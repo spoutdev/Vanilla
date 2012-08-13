@@ -28,7 +28,7 @@ package org.spout.vanilla.entity.component.ai.attack;
 
 import org.spout.api.entity.BasicComponent;
 
-import org.spout.vanilla.entity.living.creature.hostile.Creeper;
+import org.spout.vanilla.entity.creature.hostile.Creeper;
 
 /**
  * The Creeper's attack component which involves approaching a entity and exploding.

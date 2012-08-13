@@ -32,9 +32,9 @@ import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
+import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.data.drops.Drop;
-import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 
 /**
  * A drop of a fixed amount
@@ -57,7 +57,7 @@ public class FixedDrop extends Drop {
 	}
 
 	@Override
-	public List<ItemStack> getDrops(Random random, Set<DropFlagSingle> flags, List<ItemStack> drops) {
+	public List<ItemStack> getDrops(Random random, Set<Flag> flags, List<ItemStack> drops) {
 		if (this.canDrop(random, flags)) {
 			drops.add(new ItemStack(getMaterial(), getAmount()));
 		}

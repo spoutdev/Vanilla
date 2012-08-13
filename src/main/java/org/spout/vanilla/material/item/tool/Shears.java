@@ -32,7 +32,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.entity.living.creature.passive.Sheep;
+import org.spout.vanilla.entity.creature.passive.Sheep;
 import org.spout.vanilla.entity.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.ToolType;

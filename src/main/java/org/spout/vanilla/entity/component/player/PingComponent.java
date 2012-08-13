@@ -69,6 +69,7 @@ public class PingComponent extends BasicComponent<VanillaPlayerController> {
 			lastRequestHash = random.nextInt();
 			lastRequestTime = time;
 			getParent().getParent().getNetworkSynchronizer().callProtocolEvent(new PlayerKeepAliveEvent(lastRequestHash));
+			return; // Prevent a response check, could be a tick delay
 		}
 
 		// Disconnect the player if there has been no response in time

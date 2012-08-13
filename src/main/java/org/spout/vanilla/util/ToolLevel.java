@@ -26,8 +26,7 @@
  */
 package org.spout.vanilla.util;
 
-import org.spout.vanilla.data.drops.flag.DropFlagBundle;
-import org.spout.vanilla.data.drops.flag.DropFlagSingle;
+import org.spout.api.util.flag.Flag;
 import org.spout.vanilla.data.drops.flag.ToolLevelFlags;
 
 public class ToolLevel {
@@ -38,13 +37,13 @@ public class ToolLevel {
 	public static final ToolLevel DIAMOND = new ToolLevel(ToolLevelFlags.DIAMOND, ToolLevelFlags.DIAMOND_UP, 8.0f, 1561, 3);
 	public static final ToolLevel GOLD = new ToolLevel(ToolLevelFlags.GOLD, ToolLevelFlags.GOLD_UP, 12.0f, 32, 0);
 
-	private final DropFlagSingle toolFlag;
-	private final DropFlagBundle dropFlag;
+	private final Flag toolFlag;
+	private final Flag dropFlag;
 	private final float diggingSpeed;
 	private final short maxDurability;
 	private final short damageBonus;
 
-	public ToolLevel(DropFlagSingle toolFlag, DropFlagBundle dropFlag, float diggingSpeed, int maxDurability, int damageBonus) {
+	public ToolLevel(Flag toolFlag, Flag dropFlag, float diggingSpeed, int maxDurability, int damageBonus) {
 		this.toolFlag = toolFlag;
 		this.dropFlag = dropFlag;
 		this.diggingSpeed = diggingSpeed;
@@ -66,7 +65,7 @@ public class ToolLevel {
 	 * 
 	 * @return Tool flag
 	 */
-	public DropFlagSingle getToolFlag() {
+	public Flag getToolFlag() {
 		return this.toolFlag;
 	}
 
@@ -75,7 +74,7 @@ public class ToolLevel {
 	 * 
 	 * @return Drop flag
 	 */
-	public DropFlagBundle getDropFlag() {
+	public Flag getDropFlag() {
 		return this.dropFlag;
 	}
 

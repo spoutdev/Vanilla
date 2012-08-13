@@ -26,22 +26,21 @@
  */
 package org.spout.vanilla.material.item.tool;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.data.drops.flag.DropFlagSingle;
+import org.spout.vanilla.data.drops.flag.ToolEnchantFlags;
 import org.spout.vanilla.entity.VanillaEntityController;
-import org.spout.vanilla.entity.living.creature.hostile.Silverfish;
-import org.spout.vanilla.entity.living.creature.hostile.Skeleton;
-import org.spout.vanilla.entity.living.creature.hostile.Spider;
-import org.spout.vanilla.entity.living.creature.hostile.Zombie;
+import org.spout.vanilla.entity.creature.hostile.Silverfish;
+import org.spout.vanilla.entity.creature.hostile.Skeleton;
+import org.spout.vanilla.entity.creature.hostile.Spider;
+import org.spout.vanilla.entity.creature.hostile.Zombie;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
@@ -53,14 +52,12 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 	private short durability;
 	private int enchantability;
 	private Map<BlockMaterial, Float> strengthModifiers = new HashMap<BlockMaterial, Float>();
-	private final HashSet<DropFlagSingle> dropFlags = new HashSet<DropFlagSingle>();
 	private ToolType toolType;
 
 	public Tool(String name, int id, short durability, ToolType toolType) {
 		super(name, id);
 		this.durability = durability;
 		this.toolType = toolType;
-		this.addDropFlags(this.toolType.getToolFlag());
 	}
 
 	public short getDurabilityPenalty(ItemStack item) {
@@ -122,22 +119,13 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 		return true;
 	}
 
-	/**
-	 * Gets all the drop flags this tool adds
-	 * @return tool flags
-	 */
-	public Set<DropFlagSingle> getDropFlags() {
-		return this.dropFlags;
-	}
-
-	/**
-	 * Adds all the drop flags to this tool
-	 * @param dropFlags to add
-	 * @return this Tool
-	 */
-	public Tool addDropFlags(DropFlagSingle... dropFlags) {
-		this.dropFlags.addAll(Arrays.asList(dropFlags));
-		return this;
+	@Override
+	public void getItemFlags(ItemStack item, Set<Flag> flags) {
+		super.getItemFlags(item, flags);
+		flags.add(this.toolType.getToolFlag());
+		if (EnchantmentUtil.hasEnchantment(item, Enchantments.SILK_TOUCH)) {
+			flags.add(ToolEnchantFlags.SILK_TOUCH);
+		}
 	}
 
 	public int getDamageBonus(VanillaEntityController damaged, ItemStack heldItem) {

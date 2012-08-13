@@ -32,9 +32,9 @@ import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
+import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.data.drops.Drop;
-import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 
 public class RandomRangeDrop extends Drop {
 	private final Material material;
@@ -62,7 +62,7 @@ public class RandomRangeDrop extends Drop {
 	}
 
 	@Override
-	public List<ItemStack> getDrops(Random random, Set<DropFlagSingle> flags, List<ItemStack> drops) {
+	public List<ItemStack> getDrops(Random random, Set<Flag> flags, List<ItemStack> drops) {
 		if (this.canDrop(random, flags)) {
 			int amount = min + random.nextInt(max - min + 1);
 			if (amount > 0) {

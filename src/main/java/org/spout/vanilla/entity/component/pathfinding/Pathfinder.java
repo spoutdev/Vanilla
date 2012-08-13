@@ -31,7 +31,7 @@ import java.util.List;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.entity.living.Creature;
+import org.spout.vanilla.entity.creature.Creature;
 
 /**
  * An abstract Pathfinder.

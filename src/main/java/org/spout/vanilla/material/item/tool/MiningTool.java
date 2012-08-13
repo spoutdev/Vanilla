@@ -26,6 +26,10 @@
  */
 package org.spout.vanilla.material.item.tool;
 
+import java.util.Set;
+
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.util.flag.Flag;
 import org.spout.vanilla.util.ToolLevel;
 import org.spout.vanilla.util.ToolType;
 
@@ -34,11 +38,18 @@ import org.spout.vanilla.util.ToolType;
  */
 public class MiningTool extends Tool {
 	private float diggingSpeed;
+	private ToolLevel toolLevel;
 
 	public MiningTool(String name, int id, ToolLevel toolLevel, ToolType toolType) {
 		super(name, id, toolLevel.getMaxDurability(), toolType);
-		this.addDropFlags(toolLevel.getToolFlag());
+		this.toolLevel = toolLevel;
 		this.diggingSpeed = toolLevel.getDiggingSpeed();
+	}
+
+	@Override
+	public void getItemFlags(ItemStack item, Set<Flag> flags) {
+		super.getItemFlags(item, flags);
+		flags.add(this.toolLevel.getToolFlag());
 	}
 
 	/**

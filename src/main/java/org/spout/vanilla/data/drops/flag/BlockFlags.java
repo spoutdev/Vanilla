@@ -26,13 +26,19 @@
  */
 package org.spout.vanilla.data.drops.flag;
 
+import org.spout.api.util.flag.FlagSingle;
+
 public class BlockFlags {
 	/**
 	 * The (growing) block is fully grown
 	 */
-	public static final DropFlagSingle FULLY_GROWN = new DropFlagSingle();
+	public static final FlagSingle FULLY_GROWN = new FlagSingle();
 	/**
 	 * Whether seeds are dropped
 	 */
-	public static final DropFlagSingle SEEDS = new DropFlagSingle();
+	public static final FlagSingle SEEDS = new FlagSingle();
+	/**
+	 * The block was destroyed because of an explosion
+	 */
+	public static final FlagSingle IGNITED = new FlagSingle();
 }

@@ -32,9 +32,9 @@ import java.util.Set;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.data.drops.flag.BlockFlags;
-import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.Plant;
@@ -52,12 +52,11 @@ public class NetherWartBlock extends GroundAttachable implements Plant, Growing,
 	}
 
 	@Override
-	public Set<DropFlagSingle> getDropFlags(Block block, Set<DropFlagSingle> flags) {
-		flags = super.getDropFlags(block, flags);
+	public void getBlockFlags(Block block, Set<Flag> flags) {
+		super.getBlockFlags(block, flags);
 		if (this.isFullyGrown(block)) {
 			flags.add(BlockFlags.FULLY_GROWN);
 		}
-		return flags;
 	}
 
 	@Override

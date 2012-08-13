@@ -24,35 +24,51 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.entity.creature.neutral;
 
 import java.util.List;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.Source;
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.entity.creature.neutral.Enderman;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.creature.Neutral;
+import org.spout.vanilla.entity.creature.hostile.Zombie;
+import org.spout.vanilla.material.VanillaMaterials;
 
-public class EndermanEntityProtocol extends BasicMobEntityProtocol {
-	public EndermanEntityProtocol() {
-		super(58);
+public class PigZombie extends Zombie implements Neutral {
+	public PigZombie() {
+		super(VanillaControllerTypes.PIG_ZOMBIE);
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		if (controller instanceof Enderman) {
-			Enderman enderman = (Enderman) controller;
-			ItemStack held = enderman.getHeldItem();
-			if (held != null && !held.getMaterial().equals(enderman.getPreviouslyHeldItem().getMaterial())) {
-				List<Parameter<?>> parameters = super.getSpawnParameters(controller);
-				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) held.getMaterial().getId()));
-				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, (byte) held.getData()));
-				return parameters;
+	public void onAttached() {
+		super.onAttached();
+		getHealth().setSpawnHealth(20);
+		getDrops().addRange(VanillaMaterials.ROTTEN_FLESH, 1);
+		getDrops().addRange(VanillaMaterials.GOLD_NUGGET, 1);
+	}
+
+	@Override
+	public List<ItemStack> getDrops(Source source, Entity lastDamager) {
+		List<ItemStack> drops = super.getDrops(source, lastDamager);
+		if (lastDamager != null && lastDamager.getController() instanceof VanillaPlayerController) {
+			// TODO enchantments
+			if (getRandom().nextInt(25) == 0) {
+				drops.add(new ItemStack(VanillaMaterials.GOLD_INGOT, 1));
+			}
+
+			if (getRandom().nextInt(50) == 0) {
+				drops.add(new ItemStack(VanillaMaterials.GOLD_SWORD, 1));
+			}
+
+			if (getRandom().nextInt(75) == 0) {
+				drops.add(new ItemStack(VanillaMaterials.GOLD_HELMET, 1));
 			}
 		}
 
-		return super.getSpawnParameters(controller);
+		return drops;
 	}
 }

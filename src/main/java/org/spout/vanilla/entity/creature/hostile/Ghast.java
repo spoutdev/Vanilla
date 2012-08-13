@@ -24,15 +24,41 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.component.ai.attack;
+package org.spout.vanilla.entity.creature.hostile;
 
-import org.spout.api.entity.BasicComponent;
+import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.creature.Creature;
+import org.spout.vanilla.entity.creature.Hostile;
+import org.spout.vanilla.material.VanillaMaterials;
 
-import org.spout.vanilla.entity.creature.neutral.Enderman;
+public class Ghast extends Creature implements Hostile {
+	public Ghast() {
+		super(VanillaControllerTypes.GHAST);
+	}
 
-/**
- * The Enderman's attack component which involves a "hit and run" style of assault against a entity.
- */
-public class EndermanAttackComponent extends BasicComponent<Enderman> {
-	//TODO Override methods for this AI component!
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		getHealth().setSpawnHealth(10);
+		getHealth().setHurtEffect(SoundEffects.MOB_GHAST_SCREAM);
+		getDrops().addRange(VanillaMaterials.GUNPOWDER, 2);
+		getDrops().addRange(VanillaMaterials.GHAST_TEAR, 1);
+	}
+
+	/**
+	 * Whether or not the ghast has red eyes.
+	 * @return true if it has red eyes
+	 */
+	public boolean hasRedEyes() {
+		return getDataMap().containsKey("red_eyes");
+	}
+
+	/**
+	 * Sets whether or not the ghast has red eyes.
+	 * @param redEyes
+	 */
+	public void setRedEyes(boolean redEyes) {
+		getDataMap().put("red_eyes", redEyes);
+	}
 }

@@ -24,35 +24,58 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.entity.creature.neutral;
 
-import java.util.List;
-
-import org.spout.api.entity.Controller;
+import org.spout.api.collision.BoundingBox;
+import org.spout.api.collision.CollisionModel;
+import org.spout.api.data.Data;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.entity.creature.neutral.Enderman;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.creature.Creature;
+import org.spout.vanilla.entity.creature.Neutral;
+import org.spout.vanilla.material.VanillaMaterials;
 
-public class EndermanEntityProtocol extends BasicMobEntityProtocol {
-	public EndermanEntityProtocol() {
-		super(58);
+public class Enderman extends Creature implements Neutral {
+	private ItemStack heldItem;
+	private ItemStack lastHeldItem;
+
+	public Enderman() {
+		super(VanillaControllerTypes.ENDERMAN);
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		if (controller instanceof Enderman) {
-			Enderman enderman = (Enderman) controller;
-			ItemStack held = enderman.getHeldItem();
-			if (held != null && !held.getMaterial().equals(enderman.getPreviouslyHeldItem().getMaterial())) {
-				List<Parameter<?>> parameters = super.getSpawnParameters(controller);
-				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) held.getMaterial().getId()));
-				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, (byte) held.getData()));
-				return parameters;
-			}
+	public void onAttached() {
+		super.onAttached();
+		getHealth().setSpawnHealth(40);
+		if (getDataMap().containsKey(Data.HELD_ITEM)) {
+			heldItem = getDataMap().get(Data.HELD_ITEM);
 		}
+		getParent().setCollision(new CollisionModel(new BoundingBox(1, 3, 1, 2, 3, 1)));
+		getDrops().addRange(VanillaMaterials.ENDER_PEARL, 1);
+	}
 
-		return super.getSpawnParameters(controller);
+	@Override
+	public void onSave() {
+		super.onSave();
+		getDataMap().put(Data.HELD_ITEM, heldItem);
+	}
+
+	@Override
+	public void finalizeTick() {
+		super.finalizeTick();
+		this.lastHeldItem = heldItem;
+	}
+
+	public ItemStack getPreviouslyHeldItem() {
+		return lastHeldItem;
+	}
+
+	public ItemStack getHeldItem() {
+		return heldItem;
+	}
+
+	public void setHeldItem(ItemStack heldItem) {
+		this.heldItem = heldItem;
 	}
 }

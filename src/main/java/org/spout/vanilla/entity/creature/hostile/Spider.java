@@ -24,35 +24,48 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.entity.creature.hostile;
 
 import java.util.List;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.Source;
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.entity.creature.neutral.Enderman;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.entity.VanillaControllerType;
+import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.creature.Creature;
+import org.spout.vanilla.entity.creature.Hostile;
+import org.spout.vanilla.material.VanillaMaterials;
 
-public class EndermanEntityProtocol extends BasicMobEntityProtocol {
-	public EndermanEntityProtocol() {
-		super(58);
+public class Spider extends Creature implements Hostile {
+	protected Spider(VanillaControllerType type) {
+		super(type);
+	}
+
+	public Spider() {
+		super(VanillaControllerTypes.SPIDER);
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		if (controller instanceof Enderman) {
-			Enderman enderman = (Enderman) controller;
-			ItemStack held = enderman.getHeldItem();
-			if (held != null && !held.getMaterial().equals(enderman.getPreviouslyHeldItem().getMaterial())) {
-				List<Parameter<?>> parameters = super.getSpawnParameters(controller);
-				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) held.getMaterial().getId()));
-				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, (byte) held.getData()));
-				return parameters;
+	public void onAttached() {
+		super.onAttached();
+		getHealth().setSpawnHealth(16);
+		getHealth().setHurtEffect(SoundEffects.MOB_SPIDER);
+		getDrops().addRange(VanillaMaterials.STRING, 2);
+	}
+
+	@Override
+	public List<ItemStack> getDrops(Source source, Entity lastDamager) {
+		List<ItemStack> drops = super.getDrops(source, lastDamager);
+		if (lastDamager != null && lastDamager.getController() instanceof VanillaPlayerController && getRandom().nextInt(100) < 33) {
+			int count = getRandom().nextInt(2);
+			if (count > 0) {
+				drops.add(new ItemStack(VanillaMaterials.SPIDER_EYE, count));
 			}
 		}
-
-		return super.getSpawnParameters(controller);
+		return drops;
 	}
 }

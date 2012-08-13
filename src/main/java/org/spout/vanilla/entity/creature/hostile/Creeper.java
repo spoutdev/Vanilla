@@ -24,15 +24,40 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.component.ai.attack;
+package org.spout.vanilla.entity.creature.hostile;
 
-import org.spout.api.entity.BasicComponent;
+import java.util.List;
 
-import org.spout.vanilla.entity.creature.neutral.Enderman;
+import org.spout.api.Source;
+import org.spout.api.entity.Entity;
+import org.spout.api.inventory.ItemStack;
 
-/**
- * The Enderman's attack component which involves a "hit and run" style of assault against a entity.
- */
-public class EndermanAttackComponent extends BasicComponent<Enderman> {
-	//TODO Override methods for this AI component!
+import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.creature.Creature;
+import org.spout.vanilla.entity.creature.Hostile;
+import org.spout.vanilla.entity.source.DamageCause;
+import org.spout.vanilla.material.VanillaMaterials;
+
+public class Creeper extends Creature implements Hostile {
+	protected Creeper() {
+		super(VanillaControllerTypes.CREEPER);
+	}
+
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		getHealth().setSpawnHealth(20);
+		getHealth().setHurtEffect(SoundEffects.MOB_CREEPER);
+		getDrops().addRange(VanillaMaterials.GUNPOWDER, 0, 2);
+	}
+
+	@Override
+	public List<ItemStack> getDrops(Source source, Entity lastDamager) {
+		List<ItemStack> drops = super.getDrops(source, lastDamager);
+		if (source == DamageCause.ARROW && lastDamager != null && lastDamager instanceof Skeleton) {
+			drops.add(new ItemStack(VanillaMaterials.getMaterial((short) (VanillaMaterials.GOLD_MUSIC_DISC.getId() + getRandom().nextInt(11))), 1));
+		}
+		return drops;
+	}
 }

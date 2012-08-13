@@ -35,7 +35,7 @@ import java.util.Set;
 
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.entity.living.Creature;
+import org.spout.vanilla.entity.creature.Creature;
 
 /**
  * A pathfinder that uses the A*-Algorithm to find a path.

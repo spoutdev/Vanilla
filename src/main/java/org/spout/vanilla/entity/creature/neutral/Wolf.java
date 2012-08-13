@@ -24,15 +24,48 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.component.ai.attack;
+package org.spout.vanilla.entity.creature.neutral;
 
-import org.spout.api.entity.BasicComponent;
+import org.spout.api.entity.Controller;
 
-import org.spout.vanilla.entity.creature.neutral.Enderman;
+import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.creature.Creature;
+import org.spout.vanilla.entity.creature.Neutral;
+import org.spout.vanilla.entity.creature.Tameable;
 
-/**
- * The Enderman's attack component which involves a "hit and run" style of assault against a entity.
- */
-public class EndermanAttackComponent extends BasicComponent<Enderman> {
-	//TODO Override methods for this AI component!
+public class Wolf extends Creature implements Tameable, Neutral {
+	private Controller master;
+
+	public Wolf() {
+		super(VanillaControllerTypes.WOLF);
+	}
+
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		// master = data().get("controlling_entity", master);
+		if (master != null) {
+			getHealth().setSpawnHealth(20);
+		} else {
+			getHealth().setSpawnHealth(8);
+		}
+		getHealth().setHurtEffect(SoundEffects.MOB_WOLF_HURT);
+	}
+
+	@Override
+	public void onSave() {
+		super.onSave();
+		// data().put("controlling_entity", master);
+	}
+
+	@Override
+	public void controlledBy(Controller master) {
+		this.master = master;
+	}
+
+	@Override
+	public boolean isControlled() {
+		return master != null;
+	}
 }

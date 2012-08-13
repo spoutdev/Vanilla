@@ -24,15 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.component.ai.attack;
+package org.spout.vanilla.entity.creature.util;
 
-import org.spout.api.entity.BasicComponent;
+import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.creature.Creature;
+import org.spout.vanilla.entity.creature.Utility;
+import org.spout.vanilla.material.VanillaMaterials;
 
-import org.spout.vanilla.entity.creature.neutral.Enderman;
+public class IronGolem extends Creature implements Utility {
+	public IronGolem() {
+		super(VanillaControllerTypes.IRON_GOLEM);
+	}
 
-/**
- * The Enderman's attack component which involves a "hit and run" style of assault against a entity.
- */
-public class EndermanAttackComponent extends BasicComponent<Enderman> {
-	//TODO Override methods for this AI component!
+	@Override
+	public void onAttached() {
+		getHealth().setSpawnHealth(100);
+		getHealth().setDeathAnimation(false);
+		super.onAttached();
+		getDrops().addRange(VanillaMaterials.IRON_INGOT, 3, 5);
+		getDrops().addRange(VanillaMaterials.ROSE, 2);
+	}
 }

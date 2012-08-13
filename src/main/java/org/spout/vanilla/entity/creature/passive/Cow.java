@@ -24,35 +24,50 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.entity.creature.passive;
 
 import java.util.List;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.Source;
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.entity.creature.neutral.Enderman;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.entity.VanillaControllerType;
+import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.creature.Creature;
+import org.spout.vanilla.entity.creature.Passive;
+import org.spout.vanilla.entity.source.DamageCause;
+import org.spout.vanilla.material.VanillaMaterials;
 
-public class EndermanEntityProtocol extends BasicMobEntityProtocol {
-	public EndermanEntityProtocol() {
-		super(58);
+public class Cow extends Creature implements Passive {
+	public Cow() {
+		super(VanillaControllerTypes.COW);
+	}
+
+	protected Cow(VanillaControllerType type) {
+		super(type);
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		if (controller instanceof Enderman) {
-			Enderman enderman = (Enderman) controller;
-			ItemStack held = enderman.getHeldItem();
-			if (held != null && !held.getMaterial().equals(enderman.getPreviouslyHeldItem().getMaterial())) {
-				List<Parameter<?>> parameters = super.getSpawnParameters(controller);
-				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) held.getMaterial().getId()));
-				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, (byte) held.getData()));
-				return parameters;
+	public void onAttached() {
+		super.onAttached();
+		getHealth().setSpawnHealth(10);
+		getHealth().setHurtEffect(SoundEffects.MOB_COWHURT.adjust(0.4f, 1.0f));
+		getDrops().addRange(VanillaMaterials.LEATHER, 2);
+	}
+
+	@Override
+	public List<ItemStack> getDrops(Source source, Entity lastDamager) {
+		List<ItemStack> drops = super.getDrops(source, lastDamager);
+		int count = getRandom().nextInt(2) + 1;
+		if (count > 0) {
+			if (source == DamageCause.BURN) {
+				drops.add(new ItemStack(VanillaMaterials.STEAK, count));
+			} else {
+				drops.add(new ItemStack(VanillaMaterials.RAW_BEEF, count));
 			}
 		}
-
-		return super.getSpawnParameters(controller);
+		return drops;
 	}
 }

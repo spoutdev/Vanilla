@@ -24,48 +24,49 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.tool;
+package org.spout.vanilla.entity.creature.hostile;
 
-import java.util.Random;
+import java.util.List;
 
+import org.spout.api.Source;
 import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.entity.creature.passive.Sheep;
-import org.spout.vanilla.entity.object.moving.Item;
+import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.creature.Creature;
+import org.spout.vanilla.entity.creature.Hostile;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.util.ToolType;
-import org.spout.vanilla.util.VanillaPlayerUtil;
+import org.spout.vanilla.material.enchantment.Enchantments;
+import org.spout.vanilla.util.EnchantmentUtil;
 
-public class Shears extends Tool {
-	private Random rand = new Random();
-
-	public Shears(String name, int id, short durability) {
-		super(name, id, durability, ToolType.SHEARS);
+public class Skeleton extends Creature implements Hostile {
+	public Skeleton() {
+		super(VanillaControllerTypes.SKELETON);
 	}
 
 	@Override
-	public void onInteract(Entity entity, Entity other, Action action) {
-		if (action == Action.RIGHT_CLICK) {
-			if (!(other.getController() instanceof Sheep)) {
-				return;
-			}
+	public void onAttached() {
+		super.onAttached();
+		getHealth().setSpawnHealth(20);
+		getHealth().setHurtEffect(SoundEffects.MOB_SKELETONHURT);
+		getDrops().addRange(VanillaMaterials.ARROW, 2);
+		getDrops().addRange(VanillaMaterials.BONE, 2);
+	}
 
-			Sheep sheep = (Sheep) other.getController();
-			if (sheep.isSheared() || sheep.getGrowing().isBaby()) {
-				System.out.println("Debug");
-				return;
-			}
-
-			sheep.setSheared(true);
-			short col = sheep.getColor().getData();
-
-			other.getWorld().createAndSpawnEntity(other.getPosition(), new Item(new ItemStack(VanillaMaterials.WOOL, col, rand.nextInt(3) + 1), other.getPosition().normalize()));
-
-			if (VanillaPlayerUtil.isSurvival(entity)) {
-				VanillaPlayerUtil.getCurrentSlot(entity).addItemData(0, 1);
+	@Override
+	public List<ItemStack> getDrops(Source source, Entity lastDamager) {
+		List<ItemStack> drops = super.getDrops(source, lastDamager);
+		if (lastDamager != null && lastDamager.getController() instanceof VanillaPlayerController) {
+			if (getRandom().nextInt(32) == 0) {
+				ItemStack bow = new ItemStack(VanillaMaterials.BOW, 1);
+				if (getRandom().nextInt(5) == 0) {
+					EnchantmentUtil.addEnchantment(bow, Enchantments.POWER);
+				}
+				drops.add(bow);
 			}
 		}
+		return drops;
 	}
 }

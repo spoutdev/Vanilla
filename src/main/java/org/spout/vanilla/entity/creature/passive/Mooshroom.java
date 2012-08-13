@@ -24,15 +24,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.component.ai.attack;
+package org.spout.vanilla.entity.creature.passive;
 
-import org.spout.api.entity.BasicComponent;
+import org.spout.vanilla.entity.VanillaControllerTypes;
 
-import org.spout.vanilla.entity.creature.neutral.Enderman;
-
-/**
- * The Enderman's attack component which involves a "hit and run" style of assault against a entity.
- */
-public class EndermanAttackComponent extends BasicComponent<Enderman> {
-	//TODO Override methods for this AI component!
+public class Mooshroom extends Cow {
+	public Mooshroom() {
+		super(VanillaControllerTypes.MOOSHROOM);
+	}
 }

@@ -37,10 +37,10 @@ import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.data.drops.flag.ToolEnchantFlags;
 import org.spout.vanilla.entity.VanillaEntityController;
-import org.spout.vanilla.entity.living.creature.hostile.Silverfish;
-import org.spout.vanilla.entity.living.creature.hostile.Skeleton;
-import org.spout.vanilla.entity.living.creature.hostile.Spider;
-import org.spout.vanilla.entity.living.creature.hostile.Zombie;
+import org.spout.vanilla.entity.creature.hostile.Silverfish;
+import org.spout.vanilla.entity.creature.hostile.Skeleton;
+import org.spout.vanilla.entity.creature.hostile.Spider;
+import org.spout.vanilla.entity.creature.hostile.Zombie;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.VanillaItemMaterial;

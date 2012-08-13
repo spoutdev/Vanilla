@@ -24,15 +24,20 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.component.ai.attack;
+package org.spout.vanilla.entity.creature.hostile;
 
-import org.spout.api.entity.BasicComponent;
+import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.entity.VanillaControllerTypes;
 
-import org.spout.vanilla.entity.creature.neutral.Enderman;
+public class CaveSpider extends Spider {
+	public CaveSpider() {
+		super(VanillaControllerTypes.CAVE_SPIDER);
+	}
 
-/**
- * The Enderman's attack component which involves a "hit and run" style of assault against a entity.
- */
-public class EndermanAttackComponent extends BasicComponent<Enderman> {
-	//TODO Override methods for this AI component!
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		getHealth().setSpawnHealth(12);
+		getHealth().setHurtEffect(SoundEffects.MOB_SPIDER);
+	}
 }

@@ -28,7 +28,7 @@ package org.spout.vanilla.entity.component.ai.attack;
 
 import org.spout.api.entity.BasicComponent;
 
-import org.spout.vanilla.entity.living.creature.hostile.EnderDragon;
+import org.spout.vanilla.entity.creature.hostile.EnderDragon;
 
 /**
  * The EnderDragon's attack component which involves randomly flying around, setting up for a

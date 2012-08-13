@@ -26,15 +26,28 @@
  */
 package org.spout.vanilla.material.block.plant;
 
+import java.util.Random;
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.special.InventorySlot;
+import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
+import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.solid.Log;
+import org.spout.vanilla.material.item.misc.Dye;
+import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class CocoaPlant extends AbstractAttachable implements Plant {
+public class CocoaPlant extends AbstractAttachable implements Plant, Growing, RandomBlockMaterial {
+	private static final int DIRECTION_MASK = 0x3;
+	private static final int GROWTH_MASK = 0xC;
+
 	public CocoaPlant(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.NESW);
@@ -47,11 +60,62 @@ public class CocoaPlant extends AbstractAttachable implements Plant {
 
 	@Override
 	public void setAttachedFace(Block block, BlockFace attachedFace) {
-		block.setDataField(0x3, BlockFaces.WNES.indexOf(attachedFace, 0));
+		block.setDataField(DIRECTION_MASK, BlockFaces.WNES.indexOf(attachedFace, 0));
 	}
 
 	@Override
 	public BlockFace getAttachedFace(short data) {
-		return BlockFaces.WNES.get(data & 0x3);
+		return BlockFaces.WNES.get(data & DIRECTION_MASK);
+	}
+
+	@Override
+	public int getMinimumLightToGrow() {
+		return 0;
+	}
+
+	@Override
+	public int getGrowthStageCount() {
+		return 3;
+	}
+
+	@Override
+	public int getGrowthStage(Block block) {
+		return block.getDataField(GROWTH_MASK);
+	}
+
+	@Override
+	public void setGrowthStage(Block block, int stage) {
+		block.setDataField(GROWTH_MASK, stage);
+	}
+
+	@Override
+	public boolean isFullyGrown(Block block) {
+		System.out.println(getGrowthStage(block));
+		return getGrowthStage(block) >= 2;
+	}
+
+	@Override
+	public void onRandomTick(Block block) {
+		if (new Random().nextInt(5) != 0) {
+			return;
+		}
+		int growthStage = getGrowthStage(block);
+		if (growthStage < getGrowthStageCount() - 1) {
+			setGrowthStage(block, ++growthStage);
+		}
+	}
+	
+	@Override
+	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
+		final InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);
+		final ItemStack current = inv.getItem();
+		if (current != null && current.isMaterial(Dye.BONE_MEAL) && type == Action.RIGHT_CLICK) {
+			if (!isFullyGrown(block)) {
+				if (VanillaPlayerUtil.isSurvival(entity)) {
+					inv.addItemAmount(0, -1);
+				}
+				setGrowthStage(block, 2);
+			}
+		}
 	}
 }

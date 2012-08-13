@@ -129,7 +129,9 @@ public class SmallTreeObject extends TreeObject {
 							continue;
 						}
 						final Block block = w.getBlock(position.add(face.getOffset()), w);
-						//TODO: place the cocoa plant (waiting on its implementation)
+						block.setMaterial(VanillaMaterials.COCOA_PLANT);
+						VanillaMaterials.COCOA_PLANT.setAttachedFace(block, face.getOpposite());
+						VanillaMaterials.COCOA_PLANT.setGrowthStage(block, random.nextInt(3));
 					}
 				}
 			}
@@ -137,12 +139,12 @@ public class SmallTreeObject extends TreeObject {
 	}
 
 	private void placeVines(World w, int x, int y, int z, byte faceOdd, boolean grow) {
+		final byte lenght = (byte) (grow ? 5 : 1);
 		for (BlockFace face : BlockFaces.NSEW) {
 			if (random.nextInt(faceOdd) != 0) {
 				continue;
 			}
 			final BlockFace facing = face.getOpposite();
-			final byte lenght = (byte) (grow ? 5 : 1);
 			for (byte yy = 0; yy < lenght; yy++) {
 				final Block block = w.getBlock(face.getOffset().add(x, y - yy, z), w);
 				if (block.isMaterial(VanillaMaterials.AIR)) {

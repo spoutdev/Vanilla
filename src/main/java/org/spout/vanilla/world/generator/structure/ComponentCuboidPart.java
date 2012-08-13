@@ -32,8 +32,8 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 
 public class ComponentCuboidPart extends ComponentPart {
-	private IntVector3 min = new IntVector3(0, 0, 0);
-	private IntVector3 max = new IntVector3(1, 1, 1);
+	protected IntVector3 min = new IntVector3(0, 0, 0);
+	protected IntVector3 max = new IntVector3(1, 1, 1);
 
 	public ComponentCuboidPart(StructureComponent parent) {
 		super(parent);
@@ -90,6 +90,11 @@ public class ComponentCuboidPart extends ComponentPart {
 		offsetMin(minXOff, minYOff, minZOff);
 		offsetMax(maxXOff, maxYOdd, maxZOff);
 	}
+	
+	protected boolean isOuter(int xx, int yy, int zz) {
+		return xx == min.getX() || yy == min.getY() || zz == min.getZ()
+				|| xx == max.getZ() || yy == max.getY() || zz == max.getZ();
+	}
 
 	@Override
 	public void fill(BlockMaterialPicker picker, boolean ignoreAir) {
@@ -101,8 +106,7 @@ public class ComponentCuboidPart extends ComponentPart {
 				for (int zz = min.getZ(); zz <= endZ; zz++) {
 
 					if (!ignoreAir || !parent.getBlockMaterial(xx, yy, zz).isMaterial(VanillaMaterials.AIR)) {
-						parent.setBlockMaterial(xx, yy, zz, picker.get(xx == 0 || yy == 0 || zz == 0
-								|| xx == endX || yy == endY || zz == endZ));
+						parent.setBlockMaterial(xx, yy, zz, picker.get(isOuter(xx, yy, zz)));
 					}
 				}
 			}
@@ -123,8 +127,7 @@ public class ComponentCuboidPart extends ComponentPart {
 					}
 
 					if (!ignoreAir || !parent.getBlockMaterial(xx, yy, zz).isMaterial(VanillaMaterials.AIR)) {
-						parent.setBlockMaterial(xx, yy, zz, picker.get(xx == 0 || yy == 0 || zz == 0
-								|| xx == endX || yy == endY || zz == endZ));
+						parent.setBlockMaterial(xx, yy, zz, picker.get(isOuter(xx, yy, zz)));
 					}
 				}
 			}

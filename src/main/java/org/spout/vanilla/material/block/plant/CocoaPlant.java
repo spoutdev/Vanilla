@@ -27,6 +27,8 @@
 package org.spout.vanilla.material.block.plant;
 
 import java.util.Random;
+import java.util.Set;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 
@@ -36,7 +38,10 @@ import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.util.flag.Flag;
 
+import org.spout.vanilla.data.drops.flag.BlockFlags;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
@@ -44,13 +49,20 @@ import org.spout.vanilla.material.block.solid.Log;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class CocoaPlant extends AbstractAttachable implements Plant, Growing, RandomBlockMaterial {
+public class CocoaPlant extends AbstractAttachable implements Plant, Growing, RandomBlockMaterial, InitializableMaterial {
 	private static final int DIRECTION_MASK = 0x3;
 	private static final int GROWTH_MASK = 0xC;
 
 	public CocoaPlant(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.NESW);
+	}
+
+	@Override
+	public void initialize() {
+		getDrops().DEFAULT.clear();
+		getDrops().DEFAULT.add(Dye.COCOA_BEANS, 1).addFlags(BlockFlags.FULLY_GROWN.NOT);
+		getDrops().DEFAULT.add(Dye.COCOA_BEANS, 3).addFlags(BlockFlags.FULLY_GROWN);
 	}
 
 	@Override
@@ -76,6 +88,14 @@ public class CocoaPlant extends AbstractAttachable implements Plant, Growing, Ra
 	@Override
 	public int getGrowthStageCount() {
 		return 3;
+	}
+
+	@Override
+	public void getBlockFlags(Block block, Set<Flag> flags) {
+		super.getBlockFlags(block, flags);
+		if (this.isFullyGrown(block)) {
+			flags.add(BlockFlags.FULLY_GROWN);
+		}
 	}
 
 	@Override

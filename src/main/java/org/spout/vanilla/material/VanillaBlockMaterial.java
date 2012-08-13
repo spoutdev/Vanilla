@@ -44,6 +44,7 @@ import org.spout.api.util.flag.Flag;
 import org.spout.api.util.flag.FlagBundle;
 
 import org.spout.vanilla.data.drops.flag.DropFlags;
+import org.spout.vanilla.data.drops.flag.PlayerFlags;
 import org.spout.vanilla.data.drops.type.block.BlockDrops;
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
@@ -338,6 +339,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	private void updateDropFlags() {
 		this.drops.NOT_CREATIVE.clearFlags();
+		this.drops.NOT_CREATIVE.addFlags(PlayerFlags.CREATIVE.NOT);
 		if (this.miningLevel != null && this.miningLevel != ToolLevel.NONE) {
 			this.drops.NOT_CREATIVE.addFlags(this.miningLevel.getDropFlag());
 			Flag[] typeFlags = new Flag[this.miningTypes.size()];

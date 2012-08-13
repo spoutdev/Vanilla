@@ -26,12 +26,23 @@
  */
 package org.spout.vanilla.entity.object.misc;
 
+import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.object.Substance;
 
 public class Lightning extends Substance {
+	private int aliveTicks;
+	private int deathDelayTicks;
+
 	public Lightning() {
 		super(VanillaControllerTypes.LIGHTNING);
+	}
+
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		this.deathDelayTicks = this.getRandom().nextInt(3) + 1;
+		this.aliveTicks = 0;
 	}
 
 	@Override
@@ -41,6 +52,20 @@ public class Lightning extends Substance {
 
 	@Override
 	public void onTick(float dt) {
-		getParent().kill();
+		super.onTick(dt);
+		if (this.aliveTicks == 0) {
+			GeneralEffects.LIGHTNING_THUNDER.playGlobal(this.getParent().getPosition());
+		}
+		this.aliveTicks++;
+		if (this.aliveTicks > 2) {
+			if (this.deathDelayTicks == 0) {
+				getParent().kill();
+			} else if (aliveTicks >= getRandom().nextInt(12)) {
+				this.deathDelayTicks--;
+				//TODO: Burn the blocks (post effect of the lightning strike)
+			}
+		} else {
+			//TODO: Electrify entities as the lightning strike is alive
+		}
 	}
 }

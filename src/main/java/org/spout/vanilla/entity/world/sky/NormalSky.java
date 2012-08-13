@@ -27,12 +27,12 @@
 package org.spout.vanilla.entity.world.sky;
 
 import org.spout.api.Spout;
+import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.entity.world.VanillaSky;
-import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.protocol.msg.TimeUpdateMessage;
 import org.spout.vanilla.util.VanillaMathHelper;
 import org.spout.vanilla.world.WeatherSimulator;
@@ -72,8 +72,8 @@ public class NormalSky extends VanillaSky {
 			return;
 		}
 		this.getWorld().getDataMap().put(VanillaData.WEATHER, newWeather);
-
-		byte reason = (newWeather.equals(Weather.RAIN) || newWeather.equals(Weather.THUNDERSTORM)) ? ChangeGameStateMessage.BEGIN_RAINING : ChangeGameStateMessage.END_RAINING;
-		broadcastMessage(new ChangeGameStateMessage(reason));
+		for (Player player : this.getWorld().getPlayers()) {
+			player.getNetworkSynchronizer().callProtocolEvent(event);
+		}
 	}
 }

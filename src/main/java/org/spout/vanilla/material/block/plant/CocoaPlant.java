@@ -90,7 +90,6 @@ public class CocoaPlant extends AbstractAttachable implements Plant, Growing, Ra
 
 	@Override
 	public boolean isFullyGrown(Block block) {
-		System.out.println(getGrowthStage(block));
 		return getGrowthStage(block) >= 2;
 	}
 

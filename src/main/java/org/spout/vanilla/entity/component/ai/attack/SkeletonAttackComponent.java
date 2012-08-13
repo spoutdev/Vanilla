@@ -28,7 +28,7 @@ package org.spout.vanilla.entity.component.ai.attack;
 
 import org.spout.api.entity.BasicComponent;
 
-import org.spout.vanilla.entity.living.creature.hostile.Skeleton;
+import org.spout.vanilla.entity.creature.hostile.Skeleton;
 
 /**
  * The Skeleton's attack component which involves keeping a distance from the entity and

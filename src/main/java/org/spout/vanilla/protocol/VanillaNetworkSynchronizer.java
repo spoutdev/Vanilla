@@ -67,6 +67,7 @@ import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.data.WorldType;
 import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.event.block.BlockActionEvent;
@@ -88,6 +89,7 @@ import org.spout.vanilla.event.window.WindowSetSlotsEvent;
 import org.spout.vanilla.event.world.PlayExplosionEffectEvent;
 import org.spout.vanilla.event.world.PlayParticleEffectEvent;
 import org.spout.vanilla.event.world.PlaySoundEffectEvent;
+import org.spout.vanilla.event.world.WeatherChangeEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
@@ -562,6 +564,16 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@EventHandler
 	public Message onPlayerGameState(PlayerGameStateEvent event) {
 		return new ChangeGameStateMessage(event.getReason(), event.getGameMode());
+	}
+
+	@EventHandler
+	public Message onWeatherChanged(WeatherChangeEvent event) {
+		Weather newWeather = event.getNewWeather();
+		if (newWeather.equals(Weather.RAIN) || newWeather.equals(Weather.THUNDERSTORM)) {
+			return new ChangeGameStateMessage(ChangeGameStateMessage.BEGIN_RAINING);
+		} else {
+			return new ChangeGameStateMessage(ChangeGameStateMessage.END_RAINING);
+		}
 	}
 
 	public static enum ChunkInit {

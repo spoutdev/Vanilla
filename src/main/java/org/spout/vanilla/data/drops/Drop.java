@@ -27,39 +27,27 @@
 package org.spout.vanilla.data.drops;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
-
-import org.spout.vanilla.data.drops.flag.DropFlag;
-import org.spout.vanilla.data.drops.flag.DropFlagSingle;
+import org.spout.api.util.flag.Flag;
+import org.spout.api.util.flag.FlagContainer;
 
 /**
  * Contains one or more Drops
  */
-public abstract class Drop {
-	private final List<DropFlag> flags = new ArrayList<DropFlag>();
+public abstract class Drop extends FlagContainer {
 	private double chance = 1.0;
 
-	/**
-	 * Checks if this Drop matches all the flags given
-	 * @param flags to match against
-	 * @return True if matched, False if not
-	 */
-	public boolean matchFlags(Set<DropFlagSingle> flags) {
-		if (flags.contains(DropFlagSingle.NO_DROPS)) {
-			return false;
-		}
-		for (DropFlag flag : this.flags) {
-			if (!flag.evaluate(flags)) {
-				return false;
-			}
-		}
-		return true;
+	@Override
+	public boolean matchFlags(Set<Flag> flags) {
+//		if (flags.contains(DropFlagSingle.NO_DROPS)) {
+//			return false;
+//		}
+		return super.matchFlags(flags);
 	}
 
 	/**
@@ -68,11 +56,11 @@ public abstract class Drop {
 	 * @param dropFlags to check against
 	 * @return True if a drop can be performed, False if not
 	 */
-	public boolean canDrop(Random random, Set<DropFlagSingle> dropFlags) {
+	public boolean canDrop(Random random, Set<Flag> flags) {
 		if (this.hasChance() && random.nextDouble() >= this.getChance()) {
 			return false;
 		}
-		return this.matchFlags(dropFlags);
+		return this.matchFlags(flags);
 	}
 
 	/**
@@ -100,36 +88,16 @@ public abstract class Drop {
 		return this.chance;
 	}
 
-	/**
-	 * Adds all the flags for these drops<br>
-	 * All flags set for these drops need to be set to make these drops function
-	 * 
-	 * @param dropflags to add (can be a DropFlag and DropFlagBundle)
-	 * @return these Drops
-	 */
-	public Drop addFlags(DropFlag... dropFlags) {
-		this.flags.addAll(Arrays.asList(dropFlags));
+	@Override
+	public Drop addFlags(Flag... dropFlags) {
+		super.addFlags(dropFlags);
 		return this;
 	}
 
-	/**
-	 * Removes all the flags for these drops
-	 * 
-	 * @param dropflags to remove (can be a DropFlag and DropFlagBundle)
-	 * @return these Drops
-	 */
-	public Drop removeFlags(DropFlag... dropFlags) {
-		this.flags.removeAll(Arrays.asList(dropFlags));
+	@Override
+	public Drop removeFlags(Flag... dropFlags) {
+		super.removeFlags(dropFlags);
 		return this;
-	}
-
-	/**
-	 * Gets all the flags set for these drops<br>
-	 * All flags set for these drops need to be set to make these drops function
-	 * @return drop flags
-	 */
-	public List<DropFlag> getFlags() {
-		return this.flags;
 	}
 
 	/**
@@ -139,7 +107,7 @@ public abstract class Drop {
 	 * @param drops list to fill
 	 * @return the inputed list of drops
 	 */
-	public abstract List<ItemStack> getDrops(Random random, Set<DropFlagSingle> flags, List<ItemStack> drops);
+	public abstract List<ItemStack> getDrops(Random random, Set<Flag> flags, List<ItemStack> drops);
 
 	/**
 	 * Gets the Drops
@@ -147,7 +115,7 @@ public abstract class Drop {
 	 * @param flags to evaluate against (contains no inverted flags)
 	 * @return list of ItemStacks
 	 */
-	public final List<ItemStack> getDrops(Random random, Set<DropFlagSingle> flags) {
+	public final List<ItemStack> getDrops(Random random, Set<Flag> flags) {
 		return getDrops(random, flags, new ArrayList<ItemStack>());
 	}
 

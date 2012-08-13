@@ -32,7 +32,7 @@ import org.spout.api.entity.BasicComponent;
 import org.spout.api.math.Vector3;
 import org.spout.api.tickable.TickPriority;
 
-import org.spout.vanilla.entity.living.creature.passive.Sheep;
+import org.spout.vanilla.entity.creature.passive.Sheep;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 

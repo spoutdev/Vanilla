@@ -34,9 +34,8 @@ import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
+import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.data.drops.flag.DropFlag;
-import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 import org.spout.vanilla.data.drops.type.FixedDrop;
 import org.spout.vanilla.data.drops.type.RandomDrop;
 import org.spout.vanilla.data.drops.type.RandomRangeDrop;
@@ -48,7 +47,7 @@ public class Drops extends Drop {
 	private final List<Drop> drops = new ArrayList<Drop>();
 
 	@Override
-	public List<ItemStack> getDrops(Random random, Set<DropFlagSingle> flags, List<ItemStack> drops) {
+	public List<ItemStack> getDrops(Random random, Set<Flag> flags, List<ItemStack> drops) {
 		if (this.canDrop(random, flags) && !this.drops.isEmpty()) {
 			for (Drop drop : this.drops) {
 				drops = drop.getDrops(random, flags, drops);
@@ -144,20 +143,20 @@ public class Drops extends Drop {
 	}
 
 	@Override
-	public Drops addFlags(DropFlag... dropFlags) {
+	public Drops addFlags(Flag... dropFlags) {
 		super.addFlags(dropFlags);
 		return this;
 	}
 
-	public SwitchDrops addSwitch(DropFlag... dropFlags) {
+	public SwitchDrops addSwitch(Flag... dropFlags) {
 		return this.add(new SwitchDrops()).addFlags(dropFlags);
 	}
 
-	public Drops forFlags(DropFlagSingle... flags) {
+	public Drops forFlags(Flag... flags) {
 		return add(new Drops().addFlags(flags));
 	}
 
-	public SelectedDrops addSelect(DropFlagSingle... flags) {
+	public SelectedDrops addSelect(Flag... flags) {
 		return add(new SelectedDrops().addFlags(flags));
 	}
 

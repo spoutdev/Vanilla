@@ -45,7 +45,7 @@ public class Snow extends GroundAttachable implements RandomBlockMaterial, Initi
 		super(name, id);
 		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent();
 		this.setOcclusion((short) 0, BlockFace.BOTTOM);
-		this.setMiningType(ToolType.SPADE, ToolLevel.WOOD);
+		this.addMiningType(ToolType.SPADE).setMiningLevel(ToolLevel.WOOD);
 	}
 
 	@Override

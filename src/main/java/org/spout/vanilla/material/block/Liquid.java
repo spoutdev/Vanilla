@@ -145,7 +145,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	 * @return True to notify spreading was allowed, False to deny
 	 */
 	public void onSpread(Block block, int newLevel, BlockFace from) {
-		block.getMaterial().onDestroy(block);
+		block.getMaterial().destroy(block);
 		block.setMaterial(this.getFlowingMaterial());
 		this.setLevel(block, newLevel);
 		if (from == BlockFace.TOP) {

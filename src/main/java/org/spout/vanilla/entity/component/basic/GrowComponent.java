@@ -34,7 +34,7 @@ import org.spout.api.tickable.TickPriority;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.entity.living.Creature;
+import org.spout.vanilla.entity.creature.Creature;
 import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 

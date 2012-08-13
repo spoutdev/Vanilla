@@ -27,7 +27,6 @@
 package org.spout.vanilla.data.effect.type;
 
 import java.util.List;
-import java.util.Set;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;

@@ -62,7 +62,7 @@ public class ChestBlock extends ControlledMaterial implements Directional, Fuel 
 	}
 
 	@Override
-	public void onDestroyBlock(Block block) {
+	public void onDestroy(Block block) {
 		BlockController old = block.getController();
 		if (old != null && old instanceof org.spout.vanilla.entity.block.Chest) {
 			//Drop items
@@ -75,7 +75,7 @@ public class ChestBlock extends ControlledMaterial implements Directional, Fuel 
 				ItemUtil.dropItemNaturally(position, item);
 			}
 		}
-		super.onDestroyBlock(block);
+		super.onDestroy(block);
 	}
 
 	@Override

@@ -41,53 +41,38 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.Material;
 import org.spout.api.material.basic.BasicAir;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.data.ExhaustionLevel;
-import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 import org.spout.vanilla.data.drops.flag.PlayerFlags;
-import org.spout.vanilla.data.drops.flag.ToolEnchantFlags;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.entity.VanillaPlayerController;
-import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.Food;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
-import org.spout.vanilla.util.EnchantmentUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDiggingMessage> {
 	private void breakBlock(BlockMaterial blockMaterial, Block block, VanillaPlayerController player) {
-		if (blockMaterial instanceof VanillaBlockMaterial) {
-			HashSet<DropFlagSingle> flags = new HashSet<DropFlagSingle>();
-			if (player.isSurvival()) {
-				flags.add(PlayerFlags.SURVIVAL);
-			} else {
-				flags.add(PlayerFlags.CREATIVE);
-			}
-			ItemStack heldItem = player.getInventory().getQuickbar().getCurrentItem();
-			if (heldItem != null) {
-				if (EnchantmentUtil.hasEnchantment(heldItem, Enchantments.SILK_TOUCH)) {
-					flags.add(ToolEnchantFlags.SILK_TOUCH);
-				}
-				Material heldMaterial = heldItem.getMaterial();
-				if (heldMaterial instanceof Tool) {
-					flags.addAll(((Tool) heldMaterial).getDropFlags());
-				}
-			}
-			((VanillaBlockMaterial) blockMaterial).onDestroy(block, flags);
+		HashSet<Flag> flags = new HashSet<Flag>();
+		if (player.isSurvival()) {
+			flags.add(PlayerFlags.SURVIVAL);
 		} else {
-			blockMaterial.onDestroy(block);
+			flags.add(PlayerFlags.CREATIVE);
 		}
+		ItemStack heldItem = player.getInventory().getQuickbar().getCurrentItem();
+		if (heldItem != null) {
+			heldItem.getMaterial().getItemFlags(heldItem, flags);
+		}
+		blockMaterial.destroy(block, flags);
 	}
 
 	@Override

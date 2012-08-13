@@ -29,11 +29,12 @@ package org.spout.vanilla.event.world;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.world.WorldEvent;
+import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.entity.world.VanillaSky;
 
-public class WeatherChangeEvent extends WorldEvent implements Cancellable {
+public class WeatherChangeEvent extends WorldEvent implements Cancellable, ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();
 	private Weather current, weather;
 

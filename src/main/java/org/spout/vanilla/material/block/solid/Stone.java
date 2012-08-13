@@ -36,7 +36,7 @@ import org.spout.vanilla.util.ToolType;
 public class Stone extends Solid implements InitializableMaterial {
 	public Stone(String name, int id) {
 		super(name, id);
-		this.setHardness(1.5F).setResistance(10.0F).setMiningType(ToolType.PICKAXE, ToolLevel.WOOD);
+		this.setHardness(1.5F).setResistance(10.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
 	@Override

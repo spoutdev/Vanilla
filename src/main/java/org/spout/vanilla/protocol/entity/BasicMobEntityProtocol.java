@@ -37,7 +37,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.entity.component.HeadOwner;
-import org.spout.vanilla.entity.living.Creature;
+import org.spout.vanilla.entity.creature.Creature;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnMobMessage;
 

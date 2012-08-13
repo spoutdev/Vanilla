@@ -64,9 +64,9 @@ public class TripWire extends GroundAttachable implements InitializableMaterial 
 	}
 
 	@Override
-	public void onDestroyBlock(Block block) {
+	public void onDestroy(Block block) {
 		this.trample(block);
-		super.onDestroyBlock(block);
+		super.onDestroy(block);
 	}
 
 	@Override

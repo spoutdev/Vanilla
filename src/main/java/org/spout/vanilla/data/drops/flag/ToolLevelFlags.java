@@ -26,53 +26,57 @@
  */
 package org.spout.vanilla.data.drops.flag;
 
+import org.spout.api.util.flag.FlagBoolean;
+import org.spout.api.util.flag.FlagBundle;
+import org.spout.api.util.flag.FlagSingle;
+
 public class ToolLevelFlags {
 	/**
 	 * An unknown type was used, always evaluates True
 	 */
-	public static final DropFlagSingle NONE = new DropFlagTrue();
+	public static final FlagBoolean NONE = new FlagBoolean(true);
 	/**
 	 * A wooden tool or weapon was used
 	 */
-	public static final DropFlagSingle WOOD = new DropFlagSingle();
+	public static final FlagSingle WOOD = new FlagSingle();
 	/**
 	 * A stone tool or weapon was used
 	 */
-	public static final DropFlagSingle STONE = new DropFlagSingle();
+	public static final FlagSingle STONE = new FlagSingle();
 	/**
 	 * An iron tool or weapon was used
 	 */
-	public static final DropFlagSingle IRON = new DropFlagSingle();
+	public static final FlagSingle IRON = new FlagSingle();
 	/**
 	 * A golden tool or weapon was used
 	 */
-	public static final DropFlagSingle GOLD = new DropFlagSingle();
+	public static final FlagSingle GOLD = new FlagSingle();
 	/**
 	 * A diamond tool or weapon was used
 	 */
-	public static final DropFlagSingle DIAMOND = new DropFlagSingle();
+	public static final FlagSingle DIAMOND = new FlagSingle();
 	/**
 	 * Any type of level
 	 */
-	public static final DropFlagBundle NONE_UP = new DropFlagBundle(NONE);
+	public static final FlagBundle NONE_UP = new FlagBundle(NONE);
 	/**
 	 * A wooden or higher tool or weapon level
 	 */
-	public static final DropFlagBundle WOOD_UP = new DropFlagBundle(WOOD, STONE, IRON, GOLD, DIAMOND);
+	public static final FlagBundle WOOD_UP = new FlagBundle(WOOD, STONE, IRON, GOLD, DIAMOND);
 	/**
 	 * A stone or higher tool or weapon level
 	 */
-	public static final DropFlagBundle STONE_UP = new DropFlagBundle(STONE, IRON, GOLD, DIAMOND);
+	public static final FlagBundle STONE_UP = new FlagBundle(STONE, IRON, GOLD, DIAMOND);
 	/**
 	 * An iron or higher tool or weapon level
 	 */
-	public static final DropFlagBundle IRON_UP = new DropFlagBundle(IRON, GOLD, DIAMOND);
+	public static final FlagBundle IRON_UP = new FlagBundle(IRON, GOLD, DIAMOND);
 	/**
 	 * A gold or higher tool or weapon level
 	 */
-	public static final DropFlagBundle GOLD_UP = new DropFlagBundle(GOLD, DIAMOND);
+	public static final FlagBundle GOLD_UP = new FlagBundle(GOLD, DIAMOND);
 	/**
 	 * A diamond or higher tool or weapon level
 	 */
-	public static final DropFlagBundle DIAMOND_UP = new DropFlagBundle(DIAMOND);
+	public static final FlagBundle DIAMOND_UP = new FlagBundle(DIAMOND);
 }

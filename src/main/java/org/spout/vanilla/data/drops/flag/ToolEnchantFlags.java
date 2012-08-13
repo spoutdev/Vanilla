@@ -26,9 +26,11 @@
  */
 package org.spout.vanilla.data.drops.flag;
 
+import org.spout.api.util.flag.FlagSingle;
+
 public class ToolEnchantFlags {
 	/**
 	 * The tool used has the silk touch enchantment
 	 */
-	public static final DropFlagSingle SILK_TOUCH = new DropFlagSingle();
+	public static final FlagSingle SILK_TOUCH = new FlagSingle();
 }

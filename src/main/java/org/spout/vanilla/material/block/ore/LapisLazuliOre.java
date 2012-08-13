@@ -39,7 +39,7 @@ import org.spout.vanilla.util.ToolType;
 public class LapisLazuliOre extends Ore implements TimedCraftable, InitializableMaterial {
 	public LapisLazuliOre(String name, int id) {
 		super(name, id);
-		this.setHardness(3.0F).setResistance(5.0F).setMiningType(ToolType.PICKAXE, ToolLevel.STONE);
+		this.setHardness(3.0F).setResistance(5.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.STONE);
 	}
 
 	@Override

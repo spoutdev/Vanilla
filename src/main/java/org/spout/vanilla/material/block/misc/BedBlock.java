@@ -49,7 +49,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 	}
 
 	@Override
-	public void onDestroyBlock(Block block) {
+	public void onDestroy(Block block) {
 		Block head = getCorrectHalf(block, true);
 		Block foot = getCorrectHalf(block, false);
 		head.setMaterial(VanillaMaterials.AIR);

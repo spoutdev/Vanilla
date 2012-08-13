@@ -30,7 +30,7 @@ import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.entity.living.Creature;
+import org.spout.vanilla.entity.creature.Creature;
 
 public class CreatureHealthComponent extends HealthComponent {
 	private SoundEffect babyHurtEffect = SoundEffects.NONE;

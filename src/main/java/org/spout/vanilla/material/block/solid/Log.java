@@ -49,7 +49,6 @@ import org.spout.vanilla.material.block.controlled.FurnaceBlock;
 import org.spout.vanilla.material.block.plant.Sapling;
 import org.spout.vanilla.material.item.misc.Coal;
 import org.spout.vanilla.util.Instrument;
-import org.spout.vanilla.util.ToolLevel;
 import org.spout.vanilla.util.ToolType;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -71,14 +70,14 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	private Log(String name, Sapling sapling) {
 		super(dataMask, name, 17);
 		this.setHardness(2.0F).setResistance(10.F).setStepSound(SoundEffects.STEP_WOOD);
-		this.setMiningType(ToolType.AXE, ToolLevel.NONE);
+		this.addMiningType(ToolType.AXE);
 		this.sapling = sapling;
 	}
 
 	private Log(String name, int data, Log parent, Sapling sapling) {
 		super(name, 17, data, parent);
 		this.setHardness(2.0F).setResistance(10.F).setStepSound(SoundEffects.STEP_WOOD);
-		this.setMiningType(ToolType.AXE, ToolLevel.NONE);
+		this.addMiningType(ToolType.AXE);
 		this.sapling = sapling;
 	}
 

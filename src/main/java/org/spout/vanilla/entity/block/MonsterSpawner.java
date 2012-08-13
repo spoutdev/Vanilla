@@ -39,7 +39,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.entity.VanillaBlockController;
 import org.spout.vanilla.entity.VanillaControllerType;
 import org.spout.vanilla.entity.VanillaControllerTypes;
-import org.spout.vanilla.entity.living.Creature;
+import org.spout.vanilla.entity.creature.Creature;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.TileEntityDataMessage;
 import org.spout.vanilla.util.VanillaNetworkUtil;

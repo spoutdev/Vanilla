@@ -42,7 +42,7 @@ public class RedstoneOre extends Ore implements TimedCraftable, InitializableMat
 	public RedstoneOre(String name, int id, boolean glowing) {
 		super(name, id);
 		this.glowing = glowing;
-		this.setHardness(3.0F).setResistance(5.0F).setMiningType(ToolType.PICKAXE, ToolLevel.IRON);
+		this.setHardness(3.0F).setResistance(5.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.STONE);
 	}
 
 	@Override

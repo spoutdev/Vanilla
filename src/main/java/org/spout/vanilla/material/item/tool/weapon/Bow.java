@@ -31,7 +31,6 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.entity.object.projectile.Arrow;
 import org.spout.vanilla.material.item.RangedWeapon;
 import org.spout.vanilla.util.ToolType;
@@ -40,7 +39,6 @@ public class Bow extends RangedWeapon {
 	public Bow(String name, int id, short durability) {
 		super(name, id, durability, ToolType.BOW);
 		this.setRangedDamage(9).setEnchantability(1);
-		this.addDropFlags(ToolTypeFlags.BOW);
 	}
 
 	@Override

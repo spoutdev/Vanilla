@@ -27,7 +27,6 @@
 package org.spout.vanilla.material;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -41,8 +40,10 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.block.BlockSnapshot;
 import org.spout.api.math.Vector3;
+import org.spout.api.util.flag.Flag;
+import org.spout.api.util.flag.FlagBundle;
 
-import org.spout.vanilla.data.drops.flag.DropFlagSingle;
+import org.spout.vanilla.data.drops.flag.DropFlags;
 import org.spout.vanilla.data.drops.type.block.BlockDrops;
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
@@ -63,8 +64,8 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	private boolean liquidObstacle = true;
 	private SoundEffect stepSound = SoundEffects.STEP_STONE;
 	private final BlockDrops drops = new BlockDrops();
-	private ToolType miningType = null;
-	private ToolLevel miningLevel = ToolLevel.WOOD;
+	private Set<ToolType> miningTypes = new HashSet<ToolType>();
+	private ToolLevel miningLevel = ToolLevel.NONE;
 
 	public VanillaBlockMaterial(String name, int id) {
 		this((short) 0, name, id);
@@ -100,29 +101,31 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Called when this block is destroyed because of an explosion
+	 * 
 	 * @param block that got ignited
 	 */
 	public void onIgnite(Block block) {
-		HashSet<DropFlagSingle> dropFlags = new HashSet<DropFlagSingle>();
+		HashSet<Flag> dropFlags = new HashSet<Flag>();
 		if (Math.random() > 0.3) {
-			dropFlags.add(DropFlagSingle.NO_DROPS);
+			dropFlags.add(DropFlags.NO_DROPS);
 		}
-		this.onDestroy(block, dropFlags);
+		this.destroy(block, dropFlags);
 	}
 
 	@Override
-	public final void onDestroy(Block block) {
-		onDestroy(block, new HashSet<DropFlagSingle>());
-	}
-
-	public void onDestroy(Block block, Set<DropFlagSingle> dropFlags) {
+	public boolean destroy(Block block, Set<Flag> flags) {
 		BlockChangeEvent event = new BlockChangeEvent(block, new BlockSnapshot(block, this, block.getData()), block.getSource());
 		if (event.isCancelled()) {
-			return;
+			return false;
 		}
-		this.onDestroyBlock(block);
+		return super.destroy(block, flags);
+	}
+
+	@Override
+	public void onPostDestroy(Block block, Set<Flag> flags) {
 		//TODO stack items together for more performance
-		for (ItemStack item : this.getDrops(block, dropFlags)) {
+		Random random = new Random(block.getWorld().getAge());
+		for (ItemStack item : this.getDrops().getDrops(random, flags)) {
 			ItemUtil.dropItemNaturally(block.getPosition(), item);
 		}
 	}
@@ -206,14 +209,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 */
 	public Instrument getInstrument() {
 		return Instrument.PIANO;
-	}
-
-	/**
-	 * Called when this block is destroyed to perform the actual block destruction
-	 * @param block to destroy
-	 */
-	public void onDestroyBlock(Block block) {
-		block.setMaterial(VanillaMaterials.AIR);
 	}
 
 	/**
@@ -325,28 +320,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	/**
-	 * Gets all the drop flags for a Block
-	 * @param flags to fill
-	 * @return the flags parameter
-	 */
-	public Set<DropFlagSingle> getDropFlags(Block block, Set<DropFlagSingle> flags) {
-		return flags;
-	}
-
-	/**
-	 * Gets all the drops for this block<br>
-	 * To provide Block-specific rules, override getDropFlags.
-	 * @param block that needs drops
-	 * @param flags to initially use
-	 * @return list of ItemStack drops
-	 */
-	public final List<ItemStack> getDrops(Block block, Set<DropFlagSingle> flags) {
-		flags = getDropFlags(block, flags);
-		Random random = new Random(block.getWorld().getAge());
-		return getDrops().getDrops(random, flags);
-	}
-
-	/**
 	 * Gets if this material is a liquid obstacle
 	 * @return True if it can stop liquids, False if this material gets destroyed
 	 */
@@ -363,44 +336,51 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		return this;
 	}
 
-	/**
-	 * Sets the mining type of this Block material<br>
-	 * This type is used when checking for drops and when calculating digging time
-	 * 
-	 * @param miningType to set to, can be null to disable
-	 * @param miningLevel that has to be met to spawn drops
-	 * @return this material
-	 */
-	public VanillaBlockMaterial setMiningType(ToolType miningType, ToolLevel miningLevel) {
-		if (this.miningType != null) {
-			this.drops.NOT_CREATIVE.removeFlags(this.miningType.getDropFlag()); // remove old drop type flags
+	private void updateDropFlags() {
+		this.drops.NOT_CREATIVE.clearFlags();
+		if (this.miningLevel != null && this.miningLevel != ToolLevel.NONE) {
+			this.drops.NOT_CREATIVE.addFlags(this.miningLevel.getDropFlag());
+			Flag[] typeFlags = new Flag[this.miningTypes.size()];
+			int i = 0;
+			for (ToolType type : this.miningTypes) {
+				typeFlags[i] = type.getDropFlag();
+				i++;
+			}
+			this.drops.NOT_CREATIVE.addFlags(new FlagBundle(typeFlags));
 		}
-		this.miningType = miningType;
-		if (this.miningType != null) {
-			this.drops.NOT_CREATIVE.addFlags(this.miningType.getDropFlag()); // add new drop type flags
-		}
-		if (this.miningLevel != null) {
-			this.drops.NOT_CREATIVE.removeFlags(this.miningLevel.getDropFlag()); // remove old drop level flags
-		}
+	}
+
+	public VanillaBlockMaterial setMiningLevel(ToolLevel miningLevel) {
 		this.miningLevel = miningLevel;
-		if (this.miningLevel != null) {
-			this.drops.NOT_CREATIVE.addFlags(this.miningLevel.getDropFlag()); // add new drop level flags
-		}
+		updateDropFlags();
 		return this;
 	}
 
 	/**
-	 * Gets the mining type of this Block material<br>
-	 * This type is used when checking for drops and when calculating digging time
+	 * Adds the mining type to this Block material<br>
+	 * This type will be used when checking for drops and when calculating the digging time
 	 * 
-	 * @return the mining type, can be null if none is set
+	 * @param miningType to add
+	 * @return this material
 	 */
-	public ToolType getMiningType() {
-		return miningType;
+	public VanillaBlockMaterial addMiningType(ToolType miningType) {
+		this.miningTypes.add(miningType);
+		updateDropFlags();
+		return this;
 	}
 
 	/**
-	 * Gets the mining level requires for this BlockMaterial<br>
+	 * Gets if the mining type is set for this Block material<br>
+	 * This type is used when checking for drops and when calculating digging time
+	 * 
+	 * @return True if the tool type is set
+	 */
+	public boolean isMiningType(ToolType toolType) {
+		return this.miningTypes.contains(toolType);
+	}
+
+	/**
+	 * Gets the mining level required for breaking this BlockMaterial<br>
 	 * This level has to be met to spawn drops
 	 * 
 	 * @return mining level
@@ -408,7 +388,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	public ToolLevel getMiningLevel() {
 		return miningLevel;
 	}
-	
+
 	/**
 	 * Gets the drops for this block material
 	 * @return the drops

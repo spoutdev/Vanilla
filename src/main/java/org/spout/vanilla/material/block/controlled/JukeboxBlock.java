@@ -26,11 +26,8 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import java.util.Set;
-
 import org.spout.api.geo.cuboid.Block;
 
-import org.spout.vanilla.data.drops.flag.DropFlagSingle;
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.block.Jukebox;
 import org.spout.vanilla.material.Fuel;
@@ -46,9 +43,9 @@ public class JukeboxBlock extends ControlledMaterial implements Fuel {
 	}
 
 	@Override
-	public void onDestroy(Block block, Set<DropFlagSingle> dropFlags) {
+	public void onDestroy(Block block) {
 		this.getController(block).stopMusic();
-		super.onDestroy(block, dropFlags);
+		super.onDestroy(block);
 	}
 
 	@Override

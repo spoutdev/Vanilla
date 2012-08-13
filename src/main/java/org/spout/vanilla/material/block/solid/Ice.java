@@ -65,7 +65,7 @@ public class Ice extends SpreadingSolid implements InitializableMaterial {
 	}
 
 	@Override
-	public void onDestroyBlock(Block block) {
+	public void onDestroy(Block block) {
 		if (!(block.getWorld().getGenerator() instanceof NetherGenerator) || block.translate(BlockFace.BOTTOM).getMaterial() != VanillaMaterials.AIR) {
 			// TODO Setting the source to world correct?
 			if (VanillaPlayerUtil.isCreative(block.getSource())) {
@@ -80,7 +80,7 @@ public class Ice extends SpreadingSolid implements InitializableMaterial {
 				}
 			}
 		}
-		block.setMaterial(VanillaMaterials.AIR);
+		super.onDecay(block);
 	}
 
 	@Override

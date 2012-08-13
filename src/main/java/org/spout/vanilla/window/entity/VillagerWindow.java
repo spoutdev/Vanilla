@@ -27,7 +27,7 @@
 package org.spout.vanilla.window.entity;
 
 import org.spout.vanilla.entity.VanillaPlayerController;
-import org.spout.vanilla.entity.living.creature.passive.Villager;
+import org.spout.vanilla.entity.creature.passive.Villager;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 import org.spout.vanilla.util.intmap.SlotIndexGrid;
 import org.spout.vanilla.util.intmap.SlotIndexMap;

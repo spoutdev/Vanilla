@@ -27,7 +27,6 @@
 package org.spout.vanilla.data.effect;
 
 import java.util.List;
-import java.util.Set;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;

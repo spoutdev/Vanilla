@@ -37,10 +37,10 @@ import org.spout.api.material.MaterialRegistry;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.api.util.map.TIntPairObjectHashMap;
 
-import org.spout.vanilla.world.generator.normal.biome.GrassyBiome;
+import org.spout.vanilla.world.generator.normal.biome.grassy.GrassyBiome;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
-import org.spout.vanilla.world.generator.normal.biome.SandyBiome;
-import org.spout.vanilla.world.generator.normal.biome.SnowyBiome;
+import org.spout.vanilla.world.generator.normal.biome.sandy.SandyBiome;
+import org.spout.vanilla.world.generator.normal.biome.icy.IcyBiome;
 
 public class SmoothPopulator extends Populator {
 	private static final byte CHUNK_SIZE = (byte) Chunk.BLOCKS.SIZE;
@@ -86,7 +86,7 @@ public class SmoothPopulator extends Populator {
 								smoothBiomeMap.put(xx, zz, grassySmoothBiome);
 							} else if (current instanceof SandyBiome) {
 								smoothBiomeMap.put(xx, zz, new SandySmoothBiome());
-							} else if (current instanceof SnowyBiome) {
+							} else if (current instanceof IcyBiome) {
 								smoothBiomeMap.put(xx, zz, new IcySmoothBiome());
 							} else {
 								smoothBiomeMap.put(xx, zz, current);
@@ -183,7 +183,7 @@ public class SmoothPopulator extends Populator {
 		}
 	}
 
-	private static class IcySmoothBiome extends SnowyBiome implements SmoothBiome {
+	private static class IcySmoothBiome extends IcyBiome implements SmoothBiome {
 		public IcySmoothBiome() {
 			super(1003);
 		}

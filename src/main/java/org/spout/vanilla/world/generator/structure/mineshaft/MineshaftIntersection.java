@@ -154,8 +154,8 @@ public class MineshaftIntersection extends StructureComponent {
 		return height;
 	}
 
-	public void setHeight(byte height) {
-		this.height = height;
+	public void setDoubleHeight(boolean doubleHeight) {
+		height = (byte) (doubleHeight ? 6 : 2);
 	}
 
 	@Override

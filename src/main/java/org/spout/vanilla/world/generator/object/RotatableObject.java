@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.world.generator.object;
 
+import java.util.Random;
 import org.spout.api.Source;
-import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
@@ -35,9 +35,13 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
-public abstract class RotatableObject extends WorldGeneratorObject {
+public abstract class RotatableObject extends RandomObject {
 	protected Quaternion rotation = Quaternion.IDENTITY;
 	protected Vector3 center = new Vector3(0, 0, 0);
+
+	public RotatableObject(Random random) {
+		super(random);
+	}
 
 	protected Block getBlock(World world, int x, int y, int z) {
 		return world.getBlock(applyRotation(x, y, z), world);

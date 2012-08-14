@@ -33,6 +33,7 @@ import java.util.Map;
 import org.spout.api.generator.WorldGeneratorObject;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.nether.object.GlowstonePatchObject;
 import org.spout.vanilla.world.generator.nether.object.NetherPortalObject;
 import org.spout.vanilla.world.generator.normal.object.BlockPatchObject;
 import org.spout.vanilla.world.generator.normal.object.DungeonObject;
@@ -94,6 +95,7 @@ public class VanillaObjects {
 	public static final BlockPatchObject CLAY_PATCH = new BlockPatchObject(VanillaMaterials.CLAY_BLOCK);
 	public static final LootChestObject LOOT_CHEST = new LootChestObject();
 	public static final SnowObject FALLING_SNOW = new SnowObject();
+	public static final GlowstonePatchObject GLOWSTONE_PATCH = new GlowstonePatchObject();
 	public static final Mineshaft MINESHAFT = new Mineshaft();
 	// for the '/obj' test command
 	private static final Map<String, WorldGeneratorObject> BY_NAME = new HashMap<String, WorldGeneratorObject>();

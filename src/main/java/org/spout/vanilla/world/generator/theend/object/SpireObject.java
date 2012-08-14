@@ -53,7 +53,7 @@ public class SpireObject extends LargePlantObject {
 
 	public SpireObject(Random random) {
 		super(random, (byte) 6, (byte) 32);
-		randomizeRadius();
+		randomize();
 	}
 
 	@Override
@@ -94,9 +94,9 @@ public class SpireObject extends LargePlantObject {
 	}
 
 	@Override
-	public void randomize() {
-		super.randomize();
-		randomizeRadius();
+	public final void randomize() {
+		totalHeight = (byte) (baseHeight + random.nextInt(randomHeight));
+		totalRadius = (byte) (baseRadius + random.nextInt(randRadius));
 	}
 
 	private byte getDiameter() {
@@ -107,12 +107,9 @@ public class SpireObject extends LargePlantObject {
 		return (short) (totalRadius * totalRadius + 1);
 	}
 
-	public final void randomizeRadius() {
-		totalRadius = (byte) (baseRadius + random.nextInt(randRadius));
-	}
-
 	public void setBaseRadius(byte baseRadius) {
 		this.baseRadius = baseRadius;
+		totalRadius = (byte) (baseRadius + random.nextInt(randRadius));
 	}
 
 	public void setEnderCrystalBaseMaterial(BlockMaterial crystalBase) {
@@ -125,6 +122,7 @@ public class SpireObject extends LargePlantObject {
 
 	public void setRandRadius(byte randRadius) {
 		this.randRadius = randRadius;
+		totalRadius = (byte) (baseRadius + random.nextInt(randRadius));
 	}
 
 	public void spawnEnderCrystal(boolean spawnEnderCrystal) {

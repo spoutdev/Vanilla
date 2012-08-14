@@ -39,8 +39,9 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.material.item.misc.MusicDisc;
 import org.spout.vanilla.world.generator.object.RandomObject;
+import org.spout.vanilla.world.generator.object.RandomizableObject;
 
-public class DungeonObject extends RandomObject {
+public class DungeonObject extends RandomObject implements RandomizableObject {
 	// base dimensions
 	private byte height = 3;
 	private byte baseRadius = 2;
@@ -63,7 +64,7 @@ public class DungeonObject extends RandomObject {
 
 	public DungeonObject(Random random) {
 		super(random);
-		randomizeRadius();
+		randomize();
 		final double ELEVEN = 1.0 / 11.0;
 		chestObject = new LootChestObject(random);
 		chestObject.setMaxNumberOfStacks(8);
@@ -165,7 +166,8 @@ public class DungeonObject extends RandomObject {
 		this.height = height;
 	}
 
-	public final void randomizeRadius() {
+	@Override
+	public final void randomize() {
 		radiusX = (byte) (random.nextInt(randRadius) + baseRadius);
 		radiusZ = (byte) (random.nextInt(randRadius) + baseRadius);
 	}
@@ -204,10 +206,5 @@ public class DungeonObject extends RandomObject {
 
 	public void addSpawner(boolean addSpawner) {
 		this.addSpawner = addSpawner;
-	}
-
-	@Override
-	public void randomize() {
-		randomizeRadius();
 	}
 }

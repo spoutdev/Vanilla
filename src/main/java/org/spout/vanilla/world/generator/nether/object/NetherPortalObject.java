@@ -42,29 +42,19 @@ import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.RotatableObject;
 
 public class NetherPortalObject extends RotatableObject implements RandomizableObject {
-	private Random random;
 	private boolean floating = false;
+
+	public NetherPortalObject(Random random) {
+		super(random);
+		randomize();
+	}
 
 	public NetherPortalObject() {
 		this(null);
 	}
 
-	public NetherPortalObject(Random random) {
-		this.random = random == null ? new Random() : random;
-		findRandomAngle();
-	}
-
 	@Override
-	public void setRandom(Random random) {
-		this.random = random;
-	}
-
-	@Override
-	public void randomize() {
-		findRandomAngle();
-	}
-
-	public final void findRandomAngle() {
+	public final void randomize() {
 		rotation = new Quaternion(90 * random.nextInt(4), 0, 1, 0);
 	}
 
@@ -112,12 +102,13 @@ public class NetherPortalObject extends RotatableObject implements RandomizableO
 
 	/**
 	 * Attempts to place a portal near the given coordinates.
+	 *
 	 * @param world the world to place in
 	 * @param x the x coordinate
 	 * @param z the z coordinate
 	 * @param random the random used to find an angle
-	 * @return a Transform for placing entities inside output portals, or null if no portal could be
-	 *         placed
+	 * @return a Transform for placing entities inside output portals, or null
+	 * if no portal could be placed
 	 */
 	public static Transform placePortal(World world, int x, int z, Random random) {
 		final NetherPortalObject portal = new NetherPortalObject(random);

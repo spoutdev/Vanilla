@@ -41,6 +41,7 @@ public class CactusStackObject extends LargePlantObject {
 
 	public CactusStackObject(Random random) {
 		super(random, (byte) 1, (byte) 3);
+		randomize();
 	}
 
 	@Override
@@ -62,5 +63,10 @@ public class CactusStackObject extends LargePlantObject {
 			}
 			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.CACTUS, (short) 0, w);
 		}
+	}
+	
+	@Override
+	public final void randomize() {
+		totalHeight = (byte) (baseHeight + random.nextInt(randomHeight));
 	}
 }

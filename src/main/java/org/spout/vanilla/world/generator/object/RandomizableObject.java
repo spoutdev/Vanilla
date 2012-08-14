@@ -30,6 +30,4 @@ import java.util.Random;
 
 public interface RandomizableObject {
 	public void randomize();
-
-	public void setRandom(Random random);
 }

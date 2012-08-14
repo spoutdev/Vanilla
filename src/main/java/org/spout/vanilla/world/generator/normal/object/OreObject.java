@@ -170,11 +170,6 @@ public class OreObject extends RandomObject {
 		}
 	}
 
-
-	@Override
-	public void randomize() {
-	}
-
 	public static enum OreType {
 		DIRT(VanillaMaterials.DIRT, (byte) 20, (byte) 32, (short) 128),
 		GRAVEL(VanillaMaterials.GRAVEL, (byte) 10, (byte) 32, (short) 128),

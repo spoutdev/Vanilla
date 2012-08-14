@@ -35,8 +35,9 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.object.RandomObject;
+import org.spout.vanilla.world.generator.object.RandomizableObject;
 
-public class BlockPatchObject extends RandomObject {
+public class BlockPatchObject extends RandomObject implements RandomizableObject {
 	// size control
 	private byte baseRadius = 5;
 	private byte randRadius = 2;
@@ -53,7 +54,7 @@ public class BlockPatchObject extends RandomObject {
 		this.material = material;
 		overridable.add(VanillaMaterials.DIRT);
 		overridable.add(VanillaMaterials.GRASS);
-		randomizeRadius();
+		randomize();
 	}
 
 	public BlockPatchObject(BlockMaterial material) {
@@ -81,22 +82,18 @@ public class BlockPatchObject extends RandomObject {
 	}
 
 	@Override
-	public void randomize() {
-		randomizeRadius();
-	}
-
-	public final void randomizeRadius() {
+	public final void randomize() {
 		totalRadius = (byte) (baseRadius + random.nextInt(randRadius));
 	}
 
 	public void setBaseRadius(byte baseRadius) {
 		this.baseRadius = baseRadius;
-		randomizeRadius();
+		randomize();
 	}
 
 	public void setRandRadius(byte randRadius) {
 		this.randRadius = randRadius;
-		randomizeRadius();
+		randomize();
 	}
 
 	public void setTotalRadius(byte totalRadius) {

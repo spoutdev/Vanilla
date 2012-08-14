@@ -63,7 +63,6 @@ public class OrePopulator extends Populator {
 				final int x = chunk.getBlockX(random);
 				final int y = random.nextInt(ore.getMaxHeight());
 				final int z = chunk.getBlockZ(random);
-				ore.randomize();
 				if (ore.canPlaceObject(world, x, y, z)) {
 					ore.placeObject(world, x, y, z);
 				}

@@ -28,7 +28,7 @@ package org.spout.vanilla.world.generator.object;
 
 import java.util.Random;
 
-public abstract class LargePlantObject extends RandomObject {
+public abstract class LargePlantObject extends RandomObject implements RandomizableObject {
 	// size control
 	protected byte baseHeight;
 	protected byte randomHeight;
@@ -42,29 +42,17 @@ public abstract class LargePlantObject extends RandomObject {
 		super(random);
 		this.baseHeight = baseHeight;
 		this.randomHeight = randomHeight;
-		randomizeHeight();
 	}
 
 	public void setBaseHeight(byte baseHeight) {
 		this.baseHeight = baseHeight;
-		randomizeHeight();
 	}
 
 	public void setRandomHeight(byte randHeight) {
 		this.randomHeight = randHeight;
-		randomizeHeight();
 	}
 
 	public void setTotalHeight(byte height) {
 		this.totalHeight = height;
-	}
-
-	public final void randomizeHeight() {
-		totalHeight = (byte) (baseHeight + random.nextInt(randomHeight));
-	}
-
-	@Override
-	public void randomize() {
-		randomizeHeight();
 	}
 }

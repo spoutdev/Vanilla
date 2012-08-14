@@ -58,6 +58,7 @@ public abstract class TreeObject extends LargePlantObject {
 		super(random, baseHeight, randomHeight);
 		this.leavesMetadata = leavesMetadata;
 		this.logMetadata = logMetadata;
+		randomize();
 	}
 
 	public void setLeavesMetadata(short leavesMetadata) {
@@ -85,6 +86,11 @@ public abstract class TreeObject extends LargePlantObject {
 		}
 		// Can only place trees on dirt and grass surfaces
 		return w.getBlockMaterial(x, y - 1, z).isMaterial(VanillaMaterials.DIRT, VanillaMaterials.GRASS);
+	}
+	
+	@Override
+	public final void randomize() {
+		totalHeight = (byte) (baseHeight + random.nextInt(randomHeight));
 	}
 
 	public static void growTree(Sapling sapling, Block pos, Random random) {

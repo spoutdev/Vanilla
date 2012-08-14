@@ -63,7 +63,6 @@ public class SnowPopulator extends Populator {
 		final int z = chunk.getBlockZ();
 		for (byte xx = 0; xx < 16; xx++) {
 			for (byte zz = 0; zz < 16; zz++) {
-				SNOW.randomize();
 				if (!SNOW.canPlaceObject(world, x + xx, 63, z + zz)) {
 					continue;
 				}

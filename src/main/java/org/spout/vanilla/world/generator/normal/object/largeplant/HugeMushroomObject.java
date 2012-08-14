@@ -69,6 +69,7 @@ public class HugeMushroomObject extends LargePlantObject {
 		overridable.add(VanillaMaterials.LEAVES);
 		overridable.add(VanillaMaterials.RED_MUSHROOM);
 		overridable.add(VanillaMaterials.BROWN_MUSHROOM);
+		randomize();
 		checkIfUseTextureMetadata();
 	}
 
@@ -271,6 +272,11 @@ public class HugeMushroomObject extends LargePlantObject {
 				return 0;
 			}
 		}
+	}
+	
+	@Override
+	public final void randomize() {
+		totalHeight = (byte) (baseHeight + random.nextInt(randomHeight));
 	}
 
 	private void checkIfUseTextureMetadata() {

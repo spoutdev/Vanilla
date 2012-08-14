@@ -138,12 +138,7 @@ public class SnowObject extends RandomObject implements Source {
 			return;
 		}
 		for (int i = 0; i < MAX_ITERATIONS && !this.fall(world, position); i++) {
-			;
 		}
-	}
-
-	@Override
-	public void randomize() {
 	}
 
 	private boolean setHighestWorkableBlock(World world, IntVector3 position) {

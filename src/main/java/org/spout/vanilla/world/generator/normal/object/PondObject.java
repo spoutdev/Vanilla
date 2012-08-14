@@ -39,8 +39,9 @@ import org.spout.vanilla.world.generator.normal.biome.grassy.GrassyBiome;
 import org.spout.vanilla.world.generator.normal.biome.sandy.SandyBiome;
 import org.spout.vanilla.world.generator.normal.biome.icy.IcyBiome;
 import org.spout.vanilla.world.generator.object.RandomObject;
+import org.spout.vanilla.world.generator.object.RandomizableObject;
 
-public class PondObject extends RandomObject {
+public class PondObject extends RandomObject implements RandomizableObject {
 	// pond instance for generating the height maps
 	private final PondHole pond;
 	// height maps for generation
@@ -64,7 +65,7 @@ public class PondObject extends RandomObject {
 		stoneWalls = type.stoneWalls;
 		stonyTop = type.stonyTop;
 		biomeAdaptedSurface = type.biomeSurface;
-		generateHeightMaps();
+		randomize();
 	}
 
 	@Override
@@ -165,7 +166,8 @@ public class PondObject extends RandomObject {
 		}
 	}
 
-	public final void generateHeightMaps() {
+	@Override
+	public final void randomize() {
 		holeHeightMap = new byte[256];
 		topHeightMap = new byte[256];
 		for (byte px = 0; px < 16; px++) {
@@ -214,11 +216,6 @@ public class PondObject extends RandomObject {
 
 	public void stonyTop(boolean stonyTop) {
 		this.stonyTop = stonyTop;
-	}
-
-	@Override
-	public void randomize() {
-		generateHeightMaps();
 	}
 
 	/*

@@ -55,10 +55,6 @@ public class LootChestObject extends RandomObject {
 	}
 
 	@Override
-	public void randomize() {
-	}
-
-	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
 		final Block block = w.getBlock(x, y, z, w);
 		final Block above = block.translate(BlockFace.TOP);

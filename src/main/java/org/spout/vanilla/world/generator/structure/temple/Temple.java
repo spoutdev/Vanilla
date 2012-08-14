@@ -33,10 +33,6 @@ import org.spout.vanilla.world.generator.structure.Structure;
 public class Temple extends Structure {
 
 	@Override
-	public void randomize() {
-	}
-
-	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
 		return true;
 	}
@@ -47,5 +43,4 @@ public class Temple extends Structure {
 		desertTemple.setPosition(new Point(w, x, y, z));
 		desertTemple.place();
 	}
-
 }

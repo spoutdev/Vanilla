@@ -97,8 +97,4 @@ public class Mineshaft extends Structure {
 		}
 		return false;
 	}
-
-	@Override
-	public void randomize() {
-	}
 }

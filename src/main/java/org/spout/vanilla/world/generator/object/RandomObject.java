@@ -30,7 +30,7 @@ import java.util.Random;
 
 import org.spout.api.generator.WorldGeneratorObject;
 
-public abstract class RandomObject extends WorldGeneratorObject implements RandomizableObject {
+public abstract class RandomObject extends WorldGeneratorObject {
 	protected Random random;
 
 	protected RandomObject() {
@@ -41,7 +41,6 @@ public abstract class RandomObject extends WorldGeneratorObject implements Rando
 		this.random = random == null ? new Random() : random;
 	}
 
-	@Override
 	public void setRandom(Random random) {
 		this.random = random;
 	}

@@ -119,4 +119,24 @@ public class GlowstonePatchObject extends RandomObject implements RandomizableOb
 			return nextComponents;
 		}
 	}
+
+	public void setAttatchTo(BlockMaterial attatchTo) {
+		this.attatchTo = attatchTo;
+	}
+
+	public void setBaseSize(byte baseSize) {
+		this.baseSize = baseSize;
+	}
+
+	public void setMain(BlockMaterial main) {
+		this.main = main;
+	}
+
+	public void setRandSize(byte randSize) {
+		this.randSize = randSize;
+	}
+
+	public void setTotalSize(byte totalSize) {
+		this.totalSize = totalSize;
+	}
 }

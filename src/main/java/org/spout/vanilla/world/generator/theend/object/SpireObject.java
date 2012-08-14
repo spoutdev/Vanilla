@@ -109,7 +109,6 @@ public class SpireObject extends LargePlantObject {
 
 	public void setBaseRadius(byte baseRadius) {
 		this.baseRadius = baseRadius;
-		totalRadius = (byte) (baseRadius + random.nextInt(randRadius));
 	}
 
 	public void setEnderCrystalBaseMaterial(BlockMaterial crystalBase) {
@@ -122,7 +121,6 @@ public class SpireObject extends LargePlantObject {
 
 	public void setRandRadius(byte randRadius) {
 		this.randRadius = randRadius;
-		totalRadius = (byte) (baseRadius + random.nextInt(randRadius));
 	}
 
 	public void spawnEnderCrystal(boolean spawnEnderCrystal) {

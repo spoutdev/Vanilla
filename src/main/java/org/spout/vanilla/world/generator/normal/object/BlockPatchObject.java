@@ -88,12 +88,10 @@ public class BlockPatchObject extends RandomObject implements RandomizableObject
 
 	public void setBaseRadius(byte baseRadius) {
 		this.baseRadius = baseRadius;
-		randomize();
 	}
 
 	public void setRandRadius(byte randRadius) {
 		this.randRadius = randRadius;
-		randomize();
 	}
 
 	public void setTotalRadius(byte totalRadius) {

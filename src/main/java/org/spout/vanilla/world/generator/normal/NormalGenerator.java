@@ -46,6 +46,7 @@ import org.spout.vanilla.world.generator.normal.populator.FallingLiquidPopulator
 import org.spout.vanilla.world.generator.normal.populator.OrePopulator;
 import org.spout.vanilla.world.generator.normal.populator.PondPopulator;
 import org.spout.vanilla.world.generator.normal.populator.RavinePopulator;
+import org.spout.vanilla.world.generator.normal.populator.RockyShieldPopulator;
 import org.spout.vanilla.world.generator.normal.populator.SmoothPopulator;
 import org.spout.vanilla.world.generator.normal.populator.SnowPopulator;
 import org.spout.vanilla.world.selector.VanillaBiomeSelector;
@@ -58,8 +59,8 @@ public class NormalGenerator extends VanillaBiomeGenerator implements VanillaGen
 		// if you want to check out a particular biome, use this!
 		//setSelector(new PerBlockBiomeSelector(VanillaBiomes.MOUNTAINS));
 		setSelector(new VanillaBiomeSelector());
-		addPopulators(new SmoothPopulator(), new CavePopulator(), new RavinePopulator(),
-				new PondPopulator(), new DungeonPopulator(), new OrePopulator(),
+		addPopulators(new SmoothPopulator(), new RockyShieldPopulator(), new CavePopulator(),
+				new RavinePopulator(), new PondPopulator(), new DungeonPopulator(), new OrePopulator(),
 				new BiomePopulator(getBiomeMap()), new FallingLiquidPopulator(), new SnowPopulator());
 		register(VanillaBiomes.OCEAN);
 		register(VanillaBiomes.FROZEN_OCEAN);

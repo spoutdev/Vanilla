@@ -53,7 +53,7 @@ public class VanillaWorldGeneratorUtil {
 		return noiseArray;
 	}
 
-	public static double[][] fastNoise(Module noiseGenerator, int xSize, int ySize, int samplingRate, int x, int y, int z) {
+	public static double[][] fastNoise(Module noiseGenerator, int xSize, int zSize, int samplingRate, int x, int y, int z) {
 		if (noiseGenerator == null) {
 			throw new IllegalArgumentException("noiseGenerator cannot be null");
 		}
@@ -63,24 +63,24 @@ public class VanillaWorldGeneratorUtil {
 		if (xSize % samplingRate != 0) {
 			throw new IllegalArgumentException("(xSize % samplingRate) must return 0");
 		}
-		if (ySize % samplingRate != 0) {
-			throw new IllegalArgumentException("(ySize % samplingRate) must return 0");
+		if (zSize % samplingRate != 0) {
+			throw new IllegalArgumentException("(zSize % samplingRate) must return 0");
 		}
-		final double[][] noiseArray = new double[xSize + 1][ySize + 1];
+		final double[][] noiseArray = new double[xSize + 1][zSize + 1];
 		for (int xx = 0; xx <= xSize; xx += samplingRate) {
-			for (int yy = 0; yy <= ySize; yy += samplingRate) {
-				noiseArray[xx][yy] = noiseGenerator.GetValue(xx + x, y + yy, z);
+			for (int zz = 0; zz <= zSize; zz += samplingRate) {
+				noiseArray[xx][zz] = noiseGenerator.GetValue(xx + x, y, z + zz);
 			}
 		}
 		for (int xx = 0; xx < xSize; xx++) {
-			for (int yy = 0; yy < ySize; yy++) {
-				if (xx % samplingRate != 0 || yy % samplingRate != 0) {
+			for (int zz = 0; zz < zSize; zz++) {
+				if (xx % samplingRate != 0 || zz % samplingRate != 0) {
 					int nx = (xx / samplingRate) * samplingRate;
-					int ny = (yy / samplingRate) * samplingRate;
-					noiseArray[xx][yy] = VanillaMathHelper.biLerp(xx, yy, noiseArray[nx][ny],
-							noiseArray[nx][ny + samplingRate], noiseArray[nx + samplingRate][ny],
-							noiseArray[nx + samplingRate][ny + samplingRate],nx, nx + samplingRate,
-							ny, ny + samplingRate);
+					int nz = (zz / samplingRate) * samplingRate;
+					noiseArray[xx][zz] = VanillaMathHelper.biLerp(xx, zz, noiseArray[nx][nz],
+							noiseArray[nx][nz + samplingRate], noiseArray[nx + samplingRate][nz],
+							noiseArray[nx + samplingRate][nz + samplingRate], nx, nx + samplingRate,
+							nz, nz + samplingRate);
 				}
 			}
 		}

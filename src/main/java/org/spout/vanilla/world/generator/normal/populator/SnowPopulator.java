@@ -53,23 +53,22 @@ public class SnowPopulator extends Populator {
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
-		final int seed = (int) chunk.getWorld().getSeed();
-		SNOW_HEIGHT.setSeed(seed);
-		SNOW.setRandom(random);
-		
-		double[][] heights = VanillaWorldGeneratorUtil.fastNoise(SNOW_HEIGHT, 16, 16, 4, chunk.getBlockX(), chunk.getBlockY(), chunk.getBlockZ());
 		if (chunk.getY() != 4) {
 			return;
 		}
 		final World world = chunk.getWorld();
+		final int seed = (int) (world.getSeed() * 51);
+		SNOW_HEIGHT.setSeed(seed);
+		SNOW.setRandom(random);
 		final int x = chunk.getBlockX();
 		final int z = chunk.getBlockZ();
+		double[][] heights = VanillaWorldGeneratorUtil.fastNoise(SNOW_HEIGHT, 16, 16, 4, x, 63, z);
 		for (byte xx = 0; xx < 16; xx++) {
 			for (byte zz = 0; zz < 16; zz++) {
 				if (!SNOW.canPlaceObject(world, x + xx, 63, z + zz)) {
 					continue;
 				}
-				int count = (int) ((heights[xx][zz]+1) * 4.0);
+				int count = (int) ((heights[xx][zz] + 1) * 4.0);
 				for (int i = 0; i < count; i++) {
 					SNOW.placeObject(world, x + xx, 0, z + zz);
 				}

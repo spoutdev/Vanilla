@@ -188,6 +188,13 @@ recipes:
     ingredients:
       A: NETHER_BRICK
     rows: ['  A', ' AA', 'AAA']
+    
+  Sandstone Stairs:
+    type: Shaped
+    result: SANDSTONE_STAIRS,4
+    ingredients:
+      A: SANDSTONE
+    rows: ['  A', ' AA', 'AAA']
 
   Snow Block:
     type: Shaped

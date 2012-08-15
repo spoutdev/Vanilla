@@ -35,6 +35,7 @@ import org.spout.api.generator.Populator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
+import org.spout.vanilla.util.VanillaWorldGeneratorUtil;
 import org.spout.vanilla.world.generator.normal.object.SnowObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
 
@@ -55,6 +56,8 @@ public class SnowPopulator extends Populator {
 		final int seed = (int) chunk.getWorld().getSeed();
 		SNOW_HEIGHT.setSeed(seed);
 		SNOW.setRandom(random);
+		
+		double[][] heights = VanillaWorldGeneratorUtil.fastNoise(SNOW_HEIGHT, 16, 16, 4, chunk.getBlockX(), chunk.getBlockY(), chunk.getBlockZ());
 		if (chunk.getY() != 4) {
 			return;
 		}
@@ -66,7 +69,7 @@ public class SnowPopulator extends Populator {
 				if (!SNOW.canPlaceObject(world, x + xx, 63, z + zz)) {
 					continue;
 				}
-				int count = (int) ((SNOW_HEIGHT.GetValue(x + xx + 0.001, 0.123, z + zz + 0.1) + 1.0) * 4.0);
+				int count = (int) ((heights[xx][zz]+1) * 4.0);
 				for (int i = 0; i < count; i++) {
 					SNOW.placeObject(world, x + xx, 0, z + zz);
 				}

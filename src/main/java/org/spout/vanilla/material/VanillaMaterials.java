@@ -156,6 +156,7 @@ import org.spout.vanilla.material.block.solid.Wool;
 import org.spout.vanilla.material.block.stair.BrickStairs;
 import org.spout.vanilla.material.block.stair.CobblestoneStairs;
 import org.spout.vanilla.material.block.stair.NetherBrickStairs;
+import org.spout.vanilla.material.block.stair.SandstoneStairs;
 import org.spout.vanilla.material.block.stair.StoneBrickStairs;
 import org.spout.vanilla.material.block.stair.WoodenStairs;
 import org.spout.vanilla.material.item.BlockItem;
@@ -277,6 +278,7 @@ public final class VanillaMaterials {
 	public static final CobblestoneStairs STAIRS_COBBLESTONE = new CobblestoneStairs("Cobblestone Stairs", 67);
 	public static final WoodenStairs STAIRS_WOODEN = new WoodenStairs("Wooden Stairs", 53);
 	public static final StoneBrickStairs STAIRS_STONE_BRICK = new StoneBrickStairs("Stone Brick Stairs", 109);
+	public static final SandstoneStairs STAIRS_SANDSTONE = new SandstoneStairs("Sandstone Stairs", 128);
 	// == Portals ==
 	public static final NetherPortal PORTAL = new NetherPortal("Portal", 90);
 	public static final EndPortal END_PORTAL = new EndPortal("End Portal", 119);

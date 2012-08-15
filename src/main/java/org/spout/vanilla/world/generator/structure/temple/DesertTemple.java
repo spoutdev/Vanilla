@@ -30,12 +30,16 @@ import java.util.Collections;
 import java.util.List;
 
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Stairs;
 import org.spout.vanilla.material.block.solid.Sandstone;
 import org.spout.vanilla.material.block.solid.Wool;
+import org.spout.vanilla.material.block.stair.SandstoneStairs;
 import org.spout.vanilla.world.generator.normal.object.LootChestObject;
 import org.spout.vanilla.world.generator.structure.ComplexLayoutPainter;
 import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
@@ -176,11 +180,43 @@ public class DesertTemple extends StructureComponent {
 		placeObject(0, -11, -2, lootChest);
 		
 		// Build the towers
+		placeTower(-8, 1, -8);
+		placeTower(-8, 1,  8);
+		
 		Quaternion backup = getRotation();
-		setRotation(new Quaternion((float) (90 * MathHelper.DEGTORAD), new Vector3(0, 0, 1)));
+		Quaternion q = new Quaternion(90, new Vector3(0, 1, 0));
+//		q = q.rotate(90, 0, 0, 1);
+		setRotation(q);
 		offsetPosition(-10, 1, -10);
 		setRotationPoint(new Vector3(0, 0, 0));
 		glyph.draw();
+	}
+
+	private void placeTower(int x, int y, int z) {
+		offsetPosition(x, y, z);
+		ComponentPlanePart plane = new ComponentPlanePart(this);
+		SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
+		picker.setInnerMaterial(VanillaMaterials.AIR);
+		picker.setOuterMaterial(PRIMARY_BLOCK);
+		plane.setMinMax(-2, 0, -2, 2, 0, 2);
+		int width = 5, height = 9;
+		for(int yy = 0; yy < height; yy++) {
+			offsetPosition(0, 1, 0);
+			plane.fill(picker, false);
+		}
+		
+		picker.setInnerMaterial(PRIMARY_BLOCK);
+		plane.setMinMax(-1, 1, -1, 1, 1, 1);
+		plane.fill(picker, false);
+		
+		for (BlockFace face:BlockFaces.NESW) {
+			int xx = face.getOffset().getFloorX();
+			int yy = face.getOffset().getFloorY();
+			int zz = face.getOffset().getFloorZ();
+			setBlockMaterial(xx*2, 0, zz*2, VanillaMaterials.STAIRS_SANDSTONE);
+		}
+		
+		offsetPosition(-x, -y - height, -z);
 	}
 
 	@Override

@@ -42,7 +42,7 @@ public class GlowstonePatchObject extends RandomObject implements RandomizableOb
 	private byte baseSize = 20;
 	private byte randSize = 21;
 	private byte totalSize;
-	private BlockMaterial attatchTo = VanillaMaterials.NETHERRACK;
+	private BlockMaterial attachTo = VanillaMaterials.NETHERRACK;
 	private BlockMaterial main = VanillaMaterials.GLOWSTONE_BLOCK;
 
 	public GlowstonePatchObject(Random random) {
@@ -58,7 +58,7 @@ public class GlowstonePatchObject extends RandomObject implements RandomizableOb
 	public boolean canPlaceObject(World w, int x, int y, int z) {
 		final Block block = w.getBlock(x, y, z, w);
 		return block.isMaterial(VanillaMaterials.AIR)
-				&& block.translate(BlockFace.TOP).isMaterial(attatchTo);
+				&& block.translate(BlockFace.TOP).isMaterial(attachTo);
 	}
 
 	@Override
@@ -120,8 +120,8 @@ public class GlowstonePatchObject extends RandomObject implements RandomizableOb
 		}
 	}
 
-	public void setAttatchTo(BlockMaterial attatchTo) {
-		this.attatchTo = attatchTo;
+	public void setAttachTo(BlockMaterial attachTo) {
+		this.attachTo = attachTo;
 	}
 
 	public void setBaseSize(byte baseSize) {

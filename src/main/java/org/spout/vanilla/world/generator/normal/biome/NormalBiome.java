@@ -153,8 +153,6 @@ public abstract class NormalBiome extends VanillaBiome {
 			if (y <= densityTerrainHeight) {
 				if (TURBULENT_MASTER.GetValue(x, y, z) > 0) {
 					blockData.set(x, y, z, VanillaMaterials.STONE.getId());
-				} else {
-					blockData.set(x, y, z, VanillaMaterials.AIR.getId());
 				}
 			} else {
 				break;

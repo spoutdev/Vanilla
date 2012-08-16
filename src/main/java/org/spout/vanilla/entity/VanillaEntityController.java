@@ -46,7 +46,6 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.tickable.TickPriority;
-import org.spout.api.util.Profiler;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.data.VanillaData;
@@ -113,7 +112,6 @@ public abstract class VanillaEntityController extends BasicController implements
 
 	@Override
 	public void onTick(float dt) {
-		Profiler.start(this.getType().getName());
 		if (this.healthComponent.isDying()) {
 			this.healthComponent.onTick(dt);
 			return;
@@ -121,7 +119,6 @@ public abstract class VanillaEntityController extends BasicController implements
 
 		positionTicks++;
 		velocityTicks++;
-		Profiler.stop();
 		super.onTick(dt);
 	}
 

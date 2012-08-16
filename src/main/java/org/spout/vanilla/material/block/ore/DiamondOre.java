@@ -44,9 +44,7 @@ public class DiamondOre extends Ore implements InitializableMaterial, TimedCraft
 
 	@Override
 	public void initialize() {
-		getDrops().clear();
-		getDrops().DEFAULT.add(VanillaMaterials.DIAMOND);
-		getDrops().SILK_TOUCH.add(VanillaMaterials.DIAMOND_ORE);
+		this.getDrops().add(VanillaMaterials.DIAMOND);
 	}
 
 	@Override

@@ -41,7 +41,6 @@ public class ClayBlock extends Solid implements InitializableMaterial {
 
 	@Override
 	public void initialize() {
-		getDrops().DEFAULT.clear().add(VanillaMaterials.CLAY, 4);
-		getDrops().SILK_TOUCH.add(VanillaMaterials.CLAY_BLOCK);
+		this.getDrops().DEFAULT.clear().add(VanillaMaterials.CLAY, 4);
 	}
 }

@@ -30,7 +30,6 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
 import org.spout.vanilla.material.block.controlled.FurnaceBlock;
 import org.spout.vanilla.material.item.misc.Dye;
@@ -45,9 +44,7 @@ public class LapisLazuliOre extends Ore implements TimedCraftable, Initializable
 
 	@Override
 	public void initialize() {
-		getDrops().clear();
-		getDrops().DEFAULT.addRange(Dye.LAPIS_LAZULI, 2, 4);
-		getDrops().SILK_TOUCH.add(VanillaMaterials.LAPIS_LAZULI_ORE);
+		this.getDrops().addRange(Dye.LAPIS_LAZULI, 2, 4);
 	}
 
 	@Override

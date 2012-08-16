@@ -44,9 +44,7 @@ public class CoalOre extends Ore implements TimedCraftable, InitializableMateria
 
 	@Override
 	public void initialize() {
-		getDrops().clear();
-		getDrops().DEFAULT.add(VanillaMaterials.COAL);
-		getDrops().SILK_TOUCH.add(VanillaMaterials.COAL_ORE);
+		this.getDrops().add(VanillaMaterials.COAL_ORE);
 	}
 
 	@Override

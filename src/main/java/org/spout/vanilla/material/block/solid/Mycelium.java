@@ -42,10 +42,8 @@ public class Mycelium extends SpreadingSolid implements InitializableMaterial {
 
 	@Override
 	public void initialize() {
-		setReplacedMaterial(VanillaMaterials.DIRT);
-		getDrops().DEFAULT.clear();
-		getDrops().DEFAULT.add(VanillaMaterials.DIRT);
-		getDrops().SILK_TOUCH.add(VanillaMaterials.MYCELIUM);
+		this.setReplacedMaterial(VanillaMaterials.DIRT);
+		this.getDrops().add(VanillaMaterials.DIRT);
 	}
 
 	@Override

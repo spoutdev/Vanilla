@@ -44,7 +44,9 @@ public class EmeraldOre extends Ore implements InitializableMaterial, TimedCraft
 
 	@Override
 	public void initialize() {
-		this.getDrops().add(VanillaMaterials.EMERALD);
+		getDrops().clear();
+		getDrops().DEFAULT.add(VanillaMaterials.EMERALD);
+		getDrops().SILK_TOUCH.add(VanillaMaterials.EMERALD_ORE);
 	}
 
 	@Override

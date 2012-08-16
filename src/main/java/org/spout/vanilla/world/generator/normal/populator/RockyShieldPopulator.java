@@ -32,6 +32,7 @@ import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.generator.Populator;
+import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
@@ -41,7 +42,6 @@ import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
-import org.spout.vanilla.util.VanillaWorldGeneratorUtil;
 
 public class RockyShieldPopulator extends Populator {
 	private static final Perlin SHIELD_BASE = new Perlin();
@@ -72,7 +72,7 @@ public class RockyShieldPopulator extends Populator {
 		final int seed = (int) (world.getSeed() * 73);
 		SHIELD_BASE.setSeed(seed);
 		SHIELD.setSeed(seed);
-		final double[][] noise = VanillaWorldGeneratorUtil.fastNoise(SHIELD, size, size, 4, x, 63, z);
+		final double[][] noise = WorldGeneratorUtils.fastNoise(SHIELD, size, size, 4, x, 63, z);
 		for (int xx = 0; xx < size; xx++) {
 			for (int zz = 0; zz < size; zz++) {
 				if (noise[xx][zz] > 0.9) {

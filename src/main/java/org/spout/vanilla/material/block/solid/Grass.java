@@ -46,7 +46,9 @@ public class Grass extends SpreadingSolid implements RandomBlockMaterial, Initia
 	@Override
 	public void initialize() {
 		this.setReplacedMaterial(VanillaMaterials.DIRT);
-		this.getDrops().add(VanillaMaterials.DIRT);
+		getDrops().DEFAULT.clear();	
+		getDrops().DEFAULT.add(VanillaMaterials.DIRT);
+		getDrops().SILK_TOUCH.add(VanillaMaterials.GRASS);
 	}
 
 	@Override

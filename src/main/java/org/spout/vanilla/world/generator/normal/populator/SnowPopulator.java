@@ -32,10 +32,10 @@ import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.generator.Populator;
+import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
-import org.spout.vanilla.util.VanillaWorldGeneratorUtil;
 import org.spout.vanilla.world.generator.normal.object.SnowObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
 
@@ -62,7 +62,7 @@ public class SnowPopulator extends Populator {
 		SNOW.setRandom(random);
 		final int x = chunk.getBlockX();
 		final int z = chunk.getBlockZ();
-		double[][] heights = VanillaWorldGeneratorUtil.fastNoise(SNOW_HEIGHT, 16, 16, 4, x, 63, z);
+		double[][] heights = WorldGeneratorUtils.fastNoise(SNOW_HEIGHT, 16, 16, 4, x, 63, z);
 		for (byte xx = 0; xx < 16; xx++) {
 			for (byte zz = 0; zz < 16; zz++) {
 				if (!SNOW.canPlaceObject(world, x + xx, 63, z + zz)) {

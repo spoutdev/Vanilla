@@ -49,7 +49,7 @@ import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public abstract class NormalBiome extends VanillaBiome {
-	// the master noise to be used by biomes extending this class
+	// the master noise
 	private static final ScalePoint MASTER = new ScalePoint();
 	// the parts for the master noise
 	private static final Perlin ELEVATION = new Perlin();

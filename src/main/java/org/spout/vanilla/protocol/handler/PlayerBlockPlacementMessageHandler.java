@@ -26,10 +26,15 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import java.util.Collection;
+
+import org.spout.api.Spout;
+import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventManager;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.Protection;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
@@ -39,6 +44,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
@@ -193,7 +199,17 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 						}
 					}
 				}
-
+				
+				//Check if the player can place the block.
+				Collection<Protection> protections = Spout.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(alterBlock.getPosition());
+				for (Protection p : protections) {
+					if (p.contains(alterBlock.getPosition()) && !((VanillaPlayerController)player.getController()).isOp()) {
+						undoPlacement(player, clickedBlock, alterBlock);
+						player.sendMessage(ChatStyle.DARK_RED, "This area is a protected spawn point!");
+						return;
+					}
+				}
+				
 				// Perform actual placement
 				if (toPlace.onPlacement(target, placedData, targetFace, message.getFace(), target == clickedBlock)) {
 					// Play sound

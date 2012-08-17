@@ -46,10 +46,11 @@ public class GlowstoneDecorator extends Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
+		final int height = world.getHeight();
 		GLOWSTONE.setRandom(random);
 		for (byte amount = (byte) (random.nextInt(RAND_AMOUNT) + BASE_AMOUNT); amount > 0; amount--) {
 			final int x = chunk.getBlockX(random);
-			final int y = random.nextInt(256);
+			final int y = random.nextInt(height);
 			final int z = chunk.getBlockZ(random);
 			GLOWSTONE.randomize();
 			if (GLOWSTONE.canPlaceObject(world, x, y, z)) {

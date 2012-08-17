@@ -30,10 +30,11 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.world.generator.nether.decorator.GlowstoneDecorator;
+import org.spout.vanilla.world.generator.nether.decorator.LavaFallDecorator;
 
 public class NetherrackBiome extends VanillaBiome {
 	public NetherrackBiome(int id) {
-		super(id, new GlowstoneDecorator());
+		super(id, new LavaFallDecorator(), new GlowstoneDecorator());
 	}
 
 	@Override

@@ -26,13 +26,88 @@
  */
 package org.spout.vanilla.world.generator.nether.decorator;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.spout.api.generator.biome.Decorator;
+import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
+import org.spout.api.util.set.TInt21TripleHashSet;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Liquid;
 
 public class LavaFallDecorator extends Decorator {
+	private static final byte LAVA_ATTEMPTS = 8;
+
 	@Override
 	public void populate(Chunk chunk, Random random) {
+		if (chunk.getY() != 4) {
+			return;
+		}
+		final World world = chunk.getWorld();
+		final int height = world.getHeight();
+		List<Block> liquids = new ArrayList<Block>();
+		for (byte count = 0; count < LAVA_ATTEMPTS; count++) {
+			final int x = chunk.getBlockX(random);
+			final int y = random.nextInt(height);
+			final int z = chunk.getBlockZ(random);
+			final Block block = world.getBlock(x, y, z, world);
+			if (isValidSourcePoint(block)) {
+				block.setMaterial(VanillaMaterials.LAVA);
+				liquids.add(block);
+			}
+		}
+		// Perform instant physics
+		if (liquids.isEmpty()) {
+			return;
+		}
+		TInt21TripleHashSet ignoredBlocks = new TInt21TripleHashSet();
+		List<Block> tmpBlocks = new ArrayList<Block>();
+		BlockMaterial material;
+		while (!liquids.isEmpty()) {
+			for (Block liquid : liquids) {
+				material = liquid.getMaterial();
+				if (!ignoredBlocks.add(liquid.getX(), liquid.getY(), liquid.getZ())) {
+					continue;
+				}
+				if (!(material instanceof Liquid)) {
+					continue;
+				}
+				// First only flow down to generate a possible liquid below
+				// Then do a regular flow just in case flowing outwards is/was needed
+				if (((Liquid) material).onFlow(liquid, BlockFace.BOTTOM) | ((Liquid) material).onFlow(liquid)) {
+					for (BlockFace face : BlockFaces.NESWB) {
+						tmpBlocks.add(liquid.translate(face));
+					}
+				}
+			}
+			// reset liquids
+			liquids.clear();
+			liquids.addAll(tmpBlocks);
+			tmpBlocks.clear();
+		}
+	}
+
+	private boolean isValidSourcePoint(Block block) {
+		if (!block.isMaterial(VanillaMaterials.NETHERRACK, VanillaMaterials.AIR)
+				|| !block.translate(BlockFace.TOP).isMaterial(VanillaMaterials.NETHERRACK)) {
+			return false;
+		}
+		byte adjacentNetherrackCount = 0;
+		byte adjacentAirCount = 0;
+		for (final BlockFace face : BlockFaces.NSEWB) {
+			final BlockMaterial material = block.translate(face).getMaterial();
+			if (material == VanillaMaterials.AIR) {
+				adjacentAirCount++;
+			} else if (material == VanillaMaterials.NETHERRACK) {
+				adjacentNetherrackCount++;
+			}
+		}
+		return adjacentNetherrackCount == 4 && adjacentAirCount == 1;
 	}
 }

@@ -32,10 +32,12 @@ import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.world.generator.nether.decorator.FireDecorator;
 import org.spout.vanilla.world.generator.nether.decorator.GlowstoneDecorator;
 import org.spout.vanilla.world.generator.nether.decorator.LavaFallDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 
 public class NetherrackBiome extends VanillaBiome {
 	public NetherrackBiome(int id) {
-		super(id, new LavaFallDecorator(), new FireDecorator(), new GlowstoneDecorator());
+		super(id, new LavaFallDecorator(), new FireDecorator(), new GlowstoneDecorator(),
+				new MushroomDecorator((byte) 1, (byte) 2));
 	}
 
 	@Override

@@ -32,9 +32,11 @@ import java.util.Random;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.object.RandomObject;
@@ -44,6 +46,9 @@ public class GlowstonePatchObject extends RandomObject implements RandomizableOb
 	private byte baseSize = 20;
 	private byte randSize = 21;
 	private byte totalSize;
+	private byte maxXRadius = 8;
+	private byte maxYDepth = 12;
+	private byte maxZRadius = 8;
 	private BlockMaterial attachTo = VanillaMaterials.NETHERRACK;
 	private BlockMaterial main = VanillaMaterials.GLOWSTONE_BLOCK;
 
@@ -65,18 +70,25 @@ public class GlowstonePatchObject extends RandomObject implements RandomizableOb
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
+		final Vector3 seed = new Vector3(x, y, z);
 		final List<BlockComponent> blocks = new ArrayList<BlockComponent>();
-		blocks.add(new BlockComponent(w.getBlock(x, y, z, w)));
+		blocks.add(new BlockComponent(w.getBlock(seed, w)));
 		byte count = 0;
 		while (!blocks.isEmpty() && count < totalSize) {
 			final BlockComponent current = blocks.get(0);
-			if (current.canPlace() || count == 0) {
+			if (count == 0 || (isInBounds(seed, current.getPosition()) && current.canPlace())) {
 				current.place();
 				count++;
 				blocks.addAll(current.getNextComponents(current));
 			}
 			blocks.remove(current);
 		}
+	}
+
+	private boolean isInBounds(Vector3 seed, Vector3 target) {
+		final Vector3 diff = target.subtract(seed);
+		return Math.abs(diff.getFloorX()) < maxXRadius && Math.abs(diff.getFloorZ()) < maxZRadius
+				&& diff.getFloorY() > -maxYDepth;
 	}
 
 	@Override
@@ -114,11 +126,15 @@ public class GlowstonePatchObject extends RandomObject implements RandomizableOb
 			final List<BlockComponent> nextComponents = new ArrayList<BlockComponent>();
 			for (BlockFace face : BlockFaces.ALL) {
 				final Block next = block.translate(face);
-				if (!next.equals(last) && random.nextInt(4) == 0) {
+				if (!next.equals(last) && random.nextBoolean()) {
 					nextComponents.add(new BlockComponent(next));
 				}
 			}
 			return nextComponents;
+		}
+
+		public Point getPosition() {
+			return block.getPosition();
 		}
 	}
 
@@ -140,5 +156,17 @@ public class GlowstonePatchObject extends RandomObject implements RandomizableOb
 
 	public void setTotalSize(byte totalSize) {
 		this.totalSize = totalSize;
+	}
+
+	public void setMaxXRadius(byte maxXRadius) {
+		this.maxXRadius = maxXRadius;
+	}
+
+	public void setMaxZRadius(byte maxZRadius) {
+		this.maxZRadius = maxZRadius;
+	}
+
+	public void setMaxYDepth(byte maxYDepth) {
+		this.maxYDepth = maxYDepth;
 	}
 }

@@ -28,8 +28,8 @@ package org.spout.vanilla.world.generator.nether;
 
 import java.util.Arrays;
 import java.util.Random;
-import net.royawesome.jlibnoise.MathHelper;
 
+import net.royawesome.jlibnoise.MathHelper;
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.combiner.Add;
 import net.royawesome.jlibnoise.module.combiner.Multiply;
@@ -38,6 +38,7 @@ import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.generator.biome.BiomeManager;
+import org.spout.api.generator.biome.BiomePopulator;
 import org.spout.api.generator.biome.Simple2DBiomeManager;
 import org.spout.api.generator.biome.selector.PerBlockBiomeSelector;
 import org.spout.api.geo.World;
@@ -103,6 +104,7 @@ public class NetherGenerator extends VanillaBiomeGenerator implements VanillaGen
 	@Override
 	public void registerBiomes() {
 		setSelector(new PerBlockBiomeSelector(VanillaBiomes.NETHERRACK));
+		addPopulators(new BiomePopulator(getBiomeMap()));
 		register(VanillaBiomes.NETHERRACK);
 	}
 

@@ -31,8 +31,8 @@ import java.util.Random;
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.cuboid.Chunk;
 
-public class FortressDecorator extends Decorator {
+public class GravelDecorator extends Decorator {
 	@Override
-	public void populate(Chunk c, Random random) {
+	public void populate(Chunk chunk, Random random) {
 	}
 }

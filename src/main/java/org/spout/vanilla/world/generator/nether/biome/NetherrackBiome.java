@@ -29,10 +29,11 @@ package org.spout.vanilla.world.generator.nether.biome;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.world.generator.VanillaBiome;
+import org.spout.vanilla.world.generator.nether.decorator.GlowstoneDecorator;
 
 public class NetherrackBiome extends VanillaBiome {
 	public NetherrackBiome(int id) {
-		super(id);
+		super(id, new GlowstoneDecorator());
 	}
 
 	@Override

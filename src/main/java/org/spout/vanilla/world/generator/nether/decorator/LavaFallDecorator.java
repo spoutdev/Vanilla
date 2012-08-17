@@ -34,9 +34,5 @@ import org.spout.api.geo.cuboid.Chunk;
 public class LavaFallDecorator extends Decorator {
 	@Override
 	public void populate(Chunk chunk, Random random) {
-		/**
-		 * TODO determine what biome this is in then generate differently
-		 * (as lava falls happen in normal worlds but quite a bit differently.
-		 */
 	}
 }

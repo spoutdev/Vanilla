@@ -55,7 +55,7 @@ public class LilyPadDecorator extends Decorator {
 		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
-			for (byte size = 4; size >= 0; size--) {
+			for (byte size = 5; size > 0; size--) {
 				final int xx = x - 7 + random.nextInt(15);
 				final int zz = z - 7 + random.nextInt(15);
 				final int yy = getHighestWorkableBlock(world, xx, zz);

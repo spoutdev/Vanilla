@@ -49,10 +49,10 @@ public class RockyShieldPopulator extends Populator {
 
 	static {
 		SHIELD_BASE.setFrequency(0.01);
-		SHIELD_BASE.setOctaveCount(2);
+		SHIELD_BASE.setOctaveCount(1);
 		SHIELD.SetSourceModule(0, SHIELD_BASE);
 		SHIELD.setFrequency(0.05);
-		SHIELD.setPower(20);
+		SHIELD.setPower(10);
 		SHIELD.setRoughness(3);
 	}
 

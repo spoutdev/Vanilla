@@ -31,12 +31,9 @@ import java.util.Random;
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.cuboid.Chunk;
 
-public class LavaLakeDecorator extends Decorator {
+public class NetherCaveDecorator extends Decorator {
+
 	@Override
 	public void populate(Chunk chunk, Random random) {
-		/**
-		 * TODO determine what biome this is in then generate differently
-		 * (as lava lakes happen in normal worlds but quite a bit differently).
-		 */
 	}
 }

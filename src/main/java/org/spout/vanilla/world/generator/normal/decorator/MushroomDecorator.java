@@ -63,7 +63,7 @@ public class MushroomDecorator extends Decorator {
 			final int z = chunk.getBlockZ(random);
 			final Mushroom mushroom = random.nextInt(4) == 0 ? VanillaMaterials.RED_MUSHROOM : VanillaMaterials.BROWN_MUSHROOM;
 			final boolean surface = random.nextBoolean();
-			for (byte size = 5; size >= 0; size--) {
+			for (byte size = 6; size > 0; size--) {
 				final int xx = x - 7 + random.nextInt(15);
 				final int zz = z - 7 + random.nextInt(15);
 				final int yy = surface ? getHighestWorkableBlock(world, xx, zz)
@@ -83,7 +83,7 @@ public class MushroomDecorator extends Decorator {
 	private int getHighestWorkableBlock(World w, int x, int y, int z) {
 		while (!w.getBlockMaterial(x, y, z).isOpaque()) {
 			y--;
-			if (y == 0) {
+			if (y <= 0) {
 				return -1;
 			}
 		}

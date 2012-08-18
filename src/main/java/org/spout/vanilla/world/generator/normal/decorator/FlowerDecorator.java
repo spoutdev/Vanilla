@@ -62,11 +62,11 @@ public class FlowerDecorator extends Decorator {
 		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
-			for (byte size = 5; size >= 0; size--) {
+			for (byte size = 6; size > 0; size--) {
 				final int xx = x - 7 + random.nextInt(15);
 				final int zz = z - 7 + random.nextInt(15);
 				final int yy = getHighestWorkableBlock(world, xx, zz);
-				if (yy != -1 && world.getBlockMaterial(xx, yy, zz) == VanillaMaterials.AIR
+				if (yy != -1 && world.getBlockMaterial(xx, yy, zz).isMaterial(VanillaMaterials.AIR)
 						&& canFlowerStay(world.getBlock(xx, yy, zz, world))) {
 					world.setBlockMaterial(xx, yy, zz, flower, (short) 0, world);
 				}

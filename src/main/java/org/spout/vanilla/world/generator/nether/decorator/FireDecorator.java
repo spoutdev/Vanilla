@@ -29,10 +29,45 @@ package org.spout.vanilla.world.generator.nether.decorator;
 import java.util.Random;
 
 import org.spout.api.generator.biome.Decorator;
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
-public class FortressDecorator extends Decorator {
+import org.spout.vanilla.material.VanillaMaterials;
+
+public class FireDecorator extends Decorator {
+	private static final byte BASE_AMOUNT = 1;
+	private static final byte RAND_AMOUNT = 5;
+
 	@Override
-	public void populate(Chunk c, Random random) {
+	public void populate(Chunk chunk, Random random) {
+		if (chunk.getY() != 4) {
+			return;
+		}
+		final World world = chunk.getWorld();
+		final int height = world.getHeight();
+		for (byte amount = (byte) (random.nextInt(RAND_AMOUNT) + BASE_AMOUNT); amount > 0; amount--) {
+			final int x = chunk.getBlockX(random);
+			final int y = random.nextInt(height);
+			final int z = chunk.getBlockZ(random);
+			for (byte size = 6; size > 0; size--) {
+				final int xx = x - 7 + random.nextInt(15);
+				final int zz = z - 7 + random.nextInt(15);
+				final int yy = getHighestWorkableBlock(world, xx, y, zz);
+				if (yy != -1 && world.getBlockMaterial(xx, yy, zz).isMaterial(VanillaMaterials.AIR)) {
+					world.setBlockMaterial(xx, yy, zz, VanillaMaterials.FIRE, (short) 0, world);
+				}
+			}
+		}
+	}
+
+	private int getHighestWorkableBlock(World world, int x, int y, int z) {
+		while (!world.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.NETHERRACK)) {
+			y--;
+			if (y <= 0) {
+				return -1;
+			}
+		}
+		y++;
+		return y;
 	}
 }

@@ -24,58 +24,15 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.decorator;
+package org.spout.vanilla.world.generator.nether.decorator;
 
 import java.util.Random;
 
 import org.spout.api.generator.biome.Decorator;
-import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.VanillaMaterials;
-
-public class LilyPadDecorator extends Decorator {
-	private final byte amount;
-
-	public LilyPadDecorator() {
-		this((byte) 1);
-	}
-
-	public LilyPadDecorator(byte amount) {
-		this.amount = amount;
-	}
-
+public class GravelDecorator extends Decorator {
 	@Override
 	public void populate(Chunk chunk, Random random) {
-		if (chunk.getY() != 4) {
-			return;
-		}
-		final World world = chunk.getWorld();
-		for (byte count = 0; count < amount; count++) {
-			final int x = chunk.getBlockX(random);
-			final int z = chunk.getBlockZ(random);
-			for (byte size = 5; size > 0; size--) {
-				final int xx = x - 7 + random.nextInt(15);
-				final int zz = z - 7 + random.nextInt(15);
-				final int yy = getHighestWorkableBlock(world, xx, zz);
-				if (yy != -1 && world.getBlockMaterial(xx, yy, zz) == VanillaMaterials.AIR
-						&& VanillaMaterials.LILY_PAD.canAttachTo(world.getBlock(xx, yy - 1, zz, world), BlockFace.TOP)) {
-					world.setBlockMaterial(xx, yy, zz, VanillaMaterials.LILY_PAD, (short) 0, world);
-				}
-			}
-		}
-	}
-
-	private int getHighestWorkableBlock(World world, int x, int z) {
-		int y = world.getHeight();
-		while (world.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.AIR, VanillaMaterials.LEAVES)) {
-			y--;
-			if (y == 0) {
-				return -1;
-			}
-		}
-		y++;
-		return y;
 	}
 }

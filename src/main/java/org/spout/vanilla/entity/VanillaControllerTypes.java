@@ -56,6 +56,7 @@ import org.spout.vanilla.entity.creature.hostile.Slime;
 import org.spout.vanilla.entity.creature.hostile.Spider;
 import org.spout.vanilla.entity.creature.hostile.Zombie;
 import org.spout.vanilla.entity.creature.neutral.Enderman;
+import org.spout.vanilla.entity.creature.neutral.Human;
 import org.spout.vanilla.entity.creature.neutral.PigZombie;
 import org.spout.vanilla.entity.creature.neutral.Wolf;
 import org.spout.vanilla.entity.creature.passive.Chicken;
@@ -92,6 +93,7 @@ import org.spout.vanilla.protocol.entity.living.CreeperEntityProtocol;
 import org.spout.vanilla.protocol.entity.living.EnderDragonEntityProtocol;
 import org.spout.vanilla.protocol.entity.living.EndermanEntityProtocol;
 import org.spout.vanilla.protocol.entity.living.GhastEntityProtocol;
+import org.spout.vanilla.protocol.entity.living.HumanEntityProtocol;
 import org.spout.vanilla.protocol.entity.living.MagmaCubeEntityProtocol;
 import org.spout.vanilla.protocol.entity.living.PigEntityProtocol;
 import org.spout.vanilla.protocol.entity.living.SheepEntityProtocol;
@@ -152,6 +154,7 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType ENDER_CRYSTAL = new VanillaControllerType(200, EnderCrystal.class, "Ender Crystal", new BasicObjectEntityProtocol(51));
 	public static final VanillaControllerType PAINTINGS = new VanillaControllerType(-1, Painting.class, "Painting", new PaintingEntityProtocol());
 	public static final VanillaControllerType VANILLA_PLAYER = new VanillaControllerType(-1, VanillaPlayerController.class, "Vanilla Player", new VanillaPlayerProtocol());
+	public static final VanillaControllerType HUMAN = new VanillaControllerType(-1, Human.class, "Human", new HumanEntityProtocol());
 	// World
 	public static final VanillaControllerType LIGHTNING = new VanillaControllerType(-7, Lightning.class, "Lightning", new LightningEntityProtocol());
 	// Block

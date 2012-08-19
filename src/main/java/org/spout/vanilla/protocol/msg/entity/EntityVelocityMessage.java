@@ -41,10 +41,6 @@ public final class EntityVelocityMessage extends EntityMessage {
 	}
 
 	public EntityVelocityMessage(int id, int velocityX, int velocityY, int velocityZ) {
-		/*
-		new Exception().fillInStackTrace().printStackTrace();
-		* This is for testing the random teleport behaviour of some mobs, uncomment if it happens!
-		*/
 		super(id);
 		this.velocityX = velocityX;
 		this.velocityY = velocityY;

@@ -54,6 +54,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.entityeffect.potion.Speed;
 import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.creature.neutral.Human;
 import org.spout.vanilla.entity.source.HealthChangeReason;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
@@ -317,12 +318,9 @@ public class TestCommands {
 			throw new CommandException("Only a player may spawn an npc");
 		}
 		Player spawner = (Player) source;
-		// TODO: Needs implementation!
-		/*
 		Human npc = new Human();
-		String title = npc.data().get(Data.TITLE);
-		npc.setTitle(title.equals("") ? "Steve" : title);
+		String title = args.getString(0);
+		npc.setDisplayName(title.equals("") ? "Steve" : title);
 		spawner.getWorld().createAndSpawnEntity(spawner.getPosition(), npc);
-		*/
 	}
 }

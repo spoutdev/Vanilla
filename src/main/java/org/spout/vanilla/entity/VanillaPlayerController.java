@@ -29,8 +29,10 @@ package org.spout.vanilla.entity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 
 import org.spout.api.Source;
+import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.entity.controller.PlayerController;
@@ -105,6 +107,12 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	protected GameMode gameMode;
 	protected Point compassTarget;
 	private short experience = 0;
+	// Protocol: last known updated client transform
+	private Transform lastClientTransform = new Transform();
+
+	private int positionTicks = 0;
+	private int velocityTicks = 0;
+	private Vector3 velocity = Vector3.ZERO;
 
 	public VanillaPlayerController() {
 		super(VanillaControllerTypes.VANILLA_PLAYER);
@@ -127,12 +135,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 
 		compassTarget = getParent().getWorld().getSpawnPoint().getPosition();
 		tabListName = getParent().getName();
-		Transform spawn = getParent().getTransform();
-		Quaternion rotation = spawn.getRotation();
 		getParent().setObserver(true);
-		getParent().setPosition(spawn.getPosition());
-		getParent().setRotation(rotation);
-		getParent().setScale(spawn.getScale());
 		getHealth().setSpawnHealth(20);
 		getHealth().setDeathAnimation(false);
 		getHead().setHeight(1.62f);
@@ -147,6 +150,9 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 		if (getHealth().isDead()) {
 			return;
 		}
+		
+		positionTicks++;
+		velocityTicks++;		
 		super.onTick(dt);
 
 		Player player = getParent();
@@ -522,6 +528,23 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 		this.experience = experience;
 	}
 
+	/**
+	 * Sets the last known transformation known by the clients<br>
+	 * This should only be called by the protocol classes
+	 * @param transform to set to
+	 */
+	public void setLastClientTransform(Transform transform) {
+		this.lastClientTransform = transform.copy();
+	}
+
+	/**
+	 * Gets the last known transformation updated to the clients
+	 * @return the last known transform by the clients
+	 */
+	public Transform getLastClientTransform() {
+		return this.lastClientTransform;
+	}
+	
 	@Override
 	public void callProtocolEvent(ProtocolEvent event) {
 		for (Player player : getParent().getWorld().getNearbyPlayers(getParent(), getParent().getViewDistance())) {
@@ -531,4 +554,45 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 			player.getNetworkSynchronizer().callProtocolEvent(event);
 		}
 	}
+
+	/**
+	 * Tests if a velocity update is needed for this entity<br>
+	 * This is called by the entity protocol
+	 * @return True if a velocity update is needed
+	 */
+	public boolean needsVelocityUpdate() {
+		return velocityTicks % 5 == 0;
+	}
+
+	/**
+	 * Tests if a position update is needed for this entity<br>
+	 * This is called by the entity protocol
+	 * @return True if a position update is needed
+	 */
+	public boolean needsPositionUpdate() {
+		return positionTicks % 30 == 0;
+	}
+
+	/**
+	 * Gets the current velocity of this entity
+	 * @return the velocity
+	 */
+	public Vector3 getVelocity() {
+		return velocity;
+	}
+
+	/**
+	 * Sets the current velocity for this entity
+	 * @param velocity to set to
+	 */
+	public void setVelocity(Vector3 velocity) {
+		if (velocity == null) {
+			if (Spout.debugMode()) {
+				Spout.getLogger().log(Level.SEVERE, "Velocity of " + this.toString() + " set to null!");
+				Spout.getLogger().log(Level.SEVERE, "Report this to http://issues.spout.org");
+			}
+			velocity = Vector3.ZERO;
+		}
+		this.velocity = velocity;
+	}	
 }

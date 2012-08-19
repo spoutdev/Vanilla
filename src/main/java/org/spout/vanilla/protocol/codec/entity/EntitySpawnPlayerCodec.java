@@ -61,7 +61,7 @@ public final class EntitySpawnPlayerCodec extends MessageCodec<EntitySpawnPlayer
 	public ChannelBuffer encode(EntitySpawnPlayerMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeInt(message.getEntityId());
-		ChannelBufferUtils.writeString(buffer, message.getPlayerName());
+		ChannelBufferUtils.writeString(buffer, message.getName());
 		buffer.writeInt(message.getX());
 		buffer.writeInt(message.getY());
 		buffer.writeInt(message.getZ());

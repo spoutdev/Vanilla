@@ -57,7 +57,7 @@ public final class EntitySpawnPlayerMessage extends EntityMessage {
 		this.parameters = parameters;
 	}
 
-	public String getPlayerName() {
+	public String getName() {
 		return name;
 	}
 

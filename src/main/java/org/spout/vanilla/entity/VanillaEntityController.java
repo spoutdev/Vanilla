@@ -64,8 +64,6 @@ public abstract class VanillaEntityController extends BasicController implements
 	private final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
 	private static Random rand = new Random();
 	private Drops drops = new Drops();
-	// Protocol: last known updated client transform
-	private Transform lastClientTransform = new Transform();
 	// Tick effects
 	private int positionTicks = 0;
 	private int velocityTicks = 0;
@@ -88,7 +86,6 @@ public abstract class VanillaEntityController extends BasicController implements
 		getParent().setCollision(new CollisionModel(area));
 		getParent().getCollision().setStrategy(CollisionStrategy.SOLID);
 		getDataMap().put(VanillaData.CONTROLLER_TYPE, getType().getMinecraftId());
-		this.lastClientTransform = getParent().getTransform();
 
 		healthComponent = addComponent(new HealthComponent(TickPriority.HIGHEST));
 		blockCollisionComponent = addComponent(new BlockCollisionComponent(TickPriority.HIGHEST));
@@ -172,23 +169,6 @@ public abstract class VanillaEntityController extends BasicController implements
 	@Override
 	public HealthComponent getHealth() {
 		return healthComponent;
-	}
-
-	/**
-	 * Sets the last known transformation known by the clients<br>
-	 * This should only be called by the protocol classes
-	 * @param transform to set to
-	 */
-	public void setLastClientTransform(Transform transform) {
-		this.lastClientTransform = transform.copy();
-	}
-
-	/**
-	 * Gets the last known transformation updated to the clients
-	 * @return the last known transform by the clients
-	 */
-	public Transform getLastClientTransform() {
-		return this.lastClientTransform;
 	}
 
 	/**

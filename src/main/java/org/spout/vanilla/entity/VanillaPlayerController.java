@@ -127,7 +127,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 
 		compassTarget = getParent().getWorld().getSpawnPoint().getPosition();
 		tabListName = getParent().getName();
-		Transform spawn = getParent().getWorld().getSpawnPoint();
+		Transform spawn = getParent().getTransform();
 		Quaternion rotation = spawn.getRotation();
 		getParent().setObserver(true);
 		getParent().setPosition(spawn.getPosition());

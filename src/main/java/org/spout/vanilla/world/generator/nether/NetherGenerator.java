@@ -32,6 +32,7 @@ import java.util.Random;
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.combiner.Add;
 import net.royawesome.jlibnoise.module.combiner.Multiply;
+import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
@@ -51,14 +52,17 @@ import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.VanillaBiomeGenerator;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;
+import org.spout.vanilla.world.generator.nether.populator.NetherCavePopulator;
 
 public class NetherGenerator extends VanillaBiomeGenerator implements VanillaGenerator {
-	public final static int SEA_LEVEL = 31;
+	public static final int HEIGHT = 128;
+	public static final int SEA_LEVEL = 31;
 	// noise for generation
 	private static final Perlin BASE = new Perlin();
 	private static final Perlin ROUGHNESS = new Perlin();
 	private static final Perlin DETAIL = new Perlin();
-	private static final Turbulence MASTER = new Turbulence();
+	private static final Turbulence TURBULENCE = new Turbulence();
+	private static final ScalePoint SCALE = new ScalePoint();
 	// noise for block replacement
 	private static final Perlin BLOCK_REPLACER = new Perlin();
 
@@ -88,12 +92,17 @@ public class NetherGenerator extends VanillaBiomeGenerator implements VanillaGen
 		final Add add = new Add();
 		add.SetSourceModule(0, multiply);
 		add.SetSourceModule(1, BASE);
-		
-		MASTER.SetSourceModule(0, add);
-		MASTER.setFrequency(0.01);
-		MASTER.setPower(8);
-		MASTER.setRoughness(1);
 
+		TURBULENCE.SetSourceModule(0, add);
+		TURBULENCE.setFrequency(0.01);
+		TURBULENCE.setPower(8);
+		TURBULENCE.setRoughness(1);
+
+		SCALE.SetSourceModule(0, TURBULENCE);
+		SCALE.setxScale(0.7);
+		SCALE.setyScale(1);
+		SCALE.setzScale(0.7);
+		
 		BLOCK_REPLACER.setFrequency(0.35);
 		BLOCK_REPLACER.setLacunarity(1);
 		BLOCK_REPLACER.setNoiseQuality(NoiseQuality.FAST);
@@ -104,7 +113,7 @@ public class NetherGenerator extends VanillaBiomeGenerator implements VanillaGen
 	@Override
 	public void registerBiomes() {
 		setSelector(new PerBlockBiomeSelector(VanillaBiomes.NETHERRACK));
-		addPopulators(new BiomePopulator(getBiomeMap()));
+		addPopulators(new NetherCavePopulator(), new BiomePopulator(getBiomeMap()));
 		register(VanillaBiomes.NETHERRACK);
 	}
 
@@ -118,17 +127,19 @@ public class NetherGenerator extends VanillaBiomeGenerator implements VanillaGen
 		if (chunkY < 0) {
 			return super.generate(blockData, chunkX, chunkY, chunkZ);
 		}
-		final int x = chunkX << Chunk.BLOCKS.BITS;
-		final int y = chunkY << Chunk.BLOCKS.BITS;
-		final int z = chunkZ << Chunk.BLOCKS.BITS;
-		final int seed = (int) blockData.getWorld().getSeed();
-		BASE.setSeed(seed * 23);
-		ROUGHNESS.setSeed(seed * 29);
-		DETAIL.setSeed(seed * 17);
-		MASTER.setSeed(seed * 53);
-		BLOCK_REPLACER.setSeed(seed * 83);
-		generateTerrain(blockData, x, y, z);
-		replaceBlocks(blockData, x, y, z);
+		if (chunkY * 16 < HEIGHT) {
+			final int x = chunkX << Chunk.BLOCKS.BITS;
+			final int y = chunkY << Chunk.BLOCKS.BITS;
+			final int z = chunkZ << Chunk.BLOCKS.BITS;
+			final int seed = (int) blockData.getWorld().getSeed();
+			BASE.setSeed(seed * 23);
+			ROUGHNESS.setSeed(seed * 29);
+			DETAIL.setSeed(seed * 17);
+			TURBULENCE.setSeed(seed * 53);
+			BLOCK_REPLACER.setSeed(seed * 83);
+			generateTerrain(blockData, x, y, z);
+			replaceBlocks(blockData, x, y, z);
+		}
 		final BiomeManager biomeManger = new Simple2DBiomeManager(chunkX, chunkY, chunkZ);
 		final byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
 		Arrays.fill(biomeData, (byte) VanillaBiomes.NETHERRACK.getId());
@@ -138,10 +149,9 @@ public class NetherGenerator extends VanillaBiomeGenerator implements VanillaGen
 
 	private void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z) {
 		final int size = Chunk.BLOCKS.SIZE;
-		final int height = blockData.getWorld().getHeight();
 		final double[][][] noise;
 		// build the density maps
-		if (y == height - size || y == 0) {
+		if (y == HEIGHT - size || y == 0) {
 			// just solid netherrack
 			noise = new double[size][size][size];
 			for (int xx = 0; xx < size; xx++) {
@@ -151,10 +161,10 @@ public class NetherGenerator extends VanillaBiomeGenerator implements VanillaGen
 					}
 				}
 			}
-		} else if (y == height - size * 2) {
+		} else if (y == HEIGHT - size * 2) {
 			// a height map for smooth progression from density to solid netherrack
 			// this one is upside down
-			final double[][] flatNoise = WorldGeneratorUtils.fastNoise(MASTER, size, size, 4, x, y, z);
+			final double[][] flatNoise = WorldGeneratorUtils.fastNoise(SCALE, size, size, 4, x, y, z);
 			noise = new double[size][size][size];
 			for (int xx = 0; xx < size; xx++) {
 				for (int zz = 0; zz < size; zz++) {
@@ -167,7 +177,7 @@ public class NetherGenerator extends VanillaBiomeGenerator implements VanillaGen
 			}
 		} else if (y == size) {
 			// a height map for smooth progression from density to solid netherrack
-			final double[][] flatNoise = WorldGeneratorUtils.fastNoise(MASTER, size, size, 4, x, y + size - 1, z);
+			final double[][] flatNoise = WorldGeneratorUtils.fastNoise(SCALE, size, size, 4, x, y + size - 1, z);
 			noise = new double[size][size][size];
 			for (int xx = 0; xx < size; xx++) {
 				for (int zz = 0; zz < size; zz++) {
@@ -180,7 +190,7 @@ public class NetherGenerator extends VanillaBiomeGenerator implements VanillaGen
 			}
 		} else {
 			// just density noise
-			noise = WorldGeneratorUtils.fastNoise(MASTER, size, size, size, 4, x, y, z);
+			noise = WorldGeneratorUtils.fastNoise(SCALE, size, size, size, 4, x, y, z);
 		}
 		// build the chunk from the density map
 		for (int xx = 0; xx < size; xx++) {
@@ -203,7 +213,6 @@ public class NetherGenerator extends VanillaBiomeGenerator implements VanillaGen
 
 	private void replaceBlocks(CuboidShortBuffer blockData, int x, int y, int z) {
 		final int size = Chunk.BLOCKS.SIZE;
-		final int height = blockData.getWorld().getHeight();
 		if (y == 0) {
 			for (int xx = 0; xx < size; xx++) {
 				for (int zz = 0; zz < size; zz++) {
@@ -213,11 +222,11 @@ public class NetherGenerator extends VanillaBiomeGenerator implements VanillaGen
 					}
 				}
 			}
-		} else if (y == height - size) {
+		} else if (y == HEIGHT - size) {
 			for (int xx = 0; xx < size; xx++) {
 				for (int zz = 0; zz < size; zz++) {
 					final byte bedrockDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x + xx, -73, z + zz) * 2 + 4, 1, 4);
-					for (y = height - 1; y >= height - 1 - bedrockDepth; y--) {
+					for (y = HEIGHT - 1; y >= HEIGHT - 1 - bedrockDepth; y--) {
 						blockData.set(x + xx, y, z + zz, VanillaMaterials.BEDROCK.getId());
 					}
 				}

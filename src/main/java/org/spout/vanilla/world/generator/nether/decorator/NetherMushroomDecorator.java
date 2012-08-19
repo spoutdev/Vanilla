@@ -29,11 +29,52 @@ package org.spout.vanilla.world.generator.nether.decorator;
 import java.util.Random;
 
 import org.spout.api.generator.biome.Decorator;
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.material.block.BlockFace;
 
-public class NetherCaveDecorator extends Decorator {
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.plant.Mushroom;
+import org.spout.vanilla.world.generator.nether.NetherGenerator;
+
+public class NetherMushroomDecorator extends Decorator {
+	private final byte odd = 1;
+	private final byte amount = 1;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
+		if (chunk.getY() != 4) {
+			return;
+		}
+		if (random.nextInt(odd) != 0) {
+			return;
+		}
+		final World world = chunk.getWorld();
+		for (byte count = 0; count < amount; count++) {
+			final int x = chunk.getBlockX(random);
+			final int y = random.nextInt(NetherGenerator.HEIGHT);
+			final int z = chunk.getBlockZ(random);
+			final Mushroom mushroom = random.nextInt(4) == 0 ? VanillaMaterials.RED_MUSHROOM : VanillaMaterials.BROWN_MUSHROOM;
+			for (byte size = 6; size > 0; size--) {
+				final int xx = x - 7 + random.nextInt(15);
+				final int zz = z - 7 + random.nextInt(15);
+				final int yy = getHighestWorkableBlock(world, xx, y, zz);
+				if (yy != -1 && world.getBlockMaterial(xx, yy, zz) == VanillaMaterials.AIR
+						&& mushroom.isValidPosition(world.getBlock(xx, yy, zz, world), BlockFace.BOTTOM, false)) {
+					world.setBlockMaterial(xx, yy, zz, mushroom, (short) 0, world);
+				}
+			}
+		}
+	}
+
+	private int getHighestWorkableBlock(World w, int x, int y, int z) {
+		while (!w.getBlockMaterial(x, y, z).isOpaque()) {
+			y--;
+			if (y <= 0) {
+				return -1;
+			}
+		}
+		y++;
+		return y;
 	}
 }

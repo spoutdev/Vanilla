@@ -41,6 +41,7 @@ import org.spout.api.util.set.TInt21TripleHashSet;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
 public class LavaFallDecorator extends Decorator {
 	private static final byte LAVA_ATTEMPTS = 8;
@@ -51,11 +52,10 @@ public class LavaFallDecorator extends Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		final int height = world.getHeight();
 		List<Block> liquids = new ArrayList<Block>();
 		for (byte count = 0; count < LAVA_ATTEMPTS; count++) {
 			final int x = chunk.getBlockX(random);
-			final int y = random.nextInt(height);
+			final int y = random.nextInt(NetherGenerator.HEIGHT);
 			final int z = chunk.getBlockZ(random);
 			final Block block = world.getBlock(x, y, z, world);
 			if (isValidSourcePoint(block)) {

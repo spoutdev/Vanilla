@@ -33,10 +33,11 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
 public class FireDecorator extends Decorator {
 	private static final byte BASE_AMOUNT = 1;
-	private static final byte RAND_AMOUNT = 5;
+	private static final byte RAND_AMOUNT = 2;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -44,12 +45,11 @@ public class FireDecorator extends Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		final int height = world.getHeight();
 		for (byte amount = (byte) (random.nextInt(RAND_AMOUNT) + BASE_AMOUNT); amount > 0; amount--) {
 			final int x = chunk.getBlockX(random);
-			final int y = random.nextInt(height);
+			final int y = random.nextInt(NetherGenerator.HEIGHT);
 			final int z = chunk.getBlockZ(random);
-			for (byte size = 6; size > 0; size--) {
+			for (byte size = 8; size > 0; size--) {
 				final int xx = x - 7 + random.nextInt(15);
 				final int zz = z - 7 + random.nextInt(15);
 				final int yy = getHighestWorkableBlock(world, xx, y, zz);

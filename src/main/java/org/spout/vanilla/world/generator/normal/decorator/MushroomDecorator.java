@@ -60,24 +60,19 @@ public class MushroomDecorator extends Decorator {
 		final World world = chunk.getWorld();
 		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random);
+			final int y = random.nextBoolean() ? world.getHeight() - 1 : random.nextInt(64);
 			final int z = chunk.getBlockZ(random);
 			final Mushroom mushroom = random.nextInt(4) == 0 ? VanillaMaterials.RED_MUSHROOM : VanillaMaterials.BROWN_MUSHROOM;
-			final boolean surface = random.nextBoolean();
 			for (byte size = 6; size > 0; size--) {
 				final int xx = x - 7 + random.nextInt(15);
 				final int zz = z - 7 + random.nextInt(15);
-				final int yy = surface ? getHighestWorkableBlock(world, xx, zz)
-						: getHighestWorkableBlock(world, xx, random.nextInt(64), zz);
+				final int yy = getHighestWorkableBlock(world, xx, y, zz);
 				if (yy != -1 && world.getBlockMaterial(xx, yy, zz) == VanillaMaterials.AIR
 						&& mushroom.isValidPosition(world.getBlock(xx, yy, zz, world), BlockFace.BOTTOM, false)) {
 					world.setBlockMaterial(xx, yy, zz, mushroom, (short) 0, world);
 				}
 			}
 		}
-	}
-
-	private int getHighestWorkableBlock(World w, int x, int z) {
-		return getHighestWorkableBlock(w, x, w.getHeight(), z);
 	}
 
 	private int getHighestWorkableBlock(World w, int x, int y, int z) {

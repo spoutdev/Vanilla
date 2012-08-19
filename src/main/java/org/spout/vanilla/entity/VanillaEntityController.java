@@ -76,6 +76,9 @@ public abstract class VanillaEntityController extends BasicController implements
 	protected HealthComponent healthComponent;
 	protected FireDamageComponent fireDamageComponent;
 
+	// Protocol: last known updated client transform
+	private Transform lastClientTransform = new Transform();
+
 	protected VanillaEntityController(VanillaControllerType type) {
 		super(type);
 		this.type = type;
@@ -260,6 +263,23 @@ public abstract class VanillaEntityController extends BasicController implements
 	 */
 	public Drops getDrops() {
 		return this.drops;
+	}
+
+	/**
+	 * Sets the last known transformation known by the clients<br>
+	 * This should only be called by the protocol classes
+	 * @param transform to set to
+	 */
+	public void setLastClientTransform(Transform transform) {
+		this.lastClientTransform = transform.copy();
+	}
+
+	/**
+	 * Gets the last known transformation updated to the clients
+	 * @return the last known transform by the clients
+	 */
+	public Transform getLastClientTransform() {
+		return this.lastClientTransform;
 	}
 
 	// =========================

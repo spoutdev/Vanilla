@@ -66,7 +66,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		// The last tick transform delta is not enough to properly send update messages
 		// For most entities, an update takes more than one tick before an update message is ready
 		// Do NOT use entity.getLastTransform() because it is not a delta since last tick!
-		Transform prevTransform = vController.getParent().getLastTransform();
+		Transform prevTransform = vController.getLastClientTransform();
 		Transform newTransform = entity.getTransform();
 
 		int lastX = protocolifyPosition(prevTransform.getPosition().getX());
@@ -87,17 +87,21 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 
 		if (vController.needsPositionUpdate() || deltaX > 128 || deltaX < -128 || deltaY > 128 || deltaY < -128 || deltaZ > 128 || deltaZ < -128) {
 			messages.add(new EntityTeleportMessage(entity.getId(), newX, newY, newZ, newYaw, newPitch));
+			vController.setLastClientTransform(newTransform);
 		} else {
 			boolean moved = !prevTransform.getPosition().equals(newTransform.getPosition());
 			boolean looked = !prevTransform.getRotation().equals(newTransform.getRotation());
 			if (moved) {
 				if (looked) {
 					messages.add(new EntityRelativePositionRotationMessage(entity.getId(), deltaX, deltaY, deltaZ, newYaw, newPitch));
+					vController.setLastClientTransform(newTransform);
 				} else {
 					messages.add(new EntityRelativePositionMessage(entity.getId(), deltaX, deltaY, deltaZ));
+					vController.getLastClientTransform().setPosition(newTransform.getPosition());
 				}
 			} else if (looked) {
 				messages.add(new EntityRotationMessage(entity.getId(), newYaw, newPitch));
+				vController.getLastClientTransform().setRotation(newTransform.getRotation());
 			}
 		}
 

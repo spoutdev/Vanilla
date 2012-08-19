@@ -127,17 +127,21 @@ public class VanillaPlayerProtocol implements EntityProtocol {
 
 		if (playerController.needsPositionUpdate() || deltaX > 128 || deltaX < -128 || deltaY > 128 || deltaY < -128 || deltaZ > 128 || deltaZ < -128) {
 			messages.add(new EntityTeleportMessage(entity.getId(), newX, newY, newZ, newYaw, newPitch));
+			playerController.setLastClientTransform(newTransform);
 		} else {
 			boolean moved = !prevTransform.getPosition().equals(newTransform.getPosition());
 			boolean looked = !prevTransform.getRotation().equals(newTransform.getRotation());
 			if (moved) {
 				if (looked) {
 					messages.add(new EntityRelativePositionRotationMessage(entity.getId(), deltaX, deltaY, deltaZ, newYaw, newPitch));
+					playerController.setLastClientTransform(newTransform);
 				} else {
 					messages.add(new EntityRelativePositionMessage(entity.getId(), deltaX, deltaY, deltaZ));
+					playerController.getLastClientTransform().setPosition(newTransform.getPosition());
 				}
 			} else if (looked) {
 				messages.add(new EntityRotationMessage(entity.getId(), newYaw, newPitch));
+				playerController.getLastClientTransform().setRotation(newTransform.getRotation());
 			}
 		}
 		if (playerController.needsVelocityUpdate()) {

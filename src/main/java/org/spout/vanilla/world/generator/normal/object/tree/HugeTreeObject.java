@@ -29,14 +29,18 @@ package org.spout.vanilla.world.generator.normal.object.tree;
 import java.util.Random;
 
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.SinusHelper;
 import org.spout.api.math.Vector2;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.plant.Sapling;
+import org.spout.vanilla.util.VanillaMathHelper;
 
 public class HugeTreeObject extends TreeObject {
 	// size control
@@ -91,10 +95,13 @@ public class HugeTreeObject extends TreeObject {
 			Vector2 randomOffset = SinusHelper.getRandom2DAxis(random);
 			generateLeaves(w, (int) (x + (randomOffset.getX() * 4f + 0.5f)), y + yy, (int) (z + (randomOffset.getY() * 4f + 0.5f)), (byte) 0);
 			for (byte branchLengthCount = 0; branchLengthCount < branchLength; branchLengthCount++) {
-				w.setBlockMaterial(((int) (randomOffset.getX() * branchLengthCount + 1.5f) + x),
-						y + yy - 3 + branchLengthCount / 2,
-						((int) (randomOffset.getY() * branchLengthCount + 1.5f) + z),
-						VanillaMaterials.LOG, logMetadata, w);
+				final int bx = (int) (randomOffset.getX() * branchLengthCount + 1.5f);
+				final int by = -3 + branchLengthCount / 2;
+				final int bz = (int) (randomOffset.getY() * branchLengthCount + 1.5f);
+				final Block block = w.getBlock(x + bx, y + yy + by, z + bz, w);
+				block.setMaterial(VanillaMaterials.LOG);
+				block.setData(logMetadata);
+				VanillaMaterials.LOG.setFacing(block, BlockFace.fromYaw(VanillaMathHelper.getLookAtYaw(new Vector3(bx, by, bz))));
 			}
 		}
 		for (byte yy = -1; yy < totalHeight - 1; yy++) {

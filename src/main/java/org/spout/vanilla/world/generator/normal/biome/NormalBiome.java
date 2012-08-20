@@ -125,6 +125,7 @@ public abstract class NormalBiome extends VanillaBiome {
 
 		fill(blockData, x, startY, endY, z);
 
+		BLOCK_REPLACER.setSeed((int) (blockData.getWorld().getSeed() * 97));
 		replaceBlocks(blockData, x, chunkY, z);
 	}
 

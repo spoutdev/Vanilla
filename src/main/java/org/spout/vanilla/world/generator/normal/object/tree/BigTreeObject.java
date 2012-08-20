@@ -31,13 +31,17 @@ import java.util.List;
 import java.util.Random;
 
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.SinusHelper;
 import org.spout.api.math.Vector2;
+import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.plant.Sapling;
+import org.spout.vanilla.util.VanillaMathHelper;
 
 public class BigTreeObject extends TreeObject {
 	private float trunkHeightMultiplier = 0.618f;
@@ -180,11 +184,23 @@ public class BigTreeObject extends TreeObject {
 
 	private void generateBranches(World world, int x, int y, int z, List<PointBase> groups) {
 		for (PointBase group : groups) {
-			final int base = group.getBase();
-			if (base - y >= totalHeight * 0.2) {
-				final BlockIterator branch = new BlockIterator(new Point(world, x, base, z), group);
+			final int baseY = group.getBase();
+			if (baseY - y >= totalHeight * 0.2) {
+				final Point base = new Point(world, x, baseY, z);
+				final BlockIterator branch = new BlockIterator(base, group);
+				final Vector3 diff = group.subtract(base);
+				final BlockFace facing;
+				if (VanillaMathHelper.getLookAtPitch(diff) < 135) {
+					facing = BlockFace.fromYaw(VanillaMathHelper.getLookAtYaw(diff));
+				} else {
+					facing = BlockFace.TOP;
+				}
 				while (branch.hasNext()) {
-					branch.next().setMaterial(VanillaMaterials.LOG, logMetadata);
+					final Block block = branch.next();
+					block.setMaterial(VanillaMaterials.LOG, logMetadata);
+					if (block.getX() != x || block.getZ() != z) {
+						VanillaMaterials.LOG.setFacing(block, facing);
+					}
 				}
 			}
 		}

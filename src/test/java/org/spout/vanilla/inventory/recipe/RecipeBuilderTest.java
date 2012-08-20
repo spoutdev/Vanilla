@@ -43,7 +43,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+
 import org.spout.api.inventory.CommonRecipeManager;
+
 import org.spout.vanilla.material.block.solid.Plank;
 
 public class RecipeBuilderTest {

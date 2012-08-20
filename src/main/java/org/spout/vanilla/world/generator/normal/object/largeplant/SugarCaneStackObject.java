@@ -64,7 +64,7 @@ public class SugarCaneStackObject extends LargePlantObject {
 			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.SUGAR_CANE_BLOCK, (short) 0, w);
 		}
 	}
-	
+
 	@Override
 	public final void randomize() {
 		totalHeight = (byte) (baseHeight + random.nextInt(randomHeight));

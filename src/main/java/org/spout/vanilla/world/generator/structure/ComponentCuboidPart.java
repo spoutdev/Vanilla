@@ -90,7 +90,7 @@ public class ComponentCuboidPart extends ComponentPart {
 		offsetMin(minXOff, minYOff, minZOff);
 		offsetMax(maxXOff, maxYOdd, maxZOff);
 	}
-	
+
 	protected boolean isOuter(int xx, int yy, int zz) {
 		return xx == min.getX() || yy == min.getY() || zz == min.getZ()
 				|| xx == max.getZ() || yy == max.getY() || zz == max.getZ();

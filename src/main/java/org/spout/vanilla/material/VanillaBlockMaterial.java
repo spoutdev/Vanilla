@@ -102,7 +102,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Called when this block is destroyed because of an explosion
-	 * 
 	 * @param block that got ignited
 	 */
 	public void onIgnite(Block block) {
@@ -361,7 +360,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	/**
 	 * Adds the mining type to this Block material<br>
 	 * This type will be used when checking for drops and when calculating the digging time
-	 * 
 	 * @param miningType to add
 	 * @return this material
 	 */
@@ -374,7 +372,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	/**
 	 * Gets if the mining type is set for this Block material<br>
 	 * This type is used when checking for drops and when calculating digging time
-	 * 
 	 * @return True if the tool type is set
 	 */
 	public boolean isMiningType(ToolType toolType) {
@@ -384,7 +381,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	/**
 	 * Gets the mining level required for breaking this BlockMaterial<br>
 	 * This level has to be met to spawn drops
-	 * 
 	 * @return mining level
 	 */
 	public ToolLevel getMiningLevel() {

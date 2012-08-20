@@ -66,7 +66,6 @@ public class GeneralEffects {
 	public static final BatchExplosionEffect EXPLOSION = new BatchExplosionEffect(SoundEffects.RANDOM_EXPLODE);
 	public static final BatchEffect EXTINGUISH = new BatchEffect(SoundEffects.RANDOM_FIZZ, GeneralEffects.SMOKE);
 	public static final DoorEffect DOOR = new DoorEffect();
-
 	// Lightning sound effects
 	public static final SoundEffect LIGHTNING_THUNDER = SoundEffects.AMBIENT_WEATHER_THUNDER.adjust(10000.0f, 0.9f).randomPitch(0.2f);
 	public static final SoundEffect LIGHTNING_EXPLODE = SoundEffects.RANDOM_EXPLODE.adjust(2.0f, 0.6f).randomPitch(0.2f);

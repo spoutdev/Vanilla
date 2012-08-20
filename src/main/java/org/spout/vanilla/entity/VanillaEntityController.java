@@ -75,7 +75,6 @@ public abstract class VanillaEntityController extends BasicController implements
 	protected BlockCollisionComponent blockCollisionComponent;
 	protected HealthComponent healthComponent;
 	protected FireDamageComponent fireDamageComponent;
-
 	// Protocol: last known updated client transform
 	private Transform lastClientTransform = new Transform();
 

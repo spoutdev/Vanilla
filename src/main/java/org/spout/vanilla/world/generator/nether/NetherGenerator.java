@@ -102,7 +102,7 @@ public class NetherGenerator extends VanillaBiomeGenerator implements VanillaGen
 		SCALE.setxScale(0.7);
 		SCALE.setyScale(1);
 		SCALE.setzScale(0.7);
-		
+
 		BLOCK_REPLACER.setFrequency(0.35);
 		BLOCK_REPLACER.setLacunarity(1);
 		BLOCK_REPLACER.setNoiseQuality(NoiseQuality.FAST);

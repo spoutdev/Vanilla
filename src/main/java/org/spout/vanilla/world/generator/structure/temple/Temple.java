@@ -28,10 +28,10 @@ package org.spout.vanilla.world.generator.structure.temple;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
+
 import org.spout.vanilla.world.generator.structure.Structure;
 
 public class Temple extends Structure {
-
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
 		return true;

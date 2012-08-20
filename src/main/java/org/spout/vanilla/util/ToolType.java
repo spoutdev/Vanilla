@@ -27,6 +27,7 @@
 package org.spout.vanilla.util;
 
 import org.spout.api.util.flag.Flag;
+
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 
 public class ToolType {
@@ -40,7 +41,6 @@ public class ToolType {
 	public static final ToolType PICKAXE = new ToolType(ToolTypeFlags.PICKAXE);
 	public static final ToolType SPADE = new ToolType(ToolTypeFlags.SPADE);
 	public static final ToolType HOE = new ToolType(ToolTypeFlags.HOE);
-
 	private final Flag toolFlag;
 
 	public ToolType(Flag toolFlag) {
@@ -49,7 +49,6 @@ public class ToolType {
 
 	/**
 	 * Gets the tool flag for this particular type of tool
-	 * 
 	 * @return tool flag
 	 */
 	public Flag getToolFlag() {
@@ -58,7 +57,6 @@ public class ToolType {
 
 	/**
 	 * Gets the block drop flag for this particular type of tool
-	 * 
 	 * @return drop flag
 	 */
 	public Flag getDropFlag() {

@@ -27,6 +27,7 @@
 package org.spout.vanilla.chat.style;
 
 import org.junit.Test;
+
 import org.spout.api.chat.style.ChatStyle;
 
 import static org.junit.Assert.fail;

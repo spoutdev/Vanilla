@@ -50,7 +50,6 @@ public class MushroomBlock extends Solid implements Fuel, InitializableMaterial 
 			getDrops().DEFAULT.addRange(VanillaMaterials.BROWN_MUSHROOM, -7, 2);
 			getDrops().SILK_TOUCH.add(VanillaMaterials.HUGE_BROWN_MUSHROOM);
 		}
-		
 	}
 
 	@Override

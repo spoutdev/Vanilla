@@ -35,7 +35,6 @@ import org.spout.api.math.Vector3;
 public class VanillaMathHelper {
 	/**
 	 * Gets the celestial angle at a certain time of the day
-	 *
 	 * @param timeMillis time
 	 * @param timeMillisTune fine runing
 	 * @return celestial angle
@@ -56,7 +55,6 @@ public class VanillaMathHelper {
 	/**
 	 * Gets the (real?) celestial angle at a certain time of the day<br> The use
 	 * of this function is unknown...
-	 *
 	 * @param timeMillis time
 	 * @param timeMillisTune fine runing
 	 * @return celestial angle, a value from 0 to 1
@@ -75,7 +73,6 @@ public class VanillaMathHelper {
 
 	/**
 	 * Calculates a new random direction
-	 *
 	 * @param maxXZForce of the direction
 	 * @param maxYForce of the direction
 	 * @return a random Vector3 direction

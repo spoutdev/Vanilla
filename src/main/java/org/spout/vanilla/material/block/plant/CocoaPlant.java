@@ -31,7 +31,6 @@ import java.util.Set;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
@@ -123,7 +122,7 @@ public class CocoaPlant extends AbstractAttachable implements Plant, Growing, Ra
 			setGrowthStage(block, ++growthStage);
 		}
 	}
-	
+
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		final InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);

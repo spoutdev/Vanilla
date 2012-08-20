@@ -27,6 +27,7 @@
 package org.spout.vanilla.util;
 
 import org.spout.api.util.flag.Flag;
+
 import org.spout.vanilla.data.drops.flag.ToolLevelFlags;
 
 public class ToolLevel {
@@ -36,7 +37,6 @@ public class ToolLevel {
 	public static final ToolLevel IRON = new ToolLevel(ToolLevelFlags.IRON, ToolLevelFlags.IRON_UP, 6.0f, 250, 2);
 	public static final ToolLevel DIAMOND = new ToolLevel(ToolLevelFlags.DIAMOND, ToolLevelFlags.DIAMOND_UP, 8.0f, 1561, 3);
 	public static final ToolLevel GOLD = new ToolLevel(ToolLevelFlags.GOLD, ToolLevelFlags.GOLD_UP, 12.0f, 32, 0);
-
 	private final Flag toolFlag;
 	private final Flag dropFlag;
 	private final float diggingSpeed;
@@ -53,7 +53,6 @@ public class ToolLevel {
 
 	/**
 	 * Gets the additional damage this tool level provides
-	 * 
 	 * @return tool damage bonus
 	 */
 	public short getDamageBonus() {
@@ -62,7 +61,6 @@ public class ToolLevel {
 
 	/**
 	 * Gets the particular tool flag for this tool level
-	 * 
 	 * @return Tool flag
 	 */
 	public Flag getToolFlag() {
@@ -71,7 +69,6 @@ public class ToolLevel {
 
 	/**
 	 * Gets the particular block drop flag for this tool level
-	 * 
 	 * @return Drop flag
 	 */
 	public Flag getDropFlag() {
@@ -80,7 +77,6 @@ public class ToolLevel {
 
 	/**
 	 * Gets the time it takes to dig using this tool level
-	 * 
 	 * @return digging time
 	 */
 	public float getDiggingSpeed() {
@@ -89,7 +85,6 @@ public class ToolLevel {
 
 	/**
 	 * Gets the maximum durability a tool with this level has
-	 * 
 	 * @return maximum durability
 	 */
 	public short getMaxDurability() {

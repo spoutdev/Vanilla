@@ -27,6 +27,7 @@
 package org.spout.vanilla.world.generator.object;
 
 import java.util.Random;
+
 import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;

@@ -35,22 +35,20 @@ import org.spout.api.math.Vector3;
 /**
  * Draws a plane with the defined complex layout
  * @author tux
- *
  */
 public class ComplexLayoutPainter {
 	StructureComponent parent;
-	
 	private short layout[][] = null;
 	private TShortObjectHashMap<BlockMaterial> style = new TShortObjectHashMap<BlockMaterial>();
-	
+
 	public ComplexLayoutPainter(StructureComponent parent) {
 		this.parent = parent;
 	}
-	
+
 	public void setBlockMaterial(char key, BlockMaterial material) {
 		style.put((short) key, material);
 	}
-	
+
 	/**
 	 * <p>Sets the layout by using a string. The string has to be formatted in alphanumeric codes</p>
 	 * <p><strong>Example:</strong></p>
@@ -64,17 +62,17 @@ public class ComplexLayoutPainter {
 		String lines[] = layout.split("\n");
 		int rows = lines.length;
 		int cols = lines[0].length();
-		
+
 		int row = 0;
 		this.layout = new short[rows][cols];
-		for (String line:lines) {
+		for (String line : lines) {
 			for (int col = 0; col < line.length(); col++) {
 				this.layout[row][col] = (short) line.charAt(col);
 			}
 			row++;
 		}
 	}
-	
+
 	/**
 	 * Draws the set layout
 	 * @param x origin coord
@@ -82,14 +80,14 @@ public class ComplexLayoutPainter {
 	 * @param z origin coord
 	 */
 	public void draw() {
-		for (int zz = 0; zz < layout.length; zz ++) {
-			for (int xx = 0; xx < layout[0].length; xx ++) {
+		for (int zz = 0; zz < layout.length; zz++) {
+			for (int xx = 0; xx < layout[0].length; xx++) {
 				BlockMaterial material = style.get(layout[zz][xx]);
 				getParent().setBlockMaterial(xx, 0, zz, material);
 			}
 		}
 	}
-	
+
 	public StructureComponent getParent() {
 		return parent;
 	}

@@ -273,7 +273,7 @@ public class HugeMushroomObject extends LargePlantObject {
 			}
 		}
 	}
-	
+
 	@Override
 	public final void randomize() {
 		totalHeight = (byte) (baseHeight + random.nextInt(randomHeight));

@@ -44,9 +44,9 @@ public abstract class Drop extends FlagContainer {
 
 	@Override
 	public boolean matchFlags(Set<Flag> flags) {
-//		if (flags.contains(DropFlagSingle.NO_DROPS)) {
-//			return false;
-//		}
+		//		if (flags.contains(DropFlagSingle.NO_DROPS)) {
+		//			return false;
+		//		}
 		return super.matchFlags(flags);
 	}
 

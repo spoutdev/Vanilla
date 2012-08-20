@@ -199,17 +199,17 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 						}
 					}
 				}
-				
+
 				//Check if the player can place the block.
 				Collection<Protection> protections = Spout.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(alterBlock.getPosition());
 				for (Protection p : protections) {
-					if (p.contains(alterBlock.getPosition()) && !((VanillaPlayerController)player.getController()).isOp()) {
+					if (p.contains(alterBlock.getPosition()) && !((VanillaPlayerController) player.getController()).isOp()) {
 						undoPlacement(player, clickedBlock, alterBlock);
 						player.sendMessage(ChatStyle.DARK_RED, "This area is a protected spawn point!");
 						return;
 					}
 				}
-				
+
 				// Perform actual placement
 				if (toPlace.onPlacement(target, placedData, targetFace, message.getFace(), target == clickedBlock)) {
 					// Play sound

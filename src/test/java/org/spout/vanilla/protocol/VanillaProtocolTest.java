@@ -118,13 +118,11 @@ import static org.spout.vanilla.protocol.ChannelBufferUtilsTest.TEST_PARAMS;
 
 public class VanillaProtocolTest extends BaseProtocolTest {
 	private static final VanillaCodecLookupService CODEC_LOOKUP = new VanillaCodecLookupService();
-
 	static boolean[] allFalse = new boolean[16];
 	static byte[] chunkData = new byte[10240];
-	static byte[][] columnData = new byte[][] {chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData};
+	static byte[][] columnData = new byte[][]{chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData};
 	static byte[] biomeData1 = new byte[256];
 	static byte[] biomeData2 = new byte[256];
-
 	private static final Message[] TEST_MESSAGES = new Message[]{
 			new KeepAliveMessage(42),
 			//new ClientLoginRequestMessage(),
@@ -169,13 +167,13 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new EntityEffectMessage(1, (byte) 1, (byte) 1, (short) 34),
 			new EntityRemoveEffectMessage(1, (byte) 1),
 			new NamedSoundEffectMessage("random.bow", 12.5f, 0.0f, 12.0f, 1.0f, 1.0f),
-			new DestroyEntitiesMessage(new int[] {2}),
+			new DestroyEntitiesMessage(new int[]{2}),
 			new SetExperienceMessage(1.2F, (short) 2, (short) 3),
 			new CompressedChunkMessage(1, 2, true, new boolean[16], new byte[][]{new byte[16 * 16 * 16 * 5 / 2], null, null, null, null, null, null, null, null, null, new byte[Chunk.BLOCKS.HALF_VOLUME * 5], null, null, null, null, null}, new byte[16 * 16]),
 			new MultiBlockChangeMessage(2, 3, new short[]{2, 3, 4, /**/ 3, 6, 4, /**/ 8, 5, 5}, new short[]{1, 2, 3}, new byte[]{3, 4, 5}),
-			new BlockChangeMessage(1, 2, 3, (short)87, 2),
+			new BlockChangeMessage(1, 2, 3, (short) 87, 2),
 			new BlockActionMessage(1, 2, 3, (byte) 4, (byte) 5, (byte) 29),
-			new BulkChunkMessage(new int[] {0, 1}, new int[] {3, 4}, new boolean[][] {allFalse, allFalse}, new byte[][][] {columnData, columnData}, new byte[][] {biomeData1, biomeData2}),
+			new BulkChunkMessage(new int[]{0, 1}, new int[]{3, 4}, new boolean[][]{allFalse, allFalse}, new byte[][][]{columnData, columnData}, new byte[][]{biomeData1, biomeData2}),
 			new ExplosionMessage(3, 4, 5, 24, new byte[]{1, 2, 3, 1, 1, 2, 1, 1, 1}),
 			new PlayEffectMessage(34566, 1, 2, 34, 5),
 			new ChangeGameStateMessage(ChangeGameStateMessage.CHANGE_GAME_MODE, GameMode.CREATIVE),

@@ -31,7 +31,6 @@ import org.spout.vanilla.util.ToolLevel;
 import org.spout.vanilla.util.ToolType;
 
 public class Sword extends Tool {
-
 	public Sword(String name, int id, ToolLevel toolLevel) {
 		super(name, id, toolLevel.getMaxDurability(), ToolType.SWORD);
 		this.setDamage(4 + toolLevel.getDamageBonus());

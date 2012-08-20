@@ -109,7 +109,6 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	private short experience = 0;
 	// Protocol: last known updated client transform
 	private Transform lastClientTransform = new Transform();
-
 	private int positionTicks = 0;
 	private int velocityTicks = 0;
 	private Vector3 velocity = Vector3.ZERO;
@@ -150,9 +149,9 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 		if (getHealth().isDead()) {
 			return;
 		}
-		
+
 		positionTicks++;
-		velocityTicks++;		
+		velocityTicks++;
 		super.onTick(dt);
 
 		Player player = getParent();
@@ -544,7 +543,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	public Transform getLastClientTransform() {
 		return this.lastClientTransform;
 	}
-	
+
 	@Override
 	public void callProtocolEvent(ProtocolEvent event) {
 		for (Player player : getParent().getWorld().getNearbyPlayers(getParent(), getParent().getViewDistance())) {
@@ -594,5 +593,5 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 			velocity = Vector3.ZERO;
 		}
 		this.velocity = velocity;
-	}	
+	}
 }

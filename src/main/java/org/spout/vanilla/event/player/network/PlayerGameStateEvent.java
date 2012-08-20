@@ -30,6 +30,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.protocol.event.ProtocolEvent;
+
 import org.spout.vanilla.data.GameMode;
 
 public class PlayerGameStateEvent extends PlayerEvent implements ProtocolEvent {

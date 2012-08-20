@@ -60,7 +60,7 @@ public class RecipeTreeTest {
 		System.out.println("");
 		System.out.println("");
 	}
-	
+
 	@Test
 	public void treeTest2() {
 		RecipeBuilder builder = new RecipeBuilder();
@@ -78,7 +78,7 @@ public class RecipeTreeTest {
 		System.out.println("");
 		System.out.println("");
 	}
-	
+
 	@Test
 	public void treeTest3() {
 		RecipeBuilder builder = new RecipeBuilder();

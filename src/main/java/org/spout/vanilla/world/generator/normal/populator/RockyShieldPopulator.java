@@ -102,7 +102,7 @@ public class RockyShieldPopulator extends Populator {
 			}
 		}
 	}
-	
+
 	private boolean canReplace(BlockMaterial material) {
 		return material.isMaterial(VanillaMaterials.GRASS, VanillaMaterials.MYCELIUM,
 				VanillaMaterials.DIRT, VanillaMaterials.SAND, VanillaMaterials.SANDSTONE);

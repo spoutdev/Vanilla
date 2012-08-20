@@ -27,7 +27,6 @@
 package org.spout.vanilla.world.generator.structure;
 
 public class ComponentPlanePart extends ComponentCuboidPart {
-
 	public ComponentPlanePart(StructureComponent parent) {
 		super(parent);
 	}

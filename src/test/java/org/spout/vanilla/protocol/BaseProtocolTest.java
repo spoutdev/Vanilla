@@ -62,7 +62,7 @@ public abstract class BaseProtocolTest {
 	}
 
 	@Test
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	public void testMessageEncoding() throws IOException {
 		for (Message message : testMessages) {
 			MessageCodec codec = codecLookup.find(message.getClass());

@@ -87,7 +87,7 @@ public abstract class TreeObject extends LargePlantObject {
 		// Can only place trees on dirt and grass surfaces
 		return w.getBlockMaterial(x, y - 1, z).isMaterial(VanillaMaterials.DIRT, VanillaMaterials.GRASS);
 	}
-	
+
 	@Override
 	public final void randomize() {
 		totalHeight = (byte) (baseHeight + random.nextInt(randomHeight));

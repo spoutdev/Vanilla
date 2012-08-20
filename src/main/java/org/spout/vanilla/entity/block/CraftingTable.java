@@ -27,7 +27,6 @@
 package org.spout.vanilla.entity.block;
 
 import org.spout.vanilla.entity.VanillaControllerTypes;
-import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.window.Window;
 import org.spout.vanilla.window.block.CraftingTableWindow;
@@ -46,7 +45,7 @@ public class CraftingTable extends VanillaWindowBlockController {
 	}
 
 	@Override
-	public Window createWindow(VanillaPlayerController player) {
-		return new CraftingTableWindow(player, this);
+	public Window createWindow() {
+		return new CraftingTableWindow(this);
 	}
 }

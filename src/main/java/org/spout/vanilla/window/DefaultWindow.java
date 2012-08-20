@@ -26,9 +26,7 @@
  */
 package org.spout.vanilla.window;
 
-import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
-import org.spout.vanilla.util.intmap.SlotIndexGrid;
 import org.spout.vanilla.util.intmap.SlotIndexMap;
 import org.spout.vanilla.util.intmap.SlotIndexRow;
 
@@ -36,15 +34,18 @@ import org.spout.vanilla.util.intmap.SlotIndexRow;
  * The default player window always displayed
  */
 public class DefaultWindow extends CraftingWindow {
-	private static final SlotIndexCollection MAIN_SLOTS = new SlotIndexGrid(9, 4, 9);
 	private static final SlotIndexCollection ARMOR_SLOTS = new SlotIndexRow(4, 5);
 	private static final SlotIndexCollection CRAFTING_SLOTS = new SlotIndexMap("1-4, 0");
 
-	public DefaultWindow(VanillaPlayerController owner) {
-		super(WindowType.DEFAULT, "Inventory", owner, owner.getInventory().getCraftingGrid());
-		this.addInventory(owner.getInventory().getMain(), MAIN_SLOTS);
-		this.addInventory(owner.getInventory().getCraftingGrid(), CRAFTING_SLOTS);
-		this.addInventory(owner.getInventory().getArmor(), ARMOR_SLOTS);
+	public DefaultWindow() {
+		super(WindowType.DEFAULT, "Inventory", 9);
+	}
+
+	@Override
+	public void onAttached() {
+		this.setCraftingGrid(getParent().getInventory().getCraftingGrid(), CRAFTING_SLOTS);
+		this.addInventory(getParent().getInventory().getArmor(), ARMOR_SLOTS);
+		super.onAttached();
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class DefaultWindow extends CraftingWindow {
 	@Override
 	public void close() {
 		super.close();
-		if (this.getOwner().isSurvival()) {
+		if (this.getParent().isSurvival()) {
 			this.dropItemOnCursor();
 		}
 	}

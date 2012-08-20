@@ -67,7 +67,7 @@ public class Villager extends Creature implements Passive, WindowController, Inv
 	@Override
 	public boolean open(VanillaPlayerController player) {
 		if (!this.viewers.containsKey(player)) {
-			Window w = new VillagerWindow(player, this);
+			Window w = new VillagerWindow(this);
 			this.addViewer(player, w);
 			player.setWindow(w);
 			return true;

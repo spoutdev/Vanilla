@@ -41,7 +41,6 @@ import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.tickable.TickPriority;
@@ -102,7 +101,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	protected String title; //TODO title isn't really a good name...
 	protected float initialYFalling = 0.0f;
 	protected final PlayerInventory playerInventory = new PlayerInventory(this);
-	protected Window activeWindow = new DefaultWindow(this);
+	protected Window activeWindow;
 	protected String tabListName;
 	protected GameMode gameMode;
 	protected Point compassTarget;
@@ -132,6 +131,8 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 		creativeComponent = addComponent(new CreativeComponent(TickPriority.HIGH));
 		adventureComponent = addComponent(new AdventureComponent(TickPriority.HIGH));
 
+		activeWindow = addComponent(new DefaultWindow());
+
 		compassTarget = getParent().getWorld().getSpawnPoint().getPosition();
 		tabListName = getParent().getName();
 		getParent().setObserver(true);
@@ -158,9 +159,6 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 		if (player == null || player.getSession() == null) {
 			return;
 		}
-
-		// Update window
-		this.getActiveWindow().onTick(dt);
 	}
 
 	public DiggingComponent getDiggingLogic() {
@@ -400,21 +398,15 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	 * @param activeWindow the window to open and set as the active window.
 	 */
 	public void setWindow(Window activeWindow) {
-		Window old = this.activeWindow;
-		this.activeWindow = activeWindow;
-		if (old.isOpen()) {
-			old.close();
-		}
-		if (!activeWindow.isOpen()) {
-			activeWindow.open();
-		}
+		this.removeComponent(this.activeWindow.getClass());
+		this.activeWindow = this.addComponent(activeWindow);
 	}
 
 	/**
 	 * Closes the active {@link Window}.
 	 */
 	public void closeWindow() {
-		this.setWindow(new DefaultWindow(this));
+		this.setWindow(new DefaultWindow());
 	}
 
 	/**

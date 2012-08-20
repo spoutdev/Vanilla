@@ -28,7 +28,6 @@ package org.spout.vanilla.window.block;
 
 import org.spout.api.inventory.InventoryBase;
 
-import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.entity.block.BrewingStand;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.util.intmap.SlotIndexMap;
@@ -40,8 +39,8 @@ public class BrewingStandWindow extends TransactionWindow {
 	private static final SlotIndexMap BREWING_SLOTS = new SlotIndexMap("0-3");
 	protected final BrewingStandInventory brewing;
 
-	public BrewingStandWindow(VanillaPlayerController owner, BrewingStand stand) {
-		super(WindowType.BREWINGSTAND, "Brewing Stand", owner, 4, stand);
+	public BrewingStandWindow(BrewingStand stand) {
+		super(WindowType.BREWINGSTAND, "Brewing Stand", 4, stand);
 		this.brewing = stand.getInventory();
 		this.addInventory(this.brewing, BREWING_SLOTS);
 	}

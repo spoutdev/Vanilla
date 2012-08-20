@@ -117,17 +117,17 @@ public class Chest extends VanillaWindowBlockController implements InventoryOwne
 	}
 
 	@Override
-	public Window createWindow(VanillaPlayerController player) {
+	public Window createWindow() {
 		Chest other = this.getOtherHalf();
 		if (other != null) {
 			Vector3 offset = other.getParent().getPosition().subtract(this.getParent().getPosition());
 			if (offset.getX() > 0 || offset.getZ() > 0) {
-				return new ChestWindow(player, other, this);
+				return new ChestWindow(other, this);
 			} else {
-				return new ChestWindow(player, this, other);
+				return new ChestWindow(this, other);
 			}
 		} else {
-			return new ChestWindow(player, this);
+			return new ChestWindow(this);
 		}
 	}
 }

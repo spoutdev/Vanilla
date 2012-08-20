@@ -27,6 +27,7 @@
 package org.spout.vanilla.entity.block;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 import org.spout.api.entity.Entity;
@@ -46,7 +47,7 @@ public abstract class VanillaWindowBlockController extends VanillaBlockControlle
 		super(type, blockMaterial);
 	}
 
-	public abstract Window createWindow(VanillaPlayerController player);
+	public abstract Window createWindow();
 
 	@Override
 	public void onInteract(Entity entity, Action type) {
@@ -59,7 +60,7 @@ public abstract class VanillaWindowBlockController extends VanillaBlockControlle
 	@Override
 	public boolean open(VanillaPlayerController player) {
 		if (!this.viewers.containsKey(player)) {
-			Window w = this.createWindow(player);
+			Window w = this.createWindow();
 			this.addViewer(player, w);
 			player.setWindow(w);
 			return true;
@@ -111,7 +112,7 @@ public abstract class VanillaWindowBlockController extends VanillaBlockControlle
 
 	@Override
 	public Collection<VanillaPlayerController> getViewers() {
-		return this.viewers.keySet();
+		return Collections.unmodifiableSet(this.viewers.keySet());
 	}
 
 	/**

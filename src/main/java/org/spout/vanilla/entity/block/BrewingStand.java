@@ -28,7 +28,6 @@ package org.spout.vanilla.entity.block;
 
 import org.spout.vanilla.entity.InventoryOwner;
 import org.spout.vanilla.entity.VanillaControllerTypes;
-import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.window.Window;
@@ -64,7 +63,7 @@ public class BrewingStand extends VanillaWindowBlockController implements Invent
 	}
 
 	@Override
-	public Window createWindow(VanillaPlayerController player) {
-		return new BrewingStandWindow(player, this);
+	public Window createWindow() {
+		return new BrewingStandWindow(this);
 	}
 }

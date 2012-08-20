@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.window;
 
-import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.entity.WindowController;
 import org.spout.vanilla.util.intmap.SlotIndexGrid;
 
@@ -34,9 +33,17 @@ import org.spout.vanilla.util.intmap.SlotIndexGrid;
  * This window contains the player inventory items with additional slots above
  */
 public class TransactionWindow extends Window {
-	public TransactionWindow(WindowType type, String title, VanillaPlayerController owner, int transactionSize, WindowController... windowOwners) {
-		super(type, title, owner, windowOwners);
-		this.addInventory(owner.getInventory().getMain(), new SlotIndexGrid(9, 4, transactionSize));
+	protected final int transactionSize;
+
+	public TransactionWindow(WindowType type, String title, int transactionSize, WindowController... windowOwners) {
+		super(type, title, windowOwners);
+		this.transactionSize = transactionSize;
+	}
+
+	@Override
+	public void onAttached() {
+		this.addInventory(getParent().getInventory().getMain(), new SlotIndexGrid(9, 4, transactionSize));
+		super.onAttached();
 	}
 
 	@Override

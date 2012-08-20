@@ -451,7 +451,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (event.getWindow() instanceof DefaultWindow) {
 			return null; // no message for the default Window
 		}
-		int size = event.getWindow().getInventorySize() - event.getWindow().getOwner().getInventory().getMain().getSize();
+		int size = event.getWindow().getInventorySize() - event.getWindow().getParent().getInventory().getMain().getSize();
 		return new WindowOpenMessage(event.getWindow(), size);
 	}
 

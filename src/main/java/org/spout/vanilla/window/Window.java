@@ -35,11 +35,11 @@ import java.util.Set;
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
+import org.spout.api.entity.BasicComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.tickable.Tickable;
 
 import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.entity.WindowController;
@@ -51,23 +51,38 @@ import org.spout.vanilla.event.window.WindowSetSlotsEvent;
 import org.spout.vanilla.util.InventoryUtil;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 
-public class Window implements InventoryViewer, Tickable {
+public class Window extends BasicComponent<VanillaPlayerController> implements InventoryViewer {
 	protected final WindowType type;
 	protected final int instanceId;
 	protected String title;
-	protected final VanillaPlayerController owner;
 	protected final TIntObjectHashMap<ItemStack> queuedInventoryUpdates = new TIntObjectHashMap<ItemStack>(); // items to update
 	protected Map<InventoryBase, SlotIndexCollection> inventories = new HashMap<InventoryBase, SlotIndexCollection>();
 	protected ItemStack itemOnCursor;
 	protected boolean isOpen = false;
 	protected WindowController[] windowOwners;
 
-	public Window(WindowType type, String title, VanillaPlayerController owner, WindowController... windowOwners) {
+	public Window(WindowType type, String title, WindowController... windowOwners) {
 		this.type = type;
 		this.title = title;
-		this.owner = owner;
 		this.instanceId = InventoryUtil.nextWindowId();
 		this.windowOwners = windowOwners;
+	}
+
+	@Override
+	public void onDetached() {
+		if (this.isOpen()) {
+			this.close();
+		}
+		this.inventories.clear();
+		super.onDetached();
+	}
+
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		if (!this.isOpen()) {
+			this.open();
+		}
 	}
 
 	/**
@@ -112,9 +127,11 @@ public class Window implements InventoryViewer, Tickable {
 	 * Adds a new Inventory to this Window, mapped to the slots specified
 	 * @param inventory to add
 	 * @param slots of the inventory (protocol)
+	 * @return the inventory that got added
 	 */
-	public void addInventory(InventoryBase inventory, SlotIndexCollection slots) {
+	public <T extends InventoryBase> T addInventory(T inventory, SlotIndexCollection slots) {
 		this.inventories.put(inventory, slots);
+		return inventory;
 	}
 
 	/**
@@ -154,15 +171,7 @@ public class Window implements InventoryViewer, Tickable {
 	 * @return the player
 	 */
 	public Player getPlayer() {
-		return this.owner.getParent();
-	}
-
-	/**
-	 * Gets the Vanilla player entity owner of this Window
-	 * @return the owner player entity
-	 */
-	public VanillaPlayerController getOwner() {
-		return this.owner;
+		return getParent().getParent();
 	}
 
 	/**
@@ -179,7 +188,7 @@ public class Window implements InventoryViewer, Tickable {
 	public void open() {
 		this.isOpen = true;
 		for (WindowController owner : this.windowOwners) {
-			owner.addViewer(this.getOwner(), this);
+			owner.addViewer(this.getParent(), this);
 		}
 		for (InventoryBase inventory : this.inventories.keySet()) {
 			inventory.addViewer(this);
@@ -194,7 +203,7 @@ public class Window implements InventoryViewer, Tickable {
 	public void close() {
 		this.isOpen = false;
 		for (WindowController owner : this.windowOwners) {
-			owner.removeViewer(this.getOwner());
+			owner.removeViewer(this.getParent());
 		}
 		for (InventoryBase inventory : this.inventories.keySet()) {
 			inventory.removeViewer(this);
@@ -241,13 +250,6 @@ public class Window implements InventoryViewer, Tickable {
 				}
 			}
 			this.queuedInventoryUpdates.clear();
-		}
-	}
-
-	@Override
-	public final void tick(float dt) {
-		if (canTick()) {
-			onTick(dt);
 		}
 	}
 
@@ -383,7 +385,7 @@ public class Window implements InventoryViewer, Tickable {
 	 */
 	public void dropItemOnCursor() {
 		if (this.hasItemOnCursor()) {
-			this.getOwner().dropItem(this.getItemOnCursor());
+			this.getParent().dropItem(this.getItemOnCursor());
 			this.setItemOnCursor(null);
 		}
 	}

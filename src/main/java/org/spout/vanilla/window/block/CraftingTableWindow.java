@@ -26,26 +26,22 @@
  */
 package org.spout.vanilla.window.block;
 
-import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.entity.block.CraftingTable;
 import org.spout.vanilla.inventory.block.CraftingTableInventory;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
-import org.spout.vanilla.util.intmap.SlotIndexGrid;
 import org.spout.vanilla.util.intmap.SlotIndexMap;
 import org.spout.vanilla.window.CraftingWindow;
 import org.spout.vanilla.window.WindowType;
 
 public class CraftingTableWindow extends CraftingWindow {
-	private static final SlotIndexCollection MAIN_SLOTS = new SlotIndexGrid(9, 4, 10);
 	private static final SlotIndexCollection CRAFTING_SLOTS = new SlotIndexMap("1-3, 4-6, 7-9, 0");
 
-	public CraftingTableWindow(VanillaPlayerController owner, CraftingTable craftingTable) {
-		this(owner, craftingTable, new CraftingTableInventory());
+	public CraftingTableWindow(CraftingTable craftingTable) {
+		this(craftingTable, new CraftingTableInventory());
 	}
 
-	private CraftingTableWindow(VanillaPlayerController owner, CraftingTable craftingTable, CraftingTableInventory inventory) {
-		super(WindowType.CRAFTINGTABLE, "Crafting", owner, inventory, craftingTable);
-		this.addInventory(owner.getInventory().getMain(), MAIN_SLOTS);
-		this.addInventory(this.getCraftingGrid(), CRAFTING_SLOTS);
+	private CraftingTableWindow(CraftingTable craftingTable, CraftingTableInventory inventory) {
+		super(WindowType.CRAFTINGTABLE, "Crafting", 10, craftingTable);
+		this.setCraftingGrid(inventory, CRAFTING_SLOTS);
 	}
 }

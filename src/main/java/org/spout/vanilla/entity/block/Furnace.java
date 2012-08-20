@@ -194,7 +194,7 @@ public class Furnace extends VanillaWindowBlockController implements InventoryOw
 	}
 
 	@Override
-	public Window createWindow(VanillaPlayerController player) {
-		return new FurnaceWindow(player, this);
+	public Window createWindow() {
+		return new FurnaceWindow(this);
 	}
 }

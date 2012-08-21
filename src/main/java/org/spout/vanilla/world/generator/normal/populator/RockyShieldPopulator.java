@@ -28,6 +28,7 @@ package org.spout.vanilla.world.generator.normal.populator;
 
 import java.util.Random;
 
+import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
@@ -37,11 +38,9 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
 public class RockyShieldPopulator extends Populator {
 	private static final Perlin SHIELD_BASE = new Perlin();
@@ -49,7 +48,9 @@ public class RockyShieldPopulator extends Populator {
 
 	static {
 		SHIELD_BASE.setFrequency(0.01);
+		SHIELD_BASE.setNoiseQuality(NoiseQuality.STANDARD);
 		SHIELD_BASE.setOctaveCount(1);
+
 		SHIELD.SetSourceModule(0, SHIELD_BASE);
 		SHIELD.setFrequency(0.05);
 		SHIELD.setPower(10);
@@ -75,7 +76,7 @@ public class RockyShieldPopulator extends Populator {
 		final double[][] noise = WorldGeneratorUtils.fastNoise(SHIELD, size, size, 4, x, 63, z);
 		for (int xx = 0; xx < size; xx++) {
 			for (int zz = 0; zz < size; zz++) {
-				if (noise[xx][zz] > 0.9) {
+				if (noise[xx][zz] > 0.92) {
 					final int y = world.getSurfaceHeight(x + xx, z + zz);
 					for (int yy = 0; yy >= -7; yy--) {
 						if (yy == 0) {
@@ -83,15 +84,8 @@ public class RockyShieldPopulator extends Populator {
 							if (!canReplace(block.getMaterial())) {
 								continue;
 							}
-							BlockMaterial material = VanillaMaterials.AIR;
-							for (BlockFace face : BlockFaces.NSEW) {
-								final Block adjacent = block.translate(face);
-								if (adjacent.getMaterial() instanceof Liquid) {
-									material = adjacent.getMaterial();
-									break;
-								}
-							}
-							block.setMaterial(material);
+							block.setMaterial(block.getY() <= NormalGenerator.SEA_LEVEL ? VanillaMaterials.STATIONARY_WATER
+									: VanillaMaterials.AIR);
 						} else {
 							if (canReplace(world.getBlockMaterial(x + xx, y + yy, z + zz))) {
 								world.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.STONE, (short) 0, world);

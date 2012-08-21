@@ -168,7 +168,7 @@ public class NetherGenerator extends VanillaBiomeGenerator implements VanillaGen
 			noise = new double[size][size][size];
 			for (int xx = 0; xx < size; xx++) {
 				for (int zz = 0; zz < size; zz++) {
-					final int heightMapValue = (int) (flatNoise[xx][zz] * size + size + 1);
+					final int heightMapValue = (int) (flatNoise[xx][zz] * size + size);
 					final int endY = MathHelper.clamp(size - heightMapValue, 0, size - 1);
 					for (int yy = size - 1; yy >= endY; yy--) {
 						noise[xx][yy][zz] = 1;

@@ -26,31 +26,24 @@
  */
 package org.spout.vanilla.data;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public enum GameMode {
-	SURVIVAL((byte) 0),
-	CREATIVE((byte) 1),
-	ADVENTURE((byte) 2); //1.3 only
-	private final byte id;
-	private static final Map<Byte, GameMode> idMap = new HashMap<Byte, GameMode>();
-
-	static {
-		for (GameMode mode : GameMode.values()) {
-			idMap.put(mode.getId(), mode);
-		}
-	}
-
-	private GameMode(byte id) {
-		this.id = id;
-	}
+	SURVIVAL,
+	CREATIVE,
+	ADVENTURE; //1.3 only
 
 	public byte getId() {
-		return id;
+		return (byte) ordinal();
+	}
+
+	public static GameMode get(int id) {
+		return values()[id];
 	}
 
 	public static GameMode get(byte id) {
-		return idMap.get(id);
+		return values()[id];
+	}
+
+	public static GameMode get(String name) {
+		return valueOf(name.toUpperCase());
 	}
 }

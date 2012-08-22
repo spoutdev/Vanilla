@@ -114,7 +114,6 @@ public class TestCommands {
 						}
 						types.add(testType);
 						match = true;
-						;
 						break;
 					}
 				}
@@ -144,7 +143,7 @@ public class TestCommands {
 			toSpawn += numbers.get(i);
 		}
 
-		ControllerType[] typeArray = types.toArray(new ControllerType[0]);
+		ControllerType[] typeArray;
 
 		if (types.size() == 1) {
 			typeArray = new ControllerType[]{types.get(0)};

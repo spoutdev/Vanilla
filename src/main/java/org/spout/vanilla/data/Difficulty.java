@@ -30,30 +30,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum Difficulty {
-	PEACEFUL((byte) 0),
-	EASY((byte) 1),
-	NORMAL((byte) 2),
-	HARD((byte) 3),
-	HARDCORE((byte) 4); //1.3 only
-	private final byte id;
-	private static final Map<Byte, Difficulty> idMap = new HashMap<Byte, Difficulty>();
-
-	static {
-		for (Difficulty diff : Difficulty.values()) {
-			idMap.put(diff.getId(), diff);
-		}
-	}
-
-	private Difficulty(byte id) {
-		this.id = id;
-	}
+	PEACEFUL,
+	EASY,
+	NORMAL,
+	HARD,
+	HARDCORE; //1.3 only
 
 	public byte getId() {
-		return id;
+		return (byte) ordinal();
+	}
+
+	public static Difficulty get(int id) {
+		return values()[id];
 	}
 
 	public static Difficulty get(byte id) {
-		return idMap.get(id);
+		return values()[id];
+	}
+
+	public static Difficulty get(String name) {
+		return valueOf(name.toUpperCase());
 	}
 }
 

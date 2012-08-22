@@ -53,4 +53,8 @@ public enum Dimension {
 	public static Dimension get(int id) {
 		return idMap.get(id);
 	}
+
+	public static Dimension get(String name) {
+		return valueOf(name.toUpperCase());
+	}
 }

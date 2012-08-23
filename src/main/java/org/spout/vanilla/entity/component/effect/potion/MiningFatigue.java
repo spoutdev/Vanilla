@@ -24,18 +24,13 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.entityeffect.food;
+package org.spout.vanilla.entity.component.effect.potion;
 
-import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
+import org.spout.vanilla.entity.component.effect.VanillaEntityEffect;
 import org.spout.vanilla.entity.VanillaPlayerController;
 
-public class FoodSaturation extends VanillaEntityFoodEffect {
-	public FoodSaturation(VanillaPlayerController effected, float amount) {
-		super(effected, amount);
-	}
-
-	@Override
-	public void onAttached() {
-		this.getParent().getSurvivalComponent().setFoodSaturation(this.getParent().getSurvivalComponent().getFoodSaturation() + this.getStrength());
+public class MiningFatigue extends VanillaEntityEffect {
+	public MiningFatigue(VanillaPlayerController effected, float duration, int strength) {
+		super(effected, 4, duration, strength);
 	}
 }

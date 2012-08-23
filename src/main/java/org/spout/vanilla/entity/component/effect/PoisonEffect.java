@@ -24,13 +24,30 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.entityeffect.potion;
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package org.spout.vanilla.entity.component.effect;
 
-import org.spout.vanilla.data.entityeffect.VanillaEntityEffect;
-import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.api.entity.BasicComponent;
+import org.spout.api.tickable.TickPriority;
 
-public class Regeneration extends VanillaEntityEffect {
-	public Regeneration(VanillaPlayerController effected, float duration, int strength) {
-		super(effected, 10, duration, strength);
+import org.spout.vanilla.entity.VanillaEntityController;
+
+public class PoisonEffect extends BasicComponent<VanillaEntityController> {
+	//TODO implement methods and do this!
+	private boolean poisoned;
+
+	public PoisonEffect(TickPriority priority) {
+		super(priority);
+	}
+
+	public void setPoisoned(boolean poisoned) {
+		this.poisoned = poisoned;
+	}
+
+	public boolean isPoisoned() {
+		return this.poisoned;
 	}
 }

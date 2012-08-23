@@ -51,7 +51,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.data.entityeffect.potion.Speed;
+import org.spout.vanilla.entity.component.effect.potion.Speed;
 import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.entity.creature.neutral.Human;

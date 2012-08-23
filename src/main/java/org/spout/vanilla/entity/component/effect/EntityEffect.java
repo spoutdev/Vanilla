@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.entityeffect;
+package org.spout.vanilla.entity.component.effect;
 
 import org.spout.api.entity.BasicComponent;
 import org.spout.api.protocol.Message;

@@ -24,13 +24,13 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.entityeffect.potion;
+package org.spout.vanilla.entity.component.effect.potion;
 
-import org.spout.vanilla.data.entityeffect.VanillaEntityEffect;
+import org.spout.vanilla.entity.component.effect.VanillaEntityEffect;
 import org.spout.vanilla.entity.VanillaPlayerController;
 
-public class JumpBoost extends VanillaEntityEffect {
-	public JumpBoost(VanillaPlayerController effected, float duration, int strength) {
-		super(effected, 8, duration, strength);
+public class InstantHeal extends VanillaEntityEffect {
+	public InstantHeal(VanillaPlayerController effected, float duration, int strength) {
+		super(effected, 6, duration, strength);
 	}
 }

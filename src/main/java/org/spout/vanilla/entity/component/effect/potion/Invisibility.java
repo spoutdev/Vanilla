@@ -24,36 +24,13 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.entityeffect;
+package org.spout.vanilla.entity.component.effect.potion;
 
-import org.spout.api.protocol.Message;
-
+import org.spout.vanilla.entity.component.effect.VanillaEntityEffect;
 import org.spout.vanilla.entity.VanillaPlayerController;
-import org.spout.vanilla.protocol.msg.entity.EntityEffectMessage;
-import org.spout.vanilla.protocol.msg.entity.EntityRemoveEffectMessage;
 
-public abstract class VanillaEntityEffect extends EntityEffect {
-	public VanillaEntityEffect(VanillaPlayerController effected, int id, float duration, int strength) {
-		super(effected, id, duration, strength);
-	}
-
-	@Override
-	public boolean hasApplianceMessage() {
-		return true;
-	}
-
-	@Override
-	public boolean hasRemovalMessage() {
-		return true;
-	}
-
-	@Override
-	public Message getApplianceMessage() {
-		return new EntityEffectMessage(getParent().getParent().getId(), (byte) id, (byte) strength, (byte) (getDelay() * 20));
-	}
-
-	@Override
-	public Message getRemovalMessage() {
-		return new EntityRemoveEffectMessage(getParent().getParent().getId(), (byte) id);
+public class Invisibility extends VanillaEntityEffect {
+	public Invisibility(VanillaPlayerController effected, float duration, int strength) {
+		super(effected, 14, duration, strength);
 	}
 }

@@ -24,13 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.entityeffect.potion;
+package org.spout.vanilla.entity.component.effect.food;
 
-import org.spout.vanilla.data.entityeffect.VanillaEntityEffect;
+import org.spout.vanilla.entity.component.effect.VanillaEntityFoodEffect;
 import org.spout.vanilla.entity.VanillaPlayerController;
 
-public class Weakness extends VanillaEntityEffect {
-	public Weakness(VanillaPlayerController effected, float duration, int strength) {
-		super(effected, 18, duration, strength);
+public class Poisoning extends VanillaEntityFoodEffect {
+	public Poisoning(VanillaPlayerController effected, float amount) {
+		//Unused. Only to get the vPlayer
+		super(effected, 30, 0);
+	}
+
+	@Override
+	public void onAttached() {
+		this.getParent().getPoisonEffectComponent().setPoisoned(true);
+	}
+
+	@Override
+	public void onTick(float dt) {
+		this.getParent().getPoisonEffectComponent().setPoisoned(false);
 	}
 }

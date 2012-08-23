@@ -24,13 +24,13 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.entityeffect.potion;
+package org.spout.vanilla.entity.component.effect.potion;
 
-import org.spout.vanilla.data.entityeffect.VanillaEntityEffect;
+import org.spout.vanilla.entity.component.effect.VanillaEntityEffect;
 import org.spout.vanilla.entity.VanillaPlayerController;
 
-public class NightVision extends VanillaEntityEffect {
-	public NightVision(VanillaPlayerController effected, float duration, int strength) {
-		super(effected, 16, duration, strength);
+public class Poison extends VanillaEntityEffect {
+	public Poison(VanillaPlayerController effected, float duration, int strength) {
+		super(effected, 19, duration, strength);
 	}
 }

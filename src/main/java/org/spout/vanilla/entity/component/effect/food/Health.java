@@ -24,13 +24,19 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.entityeffect.potion;
+package org.spout.vanilla.entity.component.effect.food;
 
-import org.spout.vanilla.data.entityeffect.VanillaEntityEffect;
+import org.spout.vanilla.entity.component.effect.VanillaEntityFoodEffect;
 import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.entity.source.HealthChangeReason;
 
-public class Blindness extends VanillaEntityEffect {
-	public Blindness(VanillaPlayerController effected, float duration, int strength) {
-		super(effected, 15, duration, strength);
+public class Health extends VanillaEntityFoodEffect {
+	public Health(VanillaPlayerController effected, float amount) {
+		super(effected, amount);
+	}
+
+	@Override
+	public void onAttached() {
+		this.getParent().getHealth().setHealth((int) (this.getParent().getHealth().getHealth() + this.getStrength()), HealthChangeReason.EATING);
 	}
 }

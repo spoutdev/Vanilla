@@ -24,30 +24,18 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package org.spout.vanilla.entity.component.effect;
+package org.spout.vanilla.entity.component.effect.food;
 
-import org.spout.api.entity.BasicComponent;
-import org.spout.api.tickable.TickPriority;
+import org.spout.vanilla.entity.component.effect.VanillaEntityFoodEffect;
+import org.spout.vanilla.entity.VanillaPlayerController;
 
-import org.spout.vanilla.entity.VanillaEntityController;
-
-public class PoisonEffectComponent extends BasicComponent<VanillaEntityController> {
-	//TODO implement methods and do this!
-	private boolean poisoned;
-
-	public PoisonEffectComponent(TickPriority priority) {
-		super(priority);
+public class FoodSaturation extends VanillaEntityFoodEffect {
+	public FoodSaturation(VanillaPlayerController effected, float amount) {
+		super(effected, amount);
 	}
 
-	public void setPoisoned(boolean poisoned) {
-		this.poisoned = poisoned;
-	}
-
-	public boolean isPoisoned() {
-		return this.poisoned;
+	@Override
+	public void onAttached() {
+		this.getParent().getSurvivalComponent().setFoodSaturation(this.getParent().getSurvivalComponent().getFoodSaturation() + this.getStrength());
 	}
 }

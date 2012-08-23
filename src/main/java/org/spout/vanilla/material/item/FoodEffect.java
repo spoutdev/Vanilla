@@ -28,7 +28,7 @@ package org.spout.vanilla.material.item;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
+import org.spout.vanilla.entity.component.effect.VanillaEntityFoodEffect;
 import org.spout.vanilla.entity.VanillaPlayerController;
 
 public class FoodEffect {

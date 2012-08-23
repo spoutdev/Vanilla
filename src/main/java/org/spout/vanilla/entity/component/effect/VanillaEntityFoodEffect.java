@@ -24,13 +24,45 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.entityeffect.potion;
+package org.spout.vanilla.entity.component.effect;
 
-import org.spout.vanilla.data.entityeffect.VanillaEntityEffect;
+import org.spout.api.protocol.Message;
+
 import org.spout.vanilla.entity.VanillaPlayerController;
 
-public class Resistance extends VanillaEntityEffect {
-	public Resistance(VanillaPlayerController effected, float duration, int strength) {
-		super(effected, 11, duration, strength);
+public abstract class VanillaEntityFoodEffect extends EntityEffect {
+	public VanillaEntityFoodEffect(VanillaPlayerController effected, float amount) {
+		super(effected, 0, 1, amount);
+	}
+
+	public VanillaEntityFoodEffect(VanillaPlayerController effected, int duration, float amount) {
+		super(effected, 0, duration, amount);
+	}
+
+	@Override
+	public boolean hasApplianceMessage() {
+		return false;
+	}
+
+	@Override
+	public boolean hasRemovalMessage() {
+		return false;
+	}
+
+	@Override
+	public Message getApplianceMessage() {
+		return null;
+	}
+
+	@Override
+	public Message getRemovalMessage() {
+		return null;
+	}
+
+	@Override
+	public abstract void onAttached();
+
+	@Override
+	public void onTick(float dt) {
 	}
 }

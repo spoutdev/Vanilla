@@ -24,24 +24,13 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.entityeffect.food;
+package org.spout.vanilla.entity.component.effect.potion;
 
-import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
+import org.spout.vanilla.entity.component.effect.VanillaEntityEffect;
 import org.spout.vanilla.entity.VanillaPlayerController;
 
-public class Poisoning extends VanillaEntityFoodEffect {
-	public Poisoning(VanillaPlayerController effected, float amount) {
-		//Unused. Only to get the vPlayer
-		super(effected, 30, 0);
-	}
-
-	@Override
-	public void onAttached() {
-		this.getParent().getPoisonEffectComponent().setPoisoned(true);
-	}
-
-	@Override
-	public void onTick(float dt) {
-		this.getParent().getPoisonEffectComponent().setPoisoned(false);
+public class Nausea extends VanillaEntityEffect {
+	public Nausea(VanillaPlayerController effected, float duration, int strength) {
+		super(effected, 9, duration, strength);
 	}
 }

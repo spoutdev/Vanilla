@@ -58,7 +58,7 @@ import org.spout.vanilla.entity.component.basic.HealthComponent;
 import org.spout.vanilla.entity.component.basic.PlayerHeadComponent;
 import org.spout.vanilla.entity.component.basic.PlayerSuffocationComponent;
 import org.spout.vanilla.entity.component.basic.SuffocationComponent;
-import org.spout.vanilla.entity.component.effect.PoisonEffectComponent;
+import org.spout.vanilla.entity.component.effect.PoisonEffect;
 import org.spout.vanilla.entity.component.gamemode.AdventureComponent;
 import org.spout.vanilla.entity.component.gamemode.CreativeComponent;
 import org.spout.vanilla.entity.component.gamemode.SurvivalComponent;
@@ -82,7 +82,7 @@ import static org.spout.vanilla.util.VanillaMathHelper.getRandomDirection;
  */
 public class VanillaPlayerController extends PlayerController implements VanillaController, HealthOwner, SuffocationOwner, HeadOwner, GameModeOwner {
 	private PingComponent pingComponent;
-	private PoisonEffectComponent poisonEffectComponent;
+	private PoisonEffect poisonEffectComponent;
 	private PlayerStepSoundComponent stepSoundComponent;
 	private StatsUpdateComponent statsUpdateComponent;
 	private HealthComponent healthComponent;
@@ -125,7 +125,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 		headComponent = addComponent(new PlayerHeadComponent());
 		statsUpdateComponent = addComponent(new StatsUpdateComponent(TickPriority.HIGHEST));
 		pingComponent = addComponent(new PingComponent(TickPriority.HIGH));
-		poisonEffectComponent = addComponent(new PoisonEffectComponent(TickPriority.HIGH));
+		poisonEffectComponent = addComponent(new PoisonEffect(TickPriority.HIGH));
 		stepSoundComponent = addComponent(new PlayerStepSoundComponent(TickPriority.HIGHEST));
 		diggingComponent = addComponent(new DiggingComponent(TickPriority.HIGH));
 		blockCollisionComponent = addComponent(new BlockCollisionComponent(TickPriority.HIGHEST));
@@ -509,7 +509,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 		return pingComponent;
 	}
 
-	public PoisonEffectComponent getPoisonEffectComponent() {
+	public PoisonEffect getPoisonEffectComponent() {
 		return poisonEffectComponent;
 	}
 

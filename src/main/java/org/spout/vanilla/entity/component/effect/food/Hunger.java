@@ -24,9 +24,9 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.entityeffect.food;
+package org.spout.vanilla.entity.component.effect.food;
 
-import org.spout.vanilla.data.entityeffect.VanillaEntityFoodEffect;
+import org.spout.vanilla.entity.component.effect.VanillaEntityFoodEffect;
 import org.spout.vanilla.entity.VanillaPlayerController;
 
 public class Hunger extends VanillaEntityFoodEffect {

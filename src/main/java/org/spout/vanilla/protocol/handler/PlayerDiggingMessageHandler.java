@@ -98,8 +98,8 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 
 		VanillaPlayerController vp = ((VanillaPlayerController) player.getController());
 
-		//Don't block protections if dropping an item, silly Notch...
-		if (state != PlayerDiggingMessage.STATE_DROP_ITEM) {
+		// Don't block protections if dropping an item, silly Notch...
+		if (state != PlayerDiggingMessage.STATE_DROP_ITEM && state != PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
 			Collection<Protection> protections = Spout.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(point);
 			for (Protection p : protections) {
 				if (p.contains(point) && !vp.isOp()) {
@@ -197,10 +197,10 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				if (block.getMaterial() != VanillaMaterials.AIR) {
 					GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);
 				}
-			} else if (state == PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
-				if (heldItem.getMaterial() instanceof Food) {
-					((Food) heldItem.getMaterial()).onEat(player, currentSlot);
-				}
+			}
+		} else if (state == PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
+			if (heldItem.getMaterial() instanceof Food) {
+				((Food) heldItem.getMaterial()).onEat(player, currentSlot);
 			}
 		}
 	}

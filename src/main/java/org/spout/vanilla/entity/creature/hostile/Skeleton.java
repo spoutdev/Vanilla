@@ -50,7 +50,7 @@ public class Skeleton extends Creature implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getHealth().setSpawnHealth(20);
-		getHealth().setHurtEffect(SoundEffects.MOB_SKELETONHURT);
+		getHealth().setHurtEffect(SoundEffects.MOB_SKELETONHURT.adjust(1.0f, 0.8f));
 		getDrops().addRange(VanillaMaterials.ARROW, 2);
 		getDrops().addRange(VanillaMaterials.BONE, 2);
 	}

@@ -28,12 +28,9 @@ package org.spout.vanilla.entity.world;
 
 import java.util.HashMap;
 
-import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
-import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.data.Weather;
-import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.world.WeatherSimulator;
 
 /**
@@ -74,19 +71,6 @@ public abstract class VanillaSky implements Runnable {
 
 	public void onDetach() {
 		setSky(this.world, null);
-	}
-
-	public void broadcastMessage(Message message) {
-		World world = getWorld();
-		for (Player player : world.getPlayers()) {
-			if (!player.isOnline()) {
-				continue;
-			}
-			if (!player.getWorld().equals(world)) {
-				continue;
-			}
-			VanillaNetworkUtil.sendPacket(player, message);
-		}
 	}
 
 	@Override

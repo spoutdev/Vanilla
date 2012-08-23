@@ -56,7 +56,7 @@ public class Chicken extends Creature implements Passive {
 	public void onAttached() {
 		super.onAttached();
 		getHealth().setSpawnHealth(4);
-		getHealth().setHurtEffect(SoundEffects.MOB_CHICKENHURT);
+		getHealth().setHurtEffect(SoundEffects.MOB_CHICKENHURT.adjust(1.0f, 0.8f));
 		//dropItemComponent = new TimedDropItemComponent(this, VanillaMaterials.EGG, 1, MINIMUM_EGG_BREEDING_TIME, MAXIMUM_EGG_BREEDING_TIME);
 		getDrops().add(VanillaMaterials.FEATHER, 2);
 	}

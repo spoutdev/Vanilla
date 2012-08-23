@@ -33,7 +33,7 @@ import org.spout.api.geo.World;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.entity.world.VanillaSky;
-import org.spout.vanilla.protocol.msg.TimeUpdateMessage;
+import org.spout.vanilla.event.world.TimeUpdateEvent;
 import org.spout.vanilla.util.VanillaMathHelper;
 import org.spout.vanilla.world.WeatherSimulator;
 
@@ -57,7 +57,10 @@ public class NormalSky extends VanillaSky {
 		}
 		this.getWorld().setSkyLight((byte) (celestial * (float) SKY_LIGHT_RANGE + MIN_SKY_LIGHT));
 
-		broadcastMessage(new TimeUpdateMessage(time));
+		TimeUpdateEvent event = new TimeUpdateEvent(getWorld(), time);
+		for (Player player : getWorld().getPlayers()) {
+			player.getNetworkSynchronizer().callProtocolEvent(event);
+		}
 	}
 
 	@Override

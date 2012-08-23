@@ -32,8 +32,10 @@ import java.util.Set;
 
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.event.block.BlockChangeEvent;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -48,6 +50,7 @@ import org.spout.vanilla.data.drops.flag.PlayerFlags;
 import org.spout.vanilla.data.drops.type.block.BlockDrops;
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.event.block.BlockActionEvent;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.ItemUtil;
@@ -393,5 +396,20 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 */
 	public BlockDrops getDrops() {
 		return this.drops;
+	}
+
+	/**
+	 * Plays a block action for this type of Block Material
+	 * 
+	 * @param block to play at
+	 * @param arg1 for the action
+	 * @param arg2 for the action
+	 */
+	public void playBlockAction(Block block, byte arg1, byte arg2) {
+		BlockActionEvent event = new BlockActionEvent(block, this, arg1, arg2);
+		Point position = block.getPosition();
+		for (Player player : position.getWorld().getNearbyPlayers(position, 48)) {
+			player.getNetworkSynchronizer().callProtocolEvent(event);
+		}
 	}
 }

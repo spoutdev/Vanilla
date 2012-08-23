@@ -106,7 +106,7 @@ public class Slab extends VanillaBlockMaterial {
 
 	@Override
 	public boolean destroy(Block block, Set<Flag> flags) {
-		if (!block.isMaterial(this.doubletype)) {
+		if (block.isMaterial(this.doubletype)) {
 			return false;
 		}
 		return super.destroy(block, flags);

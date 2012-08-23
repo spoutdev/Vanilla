@@ -53,7 +53,7 @@ public class Spider extends Creature implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getHealth().setSpawnHealth(16);
-		getHealth().setHurtEffect(SoundEffects.MOB_SPIDER);
+		getHealth().setHurtEffect(SoundEffects.MOB_SPIDER.adjust(1.0f, 0.8f));
 		getDrops().addRange(VanillaMaterials.STRING, 2);
 	}
 

@@ -32,15 +32,26 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.data.effect.Effect;
+import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
-import org.spout.vanilla.data.effect.store.SoundEffects;
 
-public class DoorEffect extends Effect {
-	private static final int DOOR_RANGE = 16;
+public class ToggleSoundEffect extends SoundEffect {
+	private final SoundEffect open, close;
 
-	public DoorEffect() {
-		super(DOOR_RANGE);
+	public ToggleSoundEffect(SoundEffect open, SoundEffect close) {
+		super(open.getName());
+		this.open = open;
+		this.close = close;
+	}
+
+	@Override
+	public ToggleSoundEffect adjust(float volume, float pitch) {
+		return new ToggleSoundEffect(this.open.adjust(volume, pitch), this.close.adjust(volume, pitch));
+	}
+
+	@Override
+	public ToggleSoundEffect randomPitch(float amount) {
+		return new ToggleSoundEffect(this.open.randomPitch(amount), this.close.randomPitch(amount));
 	}
 
 	@Override
@@ -49,11 +60,7 @@ public class DoorEffect extends Effect {
 	}
 
 	public void play(Player player, Point position, boolean open) {
-		if (open) {
-			SoundEffects.RANDOM_DOOR_OPEN.play(player, position);
-		} else {
-			SoundEffects.RANDOM_DOOR_CLOSE.play(player, position);
-		}
+		(open ? this.open : this.close).play(player, position);
 	}
 
 	public void play(List<Player> players, Point position, boolean open) {

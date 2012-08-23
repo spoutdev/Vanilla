@@ -48,7 +48,7 @@ public class Creeper extends Creature implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getHealth().setSpawnHealth(20);
-		getHealth().setHurtEffect(SoundEffects.MOB_CREEPER);
+		getHealth().setHurtEffect(SoundEffects.MOB_CREEPER.adjust(1.0f, 0.8f));
 		getDrops().addRange(VanillaMaterials.GUNPOWDER, 0, 2);
 	}
 

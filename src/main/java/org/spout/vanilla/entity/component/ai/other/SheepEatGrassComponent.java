@@ -33,10 +33,9 @@ import org.spout.api.math.Vector3;
 import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.entity.creature.passive.Sheep;
+import org.spout.vanilla.event.entity.EntityStatusEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
-
-import static org.spout.vanilla.util.VanillaNetworkUtil.broadcastPacket;
 
 /**
  * Sheep component for eating grass
@@ -94,7 +93,7 @@ public class SheepEatGrassComponent extends BasicComponent<Sheep> {
 	 * Is called when the sheep eats grass. Applies the bonuses to the sheep.
 	 */
 	private void onGrassEaten() {
-		broadcastPacket(new EntityStatusMessage(getParent().getParent().getId(), EntityStatusMessage.SHEEP_EAT_GRASS));
+		getParent().callProtocolEvent(new EntityStatusEvent(getParent().getParent(), EntityStatusMessage.SHEEP_EAT_GRASS));
 		getParent().setSheared(false);
 		long newTimeUntilAdult = getParent().getGrowing().getTimeUntilAdult() - 1200;
 		if (newTimeUntilAdult < 0) {

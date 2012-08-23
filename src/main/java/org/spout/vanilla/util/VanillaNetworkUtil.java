@@ -29,34 +29,19 @@ package org.spout.vanilla.util;
 import java.util.ArrayList;
 
 import org.spout.api.Spout;
-import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.protocol.VanillaProtocol;
-import org.spout.vanilla.protocol.msg.BlockActionMessage;
 
 public class VanillaNetworkUtil {
-	public static int BLOCK_EFFECT_RANGE = 16;
-
 	/**
 	 * This method takes any amount of messages and sends them to every online player on the server.
 	 * @param messages
 	 */
 	public static void broadcastPacket(Message... messages) {
-		sendPacket(Spout.getEngine().getOnlinePlayers(), messages);
-	}
-
-	/**
-	 * This method takes in any amount of messages and sends them to any amount of
-	 * players.
-	 * @param players specific players to send a message to.
-	 * @param messages the message(s) to send
-	 */
-	public static void sendPacket(Player[] players, Message... messages) {
-		for (Player player : players) {
+		//TODO: Let the setNextSpawn of the monster spawner use a protocol event or network component
+		for (Player player : Spout.getEngine().getOnlinePlayers()) {
 			sendPacket(player, messages);
 		}
 	}
@@ -68,6 +53,7 @@ public class VanillaNetworkUtil {
 	 * @param messages Messages to send
 	 */
 	public static void broadcastPacket(Player[] ignore, Message... messages) {
+		//TODO: Handle client status messages differently
 		ArrayList<Player> toSend = new ArrayList<Player>();
 		for (Player player : Spout.getEngine().getOnlinePlayers()) {
 			for (Player ignored : ignore) {
@@ -77,73 +63,17 @@ public class VanillaNetworkUtil {
 				toSend.add(player);
 			}
 		}
-		sendPacket(toSend.toArray(new Player[toSend.size()]), messages);
+		for (Player player : toSend) {
+			sendPacket(player, messages);
+		}
 	}
 
-	/**
-	 * This method takes in a message and sends it to a specific player
-	 * @param player specific player to relieve message
-	 * @param messages specific message to send.
-	 */
-	public static void sendPacket(Player player, Message... messages) {
+	private static void sendPacket(Player player, Message... messages) {
 		if (!(player.getSession().getProtocol() instanceof VanillaProtocol)) {
 			return;
 		}
 		for (Message message : messages) {
 			player.getSession().send(false, message);
-		}
-	}
-
-	/**
-	 * Sends a block action message to all nearby players in a 48-block radius
-	 */
-	public static void playBlockAction(Block block, byte arg1, byte arg2) {
-		sendPacketsToNearbyPlayers(block.getPosition(), 48, new BlockActionMessage(block, arg1, arg2, (byte) block.getMaterial().getId()));
-	}
-
-	/**
-	 * Sends a block action message to all nearby players
-	 */
-	public static void playBlockAction(Block block, int range, byte arg1, byte arg2) {
-		sendPacketsToNearbyPlayers(block.getPosition(), range, new BlockActionMessage(block, arg1, arg2, (byte) block.getMaterial().getId()));
-	}
-
-	/**
-	 * This method sends any amount of packets to all nearby players of a position (within a specified range).
-	 * @param position The position that the packet relates to. It will be used as the central point to send packets in a range from.
-	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
-	 * @param messages The messages that should be sent to the discovered nearest player.
-	 */
-	public static void sendPacketsToNearbyPlayers(Point position, Entity ignore, int range, Message... messages) {
-		for (Player plr : position.getWorld().getNearbyPlayers(position, ignore, range)) {
-			plr.getSession().sendAll(false, messages);
-		}
-	}
-
-	/**
-	 * This method sends any amount of packets to all nearby players of a position (within a specified range).
-	 * @param position The position that the packet relates to. It will be used as the central point to send packets in a range from.
-	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
-	 * @param messages The messages that should be sent to the discovered nearest player.
-	 */
-	public static void sendPacketsToNearbyPlayers(Point position, int range, Message... messages) {
-		for (Player plr : position.getWorld().getNearbyPlayers(position, range)) {
-			plr.getSession().sendAll(false, messages);
-		}
-	}
-
-	/**
-	 * This method sends any amount of packets to all nearby players of an entity (within a specified range).
-	 * @param entity The entity that the packet relates to. It will be used as the central point to send packets in a range from.
-	 * @param range The range (circular) from the entity in-which the nearest player should be searched for.
-	 * @param messages The messages that should be sent to the discovered nearest player.
-	 */
-	public static void sendPacketsToNearbyPlayers(Entity entity, int range, Message... messages) {
-		if (entity == null || entity.getRegion() == null) {
-			return;
-		}
-		for (Player plr : entity.getWorld().getNearbyPlayers(entity, range)) {
-			plr.getSession().sendAll(false, messages);
 		}
 	}
 }

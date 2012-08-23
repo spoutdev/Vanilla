@@ -47,7 +47,7 @@ public class Sign extends VanillaBlockController {
 	private EventManager eventManager = Spout.getEngine().getEventManager();
 
 	public Sign() {
-		super(VanillaControllerTypes.SIGN, VanillaMaterials.SIGN.getPlacedMaterial());
+		super(VanillaControllerTypes.SIGN, VanillaMaterials.WALL_SIGN);
 	}
 
 	@Override

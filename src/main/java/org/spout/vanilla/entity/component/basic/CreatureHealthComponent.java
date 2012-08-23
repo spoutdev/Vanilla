@@ -58,8 +58,8 @@ public class CreatureHealthComponent extends HealthComponent {
 
 	@Override
 	public void setHurtEffect(SoundEffect effect) {
-		adultHurtEffect = effect.randomPitch(0.2f);
-		babyHurtEffect = effect.adjust(effect.getDefaultVolume(), effect.getDefaultPitch() + 0.5f).randomPitch(0.2f);
+		adultHurtEffect = effect.randomPitch(0.4f);
+		babyHurtEffect = effect.adjust(effect.getDefaultVolume(), effect.getDefaultPitch() + 0.5f).randomPitch(0.4f);
 	}
 
 	@Override

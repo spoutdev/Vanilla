@@ -31,12 +31,12 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.entity.InventoryOwner;
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.window.Window;
 import org.spout.vanilla.window.block.ChestWindow;
 
@@ -87,7 +87,8 @@ public class Chest extends VanillaWindowBlockController implements InventoryOwne
 	public void setOpened(boolean opened) {
 		if (this.opened != opened) {
 			this.opened = opened;
-			VanillaNetworkUtil.playBlockAction(getBlock(), (byte) 1, opened ? (byte) 1 : (byte) 0);
+			playBlockAction((byte) 1, opened ? (byte) 1 : (byte) 0);
+			GeneralEffects.CHEST.playGlobal(getBlock().getPosition(), opened);
 		}
 	}
 

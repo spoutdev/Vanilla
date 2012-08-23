@@ -57,7 +57,7 @@ public class Sheep extends Creature implements Passive {
 		getHealth().setSpawnHealth(8);
 		eatGrassComponent = addComponent(new SheepEatGrassComponent(TickPriority.NORMAL));
 		isSheared = getDataMap().get("sheep_sheared", false);
-		getHealth().setHurtEffect(SoundEffects.MOB_SHEEP);
+		getHealth().setHurtEffect(SoundEffects.MOB_SHEEP.adjust(1.0f, 0.8f));
 	}
 
 	@Override

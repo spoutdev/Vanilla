@@ -28,14 +28,14 @@ package org.spout.vanilla.entity;
 
 import org.spout.api.entity.Player;
 import org.spout.api.entity.controller.BlockController;
-import org.spout.api.material.BlockMaterial;
 import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 
 /**
  * A entity that is always at a fixed position handling Block logic a Block material can't do
  */
 public abstract class VanillaBlockController extends BlockController implements VanillaController {
-	protected VanillaBlockController(VanillaControllerType type, BlockMaterial blockMaterial) {
+	protected VanillaBlockController(VanillaControllerType type, VanillaBlockMaterial blockMaterial) {
 		super(type, blockMaterial);
 	}
 
@@ -44,5 +44,21 @@ public abstract class VanillaBlockController extends BlockController implements 
 		for (Player player : getParent().getWorld().getNearbyPlayers(getParent(), 160)) {
 			player.getNetworkSynchronizer().callProtocolEvent(event);
 		}
+	}
+
+	@Override
+	public VanillaBlockMaterial getMaterial() {
+		return (VanillaBlockMaterial) super.getMaterial();
+	}
+
+	/**
+	 * Plays a block action<br>
+	 * See also: VanillaBlockMaterial.playBlockAction
+	 * 
+	 * @param arg1 for the action
+	 * @param arg2 for the action
+	 */
+	public void playBlockAction(byte arg1, byte arg2) {
+		getMaterial().playBlockAction(getBlock(), arg1, arg2);
 	}
 }

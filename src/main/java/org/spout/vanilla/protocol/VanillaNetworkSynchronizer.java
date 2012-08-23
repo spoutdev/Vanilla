@@ -89,6 +89,7 @@ import org.spout.vanilla.event.window.WindowSetSlotsEvent;
 import org.spout.vanilla.event.world.PlayExplosionEffectEvent;
 import org.spout.vanilla.event.world.PlayParticleEffectEvent;
 import org.spout.vanilla.event.world.PlaySoundEffectEvent;
+import org.spout.vanilla.event.world.TimeUpdateEvent;
 import org.spout.vanilla.event.world.WeatherChangeEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.BlockActionMessage;
@@ -105,6 +106,7 @@ import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerUpdateStatsMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
+import org.spout.vanilla.protocol.msg.TimeUpdateMessage;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityCollectItemMessage;
@@ -574,6 +576,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		} else {
 			return new ChangeGameStateMessage(ChangeGameStateMessage.END_RAINING);
 		}
+	}
+
+	@EventHandler
+	public Message onTimeUpdate(TimeUpdateEvent event) {
+		return new TimeUpdateMessage(event.getNewTime());
 	}
 
 	public static enum ChunkInit {

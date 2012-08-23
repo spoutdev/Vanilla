@@ -41,7 +41,7 @@ public class Ghast extends Creature implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getHealth().setSpawnHealth(10);
-		getHealth().setHurtEffect(SoundEffects.MOB_GHAST_SCREAM);
+		getHealth().setHurtEffect(SoundEffects.MOB_GHAST_SCREAM.adjust(1.0f, 0.8f));
 		getDrops().addRange(VanillaMaterials.GUNPOWDER, 2);
 		getDrops().addRange(VanillaMaterials.GHAST_TEAR, 1);
 	}

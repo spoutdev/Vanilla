@@ -48,7 +48,7 @@ public class Pig extends Creature implements Passive {
 	public void onAttached() {
 		super.onAttached();
 		getHealth().setSpawnHealth(10);
-		getHealth().setHurtEffect(SoundEffects.MOB_PIG);
+		getHealth().setHurtEffect(SoundEffects.MOB_PIG.adjust(1.0f, 0.8f));
 	}
 
 	@Override

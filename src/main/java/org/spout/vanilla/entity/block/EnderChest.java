@@ -31,7 +31,6 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.window.Window;
 import org.spout.vanilla.window.block.EnderChestWindow;
 
@@ -66,7 +65,7 @@ public class EnderChest extends VanillaWindowBlockController {
 	public void setOpened(boolean opened) {
 		if (this.opened != opened) {
 			this.opened = opened;
-			VanillaNetworkUtil.playBlockAction(getBlock(), (byte) 1, opened ? (byte) 1 : (byte) 0);
+			playBlockAction((byte) 1, opened ? (byte) 1 : (byte) 0);
 		}
 	}
 

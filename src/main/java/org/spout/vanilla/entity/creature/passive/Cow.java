@@ -53,7 +53,7 @@ public class Cow extends Creature implements Passive {
 	public void onAttached() {
 		super.onAttached();
 		getHealth().setSpawnHealth(10);
-		getHealth().setHurtEffect(SoundEffects.MOB_COWHURT.adjust(0.4f, 1.0f));
+		getHealth().setHurtEffect(SoundEffects.MOB_COWHURT.adjust(0.4f, 0.8f));
 		getDrops().addRange(VanillaMaterials.LEATHER, 2);
 	}
 

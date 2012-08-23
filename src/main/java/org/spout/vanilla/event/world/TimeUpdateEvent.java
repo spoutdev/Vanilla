@@ -24,20 +24,32 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.creature.hostile;
+package org.spout.vanilla.event.world;
 
-import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.world.WorldEvent;
+import org.spout.api.geo.World;
+import org.spout.api.protocol.event.ProtocolEvent;
 
-public class CaveSpider extends Spider {
-	public CaveSpider() {
-		super(VanillaControllerTypes.CAVE_SPIDER);
+public class TimeUpdateEvent extends WorldEvent implements ProtocolEvent {
+	private static HandlerList handlers = new HandlerList();
+	private final long newTime;
+
+	public TimeUpdateEvent(World world, long newTime) {
+		super(world);
+		this.newTime = newTime;
+	}
+
+	public long getNewTime() {
+		return this.newTime;
 	}
 
 	@Override
-	public void onAttached() {
-		super.onAttached();
-		getHealth().setSpawnHealth(12);
-		getHealth().setHurtEffect(SoundEffects.MOB_SPIDER.adjust(1.0f, 0.8f));
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

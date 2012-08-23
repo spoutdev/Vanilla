@@ -93,9 +93,9 @@ public class SurvivalComponent extends BasicComponent<VanillaPlayerController> {
 		if (getExhaustion() > 4.0) {
 			setExhaustion(getExhaustion() - 4.0f);
 			if (getFoodSaturation() > 0) {
-				setFoodSaturation(Math.max(getExhaustion() - 1f, 0));
+				setFoodSaturation(Math.max(getFoodSaturation() - 1f, 0));
 			} else {
-				getParent().getHealth().damage(1, DamageCause.STARVE);
+				setHunger((short) Math.max(getHunger() - 1, 0));
 			}
 		}
 

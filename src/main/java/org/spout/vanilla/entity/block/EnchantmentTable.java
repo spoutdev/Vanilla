@@ -28,6 +28,7 @@ package org.spout.vanilla.entity.block;
 
 import org.spout.vanilla.entity.InventoryOwner;
 import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.window.Window;
@@ -56,7 +57,7 @@ public class EnchantmentTable extends VanillaWindowBlockController implements In
 	}
 
 	@Override
-	public Window createWindow() {
+	public Window createWindow(VanillaPlayerController player) {
 		return new EnchantmentTableWindow(this);
 	}
 }

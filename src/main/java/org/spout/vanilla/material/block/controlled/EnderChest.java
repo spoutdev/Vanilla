@@ -24,47 +24,43 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.block;
+package org.spout.vanilla.material.block.controlled;
 
-import org.spout.vanilla.entity.InventoryOwner;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
+
 import org.spout.vanilla.entity.VanillaControllerTypes;
-import org.spout.vanilla.entity.VanillaPlayerController;
-import org.spout.vanilla.inventory.block.BrewingStandInventory;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.window.Window;
-import org.spout.vanilla.window.block.BrewingStandWindow;
+import org.spout.vanilla.material.block.Directional;
+import org.spout.vanilla.util.MoveReaction;
 
-public class BrewingStand extends VanillaWindowBlockController implements InventoryOwner {
-	private BrewingStandInventory inventory = new BrewingStandInventory();
-	private float brewTime = 0;
-
-	public BrewingStand() {
-		super(VanillaControllerTypes.BREWING_STAND, VanillaMaterials.BREWING_STAND_BLOCK);
+public class EnderChest extends ControlledMaterial implements Directional {
+	public EnderChest(String name, int id) {
+		super(VanillaControllerTypes.ENDER_CHEST, name, id);
 	}
 
 	@Override
-	public BrewingStandInventory getInventory() {
-		return inventory;
-	}
-
-	/**
-	 * Gets the remaining time for brewing to complete
-	 * @return the brewing time
-	 */
-	public float getBrewTime() {
-		return this.brewTime;
+	public org.spout.vanilla.entity.block.EnderChest getController(Block block) {
+		return (org.spout.vanilla.entity.block.EnderChest) super.getController(block);
 	}
 
 	@Override
-	public void onAttached() {
+	public MoveReaction getMoveReaction(Block block) {
+		return MoveReaction.DENY;
 	}
 
 	@Override
-	public void onTick(float dt) {
+	public BlockFace getFacing(Block block) {
+		return BlockFaces.EWNS.get(block.getData() - 2);
 	}
 
 	@Override
-	public Window createWindow(VanillaPlayerController player) {
-		return new BrewingStandWindow(this);
+	public void setFacing(Block block, BlockFace facing) {
+		block.setData((short) (BlockFaces.EWNS.indexOf(facing, 0) + 2));
+	}
+
+	@Override
+	public boolean isPlacementSuppressed() {
+		return true;
 	}
 }

@@ -31,6 +31,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.entity.InventoryOwner;
 import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.inventory.block.DispenserInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.window.Window;
@@ -124,7 +125,7 @@ public class Dispenser extends VanillaWindowBlockController implements Inventory
 	}
 
 	@Override
-	public Window createWindow() {
+	public Window createWindow(VanillaPlayerController player) {
 		return new DispenserWindow(this);
 	}
 }

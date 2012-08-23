@@ -47,7 +47,7 @@ public abstract class VanillaWindowBlockController extends VanillaBlockControlle
 		super(type, blockMaterial);
 	}
 
-	public abstract Window createWindow();
+	public abstract Window createWindow(VanillaPlayerController player);
 
 	@Override
 	public void onInteract(Entity entity, Action type) {
@@ -60,7 +60,7 @@ public abstract class VanillaWindowBlockController extends VanillaBlockControlle
 	@Override
 	public boolean open(VanillaPlayerController player) {
 		if (!this.viewers.containsKey(player)) {
-			Window w = this.createWindow();
+			Window w = this.createWindow(player);
 			this.addViewer(player, w);
 			player.setWindow(w);
 			return true;

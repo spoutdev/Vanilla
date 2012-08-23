@@ -36,6 +36,7 @@ import org.spout.vanilla.entity.block.Chest;
 import org.spout.vanilla.entity.block.CraftingTable;
 import org.spout.vanilla.entity.block.Dispenser;
 import org.spout.vanilla.entity.block.EnchantmentTable;
+import org.spout.vanilla.entity.block.EnderChest;
 import org.spout.vanilla.entity.block.Furnace;
 import org.spout.vanilla.entity.block.Jukebox;
 import org.spout.vanilla.entity.block.MonsterSpawner;
@@ -170,6 +171,7 @@ public class VanillaControllerTypes {
 	public static final VanillaControllerType BREWING_STAND = new VanillaControllerType(-15, BrewingStand.class, "Brewing Stand");
 	public static final VanillaControllerType MOVING_BLOCK = new VanillaControllerType(-16, MovingBlock.class, "Moving Block");
 	public static final VanillaControllerType CRAFTING_TABLE = new VanillaControllerType(-17, CraftingTable.class, "Crafting Table");
+	public static final VanillaControllerType ENDER_CHEST = new VanillaControllerType(-18, EnderChest.class, "Ender Chest");
 	private static final TIntObjectHashMap<VanillaControllerType> ID_LOOKUP = new TIntObjectHashMap<VanillaControllerType>();
 
 	public static VanillaControllerType getByID(int id) {

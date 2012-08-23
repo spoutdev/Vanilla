@@ -26,33 +26,20 @@
  */
 package org.spout.vanilla.entity.block;
 
-import org.spout.vanilla.entity.InventoryOwner;
+import org.spout.api.geo.discrete.Point;
+
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.VanillaPlayerController;
-import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.window.Window;
-import org.spout.vanilla.window.block.BrewingStandWindow;
+import org.spout.vanilla.window.block.EnderChestWindow;
 
-public class BrewingStand extends VanillaWindowBlockController implements InventoryOwner {
-	private BrewingStandInventory inventory = new BrewingStandInventory();
-	private float brewTime = 0;
+public class EnderChest extends VanillaWindowBlockController {
+	private boolean opened = false;
 
-	public BrewingStand() {
-		super(VanillaControllerTypes.BREWING_STAND, VanillaMaterials.BREWING_STAND_BLOCK);
-	}
-
-	@Override
-	public BrewingStandInventory getInventory() {
-		return inventory;
-	}
-
-	/**
-	 * Gets the remaining time for brewing to complete
-	 * @return the brewing time
-	 */
-	public float getBrewTime() {
-		return this.brewTime;
+	protected EnderChest() {
+		super(VanillaControllerTypes.ENDER_CHEST, VanillaMaterials.ENDER_CHEST);
 	}
 
 	@Override
@@ -61,10 +48,34 @@ public class BrewingStand extends VanillaWindowBlockController implements Invent
 
 	@Override
 	public void onTick(float dt) {
+		if (this.hasViewers()) {
+			Point position = this.getBlock().getPosition();
+			for (VanillaPlayerController player : this.getViewerArray()) {
+				if (player.getParent().getPosition().distanceSquared(position) > 64) {
+					this.close(player);
+				}
+			}
+		}
+	}
+
+	@Override
+	public void onViewersChanged() {
+		this.setOpened(this.hasViewers());
+	}
+
+	public void setOpened(boolean opened) {
+		if (this.opened != opened) {
+			this.opened = opened;
+			VanillaNetworkUtil.playBlockAction(getBlock(), (byte) 1, opened ? (byte) 1 : (byte) 0);
+		}
+	}
+
+	public boolean isOpened() {
+		return opened;
 	}
 
 	@Override
 	public Window createWindow(VanillaPlayerController player) {
-		return new BrewingStandWindow(this);
+		return new EnderChestWindow(player, this);
 	}
 }

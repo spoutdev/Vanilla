@@ -45,6 +45,7 @@ import org.spout.vanilla.material.block.controlled.ChestBlock;
 import org.spout.vanilla.material.block.controlled.CraftingTableBlock;
 import org.spout.vanilla.material.block.controlled.DispenserBlock;
 import org.spout.vanilla.material.block.controlled.EnchantmentTableBlock;
+import org.spout.vanilla.material.block.controlled.EnderChest;
 import org.spout.vanilla.material.block.controlled.FurnaceBlock;
 import org.spout.vanilla.material.block.controlled.JukeboxBlock;
 import org.spout.vanilla.material.block.controlled.MonsterSpawnerBlock;
@@ -296,6 +297,7 @@ public final class VanillaMaterials {
 	public static final Fire FIRE = new Fire("Fire", 51);
 	public static final MonsterSpawnerBlock MONSTER_SPAWNER = new MonsterSpawnerBlock("Monster Spawner", 52);
 	public static final ChestBlock CHEST = new ChestBlock("Chest", 54);
+	public static final EnderChest ENDER_CHEST = new EnderChest("Ender Chest", 130);
 	public static final RedstoneWire REDSTONE_WIRE = new RedstoneWire("Redstone Wire", 55);
 	public static final CraftingTableBlock CRAFTING_TABLE = new CraftingTableBlock("Crafting Table", 58);
 	public static final WheatCrop WHEATCROP = new WheatCrop("Wheat Crop", 59);

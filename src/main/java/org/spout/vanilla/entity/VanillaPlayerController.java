@@ -38,6 +38,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.entity.controller.PlayerController;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
@@ -101,6 +102,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	protected String title; //TODO title isn't really a good name...
 	protected float initialYFalling = 0.0f;
 	protected final PlayerInventory playerInventory = new PlayerInventory(this);
+	protected final Inventory enderChestInventory = new Inventory(27);
 	protected Window activeWindow;
 	protected String tabListName;
 	protected GameMode gameMode;
@@ -423,6 +425,14 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	 */
 	public PlayerInventory getInventory() {
 		return playerInventory;
+	}
+
+	/**
+	 * Gets the player's {@link org.spout.vanilla.material.block.controlled.EnderChest} inventory.
+	 * @return the inventory for all ender chests that they open.
+	 */
+	public Inventory getEnderChestInventory() {
+		return enderChestInventory;
 	}
 
 	public boolean isCrouching() {

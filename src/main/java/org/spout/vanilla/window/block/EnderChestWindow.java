@@ -24,47 +24,16 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.block;
+package org.spout.vanilla.window.block;
 
-import org.spout.vanilla.entity.InventoryOwner;
-import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.VanillaPlayerController;
-import org.spout.vanilla.inventory.block.BrewingStandInventory;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.window.Window;
-import org.spout.vanilla.window.block.BrewingStandWindow;
+import org.spout.vanilla.entity.block.EnderChest;
+import org.spout.vanilla.window.TransactionWindow;
+import org.spout.vanilla.window.WindowType;
 
-public class BrewingStand extends VanillaWindowBlockController implements InventoryOwner {
-	private BrewingStandInventory inventory = new BrewingStandInventory();
-	private float brewTime = 0;
-
-	public BrewingStand() {
-		super(VanillaControllerTypes.BREWING_STAND, VanillaMaterials.BREWING_STAND_BLOCK);
-	}
-
-	@Override
-	public BrewingStandInventory getInventory() {
-		return inventory;
-	}
-
-	/**
-	 * Gets the remaining time for brewing to complete
-	 * @return the brewing time
-	 */
-	public float getBrewTime() {
-		return this.brewTime;
-	}
-
-	@Override
-	public void onAttached() {
-	}
-
-	@Override
-	public void onTick(float dt) {
-	}
-
-	@Override
-	public Window createWindow(VanillaPlayerController player) {
-		return new BrewingStandWindow(this);
+public class EnderChestWindow extends TransactionWindow {
+	public EnderChestWindow(VanillaPlayerController owner, EnderChest chest) {
+		super(WindowType.CHEST, "Ender Chest", 27, chest);
+		addInventory(owner.getEnderChestInventory(), ChestWindow.SMALL_CHEST_SLOTS);
 	}
 }

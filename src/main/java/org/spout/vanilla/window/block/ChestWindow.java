@@ -33,7 +33,7 @@ import org.spout.vanilla.window.TransactionWindow;
 import org.spout.vanilla.window.WindowType;
 
 public class ChestWindow extends TransactionWindow {
-	private static final SlotIndexCollection SMALL_CHEST_SLOTS = new SlotIndexGrid(9, 3);
+	public static final SlotIndexCollection SMALL_CHEST_SLOTS = new SlotIndexGrid(9, 3);
 	private static final SlotIndexCollection LARGE_CHEST1_SLOTS = new SlotIndexGrid(9, 3, 27);
 	private static final SlotIndexCollection LARGE_CHEST2_SLOTS = new SlotIndexGrid(9, 3);
 

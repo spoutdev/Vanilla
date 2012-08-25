@@ -119,7 +119,7 @@ public class NormalGenerator extends VanillaBiomeGenerator implements VanillaGen
 				return -1;
 			}
 		}
-		return y + 2;
+		return ++y;
 	}
 
 	@Override

@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.world.generator.flat;
 
+import java.util.Random;
+
 import org.spout.api.generator.Populator;
 import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.generator.biome.EmptyBiomeManager;
@@ -77,8 +79,12 @@ public class FlatGenerator implements VanillaGenerator {
 
 	@Override
 	public Point getSafeSpawn(World world) {
-		//TODO Implement suitable flat world generator safe spawn point.
-		return new Point(world, 0, 80, 0);
+		final Random random = new Random();
+		final int x = 16 - random.nextInt(32);
+		final int z = 16 - random.nextInt(32);
+		int y = world.getHeight();
+		for (; !world.getBlockMaterial(x, y, z).isSolid(); y--);
+		return new Point(world, x, y + 1.5f, z);
 	}
 
 	@Override

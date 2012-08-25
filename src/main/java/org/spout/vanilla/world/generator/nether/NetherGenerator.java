@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.world.generator.nether;
 
-import java.util.Arrays;
 import java.util.Random;
 
 import net.royawesome.jlibnoise.NoiseQuality;
@@ -37,9 +36,7 @@ import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.generator.WorldGeneratorUtils;
-import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.generator.biome.BiomePopulator;
-import org.spout.api.generator.biome.Simple2DBiomeManager;
 import org.spout.api.generator.biome.selector.PerBlockBiomeSelector;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
@@ -49,12 +46,12 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
-import org.spout.vanilla.world.generator.VanillaBiomeGenerator;
+import org.spout.vanilla.world.generator.VanillaBiomeChunkGenerator;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.generator.nether.populator.NetherCavePopulator;
 
-public class NetherGenerator extends VanillaBiomeGenerator implements VanillaGenerator {
+public class NetherGenerator extends VanillaBiomeChunkGenerator implements VanillaGenerator {
 	public static final int HEIGHT = 128;
 	public static final int SEA_LEVEL = 31;
 	// noise for generation
@@ -110,6 +107,10 @@ public class NetherGenerator extends VanillaBiomeGenerator implements VanillaGen
 		BLOCK_REPLACER.setOctaveCount(1);
 	}
 
+	public NetherGenerator() {
+		super(HEIGHT, VanillaBiomes.NETHERRACK);
+	}
+
 	@Override
 	public void registerBiomes() {
 		setSelector(new PerBlockBiomeSelector(VanillaBiomes.NETHERRACK));
@@ -123,31 +124,12 @@ public class NetherGenerator extends VanillaBiomeGenerator implements VanillaGen
 	}
 
 	@Override
-	public BiomeManager generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
-		if (chunkY < 0) {
-			return super.generate(blockData, chunkX, chunkY, chunkZ);
-		}
-		if (chunkY * 16 < HEIGHT) {
-			final int x = chunkX << Chunk.BLOCKS.BITS;
-			final int y = chunkY << Chunk.BLOCKS.BITS;
-			final int z = chunkZ << Chunk.BLOCKS.BITS;
-			final int seed = (int) blockData.getWorld().getSeed();
-			BASE.setSeed(seed * 23);
-			ROUGHNESS.setSeed(seed * 29);
-			DETAIL.setSeed(seed * 17);
-			TURBULENCE.setSeed(seed * 53);
-			BLOCK_REPLACER.setSeed(seed * 83);
-			generateTerrain(blockData, x, y, z);
-			replaceBlocks(blockData, x, y, z);
-		}
-		final BiomeManager biomeManger = new Simple2DBiomeManager(chunkX, chunkY, chunkZ);
-		final byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
-		Arrays.fill(biomeData, (byte) VanillaBiomes.NETHERRACK.getId());
-		biomeManger.deserialize(biomeData);
-		return biomeManger;
-	}
-
-	private void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z) {
+	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z) {
+		final int seed = (int) blockData.getWorld().getSeed();
+		BASE.setSeed(seed * 23);
+		ROUGHNESS.setSeed(seed * 29);
+		DETAIL.setSeed(seed * 17);
+		TURBULENCE.setSeed(seed * 53);
 		final int size = Chunk.BLOCKS.SIZE;
 		final double[][][] noise;
 		// build the density maps
@@ -209,9 +191,13 @@ public class NetherGenerator extends VanillaBiomeGenerator implements VanillaGen
 				}
 			}
 		}
+		//place the bedrock
+		replaceBlocks(blockData, x, y, z);
 	}
 
 	private void replaceBlocks(CuboidShortBuffer blockData, int x, int y, int z) {
+		final int seed = (int) blockData.getWorld().getSeed();
+		BLOCK_REPLACER.setSeed(seed * 83);
 		final int size = Chunk.BLOCKS.SIZE;
 		if (y == 0) {
 			for (int xx = 0; xx < size; xx++) {
@@ -249,14 +235,14 @@ public class NetherGenerator extends VanillaBiomeGenerator implements VanillaGen
 	}
 
 	private int getHighestSolidBlock(World world, int x, int z) {
-		int y = world.getHeight() - 1;
+		int y = HEIGHT / 2;
 		while (world.getBlockMaterial(x, y, z).equals(VanillaMaterials.AIR)) {
 			y--;
 			if (y == 0 || world.getBlockMaterial(x, y, z) instanceof Liquid) {
 				return -1;
 			}
 		}
-		return y + 2;
+		return ++y;
 	}
 
 	@Override

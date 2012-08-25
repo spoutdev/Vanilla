@@ -24,24 +24,40 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.theend.biome;
+package org.spout.vanilla.world.generator;
 
+import java.util.Arrays;
+
+import org.spout.api.generator.biome.Biome;
+import org.spout.api.generator.biome.BiomeManager;
+import org.spout.api.generator.biome.Simple2DBiomeManager;
+import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
-import org.spout.vanilla.world.generator.VanillaBiome;
-import org.spout.vanilla.world.generator.theend.decorator.SpireDecorator;
+public abstract class VanillaBiomeChunkGenerator extends VanillaBiomeGenerator {
+	private final int height;
+	private final Biome biome;
 
-public class EndStoneBiome extends VanillaBiome {
-	public EndStoneBiome(int biomeId) {
-		super(biomeId, new SpireDecorator());
+	public VanillaBiomeChunkGenerator(int height, Biome biome) {
+		this.height = height;
+		this.biome = biome;
 	}
 
 	@Override
-	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
+	public BiomeManager generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
+		if (chunkY < 0) {
+			return super.generate(blockData, chunkX, chunkY, chunkZ);
+		}
+		if (chunkY * 16 < height) {
+			generateTerrain(blockData, chunkX << Chunk.BLOCKS.BITS, chunkY << Chunk.BLOCKS.BITS,
+					chunkZ << Chunk.BLOCKS.BITS);
+		}
+		final BiomeManager biomeManger = new Simple2DBiomeManager(chunkX, chunkY, chunkZ);
+		final byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
+		Arrays.fill(biomeData, (byte) biome.getId());
+		biomeManger.deserialize(biomeData);
+		return biomeManger;
 	}
 
-	@Override
-	public String getName() {
-		return "EndStone";
-	}
+	protected abstract void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z);
 }

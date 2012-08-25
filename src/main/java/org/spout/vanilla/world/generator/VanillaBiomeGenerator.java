@@ -29,7 +29,6 @@ package org.spout.vanilla.world.generator;
 import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.generator.biome.EmptyBiomeManager;
-import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -40,16 +39,7 @@ public abstract class VanillaBiomeGenerator extends BiomeGenerator {
 		if (chunkY >= 0) {
 			return super.generate(blockData, chunkX, chunkY, chunkZ);
 		}
-		int x = chunkX << Chunk.BLOCKS.BITS;
-		int z = chunkZ << Chunk.BLOCKS.BITS;
-		int y = chunkY << Chunk.BLOCKS.BITS;
-		for (int dx = x; dx < x + 16; ++dx) {
-			for (int dz = z; dz < z + 16; ++dz) {
-				for (int dy = y; dy < y + 16; ++dy) {
-					blockData.set(dx, dy, dz, VanillaMaterials.BEDROCK.getId());
-				}
-			}
-		}
+		blockData.flood(VanillaMaterials.BEDROCK.getId());
 		return new EmptyBiomeManager(chunkX, chunkY, chunkZ);
 	}
 }

@@ -36,6 +36,7 @@ public class EnderCrystal extends Substance {
 
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		getHealth().setSpawnHealth(1);
 		getHealth().setDeathAnimation(false);
 	}

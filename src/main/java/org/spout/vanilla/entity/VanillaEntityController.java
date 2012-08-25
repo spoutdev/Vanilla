@@ -90,7 +90,7 @@ public abstract class VanillaEntityController extends BasicController implements
 		getDataMap().put(VanillaData.CONTROLLER_TYPE, getType().getMinecraftId());
 
 		healthComponent = addComponent(new HealthComponent(TickPriority.HIGHEST));
-		blockCollisionComponent = addComponent(new BlockCollisionComponent(TickPriority.HIGHEST));
+		//blockCollisionComponent = addComponent(new BlockCollisionComponent(TickPriority.HIGHEST));
 		fireDamageComponent = addComponent(new FireDamageComponent(TickPriority.HIGHEST));
 
 		// Load data

@@ -62,14 +62,15 @@ public class VanillaPlayerProtocol implements EntityProtocol {
 		if (c == null) {
 			return null;
 		}
-		int id = entity.getId();
-		int x = (int) (entity.getPosition().getX() * 32);
-		int y = (int) (entity.getPosition().getY() * 32);
-		int z = (int) (entity.getPosition().getZ() * 32);
-		int r = (int) (-entity.getYaw() * 32); //cardinal directions differ
-		int p = (int) (entity.getPitch() * 32);
 
 		if (c instanceof VanillaPlayerController) {
+			int id = entity.getId();
+			int x = (int) (entity.getPosition().getX() * 32);
+			int y = (int) (entity.getPosition().getY() * 32);
+			int z = (int) (entity.getPosition().getZ() * 32);
+			int r = (int) (-entity.getYaw() * 32); //cardinal directions differ
+			int p = (int) (entity.getPitch() * 32);
+
 			VanillaPlayerController playerController = (VanillaPlayerController) c;
 			int item = 0;
 			ItemStack hand = playerController.getRenderedItemInHand();

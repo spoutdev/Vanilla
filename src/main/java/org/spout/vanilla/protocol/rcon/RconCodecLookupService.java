@@ -32,7 +32,7 @@ import org.spout.vanilla.protocol.rcon.codec.CommandCodec;
 import org.spout.vanilla.protocol.rcon.codec.CommandResponseCodec;
 
 /**
- * @author zml2008
+ * Codec lookup service for rcon
  */
 public class RconCodecLookupService extends CodecLookupService {
 	public RconCodecLookupService() {

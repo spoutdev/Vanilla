@@ -163,7 +163,7 @@ public class AdministrationCommands {
 
 		int count = args.getInteger(++index, 1);
 
-		controller.getInventory().getMain().addItem(new ItemStack(material, count), false);
+		controller.getInventory().getMain().addItem(new ItemStack(material, count));
 
 		source.sendMessage("Gave ", controller.getParent().getName(), " ", count, " ", material.getDisplayName());
 	}

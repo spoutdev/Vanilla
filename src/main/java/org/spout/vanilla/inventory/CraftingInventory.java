@@ -97,19 +97,9 @@ public class CraftingInventory extends Inventory implements VanillaInventory {
 	 * Crafts the current recipe, subtracting all the requirements from the crafting grid
 	 */
 	public void craft() {
-		ItemStack[] clonedContents = this.getGrid().getClonedContents();
-		for (int i = 0; i < clonedContents.length; i++) {
-			ItemStack clickedItem = clonedContents[i];
-			if (clickedItem == null) {
-				continue;
-			}
-			clickedItem.setAmount(clickedItem.getAmount() - 1);
-			if (clickedItem.isEmpty()) {
-				clickedItem = null;
-			}
-			clonedContents[i] = clickedItem;
+		for (int i = 0; i < this.getGrid().getSize(); i++) {
+			this.getGrid().addItemAmount(i, -1);
 		}
-		this.getGrid().setContents(clonedContents);
 	}
 
 	public boolean updateOutput() {

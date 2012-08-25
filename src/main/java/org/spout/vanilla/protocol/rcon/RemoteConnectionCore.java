@@ -24,44 +24,37 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.customdata;
+package org.spout.vanilla.protocol.rcon;
 
-import java.util.Arrays;
-import java.util.Iterator;
+import java.io.Closeable;
+import java.util.logging.Logger;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.util.CharsetUtil;
+import org.spout.api.protocol.CodecLookupService;
+import org.spout.vanilla.protocol.rcon.handler.RconHandlerLookupService;
 
-import org.spout.api.protocol.MessageCodec;
-import org.spout.api.util.Named;
+/**
+ * Core interface for the rcon system
+ *
+ * This has most of the stuff needed for a client implementation, but that has not been done yet.
+ */
+public abstract class RemoteConnectionCore implements Closeable {
+	private final Logger logger;
+	private final RconCodecLookupService codecLookupService = new RconCodecLookupService();
+	private final RconHandlerLookupService handlerLookupService = new RconHandlerLookupService();
 
-public class UnregisterPluginChannelCodec extends MessageCodec<UnregisterPluginChannelMessage> implements Named {
-	public UnregisterPluginChannelCodec(int opcode) {
-		super(UnregisterPluginChannelMessage.class, opcode);
+	public RemoteConnectionCore(Logger logger) {
+		this.logger = logger;
 	}
 
-	@Override
-	public ChannelBuffer encode(UnregisterPluginChannelMessage message) {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		for (Iterator<String> i = message.getTypes().iterator(); i.hasNext(); ) {
-			buffer.writeBytes(i.next().getBytes(CharsetUtil.UTF_8));
-			if (i.hasNext()) {
-				buffer.writeByte(0);
-			}
-		}
-		return buffer;
+	public CodecLookupService getCodecLookupService() {
+		return codecLookupService;
 	}
 
-	@Override
-	public UnregisterPluginChannelMessage decode(ChannelBuffer buffer) {
-		byte[] strData = new byte[buffer.readableBytes()];
-		buffer.readBytes(strData);
-		String str = new String(strData, CharsetUtil.UTF_8);
-		return new UnregisterPluginChannelMessage(Arrays.asList(str.split("\0")));
+	public RconHandlerLookupService getHandlerLookupService() {
+		return handlerLookupService;
 	}
 
-	public String getName() {
-		return "UNREGISTER";
+	public Logger getLogger() {
+		return logger;
 	}
 }

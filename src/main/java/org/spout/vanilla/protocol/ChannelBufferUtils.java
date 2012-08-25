@@ -31,12 +31,12 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 
+import org.jboss.netty.util.CharsetUtil;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.MathHelper;
@@ -54,10 +54,6 @@ import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public final class ChannelBufferUtils {
-	/**
-	 * The UTF-8 character set.
-	 */
-	public static final Charset CHARSET_UTF8 = Charset.forName("UTF-8");
 
 	/**
 	 * Writes a list of parameters (e.g. mob metadata) to the buffer.
@@ -169,7 +165,7 @@ public final class ChannelBufferUtils {
 	 * @throws IllegalArgumentException if the string is too long <em>after</em> it is encoded.
 	 */
 	public static void writeUtf8String(ChannelBuffer buf, String str) throws UnsupportedEncodingException {
-		byte[] bytes = str.getBytes(CHARSET_UTF8.name());
+		byte[] bytes = str.getBytes(CharsetUtil.UTF_8);
 		if (bytes.length >= 65536) {
 			throw new IllegalArgumentException("Encoded UTF-8 string too long.");
 		}
@@ -206,7 +202,7 @@ public final class ChannelBufferUtils {
 		byte[] bytes = new byte[len];
 		buf.readBytes(bytes);
 
-		return new String(bytes, CHARSET_UTF8.name());
+		return new String(bytes, CharsetUtil.UTF_8);
 	}
 
 	public static CompoundMap readCompound(ChannelBuffer buf) {

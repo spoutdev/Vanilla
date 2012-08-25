@@ -24,44 +24,37 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.customdata;
+package org.spout.vanilla.protocol.rcon.handler;
 
-import java.util.Arrays;
-import java.util.Iterator;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.util.CharsetUtil;
+import org.spout.vanilla.protocol.rcon.msg.AuthMessage;
+import org.spout.vanilla.protocol.rcon.msg.CommandMessage;
+import org.spout.vanilla.protocol.rcon.msg.CommandResponseMessage;
+import org.spout.vanilla.protocol.rcon.msg.RconMessage;
 
-import org.spout.api.protocol.MessageCodec;
-import org.spout.api.util.Named;
-
-public class UnregisterPluginChannelCodec extends MessageCodec<UnregisterPluginChannelMessage> implements Named {
-	public UnregisterPluginChannelCodec(int opcode) {
-		super(UnregisterPluginChannelMessage.class, opcode);
-	}
-
-	@Override
-	public ChannelBuffer encode(UnregisterPluginChannelMessage message) {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		for (Iterator<String> i = message.getTypes().iterator(); i.hasNext(); ) {
-			buffer.writeBytes(i.next().getBytes(CharsetUtil.UTF_8));
-			if (i.hasNext()) {
-				buffer.writeByte(0);
-			}
+/**
+ * Handler lookup for the rcon protocol
+ */
+public class RconHandlerLookupService {
+	private final Map<Class<? extends RconMessage>, RconMessageHandler<?>> handlers = new HashMap<Class<? extends RconMessage>, RconMessageHandler<?>>();
+	public RconHandlerLookupService() {
+		try {
+			bind(AuthMessage.class, new AuthMessageHandler());
+			bind(CommandMessage.class, new CommandMessageHandler());
+			bind(CommandResponseMessage.class, new CommandResponseMessageHandler());
+		} catch (Throwable t) {
+			throw new ExceptionInInitializerError(t);
 		}
-		return buffer;
 	}
 
-	@Override
-	public UnregisterPluginChannelMessage decode(ChannelBuffer buffer) {
-		byte[] strData = new byte[buffer.readableBytes()];
-		buffer.readBytes(strData);
-		String str = new String(strData, CharsetUtil.UTF_8);
-		return new UnregisterPluginChannelMessage(Arrays.asList(str.split("\0")));
+	protected <T extends RconMessage> void bind(Class<T> messageClass, RconMessageHandler<T> handler) {
+		handlers.put(messageClass, handler);
 	}
 
-	public String getName() {
-		return "UNREGISTER";
+	@SuppressWarnings("unchecked")
+	public <T extends RconMessage> RconMessageHandler<T> find(Class<T> message) {
+		return (RconMessageHandler<T>) handlers.get(message);
 	}
 }

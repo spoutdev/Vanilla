@@ -24,44 +24,38 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.customdata;
+package org.spout.vanilla.protocol.rcon.handler;
 
-import java.util.Arrays;
-import java.util.Iterator;
+import org.spout.api.chat.ChatArguments;
+import org.spout.vanilla.protocol.rcon.RemoteConnectionSession;
+import org.spout.vanilla.protocol.rcon.msg.CommandMessage;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.util.CharsetUtil;
-
-import org.spout.api.protocol.MessageCodec;
-import org.spout.api.util.Named;
-
-public class UnregisterPluginChannelCodec extends MessageCodec<UnregisterPluginChannelMessage> implements Named {
-	public UnregisterPluginChannelCodec(int opcode) {
-		super(UnregisterPluginChannelMessage.class, opcode);
-	}
-
+/**
+ * @author zml2008
+ */
+public class CommandMessageHandler extends RconMessageHandler<CommandMessage> {
 	@Override
-	public ChannelBuffer encode(UnregisterPluginChannelMessage message) {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		for (Iterator<String> i = message.getTypes().iterator(); i.hasNext(); ) {
-			buffer.writeBytes(i.next().getBytes(CharsetUtil.UTF_8));
-			if (i.hasNext()) {
-				buffer.writeByte(0);
-			}
+	public void handleServer(RemoteConnectionSession session, CommandMessage message) {
+		String command;
+		ChatArguments arguments;
+		String text = message.getPayload();
+		int spaceIndex = text.indexOf(" ");
+		if (spaceIndex != -1) {
+			command = text.substring(0, spaceIndex);
+			text = text.substring(spaceIndex + 1);
+		} else {
+			command = text;
+			text = "";
 		}
-		return buffer;
+		arguments = ChatArguments.fromString(text);
+		session.processCommand(command, arguments);
 	}
 
 	@Override
-	public UnregisterPluginChannelMessage decode(ChannelBuffer buffer) {
-		byte[] strData = new byte[buffer.readableBytes()];
-		buffer.readBytes(strData);
-		String str = new String(strData, CharsetUtil.UTF_8);
-		return new UnregisterPluginChannelMessage(Arrays.asList(str.split("\0")));
-	}
-
-	public String getName() {
-		return "UNREGISTER";
+	public void handleClient(RemoteConnectionSession session, CommandMessage message) {
+		// TODO: Verify if this is correct
+		if (session.isAuthenticated()) {
+			session.setState(RemoteConnectionSession.State.COMMANDS);
+		}
 	}
 }

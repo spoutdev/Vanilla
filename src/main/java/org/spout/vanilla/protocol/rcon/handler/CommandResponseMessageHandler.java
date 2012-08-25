@@ -24,44 +24,17 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.customdata;
+package org.spout.vanilla.protocol.rcon.handler;
 
-import java.util.Arrays;
-import java.util.Iterator;
+import org.spout.vanilla.protocol.rcon.RemoteConnectionSession;
+import org.spout.vanilla.protocol.rcon.msg.CommandResponseMessage;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.util.CharsetUtil;
-
-import org.spout.api.protocol.MessageCodec;
-import org.spout.api.util.Named;
-
-public class UnregisterPluginChannelCodec extends MessageCodec<UnregisterPluginChannelMessage> implements Named {
-	public UnregisterPluginChannelCodec(int opcode) {
-		super(UnregisterPluginChannelMessage.class, opcode);
-	}
-
+/**
+ * @author zml2008
+ */
+public class CommandResponseMessageHandler extends RconMessageHandler<CommandResponseMessage> {
 	@Override
-	public ChannelBuffer encode(UnregisterPluginChannelMessage message) {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		for (Iterator<String> i = message.getTypes().iterator(); i.hasNext(); ) {
-			buffer.writeBytes(i.next().getBytes(CharsetUtil.UTF_8));
-			if (i.hasNext()) {
-				buffer.writeByte(0);
-			}
-		}
-		return buffer;
-	}
-
-	@Override
-	public UnregisterPluginChannelMessage decode(ChannelBuffer buffer) {
-		byte[] strData = new byte[buffer.readableBytes()];
-		buffer.readBytes(strData);
-		String str = new String(strData, CharsetUtil.UTF_8);
-		return new UnregisterPluginChannelMessage(Arrays.asList(str.split("\0")));
-	}
-
-	public String getName() {
-		return "UNREGISTER";
+	public void handleClient(RemoteConnectionSession session, CommandResponseMessage message) {
+		throw new UnsupportedOperationException("Not supported yet."); // TODO: Find a good way to prit command responses onto the client!
 	}
 }

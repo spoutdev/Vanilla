@@ -82,16 +82,14 @@ public abstract class CraftingWindow extends TransactionWindow {
 			if (args.isShiftDown()) {
 				InventorySlot slot = this.craftingGrid.getOutput();
 				ItemStack clickedItem = slot.getItem().clone();
-				ItemStack[] before = this.craftingGrid.getGrid().getClonedContents();
-				ItemStack items = new ItemStack(clickedItem.getMaterial(), 0);
+				ItemStack[] before = this.craftingGrid.getGrid().getContents();
+				ItemStack newItem = new ItemStack(clickedItem.getMaterial(), 0);
 				while (clickedItem.equalsIgnoreSize(slot.getItem())) {
-					items.setAmount(items.getAmount() + 1);
+					newItem.setAmount(newItem.getAmount() + 1);
 					this.craftingGrid.craft();
 				}
-				if (!getParent().getInventory().getMain().canItemFit(items, true, true)) {
+				if (!getParent().getInventory().addItemFully(newItem)) {
 					this.craftingGrid.setContents(before);
-				} else {
-					getParent().getInventory().getMain().addItem(items);
 				}
 				return true;
 			} else if (args.isLeftClick()) {

@@ -75,7 +75,7 @@ public class DetectItemCollectorComponent extends BasicComponent<Item> {
 		getParent().callProtocolEvent(new EntityCollectItemEvent(player, getParent().getParent()));
 		//TODO Handle other controllers within other protocols
 		if (player.getController() instanceof VanillaPlayerController) {
-			((VanillaPlayerController) player.getController()).getInventory().getMain().addItem(getParent().getItemStack(), true, true);
+			((VanillaPlayerController) player.getController()).getInventory().getMain().addItem(getParent().getItemStack());
 		}
 		getParent().kill();
 	}

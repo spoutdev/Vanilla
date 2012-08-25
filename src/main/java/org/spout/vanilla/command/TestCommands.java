@@ -83,6 +83,23 @@ public class TestCommands {
 		ExplosionModels.SPHERICAL.execute(position, 4.0f);
 	}
 
+	@Command(aliases = {"tpworld", "tpw"}, usage = "<world name>", desc = "Teleport to a world's spawn.")
+	public void tpWorld(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to teleport");
+		}
+		final Player player = (Player) source;
+		final World world = Spout.getEngine().getWorld(args.getString(0));
+		if (world != null) {
+			final Point loc = world.getSpawnPoint().getPosition();
+			world.getChunkFromBlock(loc);
+			player.setPosition(loc);
+			player.getNetworkSynchronizer().setPositionDirty();
+		} else {
+			throw new CommandException("Please enter a valid world");
+		}
+	}
+
 	@Command(aliases = {"spawn"}, usage = "<spiral or disk> <number> <controller> ... <number> <controller>", desc = "Spawn up to 50 controllers!", min = 1, max = 10)
 	public void spawn(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {

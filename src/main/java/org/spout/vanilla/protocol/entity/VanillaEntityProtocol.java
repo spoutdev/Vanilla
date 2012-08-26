@@ -27,6 +27,8 @@
 package org.spout.vanilla.protocol.entity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.spout.api.entity.Controller;
@@ -37,6 +39,8 @@ import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.entity.VanillaEntityController;
 import org.spout.vanilla.entity.component.HeadOwner;
+import org.spout.vanilla.entity.component.PositionUpdateOwner;
+import org.spout.vanilla.entity.component.network.PositionUpdateComponent;
 import org.spout.vanilla.protocol.msg.DestroyEntitiesMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityHeadYawMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityRelativePositionMessage;
@@ -50,23 +54,23 @@ import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyRotation;
 
 public abstract class VanillaEntityProtocol implements EntityProtocol {
 	@Override
-	public Message[] getDestroyMessage(Entity entity) {
-		return new Message[]{new DestroyEntitiesMessage(new int[]{entity.getId()})};
+	public List<Message> getDestroyMessages(Entity entity) {
+		return Arrays.<Message>asList(new DestroyEntitiesMessage(new int[]{entity.getId()}));
 	}
 
 	@Override
-	public Message[] getUpdateMessage(Entity entity) {
+	public List<Message> getUpdateMessages(Entity entity) {
 		Controller controller = entity.getController();
-		if (!(controller instanceof VanillaEntityController)) {
-			return new Message[0];
+		if (!(controller instanceof PositionUpdateOwner)) {
+			return Collections.emptyList();
 		}
-		VanillaEntityController vController = (VanillaEntityController) controller;
+		PositionUpdateComponent<?> network = ((PositionUpdateOwner) controller).getNetworkComponent();
 
 		// You have to use the last known CLIENT transform
 		// The last tick transform delta is not enough to properly send update messages
 		// For most entities, an update takes more than one tick before an update message is ready
 		// Do NOT use entity.getLastTransform() because it is not a delta since last tick!
-		Transform prevTransform = vController.getLastClientTransform();
+		Transform prevTransform = network.getLastClientTransform();
 		Transform newTransform = entity.getTransform();
 
 		int lastX = protocolifyPosition(prevTransform.getPosition().getX());
@@ -84,29 +88,28 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		int deltaZ = newZ - lastZ;
 
 		List<Message> messages = new ArrayList<Message>(3);
-
-		if (vController.needsPositionUpdate() || deltaX > 128 || deltaX < -128 || deltaY > 128 || deltaY < -128 || deltaZ > 128 || deltaZ < -128) {
+		if (network.needsPositionUpdate() || deltaX > 128 || deltaX < -128 || deltaY > 128 || deltaY < -128 || deltaZ > 128 || deltaZ < -128) {
 			messages.add(new EntityTeleportMessage(entity.getId(), newX, newY, newZ, newYaw, newPitch));
-			vController.setLastClientTransform(newTransform);
+			network.setLastClientTransform(newTransform);
 		} else {
 			boolean moved = !prevTransform.getPosition().equals(newTransform.getPosition());
 			boolean looked = !prevTransform.getRotation().equals(newTransform.getRotation());
 			if (moved) {
 				if (looked) {
 					messages.add(new EntityRelativePositionRotationMessage(entity.getId(), deltaX, deltaY, deltaZ, newYaw, newPitch));
-					vController.setLastClientTransform(newTransform);
+					network.setLastClientTransform(newTransform);
 				} else {
 					messages.add(new EntityRelativePositionMessage(entity.getId(), deltaX, deltaY, deltaZ));
-					vController.getLastClientTransform().setPosition(newTransform.getPosition());
+					network.getLastClientTransform().setPosition(newTransform.getPosition());
 				}
 			} else if (looked) {
 				messages.add(new EntityRotationMessage(entity.getId(), newYaw, newPitch));
-				vController.getLastClientTransform().setRotation(newTransform.getRotation());
+				network.getLastClientTransform().setRotation(newTransform.getRotation());
 			}
 		}
 
-		if (vController.needsVelocityUpdate()) {
-			messages.add(new EntityVelocityMessage(entity.getId(), vController.getVelocity()));
+		if (controller instanceof VanillaEntityController && network.needsVelocityUpdate()) {
+			messages.add(new EntityVelocityMessage(entity.getId(), ((VanillaEntityController) controller).getVelocity()));
 		}
 
 		if (controller instanceof HeadOwner) {
@@ -115,7 +118,6 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 				messages.add(new EntityHeadYawMessage(entity.getId(), protocolifyRotation(headOwner.getHead().getYaw())));
 			}
 		}
-
-		return messages.toArray(new Message[messages.size()]);
+		return messages;
 	}
 }

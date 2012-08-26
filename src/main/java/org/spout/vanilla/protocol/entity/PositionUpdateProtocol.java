@@ -24,25 +24,10 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.object;
+package org.spout.vanilla.protocol.entity;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import org.spout.api.protocol.EntityProtocol;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.protocol.Message;
+public abstract class PositionUpdateProtocol implements EntityProtocol {
 
-import org.spout.vanilla.entity.object.misc.Lightning;
-import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
-import org.spout.vanilla.protocol.msg.entity.EntitySpawnLightningStrikeMessage;
-
-public class LightningEntityProtocol extends VanillaEntityProtocol {
-	@Override
-	public List<Message> getSpawnMessages(Entity entity) {
-		if (!(entity.getController() instanceof Lightning)) {
-			return Collections.emptyList();
-		}
-		return Arrays.<Message>asList(new EntitySpawnLightningStrikeMessage(entity.getId(), entity.getPosition().getBlockX(), entity.getPosition().getBlockY(), entity.getPosition().getBlockZ()));
-	}
 }

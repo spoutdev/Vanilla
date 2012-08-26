@@ -37,7 +37,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.entity.controller.PlayerController;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
@@ -51,6 +50,7 @@ import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.entity.component.GameModeOwner;
 import org.spout.vanilla.entity.component.HeadOwner;
 import org.spout.vanilla.entity.component.HealthOwner;
+import org.spout.vanilla.entity.component.PositionUpdateOwner;
 import org.spout.vanilla.entity.component.SuffocationOwner;
 import org.spout.vanilla.entity.component.basic.DiggingComponent;
 import org.spout.vanilla.entity.component.basic.HeadComponent;
@@ -62,10 +62,9 @@ import org.spout.vanilla.entity.component.effect.PoisonEffect;
 import org.spout.vanilla.entity.component.gamemode.AdventureComponent;
 import org.spout.vanilla.entity.component.gamemode.CreativeComponent;
 import org.spout.vanilla.entity.component.gamemode.SurvivalComponent;
+import org.spout.vanilla.entity.component.network.PlayerNetworkComponent;
 import org.spout.vanilla.entity.component.physics.BlockCollisionComponent;
 import org.spout.vanilla.entity.component.physics.PlayerStepSoundComponent;
-import org.spout.vanilla.entity.component.player.PingComponent;
-import org.spout.vanilla.entity.component.player.StatsUpdateComponent;
 import org.spout.vanilla.entity.source.DamageCause;
 import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
 import org.spout.vanilla.inventory.player.PlayerInventory;
@@ -80,11 +79,10 @@ import static org.spout.vanilla.util.VanillaMathHelper.getRandomDirection;
 /**
  * Represents a player on a server with the VanillaPlugin; specific methods to Vanilla.
  */
-public class VanillaPlayerController extends PlayerController implements VanillaController, HealthOwner, SuffocationOwner, HeadOwner, GameModeOwner {
-	private PingComponent pingComponent;
+public class VanillaPlayerController extends PlayerController implements VanillaController, HealthOwner, SuffocationOwner, HeadOwner, GameModeOwner, PositionUpdateOwner {
 	private PoisonEffect poisonEffectComponent;
 	private PlayerStepSoundComponent stepSoundComponent;
-	private StatsUpdateComponent statsUpdateComponent;
+	private PlayerNetworkComponent networkComponent;
 	private HealthComponent healthComponent;
 	private PlayerSuffocationComponent suffocationComponent;
 	private PlayerHeadComponent headComponent;
@@ -109,9 +107,6 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 	protected Point compassTarget;
 	private short experience = 0;
 	// Protocol: last known updated client transform
-	private Transform lastClientTransform = new Transform();
-	private int positionTicks = 0;
-	private int velocityTicks = 0;
 	private Vector3 velocity = Vector3.ZERO;
 
 	public VanillaPlayerController() {
@@ -123,8 +118,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 		//Components
 		healthComponent = addComponent(new HealthComponent(TickPriority.HIGHEST));
 		headComponent = addComponent(new PlayerHeadComponent());
-		statsUpdateComponent = addComponent(new StatsUpdateComponent(TickPriority.HIGHEST));
-		pingComponent = addComponent(new PingComponent(TickPriority.HIGH));
+		networkComponent = addComponent(new PlayerNetworkComponent(TickPriority.HIGHEST));
 		poisonEffectComponent = addComponent(new PoisonEffect(TickPriority.HIGH));
 		stepSoundComponent = addComponent(new PlayerStepSoundComponent(TickPriority.HIGHEST));
 		diggingComponent = addComponent(new DiggingComponent(TickPriority.HIGH));
@@ -153,8 +147,6 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 			return;
 		}
 
-		positionTicks++;
-		velocityTicks++;
 		super.onTick(dt);
 
 		Player player = getParent();
@@ -505,16 +497,13 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 		getParent().getSession().send(false, new ChangeGameStateMessage(ChangeGameStateMessage.ENTER_CREDITS));
 	}
 
-	public PingComponent getPingComponent() {
-		return pingComponent;
-	}
-
 	public PoisonEffect getPoisonEffectComponent() {
 		return poisonEffectComponent;
 	}
 
-	public StatsUpdateComponent getStatsUpdateComponent() {
-		return statsUpdateComponent;
+	@Override
+	public PlayerNetworkComponent getNetworkComponent() {
+		return networkComponent;
 	}
 
 	public PlayerStepSoundComponent getStepSoundComponent() {
@@ -529,23 +518,6 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 		this.experience = experience;
 	}
 
-	/**
-	 * Sets the last known transformation known by the clients<br>
-	 * This should only be called by the protocol classes
-	 * @param transform to set to
-	 */
-	public void setLastClientTransform(Transform transform) {
-		this.lastClientTransform = transform.copy();
-	}
-
-	/**
-	 * Gets the last known transformation updated to the clients
-	 * @return the last known transform by the clients
-	 */
-	public Transform getLastClientTransform() {
-		return this.lastClientTransform;
-	}
-
 	@Override
 	public void callProtocolEvent(ProtocolEvent event) {
 		for (Player player : getParent().getWorld().getNearbyPlayers(getParent(), getParent().getViewDistance())) {
@@ -554,24 +526,6 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 			}
 			player.getNetworkSynchronizer().callProtocolEvent(event);
 		}
-	}
-
-	/**
-	 * Tests if a velocity update is needed for this entity<br>
-	 * This is called by the entity protocol
-	 * @return True if a velocity update is needed
-	 */
-	public boolean needsVelocityUpdate() {
-		return velocityTicks % 5 == 0;
-	}
-
-	/**
-	 * Tests if a position update is needed for this entity<br>
-	 * This is called by the entity protocol
-	 * @return True if a position update is needed
-	 */
-	public boolean needsPositionUpdate() {
-		return positionTicks % 30 == 0;
 	}
 
 	/**

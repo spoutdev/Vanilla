@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.entity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.spout.api.entity.Controller;
@@ -62,10 +63,10 @@ public class BasicMobEntityProtocol extends BasicEntityProtocol {
 	}
 
 	@Override
-	public Message[] getSpawnMessage(Entity entity) {
+	public List<Message> getSpawnMessages(Entity entity) {
 		Controller c = entity.getController();
 		if (c == null) {
-			return null;
+			return Collections.emptyList();
 		}
 
 		int id = entity.getId();
@@ -78,19 +79,16 @@ public class BasicMobEntityProtocol extends BasicEntityProtocol {
 		}
 		List<Parameter<?>> parameters = this.getSpawnParameters(c);
 		//TODO: Is there a Velocity in a entity class?
-		return new Message[]{new EntitySpawnMobMessage(id, this.getSpawnID(), pos, r, p, headyaw, (short) 0, (short) 0, (short) 0, parameters)};
+		return Arrays.<Message>asList(new EntitySpawnMobMessage(id, this.getSpawnID(), pos, r, p, headyaw, (short) 0, (short) 0, (short) 0, parameters));
 	}
 
 	@Override
-	public Message[] getUpdateMessage(Entity entity) {
+	public List<Message> getUpdateMessages(Entity entity) {
+		List<Message> messages = new ArrayList<Message>(super.getUpdateMessages(entity));
 		List<Parameter<?>> params = this.getSpawnParameters(entity.getController());
-		if (params == null || params.size() <= 0) {
-			return super.getUpdateMessage(entity);
+		if (params != null && !params.isEmpty()) {
+			messages.add(new EntityMetadataMessage(entity.getId(), params));
 		}
-
-		Message[] toSend = super.getUpdateMessage(entity);
-		List<Message> msgs = new ArrayList<Message>(Arrays.asList(toSend != null ? toSend : new Message[0]));
-		msgs.add(new EntityMetadataMessage(entity.getId(), params));
-		return msgs.toArray(new Message[msgs.size()]);
+		return messages;
 	}
 }

@@ -27,6 +27,8 @@
 package org.spout.vanilla.protocol.entity.living;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.spout.api.entity.Controller;
@@ -41,11 +43,13 @@ import org.spout.vanilla.protocol.msg.entity.EntitySpawnPlayerMessage;
 
 public class HumanEntityProtocol extends VanillaEntityProtocol {
 	@Override
-	public Message[] getSpawnMessage(Entity entity) {
+	public List<Message> getSpawnMessages(Entity entity) {
 		Controller c = entity.getController();
-		if (c == null) {
-			return null;
+		if (c == null || !(c instanceof Human)) {
+			return Collections.emptyList();
 		}
+		Human npc = (Human) c;
+
 		int id = entity.getId();
 		int x = (int) (entity.getPosition().getX() * 32);
 		int y = (int) (entity.getPosition().getY() * 32);
@@ -53,17 +57,13 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		int r = (int) (-entity.getYaw() * 32);
 		int p = (int) (entity.getPitch() * 32);
 
-		if (c instanceof Human) {
-			Human npc = (Human) c;
-			int item = 0;
-			ItemStack hand = npc.getRenderedItemInHand();
-			if (hand != null) {
-				item = hand.getMaterial().getId();
-			}
-			List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
-			parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 100));
-			return new Message[]{new EntitySpawnPlayerMessage(id, npc.getDisplayName(), x, y, z, r, p, item, parameters)};
+		int item = 0;
+		ItemStack hand = npc.getRenderedItemInHand();
+		if (hand != null) {
+			item = hand.getMaterial().getId();
 		}
-		return null;
+		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
+		parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 100));
+		return Arrays.<Message>asList(new EntitySpawnPlayerMessage(id, npc.getDisplayName(), x, y, z, r, p, item, parameters));
 	}
 }

@@ -24,40 +24,65 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.component.player;
+package org.spout.vanilla.entity.component.network;
 
 import org.spout.api.entity.BasicComponent;
+import org.spout.api.entity.Controller;
+import org.spout.api.geo.discrete.Transform;
 import org.spout.api.tickable.TickPriority;
 
-import org.spout.vanilla.entity.VanillaPlayerController;
-import org.spout.vanilla.event.player.network.PlayerUpdateStatsEvent;
+public class PositionUpdateComponent <T extends Controller> extends BasicComponent<T> {
+	private int positionTicks = 0;
+	private int velocityTicks = 0;
+	private Transform lastClientTransform = new Transform();
 
-/**
- * Updates health, hunger and food saturation states for the player
- */
-public class StatsUpdateComponent extends BasicComponent<VanillaPlayerController> {
-	private int oldHealth = Integer.MIN_VALUE, oldHunger = Integer.MIN_VALUE;
-	private float oldFoodSat = Float.MIN_VALUE;
-
-	public StatsUpdateComponent(TickPriority priority) {
+	public PositionUpdateComponent(TickPriority priority) {
 		super(priority);
 	}
 
 	@Override
 	public boolean canTick() {
-		if (!getParent().isSurvival()) {
-			return false;
-		}
-		return oldHealth != getParent().getHealth().getHealth() ||
-				oldHunger != getParent().getSurvivalComponent().getHunger() ||
-				oldFoodSat != getParent().getSurvivalComponent().getFoodSaturation();
+		return true;
 	}
 
 	@Override
 	public void onTick(float dt) {
-		oldHealth = getParent().getHealth().getHealth();
-		oldHunger = getParent().getSurvivalComponent().getHunger();
-		oldFoodSat = getParent().getSurvivalComponent().getFoodSaturation();
-		getParent().getParent().getNetworkSynchronizer().callProtocolEvent(new PlayerUpdateStatsEvent(getParent().getParent()));
+		positionTicks++;
+		velocityTicks++;
+	}
+
+	/**
+	 * Tests if a velocity update is needed for this entity<br>
+	 * This is called by the entity protocol
+	 * @return True if a velocity update is needed
+	 */
+	public boolean needsVelocityUpdate() {
+		return velocityTicks % 5 == 0;
+	}
+
+	/**
+	 * Tests if a position update is needed for this entity<br>
+	 * This is called by the entity protocol
+	 * @return True if a position update is needed
+	 */
+	public boolean needsPositionUpdate() {
+		return positionTicks % 30 == 0;
+	}
+
+	/**
+	 * Sets the last known transformation known by the clients<br>
+	 * This should only be called by the protocol classes
+	 * @param transform to set to
+	 */
+	public void setLastClientTransform(Transform transform) {
+		this.lastClientTransform = transform.copy();
+	}
+
+	/**
+	 * Gets the last known transformation updated to the clients
+	 * @return the last known transform by the clients
+	 */
+	public Transform getLastClientTransform() {
+		return this.lastClientTransform;
 	}
 }

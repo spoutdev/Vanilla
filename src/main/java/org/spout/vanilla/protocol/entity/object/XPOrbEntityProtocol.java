@@ -26,6 +26,10 @@
  */
 package org.spout.vanilla.protocol.entity.object;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
@@ -36,15 +40,15 @@ import org.spout.vanilla.protocol.msg.entity.EntitySpawnExperienceOrbMessage;
 
 public class XPOrbEntityProtocol extends VanillaEntityProtocol {
 	@Override
-	public Message[] getSpawnMessage(Entity entity) {
+	public List<Message> getSpawnMessages(Entity entity) {
 		final Controller c = entity.getController();
-		if (c == null || !(c instanceof XPOrb)) {
-			return null;
+		if (!(c instanceof XPOrb)) {
+			return Collections.emptyList();
 		}
 		int id = entity.getId();
 		int x = (int) (entity.getPosition().getX() * 32);
 		int y = (int) (entity.getPosition().getY() * 32);
 		int z = (int) (entity.getPosition().getZ() * 32);
-		return new Message[]{new EntitySpawnExperienceOrbMessage(id, x, y, z, ((XPOrb) c).getExperience())};
+		return Arrays.<Message>asList(new EntitySpawnExperienceOrbMessage(id, x, y, z, ((XPOrb) c).getExperience()));
 	}
 }

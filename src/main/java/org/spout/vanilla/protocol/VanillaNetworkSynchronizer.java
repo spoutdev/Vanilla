@@ -392,60 +392,27 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 
 	@Override
-	public void spawnEntity(Entity e) {
-		if (e == null) {
-			return;
-		}
-
+	public void syncEntity(Entity e, boolean spawn, boolean destroy, boolean update) {
 		Controller c = e.getController();
 		if (c != null) {
 			EntityProtocol ep = c.getType().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
 			if (ep != null) {
-				Message[] spawn = ep.getSpawnMessage(e);
-				if (spawn != null) {
-					session.sendAll(false, spawn);
+				List<Message> messages = new ArrayList<Message>(3);
+				// Sync using vanilla protocol
+				if (destroy) {
+					messages.addAll(ep.getDestroyMessages(e));
+				}
+				if (spawn) {
+					messages.addAll(ep.getSpawnMessages(e));
+				}
+				if (update) {
+					messages.addAll(ep.getUpdateMessages(e));
+				}
+				for (Message message : messages) {
+					this.session.send(false, message);
 				}
 			}
 		}
-		super.spawnEntity(e);
-	}
-
-	@Override
-	public void destroyEntity(Entity e) {
-		if (e == null) {
-			return;
-		}
-
-		Controller c = e.getController();
-		if (c != null) {
-			EntityProtocol ep = c.getType().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
-			if (ep != null) {
-				Message[] death = ep.getDestroyMessage(e);
-				if (death != null) {
-					session.sendAll(false, death);
-				}
-			}
-		}
-		super.destroyEntity(e);
-	}
-
-	@Override
-	public void syncEntity(Entity e) {
-		if (e == null) {
-			return;
-		}
-
-		Controller c = e.getController();
-		if (c != null) {
-			EntityProtocol ep = c.getType().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
-			if (ep != null) {
-				Message[] sync = ep.getUpdateMessage(e);
-				if (sync != null) {
-					session.sendAll(false, sync);
-				}
-			}
-		}
-		super.syncEntity(e);
 	}
 
 	@EventHandler

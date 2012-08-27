@@ -39,7 +39,6 @@ import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.BasicController;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
@@ -51,32 +50,30 @@ import org.spout.api.util.flag.Flag;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.Drops;
 import org.spout.vanilla.entity.component.HealthOwner;
+import org.spout.vanilla.entity.component.PositionUpdateOwner;
 import org.spout.vanilla.entity.component.basic.FireDamageComponent;
 import org.spout.vanilla.entity.component.basic.HealthComponent;
+import org.spout.vanilla.entity.component.network.EntityNetworkComponent;
 import org.spout.vanilla.entity.component.physics.BlockCollisionComponent;
 import org.spout.vanilla.entity.object.moving.Item;
 
 /**
  * Controller that is the parent of all entity controllers.
  */
-public abstract class VanillaEntityController extends BasicController implements VanillaController, HealthOwner {
+public abstract class VanillaEntityController extends BasicController implements VanillaController, HealthOwner, PositionUpdateOwner {
 	private final VanillaControllerType type;
 	private final BoundingBox area = new BoundingBox(-0.3F, 0F, -0.3F, 0.3F, 0.8F, 0.3F);
 	private static Random rand = new Random();
 	private Drops drops = new Drops();
-	// Tick effects
-	private int positionTicks = 0;
-	private int velocityTicks = 0;
 	// Velocity-related
 	private Vector3 velocity = Vector3.ZERO;
 	private Vector3 movementSpeed = Vector3.ZERO;
 	private Vector3 maxSpeed = new Vector3(0.4, 0.4, 0.4);
-	// Block collision handling
+	// Components
 	protected BlockCollisionComponent blockCollisionComponent;
 	protected HealthComponent healthComponent;
 	protected FireDamageComponent fireDamageComponent;
-	// Protocol: last known updated client transform
-	private Transform lastClientTransform = new Transform();
+	protected EntityNetworkComponent networkComponent;
 
 	protected VanillaEntityController(VanillaControllerType type) {
 		super(type);
@@ -92,6 +89,7 @@ public abstract class VanillaEntityController extends BasicController implements
 		healthComponent = addComponent(new HealthComponent(TickPriority.HIGHEST));
 		//blockCollisionComponent = addComponent(new BlockCollisionComponent(TickPriority.HIGHEST));
 		fireDamageComponent = addComponent(new FireDamageComponent(TickPriority.HIGHEST));
+		networkComponent = addComponent(new EntityNetworkComponent(TickPriority.HIGHEST));
 
 		// Load data
 		maxSpeed = getDataMap().get(VanillaData.MAX_SPEED, maxSpeed);
@@ -115,9 +113,6 @@ public abstract class VanillaEntityController extends BasicController implements
 			this.healthComponent.onTick(dt);
 			return;
 		}
-
-		positionTicks++;
-		velocityTicks++;
 		super.onTick(dt);
 	}
 
@@ -169,6 +164,11 @@ public abstract class VanillaEntityController extends BasicController implements
 	}
 
 	@Override
+	public EntityNetworkComponent getNetworkComponent() {
+		return this.networkComponent;
+	}
+
+	@Override
 	public HealthComponent getHealth() {
 		return healthComponent;
 	}
@@ -179,24 +179,6 @@ public abstract class VanillaEntityController extends BasicController implements
 	 */
 	public BoundingBox getBounds() {
 		return this.area;
-	}
-
-	/**
-	 * Tests if a velocity update is needed for this entity<br>
-	 * This is called by the entity protocol
-	 * @return True if a velocity update is needed
-	 */
-	public boolean needsVelocityUpdate() {
-		return velocityTicks % 5 == 0;
-	}
-
-	/**
-	 * Tests if a position update is needed for this entity<br>
-	 * This is called by the entity protocol
-	 * @return True if a position update is needed
-	 */
-	public boolean needsPositionUpdate() {
-		return positionTicks % 30 == 0;
 	}
 
 	/**
@@ -264,23 +246,6 @@ public abstract class VanillaEntityController extends BasicController implements
 		return this.drops;
 	}
 
-	/**
-	 * Sets the last known transformation known by the clients<br>
-	 * This should only be called by the protocol classes
-	 * @param transform to set to
-	 */
-	public void setLastClientTransform(Transform transform) {
-		this.lastClientTransform = transform.copy();
-	}
-
-	/**
-	 * Gets the last known transformation updated to the clients
-	 * @return the last known transform by the clients
-	 */
-	public Transform getLastClientTransform() {
-		return this.lastClientTransform;
-	}
-
 	// =========================
 	// Controller helper methods
 	// =========================
@@ -328,30 +293,6 @@ public abstract class VanillaEntityController extends BasicController implements
 	 */
 	public void rotate(float degrees, float x, float y, float z) {
 		getParent().rotate(degrees, x, y, z);
-	}
-
-	/**
-	 * Sets the yaw angle for this entity
-	 * @param angle to set to
-	 */
-	public void yaw(float angle) {
-		getParent().yaw(angle);
-	}
-
-	/**
-	 * Sets the pitch angle for this entity
-	 * @param angle to set to
-	 */
-	public void pitch(float angle) {
-		getParent().pitch(angle);
-	}
-
-	/**
-	 * Rolls this entity along an angle.
-	 * @param angle the angle in-which to roll
-	 */
-	public void roll(float angle) {
-		getParent().roll(angle);
 	}
 
 	/**

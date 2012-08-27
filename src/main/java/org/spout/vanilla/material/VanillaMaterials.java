@@ -458,6 +458,8 @@ public final class VanillaMaterials {
 	public static final BlockItem SUGAR_CANE = new BlockItem("Sugar Cane", 338, VanillaMaterials.SUGAR_CANE_BLOCK);
 	public static final VanillaItemMaterial PAPER = new VanillaItemMaterial("Paper", 339);
 	public static final VanillaItemMaterial BOOK = new VanillaItemMaterial("Book", 340);
+	public static final VanillaItemMaterial BOOK_AND_QUILL = new VanillaItemMaterial("Book and Quill", 386);
+	public static final VanillaItemMaterial WRITTEN_BOOK = new VanillaItemMaterial("Written Book", 387);
 	public static final VanillaItemMaterial SLIMEBALL = new VanillaItemMaterial("Slimeball", 341);
 	public static final VanillaItemMaterial EGG = new VanillaItemMaterial("Egg", 344);
 	public static final VanillaItemMaterial COMPASS = new VanillaItemMaterial("Compass", 345);

@@ -36,11 +36,13 @@ import org.spout.api.tickable.TickPriority;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.entity.component.HealthOwner;
 import org.spout.vanilla.entity.source.DamageCause;
 import org.spout.vanilla.entity.source.HealthChangeReason;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
+import org.spout.vanilla.protocol.msg.PlayerUpdateStatsMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 

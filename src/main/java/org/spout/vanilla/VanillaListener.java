@@ -28,6 +28,7 @@ package org.spout.vanilla;
 
 import java.util.HashSet;
 
+import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventHandler;
@@ -83,25 +84,6 @@ public class VanillaListener implements Listener {
 		}
 	}
 
-	@EventHandler(order = Order.MONITOR)
-	public void onEntitySpawn(EntitySpawnEvent event) {
-		if (event.isCancelled()) {
-			return;
-		}
-
-		Entity entity = event.getEntity();
-		Controller c = entity.getController();
-		if (c instanceof Sheep) {
-			Sheep sheep = (Sheep) c;
-			sheep.getGrowing().setTimeUntilAdult(100);
-		}
-
-		if (c instanceof Ghast) {
-			Ghast ghast = (Ghast) c;
-			ghast.setRedEyes(true);
-		}
-	}
-
 	@EventHandler(order = Order.EARLIEST)
 	public void onPermissionNode(PermissionNodeEvent event) {
 		if (VanillaConfiguration.OPS.isOp(event.getSubject().getName())) {
@@ -112,6 +94,7 @@ public class VanillaListener implements Listener {
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent event) {
 		if (VanillaConfiguration.HARDCORE_MODE.getBoolean()) {
+			event.getPlayer().ban(true, ChatStyle.RED, "Game Over");
 		}
 	}
 }

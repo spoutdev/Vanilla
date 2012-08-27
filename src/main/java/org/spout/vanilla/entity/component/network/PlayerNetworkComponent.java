@@ -24,13 +24,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity.component.player;
+package org.spout.vanilla.entity.component.network;
 
 import java.util.Random;
 import java.util.logging.Level;
 
 import org.spout.api.Spout;
-import org.spout.api.entity.BasicComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.tickable.TickPriority;
 
@@ -38,9 +37,13 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.event.player.network.PlayerKeepAliveEvent;
 import org.spout.vanilla.event.player.network.PlayerPingChangedEvent;
+import org.spout.vanilla.event.player.network.PlayerUpdateStatsEvent;
 import org.spout.vanilla.event.player.network.PlayerUpdateUserListEvent;
 
-public class PingComponent extends BasicComponent<VanillaPlayerController> {
+/**
+ * Updates health, hunger and food saturation states for the player
+ */
+public class PlayerNetworkComponent extends PositionUpdateComponent<VanillaPlayerController> {
 	private static final int MAX_USER_UPDATES = 40; // the maximum rate (in ticks) at which the user list is updated
 	private int maxUserListUpdateCounter = MAX_USER_UPDATES;
 	private int lastRequestHash = 0; // after log-in an initial keep-alive is sent with hash 0
@@ -49,8 +52,10 @@ public class PingComponent extends BasicComponent<VanillaPlayerController> {
 	private long ping = 0L;
 	private boolean hasTimeOutMsg = true; //temporary to prevent massive kick notify messages
 	private Random random = new Random();
+	private int oldHealth = Integer.MIN_VALUE, oldHunger = Integer.MIN_VALUE;
+	private float oldFoodSat = Float.MIN_VALUE;
 
-	public PingComponent(TickPriority priority) {
+	public PlayerNetworkComponent(TickPriority priority) {
 		super(priority);
 	}
 
@@ -61,6 +66,20 @@ public class PingComponent extends BasicComponent<VanillaPlayerController> {
 
 	@Override
 	public void onTick(float dt) {
+		super.onTick(dt);
+		// Update heath, hunger and food saturation
+		if (getParent().isSurvival()) {
+			int newHealth = getParent().getHealth().getHealth();
+			int newHunger = getParent().getSurvivalComponent().getHunger();
+			float newFoodSat = getParent().getSurvivalComponent().getFoodSaturation();
+			if (oldHealth != newHealth || oldHunger != newHunger || oldFoodSat != newFoodSat) {
+				oldHealth = newHealth;
+				oldHunger = newHunger;
+				oldFoodSat = newFoodSat;
+				getParent().getParent().getNetworkSynchronizer().callProtocolEvent(new PlayerUpdateStatsEvent(getParent().getParent()));
+			}
+		}
+
 		maxUserListUpdateCounter++;
 		long time = System.currentTimeMillis();
 

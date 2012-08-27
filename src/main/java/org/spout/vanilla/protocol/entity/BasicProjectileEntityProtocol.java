@@ -26,6 +26,10 @@
  */
 package org.spout.vanilla.protocol.entity;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
@@ -39,10 +43,10 @@ public class BasicProjectileEntityProtocol extends BasicEntityProtocol {
 	}
 
 	@Override
-	public Message[] getSpawnMessage(Entity entity) {
+	public List<Message> getSpawnMessages(Entity entity) {
 		Controller c = entity.getController();
 		if (c == null || !(c instanceof Projectile)) {
-			return null;
+			return Collections.emptyList();
 		}
 
 		Projectile pro = (Projectile) c;
@@ -51,7 +55,6 @@ public class BasicProjectileEntityProtocol extends BasicEntityProtocol {
 
 		Entity shooter = pro.getShooter();
 		int shooterid = shooter == null ? 0 : shooter.getId();
-
-		return new Message[]{new EntitySpawnVehicleMessage(id, this.getSpawnID(), entity.getPosition(), shooterid, pro.getVelocity())};
+		return Arrays.<Message>asList(new EntitySpawnVehicleMessage(id, this.getSpawnID(), entity.getPosition(), shooterid, pro.getVelocity()));
 	}
 }

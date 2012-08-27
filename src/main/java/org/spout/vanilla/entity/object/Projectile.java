@@ -48,10 +48,7 @@ public class Projectile extends Substance {
 
 	@Override
 	public void onAttached() {
-		Vector3 rotation = this.rotation.getAxisAngles();
-		yaw(rotation.getX());
-		pitch(rotation.getY());
-		roll(rotation.getZ());
+		getParent().setRotation(this.rotation);
 	}
 
 	@Override

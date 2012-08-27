@@ -83,13 +83,13 @@ public class TestCommands {
 		ExplosionModels.SPHERICAL.execute(position, 4.0f);
 	}
 
-	@Command(aliases = {"tpworld", "tpw"}, usage = "<world name>", desc = "Teleport to a world's spawn.")
+	@Command(aliases = {"tpworld", "tpw"}, usage = "<world name>", desc = "Teleport to a world's spawn.", min = 1, max = 1)
 	public void tpWorld(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to teleport");
 		}
 		final Player player = (Player) source;
-		final World world = Spout.getEngine().getWorld(args.getString(0));
+		final World world = args.getWorld(0);
 		if (world != null) {
 			final Point loc = world.getSpawnPoint().getPosition();
 			world.getChunkFromBlock(loc);

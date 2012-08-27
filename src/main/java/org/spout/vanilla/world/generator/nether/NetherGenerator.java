@@ -31,6 +31,7 @@ import java.util.Random;
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.combiner.Add;
 import net.royawesome.jlibnoise.module.combiner.Multiply;
+import net.royawesome.jlibnoise.module.modifier.Clamp;
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
@@ -60,6 +61,7 @@ public class NetherGenerator extends VanillaBiomeChunkGenerator implements Vanil
 	private static final Perlin DETAIL = new Perlin();
 	private static final Turbulence TURBULENCE = new Turbulence();
 	private static final ScalePoint SCALE = new ScalePoint();
+	private static final Clamp FINAL = new Clamp();
 	// noise for block replacement
 	private static final Perlin BLOCK_REPLACER = new Perlin();
 
@@ -100,6 +102,10 @@ public class NetherGenerator extends VanillaBiomeChunkGenerator implements Vanil
 		SCALE.setyScale(1);
 		SCALE.setzScale(0.7);
 
+		FINAL.SetSourceModule(0, SCALE);
+		FINAL.setLowerBound(-1);
+		FINAL.setUpperBound(1);
+
 		BLOCK_REPLACER.setFrequency(0.35);
 		BLOCK_REPLACER.setLacunarity(1);
 		BLOCK_REPLACER.setNoiseQuality(NoiseQuality.FAST);
@@ -133,53 +139,37 @@ public class NetherGenerator extends VanillaBiomeChunkGenerator implements Vanil
 		final int size = Chunk.BLOCKS.SIZE;
 		final double[][][] noise;
 		// build the density maps
-		if (y == HEIGHT - size || y == 0) {
-			// just solid netherrack
-			noise = new double[size][size][size];
+		if (y >= HEIGHT - size * 2) {
+			// density noise with higher values with greater y + yy
+			noise = WorldGeneratorUtils.fastNoise(FINAL, size, size, size, 4, x, y, z);
+			final int smoothOffset = size * 2 - HEIGHT + y;
 			for (int xx = 0; xx < size; xx++) {
 				for (int yy = 0; yy < size; yy++) {
 					for (int zz = 0; zz < size; zz++) {
-						noise[xx][yy][zz] = 1;
+						noise[xx][yy][zz] += (1d / (size + size / 2)) * (yy + smoothOffset);
 					}
 				}
 			}
-		} else if (y == HEIGHT - size * 2) {
-			// a height map for smooth progression from density to solid netherrack
-			// this one is upside down
-			final double[][] flatNoise = WorldGeneratorUtils.fastNoise(SCALE, size, size, 4, x, y, z);
-			noise = new double[size][size][size];
+		} else if (y <= size) {
+			// density noise with higher values with lower y + yy
+			noise = WorldGeneratorUtils.fastNoise(FINAL, size, size, size, 4, x, y, z);
 			for (int xx = 0; xx < size; xx++) {
-				for (int zz = 0; zz < size; zz++) {
-					final int heightMapValue = (int) (flatNoise[xx][zz] * size + size);
-					final int endY = MathHelper.clamp(size - heightMapValue, 0, size - 1);
-					for (int yy = size - 1; yy >= endY; yy--) {
-						noise[xx][yy][zz] = 1;
-					}
-				}
-			}
-		} else if (y == size) {
-			// a height map for smooth progression from density to solid netherrack
-			final double[][] flatNoise = WorldGeneratorUtils.fastNoise(SCALE, size, size, 4, x, y + size - 1, z);
-			noise = new double[size][size][size];
-			for (int xx = 0; xx < size; xx++) {
-				for (int zz = 0; zz < size; zz++) {
-					final int heightMapValue = (int) (flatNoise[xx][zz] * size + size);
-					final int endY = MathHelper.clamp(heightMapValue, 0, size);
-					for (int yy = 0; yy < endY; yy++) {
-						noise[xx][yy][zz] = 1;
+				for (int yy = 0; yy < size; yy++) {
+					for (int zz = 0; zz < size; zz++) {
+						noise[xx][yy][zz] += -(1d / (size + size / 2)) * (yy + y) + (1d / (size + size / 2)) * (size * 2 - 1);
 					}
 				}
 			}
 		} else {
 			// just density noise
-			noise = WorldGeneratorUtils.fastNoise(SCALE, size, size, size, 4, x, y, z);
+			noise = WorldGeneratorUtils.fastNoise(FINAL, size, size, size, 4, x, y, z);
 		}
 		// build the chunk from the density map
 		for (int xx = 0; xx < size; xx++) {
 			for (int yy = 0; yy < size; yy++) {
 				for (int zz = 0; zz < size; zz++) {
 					final double value = noise[xx][yy][zz];
-					if (value > 0) {
+					if (value >= 0) {
 						blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.NETHERRACK.getId());
 					} else {
 						if (y <= SEA_LEVEL) {
@@ -223,12 +213,12 @@ public class NetherGenerator extends VanillaBiomeChunkGenerator implements Vanil
 	@Override
 	public Point getSafeSpawn(World world) {
 		final Random random = new Random();
-		for (byte attempts = 0; attempts < 10; attempts++) {
-			final int x = random.nextInt(31) - 15;
-			final int z = random.nextInt(31) - 15;
+		for (byte attempts = 0; attempts < 32; attempts++) {
+			final int x = random.nextInt(256) - 127;
+			final int z = random.nextInt(256) - 127;
 			final int y = getHighestSolidBlock(world, x, z);
 			if (y != -1) {
-				return new Point(world, x, y, z);
+				return new Point(world, x, y + 0.5f, z);
 			}
 		}
 		return new Point(world, 0, 80, 0);
@@ -236,6 +226,9 @@ public class NetherGenerator extends VanillaBiomeChunkGenerator implements Vanil
 
 	private int getHighestSolidBlock(World world, int x, int z) {
 		int y = HEIGHT / 2;
+		if (!world.getBlockMaterial(x, y, z).equals(VanillaMaterials.AIR)) {
+			return -1;
+		}
 		while (world.getBlockMaterial(x, y, z).equals(VanillaMaterials.AIR)) {
 			y--;
 			if (y == 0 || world.getBlockMaterial(x, y, z) instanceof Liquid) {

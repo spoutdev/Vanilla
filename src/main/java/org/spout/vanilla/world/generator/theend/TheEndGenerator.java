@@ -31,6 +31,7 @@ import java.util.Random;
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.combiner.Add;
 import net.royawesome.jlibnoise.module.combiner.Multiply;
+import net.royawesome.jlibnoise.module.modifier.Clamp;
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
@@ -63,6 +64,7 @@ public class TheEndGenerator extends VanillaBiomeChunkGenerator implements Vanil
 	private static final Perlin DETAIL = new Perlin();
 	private static final Turbulence TURBULENCE = new Turbulence();
 	private static final ScalePoint SCALE = new ScalePoint();
+	private static final Clamp FINAL = new Clamp();
 
 	static {
 		BASE.setFrequency(0.012);
@@ -100,6 +102,10 @@ public class TheEndGenerator extends VanillaBiomeChunkGenerator implements Vanil
 		SCALE.setxScale(0.7);
 		SCALE.setyScale(1);
 		SCALE.setzScale(0.7);
+		
+		FINAL.SetSourceModule(0, SCALE);
+		FINAL.setLowerBound(-1);
+		FINAL.setUpperBound(1);
 	}
 
 	public TheEndGenerator() {
@@ -131,7 +137,7 @@ public class TheEndGenerator extends VanillaBiomeChunkGenerator implements Vanil
 		DETAIL.setSeed(seed * 17);
 		TURBULENCE.setSeed(seed * 53);
 		final int size = blockData.getSize().getFloorX();
-		final double[][][] densityNoise = WorldGeneratorUtils.fastNoise(SCALE, size, size, size, 4, x, y, z);
+		final double[][][] densityNoise = WorldGeneratorUtils.fastNoise(FINAL, size, size, size, 4, x, y, z);
 		for (int xx = 0; xx < size; xx++) {
 			for (int yy = 0; yy < size; yy++) {
 				for (int zz = 0; zz < size; zz++) {

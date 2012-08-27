@@ -47,6 +47,7 @@ import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.creature.hostile.Ghast;
 import org.spout.vanilla.entity.creature.passive.Sheep;
 import org.spout.vanilla.entity.world.RegionSpawner;
+import org.spout.vanilla.event.player.PlayerDeathEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class VanillaListener implements Listener {
@@ -105,6 +106,12 @@ public class VanillaListener implements Listener {
 	public void onPermissionNode(PermissionNodeEvent event) {
 		if (VanillaConfiguration.OPS.isOp(event.getSubject().getName())) {
 			event.setResult(Result.ALLOW);
+		}
+	}
+
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent event) {
+		if (VanillaConfiguration.HARDCORE_MODE.getBoolean()) {
 		}
 	}
 }

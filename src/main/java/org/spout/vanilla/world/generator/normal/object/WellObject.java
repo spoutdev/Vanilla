@@ -36,11 +36,12 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.misc.Slab;
 
 public class WellObject extends WorldGeneratorObject {
 	// main materials
 	private BlockMaterial main = VanillaMaterials.SANDSTONE;
-	private BlockMaterial slab = VanillaMaterials.SLAB.getSubMaterial((short) 1);
+	private BlockMaterial slab = Slab.SANDSTONE;
 	private BlockMaterial liquid = VanillaMaterials.STATIONARY_WATER;
 	// material we can place it on
 	private BlockMaterial placeableOn = VanillaMaterials.SAND;

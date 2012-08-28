@@ -285,8 +285,10 @@ public final class VanillaMaterials {
 	public static final EndPortal END_PORTAL = new EndPortal("End Portal", 119);
 	public static final EndPortalFrame END_PORTAL_FRAME = new EndPortalFrame("End Portal Frame", 120);
 	// ================
-	public static final DoubleSlab DOUBLE_SLABS = DoubleSlab.STONE_SLAB;
-	public static final Slab SLAB = Slab.STONE_SLAB;
+	public static final Slab SLAB = Slab.STONE;
+	public static final DoubleSlab DOUBLE_SLABS = DoubleSlab.STONE;
+	public static final Slab WOODEN_SLAB = Slab.OAK_WOOD;
+	public static final DoubleSlab WOODEN_DOUBLE_SLABS = DoubleSlab.OAK_WOOD;
 	public static final Wool WOOL = Wool.WHITE_WOOL;
 	public static final Brick BRICK = new Brick("Brick Block", 45);
 	public static final TNT TNT = new TNT("TNT", 46);
@@ -557,6 +559,7 @@ public final class VanillaMaterials {
 					}
 				}
 			} catch (Exception e) {
+				e.printStackTrace();
 				throw new RuntimeException(e);
 			}
 		}

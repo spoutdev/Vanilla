@@ -42,30 +42,57 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.scheduler.TaskManager;
 
 /**
  * Runnable that spawns entities in regions.
  */
 public class RegionSpawner implements Runnable {
 	private static final int SPAWN_TRIES = 6;
-	private final Region region;
+	private final int rx, ry, rz;
+	private final World world;
 	private final Random rand = new Random();
 	private final Map<ControllerType, SpawnInformation> spawnableTypes = new ConcurrentHashMap<ControllerType, SpawnInformation>();
-
+	private int taskId = -1;
+	private TaskManager manager;
 	public RegionSpawner(Region region) {
-		this.region = region;
+		this.world = region.getWorld();
+		this.rx = region.getX();
+		this.ry = region.getY();
+		this.rz = region.getZ();
+	}
+	
+	public int getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
+	}
+	
+	public TaskManager getTaskManager() {
+		return manager;
+	}
+
+	public void setTaskManager(TaskManager manager) {
+		this.manager = manager;
 	}
 
 	@Override
 	public void run() {
-		for (int chunks = 0; chunks < 10; chunks++) {
-			int randX = this.rand.nextInt(Region.CHUNKS.SIZE);
-			int randY = this.rand.nextInt(Region.CHUNKS.SIZE);
-			int randZ = this.rand.nextInt(Region.CHUNKS.SIZE);
-			Chunk chunk = region.getChunk(randX, randY, randZ, LoadOption.NO_LOAD);
-			if (chunk != null) {
-				spawn(chunk);
+		Region region = world.getRegion(rx, ry, rz, LoadOption.NO_LOAD);
+		if (region != null) {
+			for (int chunks = 0; chunks < 10; chunks++) {
+				int randX = this.rand.nextInt(Region.CHUNKS.SIZE);
+				int randY = this.rand.nextInt(Region.CHUNKS.SIZE);
+				int randZ = this.rand.nextInt(Region.CHUNKS.SIZE);
+				Chunk chunk = region.getChunk(randX, randY, randZ, LoadOption.NO_LOAD);
+				if (chunk != null) {
+					spawn(chunk);
+				}
 			}
+		} else {
+			manager.cancelTask(taskId);
 		}
 	}
 
@@ -83,18 +110,10 @@ public class RegionSpawner implements Runnable {
 		spawnableTypes.put(type, new SpawnInformation(amount, canSpawnOn));
 	}
 
-	/**
-	 * Region this spawner manages.
-	 * @return region
-	 */
-	public Region getRegion() {
-		return region;
-	}
-
 	public void spawn(Chunk chunk) {
 		for (Entry<ControllerType, SpawnInformation> entry : spawnableTypes.entrySet()) {
 			SpawnInformation info = entry.getValue();
-			List<Entity> existing = region.getAll(entry.getKey().getControllerClass());
+			List<Entity> existing = chunk.getRegion().getAll(entry.getKey().getControllerClass());
 			if (existing.size() < info.amount) {
 				int randX = this.rand.nextInt(Chunk.BLOCKS.SIZE);
 				int randY = this.rand.nextInt(Chunk.BLOCKS.SIZE);
@@ -112,7 +131,7 @@ public class RegionSpawner implements Runnable {
 								x += chunk.getBlockX() + 0.5F;
 								y += chunk.getBlockY() + 1F;
 								z += chunk.getBlockZ() + 0.5F;
-								region.getWorld().createAndSpawnEntity(new Point(region.getWorld(), x, y, z), controller);
+								chunk.getWorld().createAndSpawnEntity(new Point(chunk.getWorld(), x, y, z), controller);
 							} catch (Exception e) {
 								throw new RuntimeException("Unable to spawn " + entry.getKey().getName(), e);
 							}

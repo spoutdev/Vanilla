@@ -63,7 +63,9 @@ public class VanillaListener implements Listener {
 		Region region = event.getRegion();
 
 		RegionSpawner spawner = new RegionSpawner(region);
-		region.getTaskManager().scheduleSyncRepeatingTask(plugin, spawner, 100, 100, TaskPriority.LOW);
+		int taskId = region.getTaskManager().scheduleSyncRepeatingTask(plugin, spawner, 100, 100, TaskPriority.LOW);
+		spawner.setTaskId(taskId);
+		spawner.setTaskManager(region.getTaskManager());
 
 		WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.getOrCreate(event.getWorld());
 		if (worldConfig.SPAWN_ANIMALS.getBoolean()) {

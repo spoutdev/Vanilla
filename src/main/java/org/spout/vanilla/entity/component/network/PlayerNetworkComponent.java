@@ -29,8 +29,10 @@ package org.spout.vanilla.entity.component.network;
 import java.util.Random;
 import java.util.logging.Level;
 
+import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
+import org.spout.api.plugin.Platform;
 import org.spout.api.tickable.TickPriority;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -116,6 +118,11 @@ public class PlayerNetworkComponent extends PositionUpdateComponent<VanillaPlaye
 	 * @param responseHash to validate against
 	 */
 	public void resetTimeout(int responseHash) {
+		Platform platform = Spout.getPlatform();
+		if (platform != Platform.SERVER || platform != Platform.PROXY) {
+			return;
+		}
+
 		if (responseHash != lastRequestHash) {
 			return; // invalid or older message
 		}
@@ -128,7 +135,7 @@ public class PlayerNetworkComponent extends PositionUpdateComponent<VanillaPlaye
 			// Update the user lists for all players
 			if (maxUserListUpdateCounter >= MAX_USER_UPDATES) {
 				maxUserListUpdateCounter = 0;
-				for (Player player : Spout.getEngine().getOnlinePlayers()) {
+				for (Player player : ((Server) Spout.getEngine()).getOnlinePlayers()) {
 					player.getNetworkSynchronizer().callProtocolEvent(new PlayerUpdateUserListEvent(p, this.ping));
 				}
 			}

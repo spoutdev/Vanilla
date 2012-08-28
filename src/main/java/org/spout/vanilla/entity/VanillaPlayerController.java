@@ -45,7 +45,6 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.tickable.TickPriority;
 
-import org.spout.vanilla.chat.style.VanillaStyleHandler;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.entity.component.GameModeOwner;
@@ -550,10 +549,5 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 			velocity = Vector3.ZERO;
 		}
 		this.velocity = velocity;
-	}
-
-	@Override
-	public int getStyleHandlerId() {
-		return VanillaStyleHandler.ID;
 	}
 }

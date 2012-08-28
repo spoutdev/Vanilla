@@ -37,8 +37,6 @@ import org.jboss.netty.channel.Channel;
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.console.Console;
-import org.spout.api.chat.style.StyleHandler;
-import org.spout.api.chat.style.html.HTMLStyleHandler;
 import org.spout.api.command.Command;
 import org.spout.api.command.CommandSource;
 import org.spout.api.data.ValueHolder;
@@ -232,10 +230,5 @@ public class RemoteConnectionSession implements Console, CommandSource {
 
 	public boolean isGroup() {
 		return false;
-	}
-
-	@Override
-	public int getStyleHandlerId() {
-		return HTMLStyleHandler.ID;
 	}
 }

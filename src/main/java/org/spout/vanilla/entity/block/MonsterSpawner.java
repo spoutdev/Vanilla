@@ -40,9 +40,8 @@ import org.spout.vanilla.entity.VanillaBlockController;
 import org.spout.vanilla.entity.VanillaControllerType;
 import org.spout.vanilla.entity.VanillaControllerTypes;
 import org.spout.vanilla.entity.creature.Creature;
+import org.spout.vanilla.event.block.BlockControllerDataEvent;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.msg.TileEntityDataMessage;
-import org.spout.vanilla.util.VanillaNetworkUtil;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
 public class MonsterSpawner extends VanillaBlockController {
@@ -210,8 +209,7 @@ public class MonsterSpawner extends VanillaBlockController {
 	 * @param nextSpawn to set to
 	 */
 	public void setNextSpawn(VanillaControllerType nextSpawn) {
-		Block block = getBlock();
-		VanillaNetworkUtil.broadcastPacket(new TileEntityDataMessage(block.getX(), block.getY(), block.getZ(), 1, nextSpawn.getMinecraftId(), -1, -1));
 		this.nextSpawn = nextSpawn;
+		this.callProtocolEvent(new BlockControllerDataEvent(getBlock(), 1, nextSpawn.getMinecraftId()));
 	}
 }

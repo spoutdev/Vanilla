@@ -34,6 +34,10 @@ import org.spout.api.util.SpoutToStringStyle;
 public class TileEntityDataMessage implements Message {
 	private final int x, y, z, action, custom1, custom2, custom3;
 
+	public TileEntityDataMessage(int x, int y, int z, int action, int[] data) {
+		this(x, y, z, action, data.length >= 1 ? data[0] : -1, data.length >= 2 ? data[1] : -1, data.length >= 3 ? data[2] : -1);
+	}
+
 	public TileEntityDataMessage(int x, int y, int z, int action, int custom1, int custom2, int custom3) {
 		this.x = x;
 		this.y = y;

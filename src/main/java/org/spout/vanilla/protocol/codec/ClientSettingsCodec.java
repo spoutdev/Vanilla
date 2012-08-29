@@ -55,7 +55,7 @@ public class ClientSettingsCodec extends MessageCodec<ClientSettingsMessage> {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		ChannelBufferUtils.writeString(buffer, message.getLocale());
 		buffer.writeByte(message.getViewDistance());
-		buffer.writeInt(message.getChatFlags());
+		buffer.writeByte(message.getChatFlags());
 		buffer.writeByte(message.getDifficulty());
 		return buffer;
 	}

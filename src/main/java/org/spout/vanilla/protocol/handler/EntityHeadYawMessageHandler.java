@@ -31,7 +31,7 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.component.component.HeadOwner;
+import org.spout.vanilla.components.component.HeadOwner;
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityHeadYawMessage;
 

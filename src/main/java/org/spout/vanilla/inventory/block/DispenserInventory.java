@@ -28,7 +28,7 @@ package org.spout.vanilla.inventory.block;
 
 import org.spout.api.inventory.Inventory;
 
-import org.spout.vanilla.component.block.Dispenser;
+import org.spout.vanilla.components.block.Dispenser;
 import org.spout.vanilla.inventory.VanillaInventory;
 
 /**

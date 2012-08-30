@@ -32,7 +32,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventoryRange;
 import org.spout.api.inventory.special.InventorySlot;
 
-import org.spout.vanilla.component.VanillaPlayerController;
+import org.spout.vanilla.components.VanillaPlayerController;
 import org.spout.vanilla.event.player.PlayerSlotChangeEvent;
 
 public class PlayerQuickbar extends InventoryRange {

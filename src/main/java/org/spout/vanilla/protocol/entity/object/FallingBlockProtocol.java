@@ -37,7 +37,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.object.moving.MovingBlock;
+import org.spout.vanilla.components.object.moving.MovingBlock;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.BasicVehicleEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;

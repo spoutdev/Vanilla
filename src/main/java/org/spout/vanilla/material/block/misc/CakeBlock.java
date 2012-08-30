@@ -32,7 +32,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 
-import org.spout.vanilla.component.VanillaPlayerController;
+import org.spout.vanilla.components.VanillaPlayerController;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 

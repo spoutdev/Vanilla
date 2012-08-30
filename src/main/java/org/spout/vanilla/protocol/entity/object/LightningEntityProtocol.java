@@ -33,7 +33,7 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.component.object.misc.Lightning;
+import org.spout.vanilla.components.object.misc.Lightning;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnLightningStrikeMessage;
 

@@ -51,11 +51,11 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.VanillaEntityController;
-import org.spout.vanilla.component.VanillaPlayerController;
-import org.spout.vanilla.component.component.effect.potion.Speed;
-import org.spout.vanilla.component.creature.neutral.Human;
-import org.spout.vanilla.component.source.HealthChangeReason;
+import org.spout.vanilla.components.VanillaEntityController;
+import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.component.effect.potion.Speed;
+import org.spout.vanilla.components.creature.neutral.Human;
+import org.spout.vanilla.components.source.HealthChangeReason;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;

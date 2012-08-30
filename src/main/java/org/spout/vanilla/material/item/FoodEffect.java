@@ -28,8 +28,8 @@ package org.spout.vanilla.material.item;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.spout.vanilla.component.VanillaPlayerController;
-import org.spout.vanilla.component.component.effect.VanillaEntityFoodEffect;
+import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.component.effect.VanillaEntityFoodEffect;
 
 public class FoodEffect {
 	private final float amount;

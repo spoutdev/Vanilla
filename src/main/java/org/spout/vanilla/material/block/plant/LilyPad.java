@@ -33,7 +33,7 @@ import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.component.HeadOwner;
+import org.spout.vanilla.components.component.HeadOwner;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.util.VanillaPlayerUtil;

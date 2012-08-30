@@ -28,7 +28,7 @@ package org.spout.vanilla.window.block;
 
 import org.spout.api.inventory.InventoryBase;
 
-import org.spout.vanilla.component.block.BrewingStand;
+import org.spout.vanilla.components.block.BrewingStand;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.util.intmap.SlotIndexMap;
 import org.spout.vanilla.window.ClickArgs;

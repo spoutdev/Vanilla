@@ -37,9 +37,9 @@ import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
 import org.spout.api.util.map.concurrent.AtomicShortArray;
 
-import org.spout.vanilla.component.component.effect.food.FoodSaturation;
-import org.spout.vanilla.component.component.effect.food.Hunger;
-import org.spout.vanilla.component.component.effect.food.Poisoning;
+import org.spout.vanilla.components.component.effect.food.FoodSaturation;
+import org.spout.vanilla.components.component.effect.food.Hunger;
+import org.spout.vanilla.components.component.effect.food.Poisoning;
 import org.spout.vanilla.material.block.controlled.BrewingStandBlock;
 import org.spout.vanilla.material.block.controlled.ChestBlock;
 import org.spout.vanilla.material.block.controlled.CraftingTableBlock;

@@ -34,8 +34,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.VanillaControllerTypes;
-import org.spout.vanilla.component.block.Chest;
+import org.spout.vanilla.components.VanillaControllerTypes;
+import org.spout.vanilla.components.block.Chest;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.util.Instrument;

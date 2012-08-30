@@ -32,7 +32,7 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.object.vehicle.minecart.TransportMinecart;
+import org.spout.vanilla.components.object.vehicle.minecart.TransportMinecart;
 import org.spout.vanilla.material.block.rail.RailBase;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 

@@ -48,7 +48,7 @@ import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.component.VanillaPlayerController;
+import org.spout.vanilla.components.VanillaPlayerController;
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.VanillaBlockMaterial;

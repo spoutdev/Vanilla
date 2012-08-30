@@ -29,7 +29,7 @@ package org.spout.vanilla.inventory.block;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.special.InventorySlot;
 
-import org.spout.vanilla.component.block.Furnace;
+import org.spout.vanilla.components.block.Furnace;
 import org.spout.vanilla.inventory.VanillaInventory;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;

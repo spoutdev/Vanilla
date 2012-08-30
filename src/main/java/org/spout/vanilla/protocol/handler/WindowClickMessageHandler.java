@@ -33,7 +33,7 @@ import org.spout.api.inventory.InventoryBase;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.component.VanillaPlayerController;
+import org.spout.vanilla.components.VanillaPlayerController;
 import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
 import org.spout.vanilla.window.ClickArgs;

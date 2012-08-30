@@ -33,9 +33,9 @@ import org.spout.api.inventory.InventoryBase;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.VanillaControllerType;
-import org.spout.vanilla.component.VanillaControllerTypes;
-import org.spout.vanilla.component.VanillaPlayerController;
+import org.spout.vanilla.components.VanillaControllerType;
+import org.spout.vanilla.components.VanillaControllerTypes;
+import org.spout.vanilla.components.VanillaPlayerController;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 

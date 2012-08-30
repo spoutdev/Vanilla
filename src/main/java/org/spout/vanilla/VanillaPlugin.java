@@ -40,8 +40,7 @@ import org.spout.api.command.CommandRegistrationsFactory;
 import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
 import org.spout.api.command.annotated.SimpleInjector;
-import org.spout.api.entity.controller.basic.PointObserver;
-import org.spout.api.entity.controller.type.ControllerType;
+import org.spout.api.component.components.NetworkComponent;
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
@@ -57,7 +56,6 @@ import org.spout.api.plugin.ServiceManager;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.PortBinding;
 import org.spout.api.protocol.Protocol;
-import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.util.OutwardIterator;
 
 import org.spout.vanilla.command.AdministrationCommands;
@@ -68,10 +66,6 @@ import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.entity.world.VanillaSky;
-import org.spout.vanilla.entity.world.sky.NetherSky;
-import org.spout.vanilla.entity.world.sky.NormalSky;
-import org.spout.vanilla.entity.world.sky.TheEndSky;
 import org.spout.vanilla.inventory.recipe.VanillaRecipes;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -92,7 +86,7 @@ import org.spout.vanilla.world.generator.VanillaGenerators;
 public class VanillaPlugin extends CommonPlugin {
 	private static final int LOADER_THREAD_COUNT = 16;
 	public static final int MINECRAFT_PROTOCOL_ID = 39;
-	public static final int VANILLA_PROTOCOL_ID = ControllerType.getProtocolId("org.spout.vanilla.protocol");
+	public static final int VANILLA_PROTOCOL_ID = NetworkComponent.getProtocolId("org.spout.vanilla.protocol");
 	private static VanillaPlugin instance;
 	private Engine engine;
 	private VanillaConfiguration config;
@@ -248,9 +242,9 @@ public class VanillaPlugin extends CommonPlugin {
 				World world = engine.loadWorld(worldNode.getWorldName(), generator);
 
 				// Apply general settings
-				world.getDataMap().put(VanillaData.GAMEMODE, GameMode.get(worldNode.GAMEMODE.getString()));
-				world.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.get(worldNode.DIFFICULTY.getString()));
-				world.getDataMap().put(VanillaData.DIMENSION, Dimension.get(worldNode.SKY_TYPE.getString()));
+				world.getDatatable().put(VanillaData.GAMEMODE, GameMode.get(worldNode.GAMEMODE.getString()));
+				world.getDatatable().put(VanillaData.DIFFICULTY, Difficulty.get(worldNode.DIFFICULTY.getString()));
+				world.getDatatable().put(VanillaData.DIMENSION, Dimension.get(worldNode.SKY_TYPE.getString()));
 
 				// Grab safe spawn if newly created world.
 				if (world.getAge() <= 0) {
@@ -310,27 +304,6 @@ public class VanillaPlugin extends CommonPlugin {
 			}
 
 			WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.getOrCreate(world);
-
-			// Keep spawn loaded
-			if (worldConfig.LOADED_SPAWN.getBoolean()) {
-				world.createAndSpawnEntity(point, new PointObserver(radius));
-			}
-
-			//TODO Remove sky setting when Weather and Time are Region tasks.
-			// Sky
-			String skyType = worldConfig.SKY_TYPE.getString();
-			VanillaSky sky;
-			if (skyType.equalsIgnoreCase("normal")) {
-				sky = new NormalSky(world);
-			} else if (skyType.equalsIgnoreCase("nether")) {
-				sky = new NetherSky(world);
-			} else if (skyType.equalsIgnoreCase("the_end")) {
-				sky = new TheEndSky(world);
-			} else {
-				throw new IllegalArgumentException("Invalid sky type for world '" + world.getName() + "': " + skyType);
-			}
-			world.getTaskManager().scheduleSyncRepeatingTask(this, sky, 50, 50, TaskPriority.NORMAL);
-			sky.onAttach();
 		}
 	}
 

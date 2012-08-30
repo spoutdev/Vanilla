@@ -26,30 +26,17 @@
  */
 package org.spout.vanilla;
 
-import java.util.HashSet;
-
 import org.spout.api.chat.style.ChatStyle;
-import org.spout.api.entity.Controller;
-import org.spout.api.entity.Entity;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
 import org.spout.api.event.Order;
 import org.spout.api.event.Result;
-import org.spout.api.event.entity.EntitySpawnEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.event.world.RegionLoadEvent;
-import org.spout.api.geo.cuboid.Region;
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.scheduler.TaskPriority;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.configuration.WorldConfigurationNode;
-import org.spout.vanilla.entity.VanillaControllerTypes;
-import org.spout.vanilla.entity.creature.hostile.Ghast;
-import org.spout.vanilla.entity.creature.passive.Sheep;
-import org.spout.vanilla.entity.world.RegionSpawner;
 import org.spout.vanilla.event.player.PlayerDeathEvent;
-import org.spout.vanilla.material.VanillaMaterials;
 
 public class VanillaListener implements Listener {
 	private final VanillaPlugin plugin;
@@ -60,27 +47,10 @@ public class VanillaListener implements Listener {
 
 	@EventHandler
 	public void onRegionLoad(RegionLoadEvent event) {
-		Region region = event.getRegion();
-
-		RegionSpawner spawner = new RegionSpawner(region);
-		region.getTaskManager().scheduleSyncRepeatingTask(plugin, spawner, 100, 100, TaskPriority.LOW);
-
 		WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.getOrCreate(event.getWorld());
 		if (worldConfig.SPAWN_ANIMALS.getBoolean()) {
-			HashSet<BlockMaterial> grass = new HashSet<BlockMaterial>();
-			grass.add(VanillaMaterials.GRASS);
-			spawner.addSpawnableType(VanillaControllerTypes.SHEEP, grass, 5);
-
-			spawner.addSpawnableType(VanillaControllerTypes.PIG, grass, 5);
-
-			spawner.addSpawnableType(VanillaControllerTypes.COW, grass, 5);
-
-			spawner.addSpawnableType(VanillaControllerTypes.CHICKEN, grass, 5);
 		}
 		if (worldConfig.SPAWN_MONSTERS.getBoolean()) {
-			HashSet<BlockMaterial> endStone = new HashSet<BlockMaterial>();
-			endStone.add(VanillaMaterials.END_STONE);
-			spawner.addSpawnableType(VanillaControllerTypes.ENDERMAN, endStone, 7);
 		}
 	}
 

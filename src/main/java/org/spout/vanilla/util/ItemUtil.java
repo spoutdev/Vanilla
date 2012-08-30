@@ -30,7 +30,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.entity.object.moving.Item;
+import org.spout.vanilla.component.object.moving.Item;
 
 public class ItemUtil {
 	/**

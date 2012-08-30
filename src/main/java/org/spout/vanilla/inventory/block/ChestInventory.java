@@ -28,7 +28,7 @@ package org.spout.vanilla.inventory.block;
 
 import org.spout.api.inventory.Inventory;
 
-import org.spout.vanilla.entity.block.Chest;
+import org.spout.vanilla.component.block.Chest;
 import org.spout.vanilla.inventory.VanillaInventory;
 
 public class ChestInventory extends Inventory implements VanillaInventory {

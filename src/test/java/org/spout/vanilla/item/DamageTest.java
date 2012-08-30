@@ -30,7 +30,7 @@ import org.junit.Test;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.entity.source.DamageCause;
+import org.spout.vanilla.component.source.DamageCause;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.armor.Armor;

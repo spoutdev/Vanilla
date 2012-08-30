@@ -30,7 +30,7 @@ import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 
-import org.spout.vanilla.entity.WindowController;
+import org.spout.vanilla.component.WindowController;
 import org.spout.vanilla.inventory.CraftingInventory;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 

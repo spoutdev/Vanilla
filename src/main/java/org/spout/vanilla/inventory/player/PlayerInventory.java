@@ -29,7 +29,7 @@ package org.spout.vanilla.inventory.player;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.special.InventoryBundle;
 
-import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.component.VanillaPlayerController;
 import org.spout.vanilla.inventory.VanillaInventory;
 
 /**

@@ -39,7 +39,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.component.VanillaPlayerController;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnPlayerMessage;
 
 public class VanillaPlayerProtocol extends VanillaEntityProtocol {

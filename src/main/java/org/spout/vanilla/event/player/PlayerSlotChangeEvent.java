@@ -31,7 +31,7 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.inventory.special.InventorySlot;
 
-import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.component.VanillaPlayerController;
 
 public class PlayerSlotChangeEvent extends PlayerEvent {
 	private static HandlerList handlers = new HandlerList();

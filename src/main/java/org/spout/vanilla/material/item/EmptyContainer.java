@@ -39,7 +39,7 @@ import org.spout.api.material.source.GenericMaterialSource;
 import org.spout.api.material.source.MaterialSource;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.entity.component.HeadOwner;
+import org.spout.vanilla.component.component.HeadOwner;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 

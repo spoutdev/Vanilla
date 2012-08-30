@@ -29,8 +29,8 @@ package org.spout.vanilla.material.block.pressureplate;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 
+import org.spout.vanilla.component.object.moving.Item;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.entity.object.moving.Item;
 import org.spout.vanilla.material.block.PressurePlate;
 
 public class StonePressurePlate extends PressurePlate {

@@ -31,7 +31,7 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
 
-import org.spout.vanilla.component.block.Sign;
+import org.spout.vanilla.components.block.Sign;
 
 /**
  * Event which is called when the text on a sign changes

@@ -39,10 +39,10 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.VanillaControllerTypes;
-import org.spout.vanilla.component.block.Dispenser;
-import org.spout.vanilla.component.object.moving.Item;
-import org.spout.vanilla.component.object.projectile.Arrow;
+import org.spout.vanilla.components.VanillaControllerTypes;
+import org.spout.vanilla.components.block.Dispenser;
+import org.spout.vanilla.components.object.moving.Item;
+import org.spout.vanilla.components.object.projectile.Arrow;
 import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.VanillaMaterials;

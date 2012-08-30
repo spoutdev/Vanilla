@@ -31,7 +31,7 @@ import java.util.List;
 import org.spout.api.entity.Controller;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.creature.hostile.Slime;
+import org.spout.vanilla.components.creature.hostile.Slime;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class SlimeEntityProtocol extends BasicMobEntityProtocol {

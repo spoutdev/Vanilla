@@ -32,9 +32,9 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.VanillaControllerTypes;
-import org.spout.vanilla.component.VanillaPlayerController;
-import org.spout.vanilla.component.block.CraftingTable;
+import org.spout.vanilla.components.VanillaControllerTypes;
+import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.block.CraftingTable;
 import org.spout.vanilla.util.Instrument;
 
 public class CraftingTableBlock extends ControlledMaterial {

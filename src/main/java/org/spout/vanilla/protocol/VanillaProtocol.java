@@ -48,8 +48,8 @@ import org.spout.api.protocol.Session;
 import org.spout.api.util.Named;
 
 import org.spout.vanilla.chat.style.VanillaStyleHandler;
-import org.spout.vanilla.component.VanillaPlayerController;
-import org.spout.vanilla.component.source.ControllerChangeReason;
+import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.source.ControllerChangeReason;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.customdata.RegisterPluginChannelCodec;
 import org.spout.vanilla.protocol.customdata.RegisterPluginChannelMessage;

@@ -37,10 +37,10 @@ import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.component.VanillaEntityController;
-import org.spout.vanilla.component.component.HeadOwner;
-import org.spout.vanilla.component.component.PositionUpdateOwner;
-import org.spout.vanilla.component.component.network.PositionUpdateComponent;
+import org.spout.vanilla.components.VanillaEntityController;
+import org.spout.vanilla.components.component.HeadOwner;
+import org.spout.vanilla.components.component.PositionUpdateOwner;
+import org.spout.vanilla.components.component.network.PositionUpdateComponent;
 import org.spout.vanilla.protocol.msg.DestroyEntitiesMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityHeadYawMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityRelativePositionMessage;

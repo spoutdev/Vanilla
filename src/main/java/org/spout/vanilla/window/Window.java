@@ -41,8 +41,8 @@ import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.component.VanillaPlayerController;
-import org.spout.vanilla.component.WindowController;
+import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.WindowController;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;

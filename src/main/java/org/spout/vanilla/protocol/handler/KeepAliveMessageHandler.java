@@ -29,7 +29,7 @@ package org.spout.vanilla.protocol.handler;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.component.VanillaPlayerController;
+import org.spout.vanilla.components.VanillaPlayerController;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 
 public class KeepAliveMessageHandler extends MessageHandler<KeepAliveMessage> {

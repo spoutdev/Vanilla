@@ -36,8 +36,8 @@ import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.VanillaPlayerController;
-import org.spout.vanilla.component.component.HeadOwner;
+import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.component.HeadOwner;
 import org.spout.vanilla.inventory.player.PlayerInventory;
 
 public class VanillaPlayerUtil {

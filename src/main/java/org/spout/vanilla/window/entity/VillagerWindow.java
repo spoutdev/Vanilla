@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.window.entity;
 
-import org.spout.vanilla.component.creature.passive.Villager;
+import org.spout.vanilla.components.creature.passive.Villager;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 import org.spout.vanilla.util.intmap.SlotIndexMap;
 import org.spout.vanilla.window.CraftingWindow;

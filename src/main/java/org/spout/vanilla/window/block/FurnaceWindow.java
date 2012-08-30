@@ -28,7 +28,7 @@ package org.spout.vanilla.window.block;
 
 import org.spout.api.inventory.InventoryBase;
 
-import org.spout.vanilla.component.block.Furnace;
+import org.spout.vanilla.components.block.Furnace;
 import org.spout.vanilla.event.window.WindowPropertyEvent;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;

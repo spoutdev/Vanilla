@@ -24,23 +24,10 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.components.creature;
+package org.spout.vanilla.components;
 
-import org.spout.vanilla.component.components.VanillaEntityComponent;
-import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
-import org.spout.vanilla.protocol.entity.living.EndermanEntityProtocol;
+import org.spout.vanilla.components.creature.Enderman;
 
-public class Enderman extends VanillaEntityComponent {
-	private final VanillaEntityProtocol protocol;
-	
-	public Enderman() {
-		protocol = new EndermanEntityProtocol();
-		
-		//TODO register components!
-	}
-	
-	@Override
-	public VanillaEntityProtocol getEntityProtocol() {
-		return protocol;
-	}
+public class VanillaComponentTypes {
+	public static final Enderman ENDERMAN = new Enderman();
 }

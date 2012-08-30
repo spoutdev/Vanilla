@@ -26,19 +26,12 @@
  */
 package org.spout.vanilla.components.creature;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.entity.EntityType;
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.entity.living.EndermanEntityProtocol;
+import org.spout.api.component.components.EntityComponent;
 
-public class Enderman extends EntityType {
+/**
+ * A component that identifies the entity as an Enderman. 
+ */
+public class Enderman extends EntityComponent {
 	public Enderman() {
-		//Call super and pass in components!
-		//super(VanillaComponents.HEALTH);
 	}
-	
-	@Override
-	public void init(Entity typed) {
-		typed.getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new EndermanEntityProtocol());
-	}	
 }

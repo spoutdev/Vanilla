@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.window.block;
 
-import org.spout.vanilla.entity.block.CraftingTable;
+import org.spout.vanilla.component.block.CraftingTable;
 import org.spout.vanilla.inventory.block.CraftingTableInventory;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 import org.spout.vanilla.util.intmap.SlotIndexMap;

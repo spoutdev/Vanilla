@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.window;
 
-import org.spout.vanilla.entity.WindowController;
+import org.spout.vanilla.component.WindowController;
 import org.spout.vanilla.util.intmap.SlotIndexGrid;
 
 /**

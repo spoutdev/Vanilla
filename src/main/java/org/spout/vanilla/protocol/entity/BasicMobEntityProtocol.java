@@ -37,8 +37,8 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.entity.component.HeadOwner;
-import org.spout.vanilla.entity.creature.Creature;
+import org.spout.vanilla.component.component.HeadOwner;
+import org.spout.vanilla.component.creature.Creature;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnMobMessage;
 

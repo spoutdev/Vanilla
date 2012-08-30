@@ -30,8 +30,8 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.entity.VanillaEntityController;
-import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.component.VanillaEntityController;
+import org.spout.vanilla.component.VanillaPlayerController;
 import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
 
 public final class PlayerAbilityMessageHandler extends MessageHandler<PlayerAbilityMessage> {

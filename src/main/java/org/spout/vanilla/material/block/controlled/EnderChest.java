@@ -30,7 +30,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.entity.VanillaControllerTypes;
+import org.spout.vanilla.component.VanillaControllerTypes;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.util.MoveReaction;
 

@@ -31,8 +31,8 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.component.VanillaPlayerController;
 import org.spout.vanilla.data.ExhaustionLevel;
-import org.spout.vanilla.entity.VanillaPlayerController;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionMessage;
 import org.spout.vanilla.util.VanillaPlayerUtil;

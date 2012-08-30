@@ -35,12 +35,12 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.util.flag.Flag;
 
+import org.spout.vanilla.component.VanillaEntityController;
+import org.spout.vanilla.component.creature.hostile.Silverfish;
+import org.spout.vanilla.component.creature.hostile.Skeleton;
+import org.spout.vanilla.component.creature.hostile.Spider;
+import org.spout.vanilla.component.creature.hostile.Zombie;
 import org.spout.vanilla.data.drops.flag.ToolEnchantFlags;
-import org.spout.vanilla.entity.VanillaEntityController;
-import org.spout.vanilla.entity.creature.hostile.Silverfish;
-import org.spout.vanilla.entity.creature.hostile.Skeleton;
-import org.spout.vanilla.entity.creature.hostile.Spider;
-import org.spout.vanilla.entity.creature.hostile.Zombie;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.VanillaItemMaterial;

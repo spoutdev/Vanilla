@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.window.block;
 
-import org.spout.vanilla.entity.VanillaPlayerController;
-import org.spout.vanilla.entity.block.EnderChest;
+import org.spout.vanilla.component.VanillaPlayerController;
+import org.spout.vanilla.component.block.EnderChest;
 import org.spout.vanilla.window.TransactionWindow;
 import org.spout.vanilla.window.WindowType;
 

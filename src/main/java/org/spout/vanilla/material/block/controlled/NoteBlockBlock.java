@@ -29,8 +29,8 @@ package org.spout.vanilla.material.block.controlled;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.entity.VanillaControllerTypes;
-import org.spout.vanilla.entity.block.NoteBlock;
+import org.spout.vanilla.component.VanillaControllerTypes;
+import org.spout.vanilla.component.block.NoteBlock;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;

@@ -49,12 +49,12 @@ import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.NetworkSynchronizer;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.VanillaPlayerController;
+import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.configuration.OpConfiguration;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.Weather;
-import org.spout.vanilla.entity.VanillaPlayerController;
-import org.spout.vanilla.entity.world.VanillaSky;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaBlockUtil;
 

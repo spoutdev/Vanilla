@@ -24,10 +24,11 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.entity;
+package org.spout.vanilla.component;
 
-import org.spout.vanilla.entity.types.Enderman;
+import org.spout.vanilla.component.components.creature.Enderman;
 
-public class VanillaEntityTypes {
+
+public class VanillaComponentTypes {
 	public static final Enderman ENDERMAN = new Enderman();
 }

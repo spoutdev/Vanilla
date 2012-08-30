@@ -31,7 +31,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.special.InventorySlot;
 
-import org.spout.vanilla.entity.VanillaPlayerController;
+import org.spout.vanilla.component.VanillaPlayerController;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Food extends VanillaItemMaterial {

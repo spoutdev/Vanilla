@@ -34,7 +34,7 @@ import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.entity.object.Projectile;
+import org.spout.vanilla.component.object.Projectile;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnVehicleMessage;
 
 public class BasicProjectileEntityProtocol extends BasicEntityProtocol {

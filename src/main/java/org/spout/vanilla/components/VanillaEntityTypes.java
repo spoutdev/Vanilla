@@ -24,35 +24,10 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.components;
 
-import java.util.List;
+import org.spout.vanilla.components.types.EndermanType;
 
-import org.spout.api.entity.Controller;
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.util.Parameter;
-
-import org.spout.vanilla.components.creature.neutral.Enderman;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
-
-public class EndermanEntityProtocol extends BasicMobEntityProtocol {
-	public EndermanEntityProtocol() {
-		super(58);
-	}
-
-	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		if (controller instanceof EndermanType) {
-			EndermanType enderman = (EndermanType) controller;
-			ItemStack held = enderman.getHeldItem();
-			if (held != null && !held.getMaterial().equals(enderman.getPreviouslyHeldItem().getMaterial())) {
-				List<Parameter<?>> parameters = super.getSpawnParameters(controller);
-				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) held.getMaterial().getId()));
-				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, (byte) held.getData()));
-				return parameters;
-			}
-		}
-
-		return super.getSpawnParameters(controller);
-	}
+public class VanillaEntityTypes {
+	public static final EndermanType ENDERMAN = new EndermanType();
 }

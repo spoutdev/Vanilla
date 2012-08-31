@@ -33,6 +33,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import gnu.trove.set.TIntSet;
 
+import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
@@ -346,7 +347,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (first) {
 			first = false;
 			int entityId = owner.getId();
-			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) session.getEngine().getMaxPlayers());
+			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) ((Server) session.getEngine()).getMaxPlayers());
 			owner.getSession().send(false, true, idMsg);
 			owner.getSession().setState(State.GAME);
 			for (int slot = 0; slot < 4; slot++) {

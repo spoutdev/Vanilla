@@ -26,9 +26,6 @@
  */
 package org.spout.vanilla.data;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public enum Difficulty {
 	PEACEFUL,
 	EASY,

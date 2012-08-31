@@ -28,8 +28,10 @@ package org.spout.vanilla.util;
 
 import java.util.ArrayList;
 
+import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
+import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.protocol.VanillaProtocol;
@@ -41,7 +43,11 @@ public class VanillaNetworkUtil {
 	 */
 	public static void broadcastPacket(Message... messages) {
 		//TODO: Let the setNextSpawn of the monster spawner use a protocol event or network component
-		for (Player player : Spout.getEngine().getOnlinePlayers()) {
+		Platform platform = Spout.getPlatform();
+		if (platform != Platform.SERVER || platform != Platform.PROXY) {
+			return;
+		}
+		for (Player player : ((Server) Spout.getEngine()).getOnlinePlayers()) {
 			sendPacket(player, messages);
 		}
 	}
@@ -54,8 +60,12 @@ public class VanillaNetworkUtil {
 	 */
 	public static void broadcastPacket(Player[] ignore, Message... messages) {
 		//TODO: Handle client status messages differently
+		Platform platform = Spout.getPlatform();
+		if (platform != Platform.SERVER || platform != Platform.PROXY) {
+			return;
+		}
 		ArrayList<Player> toSend = new ArrayList<Player>();
-		for (Player player : Spout.getEngine().getOnlinePlayers()) {
+		for (Player player : ((Server) Spout.getEngine()).getOnlinePlayers()) {
 			for (Player ignored : ignore) {
 				if (player.equals(ignored)) {
 					continue;

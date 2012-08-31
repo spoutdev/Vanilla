@@ -32,7 +32,6 @@ import org.spout.api.entity.Controller;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.components.creature.neutral.Enderman;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class EndermanEntityProtocol extends BasicMobEntityProtocol {

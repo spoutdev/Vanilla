@@ -37,9 +37,9 @@ public class BootstrapLoginRequestMessageHandler extends MessageHandler<LoginReq
 		//		long start = System.currentTimeMillis();
 		//		Spout.getLogger().info("Handshake response took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
 		//		if (message > VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
-		//			session.disconnect(false, new Object[]{"Outdated server!"});
+		//			session.disconnect(false, new Object[]{VanillaConfiguration.OUTDATED_SERVER_MESSAGE.getString()});
 		//		} else if (message.getId() < VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
-		//			session.disconnect(false, new Object[]{"Outdated client!"});
+		//			session.disconnect(false, new Object[]{VanillaConfiguration.OUTDATED_CLIENT_MESSAGE.getString()});
 		//		} else {
 		//			String handshakeUsername = session.getDataMap().get(VanillaProtocol.HANDSHAKE_USERNAME);
 		//			handshakeUsername = handshakeUsername.split(";")[0];

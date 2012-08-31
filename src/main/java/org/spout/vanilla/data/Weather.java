@@ -26,9 +26,6 @@
  */
 package org.spout.vanilla.data;
 
-import gnu.trove.map.TIntObjectMap;
-import gnu.trove.map.hash.TIntObjectHashMap;
-
 /**
  * Enum of the vanilla weather states.
  */

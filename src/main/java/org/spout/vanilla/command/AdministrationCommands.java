@@ -28,6 +28,7 @@ package org.spout.vanilla.command;
 
 import java.util.Set;
 
+import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.command.CommandContext;
@@ -43,6 +44,7 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
+import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.NetworkSynchronizer;
 
 import org.spout.vanilla.VanillaPlugin;
@@ -69,7 +71,11 @@ public class AdministrationCommands {
 		Player player;
 
 		if (args.length() % 2 == 0) {
-			player = Spout.getEngine().getPlayer(args.getString(index++), true);
+			Platform platform = Spout.getPlatform();
+			if (platform != Platform.SERVER || platform != Platform.PROXY) {
+				throw new CommandException("You cannot search for players unless you are in server mode.");
+			}
+			player = ((Server) Spout.getEngine()).getPlayer(args.getString(index++), true);
 
 			if (player == null) {
 				throw new CommandException(args.getString(0) + " is not online.");
@@ -101,7 +107,11 @@ public class AdministrationCommands {
 			
 			point = new Point(world, args.getInteger(index), args.getInteger(index + 1), args.getInteger(index + 2));
 		} else {
-			Player target = Spout.getEngine().getPlayer(args.getString(index), true);
+			Platform platform = Spout.getPlatform();
+			if (platform != Platform.SERVER || platform != Platform.PROXY) {
+				throw new CommandException("You cannot search for players unless you are in server mode.");
+			}
+			Player target = ((Server) Spout.getEngine()).getPlayer(args.getString(index), true);
 
 			if (target == null) {
 				throw new CommandException(args.getString(0) + " is not online.");
@@ -122,7 +132,11 @@ public class AdministrationCommands {
 		Player player = null;
 
 		if (args.length() != 1) {
-			player = Spout.getEngine().getPlayer(args.getString(index++), true);
+			Platform platform = Spout.getPlatform();
+			if (platform != Platform.SERVER || platform != Platform.PROXY) {
+				throw new CommandException("You cannot search for players unless you are in server mode.");
+			}
+			player = ((Server) Spout.getEngine()).getPlayer(args.getString(index++), true);
 		}
 
 		if (player == null) {
@@ -171,11 +185,16 @@ public class AdministrationCommands {
 	@Command(aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.deop")
 	public void deop(CommandContext args, CommandSource source) throws CommandException {
+		Platform platform = Spout.getPlatform();
+		if (platform != Platform.SERVER || platform != Platform.PROXY) {
+			throw new CommandException("You cannot search for players unless you are in server mode.");
+		}
+
 		String playerName = args.getString(0);
 		OpConfiguration ops = VanillaConfiguration.OPS;
 		ops.setOp(playerName, false);
 		source.sendMessage(ChatStyle.YELLOW, playerName, " had their operator status revoked!");
-		Player player = Spout.getEngine().getPlayer(playerName, true);
+		Player player = ((Server) Spout.getEngine()).getPlayer(playerName, true);
 		if (player != null && !source.equals(player)) {
 			player.sendMessage(ChatStyle.YELLOW, "You had your operator status revoked!");
 		}
@@ -184,11 +203,16 @@ public class AdministrationCommands {
 	@Command(aliases = {"op"}, usage = "<player>", desc = "Make a player an operator", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.op")
 	public void op(CommandContext args, CommandSource source) throws CommandException {
+		Platform platform = Spout.getPlatform();
+		if (platform != Platform.SERVER || platform != Platform.PROXY) {
+			throw new CommandException("You cannot search for players unless you are in server mode.");
+		}
+
 		String playerName = args.getString(0);
 		OpConfiguration ops = VanillaConfiguration.OPS;
 		ops.setOp(playerName, true);
 		source.sendMessage(ChatStyle.YELLOW, playerName, " is now an operator!");
-		Player player = Spout.getEngine().getPlayer(playerName, true);
+		Player player = ((Server) Spout.getEngine()).getPlayer(playerName, true);
 		if (player != null && !source.equals(player)) {
 			player.sendMessage(ChatStyle.YELLOW, "You are now an operator!");
 		}
@@ -266,7 +290,11 @@ public class AdministrationCommands {
 		int index = 0;
 		Player player;
 		if (args.length() == 2) {
-			player = Spout.getEngine().getPlayer(args.getString(index++), true);
+			Platform platform = Spout.getPlatform();
+			if (platform != Platform.SERVER || platform != Platform.PROXY) {
+				throw new CommandException("You cannot search for players unless you are in server mode.");
+			}
+			player = ((Server) Spout.getEngine()).getPlayer(args.getString(index++), true);
 			if (player == null) {
 				throw new CommandException(args.getString(0) + " is not online.");
 			}
@@ -318,7 +346,11 @@ public class AdministrationCommands {
 				throw new CommandException("You must be a player to give yourself xp.");
 			}
 		} else {
-			Player player = Spout.getEngine().getPlayer(args.getString(0), true);
+			Platform platform = Spout.getPlatform();
+			if (platform != Platform.SERVER || platform != Platform.PROXY) {
+				throw new CommandException("You cannot search for players unless you are in server mode.");
+			}
+			Player player = ((Server) Spout.getEngine()).getPlayer(args.getString(0), true);
 			if (player != null) {
 				int amount = args.getInteger(1);
 				player.sendMessage("You have been given ", amount, " xp.");
@@ -375,12 +407,16 @@ public class AdministrationCommands {
 
 	@Command(aliases = "debug", usage = "[type] (/resend /resendall)", desc = "Debug commands", max = 2)
 	@CommandPermissions("vanilla.command.debug")
-	public void debug(CommandContext args, CommandSource source) {
+	public void debug(CommandContext args, CommandSource source) throws CommandException {
 		Player player;
 		if (source instanceof Player) {
 			player = (Player) source;
 		} else {
-			player = Spout.getEngine().getPlayer(args.getString(1, ""), true);
+			Platform platform = Spout.getPlatform();
+			if (platform != Platform.SERVER || platform != Platform.PROXY) {
+				throw new CommandException("You cannot search for players unless you are in server mode.");
+			}
+			player = ((Server) Spout.getEngine()).getPlayer(args.getString(1, ""), true);
 			if (player == null) {
 				source.sendMessage("Must be a player or send player name in arguments");
 				return;
@@ -415,7 +451,11 @@ public class AdministrationCommands {
 			}
 			((VanillaPlayerController) ((Player) source).getController()).getHealth().die(source);
 		} else {
-			VanillaPlayerController victim = (VanillaPlayerController) Spout.getEngine().getPlayer(args.getString(0), true).getController();
+			Platform platform = Spout.getPlatform();
+			if (platform != Platform.SERVER || platform != Platform.PROXY) {
+				throw new CommandException("You cannot search for players unless you are in server mode.");
+			}
+			VanillaPlayerController victim = (VanillaPlayerController) ((Server) Spout.getEngine()).getPlayer(args.getString(0), true).getController();
 			if (victim != null) {
 				victim.getHealth().die(source);
 			}

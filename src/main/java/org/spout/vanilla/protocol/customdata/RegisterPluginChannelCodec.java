@@ -31,12 +31,10 @@ import java.util.Iterator;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-
 import org.jboss.netty.util.CharsetUtil;
+
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.util.Named;
-
-import org.spout.vanilla.protocol.ChannelBufferUtils;
 
 public class RegisterPluginChannelCodec extends MessageCodec<RegisterPluginChannelMessage> implements Named {
 	public RegisterPluginChannelCodec(int opcode) {

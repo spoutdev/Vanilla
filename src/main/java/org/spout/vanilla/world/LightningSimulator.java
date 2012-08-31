@@ -116,7 +116,7 @@ public class LightningSimulator extends BasicTickable {
 
 	public void strikePlayers(List<Player> toStrike) {
 		for (Player player : toStrike) {
-			Point playerPos = player.getPosition();
+			Point playerPos = player.getTransform().getPosition();
 			final int posX = MathHelper.floor(playerPos.getX());
 			final int posY = MathHelper.floor(playerPos.getY());
 			final int posZ = MathHelper.floor(playerPos.getZ());

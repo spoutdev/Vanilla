@@ -34,7 +34,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import gnu.trove.set.TIntSet;
 
 import org.spout.api.Spout;
-import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
@@ -62,7 +61,6 @@ import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.components.VanillaPlayerController;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
@@ -160,8 +158,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 	}
 
-	public VanillaNetworkSynchronizer(Player player, Entity entity) {
-		super(player, player.getSession(), entity, 3);
+	public VanillaNetworkSynchronizer(Session session) {
+		super(session, 3);
 		registerProtocolEvents(this);
 		chunkInit = ChunkInit.getChunkInit(VanillaConfiguration.CHUNK_INIT.getString("client"));
 	}
@@ -292,7 +290,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			}
 
 			CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, true, new boolean[16], packetChunkData, biomeData);
-			owner.getSession().send(false, CCMsg);
+			player.getSession().send(false, CCMsg);
 
 			chunks = chunkInit.getChunks(c);
 		}
@@ -302,7 +300,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		byte[][] packetChunkData = new byte[16][];
 		packetChunkData[y] = fullChunkData;
 		CompressedChunkMessage CCMsg = new CompressedChunkMessage(x, z, false, new boolean[16], packetChunkData, null);
-		owner.getSession().send(false, CCMsg);
+		player.getSession().send(false, CCMsg);
 
 		return chunks;
 	}
@@ -310,9 +308,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@Override
 	protected void sendPosition(Point p, Quaternion rot) {
 		//TODO: Implement Spout Protocol
-		Session session = owner.getSession();
-		if (p.distanceSquared(entity.getPosition()) >= 16) {
-			EntityTeleportMessage ETMMsg = new EntityTeleportMessage(entity.getId(), (int) p.getX(), (int) p.getY(), (int) p.getZ(), (int) rot.getYaw(), (int) rot.getPitch());
+		Session session = player.getSession();
+		if (p.distanceSquared(player.getTransform().getPosition()) >= 16) {
+			EntityTeleportMessage ETMMsg = new EntityTeleportMessage(player.getId(), (int) p.getX(), (int) p.getY(), (int) p.getZ(), (int) rot.getYaw(), (int) rot.getPitch());
 			PlayerLookMessage PLMsg = new PlayerLookMessage(rot.getYaw(), rot.getPitch(), true);
 			session.sendAll(false, ETMMsg, PLMsg);
 		} else {
@@ -323,13 +321,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	protected void worldChanged(World world) {
-		VanillaPlayerController vc = (VanillaPlayerController) owner.getController();
-
-		GameMode gamemode = world.getDataMap().get(VanillaData.GAMEMODE);
+		GameMode gamemode = world.getDatatable().get(VanillaData.GAMEMODE);
 		//The world the player is entering has a different gamemode...
 		if (gamemode != null) {
 			if (gamemode != vc.getGameMode()) {
-				PlayerGameModeChangedEvent event = Spout.getEngine().getEventManager().callEvent(new PlayerGameModeChangedEvent(owner, gamemode));
+				PlayerGameModeChangedEvent event = Spout.getEngine().getEventManager().callEvent(new PlayerGameModeChangedEvent(player, gamemode));
 				if (!event.isCancelled()) {
 					gamemode = event.getMode();
 				}
@@ -338,28 +334,28 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			//The world has no gamemode setting in its map so default to the Player's GameMode.
 			gamemode = vc.getGameMode();
 		}
-		Difficulty difficulty = world.getDataMap().get(VanillaData.DIFFICULTY);
-		Dimension dimension = world.getDataMap().get(VanillaData.DIMENSION);
-		WorldType worldType = world.getDataMap().get(VanillaData.WORLD_TYPE);
+		Difficulty difficulty = world.getDatatable().get(VanillaData.DIFFICULTY);
+		Dimension dimension = world.getDatatable().get(VanillaData.DIMENSION);
+		WorldType worldType = world.getDatatable().get(VanillaData.WORLD_TYPE);
 
 		//TODO Handle infinite height
 		if (first) {
 			first = false;
-			int entityId = owner.getId();
+			int entityId = player.getId();
 			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) session.getEngine().getMaxPlayers());
-			owner.getSession().send(false, true, idMsg);
-			owner.getSession().setState(State.GAME);
+			player.getSession().send(false, true, idMsg);
+			player.getSession().setState(State.GAME);
 			for (int slot = 0; slot < 4; slot++) {
 				ItemStack slotItem = vc.getInventory().getArmor().getItem(slot);
-				owner.getSession().send(false, new EntityEquipmentMessage(entityId, slot, slotItem));
+				player.getSession().send(false, new EntityEquipmentMessage(entityId, slot, slotItem));
 			}
 		} else {
-			owner.getSession().send(false, new RespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
+			player.getSession().send(false, new RespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
 		}
 
 		Point pos = world.getSpawnPoint().getPosition();
 		SpawnPositionMessage SPMsg = new SpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ());
-		owner.getSession().send(false, SPMsg);
+		player.getSession().send(false, SPMsg);
 	}
 
 	@Override
@@ -393,27 +389,24 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	public void syncEntity(Entity e, boolean spawn, boolean destroy, boolean update) {
-		Controller c = e.getController();
-		if (c != null) {
-			EntityProtocol ep = c.getType().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
-			if (ep != null) {
-				List<Message> messages = new ArrayList<Message>(3);
-				// Sync using vanilla protocol
-				if (destroy) {
-					messages.addAll(ep.getDestroyMessages(e));
-				}
-				if (spawn) {
-					messages.addAll(ep.getSpawnMessages(e));
-				}
-				if (update) {
-					messages.addAll(ep.getUpdateMessages(e));
-				}
+		EntityProtocol ep = e.getNetworkComponent().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
+		if (ep != null) {
+			List<Message> messages = new ArrayList<Message>(3);
+			// Sync using vanilla protocol
+			if (destroy) {
+				messages.addAll(ep.getDestroyMessages(e));
+			}
+			if (spawn) {
+				messages.addAll(ep.getSpawnMessages(e));
+			}
+			if (update) {
+				messages.addAll(ep.getUpdateMessages(e));
+			}
 				for (Message message : messages) {
 					this.session.send(false, message);
 				}
 			}
 		}
-	}
 
 	@EventHandler
 	public Message onWindowOpen(WindowOpenEvent event) {

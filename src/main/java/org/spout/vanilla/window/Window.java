@@ -35,14 +35,11 @@ import java.util.Set;
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
-import org.spout.api.entity.BasicComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.components.VanillaPlayerController;
-import org.spout.vanilla.components.WindowController;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;

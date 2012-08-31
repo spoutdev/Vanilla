@@ -37,7 +37,6 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.command.Command;
-import org.spout.api.entity.Player;
 import org.spout.api.exception.UnknownPacketException;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
@@ -48,9 +47,6 @@ import org.spout.api.protocol.Session;
 import org.spout.api.util.Named;
 
 import org.spout.vanilla.chat.style.VanillaStyleHandler;
-import org.spout.vanilla.components.VanillaPlayerController;
-import org.spout.vanilla.components.source.ControllerChangeReason;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.customdata.RegisterPluginChannelCodec;
 import org.spout.vanilla.protocol.customdata.RegisterPluginChannelMessage;
 import org.spout.vanilla.protocol.customdata.RegisterPluginChannelMessageHandler;
@@ -153,8 +149,7 @@ public class VanillaProtocol extends Protocol {
 
 	@Override
 	public void initializeSession(Session session) {
-		final Player player = session.getPlayer();
-		session.setNetworkSynchronizer(new VanillaNetworkSynchronizer(player, player));
+		session.setNetworkSynchronizer(new VanillaNetworkSynchronizer(session));
 
 		List<MessageCodec<?>> dynamicCodecList = new ArrayList<MessageCodec<?>>();
 		for (Pair<Integer, String> item : getDynamicallyRegisteredPackets()) {
@@ -167,14 +162,5 @@ public class VanillaProtocol extends Protocol {
 		}
 
 		session.send(false, new RegisterPluginChannelMessage(dynamicCodecList));
-	}
-
-	@Override
-	public void setPlayerController(Player player) {
-		VanillaPlayerController vanillaPlayer = new VanillaPlayerController();
-		vanillaPlayer.setTitle(player.getDisplayName());
-		player.setController(vanillaPlayer, ControllerChangeReason.INITIALIZATION);
-		// Set game mode
-		vanillaPlayer.setGameMode(player.getWorld().getDataMap().get(VanillaData.GAMEMODE));
 	}
 }

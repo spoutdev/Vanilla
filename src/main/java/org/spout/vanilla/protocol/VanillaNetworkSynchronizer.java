@@ -287,7 +287,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
 			for (int dx = x; dx < x + Chunk.BLOCKS.SIZE; ++dx) {
 				for (int dz = z; dz < z + Chunk.BLOCKS.SIZE; ++dz) {
-					Biome biome = chunk.getBiomeType(dx & Chunk.BLOCKS.MASK, 0, dz & Chunk.BLOCKS.MASK);
+					Biome biome = chunk.getBiome(dx & Chunk.BLOCKS.MASK, 0, dz & Chunk.BLOCKS.MASK);
 					if (biome instanceof VanillaBiome) {
 						biomeData[(dz & Chunk.BLOCKS.MASK) << 4 | (dx & Chunk.BLOCKS.MASK)] = (byte) ((VanillaBiome) biome).getBiomeId();
 					}

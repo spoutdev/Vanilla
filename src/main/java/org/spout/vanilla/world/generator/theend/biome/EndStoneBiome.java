@@ -37,10 +37,6 @@ public class EndStoneBiome extends VanillaBiome {
 	}
 
 	@Override
-	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-	}
-
-	@Override
 	public String getName() {
 		return "EndStone";
 	}

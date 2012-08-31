@@ -480,7 +480,7 @@ public class AdministrationCommands {
 			throw new CommandException("This map does not appear to have any biome data.");
 		}
 		Point pos = player.getPosition();
-		Biome biome = pos.getWorld().getBiomeType(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ());
+		Biome biome = pos.getWorld().getBiome(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ());
 		source.sendMessage("Current biome: ", (biome != null ? biome.getName() : "none"));
 	}
 }

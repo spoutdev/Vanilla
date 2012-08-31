@@ -29,8 +29,6 @@ package org.spout.vanilla.world.generator.structure;
 import gnu.trove.map.hash.TShortObjectHashMap;
 
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector3;
 
 /**
  * Draws a plane with the defined complex layout

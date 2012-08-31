@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.rcon;
 
 import org.spout.api.protocol.CodecLookupService;
+
 import org.spout.vanilla.protocol.rcon.codec.AuthCodec;
 import org.spout.vanilla.protocol.rcon.codec.CommandCodec;
 import org.spout.vanilla.protocol.rcon.codec.CommandResponseCodec;

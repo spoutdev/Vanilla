@@ -30,6 +30,7 @@ import java.io.Closeable;
 import java.util.logging.Logger;
 
 import org.spout.api.protocol.CodecLookupService;
+
 import org.spout.vanilla.protocol.rcon.handler.RconHandlerLookupService;
 
 /**

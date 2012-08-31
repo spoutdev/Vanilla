@@ -31,7 +31,9 @@ import java.nio.ByteOrder;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.util.CharsetUtil;
+
 import org.spout.api.protocol.MessageCodec;
+
 import org.spout.vanilla.protocol.rcon.msg.RconMessage;
 
 /**

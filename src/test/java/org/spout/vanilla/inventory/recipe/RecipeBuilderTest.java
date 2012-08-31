@@ -32,21 +32,19 @@ import java.util.List;
 
 import org.junit.Test;
 
+import org.spout.api.inventory.CommonRecipeManager;
 import org.spout.api.inventory.RecipeBuilder;
 import org.spout.api.inventory.ShapedRecipe;
 import org.spout.api.inventory.ShapelessRecipe;
 import org.spout.api.material.Material;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.solid.Plank;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-
-import org.spout.api.inventory.CommonRecipeManager;
-
-import org.spout.vanilla.material.block.solid.Plank;
 
 public class RecipeBuilderTest {
 	@Test

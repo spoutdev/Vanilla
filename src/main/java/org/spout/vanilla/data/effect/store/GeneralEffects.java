@@ -32,13 +32,13 @@ import org.spout.vanilla.data.effect.GeneralEffect;
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.type.BatchExplosionEffect;
 import org.spout.vanilla.data.effect.type.BreakBlockEffect;
-import org.spout.vanilla.data.effect.type.ToggleSoundEffect;
 import org.spout.vanilla.data.effect.type.ExplosionEffect;
 import org.spout.vanilla.data.effect.type.LavaFizzEffect;
 import org.spout.vanilla.data.effect.type.MusicDiscEffect;
 import org.spout.vanilla.data.effect.type.NoteParticleEffect;
 import org.spout.vanilla.data.effect.type.PressBlockEffect;
 import org.spout.vanilla.data.effect.type.SmokeEffect;
+import org.spout.vanilla.data.effect.type.ToggleSoundEffect;
 
 public class GeneralEffects {
 	public static final ExplosionEffect EXPLOSION_PARTICLES = new ExplosionEffect();

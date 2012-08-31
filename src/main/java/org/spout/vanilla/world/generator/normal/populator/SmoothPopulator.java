@@ -37,10 +37,10 @@ import org.spout.api.material.MaterialRegistry;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.api.util.map.TIntPairObjectHashMap;
 
-import org.spout.vanilla.world.generator.normal.biome.grassy.GrassyBiome;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
-import org.spout.vanilla.world.generator.normal.biome.sandy.SandyBiome;
+import org.spout.vanilla.world.generator.normal.biome.grassy.GrassyBiome;
 import org.spout.vanilla.world.generator.normal.biome.icy.IcyBiome;
+import org.spout.vanilla.world.generator.normal.biome.sandy.SandyBiome;
 
 public class SmoothPopulator extends Populator {
 	private static final byte CHUNK_SIZE = (byte) Chunk.BLOCKS.SIZE;

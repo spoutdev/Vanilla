@@ -29,18 +29,12 @@ package org.spout.vanilla.world.generator.normal.biome;
 import java.util.Random;
 
 import net.royawesome.jlibnoise.NoiseQuality;
-import net.royawesome.jlibnoise.module.combiner.Add;
-import net.royawesome.jlibnoise.module.combiner.Multiply;
-import net.royawesome.jlibnoise.module.modifier.ScalePoint;
-import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
-import org.spout.api.math.MathHelper;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.plant.TallGrass;
 import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator.TallGrassFactory;
@@ -49,62 +43,18 @@ import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public abstract class NormalBiome extends VanillaBiome {
-	// the master noise
-	private static final ScalePoint MASTER = new ScalePoint();
-	// the parts for the master noise
-	private static final Perlin ELEVATION = new Perlin();
-	private static final Perlin ROUGHNESS = new Perlin();
-	private static final Perlin DETAIL = new Perlin();
-	// a turbulent version of the modified master, used for density gen
-	private static final Turbulence TURBULENT_MASTER = new Turbulence();
 	// a perlin for determining groud cover depth
 	protected static final Perlin BLOCK_REPLACER = new Perlin();
-	// height settings
+	// elevation values
 	protected float min;
 	protected float max;
 
 	static {
-		ELEVATION.setFrequency(0.2);
-		ELEVATION.setLacunarity(1);
-		ELEVATION.setNoiseQuality(NoiseQuality.STANDARD);
-		ELEVATION.setPersistence(0.7);
-		ELEVATION.setOctaveCount(1);
-
-		ROUGHNESS.setFrequency(0.53);
-		ROUGHNESS.setLacunarity(1);
-		ROUGHNESS.setNoiseQuality(NoiseQuality.STANDARD);
-		ROUGHNESS.setPersistence(0.9);
-		ROUGHNESS.setOctaveCount(1);
-
-		DETAIL.setFrequency(0.7);
-		DETAIL.setLacunarity(1);
-		DETAIL.setNoiseQuality(NoiseQuality.STANDARD);
-		DETAIL.setPersistence(0.7);
-		DETAIL.setOctaveCount(1);
-
-		final Multiply multiply = new Multiply();
-		multiply.SetSourceModule(0, ROUGHNESS);
-		multiply.SetSourceModule(1, DETAIL);
-
-		final Add add = new Add();
-		add.SetSourceModule(0, multiply);
-		add.SetSourceModule(1, ELEVATION);
-
-		MASTER.SetSourceModule(0, add);
-		MASTER.setxScale(0.06);
-		MASTER.setyScale(0.04);
-		MASTER.setzScale(0.06);
-
 		BLOCK_REPLACER.setFrequency(0.35);
 		BLOCK_REPLACER.setLacunarity(1);
 		BLOCK_REPLACER.setNoiseQuality(NoiseQuality.FAST);
 		BLOCK_REPLACER.setPersistence(0.7);
 		BLOCK_REPLACER.setOctaveCount(1);
-
-		TURBULENT_MASTER.SetSourceModule(0, MASTER);
-		TURBULENT_MASTER.setFrequency(0.01);
-		TURBULENT_MASTER.setPower(8);
-		TURBULENT_MASTER.setRoughness(1);
 	}
 
 	protected NormalBiome(int biomeId, Decorator... decorators) {
@@ -113,78 +63,11 @@ public abstract class NormalBiome extends VanillaBiome {
 
 	@Override
 	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-
-		if (chunkY < 0) {
-			return;
-		}
-
-		final short size = (short) blockData.getSize().getY();
-
-		final int startY = chunkY * 16;
-		final int endY = startY + size;
-
-		fill(blockData, x, startY, endY, z);
-
-		BLOCK_REPLACER.setSeed((int) (blockData.getWorld().getSeed() * 97));
-		replaceBlocks(blockData, x, chunkY, z);
 	}
 
-	protected void fill(CuboidShortBuffer blockData, int x, int startY, int endY, int z) {
-
-		final int seed = (int) blockData.getWorld().getSeed();
-		ELEVATION.setSeed(seed);
-		ROUGHNESS.setSeed(seed * 2);
-		DETAIL.setSeed(seed * 3);
-		TURBULENT_MASTER.setSeed(seed * 5);
-
-		final float value = (float) TURBULENT_MASTER.GetValue(x, 63, z);
-		final float diff = max - min;
-		final float halfDiff = diff / 2;
-		final int heightMapHeight = Math.round(value * diff + diff + min);
-		final int densityTerrainHeight = Math.round(value * halfDiff + halfDiff) + heightMapHeight;
-		int y = startY;
-		for (; y < endY; y++) {
-			if (y <= heightMapHeight) {
-				blockData.set(x, y, z, VanillaMaterials.STONE.getId());
-			} else {
-				break;
-			}
-		}
-		for (; y < endY; y++) {
-			if (y <= densityTerrainHeight) {
-				if (TURBULENT_MASTER.GetValue(x, y, z) > 0) {
-					blockData.set(x, y, z, VanillaMaterials.STONE.getId());
-				}
-			} else {
-				break;
-			}
-		}
-	}
-
-	protected void replaceBlocks(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-		if (chunkY == 0) {
-			final byte bedrockDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, -5, z) * 2 + 4, 1, 5);
-			for (byte y = 0; y <= bedrockDepth; y++) {
-				blockData.set(x, y, z, VanillaMaterials.BEDROCK.getId());
-			}
-		}
-	}
-
-	protected CuboidShortBuffer getSample(World world, int x, int startY, int endY, int z) {
-		int size;
-
-		if (endY <= startY) {
-			size = 0;
-		} else {
-			size = endY - startY;
-		}
-
-		if (size >= 16) {
-			size = 15; // samples should not be larger than a column
-		}
-		final CuboidShortBuffer sample = new CuboidShortBuffer(world, x, startY, z, 1, size, 1);
-		fill(sample, x, startY, endY, z);
-		return sample;
+	public int placeGroundCover(World world, int x, int y, int z) {
+		BLOCK_REPLACER.setSeed((int) world.getSeed() * 127);
+		return 0;
 	}
 
 	protected void setMinMax(float min, float max) {

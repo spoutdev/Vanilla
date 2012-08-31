@@ -52,11 +52,11 @@ public abstract class VanillaBiomeChunkGenerator extends VanillaBiomeGenerator {
 			generateTerrain(blockData, chunkX << Chunk.BLOCKS.BITS, chunkY << Chunk.BLOCKS.BITS,
 					chunkZ << Chunk.BLOCKS.BITS);
 		}
-		final BiomeManager biomeManger = new Simple2DBiomeManager(chunkX, chunkY, chunkZ);
+		final BiomeManager biomeManager = new Simple2DBiomeManager(chunkX, chunkY, chunkZ);
 		final byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
 		Arrays.fill(biomeData, (byte) biome.getId());
-		biomeManger.deserialize(biomeData);
-		return biomeManger;
+		biomeManager.deserialize(biomeData);
+		return biomeManager;
 	}
 
 	protected abstract void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z);

@@ -41,7 +41,7 @@ public class MountainsBiome extends GrassyBiome {
 				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory()),
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator(),
 				new EmeraldOreDecorator());
-		setMinMax((byte) 64, (byte) 92);
+		setMinMax(32.5f, 128);
 	}
 
 	@Override

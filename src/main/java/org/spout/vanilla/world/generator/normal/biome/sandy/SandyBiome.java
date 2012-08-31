@@ -27,12 +27,11 @@
 package org.spout.vanilla.world.generator.normal.biome.sandy;
 
 import org.spout.api.generator.biome.Decorator;
+import org.spout.api.geo.World;
 import org.spout.api.math.MathHelper;
-import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
 public abstract class SandyBiome extends NormalBiome {
@@ -42,62 +41,21 @@ public abstract class SandyBiome extends NormalBiome {
 	}
 
 	@Override
-	public void replaceBlocks(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-
-		final short size = (short) blockData.getSize().getY();
-
-		if (size < 16) {
-			return; // ignore samples
-		}
-
-		final int endY = chunkY * 16;
-		final int startY = endY + size - 1;
-
+	public int placeGroundCover(World world, int x, int y, int z) {
+		super.placeGroundCover(world, x, y, z);
 		final byte sandDepth = (byte) MathHelper.clamp(Math.round(BLOCK_REPLACER.GetValue(x, -5, z) * 0.5 + 3.5), 3, 4);
 		final byte sandstoneDepth = (byte) MathHelper.clamp(Math.round(BLOCK_REPLACER.GetValue(x, -6, z) + 2), 1, 3);
 		final byte maxGroudCoverDepth = (byte) (sandDepth + sandstoneDepth);
-		final byte sampleSize = (byte) (maxGroudCoverDepth + 1);
-		boolean hasSurface = false;
-		byte groundCoverDepth = 0;
-		// check the column above by sampling, determining any missing blocks
-		// to add to the current column
-		if (blockData.get(x, startY, z) != VanillaMaterials.AIR.getId()) {
-			final int nextChunkStart = (chunkY + 1) * 16;
-			final int nextChunkEnd = nextChunkStart + sampleSize;
-			final CuboidShortBuffer sample = getSample(blockData.getWorld(), x, nextChunkStart, nextChunkEnd, z);
-			for (int y = nextChunkStart; y < nextChunkEnd; y++) {
-				if (sample.get(x, y, z) != VanillaMaterials.AIR.getId()) {
-					groundCoverDepth++;
-				} else {
-					hasSurface = true;
-					break;
-				}
+		for (byte depth = 0; depth < maxGroudCoverDepth; depth++) {
+			if (world.getBlockMaterial(x, y - depth, z).isMaterial(VanillaMaterials.AIR)) {
+				return maxGroudCoverDepth;
 			}
-		}
-		// place ground cover
-		for (int y = startY; y >= endY; y--) {
-			final short id = blockData.get(x, y, z);
-			if (id == VanillaMaterials.AIR.getId()) {
-				hasSurface = true;
-				groundCoverDepth = 0;
-				if (y <= NormalGenerator.SEA_LEVEL) {
-					blockData.set(x, y, z, VanillaMaterials.STATIONARY_WATER.getId());
-				}
+			if (depth < sandDepth) {
+				world.setBlockMaterial(x, y - depth, z, VanillaMaterials.SAND, (short) 0, world);
 			} else {
-				if (hasSurface) {
-					if (groundCoverDepth < sandDepth) {
-						blockData.set(x, y, z, VanillaMaterials.SAND.getId());
-						groundCoverDepth++;
-					} else if (groundCoverDepth < maxGroudCoverDepth) {
-						blockData.set(x, y, z, VanillaMaterials.SANDSTONE.getId());
-						groundCoverDepth++;
-					} else {
-						hasSurface = false;
-					}
-				}
+				world.setBlockMaterial(x, y - depth, z, VanillaMaterials.SANDSTONE, (short) 0, world);
 			}
 		}
-		// place bedrock
-		super.replaceBlocks(blockData, x, chunkY, z);
+		return maxGroudCoverDepth;
 	}
 }

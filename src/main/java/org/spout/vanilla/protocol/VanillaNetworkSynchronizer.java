@@ -33,6 +33,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import gnu.trove.set.TIntSet;
 
+import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -69,6 +70,7 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.data.WorldType;
 import org.spout.vanilla.event.block.BlockActionEvent;
+import org.spout.vanilla.event.block.BlockControllerDataEvent;
 import org.spout.vanilla.event.block.SignUpdateEvent;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.event.entity.EntityCollectItemEvent;
@@ -104,6 +106,7 @@ import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerUpdateStatsMessage;
 import org.spout.vanilla.protocol.msg.RespawnMessage;
 import org.spout.vanilla.protocol.msg.SpawnPositionMessage;
+import org.spout.vanilla.protocol.msg.TileEntityDataMessage;
 import org.spout.vanilla.protocol.msg.TimeUpdateMessage;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
@@ -342,7 +345,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (first) {
 			first = false;
 			int entityId = player.getId();
-			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) session.getEngine().getMaxPlayers());
+			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) ((Server) session.getEngine()).getMaxPlayers());
 			player.getSession().send(false, true, idMsg);
 			player.getSession().setState(State.GAME);
 			for (int slot = 0; slot < 4; slot++) {
@@ -541,6 +544,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@EventHandler
 	public Message onTimeUpdate(TimeUpdateEvent event) {
 		return new TimeUpdateMessage(event.getNewTime());
+	}
+
+	@EventHandler
+	public Message onBlockControllerData(BlockControllerDataEvent event) {
+		Block b = event.getBlock();
+		return new TileEntityDataMessage(b.getX(), b.getY(), b.getZ(), event.getAction(), event.getData());
 	}
 
 	public static enum ChunkInit {

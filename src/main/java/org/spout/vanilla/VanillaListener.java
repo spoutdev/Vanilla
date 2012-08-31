@@ -45,15 +45,6 @@ public class VanillaListener implements Listener {
 		this.plugin = plugin;
 	}
 
-	@EventHandler
-	public void onRegionLoad(RegionLoadEvent event) {
-		WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.getOrCreate(event.getWorld());
-		if (worldConfig.SPAWN_ANIMALS.getBoolean()) {
-		}
-		if (worldConfig.SPAWN_MONSTERS.getBoolean()) {
-		}
-	}
-
 	@EventHandler(order = Order.EARLIEST)
 	public void onPermissionNode(PermissionNodeEvent event) {
 		if (VanillaConfiguration.OPS.isOp(event.getSubject().getName())) {

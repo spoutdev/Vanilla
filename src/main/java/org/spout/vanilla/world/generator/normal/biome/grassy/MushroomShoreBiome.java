@@ -29,7 +29,7 @@ package org.spout.vanilla.world.generator.normal.biome.grassy;
 public class MushroomShoreBiome extends MushroomBiome {
 	public MushroomShoreBiome(int biomeId) {
 		super(biomeId);
-		setMinMax((byte) 60, (byte) 63);
+		setMinMax(60, 72);
 	}
 
 	@Override

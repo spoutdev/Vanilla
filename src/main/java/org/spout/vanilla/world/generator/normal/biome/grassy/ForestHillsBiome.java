@@ -29,7 +29,7 @@ package org.spout.vanilla.world.generator.normal.biome.grassy;
 public class ForestHillsBiome extends ForestBiome {
 	public ForestHillsBiome(int biomeId) {
 		super(biomeId);
-		setMinMax((byte) 64, (byte) 77);
+		setMinMax(46, 100);
 	}
 
 	@Override

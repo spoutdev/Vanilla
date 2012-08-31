@@ -38,7 +38,7 @@ public class PlainBiome extends GrassyBiome {
 		super(id, new SandAndClayDecorator(), new FlowerDecorator((byte) 4),
 				new TallGrassDecorator(new NormalTallGrassFactory(), (byte) 10),
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator());
-		setMinMax((byte) 64, (byte) 69);
+		setMinMax(56, 80);
 	}
 
 	@Override

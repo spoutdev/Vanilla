@@ -109,6 +109,13 @@ public class VanillaPlugin extends CommonPlugin {
 
 	@Override
 	public void onEnable() {
+		//Config
+		try {
+			config.load();
+		} catch (ConfigurationException e) {
+			getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
+		}
+
 		// Universal Plug and Play
 		if (getEngine() instanceof Server) {
 			for (PortBinding binding : ((Server) getEngine()).getBoundAddresses()) {
@@ -131,6 +138,11 @@ public class VanillaPlugin extends CommonPlugin {
 		//Configuration
 		VanillaBlockMaterial.REDSTONE_POWER_MAX = (short) VanillaConfiguration.REDSTONE_MAX_RANGE.getInt();
 		VanillaBlockMaterial.REDSTONE_POWER_MIN = (short) VanillaConfiguration.REDSTONE_MIN_RANGE.getInt();
+
+		if (engine.getPlatform() == Platform.SERVER) {
+			//Worlds
+			setupWorlds();
+		}
 
 		setupBonjour();
 
@@ -155,18 +167,6 @@ public class VanillaPlugin extends CommonPlugin {
 		MapPalette.DEFAULT = (MapPalette) Spout.getFilesystem().getResource("mappalette://Vanilla/resources/map/mapColorPalette.dat");
 		RecipeYaml.DEFAULT = (RecipeYaml) Spout.getFilesystem().getResource("recipe://Vanilla/resources/recipes.yml");
 		VanillaRecipes.initialize();
-
-		//Config
-		try {
-			config.load();
-		} catch (ConfigurationException e) {
-			getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
-		}
-
-		if (engine.getPlatform() == Platform.SERVER) {
-			//Worlds
-			setupWorlds();
-		}
 
 		getLogger().info("loaded");
 	}

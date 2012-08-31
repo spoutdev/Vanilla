@@ -28,6 +28,7 @@ package org.spout.vanilla.command;
 
 import java.util.Set;
 
+import org.spout.api.Client;
 import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
@@ -71,8 +72,7 @@ public class AdministrationCommands {
 		Player player;
 
 		if (args.length() % 2 == 0) {
-			Platform platform = Spout.getPlatform();
-			if (platform != Platform.SERVER || platform != Platform.PROXY) {
+			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
 			player = ((Server) Spout.getEngine()).getPlayer(args.getString(index++), true);
@@ -107,8 +107,7 @@ public class AdministrationCommands {
 			
 			point = new Point(world, args.getInteger(index), args.getInteger(index + 1), args.getInteger(index + 2));
 		} else {
-			Platform platform = Spout.getPlatform();
-			if (platform != Platform.SERVER || platform != Platform.PROXY) {
+			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
 			Player target = ((Server) Spout.getEngine()).getPlayer(args.getString(index), true);
@@ -132,8 +131,7 @@ public class AdministrationCommands {
 		Player player = null;
 
 		if (args.length() != 1) {
-			Platform platform = Spout.getPlatform();
-			if (platform != Platform.SERVER || platform != Platform.PROXY) {
+			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
 			player = ((Server) Spout.getEngine()).getPlayer(args.getString(index++), true);
@@ -185,8 +183,7 @@ public class AdministrationCommands {
 	@Command(aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.deop")
 	public void deop(CommandContext args, CommandSource source) throws CommandException {
-		Platform platform = Spout.getPlatform();
-		if (platform != Platform.SERVER || platform != Platform.PROXY) {
+		if (Spout.getEngine() instanceof Client) {
 			throw new CommandException("You cannot search for players unless you are in server mode.");
 		}
 
@@ -203,8 +200,7 @@ public class AdministrationCommands {
 	@Command(aliases = {"op"}, usage = "<player>", desc = "Make a player an operator", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.op")
 	public void op(CommandContext args, CommandSource source) throws CommandException {
-		Platform platform = Spout.getPlatform();
-		if (platform != Platform.SERVER || platform != Platform.PROXY) {
+		if (Spout.getEngine() instanceof Client) {
 			throw new CommandException("You cannot search for players unless you are in server mode.");
 		}
 
@@ -290,8 +286,7 @@ public class AdministrationCommands {
 		int index = 0;
 		Player player;
 		if (args.length() == 2) {
-			Platform platform = Spout.getPlatform();
-			if (platform != Platform.SERVER || platform != Platform.PROXY) {
+			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
 			player = ((Server) Spout.getEngine()).getPlayer(args.getString(index++), true);
@@ -346,8 +341,7 @@ public class AdministrationCommands {
 				throw new CommandException("You must be a player to give yourself xp.");
 			}
 		} else {
-			Platform platform = Spout.getPlatform();
-			if (platform != Platform.SERVER || platform != Platform.PROXY) {
+			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
 			Player player = ((Server) Spout.getEngine()).getPlayer(args.getString(0), true);
@@ -412,8 +406,7 @@ public class AdministrationCommands {
 		if (source instanceof Player) {
 			player = (Player) source;
 		} else {
-			Platform platform = Spout.getPlatform();
-			if (platform != Platform.SERVER || platform != Platform.PROXY) {
+			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
 			player = ((Server) Spout.getEngine()).getPlayer(args.getString(1, ""), true);
@@ -451,8 +444,7 @@ public class AdministrationCommands {
 			}
 			((VanillaPlayerController) ((Player) source).getController()).getHealth().die(source);
 		} else {
-			Platform platform = Spout.getPlatform();
-			if (platform != Platform.SERVER || platform != Platform.PROXY) {
+			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
 			VanillaPlayerController victim = (VanillaPlayerController) ((Server) Spout.getEngine()).getPlayer(args.getString(0), true).getController();

@@ -29,6 +29,7 @@ package org.spout.vanilla.command;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.spout.api.Client;
 import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
@@ -201,11 +202,6 @@ public class TestCommands {
 
 	@Command(aliases = {"tppos"}, usage = "<name> <world> <x> <y> <z>", desc = "Teleport to coordinates!", min = 5, max = 5)
 	public void tppos(CommandContext args, CommandSource source) throws CommandException {
-		Platform platform = Spout.getPlatform();
-		if (platform != Platform.SERVER || platform != Platform.PROXY) {
-			return;
-		}
-
 		Player player = ((Server) Spout.getEngine()).getPlayer(args.getString(0), true);
 		if (!(source instanceof Player) && player == null) {
 			throw new CommandException("Must specify a valid player to tppos from the console.");

@@ -66,36 +66,8 @@ public class RemoteConnectionSession implements Console, CommandSource {
 		//requestId.set(new Random().nextInt()); // TODO: Find place to allocate request id, might want to have client do this
 	}
 
-	public String getName() {
-		return isInitialized() ? "RCON:" + channel.get().getRemoteAddress() : "RCON:Unknown";
-	}
-
-
-	public void init() {
-	}
-
-	public boolean isInitialized() {
-		return channel.get() != null && channel.get().isConnected();
-	}
-
-	public void close() {
-		getChannel().getCloseFuture().awaitUninterruptibly();
-	}
-
-	public void setDateFormat(DateFormat format) {
-		this.format = format;
-	}
-
 	public void send(RconMessage message) {
 		getChannel().write(message);
-	}
-
-	public void addMessage(ChatArguments message) {
-		StringBuilder builder = new StringBuilder();
-		builder.append('[').append(format.format(new Date())).append("] ");
-		builder.append(message.asString());
-		// TODO: Split up payload
-		send(new CommandResponseMessage(builder.toString()));
 	}
 
 	public Channel getChannel() {
@@ -142,7 +114,41 @@ public class RemoteConnectionSession implements Console, CommandSource {
 		this.state = state;
 	}
 
+	@Override
+	public void addMessage(ChatArguments message) {
+		StringBuilder builder = new StringBuilder();
+		builder.append('[').append(format.format(new Date())).append("] ");
+		builder.append(message.asString());
+		// TODO: Split up payload
+		send(new CommandResponseMessage(builder.toString()));
+	}
+
+	@Override
+	public String getName() {
+		return isInitialized() ? "RCON:" + channel.get().getRemoteAddress() : "RCON:Unknown";
+	}
+
+	@Override
+	public void init() {
+	}
+
+	@Override
+	public boolean isInitialized() {
+		return channel.get() != null && channel.get().isConnected();
+	}
+
+	@Override
+	public void close() {
+		getChannel().getCloseFuture().awaitUninterruptibly();
+	}
+
+	@Override
+	public void setDateFormat(DateFormat format) {
+		this.format = format;
+	}
+
 	// CommandSource methods
+	@Override
 	public void sendCommand(String command, ChatArguments arguments) {
 		if ("say".equals(command)) {
 			addMessage(arguments);
@@ -152,6 +158,7 @@ public class RemoteConnectionSession implements Console, CommandSource {
 		}
 	}
 
+	@Override
 	public void processCommand(String command, ChatArguments arguments) {
 		Command cmd = Spout.getEngine().getRootCommand().getChild(command);
 		if (cmd == null) {
@@ -161,49 +168,70 @@ public class RemoteConnectionSession implements Console, CommandSource {
 		}
 	}
 
+	@Override
 	public boolean sendMessage(Object... message) {
 		return sendMessage(new ChatArguments(message));
 	}
 
+	@Override
 	public boolean sendMessage(ChatArguments message) {
 		addMessage(message);
 		return true;
 	}
 
+	@Override
 	public boolean sendRawMessage(Object... message) {
 		return sendRawMessage(new ChatArguments(message));
 	}
 
+	@Override
 	public boolean sendRawMessage(ChatArguments message) {
 		addMessage(message);
 		return true;
 	}
 
+	@Override
 	public Locale getPreferredLocale() {
 		return Locale.ENGLISH_US;
 	}
 
+	@Override
 	public ValueHolder getData(String node) {
 		return new ValueHolderBase.NullHolder();
 	}
 
+	@Override
+	public ValueHolder getData(World world, String node) {
+		return new ValueHolderBase.NullHolder();
+	}
+
+	@Override
 	public boolean hasPermission(String node) {
 		return hasPermission(null, node);
 	}
 
+	@Override
 	public boolean hasPermission(World world, String node) {
 		return true;
 	}
 
+	@Override
 	public boolean isInGroup(String group) {
 		return false;
 	}
 
+	@Override
+	public boolean isInGroup(World world, String group) {
+		return false;
+	}
+
+	@Override
 	public String[] getGroups() {
 		return new String[0];
 	}
 
-	public boolean isGroup() {
-		return false;
+	@Override
+	public String[] getGroups(World world) {
+		return new String[0];
 	}
 }

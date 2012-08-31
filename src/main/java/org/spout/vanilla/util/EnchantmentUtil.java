@@ -35,6 +35,7 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.nbt.CompoundMap;
 import org.spout.nbt.CompoundTag;
+import org.spout.nbt.ListTag;
 import org.spout.nbt.ShortTag;
 import org.spout.nbt.Tag;
 
@@ -92,9 +93,9 @@ public class EnchantmentUtil {
 				}
 			}
 
-			List<Tag> enchantments = new ArrayList<Tag>();
+			List<Tag<?>> enchantments = new ArrayList<Tag<?>>();
 			if (item.getNBTData() != null && item.getNBTData().containsKey("ench")) {
-				enchantments = (List<Tag>) item.getNBTData().get("ench").getValue();
+				enchantments = ((ListTag) item.getNBTData().get("ench")).getValue();
 			}
 			CompoundMap map = new CompoundMap();
 			map.put(new ShortTag("id", (short) enchantment.getId()));

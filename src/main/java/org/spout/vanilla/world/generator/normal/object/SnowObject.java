@@ -60,7 +60,7 @@ public class SnowObject extends RandomObject implements Source {
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		final Biome biome = w.getBiomeType(x, y, z);
+		final Biome biome = w.getBiome(x, y, z);
 		return biome instanceof VanillaBiome && ((VanillaBiome) biome).getClimate().hasSnowfall();
 	}
 

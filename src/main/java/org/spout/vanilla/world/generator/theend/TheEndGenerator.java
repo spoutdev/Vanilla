@@ -37,6 +37,7 @@ import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.generator.WorldGeneratorUtils;
+import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.generator.biome.BiomePopulator;
 import org.spout.api.generator.biome.selector.PerBlockBiomeSelector;
 import org.spout.api.geo.World;
@@ -48,9 +49,8 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.VanillaBiomeChunkGenerator;
 import org.spout.vanilla.world.generator.VanillaBiomes;
-import org.spout.vanilla.world.generator.VanillaGenerator;
 
-public class TheEndGenerator extends VanillaBiomeChunkGenerator implements VanillaGenerator {
+public class TheEndGenerator extends VanillaBiomeChunkGenerator {
 	public static final int HEIGHT = 128;
 	private static final int SEA_LEVEL = 63;
 	private static final int ISLAND_HEIGHT = 56;
@@ -125,17 +125,16 @@ public class TheEndGenerator extends VanillaBiomeChunkGenerator implements Vanil
 	}
 
 	@Override
-	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z) {
+	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
 		if (x < -ISLAND_RADIUS || x > ISLAND_RADIUS
 				|| y < 0 || y > ISLAND_HEIGHT + ISLAND_OFFSET
 				|| z < -ISLAND_RADIUS || z > ISLAND_RADIUS) {
 			return;
 		}
-		final int seed = (int) blockData.getWorld().getSeed();
-		ELEVATION.setSeed(seed * 23);
-		ROUGHNESS.setSeed(seed * 29);
-		DETAIL.setSeed(seed * 17);
-		TURBULENCE.setSeed(seed * 53);
+		ELEVATION.setSeed((int) seed * 23);
+		ROUGHNESS.setSeed((int) seed * 29);
+		DETAIL.setSeed((int) seed * 17);
+		TURBULENCE.setSeed((int) seed * 53);
 		final int size = blockData.getSize().getFloorX();
 		final double[][][] densityNoise = WorldGeneratorUtils.fastNoise(FINAL, size, size, size, 4, x, y, z);
 		for (int xx = 0; xx < size; xx++) {

@@ -33,13 +33,13 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
-public abstract class VanillaBiomeGenerator extends BiomeGenerator {
+public abstract class VanillaBiomeGenerator extends BiomeGenerator implements VanillaGenerator {
 	@Override
-	public BiomeManager generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
-		if (chunkY >= 0) {
-			return super.generate(blockData, chunkX, chunkY, chunkZ);
+	public BiomeManager generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ, long seed) {
+		if (chunkY < 0) {
+			blockData.flood(VanillaMaterials.BEDROCK.getId());
+			return new EmptyBiomeManager(chunkX, chunkY, chunkZ);
 		}
-		blockData.flood(VanillaMaterials.BEDROCK.getId());
-		return new EmptyBiomeManager(chunkX, chunkY, chunkZ);
+		return super.generate(blockData, chunkX, chunkY, chunkZ, seed);
 	}
 }

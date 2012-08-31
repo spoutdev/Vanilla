@@ -39,7 +39,7 @@ public class RiverBiome extends GrassyBiome {
 		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new NormalTreeWGOFactory()),
 				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory()),
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator());
-		setMinMax((byte) 49, (byte) 52);
+		setMinMax(49, 55);
 	}
 
 	@Override

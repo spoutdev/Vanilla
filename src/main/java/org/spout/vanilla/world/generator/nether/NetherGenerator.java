@@ -37,6 +37,7 @@ import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.generator.WorldGeneratorUtils;
+import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.generator.biome.BiomePopulator;
 import org.spout.api.generator.biome.selector.PerBlockBiomeSelector;
 import org.spout.api.geo.World;
@@ -56,7 +57,7 @@ public class NetherGenerator extends VanillaBiomeChunkGenerator implements Vanil
 	public static final int HEIGHT = 128;
 	public static final int SEA_LEVEL = 31;
 	// noise for generation
-	private static final Perlin BASE = new Perlin();
+	private static final Perlin ELEVATION = new Perlin();
 	private static final Perlin ROUGHNESS = new Perlin();
 	private static final Perlin DETAIL = new Perlin();
 	private static final Turbulence TURBULENCE = new Turbulence();
@@ -66,11 +67,11 @@ public class NetherGenerator extends VanillaBiomeChunkGenerator implements Vanil
 	private static final Perlin BLOCK_REPLACER = new Perlin();
 
 	static {
-		BASE.setFrequency(0.012);
-		BASE.setLacunarity(1);
-		BASE.setNoiseQuality(NoiseQuality.STANDARD);
-		BASE.setPersistence(0.7);
-		BASE.setOctaveCount(1);
+		ELEVATION.setFrequency(0.012);
+		ELEVATION.setLacunarity(1);
+		ELEVATION.setNoiseQuality(NoiseQuality.STANDARD);
+		ELEVATION.setPersistence(0.7);
+		ELEVATION.setOctaveCount(1);
 
 		ROUGHNESS.setFrequency(0.0318);
 		ROUGHNESS.setLacunarity(1);
@@ -90,7 +91,7 @@ public class NetherGenerator extends VanillaBiomeChunkGenerator implements Vanil
 
 		final Add add = new Add();
 		add.SetSourceModule(0, multiply);
-		add.SetSourceModule(1, BASE);
+		add.SetSourceModule(1, ELEVATION);
 
 		TURBULENCE.SetSourceModule(0, add);
 		TURBULENCE.setFrequency(0.01);
@@ -132,16 +133,15 @@ public class NetherGenerator extends VanillaBiomeChunkGenerator implements Vanil
 	@Override
 	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z) {
 		final int seed = (int) blockData.getWorld().getSeed();
-		BASE.setSeed(seed * 23);
+		ELEVATION.setSeed(seed * 23);
 		ROUGHNESS.setSeed(seed * 29);
 		DETAIL.setSeed(seed * 17);
 		TURBULENCE.setSeed(seed * 53);
 		final int size = Chunk.BLOCKS.SIZE;
-		final double[][][] noise;
+		final double[][][] noise = WorldGeneratorUtils.fastNoise(FINAL, size, size, size, 4, x, y, z);
 		// build the density maps
 		if (y >= HEIGHT - size * 2) {
 			// density noise with higher values with greater y + yy
-			noise = WorldGeneratorUtils.fastNoise(FINAL, size, size, size, 4, x, y, z);
 			final int smoothOffset = size * 2 - HEIGHT + y;
 			for (int xx = 0; xx < size; xx++) {
 				for (int yy = 0; yy < size; yy++) {
@@ -152,7 +152,6 @@ public class NetherGenerator extends VanillaBiomeChunkGenerator implements Vanil
 			}
 		} else if (y <= size) {
 			// density noise with higher values with lower y + yy
-			noise = WorldGeneratorUtils.fastNoise(FINAL, size, size, size, 4, x, y, z);
 			for (int xx = 0; xx < size; xx++) {
 				for (int yy = 0; yy < size; yy++) {
 					for (int zz = 0; zz < size; zz++) {
@@ -160,9 +159,6 @@ public class NetherGenerator extends VanillaBiomeChunkGenerator implements Vanil
 					}
 				}
 			}
-		} else {
-			// just density noise
-			noise = WorldGeneratorUtils.fastNoise(FINAL, size, size, size, 4, x, y, z);
 		}
 		// build the chunk from the density map
 		for (int xx = 0; xx < size; xx++) {

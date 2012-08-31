@@ -59,7 +59,7 @@ public class TheEndGenerator extends VanillaBiomeChunkGenerator implements Vanil
 	private static final float ISLAND_TOTAL_OFFSET = ISLAND_OFFSET + ISLAND_HEIGHT / 2f;
 	private static final float ISLAND_HEIGHT_SCALE = ((float) ISLAND_RADIUS / (float) ISLAND_HEIGHT) * 2f;
 	// noise for generation
-	private static final Perlin BASE = new Perlin();
+	private static final Perlin ELEVATION = new Perlin();
 	private static final Perlin ROUGHNESS = new Perlin();
 	private static final Perlin DETAIL = new Perlin();
 	private static final Turbulence TURBULENCE = new Turbulence();
@@ -67,11 +67,11 @@ public class TheEndGenerator extends VanillaBiomeChunkGenerator implements Vanil
 	private static final Clamp FINAL = new Clamp();
 
 	static {
-		BASE.setFrequency(0.012);
-		BASE.setLacunarity(1);
-		BASE.setNoiseQuality(NoiseQuality.STANDARD);
-		BASE.setPersistence(0.7);
-		BASE.setOctaveCount(1);
+		ELEVATION.setFrequency(0.012);
+		ELEVATION.setLacunarity(1);
+		ELEVATION.setNoiseQuality(NoiseQuality.STANDARD);
+		ELEVATION.setPersistence(0.7);
+		ELEVATION.setOctaveCount(1);
 
 		ROUGHNESS.setFrequency(0.0318);
 		ROUGHNESS.setLacunarity(1);
@@ -91,7 +91,7 @@ public class TheEndGenerator extends VanillaBiomeChunkGenerator implements Vanil
 
 		final Add add = new Add();
 		add.SetSourceModule(0, multiply);
-		add.SetSourceModule(1, BASE);
+		add.SetSourceModule(1, ELEVATION);
 
 		TURBULENCE.SetSourceModule(0, add);
 		TURBULENCE.setFrequency(0.01);
@@ -132,7 +132,7 @@ public class TheEndGenerator extends VanillaBiomeChunkGenerator implements Vanil
 			return;
 		}
 		final int seed = (int) blockData.getWorld().getSeed();
-		BASE.setSeed(seed * 23);
+		ELEVATION.setSeed(seed * 23);
 		ROUGHNESS.setSeed(seed * 29);
 		DETAIL.setSeed(seed * 17);
 		TURBULENCE.setSeed(seed * 53);

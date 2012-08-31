@@ -34,7 +34,7 @@ public class TundraBiome extends IcyBiome {
 	public TundraBiome(int id) {
 		super(id, new SandAndClayDecorator(), new TreeDecorator(new NormalTreeWGOFactory()),
 				new MushroomDecorator());
-		setMinMax((byte) 64, (byte) 70);
+		setMinMax(56, 80);
 	}
 
 	@Override

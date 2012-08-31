@@ -24,42 +24,57 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome.grassy;
+package org.spout.vanilla.world.generator.normal.populator;
 
-import org.spout.api.generator.biome.Decorator;
+import java.util.Random;
+import org.spout.api.generator.Populator;
+import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.MathHelper;
-
+import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
-public abstract class GrassyBiome extends NormalBiome {
-	protected BlockMaterial topCover = VanillaMaterials.GRASS;
-
-	public GrassyBiome(int biomeId, Decorator... decorators) {
-		super(biomeId, decorators);
+public class GroundCoverPopulator extends Populator {
+	public GroundCoverPopulator() {
+		super(true);
 	}
 
 	@Override
-	public int placeGroundCover(World world, int x, int y, int z) {
-		super.placeGroundCover(world, x, y, z);
-		final byte maxGroudCoverDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, 0, z) * 2 + 4, 2, 5);
-		for (byte depth = 0; depth < maxGroudCoverDepth; depth++) {
-			if (world.getBlockMaterial(x, y - depth, z).isMaterial(VanillaMaterials.AIR)) {
-				return maxGroudCoverDepth;
-			}
-			if (depth == 0 && y >= NormalGenerator.SEA_LEVEL) {
-				world.setBlockMaterial(x, y - depth, z, topCover, (short) 0, world);
-			} else {
-				world.setBlockMaterial(x, y - depth, z, VanillaMaterials.DIRT, (short) 0, world);
+	public void populate(Chunk chunk, Random random) {
+		if (chunk.getY() != 4) {
+			return;
+		}
+		final World world = chunk.getWorld();
+		final int x = chunk.getBlockX();
+		final int z = chunk.getBlockZ();
+		for (byte xx = 0; xx < Chunk.BLOCKS.SIZE; xx++) {
+			for (byte zz = 0; zz < Chunk.BLOCKS.SIZE; zz++) {
+				final Biome biome = chunk.getBiomeType(xx, 0, zz);
+				if (biome instanceof NormalBiome) {
+					final NormalBiome normalBiome = (NormalBiome) biome;
+					int y = getNextStone(world, x + xx, NormalGenerator.HEIGHT, z + zz);
+					while (y > 0) {
+						y = getNextStone(world, x + xx, y, z + zz);
+						y -= normalBiome.placeGroundCover(world, x + xx, y, z + zz);
+						y = getNextAir(world, x + xx, y, z + zz);
+					}
+				}
 			}
 		}
-		return maxGroudCoverDepth;
 	}
 
-	public BlockMaterial getTopCover() {
-		return topCover;
+	private int getNextStone(World world, int x, int y, int z) {
+		for (; !world.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.STONE) && y > 0; y--) {
+			// iterate until we reach stone
+		}
+		return y;
+	}
+
+	private int getNextAir(World world, int x, int y, int z) {
+		for (; world.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.STONE) && y > 0; y--) {
+			// iterate until we exit the stone column
+		}
+		return y;
 	}
 }

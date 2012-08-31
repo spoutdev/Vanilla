@@ -29,7 +29,7 @@ package org.spout.vanilla.world.generator.normal.biome.icy;
 public class TundraHillsBiome extends TundraBiome {
 	public TundraHillsBiome(int biomeId) {
 		super(biomeId);
-		setMinMax((byte) 64, (byte) 77);
+		setMinMax(51, 90);
 	}
 
 	@Override

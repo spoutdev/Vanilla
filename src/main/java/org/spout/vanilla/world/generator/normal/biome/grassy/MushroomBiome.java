@@ -35,7 +35,7 @@ public class MushroomBiome extends GrassyBiome {
 	public MushroomBiome(int biomeId) {
 		super(biomeId, new SandAndClayDecorator(), new HugeMushroomDecorator(),
 				new MushroomDecorator((byte) 1, (byte) 1));
-		setMinMax((byte) 64, (byte) 74);
+		setMinMax(55, 90);
 		this.topCover = VanillaMaterials.MYCELIUM;
 	}
 

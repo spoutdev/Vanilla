@@ -28,14 +28,13 @@ package org.spout.vanilla.components.types;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityType;
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.components.creature.Enderman;
+import org.spout.vanilla.components.VanillaComponents;
 import org.spout.vanilla.protocol.entity.living.EndermanEntityProtocol;
 
 public class EndermanType extends EntityType {
 	public EndermanType() {
 		//Call super and pass in components!
-		super(new Enderman());
+		super(VanillaComponents.ENDERMAN);
 	}
 	
 	@Override

@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.components;
 
-import org.spout.vanilla.components.types.EnderDragonType;
-import org.spout.vanilla.components.types.EndermanType;
+import org.spout.vanilla.components.creature.EnderDragon;
+import org.spout.vanilla.components.creature.Enderman;
 
-public class VanillaEntityTypes {
-	public static final EnderDragonType TYPE_ENDERDRAGON = new EnderDragonType();
-	public static final EndermanType TYPE_ENDERMAN = new EndermanType();	
+public class VanillaComponents {
+	public static final EnderDragon ENDERDRAGON = new EnderDragon();	
+	public static final Enderman ENDERMAN = new Enderman();
 }

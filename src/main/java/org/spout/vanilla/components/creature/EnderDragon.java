@@ -24,12 +24,14 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.components;
+package org.spout.vanilla.components.creature;
 
-import org.spout.vanilla.components.types.EnderDragonType;
-import org.spout.vanilla.components.types.EndermanType;
+import org.spout.api.component.components.EntityComponent;
 
-public class VanillaEntityTypes {
-	public static final EnderDragonType TYPE_ENDERDRAGON = new EnderDragonType();
-	public static final EndermanType TYPE_ENDERMAN = new EndermanType();	
+/**
+ * A component that identifies the entity as an EnderDragon. 
+ */
+public class EnderDragon extends EntityComponent {
+	public EnderDragon() {	
+	}
 }

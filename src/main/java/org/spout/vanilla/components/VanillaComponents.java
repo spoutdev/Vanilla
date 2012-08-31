@@ -26,10 +26,57 @@
  */
 package org.spout.vanilla.components;
 
+import org.spout.vanilla.components.creature.Blaze;
+import org.spout.vanilla.components.creature.CaveSpider;
+import org.spout.vanilla.components.creature.Chicken;
+import org.spout.vanilla.components.creature.Cow;
+import org.spout.vanilla.components.creature.Creeper;
 import org.spout.vanilla.components.creature.EnderDragon;
 import org.spout.vanilla.components.creature.Enderman;
+import org.spout.vanilla.components.creature.Ghast;
+import org.spout.vanilla.components.creature.Giant;
+import org.spout.vanilla.components.creature.IronGolem;
+import org.spout.vanilla.components.creature.MagmaCube;
+import org.spout.vanilla.components.creature.MushroomCow;
+import org.spout.vanilla.components.creature.Ocelot;
+import org.spout.vanilla.components.creature.Pig;
+import org.spout.vanilla.components.creature.PigZombie;
+import org.spout.vanilla.components.creature.Sheep;
+import org.spout.vanilla.components.creature.Silverfish;
+import org.spout.vanilla.components.creature.Skeleton;
+import org.spout.vanilla.components.creature.Slime;
+import org.spout.vanilla.components.creature.SnowMan;
+import org.spout.vanilla.components.creature.Spider;
+import org.spout.vanilla.components.creature.Squid;
+import org.spout.vanilla.components.creature.Villager;
+import org.spout.vanilla.components.creature.Wolf;
+import org.spout.vanilla.components.creature.Zombie;
 
 public class VanillaComponents {
-	public static final EnderDragon ENDERDRAGON = new EnderDragon();	
+	// creatures
+	public static final Blaze BLAZE = new Blaze();
+	public static final CaveSpider CAVESPIDER = new CaveSpider();
+	public static final Chicken CHICKEN = new Chicken();
+	public static final Cow COW = new Cow();
+	public static final Creeper CREEPER = new Creeper();
+	public static final EnderDragon ENDERDRAGON = new EnderDragon();
 	public static final Enderman ENDERMAN = new Enderman();
+	public static final Ghast GHAST = new Ghast();
+	public static final Giant GIANT = new Giant();
+	public static final IronGolem IRONGOLEM = new IronGolem();
+	public static final MagmaCube MAGMACUBE = new MagmaCube();
+	public static final MushroomCow MUSHROOMCOW = new MushroomCow();
+	public static final Ocelot OCELOT = new Ocelot();
+	public static final Pig PIG = new Pig();
+	public static final PigZombie PIGZOMBIE = new PigZombie();
+	public static final Sheep SHEEP = new Sheep();
+	public static final Silverfish SILVERFISH = new Silverfish();
+	public static final Skeleton SKELETON = new Skeleton();
+	public static final Slime SLIME = new Slime();
+	public static final SnowMan SNOWMAN = new SnowMan();
+	public static final Spider SPIDER = new Spider();
+	public static final Squid SQUID = new Squid();
+	public static final Villager VILLAGER = new Villager();
+	public static final Wolf WOLF = new Wolf();
+	public static final Zombie ZOMBIE = new Zombie();
 }

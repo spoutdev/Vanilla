@@ -29,17 +29,20 @@ package org.spout.vanilla.components.types;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityType;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.VanillaComponents;
-import org.spout.vanilla.protocol.entity.living.EndermanEntityProtocol;
 
-public class EndermanType extends EntityType {
-	public EndermanType() {
-		super(VanillaComponents.ENDERMAN);
+public class CowType extends EntityType {
+	public CowType() {
+		super(VanillaComponents.COW);
+	}
+
+	public CowType(VanillaComponents components){
+		super(components);
 	}
 
 	@Override
 	public void init(Entity typed) {
-		typed.getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new EndermanEntityProtocol());
+		// Todo missing CowEntityProtocol
+		// typed.getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CowEntityProtocol());
 	}
 }

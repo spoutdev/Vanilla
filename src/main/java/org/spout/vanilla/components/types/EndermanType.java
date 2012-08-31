@@ -33,7 +33,6 @@ import org.spout.vanilla.protocol.entity.living.EndermanEntityProtocol;
 
 public class EndermanType extends EntityType {
 	public EndermanType() {
-		//Call super and pass in components!
 		super(VanillaComponents.ENDERMAN);
 	}
 	

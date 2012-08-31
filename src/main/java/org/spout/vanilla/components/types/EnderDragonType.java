@@ -33,7 +33,6 @@ import org.spout.vanilla.protocol.entity.living.EnderDragonEntityProtocol;
 
 public class EnderDragonType extends EntityType {
 	public EnderDragonType() {
-		//Call super and pass in components!
 		super(VanillaComponents.ENDERDRAGON);
 	}
 	

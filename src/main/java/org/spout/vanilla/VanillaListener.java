@@ -57,34 +57,32 @@ public class VanillaListener implements Listener {
 	public VanillaListener(VanillaPlugin plugin) {
 		this.plugin = plugin;
 	}
-
-	@EventHandler
-	public void onRegionLoad(RegionLoadEvent event) {
-		Region region = event.getRegion();
-
-		RegionSpawner spawner = new RegionSpawner(region);
-		int taskId = region.getTaskManager().scheduleSyncRepeatingTask(plugin, spawner, 100, 100, TaskPriority.LOW);
-		spawner.setTaskId(taskId);
-		spawner.setTaskManager(region.getTaskManager());
-
-		WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.getOrCreate(event.getWorld());
-		if (worldConfig.SPAWN_ANIMALS.getBoolean()) {
-			HashSet<BlockMaterial> grass = new HashSet<BlockMaterial>();
-			grass.add(VanillaMaterials.GRASS);
-			spawner.addSpawnableType(VanillaControllerTypes.SHEEP, grass, 5);
-
-			spawner.addSpawnableType(VanillaControllerTypes.PIG, grass, 5);
-
-			spawner.addSpawnableType(VanillaControllerTypes.COW, grass, 5);
-
-			spawner.addSpawnableType(VanillaControllerTypes.CHICKEN, grass, 5);
-		}
-		if (worldConfig.SPAWN_MONSTERS.getBoolean()) {
-			HashSet<BlockMaterial> endStone = new HashSet<BlockMaterial>();
-			endStone.add(VanillaMaterials.END_STONE);
-			spawner.addSpawnableType(VanillaControllerTypes.ENDERMAN, endStone, 7);
-		}
-	}
+	
+//	@EventHandler
+//	public void onRegionLoad(RegionLoadEvent event) {
+//		Region region = event.getRegion();
+//
+//		RegionSpawner spawner = new RegionSpawner(region);
+//		region.getTaskManager().scheduleSyncRepeatingTask(plugin, spawner, 100, 100, TaskPriority.LOW);
+//
+//		WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.getOrCreate(event.getWorld());
+//		if (worldConfig.SPAWN_ANIMALS.getBoolean()) {
+//			HashSet<BlockMaterial> grass = new HashSet<BlockMaterial>();
+//			grass.add(VanillaMaterials.GRASS);
+//			spawner.addSpawnableType(VanillaControllerTypes.SHEEP, grass, 5);
+//
+//			spawner.addSpawnableType(VanillaControllerTypes.PIG, grass, 5);
+//
+//			spawner.addSpawnableType(VanillaControllerTypes.COW, grass, 5);
+//
+//			spawner.addSpawnableType(VanillaControllerTypes.CHICKEN, grass, 5);
+//		}
+//		if (worldConfig.SPAWN_MONSTERS.getBoolean()) {
+//			HashSet<BlockMaterial> endStone = new HashSet<BlockMaterial>();
+//			endStone.add(VanillaMaterials.END_STONE);
+//			spawner.addSpawnableType(VanillaControllerTypes.ENDERMAN, endStone, 7);
+//		}
+//	}
 
 	@EventHandler(order = Order.EARLIEST)
 	public void onPermissionNode(PermissionNodeEvent event) {

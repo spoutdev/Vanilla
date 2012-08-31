@@ -61,10 +61,6 @@ public abstract class NormalBiome extends VanillaBiome {
 		super(biomeId, decorators);
 	}
 
-	@Override
-	public void generateColumn(CuboidShortBuffer blockData, int x, int chunkY, int z) {
-	}
-
 	public int placeGroundCover(World world, int x, int y, int z) {
 		BLOCK_REPLACER.setSeed((int) world.getSeed() * 127);
 		return 0;

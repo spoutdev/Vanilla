@@ -38,10 +38,7 @@ import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.generator.biome.BiomeManager;
-import org.spout.api.generator.biome.BiomeMap;
 import org.spout.api.generator.biome.BiomeSelector;
-import org.spout.api.generator.biome.EmptyBiomeManager;
-import org.spout.api.generator.biome.Simple2DBiomeManager;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
@@ -54,12 +51,11 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.VanillaBiomeGenerator;
 import org.spout.vanilla.world.generator.VanillaBiomes;
-import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator;
 import org.spout.vanilla.world.selector.VanillaBiomeSelector;
 
-public class NormalGenerator extends VanillaBiomeGenerator implements VanillaGenerator {
+public class NormalGenerator extends VanillaBiomeGenerator {
 	public static final int HEIGHT = 256;
 	public static final int SEA_LEVEL = 63;
 	// noise for generation
@@ -161,42 +157,17 @@ public class NormalGenerator extends VanillaBiomeGenerator implements VanillaGen
 	}
 
 	@Override
-	public BiomeManager generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ) {
-		if (chunkY < 0) {
-			return super.generate(blockData, chunkX, chunkY, chunkZ);
-		}
-		if (chunkY >= HEIGHT / Chunk.BLOCKS.SIZE) {
-			return new EmptyBiomeManager(chunkX, chunkY, chunkZ);
-		}
-		final int x = chunkX << Chunk.BLOCKS.BITS;
-		final int z = chunkZ << Chunk.BLOCKS.BITS;
-		final long seed = blockData.getWorld().getSeed();
-		final Simple2DBiomeManager biomeManager = new Simple2DBiomeManager(chunkX, chunkY, chunkZ);
-		final byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
-		final BiomeMap biomeMap = getBiomeMap();
-		for (int dx = x; dx < x + Chunk.BLOCKS.SIZE; ++dx) {
-			for (int dz = z; dz < z + Chunk.BLOCKS.SIZE; ++dz) {
-				biomeData[(dz & Chunk.BLOCKS.MASK) << 4 | (dx & Chunk.BLOCKS.MASK)] =
-						(byte) biomeMap.getBiome(dx, dz, seed).getId();
-			}
-		}
-		biomeManager.deserialize(biomeData);
-		generateTerrain(blockData, x, chunkY << Chunk.BLOCKS.BITS, z, biomeManager);
-		return biomeManager;
-	}
-
-	private void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomes) {
+	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
 		final int sizeX = blockData.getSize().getFloorX();
 		final int sizeY = blockData.getSize().getFloorY();
 		final int sizeZ = blockData.getSize().getFloorZ();
-		final World world = blockData.getWorld();
-		final int seed = (int) world.getSeed();
-		ELEVATION.setSeed(seed * 23);
-		ROUGHNESS.setSeed(seed * 29);
-		DETAIL.setSeed(seed * 17);
-		TURBULENCE.setSeed(seed * 53);
-		BLOCK_REPLACER.setSeed(seed * 127);
+		ELEVATION.setSeed((int) seed * 23);
+		ROUGHNESS.setSeed((int) seed * 29);
+		DETAIL.setSeed((int) seed * 17);
+		TURBULENCE.setSeed((int) seed * 53);
+		BLOCK_REPLACER.setSeed((int) seed * 127);
 		final double[][][] noise = WorldGeneratorUtils.fastNoise(FINAL, sizeX, sizeY, sizeZ, 4, x, y, z);
+		final BiomeSelector selector = getSelector();
 		for (byte xx = 0; xx < sizeX; xx++) {
 			for (byte zz = 0; zz < sizeZ; zz++) {
 				float maxSum = 0;
@@ -206,7 +177,7 @@ public class NormalGenerator extends VanillaBiomeGenerator implements VanillaGen
 					for (int sz = -SMOOTH_SIZE; sz <= SMOOTH_SIZE; sz++) {
 						if (xx + sx < 0 || zz + sz < 0
 								|| xx + sx >= sizeX || zz + sz >= sizeZ) {
-							final NormalBiome adjacent = (NormalBiome) world.getBiomeType(x + xx + sx, y, z + zz + sz);
+							final NormalBiome adjacent = (NormalBiome) selector.pickBiome(x + xx + sx, y, z + zz + sz, seed);
 							minSum += adjacent.getMin();
 							maxSum += adjacent.getMax();
 						} else {

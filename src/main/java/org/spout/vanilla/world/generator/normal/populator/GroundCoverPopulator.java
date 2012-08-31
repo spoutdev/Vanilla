@@ -50,7 +50,7 @@ public class GroundCoverPopulator extends Populator {
 		final int z = chunk.getBlockZ();
 		for (byte xx = 0; xx < Chunk.BLOCKS.SIZE; xx++) {
 			for (byte zz = 0; zz < Chunk.BLOCKS.SIZE; zz++) {
-				final Biome biome = chunk.getBiomeType(xx, 0, zz);
+				final Biome biome = chunk.getBiome(xx, 0, zz);
 				if (biome instanceof NormalBiome) {
 					final NormalBiome normalBiome = (NormalBiome) biome;
 					int y = getNextStone(world, x + xx, NormalGenerator.HEIGHT, z + zz);

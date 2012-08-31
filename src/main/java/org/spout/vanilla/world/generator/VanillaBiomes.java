@@ -51,7 +51,6 @@ import org.spout.vanilla.world.generator.normal.biome.sandy.DesertHillsBiome;
 import org.spout.vanilla.world.generator.theend.biome.EndStoneBiome;
 
 public class VanillaBiomes {
-	//TODO These numbers need to be checked...
 	public static final VanillaBiome OCEAN = new OceanBiome(0);
 	public static final VanillaBiome PLAINS = new PlainBiome(1);
 	public static final VanillaBiome DESERT = new DesertBiome(2);

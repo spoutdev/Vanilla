@@ -50,10 +50,9 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.VanillaBiomeChunkGenerator;
 import org.spout.vanilla.world.generator.VanillaBiomes;
-import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.generator.nether.populator.NetherCavePopulator;
 
-public class NetherGenerator extends VanillaBiomeChunkGenerator implements VanillaGenerator {
+public class NetherGenerator extends VanillaBiomeChunkGenerator {
 	public static final int HEIGHT = 128;
 	public static final int SEA_LEVEL = 31;
 	// noise for generation
@@ -131,12 +130,11 @@ public class NetherGenerator extends VanillaBiomeChunkGenerator implements Vanil
 	}
 
 	@Override
-	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z) {
-		final int seed = (int) blockData.getWorld().getSeed();
-		ELEVATION.setSeed(seed * 23);
-		ROUGHNESS.setSeed(seed * 29);
-		DETAIL.setSeed(seed * 17);
-		TURBULENCE.setSeed(seed * 53);
+	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomeManager, long seed) {
+		ELEVATION.setSeed((int) seed * 23);
+		ROUGHNESS.setSeed((int) seed * 29);
+		DETAIL.setSeed((int) seed * 17);
+		TURBULENCE.setSeed((int) seed * 53);
 		final int size = Chunk.BLOCKS.SIZE;
 		final double[][][] noise = WorldGeneratorUtils.fastNoise(FINAL, size, size, size, 4, x, y, z);
 		// build the density maps
@@ -178,12 +176,11 @@ public class NetherGenerator extends VanillaBiomeChunkGenerator implements Vanil
 			}
 		}
 		//place the bedrock
-		replaceBlocks(blockData, x, y, z);
+		replaceBlocks(blockData, x, y, z, seed);
 	}
 
-	private void replaceBlocks(CuboidShortBuffer blockData, int x, int y, int z) {
-		final int seed = (int) blockData.getWorld().getSeed();
-		BLOCK_REPLACER.setSeed(seed * 83);
+	private void replaceBlocks(CuboidShortBuffer blockData, int x, int y, int z, long seed) {
+		BLOCK_REPLACER.setSeed((int) seed * 83);
 		final int size = Chunk.BLOCKS.SIZE;
 		if (y == 0) {
 			for (int xx = 0; xx < size; xx++) {

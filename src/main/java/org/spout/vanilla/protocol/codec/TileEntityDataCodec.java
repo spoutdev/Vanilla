@@ -33,6 +33,9 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
+import org.spout.nbt.CompoundMap;
+
+import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.TileEntityDataMessage;
 
 public class TileEntityDataCodec extends MessageCodec<TileEntityDataMessage> {
@@ -46,22 +49,18 @@ public class TileEntityDataCodec extends MessageCodec<TileEntityDataMessage> {
 		int y = buffer.readShort();
 		int z = buffer.readInt();
 		int action = buffer.readByte();
-		int custom1 = buffer.readInt();
-		int custom2 = buffer.readInt();
-		int custom3 = buffer.readInt();
-		return new TileEntityDataMessage(x, y, z, action, custom1, custom2, custom3);
+		CompoundMap data = ChannelBufferUtils.readCompound(buffer);
+		return new TileEntityDataMessage(x, y, z, action, data);
 	}
 
 	@Override
 	public ChannelBuffer encode(TileEntityDataMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(24);
+		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeInt(message.getX());
 		buffer.writeShort(message.getY());
 		buffer.writeInt(message.getZ());
 		buffer.writeByte(message.getAction());
-		buffer.writeInt(message.getCustom1());
-		buffer.writeInt(message.getCustom2());
-		buffer.writeInt(message.getCustom3());
+		ChannelBufferUtils.writeCompound(buffer, message.getData());
 		return buffer;
 	}
 }

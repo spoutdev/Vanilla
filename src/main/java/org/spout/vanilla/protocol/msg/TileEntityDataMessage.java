@@ -30,9 +30,18 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.nbt.CompoundMap;
 
 public class TileEntityDataMessage implements Message {
-	private final int x, y, z, action, custom1, custom2, custom3;
+	private final int x;
+	private final int y;
+	private final int z;
+	private final int action;
+	private int custom1;
+	private int custom2;
+	private int custom3;
+	private CompoundMap data;
+	
 
 	public TileEntityDataMessage(int x, int y, int z, int action, int[] data) {
 		this(x, y, z, action, data.length >= 1 ? data[0] : -1, data.length >= 2 ? data[1] : -1, data.length >= 3 ? data[2] : -1);
@@ -46,6 +55,14 @@ public class TileEntityDataMessage implements Message {
 		this.custom1 = custom1;
 		this.custom2 = custom2;
 		this.custom3 = custom3;
+	}
+
+	public TileEntityDataMessage(int x, int y, int z, int action, CompoundMap data) {
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.action = action;
+		this.data = data;
 	}
 
 	public int getX() {
@@ -74,6 +91,10 @@ public class TileEntityDataMessage implements Message {
 
 	public int getCustom3() {
 		return custom3;
+	}
+
+	public CompoundMap getData() {
+		return data;
 	}
 
 	@Override

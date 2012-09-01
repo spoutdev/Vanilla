@@ -86,7 +86,7 @@ public class PlayerNetworkComponent extends PositionUpdateComponent<VanillaPlaye
 		long time = System.currentTimeMillis();
 
 		// Send a new request message after half the time-out time has passed
-		if ((time - lastRequestTime) > (VanillaConfiguration.PLAYER_TIMEOUT_MS.getInt() / 2)) {
+		if ((time - lastRequestTime) > (VanillaConfiguration.PLAYER_TIMEOUT_MS.getLong() / 2)) {
 			lastRequestHash = random.nextInt();
 			lastRequestTime = time;
 			getParent().getParent().getNetworkSynchronizer().callProtocolEvent(new PlayerKeepAliveEvent(lastRequestHash));

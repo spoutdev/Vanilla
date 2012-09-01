@@ -56,6 +56,31 @@ public class RemoteConnectionSession implements Console, CommandSource {
 	private State state = State.AUTH;
 	private DateFormat format = new SimpleDateFormat("hh:mm:ss");
 
+	@Override
+	public boolean isInGroup(World world, String group) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public String[] getGroups(World world) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public ValueHolder getData(World world, String node) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public boolean hasData(String node) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public boolean hasData(World world, String node) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
 	public static enum State {
 		AUTH,
 		COMMANDS,

@@ -39,6 +39,8 @@ import net.royawesome.jlibnoise.module.source.Perlin;
 import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.generator.biome.BiomeSelector;
+import org.spout.api.generator.biome.EmptyBiomeManager;
+import org.spout.api.generator.biome.Simple2DBiomeManager;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
@@ -123,8 +125,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		// if you want to check out a particular biome, use this!
 		//setSelector(new PerBlockBiomeSelector(VanillaBiomes.MOUNTAINS));
 		setSelector(new VanillaBiomeSelector());
-		addPopulators(new GroundCoverPopulator()
-				//, new RockyShieldPopulator(), new CavePopulator(), new RavinePopulator(),
+		addPopulators(new GroundCoverPopulator() //, new RockyShieldPopulator(), new CavePopulator(), new RavinePopulator(),
 				//new PondPopulator(), new DungeonPopulator(), new OrePopulator(), new BiomePopulator(getBiomeMap()),
 				//new FallingLiquidPopulator(), new SnowPopulator()
 				);
@@ -157,11 +158,37 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 	}
 
 	@Override
+	public BiomeManager generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ, World world) {
+		if (chunkY < 0) {
+			return super.generate(blockData, chunkX, chunkY, chunkZ, world);
+		}
+		final int x = chunkX << Chunk.BLOCKS.BITS;
+		final int z = chunkZ << Chunk.BLOCKS.BITS;
+		final BiomeManager biomeManager;
+		if (chunkY == 0) {
+			biomeManager = new Simple2DBiomeManager(chunkX, chunkY, chunkZ);
+			byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
+			final long seed = world.getSeed();
+			for (int dx = x; dx < x + Chunk.BLOCKS.SIZE; ++dx) {
+				for (int dz = z; dz < z + Chunk.BLOCKS.SIZE; ++dz) {
+					biomeData[(dz & Chunk.BLOCKS.MASK) << 4 | (dx & Chunk.BLOCKS.MASK)] =
+							(byte) biomes.getBiome(dx, dz, seed).getId();
+				}
+			}
+			biomeManager.deserialize(biomeData);
+		} else {
+			biomeManager = world.getChunk(chunkX, 0, chunkZ).getBiomeManager();
+		}
+		generateTerrain(blockData, x, chunkY << Chunk.BLOCKS.BITS, z, biomeManager, world);
+		return biomeManager;
+	}
+
+	@Override
 	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomes, World world) {
-		final long seed = world.getSeed();
 		final int sizeX = blockData.getSize().getFloorX();
 		final int sizeY = blockData.getSize().getFloorY();
 		final int sizeZ = blockData.getSize().getFloorZ();
+		final long seed = world.getSeed();
 		ELEVATION.setSeed((int) seed * 23);
 		ROUGHNESS.setSeed((int) seed * 29);
 		DETAIL.setSeed((int) seed * 17);

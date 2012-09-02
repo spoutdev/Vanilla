@@ -136,11 +136,13 @@ public class TheEndGenerator extends VanillaBiomeChunkGenerator {
 		ROUGHNESS.setSeed((int) seed * 29);
 		DETAIL.setSeed((int) seed * 17);
 		TURBULENCE.setSeed((int) seed * 53);
-		final int size = blockData.getSize().getFloorX();
-		final double[][][] densityNoise = WorldGeneratorUtils.fastNoise(FINAL, size, size, size, 4, x, y, z);
-		for (int xx = 0; xx < size; xx++) {
-			for (int yy = 0; yy < size; yy++) {
-				for (int zz = 0; zz < size; zz++) {
+		final int sizeX = blockData.getSize().getFloorX();
+		final int sizeY = blockData.getSize().getFloorY();
+		final int sizeZ = blockData.getSize().getFloorZ();
+		final double[][][] densityNoise = WorldGeneratorUtils.fastNoise(FINAL, sizeX, sizeY, sizeZ, 4, x, y, z);
+		for (int xx = 0; xx < sizeX; xx++) {
+			for (int yy = 0; yy < sizeY; yy++) {
+				for (int zz = 0; zz < sizeZ; zz++) {
 					final int totalX = x + xx;
 					final int totalY = y + yy;
 					final float distanceY = (totalY - ISLAND_TOTAL_OFFSET) * ISLAND_HEIGHT_SCALE;

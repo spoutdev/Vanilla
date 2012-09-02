@@ -58,27 +58,27 @@ public class RemoteConnectionSession implements Console, CommandSource {
 
 	@Override
 	public boolean isInGroup(World world, String group) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		return false;
 	}
 
 	@Override
 	public String[] getGroups(World world) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		return new String[0];
 	}
 
 	@Override
 	public ValueHolder getData(World world, String node) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		return null;
 	}
 
 	@Override
 	public boolean hasData(String node) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		return false;
 	}
 
 	@Override
 	public boolean hasData(World world, String node) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		return false;
 	}
 
 	public static enum State {

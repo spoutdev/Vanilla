@@ -125,12 +125,13 @@ public class TheEndGenerator extends VanillaBiomeChunkGenerator {
 	}
 
 	@Override
-	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
+	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomes, World world) {
 		if (x < -ISLAND_RADIUS || x > ISLAND_RADIUS
 				|| y < 0 || y > ISLAND_HEIGHT + ISLAND_OFFSET
 				|| z < -ISLAND_RADIUS || z > ISLAND_RADIUS) {
 			return;
 		}
+		final long seed = world.getSeed();
 		ELEVATION.setSeed((int) seed * 23);
 		ROUGHNESS.setSeed((int) seed * 29);
 		DETAIL.setSeed((int) seed * 17);

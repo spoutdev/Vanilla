@@ -31,6 +31,7 @@ import java.util.Arrays;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.generator.biome.Simple2DBiomeManager;
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
@@ -44,9 +45,9 @@ public abstract class VanillaBiomeChunkGenerator extends VanillaBiomeGenerator {
 	}
 
 	@Override
-	public BiomeManager generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ, long seed) {
+	public BiomeManager generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ, World world) {
 		if (chunkY < 0) {
-			return super.generate(blockData, chunkX, chunkY, chunkZ, seed);
+			return super.generate(blockData, chunkX, chunkY, chunkZ, world);
 		}
 		final BiomeManager biomeManager = new Simple2DBiomeManager(chunkX, chunkY, chunkZ);
 		final byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
@@ -54,7 +55,7 @@ public abstract class VanillaBiomeChunkGenerator extends VanillaBiomeGenerator {
 		biomeManager.deserialize(biomeData);
 		if (chunkY * 16 < height) {
 			generateTerrain(blockData, chunkX << Chunk.BLOCKS.BITS, chunkY << Chunk.BLOCKS.BITS,
-					chunkZ << Chunk.BLOCKS.BITS, biomeManager, seed);
+					chunkZ << Chunk.BLOCKS.BITS, biomeManager, world);
 		}
 		return biomeManager;
 	}

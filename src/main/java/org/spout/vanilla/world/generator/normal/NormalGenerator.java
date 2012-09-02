@@ -157,7 +157,8 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 	}
 
 	@Override
-	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
+	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomes, World world) {
+		final long seed = world.getSeed();
 		final int sizeX = blockData.getSize().getFloorX();
 		final int sizeY = blockData.getSize().getFloorY();
 		final int sizeZ = blockData.getSize().getFloorZ();

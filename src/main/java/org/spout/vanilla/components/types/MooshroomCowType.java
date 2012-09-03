@@ -31,15 +31,15 @@ import org.spout.api.entity.EntityType;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.VanillaComponents;
-import org.spout.vanilla.protocol.entity.living.SkeletonEntityProtocol;
+import org.spout.vanilla.protocol.entity.living.MooshroomCowEntityProtocol;
 
-public class SkeletonType extends EntityType {
-	public SkeletonType() {
-		super(VanillaComponents.SKELETON);
+public class MooshroomCowType extends EntityType {
+	public MooshroomCowType() {
+		super(VanillaComponents.MOOSHROOMCOW);
 	}
 
 	@Override
 	public void init(Entity typed) {
-		typed.getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SkeletonEntityProtocol());
+		typed.getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MooshroomCowEntityProtocol());
 	}
 }

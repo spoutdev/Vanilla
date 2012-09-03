@@ -29,7 +29,9 @@ package org.spout.vanilla.components.types;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityType;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.VanillaComponents;
+import org.spout.vanilla.protocol.entity.living.SilverfishEntityProtocol;
 
 public class SilverfishType extends EntityType {
 	public SilverfishType() {
@@ -38,7 +40,6 @@ public class SilverfishType extends EntityType {
 
 	@Override
 	public void init(Entity typed) {
-		// Todo missing SilverfishEntityProtocol
-		// typed.getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SilverfishEntityProtocol());
+		typed.getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SilverfishEntityProtocol());
 	}
 }

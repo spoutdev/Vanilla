@@ -29,7 +29,9 @@ package org.spout.vanilla.components.types;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityType;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.VanillaComponents;
+import org.spout.vanilla.protocol.entity.living.IronGolemEntityProtocol;
 
 public class IronGolemType extends EntityType {
 	public IronGolemType() {
@@ -38,7 +40,6 @@ public class IronGolemType extends EntityType {
 
 	@Override
 	public void init(Entity typed) {
-		// Todo missing IronGolemEntityProtocol
-		// typed.getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new IronGolemEntityProtocol());
+		typed.getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new IronGolemEntityProtocol());
 	}
 }

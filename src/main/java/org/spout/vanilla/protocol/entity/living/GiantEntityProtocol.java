@@ -24,14 +24,23 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.components.creature;
+package org.spout.vanilla.protocol.entity.living;
 
-import org.spout.api.component.components.EntityComponent;
+import java.util.List;
 
-/**
- * A component that identifies the entity as a MushroomCow.
- */
-public class MushroomCow extends EntityComponent {
-	public MushroomCow() {
+import org.spout.api.entity.Controller;
+import org.spout.api.util.Parameter;
+
+import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+
+public class GiantEntityProtocol extends BasicMobEntityProtocol {
+	public GiantEntityProtocol() {
+		super(53);
+	}
+
+	@Override
+	public List<Parameter<?>> getSpawnParameters(Controller controller) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
+		return parameters;
 	}
 }

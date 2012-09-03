@@ -24,22 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.components.types;
+package org.spout.vanilla.protocol.entity.living;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.entity.EntityType;
+import java.util.List;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.components.VanillaComponents;
-import org.spout.vanilla.protocol.entity.living.SkeletonEntityProtocol;
+import org.spout.api.entity.Controller;
+import org.spout.api.util.Parameter;
 
-public class SkeletonType extends EntityType {
-	public SkeletonType() {
-		super(VanillaComponents.SKELETON);
+import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+
+public class VillagerEntityProtocol extends BasicMobEntityProtocol {
+	public VillagerEntityProtocol() {
+		super(120);
 	}
 
 	@Override
-	public void init(Entity typed) {
-		typed.getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SkeletonEntityProtocol());
+	public List<Parameter<?>> getSpawnParameters(Controller controller) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
+		//TODO Index 16 (int): Unknown, example: 0
+		return parameters;
 	}
 }

@@ -24,22 +24,14 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.components.types;
+package org.spout.vanilla.components.creature;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.entity.EntityType;
+import org.spout.api.component.components.EntityComponent;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.components.VanillaComponents;
-import org.spout.vanilla.protocol.entity.living.SkeletonEntityProtocol;
-
-public class SkeletonType extends EntityType {
-	public SkeletonType() {
-		super(VanillaComponents.SKELETON);
-	}
-
-	@Override
-	public void init(Entity typed) {
-		typed.getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SkeletonEntityProtocol());
+/**
+ * A component that identifies the entity as a MushroomCow.
+ */
+public class MooshroomCow extends EntityComponent {
+	public MooshroomCow() {
 	}
 }

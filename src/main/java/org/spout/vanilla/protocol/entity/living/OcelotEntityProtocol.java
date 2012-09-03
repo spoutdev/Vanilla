@@ -24,22 +24,29 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.components.types;
+package org.spout.vanilla.protocol.entity.living;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.entity.EntityType;
+import java.util.List;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.components.VanillaComponents;
-import org.spout.vanilla.protocol.entity.living.SkeletonEntityProtocol;
+import org.spout.api.entity.Controller;
+import org.spout.api.util.Parameter;
 
-public class SkeletonType extends EntityType {
-	public SkeletonType() {
-		super(VanillaComponents.SKELETON);
+import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+
+public class OcelotEntityProtocol extends BasicMobEntityProtocol {
+	public OcelotEntityProtocol() {
+		super(98);
 	}
 
 	@Override
-	public void init(Entity typed) {
-		typed.getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SkeletonEntityProtocol());
+	public List<Parameter<?>> getSpawnParameters(Controller controller) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
+		// TODO: Index 16 (byte): Flags (below:)
+		// bit 0 0x01 Sitting down
+		// bit 1 0x02 Aggressive (red eyes)
+		// bit 2 0x04 Tamed
+		// TODO: Index 17 (string): Name of player that tamed ocelot
+		// TODO Index 18 (byte): Skin: 0 - Ocelot 3 - Tamed cat, probably 1 and 2 too
+		return parameters;
 	}
 }

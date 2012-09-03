@@ -130,8 +130,7 @@ public class NetherGenerator extends VanillaBiomeChunkGenerator {
 	}
 
 	@Override
-	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomeManager, World world) {
-		long seed = world.getSeed();
+	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomeManager, long seed) {
 		ELEVATION.setSeed((int) seed * 23);
 		ROUGHNESS.setSeed((int) seed * 29);
 		DETAIL.setSeed((int) seed * 17);

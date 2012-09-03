@@ -45,18 +45,22 @@ public abstract class VanillaBiomeChunkGenerator extends VanillaBiomeGenerator {
 	}
 
 	@Override
-	public BiomeManager generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ, World world) {
-		if (chunkY < 0) {
-			return super.generate(blockData, chunkX, chunkY, chunkZ, world);
-		}
-		final BiomeManager biomeManager = new Simple2DBiomeManager(chunkX, chunkY, chunkZ);
+	public BiomeManager generateBiomes(int chunkX, int chunkZ, World world) {
+		final BiomeManager biomeManager = new Simple2DBiomeManager(chunkX, chunkZ);
 		final byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
 		Arrays.fill(biomeData, (byte) biome.getId());
 		biomeManager.deserialize(biomeData);
-		if (chunkY * 16 < height) {
-			generateTerrain(blockData, chunkX << Chunk.BLOCKS.BITS, chunkY << Chunk.BLOCKS.BITS,
-					chunkZ << Chunk.BLOCKS.BITS, biomeManager, world);
-		}
 		return biomeManager;
+	}
+
+	@Override
+	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ, World world) {
+		if (chunkY < 0) {
+			super.generate(blockData, chunkX, chunkY, chunkZ, world);
+		} else if (chunkY * 16 < height) {
+			final int x = chunkX << Chunk.BLOCKS.BITS;
+			final int z = chunkZ << Chunk.BLOCKS.BITS;
+			generateTerrain(blockData, x, chunkY << Chunk.BLOCKS.BITS, z, world.getBiomeManager(x, z, true), world.getSeed());
+		}
 	}
 }

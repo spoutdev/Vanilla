@@ -59,22 +59,22 @@ import static org.spout.vanilla.world.generator.VanillaBiomes.TUNDRA_HILLS;
 public class VanillaBiomeSelector extends BiomeSelector {
 	private static final float DEFAULT_SCALE = 2.5f;
 	//
-	private static final float CONTINENTS_THRESHOLD = -0.3f;
+	private static final float CONTINENTS_THRESHOLD = -0.05f;
 	private static final float LAND_THRESHOLD = 0;
-	private static final float SWAMP_THRESHOLD = 0;
 	private static final float SMALL_MOUNTAIN_THRESHOLD = 0.675f;
 	private static final float MOUNTAIN_THRESHOLD = 0.71f;
-	private static final float RIVER_THRESHOLD = 0.82f;
-	private static final float PLAINS_THRESHOLD = 2;
-	private static final float FOREST_THRESHOLD = 1;
+	private static final float RIVER_THRESHOLD = 0.89f;
+	private static final float SWAMP_THRESHOLD = 6;
+	private static final float PLAINS_THRESHOLD = 5;
+	private static final float FOREST_THRESHOLD = 4;
+	private static final float JUNGLE_THRESHOLD = 3;
+	private static final float DESERT_THRESHOLD = 2;
+	private static final float TAIGA_THRESHOLD = 1;
+	private static final float TUNDRA_THRESHOLD = 0;
 	private static final float FOREST_HILLS_THRESHOLD = 0.5f;
-	private static final float JUNGLE_THRESHOLD = 0;
-	private static final float JUNGLE_HILLS_THRESHOLD = 0.5f;
-	private static final float DESERT_THRESHOLD = -1;
 	private static final float DESERT_HILLS_THRESHOLD = 0.5f;
-	private static final float TAIGA_THRESHOLD = -2;
+	private static final float JUNGLE_HILLS_THRESHOLD = 0.5f;
 	private static final float TAIGA_HILLS_THRESHOLD = 0.5f;
-	private static final float TUNDRA_THRESHOLD = -3;
 	private static final float TUNDRA_HILLS_THRESHOLD = 0.5f;
 	private static final float FROZEN_OCEAN_THRESHOLD = 0.4f;
 	private static final float MUSHROOM_THRESHOLD = 0.85f;
@@ -97,33 +97,33 @@ public class VanillaBiomeSelector extends BiomeSelector {
 
 	public VanillaBiomeSelector(float scale) {
 		continentsBase.setFrequency(0.007 / scale);
-		continentsBase.setOctaveCount(2);
+		continentsBase.setOctaveCount(1);
 
 		continents.SetSourceModule(0, continentsBase);
-		continents.setFrequency(0.0125);
+		continents.setFrequency(0.02);
 		continents.setPower(20);
 		continents.setRoughness(1);
 		//
 		landBase.setFrequency(0.007 / scale);
-		landBase.setDisplacement(3);
+		landBase.setDisplacement(1);
 
 		land.SetSourceModule(0, landBase);
-		land.setFrequency(0.0021875);
+		land.setFrequency(0.004);
 		land.setPower(70);
 		//
 		final Cylinders riversNoise = new Cylinders();
 		riversNoise.setFrequency(0.0025);
 
 		rivers.SetSourceModule(0, riversNoise);
-		rivers.setFrequency(0.00625);
-		rivers.setRoughness(1);
+		rivers.setFrequency(0.0085);
+		rivers.setRoughness(3);
 		rivers.setPower(100);
 		//
 		detailBase.setFrequency(0.01 / scale);
-		detailBase.setOctaveCount(2);
+		detailBase.setOctaveCount(1);
 
 		detail.SetSourceModule(0, detailBase);
-		detail.setFrequency(0.0125);
+		detail.setFrequency(0.03);
 		detail.setPower(20);
 		detail.setRoughness(1);
 	}
@@ -151,14 +151,20 @@ public class VanillaBiomeSelector extends BiomeSelector {
 					}
 					return SMALL_MOUNTAINS;
 				}
-				final float landValue = (float) land.GetValue(x, 0, z);
+				final float landValue = (float) land.GetValue(x, 0, z) * 3.5f + 3.5f;
+				if (landValue > SWAMP_THRESHOLD) {
+					if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
+						return RIVER;
+					}
+					return SWAMP;
+				}
 				if (landValue > PLAINS_THRESHOLD) {
 					if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
 						return RIVER;
 					}
 					return PLAINS;
 				}
-				final float hillValue = (float) detail.GetValue(x, 127, z);
+				final float hillValue = (float) detail.GetValue(x, 500, z);
 				if (landValue > FOREST_THRESHOLD) {
 					if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
 						return RIVER;
@@ -186,7 +192,7 @@ public class VanillaBiomeSelector extends BiomeSelector {
 					}
 					return DESERT;
 				}
-				final float frozenOceanValue = (float) detail.GetValue(x, 255, z);
+				final float frozenOceanValue = (float) detail.GetValue(x, 1000, z);
 				if (landValue > TAIGA_THRESHOLD) {
 					if (frozenOceanValue > FROZEN_OCEAN_THRESHOLD) {
 						return FROZEN_OCEAN;
@@ -214,9 +220,6 @@ public class VanillaBiomeSelector extends BiomeSelector {
 			}
 			if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
 				return RIVER;
-			}
-			if (land.GetValue(x, 0, z) > SWAMP_THRESHOLD) {
-				return SWAMP;
 			}
 			return BEACH;
 		}

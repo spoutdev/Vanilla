@@ -50,6 +50,14 @@ public class ShrubObject extends TreeObject {
 	}
 
 	@Override
+	public boolean canPlaceObject(World w, int x, int y, int z) {
+		if (!super.canPlaceObject(w, x, y, z)) {
+			return false;
+		}
+		return !(w.getBlockMaterial(x, y, z) instanceof Liquid);
+	}
+
+	@Override
 	public void placeObject(World w, int x, int y, int z) {
 		w.setBlockMaterial(x, y - 1, z, VanillaMaterials.DIRT, (short) 0, w);
 		for (byte yy = 0; yy < totalHeight; yy++) {

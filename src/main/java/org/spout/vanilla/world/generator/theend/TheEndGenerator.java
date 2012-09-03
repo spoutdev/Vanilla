@@ -57,8 +57,8 @@ public class TheEndGenerator extends VanillaBiomeChunkGenerator {
 	private static final int ISLAND_HEIGHT = 56;
 	private static final int ISLAND_OFFSET = 8;
 	private static final int ISLAND_RADIUS = 144;
-	private static final float ISLAND_TOTAL_OFFSET = ISLAND_OFFSET + ISLAND_HEIGHT / 2f;
-	private static final float ISLAND_HEIGHT_SCALE = ((float) ISLAND_RADIUS / (float) ISLAND_HEIGHT) * 2f;
+	private static final double ISLAND_TOTAL_OFFSET = ISLAND_OFFSET + ISLAND_HEIGHT / 2f;
+	private static final double ISLAND_HEIGHT_SCALE = ((double) ISLAND_RADIUS / (double) ISLAND_HEIGHT) * 2f;
 	// noise for generation
 	private static final Perlin ELEVATION = new Perlin();
 	private static final Perlin ROUGHNESS = new Perlin();
@@ -146,7 +146,7 @@ public class TheEndGenerator extends VanillaBiomeChunkGenerator {
 				for (int zz = 0; zz < sizeZ; zz++) {
 					final int totalX = x + xx;
 					final int totalY = y + yy;
-					final float distanceY = (totalY - ISLAND_TOTAL_OFFSET) * ISLAND_HEIGHT_SCALE;
+					final double distanceY = (totalY - ISLAND_TOTAL_OFFSET) * ISLAND_HEIGHT_SCALE;
 					final int totalZ = z + zz;
 					final double distance = Math.sqrt(totalX * totalX + distanceY * distanceY + totalZ * totalZ);
 					if (distance == 0) {

@@ -151,9 +151,9 @@ public class NetherGenerator extends VanillaBiomeChunkGenerator {
 					double value = noise[xx][yy][zz];
 					if (SMOOTH_HEIGHT > 0) {
 						if (yy + y < LOW_SMOOTH_START) {
-							value += (1 / (float) SMOOTH_HEIGHT) * (LOW_SMOOTH_START - yy - y);
+							value += (1 / (double) SMOOTH_HEIGHT) * (LOW_SMOOTH_START - yy - y);
 						} else if (yy + y >= HIGH_SMOOTH_START) {
-							value += (1 / (float) SMOOTH_HEIGHT) * (y + yy - HIGH_SMOOTH_START);
+							value += (1 / (double) SMOOTH_HEIGHT) * (y + yy - HIGH_SMOOTH_START);
 						}
 					}
 					if (value >= 0) {
@@ -178,7 +178,7 @@ public class NetherGenerator extends VanillaBiomeChunkGenerator {
 			for (int xx = 0; xx < size; xx++) {
 				for (int zz = 0; zz < size; zz++) {
 					final byte bedrockDepth = (byte) Math.ceil(BLOCK_REPLACER.GetValue(x + xx, -5, z + zz)
-							* (BEDROCK_DEPTH / 2f) + BEDROCK_DEPTH / 2f);
+							* (BEDROCK_DEPTH / 2d) + BEDROCK_DEPTH / 2d);
 					for (y = 0; y < bedrockDepth; y++) {
 						blockData.set(x + xx, y, z + zz, VanillaMaterials.BEDROCK.getId());
 					}
@@ -188,7 +188,7 @@ public class NetherGenerator extends VanillaBiomeChunkGenerator {
 			for (int xx = 0; xx < size; xx++) {
 				for (int zz = 0; zz < size; zz++) {
 					final byte bedrockDepth = (byte) Math.ceil(BLOCK_REPLACER.GetValue(x + xx, -73, z + zz)
-							* (BEDROCK_DEPTH / 2f) + BEDROCK_DEPTH / 2f);
+							* (BEDROCK_DEPTH / 2d) + BEDROCK_DEPTH / 2d);
 					for (y = HEIGHT - 1; y > HEIGHT - bedrockDepth; y--) {
 						blockData.set(x + xx, y, z + zz, VanillaMaterials.BEDROCK.getId());
 					}

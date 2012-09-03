@@ -189,8 +189,8 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 						count++;
 					}
 				}
-				final float minElevation = minSum / count;
-				final float maxElevation = maxSum / count;
+				final double minElevation = minSum / count;
+				final double maxElevation = maxSum / count;
 				final double smoothHeight = (maxElevation - minElevation) / 2d;
 				final double lowSmoothStart = minElevation + smoothHeight;
 				final double upperSmoothStart = maxElevation - smoothHeight;
@@ -219,7 +219,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 				}
 				if (y == 0) {
 					final byte bedrockDepth = (byte) Math.ceil(BLOCK_REPLACER.GetValue(x + xx, -5, z + zz)
-							* (BEDROCK_DEPTH / 2f) + BEDROCK_DEPTH / 2f);
+							* (BEDROCK_DEPTH / 2d) + BEDROCK_DEPTH / 2d);
 					for (byte yy = 0; yy < bedrockDepth; yy++) {
 						blockData.set(x + xx, yy, z + zz, VanillaMaterials.BEDROCK.getId());
 					}

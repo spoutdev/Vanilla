@@ -26,11 +26,17 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.util.RedstoneUtil;
 
-public class RedstoneLamp extends Solid implements InitializableMaterial {
+public class RedstoneLamp extends Solid implements InitializableMaterial, RedstoneTarget {
 	private final boolean on;
 
 	public RedstoneLamp(String name, int id, boolean on) {
@@ -42,7 +48,7 @@ public class RedstoneLamp extends Solid implements InitializableMaterial {
 
 	@Override
 	public void initialize() {
-		this.getDrops().DEFAULT.clear().add(VanillaMaterials.REDSTONE_LAMP_ON);
+		this.getDrops().DEFAULT.clear().add(VanillaMaterials.REDSTONE_LAMP_OFF);
 	}
 
 	/**
@@ -56,5 +62,44 @@ public class RedstoneLamp extends Solid implements InitializableMaterial {
 	@Override
 	public byte getLightLevel(short data) {
 		return on ? (byte) 15 : (byte) 0;
+	}
+
+	@Override
+	public boolean isReceivingPower(Block block) {
+		return RedstoneUtil.isReceivingPower(block);
+	}
+	
+	@Override
+	public boolean isRedstoneConductor() {
+		return false;
+	}
+	
+	@Override
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
+		boolean power = isReceivingPower(block);
+		if (!power) {
+			for (BlockFace face:BlockFaces.BTEWNS) {
+				Block other = block.translate(face);
+				if (other.getMaterial() instanceof RedstoneLamp) {
+					if (isReceivingPower(other)) {
+						power = true;
+						break;
+					}
+				}
+			}
+		}
+		if (power != on) {
+			if (power) {
+				block.setMaterial(VanillaMaterials.REDSTONE_LAMP_ON);
+			} else {
+				block.setMaterial(VanillaMaterials.REDSTONE_LAMP_OFF);
+			}
+		}
+	}
+	
+	@Override
+	public boolean hasPhysics() {
+		return true;
 	}
 }

@@ -30,6 +30,8 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.material.range.CubicEffectRange;
+import org.spout.api.material.range.EffectRange;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
@@ -38,6 +40,9 @@ import org.spout.vanilla.util.RedstoneUtil;
 
 public class RedstoneLamp extends Solid implements InitializableMaterial, RedstoneTarget {
 	private final boolean on;
+	private final static EffectRange effectRange = new CubicEffectRange(2);
+	private static final int HAS_REDSTONE_POWER = 1;
+	private static final int HAS_NO_REDSTONE_POWER = 0;
 
 	public RedstoneLamp(String name, int id, boolean on) {
 		super(name, id);
@@ -78,18 +83,21 @@ public class RedstoneLamp extends Solid implements InitializableMaterial, Redsto
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
 		boolean power = isReceivingPower(block);
-		if (!power) {
+		if (power) {
+			block.setData(HAS_REDSTONE_POWER);
+		} else {
+			block.setData(HAS_NO_REDSTONE_POWER);
 			for (BlockFace face:BlockFaces.BTEWNS) {
 				Block other = block.translate(face);
 				if (other.getMaterial() instanceof RedstoneLamp) {
-					if (isReceivingPower(other)) {
+					if (other.getData() == HAS_REDSTONE_POWER) {
 						power = true;
 						break;
 					}
 				}
 			}
 		}
-		if (power != on) {
+		if (on != power) {
 			if (power) {
 				block.setMaterial(VanillaMaterials.REDSTONE_LAMP_ON);
 			} else {
@@ -101,5 +109,10 @@ public class RedstoneLamp extends Solid implements InitializableMaterial, Redsto
 	@Override
 	public boolean hasPhysics() {
 		return true;
+	}
+	
+	@Override
+	public EffectRange getPhysicsRange(short data) {
+		return effectRange;
 	}
 }

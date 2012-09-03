@@ -24,21 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.components.types;
+package org.spout.vanilla.protocol.entity.living;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.entity.EntityType;
+import java.util.List;
 
-import org.spout.vanilla.components.VanillaComponents;
+import org.spout.api.entity.Controller;
+import org.spout.api.util.Parameter;
 
-public class MushroomCowType extends EntityType {
-	public MushroomCowType() {
-		super(VanillaComponents.MUSHROOMCOW);
+import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+
+public class IronGolemEntityProtocol extends BasicMobEntityProtocol {
+	public IronGolemEntityProtocol() {
+		super(99);
 	}
 
 	@Override
-	public void init(Entity typed) {
-		// Todo missing MushroomCowEntityProtocol
-		// typed.getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MushroomCowEntityProtocol());
+	public List<Parameter<?>> getSpawnParameters(Controller controller) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
+		//TODO: Index 16 (byte): Unknown. Example: 1
+		return parameters;
 	}
 }

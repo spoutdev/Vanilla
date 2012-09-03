@@ -29,7 +29,9 @@ package org.spout.vanilla.components.types;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityType;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.VanillaComponents;
+import org.spout.vanilla.protocol.entity.living.SquidEntityProtocol;
 
 public class SquidType extends EntityType {
 	public SquidType() {
@@ -38,7 +40,6 @@ public class SquidType extends EntityType {
 
 	@Override
 	public void init(Entity typed) {
-		// Todo missing SquidEntityProtocol
-		// typed.getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SquidEntityProtocol());
+		typed.getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SquidEntityProtocol());
 	}
 }

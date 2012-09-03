@@ -31,7 +31,7 @@ import org.spout.api.component.components.EntityComponent;
 /**
  * A component that identifies the entity as a SnowMan.
  */
-public class SnowMan extends EntityComponent {
-	public SnowMan() {
+public class Snowman extends EntityComponent {
+	public Snowman() {
 	}
 }

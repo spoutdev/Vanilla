@@ -77,7 +77,7 @@ public class AdministrationCommands {
 			}
 			player = ((Server) Spout.getEngine()).getPlayer(args.getString(index++), true);
 
-			if (player == null) {
+			if (player == null || !player.isOnline()) {
 				throw new CommandException(args.getString(0) + " is not online.");
 			}
 		} else {
@@ -112,7 +112,7 @@ public class AdministrationCommands {
 			}
 			Player target = ((Server) Spout.getEngine()).getPlayer(args.getString(index), true);
 
-			if (target == null) {
+			if (target == null || !target.isOnline()) {
 				throw new CommandException(args.getString(0) + " is not online.");
 			}
 

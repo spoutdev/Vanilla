@@ -54,7 +54,7 @@ public class GroundCoverPopulator extends Populator {
 				if (biome instanceof NormalBiome) {
 					final NormalBiome normalBiome = (NormalBiome) biome;
 					int y = getNextStone(world, x + xx, NormalGenerator.HEIGHT, z + zz);
-					while (y > 0) {
+					while (y > 5) {
 						y = getNextStone(world, x + xx, y, z + zz);
 						y -= normalBiome.placeGroundCover(world, x + xx, y, z + zz);
 						y = getNextAir(world, x + xx, y, z + zz);

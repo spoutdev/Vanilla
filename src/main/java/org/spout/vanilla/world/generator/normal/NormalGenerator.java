@@ -42,7 +42,7 @@ import org.spout.api.generator.biome.BiomeSelector;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
@@ -67,6 +67,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 	private static final Clamp FINAL = new Clamp();
 	// a perlin for determining groud cover depth
 	protected static final Perlin BLOCK_REPLACER = new Perlin();
+	private static final byte BEDROCK_DEPTH = 5;
 	// smoothing stuff
 	private static final int SMOOTH_SIZE = 2;
 
@@ -123,8 +124,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		// if you want to check out a particular biome, use this!
 		//setSelector(new PerBlockBiomeSelector(VanillaBiomes.MOUNTAINS));
 		setSelector(new VanillaBiomeSelector());
-		addPopulators(new GroundCoverPopulator()
-				//, new RockyShieldPopulator(), new CavePopulator(), new RavinePopulator(),
+		addPopulators(new GroundCoverPopulator() //, new RockyShieldPopulator(), new CavePopulator(), new RavinePopulator(),
 				//new PondPopulator(), new DungeonPopulator(), new OrePopulator(), new BiomePopulator(getBiomeMap()),
 				//new FallingLiquidPopulator(), new SnowPopulator()
 				);
@@ -158,9 +158,10 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 
 	@Override
 	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
-		final int sizeX = blockData.getSize().getFloorX();
-		final int sizeY = blockData.getSize().getFloorY();
-		final int sizeZ = blockData.getSize().getFloorZ();
+		final Vector3 size = blockData.getSize();
+		final int sizeX = size.getFloorX();
+		final int sizeY = size.getFloorY();
+		final int sizeZ = size.getFloorZ();
 		ELEVATION.setSeed((int) seed * 23);
 		ROUGHNESS.setSeed((int) seed * 29);
 		DETAIL.setSeed((int) seed * 17);
@@ -217,8 +218,9 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 					}
 				}
 				if (y == 0) {
-					final byte bedrockDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x + xx, -5, z + zz) * 2 + 4, 1, 5);
-					for (byte yy = 0; yy <= bedrockDepth; yy++) {
+					final byte bedrockDepth = (byte) Math.ceil(BLOCK_REPLACER.GetValue(x + xx, -5, z + zz)
+							* (BEDROCK_DEPTH / 2f) + BEDROCK_DEPTH / 2f);
+					for (byte yy = 0; yy < bedrockDepth; yy++) {
 						blockData.set(x + xx, yy, z + zz, VanillaMaterials.BEDROCK.getId());
 					}
 				}

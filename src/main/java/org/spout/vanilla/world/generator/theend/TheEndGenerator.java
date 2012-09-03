@@ -43,6 +43,7 @@ import org.spout.api.generator.biome.selector.PerBlockBiomeSelector;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.math.Vector3;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -135,9 +136,10 @@ public class TheEndGenerator extends VanillaBiomeChunkGenerator {
 		ROUGHNESS.setSeed((int) seed * 29);
 		DETAIL.setSeed((int) seed * 17);
 		TURBULENCE.setSeed((int) seed * 53);
-		final int sizeX = blockData.getSize().getFloorX();
-		final int sizeY = blockData.getSize().getFloorY();
-		final int sizeZ = blockData.getSize().getFloorZ();
+		final Vector3 size = blockData.getSize();
+		final int sizeX = size.getFloorX();
+		final int sizeY = size.getFloorY();
+		final int sizeZ = size.getFloorZ();
 		final double[][][] densityNoise = WorldGeneratorUtils.fastNoise(FINAL, sizeX, sizeY, sizeZ, 4, x, y, z);
 		for (int xx = 0; xx < sizeX; xx++) {
 			for (int yy = 0; yy < sizeY; yy++) {

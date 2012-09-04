@@ -45,7 +45,7 @@ import org.spout.vanilla.components.creature.Sheep;
 import org.spout.vanilla.components.creature.Silverfish;
 import org.spout.vanilla.components.creature.Skeleton;
 import org.spout.vanilla.components.creature.Slime;
-import org.spout.vanilla.components.creature.SnowMan;
+import org.spout.vanilla.components.creature.Snowman;
 import org.spout.vanilla.components.creature.Spider;
 import org.spout.vanilla.components.creature.Squid;
 import org.spout.vanilla.components.creature.Villager;
@@ -73,7 +73,7 @@ public class VanillaComponents {
 	public static final Silverfish SILVERFISH = new Silverfish();
 	public static final Skeleton SKELETON = new Skeleton();
 	public static final Slime SLIME = new Slime();
-	public static final SnowMan SNOWMAN = new SnowMan();
+	public static final Snowman SNOWMAN = new Snowman();
 	public static final Spider SPIDER = new Spider();
 	public static final Squid SQUID = new Squid();
 	public static final Villager VILLAGER = new Villager();

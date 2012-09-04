@@ -28,7 +28,7 @@ package org.spout.vanilla.protocol.rcon.msg;
 
 /**
  * Message sent by the server with a command response
- *
+ * <p/>
  * Payload: Command response text
  */
 public class CommandResponseMessage extends RconMessage {

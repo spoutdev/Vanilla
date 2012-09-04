@@ -27,10 +27,11 @@
 package org.spout.vanilla.components.types;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.EntityType;
 
 import org.spout.vanilla.components.VanillaComponents;
 
-public class PigZombieType extends ZombieType {
+public class PigZombieType extends EntityType {
 	public PigZombieType() {
 		super(VanillaComponents.PIGZOMBIE);
 	}

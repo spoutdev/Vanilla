@@ -30,6 +30,7 @@ import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
+
 import org.spout.vanilla.protocol.rcon.handler.RconMessageHandler;
 import org.spout.vanilla.protocol.rcon.msg.RconMessage;
 
@@ -38,6 +39,7 @@ import org.spout.vanilla.protocol.rcon.msg.RconMessage;
  */
 public class RconHandler extends SimpleChannelHandler {
 	private final RemoteConnectionSession session;
+
 	public RconHandler(RemoteConnectionSession session) {
 		this.session = session;
 	}

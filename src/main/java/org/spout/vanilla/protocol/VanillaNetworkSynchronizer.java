@@ -36,7 +36,6 @@ import gnu.trove.set.TIntSet;
 import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
@@ -405,11 +404,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			if (update) {
 				messages.addAll(ep.getUpdateMessages(e));
 			}
-				for (Message message : messages) {
-					this.session.send(false, message);
-				}
+			for (Message message : messages) {
+				this.session.send(false, message);
 			}
 		}
+	}
 
 	@EventHandler
 	public Message onWindowOpen(WindowOpenEvent event) {

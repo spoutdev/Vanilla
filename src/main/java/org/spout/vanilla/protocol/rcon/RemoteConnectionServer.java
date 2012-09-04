@@ -47,9 +47,11 @@ import org.jboss.netty.channel.group.ChannelGroupFuture;
 import org.jboss.netty.channel.group.DefaultChannelGroup;
 import org.jboss.netty.channel.socket.ServerSocketChannel;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
+
 import org.spout.api.Server;
 import org.spout.api.protocol.PortBinding;
 import org.spout.api.util.config.yaml.YamlConfiguration;
+
 import org.spout.vanilla.protocol.VanillaProtocol;
 
 /**
@@ -67,9 +69,9 @@ public class RemoteConnectionServer extends RemoteConnectionCore {
 			public ChannelPipeline getPipeline() throws Exception {
 				RemoteConnectionSession session = new RemoteConnectionSession(RemoteConnectionServer.this);
 				return Channels.pipeline(new RconEncoder(session),
-										 new RconDecoder(session),
-										 new ChannelTracker(),
-										 new RconHandler(session));
+						new RconDecoder(session),
+						new ChannelTracker(),
+						new RconHandler(session));
 			}
 		});
 
@@ -103,7 +105,6 @@ public class RemoteConnectionServer extends RemoteConnectionCore {
 					}
 
 					bind(new InetSocketAddress(addr.getAddress(), bindPort));
-
 				}
 			}
 		}
@@ -117,7 +118,7 @@ public class RemoteConnectionServer extends RemoteConnectionCore {
 		return config.PASSWORD.getString();
 	}
 
-	public void close() throws IOException{
+	public void close() throws IOException {
 		ChannelGroupFuture f = group.close().awaitUninterruptibly();
 		if (!f.isCompleteSuccess()) {
 			for (ChannelFuture future : f) {

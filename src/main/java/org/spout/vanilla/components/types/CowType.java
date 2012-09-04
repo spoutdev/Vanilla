@@ -36,10 +36,6 @@ public class CowType extends EntityType {
 		super(VanillaComponents.COW);
 	}
 
-	public CowType(VanillaComponents components){
-		super(components);
-	}
-
 	@Override
 	public void init(Entity typed) {
 		// Todo missing CowEntityProtocol

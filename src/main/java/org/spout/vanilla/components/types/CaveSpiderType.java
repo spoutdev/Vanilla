@@ -27,12 +27,13 @@
 package org.spout.vanilla.components.types;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.EntityType;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.VanillaComponents;
 import org.spout.vanilla.protocol.entity.living.SpiderEntityProtocol;
 
-public class CaveSpiderType extends SpiderType {
+public class CaveSpiderType extends EntityType {
 	public CaveSpiderType() {
 		super(VanillaComponents.CAVESPIDER);
 	}

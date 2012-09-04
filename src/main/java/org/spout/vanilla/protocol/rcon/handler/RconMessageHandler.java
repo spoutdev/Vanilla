@@ -34,10 +34,9 @@ import org.spout.vanilla.protocol.rcon.msg.RconMessage;
  * Parent class for handlers for {@link RconMessage RconMessages}
  */
 public abstract class RconMessageHandler<T extends RconMessage> {
-
 	public void handle(RemoteConnectionSession session, T message) {
 		if (session.getCore() instanceof RemoteConnectionServer) {
-			 handleServer(session, message);
+			handleServer(session, message);
 		} else { // TODO: Extra check once client is added?
 			handleClient(session, message);
 		}

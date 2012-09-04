@@ -39,6 +39,7 @@ import org.spout.vanilla.protocol.rcon.msg.RconMessage;
  */
 public class RconHandlerLookupService {
 	private final Map<Class<? extends RconMessage>, RconMessageHandler<?>> handlers = new HashMap<Class<? extends RconMessage>, RconMessageHandler<?>>();
+
 	public RconHandlerLookupService() {
 		try {
 			bind(AuthMessage.class, new AuthMessageHandler());

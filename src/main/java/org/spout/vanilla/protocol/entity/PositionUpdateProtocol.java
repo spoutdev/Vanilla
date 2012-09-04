@@ -29,5 +29,4 @@ package org.spout.vanilla.protocol.entity;
 import org.spout.api.protocol.EntityProtocol;
 
 public abstract class PositionUpdateProtocol implements EntityProtocol {
-
 }

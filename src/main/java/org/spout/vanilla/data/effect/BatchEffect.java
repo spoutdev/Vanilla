@@ -61,7 +61,7 @@ public class BatchEffect extends Effect {
 	public void play(List<Player> players, Point position) {
 		int distanceSquared;
 		for (Player player : players) {
-			distanceSquared = (int) player.getPosition().distanceSquared(position);
+			distanceSquared = (int) player.getTransform().getPosition().distanceSquared(position);
 			for (Effect effect : this.effects) {
 				if (distanceSquared <= (effect.getRange() * effect.getRange())) {
 					effect.play(player, position);

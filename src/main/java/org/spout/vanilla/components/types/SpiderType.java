@@ -38,10 +38,6 @@ public class SpiderType extends EntityType {
 		super(VanillaComponents.SPIDER);
 	}
 
-	public SpiderType(VanillaComponents components){
-		super(components);
-	}
-
 	@Override
 	public void init(Entity typed) {
 		typed.getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SpiderEntityProtocol());

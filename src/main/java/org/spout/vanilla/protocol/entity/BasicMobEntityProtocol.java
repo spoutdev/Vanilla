@@ -28,65 +28,44 @@ package org.spout.vanilla.protocol.entity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.components.component.HeadOwner;
-import org.spout.vanilla.components.creature.Creature;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnMobMessage;
 
 public class BasicMobEntityProtocol extends BasicEntityProtocol {
+	private List<Parameter<?>> meta;
+
 	public BasicMobEntityProtocol(int mobSpawnID) {
 		super(mobSpawnID);
 	}
 
-	/**
-	 * Gets a list of parameters used for the creation of a mob spawn message
-	 * @param controller - The entity entity to obtain the parameters from
-	 * @return a list of parameters
-	 */
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>(1);
-		if (controller instanceof Creature) {
-			Creature creature = (Creature) controller;
-			parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 12, (int) creature.getGrowing().getTimeUntilAdult() * -1));
-		}
-
-		return parameters;
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		return new ArrayList<Parameter<?>>(0);
 	}
 
 	@Override
 	public List<Message> getSpawnMessages(Entity entity) {
-		Controller c = entity.getController();
-		if (c == null) {
-			return Collections.emptyList();
-		}
-
 		int id = entity.getId();
-		Vector3 pos = entity.getPosition().multiply(32).floor();
-		int r = (int) (entity.getYaw() * 32);
-		int p = (int) (entity.getPitch() * 32);
-		int headyaw = 0;
-		if (c instanceof HeadOwner) {
-			headyaw = ((HeadOwner) c).getHead().getYaw();
-		}
-		List<Parameter<?>> parameters = this.getSpawnParameters(c);
-		//TODO: Is there a Velocity in a entity class?
-		return Arrays.<Message>asList(new EntitySpawnMobMessage(id, this.getSpawnID(), pos, r, p, headyaw, (short) 0, (short) 0, (short) 0, parameters));
+		Vector3 position = entity.getTransform().getPosition().multiply(32).floor();
+		int yaw = (int) (entity.getTransform().getYaw() * 32);
+		int pitch = (int) (entity.getTransform().getPitch() * 32);
+		List<Parameter<?>> parameters = this.getSpawnParameters(entity);
+		//TODO Headyaw
+		return Arrays.<Message>asList(new EntitySpawnMobMessage(id, this.getSpawnID(), position, yaw, pitch, 0, (short) 0, (short) 0, (short) 0, parameters));
 	}
 
 	@Override
 	public List<Message> getUpdateMessages(Entity entity) {
 		List<Message> messages = new ArrayList<Message>(super.getUpdateMessages(entity));
-		List<Parameter<?>> params = this.getSpawnParameters(entity.getController());
-		if (params != null && !params.isEmpty()) {
+		List<Parameter<?>> params = this.getSpawnParameters(entity);
+		if (!params.isEmpty() && !meta.equals(params)) {
+			meta = params;
 			messages.add(new EntityMetadataMessage(entity.getId(), params));
 		}
 		return messages;

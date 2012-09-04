@@ -36,10 +36,6 @@ public class ZombieType extends EntityType {
 		super(VanillaComponents.ZOMBIE);
 	}
 
-	public ZombieType(VanillaComponents components){
-		super(components);
-	}
-
 	@Override
 	public void init(Entity typed) {
 		// Todo missing ZombieEntityProtocol

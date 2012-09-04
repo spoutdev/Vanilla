@@ -31,8 +31,8 @@ import org.spout.api.entity.EntityType;
 
 import org.spout.vanilla.components.VanillaComponents;
 
-public class SnowManType extends EntityType {
-	public SnowManType() {
+public class SnowmanType extends EntityType {
+	public SnowmanType() {
 		super(VanillaComponents.SNOWMAN);
 	}
 

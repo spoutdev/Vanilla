@@ -31,14 +31,15 @@ import java.nio.ByteOrder;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.util.CharsetUtil;
+
 import org.spout.api.protocol.MessageCodec;
+
 import org.spout.vanilla.protocol.rcon.msg.RconMessage;
 
 /**
  * Base class for MessageCodecs using rcon
  */
 public abstract class RconCodec<T extends RconMessage> extends MessageCodec<T> {
-
 	public RconCodec(Class<T> clazz, int opcode) {
 		super(clazz, opcode);
 	}

@@ -35,8 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.jboss.netty.buffer.ChannelBuffer;
-
 import org.jboss.netty.util.CharsetUtil;
+
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.MathHelper;
@@ -54,7 +54,6 @@ import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public final class ChannelBufferUtils {
-
 	/**
 	 * Writes a list of parameters (e.g. mob metadata) to the buffer.
 	 * @param buf The buffer.

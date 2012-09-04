@@ -38,10 +38,6 @@ public class SlimeType extends EntityType {
 		super(VanillaComponents.SLIME);
 	}
 
-	public SlimeType(VanillaComponents components){
-		super(components);
-	}
-
 	@Override
 	public void init(Entity typed) {
 		typed.getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SlimeEntityProtocol());

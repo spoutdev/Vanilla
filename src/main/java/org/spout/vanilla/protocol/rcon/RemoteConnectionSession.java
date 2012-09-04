@@ -29,11 +29,11 @@ package org.spout.vanilla.protocol.rcon;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.jboss.netty.channel.Channel;
+
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.console.Console;
@@ -43,6 +43,7 @@ import org.spout.api.data.ValueHolder;
 import org.spout.api.data.ValueHolderBase;
 import org.spout.api.geo.World;
 import org.spout.api.lang.Locale;
+
 import org.spout.vanilla.protocol.rcon.msg.CommandResponseMessage;
 import org.spout.vanilla.protocol.rcon.msg.RconMessage;
 
@@ -94,7 +95,6 @@ public class RemoteConnectionSession implements Console, CommandSource {
 	public String getName() {
 		return isInitialized() ? "RCON:" + channel.get().getRemoteAddress() : "RCON:Unknown";
 	}
-
 
 	public void init() {
 	}

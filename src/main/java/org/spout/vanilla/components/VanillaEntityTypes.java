@@ -45,7 +45,7 @@ import org.spout.vanilla.components.types.SheepType;
 import org.spout.vanilla.components.types.SilverfishType;
 import org.spout.vanilla.components.types.SkeletonType;
 import org.spout.vanilla.components.types.SlimeType;
-import org.spout.vanilla.components.types.SnowManType;
+import org.spout.vanilla.components.types.SnowmanType;
 import org.spout.vanilla.components.types.SpiderType;
 import org.spout.vanilla.components.types.SquidType;
 import org.spout.vanilla.components.types.VillagerType;
@@ -53,7 +53,6 @@ import org.spout.vanilla.components.types.WolfType;
 import org.spout.vanilla.components.types.ZombieType;
 
 public class VanillaEntityTypes {
-		// creatures
 	public static final BlazeType TYPE_BLAZE = new BlazeType();
 	public static final CaveSpiderType TYPE_CAVESPIDER = new CaveSpiderType();
 	public static final ChickenType TYPE_CHICKEN = new ChickenType();
@@ -73,11 +72,10 @@ public class VanillaEntityTypes {
 	public static final SilverfishType TYPE_SILVERFISH = new SilverfishType();
 	public static final SkeletonType TYPE_SKELETON = new SkeletonType();
 	public static final SlimeType TYPE_SLIME = new SlimeType();
-	public static final SnowManType TYPE_SNOWMAN = new SnowManType();
+	public static final SnowmanType TYPE_SNOWMAN = new SnowmanType();
 	public static final SpiderType TYPE_SPIDER = new SpiderType();
 	public static final SquidType TYPE_SQUID = new SquidType();
 	public static final VillagerType TYPE_VILLAGER = new VillagerType();
 	public static final WolfType TYPE_WOLF = new WolfType();
 	public static final ZombieType TYPE_ZOMBIE = new ZombieType();
-
 }

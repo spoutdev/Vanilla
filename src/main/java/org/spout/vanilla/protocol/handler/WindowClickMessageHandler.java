@@ -37,7 +37,7 @@ import org.spout.vanilla.components.VanillaPlayerController;
 import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
 import org.spout.vanilla.window.ClickArgs;
-import org.spout.vanilla.window.Window;
+import org.spout.vanilla.components.misc.Window;
 
 public final class WindowClickMessageHandler extends MessageHandler<WindowClickMessage> {
 	@Override

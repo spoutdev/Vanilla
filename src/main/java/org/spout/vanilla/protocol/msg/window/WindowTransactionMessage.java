@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.WindowMessage;
-import org.spout.vanilla.window.Window;
+import org.spout.vanilla.components.misc.Window;
 
 public final class WindowTransactionMessage extends WindowMessage {
 	private final int transaction;

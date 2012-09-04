@@ -29,7 +29,7 @@ package org.spout.vanilla.protocol.msg.window;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.protocol.msg.WindowMessage;
-import org.spout.vanilla.window.Window;
+import org.spout.vanilla.components.misc.Window;
 
 public final class WindowClickMessage extends WindowMessage {
 	private final int slot;

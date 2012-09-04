@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.window;
+package org.spout.vanilla.components.misc;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.HashMap;
@@ -35,6 +35,8 @@ import java.util.Set;
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
+import org.spout.api.component.BaseComponent;
+import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.InventoryViewer;
@@ -47,8 +49,10 @@ import org.spout.vanilla.event.window.WindowSetSlotEvent;
 import org.spout.vanilla.event.window.WindowSetSlotsEvent;
 import org.spout.vanilla.util.InventoryUtil;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
+import org.spout.vanilla.window.ClickArgs;
+import org.spout.vanilla.window.WindowType;
 
-public class Window extends BasicComponent<VanillaPlayerController> implements InventoryViewer {
+public class Window extends BaseComponent implements InventoryViewer {
 	protected final WindowType type;
 	protected final int instanceId;
 	protected String title;
@@ -56,9 +60,9 @@ public class Window extends BasicComponent<VanillaPlayerController> implements I
 	protected Map<InventoryBase, SlotIndexCollection> inventories = new HashMap<InventoryBase, SlotIndexCollection>();
 	protected ItemStack itemOnCursor;
 	protected boolean isOpen = false;
-	protected WindowController[] windowOwners;
+	protected Entity[] windowOwners;
 
-	public Window(WindowType type, String title, WindowController... windowOwners) {
+	public Window(WindowType type, String title, Entity... windowOwners) {
 		this.type = type;
 		this.title = title;
 		this.instanceId = InventoryUtil.nextWindowId();
@@ -164,14 +168,6 @@ public class Window extends BasicComponent<VanillaPlayerController> implements I
 	}
 
 	/**
-	 * Gets the player viewing this Window
-	 * @return the player
-	 */
-	public Player getPlayer() {
-		return getParent().getParent();
-	}
-
-	/**
 	 * Gets whether this window is opened to the player
 	 * @return True if open, False if not
 	 */
@@ -190,7 +186,9 @@ public class Window extends BasicComponent<VanillaPlayerController> implements I
 		for (InventoryBase inventory : this.inventories.keySet()) {
 			inventory.addViewer(this);
 		}
-		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowOpenEvent(this));
+		if (getHolder() instanceof Player) {
+			((Player) getHolder()).getNetworkSynchronizer().callProtocolEvent(new WindowOpenEvent(this));
+		}
 		this.refreshItems();
 	}
 
@@ -205,7 +203,9 @@ public class Window extends BasicComponent<VanillaPlayerController> implements I
 		for (InventoryBase inventory : this.inventories.keySet()) {
 			inventory.removeViewer(this);
 		}
-		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowCloseEvent(this));
+		if (getHolder() instanceof Player) {
+			((Player) getHolder()).getNetworkSynchronizer().callProtocolEvent(new WindowCloseEvent(this));
+		}
 	}
 
 	public void refreshItems() {
@@ -255,7 +255,9 @@ public class Window extends BasicComponent<VanillaPlayerController> implements I
 	 * @param event to send
 	 */
 	public void sendEvent(WindowEvent event) {
-		this.getPlayer().getNetworkSynchronizer().callProtocolEvent(event);
+		if (getHolder() instanceof Player) {
+			((Player) getHolder()).getNetworkSynchronizer().callProtocolEvent(event);
+		}
 	}
 
 	public boolean hasItemOnCursor() {
@@ -285,8 +287,6 @@ public class Window extends BasicComponent<VanillaPlayerController> implements I
 	 * Performs a click by the user
 	 * @param inventory that was clicked
 	 * @param clickedSlot of the item that was clicked
-	 * @param rightClick True when right clicked by the mouse, False if not
-	 * @param shift was down
 	 * @return True if successful
 	 */
 	public boolean onClick(InventoryBase inventory, int clickedSlot, ClickArgs args) {

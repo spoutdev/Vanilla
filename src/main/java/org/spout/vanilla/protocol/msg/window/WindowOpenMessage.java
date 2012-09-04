@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.WindowMessage;
-import org.spout.vanilla.window.Window;
+import org.spout.vanilla.components.misc.Window;
 import org.spout.vanilla.window.WindowType;
 
 public final class WindowOpenMessage extends WindowMessage {

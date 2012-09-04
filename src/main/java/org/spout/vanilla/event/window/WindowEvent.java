@@ -29,7 +29,7 @@ package org.spout.vanilla.event.window;
 import org.spout.api.event.Event;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.components.misc.Window;
+import org.spout.vanilla.components.basic.Window;
 
 public abstract class WindowEvent extends Event implements ProtocolEvent {
 	private Window window;

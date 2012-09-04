@@ -28,10 +28,17 @@ package org.spout.vanilla.components.creature;
 
 import org.spout.api.component.components.EntityComponent;
 
+import org.spout.vanilla.VanillaPlugin;
+
 /**
  * A component that identifies the entity as a Skeleton.
  */
 public class Skeleton extends EntityComponent {
 	public Skeleton() {
+	}
+
+	@Override
+	public void onAttached() {
+		getHolder().getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SkeletonEntityProtocol());
 	}
 }

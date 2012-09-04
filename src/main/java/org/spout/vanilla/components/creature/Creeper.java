@@ -28,10 +28,18 @@ package org.spout.vanilla.components.creature;
 
 import org.spout.api.component.components.EntityComponent;
 
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.protocol.entity.living.CreeperEntityProtocol;
+
 /**
  * A component that identifies the entity as a Creeper.
  */
 public class Creeper extends EntityComponent {
 	public Creeper() {
+	}
+
+	@Override
+	public void onAttached() {
+		getHolder().getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreeperEntityProtocol());
 	}
 }

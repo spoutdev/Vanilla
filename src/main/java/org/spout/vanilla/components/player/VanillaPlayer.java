@@ -28,10 +28,18 @@ package org.spout.vanilla.components.player;
 
 import org.spout.api.component.components.EntityComponent;
 
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.protocol.entity.VanillaPlayerProtocol;
+
 /**
  * A component that identifies the entity as a Vanilla player.
  */
 public class VanillaPlayer extends EntityComponent {
 	public VanillaPlayer() {
+	}
+
+	@Override
+	public void onAttached() {
+		getHolder().getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new VanillaPlayerProtocol());
 	}
 }

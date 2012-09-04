@@ -28,10 +28,17 @@ package org.spout.vanilla.components.creature;
 
 import org.spout.api.component.components.EntityComponent;
 
+import org.spout.vanilla.VanillaPlugin;
+
 /**
  * A component that identifies the entity as a IronGolem.
  */
 public class IronGolem extends EntityComponent {
 	public IronGolem() {
+	}
+
+	@Override
+	public void onAttached() {
+		getHolder().getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new IronGolemEntityProtocol());
 	}
 }

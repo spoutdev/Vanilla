@@ -28,10 +28,17 @@ package org.spout.vanilla.components.creature;
 
 import org.spout.api.component.components.EntityComponent;
 
+import org.spout.vanilla.VanillaPlugin;
+
 /**
  * A component that identifies the entity as a Cow.
  */
 public class Cow extends EntityComponent {
 	public Cow() {
+	}
+
+	@Override
+	public void onAttached() {
+		getHolder().getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CowEntityProtocol());
 	}
 }

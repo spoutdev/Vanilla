@@ -1,4 +1,4 @@
-package org.spout.vanilla.components;
+package org.spout.vanilla.components.basic;
 
 import org.spout.api.Source;
 import org.spout.api.Spout;
@@ -157,7 +157,7 @@ public class Health extends EntityComponent {
 		lastDamageCause = cause;
 		if (sendHurtMessage) {
 			getHolder().getNetworkComponent().
-			getHolder().getNetworkComponent().callProtocolEvent(new EntityAnimationEvent(getHolder(), EntityAnimationMessage.ANIMATION_HURT));
+					getHolder().getNetworkComponent().callProtocolEvent(new EntityAnimationEvent(getHolder(), EntityAnimationMessage.ANIMATION_HURT));
 			getHolder().getNetworkComponent().callProtocolEvent(new EntityStatusEvent(getHolder(), EntityStatusMessage.ENTITY_HURT));
 			//getHurtEffect().playGlobal(getParent().getParent().getPosition());
 		}

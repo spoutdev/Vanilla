@@ -37,7 +37,7 @@ import org.spout.vanilla.components.creature.Ghast;
 import org.spout.vanilla.components.creature.Giant;
 import org.spout.vanilla.components.creature.IronGolem;
 import org.spout.vanilla.components.creature.MagmaCube;
-import org.spout.vanilla.components.creature.MushroomCow;
+import org.spout.vanilla.components.creature.MooshroomCow;
 import org.spout.vanilla.components.creature.Ocelot;
 import org.spout.vanilla.components.creature.Pig;
 import org.spout.vanilla.components.creature.PigZombie;
@@ -68,7 +68,7 @@ public class VanillaComponents {
 	public static final Giant GIANT = new Giant();
 	public static final IronGolem IRONGOLEM = new IronGolem();
 	public static final MagmaCube MAGMACUBE = new MagmaCube();
-	public static final MushroomCow MUSHROOMCOW = new MushroomCow();
+	public static final MooshroomCow MUSHROOMCOW = new MooshroomCow();
 	public static final Ocelot OCELOT = new Ocelot();
 	public static final Pig PIG = new Pig();
 	public static final PigZombie PIGZOMBIE = new PigZombie();

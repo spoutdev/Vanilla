@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.components.types;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityType;
 
 import org.spout.vanilla.components.VanillaComponents;
@@ -34,11 +33,5 @@ import org.spout.vanilla.components.VanillaComponents;
 public class SkeletonType extends EntityType {
 	public SkeletonType() {
 		super(VanillaComponents.SKELETON);
-	}
-
-	@Override
-	public void init(Entity typed) {
-		// Todo missing SkeletonEntityProtocol
-		// typed.getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SkeletonEntityProtocol());
 	}
 }

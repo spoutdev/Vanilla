@@ -26,20 +26,12 @@
  */
 package org.spout.vanilla.components.types;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityType;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.VanillaComponents;
-import org.spout.vanilla.protocol.entity.living.SlimeEntityProtocol;
 
 public class SlimeType extends EntityType {
 	public SlimeType() {
 		super(VanillaComponents.SLIME);
-	}
-
-	@Override
-	public void init(Entity typed) {
-		typed.getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SlimeEntityProtocol());
 	}
 }

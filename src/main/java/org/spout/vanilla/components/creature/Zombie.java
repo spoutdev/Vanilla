@@ -28,10 +28,17 @@ package org.spout.vanilla.components.creature;
 
 import org.spout.api.component.components.EntityComponent;
 
+import org.spout.vanilla.VanillaPlugin;
+
 /**
  * A component that identifies the entity as a Zombie.
  */
 public class Zombie extends EntityComponent {
 	public Zombie() {
+	}
+
+	@Override
+	public void onAttached() {
+		getHolder().getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ZombieEntityProtocol());
 	}
 }

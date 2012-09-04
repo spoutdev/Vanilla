@@ -36,7 +36,7 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.components.VanillaPlayerController;
 import org.spout.vanilla.protocol.msg.CreativeMessage;
 import org.spout.vanilla.window.ClickArgs;
-import org.spout.vanilla.components.misc.Window;
+import org.spout.vanilla.components.basic.Window;
 
 public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 	@Override

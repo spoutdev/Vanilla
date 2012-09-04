@@ -28,10 +28,17 @@ package org.spout.vanilla.components.creature;
 
 import org.spout.api.component.components.EntityComponent;
 
+import org.spout.vanilla.VanillaPlugin;
+
 /**
- * A component that identifies the entity as a MushroomCow.
+ * A component that identifies the entity as a MooshroomCow.
  */
-public class MushroomCow extends EntityComponent {
-	public MushroomCow() {
+public class MooshroomCow extends EntityComponent {
+	public MooshroomCow() {
+	}
+
+	@Override
+	public void onAttached() {
+		getHolder().getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MooshroomCowEntityProtocol());
 	}
 }

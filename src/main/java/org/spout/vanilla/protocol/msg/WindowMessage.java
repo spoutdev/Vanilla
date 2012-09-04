@@ -28,7 +28,7 @@ package org.spout.vanilla.protocol.msg;
 
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.components.misc.Window;
+import org.spout.vanilla.components.basic.Window;
 
 /**
  * An abstraction of messages meant for Windows

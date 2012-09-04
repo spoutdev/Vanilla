@@ -28,10 +28,18 @@ package org.spout.vanilla.components.creature;
 
 import org.spout.api.component.components.EntityComponent;
 
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.protocol.entity.living.GhastEntityProtocol;
+
 /**
  * A component that identifies the entity as a Ghast.
  */
 public class Ghast extends EntityComponent {
 	public Ghast() {
+	}
+
+	@Override
+	public void onAttached() {
+		getHolder().getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new GhastEntityProtocol());
 	}
 }

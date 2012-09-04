@@ -7,6 +7,10 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.event.entity.EntityAnimationEvent;
+import org.spout.vanilla.event.entity.EntityStatusEvent;
+import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 import org.spout.vanilla.source.DamageCause;
 import org.spout.vanilla.source.HealthChangeCause;
 
@@ -16,7 +20,7 @@ public class Health extends EntityComponent {
 	//damage
 	private DamageCause lastDamageCause = DamageCause.UNKNOWN;
 	private Entity lastDamager;
-	private int deathTicks;
+	private int deathTicks = 0;
 
 	public Health() {
 
@@ -153,8 +157,8 @@ public class Health extends EntityComponent {
 		lastDamageCause = cause;
 		if (sendHurtMessage) {
 			getHolder().getNetworkComponent().
-			get.callProtocolEvent(new EntityAnimationEvent(getParent().getParent(), EntityAnimationMessage.ANIMATION_HURT));
-			getParent().callProtocolEvent(new EntityStatusEvent(getParent().getParent(), EntityStatusMessage.ENTITY_HURT));
+			getHolder().getNetworkComponent().callProtocolEvent(new EntityAnimationEvent(getHolder(), EntityAnimationMessage.ANIMATION_HURT));
+			getHolder().getNetworkComponent().callProtocolEvent(new EntityStatusEvent(getHolder(), EntityStatusMessage.ENTITY_HURT));
 			//getHurtEffect().playGlobal(getParent().getParent().getPosition());
 		}
 	}

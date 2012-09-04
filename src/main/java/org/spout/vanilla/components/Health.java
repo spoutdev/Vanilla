@@ -101,7 +101,7 @@ public class Health extends EntityComponent {
 	 * @return dead
 	 */
 	public boolean isDead() {
-		return getDatatable().get(VanillaData.HEALTH) <= 0;
+		return getHealth() <= 0;
 	}
 
 	/**
@@ -110,5 +110,60 @@ public class Health extends EntityComponent {
 	 */
 	public boolean isDying() {
 		return deathTicks > 0;
-	}	
+	}
+
+	/**
+	 * Damages this entity with the given {@link DamageCause}.
+	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
+	 */
+	public void damage(int amount) {
+		damage(amount, DamageCause.UNKNOWN);
+	}
+
+	/**
+	 * Damages this entity with the given {@link DamageCause}.
+	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
+	 * @param cause cause of this entity being damaged
+	 */
+	public void damage(int amount, DamageCause cause) {
+		damage(amount, cause, true);
+	}
+
+	/**
+	 * Damages this entity with the given {@link DamageCause}.
+	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
+	 * @param cause cause of this entity being damaged
+	 * @param sendHurtMessage whether to send the hurt packet to all players online
+	 */
+	public void damage(int amount, DamageCause cause, boolean sendHurtMessage) {
+		damage(amount, cause, null, sendHurtMessage);
+	}
+
+	/**
+	 * Damages this entity with the given {@link DamageCause} and damager.
+	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
+	 * @param cause cause of this entity being damaged
+	 * @param damager entity that damaged this entity
+	 * @param sendHurtMessage whether to send the hurt packet to all players online
+	 */
+	public void damage(int amount, DamageCause cause, Entity damager, boolean sendHurtMessage) {
+		// TODO take potion effects into account
+		setHealth(getHealth() - amount, HealthChangeCause.DAMAGE);
+		lastDamager = damager;
+		lastDamageCause = cause;
+		if (sendHurtMessage) {
+			getHolder().getNetworkComponent().
+			get.callProtocolEvent(new EntityAnimationEvent(getParent().getParent(), EntityAnimationMessage.ANIMATION_HURT));
+			getParent().callProtocolEvent(new EntityStatusEvent(getParent().getParent(), EntityStatusMessage.ENTITY_HURT));
+			//getHurtEffect().playGlobal(getParent().getParent().getPosition());
+		}
+	}
+
+	public boolean hasDeathAnimation() {
+		return hasDeathAnimation;
+	}
+
+	public void setDeathAnimation(boolean hasDeathAnimation) {
+		this.hasDeathAnimation = hasDeathAnimation;
+	}
 }

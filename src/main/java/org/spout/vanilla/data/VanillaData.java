@@ -50,9 +50,8 @@ public class VanillaData {
 	 * If the value is the default (null) then it means this world has no link to it.
 	 */
 	public static final DefaultedKey<UUID> WORLD_LINK = new DefaultedKeyImpl<UUID>("world_link", null);
-	//Player-specific
+	//Component-specific
 	public static final DefaultedKey<GameMode> GAMEMODE = new DefaultedKeyImpl<GameMode>("game_mode", GameMode.SURVIVAL);
-	//Controller-specific
 	public static final DefaultedKey<Integer> AIR_TICKS = new DefaultedKeyImpl<Integer>("air_ticks", 0);
 	public static final DefaultedKey<Integer> CONTROLLER_TYPE = new DefaultedKeyImpl<Integer>("controller_id", 0);
 	public static final DefaultedKey<Integer> FIRE_TICKS = new DefaultedKeyImpl<Integer>("fire_ticks", 0);
@@ -62,6 +61,7 @@ public class VanillaData {
 	public static final DefaultedKey<Integer> MAX_HEALTH = new DefaultedKeyImpl<Integer>("max_health", 1);
 	public static final DefaultedKey<Vector3> MAX_SPEED = new DefaultedKeyImpl<Vector3>("max_speed", Vector3.ZERO);
 	public static final DefaultedKey<Vector3> MOVEMENT_SPEED = new DefaultedKeyImpl<Vector3>("movement_speed", Vector3.ZERO);
+	public static final DefaultedKey<Integer> INTERACT_REACH = new DefaultedKeyImpl<Integer>("interact_reach", 5);
 	public static final DefaultedKey<Vector3> VELOCITY = new DefaultedKeyImpl<Vector3>("velocity", Vector3.ZERO);
 	public static final DefaultedKey<ItemStack[]> ITEMS = new DefaultedKeyImpl<ItemStack[]>("items", new ItemStack[36]);
 	//Creature-specific

@@ -35,7 +35,7 @@ import org.spout.vanilla.util.ToolLevel;
 import org.spout.vanilla.util.ToolType;
 
 /**
- * A type of tool that allows you to mine certain blocks faster
+ * A creature of tool that allows you to mine certain blocks faster
  */
 public class MiningTool extends Tool {
 	private float diggingSpeed;
@@ -54,7 +54,7 @@ public class MiningTool extends Tool {
 	}
 
 	/**
-	 * Gets the time this type of tool subtracts from the digging time<br>
+	 * Gets the time this creature of tool subtracts from the digging time<br>
 	 * The default digging speed without tool is 1.0
 	 * @return digging time
 	 */
@@ -63,7 +63,7 @@ public class MiningTool extends Tool {
 	}
 
 	/**
-	 * Sets the time this type of tool subtracts from the digging time<br>
+	 * Sets the time this creature of tool subtracts from the digging time<br>
 	 * The default digging speed without tool is 1.0
 	 * @param diggingTime to set to
 	 * @return this Mining Tool

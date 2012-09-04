@@ -72,6 +72,6 @@ public class StaticInitialisationOrderTest {
 			t.printStackTrace();
 			t = t.getCause();
 		}
-		fail(s + ": Static initialisation of VanillaMaterials failed.");//Exception type does not matter! Static initialisation failure loses the exception data, turns into ClassLoader fail. :(
+		fail(s + ": Static initialisation of VanillaMaterials failed.");//Exception creature does not matter! Static initialisation failure loses the exception data, turns into ClassLoader fail. :(
 	}
 }

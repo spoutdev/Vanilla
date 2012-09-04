@@ -32,7 +32,7 @@ import org.spout.api.util.flag.FlagSingle;
 
 public class ToolLevelFlags {
 	/**
-	 * An unknown type was used, always evaluates True
+	 * An unknown creature was used, always evaluates True
 	 */
 	public static final FlagBoolean NONE = new FlagBoolean(true);
 	/**
@@ -56,7 +56,7 @@ public class ToolLevelFlags {
 	 */
 	public static final FlagSingle DIAMOND = new FlagSingle();
 	/**
-	 * Any type of level
+	 * Any creature of level
 	 */
 	public static final FlagBundle NONE_UP = new FlagBundle(NONE);
 	/**

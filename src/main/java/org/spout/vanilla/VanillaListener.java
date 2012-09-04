@@ -31,9 +31,11 @@ import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
 import org.spout.api.event.Order;
 import org.spout.api.event.Result;
+import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.event.world.RegionLoadEvent;
 
+import org.spout.vanilla.components.VanillaEntityTypes;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.configuration.WorldConfigurationNode;
 import org.spout.vanilla.event.player.PlayerDeathEvent;
@@ -57,5 +59,10 @@ public class VanillaListener implements Listener {
 		if (VanillaConfiguration.HARDCORE_MODE.getBoolean()) {
 			event.getPlayer().ban(true, ChatStyle.RED, "Game Over");
 		}
+	}
+
+	@EventHandler
+	public void onPlayerJoin(PlayerJoinEvent event) {
+		event.getPlayer().applyType(VanillaEntityTypes.TYPE_VANILLAPLAYER);
 	}
 }

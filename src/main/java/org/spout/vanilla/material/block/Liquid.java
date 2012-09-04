@@ -160,19 +160,19 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	public abstract int getMaxLevel();
 
 	/**
-	 * Gets the liquid type to use for flowing liquids
+	 * Gets the liquid creature to use for flowing liquids
 	 * @return the flowing material
 	 */
 	public abstract Liquid getFlowingMaterial();
 
 	/**
-	 * Gets the liquid type to use for stationary liquids
+	 * Gets the liquid creature to use for stationary liquids
 	 * @return the stationary material
 	 */
 	public abstract Liquid getStationaryMaterial();
 
 	/**
-	 * Checks if the material given is either the flowing or stationary type of this Liquid
+	 * Checks if the material given is either the flowing or stationary creature of this Liquid
 	 * @param material to check
 	 * @return True if it is this liquid, False if not
 	 */

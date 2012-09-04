@@ -115,7 +115,7 @@ public abstract class RailBase extends GroundAttachable {
 	}
 
 	/**
-	 * Gets whether this type of rail can curve
+	 * Gets whether this creature of rail can curve
 	 * @return True if it can curve
 	 */
 	public abstract boolean canCurve();

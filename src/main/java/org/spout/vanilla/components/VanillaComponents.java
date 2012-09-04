@@ -51,9 +51,12 @@ import org.spout.vanilla.components.creature.Squid;
 import org.spout.vanilla.components.creature.Villager;
 import org.spout.vanilla.components.creature.Wolf;
 import org.spout.vanilla.components.creature.Zombie;
+import org.spout.vanilla.components.player.VanillaPlayer;
 
 public class VanillaComponents {
-	// creatures
+	//player
+	public static final VanillaPlayer VANILLAPLAYER = new VanillaPlayer();
+	//creature
 	public static final Blaze BLAZE = new Blaze();
 	public static final CaveSpider CAVESPIDER = new CaveSpider();
 	public static final Chicken CHICKEN = new Chicken();

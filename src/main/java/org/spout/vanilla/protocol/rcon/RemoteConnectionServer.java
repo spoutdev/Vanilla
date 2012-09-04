@@ -79,9 +79,9 @@ public class RemoteConnectionServer extends RemoteConnectionCore {
 			@Override
 			public ServerSocketChannel newChannel(ChannelPipeline pipeline) {
 				ServerSocketChannel channel = super.newChannel(pipeline);
-				// This is the factory type used in org.jboss.netty.channel.DefaultServerChannelConfig, modified to be little-endian
+				// This is the factory creature used in org.jboss.netty.channel.DefaultServerChannelConfig, modified to be little-endian
 				// Netty 4.x should no longer need this, since the byte-order conversion can be done through the ChannelBuffer.
-				// This type of fix may reduce object creation though.
+				// This creature of fix may reduce object creation though.
 				channel.getConfig().setBufferFactory(HeapChannelBufferFactory.getInstance(ByteOrder.LITTLE_ENDIAN));
 				return channel;
 			}

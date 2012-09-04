@@ -48,11 +48,15 @@ import org.spout.vanilla.components.types.SlimeType;
 import org.spout.vanilla.components.types.SnowmanType;
 import org.spout.vanilla.components.types.SpiderType;
 import org.spout.vanilla.components.types.SquidType;
+import org.spout.vanilla.components.types.VanillaPlayerType;
 import org.spout.vanilla.components.types.VillagerType;
 import org.spout.vanilla.components.types.WolfType;
 import org.spout.vanilla.components.types.ZombieType;
 
 public class VanillaEntityTypes {
+	//player
+	public static final VanillaPlayerType TYPE_VANILLAPLAYER = new VanillaPlayerType();
+	//creature
 	public static final BlazeType TYPE_BLAZE = new BlazeType();
 	public static final CaveSpiderType TYPE_CAVESPIDER = new CaveSpiderType();
 	public static final ChickenType TYPE_CHICKEN = new ChickenType();

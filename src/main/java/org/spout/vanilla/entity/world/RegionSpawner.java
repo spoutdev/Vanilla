@@ -97,10 +97,10 @@ public class RegionSpawner implements Runnable {
 	}
 
 	/**
-	 * Adds a entity type to the list of entity types this region spawner will try to spawn.
+	 * Adds a entity creature to the list of entity types this region spawner will try to spawn.
 	 * @param type to spawn
 	 * @param canSpawnOn a set of block materials that this entity can spawn on
-	 * @param amount of this type of entity that should be spawned per chunk, on average
+	 * @param amount of this creature of entity that should be spawned per chunk, on average
 	 * @throws IllegalStateException if the entity cannot be spawned
 	 */
 	public void addSpawnableType(ControllerType type, Set<BlockMaterial> canSpawnOn, int amount) {

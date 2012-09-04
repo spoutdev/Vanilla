@@ -132,8 +132,8 @@ public class Window extends BasicComponent<VanillaPlayerController> implements I
 	}
 
 	/**
-	 * Gets the 'minecraft' or 'notchian' window type of this Window
-	 * @return window type
+	 * Gets the 'minecraft' or 'notchian' window creature of this Window
+	 * @return window creature
 	 */
 	public WindowType getType() {
 		return this.type;

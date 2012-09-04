@@ -197,15 +197,15 @@ public class MonsterSpawner extends VanillaBlockController {
 	}
 
 	/**
-	 * Gets the next entity type spawned by this Monster Spawner
-	 * @return the next spawned entity type
+	 * Gets the next entity creature spawned by this Monster Spawner
+	 * @return the next spawned entity creature
 	 */
 	public VanillaControllerType getNextSpawn() {
 		return nextSpawn;
 	}
 
 	/**
-	 * Sets the next entity type spawned by this Monster Spawner
+	 * Sets the next entity creature spawned by this Monster Spawner
 	 * @param nextSpawn to set to
 	 */
 	public void setNextSpawn(VanillaControllerType nextSpawn) {

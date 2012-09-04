@@ -24,16 +24,14 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.controlled;
+package org.spout.vanilla.components.player;
 
-import org.spout.vanilla.material.block.piston.PistonExtension;
+import org.spout.api.component.components.EntityComponent;
 
 /**
- * A temporary block creature with entity which animates the extension of the piston
+ * A component that identifies the entity as a Vanilla player.
  */
-public class PistonExtensionMoving extends PistonExtension {
-	public PistonExtensionMoving(String name, int id) {
-		super(name, id);
-		this.setResistance(0.0F);
+public class VanillaPlayer extends EntityComponent {
+	public VanillaPlayer() {
 	}
 }

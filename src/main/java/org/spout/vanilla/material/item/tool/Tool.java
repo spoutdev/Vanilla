@@ -71,8 +71,8 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 	}
 
 	/**
-	 * Gets the type of tool
-	 * @return tool type
+	 * Gets the creature of tool
+	 * @return tool creature
 	 */
 	public ToolType getToolType() {
 		return this.toolType;

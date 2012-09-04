@@ -116,7 +116,7 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 	}
 
 	/**
-	 * Grows a full-sized tree from the sapling type given
+	 * Grows a full-sized tree from the sapling creature given
 	 * @param block to grow a tree at
 	 * @param type of tree
 	 */

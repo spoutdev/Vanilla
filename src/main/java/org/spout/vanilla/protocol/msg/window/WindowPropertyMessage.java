@@ -31,12 +31,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.WindowMessage;
-import org.spout.vanilla.components.basic.Window;
+import org.spout.vanilla.components.basic.WindowComponent;
 
 public final class WindowPropertyMessage extends WindowMessage {
 	private final int progressBar, value;
 
-	public WindowPropertyMessage(Window window, int progressBar, int value) {
+	public WindowPropertyMessage(WindowComponent window, int progressBar, int value) {
 		this(window.getInstanceId(), progressBar, value);
 	}
 

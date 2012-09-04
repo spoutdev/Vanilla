@@ -24,36 +24,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.event.window;
+package org.spout.vanilla.components.basic;
 
-import org.spout.api.event.HandlerList;
-import org.spout.api.inventory.ItemStack;
+import org.spout.api.component.components.EntityComponent;
 
-import org.spout.vanilla.components.basic.WindowComponent;
-
-public class WindowSetSlotsEvent extends WindowEvent {
-	private static HandlerList handlers = new HandlerList();
-	private ItemStack[] items;
-
-	public WindowSetSlotsEvent(WindowComponent window, ItemStack[] items) {
-		super(window);
-		this.items = items;
-	}
-
-	/**
-	 * Gets the new Items that are set for the Window
-	 * @return items
-	 */
-	public ItemStack[] getItems() {
-		return this.items;
-	}
-
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
+/**
+ * Component that adds a detector to entities to scan for an pickup item.
+ */
+public class PickupItemComponent extends EntityComponent {
 }

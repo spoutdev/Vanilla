@@ -27,13 +27,13 @@
 package org.spout.vanilla.window;
 
 import org.spout.vanilla.components.WindowController;
-import org.spout.vanilla.components.basic.Window;
+import org.spout.vanilla.components.basic.WindowComponent;
 import org.spout.vanilla.util.intmap.SlotIndexGrid;
 
 /**
  * This window contains the player inventory items with additional slots above
  */
-public class TransactionWindow extends Window {
+public class TransactionWindow extends WindowComponent {
 	protected final int transactionSize;
 
 	public TransactionWindow(WindowType type, String title, int transactionSize, WindowController... windowOwners) {

@@ -28,14 +28,14 @@ package org.spout.vanilla.event.window;
 
 import org.spout.api.event.HandlerList;
 
-import org.spout.vanilla.components.basic.Window;
+import org.spout.vanilla.components.basic.WindowComponent;
 
 public class WindowPropertyEvent extends WindowEvent {
 	private static HandlerList handlers = new HandlerList();
 	private int id;
 	private int value;
 
-	public WindowPropertyEvent(Window window, int id, int value) {
+	public WindowPropertyEvent(WindowComponent window, int id, int value) {
 		super(window);
 		this.id = id;
 		this.value = value;

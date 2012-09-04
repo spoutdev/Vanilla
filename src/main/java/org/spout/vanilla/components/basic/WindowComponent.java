@@ -52,7 +52,7 @@ import org.spout.vanilla.util.intmap.SlotIndexCollection;
 import org.spout.vanilla.window.ClickArgs;
 import org.spout.vanilla.window.WindowType;
 
-public class Window extends BaseComponent implements InventoryViewer {
+public class WindowComponent extends BaseComponent implements InventoryViewer {
 	protected final WindowType type;
 	protected final int instanceId;
 	protected String title;
@@ -62,7 +62,7 @@ public class Window extends BaseComponent implements InventoryViewer {
 	protected boolean isOpen = false;
 	protected Entity[] windowOwners;
 
-	public Window(WindowType type, String title, Entity... windowOwners) {
+	public WindowComponent(WindowType type, String title, Entity... windowOwners) {
 		this.type = type;
 		this.title = title;
 		this.instanceId = InventoryUtil.nextWindowId();

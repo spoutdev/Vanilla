@@ -34,10 +34,10 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.basic.WindowComponent;
 import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
 import org.spout.vanilla.window.ClickArgs;
-import org.spout.vanilla.components.basic.Window;
 
 public final class WindowClickMessageHandler extends MessageHandler<WindowClickMessage> {
 	@Override
@@ -52,7 +52,7 @@ public final class WindowClickMessageHandler extends MessageHandler<WindowClickM
 		}
 
 		VanillaPlayerController controller = (VanillaPlayerController) player.getController();
-		Window window = controller.getActiveWindow();
+		WindowComponent window = controller.getActiveWindow();
 		boolean result = false;
 		try {
 			if (message.getSlot() == 64537) {

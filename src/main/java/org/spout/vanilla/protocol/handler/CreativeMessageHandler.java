@@ -34,9 +34,9 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.basic.WindowComponent;
 import org.spout.vanilla.protocol.msg.CreativeMessage;
 import org.spout.vanilla.window.ClickArgs;
-import org.spout.vanilla.components.basic.Window;
 
 public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 	@Override
@@ -56,7 +56,7 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 			return;
 		}
 
-		Window active = controller.getActiveWindow();
+		WindowComponent active = controller.getActiveWindow();
 
 		if (message.getItem() == null) {
 			//Taking item from existing slot

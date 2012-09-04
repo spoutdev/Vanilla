@@ -32,13 +32,13 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.WindowMessage;
-import org.spout.vanilla.components.basic.Window;
+import org.spout.vanilla.components.basic.WindowComponent;
 
 public final class WindowSetSlotMessage extends WindowMessage {
 	private final int slot;
 	private final ItemStack item;
 
-	public WindowSetSlotMessage(Window window, int slot, ItemStack item) {
+	public WindowSetSlotMessage(WindowComponent window, int slot, ItemStack item) {
 		this(window.getInstanceId(), slot, item);
 	}
 

@@ -28,7 +28,7 @@ package org.spout.vanilla.protocol.msg;
 
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.components.basic.Window;
+import org.spout.vanilla.components.basic.WindowComponent;
 
 /**
  * An abstraction of messages meant for Windows
@@ -36,7 +36,7 @@ import org.spout.vanilla.components.basic.Window;
 public abstract class WindowMessage implements Message {
 	private final int instanceId;
 
-	public WindowMessage(Window window) {
+	public WindowMessage(WindowComponent window) {
 		this.instanceId = window.getInstanceId();
 	}
 

@@ -361,8 +361,8 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	/**
-	 * Adds the mining creature to this Block material<br>
-	 * This creature will be used when checking for drops and when calculating the digging time
+	 * Adds the mining type to this Block material<br>
+	 * This type will be used when checking for drops and when calculating the digging time
 	 * @param miningType to add
 	 * @return this material
 	 */
@@ -373,9 +373,9 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	/**
-	 * Gets if the mining creature is set for this Block material<br>
-	 * This creature is used when checking for drops and when calculating digging time
-	 * @return True if the tool creature is set
+	 * Gets if the mining type is set for this Block material<br>
+	 * This type is used when checking for drops and when calculating digging time
+	 * @return True if the tool type is set
 	 */
 	public boolean isMiningType(ToolType toolType) {
 		return this.miningTypes.contains(toolType);
@@ -399,7 +399,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	/**
-	 * Plays a block action for this creature of Block Material
+	 * Plays a block action for this type of Block Material
 	 * 
 	 * @param block to play at
 	 * @param arg1 for the action

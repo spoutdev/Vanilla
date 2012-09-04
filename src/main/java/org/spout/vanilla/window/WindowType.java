@@ -55,7 +55,7 @@ public enum WindowType {
 	}
 
 	/**
-	 * Gets the creature Id of this Window Type
+	 * Gets the type Id of this Window Type
 	 * @return Type Id
 	 */
 	public int getId() {
@@ -64,7 +64,7 @@ public enum WindowType {
 
 	/**
 	 * Gets a certain Window Type by Id
-	 * @param id of the creature
+	 * @param id of the type
 	 * @return Window Type, or null if not found
 	 */
 	public static WindowType getById(int id) {

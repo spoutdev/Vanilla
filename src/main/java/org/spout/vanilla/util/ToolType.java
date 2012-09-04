@@ -48,7 +48,7 @@ public class ToolType {
 	}
 
 	/**
-	 * Gets the tool flag for this particular creature of tool
+	 * Gets the tool flag for this particular type of tool
 	 * @return tool flag
 	 */
 	public Flag getToolFlag() {
@@ -56,7 +56,7 @@ public class ToolType {
 	}
 
 	/**
-	 * Gets the block drop flag for this particular creature of tool
+	 * Gets the block drop flag for this particular type of tool
 	 * @return drop flag
 	 */
 	public Flag getDropFlag() {

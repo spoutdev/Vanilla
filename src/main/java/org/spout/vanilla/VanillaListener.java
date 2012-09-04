@@ -35,6 +35,7 @@ import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.event.world.RegionLoadEvent;
 
+import org.spout.vanilla.components.VanillaComponents;
 import org.spout.vanilla.components.VanillaEntityTypes;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.configuration.WorldConfigurationNode;
@@ -63,6 +64,6 @@ public class VanillaListener implements Listener {
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		event.getPlayer().applyType(VanillaEntityTypes.TYPE_VANILLAPLAYER);
+		event.getPlayer().addComponent(VanillaComponents.VANILLAPLAYER);
 	}
 }

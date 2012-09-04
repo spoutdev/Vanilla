@@ -36,6 +36,7 @@ import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
+import org.spout.api.command.annotated.CommandPermissions;
 import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -72,6 +73,7 @@ public class TestCommands {
 	}
 
 	@Command(aliases = {"explode"}, usage = "<explode>", desc = "Create an explosion")
+	@CommandPermissions("vanilla.command.debug")
 	public void explode(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to cause an explosion");
@@ -87,6 +89,7 @@ public class TestCommands {
 	}
 
 	@Command(aliases = {"tpworld", "tpw"}, usage = "<world name>", desc = "Teleport to a world's spawn.", min = 1, max = 1)
+	@CommandPermissions("vanilla.command.debug")
 	public void tpWorld(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to teleport");
@@ -104,6 +107,7 @@ public class TestCommands {
 	}
 
 	@Command(aliases = {"spawn"}, usage = "<spiral or disk> <number> <controller> ... <number> <controller>", desc = "Spawn up to 50 controllers!", min = 1, max = 10)
+	@CommandPermissions("vanilla.command.debug")
 	public void spawn(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to spawn a controller");
@@ -201,6 +205,7 @@ public class TestCommands {
 	}
 
 	@Command(aliases = {"tppos"}, usage = "<name> <world> <x> <y> <z>", desc = "Teleport to coordinates!", min = 5, max = 5)
+	@CommandPermissions("vanilla.command.debug")
 	public void tppos(CommandContext args, CommandSource source) throws CommandException {
 		Player player = ((Server) Spout.getEngine()).getPlayer(args.getString(0), true);
 		if (!(source instanceof Player) && player == null) {
@@ -225,6 +230,7 @@ public class TestCommands {
 	}
 
 	@Command(aliases = {"object", "obj"}, usage = "<name>", flags = "f", desc = "Spawn a WorldGeneratorObject at your location. Use -f to ignore canPlace check", min = 1, max = 2)
+	@CommandPermissions("vanilla.command.debug")
 	public void generateObject(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("The source must be a player.");
@@ -254,6 +260,7 @@ public class TestCommands {
 	}
 
 	@Command(aliases = {"block"}, desc = "Checks if the block below you has an entity", min = 0, max = 0)
+	@CommandPermissions("vanilla.command.debug")
 	public void checkBlock(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("Source must be player");
@@ -271,6 +278,7 @@ public class TestCommands {
 	}
 
 	@Command(aliases = {"killall", "ka"}, desc = "Kill all non-player or world entities within a world", min = 0, max = 1)
+	@CommandPermissions("vanilla.command.debug")
 	public void killall(CommandContext args, CommandSource source) throws CommandException {
 		World world = null;
 		boolean isConsole = false;
@@ -310,6 +318,7 @@ public class TestCommands {
 	}
 
 	@Command(aliases = "rollcredits", desc = "Rolls the end credits for the game.", min = 0, max = 0)
+	@CommandPermissions("vanilla.command.debug")
 	public void rollCredits(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to view the credits.");
@@ -322,6 +331,7 @@ public class TestCommands {
 	}
 
 	@Command(aliases = "speed", desc = "Applies speed", min = 2, max = 2)
+	@CommandPermissions("vanilla.command.debug")
 	public void speed(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to apply speed");
@@ -332,6 +342,7 @@ public class TestCommands {
 	}
 
 	@Command(aliases = "npc", desc = "Spawns an npc at your location", min = 1, max = 1)
+	@CommandPermissions("vanilla.command.debug")
 	public void npc(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("Only a player may spawn an npc");

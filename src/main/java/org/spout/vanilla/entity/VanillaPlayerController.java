@@ -150,7 +150,7 @@ public class VanillaPlayerController extends PlayerController implements Vanilla
 		super.onTick(dt);
 
 		Player player = getParent();
-		if (player == null || player.getSession() == null) {
+		if (player == null || !player.isOnline()) {
 			return;
 		}
 	}

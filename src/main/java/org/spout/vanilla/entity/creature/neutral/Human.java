@@ -42,7 +42,7 @@ public class Human extends Creature {
 
 	@Override
 	public void onAttached() {
-		if (displayName.isEmpty()) {
+		if (displayName == null || displayName.isEmpty()) {
 			displayName = getDataMap().get(Data.TITLE);
 		}
 		if (renderedItemInHand == null) {

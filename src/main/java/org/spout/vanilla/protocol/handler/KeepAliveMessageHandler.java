@@ -38,7 +38,6 @@ public class KeepAliveMessageHandler extends MessageHandler<KeepAliveMessage> {
 		if (!session.hasPlayer() || (!(session.getPlayer().getController() instanceof VanillaPlayerController))) {
 			return;
 		}
-
 		VanillaPlayerController mp = (VanillaPlayerController) session.getPlayer().getController();
 		mp.getNetworkComponent().resetTimeout(message.getPingId());
 	}

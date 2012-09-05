@@ -33,13 +33,13 @@ import java.util.List;
 
 import net.royawesome.jlibnoise.MathHelper;
 
-import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnPlayerMessage;
 
 public class VanillaPlayerProtocol extends VanillaEntityProtocol {
@@ -48,16 +48,16 @@ public class VanillaPlayerProtocol extends VanillaEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity) {
 		Controller c = entity.getController();
-		if (!(c instanceof VanillaPlayerController)) {
+		if (!entity.has(VanillaPlayer.class)) {
 			return Collections.emptyList();
 		}
 
 		int id = entity.getId();
-		int x = (int) (entity.getPosition().getX() * 32);
-		int y = (int) (entity.getPosition().getY() * 32);
-		int z = (int) (entity.getPosition().getZ() * 32);
-		int r = (int) (-entity.getYaw() * 32); //cardinal directions differ
-		int p = (int) (entity.getPitch() * 32);
+		int x = (int) (entity.getTransform().getPosition().getX() * 32);
+		int y = (int) (entity.getTransform().getPosition().getY() * 32);
+		int z = (int) (entity.getTransform().getPosition().getZ() * 32);
+		int r = (int) (-entity.getTransform().getYaw() * 32); //cardinal directions differ
+		int p = (int) (entity.getTransform().getPitch() * 32);
 
 		VanillaPlayerController playerController = (VanillaPlayerController) c;
 		int item = 0;

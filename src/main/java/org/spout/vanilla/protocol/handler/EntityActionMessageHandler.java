@@ -34,7 +34,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.entity.EntityActionMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 
@@ -47,11 +47,10 @@ public final class EntityActionMessageHandler extends MessageHandler<EntityActio
 
 		Player player = session.getPlayer();
 
-		if (!(player.getController() instanceof VanillaPlayerController)) {
+		if (!player.has(VanillaPlayer.class)) {
 			return;
 		}
 
-		VanillaPlayerController ve = (VanillaPlayerController) player.getController();
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 
 		switch (message.getAction()) {
@@ -69,12 +68,12 @@ public final class EntityActionMessageHandler extends MessageHandler<EntityActio
 			case EntityActionMessage.ACTION_START_SPRINTING:
 				parameters.add(EntityMetadataMessage.Parameters.META_SPRINTING.get());
 				session.send(false, new EntityMetadataMessage(player.getId(), parameters));
-				ve.setSprinting(true);
+				player.get(VanillaPlayer.class).setSprinting(true);
 				break;
 			case EntityActionMessage.ACTION_STOP_SPRINTING:
 				parameters.add(EntityMetadataMessage.Parameters.META_SPRINTING.get());
 				session.send(false, new EntityMetadataMessage(player.getId(), parameters));
-				ve.setSprinting(false);
+				player.get(VanillaPlayer.class).setSprinting(false);
 				break;
 			default:
 				break;

@@ -35,11 +35,57 @@ import org.spout.vanilla.protocol.entity.VanillaPlayerProtocol;
  * A component that identifies the entity as a Vanilla player.
  */
 public class VanillaPlayer extends EntityComponent {
+	
+	private boolean onGround = true, isFlying = false, isSprinting = false, isFalling = false, isJumping = false;
 	public VanillaPlayer() {
 	}
 
 	@Override
 	public void onAttached() {
-		getHolder().getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new VanillaPlayerProtocol());
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new VanillaPlayerProtocol());
+	}
+
+	public boolean isOnGround() {
+		return onGround;
+	}
+
+	public void setOnGround(boolean onGround) {
+		this.onGround = onGround;
+	}
+
+	public boolean isFlying() {
+		return isFlying;
+	}
+
+	public void setFlying(boolean isFlying) {
+		this.isFlying = isFlying;
+	}
+
+	public boolean isSprinting() {
+		return isSprinting;
+	}
+
+	public void setSprinting(boolean isSprinting) {
+		this.isSprinting = isSprinting;
+	}
+
+	public boolean isFalling() {
+		return isFalling;
+	}
+
+	public void setFalling(boolean isFalling) {
+		this.isFalling = isFalling;
+	}
+
+	public boolean isJumping() {
+		return isJumping;
+	}
+
+	public void setJumping(boolean isJumping) {
+		this.isJumping = isJumping;
+	}
+	
+	public void rollCredits() {
+		//TODO: Roll credits
 	}
 }

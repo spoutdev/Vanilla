@@ -185,9 +185,8 @@ public class HealthComponent extends EntityComponent {
 		lastDamager = damager;
 		lastDamageCause = cause;
 		if (sendHurtMessage) {
-			getHolder().getNetworkComponent().
-					getHolder().getNetworkComponent().callProtocolEvent(new EntityAnimationEvent(getHolder(), EntityAnimationMessage.ANIMATION_HURT));
-			getHolder().getNetworkComponent().callProtocolEvent(new EntityStatusEvent(getHolder(), EntityStatusMessage.ENTITY_HURT));
+			getHolder().getNetwork().getHolder().getNetwork().callProtocolEvent(new EntityAnimationEvent(getHolder(), EntityAnimationMessage.ANIMATION_HURT));
+			getHolder().getNetwork().callProtocolEvent(new EntityStatusEvent(getHolder(), EntityStatusMessage.ENTITY_HURT));
 			//getHurtEffect().playGlobal(getParent().getParent().getPosition());
 		}
 	}

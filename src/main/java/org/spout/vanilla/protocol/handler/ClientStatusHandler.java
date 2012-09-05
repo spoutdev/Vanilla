@@ -40,7 +40,7 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.VanillaPlayerController;
-import org.spout.vanilla.components.source.HealthChangeReason;
+import org.spout.vanilla.components.basic.HealthComponent;
 import org.spout.vanilla.event.player.PlayerRespawnEvent;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.ClientStatusMessage;
@@ -66,10 +66,9 @@ public class ClientStatusHandler extends MessageHandler<ClientStatusMessage> {
 
 			//Set position for the server
 			Point point = event.getPoint();
-			player.setPosition(point);
+			player.getTransform().setPosition(point);
 			player.getNetworkSynchronizer().setRespawned();
-			VanillaPlayerController controller = (VanillaPlayerController) player.getController();
-			controller.getHealth().setHealth(controller.getHealth().getMaxHealth(), HealthChangeReason.SPAWN);
+			player.get(HealthComponent.class).setHealth(player.get(HealthComponent.class).getMaxHealth(), HealthChangeReason.SPAWN);
 
 			//send spawn to everyone else
 			EntityProtocol ep = controller.getType().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);

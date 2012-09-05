@@ -31,7 +31,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.player.VanillaPlayer;
 import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.protocol.msg.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.PlayerPositionMessage;
@@ -50,7 +50,7 @@ public final class PlayerPositionMessageHandler extends MessageHandler<PlayerPos
 		double y = message.getY();
 		double z = message.getZ();
 
-		Point ep = player.getPosition();
+		Point ep = player.getTransform().getPosition();
 		double dx = x - ep.getX();
 		double dy = y - ep.getY();
 		double dz = z - ep.getZ();
@@ -85,7 +85,7 @@ public final class PlayerPositionMessageHandler extends MessageHandler<PlayerPos
 
 		// START Hunger / Damage falling implementation. Will probably have a better way to handle that when Collision is implemented
 		if (VanillaPlayerUtil.isSurvival(player)) {
-			VanillaPlayerController vPlayer = (VanillaPlayerController) player.getController();
+			VanillaPlayer vPlayer = player.get(VanillaPlayer.class);
 			if (ep.getY() > y) {
 				vPlayer.setFalling(true);
 			} else {
@@ -113,7 +113,7 @@ public final class PlayerPositionMessageHandler extends MessageHandler<PlayerPos
 		Point p = new Point(player.getWorld(), (float) x, (float) y, (float) z);
 		// Force the chunk to load if needed - if a player moves into an unloaded chunk they will die
 		player.getWorld().getChunkFromBlock(p);
-		player.setPosition(p);
+		player.getTransform().setPosition(p);
 	}
 
 	public void handleClient(Session session, Player player, PlayerPositionLookMessage message) {

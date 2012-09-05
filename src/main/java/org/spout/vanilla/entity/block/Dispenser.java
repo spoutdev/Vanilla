@@ -55,7 +55,8 @@ public class Dispenser extends VanillaWindowBlockController implements Inventory
 		if (getDataMap().containsKey(VanillaData.ITEMS)) {
 			this.inventory.setContents(getDataMap().get(VanillaData.ITEMS));
 		}
-		this.isPowered = VanillaMaterials.DISPENSER.isReceivingPower(this.getBlock());
+		//TODO: any chunk method call can not be used in onAttached - causes stack overflow when loading controllers from saves
+		//this.isPowered = VanillaMaterials.DISPENSER.isReceivingPower(this.getBlock());
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public class Painting extends Substance {
 
 	@Override
 	public boolean isSavable() {
-		return true;
+		return false;
 	}
 
 	public PaintingStyle getPaintingStyle() {

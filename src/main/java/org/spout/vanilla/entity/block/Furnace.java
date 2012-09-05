@@ -61,7 +61,8 @@ public class Furnace extends VanillaWindowBlockController implements InventoryOw
 		if (getDataMap().containsKey(VanillaData.ITEMS)) {
 			this.inventory.setContents(getDataMap().get(VanillaData.ITEMS));
 		}
-		this.isBurningState = getBlock().getMaterial() == VanillaMaterials.FURNACE_BURNING;
+		//TODO: any chunk method call can not be used in onAttached - causes stack overflow when loading controllers from saves
+		//this.isBurningState = getBlock().getMaterial() == VanillaMaterials.FURNACE_BURNING;
 	}
 
 	@Override

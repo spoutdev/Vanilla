@@ -28,9 +28,10 @@ package org.spout.vanilla.protocol.entity.living;
 
 import java.util.List;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.components.creature.Pig;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class PigEntityProtocol extends BasicMobEntityProtocol {
@@ -39,9 +40,9 @@ public class PigEntityProtocol extends BasicMobEntityProtocol {
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
-		//TODO: Index 16 (byte): 1 if saddled, 0 otherwise
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte)(entity.getOrCreate(Pig.class).isSaddled() ? 1 : 0)));
 		return parameters;
 	}
 }

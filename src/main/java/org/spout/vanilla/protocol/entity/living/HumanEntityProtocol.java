@@ -36,17 +36,14 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.components.creature.Human;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnPlayerMessage;
 
 public class HumanEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity) {
-		Controller c = entity.getController();
-		if (c == null || !(c instanceof Human)) {
-			return Collections.emptyList();
-		}
-		Human npc = (Human) c;
+		Human npc = (Human) entity.getOrCreate(Human.class);
 
 		int id = entity.getId();
 		int x = (int) (entity.getTransform().getPosition().getX() * 32);

@@ -83,4 +83,17 @@ public class VanillaData {
 	public static final DefaultedKey<Long> TIME_DISPERSED = new DefaultedKeyImpl<Long>("time_dispersed", Long.valueOf(0));
 	//Slime-specific
 	public static final DefaultedKey<Byte> SLIME_SIZE = new SlimeSize("slime_size");
+	//Sheep-specific
+	public static final DefaultedKey<Short> WOOL_COLOR = new DefaultedKeyImpl<Short>("wool_color", (short) 0);
+	public static final DefaultedKey<Boolean> SHEARED = new DefaultedKeyImpl<Boolean>("sheared", false);
+	//Pig-specific
+	public static final DefaultedKey<Boolean> SADDLED = new DefaultedKeyImpl<Boolean>("saddled", false);
+	//Wolf/Ocelot-specific
+	public static final DefaultedKey<Boolean> SITTING = new DefaultedKeyImpl<Boolean>("sitting", false);
+	public static final DefaultedKey<Boolean> TAMED = new DefaultedKeyImpl<Boolean>("tamed", false);
+	public static final DefaultedKey<String> OWNER = new DefaultedKeyImpl<String>("owner", null);
+	//Ocelot-specific
+	public static final DefaultedKey<Byte> SKIN = new DefaultedKeyImpl<Byte>("skin", (byte) 0);
+	//NPC-specific
+	public static final DefaultedKey<String> TITLE = new DefaultedKeyImpl<String>("title", null);
 }

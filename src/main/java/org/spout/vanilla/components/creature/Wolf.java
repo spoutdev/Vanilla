@@ -37,8 +37,8 @@ import org.spout.vanilla.protocol.entity.living.WolfEntityProtocol;
  * A component that identifies the entity as a Wolf.
  */
 public class Wolf extends EntityComponent {
-	
 	private boolean redEyes = false;
+
 	public Wolf() {
 	}
 
@@ -49,19 +49,19 @@ public class Wolf extends EntityComponent {
 		health.setSpawnHealth(8); //TODO: Get the health on save or something
 		getHolder().put(health);
 	}
-	
+
 	public boolean isTamed() {
 		return getHolder().getData().get(VanillaData.TAMED);
 	}
-	
+
 	public void setTamed(boolean tamed) {
 		getHolder().getData().put(VanillaData.TAMED, tamed);
 	}
-	
+
 	public String getOwner() {
 		return getHolder().getData().get(VanillaData.OWNER);
 	}
-	
+
 	public void setOwner(String owner) {
 		if (isTamed()) {
 			getHolder().getData().put(VanillaData.OWNER, owner);
@@ -75,11 +75,11 @@ public class Wolf extends EntityComponent {
 	public void setRedEyes(boolean redEyes) {
 		this.redEyes = redEyes;
 	}
-	
+
 	public boolean isSitting() {
 		return getHolder().getData().get(VanillaData.SITTING);
 	}
-	
+
 	public void setSitting(boolean sitting) {
 		getHolder().getData().put(VanillaData.SITTING, sitting);
 	}

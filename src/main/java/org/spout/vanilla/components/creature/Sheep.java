@@ -37,7 +37,6 @@ import org.spout.vanilla.protocol.entity.living.SheepEntityProtocol;
  * A component that identifies the entity as a Sheep.
  */
 public class Sheep extends EntityComponent {
-	
 	public Sheep() {
 	}
 
@@ -53,7 +52,7 @@ public class Sheep extends EntityComponent {
 	public void setSheared(boolean sheared) {
 		getHolder().getData().put(VanillaData.SHEARED, sheared);
 	}
-	
+
 	/**
 	 * Gets the color of the sheep.
 	 * @return color of the sheep.

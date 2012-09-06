@@ -55,7 +55,6 @@ public class InteractComponent extends EntityComponent {
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	public BlockIterator getBlockView() {
@@ -63,7 +62,6 @@ public class InteractComponent extends EntityComponent {
 	}
 
 	/**
-	 *
 	 * @param reach
 	 * @return
 	 */

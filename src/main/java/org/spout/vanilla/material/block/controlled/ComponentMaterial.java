@@ -31,7 +31,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.components.VanillaControllerType;
 import org.spout.vanilla.material.block.Solid;
 
 public abstract class ComponentMaterial extends Solid {

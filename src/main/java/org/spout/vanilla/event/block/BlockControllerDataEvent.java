@@ -39,7 +39,6 @@ public class BlockControllerDataEvent extends Event implements ProtocolEvent {
 
 	/**
 	 * Constructs a new Data event for the block specified
-	 * 
 	 * @param block for the data
 	 * @param action to perform
 	 * @param data to use, max 3 elements
@@ -55,7 +54,6 @@ public class BlockControllerDataEvent extends Event implements ProtocolEvent {
 
 	/**
 	 * Gets the Block the data is meant for
-	 * 
 	 * @return Block
 	 */
 	public Block getBlock() {
@@ -64,7 +62,6 @@ public class BlockControllerDataEvent extends Event implements ProtocolEvent {
 
 	/**
 	 * Gets the action to perform
-	 * 
 	 * @return action Id
 	 */
 	public int getAction() {
@@ -73,7 +70,6 @@ public class BlockControllerDataEvent extends Event implements ProtocolEvent {
 
 	/**
 	 * Gets the data to use
-	 * 
 	 * @return data array
 	 */
 	public int[] getData() {

@@ -35,9 +35,9 @@ import org.spout.vanilla.protocol.entity.living.CreeperEntityProtocol;
  * A component that identifies the entity as a Creeper.
  */
 public class Creeper extends EntityComponent {
-	
 	private byte fuse = -1;
 	private boolean charged = false;
+
 	public Creeper() {
 	}
 

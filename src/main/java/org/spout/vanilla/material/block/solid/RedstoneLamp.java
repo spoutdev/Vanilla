@@ -32,6 +32,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
+
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
@@ -73,12 +74,12 @@ public class RedstoneLamp extends Solid implements InitializableMaterial, Redsto
 	public boolean isReceivingPower(Block block) {
 		return RedstoneUtil.isReceivingPower(block);
 	}
-	
+
 	@Override
 	public boolean isRedstoneConductor() {
 		return false;
 	}
-	
+
 	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
@@ -87,7 +88,7 @@ public class RedstoneLamp extends Solid implements InitializableMaterial, Redsto
 			block.setData(HAS_REDSTONE_POWER);
 		} else {
 			block.setData(HAS_NO_REDSTONE_POWER);
-			for (BlockFace face:BlockFaces.BTEWNS) {
+			for (BlockFace face : BlockFaces.BTEWNS) {
 				Block other = block.translate(face);
 				if (other.getMaterial() instanceof RedstoneLamp) {
 					if (other.getData() == HAS_REDSTONE_POWER) {
@@ -105,12 +106,12 @@ public class RedstoneLamp extends Solid implements InitializableMaterial, Redsto
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean hasPhysics() {
 		return true;
 	}
-	
+
 	@Override
 	public EffectRange getPhysicsRange(short data) {
 		return effectRange;

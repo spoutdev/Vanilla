@@ -400,7 +400,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Plays a block action for this type of Block Material
-	 * 
 	 * @param block to play at
 	 * @param arg1 for the action
 	 * @param arg2 for the action

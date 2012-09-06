@@ -33,7 +33,6 @@ import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
-import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.block.plant.TallGrass;
 import org.spout.vanilla.world.generator.VanillaBiome;

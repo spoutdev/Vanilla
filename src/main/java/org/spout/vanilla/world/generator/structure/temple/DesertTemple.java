@@ -32,15 +32,12 @@ import java.util.List;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Stairs;
 import org.spout.vanilla.material.block.solid.Sandstone;
 import org.spout.vanilla.material.block.solid.Wool;
-import org.spout.vanilla.material.block.stair.SandstoneStairs;
 import org.spout.vanilla.world.generator.normal.object.LootChestObject;
 import org.spout.vanilla.world.generator.structure.ComplexLayoutPainter;
 import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;

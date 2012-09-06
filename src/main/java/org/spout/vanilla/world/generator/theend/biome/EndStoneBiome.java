@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.world.generator.theend.biome;
 
-import org.spout.api.util.cuboid.CuboidShortBuffer;
-
 import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.world.generator.theend.decorator.SpireDecorator;
 

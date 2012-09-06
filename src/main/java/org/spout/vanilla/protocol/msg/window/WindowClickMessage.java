@@ -28,8 +28,8 @@ package org.spout.vanilla.protocol.msg.window;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.protocol.msg.WindowMessage;
 import org.spout.vanilla.components.WindowComponent;
+import org.spout.vanilla.protocol.msg.WindowMessage;
 
 public final class WindowClickMessage extends WindowMessage {
 	private final int slot;

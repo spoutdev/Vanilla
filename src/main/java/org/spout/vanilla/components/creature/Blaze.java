@@ -35,9 +35,8 @@ import org.spout.vanilla.protocol.entity.living.BlazeEntityProtocol;
  * A component that identifies the entity as a Blaze.
  */
 public class Blaze extends EntityComponent {
-	
 	private boolean attacking = false;
-	
+
 	public Blaze() {
 	}
 

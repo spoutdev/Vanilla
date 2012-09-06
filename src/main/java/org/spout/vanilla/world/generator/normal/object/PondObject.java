@@ -36,8 +36,8 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.normal.biome.grassy.GrassyBiome;
-import org.spout.vanilla.world.generator.normal.biome.sandy.SandyBiome;
 import org.spout.vanilla.world.generator.normal.biome.icy.IcyBiome;
+import org.spout.vanilla.world.generator.normal.biome.sandy.SandyBiome;
 import org.spout.vanilla.world.generator.object.RandomObject;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 

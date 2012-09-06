@@ -43,11 +43,11 @@ public class Slime extends EntityComponent {
 	public void onAttached() {
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SlimeEntityProtocol());
 	}
-	
+
 	public byte getSize() {
 		return getHolder().getData().get(VanillaData.SLIME_SIZE);
 	}
-	
+
 	public void setSize(byte size) {
 		if (size >= 0 && size <= 4 && size != 3) {
 			getHolder().getData().put(VanillaData.SLIME_SIZE, size);

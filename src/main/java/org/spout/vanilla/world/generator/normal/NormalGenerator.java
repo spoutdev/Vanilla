@@ -127,7 +127,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		addPopulators(new GroundCoverPopulator() //, new RockyShieldPopulator(), new CavePopulator(), new RavinePopulator(),
 				//new PondPopulator(), new DungeonPopulator(), new OrePopulator(), new BiomePopulator(getBiomeMap()),
 				//new FallingLiquidPopulator(), new SnowPopulator()
-				);
+		);
 		register(VanillaBiomes.OCEAN);
 		register(VanillaBiomes.FROZEN_OCEAN);
 		register(VanillaBiomes.PLAINS);

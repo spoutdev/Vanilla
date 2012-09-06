@@ -103,7 +103,7 @@ public class TheEndGenerator extends VanillaBiomeChunkGenerator {
 		SCALE.setxScale(0.7);
 		SCALE.setyScale(1);
 		SCALE.setzScale(0.7);
-		
+
 		FINAL.SetSourceModule(0, SCALE);
 		FINAL.setLowerBound(-1);
 		FINAL.setUpperBound(1);

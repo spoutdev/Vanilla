@@ -43,9 +43,7 @@ import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
-import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.NetworkSynchronizer;
 
 import org.spout.vanilla.VanillaPlugin;
@@ -104,7 +102,7 @@ public class AdministrationCommands {
 					throw new CommandException("Please supply an existing world.");
 				}
 			}
-			
+
 			point = new Point(world, args.getInteger(index), args.getInteger(index + 1), args.getInteger(index + 2));
 		} else {
 			if (Spout.getEngine() instanceof Client) {
@@ -174,7 +172,7 @@ public class AdministrationCommands {
 
 		int count = args.getInteger(++index, 1);
 
-//		controller.getInventory().getMain().addItem(new ItemStack(material, count)); DATAMAPS
+		//		controller.getInventory().getMain().addItem(new ItemStack(material, count)); DATAMAPS
 
 		source.sendMessage("Gave ", player.getName(), " ", count, " ", material.getDisplayName());
 	}
@@ -233,51 +231,51 @@ public class AdministrationCommands {
 		}
 	}
 
-//	@Command(aliases = {"time"}, usage = "<add|set> <0-24000|day|night|dawn|dusk> [world]", desc = "Set the time of the server", min = 2, max = 3)
-//	@CommandPermissions("vanilla.command.time")
-//	public void time(CommandContext args, CommandSource source) throws CommandException {
-//		int time = 0;
-//		boolean relative = false;
-//		if (args.getString(0).equalsIgnoreCase("set")) {
-//			if (args.isInteger(1)) {
-//				time = args.getInteger(1);
-//			} else {
-//				try {
-//					time = Times.get(args.getString(1)).getTime();
-//				} catch (Exception e) {
-//					throw new CommandException("'" + args.getString(1) + "' is not a valid time.");
-//				}
-//			}
-//		} else if (args.getString(0).equalsIgnoreCase("add")) {
-//			relative = true;
-//			if (args.isInteger(1)) {
-//				time = args.getInteger(1);
-//			} else {
-//				throw new CommandException("Argument to 'add' must be an integer.");
-//			}
-//		}
-//
-//		World world;
-//		if (args.length() == 3) {
-//			world = plugin.getEngine().getWorld(args.getString(2));
-//			if (world == null) {
-//				throw new CommandException("'" + args.getString(2) + "' is not a valid world.");
-//			}
-//		} else if (source instanceof Player) {
-//			Player player = (Player) source;
-//			world = player.getWorld();
-//		} else {
-//			throw new CommandException("You must specify a world.");
-//		}
-//
-//		VanillaSky sky = VanillaSky.getSky(world);
-//		if (sky == null) {
-//			throw new CommandException("The world '" + args.getString(2) + "' is not available.");
-//		}
-//
-//		sky.setTime(relative ? (sky.getTime() + time) : time);
-//		source.sendMessage("Set ", world.getName(), "'s time to: ", sky.getTime());
-//	}
+	//	@Command(aliases = {"time"}, usage = "<add|set> <0-24000|day|night|dawn|dusk> [world]", desc = "Set the time of the server", min = 2, max = 3)
+	//	@CommandPermissions("vanilla.command.time")
+	//	public void time(CommandContext args, CommandSource source) throws CommandException {
+	//		int time = 0;
+	//		boolean relative = false;
+	//		if (args.getString(0).equalsIgnoreCase("set")) {
+	//			if (args.isInteger(1)) {
+	//				time = args.getInteger(1);
+	//			} else {
+	//				try {
+	//					time = Times.get(args.getString(1)).getTime();
+	//				} catch (Exception e) {
+	//					throw new CommandException("'" + args.getString(1) + "' is not a valid time.");
+	//				}
+	//			}
+	//		} else if (args.getString(0).equalsIgnoreCase("add")) {
+	//			relative = true;
+	//			if (args.isInteger(1)) {
+	//				time = args.getInteger(1);
+	//			} else {
+	//				throw new CommandException("Argument to 'add' must be an integer.");
+	//			}
+	//		}
+	//
+	//		World world;
+	//		if (args.length() == 3) {
+	//			world = plugin.getEngine().getWorld(args.getString(2));
+	//			if (world == null) {
+	//				throw new CommandException("'" + args.getString(2) + "' is not a valid world.");
+	//			}
+	//		} else if (source instanceof Player) {
+	//			Player player = (Player) source;
+	//			world = player.getWorld();
+	//		} else {
+	//			throw new CommandException("You must specify a world.");
+	//		}
+	//
+	//		VanillaSky sky = VanillaSky.getSky(world);
+	//		if (sky == null) {
+	//			throw new CommandException("The world '" + args.getString(2) + "' is not available.");
+	//		}
+	//
+	//		sky.setTime(relative ? (sky.getTime() + time) : time);
+	//		source.sendMessage("Set ", world.getName(), "'s time to: ", sky.getTime());
+	//	}
 
 	@Command(aliases = {"gamemode", "gm"}, usage = "[player] <0|1|2|survival|creative|adventure> (0 = SURVIVAL, 1 = CREATIVE, 2 = ADVENTURE)", desc = "Change a player's game mode", min = 1, max = 2)
 	@CommandPermissions("vanilla.command.gamemode")
@@ -377,7 +375,7 @@ public class AdministrationCommands {
 			} else {
 				weather = Weather.get(args.getString(0).replace("snow", "rain"));
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			throw new CommandException("Weather must be a mode between 0 and 2, 'CLEAR', 'RAIN', 'SNOW', or 'THUNDERSTORM'");
 		}
 

@@ -72,9 +72,9 @@
 */
 package org.spout.vanilla.event.player;
 
+import org.spout.api.entity.Player;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerEvent;
 
 /**
@@ -92,7 +92,6 @@ public class PlayerHeldItemChangeEvent extends PlayerEvent implements Cancellabl
 
 	/**
 	 * Gets the previous slot the player had selected.
-	 *
 	 * @return The index of the previous slot.
 	 */
 	public int getPreviousSlot() {
@@ -101,7 +100,6 @@ public class PlayerHeldItemChangeEvent extends PlayerEvent implements Cancellabl
 
 	/**
 	 * Gets the new slot the player selected.
-	 *
 	 * @return The index of the new selected slot.
 	 */
 	public int getNewSlot() {

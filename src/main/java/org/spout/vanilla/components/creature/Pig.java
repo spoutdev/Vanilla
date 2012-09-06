@@ -43,11 +43,11 @@ public class Pig extends EntityComponent {
 	public void onAttached() {
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PigEntityProtocol());
 	}
-	
+
 	public boolean isSaddled() {
 		return getHolder().getData().get(VanillaData.SADDLED);
 	}
-	
+
 	public void setSaddled(boolean saddled) {
 		getHolder().getData().put(VanillaData.SADDLED, saddled);
 	}

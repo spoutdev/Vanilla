@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.world.generator.object;
 
-import java.util.Random;
-
 public interface RandomizableObject {
 	public void randomize();
 }

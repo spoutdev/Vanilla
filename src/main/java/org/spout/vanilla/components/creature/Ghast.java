@@ -35,7 +35,6 @@ import org.spout.vanilla.protocol.entity.living.GhastEntityProtocol;
  * A component that identifies the entity as a Ghast.
  */
 public class Ghast extends EntityComponent {
-
 	private boolean redEyes;
 
 	public Ghast() {

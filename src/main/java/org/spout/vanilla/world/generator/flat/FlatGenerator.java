@@ -80,7 +80,9 @@ public class FlatGenerator implements VanillaGenerator {
 		final int x = 16 - random.nextInt(32);
 		final int z = 16 - random.nextInt(32);
 		int y = world.getHeight();
-		for (; !world.getBlockMaterial(x, y, z).isSolid(); y--);
+		for (; !world.getBlockMaterial(x, y, z).isSolid(); y--) {
+			;
+		}
 		return new Point(world, x, y + 1.5f, z);
 	}
 

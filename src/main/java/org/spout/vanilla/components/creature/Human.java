@@ -36,7 +36,6 @@ import org.spout.vanilla.protocol.entity.living.HumanEntityProtocol;
  * A component that identifies the entity as a Human (NPC).
  */
 public class Human extends EntityComponent {
-
 	public Human() {
 	}
 

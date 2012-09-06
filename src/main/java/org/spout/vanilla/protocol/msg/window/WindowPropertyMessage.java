@@ -30,8 +30,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.msg.WindowMessage;
 import org.spout.vanilla.components.WindowComponent;
+import org.spout.vanilla.protocol.msg.WindowMessage;
 
 public final class WindowPropertyMessage extends WindowMessage {
 	private final int progressBar, value;

@@ -30,6 +30,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.nbt.CompoundMap;
 
 public class TileEntityDataMessage implements Message {
@@ -41,7 +42,6 @@ public class TileEntityDataMessage implements Message {
 	private int custom2;
 	private int custom3;
 	private CompoundMap data;
-	
 
 	public TileEntityDataMessage(int x, int y, int z, int action, int[] data) {
 		this(x, y, z, action, data.length >= 1 ? data[0] : -1, data.length >= 2 ? data[1] : -1, data.length >= 3 ? data[2] : -1);

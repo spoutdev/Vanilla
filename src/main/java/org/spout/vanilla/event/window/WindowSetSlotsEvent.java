@@ -29,8 +29,6 @@ package org.spout.vanilla.event.window;
 import org.spout.api.event.HandlerList;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.components.WindowComponent;
-
 public class WindowSetSlotsEvent extends WindowEvent {
 	private static HandlerList handlers = new HandlerList();
 	private ItemStack[] items;

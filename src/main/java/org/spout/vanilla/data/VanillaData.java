@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.data;
 
-import java.util.UUID;
-
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
@@ -43,18 +41,10 @@ public class VanillaData {
 	public static final DefaultedKey<Difficulty> DIFFICULTY = new DefaultedKeyImpl<Difficulty>("difficulty", Difficulty.EASY);
 	public static final DefaultedKey<Weather> WEATHER = new DefaultedKeyImpl<Weather>("weather", Weather.CLEAR);
 	public static final DefaultedKey<WorldType> WORLD_TYPE = new DefaultedKeyImpl<WorldType>("world_type", WorldType.DEFAULT);
-	/**
-	 * World link recalls a stored UUID which would be 'linked' to this world. Linking means the following...
-	 * - Age
-	 * - Seed
-	 * - Portals from the world with the stored UUID would go to the UUID recalled (if applicable, cases such as nethers).
-	 * If the value is the default (null) then it means this world has no link to it.
-	 */
-	public static final DefaultedKey<UUID> WORLD_LINK = new DefaultedKeyImpl<UUID>("world_link", null);
 	//Component-specific
 	public static final DefaultedKey<GameMode> GAMEMODE = new DefaultedKeyImpl<GameMode>("game_mode", GameMode.SURVIVAL);
 	public static final DefaultedKey<Integer> AIR_TICKS = new DefaultedKeyImpl<Integer>("air_ticks", 0);
-	public static final DefaultedKey<Integer> CONTROLLER_TYPE = new DefaultedKeyImpl<Integer>("controller_id", 0);
+	public static final DefaultedKey<Integer> DEATH_TICKS = new DefaultedKeyImpl<Integer>("death_ticks", 0);
 	public static final DefaultedKey<Integer> FIRE_TICKS = new DefaultedKeyImpl<Integer>("fire_ticks", 0);
 	public static final DefaultedKey<Long> GROWTH_TICKS = new DefaultedKeyImpl<Long>("growth_ticks", Long.valueOf(0));
 	public static final DefaultedKey<Boolean> FLAMMABLE = new DefaultedKeyImpl<Boolean>("flammable", false);
@@ -66,12 +56,13 @@ public class VanillaData {
 	public static final DefaultedKey<Vector3> VELOCITY = new DefaultedKeyImpl<Vector3>("velocity", Vector3.ZERO);
 	public static final DefaultedKey<ItemStack[]> ITEMS = new DefaultedKeyImpl<ItemStack[]>("items", new ItemStack[36]);
 	//Entity data
-	public static final DefaultedKey<Boolean> FALLING = new DefaultedKeyImpl<Boolean>("falling", false);
-	public static final DefaultedKey<Boolean> GROUND = new DefaultedKeyImpl<Boolean>("onGround", true);
-	public static final DefaultedKey<Boolean> JUMPING = new DefaultedKeyImpl<Boolean>("jumping", false);
+	public static final DefaultedKey<Boolean> IS_FALLING = new DefaultedKeyImpl<Boolean>("is_falling", false);
+	public static final DefaultedKey<Boolean> IS_ON_GROUND = new DefaultedKeyImpl<Boolean>("is_on_Ground", true);
+	public static final DefaultedKey<Boolean> IS_JUMPING = new DefaultedKeyImpl<Boolean>("is_jumping", false);
+	public static final DefaultedKey<Boolean> HAS_DEATH_ANIMATION = new DefaultedKeyImpl<Boolean>("has_death_animation", true);
 	//Player-specific
-	public static final DefaultedKey<Boolean> SPRINTING = new DefaultedKeyImpl<Boolean>("sprinting", false);
-	public static final DefaultedKey<Boolean> FLYING = new DefaultedKeyImpl<Boolean>("flying", false);
+	public static final DefaultedKey<Boolean> IS_SPRINTING = new DefaultedKeyImpl<Boolean>("is_sprinting", false);
+	public static final DefaultedKey<Boolean> IS_FLYING = new DefaultedKeyImpl<Boolean>("is_flying", false);
 	public static final DefaultedKey<Inventory> INVENTORY = new DefaultedKeyImpl<Inventory>("inventory", new Inventory());
 	//Creature-specific
 	public static final DefaultedKey<Integer> LINE_OF_SIGHT = new DefaultedKeyImpl<Integer>("line_of_sight", 1);
@@ -94,5 +85,5 @@ public class VanillaData {
 	//Ocelot-specific
 	public static final DefaultedKey<Byte> SKIN = new DefaultedKeyImpl<Byte>("skin", (byte) 0);
 	//NPC-specific
-	public static final DefaultedKey<String> TITLE = new DefaultedKeyImpl<String>("title", null);
+	public static final DefaultedKey<String> TITLE = new DefaultedKeyImpl<String>("title", "Spouty");
 }

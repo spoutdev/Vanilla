@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.chat.style;
+package org.spout.vanilla.chat;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

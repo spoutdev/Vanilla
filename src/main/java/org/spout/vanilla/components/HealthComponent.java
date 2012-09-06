@@ -44,14 +44,41 @@ import org.spout.vanilla.source.HealthChangeCause;
  * Component that adds a health-like attribute to entities.
  */
 public class HealthComponent extends EntityComponent {
-	//animation
-	public boolean hasDeathAnimation = true;
+	private static final int DEATH_TIME_TICKS = 30;
 	//damage
 	private DamageCause lastDamageCause = DamageCause.UNKNOWN;
 	private Entity lastDamager;
-	private int deathTicks = 0;
 
 	public HealthComponent() {
+	}
+
+	@Override
+	public boolean canTick() {
+		return true;
+	}
+
+	@Override
+	public void onTick(float dt) {
+		if (isDying()) {
+			setDeathTicks(getDeathTicks() - 1);
+			if (getDeathTicks() <= 0) {
+				getHolder().remove();
+			}
+		} else if (isDead()) {
+			if (hasDeathAnimation()) {
+				setDeathTicks(DEATH_TIME_TICKS);
+				getHolder().getNetwork().callProtocolEvent(new EntityStatusEvent(getHolder(), EntityStatusMessage.ENTITY_DEAD));
+			} else {
+				getHolder().remove();
+			}
+			onDeath();
+		}
+	}
+
+	/**
+	 * Called when the entities' health hits zero and is considered "dead" by Vanilla game standards
+	 */
+	public void onDeath(){
 
 	}
 
@@ -76,7 +103,7 @@ public class HealthComponent extends EntityComponent {
 	 * @return the maximum health
 	 */
 	public int getMaxHealth() {
-		return getDatatable().get(VanillaData.MAX_HEALTH);
+		return getData().get(VanillaData.MAX_HEALTH);
 	}
 
 	/**
@@ -84,7 +111,7 @@ public class HealthComponent extends EntityComponent {
 	 * @param maxHealth to set to
 	 */
 	public void setMaxHealth(int maxHealth) {
-		getDatatable().put(VanillaData.MAX_HEALTH, maxHealth);
+		getData().put(VanillaData.MAX_HEALTH, maxHealth);
 	}
 
 	/**
@@ -101,7 +128,7 @@ public class HealthComponent extends EntityComponent {
 	 * @return the health value
 	 */
 	public int getHealth() {
-		return getDatatable().get(VanillaData.HEALTH);
+		return getData().get(VanillaData.HEALTH);
 	}
 
 	/**
@@ -114,9 +141,9 @@ public class HealthComponent extends EntityComponent {
 		Spout.getEngine().getEventManager().callEvent(event);
 		if (!event.isCancelled()) {
 			if (getHealth() + event.getChange() > getMaxHealth()) {
-				getDatatable().put(VanillaData.HEALTH, getMaxHealth());
+				getData().put(VanillaData.HEALTH, getMaxHealth());
 			} else {
-				getDatatable().put(VanillaData.HEALTH, getHealth() + event.getChange());
+				getData().put(VanillaData.HEALTH, getHealth() + event.getChange());
 			}
 		}
 	}
@@ -138,11 +165,30 @@ public class HealthComponent extends EntityComponent {
 	}
 
 	/**
-	 * Returns true if the entity is dying
-	 * @return dying
+	 *
+	 * @return
 	 */
 	public boolean isDying() {
-		return deathTicks > 0;
+		return getDeathTicks() > 0;
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public int getDeathTicks() {
+		return getData().get(VanillaData.DEATH_TICKS);
+	}
+
+	/**
+	 *
+	 * @param deathTicks
+	 */
+	public void setDeathTicks(int deathTicks) {
+		if (deathTicks > DEATH_TIME_TICKS) {
+			deathTicks = DEATH_TIME_TICKS;
+		}
+		getData().put(VanillaData.DEATH_TICKS, deathTicks);
 	}
 
 	/**
@@ -185,17 +231,17 @@ public class HealthComponent extends EntityComponent {
 		lastDamager = damager;
 		lastDamageCause = cause;
 		if (sendHurtMessage) {
-			getHolder().getNetwork().getHolder().getNetwork().callProtocolEvent(new EntityAnimationEvent(getHolder(), EntityAnimationMessage.ANIMATION_HURT));
+			getHolder().getNetwork().callProtocolEvent(new EntityAnimationEvent(getHolder(), EntityAnimationMessage.ANIMATION_HURT));
 			getHolder().getNetwork().callProtocolEvent(new EntityStatusEvent(getHolder(), EntityStatusMessage.ENTITY_HURT));
 			//getHurtEffect().playGlobal(getParent().getParent().getPosition());
 		}
 	}
 
 	public boolean hasDeathAnimation() {
-		return hasDeathAnimation;
+		return getData().get(VanillaData.HAS_DEATH_ANIMATION);
 	}
 
 	public void setDeathAnimation(boolean hasDeathAnimation) {
-		this.hasDeathAnimation = hasDeathAnimation;
+		getData().put(VanillaData.HAS_DEATH_ANIMATION, hasDeathAnimation);
 	}
 }

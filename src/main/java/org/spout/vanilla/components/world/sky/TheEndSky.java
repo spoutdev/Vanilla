@@ -24,22 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.components.creature;
+package org.spout.vanilla.components.world.sky;
 
-import org.spout.api.component.components.EntityComponent;
+import org.spout.api.geo.World;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.components.world.VanillaSky;
+import org.spout.vanilla.data.Weather;
 
-/**
- * A component that identifies the entity as a Squid.
- */
-public class Squid extends EntityComponent {
-	public Squid() {
+public class TheEndSky extends VanillaSky {
+	public TheEndSky(World world) {
+		super(world, false);
+		this.getWorld().setSkyLight(MIN_SKY_LIGHT);
 	}
 
 	@Override
-	public void onAttached() {
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(94));
+	protected void updateTime(long time) {
+	}
+
+	@Override
+	public void updateWeather(Weather oldWeather, Weather newWeather) {
 	}
 }

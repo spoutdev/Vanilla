@@ -85,17 +85,22 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 
 		boolean looked = !prevTransform.getRotation().equals(newTransform.getRotation());
 
+		/*
+		 * Two scenarios:
+		 * - The entity moves more than 4 blocks and maybe changes rotation.
+		 * - The entity moves less than 4 blocks and maybe changes rotation.
+		 */
 		if (deltaX > 4 || deltaX < -4 || deltaY > 4 || deltaY < -4 || deltaZ > 4 || deltaZ < -4) {
 			messages.add(new EntityTeleportMessage(entity.getId(), newX, newY, newZ, newYaw, newPitch));
+			if (looked) {
+				messages.add(new EntityRotationMessage(entity.getId(), newYaw, newPitch));
+			}
 		} else {
 			if (looked) {
 				messages.add(new EntityRelativePositionRotationMessage(entity.getId(), deltaX, deltaY, deltaZ, newYaw, newPitch));
 			} else {
 				messages.add(new EntityRelativePositionMessage(entity.getId(), deltaX, deltaY, deltaZ));
 			}
-		}
-		if (looked) {
-			messages.add(new EntityRotationMessage(entity.getId(), newYaw, newPitch));
 		}
 
 		VanillaPhysicsComponent physics = entity.getOrCreate(VanillaPhysicsComponent.class);

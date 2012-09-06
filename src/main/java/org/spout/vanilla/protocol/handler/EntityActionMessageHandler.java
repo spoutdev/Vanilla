@@ -34,7 +34,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.entity.EntityActionMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 
@@ -45,36 +45,30 @@ public final class EntityActionMessageHandler extends MessageHandler<EntityActio
 			return;
 		}
 
-		Player player = session.getPlayer();
-
-		if (!(player.getController() instanceof VanillaPlayerController)) {
-			return;
-		}
-
-		VanillaPlayerController ve = (VanillaPlayerController) player.getController();
+		VanillaPlayer vanillaPlayer = session.getPlayer().getOrCreate(VanillaPlayer.class);
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 
 		switch (message.getAction()) {
 			case EntityActionMessage.ACTION_CROUCH:
 				parameters.add(EntityMetadataMessage.Parameters.META_CROUCHED.get());
-				session.send(false, new EntityMetadataMessage(player.getId(), parameters));
+				session.send(false, new EntityMetadataMessage(vanillaPlayer.getHolder().getId(), parameters));
 				break;
 			case EntityActionMessage.ACTION_UNCROUCH:
 				parameters.add(EntityMetadataMessage.Parameters.META_CROUCHED.get());
-				session.send(false, new EntityMetadataMessage(player.getId(), parameters));
+				session.send(false, new EntityMetadataMessage(vanillaPlayer.getHolder().getId(), parameters));
 				break;
 			case EntityActionMessage.ACTION_LEAVE_BED:
-				session.send(false, new EntityActionMessage(player.getId(), EntityActionMessage.ACTION_LEAVE_BED));
+				session.send(false, new EntityActionMessage(vanillaPlayer.getHolder().getId(), EntityActionMessage.ACTION_LEAVE_BED));
 				break;
 			case EntityActionMessage.ACTION_START_SPRINTING:
 				parameters.add(EntityMetadataMessage.Parameters.META_SPRINTING.get());
-				session.send(false, new EntityMetadataMessage(player.getId(), parameters));
-				ve.setSprinting(true);
+				session.send(false, new EntityMetadataMessage(vanillaPlayer.getHolder().getId(), parameters));
+				vanillaPlayer.setSprinting(true);
 				break;
 			case EntityActionMessage.ACTION_STOP_SPRINTING:
 				parameters.add(EntityMetadataMessage.Parameters.META_SPRINTING.get());
-				session.send(false, new EntityMetadataMessage(player.getId(), parameters));
-				ve.setSprinting(false);
+				session.send(false, new EntityMetadataMessage(vanillaPlayer.getHolder().getId(), parameters));
+				vanillaPlayer.setSprinting(false);
 				break;
 			default:
 				break;

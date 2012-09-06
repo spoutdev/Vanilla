@@ -39,11 +39,12 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.components.VanillaPlayerController;
-import org.spout.vanilla.components.source.HealthChangeReason;
+import org.spout.vanilla.components.HealthComponent;
+import org.spout.vanilla.components.player.VanillaPlayer;
 import org.spout.vanilla.event.player.PlayerRespawnEvent;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.ClientStatusMessage;
+import org.spout.vanilla.source.HealthChangeCause;
 
 public class ClientStatusHandler extends MessageHandler<ClientStatusMessage> {
 	@Override
@@ -57,7 +58,7 @@ public class ClientStatusHandler extends MessageHandler<ClientStatusMessage> {
 			}
 
 			Player player = session.getPlayer();
-			PlayerRespawnEvent event = new PlayerRespawnEvent(player, player.getLastTransform().getPosition().getWorld().getSpawnPoint().getPosition());
+			PlayerRespawnEvent event = new PlayerRespawnEvent(player, player.getTransform().getPosition().getWorld().getSpawnPoint().getPosition());
 			Spout.getEngine().getEventManager().callEvent(event);
 
 			if (event.isCancelled()) {
@@ -68,11 +69,12 @@ public class ClientStatusHandler extends MessageHandler<ClientStatusMessage> {
 			Point point = event.getPoint();
 			player.getTransform().setPosition(point);
 			player.getNetworkSynchronizer().setRespawned();
-			VanillaPlayerController controller = (VanillaPlayerController) player.getController();
-			controller.getHealth().setHealth(controller.getHealth().getMaxHealth(), HealthChangeReason.SPAWN);
+			VanillaPlayer vanillaPlayer = player.getOrCreate(VanillaPlayer.class);
+			//TODO add getHealth to VanillaPlayer...
+			vanillaPlayer.getHolder().get(HealthComponent.class).setHealth(20, HealthChangeCause.SPAWN);
 
 			//send spawn to everyone else
-			EntityProtocol ep = controller.getType().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
+			EntityProtocol ep = player.getNetwork().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
 			if (ep != null) {
 				List<Message> messages = ep.getSpawnMessages(player);
 				for (Player otherPlayer : player.getWorld().getPlayers()) {

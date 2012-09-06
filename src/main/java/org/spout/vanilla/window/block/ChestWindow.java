@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.window.block;
 
-import org.spout.vanilla.components.block.Chest;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 import org.spout.vanilla.util.intmap.SlotIndexGrid;
 import org.spout.vanilla.window.TransactionWindow;

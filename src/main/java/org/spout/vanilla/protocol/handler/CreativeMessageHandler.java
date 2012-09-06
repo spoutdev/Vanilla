@@ -33,7 +33,7 @@ import org.spout.api.inventory.InventoryBase;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.CreativeMessage;
 import org.spout.vanilla.window.ClickArgs;
 
@@ -44,14 +44,9 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 			return;
 		}
 
-		Player player = session.getPlayer();
-		if (!(player.getController() instanceof VanillaPlayerController)) {
-			return;
-		}
-
-		VanillaPlayerController controller = (VanillaPlayerController) player.getController();
-		if (controller.isSurvival()) {
-			player.kick("Now now, don't try that here. Won't work.");
+		VanillaPlayer player = session.getPlayer().getOrCreate(VanillaPlayer.class);
+		if (player.isSurvival()) {
+			((Player) player.getHolder()).kick("Now now, don't try that here. Won't work.");
 			return;
 		}
 

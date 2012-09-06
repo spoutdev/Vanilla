@@ -31,6 +31,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
+import org.spout.vanilla.source.DamageCause;
 import org.spout.vanilla.util.EnchantmentUtil;
 
 public abstract class Armor extends VanillaItemMaterial implements Enchantable {

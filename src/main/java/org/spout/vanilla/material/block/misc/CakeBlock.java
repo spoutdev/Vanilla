@@ -51,11 +51,6 @@ public class CakeBlock extends Solid {
 			} else {
 				setSize(block, CakeSize.getByData((short) (getSize(block).getData() + 1)));
 			}
-
-			if (entity.getController() instanceof VanillaPlayerController) {
-				VanillaPlayerController player = (VanillaPlayerController) entity.getController();
-				player.getSurvivalComponent().setHunger((short) (player.getSurvivalComponent().getHunger() + 2));
-			}
 		}
 	}
 

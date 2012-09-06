@@ -28,9 +28,11 @@ package org.spout.vanilla.material.item.tool.weapon;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.components.substance.projectile.Arrow;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.item.RangedWeapon;
 
@@ -65,6 +67,6 @@ public class Bow extends RangedWeapon {
 	}
 
 	public void shoot(Entity entity) {
-		entity.getWorld().createAndSpawnEntity(entity.getTransform().getPosition(), new Arrow(entity.getTransform().getRotation(), 0.8f, 1.0f));
+		entity.getWorld().createAndSpawnEntity(entity.getTransform().getPosition(), new Arrow(), LoadOption.NO_LOAD);
 	}
 }

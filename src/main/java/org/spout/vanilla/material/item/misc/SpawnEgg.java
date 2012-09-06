@@ -73,17 +73,6 @@ public class SpawnEgg extends VanillaItemMaterial {
 		if (type != Action.RIGHT_CLICK) {
 			return;
 		}
-		VanillaControllerType controllerType = VanillaControllerTypes.getByID(this.getData());
-		if (controllerType == null || !controllerType.canCreateController()) {
-			return;
-		}
-
-		block.getWorld().createAndSpawnEntity(block.translate(clickedface).getPosition(), controllerType.createController());
-		if (!((VanillaPlayerController) entity.getController()).hasInfiniteResources()) {
-			InventoryBase inv = VanillaPlayerUtil.getCurrentSlot(entity);
-			if (inv != null) {
-				inv.addItemAmount(0, -1);
-			}
-		}
+		//TODO re-write spawn egg spawning handling.
 	}
 }

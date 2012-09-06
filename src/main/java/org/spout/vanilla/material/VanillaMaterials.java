@@ -92,7 +92,7 @@ import org.spout.vanilla.material.block.ore.LapisLazuliBlock;
 import org.spout.vanilla.material.block.ore.LapisLazuliOre;
 import org.spout.vanilla.material.block.ore.MelonBlock;
 import org.spout.vanilla.material.block.ore.RedstoneOre;
-import org.spout.vanilla.material.block.piston.Piston;
+import org.spout.vanilla.material.block.piston.PistonBlock;
 import org.spout.vanilla.material.block.piston.PistonExtension;
 import org.spout.vanilla.material.block.plant.Cactus;
 import org.spout.vanilla.material.block.plant.CocoaPlant;
@@ -232,9 +232,9 @@ public final class VanillaMaterials {
 	public static final NoteBlockBlock NOTEBLOCK = new NoteBlockBlock("Note Block", 25);
 	public static final BedBlock BED_BLOCK = new BedBlock("Bed", 26);
 	public static final Web WEB = new Web("Cobweb", 30);
-	// == Piston ==
-	public static final Piston PISTON_STICKY_BASE = new Piston("Sticky Piston", 29, true);
-	public static final Piston PISTON_BASE = new Piston("Piston", 33, false);
+	// == PistonBlock ==
+	public static final PistonBlock PISTON_STICKY_BASE = new PistonBlock("Sticky Piston", 29, true);
+	public static final PistonBlock PISTON_BASE = new PistonBlock("Piston", 33, false);
 	public static final PistonExtension PISTON_EXTENSION = new PistonExtension("Piston (Head)", 34);
 	public static final PistonExtensionMoving PISTON_MOVING = new PistonExtensionMoving("Moved By Piston", 36);
 	// == Rails ==

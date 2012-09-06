@@ -31,13 +31,14 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.components.substance.material.Piston;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.controlled.ComponentMaterial;
 
 public class PistonExtension extends ComponentMaterial implements Directional {
 	public PistonExtension(String name, int id) {
-		super(VanillaControllerTypes.PISTON_MOVING, name, id);
+		super(Piston.class, name, id);
 		this.setHardness(0.5F).setResistance(0.8F).setTransparent();
 	}
 
@@ -45,8 +46,8 @@ public class PistonExtension extends ComponentMaterial implements Directional {
 	public void onDestroy(Block block) {
 		block = block.translate(this.getFacing(block).getOpposite());
 		BlockMaterial mat = block.getMaterial();
-		if (mat instanceof Piston) {
-			((Piston) mat).onDestroy(block);
+		if (mat instanceof PistonBlock) {
+			mat.onDestroy(block);
 		} else {
 			super.onDestroy(block);
 		}
@@ -69,11 +70,11 @@ public class PistonExtension extends ComponentMaterial implements Directional {
 
 	@Override
 	public BlockFace getFacing(Block block) {
-		return Piston.BTEWNS.get(block.getDataField(0x7));
+		return PistonBlock.BTEWNS.get(block.getDataField(0x7));
 	}
 
 	@Override
 	public void setFacing(Block block, BlockFace facing) {
-		block.setData(Piston.BTEWNS.indexOf(facing, 1));
+		block.setData(PistonBlock.BTEWNS.indexOf(facing, 1));
 	}
 }

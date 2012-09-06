@@ -78,11 +78,6 @@ public class PaintingItem extends VanillaItemMaterial {
 		if (type != Action.RIGHT_CLICK) {
 			return;
 		}
-		Painting painting = new Painting(PaintingStyle.values()[random.nextInt(PaintingStyle.values().length)], BlockFaces.NESW.indexOf(clickedface, -1));//TODO fix the 0 here, and the position on the next line
-		block.getWorld().createAndSpawnEntity(block.translate(clickedface).getPosition(), painting);
-		InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);
-		if (inv != null) {
-			inv.addItemAmount(0, -1);
-		}
+		//TODO re-write painting handling
 	}
 }

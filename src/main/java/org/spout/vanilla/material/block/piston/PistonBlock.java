@@ -43,13 +43,13 @@ import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class Piston extends VanillaBlockMaterial implements Directional, RedstoneTarget, InitializableMaterial {
+public class PistonBlock extends VanillaBlockMaterial implements Directional, RedstoneTarget, InitializableMaterial {
 	public static final BlockFaces BTEWNS = new BlockFaces(BlockFace.BOTTOM, BlockFace.TOP, BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH);
 	public static final int maxLength = 13;
 	public static final EffectRange physicsRange = new PlusEffectRange(maxLength, true);
 	private final boolean sticky;
 
-	public Piston(String name, int id, boolean sticky) {
+	public PistonBlock(String name, int id, boolean sticky) {
 		super(name, id);
 		this.sticky = sticky;
 		this.setHardness(0.5F).setResistance(0.8F).setTransparent();

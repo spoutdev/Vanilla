@@ -28,8 +28,22 @@ package org.spout.vanilla.components;
 
 import org.spout.api.component.components.EntityComponent;
 
+import org.spout.vanilla.configuration.VanillaConfiguration;
+
 /**
  * Component that adds a detector to entities to scan for and pickup items.
  */
 public class PickupItemComponent extends EntityComponent {
+	private final float DISTANCE = VanillaConfiguration.ITEM_PICKUP_RANGE.getFloat();
+
+	@Override
+	public boolean canTick() {
+		return true;
+	}
+
+	@Override
+	public void onTick(float dt) {
+
+	}
+
 }

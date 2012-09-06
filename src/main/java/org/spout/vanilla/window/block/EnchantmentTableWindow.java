@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.window.block;
 
-import org.spout.vanilla.components.block.EnchantmentTable;
+import org.spout.vanilla.components.substance.material.EnchantmentTable;
 import org.spout.vanilla.event.window.WindowPropertyEvent;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 import org.spout.vanilla.util.intmap.SlotIndexRow;

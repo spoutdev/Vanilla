@@ -28,10 +28,12 @@ package org.spout.vanilla.world.generator.theend.object;
 
 import java.util.Random;
 
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 
+import org.spout.vanilla.components.substance.EnderCrystal;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.object.LargePlantObject;
 
@@ -88,7 +90,7 @@ public class SpireObject extends LargePlantObject {
 		}
 		w.setBlockMaterial(x, y + totalHeight, z, crystalBase, (short) 0, w);
 		if (spawnEnderCrystal) {
-			w.createAndSpawnEntity(new Point(w, x + 0.5f, y + totalHeight - 1, z + 0.5f), new EnderCrystal());
+			w.createAndSpawnEntity(new Point(w, x + 0.5f, y + totalHeight - 1, z + 0.5f), new EnderCrystal(), LoadOption.NO_LOAD);
 		}
 	}
 

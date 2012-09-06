@@ -35,21 +35,20 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.exception.InvalidControllerException;
 
-import org.spout.vanilla.components.object.projectile.Potion;
+import org.spout.vanilla.components.substance.projectile.Potion;
 
 public class PotionSplashEvent extends ProjectileHitEvent {
 	private static HandlerList handlers = new HandlerList();
-	//ControllerType = Affected by potion, Double = Intensity of potion effect.
 	private final Map<Entity, Double> entitiesAffected;
 	private Potion potion;
 
 	public PotionSplashEvent(Entity e, Source source, Map<Entity, Double> entitiesAffected) throws InvalidControllerException {
 		super(e, source);
-		if (!(e.getController() instanceof Potion)) {
+		if (!e.has(Potion.class)) {
 			throw new InvalidControllerException();
 		}
 		this.entitiesAffected = entitiesAffected;
-		potion = (Potion) e.getController();
+		potion = e.get(Potion.class);
 	}
 
 	/**

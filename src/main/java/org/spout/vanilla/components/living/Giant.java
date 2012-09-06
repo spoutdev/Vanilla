@@ -37,6 +37,6 @@ import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 public class Giant extends EntityComponent {
 	@Override
 	public void onAttached() {
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(53));
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(200));
 	}
 }

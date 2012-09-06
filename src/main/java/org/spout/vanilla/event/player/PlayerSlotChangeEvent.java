@@ -45,14 +45,6 @@ public class PlayerSlotChangeEvent extends PlayerEvent {
 	}
 
 	/**
-	 * Gets the Vanilla Player entity of the player
-	 * @return Vanilla Player entity
-	 */
-	public VanillaPlayerController getController() {
-		return (VanillaPlayerController) this.getPlayer().getController();
-	}
-
-	/**
 	 * Gets whether the slot has actually changed
 	 * @return True if it changed, False if not
 	 */
@@ -65,7 +57,7 @@ public class PlayerSlotChangeEvent extends PlayerEvent {
 	 * @return previously selected slot
 	 */
 	public InventorySlot getOldSlot() {
-		return getController().getInventory().getQuickbar().getSlotInventory(this.getOldSlotIndex());
+		return getInventory().getQuickbar().getSlotInventory(this.getOldSlotIndex());
 	}
 
 	/**
@@ -73,7 +65,7 @@ public class PlayerSlotChangeEvent extends PlayerEvent {
 	 * @return newly selected slot
 	 */
 	public InventorySlot getNewSlot() {
-		return getController().getInventory().getQuickbar().getSlotInventory(this.getNewSlotIndex());
+		return getInventory().getQuickbar().getSlotInventory(this.getNewSlotIndex());
 	}
 
 	/**

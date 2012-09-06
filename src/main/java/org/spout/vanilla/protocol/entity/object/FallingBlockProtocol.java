@@ -27,19 +27,13 @@
 package org.spout.vanilla.protocol.entity.object;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.material.BlockMaterial;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.components.object.moving.MovingBlock;
 import org.spout.vanilla.components.substance.MovingMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.BasicVehicleEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnVehicleMessage;

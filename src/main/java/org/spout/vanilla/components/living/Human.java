@@ -31,14 +31,12 @@ import org.spout.api.component.components.EntityComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.gamemode.AdventureComponent;
 import org.spout.vanilla.components.gamemode.CreativeComponent;
 import org.spout.vanilla.components.gamemode.SurvivalComponent;
 import org.spout.vanilla.components.misc.HeadComponent;
-import org.spout.vanilla.components.misc.HealthComponent;
 import org.spout.vanilla.components.misc.InventoryComponent;
 import org.spout.vanilla.components.misc.PickupItemComponent;
 import org.spout.vanilla.data.GameMode;

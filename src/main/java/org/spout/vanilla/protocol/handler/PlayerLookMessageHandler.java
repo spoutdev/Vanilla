@@ -30,21 +30,24 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.living.Human;
+import org.spout.vanilla.components.misc.HeadComponent;
 import org.spout.vanilla.protocol.msg.PlayerLookMessage;
+
+import static org.spout.vanilla.protocol.ChannelBufferUtils.deProtocolifyRotation;
 
 public final class PlayerLookMessageHandler extends MessageHandler<PlayerLookMessage> {
 	@Override
 	public void handleServer(Session session, PlayerLookMessage message) {
-		if (!session.hasPlayer()) {
+		if (!session.hasPlayer() || !session.getPlayer().has(Human.class)) {
 			return;
 		}
 
-		Player player = session.getPlayer();
+		Player holder = session.getPlayer();
 
-		player.getTransform().setPitch(message.getPitch());
-		player.getTransform().setYaw(message.getYaw());
-		player.getTransform().setRoll(message.getRoll());
-		((VanillaPlayerController) player.getController()).getHead().setLooking(message.getLookingAtVector());
+		holder.getTransform().setPitch(deProtocolifyRotation((int) message.getPitch()));
+		holder.getTransform().setYaw(deProtocolifyRotation((int) message.getYaw()));
+		holder.getTransform().setRoll(deProtocolifyRotation((int) message.getRoll()));
+		holder.getOrCreate(HeadComponent.class).setLooking(message.getLookingAtVector());
 	}
 }

@@ -28,8 +28,6 @@ package org.spout.vanilla.material.block.controlled;
 
 import org.spout.api.geo.cuboid.Block;
 
-import org.spout.vanilla.components.VanillaControllerTypes;
-import org.spout.vanilla.components.block.Jukebox;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;

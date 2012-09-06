@@ -46,23 +46,23 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 			return;
 		}
 
-//		WindowComponent active = controller.getActiveWindow();
-//
-//		if (message.getItem() == null) {
-//			//Taking item from existing slot
-//			active.setItemOnCursor(null);
-//			Entry<InventoryBase, Integer> entry = active.getInventoryEntry(message.getSlot());
-//			if (entry != null) {
-//				active.onClick(entry.getKey(), entry.getValue(), new ClickArgs(false, false));
-//			}
-//		} else if (message.getSlot() == -1) {
-//			active.setItemOnCursor(message.getItem());
-//			active.onOutsideClick();
-//		} else {
-//			Entry<InventoryBase, Integer> entry = active.getInventoryEntry(message.getSlot());
-//			if (entry != null) {
-//				active.onCreativeClick(entry.getKey(), entry.getValue(), message.getItem());
-//			}
-//		}
+		//		WindowComponent active = controller.getActiveWindow();
+		//
+		//		if (message.getItem() == null) {
+		//			//Taking item from existing slot
+		//			active.setItemOnCursor(null);
+		//			Entry<InventoryBase, Integer> entry = active.getInventoryEntry(message.getSlot());
+		//			if (entry != null) {
+		//				active.onClick(entry.getKey(), entry.getValue(), new ClickArgs(false, false));
+		//			}
+		//		} else if (message.getSlot() == -1) {
+		//			active.setItemOnCursor(message.getItem());
+		//			active.onOutsideClick();
+		//		} else {
+		//			Entry<InventoryBase, Integer> entry = active.getInventoryEntry(message.getSlot());
+		//			if (entry != null) {
+		//				active.onCreativeClick(entry.getKey(), entry.getValue(), message.getItem());
+		//			}
+		//		}
 	}
 }

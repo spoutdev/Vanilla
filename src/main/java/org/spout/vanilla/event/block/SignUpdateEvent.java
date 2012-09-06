@@ -30,7 +30,6 @@ import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.components.block.Sign;
 
 public class SignUpdateEvent extends Event implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();

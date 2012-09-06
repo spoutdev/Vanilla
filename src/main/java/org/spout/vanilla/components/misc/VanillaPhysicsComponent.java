@@ -32,12 +32,12 @@ import org.spout.api.math.Vector3;
 
 /**
  * Extension of the PhysicsComponent to put bounds on velocity.
- *
+ * <p/>
  * Basically, the official protocol handles it like this...
  * - Motion is in block units, each tick at 1/32000
  * - Velocity is clamped at a min of -0.9 and a max of 0.9 blocks per tick
  * - Protocol velocity values are simply multiplying blocks by the max block units. This leaves
- * 	 a maximum of 28800 per axis per tick for protocol motion.
+ * a maximum of 28800 per axis per tick for protocol motion.
  */
 public class VanillaPhysicsComponent extends PhysicsComponent {
 	@Override

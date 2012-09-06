@@ -1,7 +1,6 @@
 package org.spout.vanilla.components.substance;
 
 import org.spout.api.component.components.EntityComponent;
-import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
 
 import org.spout.vanilla.VanillaPlugin;

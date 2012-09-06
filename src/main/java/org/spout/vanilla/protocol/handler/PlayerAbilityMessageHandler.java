@@ -26,12 +26,9 @@
  */
 package org.spout.vanilla.protocol.handler;
 
-import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.components.VanillaEntityController;
-import org.spout.vanilla.components.VanillaPlayerController;
 import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
 
 public final class PlayerAbilityMessageHandler extends MessageHandler<PlayerAbilityMessage> {
@@ -40,11 +37,5 @@ public final class PlayerAbilityMessageHandler extends MessageHandler<PlayerAbil
 		if (!session.hasPlayer()) {
 			return;
 		}
-
-		Player player = session.getPlayer();
-		if (!(player.getController() instanceof VanillaEntityController)) {
-			return;
-		}
-		((VanillaPlayerController) player.getController()).setFlying(message.isFlying());
 	}
 }

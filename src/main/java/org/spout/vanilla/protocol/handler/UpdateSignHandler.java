@@ -27,11 +27,9 @@
 package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.entity.Player;
-import org.spout.api.entity.controller.BlockController;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.components.block.Sign;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 
 public class UpdateSignHandler extends MessageHandler<UpdateSignMessage> {

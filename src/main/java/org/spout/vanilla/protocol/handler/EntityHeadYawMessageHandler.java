@@ -31,22 +31,19 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.components.component.HeadOwner;
+import org.spout.vanilla.components.misc.HeadComponent;
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityHeadYawMessage;
 
 public class EntityHeadYawMessageHandler extends MessageHandler<EntityHeadYawMessage> {
 	@Override
 	public void handleServer(Session session, EntityHeadYawMessage message) {
-		if (!session.hasPlayer()) {
+		if (!session.hasPlayer() || !session.getPlayer().has(HeadComponent.class)) {
 			return;
 		}
 
-		Player player = session.getPlayer();
-		if (!(player.getController() instanceof HeadOwner)) {
-			return;
-		}
-		HeadOwner creature = (HeadOwner) player.getController();
-		creature.getHead().setYaw(MathHelper.floor(ChannelBufferUtils.deProtocolifyRotation(message.getHeadYaw())));
+		Player holder = session.getPlayer();
+		HeadComponent head = holder.get(HeadComponent.class);
+		head.setYaw(MathHelper.floor(ChannelBufferUtils.deProtocolifyRotation(message.getHeadYaw())));
 	}
 }

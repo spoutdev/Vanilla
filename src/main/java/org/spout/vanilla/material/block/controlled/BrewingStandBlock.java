@@ -29,8 +29,6 @@ package org.spout.vanilla.material.block.controlled;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.components.VanillaControllerTypes;
-import org.spout.vanilla.components.block.BrewingStand;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 
 public class BrewingStandBlock extends ComponentMaterial {

@@ -29,6 +29,7 @@ package org.spout.vanilla.components.creature;
 import org.spout.api.component.components.EntityComponent;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
  * A component that identifies the entity as a Ocelot.
@@ -39,6 +40,6 @@ public class Ocelot extends EntityComponent {
 
 	@Override
 	public void onAttached() {
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new OcelotEntityProtocol());
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(98));
 	}
 }

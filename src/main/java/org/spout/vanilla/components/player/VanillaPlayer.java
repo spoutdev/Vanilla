@@ -45,42 +45,42 @@ public class VanillaPlayer extends EntityComponent {
 	}
 
 	public boolean isOnGround() {
-		return getHolder().getData().get(VanillaData.GROUND);
+		return getHolder().getData().get(VanillaData.IS_ON_GROUND);
 	}
 
 	public void setOnGround(boolean onGround) {
-		getHolder().getData().put(VanillaData.GROUND, onGround);
+		getHolder().getData().put(VanillaData.IS_ON_GROUND, onGround);
 	}
 
 	public boolean isFlying() {
-		return getHolder().getData().get(VanillaData.FLYING);
+		return getHolder().getData().get(VanillaData.IS_FLYING);
 	}
 
 	public void setFlying(boolean isFlying) {
-		getHolder().getData().put(VanillaData.FLYING, isFlying);
+		getHolder().getData().put(VanillaData.IS_FLYING, isFlying);
 	}
 
 	public boolean isSprinting() {
-		return getHolder().getData().get(VanillaData.SPRINTING);
+		return getHolder().getData().get(VanillaData.IS_SPRINTING);
 	}
 
 	public void setSprinting(boolean isSprinting) {
-		getHolder().getData().put(VanillaData.SPRINTING, isSprinting);
+		getHolder().getData().put(VanillaData.IS_SPRINTING, isSprinting);
 	}
 
 	public boolean isFalling() {
-		return getHolder().getData().get(VanillaData.FALLING);
+		return getHolder().getData().get(VanillaData.IS_FALLING);
 	}
 
 	public void setFalling(boolean isFalling) {
-		getHolder().getData().put(VanillaData.FALLING, isFalling);
+		getHolder().getData().put(VanillaData.IS_FALLING, isFalling);
 	}
 
 	public boolean isJumping() {
-		return getHolder().getData().get(VanillaData.JUMPING);
+		return getHolder().getData().get(VanillaData.IS_JUMPING);
 	}
 
 	public void setJumping(boolean isJumping) {
-		getHolder().getData().put(VanillaData.JUMPING, isJumping);
+		getHolder().getData().put(VanillaData.IS_JUMPING, isJumping);
 	}
 }

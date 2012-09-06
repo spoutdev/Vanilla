@@ -43,7 +43,7 @@ public class InteractComponent extends EntityComponent {
 	 * @param reach distance
 	 */
 	public void setReach(int reach) {
-		getDatatable().put(VanillaData.INTERACT_REACH, reach);
+		getData().put(VanillaData.INTERACT_REACH, reach);
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class InteractComponent extends EntityComponent {
 	 * @return reach distance
 	 */
 	public int getReach() {
-		return getDatatable().get(VanillaData.INTERACT_REACH);
+		return getData().get(VanillaData.INTERACT_REACH);
 	}
 
 	/**

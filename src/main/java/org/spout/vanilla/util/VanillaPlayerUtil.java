@@ -27,7 +27,6 @@
 package org.spout.vanilla.util;
 
 import org.spout.api.Source;
-import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
@@ -36,8 +35,8 @@ import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.components.VanillaPlayerController;
-import org.spout.vanilla.components.component.HeadOwner;
+import org.spout.vanilla.components.living.Human;
+import org.spout.vanilla.components.misc.HeadComponent;
 import org.spout.vanilla.inventory.player.PlayerInventory;
 
 public class VanillaPlayerUtil {
@@ -52,7 +51,7 @@ public class VanillaPlayerUtil {
 		}
 
 		Entity entity = (Entity) source;
-		return entity.getController() instanceof VanillaPlayerController && ((VanillaPlayerController) entity.getController()).isSurvival();
+		return entity.has(Human.class) && entity.get(Human.class).isSurvival();
 	}
 
 	/**
@@ -66,7 +65,7 @@ public class VanillaPlayerUtil {
 		}
 
 		Entity entity = (Entity) source;
-		return entity.getController() instanceof VanillaPlayerController && !((VanillaPlayerController) entity.getController()).isSurvival();
+		return entity.has(Human.class) && entity.get(Human.class).isCreative();
 	}
 
 	/**
@@ -89,10 +88,9 @@ public class VanillaPlayerUtil {
 	 * @return The block facing
 	 */
 	public static BlockFace getBlockFacing(Block block, Entity entity) {
-		Controller controller = entity.getController();
 		Point position;
-		if (controller instanceof HeadOwner) {
-			position = ((HeadOwner) controller).getHead().getPosition();
+		if (entity.has(HeadComponent.class)) {
+			position = entity.get(HeadComponent.class).getPosition();
 		} else {
 			position = entity.getTransform().getPosition();
 		}
@@ -117,8 +115,8 @@ public class VanillaPlayerUtil {
 		if (source instanceof Entity) {
 			Entity e = (Entity) source;
 			float yaw;
-			if (e.getController() instanceof HeadOwner) {
-				yaw = ((HeadOwner) e.getController()).getHead().getYaw();
+			if (e.has(HeadComponent.class)) {
+				yaw = e.get(HeadComponent.class).getYaw();
 			} else {
 				yaw = e.getTransform().getYaw();
 			}

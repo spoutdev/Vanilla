@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.event.player;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
@@ -34,7 +34,7 @@ import org.spout.api.event.player.PlayerEvent;
 
 public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private Controller caught = null;
+	private Entity caught = null;
 	private FishingStatus status;
 
 	public PlayerFishEvent(Player p, FishingStatus status) {
@@ -43,7 +43,7 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 		this.status = status;
 	}
 
-	public PlayerFishEvent(Player p, FishingStatus status, Controller caught) {
+	public PlayerFishEvent(Player p, FishingStatus status, Entity caught) {
 		super(p);
 		this.status = status;
 		this.caught = caught;
@@ -54,7 +54,7 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 	 * @return Controller of the entity caught by the player, null if fishing,
 	 *         bobber has gotten stuck in the ground or nothing has been caught
 	 */
-	public Controller getCaught() {
+	public Entity getCaught() {
 		return caught;
 	}
 
@@ -62,7 +62,7 @@ public class PlayerFishEvent extends PlayerEvent implements Cancellable {
 	 * Sets the entity of the entity that as caught.
 	 * @param caught Controller of the entity that was caught.
 	 */
-	public void setCaught(Controller caught) {
+	public void setCaught(Entity caught) {
 		this.caught = caught;
 	}
 

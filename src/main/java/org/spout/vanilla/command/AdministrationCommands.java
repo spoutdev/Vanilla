@@ -47,7 +47,8 @@ import org.spout.api.material.Material;
 import org.spout.api.protocol.NetworkSynchronizer;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.living.Human;
+import org.spout.vanilla.components.misc.HealthComponent;
 import org.spout.vanilla.components.world.VanillaSky;
 import org.spout.vanilla.configuration.OpConfiguration;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -298,11 +299,9 @@ public class AdministrationCommands {
 			player = (Player) source;
 		}
 
-		if (!(player.getController() instanceof VanillaPlayerController)) {
+		if (!player.has(Human.class)) {
 			throw new CommandException("Invalid player!");
 		}
-
-		VanillaPlayerController controller = (VanillaPlayerController) player.getController();
 
 		GameMode mode;
 
@@ -316,10 +315,10 @@ public class AdministrationCommands {
 			throw new CommandException("A game mode must be either a number between 0 and 2, 'CREATIVE', 'SURVIVAL' or 'ADVENTURE'");
 		}
 
-		controller.setGameMode(mode);
+		player.get(Human.class).setGamemode(mode);
 
 		if (!player.equals(source)) {
-			source.sendMessage(controller.getParent().getName(), "'s game mode has been changed to ", mode.name(), ".");
+			source.sendMessage(player.getName(), "'s game mode has been changed to ", mode.name(), ".");
 		}
 	}
 
@@ -439,14 +438,14 @@ public class AdministrationCommands {
 			if (!(source instanceof Player)) {
 				throw new CommandException("Don't be silly...you cannot kill yourself as the console.");
 			}
-			((VanillaPlayerController) ((Player) source).getController()).getHealth().die(source);
+			((Player) source).getOrCreate(HealthComponent.class).kill(source);
 		} else {
 			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			VanillaPlayerController victim = (VanillaPlayerController) ((Server) Spout.getEngine()).getPlayer(args.getString(0), true).getController();
+			Player victim = ((Server) Spout.getEngine()).getPlayer(args.getString(0), true);
 			if (victim != null) {
-				victim.getHealth().die(source);
+				victim.getOrCreate(HealthComponent.class).kill(source);
 			}
 		}
 	}

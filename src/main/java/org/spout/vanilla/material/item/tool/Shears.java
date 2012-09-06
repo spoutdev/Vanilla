@@ -35,8 +35,8 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.components.living.Sheep;
 import org.spout.vanilla.components.substance.Item;
+import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.util.ToolType;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Shears extends Tool {

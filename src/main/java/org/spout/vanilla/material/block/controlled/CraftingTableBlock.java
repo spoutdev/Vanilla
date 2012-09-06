@@ -27,15 +27,17 @@
 package org.spout.vanilla.material.block.controlled;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.components.substance.material.CraftingTable;
+import org.spout.vanilla.data.Instrument;
 
 public class CraftingTableBlock extends ComponentMaterial {
 	public CraftingTableBlock(String name, int id) {
-		super(VanillaControllerTypes.CRAFTING_TABLE, name, id);
+		super(CraftingTable.class, name, id);
 		this.setHardness(4.2F);
 	}
 
@@ -45,20 +47,12 @@ public class CraftingTableBlock extends ComponentMaterial {
 	}
 
 	@Override
-	public CraftingTable getController(Block block) {
-		return (CraftingTable) super.getController(block);
-	}
-
-	@Override
 	public void onInteractBy(Entity entity, Block block, Action action, BlockFace face) {
 		if (action == Action.RIGHT_CLICK) {
-			Controller controller = entity.getController();
-			if (!(controller instanceof VanillaPlayerController)) {
+			//TODO open the window for players
+			if (!(entity instanceof Player)) {
 				return;
 			}
-
-			// Open the crafting table
-			getController(block).open((VanillaPlayerController) controller);
 		}
 	}
 

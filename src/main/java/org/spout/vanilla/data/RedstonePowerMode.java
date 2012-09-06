@@ -24,42 +24,15 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.controlled;
+package org.spout.vanilla.data;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.block.BlockFaces;
-
-import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.util.MoveReaction;
-
-public class EnderChest extends ComponentMaterial implements Directional {
-	public EnderChest(String name, int id) {
-		super(VanillaControllerTypes.ENDER_CHEST, name, id);
-	}
-
-	@Override
-	public org.spout.vanilla.entity.block.EnderChest getController(Block block) {
-		return (org.spout.vanilla.entity.block.EnderChest) super.getController(block);
-	}
-
-	@Override
-	public MoveReaction getMoveReaction(Block block) {
-		return MoveReaction.DENY;
-	}
-
-	@Override
-	public BlockFace getFacing(Block block) {
-		return BlockFaces.EWNS.get(block.getData() - 2);
-	}
-
-	@Override
-	public void setFacing(Block block, BlockFace facing) {
-		block.setData((short) (BlockFaces.EWNS.indexOf(facing, 0) + 2));
-	}
-
-	@Override
-	public boolean isPlacementSuppressed() {
-		return true;
-	}
+public enum RedstonePowerMode {
+	/**
+	 * Power of all Redstone sources
+	 */
+	ALL,
+	/**
+	 * Power of all Redstone sources except wire
+	 */
+	ALLEXCEPTWIRE;
 }

@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -56,7 +57,7 @@ public class SolidMoving extends Solid {
 		super.onUpdate(oldMaterial, block);
 		if (!block.translate(BlockFace.BOTTOM).getMaterial().isPlacementObstacle()) {
 			// turn this block into a mobile block
-			block.getWorld().createAndSpawnEntity(block.getPosition());
+			block.getWorld().createAndSpawnEntity(block.getPosition(), block.getComponent(), LoadOption.NO_LOAD);
 			block.setMaterial(VanillaMaterials.AIR);
 		}
 	}

@@ -29,16 +29,17 @@ package org.spout.vanilla.material.block.controlled;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 
+import org.spout.vanilla.components.substance.material.NoteBlock;
+import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.util.Instrument;
-import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstoneUtil;
 
 public class NoteBlockBlock extends ComponentMaterial implements Fuel {
 	public final float BURN_TIME = 15.f;
 
 	public NoteBlockBlock(String name, int id) {
-		super(VanillaControllerTypes.NOTE_BLOCK, name, id);
+		super(NoteBlock.class, name, id);
 		this.setHardness(0.8F).setResistance(1.3F);
 	}
 
@@ -63,14 +64,10 @@ public class NoteBlockBlock extends ComponentMaterial implements Fuel {
 	}
 
 	@Override
-	public NoteBlock getController(Block block) {
-		return (NoteBlock) super.getController(block);
-	}
-
-	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
-		getController(block).setPowered(isReceivingPower(block));
+		NoteBlock note = block.getComponent();
+		note.setPowered(isReceivingPower(block));
 	}
 
 	@Override

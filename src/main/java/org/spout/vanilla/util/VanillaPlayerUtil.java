@@ -30,44 +30,12 @@ import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.misc.HeadComponent;
-import org.spout.vanilla.inventory.player.PlayerInventory;
 
 public class VanillaPlayerUtil {
-	/**
-	 * Checks if the source is an entity with a vanilla player entity in survival mode
-	 * @param source to check
-	 * @return True if vanilla survival player entity
-	 */
-	public static boolean isSurvival(Source source) {
-		if (!(source instanceof Entity)) {
-			return false;
-		}
-
-		Entity entity = (Entity) source;
-		return entity.has(Human.class) && entity.get(Human.class).isSurvival();
-	}
-
-	/**
-	 * Checks if the source is an entity with a vanilla player entity in creative mode
-	 * @param source to check
-	 * @return True if vanilla creative player entity
-	 */
-	public static boolean isCreative(Source source) {
-		if (!(source instanceof Entity)) {
-			return false;
-		}
-
-		Entity entity = (Entity) source;
-		return entity.has(Human.class) && entity.get(Human.class).isCreative();
-	}
-
 	/**
 	 * Gets the required facing for a Block to look at a possible Entity in the Source
 	 * @param block to get the facing for
@@ -123,40 +91,5 @@ public class VanillaPlayerUtil {
 			return BlockFace.fromYaw(yaw);
 		}
 		return BlockFace.NORTH;
-	}
-
-	/**
-	 * Tries to find the player inventory of the source
-	 * @param source
-	 * @return inventory
-	 */
-	public static PlayerInventory getInventory(Source source) {
-		if (source instanceof Entity) {
-			Entity e = (Entity) source;
-			if (e.getController() instanceof VanillaPlayerController) {
-				return ((VanillaPlayerController) e.getController()).getInventory();
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Tries to find the player selected inventory slot of the source
-	 * @param source
-	 * @return inventory slot that is selected
-	 */
-	public static InventorySlot getCurrentSlot(Source source) {
-		PlayerInventory inv = getInventory(source);
-		return inv == null ? null : inv.getQuickbar().getCurrentSlotInventory();
-	}
-
-	/**
-	 * Tries to find the currently active item (held item) from a player entity source
-	 * @param source
-	 * @return the held item, or null if not found
-	 */
-	public static ItemStack getCurrentItem(Source source) {
-		InventorySlot inv = getCurrentSlot(source);
-		return inv == null ? null : inv.getItem();
 	}
 }

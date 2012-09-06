@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.command;
 
-import java.util.Set;
-
 import org.spout.api.Client;
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -41,10 +39,8 @@ import org.spout.api.exception.CommandException;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.Material;
-import org.spout.api.protocol.NetworkSynchronizer;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.living.Human;
@@ -55,7 +51,6 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.util.VanillaBlockUtil;
 
 public class AdministrationCommands {
 	private final VanillaPlugin plugin;
@@ -74,7 +69,7 @@ public class AdministrationCommands {
 			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			player = ((Server) Spout.getEngine()).getPlayer(args.getString(index++), true);
+			player = Spout.getEngine().getPlayer(args.getString(index++), true);
 
 			if (player == null || !player.isOnline()) {
 				throw new CommandException(args.getString(0) + " is not online.");
@@ -133,7 +128,7 @@ public class AdministrationCommands {
 			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			player = ((Server) Spout.getEngine()).getPlayer(args.getString(index++), true);
+			player = Spout.getEngine().getPlayer(args.getString(index++), true);
 		}
 
 		if (player == null) {
@@ -173,6 +168,7 @@ public class AdministrationCommands {
 
 		int count = args.getInteger(++index, 1);
 
+		//TODO inventory
 		//		controller.getInventory().getMain().addItem(new ItemStack(material, count)); DATAMAPS
 
 		source.sendMessage("Gave ", player.getName(), " ", count, " ", material.getDisplayName());
@@ -189,7 +185,7 @@ public class AdministrationCommands {
 		OpConfiguration ops = VanillaConfiguration.OPS;
 		ops.setOp(playerName, false);
 		source.sendMessage(ChatStyle.YELLOW, playerName, " had their operator status revoked!");
-		Player player = ((Server) Spout.getEngine()).getPlayer(playerName, true);
+		Player player = Spout.getEngine().getPlayer(playerName, true);
 		if (player != null && !source.equals(player)) {
 			player.sendMessage(ChatStyle.YELLOW, "You had your operator status revoked!");
 		}
@@ -206,7 +202,7 @@ public class AdministrationCommands {
 		OpConfiguration ops = VanillaConfiguration.OPS;
 		ops.setOp(playerName, true);
 		source.sendMessage(ChatStyle.YELLOW, playerName, " is now an operator!");
-		Player player = ((Server) Spout.getEngine()).getPlayer(playerName, true);
+		Player player = Spout.getEngine().getPlayer(playerName, true);
 		if (player != null && !source.equals(player)) {
 			player.sendMessage(ChatStyle.YELLOW, "You are now an operator!");
 		}
@@ -232,51 +228,51 @@ public class AdministrationCommands {
 		}
 	}
 
-	//	@Command(aliases = {"time"}, usage = "<add|set> <0-24000|day|night|dawn|dusk> [world]", desc = "Set the time of the server", min = 2, max = 3)
-	//	@CommandPermissions("vanilla.command.time")
-	//	public void time(CommandContext args, CommandSource source) throws CommandException {
-	//		int time = 0;
-	//		boolean relative = false;
-	//		if (args.getString(0).equalsIgnoreCase("set")) {
-	//			if (args.isInteger(1)) {
-	//				time = args.getInteger(1);
-	//			} else {
-	//				try {
-	//					time = Times.get(args.getString(1)).getTime();
-	//				} catch (Exception e) {
-	//					throw new CommandException("'" + args.getString(1) + "' is not a valid time.");
-	//				}
-	//			}
-	//		} else if (args.getString(0).equalsIgnoreCase("add")) {
-	//			relative = true;
-	//			if (args.isInteger(1)) {
-	//				time = args.getInteger(1);
-	//			} else {
-	//				throw new CommandException("Argument to 'add' must be an integer.");
-	//			}
-	//		}
-	//
-	//		World world;
-	//		if (args.length() == 3) {
-	//			world = plugin.getEngine().getWorld(args.getString(2));
-	//			if (world == null) {
-	//				throw new CommandException("'" + args.getString(2) + "' is not a valid world.");
-	//			}
-	//		} else if (source instanceof Player) {
-	//			Player player = (Player) source;
-	//			world = player.getWorld();
-	//		} else {
-	//			throw new CommandException("You must specify a world.");
-	//		}
-	//
-	//		VanillaSky sky = VanillaSky.getSky(world);
-	//		if (sky == null) {
-	//			throw new CommandException("The world '" + args.getString(2) + "' is not available.");
-	//		}
-	//
-	//		sky.setTime(relative ? (sky.getTime() + time) : time);
-	//		source.sendMessage("Set ", world.getName(), "'s time to: ", sky.getTime());
-	//	}
+	@Command(aliases = {"time"}, usage = "<add|set> <0-24000|day|night|dawn|dusk> [world]", desc = "Set the time of the server", min = 2, max = 3)
+	@CommandPermissions("vanilla.command.time")
+	public void time(CommandContext args, CommandSource source) throws CommandException {
+		int time = 0;
+		boolean relative = false;
+		if (args.getString(0).equalsIgnoreCase("set")) {
+			if (args.isInteger(1)) {
+				time = args.getInteger(1);
+			} else {
+				try {
+					time = Times.get(args.getString(1)).getTime();
+				} catch (Exception e) {
+					throw new CommandException("'" + args.getString(1) + "' is not a valid time.");
+				}
+			}
+		} else if (args.getString(0).equalsIgnoreCase("add")) {
+			relative = true;
+			if (args.isInteger(1)) {
+				time = args.getInteger(1);
+			} else {
+				throw new CommandException("Argument to 'add' must be an integer.");
+			}
+		}
+
+		World world;
+		if (args.length() == 3) {
+			world = plugin.getEngine().getWorld(args.getString(2));
+			if (world == null) {
+				throw new CommandException("'" + args.getString(2) + "' is not a valid world.");
+			}
+		} else if (source instanceof Player) {
+			Player player = (Player) source;
+			world = player.getWorld();
+		} else {
+			throw new CommandException("You must specify a world.");
+		}
+
+		VanillaSky sky = VanillaSky.getSky(world);
+		if (sky == null) {
+			throw new CommandException("The world '" + args.getString(2) + "' is not available.");
+		}
+
+		sky.setTime(relative ? (sky.getTime() + time) : time);
+		source.sendMessage("Set ", world.getName(), "'s time to: ", sky.getTime());
+	}
 
 	@Command(aliases = {"gamemode", "gm"}, usage = "[player] <0|1|2|survival|creative|adventure> (0 = SURVIVAL, 1 = CREATIVE, 2 = ADVENTURE)", desc = "Change a player's game mode", min = 1, max = 2)
 	@CommandPermissions("vanilla.command.gamemode")
@@ -287,7 +283,7 @@ public class AdministrationCommands {
 			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			player = ((Server) Spout.getEngine()).getPlayer(args.getString(index++), true);
+			player = Spout.getEngine().getPlayer(args.getString(index++), true);
 			if (player == null) {
 				throw new CommandException(args.getString(0) + " is not online.");
 			}
@@ -392,42 +388,6 @@ public class AdministrationCommands {
 			default:
 				source.sendMessage("Weather set to ", weather.name(), ".");
 				break;
-		}
-	}
-
-	@Command(aliases = "debug", usage = "[type] (/resend /resendall)", desc = "Debug commands", max = 2)
-	@CommandPermissions("vanilla.command.debug")
-	public void debug(CommandContext args, CommandSource source) throws CommandException {
-		Player player;
-		if (source instanceof Player) {
-			player = (Player) source;
-		} else {
-			if (Spout.getEngine() instanceof Client) {
-				throw new CommandException("You cannot search for players unless you are in server mode.");
-			}
-			player = ((Server) Spout.getEngine()).getPlayer(args.getString(1, ""), true);
-			if (player == null) {
-				source.sendMessage("Must be a player or send player name in arguments");
-				return;
-			}
-		}
-
-		if (args.getString(0, "").contains("resendall")) {
-			NetworkSynchronizer network = player.getNetworkSynchronizer();
-			Set<Chunk> chunks = network.getActiveChunks();
-			for (Chunk c : chunks) {
-				network.sendChunk(c);
-			}
-
-			source.sendMessage("All chunks resent");
-		} else if (args.getString(0, "").contains("resend")) {
-			player.getNetworkSynchronizer().sendChunk(player.getChunk());
-			source.sendMessage("Chunk resent");
-		} else if (args.getString(0, "").contains("relight")) {
-			for (Chunk chunk : VanillaBlockUtil.getChunkColumn(player.getChunk())) {
-				chunk.initLighting();
-			}
-			source.sendMessage("Chunk lighting is being initialized");
 		}
 	}
 

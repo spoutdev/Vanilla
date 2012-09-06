@@ -29,8 +29,8 @@ package org.spout.vanilla.event.block;
 import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
 import org.spout.api.protocol.event.ProtocolEvent;
-import org.spout.vanilla.material.item.misc.Sign;
 
+import org.spout.vanilla.material.item.misc.Sign;
 
 public class SignUpdateEvent extends Event implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();

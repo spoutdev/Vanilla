@@ -32,11 +32,11 @@ import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.data.tool.ToolLevel;
+import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.util.ToolLevel;
-import org.spout.vanilla.util.ToolType;
 
 public class Snow extends GroundAttachable implements RandomBlockMaterial, InitializableMaterial {
 	private static final byte MIN_MELT_LIGHT = 11;

@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.data.tool.ToolLevel;
+import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.util.Instrument;
-import org.spout.vanilla.util.ToolLevel;
-import org.spout.vanilla.util.ToolType;
 
 public class MossStone extends Solid {
 	public MossStone(String name, int id) {

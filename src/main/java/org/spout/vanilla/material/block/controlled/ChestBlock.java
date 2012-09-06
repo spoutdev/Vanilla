@@ -33,18 +33,23 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.components.substance.material.Chest;
+import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.ItemUtil;
-import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class ChestBlock extends ComponentMaterial implements Directional, Fuel {
 	public final float BURN_TIME = 15.f;
 
 	public ChestBlock(String name, int id) {
-		super(VanillaControllerTypes.CHEST, name, id);
+		this(Chest.class, name, id);
+	}
+
+	public ChestBlock(Class<? extends Chest> clazz, String name, int id) {
+		super(clazz, name, id);
 		this.setHardness(2.5F).setResistance(4.2F).setTransparent();
 	}
 
@@ -60,17 +65,15 @@ public class ChestBlock extends ComponentMaterial implements Directional, Fuel {
 
 	@Override
 	public void onDestroy(Block block) {
-		BlockController old = block.getController();
-		if (old != null && old instanceof org.spout.vanilla.entity.block.Chest) {
-			//Drop items
-			ItemStack[] items = ((org.spout.vanilla.entity.block.Chest) old).getInventory().getContents();
-			Point position = block.getPosition();
-			for (ItemStack item : items) {
-				if (item == null) {
-					continue;
-				}
-				ItemUtil.dropItemNaturally(position, item);
+		Chest chest = block.getComponent();
+		//Drop items
+		ItemStack[] items = chest.getInventory().getContents();
+		Point position = block.getPosition();
+		for (ItemStack item : items) {
+			if (item == null) {
+				continue;
 			}
+			ItemUtil.dropItemNaturally(position, item);
 		}
 		super.onDestroy(block);
 	}

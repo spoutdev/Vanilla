@@ -30,9 +30,9 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
+import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Portal;
-import org.spout.vanilla.util.MoveReaction;
 
 public class NetherPortal extends Portal {
 	public NetherPortal(String name, int id) {

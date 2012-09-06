@@ -24,24 +24,37 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.util;
+package org.spout.vanilla.material.block.controlled;
 
-import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.data.effect.type.NoteSoundEffect;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
-public enum Instrument {
-	PIANO(SoundEffects.NOTE_HARP),
-	BASSDRUM(SoundEffects.NOTE_BD),
-	SNAREDRUM(SoundEffects.NOTE_SNARE),
-	CLICK(SoundEffects.NOTE_HAT),
-	BASSGUITAR(SoundEffects.NOTE_BASSATTACK);
-	private NoteSoundEffect sound;
+import org.spout.vanilla.components.substance.material.EnderChest;
+import org.spout.vanilla.data.MoveReaction;
 
-	private Instrument(NoteSoundEffect effect) {
-		this.sound = effect;
+public class EnderChestBlock extends ChestBlock {
+	public EnderChestBlock(String name, int id) {
+		super(EnderChest.class, name, id);
 	}
 
-	public NoteSoundEffect getEffect() {
-		return this.sound;
+	@Override
+	public MoveReaction getMoveReaction(Block block) {
+		return MoveReaction.DENY;
+	}
+
+	@Override
+	public BlockFace getFacing(Block block) {
+		return BlockFaces.EWNS.get(block.getData() - 2);
+	}
+
+	@Override
+	public void setFacing(Block block, BlockFace facing) {
+		block.setData((short) (BlockFaces.EWNS.indexOf(facing, 0) + 2));
+	}
+
+	@Override
+	public boolean isPlacementSuppressed() {
+		return true;
 	}
 }

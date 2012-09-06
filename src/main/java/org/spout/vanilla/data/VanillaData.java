@@ -32,8 +32,6 @@ import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.material.VanillaMaterials;
-
 /**
  * * Common Vanilla-like data mappings that are found in Vanilla.
  */
@@ -88,4 +86,6 @@ public class VanillaData {
 	public static final DefaultedKey<Boolean> TAMED = new DefaultedKeyImpl<Boolean>("is_tamed", false);
 	//Ocelot-specific
 	public static final DefaultedKey<Byte> SKIN = new DefaultedKeyImpl<Byte>("skin", (byte) 0);
+	//Redstone-specific
+	public static final DefaultedKey<Boolean> IS_POWERED = new DefaultedKeyImpl<Boolean>("is_powered", false);
 }

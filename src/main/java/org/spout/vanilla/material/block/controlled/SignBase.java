@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.controlled;
 
 import org.spout.api.Source;
 import org.spout.api.entity.Entity;
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -35,10 +36,11 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.components.substance.material.Sign;
+import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
-import org.spout.vanilla.util.MoveReaction;
 
 public abstract class SignBase extends AbstractAttachable implements InitializableMaterial {
 	public SignBase(String name, int id) {
@@ -53,7 +55,7 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 
 	@Override
 	public void handlePlacement(Block block, short data, BlockFace attachedFace) {
-		block.getWorld().createAndSpawnEntity(block.getPosition(), new Sign());
+		block.getWorld().createAndSpawnEntity(block.getPosition(), new Sign(), LoadOption.NO_LOAD);
 		this.setAttachedFace(block, attachedFace);
 	}
 

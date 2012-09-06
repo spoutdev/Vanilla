@@ -36,10 +36,10 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 
+import org.spout.vanilla.data.RedstonePowerMode;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.block.AttachedRedstoneSource;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
-import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class StoneButton extends AttachedRedstoneSource implements PointAttachable, DynamicMaterial {

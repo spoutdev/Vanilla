@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.material.item.tool.weapon;
 
+import org.spout.vanilla.data.tool.ToolLevel;
+import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.ToolLevel;
-import org.spout.vanilla.util.ToolType;
 
 public class Sword extends Tool {
 	public Sword(String name, int id, ToolLevel toolLevel) {

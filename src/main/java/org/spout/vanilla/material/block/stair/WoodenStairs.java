@@ -29,11 +29,11 @@ package org.spout.vanilla.material.block.stair;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Stairs;
-import org.spout.vanilla.util.Instrument;
 
 public class WoodenStairs extends Stairs implements Fuel, Burnable {
 	public final float BURN_TIME = 15.f;

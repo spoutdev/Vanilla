@@ -24,15 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.util;
+package org.spout.vanilla.data;
 
-public enum RedstonePowerMode {
-	/**
-	 * Power of all Redstone sources
-	 */
-	ALL,
-	/**
-	 * Power of all Redstone sources except wire
-	 */
-	ALLEXCEPTWIRE;
+import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.data.effect.type.NoteSoundEffect;
+
+public enum Instrument {
+	PIANO(SoundEffects.NOTE_HARP),
+	BASSDRUM(SoundEffects.NOTE_BD),
+	SNAREDRUM(SoundEffects.NOTE_SNARE),
+	CLICK(SoundEffects.NOTE_HAT),
+	BASSGUITAR(SoundEffects.NOTE_BASSATTACK);
+	private NoteSoundEffect sound;
+
+	private Instrument(NoteSoundEffect effect) {
+		this.sound = effect;
+	}
+
+	public NoteSoundEffect getEffect() {
+		return this.sound;
+	}
 }

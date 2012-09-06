@@ -37,12 +37,15 @@ import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
 import org.spout.api.util.map.concurrent.AtomicShortArray;
 
+import org.spout.vanilla.data.Music;
+import org.spout.vanilla.data.tool.ToolLevel;
+import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.block.controlled.BrewingStandBlock;
 import org.spout.vanilla.material.block.controlled.ChestBlock;
 import org.spout.vanilla.material.block.controlled.CraftingTableBlock;
 import org.spout.vanilla.material.block.controlled.DispenserBlock;
 import org.spout.vanilla.material.block.controlled.EnchantmentTableBlock;
-import org.spout.vanilla.material.block.controlled.EnderChest;
+import org.spout.vanilla.material.block.controlled.EnderChestBlock;
 import org.spout.vanilla.material.block.controlled.FurnaceBlock;
 import org.spout.vanilla.material.block.controlled.JukeboxBlock;
 import org.spout.vanilla.material.block.controlled.MonsterSpawnerBlock;
@@ -208,9 +211,6 @@ import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Shears;
 import org.spout.vanilla.material.item.tool.weapon.Bow;
 import org.spout.vanilla.material.item.tool.weapon.Sword;
-import org.spout.vanilla.util.Music;
-import org.spout.vanilla.util.ToolLevel;
-import org.spout.vanilla.util.ToolType;
 
 // TODO: Remove all casts and separate remaining "set" methods out into each material's init() method
 public final class VanillaMaterials {
@@ -295,7 +295,7 @@ public final class VanillaMaterials {
 	public static final Fire FIRE = new Fire("Fire", 51);
 	public static final MonsterSpawnerBlock MONSTER_SPAWNER = new MonsterSpawnerBlock("Monster Spawner", 52);
 	public static final ChestBlock CHEST = new ChestBlock("Chest", 54);
-	public static final EnderChest ENDER_CHEST = new EnderChest("Ender Chest", 130);
+	public static final EnderChestBlock ENDER_CHEST_BLOCK = new EnderChestBlock("Ender Chest", 130);
 	public static final RedstoneWire REDSTONE_WIRE = new RedstoneWire("Redstone Wire", 55);
 	public static final CraftingTableBlock CRAFTING_TABLE = new CraftingTableBlock("Crafting Table", 58);
 	public static final WheatCrop WHEATCROP = new WheatCrop("Wheat Crop", 59);

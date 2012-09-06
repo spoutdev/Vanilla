@@ -30,6 +30,7 @@ import org.spout.api.Source;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
+
 import org.spout.vanilla.material.item.misc.Sign;
 
 /**

@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.item.tool;
 
-import org.spout.vanilla.util.ToolType;
+import org.spout.vanilla.data.tool.ToolType;
 
 public class FishingRod extends Tool {
 	public FishingRod(String name, int id, short durability) {

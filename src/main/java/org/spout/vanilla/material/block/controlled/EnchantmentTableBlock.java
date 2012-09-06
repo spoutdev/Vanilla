@@ -29,14 +29,15 @@ package org.spout.vanilla.material.block.controlled;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.components.substance.material.EnchantmentTable;
+import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.util.Instrument;
-import org.spout.vanilla.util.MoveReaction;
 
 public class EnchantmentTableBlock extends ComponentMaterial implements Directional {
 	public EnchantmentTableBlock(String name, int id) {
-		super(VanillaControllerTypes.ENCHANTMENT_TABLE, name, id);
+		super(EnchantmentTable.class, name, id);
 		this.setHardness(5.0F).setResistance(2000.0F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

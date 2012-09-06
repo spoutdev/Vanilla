@@ -36,11 +36,11 @@ import org.spout.api.material.range.ListEffectRange;
 import org.spout.api.material.range.PlusEffectRange;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.data.RedstonePowerMode;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.util.RedstonePowerMode;
 import org.spout.vanilla.util.RedstoneUtil;
 
 public class RedstoneWire extends GroundAttachable implements RedstoneSource, RedstoneTarget, InitializableMaterial {

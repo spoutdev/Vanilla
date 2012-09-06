@@ -27,8 +27,8 @@
 package org.spout.vanilla.material.block.solid;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.util.ToolType;
 
 public class Dirt extends Solid {
 	public Dirt(String name, int id) {

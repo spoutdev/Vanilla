@@ -31,10 +31,11 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.components.substance.material.Furnace;
+import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class FurnaceBlock extends ComponentMaterial implements Directional {
@@ -42,7 +43,7 @@ public class FurnaceBlock extends ComponentMaterial implements Directional {
 	private final boolean burning;
 
 	public FurnaceBlock(String name, int id, boolean burning) {
-		super(VanillaControllerTypes.FURNACE, name, id);
+		super(Furnace.class, name, id);
 		this.burning = burning;
 		this.setHardness(3.5F).setResistance(5.8F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
@@ -59,11 +60,6 @@ public class FurnaceBlock extends ComponentMaterial implements Directional {
 	 */
 	public boolean isBurning() {
 		return this.burning;
-	}
-
-	@Override
-	public Furnace getController(Block block) {
-		return (Furnace) super.getController(block);
 	}
 
 	/**

@@ -31,10 +31,10 @@ import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.SpreadingSolid;
-import org.spout.vanilla.util.ToolType;
 
 public class Grass extends SpreadingSolid implements RandomBlockMaterial, InitializableMaterial {
 	public Grass(String name, int id) {

@@ -31,9 +31,9 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.controlled.ComponentMaterial;
-import org.spout.vanilla.util.MoveReaction;
 
 public class PistonExtension extends ComponentMaterial implements Directional {
 	public PistonExtension(String name, int id) {

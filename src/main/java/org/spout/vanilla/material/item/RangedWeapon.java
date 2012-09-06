@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.material.item;
 
+import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.ToolType;
 
 public class RangedWeapon extends Tool {
 	private int rangedDamage = 1;

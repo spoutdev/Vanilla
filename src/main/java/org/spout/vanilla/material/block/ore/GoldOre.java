@@ -28,12 +28,12 @@ package org.spout.vanilla.material.block.ore;
 
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.data.tool.ToolLevel;
+import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
 import org.spout.vanilla.material.block.controlled.FurnaceBlock;
-import org.spout.vanilla.util.ToolLevel;
-import org.spout.vanilla.util.ToolType;
 
 public class GoldOre extends Ore implements TimedCraftable {
 	public GoldOre(String name, int id) {

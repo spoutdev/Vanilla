@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.util.Instrument;
 
 public class Brick extends Solid {
 	public Brick(String name, int id) {

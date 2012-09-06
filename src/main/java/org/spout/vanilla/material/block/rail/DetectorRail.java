@@ -32,9 +32,9 @@ import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
 
+import org.spout.vanilla.data.RailsState;
+import org.spout.vanilla.data.RedstonePowerMode;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
-import org.spout.vanilla.util.RailsState;
-import org.spout.vanilla.util.RedstonePowerMode;
 
 public class DetectorRail extends RailBase implements RedstoneSource, DynamicMaterial {
 	public static final int TICK_DELAY = 1000;

@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.util.Instrument;
+import org.spout.vanilla.data.Instrument;
 
 public abstract class Ore extends Solid {
 	public Ore(String name, int id) {

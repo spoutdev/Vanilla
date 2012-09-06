@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.material.block.ore;
 
+import org.spout.vanilla.data.tool.ToolLevel;
+import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.util.ToolLevel;
-import org.spout.vanilla.util.ToolType;
 
 public class EmeraldBlock extends Solid {
 	public EmeraldBlock(String name, int id) {

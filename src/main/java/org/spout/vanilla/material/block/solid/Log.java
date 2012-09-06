@@ -38,7 +38,9 @@ import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
@@ -48,8 +50,6 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.controlled.FurnaceBlock;
 import org.spout.vanilla.material.block.plant.Sapling;
 import org.spout.vanilla.material.item.misc.Coal;
-import org.spout.vanilla.util.Instrument;
-import org.spout.vanilla.util.ToolType;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable, Burnable, Directional {

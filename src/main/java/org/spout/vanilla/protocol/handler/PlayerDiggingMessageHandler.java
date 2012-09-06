@@ -146,9 +146,9 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				blockMaterial.onInteractBy(player, block, Action.LEFT_CLICK, clickedFace);
 			}
 			// Interaction with entity TODO: Add block entity interaction back
-//			if (blockMaterial.hasController()) {
-//				blockMaterial.getController(block).onInteract(player, Action.LEFT_CLICK);
-//			}
+			//			if (blockMaterial.hasController()) {
+			//				blockMaterial.getController(block).onInteract(player, Action.LEFT_CLICK);
+			//			}
 
 			if (isInteractable) {
 				Block neigh = block.translate(clickedFace);

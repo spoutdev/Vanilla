@@ -29,8 +29,8 @@ package org.spout.vanilla.data.effect.type;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 
+import org.spout.vanilla.data.Music;
 import org.spout.vanilla.data.effect.GeneralEffect;
-import org.spout.vanilla.util.Music;
 
 public class MusicDiscEffect extends GeneralEffect {
 	private static final int MUSIC_RANGE = 48;

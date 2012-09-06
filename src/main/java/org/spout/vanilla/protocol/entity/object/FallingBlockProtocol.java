@@ -33,7 +33,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.components.substance.MovingMaterial;
+import org.spout.vanilla.components.substance.MovingBlock;
 import org.spout.vanilla.protocol.entity.BasicVehicleEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnVehicleMessage;
@@ -47,7 +47,7 @@ public class FallingBlockProtocol extends BasicVehicleEntityProtocol {
 
 	@Override
 	public List<Message> getSpawnMessages(Entity entity) {
-		MovingMaterial moving = entity.getOrCreate(MovingMaterial.class);
+		MovingBlock moving = entity.getOrCreate(MovingBlock.class);
 		short spawnId = (short) moving.getMaterial().getMinecraftId();
 		List<Parameter<?>> parameters = Arrays.<Parameter<?>>asList(new Parameter<Short>(Parameter.TYPE_SHORT, BLOCK_TYPE_METADATA_INDEX, spawnId));
 		return Arrays.<Message>asList(new EntitySpawnVehicleMessage(entity.getId(), spawnId, entity.getTransform().getPosition()), new EntityMetadataMessage(entity.getId(), parameters));

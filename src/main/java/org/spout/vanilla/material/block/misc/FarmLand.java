@@ -32,12 +32,12 @@ import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
 
+import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Crop;
 import org.spout.vanilla.material.block.liquid.Water;
-import org.spout.vanilla.util.ToolType;
 import org.spout.vanilla.util.VanillaBlockUtil;
 
 public class FarmLand extends VanillaBlockMaterial implements InitializableMaterial, RandomBlockMaterial {

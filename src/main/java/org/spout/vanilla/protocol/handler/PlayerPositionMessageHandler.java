@@ -40,6 +40,6 @@ public final class PlayerPositionMessageHandler extends MessageHandler<PlayerPos
 			return;
 		}
 		Player holder = session.getPlayer();
-		holder.getTransform().setPosition(new Point(holder.getWorld(), (float) message.getX(), (float) message.getY(), (float)message.getZ()));
+		holder.getTransform().setPosition(new Point(holder.getWorld(), (float) message.getX(), (float) message.getY(), (float) message.getZ()));
 	}
 }

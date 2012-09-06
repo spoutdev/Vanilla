@@ -28,6 +28,8 @@ package org.spout.vanilla.material.block.controlled;
 
 import java.util.Random;
 
+import org.spout.api.component.components.EntityComponent;
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
@@ -38,6 +40,10 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.components.substance.Item;
+import org.spout.vanilla.components.substance.material.Dispenser;
+import org.spout.vanilla.components.substance.projectile.Arrow;
+import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -45,13 +51,12 @@ import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.material.item.misc.Potion;
 import org.spout.vanilla.material.item.misc.SpawnEgg;
-import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class DispenserBlock extends ComponentMaterial implements Directional, RedstoneTarget {
 	public DispenserBlock(String name, int id) {
-		super(name, id);
+		super(Dispenser.class, name, id);
 		this.setHardness(3.5F).setResistance(5.8F);
 	}
 
@@ -63,12 +68,8 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
-		getController(block).setPowered(this.isReceivingPower(block));
-	}
-
-	@Override
-	public Dispenser getController(Block block) {
-		return (Dispenser) super.getController(block);
+		Dispenser dispenser = block.getComponent();
+		dispenser.setPowered(this.isReceivingPower(block));
 	}
 
 	@Override
@@ -96,7 +97,7 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 
 		// Calculate position to shoot from
 		Point position = block.getPosition().add(direction.multiply(0.6));
-		Controller controller = null;
+		EntityComponent toLaunch = null;
 
 		// Calculate shooting velocity using facing direction
 		Vector3 velocity = direction.multiply(rand.nextDouble() * 0.1 + 0.2);
@@ -112,7 +113,7 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 
 		if (material.equals(VanillaMaterials.ARROW)) {
 			shootEffect = GeneralEffects.RANDOM_BOW;
-			controller = new Arrow(new Quaternion(1.0f, direction.add(0.0, 0.1, 0.0)), 1.1f, 6.0f);
+			toLaunch = new Arrow();
 		} else if (material.equals(VanillaMaterials.EGG)) {
 			shootEffect = GeneralEffects.RANDOM_BOW;
 			//TODO: Spawn
@@ -134,11 +135,12 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 		} else {
 			shootEffect = GeneralEffects.RANDOM_CLICK1;
 			position = position.subtract(0.0, 0.3, 0.0);
-			controller = new Item(item, velocity);
+			toLaunch = new Item();
+			((Item) toLaunch).setItemStack(item);
 		}
 
-		if (controller != null) {
-			block.getWorld().createAndSpawnEntity(position, controller);
+		if (toLaunch != null) {
+			block.getWorld().createAndSpawnEntity(position, toLaunch, LoadOption.NO_LOAD);
 		}
 		shootEffect.playGlobal(block.getPosition());
 		GeneralEffects.SMOKE.playGlobal(block.getPosition(), direction);

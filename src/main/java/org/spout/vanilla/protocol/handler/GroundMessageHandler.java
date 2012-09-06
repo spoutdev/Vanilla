@@ -42,7 +42,7 @@ public class GroundMessageHandler extends MessageHandler<GroundMessage> {
 
 		Player player = session.getPlayer();
 		Human human = player.get(Human.class);
-		
+
 		if (human != null) {
 			human.setOnGround(message.isOnGround());
 		}

@@ -29,11 +29,12 @@ package org.spout.vanilla.material.block.controlled;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.components.substance.material.BrewingStand;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 
 public class BrewingStandBlock extends ComponentMaterial {
 	public BrewingStandBlock(String name, int id) {
-		super(VanillaControllerTypes.BREWING_STAND, name, id);
+		super(BrewingStand.class, name, id);
 		this.setResistance(2.5F).setHardness(10.F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
@@ -41,9 +42,5 @@ public class BrewingStandBlock extends ComponentMaterial {
 	@Override
 	public byte getLightLevel(short data) {
 		return 1;
-	}
-
-	public BrewingStand getController(Block block) {
-		return (BrewingStand) super.getController(block);
 	}
 }

@@ -27,10 +27,10 @@
 package org.spout.vanilla.material.block.solid;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.util.ToolType;
 
 public class ClayBlock extends Solid implements InitializableMaterial {
 	public ClayBlock(String name, int id) {

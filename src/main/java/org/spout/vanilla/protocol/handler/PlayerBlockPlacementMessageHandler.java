@@ -136,9 +136,9 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 				holdingMat.onInteract(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
 			}
 			clickedMaterial.onInteractBy(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
-//			if (clickedMaterial.hasController()) {
-//				clickedMaterial.getController(clickedBlock).onInteract(player, Action.RIGHT_CLICK);
-//			} TODO: Put block entity handling back in
+			//			if (clickedMaterial.hasController()) {
+			//				clickedMaterial.getController(clickedBlock).onInteract(player, Action.RIGHT_CLICK);
+			//			} TODO: Put block entity handling back in
 
 			if (holdingMat instanceof InteractTool && VanillaPlayerUtil.isSurvival(clickedBlock.getSource())) { //TODO Total hack and is BADDDDDD
 				short newDurability = ((short) (durability - ((InteractTool) holdingMat).getMaxDurability()));

@@ -41,11 +41,11 @@ import org.spout.vanilla.components.living.Skeleton;
 import org.spout.vanilla.components.living.Spider;
 import org.spout.vanilla.components.living.Zombie;
 import org.spout.vanilla.data.drops.flag.ToolEnchantFlags;
+import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.util.EnchantmentUtil;
-import org.spout.vanilla.util.ToolType;
 
 public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 	private final Random rand = new Random();

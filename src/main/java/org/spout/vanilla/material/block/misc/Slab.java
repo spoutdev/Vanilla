@@ -35,12 +35,12 @@ import org.spout.api.math.Vector3;
 import org.spout.api.util.bytebit.ByteBitSet;
 import org.spout.api.util.flag.Flag;
 
+import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.data.tool.ToolLevel;
+import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.solid.DoubleSlab;
-import org.spout.vanilla.util.Instrument;
-import org.spout.vanilla.util.ToolLevel;
-import org.spout.vanilla.util.ToolType;
 
 public class Slab extends VanillaBlockMaterial implements Burnable {
 	public static final Slab STONE = new Slab((short) 0x7, "Stone Slab", 44, false);

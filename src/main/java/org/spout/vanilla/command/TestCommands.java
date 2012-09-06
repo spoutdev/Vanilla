@@ -27,21 +27,28 @@
 package org.spout.vanilla.command;
 
 import java.util.List;
+import java.util.Set;
 
+import org.spout.api.Client;
+import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.CommandPermissions;
+import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
 import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.protocol.NetworkSynchronizer;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.util.VanillaBlockUtil;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
@@ -180,13 +187,12 @@ public class TestCommands {
 		List<Entity> entities = world.getAll();
 		int count = 0;
 		for (Entity entity : entities) {
-			if (entity.getController() instanceof PlayerController || (!(entity.getController() instanceof VanillaEntityController))) {
+			if (entity instanceof Player) {
 				continue;
 			}
 			count++;
-			((VanillaEntityController) entity.getController()).getHealth().setHealth(0, HealthChangeReason.COMMAND);
 			entity.remove();
-			Spout.log(entity.getController().toString() + " was killed");
+			Spout.log(entity.getOrCreate(EntityComponent.class).toString() + " was killed");
 		}
 		if (count > 0) {
 			if (!isConsole) {
@@ -203,11 +209,6 @@ public class TestCommands {
 		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to view the credits.");
 		}
-
-		Controller controller = ((Player) source).getController();
-		if (controller instanceof VanillaPlayerController) {
-			((VanillaPlayerController) controller).rollCredits();
-		}
 	}
 
 	@Command(aliases = "speed", desc = "Applies speed", min = 2, max = 2)
@@ -216,9 +217,6 @@ public class TestCommands {
 		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to apply speed");
 		}
-
-		Controller controller = ((Player) source).getController();
-		controller.addComponent(new Speed((VanillaPlayerController) controller, args.getInteger(0), args.getInteger(1)));
 	}
 
 	@Command(aliases = "npc", desc = "Spawns an npc at your location", min = 1, max = 1)
@@ -226,6 +224,42 @@ public class TestCommands {
 	public void npc(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("Only a player may spawn an npc");
+		}
+	}
+
+	@Command(aliases = "debug", usage = "[type] (/resend /resendall)", desc = "Debug commands", max = 2)
+	@CommandPermissions("vanilla.command.debug")
+	public void debug(CommandContext args, CommandSource source) throws CommandException {
+		Player player;
+		if (source instanceof Player) {
+			player = (Player) source;
+		} else {
+			if (Spout.getEngine() instanceof Client) {
+				throw new CommandException("You cannot search for players unless you are in server mode.");
+			}
+			player = ((Server) Spout.getEngine()).getPlayer(args.getString(1, ""), true);
+			if (player == null) {
+				source.sendMessage("Must be a player or send player name in arguments");
+				return;
+			}
+		}
+
+		if (args.getString(0, "").contains("resendall")) {
+			NetworkSynchronizer network = player.getNetworkSynchronizer();
+			Set<Chunk> chunks = network.getActiveChunks();
+			for (Chunk c : chunks) {
+				network.sendChunk(c);
+			}
+
+			source.sendMessage("All chunks resent");
+		} else if (args.getString(0, "").contains("resend")) {
+			player.getNetworkSynchronizer().sendChunk(player.getChunk());
+			source.sendMessage("Chunk resent");
+		} else if (args.getString(0, "").contains("relight")) {
+			for (Chunk chunk : VanillaBlockUtil.getChunkColumn(player.getChunk())) {
+				chunk.initLighting();
+			}
+			source.sendMessage("Chunk lighting is being initialized");
 		}
 	}
 }

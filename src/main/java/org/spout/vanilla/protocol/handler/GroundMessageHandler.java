@@ -30,7 +30,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.protocol.msg.GroundMessage;
 
 public class GroundMessageHandler extends MessageHandler<GroundMessage> {
@@ -41,11 +41,11 @@ public class GroundMessageHandler extends MessageHandler<GroundMessage> {
 		}
 
 		Player player = session.getPlayer();
-		if (!(player.getController() instanceof VanillaPlayerController)) {
-			return;
+		Human human = player.get(Human.class);
+		
+		if (human != null) {
+			human.setOnGround(message.isOnGround());
 		}
-		VanillaPlayerController vplayer = (VanillaPlayerController) player.getController();
-		vplayer.setOnGround(message.isOnGround());
 		//TODO check and apply fall damage!
 	}
 }

@@ -48,7 +48,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.gamemode.SurvivalComponent;
 import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.data.drops.flag.PlayerFlags;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
@@ -61,9 +61,9 @@ import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDiggingMessage> {
-	private void breakBlock(BlockMaterial blockMaterial, Block block, VanillaPlayerController player) {
+	private void breakBlock(BlockMaterial blockMaterial, Block block, Player player) {
 		HashSet<Flag> flags = new HashSet<Flag>();
-		if (player.isSurvival()) {
+		if (player.has(SurvivalComponent.class)) {
 			flags.add(PlayerFlags.SURVIVAL);
 		} else {
 			flags.add(PlayerFlags.CREATIVE);
@@ -145,10 +145,10 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				heldItem.getMaterial().onInteract(player, block, Action.LEFT_CLICK, clickedFace);
 				blockMaterial.onInteractBy(player, block, Action.LEFT_CLICK, clickedFace);
 			}
-			// Interaction with entity
-			if (blockMaterial.hasController()) {
-				blockMaterial.getController(block).onInteract(player, Action.LEFT_CLICK);
-			}
+			// Interaction with entity TODO: Add block entity interaction back
+//			if (blockMaterial.hasController()) {
+//				blockMaterial.getController(block).onInteract(player, Action.LEFT_CLICK);
+//			}
 
 			if (isInteractable) {
 				Block neigh = block.translate(clickedFace);

@@ -48,7 +48,9 @@ import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.gamemode.CreativeComponent;
+import org.spout.vanilla.components.misc.HeadComponent;
+import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -134,9 +136,9 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 				holdingMat.onInteract(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
 			}
 			clickedMaterial.onInteractBy(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
-			if (clickedMaterial.hasController()) {
-				clickedMaterial.getController(clickedBlock).onInteract(player, Action.RIGHT_CLICK);
-			}
+//			if (clickedMaterial.hasController()) {
+//				clickedMaterial.getController(clickedBlock).onInteract(player, Action.RIGHT_CLICK);
+//			} TODO: Put block entity handling back in
 
 			if (holdingMat instanceof InteractTool && VanillaPlayerUtil.isSurvival(clickedBlock.getSource())) { //TODO Total hack and is BADDDDDD
 				short newDurability = ((short) (durability - ((InteractTool) holdingMat).getMaxDurability()));
@@ -190,7 +192,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 
 						//For now: simple distance checking
 						Point pos1 = player.getTransform().getPosition();
-						Point pos2 = ((VanillaPlayerController) player.getController()).getHead().getPosition();
+						Point pos2 = player.getOrCreate(HeadComponent.class).getPosition();
 						Point tpos = target.getPosition();
 
 						if (pos1.distance(tpos) < 0.6 || pos2.distance(tpos) < 0.6) {
@@ -203,7 +205,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 				//Check if the player can place the block.
 				Collection<Protection> protections = Spout.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(alterBlock.getPosition());
 				for (Protection p : protections) {
-					if (p.contains(alterBlock.getPosition()) && !((VanillaPlayerController) player.getController()).isOp()) {
+					if (p.contains(alterBlock.getPosition()) && !VanillaConfiguration.OPS.isOp(player.getName())) {
 						undoPlacement(player, clickedBlock, alterBlock);
 						player.sendMessage(ChatStyle.DARK_RED, "This area is a protected spawn point!");
 						return;
@@ -223,7 +225,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 					sound.playGlobal(target.getPosition(), 0.8f, 0.8f);
 					//GeneralEffects.BREAKBLOCK.playGlobal(target.getPosition(), target.getMaterial());
 					// Remove block from inventory if not in creative mode.
-					if (!((VanillaPlayerController) player.getController()).hasInfiniteResources()) {
+					if (!player.has(CreativeComponent.class)) {
 						currentSlot.addItemAmount(0, -1);
 					}
 				} else {

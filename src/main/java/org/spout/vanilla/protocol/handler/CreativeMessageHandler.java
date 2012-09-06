@@ -44,7 +44,7 @@ public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 			return;
 		}
 
-		Human player = session.getPlayer().getOrCreate(Human.class);
+		Human human = session.getPlayer().getOrCreate(Human.class);
 		if (player.isSurvival()) {
 			((Player) player.getHolder()).kick("Now now, don't try that here. Won't work.");
 			return;

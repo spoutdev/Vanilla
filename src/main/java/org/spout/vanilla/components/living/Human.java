@@ -26,13 +26,21 @@
  */
 package org.spout.vanilla.components.living;
 
+import org.spout.api.Spout;
 import org.spout.api.component.components.EntityComponent;
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.components.gamemode.AdventureComponent;
+import org.spout.vanilla.components.gamemode.CreativeComponent;
+import org.spout.vanilla.components.gamemode.SurvivalComponent;
 import org.spout.vanilla.components.misc.HeadComponent;
 import org.spout.vanilla.components.misc.HealthComponent;
 import org.spout.vanilla.components.misc.PickupItemComponent;
+import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
 import org.spout.vanilla.protocol.entity.living.HumanEntityProtocol;
 
 /**
@@ -41,7 +49,6 @@ import org.spout.vanilla.protocol.entity.living.HumanEntityProtocol;
 public class Human extends EntityComponent {
 	@Override
 	public void onAttached() {
-		getHolder().put(new HealthComponent());
 		getHolder().put(new HeadComponent());
 		getHolder().put(new PickupItemComponent());
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
@@ -85,5 +92,34 @@ public class Human extends EntityComponent {
 
 	public void setJumping(boolean isJumping) {
 		getHolder().getData().put(VanillaData.IS_JUMPING, isJumping);
+	}
+
+	public boolean isAdventure() {
+		return getData().get(VanillaData.GAMEMODE) == GameMode.ADVENTURE;
+	}
+
+	public boolean isCreative() {
+		return getData().get(VanillaData.GAMEMODE) == GameMode.CREATIVE;
+	}
+
+	public boolean isSurvival() {
+		return getData().get(VanillaData.GAMEMODE) == GameMode.SURVIVAL;
+	}
+
+	public void setGamemode(GameMode mode) {
+		Entity holder = getHolder();
+		PlayerGameModeChangedEvent event = Spout.getEventManager().callEvent(new PlayerGameModeChangedEvent((Player) getHolder(), mode));
+		if (event.isCancelled()) {
+			return;
+		}
+		switch (event.getMode()) {
+			case ADVENTURE:
+				holder.getOrCreate(AdventureComponent.class);
+			case CREATIVE:
+				holder.getOrCreate(CreativeComponent.class);
+			case SURVIVAL:
+				holder.getOrCreate(SurvivalComponent.class);
+		}
+		getData().put(VanillaData.GAMEMODE, mode);
 	}
 }

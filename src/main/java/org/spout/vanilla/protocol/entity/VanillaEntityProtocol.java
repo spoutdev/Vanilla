@@ -36,11 +36,15 @@ import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 
+import org.spout.vanilla.components.misc.HeadComponent;
+import org.spout.vanilla.components.misc.VanillaPhysicsComponent;
 import org.spout.vanilla.protocol.msg.DestroyEntitiesMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityHeadYawMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityRelativePositionMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityRelativePositionRotationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityRotationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityTeleportMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityVelocityMessage;
 
 import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPosition;
 import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyRotation;
@@ -78,7 +82,9 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		int deltaZ = newZ - lastZ;
 
 		List<Message> messages = new ArrayList<Message>(3);
+
 		boolean looked = !prevTransform.getRotation().equals(newTransform.getRotation());
+
 		if (deltaX > 4 || deltaX < -4 || deltaY > 4 || deltaY < -4 || deltaZ > 4 || deltaZ < -4) {
 			messages.add(new EntityTeleportMessage(entity.getId(), newX, newY, newZ, newYaw, newPitch));
 		} else {
@@ -91,9 +97,15 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		if (looked) {
 			messages.add(new EntityRotationMessage(entity.getId(), newYaw, newPitch));
 		}
-		//TODO Velocity component
 
-		//TODO HeadYaw component
+		VanillaPhysicsComponent physics = entity.getOrCreate(VanillaPhysicsComponent.class);
+		if (physics.isVelocityDirty()) {
+			messages.add(new EntityVelocityMessage(entity.getId(), physics.getProtocolVelocity()));
+		}
+		HeadComponent head = entity.getOrCreate(HeadComponent.class);
+		if (head.isDirty()) {
+			messages.add(new EntityHeadYawMessage(entity.getId(), head.getProtocolYaw()));
+		}
 		return messages;
 	}
 }

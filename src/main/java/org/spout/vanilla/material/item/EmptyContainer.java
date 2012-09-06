@@ -40,7 +40,7 @@ import org.spout.api.material.source.MaterialSource;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.components.HeadComponent;
+import org.spout.vanilla.components.misc.HeadComponent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 

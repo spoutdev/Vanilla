@@ -34,7 +34,7 @@ import org.spout.api.event.Result;
 import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 
-import org.spout.vanilla.components.player.VanillaPlayer;
+import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.player.PlayerDeathEvent;
 
@@ -61,6 +61,8 @@ public class VanillaListener implements Listener {
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		event.getPlayer().put(new VanillaPlayer());
+		Human human = new Human();
+		human.setName(event.getPlayer().getName());
+		event.getPlayer().put(human);
 	}
 }

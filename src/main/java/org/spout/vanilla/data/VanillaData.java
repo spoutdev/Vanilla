@@ -60,7 +60,7 @@ public class VanillaData {
 	public static final DefaultedKey<Boolean> IS_ON_GROUND = new DefaultedKeyImpl<Boolean>("is_on_Ground", true);
 	public static final DefaultedKey<Boolean> IS_JUMPING = new DefaultedKeyImpl<Boolean>("is_jumping", false);
 	public static final DefaultedKey<Boolean> HAS_DEATH_ANIMATION = new DefaultedKeyImpl<Boolean>("has_death_animation", true);
-	//Player-specific
+	//Human-specific
 	public static final DefaultedKey<Boolean> IS_SPRINTING = new DefaultedKeyImpl<Boolean>("is_sprinting", false);
 	public static final DefaultedKey<Boolean> IS_FLYING = new DefaultedKeyImpl<Boolean>("is_flying", false);
 	public static final DefaultedKey<Inventory> INVENTORY = new DefaultedKeyImpl<Inventory>("inventory", new Inventory());
@@ -87,6 +87,4 @@ public class VanillaData {
 	public static final DefaultedKey<String> OWNER = new DefaultedKeyImpl<String>("owner", null);
 	//Ocelot-specific
 	public static final DefaultedKey<Byte> SKIN = new DefaultedKeyImpl<Byte>("skin", (byte) 0);
-	//NPC-specific
-	public static final DefaultedKey<String> TITLE = new DefaultedKeyImpl<String>("title", "Spouty");
 }

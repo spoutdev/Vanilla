@@ -36,10 +36,10 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.components.creature.Silverfish;
-import org.spout.vanilla.components.creature.Skeleton;
-import org.spout.vanilla.components.creature.Spider;
-import org.spout.vanilla.components.creature.Zombie;
+import org.spout.vanilla.components.living.Silverfish;
+import org.spout.vanilla.components.living.Skeleton;
+import org.spout.vanilla.components.living.Spider;
+import org.spout.vanilla.components.living.Zombie;
 import org.spout.vanilla.data.drops.flag.ToolEnchantFlags;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.Enchantable;
@@ -71,8 +71,8 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 	}
 
 	/**
-	 * Gets the creature of tool
-	 * @return tool creature
+	 * Gets the type of tool
+	 * @return tool type
 	 */
 	public ToolType getToolType() {
 		return this.toolType;

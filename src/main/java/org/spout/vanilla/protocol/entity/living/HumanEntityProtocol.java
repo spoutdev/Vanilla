@@ -35,14 +35,14 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.components.creature.Human;
+import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnPlayerMessage;
 
 public class HumanEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity) {
-		Human npc = (Human) entity.getOrCreate(Human.class);
+		Human human = entity.getOrCreate(Human.class);
 
 		int id = entity.getId();
 		int x = (int) (entity.getTransform().getPosition().getX() * 32);
@@ -52,12 +52,12 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		int p = (int) (entity.getTransform().getPitch() * 32);
 
 		int item = 0;
-		ItemStack hand = npc.getRenderedItemInHand();
+		ItemStack hand = human.getRenderedItemInHand();
 		if (hand != null) {
 			item = hand.getMaterial().getId();
 		}
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 		parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 100));
-		return Arrays.<Message>asList(new EntitySpawnPlayerMessage(id, npc.getDisplayName(), x, y, z, r, p, item, parameters));
+		return Arrays.<Message>asList(new EntitySpawnPlayerMessage(id, human.getTitle(), x, y, z, r, p, item, parameters));
 	}
 }

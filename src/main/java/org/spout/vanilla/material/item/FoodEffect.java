@@ -27,5 +27,4 @@
 package org.spout.vanilla.material.item;
 
 public class FoodEffect {
-
 }

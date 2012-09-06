@@ -24,31 +24,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity;
+package org.spout.vanilla.components.misc;
 
-import java.util.Arrays;
-import java.util.List;
+import org.spout.api.component.Component;
 
-import org.spout.api.component.components.PhysicsComponent;
-import org.spout.api.entity.Entity;
-import org.spout.api.math.Vector3;
-import org.spout.api.protocol.Message;
-
-import org.spout.vanilla.components.substance.Projectile;
-import org.spout.vanilla.protocol.msg.entity.EntitySpawnVehicleMessage;
-
-public class BasicProjectileEntityProtocol extends BasicEntityProtocol {
-	public BasicProjectileEntityProtocol(int projectileSpawnID) {
-		super(projectileSpawnID);
-	}
-
-	@Override
-	public List<Message> getSpawnMessages(Entity entity) {
-		int id = entity.getId();
-		Projectile projectile = entity.getOrCreate(Projectile.class);
-		Entity shooter = projectile.getShooter();
-		int shooterid = shooter == null ? 0 : shooter.getId();
-		Vector3 velocity = entity.getOrCreate(PhysicsComponent.class).getVelocity();
-		return Arrays.<Message>asList(new EntitySpawnVehicleMessage(id, this.getSpawnID(), entity.getTransform().getPosition(), shooterid, velocity));
-	}
+/**
+ * Component that holds inventory references and handles inventory transactions.
+ */
+public class InventoryComponent extends Component {
 }

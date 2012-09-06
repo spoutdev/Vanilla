@@ -24,33 +24,58 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.components.living;
 
-import java.util.List;
+import org.spout.api.component.components.EntityComponent;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
-
-import org.spout.vanilla.components.living.Wolf;
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.misc.HealthComponent;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.protocol.entity.living.WolfEntityProtocol;
 
-public class WolfEntityProtocol extends BasicMobEntityProtocol {
-	public WolfEntityProtocol() {
-		super(95);
-	}
+/**
+ * A component that identifies the entity as a Wolf.
+ */
+public class Wolf extends EntityComponent {
+	private boolean redEyes = false;
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		Wolf wolf = entity.getOrCreate(Wolf.class);
-		byte data = 0;
-		data |= (wolf.isSitting() ? 1 : 0) & 0x01;
-		data |= (wolf.haveRedEyes() ? 1 : 0) & 0x02;
-		data |= (wolf.isTamed() ? 1 : 0) & 0x04;
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
-		parameters.add(new Parameter<String>(Parameter.TYPE_STRING, 17, wolf.getOwner()));
-		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 18, wolf.getHolder().get(HealthComponent.class).getHealth()));
-		return parameters;
+	public void onAttached() {
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new WolfEntityProtocol());
+		getHolder().put(new HealthComponent());
+	}
+
+	public boolean isTamed() {
+		return getHolder().getData().get(VanillaData.TAMED);
+	}
+
+	public void setTamed(boolean tamed) {
+		getHolder().getData().put(VanillaData.TAMED, tamed);
+	}
+
+	public String getOwner() {
+		return getHolder().getData().get(VanillaData.OWNER);
+	}
+
+	public void setOwner(String owner) {
+		if (isTamed()) {
+			getHolder().getData().put(VanillaData.OWNER, owner);
+		}
+	}
+
+	public boolean haveRedEyes() {
+		return redEyes;
+	}
+
+	public void setRedEyes(boolean redEyes) {
+		this.redEyes = redEyes;
+	}
+
+	public boolean isSitting() {
+		return getHolder().getData().get(VanillaData.SITTING);
+	}
+
+	public void setSitting(boolean sitting) {
+		getHolder().getData().put(VanillaData.SITTING, sitting);
 	}
 }

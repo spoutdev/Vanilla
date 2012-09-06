@@ -24,31 +24,45 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity;
+package org.spout.vanilla.components.living;
 
-import java.util.Arrays;
-import java.util.List;
+import org.spout.api.component.components.EntityComponent;
 
-import org.spout.api.component.components.PhysicsComponent;
-import org.spout.api.entity.Entity;
-import org.spout.api.math.Vector3;
-import org.spout.api.protocol.Message;
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.material.block.solid.Wool;
+import org.spout.vanilla.protocol.entity.living.SheepEntityProtocol;
 
-import org.spout.vanilla.components.substance.Projectile;
-import org.spout.vanilla.protocol.msg.entity.EntitySpawnVehicleMessage;
-
-public class BasicProjectileEntityProtocol extends BasicEntityProtocol {
-	public BasicProjectileEntityProtocol(int projectileSpawnID) {
-		super(projectileSpawnID);
+/**
+ * A component that identifies the entity as a Sheep.
+ */
+public class Sheep extends EntityComponent {
+	@Override
+	public void onAttached() {
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SheepEntityProtocol());
 	}
 
-	@Override
-	public List<Message> getSpawnMessages(Entity entity) {
-		int id = entity.getId();
-		Projectile projectile = entity.getOrCreate(Projectile.class);
-		Entity shooter = projectile.getShooter();
-		int shooterid = shooter == null ? 0 : shooter.getId();
-		Vector3 velocity = entity.getOrCreate(PhysicsComponent.class).getVelocity();
-		return Arrays.<Message>asList(new EntitySpawnVehicleMessage(id, this.getSpawnID(), entity.getTransform().getPosition(), shooterid, velocity));
+	public boolean isSheared() {
+		return getHolder().getData().get(VanillaData.SHEARED);
+	}
+
+	public void setSheared(boolean sheared) {
+		getHolder().getData().put(VanillaData.SHEARED, sheared);
+	}
+
+	/**
+	 * Gets the color of the sheep.
+	 * @return color of the sheep.
+	 */
+	public Wool.WoolColor getColor() {
+		return Wool.WoolColor.getById(getHolder().getData().get(VanillaData.WOOL_COLOR));
+	}
+
+	/**
+	 * Sets the color of the sheep.
+	 * @param color
+	 */
+	public void setColor(Wool.WoolColor color) {
+		getHolder().getData().put(VanillaData.WOOL_COLOR, color.getData());
 	}
 }

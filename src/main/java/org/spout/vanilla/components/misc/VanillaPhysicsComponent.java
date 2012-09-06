@@ -24,31 +24,39 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity;
-
-import java.util.Arrays;
-import java.util.List;
+package org.spout.vanilla.components.misc;
 
 import org.spout.api.component.components.PhysicsComponent;
-import org.spout.api.entity.Entity;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
-import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.components.substance.Projectile;
-import org.spout.vanilla.protocol.msg.entity.EntitySpawnVehicleMessage;
-
-public class BasicProjectileEntityProtocol extends BasicEntityProtocol {
-	public BasicProjectileEntityProtocol(int projectileSpawnID) {
-		super(projectileSpawnID);
+/**
+ * Extension of the PhysicsComponent to put bounds on velocity.
+ *
+ * Basically, the official protocol handles it like this...
+ * - Motion is in block units, each tick at 1/32000
+ * - Velocity is clamped at a min of -0.9 and a max of 0.9 blocks per tick
+ * - Protocol velocity values are simply multiplying blocks by the max block units. This leaves
+ * 	 a maximum of 28800 per axis per tick for protocol motion.
+ */
+public class VanillaPhysicsComponent extends PhysicsComponent {
+	@Override
+	public void setVelocity(Vector3 velocity) {
+		final double x = MathHelper.clamp(velocity.getX(), -0.9, 0.9);
+		final double y = MathHelper.clamp(velocity.getY(), -0.9, 0.9);
+		final double z = MathHelper.clamp(velocity.getZ(), -0.9, 0.9);
+		super.setVelocity(new Vector3(x, y, z));
 	}
 
-	@Override
-	public List<Message> getSpawnMessages(Entity entity) {
-		int id = entity.getId();
-		Projectile projectile = entity.getOrCreate(Projectile.class);
-		Entity shooter = projectile.getShooter();
-		int shooterid = shooter == null ? 0 : shooter.getId();
-		Vector3 velocity = entity.getOrCreate(PhysicsComponent.class).getVelocity();
-		return Arrays.<Message>asList(new EntitySpawnVehicleMessage(id, this.getSpawnID(), entity.getTransform().getPosition(), shooterid, velocity));
+	/**
+	 * Gets the velocity scaled for the official protocol's specifications
+	 * @return
+	 */
+	public Vector3 getProtocolVelocity() {
+		final Vector3 velocity = getVelocity();
+		final float x = velocity.getX() * 32000;
+		final float y = velocity.getY() * 32000;
+		final float z = velocity.getZ() * 32000;
+		return new Vector3(x, y, z);
 	}
 }

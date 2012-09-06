@@ -33,7 +33,7 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.components.creature.Sheep;
+import org.spout.vanilla.components.living.Sheep;
 import org.spout.vanilla.components.substance.Item;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.ToolType;

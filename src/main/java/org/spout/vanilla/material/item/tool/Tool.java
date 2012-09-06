@@ -31,15 +31,15 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.components.VanillaEntityController;
-import org.spout.vanilla.components.creature.hostile.Silverfish;
-import org.spout.vanilla.components.creature.hostile.Skeleton;
-import org.spout.vanilla.components.creature.hostile.Spider;
-import org.spout.vanilla.components.creature.hostile.Zombie;
+import org.spout.vanilla.components.creature.Silverfish;
+import org.spout.vanilla.components.creature.Skeleton;
+import org.spout.vanilla.components.creature.Spider;
+import org.spout.vanilla.components.creature.Zombie;
 import org.spout.vanilla.data.drops.flag.ToolEnchantFlags;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.Enchantable;
@@ -127,17 +127,17 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 		}
 	}
 
-	public int getDamageBonus(VanillaEntityController damaged, ItemStack heldItem) {
+	public int getDamageBonus(Entity damaged, ItemStack heldItem) {
 		// These enchantments conflict with each other, so only one is possible per item
 		int damage = 0;
 		if (EnchantmentUtil.hasEnchantment(heldItem, Enchantments.BANE_OF_ARTHROPODS)) {
-			if (damaged instanceof Spider || damaged instanceof Silverfish) {
+			if (damaged.has(Spider.class) || damaged.has(Silverfish.class)) {
 				damage = rand.nextInt(EnchantmentUtil.getEnchantmentLevel(heldItem, Enchantments.BANE_OF_ARTHROPODS) * 4);
 			}
 		} else if (EnchantmentUtil.hasEnchantment(heldItem, Enchantments.SHARPNESS)) {
 			damage = rand.nextInt(EnchantmentUtil.getEnchantmentLevel(heldItem, Enchantments.SHARPNESS) * 3);
 		} else if (EnchantmentUtil.hasEnchantment(heldItem, Enchantments.SMITE)) {
-			if (damaged instanceof Skeleton || damaged instanceof Zombie) {
+			if (damaged.has(Skeleton.class) || damaged.has(Zombie.class)) {
 				damage = rand.nextInt(EnchantmentUtil.getEnchantmentLevel(heldItem, Enchantments.SMITE) * 4);
 			}
 		}

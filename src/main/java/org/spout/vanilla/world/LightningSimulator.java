@@ -37,7 +37,6 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
 import org.spout.api.tickable.BasicTickable;
 
-import org.spout.vanilla.components.object.misc.Lightning;
 import org.spout.vanilla.data.Weather;
 
 public class LightningSimulator extends BasicTickable {

@@ -78,7 +78,7 @@ public class HealthComponent extends EntityComponent {
 	/**
 	 * Called when the entities' health hits zero and is considered "dead" by Vanilla game standards
 	 */
-	public void onDeath(){
+	public void onDeath() {
 
 	}
 
@@ -165,7 +165,6 @@ public class HealthComponent extends EntityComponent {
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	public boolean isDying() {
@@ -173,7 +172,6 @@ public class HealthComponent extends EntityComponent {
 	}
 
 	/**
-	 *
 	 * @return
 	 */
 	public int getDeathTicks() {
@@ -181,7 +179,6 @@ public class HealthComponent extends EntityComponent {
 	}
 
 	/**
-	 *
 	 * @param deathTicks
 	 */
 	public void setDeathTicks(int deathTicks) {

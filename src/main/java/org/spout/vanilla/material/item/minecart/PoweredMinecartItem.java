@@ -26,17 +26,8 @@
  */
 package org.spout.vanilla.material.item.minecart;
 
-import org.spout.api.entity.Controller;
-
-import org.spout.vanilla.components.object.vehicle.minecart.PoweredMinecart;
-
 public class PoweredMinecartItem extends MinecartItem {
 	public PoweredMinecartItem(String name, int id) {
 		super(name, id);
-	}
-
-	@Override
-	protected Controller getSpawnedEntity() {
-		return new PoweredMinecart();
 	}
 }

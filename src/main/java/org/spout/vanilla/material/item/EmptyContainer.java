@@ -38,8 +38,9 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.GenericMaterialSource;
 import org.spout.api.material.source.MaterialSource;
 import org.spout.api.math.Vector3;
+import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.components.component.HeadOwner;
+import org.spout.vanilla.components.HeadComponent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -64,11 +65,13 @@ public class EmptyContainer extends BlockItem {
 	@Override
 	public void onInteract(Entity entity, Action type) {
 		super.onInteract(entity, type);
-		if (type == Action.RIGHT_CLICK && entity.getController() instanceof HeadOwner) {
-			Block block = ((HeadOwner) entity.getController()).getHead().hitTest();
-			if (block == null) {
+		//TODO fix this with collisions?
+		if (type == Action.RIGHT_CLICK && entity.has(HeadComponent.class)) {
+			BlockIterator iterator = entity.get(HeadComponent.class).getBlockView();
+			if (iterator == null || !iterator.hasNext()) {
 				return;
 			}
+			Block block = iterator.next();
 			FullContainer cont = this.getFullItem(block.getMaterial(), block.getData());
 			if (cont == null) {
 				return;

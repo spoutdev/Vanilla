@@ -28,7 +28,6 @@ package org.spout.vanilla.material.block.controlled;
 
 import java.util.Random;
 
-import org.spout.api.entity.Controller;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
@@ -39,10 +38,6 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.components.VanillaControllerTypes;
-import org.spout.vanilla.components.block.Dispenser;
-import org.spout.vanilla.components.object.moving.Item;
-import org.spout.vanilla.components.object.projectile.Arrow;
 import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -56,7 +51,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class DispenserBlock extends ComponentMaterial implements Directional, RedstoneTarget {
 	public DispenserBlock(String name, int id) {
-		super(VanillaControllerTypes.DISPENSER, name, id);
+		super(name, id);
 		this.setHardness(3.5F).setResistance(5.8F);
 	}
 

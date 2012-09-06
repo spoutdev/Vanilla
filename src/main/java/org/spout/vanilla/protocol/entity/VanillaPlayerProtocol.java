@@ -33,13 +33,12 @@ import java.util.List;
 
 import net.royawesome.jlibnoise.MathHelper;
 
-import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnPlayerMessage;
 
 public class VanillaPlayerProtocol extends VanillaEntityProtocol {
@@ -47,11 +46,6 @@ public class VanillaPlayerProtocol extends VanillaEntityProtocol {
 
 	@Override
 	public List<Message> getSpawnMessages(Entity entity) {
-		Controller c = entity.getController();
-		if (!(c instanceof VanillaPlayerController)) {
-			return Collections.emptyList();
-		}
-
 		int id = entity.getId();
 		int x = (int) (entity.getTransform().getPosition().getX() * 32);
 		int y = (int) (entity.getTransform().getPosition().getY() * 32);
@@ -59,9 +53,9 @@ public class VanillaPlayerProtocol extends VanillaEntityProtocol {
 		int r = (int) (-entity.getTransform().getYaw() * 32); //cardinal directions differ
 		int p = (int) (entity.getTransform().getPitch() * 32);
 
-		VanillaPlayerController playerController = (VanillaPlayerController) c;
+		VanillaPlayer player = entity.getOrCreate(VanillaPlayer.class);
 		int item = 0;
-		ItemStack hand = playerController.getRenderedItemInHand();
+		ItemStack hand = player.getRenderedItemInHand();
 		if (hand != null) {
 			item = hand.getMaterial().getId();
 		}
@@ -72,6 +66,6 @@ public class VanillaPlayerProtocol extends VanillaEntityProtocol {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 		parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) airLeft));
 
-		return Arrays.<Message>asList(new EntitySpawnPlayerMessage(id, playerController.getTitle(), x, y, z, r, p, item, parameters));
+		return Arrays.<Message>asList(new EntitySpawnPlayerMessage(id, player.getTitle(), x, y, z, r, p, item, parameters));
 	}
 }

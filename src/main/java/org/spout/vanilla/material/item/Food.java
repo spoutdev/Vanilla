@@ -31,7 +31,6 @@ import java.lang.reflect.InvocationTargetException;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.special.InventorySlot;
 
-import org.spout.vanilla.components.VanillaPlayerController;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Food extends VanillaItemMaterial {
@@ -50,26 +49,11 @@ public class Food extends VanillaItemMaterial {
 		if (VanillaPlayerUtil.isSurvival(entity)) {
 			System.out.println("EATING");
 			for (int i = 0; i < effects.length; i++) {
+				//TODO Entities besides players should be able to eat, stop restricting things.
 				VanillaPlayerController vPlayer = (VanillaPlayerController) entity.getController();
 				try {
 					effects[i].run(vPlayer);
-				} catch (InstantiationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InvocationTargetException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (NoSuchMethodException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SecurityException e) {
-					// TODO Auto-generated catch block
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}

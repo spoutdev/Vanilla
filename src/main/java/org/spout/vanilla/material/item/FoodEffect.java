@@ -26,25 +26,6 @@
  */
 package org.spout.vanilla.material.item;
 
-import java.lang.reflect.InvocationTargetException;
-
-import org.spout.vanilla.components.VanillaPlayerController;
-import org.spout.vanilla.components.component.effect.VanillaEntityFoodEffect;
-
 public class FoodEffect {
-	private final float amount;
-	private final Class<? extends VanillaEntityFoodEffect> effect;
 
-	public FoodEffect(float amount, Class<? extends VanillaEntityFoodEffect> effect) {
-		this.amount = amount;
-		this.effect = effect;
-	}
-
-	public float getAmount() {
-		return amount;
-	}
-
-	public void run(VanillaPlayerController vPlayer) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-		vPlayer.addComponent(effect.getConstructor(new Class[]{VanillaPlayerController.class, float.class}).newInstance(vPlayer, amount));
-	}
 }

@@ -27,6 +27,7 @@
 package org.spout.vanilla.components.creature;
 
 import org.spout.api.component.components.EntityComponent;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 

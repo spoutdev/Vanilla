@@ -45,5 +45,4 @@ public class PickupItemComponent extends EntityComponent {
 	public void onTick(float dt) {
 
 	}
-
 }

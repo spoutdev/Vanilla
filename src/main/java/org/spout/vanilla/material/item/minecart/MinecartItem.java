@@ -26,27 +26,17 @@
  */
 package org.spout.vanilla.material.item.minecart;
 
-import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.components.object.vehicle.minecart.TransportMinecart;
 import org.spout.vanilla.material.block.rail.RailBase;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class MinecartItem extends VanillaItemMaterial {
 	public MinecartItem(String name, int id) {
 		super(name, id);
-	}
-
-	/**
-	 * Creates a new minecart entity to spawn when interacted
-	 * @return a new Minecart entity
-	 */
-	protected Controller getSpawnedEntity() {
-		return new TransportMinecart();
 	}
 
 	@Override
@@ -56,7 +46,7 @@ public class MinecartItem extends VanillaItemMaterial {
 		//is clicked position a track?
 		if (block.getMaterial() instanceof RailBase) {
 			//spawn minecart on rail
-			block.getWorld().createAndSpawnEntity(block.getPosition(), this.getSpawnedEntity());
+			//block.getWorld().createAndSpawnEntity(block.getPosition(), this.getSpawnedEntity());
 			//TODO: Subtracting one from the held item?
 			//Shouldn't the held item be passed to this function instead?
 		}

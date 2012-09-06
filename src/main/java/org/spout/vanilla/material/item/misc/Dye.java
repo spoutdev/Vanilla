@@ -36,7 +36,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.components.creature.passive.Sheep;
+import org.spout.vanilla.components.creature.Sheep;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Wool.WoolColor;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
@@ -123,7 +123,7 @@ public class Dye extends VanillaItemMaterial implements Placeable {
 	@Override
 	public void onInteract(Entity entity, Entity other, Action action) {
 		if (action == Action.RIGHT_CLICK) {
-			if (!(other.getController() instanceof Sheep)) {
+			if (!other.has(Sheep.class)) {
 				return;
 			}
 
@@ -132,7 +132,7 @@ public class Dye extends VanillaItemMaterial implements Placeable {
 				ItemStack holding = inv.getItem();
 				if (holding != null) {
 					//get color from holding item
-					((Sheep) other.getController()).setColor(WoolColor.getById((short) (0xF - holding.getData())));
+					other.get(Sheep.class).setColor(WoolColor.getById((short) (0xF - holding.getData())));
 
 					if (VanillaPlayerUtil.isSurvival(entity)) {
 						inv.addItemAmount(0, -1);

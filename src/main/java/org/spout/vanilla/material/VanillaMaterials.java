@@ -37,9 +37,6 @@ import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
 import org.spout.api.util.map.concurrent.AtomicShortArray;
 
-import org.spout.vanilla.components.component.effect.food.FoodSaturation;
-import org.spout.vanilla.components.component.effect.food.Hunger;
-import org.spout.vanilla.components.component.effect.food.Poisoning;
 import org.spout.vanilla.material.block.controlled.BrewingStandBlock;
 import org.spout.vanilla.material.block.controlled.ChestBlock;
 import org.spout.vanilla.material.block.controlled.CraftingTableBlock;
@@ -467,8 +464,10 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial COMPASS = new VanillaItemMaterial("Compass", 345);
 	public static final VanillaItemMaterial CLOCK = new VanillaItemMaterial("Clock", 347);
 	public static final VanillaItemMaterial GLOWSTONE_DUST = new VanillaItemMaterial("Glowstone Dust", 348);
-	public static final RawFish RAW_FISH = new RawFish("Raw Fish", 349, new FoodEffect(2, Hunger.class), new FoodEffect(1.2f, FoodSaturation.class));
-	public static final Food COOKED_FISH = new Food("Cooked Fish", 350, new FoodEffect(5, Hunger.class), new FoodEffect(6, FoodSaturation.class));
+//	public static final RawFish RAW_FISH = new RawFish("Raw Fish", 349, new FoodEffect(2, Hunger.class), new FoodEffect(1.2f, FoodSaturation.class));
+//	public static final Food COOKED_FISH = new Food("Cooked Fish", 350, new FoodEffect(5, Hunger.class), new FoodEffect(6, FoodSaturation.class));
+	public static final RawFish RAW_FISH = new RawFish("Raw Fish", 349);
+	public static final Food COOKED_FISH = new Food("Cooked Fish", 350);
 	public static final Dye DYE = Dye.INK_SAC;
 	public static final VanillaItemMaterial BONE = new VanillaItemMaterial("Bone", 352);
 	public static final VanillaItemMaterial SUGAR = new VanillaItemMaterial("Sugar", 353);
@@ -480,20 +479,37 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial PUMPKIN_SEEDS = new VanillaItemMaterial("Pumpkin Seeds", 361);
 	public static final VanillaItemMaterial MELON_SEEDS = new VanillaItemMaterial("MelonBlock Seeds", 362);
 	// == Food ==
-	public static final Food RED_APPLE = new Food("Apple", 260, new FoodEffect(4, Hunger.class), new FoodEffect(2.4f, FoodSaturation.class));
-	public static final Food MUSHROOM_SOUP = new Food("Mushroom Soup", 282, new FoodEffect(8, Hunger.class), new FoodEffect(9.6f, FoodSaturation.class));
-	public static final Food BREAD = new Food("Bread", 297, new FoodEffect(5, Hunger.class), new FoodEffect(6, FoodSaturation.class));
-	public static final RawPorkchop RAW_PORKCHOP = new RawPorkchop("Raw Porkchop", 319, new FoodEffect(3, Hunger.class), new FoodEffect(1.8f, FoodSaturation.class));
-	public static final Food COOKED_PORKCHOP = new Food("Cooked Porkchop", 320, new FoodEffect(8, Hunger.class), new FoodEffect(12.8f, FoodSaturation.class));
-	// TODO : Regen health for 4 secs
-	public static final Food GOLDEN_APPLE = new Food("Golden Apple", 322, new FoodEffect(10, Hunger.class), new FoodEffect(9.6f, FoodSaturation.class));
-	public static final Food MELON_SLICE = new Food("MelonBlock Slice", 360, new FoodEffect(2, Hunger.class), new FoodEffect(1.2f, FoodSaturation.class));
-	public static final Food COOKIE = new Food("Cookie", 357, new FoodEffect(2, Hunger.class), new FoodEffect(0.4f, FoodSaturation.class));
-	public static final RawBeef RAW_BEEF = new RawBeef("Raw Beef", 363, new FoodEffect(3, Hunger.class), new FoodEffect(1.8f, FoodSaturation.class));
-	public static final Food STEAK = new Food("Steak", 364, new FoodEffect(8, Hunger.class), new FoodEffect(12.8f, FoodSaturation.class));
-	public static final RawChicken RAW_CHICKEN = new RawChicken("Raw Chicken", 365, new FoodEffect(2, Hunger.class), new FoodEffect(1.2f, FoodSaturation.class), new FoodEffect(30, Poisoning.class));
-	public static final Food COOKED_CHICKEN = new Food("Cooked Chicken", 366, new FoodEffect(6, Hunger.class), new FoodEffect(7.2f, FoodSaturation.class));
-	public static final Food ROTTEN_FLESH = new Food("Rotten Flesh", 367, new FoodEffect(4, Hunger.class), new FoodEffect(0.8f, FoodSaturation.class), new FoodEffect(80, Poisoning.class));
+//	public static final Food RED_APPLE = new Food("Apple", 260, new FoodEffect(4, Hunger.class), new FoodEffect(2.4f, FoodSaturation.class));
+//	public static final Food MUSHROOM_SOUP = new Food("Mushroom Soup", 282, new FoodEffect(8, Hunger.class), new FoodEffect(9.6f, FoodSaturation.class));
+//	public static final Food BREAD = new Food("Bread", 297, new FoodEffect(5, Hunger.class), new FoodEffect(6, FoodSaturation.class));
+//	public static final RawPorkchop RAW_PORKCHOP = new RawPorkchop("Raw Porkchop", 319, new FoodEffect(3, Hunger.class), new FoodEffect(1.8f, FoodSaturation.class));
+//	public static final Food COOKED_PORKCHOP = new Food("Cooked Porkchop", 320, new FoodEffect(8, Hunger.class), new FoodEffect(12.8f, FoodSaturation.class));
+//	// TODO : Regen health for 4 secs
+//	public static final Food GOLDEN_APPLE = new Food("Golden Apple", 322, new FoodEffect(10, Hunger.class), new FoodEffect(9.6f, FoodSaturation.class));
+//	public static final Food MELON_SLICE = new Food("MelonBlock Slice", 360, new FoodEffect(2, Hunger.class), new FoodEffect(1.2f, FoodSaturation.class));
+//	public static final Food COOKIE = new Food("Cookie", 357, new FoodEffect(2, Hunger.class), new FoodEffect(0.4f, FoodSaturation.class));
+//	public static final RawBeef RAW_BEEF = new RawBeef("Raw Beef", 363, new FoodEffect(3, Hunger.class), new FoodEffect(1.8f, FoodSaturation.class));
+//	public static final Food STEAK = new Food("Steak", 364, new FoodEffect(8, Hunger.class), new FoodEffect(12.8f, FoodSaturation.class));
+//	public static final RawChicken RAW_CHICKEN = new RawChicken("Raw Chicken", 365, new FoodEffect(2, Hunger.class), new FoodEffect(1.2f, FoodSaturation.class), new FoodEffect(30, Poisoning.class));
+//	public static final Food COOKED_CHICKEN = new Food("Cooked Chicken", 366, new FoodEffect(6, Hunger.class), new FoodEffect(7.2f, FoodSaturation.class));
+//	public static final Food ROTTEN_FLESH = new Food("Rotten Flesh", 367, new FoodEffect(4, Hunger.class), new FoodEffect(0.8f, FoodSaturation.class), new FoodEffect(80, Poisoning.class));
+	
+	//TODO: Reimplement food less bad!
+	public static final Food RED_APPLE = new Food("Apple", 260);
+	public static final Food MUSHROOM_SOUP = new Food("Mushroom Soup", 282);
+	public static final Food BREAD = new Food("Bread", 297);
+	public static final RawPorkchop RAW_PORKCHOP = new RawPorkchop("Raw Porkchop", 319);
+	public static final Food COOKED_PORKCHOP = new Food("Cooked Porkchop", 320);
+//	// TODO : Regen health for 4 secs
+	public static final Food GOLDEN_APPLE = new Food("Golden Apple", 322);
+	public static final Food MELON_SLICE = new Food("MelonBlock Slice", 360);
+	public static final Food COOKIE = new Food("Cookie", 357);
+	public static final RawBeef RAW_BEEF = new RawBeef("Raw Beef", 363);
+	public static final Food STEAK = new Food("Steak", 364);
+	public static final RawChicken RAW_CHICKEN = new RawChicken("Raw Chicken", 365);
+	public static final Food COOKED_CHICKEN = new Food("Cooked Chicken", 366);
+	public static final Food ROTTEN_FLESH = new Food("Rotten Flesh", 367);
+
 	// == Music Discs ==
 	public static final MusicDisc GOLD_MUSIC_DISC = new MusicDisc("Music Disc - 13", 2256).setMusic(Music.THIRTEEN);
 	public static final MusicDisc GREEN_MUSIC_DISC = new MusicDisc("Music Disc - cat", 2257).setMusic(Music.CAT);
@@ -513,7 +529,8 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial GOLD_NUGGET = new VanillaItemMaterial("Gold Nugget", 371);
 	public static final VanillaItemMaterial NETHER_WART = new VanillaItemMaterial("Nether Wart", 372);
 	public static final VanillaItemMaterial GLASS_BOTTLE = new VanillaItemMaterial("Glass Bottle", 374);
-	public static final Food SPIDER_EYE = new Food("Spider Eye", 375, new FoodEffect(2, Hunger.class), new FoodEffect(3.2f, FoodSaturation.class), new FoodEffect(100, Poisoning.class));
+//	public static final Food SPIDER_EYE = new Food("Spider Eye", 375, new FoodEffect(2, Hunger.class), new FoodEffect(3.2f, FoodSaturation.class), new FoodEffect(100, Poisoning.class));
+	public static final Food SPIDER_EYE = new Food("Spider Eye", 375);
 	public static final VanillaItemMaterial FERMENTED_SPIDER_EYE = new VanillaItemMaterial("Fermented Spider Eye", 376);
 	public static final VanillaItemMaterial BLAZE_POWDER = new VanillaItemMaterial("Blaze Powder", 377);
 	public static final VanillaItemMaterial MAGMA_CREAM = new VanillaItemMaterial("Magma Cream", 378);

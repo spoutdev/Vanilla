@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.util;
 
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
-
-import org.spout.vanilla.components.object.moving.Item;
+import org.spout.vanilla.components.substance.Item;
 
 public class ItemUtil {
 	/**
@@ -52,8 +52,10 @@ public class ItemUtil {
 	 * @return the Item entity
 	 */
 	public static Item dropItem(Point position, ItemStack itemStack, Vector3 velocity) {
-		Item item = new Item(itemStack, velocity);
-		position.getWorld().createAndSpawnEntity(position, item);
+		Item item = new Item();
+		item.setItemStack(itemStack);
+		//TODO: Handle velocity
+		position.getWorld().createAndSpawnEntity(position, item, LoadOption.NO_LOAD);
 		return item;
 	}
 }

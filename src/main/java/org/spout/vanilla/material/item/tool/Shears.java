@@ -30,10 +30,11 @@ import java.util.Random;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.LoadOption;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.components.creature.passive.Sheep;
-import org.spout.vanilla.components.object.moving.Item;
+import org.spout.vanilla.components.creature.Sheep;
+import org.spout.vanilla.components.substance.Item;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.ToolType;
 import org.spout.vanilla.util.VanillaPlayerUtil;
@@ -48,12 +49,14 @@ public class Shears extends Tool {
 	@Override
 	public void onInteract(Entity entity, Entity other, Action action) {
 		if (action == Action.RIGHT_CLICK) {
-			if (!(other.getController() instanceof Sheep)) {
+			Sheep sheep = other.get(Sheep.class);
+
+			if (sheep == null) {
 				return;
 			}
 
-			Sheep sheep = (Sheep) other.getController();
-			if (sheep.isSheared() || sheep.getGrowing().isBaby()) {
+			if (sheep.isSheared()) {
+				//TODO: Also return if this is a baby sheep
 				System.out.println("Debug");
 				return;
 			}
@@ -61,7 +64,9 @@ public class Shears extends Tool {
 			sheep.setSheared(true);
 			short col = sheep.getColor().getData();
 
-			other.getWorld().createAndSpawnEntity(other.getTransform().getPosition(), new Item(new ItemStack(VanillaMaterials.WOOL, col, rand.nextInt(3) + 1), other.getTransform().getPosition().normalize()));
+			Item item = new Item();
+			item.setItemStack(new ItemStack(VanillaMaterials.WOOL, col, rand.nextInt(3) + 1));
+			other.getWorld().createAndSpawnEntity(other.getTransform().getPosition(), item, LoadOption.NO_LOAD);
 
 			if (VanillaPlayerUtil.isSurvival(entity)) {
 				VanillaPlayerUtil.getCurrentSlot(entity).addItemData(0, 1);

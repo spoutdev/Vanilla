@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.item;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.special.InventorySlot;
 
@@ -47,17 +45,7 @@ public class Food extends VanillaItemMaterial {
 
 	public void onEat(Entity entity, InventorySlot slot) {
 		if (VanillaPlayerUtil.isSurvival(entity)) {
-			System.out.println("EATING");
-			for (int i = 0; i < effects.length; i++) {
-				//TODO Entities besides players should be able to eat, stop restricting things.
-				VanillaPlayerController vPlayer = (VanillaPlayerController) entity.getController();
-				try {
-					effects[i].run(vPlayer);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			slot.addItemAmount(-1);
+			//TODO: Reimplement food less bad
 		}
 	}
 }

@@ -40,6 +40,6 @@ public class EnderDragon extends EntityComponent {
 
 	@Override
 	public void onAttached() {
-		getHolder().getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new EnderDragonEntityProtocol());
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new EnderDragonEntityProtocol());
 	}
 }

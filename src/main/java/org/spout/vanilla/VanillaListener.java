@@ -33,12 +33,9 @@ import org.spout.api.event.Order;
 import org.spout.api.event.Result;
 import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
-import org.spout.api.event.world.RegionLoadEvent;
 
-import org.spout.vanilla.components.VanillaComponents;
-import org.spout.vanilla.components.VanillaEntityTypes;
+import org.spout.vanilla.components.player.VanillaPlayer;
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.configuration.WorldConfigurationNode;
 import org.spout.vanilla.event.player.PlayerDeathEvent;
 
 public class VanillaListener implements Listener {
@@ -64,6 +61,6 @@ public class VanillaListener implements Listener {
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		event.getPlayer().addComponent(VanillaComponents.VANILLAPLAYER);
+		event.getPlayer().put(new VanillaPlayer());
 	}
 }

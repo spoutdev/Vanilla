@@ -29,6 +29,7 @@ package org.spout.vanilla.components.player;
 import org.spout.api.component.components.EntityComponent;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.VanillaPlayerProtocol;
 
 /**
@@ -40,6 +41,46 @@ public class VanillaPlayer extends EntityComponent {
 
 	@Override
 	public void onAttached() {
-		getHolder().getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new VanillaPlayerProtocol());
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new VanillaPlayerProtocol());
+	}
+
+	public boolean isOnGround() {
+		return getHolder().getData().get(VanillaData.GROUND);
+	}
+
+	public void setOnGround(boolean onGround) {
+		getHolder().getData().put(VanillaData.GROUND, onGround);
+	}
+
+	public boolean isFlying() {
+		return getHolder().getData().get(VanillaData.FLYING);
+	}
+
+	public void setFlying(boolean isFlying) {
+		getHolder().getData().put(VanillaData.FLYING, isFlying);
+	}
+
+	public boolean isSprinting() {
+		return getHolder().getData().get(VanillaData.SPRINTING);
+	}
+
+	public void setSprinting(boolean isSprinting) {
+		getHolder().getData().put(VanillaData.SPRINTING, isSprinting);
+	}
+
+	public boolean isFalling() {
+		return getHolder().getData().get(VanillaData.FALLING);
+	}
+
+	public void setFalling(boolean isFalling) {
+		getHolder().getData().put(VanillaData.FALLING, isFalling);
+	}
+
+	public boolean isJumping() {
+		return getHolder().getData().get(VanillaData.JUMPING);
+	}
+
+	public void setJumping(boolean isJumping) {
+		getHolder().getData().put(VanillaData.JUMPING, isJumping);
 	}
 }

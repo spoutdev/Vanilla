@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.components.basic;
+package org.spout.vanilla.components;
 
 import org.spout.api.Source;
 import org.spout.api.Spout;
@@ -185,9 +185,8 @@ public class HealthComponent extends EntityComponent {
 		lastDamager = damager;
 		lastDamageCause = cause;
 		if (sendHurtMessage) {
-			getHolder().getNetworkComponent().
-					getHolder().getNetworkComponent().callProtocolEvent(new EntityAnimationEvent(getHolder(), EntityAnimationMessage.ANIMATION_HURT));
-			getHolder().getNetworkComponent().callProtocolEvent(new EntityStatusEvent(getHolder(), EntityStatusMessage.ENTITY_HURT));
+			getHolder().getNetwork().getHolder().getNetwork().callProtocolEvent(new EntityAnimationEvent(getHolder(), EntityAnimationMessage.ANIMATION_HURT));
+			getHolder().getNetwork().callProtocolEvent(new EntityStatusEvent(getHolder(), EntityStatusMessage.ENTITY_HURT));
 			//getHurtEffect().playGlobal(getParent().getParent().getPosition());
 		}
 	}

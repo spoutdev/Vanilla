@@ -26,22 +26,16 @@
  */
 package org.spout.vanilla.event.player;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.entity.controller.PlayerController;
 import org.spout.api.event.HandlerList;
-import org.spout.api.exception.InvalidControllerException;
 
 import org.spout.vanilla.event.entity.VanillaEntityDeathEvent;
 
 public class PlayerDeathEvent extends VanillaEntityDeathEvent {
 	private static HandlerList handlers = new HandlerList();
 
-	public PlayerDeathEvent(Entity e) {
-		super(e);
-		if (!(e.getController() instanceof PlayerController)) {
-			throw new InvalidControllerException();
-		}
+	public PlayerDeathEvent(Player player) {
+		super(player);
 	}
 
 	/**

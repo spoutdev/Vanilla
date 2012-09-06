@@ -24,12 +24,50 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.components.basic;
+package org.spout.vanilla.components;
 
 import org.spout.api.component.components.EntityComponent;
+import org.spout.api.util.BlockIterator;
+
+import org.spout.vanilla.data.VanillaData;
 
 /**
- * Component that adds a detector to entities to scan for and pickup items.
+ * Component that gives the entity the ability to interact with the world within a range
  */
-public class PickupItemComponent extends EntityComponent {
+public class InteractComponent extends EntityComponent {
+	public InteractComponent() {
+	}
+
+	/**
+	 * Sets the maximum distance this Living Entity can interact at
+	 * @param reach distance
+	 */
+	public void setReach(int reach) {
+		getDatatable().put(VanillaData.INTERACT_REACH, reach);
+	}
+
+	/**
+	 * Gets the maximum distance this Living Entity can interact at
+	 * @return reach distance
+	 */
+	public int getReach() {
+		return getDatatable().get(VanillaData.INTERACT_REACH);
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public BlockIterator getBlockView() {
+		return getBlockView(getReach());
+	}
+
+	/**
+	 *
+	 * @param reach
+	 * @return
+	 */
+	public BlockIterator getBlockView(int reach) {
+		return new BlockIterator(getHolder().getWorld(), getHolder().getTransform().getTransform(), reach);
+	}
 }

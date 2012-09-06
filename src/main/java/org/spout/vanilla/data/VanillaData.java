@@ -28,6 +28,7 @@ package org.spout.vanilla.data;
 
 import java.util.UUID;
 
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
@@ -64,6 +65,15 @@ public class VanillaData {
 	public static final DefaultedKey<Integer> INTERACT_REACH = new DefaultedKeyImpl<Integer>("interact_reach", 5);
 	public static final DefaultedKey<Vector3> VELOCITY = new DefaultedKeyImpl<Vector3>("velocity", Vector3.ZERO);
 	public static final DefaultedKey<ItemStack[]> ITEMS = new DefaultedKeyImpl<ItemStack[]>("items", new ItemStack[36]);
+
+	//Entity data
+	public static final DefaultedKey<Boolean> FALLING = new DefaultedKeyImpl<Boolean>("falling", false);
+	public static final DefaultedKey<Boolean> GROUND = new DefaultedKeyImpl<Boolean>("onGround", true);
+	public static final DefaultedKey<Boolean> JUMPING = new DefaultedKeyImpl<Boolean>("jumping", false);
+	//Player-specific
+	public static final DefaultedKey<Boolean> SPRINTING = new DefaultedKeyImpl<Boolean>("sprinting", false);
+	public static final DefaultedKey<Boolean> FLYING = new DefaultedKeyImpl<Boolean>("flying", false);
+	public static final DefaultedKey<Inventory> INVENTORY = new DefaultedKeyImpl<Inventory>("inventory", new Inventory());
 	//Creature-specific
 	public static final DefaultedKey<Integer> LINE_OF_SIGHT = new DefaultedKeyImpl<Integer>("line_of_sight", 1);
 	//Item-specific

@@ -40,6 +40,6 @@ public class Spider extends EntityComponent {
 
 	@Override
 	public void onAttached() {
-		getHolder().getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SpiderEntityProtocol());
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SpiderEntityProtocol());
 	}
 }

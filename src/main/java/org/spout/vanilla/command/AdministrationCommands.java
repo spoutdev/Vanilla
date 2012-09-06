@@ -116,11 +116,11 @@ public class AdministrationCommands {
 				throw new CommandException(args.getString(0) + " is not online.");
 			}
 
-			point = target.getPosition();
+			point = target.getTransform().getPosition();
 		}
 
 		point.getWorld().getChunkFromBlock(point);
-		player.setPosition(point);
+		player.getTransform().setPosition(point);
 		player.getNetworkSynchronizer().setPositionDirty();
 	}
 
@@ -154,7 +154,6 @@ public class AdministrationCommands {
 		}
 
 		Material material;
-		VanillaPlayerController controller = (VanillaPlayerController) player.getController();
 
 		if (args.isInteger(index)) {
 			material = VanillaMaterials.getMaterial((short) args.getInteger(index));
@@ -175,9 +174,9 @@ public class AdministrationCommands {
 
 		int count = args.getInteger(++index, 1);
 
-		controller.getInventory().getMain().addItem(new ItemStack(material, count));
+//		controller.getInventory().getMain().addItem(new ItemStack(material, count)); DATAMAPS
 
-		source.sendMessage("Gave ", controller.getParent().getName(), " ", count, " ", material.getDisplayName());
+		source.sendMessage("Gave ", player.getName(), " ", count, " ", material.getDisplayName());
 	}
 
 	@Command(aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)
@@ -234,51 +233,51 @@ public class AdministrationCommands {
 		}
 	}
 
-	@Command(aliases = {"time"}, usage = "<add|set> <0-24000|day|night|dawn|dusk> [world]", desc = "Set the time of the server", min = 2, max = 3)
-	@CommandPermissions("vanilla.command.time")
-	public void time(CommandContext args, CommandSource source) throws CommandException {
-		int time = 0;
-		boolean relative = false;
-		if (args.getString(0).equalsIgnoreCase("set")) {
-			if (args.isInteger(1)) {
-				time = args.getInteger(1);
-			} else {
-				try {
-					time = Times.get(args.getString(1)).getTime();
-				} catch (Exception e) {
-					throw new CommandException("'" + args.getString(1) + "' is not a valid time.");
-				}
-			}
-		} else if (args.getString(0).equalsIgnoreCase("add")) {
-			relative = true;
-			if (args.isInteger(1)) {
-				time = args.getInteger(1);
-			} else {
-				throw new CommandException("Argument to 'add' must be an integer.");
-			}
-		}
-
-		World world;
-		if (args.length() == 3) {
-			world = plugin.getEngine().getWorld(args.getString(2));
-			if (world == null) {
-				throw new CommandException("'" + args.getString(2) + "' is not a valid world.");
-			}
-		} else if (source instanceof Player) {
-			Player player = (Player) source;
-			world = player.getWorld();
-		} else {
-			throw new CommandException("You must specify a world.");
-		}
-
-		VanillaSky sky = VanillaSky.getSky(world);
-		if (sky == null) {
-			throw new CommandException("The world '" + args.getString(2) + "' is not available.");
-		}
-
-		sky.setTime(relative ? (sky.getTime() + time) : time);
-		source.sendMessage("Set ", world.getName(), "'s time to: ", sky.getTime());
-	}
+//	@Command(aliases = {"time"}, usage = "<add|set> <0-24000|day|night|dawn|dusk> [world]", desc = "Set the time of the server", min = 2, max = 3)
+//	@CommandPermissions("vanilla.command.time")
+//	public void time(CommandContext args, CommandSource source) throws CommandException {
+//		int time = 0;
+//		boolean relative = false;
+//		if (args.getString(0).equalsIgnoreCase("set")) {
+//			if (args.isInteger(1)) {
+//				time = args.getInteger(1);
+//			} else {
+//				try {
+//					time = Times.get(args.getString(1)).getTime();
+//				} catch (Exception e) {
+//					throw new CommandException("'" + args.getString(1) + "' is not a valid time.");
+//				}
+//			}
+//		} else if (args.getString(0).equalsIgnoreCase("add")) {
+//			relative = true;
+//			if (args.isInteger(1)) {
+//				time = args.getInteger(1);
+//			} else {
+//				throw new CommandException("Argument to 'add' must be an integer.");
+//			}
+//		}
+//
+//		World world;
+//		if (args.length() == 3) {
+//			world = plugin.getEngine().getWorld(args.getString(2));
+//			if (world == null) {
+//				throw new CommandException("'" + args.getString(2) + "' is not a valid world.");
+//			}
+//		} else if (source instanceof Player) {
+//			Player player = (Player) source;
+//			world = player.getWorld();
+//		} else {
+//			throw new CommandException("You must specify a world.");
+//		}
+//
+//		VanillaSky sky = VanillaSky.getSky(world);
+//		if (sky == null) {
+//			throw new CommandException("The world '" + args.getString(2) + "' is not available.");
+//		}
+//
+//		sky.setTime(relative ? (sky.getTime() + time) : time);
+//		source.sendMessage("Set ", world.getName(), "'s time to: ", sky.getTime());
+//	}
 
 	@Command(aliases = {"gamemode", "gm"}, usage = "[player] <0|1|2|survival|creative|adventure> (0 = SURVIVAL, 1 = CREATIVE, 2 = ADVENTURE)", desc = "Change a player's game mode", min = 1, max = 2)
 	@CommandPermissions("vanilla.command.gamemode")

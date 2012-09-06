@@ -39,6 +39,6 @@ public class Snowman extends EntityComponent {
 
 	@Override
 	public void onAttached() {
-		getHolder().getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SnowmanEntityProtocol());
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SnowmanEntityProtocol());
 	}
 }

@@ -39,6 +39,6 @@ public class Giant extends EntityComponent {
 
 	@Override
 	public void onAttached() {
-		getHolder().getNetworkComponent().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new GiantEntityProtocol());
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new GiantEntityProtocol());
 	}
 }

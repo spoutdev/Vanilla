@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.event.entity;
 
-import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
@@ -34,9 +33,9 @@ import org.spout.api.event.entity.EntityEvent;
 
 public class EntityTameEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private Controller owner;
+	private Entity owner;
 
-	public EntityTameEvent(Entity e, Controller owner) {
+	public EntityTameEvent(Entity e, Entity owner) {
 		super(e);
 		this.owner = owner;
 	}
@@ -45,7 +44,7 @@ public class EntityTameEvent extends EntityEvent implements Cancellable {
 	 * Gets the owner of this entity
 	 * @return The owner of the entity.
 	 */
-	public Controller getOwner() {
+	public Entity getOwner() {
 		return owner;
 	}
 
@@ -53,7 +52,7 @@ public class EntityTameEvent extends EntityEvent implements Cancellable {
 	 * Sets the owner of this entity.
 	 * @param owner The owner of the entity.
 	 */
-	public void setOwner(Controller owner) {
+	public void setOwner(Entity owner) {
 		this.owner = owner;
 	}
 

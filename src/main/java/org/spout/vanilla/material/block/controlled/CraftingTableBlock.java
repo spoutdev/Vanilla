@@ -37,7 +37,7 @@ import org.spout.vanilla.components.VanillaPlayerController;
 import org.spout.vanilla.components.block.CraftingTable;
 import org.spout.vanilla.util.Instrument;
 
-public class CraftingTableBlock extends ControlledMaterial {
+public class CraftingTableBlock extends ComponentMaterial {
 	public CraftingTableBlock(String name, int id) {
 		super(VanillaControllerTypes.CRAFTING_TABLE, name, id);
 		this.setHardness(4.2F);

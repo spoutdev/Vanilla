@@ -93,7 +93,7 @@ public class Lever extends AttachedRedstoneSource implements Toggleable {
 			data = (short) (5 + Math.random());
 			if (source instanceof Entity) {
 				// set data using direction
-				Vector3 direction = block.getPosition().subtract(((Entity) source).getPosition());
+				Vector3 direction = block.getPosition().subtract(((Entity) source).getTransform().getPosition());
 				direction = direction.abs();
 				if (direction.getX() > direction.getZ()) {
 					data = 6;

@@ -35,7 +35,7 @@ import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
 
-public class EnchantmentTableBlock extends ControlledMaterial implements Directional {
+public class EnchantmentTableBlock extends ComponentMaterial implements Directional {
 	public EnchantmentTableBlock(String name, int id) {
 		super(VanillaControllerTypes.ENCHANTMENT_TABLE, name, id);
 		this.setHardness(5.0F).setResistance(2000.0F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);

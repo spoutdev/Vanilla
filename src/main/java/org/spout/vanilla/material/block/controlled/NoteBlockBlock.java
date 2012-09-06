@@ -36,7 +36,7 @@ import org.spout.vanilla.util.Instrument;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstoneUtil;
 
-public class NoteBlockBlock extends ControlledMaterial implements Fuel {
+public class NoteBlockBlock extends ComponentMaterial implements Fuel {
 	public final float BURN_TIME = 15.f;
 
 	public NoteBlockBlock(String name, int id) {

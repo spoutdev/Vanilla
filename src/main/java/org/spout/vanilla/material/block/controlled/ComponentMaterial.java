@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
+import org.spout.api.component.components.BlockComponent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
@@ -33,13 +34,12 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.components.VanillaControllerType;
 import org.spout.vanilla.material.block.Solid;
 
-public abstract class ControlledMaterial extends Solid {
-	private final VanillaControllerType type;
+public abstract class ComponentMaterial extends Solid {
+	private final Class<? extends BlockComponent> type;
 
-	public ControlledMaterial(VanillaControllerType type, String name, int id) {
+	public ComponentMaterial(Class<? extends BlockComponent> type, String name, int id) {
 		super(name, id);
 		this.type = type;
-		this.setController(type);
 	}
 
 	@Override

@@ -31,13 +31,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.components.creature.neutral.Human;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnPlayerMessage;
 
@@ -51,11 +49,11 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		Human npc = (Human) c;
 
 		int id = entity.getId();
-		int x = (int) (entity.getPosition().getX() * 32);
-		int y = (int) (entity.getPosition().getY() * 32);
-		int z = (int) (entity.getPosition().getZ() * 32);
-		int r = (int) (-entity.getYaw() * 32);
-		int p = (int) (entity.getPitch() * 32);
+		int x = (int) (entity.getTransform().getPosition().getX() * 32);
+		int y = (int) (entity.getTransform().getPosition().getY() * 32);
+		int z = (int) (entity.getTransform().getPosition().getZ() * 32);
+		int r = (int) (-entity.getTransform().getYaw() * 32);
+		int p = (int) (entity.getTransform().getPitch() * 32);
 
 		int item = 0;
 		ItemStack hand = npc.getRenderedItemInHand();

@@ -46,9 +46,9 @@ public class XPOrbEntityProtocol extends VanillaEntityProtocol {
 			return Collections.emptyList();
 		}
 		int id = entity.getId();
-		int x = (int) (entity.getPosition().getX() * 32);
-		int y = (int) (entity.getPosition().getY() * 32);
-		int z = (int) (entity.getPosition().getZ() * 32);
+		int x = (int) (entity.getTransform().getPosition().getX() * 32);
+		int y = (int) (entity.getTransform().getPosition().getY() * 32);
+		int z = (int) (entity.getTransform().getPosition().getZ() * 32);
 		return Arrays.<Message>asList(new EntitySpawnExperienceOrbMessage(id, x, y, z, ((XPOrb) c).getExperience()));
 	}
 }

@@ -54,7 +54,7 @@ import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class DispenserBlock extends ControlledMaterial implements Directional, RedstoneTarget {
+public class DispenserBlock extends ComponentMaterial implements Directional, RedstoneTarget {
 	public DispenserBlock(String name, int id) {
 		super(VanillaControllerTypes.DISPENSER, name, id);
 		this.setHardness(3.5F).setResistance(5.8F);

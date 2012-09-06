@@ -39,7 +39,7 @@ import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class FurnaceBlock extends ControlledMaterial implements Directional {
+public class FurnaceBlock extends ComponentMaterial implements Directional {
 	public static final float SMELT_TIME = 10.f;
 	private final boolean burning;
 

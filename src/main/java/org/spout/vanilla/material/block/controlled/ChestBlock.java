@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import org.spout.api.entity.controller.BlockController;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
@@ -34,8 +33,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.components.VanillaControllerTypes;
-import org.spout.vanilla.components.block.Chest;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.util.Instrument;
@@ -43,7 +40,7 @@ import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.MoveReaction;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class ChestBlock extends ControlledMaterial implements Directional, Fuel {
+public class ChestBlock extends ComponentMaterial implements Directional, Fuel {
 	public final float BURN_TIME = 15.f;
 
 	public ChestBlock(String name, int id) {
@@ -76,11 +73,6 @@ public class ChestBlock extends ControlledMaterial implements Directional, Fuel 
 			}
 		}
 		super.onDestroy(block);
-	}
-
-	@Override
-	public Chest getController(Block block) {
-		return (Chest) super.getController(block);
 	}
 
 	@Override

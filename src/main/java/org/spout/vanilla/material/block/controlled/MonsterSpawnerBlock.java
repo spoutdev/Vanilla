@@ -28,7 +28,7 @@ package org.spout.vanilla.material.block.controlled;
 
 import org.spout.vanilla.components.VanillaControllerTypes;
 
-public class MonsterSpawnerBlock extends ControlledMaterial {
+public class MonsterSpawnerBlock extends ComponentMaterial {
 	public MonsterSpawnerBlock(String name, int id) {
 		super(VanillaControllerTypes.MONSTER_SPAWNER, name, id);
 		this.setHardness(5.0F).setResistance(8.3F).setTransparent();

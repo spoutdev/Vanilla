@@ -30,11 +30,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.components.object.moving.Item;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnItemMessage;
@@ -48,11 +46,11 @@ public class ItemEntityProtocol extends VanillaEntityProtocol {
 		}
 		Item pi = (Item) c;
 		int id = entity.getId();
-		int x = (int) (entity.getPosition().getX() * 32);
-		int y = (int) (entity.getPosition().getY() * 32);
-		int z = (int) (entity.getPosition().getZ() * 32);
-		int r = (int) (entity.getYaw() * 32);
-		int p = (int) (entity.getPitch() * 32);
+		int x = (int) (entity.getTransform().getPosition().getX() * 32);
+		int y = (int) (entity.getTransform().getPosition().getY() * 32);
+		int z = (int) (entity.getTransform().getPosition().getZ() * 32);
+		int r = (int) (entity.getTransform().getYaw() * 32);
+		int p = (int) (entity.getTransform().getPitch() * 32);
 		if (pi.getMaterial() == null) {
 			int typeId = VanillaMaterials.getMinecraftId(pi.getMaterial());
 			if (typeId > 0) {

@@ -66,7 +66,7 @@ public class ClientStatusHandler extends MessageHandler<ClientStatusMessage> {
 
 			//Set position for the server
 			Point point = event.getPoint();
-			player.setPosition(point);
+			player.getTransform().setPosition(point);
 			player.getNetworkSynchronizer().setRespawned();
 			VanillaPlayerController controller = (VanillaPlayerController) player.getController();
 			controller.getHealth().setHealth(controller.getHealth().getMaxHealth(), HealthChangeReason.SPAWN);

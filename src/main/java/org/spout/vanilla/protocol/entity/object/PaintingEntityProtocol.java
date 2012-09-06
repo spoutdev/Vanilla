@@ -44,6 +44,6 @@ public class PaintingEntityProtocol extends VanillaEntityProtocol {
 			return Collections.emptyList();
 		}
 		Painting painting = (Painting) entity.getController();
-		return Arrays.<Message>asList(new EntitySpawnPaintingMessage(entity.getId(), painting.getPaintingStyle().name(), entity.getPosition(), painting.getFace()));
+		return Arrays.<Message>asList(new EntitySpawnPaintingMessage(entity.getId(), painting.getPaintingStyle().name(), entity.getTransform().getPosition(), painting.getFace()));
 	}
 }

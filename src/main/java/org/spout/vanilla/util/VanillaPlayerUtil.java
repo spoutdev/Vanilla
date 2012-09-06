@@ -94,7 +94,7 @@ public class VanillaPlayerUtil {
 		if (controller instanceof HeadOwner) {
 			position = ((HeadOwner) controller).getHead().getPosition();
 		} else {
-			position = entity.getPosition();
+			position = entity.getTransform().getPosition();
 		}
 		Vector3 diff = position.subtract(block.getX(), block.getY(), block.getZ());
 		if (Math.abs(diff.getX()) < 2.0f && Math.abs(diff.getZ()) < 2.0f) {
@@ -120,7 +120,7 @@ public class VanillaPlayerUtil {
 			if (e.getController() instanceof HeadOwner) {
 				yaw = ((HeadOwner) e.getController()).getHead().getYaw();
 			} else {
-				yaw = e.getYaw();
+				yaw = e.getTransform().getYaw();
 			}
 			return BlockFace.fromYaw(yaw);
 		}

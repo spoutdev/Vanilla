@@ -43,6 +43,6 @@ public class LightningEntityProtocol extends VanillaEntityProtocol {
 		if (!(entity.getController() instanceof Lightning)) {
 			return Collections.emptyList();
 		}
-		return Arrays.<Message>asList(new EntitySpawnLightningStrikeMessage(entity.getId(), entity.getPosition().getBlockX(), entity.getPosition().getBlockY(), entity.getPosition().getBlockZ()));
+		return Arrays.<Message>asList(new EntitySpawnLightningStrikeMessage(entity.getId(), entity.getTransform().getPosition().getBlockX(), entity.getTransform().getPosition().getBlockY(), entity.getTransform().getPosition().getBlockZ()));
 	}
 }

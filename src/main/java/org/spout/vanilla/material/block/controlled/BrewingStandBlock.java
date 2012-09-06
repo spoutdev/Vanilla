@@ -33,7 +33,7 @@ import org.spout.vanilla.components.VanillaControllerTypes;
 import org.spout.vanilla.components.block.BrewingStand;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 
-public class BrewingStandBlock extends ControlledMaterial {
+public class BrewingStandBlock extends ComponentMaterial {
 	public BrewingStandBlock(String name, int id) {
 		super(VanillaControllerTypes.BREWING_STAND, name, id);
 		this.setResistance(2.5F).setHardness(10.F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);

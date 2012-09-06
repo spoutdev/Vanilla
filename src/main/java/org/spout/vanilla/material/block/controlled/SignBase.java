@@ -69,7 +69,7 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 			Source source = block.getSource();
 			short data = 0;
 			if (source instanceof Entity) {
-				Vector3 direction = block.getPosition().subtract(((Entity) source).getPosition());
+				Vector3 direction = block.getPosition().subtract(((Entity) source).getTransform().getPosition());
 				float rotation = direction.rotationTo(Vector3.RIGHT).getYaw();
 				rotation = rotation / 360f * 16f;
 				data = (short) rotation;

@@ -185,7 +185,7 @@ public class TestCommands {
 			}
 			count++;
 			((VanillaEntityController) entity.getController()).getHealth().setHealth(0, HealthChangeReason.COMMAND);
-			entity.kill();
+			entity.remove();
 			Spout.log(entity.getController().toString() + " was killed");
 		}
 		if (count > 0) {

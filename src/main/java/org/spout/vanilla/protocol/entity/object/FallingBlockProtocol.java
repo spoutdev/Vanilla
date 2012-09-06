@@ -65,7 +65,7 @@ public class FallingBlockProtocol extends BasicVehicleEntityProtocol {
 		} else {
 			spawnId = 70; // sand
 		}
-		Point position = entity.getPosition();
+		Point position = entity.getTransform().getPosition();
 		List<Parameter<?>> parameters = Arrays.<Parameter<?>>asList(new Parameter<Short>(Parameter.TYPE_SHORT, BLOCK_TYPE_METADATA_INDEX, VanillaMaterials.getMinecraftId(mat)));
 		return Arrays.<Message>asList(new EntitySpawnVehicleMessage(entity.getId(), spawnId, position), new EntityMetadataMessage(entity.getId(), parameters));
 	}

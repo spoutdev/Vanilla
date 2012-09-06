@@ -42,9 +42,9 @@ public final class PlayerLookMessageHandler extends MessageHandler<PlayerLookMes
 
 		Player player = session.getPlayer();
 
-		player.setPitch(message.getPitch());
-		player.setYaw(message.getYaw());
-		player.setRoll(message.getRoll());
+		player.getTransform().setPitch(message.getPitch());
+		player.getTransform().setYaw(message.getYaw());
+		player.getTransform().setRoll(message.getRoll());
 		((VanillaPlayerController) player.getController()).getHead().setLooking(message.getLookingAtVector());
 	}
 }

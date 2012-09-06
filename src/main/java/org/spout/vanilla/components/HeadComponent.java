@@ -32,14 +32,14 @@ import org.spout.api.geo.discrete.Transform;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
+import org.spout.vanilla.data.VanillaData;
+
 /**
  * Component that controls the rotation of a head on Vanilla entities.
  */
 public class HeadComponent extends EntityComponent {
 	private Vector3 lookingAt = Vector3.ZERO;
-	private int headYaw = 0;
 	private int lastHeadYaw = 0;
-	private float headHeight = 1.0f;
 
 	@Override
 	public boolean canTick() {
@@ -49,11 +49,11 @@ public class HeadComponent extends EntityComponent {
 	@Override
 	public void onTick(float dt) {
 		lastHeadYaw = (int) getHolder().getTransform().getYaw();
-		headYaw = (int) getHolder().getTransform().getTransformLive().getRotation().getYaw();
+		setYaw((int) getHolder().getTransform().getTransformLive().getRotation().getYaw());
 	}
 
 	public boolean isDirty() {
-		return headYaw != lastHeadYaw;
+		return getYaw() != lastHeadYaw;
 	}
 
 	/**
@@ -61,11 +61,11 @@ public class HeadComponent extends EntityComponent {
 	 * @param headYaw
 	 */
 	public void setYaw(int headYaw) {
-		this.headYaw = headYaw;
+		getData().put(VanillaData.HEAD_YAW, headYaw);
 	}
 
 	public int getYaw() {
-		return headYaw;
+		return getData().get(VanillaData.HEAD_YAW);
 	}
 
 	/**
@@ -88,16 +88,16 @@ public class HeadComponent extends EntityComponent {
 	 * Sets the current height of the head above the main position
 	 * @param height
 	 */
-	public void setHeight(float height) {
-		this.headHeight = height;
+	public void setHeight(int height) {
+		getData().put(VanillaData.HEAD_HEIGHT, height);
 	}
 
 	/**
 	 * Gets the current height of the head above the main position
 	 * @return the head height
 	 */
-	public float getHeight() {
-		return this.headHeight;
+	public int getHeight() {
+		return getData().get(VanillaData.HEAD_HEIGHT);
 	}
 
 	/**

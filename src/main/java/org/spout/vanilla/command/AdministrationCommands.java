@@ -49,8 +49,9 @@ import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.NetworkSynchronizer;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.components.VanillaPlayerController;
-import org.spout.vanilla.components.world.VanillaSky;
+import org.spout.vanilla.components.basic.HealthComponent;
+import org.spout.vanilla.components.player.GameModeComponent;
+import org.spout.vanilla.components.player.VanillaPlayer;
 import org.spout.vanilla.configuration.OpConfiguration;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
@@ -116,11 +117,11 @@ public class AdministrationCommands {
 				throw new CommandException(args.getString(0) + " is not online.");
 			}
 
-			point = target.getPosition();
+			point = target.getTransform().getPosition();
 		}
 
 		point.getWorld().getChunkFromBlock(point);
-		player.setPosition(point);
+		player.getTransform().setPosition(point);
 		player.getNetworkSynchronizer().setPositionDirty();
 	}
 
@@ -154,7 +155,6 @@ public class AdministrationCommands {
 		}
 
 		Material material;
-		VanillaPlayerController controller = (VanillaPlayerController) player.getController();
 
 		if (args.isInteger(index)) {
 			material = VanillaMaterials.getMaterial((short) args.getInteger(index));
@@ -301,11 +301,10 @@ public class AdministrationCommands {
 			player = (Player) source;
 		}
 
-		if (!(player.getController() instanceof VanillaPlayerController)) {
+		if (!player.has(VanillaPlayer.class)) {
 			throw new CommandException("Invalid player!");
 		}
 
-		VanillaPlayerController controller = (VanillaPlayerController) player.getController();
 
 		GameMode mode;
 
@@ -319,10 +318,10 @@ public class AdministrationCommands {
 			throw new CommandException("A game mode must be either a number between 0 and 2, 'CREATIVE', 'SURVIVAL' or 'ADVENTURE'");
 		}
 
-		controller.setGameMode(mode);
+	player.get(GameModeComponent.class).setGameMode(mode);
 
 		if (!player.equals(source)) {
-			source.sendMessage(controller.getParent().getName(), "'s game mode has been changed to ", mode.name(), ".");
+			source.sendMessage(player.getName(), "'s game mode has been changed to ", mode.name(), ".");
 		}
 	}
 
@@ -442,14 +441,15 @@ public class AdministrationCommands {
 			if (!(source instanceof Player)) {
 				throw new CommandException("Don't be silly...you cannot kill yourself as the console.");
 			}
-			((VanillaPlayerController) ((Player) source).getController()).getHealth().die(source);
+			
+			((Player) source).get(HealthComponent.class).kill(source);
 		} else {
 			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			VanillaPlayerController victim = (VanillaPlayerController) ((Server) Spout.getEngine()).getPlayer(args.getString(0), true).getController();
+			Player victim = ((Server) Spout.getEngine()).getPlayer(args.getString(0), true);
 			if (victim != null) {
-				victim.getHealth().die(source);
+				victim.get(HealthComponent.class).kill(source);
 			}
 		}
 	}
@@ -468,10 +468,10 @@ public class AdministrationCommands {
 			throw new CommandException("Only a player may call this command.");
 		}
 		Player player = (Player) source;
-		if (!(player.getPosition().getWorld().getGenerator() instanceof BiomeGenerator)) {
+		if (!(player.getTransform().getPosition().getWorld().getGenerator() instanceof BiomeGenerator)) {
 			throw new CommandException("This map does not appear to have any biome data.");
 		}
-		Point pos = player.getPosition();
+		Point pos = player.getTransform().getPosition();
 		Biome biome = pos.getWorld().getBiome(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ());
 		source.sendMessage("Current biome: ", (biome != null ? biome.getName() : "none"));
 	}

@@ -323,7 +323,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	protected void worldChanged(World world) {
-		GameMode gamemode = world.getDatatable().get(VanillaData.GAMEMODE);
+		GameMode gamemode = world.getComponentHolder().getData().get(VanillaData.GAMEMODE);
 		//The world the player is entering has a different gamemode...
 		if (gamemode != null) {
 			if (gamemode != vc.getGameMode()) {
@@ -336,9 +336,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			//The world has no gamemode setting in its map so default to the Player's GameMode.
 			gamemode = vc.getGameMode();
 		}
-		Difficulty difficulty = world.getDatatable().get(VanillaData.DIFFICULTY);
-		Dimension dimension = world.getDatatable().get(VanillaData.DIMENSION);
-		WorldType worldType = world.getDatatable().get(VanillaData.WORLD_TYPE);
+		Difficulty difficulty = world.getComponentHolder().getData().get(VanillaData.DIFFICULTY);
+		Dimension dimension = world.getComponentHolder().getData().get(VanillaData.DIMENSION);
+		WorldType worldType = world.getComponentHolder().getData().get(VanillaData.WORLD_TYPE);
 
 		//TODO Handle infinite height
 		if (first) {
@@ -391,7 +391,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	public void syncEntity(Entity e, boolean spawn, boolean destroy, boolean update) {
-		EntityProtocol ep = e.getNetworkComponent().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
+		EntityProtocol ep = e.getNetwork().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
 		if (ep != null) {
 			List<Message> messages = new ArrayList<Message>(3);
 			// Sync using vanilla protocol

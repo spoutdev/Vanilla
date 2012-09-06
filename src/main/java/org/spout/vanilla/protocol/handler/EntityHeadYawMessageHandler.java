@@ -31,7 +31,7 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.components.component.HeadOwner;
+import org.spout.vanilla.components.basic.HeadComponent;
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityHeadYawMessage;
 
@@ -43,10 +43,11 @@ public class EntityHeadYawMessageHandler extends MessageHandler<EntityHeadYawMes
 		}
 
 		Player player = session.getPlayer();
-		if (!(player.getController() instanceof HeadOwner)) {
+		if (!player.has(HeadComponent.class)) {
 			return;
 		}
-		HeadOwner creature = (HeadOwner) player.getController();
-		creature.getHead().setYaw(MathHelper.floor(ChannelBufferUtils.deProtocolifyRotation(message.getHeadYaw())));
+		
+		HeadComponent creature = player.get(HeadComponent.class);
+		creature.setYaw(MathHelper.floor(ChannelBufferUtils.deProtocolifyRotation(message.getHeadYaw())));
 	}
 }

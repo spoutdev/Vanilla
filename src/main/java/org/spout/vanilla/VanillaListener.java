@@ -64,6 +64,6 @@ public class VanillaListener implements Listener {
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		event.getPlayer().addComponent(VanillaComponents.VANILLAPLAYER);
+		event.getPlayer().put(VanillaComponents.VANILLAPLAYER);
 	}
 }

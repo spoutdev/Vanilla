@@ -242,9 +242,9 @@ public class VanillaPlugin extends CommonPlugin {
 				World world = engine.loadWorld(worldNode.getWorldName(), generator);
 
 				// Apply general settings
-				world.getDatatable().put(VanillaData.GAMEMODE, GameMode.get(worldNode.GAMEMODE.getString()));
-				world.getDatatable().put(VanillaData.DIFFICULTY, Difficulty.get(worldNode.DIFFICULTY.getString()));
-				world.getDatatable().put(VanillaData.DIMENSION, Dimension.get(worldNode.SKY_TYPE.getString()));
+				world.getComponentHolder().getData().put(VanillaData.GAMEMODE, GameMode.get(worldNode.GAMEMODE.getString()));
+				world.getComponentHolder().getData().put(VanillaData.DIFFICULTY, Difficulty.get(worldNode.DIFFICULTY.getString()));
+				world.getComponentHolder().getData().put(VanillaData.DIMENSION, Dimension.get(worldNode.SKY_TYPE.getString()));
 
 				// Grab safe spawn if newly created world.
 				if (world.getAge() <= 0) {

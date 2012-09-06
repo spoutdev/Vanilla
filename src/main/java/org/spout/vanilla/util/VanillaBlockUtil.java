@@ -51,7 +51,7 @@ public class VanillaBlockUtil {
 	 * @return True if it is raining, False if not
 	 */
 	public static boolean hasRainNearby(Block block) {
-		if (block.getWorld().getDatatable().get(VanillaData.WEATHER).isRaining()) {
+		if (block.getWorld().getComponentHolder().getData().get(VanillaData.WEATHER).isRaining()) {
 			for (BlockFace face : BlockFaces.NESW) {
 				if (block.translate(face).isAtSurface()) {
 					return true;
@@ -67,7 +67,7 @@ public class VanillaBlockUtil {
 	 * @return True if rain is falling on the Block, false if not
 	 */
 	public static boolean isRaining(Block block) {
-		return block.getWorld().getDatatable().get(VanillaData.WEATHER).isRaining() && block.isAtSurface();
+		return block.getWorld().getComponentHolder().getData().get(VanillaData.WEATHER).isRaining() && block.isAtSurface();
 	}
 
 	/**

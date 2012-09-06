@@ -42,6 +42,8 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.components.basic.HealthComponent;
+import org.spout.vanilla.components.player.VanillaPlayer;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
@@ -184,8 +186,7 @@ public class TestCommands {
 				continue;
 			}
 			count++;
-			((VanillaEntityController) entity.getController()).getHealth().setHealth(0, HealthChangeReason.COMMAND);
-			entity.kill();
+			entity.get(HealthComponent.class).kill(HealthChangeReason.COMMAND);
 			Spout.log(entity.getController().toString() + " was killed");
 		}
 		if (count > 0) {
@@ -203,10 +204,9 @@ public class TestCommands {
 		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to view the credits.");
 		}
-
-		Controller controller = ((Player) source).getController();
-		if (controller instanceof VanillaPlayerController) {
-			((VanillaPlayerController) controller).rollCredits();
+		Player p = (Player) source;
+		if (p.has(VanillaPlayer.class)) {
+			p.get(VanillaPlayer.class).rollCredits();
 		}
 	}
 

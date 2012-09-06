@@ -30,8 +30,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.components.VanillaEntityController;
-import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.player.VanillaPlayer;
 import org.spout.vanilla.protocol.msg.PlayerAbilityMessage;
 
 public final class PlayerAbilityMessageHandler extends MessageHandler<PlayerAbilityMessage> {
@@ -42,9 +41,9 @@ public final class PlayerAbilityMessageHandler extends MessageHandler<PlayerAbil
 		}
 
 		Player player = session.getPlayer();
-		if (!(player.getController() instanceof VanillaEntityController)) {
+		if (!player.has(VanillaPlayer.class)) {
 			return;
 		}
-		((VanillaPlayerController) player.getController()).setFlying(message.isFlying());
+		player.get(VanillaPlayer.class).setFlying(message.isFlying());
 	}
 }

@@ -189,7 +189,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 						//}
 
 						//For now: simple distance checking
-						Point pos1 = player.getPosition();
+						Point pos1 = player.getTransform().getPosition();
 						Point pos2 = ((VanillaPlayerController) player.getController()).getHead().getPosition();
 						Point tpos = target.getPosition();
 

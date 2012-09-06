@@ -30,7 +30,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.components.VanillaPlayerController;
+import org.spout.vanilla.components.basic.HeadComponent;
 import org.spout.vanilla.protocol.msg.PlayerLookMessage;
 
 public final class PlayerLookMessageHandler extends MessageHandler<PlayerLookMessage> {
@@ -42,9 +42,9 @@ public final class PlayerLookMessageHandler extends MessageHandler<PlayerLookMes
 
 		Player player = session.getPlayer();
 
-		player.setPitch(message.getPitch());
-		player.setYaw(message.getYaw());
-		player.setRoll(message.getRoll());
-		((VanillaPlayerController) player.getController()).getHead().setLooking(message.getLookingAtVector());
+		player.getTransform().setPitch(message.getPitch());
+		player.getTransform().setYaw(message.getYaw());
+		player.getTransform().setRoll(message.getRoll());
+		player.get(HeadComponent.class).setLooking(message.getLookingAtVector());
 	}
 }

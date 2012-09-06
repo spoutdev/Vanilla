@@ -38,6 +38,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.components.object.moving.MovingBlock;
+import org.spout.vanilla.components.substance.MovingMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.BasicVehicleEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
@@ -52,21 +53,9 @@ public class FallingBlockProtocol extends BasicVehicleEntityProtocol {
 
 	@Override
 	public List<Message> getSpawnMessages(Entity entity) {
-		final Controller controller = entity.getController();
-		if (!(controller instanceof MovingBlock)) {
-			return Collections.emptyList();
-		}
-		int spawnId;
-		BlockMaterial mat = ((MovingBlock) controller).getMaterial();
-		if (mat.equals(VanillaMaterials.DRAGON_EGG)) {
-			spawnId = 74;
-		} else if (mat.equals(VanillaMaterials.GRAVEL)) {
-			spawnId = 71;
-		} else {
-			spawnId = 70; // sand
-		}
-		Point position = entity.getTransform().getPosition();
-		List<Parameter<?>> parameters = Arrays.<Parameter<?>>asList(new Parameter<Short>(Parameter.TYPE_SHORT, BLOCK_TYPE_METADATA_INDEX, VanillaMaterials.getMinecraftId(mat)));
-		return Arrays.<Message>asList(new EntitySpawnVehicleMessage(entity.getId(), spawnId, position), new EntityMetadataMessage(entity.getId(), parameters));
+		MovingMaterial moving = entity.getOrCreate(MovingMaterial.class);
+		short spawnId = (short) moving.getMaterial().getMinecraftId();
+		List<Parameter<?>> parameters = Arrays.<Parameter<?>>asList(new Parameter<Short>(Parameter.TYPE_SHORT, BLOCK_TYPE_METADATA_INDEX, spawnId));
+		return Arrays.<Message>asList(new EntitySpawnVehicleMessage(entity.getId(), spawnId, entity.getTransform().getPosition()), new EntityMetadataMessage(entity.getId(), parameters));
 	}
 }

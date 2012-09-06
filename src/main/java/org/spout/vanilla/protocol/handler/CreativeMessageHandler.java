@@ -26,47 +26,43 @@
  */
 package org.spout.vanilla.protocol.handler;
 
-import java.util.Map.Entry;
-
 import org.spout.api.entity.Player;
-import org.spout.api.inventory.InventoryBase;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.protocol.msg.CreativeMessage;
-import org.spout.vanilla.window.ClickArgs;
 
 public class CreativeMessageHandler extends MessageHandler<CreativeMessage> {
 	@Override
 	public void handleServer(Session session, CreativeMessage message) {
-		if (!session.hasPlayer()) {
+		if (!session.hasPlayer() || !session.getPlayer().has(Human.class)) {
+			return;
+		}
+		Player holder = session.getPlayer();
+		Human human = holder.get(Human.class);
+		if (human.isSurvival()) {
+			holder.kick("Now now, don't try that here. Won't work.");
 			return;
 		}
 
-		Human human = session.getPlayer().getOrCreate(Human.class);
-		if (player.isSurvival()) {
-			((Player) player.getHolder()).kick("Now now, don't try that here. Won't work.");
-			return;
-		}
-
-		WindowComponent active = controller.getActiveWindow();
-
-		if (message.getItem() == null) {
-			//Taking item from existing slot
-			active.setItemOnCursor(null);
-			Entry<InventoryBase, Integer> entry = active.getInventoryEntry(message.getSlot());
-			if (entry != null) {
-				active.onClick(entry.getKey(), entry.getValue(), new ClickArgs(false, false));
-			}
-		} else if (message.getSlot() == -1) {
-			active.setItemOnCursor(message.getItem());
-			active.onOutsideClick();
-		} else {
-			Entry<InventoryBase, Integer> entry = active.getInventoryEntry(message.getSlot());
-			if (entry != null) {
-				active.onCreativeClick(entry.getKey(), entry.getValue(), message.getItem());
-			}
-		}
+//		WindowComponent active = controller.getActiveWindow();
+//
+//		if (message.getItem() == null) {
+//			//Taking item from existing slot
+//			active.setItemOnCursor(null);
+//			Entry<InventoryBase, Integer> entry = active.getInventoryEntry(message.getSlot());
+//			if (entry != null) {
+//				active.onClick(entry.getKey(), entry.getValue(), new ClickArgs(false, false));
+//			}
+//		} else if (message.getSlot() == -1) {
+//			active.setItemOnCursor(message.getItem());
+//			active.onOutsideClick();
+//		} else {
+//			Entry<InventoryBase, Integer> entry = active.getInventoryEntry(message.getSlot());
+//			if (entry != null) {
+//				active.onCreativeClick(entry.getKey(), entry.getValue(), message.getItem());
+//			}
+//		}
 	}
 }

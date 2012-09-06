@@ -30,7 +30,10 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
+import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
+
+import org.spout.vanilla.material.VanillaMaterials;
 
 /**
  * * Common Vanilla-like data mappings that are found in Vanilla.
@@ -71,6 +74,8 @@ public class VanillaData {
 	//Head-specific
 	public static final DefaultedKey<Integer> HEAD_HEIGHT = new DefaultedKeyImpl<Integer>("head_height", 1);
 	public static final DefaultedKey<Integer> HEAD_YAW = new DefaultedKeyImpl<Integer>("head_yaw", 0);
+	//MovingMaterial-specific
+	public static final DefaultedKey<String> MATERIAL_NAME = new DefaultedKeyImpl<String>("material_name", VanillaMaterials.AIR.getName());
 	//XPOrb-specific
 	public static final DefaultedKey<Short> EXPERIENCE_AMOUNT = new DefaultedKeyImpl<Short>("experience_amount", (short) 0);
 	public static final DefaultedKey<Long> TIME_DISPERSED = new DefaultedKeyImpl<Long>("time_dispersed", Long.valueOf(0));
@@ -82,9 +87,8 @@ public class VanillaData {
 	//Pig-specific
 	public static final DefaultedKey<Boolean> SADDLED = new DefaultedKeyImpl<Boolean>("saddled", false);
 	//Wolf/Ocelot-specific
-	public static final DefaultedKey<Boolean> SITTING = new DefaultedKeyImpl<Boolean>("sitting", false);
-	public static final DefaultedKey<Boolean> TAMED = new DefaultedKeyImpl<Boolean>("tamed", false);
-	public static final DefaultedKey<String> OWNER = new DefaultedKeyImpl<String>("owner", null);
+	public static final DefaultedKey<Boolean> SITTING = new DefaultedKeyImpl<Boolean>("is_sitting", false);
+	public static final DefaultedKey<Boolean> TAMED = new DefaultedKeyImpl<Boolean>("is_tamed", false);
 	//Ocelot-specific
 	public static final DefaultedKey<Byte> SKIN = new DefaultedKeyImpl<Byte>("skin", (byte) 0);
 }

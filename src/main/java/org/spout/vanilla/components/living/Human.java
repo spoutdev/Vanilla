@@ -28,8 +28,10 @@ package org.spout.vanilla.components.living;
 
 import org.spout.api.Spout;
 import org.spout.api.component.components.EntityComponent;
+import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
+import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.gamemode.AdventureComponent;
@@ -37,6 +39,7 @@ import org.spout.vanilla.components.gamemode.CreativeComponent;
 import org.spout.vanilla.components.gamemode.SurvivalComponent;
 import org.spout.vanilla.components.misc.HeadComponent;
 import org.spout.vanilla.components.misc.HealthComponent;
+import org.spout.vanilla.components.misc.InventoryComponent;
 import org.spout.vanilla.components.misc.PickupItemComponent;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
@@ -49,9 +52,11 @@ import org.spout.vanilla.protocol.entity.living.HumanEntityProtocol;
 public class Human extends EntityComponent {
 	@Override
 	public void onAttached() {
-		getHolder().put(new HeadComponent());
-		getHolder().put(new PickupItemComponent());
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
+		Entity holder = getHolder();
+		holder.put(new HeadComponent());
+		holder.put(new InventoryComponent());
+		holder.put(new PickupItemComponent());
+		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
 	}
 
 	public boolean isOnGround() {
@@ -95,15 +100,27 @@ public class Human extends EntityComponent {
 	}
 
 	public boolean isAdventure() {
-		return getData().get(VanillaData.GAMEMODE) == GameMode.ADVENTURE;
+		return getGameMode() == GameMode.ADVENTURE;
 	}
 
 	public boolean isCreative() {
-		return getData().get(VanillaData.GAMEMODE) == GameMode.CREATIVE;
+		return getGameMode() == GameMode.CREATIVE;
 	}
 
 	public boolean isSurvival() {
-		return getData().get(VanillaData.GAMEMODE) == GameMode.SURVIVAL;
+		return getGameMode() == GameMode.SURVIVAL;
+	}
+
+	public String getName() {
+		return getData().get(Data.NAME);
+	}
+
+	public void setName(String name) {
+		getData().put(Data.NAME, name);
+	}
+
+	public GameMode getGameMode() {
+		return getData().get(VanillaData.GAMEMODE);
 	}
 
 	public void setGamemode(GameMode mode) {

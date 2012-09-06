@@ -27,9 +27,18 @@
 package org.spout.vanilla.components.misc;
 
 import org.spout.api.component.Component;
+import org.spout.api.data.Data;
+import org.spout.api.inventory.ItemStack;
 
 /**
  * Component that holds inventory references and handles inventory transactions.
  */
 public class InventoryComponent extends Component {
+	public ItemStack getCurrentItem() {
+		return getData().get(Data.HELD_ITEM);
+	}
+
+	public void setCurrentItem(ItemStack current) {
+		getData().put(Data.HELD_ITEM, current);
+	}
 }

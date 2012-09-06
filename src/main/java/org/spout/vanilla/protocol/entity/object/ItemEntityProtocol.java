@@ -33,6 +33,7 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
 
+import org.spout.vanilla.components.substance.Item;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnItemMessage;
@@ -40,21 +41,20 @@ import org.spout.vanilla.protocol.msg.entity.EntitySpawnItemMessage;
 public class ItemEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity) {
-		final Controller c = entity.getController();
-		if (!(c instanceof Item)) {
+		Item pi = entity.get(Item.class);
+		if (pi == null) {
 			return Collections.emptyList();
 		}
-		Item pi = (Item) c;
 		int id = entity.getId();
 		int x = (int) (entity.getTransform().getPosition().getX() * 32);
 		int y = (int) (entity.getTransform().getPosition().getY() * 32);
 		int z = (int) (entity.getTransform().getPosition().getZ() * 32);
 		int r = (int) (entity.getTransform().getYaw() * 32);
 		int p = (int) (entity.getTransform().getPitch() * 32);
-		if (pi.getMaterial() == null) {
-			int typeId = VanillaMaterials.getMinecraftId(pi.getMaterial());
+		if (pi.getItemStack().getMaterial() == null) {
+			int typeId = VanillaMaterials.getMinecraftId(pi.getItemStack().getMaterial());
 			if (typeId > 0) {
-				return Arrays.<Message>asList(new EntitySpawnItemMessage(id, typeId, pi.getAmount(), pi.getData(), x, y, z, r, p, (int) pi.getParent().getRoll()));
+				return Arrays.<Message>asList(new EntitySpawnItemMessage(id, typeId, pi.getItemStack().getAmount(), pi.getItemStack().getData(), x, y, z, r, p, (int) pi.getHolder().getTransform().getRoll()));
 			}
 		}
 		return Collections.emptyList();

@@ -27,22 +27,22 @@
 package org.spout.vanilla.inventory.player;
 
 import org.spout.api.Spout;
+import org.spout.api.entity.Player;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventoryRange;
 import org.spout.api.inventory.special.InventorySlot;
 
-import org.spout.vanilla.components.VanillaPlayerController;
 import org.spout.vanilla.event.player.PlayerSlotChangeEvent;
 
 public class PlayerQuickbar extends InventoryRange {
 	private static final long serialVersionUID = 1L;
 	public static final int QUICKBAR_SIZE = 9;
 	private final InventorySlot[] slots;
-	private final VanillaPlayerController owner;
+	private final Player owner;
 	private int currentSlot = 0;
 
-	public PlayerQuickbar(VanillaPlayerController owner, InventoryBase main) {
+	public PlayerQuickbar(Player owner, InventoryBase main) {
 		super(main, 0, QUICKBAR_SIZE);
 		this.owner = owner;
 		this.slots = new InventorySlot[QUICKBAR_SIZE];
@@ -66,7 +66,7 @@ public class PlayerQuickbar extends InventoryRange {
 	 */
 	public void setCurrentSlot(int slotIndex) {
 		this.checkSlotRange(slotIndex);
-		this.currentSlot = Spout.getEventManager().callEvent(new PlayerSlotChangeEvent(this.owner.getParent(), this.currentSlot, slotIndex)).getNewSlotIndex();
+		this.currentSlot = Spout.getEventManager().callEvent(new PlayerSlotChangeEvent(this.owner, this.currentSlot, slotIndex)).getNewSlotIndex();
 	}
 
 	/**

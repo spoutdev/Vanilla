@@ -26,10 +26,12 @@
  */
 package org.spout.vanilla.protocol.handler;
 
+import org.spout.api.component.components.BlockComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.components.substance.material.Sign;
 import org.spout.vanilla.protocol.msg.UpdateSignMessage;
 
 public class UpdateSignHandler extends MessageHandler<UpdateSignMessage> {
@@ -41,7 +43,7 @@ public class UpdateSignHandler extends MessageHandler<UpdateSignMessage> {
 
 		Player player = session.getPlayer();
 
-		BlockController controller = player.getWorld().getBlockController(message.getX(), message.getY(), message.getZ());
+		BlockComponent controller = player.getWorld().getBlockComponent(message.getX(), message.getY(), message.getZ());
 		if (controller == null || !(controller instanceof Sign)) {
 			return;
 		}

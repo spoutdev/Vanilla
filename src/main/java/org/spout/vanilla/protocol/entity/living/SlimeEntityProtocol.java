@@ -28,10 +28,10 @@ package org.spout.vanilla.protocol.entity.living;
 
 import java.util.List;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.components.creature.hostile.Slime;
+import org.spout.vanilla.components.creature.Slime;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class SlimeEntityProtocol extends BasicMobEntityProtocol {
@@ -40,13 +40,9 @@ public class SlimeEntityProtocol extends BasicMobEntityProtocol {
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
-		if (controller instanceof Slime) {
-			Slime slime = (Slime) controller;
-			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, slime.getSize()));
-		}
-
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
+			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, entity.getOrCreate(Slime.class).getSize()));
 		return parameters;
 	}
 }

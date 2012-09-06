@@ -28,9 +28,10 @@ package org.spout.vanilla.protocol.entity.living;
 
 import java.util.List;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.components.creature.Blaze;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class BlazeEntityProtocol extends BasicMobEntityProtocol {
@@ -39,9 +40,9 @@ public class BlazeEntityProtocol extends BasicMobEntityProtocol {
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
-		//TODO: Index 16 (byte): Attacking. 1 sets the blaze on fire; 0 signals the end of the attack
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (entity.getOrCreate(Blaze.class).isAttacking() ? 1 : 0)));
 		return parameters;
 	}
 }

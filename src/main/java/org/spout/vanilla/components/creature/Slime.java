@@ -29,6 +29,7 @@ package org.spout.vanilla.components.creature;
 import org.spout.api.component.components.EntityComponent;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.living.SlimeEntityProtocol;
 
 /**
@@ -41,5 +42,15 @@ public class Slime extends EntityComponent {
 	@Override
 	public void onAttached() {
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SlimeEntityProtocol());
+	}
+	
+	public byte getSize() {
+		return getHolder().getData().get(VanillaData.SLIME_SIZE);
+	}
+	
+	public void setSize(byte size) {
+		if (size >= 0 && size <= 4 && size != 3) {
+			getHolder().getData().put(VanillaData.SLIME_SIZE, size);
+		}
 	}
 }

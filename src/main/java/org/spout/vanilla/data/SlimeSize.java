@@ -40,7 +40,8 @@ public class SlimeSize extends DefaultedKeyImpl<Byte> {
 	@Override
 	public Byte getDefaultValue() {
 		synchronized (random) {
-			return (byte) random.nextInt(4);
+			byte[] validSlimeSizes = { 0, 1, 2, 4};
+			return validSlimeSizes[random.nextInt(validSlimeSizes.length)];
 		}
 	}
 }

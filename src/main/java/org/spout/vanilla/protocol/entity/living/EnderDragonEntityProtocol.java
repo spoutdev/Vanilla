@@ -28,9 +28,10 @@ package org.spout.vanilla.protocol.entity.living;
 
 import java.util.List;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.components.HealthComponent;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class EnderDragonEntityProtocol extends BasicMobEntityProtocol {
@@ -39,9 +40,9 @@ public class EnderDragonEntityProtocol extends BasicMobEntityProtocol {
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
-		//TODO: Index 16 (byte): Health bar (0-200)
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) entity.getOrCreate(HealthComponent.class).getHealth()));
 		return parameters;
 	}
 }

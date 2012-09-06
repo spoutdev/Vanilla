@@ -28,10 +28,10 @@ package org.spout.vanilla.protocol.entity.living;
 
 import java.util.List;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.components.creature.hostile.Ghast;
+import org.spout.vanilla.components.creature.Ghast;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class GhastEntityProtocol extends BasicMobEntityProtocol {
@@ -40,13 +40,11 @@ public class GhastEntityProtocol extends BasicMobEntityProtocol {
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
-		if (controller instanceof Ghast) {
-			Ghast ghast = (Ghast) controller;
-			byte data = ghast.hasRedEyes() ? (byte) 1 : 0;
-			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
-		}
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
+		Ghast ghast = entity.getOrCreate(Ghast.class);
+		byte data = ghast.haveRedEyes() ? (byte) 1 : 0;
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
 
 		return parameters;
 	}

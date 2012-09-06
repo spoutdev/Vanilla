@@ -29,17 +29,44 @@ package org.spout.vanilla.components.creature;
 import org.spout.api.component.components.EntityComponent;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.material.block.solid.Wool;
 import org.spout.vanilla.protocol.entity.living.SheepEntityProtocol;
 
 /**
  * A component that identifies the entity as a Sheep.
  */
 public class Sheep extends EntityComponent {
+	
 	public Sheep() {
 	}
 
 	@Override
 	public void onAttached() {
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SheepEntityProtocol());
+	}
+
+	public boolean isSheared() {
+		return getHolder().getData().get(VanillaData.SHEARED);
+	}
+
+	public void setSheared(boolean sheared) {
+		getHolder().getData().put(VanillaData.SHEARED, sheared);
+	}
+	
+	/**
+	 * Gets the color of the sheep.
+	 * @return color of the sheep.
+	 */
+	public Wool.WoolColor getColor() {
+		return Wool.WoolColor.getById(getHolder().getData().get(VanillaData.WOOL_COLOR));
+	}
+
+	/**
+	 * Sets the color of the sheep.
+	 * @param color
+	 */
+	public void setColor(Wool.WoolColor color) {
+		getHolder().getData().put(VanillaData.WOOL_COLOR, color.getData());
 	}
 }

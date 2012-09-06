@@ -29,6 +29,7 @@ package org.spout.vanilla.components.creature;
 import org.spout.api.component.components.EntityComponent;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.living.PigEntityProtocol;
 
 /**
@@ -41,5 +42,13 @@ public class Pig extends EntityComponent {
 	@Override
 	public void onAttached() {
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PigEntityProtocol());
+	}
+	
+	public boolean isSaddled() {
+		return getHolder().getData().get(VanillaData.SADDLED);
+	}
+	
+	public void setSaddled(boolean saddled) {
+		getHolder().getData().put(VanillaData.SADDLED, saddled);
 	}
 }

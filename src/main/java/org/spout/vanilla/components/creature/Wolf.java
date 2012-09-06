@@ -29,17 +29,58 @@ package org.spout.vanilla.components.creature;
 import org.spout.api.component.components.EntityComponent;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.components.HealthComponent;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.living.WolfEntityProtocol;
 
 /**
  * A component that identifies the entity as a Wolf.
  */
 public class Wolf extends EntityComponent {
+	
+	private boolean redEyes = false;
 	public Wolf() {
 	}
 
 	@Override
 	public void onAttached() {
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new WolfEntityProtocol());
+		HealthComponent health = getHolder().getOrCreate(HealthComponent.class);
+		health.setSpawnHealth(8); //TODO: Get the health on save or something
+		getHolder().put(health);
+	}
+	
+	public boolean isTamed() {
+		return getHolder().getData().get(VanillaData.TAMED);
+	}
+	
+	public void setTamed(boolean tamed) {
+		getHolder().getData().put(VanillaData.TAMED, tamed);
+	}
+	
+	public String getOwner() {
+		return getHolder().getData().get(VanillaData.OWNER);
+	}
+	
+	public void setOwner(String owner) {
+		if (isTamed()) {
+			getHolder().getData().put(VanillaData.OWNER, owner);
+		}
+	}
+
+	public boolean haveRedEyes() {
+		return redEyes;
+	}
+
+	public void setRedEyes(boolean redEyes) {
+		this.redEyes = redEyes;
+	}
+	
+	public boolean isSitting() {
+		return getHolder().getData().get(VanillaData.SITTING);
+	}
+	
+	public void setSitting(boolean sitting) {
+		getHolder().getData().put(VanillaData.SITTING, sitting);
 	}
 }

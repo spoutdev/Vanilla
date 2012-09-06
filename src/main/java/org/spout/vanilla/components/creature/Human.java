@@ -24,25 +24,32 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.components.creature;
 
-import java.util.List;
+import org.spout.api.component.components.EntityComponent;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.protocol.entity.living.HumanEntityProtocol;
 
-import org.spout.vanilla.components.creature.MagmaCube;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+/**
+ * A component that identifies the entity as a Human (NPC).
+ */
+public class Human extends EntityComponent {
 
-public class MagmaCubeEntityProtocol extends BasicMobEntityProtocol {
-	public MagmaCubeEntityProtocol() {
-		super(62);
+	public Human() {
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, entity.getOrCreate(MagmaCube.class).getSize()));
-		return parameters;
+	public void onAttached() {
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
+	}
+
+	public String getTitle() {
+		return getHolder().getData().get(VanillaData.TITLE);
+	}
+
+	public void setTitle(String title) {
+		getHolder().getData().put(VanillaData.TITLE, title);
 	}
 }

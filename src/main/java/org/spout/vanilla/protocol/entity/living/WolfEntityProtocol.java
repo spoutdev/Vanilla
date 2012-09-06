@@ -28,9 +28,11 @@ package org.spout.vanilla.protocol.entity.living;
 
 import java.util.List;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.components.HealthComponent;
+import org.spout.vanilla.components.creature.Wolf;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class WolfEntityProtocol extends BasicMobEntityProtocol {
@@ -39,14 +41,16 @@ public class WolfEntityProtocol extends BasicMobEntityProtocol {
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
-		//TODO: Index 16 (byte): Flags (below:)
-		//  bit 0 	0x01 	Sitting down
-		//  bit 1 	0x02 	Aggressive (red eyes)
-		//  bit 2 	0x04 	Tamed
-		//TODO: Index 17 (string): Name of player that tamed wolf
-		//TODO: Index 18 (int): Health
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
+		Wolf wolf = entity.getOrCreate(Wolf.class);
+		byte data = 0;
+		data |= (wolf.isSitting() ? 1 : 0) & 0x01;
+		data |= (wolf.haveRedEyes() ? 1 : 0) & 0x02;
+		data |= (wolf.isTamed() ? 1 : 0) & 0x04;
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
+		parameters.add(new Parameter<String>(Parameter.TYPE_STRING, 17, wolf.getOwner()));
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 18, wolf.getHolder().get(HealthComponent.class).getHealth()));
 		return parameters;
 	}
 }

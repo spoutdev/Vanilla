@@ -28,11 +28,11 @@ package org.spout.vanilla.protocol.entity.living;
 
 import java.util.List;
 
-import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.components.creature.Enderman;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class EndermanEntityProtocol extends BasicMobEntityProtocol {
@@ -42,17 +42,13 @@ public class EndermanEntityProtocol extends BasicMobEntityProtocol {
 
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		if (controller instanceof EndermanType) {
-			EndermanType enderman = (EndermanType) controller;
-			ItemStack held = enderman.getHeldItem();
-			if (held != null && !held.getMaterial().equals(enderman.getPreviouslyHeldItem().getMaterial())) {
-				List<Parameter<?>> parameters = super.getSpawnParameters(controller);
-				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) held.getMaterial().getId()));
-				parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, (byte) held.getData()));
-				return parameters;
-			}
+		Enderman enderman = entity.getOrCreate(Enderman.class);
+		ItemStack held = enderman.getHeldItem();
+		if (held != null && !held.getMaterial().equals(enderman.getPreviouslyHeldItem().getMaterial())) {
+			List<Parameter<?>> parameters = super.getSpawnParameters(entity);
+			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) held.getMaterial().getId()));
+			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, (byte) held.getData()));
+			return parameters;
 		}
-
-		return super.getSpawnParameters(controller);
 	}
 }

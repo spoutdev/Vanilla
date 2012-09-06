@@ -35,11 +35,30 @@ import org.spout.vanilla.protocol.entity.living.CreeperEntityProtocol;
  * A component that identifies the entity as a Creeper.
  */
 public class Creeper extends EntityComponent {
+	
+	private byte fuse = -1;
+	private boolean charged = false;
 	public Creeper() {
 	}
 
 	@Override
 	public void onAttached() {
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreeperEntityProtocol());
+	}
+
+	public byte getFuse() {
+		return fuse;
+	}
+
+	public void setFuse(byte fuse) {
+		this.fuse = fuse;
+	}
+
+	public boolean isCharged() {
+		return charged;
+	}
+
+	public void setCharged(boolean charged) {
+		this.charged = charged;
 	}
 }

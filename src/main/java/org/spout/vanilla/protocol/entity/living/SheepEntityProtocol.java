@@ -28,10 +28,10 @@ package org.spout.vanilla.protocol.entity.living;
 
 import java.util.List;
 
-import org.spout.api.entity.Controller;
+import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.components.creature.passive.Sheep;
+import org.spout.vanilla.components.creature.Sheep;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class SheepEntityProtocol extends BasicMobEntityProtocol {
@@ -40,16 +40,13 @@ public class SheepEntityProtocol extends BasicMobEntityProtocol {
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Controller controller) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(controller);
-		if (controller instanceof Sheep) {
-			Sheep sheep = (Sheep) controller;
-			byte data = 0;
-			data |= (sheep.isSheared() ? 1 : 0) << 4;
-			data |= sheep.getColor().getData() & 0x0F;
-			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
-		}
-
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
+		Sheep sheep = entity.getOrCreate(Sheep.class);
+		byte data = 0;
+		data |= (sheep.isSheared() ? 1 : 0) << 4;
+		data |= sheep.getColor().getData() & 0x0F;
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
 		return parameters;
 	}
 }

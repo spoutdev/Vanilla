@@ -35,7 +35,7 @@ import java.util.Set;
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
-import org.spout.api.component.BaseComponent;
+import org.spout.api.component.Component;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.InventoryBase;
@@ -52,7 +52,7 @@ import org.spout.vanilla.util.intmap.SlotIndexCollection;
 import org.spout.vanilla.window.ClickArgs;
 import org.spout.vanilla.window.WindowType;
 
-public class WindowComponent extends BaseComponent implements InventoryViewer {
+public class WindowComponent extends Component implements InventoryViewer {
 	protected final WindowType type;
 	protected final int instanceId;
 	protected String title;

@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import org.spout.api.component.Component;
 import org.spout.api.component.components.BlockComponent;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
@@ -46,7 +45,7 @@ public abstract class ComponentMaterial extends Solid {
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
 		super.onPlacement(block, data, against, clickedPos, isClickedBlock);
-		block.getWorld().createAndSpawnEntity(block.getPosition(), Component.create(type), LoadOption.NO_LOAD);
+		block.getWorld().createAndSpawnEntity(block.getPosition(), type, LoadOption.NO_LOAD);
 		return true;
 	}
 }

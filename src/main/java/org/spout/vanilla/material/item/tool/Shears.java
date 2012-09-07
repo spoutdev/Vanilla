@@ -64,9 +64,9 @@ public class Shears extends Tool {
 			sheep.setSheared(true);
 			short col = sheep.getColor().getData();
 
-			Item item = new Item();
+			Entity entityItem = other.getWorld().createAndSpawnEntity(other.getTransform().getPosition(), Item.class, LoadOption.NO_LOAD);
+			Item item = entity.get(Item.class);
 			item.setItemStack(new ItemStack(VanillaMaterials.WOOL, col, rand.nextInt(3) + 1));
-			other.getWorld().createAndSpawnEntity(other.getTransform().getPosition(), item, LoadOption.NO_LOAD);
 
 			if (VanillaPlayerUtil.isSurvival(entity)) {
 				VanillaPlayerUtil.getCurrentSlot(entity).addItemData(0, 1);

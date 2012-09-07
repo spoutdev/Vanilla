@@ -30,14 +30,14 @@ import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 
-import org.spout.vanilla.components.WindowController;
+import org.spout.vanilla.components.substance.material.WindowBlockComponent;
 import org.spout.vanilla.inventory.CraftingInventory;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 
 public abstract class CraftingWindow extends TransactionWindow {
 	protected CraftingInventory craftingGrid;
 
-	public CraftingWindow(WindowType type, String title, int transactionSize, WindowController... windowOwners) {
+	public CraftingWindow(WindowType type, String title, int transactionSize, WindowBlockComponent... windowOwners) {
 		super(type, title, transactionSize, windowOwners);
 	}
 

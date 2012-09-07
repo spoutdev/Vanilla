@@ -52,8 +52,8 @@ public class Human extends VanillaEntity {
 	public void onAttached() {
 		super.onAttached();
 		Entity holder = getHolder();
-		holder.put(new InventoryComponent());
-		holder.put(new PickupItemComponent());
+		holder.add(new InventoryComponent());
+		holder.add(new PickupItemComponent());
 		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
 	}
 
@@ -129,16 +129,16 @@ public class Human extends VanillaEntity {
 		}
 		switch (event.getMode()) {
 			case ADVENTURE:
-				holder.getOrCreate(AdventureComponent.class);
+				holder.add(AdventureComponent.class);
 			case CREATIVE:
-				holder.getOrCreate(CreativeComponent.class);
+				holder.add(CreativeComponent.class);
 			case SURVIVAL:
-				holder.getOrCreate(SurvivalComponent.class);
+				holder.add(SurvivalComponent.class);
 		}
 		getData().put(VanillaData.GAMEMODE, mode);
 	}
 
 	public InventoryComponent getInventory() {
-		return getHolder().getOrCreate(InventoryComponent.class);
+		return getHolder().add(InventoryComponent.class);
 	}
 }

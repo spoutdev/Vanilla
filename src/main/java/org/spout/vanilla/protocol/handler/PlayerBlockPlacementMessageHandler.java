@@ -192,7 +192,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 
 						//For now: simple distance checking
 						Point pos1 = player.getTransform().getPosition();
-						Point pos2 = player.getOrCreate(HeadComponent.class).getPosition();
+						Point pos2 = player.add(HeadComponent.class).getPosition();
 						Point tpos = target.getPosition();
 
 						if (pos1.distance(tpos) < 0.6 || pos2.distance(tpos) < 0.6) {

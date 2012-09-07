@@ -48,6 +48,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.NetworkSynchronizer;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.components.living.VanillaEntity;
 import org.spout.vanilla.util.VanillaBlockUtil;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
@@ -192,7 +193,7 @@ public class TestCommands {
 			}
 			count++;
 			entity.remove();
-			Spout.log(entity.getOrCreate(EntityComponent.class).toString() + " was killed");
+			Spout.log(entity.get(VanillaEntity.class) + " was killed");
 		}
 		if (count > 0) {
 			if (!isConsole) {

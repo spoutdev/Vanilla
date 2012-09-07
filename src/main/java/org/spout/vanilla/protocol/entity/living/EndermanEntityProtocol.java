@@ -42,7 +42,7 @@ public class EndermanEntityProtocol extends BasicMobEntityProtocol {
 
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		Enderman enderman = entity.getOrCreate(Enderman.class);
+		Enderman enderman = entity.add(Enderman.class);
 		ItemStack held = enderman.getHeldItem();
 		if (held != null && !held.getMaterial().equals(enderman.getPreviouslyHeldItem().getMaterial())) {
 			List<Parameter<?>> parameters = super.getSpawnParameters(entity);

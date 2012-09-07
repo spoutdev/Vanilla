@@ -10,15 +10,15 @@ public abstract class VanillaEntity extends EntityComponent {
 	@Override
 	public void onAttached() {
 		Entity holder = getHolder();
-		holder.put(new HeadComponent());
-		holder.put(new HealthComponent());
+		holder.add(HeadComponent.class);
+		holder.add(HealthComponent.class);
 	}
 
 	public HeadComponent getHead() {
-		return getHolder().getOrCreate(HeadComponent.class);
+		return getHolder().add(HeadComponent.class);
 	}
 
 	public HealthComponent getHealth() {
-		return getHolder().getOrCreate(HealthComponent.class);
+		return getHolder().add(HealthComponent.class);
 	}
 }

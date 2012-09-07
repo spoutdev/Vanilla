@@ -63,6 +63,6 @@ public class VanillaListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Human human = new Human();
 		human.setName(event.getPlayer().getName());
-		event.getPlayer().put(human);
+		event.getPlayer().add(human);
 	}
 }

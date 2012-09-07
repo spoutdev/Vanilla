@@ -42,7 +42,7 @@ public class GhastEntityProtocol extends BasicMobEntityProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		Ghast ghast = entity.getOrCreate(Ghast.class);
+		Ghast ghast = entity.add(Ghast.class);
 		byte data = ghast.haveRedEyes() ? (byte) 1 : 0;
 		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
 

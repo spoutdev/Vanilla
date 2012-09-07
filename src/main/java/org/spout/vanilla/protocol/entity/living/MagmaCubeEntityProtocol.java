@@ -42,7 +42,7 @@ public class MagmaCubeEntityProtocol extends BasicMobEntityProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, entity.getOrCreate(MagmaCube.class).getSize()));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, entity.add(MagmaCube.class).getSize()));
 		return parameters;
 	}
 }

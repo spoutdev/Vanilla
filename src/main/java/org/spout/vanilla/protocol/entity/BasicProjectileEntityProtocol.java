@@ -45,10 +45,10 @@ public class BasicProjectileEntityProtocol extends BasicEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity) {
 		int id = entity.getId();
-		Projectile projectile = entity.getOrCreate(Projectile.class);
+		Projectile projectile = entity.add(Projectile.class);
 		Entity shooter = projectile.getShooter();
 		int shooterid = shooter == null ? 0 : shooter.getId();
-		Vector3 velocity = entity.getOrCreate(PhysicsComponent.class).getVelocity();
+		Vector3 velocity = entity.add(PhysicsComponent.class).getVelocity();
 		return Arrays.<Message>asList(new EntitySpawnVehicleMessage(id, this.getSpawnID(), entity.getTransform().getPosition(), shooterid, velocity));
 	}
 }

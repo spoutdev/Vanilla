@@ -43,7 +43,7 @@ import org.spout.vanilla.protocol.msg.entity.EntitySpawnPlayerMessage;
 public class HumanEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity) {
-		Human human = entity.getOrCreate(Human.class);
+		Human human = entity.add(Human.class);
 
 		int id = entity.getId();
 		int x = (int) (entity.getTransform().getPosition().getX() * 32);

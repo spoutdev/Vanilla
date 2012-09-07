@@ -42,7 +42,7 @@ public class SheepEntityProtocol extends BasicMobEntityProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		Sheep sheep = entity.getOrCreate(Sheep.class);
+		Sheep sheep = entity.add(Sheep.class);
 		byte data = 0;
 		data |= (sheep.isSheared() ? 1 : 0) << 4;
 		data |= sheep.getColor().getData() & 0x0F;

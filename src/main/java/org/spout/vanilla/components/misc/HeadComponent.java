@@ -125,7 +125,7 @@ public class HeadComponent extends EntityComponent {
 	}
 
 	public BlockIterator getBlockView() {
-		return getBlockView(getHolder().getOrCreate(InteractComponent.class).getReach());
+		return getBlockView(getHolder().add(InteractComponent.class).getReach());
 	}
 
 	public BlockIterator getBlockView(int maxDistance) {

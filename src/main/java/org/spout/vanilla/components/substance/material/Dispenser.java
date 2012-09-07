@@ -26,13 +26,14 @@
  */
 package org.spout.vanilla.components.substance.material;
 
-import org.spout.api.component.components.BlockComponent;
+import org.spout.api.entity.Player;
 import org.spout.api.material.BlockMaterial;
 
+import org.spout.vanilla.components.misc.WindowComponent;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.block.controlled.DispenserBlock;
 
-public class Dispenser extends BlockComponent {
+public class Dispenser extends WindowBlockComponent {
 	@Override
 	public DispenserBlock getMaterial() {
 		return (DispenserBlock) super.getMaterial();
@@ -52,5 +53,11 @@ public class Dispenser extends BlockComponent {
 
 	public void setPowered(boolean powered) {
 		getData().put(VanillaData.IS_POWERED, powered);
+	}
+
+	@Override
+	public WindowComponent createWindow(Player player) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -42,6 +42,7 @@ import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.components.substance.material.WindowBlockComponent;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
@@ -49,6 +50,7 @@ import org.spout.vanilla.event.window.WindowSetSlotEvent;
 import org.spout.vanilla.event.window.WindowSetSlotsEvent;
 import org.spout.vanilla.util.InventoryUtil;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
+import org.spout.vanilla.window.ClickArgs;
 import org.spout.vanilla.window.WindowType;
 
 public class WindowComponent extends Component implements InventoryViewer {
@@ -59,9 +61,9 @@ public class WindowComponent extends Component implements InventoryViewer {
 	protected Map<InventoryBase, SlotIndexCollection> inventories = new HashMap<InventoryBase, SlotIndexCollection>();
 	protected ItemStack itemOnCursor;
 	protected boolean isOpen = false;
-	protected Player[] windowOwners;
+	protected WindowBlockComponent[] windowOwners;
 
-	public WindowComponent(WindowType type, String title, Player... windowOwners) {
+	public WindowComponent(WindowType type, String title, WindowBlockComponent... windowOwners) {
 		this.type = type;
 		this.title = title;
 		this.instanceId = InventoryUtil.nextWindowId();
@@ -187,8 +189,8 @@ public class WindowComponent extends Component implements InventoryViewer {
 	 */
 	public void open() {
 		this.isOpen = true;
-		for (Player owner : this.windowOwners) {
-			owner.addViewer(this.getHolder(), this);
+		for (WindowBlockComponent owner : this.windowOwners) {
+			owner.addViewer((Player) this.getHolder(), this);
 		}
 		for (InventoryBase inventory : this.inventories.keySet()) {
 			inventory.addViewer(this);
@@ -202,8 +204,8 @@ public class WindowComponent extends Component implements InventoryViewer {
 	 */
 	public void close() {
 		this.isOpen = false;
-		for (Player owner : this.windowOwners) {
-			owner.removeViewer(this.getHolder());
+		for (WindowBlockComponent owner : this.windowOwners) {
+			owner.removeViewer((Player) this.getHolder());
 		}
 		for (InventoryBase inventory : this.inventories.keySet()) {
 			inventory.removeViewer(this);

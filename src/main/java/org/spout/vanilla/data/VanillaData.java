@@ -84,6 +84,7 @@ public class VanillaData {
 	//Wolf/Ocelot-specific
 	public static final DefaultedKey<Boolean> SITTING = new DefaultedKeyImpl<Boolean>("is_sitting", false);
 	public static final DefaultedKey<Boolean> TAMED = new DefaultedKeyImpl<Boolean>("is_tamed", false);
+	public static final DefaultedKey<String> OWNER = new DefaultedKeyImpl<String>("owner", null);
 	//Ocelot-specific
 	public static final DefaultedKey<Byte> SKIN = new DefaultedKeyImpl<Byte>("skin", (byte) 0);
 	//Redstone-specific

@@ -24,55 +24,31 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.components.living;
+package org.spout.vanilla.protocol.entity.living;
 
-import org.spout.api.component.components.EntityComponent;
+import java.util.List;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.data.VanillaData;
+import org.spout.api.entity.Entity;
+import org.spout.api.util.Parameter;
+import org.spout.vanilla.components.living.Ocelot;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
-import org.spout.vanilla.protocol.entity.living.OcelotEntityProtocol;
 
-/**
- * A component that identifies the entity as a Ocelot.
- */
-public class Ocelot extends EntityComponent {
+public class OcelotEntityProtocol extends BasicMobEntityProtocol{
+
+	public OcelotEntityProtocol() {
+		super(98);
+	}
+
 	@Override
-	public void onAttached() {
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new OcelotEntityProtocol());
-	}
-	
-	public boolean isTamed() {
-		return getHolder().getData().get(VanillaData.TAMED);
-	}
-
-	public void setTamed(boolean tamed) {
-		getHolder().getData().put(VanillaData.TAMED, tamed);
-	}
-
-	public String getOwner() {
-		return getHolder().getData().get(VanillaData.OWNER);
-	}
-
-	public void setOwner(String owner) {
-		if (isTamed()) {
-			getHolder().getData().put(VanillaData.OWNER, owner);
-		}
-	}
-	
-	public byte getSkinId() {
-		return getHolder().getData().get(VanillaData.SKIN);
-	}
-	
-	public void setSkinId(byte skinId) {
-		getHolder().getData().put(VanillaData.SKIN, skinId);
-	}
-	
-	public boolean isSitting() {
-		return getHolder().getData().get(VanillaData.SITTING);
-	}
-
-	public void setSitting(boolean sitting) {
-		getHolder().getData().put(VanillaData.SITTING, sitting);
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
+		Ocelot ocelot = entity.getOrCreate(Ocelot.class);
+		byte data = 0;
+		data |= (ocelot.isSitting() ? 1 : 0) & 0x01;
+		data |= (ocelot.isTamed() ? 1 : 0) & 0x04;
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
+		parameters.add(new Parameter<String>(Parameter.TYPE_STRING, 17, ocelot.getOwner()));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 18, ocelot.getSkinId()));
+		return parameters;
 	}
 }

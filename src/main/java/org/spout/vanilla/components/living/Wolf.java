@@ -36,13 +36,13 @@ import org.spout.vanilla.protocol.entity.living.WolfEntityProtocol;
 /**
  * A component that identifies the entity as a Wolf.
  */
-public class Wolf extends EntityComponent {
+public class Wolf extends VanillaEntity {
 	private boolean redEyes = false;
 
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new WolfEntityProtocol());
-		getHolder().put(new HealthComponent());
 	}
 
 	public boolean isTamed() {

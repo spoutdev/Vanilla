@@ -34,11 +34,12 @@ import org.spout.vanilla.protocol.entity.living.BlazeEntityProtocol;
 /**
  * A component that identifies the entity as a Blaze.
  */
-public class Blaze extends EntityComponent {
+public class Blaze extends VanillaEntity {
 	private boolean attacking = false;
 
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BlazeEntityProtocol());
 	}
 

@@ -34,11 +34,12 @@ import org.spout.vanilla.protocol.entity.living.GhastEntityProtocol;
 /**
  * A component that identifies the entity as a Ghast.
  */
-public class Ghast extends EntityComponent {
+public class Ghast extends VanillaEntity {
 	private boolean redEyes;
 
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new GhastEntityProtocol());
 	}
 

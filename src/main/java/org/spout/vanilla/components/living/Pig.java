@@ -35,9 +35,10 @@ import org.spout.vanilla.protocol.entity.living.PigEntityProtocol;
 /**
  * A component that identifies the entity as a Pig.
  */
-public class Pig extends EntityComponent {
+public class Pig extends VanillaEntity {
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PigEntityProtocol());
 	}
 

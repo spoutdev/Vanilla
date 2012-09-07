@@ -34,9 +34,10 @@ import org.spout.vanilla.protocol.entity.living.EnderDragonEntityProtocol;
 /**
  * A component that identifies the entity as an EnderDragon.
  */
-public class EnderDragon extends EntityComponent {
+public class EnderDragon extends VanillaEntity {
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new EnderDragonEntityProtocol());
 	}
 }

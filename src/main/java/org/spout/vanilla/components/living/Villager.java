@@ -34,9 +34,10 @@ import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 /**
  * A component that identifies the entity as a Villager.
  */
-public class Villager extends EntityComponent {
+public class Villager extends VanillaEntity {
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(120)); //Index 16 (int): Unknown, example: 0
 	}
 }

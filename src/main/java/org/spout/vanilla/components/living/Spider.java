@@ -34,9 +34,10 @@ import org.spout.vanilla.protocol.entity.living.SpiderEntityProtocol;
 /**
  * A component that identifies the entity as a Spider.
  */
-public class Spider extends EntityComponent {
+public class Spider extends VanillaEntity {
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SpiderEntityProtocol());
 	}
 }

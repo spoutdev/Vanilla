@@ -35,9 +35,10 @@ import org.spout.vanilla.protocol.entity.living.SlimeEntityProtocol;
 /**
  * A component that identifies the entity as a Slime.
  */
-public class Slime extends EntityComponent {
+public class Slime extends VanillaEntity {
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SlimeEntityProtocol());
 	}
 

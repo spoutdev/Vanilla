@@ -238,4 +238,8 @@ public class HealthComponent extends EntityComponent {
 	public void setDeathAnimation(boolean hasDeathAnimation) {
 		getData().put(VanillaData.HAS_DEATH_ANIMATION, hasDeathAnimation);
 	}
+
+	public boolean hasInfiniteHealth() {
+		return getHealth() == -1;
+	}
 }

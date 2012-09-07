@@ -35,7 +35,9 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.components.living.Human;
+import org.spout.vanilla.components.living.VanillaEntity;
 import org.spout.vanilla.components.misc.HealthComponent;
+import org.spout.vanilla.components.misc.InventoryComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.material.VanillaMaterial;
@@ -52,34 +54,29 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 			return;
 		}
 
-		Player player = session.getPlayer();
-		Entity clickedEntity = player.getWorld().getEntity(message.getTarget());
-		if (clickedEntity == null) {
+		Player playerEnt = session.getPlayer();
+		Human player = playerEnt.get(Human.class);
+		Entity clickedEntity = playerEnt.getWorld().getEntity(message.getTarget());
+		if (clickedEntity == null || player == null) {
 			return;
 		}
 
-		ItemStack holding = VanillaPlayerUtil.getCurrentItem(player);
+		ItemStack holding = player.getInventory().getCurrentItem();
 		Material holdingMat = holding == null ? VanillaMaterials.AIR : holding.getMaterial();
 		if (holdingMat == null) {
 			holdingMat = VanillaMaterials.AIR;
 		}
 		if (message.isPunching()) {
-			holdingMat.onInteract(player, clickedEntity, Action.LEFT_CLICK);
-			clickedEntity.getController().onInteract(player, Action.LEFT_CLICK);
+			holdingMat.onInteract(playerEnt, clickedEntity, Action.LEFT_CLICK);
+			clickedEntity.interact(Action.LEFT_CLICK, playerEnt);
 
 			if (clickedEntity.has(Human.class) && !VanillaConfiguration.PLAYER_PVP_ENABLED.getBoolean()) {
 				return;
 			}
 
-			if (clickedEntity.getController() instanceof VanillaEntityController) {
-				if (VanillaPlayerUtil.isSurvival(clickedEntity) && VanillaPlayerUtil.isSurvival(player)) {
-					return;
-				}
-				vPlayer.getSurvivalComponent().addExhaustion(ExhaustionLevel.ATTACK_ENEMY.getAmount());
-
-				if (clickedEntity.getController() instanceof VanillaPlayerController) {
-					((VanillaPlayerController) clickedEntity.getController()).getSurvivalComponent().addExhaustion(ExhaustionLevel.RECEIVE_DAMAGE.getAmount());
-				}
+			VanillaEntity clicked = clickedEntity.get(VanillaEntity.class);
+			if (clicked != null) {
+				//TODO: Reimplement exhaustion values
 
 				int damage = 1;
 				if (holding != null && holdingMat instanceof VanillaMaterial) {
@@ -87,18 +84,18 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 					if (holdingMat instanceof Tool) {
 						// This is a bit of a hack due to the way Tool hierarchy is now (Only Swords can have a damage modifier, but Sword must be an interface and therefore is not able to contain getDamageModifier without code duplication)
 						damage += ((Tool) holdingMat).getDamageBonus(clickedEntity, holding);
-						vPlayer.getInventory().getQuickbar().getCurrentSlotInventory().addItemData(1);
+//						player.getInventory().getQuickbar().getCurrentSlotInventory().addItemData(1); TODO: Reimplement durability change
 					}
 				}
 				if (damage != 0) {
-					if (!clickedEntity.getOrCreate(HealthComponent.class).isDead()) {
-						clickedEntity.getOrCreate(HealthComponent.class).damage(damage, DamageCause.ATTACK, player, damage > 0);
+					if (!clicked.getHealth().isDead()) {
+						clicked.getHealth().damage(damage, DamageCause.ATTACK, playerEnt, damage > 0);
 					}
 				}
 			}
 		} else {
-			holdingMat.onInteract(player, clickedEntity, Action.RIGHT_CLICK);
-			clickedEntity.getController().onInteract(player, Action.RIGHT_CLICK);
+			holdingMat.onInteract(playerEnt, clickedEntity, Action.RIGHT_CLICK);
+			clickedEntity.interact(Action.RIGHT_CLICK, playerEnt);
 		}
 	}
 }

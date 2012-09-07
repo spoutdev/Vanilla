@@ -35,9 +35,10 @@ import org.spout.vanilla.protocol.entity.living.MagmaCubeEntityProtocol;
 /**
  * A component that identifies the entity as a MagmaCube.
  */
-public class MagmaCube extends EntityComponent {
+public class MagmaCube extends VanillaEntity {
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MagmaCubeEntityProtocol());
 	}
 

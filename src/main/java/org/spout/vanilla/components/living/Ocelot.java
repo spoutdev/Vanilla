@@ -36,9 +36,10 @@ import org.spout.vanilla.protocol.entity.living.OcelotEntityProtocol;
 /**
  * A component that identifies the entity as a Ocelot.
  */
-public class Ocelot extends EntityComponent {
+public class Ocelot extends VanillaEntity {
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new OcelotEntityProtocol());
 	}
 	

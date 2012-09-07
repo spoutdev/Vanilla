@@ -47,11 +47,11 @@ import org.spout.vanilla.protocol.entity.living.HumanEntityProtocol;
 /**
  * A component that identifies the entity as a Vanilla player.
  */
-public class Human extends EntityComponent {
+public class Human extends VanillaEntity {
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		Entity holder = getHolder();
-		holder.put(new HeadComponent());
 		holder.put(new InventoryComponent());
 		holder.put(new PickupItemComponent());
 		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
@@ -136,5 +136,9 @@ public class Human extends EntityComponent {
 				holder.getOrCreate(SurvivalComponent.class);
 		}
 		getData().put(VanillaData.GAMEMODE, mode);
+	}
+
+	public InventoryComponent getInventory() {
+		return getHolder().getOrCreate(InventoryComponent.class);
 	}
 }

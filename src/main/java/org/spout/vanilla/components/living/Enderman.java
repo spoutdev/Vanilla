@@ -34,9 +34,10 @@ import org.spout.vanilla.protocol.entity.living.EndermanEntityProtocol;
 /**
  * A component that identifies the entity as an Enderman.
  */
-public class Enderman extends EntityComponent {
+public class Enderman extends VanillaEntity {
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new EndermanEntityProtocol());
 	}
 }

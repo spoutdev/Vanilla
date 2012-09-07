@@ -34,9 +34,10 @@ import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 /**
  * A component that identifies the entity as a SnowMan.
  */
-public class Snowman extends EntityComponent {
+public class Snowman extends VanillaEntity {
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(97));
 	}
 }

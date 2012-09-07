@@ -34,9 +34,10 @@ import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 /**
  * A component that identifies the entity as a CaveSpider.
  */
-public class CaveSpider extends EntityComponent {
+public class CaveSpider extends VanillaEntity {
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(59));
 	}
 }

@@ -36,9 +36,10 @@ import org.spout.vanilla.protocol.entity.living.SheepEntityProtocol;
 /**
  * A component that identifies the entity as a Sheep.
  */
-public class Sheep extends EntityComponent {
+public class Sheep extends VanillaEntity {
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SheepEntityProtocol());
 	}
 

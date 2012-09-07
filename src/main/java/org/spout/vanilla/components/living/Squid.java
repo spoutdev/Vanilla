@@ -34,9 +34,10 @@ import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 /**
  * A component that identifies the entity as a Squid.
  */
-public class Squid extends EntityComponent {
+public class Squid extends VanillaEntity {
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(94));
 	}
 }

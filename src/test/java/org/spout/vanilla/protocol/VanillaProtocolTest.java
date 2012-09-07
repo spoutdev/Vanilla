@@ -54,6 +54,13 @@ import org.spout.vanilla.protocol.msg.ExplosionMessage;
 import org.spout.vanilla.protocol.msg.GroundMessage;
 import org.spout.vanilla.protocol.msg.login.HandshakeMessage;
 import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
+import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
+import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
+import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
+import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
+import org.spout.vanilla.protocol.msg.window.WindowSetSlotMessage;
+import org.spout.vanilla.protocol.msg.window.WindowSetSlotsMessage;
+import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
 import org.spout.vanilla.protocol.msg.ClientStatusMessage;
 import org.spout.vanilla.protocol.msg.DestroyEntitiesMessage;
 import org.spout.vanilla.protocol.msg.HeldItemChangeMessage;
@@ -105,13 +112,6 @@ import org.spout.vanilla.protocol.msg.entity.EntityUseBedMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityVelocityMessage;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnMobMessage;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnVehicleMessage;
-import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
-import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
-import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
-import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
-import org.spout.vanilla.protocol.msg.window.WindowSetSlotMessage;
-import org.spout.vanilla.protocol.msg.window.WindowSetSlotsMessage;
-import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
 import org.spout.vanilla.window.WindowType;
 
 import static org.spout.vanilla.protocol.ChannelBufferUtilsTest.TEST_PARAMS;
@@ -185,7 +185,6 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new WindowSetSlotsMessage((byte) 3, new ItemStack[]{new ItemStack(VanillaMaterials.PISTON_BASE, 3), new ItemStack(VanillaMaterials.ARROW, 23)}),
 			new WindowPropertyMessage(2, 4, 55),
 			new WindowTransactionMessage(1, 55, true),
-			new CreativeMessage((short) 1, new ItemStack(VanillaMaterials.PLANK, 2, 1)),
 			new EnchantItemMessage(2, 3),
 			new UpdateSignMessage(1, 2, 3, new String[]{"This", "is", "a", "sign"}),
 			new ItemDataMessage((short) 1, (short) 2, new byte[]{2, 3, 8, 127, 123}),

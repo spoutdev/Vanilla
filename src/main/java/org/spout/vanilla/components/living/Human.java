@@ -27,7 +27,6 @@
 package org.spout.vanilla.components.living;
 
 import org.spout.api.Spout;
-import org.spout.api.component.components.EntityComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -36,7 +35,6 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.gamemode.AdventureComponent;
 import org.spout.vanilla.components.gamemode.CreativeComponent;
 import org.spout.vanilla.components.gamemode.SurvivalComponent;
-import org.spout.vanilla.components.misc.HeadComponent;
 import org.spout.vanilla.components.misc.InventoryComponent;
 import org.spout.vanilla.components.misc.PickupItemComponent;
 import org.spout.vanilla.data.GameMode;
@@ -52,8 +50,8 @@ public class Human extends VanillaEntity {
 	public void onAttached() {
 		super.onAttached();
 		Entity holder = getHolder();
-		holder.add(new InventoryComponent());
-		holder.add(new PickupItemComponent());
+		holder.add(InventoryComponent.class);
+		holder.add(PickupItemComponent.class);
 		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
 	}
 

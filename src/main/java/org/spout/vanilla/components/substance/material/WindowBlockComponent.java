@@ -36,7 +36,7 @@ public abstract class WindowBlockComponent extends BlockComponent {
 	public boolean close(Player player) {
 		WindowComponent w = this.removeViewer(player);
 		if (w != null) {
-			player.remove(WindowComponent.class);
+			player.detach(WindowComponent.class);
 			return true;
 		} else {
 			return false;

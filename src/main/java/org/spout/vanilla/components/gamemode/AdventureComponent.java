@@ -33,7 +33,7 @@ public class AdventureComponent extends EntityComponent {
 	@Override
 	public void onAttached() {
 		Entity holder = getHolder();
-		holder.remove(SurvivalComponent.class);
-		holder.remove(CreativeComponent.class);
+		holder.detach(SurvivalComponent.class);
+		holder.detach(CreativeComponent.class);
 	}
 }

@@ -37,6 +37,6 @@ import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 public class IronGolem extends EntityComponent {
 	@Override
 	public void onAttached() {
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(99));
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(99)); //Index 16 (byte): Unknown, example: 1
 	}
 }

@@ -43,7 +43,7 @@ public class WolfEntityProtocol extends BasicMobEntityProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		Wolf wolf = entity.getOrCreate(Wolf.class);
+		Wolf wolf = entity.add(Wolf.class);
 		byte data = 0;
 		data |= (wolf.isSitting() ? 1 : 0) & 0x01;
 		data |= (wolf.haveRedEyes() ? 1 : 0) & 0x02;

@@ -55,7 +55,7 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 
 	@Override
 	public void handlePlacement(Block block, short data, BlockFace attachedFace) {
-		block.getWorld().createAndSpawnEntity(block.getPosition(), new Sign(), LoadOption.NO_LOAD);
+		block.getWorld().createAndSpawnEntity(block.getPosition(), Sign.class, LoadOption.NO_LOAD);
 		this.setAttachedFace(block, attachedFace);
 	}
 

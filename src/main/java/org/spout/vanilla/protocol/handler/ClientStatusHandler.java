@@ -69,7 +69,7 @@ public class ClientStatusHandler extends MessageHandler<ClientStatusMessage> {
 			Point point = event.getPoint();
 			player.getTransform().setPosition(point);
 			player.getNetworkSynchronizer().setRespawned();
-			Human human = player.getOrCreate(Human.class);
+			Human human = player.add(Human.class);
 			//TODO add getHealth to Human...
 			human.getHolder().get(HealthComponent.class).setHealth(20, HealthChangeCause.SPAWN);
 

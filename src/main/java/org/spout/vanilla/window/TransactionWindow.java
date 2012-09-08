@@ -26,6 +26,10 @@
  */
 package org.spout.vanilla.window;
 
+import org.spout.api.component.Component;
+import org.spout.api.entity.Entity;
+import org.spout.vanilla.components.misc.WindowComponent;
+import org.spout.vanilla.components.substance.material.WindowBlockComponent;
 import org.spout.vanilla.util.intmap.SlotIndexGrid;
 
 /**
@@ -34,7 +38,7 @@ import org.spout.vanilla.util.intmap.SlotIndexGrid;
 public class TransactionWindow extends WindowComponent {
 	protected final int transactionSize;
 
-	public TransactionWindow(WindowType type, String title, int transactionSize, WindowController... windowOwners) {
+	public TransactionWindow(WindowType type, String title, int transactionSize, WindowBlockComponent... windowOwners) {
 		super(type, title, windowOwners);
 		this.transactionSize = transactionSize;
 	}

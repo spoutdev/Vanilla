@@ -30,11 +30,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.spout.api.entity.Controller;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.components.object.moving.XPOrb;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnExperienceOrbMessage;
 

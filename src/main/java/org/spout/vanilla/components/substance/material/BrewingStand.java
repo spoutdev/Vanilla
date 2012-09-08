@@ -26,12 +26,13 @@
  */
 package org.spout.vanilla.components.substance.material;
 
-import org.spout.api.component.components.BlockComponent;
+import org.spout.api.entity.Player;
 import org.spout.api.material.BlockMaterial;
 
+import org.spout.vanilla.components.misc.WindowComponent;
 import org.spout.vanilla.material.block.controlled.BrewingStandBlock;
 
-public class BrewingStand extends BlockComponent {
+public class BrewingStand extends WindowBlockComponent {
 	@Override
 	public BrewingStandBlock getMaterial() {
 		return (BrewingStandBlock) super.getMaterial();
@@ -43,5 +44,11 @@ public class BrewingStand extends BlockComponent {
 			throw new IllegalArgumentException("Material passed in must be an instance of a BrewingStandBlock.");
 		}
 		super.setMaterial(material);
+	}
+
+	@Override
+	public WindowComponent createWindow(Player player) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

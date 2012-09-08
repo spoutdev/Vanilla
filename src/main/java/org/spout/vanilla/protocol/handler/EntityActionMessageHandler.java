@@ -44,7 +44,7 @@ public final class EntityActionMessageHandler extends MessageHandler<EntityActio
 			return;
 		}
 
-		Human human = session.getPlayer().getOrCreate(Human.class);
+		Human human = session.getPlayer().add(Human.class);
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 
 		switch (message.getAction()) {

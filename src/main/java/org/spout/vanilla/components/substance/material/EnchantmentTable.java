@@ -26,12 +26,13 @@
  */
 package org.spout.vanilla.components.substance.material;
 
-import org.spout.api.component.components.BlockComponent;
+import org.spout.api.entity.Player;
 import org.spout.api.material.BlockMaterial;
 
+import org.spout.vanilla.components.misc.WindowComponent;
 import org.spout.vanilla.material.block.controlled.EnchantmentTableBlock;
 
-public class EnchantmentTable extends BlockComponent {
+public class EnchantmentTable extends WindowBlockComponent {
 	@Override
 	public EnchantmentTableBlock getMaterial() {
 		return (EnchantmentTableBlock) super.getMaterial();
@@ -43,5 +44,11 @@ public class EnchantmentTable extends BlockComponent {
 			throw new IllegalArgumentException("Material passed in must be an instance of a EnchantmentTableBlock.");
 		}
 		super.setMaterial(material);
+	}
+
+	@Override
+	public WindowComponent createWindow(Player player) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -48,6 +48,6 @@ public final class PlayerLookMessageHandler extends MessageHandler<PlayerLookMes
 		holder.getTransform().setPitch(deProtocolifyRotation((int) message.getPitch()));
 		holder.getTransform().setYaw(deProtocolifyRotation((int) message.getYaw()));
 		holder.getTransform().setRoll(deProtocolifyRotation((int) message.getRoll()));
-		holder.getOrCreate(HeadComponent.class).setLooking(message.getLookingAtVector());
+		holder.add(HeadComponent.class).setLooking(message.getLookingAtVector());
 	}
 }

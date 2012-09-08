@@ -27,6 +27,7 @@
 package org.spout.vanilla.event.window;
 
 import org.spout.api.event.HandlerList;
+import org.spout.vanilla.components.misc.WindowComponent;
 
 public class WindowOpenEvent extends WindowEvent {
 	private static HandlerList handlers = new HandlerList();

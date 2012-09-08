@@ -33,7 +33,7 @@ public class SurvivalComponent extends EntityComponent {
 	@Override
 	public void onAttached() {
 		Entity holder = getHolder();
-		holder.remove(AdventureComponent.class);
-		holder.remove(CreativeComponent.class);
+		holder.detach(AdventureComponent.class);
+		holder.detach(CreativeComponent.class);
 	}
 }

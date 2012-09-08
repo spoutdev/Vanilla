@@ -42,7 +42,7 @@ public class OcelotEntityProtocol extends BasicMobEntityProtocol{
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		Ocelot ocelot = entity.getOrCreate(Ocelot.class);
+		Ocelot ocelot = entity.add(Ocelot.class);
 		byte data = 0;
 		data |= (ocelot.isSitting() ? 1 : 0) & 0x01;
 		data |= (ocelot.isTamed() ? 1 : 0) & 0x04;

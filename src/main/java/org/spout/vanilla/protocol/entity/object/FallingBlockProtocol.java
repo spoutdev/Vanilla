@@ -47,7 +47,7 @@ public class FallingBlockProtocol extends BasicVehicleEntityProtocol {
 
 	@Override
 	public List<Message> getSpawnMessages(Entity entity) {
-		MovingBlock moving = entity.getOrCreate(MovingBlock.class);
+		MovingBlock moving = entity.add(MovingBlock.class);
 		short spawnId = (short) moving.getMaterial().getMinecraftId();
 		List<Parameter<?>> parameters = Arrays.<Parameter<?>>asList(new Parameter<Short>(Parameter.TYPE_SHORT, BLOCK_TYPE_METADATA_INDEX, spawnId));
 		return Arrays.<Message>asList(new EntitySpawnVehicleMessage(entity.getId(), spawnId, entity.getTransform().getPosition()), new EntityMetadataMessage(entity.getId(), parameters));

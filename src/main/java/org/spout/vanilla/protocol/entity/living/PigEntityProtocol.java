@@ -42,7 +42,7 @@ public class PigEntityProtocol extends BasicMobEntityProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (entity.getOrCreate(Pig.class).isSaddled() ? 1 : 0)));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (entity.add(Pig.class).isSaddled() ? 1 : 0)));
 		return parameters;
 	}
 }

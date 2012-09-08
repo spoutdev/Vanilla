@@ -398,14 +398,14 @@ public class AdministrationCommands {
 			if (!(source instanceof Player)) {
 				throw new CommandException("Don't be silly...you cannot kill yourself as the console.");
 			}
-			((Player) source).getOrCreate(HealthComponent.class).kill(source);
+			((Player) source).add(HealthComponent.class).kill(source);
 		} else {
 			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
 			Player victim = ((Server) Spout.getEngine()).getPlayer(args.getString(0), true);
 			if (victim != null) {
-				victim.getOrCreate(HealthComponent.class).kill(source);
+				victim.add(HealthComponent.class).kill(source);
 			}
 		}
 	}

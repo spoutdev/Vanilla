@@ -33,8 +33,10 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import gnu.trove.set.TIntSet;
 
+import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
@@ -139,6 +141,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	private TSyncIntPairHashSet activeChunks = new TSyncIntPairHashSet();
 	private Object initChunkLock = new Object();
 	private final ChunkInit chunkInit;
+	private Player owner;
 
 	static {
 		int i = 0;
@@ -162,6 +165,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	public VanillaNetworkSynchronizer(Session session) {
 		super(session, 3);
+		this.owner = session.getPlayer();
 		registerProtocolEvents(this);
 		chunkInit = ChunkInit.getChunkInit(VanillaConfiguration.CHUNK_INIT.getString("client"));
 	}
@@ -326,7 +330,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		GameMode gamemode = world.getComponentHolder().getData().get(VanillaData.GAMEMODE);
 		//The world the player is entering has a different gamemode...
 		if (gamemode != null) {
-			if (gamemode != vc.getGameMode()) {
+			if (gamemode != owner.get(Human.class).getGameMode()) {
 				PlayerGameModeChangedEvent event = Spout.getEngine().getEventManager().callEvent(new PlayerGameModeChangedEvent(player, gamemode));
 				if (!event.isCancelled()) {
 					gamemode = event.getMode();
@@ -334,7 +338,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			}
 		} else {
 			//The world has no gamemode setting in its map so default to the Player's GameMode.
-			gamemode = vc.getGameMode();
+			gamemode = owner.get(Human.class).getGameMode();
 		}
 		Difficulty difficulty = world.getComponentHolder().getData().get(VanillaData.DIFFICULTY);
 		Dimension dimension = world.getComponentHolder().getData().get(VanillaData.DIMENSION);
@@ -344,11 +348,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (first) {
 			first = false;
 			int entityId = player.getId();
-			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) session.getEngine().getMaxPlayers());
+			Server server = (Server) session.getEngine();
+			LoginRequestMessage idMsg = new LoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) server.getMaxPlayers());
 			player.getSession().send(false, true, idMsg);
 			player.getSession().setState(State.GAME);
 			for (int slot = 0; slot < 4; slot++) {
-				ItemStack slotItem = vc.getInventory().getArmor().getItem(slot);
+				ItemStack slotItem = owner.get(Human.class).getInventory().getInventory().getArmor().getItem(slot);
 				player.getSession().send(false, new EntityEquipmentMessage(entityId, slot, slotItem));
 			}
 		} else {
@@ -480,13 +485,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onPlayerUpdateUserList(PlayerUpdateUserListEvent event) {
-		Controller controller = event.getPlayer().getController();
-		String name;
-		if (controller instanceof VanillaPlayerController) {
-			name = ((VanillaPlayerController) controller).getTabListName();
-		} else {
-			name = event.getPlayer().getDisplayName();
-		}
+		String name = event.getPlayer().getDisplayName();
 		return new PlayerListMessage(name, true, (short) event.getPingDelay());
 	}
 
@@ -502,11 +501,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onPlayerUpdateStats(PlayerUpdateStatsEvent event) {
-		if (event.getPlayer() != getOwner()) {
+		if (event.getPlayer() != owner) {
 			return null;
 		}
-		VanillaPlayerController player = (VanillaPlayerController) event.getPlayer().getController();
-		return new PlayerUpdateStatsMessage((short) player.getHealth().getHealth(), player.getSurvivalComponent().getHunger(), player.getSurvivalComponent().getFoodSaturation());
+		//TODO: Fix these stats?
+		return new PlayerUpdateStatsMessage((short) player.get(Human.class).getHealth().getHealth(), (short) 0, 0);
 	}
 
 	@EventHandler

@@ -10,8 +10,9 @@ import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 
 import org.spout.vanilla.components.misc.WindowComponent;
+import org.spout.vanilla.components.misc.WindowOwner;
 
-public abstract class WindowBlockComponent extends BlockComponent {
+public abstract class WindowBlockComponent extends BlockComponent implements WindowOwner {
 	private HashMap<Player, WindowComponent> viewers = new HashMap<Player, WindowComponent>();
 
 	public abstract WindowComponent createWindow(Player player);
@@ -24,6 +25,7 @@ public abstract class WindowBlockComponent extends BlockComponent {
 		}
 	}
 
+	@Override
 	public boolean open(Player player) {
 		if (!this.viewers.containsKey(player)) {
 			WindowComponent w = this.createWindow(player);
@@ -34,6 +36,7 @@ public abstract class WindowBlockComponent extends BlockComponent {
 		}
 	}
 
+	@Override
 	public boolean close(Player player) {
 		WindowComponent w = this.removeViewer(player);
 		if (w != null) {
@@ -44,12 +47,14 @@ public abstract class WindowBlockComponent extends BlockComponent {
 		}
 	}
 
+	@Override
 	public void closeAll() {
 		for (Player player : this.getViewerArray()) {
 			this.close(player);
 		}
 	}
 
+	@Override
 	public WindowComponent removeViewer(Player player) {
 		try {
 			return this.viewers.remove(player);
@@ -58,6 +63,7 @@ public abstract class WindowBlockComponent extends BlockComponent {
 		}
 	}
 
+	@Override
 	public void addViewer(Player player, WindowComponent window) {
 		this.viewers.put(player, window);
 		this.onViewersChanged();
@@ -66,9 +72,11 @@ public abstract class WindowBlockComponent extends BlockComponent {
 	/**
 	 * Is called when a viewer got removed or added
 	 */
+	@Override
 	public void onViewersChanged() {
 	}
 
+	@Override
 	public Collection<Player> getViewers() {
 		return Collections.unmodifiableSet(this.viewers.keySet());
 	}
@@ -77,10 +85,12 @@ public abstract class WindowBlockComponent extends BlockComponent {
 	 * Gets an array of viewers currently viewing this entity
 	 * @return an array of player viewers
 	 */
+	@Override
 	public Player[] getViewerArray() {
 		return this.viewers.keySet().toArray(new Player[0]);
 	}
 
+	@Override
 	public boolean hasViewers() {
 		return !this.viewers.isEmpty();
 	}

@@ -60,9 +60,9 @@ public class WindowComponent extends Component implements InventoryViewer {
 	protected Map<InventoryBase, SlotIndexCollection> inventories = new HashMap<InventoryBase, SlotIndexCollection>();
 	protected ItemStack itemOnCursor;
 	protected boolean isOpen = false;
-	protected WindowBlockComponent[] windowOwners;
+	protected WindowOwner[] windowOwners;
 
-	public WindowComponent(WindowType type, String title, WindowBlockComponent... windowOwners) {
+	public WindowComponent(WindowType type, String title, WindowOwner... windowOwners) {
 		this.type = type;
 		this.title = title;
 		this.instanceId = InventoryUtil.nextWindowId();
@@ -188,7 +188,7 @@ public class WindowComponent extends Component implements InventoryViewer {
 	 */
 	public void open() {
 		this.isOpen = true;
-		for (WindowBlockComponent owner : this.windowOwners) {
+		for (WindowOwner owner : this.windowOwners) {
 			owner.addViewer((Player) this.getHolder(), this);
 		}
 		for (InventoryBase inventory : this.inventories.keySet()) {
@@ -203,7 +203,7 @@ public class WindowComponent extends Component implements InventoryViewer {
 	 */
 	public void close() {
 		this.isOpen = false;
-		for (WindowBlockComponent owner : this.windowOwners) {
+		for (WindowOwner owner : this.windowOwners) {
 			owner.removeViewer((Player) this.getHolder());
 		}
 		for (InventoryBase inventory : this.inventories.keySet()) {

@@ -31,6 +31,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.components.living.Human;
+import org.spout.vanilla.components.misc.InventoryComponent;
 import org.spout.vanilla.protocol.msg.HeldItemChangeMessage;
 
 public final class HeldItemChangeMessageHandler extends MessageHandler<HeldItemChangeMessage> {
@@ -46,7 +47,7 @@ public final class HeldItemChangeMessageHandler extends MessageHandler<HeldItemC
 		if (newSlot < 0 || newSlot > 8) {
 			return;
 		}
-		Human human = player.add(Human.class);
-		human.getInventory().getQuickbar().setCurrentSlot(newSlot);
+		InventoryComponent inventory = player.add(InventoryComponent.class);
+		inventory.getQuickbar().setCurrentSlot(newSlot);
 	}
 }

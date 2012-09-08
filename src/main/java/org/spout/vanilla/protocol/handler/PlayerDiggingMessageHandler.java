@@ -103,7 +103,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		if (state != PlayerDiggingMessage.STATE_DROP_ITEM && state != PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
 			Collection<Protection> protections = Spout.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(point);
 			for (Protection p : protections) {
-				if (p.contains(point) && !vp.isOp()) {
+				if (p.contains(point) && !human.isOp()) {
 					player.getSession().send(false, new BlockChangeMessage(x, y, z, minecraftID, block.getData() & 0xF));
 					player.sendMessage(ChatStyle.DARK_RED, "This area is a protected spawn point!");
 					return;

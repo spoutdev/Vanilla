@@ -31,6 +31,8 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.inventory.special.InventorySlot;
 
+import org.spout.vanilla.components.misc.InventoryComponent;
+
 public class PlayerSlotChangeEvent extends PlayerEvent {
 	private static HandlerList handlers = new HandlerList();
 	private final int oldSlot;
@@ -38,6 +40,10 @@ public class PlayerSlotChangeEvent extends PlayerEvent {
 
 	public PlayerSlotChangeEvent(Player p, int oldslot, int newslot) {
 		super(p);
+		if (!p.has(InventoryComponent.class)) {
+			//TODO MissingComponentException mostly for events
+			throw new IllegalArgumentException("Player passed for slot change has no inventory component!");
+		}
 		this.oldSlot = oldslot;
 		this.newSlot = newslot;
 	}
@@ -55,7 +61,7 @@ public class PlayerSlotChangeEvent extends PlayerEvent {
 	 * @return previously selected slot
 	 */
 	public InventorySlot getOldSlot() {
-		return getInventory().getQuickbar().getSlotInventory(this.getOldSlotIndex());
+		return getPlayer().get(InventoryComponent.class).getQuickbar().getSlotInventory(this.getOldSlotIndex());
 	}
 
 	/**
@@ -63,7 +69,7 @@ public class PlayerSlotChangeEvent extends PlayerEvent {
 	 * @return newly selected slot
 	 */
 	public InventorySlot getNewSlot() {
-		return getInventory().getQuickbar().getSlotInventory(this.getNewSlotIndex());
+		return getPlayer().get(InventoryComponent.class).getQuickbar().getSlotInventory(this.getNewSlotIndex());
 	}
 
 	/**

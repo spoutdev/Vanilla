@@ -26,7 +26,11 @@
  */
 package org.spout.vanilla.components.living;
 
+import org.spout.api.data.Data;
+import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.living.EndermanEntityProtocol;
 
 /**

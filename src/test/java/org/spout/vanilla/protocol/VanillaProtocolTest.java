@@ -31,6 +31,8 @@ import java.util.Arrays;
 
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.basic.BasicAir;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
@@ -54,6 +56,7 @@ import org.spout.vanilla.protocol.msg.ExplosionMessage;
 import org.spout.vanilla.protocol.msg.GroundMessage;
 import org.spout.vanilla.protocol.msg.login.HandshakeMessage;
 import org.spout.vanilla.protocol.msg.login.LoginRequestMessage;
+import org.spout.vanilla.protocol.msg.login.request.ClientLoginRequestMessage;
 import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
@@ -125,7 +128,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 	static byte[] biomeData2 = new byte[256];
 	private static final Message[] TEST_MESSAGES = new Message[]{
 			new KeepAliveMessage(42),
-			//new ClientLoginRequestMessage(),
+			new CreativeMessage((short) 0, new ItemStack(VanillaMaterials.BED, 10, 20)),
 			new LoginRequestMessage(0, "nether", (byte) 0, (byte) 0, (byte) 0, (short) 10),
 			new HandshakeMessage((byte) 42, "Spouty", "SpoutTron", 9001),
 			new ChatMessage("<Spouty> This is a thing called a chat message"),

@@ -32,6 +32,7 @@ import org.spout.vanilla.components.substance.material.Jukebox;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.block.ComponentMaterial;
 
 public class JukeboxBlock extends ComponentMaterial implements Fuel {
 	public final float BURN_TIME = 15.f;

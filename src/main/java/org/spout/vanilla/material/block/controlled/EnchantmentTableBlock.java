@@ -33,6 +33,7 @@ import org.spout.vanilla.components.substance.material.EnchantmentTable;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.material.block.ComponentMaterial;
 import org.spout.vanilla.material.block.Directional;
 
 public class EnchantmentTableBlock extends ComponentMaterial implements Directional {

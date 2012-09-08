@@ -44,7 +44,7 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.solid.TNT;
+import org.spout.vanilla.material.block.controlled.TNTBlock;
 import org.spout.vanilla.util.VanillaBlockUtil;
 
 public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
@@ -181,8 +181,8 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 			BlockMaterial mat = sBlock.getMaterial();
 			if (mat instanceof Burnable && rand.nextInt(((Burnable) mat).getCombustChance()) < chance) {
 				// Destroy the old block
-				if (mat instanceof TNT) {
-					((TNT) mat).onIgnite(sBlock); // Ignite TNT
+				if (mat instanceof TNTBlock) {
+					((TNTBlock) mat).onIgnite(sBlock); // Ignite TNTBlock
 				} else {
 					sBlock.setMaterial(VanillaMaterials.AIR); // prevent drops
 				}

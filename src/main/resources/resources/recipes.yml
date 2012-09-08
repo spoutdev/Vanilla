@@ -106,7 +106,7 @@ recipes:
 
   TNT:
     type: Shaped
-    result: TNT,1
+    result: TNT_BLOCK,1
     ingredients:
       A: SAND
       B: GUNPOWDER

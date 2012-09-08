@@ -35,6 +35,7 @@ import org.spout.vanilla.components.substance.material.Furnace;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.ComponentMaterial;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 

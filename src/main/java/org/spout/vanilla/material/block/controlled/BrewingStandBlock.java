@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.components.substance.material.BrewingStand;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.material.block.ComponentMaterial;
 
 public class BrewingStandBlock extends ComponentMaterial {
 	public BrewingStandBlock(String name, int id) {

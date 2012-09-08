@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block.controlled;
 
 import org.spout.vanilla.components.substance.material.MonsterSpawner;
+import org.spout.vanilla.material.block.ComponentMaterial;
 
 public class MonsterSpawnerBlock extends ComponentMaterial {
 	public MonsterSpawnerBlock(String name, int id) {

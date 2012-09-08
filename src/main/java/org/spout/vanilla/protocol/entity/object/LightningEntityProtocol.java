@@ -33,15 +33,14 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
 
+import org.spout.vanilla.components.substance.Lightning;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntitySpawnLightningStrikeMessage;
 
 public class LightningEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity) {
-		if (!(entity.getController() instanceof Lightning)) {
-			return Collections.emptyList();
-		}
+		Lightning light = entity.add(Lightning.class);
 		return Arrays.<Message>asList(new EntitySpawnLightningStrikeMessage(entity.getId(), entity.getTransform().getPosition().getBlockX(), entity.getTransform().getPosition().getBlockY(), entity.getTransform().getPosition().getBlockZ()));
 	}
 }

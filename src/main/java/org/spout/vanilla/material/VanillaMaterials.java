@@ -152,7 +152,7 @@ import org.spout.vanilla.material.block.solid.SoulSand;
 import org.spout.vanilla.material.block.solid.Sponge;
 import org.spout.vanilla.material.block.solid.Stone;
 import org.spout.vanilla.material.block.solid.StoneBrick;
-import org.spout.vanilla.material.block.solid.TNT;
+import org.spout.vanilla.material.block.controlled.TNTBlock;
 import org.spout.vanilla.material.block.solid.Wool;
 import org.spout.vanilla.material.block.stair.BrickStairs;
 import org.spout.vanilla.material.block.stair.CobblestoneStairs;
@@ -287,7 +287,7 @@ public final class VanillaMaterials {
 	public static final DoubleSlab WOODEN_DOUBLE_SLABS = DoubleSlab.OAK_WOOD;
 	public static final Wool WOOL = Wool.WHITE_WOOL;
 	public static final Brick BRICK = new Brick("Brick Block", 45);
-	public static final TNT TNT = new TNT("TNT", 46);
+	public static final TNTBlock TNT_BLOCK = new TNTBlock("TNT", 46);
 	public static final BookShelf BOOKSHELF = new BookShelf("Bookshelf", 47);
 	public static final MossStone MOSS_STONE = new MossStone("Moss Stone", 48);
 	public static final Obsidian OBSIDIAN = new Obsidian("Obsidian", 49);

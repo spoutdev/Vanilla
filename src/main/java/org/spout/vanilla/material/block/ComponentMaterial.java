@@ -24,63 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.material.block;
 
+import org.spout.api.component.components.BlockComponent;
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.material.Burnable;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.block.redstone.RedstoneTarget;
-import org.spout.vanilla.util.RedstoneUtil;
 
-public class TNT extends Solid implements RedstoneTarget, Burnable {
-	public TNT(String name, int id) {
+public abstract class ComponentMaterial extends Solid {
+	private final Class<? extends BlockComponent> type;
+
+	public ComponentMaterial(Class<? extends BlockComponent> type, String name, int id) {
 		super(name, id);
-		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 1);
+		this.type = type;
 	}
 
 	@Override
-	public boolean hasPhysics() {
+	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
+		super.onPlacement(block, data, against, clickedPos, isClickedBlock);
+		block.getWorld().createAndSpawnEntity(block.getPosition(), type, LoadOption.NO_LOAD);
 		return true;
-	}
-
-	@Override
-	public int getBurnPower() {
-		return 15;
-	}
-
-	@Override
-	public int getCombustChance() {
-		return 100;
-	}
-
-	@Override
-	public boolean canSupport(BlockMaterial mat, BlockFace face) {
-		return mat.equals(VanillaMaterials.FIRE);
-	}
-
-	@Override
-	public void onIgnite(Block block) {
-		block.setMaterial(VanillaMaterials.AIR);
-		// spawn a primed TNT
-		Point point = block.getPosition();
-		point.getWorld().createAndSpawnEntity(point);
-	}
-
-	@Override
-	public void onUpdate(BlockMaterial oldMaterial, Block block) {
-		super.onUpdate(oldMaterial, block);
-		if (this.isReceivingPower(block)) {
-			this.onIgnite(block);
-		}
-	}
-
-	@Override
-	public boolean isReceivingPower(Block block) {
-		return RedstoneUtil.isReceivingPower(block);
 	}
 }

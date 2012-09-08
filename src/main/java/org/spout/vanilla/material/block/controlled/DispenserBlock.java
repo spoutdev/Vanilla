@@ -37,7 +37,6 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.components.substance.Item;
@@ -47,6 +46,7 @@ import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.ComponentMaterial;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.material.item.misc.Potion;

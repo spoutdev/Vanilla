@@ -34,6 +34,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.components.substance.material.CraftingTable;
 import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.material.block.ComponentMaterial;
 
 public class CraftingTableBlock extends ComponentMaterial {
 	public CraftingTableBlock(String name, int id) {

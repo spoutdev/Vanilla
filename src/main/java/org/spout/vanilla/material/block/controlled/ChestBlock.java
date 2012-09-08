@@ -37,6 +37,7 @@ import org.spout.vanilla.components.substance.material.Chest;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.block.ComponentMaterial;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;

@@ -39,6 +39,7 @@ import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
 
+import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.Fuel;
@@ -96,7 +97,7 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 		if (type != Action.RIGHT_CLICK) {
 			return;
 		}
-		InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);
+		InventorySlot inv = entity.get(Human.class).getInventory().getInventory().getQuickbar().getCurrentSlotInventory();
 		ItemStack current = inv.getItem();
 		if (current != null && current.isMaterial(Dye.BONE_MEAL)) {
 			if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {

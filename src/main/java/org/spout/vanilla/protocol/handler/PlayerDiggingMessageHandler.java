@@ -122,7 +122,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 			isInteractable = false;
 		}
 
-		InventorySlot currentSlot = VanillaPlayerUtil.getCurrentSlot(player);
+		InventorySlot currentSlot = player.get(Human.class).getInventory().getInventory().getQuickbar().getCurrentSlotInventory();
 		ItemStack heldItem = currentSlot.getItem();
 
 		if (state == PlayerDiggingMessage.STATE_START_DIGGING) {

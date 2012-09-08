@@ -40,6 +40,7 @@ import org.spout.api.material.source.MaterialSource;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
+import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.misc.HeadComponent;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
@@ -84,10 +85,10 @@ public class EmptyContainer extends BlockItem {
 			if (!entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 				return;
 			}
-			InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);
+			InventorySlot inv = entity.get(Human.class).getInventory().getInventory().getQuickbar().getCurrentSlotInventory();
 			if (inv != null) {
 				inv.addItemAmount(-1);
-				VanillaPlayerUtil.getInventory(entity).addItem(new ItemStack(cont, 1));
+				entity.get(Human.class).getInventory().getInventory().addItem(new ItemStack(cont, 1));
 			}
 		}
 	}

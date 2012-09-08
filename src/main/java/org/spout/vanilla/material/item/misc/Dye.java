@@ -36,6 +36,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.living.Sheep;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
@@ -129,7 +130,7 @@ public class Dye extends VanillaItemMaterial implements Placeable {
 				return;
 			}
 
-			InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);
+			InventorySlot inv = entity.get(Human.class).getInventory().getInventory().getQuickbar().getCurrentSlotInventory();
 			if (inv != null) {
 				ItemStack holding = inv.getItem();
 				if (holding != null) {

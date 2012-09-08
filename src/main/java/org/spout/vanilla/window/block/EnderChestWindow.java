@@ -35,6 +35,6 @@ import org.spout.vanilla.window.WindowType;
 public class EnderChestWindow extends TransactionWindow {
 	public EnderChestWindow(Entity owner, EnderChest chest) {
 		super(WindowType.CHEST, "Ender Chest", 27, chest);
-		addInventory(owner.getEnderChestInventory(), ChestWindow.SMALL_CHEST_SLOTS);
+		addInventory(chest.getInventory(), ChestWindow.SMALL_CHEST_SLOTS);
 	}
 }

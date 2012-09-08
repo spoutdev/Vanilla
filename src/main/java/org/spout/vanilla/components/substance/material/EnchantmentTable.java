@@ -27,12 +27,14 @@
 package org.spout.vanilla.components.substance.material;
 
 import org.spout.api.entity.Player;
+import org.spout.api.inventory.InventoryBase;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.components.misc.WindowComponent;
+import org.spout.vanilla.inventory.InventoryOwner;
 import org.spout.vanilla.material.block.controlled.EnchantmentTableBlock;
 
-public class EnchantmentTable extends WindowBlockComponent {
+public class EnchantmentTable extends WindowBlockComponent implements InventoryOwner {
 	@Override
 	public EnchantmentTableBlock getMaterial() {
 		return (EnchantmentTableBlock) super.getMaterial();
@@ -48,6 +50,12 @@ public class EnchantmentTable extends WindowBlockComponent {
 
 	@Override
 	public WindowComponent createWindow(Player player) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public InventoryBase getInventory() {
 		// TODO Auto-generated method stub
 		return null;
 	}

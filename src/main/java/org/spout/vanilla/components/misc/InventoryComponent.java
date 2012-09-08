@@ -29,16 +29,24 @@ package org.spout.vanilla.components.misc;
 import org.spout.api.component.Component;
 import org.spout.api.data.Data;
 import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.inventory.InventoryOwner;
+import org.spout.vanilla.inventory.player.PlayerInventory;
 
 /**
  * Component that holds inventory references and handles inventory transactions.
  */
-public class InventoryComponent extends Component {
+public class InventoryComponent extends Component implements InventoryOwner {
 	public ItemStack getCurrentItem() {
 		return getData().get(Data.HELD_ITEM);
 	}
 
 	public void setCurrentItem(ItemStack current) {
 		getData().put(Data.HELD_ITEM, current);
+	}
+
+	@Override
+	public PlayerInventory getInventory() {
+		return (PlayerInventory) getData().get(VanillaData.INVENTORY);
 	}
 }

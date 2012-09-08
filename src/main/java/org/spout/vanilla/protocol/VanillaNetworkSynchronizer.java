@@ -60,6 +60,7 @@ import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
@@ -414,7 +415,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (event.getWindow() instanceof DefaultWindow) {
 			return null; // no message for the default Window
 		}
-		int size = event.getWindow().getInventorySize() - event.getWindow().getParent().getInventory().getMain().getSize();
+		int size = event.getWindow().getInventorySize() - event.getWindow().getHolder().get(Human.class).getInventory().getInventory().getMain().getSize();
 		return new WindowOpenMessage(event.getWindow(), size);
 	}
 

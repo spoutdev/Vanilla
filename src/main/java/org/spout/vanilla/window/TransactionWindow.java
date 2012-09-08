@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.window;
 
+import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.misc.WindowComponent;
 import org.spout.vanilla.components.substance.material.WindowBlockComponent;
 import org.spout.vanilla.util.intmap.SlotIndexGrid;
@@ -43,7 +44,7 @@ public class TransactionWindow extends WindowComponent {
 
 	@Override
 	public void onAttached() {
-		this.addInventory(getParent().getInventory().getMain(), new SlotIndexGrid(9, 4, transactionSize));
+		this.addInventory(getHolder().get(Human.class).getInventory().getInventory().getMain(), new SlotIndexGrid(9, 4, transactionSize));
 		super.onAttached();
 	}
 

@@ -27,12 +27,21 @@
 package org.spout.vanilla.components.substance.material;
 
 import org.spout.api.entity.Player;
+import org.spout.api.inventory.InventoryBase;
 
 import org.spout.vanilla.components.misc.WindowComponent;
+import org.spout.vanilla.inventory.InventoryOwner;
+import org.spout.vanilla.inventory.block.FurnaceInventory;
 
-public class Furnace extends WindowBlockComponent {
+public class Furnace extends WindowBlockComponent implements InventoryOwner {
 	@Override
 	public WindowComponent createWindow(Player player) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public FurnaceInventory getInventory() {
 		// TODO Auto-generated method stub
 		return null;
 	}

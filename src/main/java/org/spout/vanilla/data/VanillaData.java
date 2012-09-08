@@ -27,6 +27,7 @@
 package org.spout.vanilla.data;
 
 import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
@@ -63,7 +64,7 @@ public class VanillaData {
 	//Human-specific
 	public static final DefaultedKey<Boolean> IS_SPRINTING = new DefaultedKeyImpl<Boolean>("is_sprinting", false);
 	public static final DefaultedKey<Boolean> IS_FLYING = new DefaultedKeyImpl<Boolean>("is_flying", false);
-	public static final DefaultedKey<Inventory> INVENTORY = new DefaultedKeyImpl<Inventory>("inventory", new Inventory());
+	public static final DefaultedKey<InventoryBase> INVENTORY = new DefaultedKeyImpl<InventoryBase>("inventory", new Inventory());
 	//Creature-specific
 	public static final DefaultedKey<Integer> LINE_OF_SIGHT = new DefaultedKeyImpl<Integer>("line_of_sight", 1);
 	//Item-specific

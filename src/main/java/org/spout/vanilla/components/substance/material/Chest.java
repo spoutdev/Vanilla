@@ -27,12 +27,15 @@
 package org.spout.vanilla.components.substance.material;
 
 import org.spout.api.entity.Player;
+import org.spout.api.inventory.InventoryBase;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.components.misc.WindowComponent;
+import org.spout.vanilla.inventory.InventoryOwner;
+import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.material.block.controlled.ChestBlock;
 
-public class Chest extends WindowBlockComponent {
+public class Chest extends WindowBlockComponent implements InventoryOwner {
 	@Override
 	public ChestBlock getMaterial() {
 		return (ChestBlock) super.getMaterial();
@@ -48,6 +51,12 @@ public class Chest extends WindowBlockComponent {
 
 	@Override
 	public WindowComponent createWindow(Player player) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ChestInventory getInventory() {
 		// TODO Auto-generated method stub
 		return null;
 	}

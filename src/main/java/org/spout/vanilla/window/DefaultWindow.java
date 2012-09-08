@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.window;
 
+import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 import org.spout.vanilla.util.intmap.SlotIndexMap;
 import org.spout.vanilla.util.intmap.SlotIndexRow;
@@ -43,8 +44,8 @@ public class DefaultWindow extends CraftingWindow {
 
 	@Override
 	public void onAttached() {
-		this.setCraftingGrid(getParent().getInventory().getCraftingGrid(), CRAFTING_SLOTS);
-		this.addInventory(getParent().getInventory().getArmor(), ARMOR_SLOTS);
+		this.setCraftingGrid(getHolder().get(Human.class).getInventory().getInventory().getCraftingGrid(), CRAFTING_SLOTS);
+		this.addInventory(getHolder().get(Human.class).getInventory().getInventory().getArmor(), ARMOR_SLOTS);
 		super.onAttached();
 	}
 
@@ -56,7 +57,7 @@ public class DefaultWindow extends CraftingWindow {
 	@Override
 	public void close() {
 		super.close();
-		if (this.getParent().isSurvival()) {
+		if (getHolder().get(Human.class).isSurvival()) {
 			this.dropItemOnCursor();
 		}
 	}

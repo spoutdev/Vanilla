@@ -30,6 +30,7 @@ import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 
+import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.substance.material.WindowBlockComponent;
 import org.spout.vanilla.inventory.CraftingInventory;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
@@ -88,7 +89,7 @@ public abstract class CraftingWindow extends TransactionWindow {
 					newItem.setAmount(newItem.getAmount() + 1);
 					this.craftingGrid.craft();
 				}
-				if (!getParent().getInventory().addItemFully(newItem)) {
+				if (!getHolder().get(Human.class).getInventory().getInventory().addItemFully(newItem)) {
 					this.craftingGrid.setContents(before);
 				}
 				return true;

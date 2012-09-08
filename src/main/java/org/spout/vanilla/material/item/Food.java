@@ -29,6 +29,8 @@ package org.spout.vanilla.material.item;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.special.InventorySlot;
 
+import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Food extends VanillaItemMaterial {
@@ -44,7 +46,7 @@ public class Food extends VanillaItemMaterial {
 	}
 
 	public void onEat(Entity entity, InventorySlot slot) {
-		if (VanillaPlayerUtil.isSurvival(entity)) {
+		if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 			//TODO: Reimplement food less bad
 		}
 	}

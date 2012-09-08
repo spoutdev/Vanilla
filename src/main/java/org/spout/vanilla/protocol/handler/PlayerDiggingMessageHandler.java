@@ -50,6 +50,8 @@ import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.components.gamemode.SurvivalComponent;
 import org.spout.vanilla.data.ExhaustionLevel;
+import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.PlayerFlags;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.VanillaMaterial;
@@ -170,7 +172,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				return;
 			}
 
-			if (VanillaPlayerUtil.isSurvival(player)) {
+			if (player.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 				if (vp.isSurvival()) {
 					vp.getSurvivalComponent().addExhaustion(ExhaustionLevel.BREAK_BLOCK.getAmount());
 				}

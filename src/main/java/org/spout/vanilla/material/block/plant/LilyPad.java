@@ -35,6 +35,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.components.misc.HeadComponent;
+import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.util.VanillaPlayerUtil;
@@ -71,7 +73,7 @@ public class LilyPad extends GroundAttachable {
 
 				//TODO Subtract from inventory component
 				// Subtract item
-				if (!VanillaPlayerUtil.isSurvival(entity)) {
+				if (!entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 					return;
 				}
 				InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);

@@ -41,6 +41,8 @@ import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.components.misc.HeadComponent;
+import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -79,7 +81,7 @@ public class EmptyContainer extends BlockItem {
 			block.setMaterial(VanillaMaterials.AIR);
 
 			// Subtract item
-			if (!VanillaPlayerUtil.isSurvival(entity)) {
+			if (!entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 				return;
 			}
 			InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);

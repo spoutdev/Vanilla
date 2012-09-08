@@ -35,7 +35,9 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Openable;
@@ -58,7 +60,7 @@ public class FenceGate extends VanillaBlockMaterial implements Openable, Redston
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action action, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, action, clickedFace);
-		if (action == Action.LEFT_CLICK && VanillaPlayerUtil.isCreative(block.getSource())) {
+		if (action == Action.LEFT_CLICK && entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.CREATIVE)) {
 			return;
 		}
 		this.toggleOpen(block);

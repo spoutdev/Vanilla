@@ -36,7 +36,9 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 
+import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.RedstonePowerMode;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.block.AttachedRedstoneSource;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
@@ -71,7 +73,7 @@ public class StoneButton extends AttachedRedstoneSource implements PointAttachab
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
-		if (type != Action.LEFT_CLICK || !VanillaPlayerUtil.isCreative(entity)) {
+		if (type != Action.LEFT_CLICK || !entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.CREATIVE)) {
 			this.setPressed(block, true);
 		}
 	}

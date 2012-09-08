@@ -34,7 +34,9 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.RedstonePowerMode;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.Toggleable;
 import org.spout.vanilla.material.block.AttachedRedstoneSource;
@@ -54,7 +56,7 @@ public class Lever extends AttachedRedstoneSource implements Toggleable {
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action action, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, action, clickedFace);
-		if (action == Action.LEFT_CLICK && VanillaPlayerUtil.isCreative(block.getSource())) {
+		if (action == Action.LEFT_CLICK && entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.CREATIVE)) {
 			return;
 		}
 		this.toggle(block);

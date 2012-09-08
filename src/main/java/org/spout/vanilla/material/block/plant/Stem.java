@@ -38,6 +38,8 @@ import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
+import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Crop;
 import org.spout.vanilla.material.block.Growing;
@@ -108,7 +110,7 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Ra
 		ItemStack current = inv.getItem();
 		if (current != null && current.isMaterial(Dye.BONE_MEAL)) {
 			if (this.getGrowthStage(block) != 0x7) {
-				if (VanillaPlayerUtil.isSurvival(entity)) {
+				if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 					inv.addItemAmount(0, -1);
 				}
 				this.setGrowthStage(block, 0x7);

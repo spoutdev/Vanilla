@@ -147,7 +147,7 @@ public class DesertTemple extends StructureComponent {
 			plane.setMinMax(-2, yy, -2, 2, yy, 2);
 			picker.setOuterInnerMaterials(current, yy != -14 && yy != -12 ? VanillaMaterials.AIR : SMOOTH_BLOCK);
 			if (yy == -13) {
-				picker.setInnerMaterial(VanillaMaterials.TNT);
+				picker.setInnerMaterial(VanillaMaterials.TNT_BLOCK);
 			}
 			plane.fill(picker, false);
 

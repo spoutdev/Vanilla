@@ -41,6 +41,8 @@ import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
 
+import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.Spreading;
@@ -70,7 +72,7 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Rand
 		InventorySlot inv = VanillaPlayerUtil.getCurrentSlot(entity);
 		ItemStack current = inv.getItem();
 		if (current != null && current.isMaterial(Dye.BONE_MEAL)) {
-			if (VanillaPlayerUtil.isSurvival(entity)) {
+			if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 				inv.addItemAmount(0, -1);
 			}
 			final BlockMaterial mushroomType = block.getMaterial();

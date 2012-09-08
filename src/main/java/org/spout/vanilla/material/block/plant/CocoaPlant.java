@@ -39,6 +39,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.flag.Flag;
 
+import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.BlockFlags;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.block.Growing;
@@ -129,7 +131,7 @@ public class CocoaPlant extends AbstractAttachable implements Plant, Growing, Ra
 		final ItemStack current = inv.getItem();
 		if (current != null && current.isMaterial(Dye.BONE_MEAL) && type == Action.RIGHT_CLICK) {
 			if (!isFullyGrown(block)) {
-				if (VanillaPlayerUtil.isSurvival(entity)) {
+				if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 					inv.addItemAmount(0, -1);
 				}
 				setGrowthStage(block, 2);

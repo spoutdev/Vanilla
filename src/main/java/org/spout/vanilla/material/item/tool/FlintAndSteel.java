@@ -47,9 +47,9 @@ public class FlintAndSteel extends InteractTool {
 		super.onInteract(entity, block, type, clickedface);
 		if (type == Action.RIGHT_CLICK) {
 			BlockMaterial clickedmat = block.getMaterial();
-			if (clickedmat.equals(VanillaMaterials.TNT)) {
+			if (clickedmat.equals(VanillaMaterials.TNT_BLOCK)) {
 				// Detonate TNTBlock
-				VanillaMaterials.TNT.onIgnite(block);
+				VanillaMaterials.TNT_BLOCK.onIgnite(block);
 				return;
 			} else {
 				// Default fire creation

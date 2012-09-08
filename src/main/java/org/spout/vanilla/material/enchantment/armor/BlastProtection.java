@@ -34,7 +34,7 @@ import org.spout.vanilla.material.item.armor.Boots;
 
 public class BlastProtection extends ArmorEnchantment {
 	public BlastProtection(String name, int id) {
-		super(name, id);
+		super(name, id, 5, 8, 12);
 	}
 
 	@Override

@@ -119,10 +119,7 @@ public class Enchantments {
 	 */
 	public static Enchantment[] values() {
 		Enchantment[] values = new Enchantment[idLookup.size()];
-		for (int i = 0; i < idLookup.size(); i++) {
-			values[i] = idLookup.get(i);
-		}
-
+		idLookup.values().toArray(values);
 		return values;
 	}
 }

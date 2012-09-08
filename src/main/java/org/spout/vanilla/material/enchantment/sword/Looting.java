@@ -30,11 +30,11 @@ import org.spout.vanilla.material.enchantment.SwordEnchantment;
 
 public class Looting extends SwordEnchantment {
 	public Looting(String name, int id) {
-		super(name, id);
+		super(name, id, 15, 9, 50);
 	}
 
 	@Override
-	public int getMaximumLevel() {
+	public int getMaximumPowerLevel() {
 		return 3;
 	}
 

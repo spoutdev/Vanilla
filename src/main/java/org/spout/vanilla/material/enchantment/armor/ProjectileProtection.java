@@ -34,7 +34,7 @@ import org.spout.vanilla.material.item.armor.Boots;
 
 public class ProjectileProtection extends ArmorEnchantment {
 	public ProjectileProtection(String name, int id) {
-		super(name, id);
+		super(name, id, 3, 6, 15);
 	}
 
 	@Override

@@ -33,7 +33,7 @@ import org.spout.vanilla.material.enchantment.SwordEnchantment;
 
 public class Sharpness extends SwordEnchantment {
 	public Sharpness(String name, int id) {
-		super(name, id);
+		super(name, id, 1, 11, 20);
 	}
 
 	@Override

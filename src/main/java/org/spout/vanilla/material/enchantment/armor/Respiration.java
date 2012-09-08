@@ -32,7 +32,7 @@ import org.spout.vanilla.material.item.armor.Helmet;
 
 public class Respiration extends ArmorEnchantment {
 	public Respiration(String name, int id) {
-		super(name, id);
+		super(name, id, 10, 10, 30);
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class Respiration extends ArmorEnchantment {
 	}
 
 	@Override
-	public int getMaximumLevel() {
+	public int getMaximumPowerLevel() {
 		return 3;
 	}
 

@@ -34,10 +34,17 @@ import org.spout.vanilla.material.VanillaMaterial;
 public abstract class Enchantment {
 	private final String name;
 	private final int id;
+	/**
+	 * Used to compute {@link getMinimumLevel} and {@link getMaximumLevel}
+	 */
+	protected final int baseEnchantmentLevel, deltaEnchantmentLevel, enchantmentLevelRange;
 
-	protected Enchantment(String name, int id) {
+	protected Enchantment(String name, int id, int baseEnchantmentLevel, int deltaEnchantmentLevel, int enchantmentLevelRange) {
 		this.name = name;
 		this.id = id;
+		this.baseEnchantmentLevel = baseEnchantmentLevel;
+		this.deltaEnchantmentLevel = deltaEnchantmentLevel;
+		this.enchantmentLevelRange = enchantmentLevelRange;
 	}
 
 	/**
@@ -47,10 +54,28 @@ public abstract class Enchantment {
 	public abstract boolean canEnchant(VanillaMaterial material);
 
 	/**
-	 * Gets the maximum level this enchantment can be
-	 * @return maximum level
+	 * Gets the maximum power level this enchantment can be
+	 * @return maximum power level
 	 */
-	public abstract int getMaximumLevel();
+	public abstract int getMaximumPowerLevel();
+
+	/**
+	 * Gets the minimum modified enchantment level allowed to produce this enchantment with a given power level
+	 * @param powerLevel The desired power level of the enchantment
+	 * @return Minimum level
+	 */
+	public int getMinimumLevel(int powerLevel) {
+		return baseEnchantmentLevel + (powerLevel - 1) * deltaEnchantmentLevel;
+	}
+
+	/**
+	 * Gets the maximum modified enchantment level allowed to produce this enchantment with a given power level
+	 * @param powerLevel The desired power level of the enchantment
+	 * @return Maximum level
+	 */
+	public int getMaximumLevel(int powerLevel) {
+		return getMinimumLevel(powerLevel) + enchantmentLevelRange;
+	}
 
 	/**
 	 * Gets the weight of this enchantment, enchantments with higher weights have a greater chance of being selected during the enchantment process

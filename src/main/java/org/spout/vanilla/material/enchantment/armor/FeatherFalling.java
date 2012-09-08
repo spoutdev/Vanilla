@@ -32,7 +32,7 @@ import org.spout.vanilla.material.item.armor.Boots;
 
 public class FeatherFalling extends ArmorEnchantment {
 	public FeatherFalling(String name, int id) {
-		super(name, id);
+		super(name, id, 5, 6, 10);
 	}
 
 	@Override

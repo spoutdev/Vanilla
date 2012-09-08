@@ -35,7 +35,7 @@ import org.spout.vanilla.material.item.armor.Helmet;
 
 public class Protection extends ArmorEnchantment {
 	public Protection(String name, int id) {
-		super(name, id);
+		super(name, id, 1, 11, 20);
 	}
 
 	@Override

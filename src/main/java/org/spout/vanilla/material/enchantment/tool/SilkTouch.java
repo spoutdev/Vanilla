@@ -33,7 +33,7 @@ import org.spout.vanilla.material.enchantment.ToolEnchantment;
 
 public class SilkTouch extends ToolEnchantment {
 	public SilkTouch(String name, int id) {
-		super(name, id);
+		super(name, id, 15, 0, 50);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class SilkTouch extends ToolEnchantment {
 	}
 
 	@Override
-	public int getMaximumLevel() {
+	public int getMaximumPowerLevel() {
 		return 1;
 	}
 

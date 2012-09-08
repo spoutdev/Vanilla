@@ -30,11 +30,11 @@ import org.spout.vanilla.material.enchantment.BowEnchantment;
 
 public class Punch extends BowEnchantment {
 	public Punch(String name, int id) {
-		super(name, id);
+		super(name, id, 12, 20, 25);
 	}
 
 	@Override
-	public int getMaximumLevel() {
+	public int getMaximumPowerLevel() {
 		return 2;
 	}
 }

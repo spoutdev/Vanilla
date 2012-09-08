@@ -33,7 +33,7 @@ import org.spout.vanilla.material.enchantment.SwordEnchantment;
 
 public class BaneOfArthropods extends SwordEnchantment {
 	public BaneOfArthropods(String name, int id) {
-		super(name, id);
+		super(name, id, 5, 8, 20);
 	}
 
 	@Override

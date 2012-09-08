@@ -63,6 +63,7 @@ import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.living.Human;
+import org.spout.vanilla.components.misc.InventoryComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
@@ -330,7 +331,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		GameMode gamemode = world.getComponentHolder().getData().get(VanillaData.GAMEMODE);
 		//The world the player is entering has a different gamemode...
 		if (gamemode != null) {
-			if (gamemode != owner.get(Human.class).getGameMode()) {
+			if (gamemode != getPlayer().getData().get(VanillaData.GAMEMODE)) {
 				PlayerGameModeChangedEvent event = Spout.getEngine().getEventManager().callEvent(new PlayerGameModeChangedEvent(player, gamemode));
 				if (!event.isCancelled()) {
 					gamemode = event.getMode();
@@ -338,7 +339,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			}
 		} else {
 			//The world has no gamemode setting in its map so default to the Player's GameMode.
-			gamemode = owner.get(Human.class).getGameMode();
+			gamemode = getPlayer().getData().get(VanillaData.GAMEMODE);
 		}
 		Difficulty difficulty = world.getComponentHolder().getData().get(VanillaData.DIFFICULTY);
 		Dimension dimension = world.getComponentHolder().getData().get(VanillaData.DIMENSION);
@@ -515,7 +516,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onSignUpdate(SignUpdateEvent event) {
-		Block block = event.getSign().getBlock();
+		Block block = (Block) event.getSign().getPlacedBlock();
 		return new UpdateSignMessage(block.getX(), block.getY(), block.getZ(), event.getLines());
 	}
 

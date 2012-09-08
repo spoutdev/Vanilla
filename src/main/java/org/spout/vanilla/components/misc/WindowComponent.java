@@ -48,6 +48,7 @@ import org.spout.vanilla.event.window.WindowOpenEvent;
 import org.spout.vanilla.event.window.WindowSetSlotEvent;
 import org.spout.vanilla.event.window.WindowSetSlotsEvent;
 import org.spout.vanilla.util.InventoryUtil;
+import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 import org.spout.vanilla.window.ClickArgs;
 import org.spout.vanilla.window.WindowType;

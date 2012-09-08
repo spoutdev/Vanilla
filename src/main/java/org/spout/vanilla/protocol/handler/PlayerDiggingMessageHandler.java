@@ -43,6 +43,7 @@ import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.basic.BasicAir;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -60,6 +61,7 @@ import org.spout.vanilla.material.item.Food;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
+import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDiggingMessage> {
@@ -112,7 +114,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		}
 
 		if (state == PlayerDiggingMessage.STATE_DROP_ITEM && x == 0 && y == 0 && z == 0) {
-			human.dropItem();
+			ItemUtil.dropItem(player.getTransform().getPosition(), human.getInventory().getCurrentItem(), Vector3.ONE);
 			return;
 		}
 

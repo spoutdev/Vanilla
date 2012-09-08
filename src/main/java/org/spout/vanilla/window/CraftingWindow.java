@@ -32,9 +32,14 @@ import org.spout.api.inventory.special.InventorySlot;
 
 import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.misc.InventoryComponent;
+<<<<<<< HEAD
 import org.spout.vanilla.components.misc.WindowOwner;
+=======
+import org.spout.vanilla.components.misc.WindowComponent;
+>>>>>>> And some more...
 import org.spout.vanilla.components.substance.material.WindowBlockComponent;
 import org.spout.vanilla.inventory.CraftingInventory;
+import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
 
 public abstract class CraftingWindow extends TransactionWindow {
@@ -68,7 +73,7 @@ public abstract class CraftingWindow extends TransactionWindow {
 			ItemStack item = this.craftingGrid.getItem(i);
 			if (item != null) {
 				this.craftingGrid.setItem(i, null);
-				getHolder().get(InventoryComponent.class).getInventory().dropItem(item);
+				ItemUtil.dropItemNaturally(getPlayer().getTransform().getPosition(), item);
 			}
 		}
 		// Drop item on cursor

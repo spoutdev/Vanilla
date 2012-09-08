@@ -49,6 +49,7 @@ import org.spout.api.protocol.Session;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.components.gamemode.SurvivalComponent;
+import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
@@ -63,14 +64,14 @@ import org.spout.vanilla.protocol.msg.PlayerDiggingMessage;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDiggingMessage> {
-	private void breakBlock(BlockMaterial blockMaterial, Block block, Player player) {
+	private void breakBlock(BlockMaterial blockMaterial, Block block, Human human) {
 		HashSet<Flag> flags = new HashSet<Flag>();
-		if (player.has(SurvivalComponent.class)) {
+		if (human.isSurvival()) {
 			flags.add(PlayerFlags.SURVIVAL);
 		} else {
 			flags.add(PlayerFlags.CREATIVE);
 		}
-		ItemStack heldItem = player.getInventory().getQuickbar().getCurrentItem();
+		ItemStack heldItem = human.getInventory().getQuickbar().getCurrentItem();
 		if (heldItem != null) {
 			heldItem.getMaterial().getItemFlags(heldItem, flags);
 		}
@@ -97,8 +98,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 
 		short minecraftID = VanillaMaterials.getMinecraftId(blockMaterial);
 		BlockFace clickedFace = message.getFace();
-
-		VanillaPlayerController vp = ((VanillaPlayerController) player.getController());
+		Human human = player.add(Human.class);
 
 		// Don't block protections if dropping an item, silly Notch...
 		if (state != PlayerDiggingMessage.STATE_DROP_ITEM && state != PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
@@ -113,7 +113,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		}
 
 		if (state == PlayerDiggingMessage.STATE_DROP_ITEM && x == 0 && y == 0 && z == 0) {
-			((VanillaPlayerController) player.getController()).dropItem();
+			human.dropItem();
 			return;
 		}
 
@@ -159,25 +159,25 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 					// put out fire
 					VanillaMaterials.FIRE.onDestroy(neigh);
 					GeneralEffects.RANDOM_FIZZ.playGlobal(block.getPosition());
-				} else if (vp.isSurvival() && blockMaterial.getHardness() != 0.0f) {
-					vp.getDiggingLogic().startDigging(new Point(w, x, y, z));
+				} else if (human.isSurvival() && blockMaterial.getHardness() != 0.0f) {
+					human.getDiggingLogic().startDigging(new Point(w, x, y, z));
 				} else {
 					// insta-break
-					breakBlock(blockMaterial, block, vp);
+					breakBlock(blockMaterial, block, human);
 					GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);
 				}
 			}
 		} else if (state == PlayerDiggingMessage.STATE_DONE_DIGGING) {
-			if (!vp.getDiggingLogic().stopDigging(new Point(w, x, y, z)) || !isInteractable) {
+			if (!human.getDiggingLogic().stopDigging(new Point(w, x, y, z)) || !isInteractable) {
 				return;
 			}
 
 			if (player.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-				if (vp.isSurvival()) {
-					vp.getSurvivalComponent().addExhaustion(ExhaustionLevel.BREAK_BLOCK.getAmount());
+				if (human.isSurvival()) {
+					human.addExhaustion(ExhaustionLevel.BREAK_BLOCK.getAmount());
 				}
 
-				long diggingTicks = vp.getDiggingLogic().getDiggingTicks();
+				long diggingTicks = human.getDiggingLogic().getDiggingTicks();
 				int damageDone;
 				int totalDamage;
 
@@ -194,7 +194,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 
 				totalDamage = ((int) blockMaterial.getHardness() - damageDone);
 				if (totalDamage <= 40) { // Yes, this is a very high allowance - this is because this is only over a single block, and this will spike due to varying latency.
-					breakBlock(blockMaterial, block, vp);
+					breakBlock(blockMaterial, block, human);
 				}
 				if (block.getMaterial() != VanillaMaterials.AIR) {
 					GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);

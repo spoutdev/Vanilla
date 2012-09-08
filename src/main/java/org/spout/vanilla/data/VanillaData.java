@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.data;
 
+import sun.net.idn.StringPrep;
+
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
@@ -89,4 +91,6 @@ public class VanillaData {
 	public static final DefaultedKey<Byte> SKIN = new DefaultedKeyImpl<Byte>("skin", (byte) 0);
 	//Redstone-specific
 	public static final DefaultedKey<Boolean> IS_POWERED = new DefaultedKeyImpl<Boolean>("is_powered", false);
+	//Sign-specific
+	public static final DefaultedKey<String[]> SIGN_TEXT = new DefaultedKeyImpl<String[]>("sign_text", new String[4]);
 }

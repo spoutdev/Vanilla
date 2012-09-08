@@ -43,8 +43,8 @@ public class UpdateSignHandler extends MessageHandler<UpdateSignMessage> {
 
 		Player player = session.getPlayer();
 
-		BlockComponent controller = player.getWorld().getBlockComponent(message.getX(), message.getY(), message.getZ());
-		if (controller == null || !(controller instanceof Sign)) {
+		BlockComponent component = player.getWorld().getBlockComponent(message.getX(), message.getY(), message.getZ());
+		if (component == null || !(component instanceof Sign)) {
 			return;
 		}
 
@@ -53,7 +53,7 @@ public class UpdateSignHandler extends MessageHandler<UpdateSignMessage> {
 			return;
 		}
 
-		Sign sign = (Sign) controller;
-		sign.setText(player, text);
+		Sign sign = (Sign) component;
+		sign.setText(text);
 	}
 }

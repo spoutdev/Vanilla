@@ -26,9 +26,12 @@
  */
 package org.spout.vanilla.components.substance.material;
 
+import sun.net.idn.StringPrep;
+
 import org.spout.api.component.components.BlockComponent;
 import org.spout.api.material.BlockMaterial;
 
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.block.controlled.SignPost;
 
 public class Sign extends BlockComponent {
@@ -43,5 +46,13 @@ public class Sign extends BlockComponent {
 			throw new IllegalArgumentException("Material passed in must be an instance of a SignPost.");
 		}
 		super.setMaterial(material);
+	}
+
+	public String[] getText() {
+		return getData().get(VanillaData.SIGN_TEXT);
+	}
+
+	public void setText(String[] text) {
+		getData().put(VanillaData.SIGN_TEXT, text);
 	}
 }

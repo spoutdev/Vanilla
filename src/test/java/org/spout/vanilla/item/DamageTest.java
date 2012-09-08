@@ -30,10 +30,10 @@ import org.junit.Test;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.components.source.DamageCause;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.armor.Armor;
+import org.spout.vanilla.source.DamageCause;
 import org.spout.vanilla.util.EnchantmentUtil;
 
 import static org.junit.Assert.assertTrue;

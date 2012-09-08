@@ -68,18 +68,7 @@ public class Ice extends SpreadingSolid implements InitializableMaterial {
 	@Override
 	public void onDestroy(Block block) {
 		if (!(block.getWorld().getGenerator() instanceof NetherGenerator) || block.translate(BlockFace.BOTTOM).getMaterial() != VanillaMaterials.AIR) {
-			// TODO Setting the source to world correct?
-			if (VanillaPlayerUtil.isCreative(block.getSource())) {
-				// Do not turn into water when in creative
-			} else {
-				// Only set material to water source block if the block was not destroyed by an item with Silk Touch
-				ItemStack held = VanillaPlayerUtil.getCurrentItem(block.getSource());
-
-				if (held == null || !(held.getMaterial() instanceof Tool) || !EnchantmentUtil.hasEnchantment(held, Enchantments.SILK_TOUCH)) {
-					block.setMaterial(VanillaMaterials.STATIONARY_WATER);
-					return;
-				}
-			}
+			//TODO: Fix detroying ice
 		}
 		super.onDecay(block);
 	}

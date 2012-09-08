@@ -26,24 +26,27 @@
  */
 package org.spout.vanilla.components.substance;
 
-import org.spout.api.component.components.BlockComponent;
-import org.spout.api.material.BlockMaterial;
+import org.spout.api.component.components.EntityComponent;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.protocol.entity.object.FallingBlockProtocol;
 
-public class MovingBlock extends BlockComponent {
+public class MovingBlock extends EntityComponent {
+
+	//TODO: Put this in the datamap
+	VanillaBlockMaterial material;
+
 	@Override
 	public void onAttached() {
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new FallingBlockProtocol());
 	}
 
-	@Override
-	public void setMaterial(BlockMaterial material) {
-		if (!(material instanceof VanillaBlockMaterial)) {
-			throw new IllegalArgumentException("Material passed in must be a VanillaBlockMaterial");
-		}
-		super.setMaterial(material);
+	public void setMaterial(VanillaBlockMaterial material) {
+		this.material = material;
+	}
+
+	public VanillaBlockMaterial getMaterial() {
+		return material;
 	}
 }

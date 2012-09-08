@@ -41,6 +41,7 @@ import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.substance.material.WindowBlockComponent;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowEvent;
@@ -387,7 +388,7 @@ public class WindowComponent extends Component implements InventoryViewer {
 	 */
 	public void dropItemOnCursor() {
 		if (this.hasItemOnCursor()) {
-			this.getParent().dropItem(this.getItemOnCursor());
+			this.getHolder().get(Human.class).dropItem(this.getItemOnCursor());
 			this.setItemOnCursor(null);
 		}
 	}

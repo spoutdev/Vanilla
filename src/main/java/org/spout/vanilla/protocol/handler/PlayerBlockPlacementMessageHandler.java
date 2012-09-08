@@ -58,7 +58,6 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.tool.InteractTool;
 import org.spout.vanilla.protocol.msg.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.PlayerBlockPlacementMessage;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public final class PlayerBlockPlacementMessageHandler extends MessageHandler<PlayerBlockPlacementMessage> {
 	private void undoPlacement(Player player, Block clickedBlock, Block alterBlock) {
@@ -141,14 +140,7 @@ public final class PlayerBlockPlacementMessageHandler extends MessageHandler<Pla
 			//				clickedMaterial.getController(clickedBlock).onInteract(player, Action.RIGHT_CLICK);
 			//			} TODO: Put block entity handling back in
 
-			if (holdingMat instanceof InteractTool && VanillaPlayerUtil.isSurvival(clickedBlock.getSource())) { //TODO Total hack and is BADDDDDD
-				short newDurability = ((short) (durability - ((InteractTool) holdingMat).getMaxDurability()));
-
-				currentSlot.addItemData(0, newDurability);
-				if (((InteractTool) holdingMat).getMaxDurability() < 1 && durability != ((InteractTool) holdingMat).getMaxDurability()) { //TODO Total hack!!!
-					currentSlot.setItem(null); //Break a tool if their onInteract takes away durability. TODO Probably not the best place to do this...
-				}
-			}
+			//TODO: Readd durability/breaking handling
 
 			if (clickedMaterial instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed()) {
 				undoPlacement(player, clickedBlock, alterBlock);

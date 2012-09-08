@@ -30,6 +30,8 @@ import org.spout.api.Spout;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.special.InventorySlot;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.gamemode.AdventureComponent;
@@ -43,6 +45,8 @@ import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
 import org.spout.vanilla.protocol.entity.living.HumanEntityProtocol;
+import org.spout.vanilla.util.ItemUtil;
+import org.spout.vanilla.util.VanillaMathHelper;
 
 /**
  * A component that identifies the entity as a Vanilla player.
@@ -145,5 +149,27 @@ public class Human extends VanillaEntity {
 
 	public InventoryComponent getInventory() {
 		return getHolder().add(InventoryComponent.class);
+	}
+
+	/**
+	 * Drops the item specified into the direction the player looks
+	 * @param item to drop
+	 */
+	public void dropItem(ItemStack item) {
+		ItemUtil.dropItemNaturally(this.getHolder().getTransform().getPosition(), item);
+	}
+
+	/**
+	 * Drops the player's current item.
+	 */
+	public void dropItem() {
+		InventorySlot slot = this.getInventory().getInventory().getQuickbar().getCurrentSlotInventory();
+		ItemStack current = slot.getItem();
+		if (current == null) {
+			return;
+		}
+		ItemStack drop = current.clone().setAmount(1);
+		slot.addItemAmount(-1);
+		dropItem(drop);
 	}
 }

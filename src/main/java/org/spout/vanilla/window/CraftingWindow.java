@@ -31,13 +31,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 
 import org.spout.vanilla.components.living.Human;
-import org.spout.vanilla.components.misc.InventoryComponent;
-<<<<<<< HEAD
 import org.spout.vanilla.components.misc.WindowOwner;
-=======
-import org.spout.vanilla.components.misc.WindowComponent;
->>>>>>> And some more...
-import org.spout.vanilla.components.substance.material.WindowBlockComponent;
 import org.spout.vanilla.inventory.CraftingInventory;
 import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;

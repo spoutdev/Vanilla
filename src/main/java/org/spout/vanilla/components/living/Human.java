@@ -35,8 +35,10 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.gamemode.AdventureComponent;
 import org.spout.vanilla.components.gamemode.CreativeComponent;
 import org.spout.vanilla.components.gamemode.SurvivalComponent;
+import org.spout.vanilla.components.misc.DiggingComponent;
 import org.spout.vanilla.components.misc.InventoryComponent;
 import org.spout.vanilla.components.misc.PickupItemComponent;
+import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
@@ -52,6 +54,7 @@ public class Human extends VanillaEntity {
 		Entity holder = getHolder();
 		holder.add(InventoryComponent.class);
 		holder.add(PickupItemComponent.class);
+		holder.add(DiggingComponent.class);
 		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
 	}
 
@@ -117,6 +120,10 @@ public class Human extends VanillaEntity {
 
 	public GameMode getGameMode() {
 		return getData().get(VanillaData.GAMEMODE);
+	}
+
+	public boolean isOp() {
+		return getHolder() instanceof Player && VanillaConfiguration.OPS.isOp(getName());
 	}
 
 	public void setGamemode(GameMode mode) {

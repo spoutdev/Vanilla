@@ -31,6 +31,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 
 import org.spout.vanilla.components.living.Human;
+import org.spout.vanilla.components.misc.InventoryComponent;
 import org.spout.vanilla.components.substance.material.WindowBlockComponent;
 import org.spout.vanilla.inventory.CraftingInventory;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
@@ -66,7 +67,7 @@ public abstract class CraftingWindow extends TransactionWindow {
 			ItemStack item = this.craftingGrid.getItem(i);
 			if (item != null) {
 				this.craftingGrid.setItem(i, null);
-				this.getParent().dropItem(item);
+				getHolder().get(InventoryComponent.class).getInventory().dropItem(item);
 			}
 		}
 		// Drop item on cursor

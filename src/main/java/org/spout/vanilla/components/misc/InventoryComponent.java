@@ -29,6 +29,7 @@ package org.spout.vanilla.components.misc;
 import org.spout.api.component.Component;
 import org.spout.api.data.Data;
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.InventoryOwner;
 import org.spout.vanilla.inventory.player.PlayerInventory;

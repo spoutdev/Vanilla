@@ -30,9 +30,8 @@ import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.inventory.special.InventorySlot;
-import org.spout.vanilla.components.living.Human;
-import org.spout.vanilla.components.misc.InventoryComponent;
 
+import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.misc.InventoryComponent;
 
 public class PlayerSlotChangeEvent extends PlayerEvent {

@@ -49,7 +49,7 @@ import org.spout.api.protocol.Session;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.components.living.Human;
-import org.spout.vanilla.data.ExhaustionLevel;
+import org.spout.vanilla.components.misc.DiggingComponent;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.PlayerFlags;
@@ -70,7 +70,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 		} else {
 			flags.add(PlayerFlags.CREATIVE);
 		}
-		ItemStack heldItem = human.getInventory().getQuickbar().getCurrentItem();
+		ItemStack heldItem = human.getInventory().getInventory().getQuickbar().getCurrentItem();
 		if (heldItem != null) {
 			heldItem.getMaterial().getItemFlags(heldItem, flags);
 		}
@@ -159,7 +159,7 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 					VanillaMaterials.FIRE.onDestroy(neigh);
 					GeneralEffects.RANDOM_FIZZ.playGlobal(block.getPosition());
 				} else if (human.isSurvival() && blockMaterial.getHardness() != 0.0f) {
-					human.getDiggingLogic().startDigging(new Point(w, x, y, z));
+					player.add(DiggingComponent.class).startDigging(new Point(w, x, y, z));
 				} else {
 					// insta-break
 					breakBlock(blockMaterial, block, human);
@@ -167,16 +167,12 @@ public final class PlayerDiggingMessageHandler extends MessageHandler<PlayerDigg
 				}
 			}
 		} else if (state == PlayerDiggingMessage.STATE_DONE_DIGGING) {
-			if (!human.getDiggingLogic().stopDigging(new Point(w, x, y, z)) || !isInteractable) {
+			if (!player.add(DiggingComponent.class).stopDigging(new Point(w, x, y, z)) || !isInteractable) {
 				return;
 			}
 
 			if (player.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-				if (human.isSurvival()) {
-					human.addExhaustion(ExhaustionLevel.BREAK_BLOCK.getAmount());
-				}
-
-				long diggingTicks = human.getDiggingLogic().getDiggingTicks();
+				long diggingTicks = player.get(DiggingComponent.class).getDiggingTicks();
 				int damageDone;
 				int totalDamage;
 

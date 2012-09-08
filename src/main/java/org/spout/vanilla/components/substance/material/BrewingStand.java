@@ -27,7 +27,6 @@
 package org.spout.vanilla.components.substance.material;
 
 import org.spout.api.entity.Player;
-import org.spout.api.inventory.InventoryBase;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.components.misc.WindowComponent;

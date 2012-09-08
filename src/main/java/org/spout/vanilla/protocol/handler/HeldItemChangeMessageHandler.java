@@ -30,7 +30,6 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.misc.InventoryComponent;
 import org.spout.vanilla.protocol.msg.HeldItemChangeMessage;
 
@@ -48,6 +47,6 @@ public final class HeldItemChangeMessageHandler extends MessageHandler<HeldItemC
 			return;
 		}
 		InventoryComponent inventory = player.add(InventoryComponent.class);
-		inventory.getQuickbar().setCurrentSlot(newSlot);
+		inventory.getInventory().getQuickbar().setCurrentSlot(newSlot);
 	}
 }

@@ -36,16 +36,12 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.living.VanillaEntity;
-import org.spout.vanilla.components.misc.HealthComponent;
-import org.spout.vanilla.components.misc.InventoryComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.msg.entity.EntityInteractionMessage;
 import org.spout.vanilla.source.DamageCause;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class EntityInteractionMessageHandler extends MessageHandler<EntityInteractionMessage> {
 	@Override
@@ -84,7 +80,7 @@ public class EntityInteractionMessageHandler extends MessageHandler<EntityIntera
 					if (holdingMat instanceof Tool) {
 						// This is a bit of a hack due to the way Tool hierarchy is now (Only Swords can have a damage modifier, but Sword must be an interface and therefore is not able to contain getDamageModifier without code duplication)
 						damage += ((Tool) holdingMat).getDamageBonus(clickedEntity, holding);
-//						player.getInventory().getQuickbar().getCurrentSlotInventory().addItemData(1); TODO: Reimplement durability change
+						//						player.getInventory().getQuickbar().getCurrentSlotInventory().addItemData(1); TODO: Reimplement durability change
 					}
 				}
 				if (damage != 0) {

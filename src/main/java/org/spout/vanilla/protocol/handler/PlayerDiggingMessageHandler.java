@@ -48,7 +48,6 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.components.gamemode.SurvivalComponent;
 import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.data.GameMode;

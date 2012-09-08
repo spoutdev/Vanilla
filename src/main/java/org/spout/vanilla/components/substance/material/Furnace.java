@@ -27,10 +27,10 @@
 package org.spout.vanilla.components.substance.material;
 
 import org.spout.api.entity.Player;
+
 import org.spout.vanilla.components.misc.WindowComponent;
 
 public class Furnace extends WindowBlockComponent {
-
 	@Override
 	public WindowComponent createWindow(Player player) {
 		// TODO Auto-generated method stub

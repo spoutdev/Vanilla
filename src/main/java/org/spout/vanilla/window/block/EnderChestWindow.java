@@ -29,7 +29,6 @@ package org.spout.vanilla.window.block;
 import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.components.substance.material.EnderChest;
-import org.spout.vanilla.material.block.controlled.EnderChestBlock;
 import org.spout.vanilla.window.TransactionWindow;
 import org.spout.vanilla.window.WindowType;
 

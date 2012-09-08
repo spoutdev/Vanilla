@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.components.substance.material;
 
-import sun.net.idn.StringPrep;
-
 import org.spout.api.component.components.BlockComponent;
 import org.spout.api.material.BlockMaterial;
 

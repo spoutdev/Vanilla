@@ -8,6 +8,7 @@ import org.spout.api.component.components.BlockComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+
 import org.spout.vanilla.components.misc.WindowComponent;
 
 public abstract class WindowBlockComponent extends BlockComponent {

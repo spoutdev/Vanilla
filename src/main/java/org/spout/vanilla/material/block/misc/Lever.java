@@ -40,7 +40,6 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.Toggleable;
 import org.spout.vanilla.material.block.AttachedRedstoneSource;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Lever extends AttachedRedstoneSource implements Toggleable {
 	public Lever(String name, int id) {

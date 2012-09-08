@@ -30,11 +30,11 @@ import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
+
 import org.spout.vanilla.components.living.Ocelot;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
-public class OcelotEntityProtocol extends BasicMobEntityProtocol{
-
+public class OcelotEntityProtocol extends BasicMobEntityProtocol {
 	public OcelotEntityProtocol() {
 		super(98);
 	}

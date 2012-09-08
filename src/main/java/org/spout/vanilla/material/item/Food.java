@@ -31,7 +31,6 @@ import org.spout.api.inventory.special.InventorySlot;
 
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Food extends VanillaItemMaterial {
 	private final FoodEffect[] effects;

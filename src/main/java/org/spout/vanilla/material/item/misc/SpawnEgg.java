@@ -29,12 +29,10 @@ package org.spout.vanilla.material.item.misc;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.InventoryBase;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.item.VanillaItemMaterial;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class SpawnEgg extends VanillaItemMaterial {
 	private static final SpawnEgg PARENT = new SpawnEgg("Spawn Egg"); //There is no entity with the ID 0 so this egg is invalid

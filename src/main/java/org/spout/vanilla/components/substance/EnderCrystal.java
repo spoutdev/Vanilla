@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.components.substance;
 
-import org.spout.api.component.components.BlockComponent;
 import org.spout.api.component.components.EntityComponent;
 
 import org.spout.vanilla.VanillaPlugin;

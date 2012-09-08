@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.data;
 
-import sun.net.idn.StringPrep;
-
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;

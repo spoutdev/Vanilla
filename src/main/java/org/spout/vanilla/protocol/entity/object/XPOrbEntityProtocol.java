@@ -27,7 +27,6 @@
 package org.spout.vanilla.protocol.entity.object;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.spout.api.entity.Entity;

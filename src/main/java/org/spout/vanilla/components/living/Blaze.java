@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.components.living;
 
-import org.spout.api.component.components.EntityComponent;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.living.BlazeEntityProtocol;
 

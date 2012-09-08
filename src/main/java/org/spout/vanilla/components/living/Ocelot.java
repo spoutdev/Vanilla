@@ -26,11 +26,8 @@
  */
 package org.spout.vanilla.components.living;
 
-import org.spout.api.component.components.EntityComponent;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 import org.spout.vanilla.protocol.entity.living.OcelotEntityProtocol;
 
 /**
@@ -42,7 +39,7 @@ public class Ocelot extends VanillaEntity {
 		super.onAttached();
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new OcelotEntityProtocol());
 	}
-	
+
 	public boolean isTamed() {
 		return getHolder().getData().get(VanillaData.TAMED);
 	}
@@ -60,15 +57,15 @@ public class Ocelot extends VanillaEntity {
 			getHolder().getData().put(VanillaData.OWNER, owner);
 		}
 	}
-	
+
 	public byte getSkinId() {
 		return getHolder().getData().get(VanillaData.SKIN);
 	}
-	
+
 	public void setSkinId(byte skinId) {
 		getHolder().getData().put(VanillaData.SKIN, skinId);
 	}
-	
+
 	public boolean isSitting() {
 		return getHolder().getData().get(VanillaData.SITTING);
 	}

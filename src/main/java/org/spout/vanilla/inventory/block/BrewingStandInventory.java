@@ -44,8 +44,8 @@ public class BrewingStandInventory extends Inventory implements VanillaInventory
 	 * @return {@link ItemStack} in the output
 	 */
 	public ItemStack getOutput(int index) {
-		if (index < 0 || index > 3) {
-			throw new IllegalArgumentException("The output index of the brewing stand must be between 0 and 3.");
+		if (index < 0 || index > 2) {
+			throw new IllegalArgumentException("The output index of the brewing stand must be between 0 and 2.");
 		}
 		return getItem(index);
 	}

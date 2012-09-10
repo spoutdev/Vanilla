@@ -40,6 +40,7 @@ import org.spout.vanilla.components.gamemode.SurvivalComponent;
 import org.spout.vanilla.components.misc.DiggingComponent;
 import org.spout.vanilla.components.misc.InventoryComponent;
 import org.spout.vanilla.components.misc.PickupItemComponent;
+import org.spout.vanilla.components.player.PingComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
@@ -60,6 +61,7 @@ public class Human extends VanillaEntity {
 		holder.add(InventoryComponent.class);
 		holder.add(PickupItemComponent.class);
 		holder.add(DiggingComponent.class);
+		holder.add(PingComponent.class);
 		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
 	}
 

@@ -29,13 +29,16 @@ package org.spout.vanilla.protocol.handler;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.components.player.PingComponent;
 import org.spout.vanilla.protocol.msg.KeepAliveMessage;
 
 public class KeepAliveMessageHandler extends MessageHandler<KeepAliveMessage> {
 	@Override
 	public void handleServer(Session session, KeepAliveMessage message) {
 		if (!session.hasPlayer()) {
+			session.disconnect("Illegal packet!");
 			return;
 		}
+		session.getPlayer().add(PingComponent.class).resetTimeout(message.getPingId());
 	}
 }

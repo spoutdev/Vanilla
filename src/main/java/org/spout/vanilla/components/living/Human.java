@@ -44,9 +44,10 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
+import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
 import org.spout.vanilla.protocol.entity.living.HumanEntityProtocol;
+import org.spout.vanilla.protocol.msg.ChangeGameStateMessage;
 import org.spout.vanilla.util.ItemUtil;
-import org.spout.vanilla.util.VanillaMathHelper;
 
 /**
  * A component that identifies the entity as a Vanilla player.
@@ -144,6 +145,7 @@ public class Human extends VanillaEntity {
 			case SURVIVAL:
 				holder.add(SurvivalComponent.class);
 		}
+		holder.getNetwork().callProtocolEvent(new PlayerGameStateEvent( (Player) holder, ChangeGameStateMessage.CHANGE_GAME_MODE, event.getMode()));
 		getData().put(VanillaData.GAMEMODE, mode);
 	}
 

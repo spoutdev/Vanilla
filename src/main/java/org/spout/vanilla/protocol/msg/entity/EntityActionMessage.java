@@ -30,8 +30,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.msg.EntityMessage;
-
 public final class EntityActionMessage extends EntityMessage {
 	public static final int ACTION_CROUCH = 1;
 	public static final int ACTION_UNCROUCH = 2;

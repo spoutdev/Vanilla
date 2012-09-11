@@ -31,8 +31,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.msg.EntityMessage;
-
 public final class EntityEquipmentMessage extends EntityMessage {
 	public static final int HELD_ITEM = 0;
 	public static final int BOOTS_SLOT = 1;

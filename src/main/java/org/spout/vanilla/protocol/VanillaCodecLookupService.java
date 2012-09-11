@@ -28,150 +28,150 @@ package org.spout.vanilla.protocol;
 
 import org.spout.api.protocol.CodecLookupService;
 
-import org.spout.vanilla.protocol.codec.BlockActionCodec;
-import org.spout.vanilla.protocol.codec.BlockChangeCodec;
-import org.spout.vanilla.protocol.codec.BulkChunkCodec;
-import org.spout.vanilla.protocol.codec.ChangeGameStateCodec;
-import org.spout.vanilla.protocol.codec.ChatCodec;
-import org.spout.vanilla.protocol.codec.ClientSettingsCodec;
-import org.spout.vanilla.protocol.codec.ClientStatusCodec;
-import org.spout.vanilla.protocol.codec.CompressedChunkCodec;
-import org.spout.vanilla.protocol.codec.CreativeCodec;
-import org.spout.vanilla.protocol.codec.CustomDataCodec;
-import org.spout.vanilla.protocol.codec.DestroyEntitiesCodec;
-import org.spout.vanilla.protocol.codec.EnchantItemCodec;
-import org.spout.vanilla.protocol.codec.EncryptionKeyRequestCodec;
-import org.spout.vanilla.protocol.codec.EncryptionKeyResponseCodec;
-import org.spout.vanilla.protocol.codec.ExplosionCodec;
-import org.spout.vanilla.protocol.codec.GroundCodec;
-import org.spout.vanilla.protocol.codec.HandshakeCodec;
-import org.spout.vanilla.protocol.codec.HeldItemChangeCodec;
-import org.spout.vanilla.protocol.codec.ItemDataCodec;
-import org.spout.vanilla.protocol.codec.KeepAliveCodec;
-import org.spout.vanilla.protocol.codec.KickCodec;
-import org.spout.vanilla.protocol.codec.LoginRequestCodec;
-import org.spout.vanilla.protocol.codec.MultiBlockChangeCodec;
-import org.spout.vanilla.protocol.codec.NamedSoundEffectCodec;
-import org.spout.vanilla.protocol.codec.PlayEffectCodec;
-import org.spout.vanilla.protocol.codec.PlayerAbilityCodec;
-import org.spout.vanilla.protocol.codec.PlayerBlockPlacementCodec;
-import org.spout.vanilla.protocol.codec.PlayerDiggingCodec;
-import org.spout.vanilla.protocol.codec.PlayerListCodec;
-import org.spout.vanilla.protocol.codec.PlayerLookCodec;
-import org.spout.vanilla.protocol.codec.PlayerPositionCodec;
-import org.spout.vanilla.protocol.codec.PlayerPositionLookCodec;
-import org.spout.vanilla.protocol.codec.PlayerUpdateStatsCodec;
-import org.spout.vanilla.protocol.codec.RespawnCodec;
-import org.spout.vanilla.protocol.codec.ServerListPingCodec;
-import org.spout.vanilla.protocol.codec.SetExperienceCodec;
-import org.spout.vanilla.protocol.codec.SpawnPositionCodec;
-import org.spout.vanilla.protocol.codec.StatisticCodec;
-import org.spout.vanilla.protocol.codec.TabCompleteCodec;
-import org.spout.vanilla.protocol.codec.TileEntityDataCodec;
-import org.spout.vanilla.protocol.codec.TimeUpdateCodec;
-import org.spout.vanilla.protocol.codec.UpdateSignCodec;
+import org.spout.vanilla.protocol.codec.player.PlayerBedCodec;
+import org.spout.vanilla.protocol.codec.entity.EntityInitializeCodec;
+import org.spout.vanilla.protocol.codec.entity.EntityInteractCodec;
+import org.spout.vanilla.protocol.codec.entity.pos.EntityRelativePositionYawCodec;
+import org.spout.vanilla.protocol.codec.entity.EntityTileDataCodec;
+import org.spout.vanilla.protocol.codec.entity.pos.EntityYawCodec;
+import org.spout.vanilla.protocol.codec.player.PlayerCollectItemCodec;
+import org.spout.vanilla.protocol.codec.entity.spawn.EntityExperienceOrbCodec;
+import org.spout.vanilla.protocol.codec.entity.spawn.EntityItemCodec;
+import org.spout.vanilla.protocol.codec.entity.spawn.EntityMobCodec;
+import org.spout.vanilla.protocol.codec.entity.spawn.EntityPaintingCodec;
+import org.spout.vanilla.protocol.codec.player.pos.PlayerSpawnCodec;
+import org.spout.vanilla.protocol.codec.entity.spawn.EntityThunderboltCodec;
+import org.spout.vanilla.protocol.codec.player.pos.PlayerSpawnPositionCodec;
+import org.spout.vanilla.protocol.codec.player.PlayerStatisticCodec;
+import org.spout.vanilla.protocol.codec.player.PlayerTabCompleteCodec;
+import org.spout.vanilla.protocol.codec.player.PlayerTimeCodec;
+import org.spout.vanilla.protocol.codec.window.WindowItemsCodec;
+import org.spout.vanilla.protocol.codec.window.WindowSlotCodec;
+import org.spout.vanilla.protocol.codec.world.block.SignCodec;
+import org.spout.vanilla.protocol.codec.player.PlayerExperienceCodec;
+import org.spout.vanilla.protocol.codec.player.PlayerHealthCodec;
+import org.spout.vanilla.protocol.codec.player.pos.PlayerPositionYawCodec;
+import org.spout.vanilla.protocol.codec.player.pos.PlayerRespawnCodec;
+import org.spout.vanilla.protocol.codec.player.pos.PlayerYawCodec;
+import org.spout.vanilla.protocol.codec.world.EffectCodec;
+import org.spout.vanilla.protocol.codec.player.conn.PlayerKickCodec;
+import org.spout.vanilla.protocol.codec.player.conn.PlayerLoginRequestCodec;
+import org.spout.vanilla.protocol.codec.player.conn.PlayerPingCodec;
+import org.spout.vanilla.protocol.codec.player.PlayerSoundEffectCodec;
+import org.spout.vanilla.protocol.codec.entity.EntityItemDataCodec;
+import org.spout.vanilla.protocol.codec.player.PlayerGroundCodec;
+import org.spout.vanilla.protocol.codec.player.conn.PlayerHandshakeCodec;
+import org.spout.vanilla.protocol.codec.player.PlayerHeldItemChangeCodec;
+import org.spout.vanilla.protocol.codec.entity.EntityDestroyCodec;
+import org.spout.vanilla.protocol.codec.server.ServerPluginCodec;
+import org.spout.vanilla.protocol.codec.window.WindowCreativeActionCodec;
+import org.spout.vanilla.protocol.codec.window.WindowEnchantItemCodec;
+import org.spout.vanilla.protocol.codec.world.block.BlockBulkCodec;
+import org.spout.vanilla.protocol.codec.world.chunk.ChunkDataCodec;
+import org.spout.vanilla.protocol.codec.player.PlayerChatCodec;
+import org.spout.vanilla.protocol.codec.player.PlayerGameStateCodec;
+import org.spout.vanilla.protocol.codec.player.PlayerLocaleViewDistanceCodec;
+import org.spout.vanilla.protocol.codec.player.PlayerStatusCodec;
+import org.spout.vanilla.protocol.codec.world.chunk.ChunkBulkCodec;
+import org.spout.vanilla.protocol.codec.world.block.BlockActionCodec;
+import org.spout.vanilla.protocol.codec.world.block.BlockChangeCodec;
+import org.spout.vanilla.protocol.codec.auth.EncryptionKeyRequestCodec;
+import org.spout.vanilla.protocol.codec.auth.EncryptionKeyResponseCodec;
+import org.spout.vanilla.protocol.codec.world.ExplosionCodec;
+import org.spout.vanilla.protocol.codec.player.PlayerAbilityCodec;
+import org.spout.vanilla.protocol.codec.player.PlayerBlockPlacementCodec;
+import org.spout.vanilla.protocol.codec.player.PlayerDiggingCodec;
+import org.spout.vanilla.protocol.codec.player.conn.PlayerListCodec;
+import org.spout.vanilla.protocol.codec.player.pos.PlayerPositionCodec;
+import org.spout.vanilla.protocol.codec.server.ServerListPingCodec;
 import org.spout.vanilla.protocol.codec.entity.EntityActionCodec;
 import org.spout.vanilla.protocol.codec.entity.EntityAnimationCodec;
 import org.spout.vanilla.protocol.codec.entity.EntityAttachEntityCodec;
-import org.spout.vanilla.protocol.codec.entity.EntityCollectItemCodec;
-import org.spout.vanilla.protocol.codec.entity.EntityCreateCodec;
-import org.spout.vanilla.protocol.codec.entity.EntityEffectCodec;
+import org.spout.vanilla.protocol.codec.entity.effect.EntityEffectCodec;
 import org.spout.vanilla.protocol.codec.entity.EntityEquipmentCodec;
-import org.spout.vanilla.protocol.codec.entity.EntityHeadYawCodec;
-import org.spout.vanilla.protocol.codec.entity.EntityInteractionCodec;
+import org.spout.vanilla.protocol.codec.entity.pos.EntityHeadYawCodec;
 import org.spout.vanilla.protocol.codec.entity.EntityMetadataCodec;
 import org.spout.vanilla.protocol.codec.entity.EntityRelativePositionCodec;
-import org.spout.vanilla.protocol.codec.entity.EntityRelativePositionRotationCodec;
-import org.spout.vanilla.protocol.codec.entity.EntityRemoveEffectCodec;
-import org.spout.vanilla.protocol.codec.entity.EntityRotationCodec;
-import org.spout.vanilla.protocol.codec.entity.EntitySpawnExperienceOrbCodec;
-import org.spout.vanilla.protocol.codec.entity.EntitySpawnItemCodec;
-import org.spout.vanilla.protocol.codec.entity.EntitySpawnLightningStrikeCodec;
-import org.spout.vanilla.protocol.codec.entity.EntitySpawnMobCodec;
-import org.spout.vanilla.protocol.codec.entity.EntitySpawnPaintingCodec;
-import org.spout.vanilla.protocol.codec.entity.EntitySpawnPlayerCodec;
-import org.spout.vanilla.protocol.codec.entity.EntitySpawnVehicleCodec;
+import org.spout.vanilla.protocol.codec.entity.effect.EntityRemoveEffectCodec;
+import org.spout.vanilla.protocol.codec.entity.spawn.EntitySpawnVehicleCodec;
 import org.spout.vanilla.protocol.codec.entity.EntityStatusCodec;
-import org.spout.vanilla.protocol.codec.entity.EntityTeleportCodec;
-import org.spout.vanilla.protocol.codec.entity.EntityUseBedCodec;
-import org.spout.vanilla.protocol.codec.entity.EntityVelocityCodec;
+import org.spout.vanilla.protocol.codec.entity.pos.EntityTeleportCodec;
+import org.spout.vanilla.protocol.codec.entity.pos.EntityVelocityCodec;
 import org.spout.vanilla.protocol.codec.window.WindowClickCodec;
 import org.spout.vanilla.protocol.codec.window.WindowCloseCodec;
 import org.spout.vanilla.protocol.codec.window.WindowOpenCodec;
 import org.spout.vanilla.protocol.codec.window.WindowPropertyCodec;
-import org.spout.vanilla.protocol.codec.window.WindowSetSlotCodec;
-import org.spout.vanilla.protocol.codec.window.WindowSetSlotsCodec;
 import org.spout.vanilla.protocol.codec.window.WindowTransactionCodec;
 
 public class VanillaCodecLookupService extends CodecLookupService {
 	public VanillaCodecLookupService() {
 		try {
 			/* 0x00 */
-			bind(KeepAliveCodec.class);
+			bind(PlayerPingCodec.class);
 			/* 0x01 */
-			bind(LoginRequestCodec.class);
+			bind(PlayerLoginRequestCodec.class);
 			/* 0x02 */
-			bind(HandshakeCodec.class);
+			bind(PlayerHandshakeCodec.class);
 			/* 0x03 */
-			bind(ChatCodec.class);
+			bind(PlayerChatCodec.class);
 			/* 0x04 */
-			bind(TimeUpdateCodec.class);
+			bind(PlayerTimeCodec.class);
 			/* 0x05 */
 			bind(EntityEquipmentCodec.class);
 			/* 0x06 */
-			bind(SpawnPositionCodec.class);
+			bind(PlayerSpawnPositionCodec.class);
 			/* 0x07 */
-			bind(EntityInteractionCodec.class); //TODO rename Use Entity on the minecraft protocol page
+			bind(EntityInteractCodec.class); //TODO rename Use Entity on the minecraft protocol page
 			/* 0x08 */
-			bind(PlayerUpdateStatsCodec.class);
+			bind(PlayerHealthCodec.class);
 			/* 0x09 */
-			bind(RespawnCodec.class);
+			bind(PlayerRespawnCodec.class);
 			/* 0x0A */
-			bind(GroundCodec.class);
+			bind(PlayerGroundCodec.class);
 			/* 0x0B */
 			bind(PlayerPositionCodec.class);
 			/* 0x0C */
-			bind(PlayerLookCodec.class);
+			bind(PlayerYawCodec.class);
 			/* 0x0D */
-			bind(PlayerPositionLookCodec.class);
+			bind(PlayerPositionYawCodec.class);
 			/* 0x0E */
 			bind(PlayerDiggingCodec.class);
 			/* 0x0F */
 			bind(PlayerBlockPlacementCodec.class);
 			/* 0x10 */
-			bind(HeldItemChangeCodec.class);
+			bind(PlayerHeldItemChangeCodec.class);
 			/* 0x11 */
-			bind(EntityUseBedCodec.class);
+			bind(PlayerBedCodec.class);
 			/* 0x12 */
 			bind(EntityAnimationCodec.class);
 			/* 0x13 */
 			bind(EntityActionCodec.class);
 			/* 0x14 */
-			bind(EntitySpawnPlayerCodec.class);
+			bind(PlayerSpawnCodec.class);
 			/* 0x15 */
-			bind(EntitySpawnItemCodec.class);
+			bind(EntityItemCodec.class);
 			/* 0x16 */
-			bind(EntityCollectItemCodec.class);
+			bind(PlayerCollectItemCodec.class);
 			/* 0x17 */
 			bind(EntitySpawnVehicleCodec.class);
 			/* 0x18 */
-			bind(EntitySpawnMobCodec.class);
+			bind(EntityMobCodec.class);
 			/* 0x19 */
-			bind(EntitySpawnPaintingCodec.class);
+			bind(EntityPaintingCodec.class);
 			/* 0x1A */
-			bind(EntitySpawnExperienceOrbCodec.class);
+			bind(EntityExperienceOrbCodec.class);
 			/* 0x1C */
 			bind(EntityVelocityCodec.class);
 			/* 0x1D */
-			bind(DestroyEntitiesCodec.class);
+			bind(EntityDestroyCodec.class);
 			/* 0x1E */
-			bind(EntityCreateCodec.class); //TODO the meaning of this packet is basically that the entity did not move/look since the last such packet. We need to implement this!
+			bind(EntityInitializeCodec.class); //TODO the meaning of this packet is basically that the entity did not move/look since the last such packet. We need to implement this!
 			/* 0x1F */
 			bind(EntityRelativePositionCodec.class);
 			/* 0x20 */
-			bind(EntityRotationCodec.class); //TODO rename Entity Look on the minecraft protocol page
+			bind(EntityYawCodec.class); //TODO rename Entity Look on the minecraft protocol page
 			/* 0x21 */
-			bind(EntityRelativePositionRotationCodec.class);  //TODO same as above
+			bind(EntityRelativePositionYawCodec.class);  //TODO same as above
 			/* 0x22 */
 			bind(EntityTeleportCodec.class);
 			/* 0x23 */
@@ -187,27 +187,27 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			/* 0x2A */
 			bind(EntityRemoveEffectCodec.class);
 			/* 0x2B */
-			bind(SetExperienceCodec.class);
+			bind(PlayerExperienceCodec.class);
 			/* 0x33 */
-			bind(CompressedChunkCodec.class); //TODO rename on the minecraft protocol page
+			bind(ChunkDataCodec.class); //TODO rename on the minecraft protocol page
 			/* 0x34 */
-			bind(MultiBlockChangeCodec.class);
+			bind(BlockBulkCodec.class);
 			/* 0x35 */
 			bind(BlockChangeCodec.class);
 			/* 0x36 */
 			bind(BlockActionCodec.class);
 			/* 0x38 */
-			bind(BulkChunkCodec.class);
+			bind(ChunkBulkCodec.class);
 			/* 0x3C */
 			bind(ExplosionCodec.class);
 			/* 0x3D */
-			bind(PlayEffectCodec.class);
+			bind(EffectCodec.class);
 			/* 0x3E */
-			bind(NamedSoundEffectCodec.class);
+			bind(PlayerSoundEffectCodec.class);
 			/* 0x46 */
-			bind(ChangeGameStateCodec.class);
+			bind(PlayerGameStateCodec.class);
 			/* 0x47 */
-			bind(EntitySpawnLightningStrikeCodec.class); //Minecraft protocol page -> Thunderbolt :/
+			bind(EntityThunderboltCodec.class); //Minecraft protocol page -> Thunderbolt :/
 			/* 0x64 */
 			bind(WindowOpenCodec.class);
 			/* 0x65 */
@@ -215,37 +215,37 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			/* 0x66 */
 			bind(WindowClickCodec.class);
 			/* 0x67 */
-			bind(WindowSetSlotCodec.class);
+			bind(WindowSlotCodec.class);
 			/* 0x68 */
-			bind(WindowSetSlotsCodec.class);
+			bind(WindowItemsCodec.class);
 			/* 0x69 */
 			bind(WindowPropertyCodec.class); //Update Window Property on the protocol page!
 			/* 0x6A */
 			bind(WindowTransactionCodec.class);
 			/* 0x6B */
-			bind(CreativeCodec.class);
+			bind(WindowCreativeActionCodec.class);
 			/* 0x6C */
-			bind(EnchantItemCodec.class);
+			bind(WindowEnchantItemCodec.class);
 			/* 0x82 */
-			bind(UpdateSignCodec.class);
+			bind(SignCodec.class);
 			/* 0x83 */
-			bind(ItemDataCodec.class);
+			bind(EntityItemDataCodec.class);
 			/* 0x84 */
-			bind(TileEntityDataCodec.class); //Update Tile Entity...
+			bind(EntityTileDataCodec.class); //Update Tile Entity...
 			/* 0xC8 */
-			bind(StatisticCodec.class);
+			bind(PlayerStatisticCodec.class);
 			/* 0xC9 */
 			bind(PlayerListCodec.class);
 			/* 0xCA */
 			bind(PlayerAbilityCodec.class);
 			/* 0xCB */
-			bind(TabCompleteCodec.class);
+			bind(PlayerTabCompleteCodec.class);
 			/* 0xCC */
-			bind(ClientSettingsCodec.class);
+			bind(PlayerLocaleViewDistanceCodec.class);
 			/* 0xCD */
-			bind(ClientStatusCodec.class);
+			bind(PlayerStatusCodec.class);
 			/* 0xFA */
-			bind(CustomDataCodec.class);
+			bind(ServerPluginCodec.class);
 			/* 0xFC */
 			bind(EncryptionKeyResponseCodec.class);
 			/* 0xFD */
@@ -253,7 +253,7 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			/* 0xFE */
 			bind(ServerListPingCodec.class);
 			/* 0xFF */
-			bind(KickCodec.class);
+			bind(PlayerKickCodec.class);
 		} catch (Exception ex) {
 			throw new ExceptionInInitializerError(ex);
 		}

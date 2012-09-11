@@ -32,7 +32,7 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.protocol.msg.entity.EntitySpawnVehicleMessage;
+import org.spout.vanilla.protocol.msg.entity.spawn.EntityVehicleMessage;
 
 public class BasicObjectEntityProtocol extends BasicEntityProtocol {
 	public BasicObjectEntityProtocol(int spawnID) {
@@ -41,6 +41,6 @@ public class BasicObjectEntityProtocol extends BasicEntityProtocol {
 
 	@Override
 	public List<Message> getSpawnMessages(Entity entity) {
-		return Arrays.<Message>asList(new EntitySpawnVehicleMessage(entity.getId(), this.getSpawnID(), entity.getTransform().getPosition()));
+		return Arrays.<Message>asList(new EntityVehicleMessage(entity.getId(), this.getSpawnID(), entity.getTransform().getPosition()));
 	}
 }

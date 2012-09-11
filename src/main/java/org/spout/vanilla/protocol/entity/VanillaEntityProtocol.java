@@ -38,13 +38,13 @@ import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.components.misc.HeadComponent;
 import org.spout.vanilla.components.misc.VanillaPhysicsComponent;
-import org.spout.vanilla.protocol.msg.DestroyEntitiesMessage;
-import org.spout.vanilla.protocol.msg.entity.EntityHeadYawMessage;
-import org.spout.vanilla.protocol.msg.entity.EntityRelativePositionMessage;
-import org.spout.vanilla.protocol.msg.entity.EntityRelativePositionRotationMessage;
-import org.spout.vanilla.protocol.msg.entity.EntityRotationMessage;
-import org.spout.vanilla.protocol.msg.entity.EntityTeleportMessage;
-import org.spout.vanilla.protocol.msg.entity.EntityVelocityMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityDestroyMessage;
+import org.spout.vanilla.protocol.msg.entity.pos.EntityHeadYawMessage;
+import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionMessage;
+import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionYawMessage;
+import org.spout.vanilla.protocol.msg.entity.pos.EntityYawMessage;
+import org.spout.vanilla.protocol.msg.entity.pos.EntityTeleportMessage;
+import org.spout.vanilla.protocol.msg.entity.pos.EntityVelocityMessage;
 
 import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPosition;
 import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyRotation;
@@ -52,7 +52,7 @@ import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyRotation;
 public abstract class VanillaEntityProtocol implements EntityProtocol {
 	@Override
 	public List<Message> getDestroyMessages(Entity entity) {
-		return Arrays.<Message>asList(new DestroyEntitiesMessage(new int[]{entity.getId()}));
+		return Arrays.<Message>asList(new EntityDestroyMessage(new int[]{entity.getId()}));
 	}
 
 	@Override
@@ -93,11 +93,11 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		if (deltaX > 4 || deltaX < -4 || deltaY > 4 || deltaY < -4 || deltaZ > 4 || deltaZ < -4) {
 			messages.add(new EntityTeleportMessage(entity.getId(), newX, newY, newZ, newYaw, newPitch));
 			if (looked) {
-				messages.add(new EntityRotationMessage(entity.getId(), newYaw, newPitch));
+				messages.add(new EntityYawMessage(entity.getId(), newYaw, newPitch));
 			}
 		} else {
 			if (looked) {
-				messages.add(new EntityRelativePositionRotationMessage(entity.getId(), deltaX, deltaY, deltaZ, newYaw, newPitch));
+				messages.add(new EntityRelativePositionYawMessage(entity.getId(), deltaX, deltaY, deltaZ, newYaw, newPitch));
 			} else {
 				messages.add(new EntityRelativePositionMessage(entity.getId(), deltaX, deltaY, deltaZ));
 			}

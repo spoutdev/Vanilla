@@ -32,7 +32,6 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.proxy.ConnectionInfo;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.msg.EntityMessage;
 import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
 public final class EntityAttachEntityMessage extends EntityMessage {

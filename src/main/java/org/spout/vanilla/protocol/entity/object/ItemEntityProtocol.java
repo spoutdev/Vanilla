@@ -36,7 +36,7 @@ import org.spout.api.protocol.Message;
 import org.spout.vanilla.components.substance.Item;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
-import org.spout.vanilla.protocol.msg.entity.EntitySpawnItemMessage;
+import org.spout.vanilla.protocol.msg.entity.spawn.EntityItemMessage;
 
 public class ItemEntityProtocol extends VanillaEntityProtocol {
 	@Override
@@ -54,7 +54,7 @@ public class ItemEntityProtocol extends VanillaEntityProtocol {
 		if (pi.getItemStack().getMaterial() == null) {
 			int typeId = VanillaMaterials.getMinecraftId(pi.getItemStack().getMaterial());
 			if (typeId > 0) {
-				return Arrays.<Message>asList(new EntitySpawnItemMessage(id, typeId, pi.getItemStack().getAmount(), pi.getItemStack().getData(), x, y, z, r, p, (int) pi.getHolder().getTransform().getRoll()));
+				return Arrays.<Message>asList(new EntityItemMessage(id, typeId, pi.getItemStack().getAmount(), pi.getItemStack().getData(), x, y, z, r, p, (int) pi.getHolder().getTransform().getRoll()));
 			}
 		}
 		return Collections.emptyList();

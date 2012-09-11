@@ -36,7 +36,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
-import org.spout.vanilla.protocol.msg.entity.EntitySpawnMobMessage;
+import org.spout.vanilla.protocol.msg.entity.spawn.EntityMobMessage;
 
 public class BasicMobEntityProtocol extends BasicEntityProtocol {
 	private List<Parameter<?>> meta;
@@ -57,7 +57,7 @@ public class BasicMobEntityProtocol extends BasicEntityProtocol {
 		int pitch = (int) (entity.getTransform().getPitch() * 32);
 		List<Parameter<?>> parameters = this.getSpawnParameters(entity);
 		//TODO Headyaw
-		return Arrays.<Message>asList(new EntitySpawnMobMessage(id, this.getSpawnID(), position, yaw, pitch, 0, (short) 0, (short) 0, (short) 0, parameters));
+		return Arrays.<Message>asList(new EntityMobMessage(id, this.getSpawnID(), position, yaw, pitch, 0, (short) 0, (short) 0, (short) 0, parameters));
 	}
 
 	@Override

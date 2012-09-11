@@ -47,14 +47,14 @@ import org.spout.api.protocol.Session;
 import org.spout.api.util.Named;
 
 import org.spout.vanilla.chat.VanillaStyleHandler;
-import org.spout.vanilla.protocol.customdata.RegisterPluginChannelCodec;
-import org.spout.vanilla.protocol.customdata.RegisterPluginChannelMessage;
-import org.spout.vanilla.protocol.customdata.RegisterPluginChannelMessageHandler;
-import org.spout.vanilla.protocol.customdata.UnregisterPluginChannelCodec;
-import org.spout.vanilla.protocol.customdata.UnregisterPluginChannelMessageHandler;
-import org.spout.vanilla.protocol.msg.ChatMessage;
-import org.spout.vanilla.protocol.msg.CustomDataMessage;
-import org.spout.vanilla.protocol.msg.KickMessage;
+import org.spout.vanilla.protocol.msg.player.PlayerChatMessage;
+import org.spout.vanilla.protocol.msg.player.conn.PlayerKickMessage;
+import org.spout.vanilla.protocol.msg.ServerPluginMessage;
+import org.spout.vanilla.protocol.plugin.RegisterPluginChannelCodec;
+import org.spout.vanilla.protocol.plugin.RegisterPluginChannelMessage;
+import org.spout.vanilla.protocol.plugin.RegisterPluginChannelMessageHandler;
+import org.spout.vanilla.protocol.plugin.UnregisterPluginChannelCodec;
+import org.spout.vanilla.protocol.plugin.UnregisterPluginChannelMessageHandler;
 
 public class VanillaProtocol extends Protocol {
 	public final static DefaultedKey<String> SESSION_ID = new DefaultedKeyImpl<String>("sessionid", "0000000000000000");
@@ -85,9 +85,9 @@ public class VanillaProtocol extends Protocol {
 		if (command.getPreferredName().equals("kick")) {
 			return getKickMessage(args);
 		} else if (command.getPreferredName().equals("say")) {
-			return new ChatMessage(args.asString(VanillaStyleHandler.ID) + "\u00a7r"); // The reset text is a workaround for a change in 1.3 -- Remove if fixed
+			return new PlayerChatMessage(args.asString(VanillaStyleHandler.ID) + "\u00a7r"); // The reset text is a workaround for a change in 1.3 -- Remove if fixed
 		} else {
-			return new ChatMessage('/' + command.getPreferredName() + ' ' + args.asString(VanillaStyleHandler.ID));
+			return new PlayerChatMessage('/' + command.getPreferredName() + ' ' + args.asString(VanillaStyleHandler.ID));
 		}
 	}
 
@@ -97,7 +97,7 @@ public class VanillaProtocol extends Protocol {
 		MessageCodec<T> codec = (MessageCodec<T>) getCodecLookupService().find(dynamicMessage.getClass());
 		ChannelBuffer buffer = codec.encode(upstream, dynamicMessage);
 
-		return new CustomDataMessage(getName(codec), buffer.array());
+		return new ServerPluginMessage(getName(codec), buffer.array());
 	}
 
 	@Override
@@ -119,12 +119,12 @@ public class VanillaProtocol extends Protocol {
 
 	@Override
 	public Message getKickMessage(ChatArguments message) {
-		return new KickMessage(message.asString(VanillaStyleHandler.ID));
+		return new PlayerKickMessage(message.asString(VanillaStyleHandler.ID));
 	}
 
 	@Override
 	public Message getIntroductionMessage(String playerName) {
-		//return new HandshakeMessage(VanillaPlugin.MINECRAFT_PROTOCOL_ID, playerName); //TODO Fix this Raphfrk
+		//return new PlayerHandshakeMessage(VanillaPlugin.MINECRAFT_PROTOCOL_ID, playerName); //TODO Fix this Raphfrk
 
 		return null;
 	}

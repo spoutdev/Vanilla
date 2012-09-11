@@ -38,7 +38,7 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.misc.InventoryComponent;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
-import org.spout.vanilla.protocol.msg.entity.EntitySpawnPlayerMessage;
+import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
 
 public class HumanEntityProtocol extends VanillaEntityProtocol {
 	@Override
@@ -61,6 +61,6 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		}
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 		parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 100));
-		return Arrays.<Message>asList(new EntitySpawnPlayerMessage(id, human.getName(), x, y, z, r, p, item, parameters));
+		return Arrays.<Message>asList(new PlayerSpawnMessage(id, human.getName(), x, y, z, r, p, item, parameters));
 	}
 }

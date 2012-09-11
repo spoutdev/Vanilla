@@ -30,8 +30,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.msg.EntityMessage;
-
 public final class EntityAnimationMessage extends EntityMessage {
 	public static final byte ANIMATION_NONE = 0;
 	public static final byte ANIMATION_SWING_ARM = 1;

@@ -30,8 +30,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.msg.EntityMessage;
-
 public final class EntityStatusMessage extends EntityMessage {
 	public static final byte ENTITY_HURT = 2;
 	public static final byte ENTITY_DEAD = 3;

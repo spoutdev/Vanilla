@@ -35,7 +35,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.components.substance.Projectile;
-import org.spout.vanilla.protocol.msg.entity.EntitySpawnVehicleMessage;
+import org.spout.vanilla.protocol.msg.entity.spawn.EntityVehicleMessage;
 
 public class BasicProjectileEntityProtocol extends BasicEntityProtocol {
 	public BasicProjectileEntityProtocol(int projectileSpawnID) {
@@ -49,6 +49,6 @@ public class BasicProjectileEntityProtocol extends BasicEntityProtocol {
 		Entity shooter = projectile.getShooter();
 		int shooterid = shooter == null ? 0 : shooter.getId();
 		Vector3 velocity = entity.add(PhysicsComponent.class).getVelocity();
-		return Arrays.<Message>asList(new EntitySpawnVehicleMessage(id, this.getSpawnID(), entity.getTransform().getPosition(), shooterid, velocity));
+		return Arrays.<Message>asList(new EntityVehicleMessage(id, this.getSpawnID(), entity.getTransform().getPosition(), shooterid, velocity));
 	}
 }

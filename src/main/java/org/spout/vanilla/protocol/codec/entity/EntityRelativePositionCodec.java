@@ -33,7 +33,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.msg.entity.EntityRelativePositionMessage;
+import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionMessage;
 
 public final class EntityRelativePositionCodec extends MessageCodec<EntityRelativePositionMessage> {
 	public EntityRelativePositionCodec() {

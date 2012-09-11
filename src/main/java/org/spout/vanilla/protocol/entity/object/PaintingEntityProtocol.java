@@ -34,12 +34,12 @@ import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.components.substance.Painting;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
-import org.spout.vanilla.protocol.msg.entity.EntitySpawnPaintingMessage;
+import org.spout.vanilla.protocol.msg.entity.spawn.EntityPaintingMessage;
 
 public class PaintingEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity) {
 		Painting painting = entity.add(Painting.class);
-		return Arrays.<Message>asList(new EntitySpawnPaintingMessage(entity.getId(), painting.getStyle().name(), entity.getTransform().getPosition(), painting.getProtocolFace()));
+		return Arrays.<Message>asList(new EntityPaintingMessage(entity.getId(), painting.getStyle().name(), entity.getTransform().getPosition(), painting.getProtocolFace()));
 	}
 }

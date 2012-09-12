@@ -47,6 +47,7 @@ import org.spout.vanilla.protocol.codec.player.PlayerTabCompleteCodec;
 import org.spout.vanilla.protocol.codec.player.PlayerTimeCodec;
 import org.spout.vanilla.protocol.codec.window.WindowItemsCodec;
 import org.spout.vanilla.protocol.codec.window.WindowSlotCodec;
+import org.spout.vanilla.protocol.codec.world.block.BlockBreakAnimationCodec;
 import org.spout.vanilla.protocol.codec.world.block.SignCodec;
 import org.spout.vanilla.protocol.codec.player.PlayerExperienceCodec;
 import org.spout.vanilla.protocol.codec.player.PlayerHealthCodec;
@@ -196,6 +197,8 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			bind(BlockChangeCodec.class);
 			/* 0x36 */
 			bind(BlockActionCodec.class);
+			/* 0x37 */
+			bind(BlockBreakAnimationCodec.class);
 			/* 0x38 */
 			bind(ChunkBulkCodec.class);
 			/* 0x3C */

@@ -80,4 +80,22 @@ public class BlockBreakAnimationMessage implements Message {
 				.append("stage", stage)
 				.toString();
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final BlockBreakAnimationMessage other = (BlockBreakAnimationMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.entityId, other.entityId)
+				.append(this.x, other.x)
+				.append(this.y, other.y)
+				.append(this.z, other.z)
+				.append(this.stage, other.stage)
+				.isEquals();
+	}
 }

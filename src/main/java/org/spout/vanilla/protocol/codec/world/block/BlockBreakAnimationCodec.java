@@ -52,7 +52,7 @@ public class BlockBreakAnimationCodec extends MessageCodec<BlockBreakAnimationMe
 
 	@Override
 	public ChannelBuffer encode(BlockBreakAnimationMessage msg) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(18);
+		ChannelBuffer buffer = ChannelBuffers.buffer(17);
 		buffer.writeInt(msg.getEntityId());
 		buffer.writeInt(msg.getX());
 		buffer.writeInt(msg.getY());

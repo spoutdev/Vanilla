@@ -30,7 +30,7 @@ import org.spout.vanilla.material.enchantment.ToolEnchantment;
 
 public class Unbreaking extends ToolEnchantment {
 	public Unbreaking(String name, int id) {
-		super(name, id);
+		super(name, id, 5, 8, 50);
 	}
 
 	@Override

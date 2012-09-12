@@ -34,7 +34,7 @@ import org.spout.vanilla.material.item.armor.Boots;
 
 public class FireProtection extends ArmorEnchantment {
 	public FireProtection(String name, int id) {
-		super(name, id);
+		super(name, id, 10, 8, 12);
 	}
 
 	@Override

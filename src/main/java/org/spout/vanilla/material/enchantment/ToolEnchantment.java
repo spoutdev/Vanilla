@@ -27,20 +27,20 @@
 package org.spout.vanilla.material.enchantment;
 
 import org.spout.vanilla.material.VanillaMaterial;
-import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.material.item.tool.MiningTool;
 
 public abstract class ToolEnchantment extends Enchantment {
-	protected ToolEnchantment(String name, int id) {
-		super(name, id);
+	protected ToolEnchantment(String name, int id, int baseEnchantmentLevel, int deltaEnchantmentLevel, int enchantmentLevelRange) {
+		super(name, id, baseEnchantmentLevel, deltaEnchantmentLevel, enchantmentLevelRange);
 	}
 
 	@Override
 	public boolean canEnchant(VanillaMaterial material) {
-		return material instanceof Tool;
+		return material instanceof MiningTool;
 	}
 
 	@Override
-	public int getMaximumLevel() {
+	public int getMaximumPowerLevel() {
 		return 3;
 	}
 }

@@ -30,11 +30,11 @@ import org.spout.vanilla.material.enchantment.SwordEnchantment;
 
 public class FireAspect extends SwordEnchantment {
 	public FireAspect(String name, int id) {
-		super(name, id);
+		super(name, id, 10, 20, 50);
 	}
 
 	@Override
-	public int getMaximumLevel() {
+	public int getMaximumPowerLevel() {
 		return 2;
 	}
 

@@ -30,11 +30,11 @@ import org.spout.vanilla.material.enchantment.ToolEnchantment;
 
 public class Efficiency extends ToolEnchantment {
 	public Efficiency(String name, int id) {
-		super(name, id);
+		super(name, id, 1, 10, 50);
 	}
 
 	@Override
-	public int getMaximumLevel() {
+	public int getMaximumPowerLevel() {
 		return 5;
 	}
 

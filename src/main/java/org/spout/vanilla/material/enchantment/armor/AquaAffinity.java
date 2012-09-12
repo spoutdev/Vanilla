@@ -32,7 +32,7 @@ import org.spout.vanilla.material.item.armor.Helmet;
 
 public class AquaAffinity extends ArmorEnchantment {
 	public AquaAffinity(String name, int id) {
-		super(name, id);
+		super(name, id, 1, 0, 40);
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class AquaAffinity extends ArmorEnchantment {
 	}
 
 	@Override
-	public int getMaximumLevel() {
+	public int getMaximumPowerLevel() {
 		return 1;
 	}
 

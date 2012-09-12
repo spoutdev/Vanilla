@@ -30,8 +30,8 @@ import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.item.tool.weapon.Sword;
 
 public abstract class SwordEnchantment extends Enchantment {
-	protected SwordEnchantment(String name, int id) {
-		super(name, id);
+	protected SwordEnchantment(String name, int id, int baseEnchantmentLevel, int deltaEnchantmentLevel, int enchantmentLevelRange) {
+		super(name, id, baseEnchantmentLevel, deltaEnchantmentLevel, enchantmentLevelRange);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public abstract class SwordEnchantment extends Enchantment {
 	}
 
 	@Override
-	public int getMaximumLevel() {
+	public int getMaximumPowerLevel() {
 		return 5;
 	}
 

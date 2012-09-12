@@ -24,25 +24,33 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.enchantment.tool;
+package org.spout.vanilla.item;
 
-import org.spout.vanilla.material.VanillaMaterial;
-import org.spout.vanilla.material.enchantment.Enchantment;
+import org.junit.Test;
+
+import org.spout.api.inventory.ItemStack;
+
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.enchantment.Enchantments;
-import org.spout.vanilla.material.enchantment.ToolEnchantment;
+import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.util.EnchantmentUtil;
 
-public class Fortune extends ToolEnchantment {
-	public Fortune(String name, int id) {
-		super(name, id, 15, 9, 50);
-	}
+import static org.junit.Assert.assertTrue;
 
-	@Override
-	public boolean compatibleWith(Enchantment enchantment, VanillaMaterial material) {
-		return !enchantment.equals(Enchantments.SILK_TOUCH);
-	}
+public class EnchantmentTest {
+	@Test
+	public void testUnbreaking() {
+		ItemStack itemStack = new ItemStack(VanillaMaterials.DIAMOND_PICKAXE, 1);
+		EnchantmentUtil.addEnchantment(itemStack, Enchantments.UNBREAKING, 3,
+				false);
+		assertTrue(EnchantmentUtil.getEnchantmentLevel(itemStack,
+				Enchantments.UNBREAKING) == 3);
 
-	@Override
-	public int getWeight() {
-		return 2;
+		Tool tool = (Tool) itemStack.getMaterial();
+		int durabilityLost = 0, trials = 100;
+		for (int i = 0; i < trials; ++i)
+			durabilityLost += tool.getDurabilityPenalty(itemStack);
+		System.out.println("Unbreaking III lost " + durabilityLost
+				+ " durability from " + trials + " actions.");
 	}
 }

@@ -41,6 +41,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.window.WindowItemsMessage;
 import org.spout.vanilla.protocol.msg.window.WindowSlotMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockActionMessage;
+import org.spout.vanilla.protocol.msg.world.block.BlockBreakAnimationMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockBulkMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
@@ -197,7 +198,8 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new ServerListPingMessage(),
 			new PlayerKickMessage("This is a test"),
 			new PlayerAbilityMessage(true, true, true, true, (byte) 0, (byte) 5),
-			new PlayerStatusMessage((byte) 0)
+			new PlayerStatusMessage((byte) 0),
+			new BlockBreakAnimationMessage(1, 1, 1, 1, (byte) 2)
 	};
 
 	static {

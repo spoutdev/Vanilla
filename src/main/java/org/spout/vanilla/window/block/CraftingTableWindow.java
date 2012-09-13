@@ -36,12 +36,16 @@ import org.spout.vanilla.window.WindowType;
 public class CraftingTableWindow extends CraftingWindow {
 	private static final SlotIndexCollection CRAFTING_SLOTS = new SlotIndexMap("1-3, 4-6, 7-9, 0");
 
-	public CraftingTableWindow(CraftingTable craftingTable) {
-		this(craftingTable, new CraftingTableInventory());
+	public CraftingTableWindow() {
 	}
 
-	private CraftingTableWindow(CraftingTable craftingTable, CraftingTableInventory inventory) {
-		super(WindowType.CRAFTINGTABLE, "Crafting", 10, craftingTable);
+	public CraftingTableWindow init(CraftingTable craftingTable) {
+		return this.init(craftingTable, new CraftingTableInventory());
+	}
+
+	public CraftingTableWindow init(CraftingTable craftingTable, CraftingTableInventory inventory) {
+		super.init(WindowType.CRAFTINGTABLE, "Crafting", 10, craftingTable);
 		this.setCraftingGrid(inventory, CRAFTING_SLOTS);
+		return this;
 	}
 }

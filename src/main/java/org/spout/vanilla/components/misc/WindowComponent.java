@@ -55,20 +55,26 @@ import org.spout.vanilla.window.ClickArgs;
 import org.spout.vanilla.window.WindowType;
 
 public class WindowComponent extends Component implements InventoryViewer {
-	protected final WindowType type;
-	protected final int instanceId;
+	protected WindowType type;
+	protected int instanceId;
 	protected String title;
-	protected final TIntObjectHashMap<ItemStack> queuedInventoryUpdates = new TIntObjectHashMap<ItemStack>(); // items to update
+	protected TIntObjectHashMap<ItemStack> queuedInventoryUpdates = new TIntObjectHashMap<ItemStack>(); // items to update
 	protected Map<InventoryBase, SlotIndexCollection> inventories = new HashMap<InventoryBase, SlotIndexCollection>();
 	protected ItemStack itemOnCursor;
 	protected boolean isOpen = false;
 	protected WindowOwner[] windowOwners;
 
-	public WindowComponent(WindowType type, String title, WindowOwner... windowOwners) {
+	public WindowComponent() {
+		
+	}
+
+	public WindowComponent init(WindowType type, String title, WindowOwner... windowOwners) {
 		this.type = type;
 		this.title = title;
 		this.instanceId = InventoryUtil.nextWindowId();
 		this.windowOwners = windowOwners;
+
+		return this;
 	}
 
 	@Override

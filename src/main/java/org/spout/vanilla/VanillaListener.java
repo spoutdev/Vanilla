@@ -36,6 +36,8 @@ import org.spout.api.event.server.permissions.PermissionNodeEvent;
 
 import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.player.PlayerDeathEvent;
 
 public class VanillaListener implements Listener {
@@ -63,5 +65,10 @@ public class VanillaListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Human human = event.getPlayer().add(Human.class);
 		human.setName(event.getPlayer().getName());
+		//TODO: We won't want to force this after player saving is hooked back up.
+		GameMode defaultMode = event.getPlayer().getWorld().getDataMap().get(VanillaData.GAMEMODE);
+		if (defaultMode != null) {
+			human.setGamemode(defaultMode);
+		}
 	}
 }

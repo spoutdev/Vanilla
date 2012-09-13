@@ -36,9 +36,13 @@ import org.spout.vanilla.window.WindowType;
 public class EnchantmentTableWindow extends TransactionWindow {
 	private static final SlotIndexCollection ENCHANT_SLOTS = new SlotIndexRow(1);
 
-	public EnchantmentTableWindow(EnchantmentTable table) {
-		super(WindowType.ENCHANTMENTTABLE, "Enchant", 1, table);
+	public EnchantmentTableWindow() {
+	}
+
+	public EnchantmentTableWindow init(EnchantmentTable table) {
+		super.init(WindowType.ENCHANTMENTTABLE, "Enchant", 1, table);
 		this.addInventory(table.getInventory(), ENCHANT_SLOTS);
+		return this;
 	}
 
 	/**

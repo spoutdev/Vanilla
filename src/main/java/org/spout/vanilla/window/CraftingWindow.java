@@ -31,7 +31,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.special.InventorySlot;
 
 import org.spout.vanilla.components.living.Human;
-import org.spout.vanilla.components.misc.WindowOwner;
 import org.spout.vanilla.inventory.CraftingInventory;
 import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
@@ -39,8 +38,7 @@ import org.spout.vanilla.util.intmap.SlotIndexCollection;
 public abstract class CraftingWindow extends TransactionWindow {
 	protected CraftingInventory craftingGrid;
 
-	public CraftingWindow(WindowType type, String title, int transactionSize, WindowOwner... windowOwners) {
-		super(type, title, transactionSize, windowOwners);
+	public CraftingWindow() {
 	}
 
 	public <T extends CraftingInventory> T setCraftingGrid(T craftingGrid, SlotIndexCollection slots) {

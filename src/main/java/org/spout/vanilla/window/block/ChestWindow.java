@@ -37,14 +37,20 @@ public class ChestWindow extends TransactionWindow {
 	private static final SlotIndexCollection LARGE_CHEST1_SLOTS = new SlotIndexGrid(9, 3, 27);
 	private static final SlotIndexCollection LARGE_CHEST2_SLOTS = new SlotIndexGrid(9, 3);
 
-	public ChestWindow(Chest chest1, Chest chest2) {
-		super(WindowType.CHEST, "Double Chest", 54, chest1, chest2);
-		this.addInventory(chest1.getInventory(), LARGE_CHEST1_SLOTS);
-		this.addInventory(chest2.getInventory(), LARGE_CHEST2_SLOTS);
+	public ChestWindow() {
+		
 	}
 
-	public ChestWindow(Chest chest) {
-		super(WindowType.CHEST, "Chest", 27, chest);
+	public ChestWindow init(Chest chest) {
+		super.init(WindowType.CHEST, "Chest", 27, chest);
 		this.addInventory(chest.getInventory(), SMALL_CHEST_SLOTS);
+		return this;
+	}
+
+	public ChestWindow init(Chest chest1, Chest chest2) {
+		super.init(WindowType.CHEST, "Double Chest", 54, chest1, chest2);
+		this.addInventory(chest1.getInventory(), LARGE_CHEST1_SLOTS);
+		this.addInventory(chest2.getInventory(), LARGE_CHEST2_SLOTS);
+		return this;
 	}
 }

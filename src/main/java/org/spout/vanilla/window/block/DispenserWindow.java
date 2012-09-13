@@ -36,7 +36,11 @@ public class DispenserWindow extends TransactionWindow {
 	private static final SlotIndexCollection DISPENSER_SLOTS = new SlotIndexRow(9);
 
 	public DispenserWindow(Dispenser dispenser) {
-		super(WindowType.DISPENSER, "Dispenser", 9, dispenser);
+	}
+
+	public DispenserWindow init(Dispenser dispenser) {
+		super.init(WindowType.DISPENSER, "Dispenser", 9, dispenser);
 		this.addInventory(dispenser.getInventory(), DISPENSER_SLOTS);
+		return this;
 	}
 }

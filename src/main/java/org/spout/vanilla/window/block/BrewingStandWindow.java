@@ -37,12 +37,16 @@ import org.spout.vanilla.window.WindowType;
 
 public class BrewingStandWindow extends TransactionWindow {
 	private static final SlotIndexMap BREWING_SLOTS = new SlotIndexMap("0-3");
-	protected final BrewingStandInventory brewing;
+	protected BrewingStandInventory brewing;
 
-	public BrewingStandWindow(BrewingStand stand) {
-		super(WindowType.BREWINGSTAND, "Brewing Stand", 4, stand);
+	public BrewingStandWindow() {
+	}
+
+	public BrewingStandWindow init(BrewingStand stand) {
+		super.init(WindowType.BREWINGSTAND, "Brewing Stand", 4, stand);
 		this.brewing = stand.getInventory();
 		this.addInventory(this.brewing, BREWING_SLOTS);
+		return this;
 	}
 
 	@Override

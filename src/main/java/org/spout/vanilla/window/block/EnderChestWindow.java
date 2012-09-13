@@ -26,15 +26,18 @@
  */
 package org.spout.vanilla.window.block;
 
-import org.spout.api.entity.Entity;
-
 import org.spout.vanilla.components.substance.material.EnderChest;
 import org.spout.vanilla.window.TransactionWindow;
 import org.spout.vanilla.window.WindowType;
 
 public class EnderChestWindow extends TransactionWindow {
-	public EnderChestWindow(Entity owner, EnderChest chest) {
-		super(WindowType.CHEST, "Ender Chest", 27, chest);
+
+	public EnderChestWindow() {
+	}
+
+	public EnderChestWindow init(EnderChest chest) {
+		super.init(WindowType.CHEST, "Ender Chest", 27, chest);
 		addInventory(chest.getInventory(), ChestWindow.SMALL_CHEST_SLOTS);
+		return this;
 	}
 }

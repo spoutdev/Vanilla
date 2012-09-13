@@ -35,8 +35,12 @@ import org.spout.vanilla.window.WindowType;
 public class VillagerWindow extends CraftingWindow {
 	private static final SlotIndexCollection CRAFTING_SLOTS = new SlotIndexMap("0-2");
 
-	public VillagerWindow(Villager villager) {
-		super(WindowType.VILLAGER, "villager", 3, villager);
+	public VillagerWindow() {
+	}
+
+	public VillagerWindow init(Villager villager) {
+		super.init(WindowType.VILLAGER, "villager", 3, villager);
 		this.setCraftingGrid(villager.getInventory(), CRAFTING_SLOTS);
+		return this;
 	}
 }

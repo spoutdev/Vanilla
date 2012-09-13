@@ -39,7 +39,7 @@ public class DefaultWindow extends CraftingWindow {
 	private static final SlotIndexCollection CRAFTING_SLOTS = new SlotIndexMap("1-4, 0");
 
 	public DefaultWindow() {
-		super(WindowType.DEFAULT, "Inventory", 9);
+		init(WindowType.DEFAULT, "Inventory", 9);
 	}
 
 	@Override

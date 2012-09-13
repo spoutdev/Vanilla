@@ -240,6 +240,12 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 						cursorItem = null;
 					}
 					return true;
+				} else {
+					// materials don't match
+					// swap stacks
+					ItemStack newCursor = clicked.clone();
+					inventory.setItem(slot, cursorItem);
+					cursorItem = newCursor;
 				}
 			} else {
 				// slot is not empty; cursor is empty.

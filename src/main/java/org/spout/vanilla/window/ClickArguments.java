@@ -24,23 +24,21 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.window.entity;
+package org.spout.vanilla.window;
 
-import org.spout.vanilla.components.living.Villager;
-import org.spout.vanilla.util.intmap.SlotIndexCollection;
-import org.spout.vanilla.util.intmap.SlotIndexMap;
-import org.spout.vanilla.window.CraftingWindow;
-import org.spout.vanilla.window.WindowType;
+public class ClickArguments {
+	private final boolean rightClick, shiftClick;
 
-public class VillagerWindow extends CraftingWindow {
-	private static final SlotIndexCollection CRAFTING_SLOTS = new SlotIndexMap("0-2");
-
-	public VillagerWindow() {
+	public ClickArguments(boolean rightClick, boolean shiftClick) {
+		this.rightClick = rightClick;
+		this.shiftClick = shiftClick;
 	}
 
-	public VillagerWindow init(Villager villager) {
-		super.init(WindowType.VILLAGER, "villager", 3, villager);
-		this.setCraftingGrid(villager.getInventory(), CRAFTING_SLOTS);
-		return this;
+	public boolean isRightClick() {
+		return rightClick;
+	}
+
+	public boolean isShiftClick() {
+		return shiftClick;
 	}
 }

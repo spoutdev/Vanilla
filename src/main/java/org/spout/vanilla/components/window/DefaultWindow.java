@@ -24,40 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.window;
+package org.spout.vanilla.components.window;
 
-/**
- * Stores information of a Window item click event
- */
-public class ClickArgs {
-	private final boolean rightClick, shift;
-
-	public ClickArgs(boolean rightClick, boolean shift) {
-		this.rightClick = rightClick;
-		this.shift = shift;
-	}
-
-	/**
-	 * Gets whether it was a right mouse click
-	 * @return True if it was a right click, False if not
-	 */
-	public boolean isRightClick() {
-		return this.rightClick;
-	}
-
-	/**
-	 * Gets whether it was a left mouse click
-	 * @return True if it was a left click, False if not
-	 */
-	public boolean isLeftClick() {
-		return !this.rightClick;
-	}
-
-	/**
-	 * Gets whether shift was down while clicking
-	 * @return True if shift was down, False if not
-	 */
-	public boolean isShiftDown() {
-		return this.shift;
-	}
+public class DefaultWindow extends Window {
 }

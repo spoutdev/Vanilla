@@ -45,7 +45,7 @@ public final class WindowOpenCodec extends MessageCodec<WindowOpenMessage> {
 	@Override
 	public WindowOpenMessage decode(ChannelBuffer buffer) throws IOException {
 		int id = buffer.readUnsignedByte();
-		WindowType type = WindowType.getById(buffer.readUnsignedByte());
+		WindowType type = WindowType.get(buffer.readUnsignedByte());
 		if (type == null) {
 			throw new IOException("Read Window Type is invalid");
 		}

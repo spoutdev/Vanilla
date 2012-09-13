@@ -24,36 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.window.block;
+package org.spout.vanilla.window;
 
 import org.spout.api.inventory.InventoryBase;
 
-import org.spout.vanilla.components.substance.material.BrewingStand;
-import org.spout.vanilla.inventory.block.BrewingStandInventory;
-import org.spout.vanilla.util.intmap.SlotIndexMap;
-import org.spout.vanilla.window.ClickArgs;
-import org.spout.vanilla.window.TransactionWindow;
-import org.spout.vanilla.window.WindowType;
+public class InventoryEntry {
+	private final InventoryBase inventory;
+	private final int slot;
 
-public class BrewingStandWindow extends TransactionWindow {
-	private static final SlotIndexMap BREWING_SLOTS = new SlotIndexMap("0-3");
-	protected BrewingStandInventory brewing;
-
-	public BrewingStandWindow() {
+	public InventoryEntry(InventoryBase inventory, int slot) {
+		this.inventory = inventory;
+		this.slot = slot;
 	}
 
-	public BrewingStandWindow init(BrewingStand stand) {
-		super.init(WindowType.BREWINGSTAND, "Brewing Stand", 4, stand);
-		this.brewing = stand.getInventory();
-		this.addInventory(this.brewing, BREWING_SLOTS);
-		return this;
+	public InventoryBase getInventory() {
+		return inventory;
 	}
 
-	@Override
-	public boolean onClick(InventoryBase inventory, int clickedSlot, ClickArgs args) {
-		if (inventory == this.brewing && this.hasItemOnCursor()) {
-			return false;
-		}
-		return super.onClick(inventory, clickedSlot, args);
+	public int getSlot() {
+		return slot;
 	}
 }

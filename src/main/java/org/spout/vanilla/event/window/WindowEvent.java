@@ -29,12 +29,12 @@ package org.spout.vanilla.event.window;
 import org.spout.api.event.Event;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.components.misc.WindowComponent;
+import org.spout.vanilla.components.window.Window;
 
 public abstract class WindowEvent extends Event implements ProtocolEvent {
-	private WindowComponent window;
+	private Window window;
 
-	public WindowEvent(WindowComponent window) {
+	public WindowEvent(Window window) {
 		this.window = window;
 	}
 
@@ -42,7 +42,7 @@ public abstract class WindowEvent extends Event implements ProtocolEvent {
 	 * Gets the Window of this Event
 	 * @return the Window
 	 */
-	public WindowComponent getWindow() {
+	public Window getWindow() {
 		return this.window;
 	}
 }

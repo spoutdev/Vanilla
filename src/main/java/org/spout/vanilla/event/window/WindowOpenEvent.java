@@ -28,12 +28,12 @@ package org.spout.vanilla.event.window;
 
 import org.spout.api.event.HandlerList;
 
-import org.spout.vanilla.components.misc.WindowComponent;
+import org.spout.vanilla.components.window.Window;
 
 public class WindowOpenEvent extends WindowEvent {
 	private static HandlerList handlers = new HandlerList();
 
-	public WindowOpenEvent(WindowComponent window) {
+	public WindowOpenEvent(Window window) {
 		super(window);
 	}
 

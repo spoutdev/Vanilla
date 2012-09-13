@@ -26,48 +26,37 @@
  */
 package org.spout.vanilla.window;
 
+import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
-/**
- * Available Window Types in the Notchian Minecraft client
- */
 public enum WindowType {
 	DEFAULT(-1),
 	CHEST(0),
-	CRAFTINGTABLE(1),
+	CRAFTING_TABLE(1),
 	FURNACE(2),
 	DISPENSER(3),
-	ENCHANTMENTTABLE(4),
-	BREWINGSTAND(5),
+	ENCHANTMENT_TABLE(4),
+	BREWING_STAND(5),
 	VILLAGER(6);
-	private static final TIntObjectHashMap<WindowType> values = new TIntObjectHashMap<WindowType>();
-
-	static {
-		for (WindowType type : values()) {
-			values.put(type.getId(), type);
-		}
-	}
 
 	private final int id;
+	private static final TIntObjectMap<WindowType> idMap = new TIntObjectHashMap<WindowType>();
 
 	private WindowType(int id) {
 		this.id = id;
 	}
 
-	/**
-	 * Gets the type Id of this Window Type
-	 * @return Type Id
-	 */
 	public int getId() {
-		return this.id;
+		return id;
 	}
 
-	/**
-	 * Gets a certain Window Type by Id
-	 * @param id of the type
-	 * @return Window Type, or null if not found
-	 */
-	public static WindowType getById(int id) {
-		return values.get(id);
+	static {
+		for (WindowType type : WindowType.values()) {
+			idMap.put(type.getId(), type);
+		}
+	}
+
+	public static WindowType get(int id) {
+		return idMap.get(id);
 	}
 }

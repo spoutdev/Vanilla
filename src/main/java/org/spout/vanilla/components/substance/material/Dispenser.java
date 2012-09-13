@@ -30,7 +30,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.components.misc.WindowComponent;
+import org.spout.vanilla.components.window.Window;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.InventoryOwner;
 import org.spout.vanilla.material.block.controlled.DispenserBlock;
@@ -58,7 +58,7 @@ public class Dispenser extends WindowBlockComponent implements InventoryOwner {
 	}
 
 	@Override
-	public WindowComponent createWindow(Player player) {
+	public Window createWindow(Player player) {
 		// TODO Auto-generated method stub
 		return null;
 	}

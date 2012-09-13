@@ -63,6 +63,7 @@ import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.living.Human;
+import org.spout.vanilla.components.window.DefaultWindow;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
@@ -83,10 +84,10 @@ import org.spout.vanilla.event.player.network.PlayerKeepAliveEvent;
 import org.spout.vanilla.event.player.network.PlayerUpdateStatsEvent;
 import org.spout.vanilla.event.player.network.PlayerUpdateUserListEvent;
 import org.spout.vanilla.event.window.WindowCloseEvent;
+import org.spout.vanilla.event.window.WindowItemsEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
 import org.spout.vanilla.event.window.WindowPropertyEvent;
-import org.spout.vanilla.event.window.WindowSetSlotEvent;
-import org.spout.vanilla.event.window.WindowSetSlotsEvent;
+import org.spout.vanilla.event.window.WindowSlotEvent;
 import org.spout.vanilla.event.world.PlayExplosionEffectEvent;
 import org.spout.vanilla.event.world.PlayParticleEffectEvent;
 import org.spout.vanilla.event.world.PlaySoundEffectEvent;
@@ -122,7 +123,6 @@ import org.spout.vanilla.protocol.msg.player.conn.PlayerLoginRequestMessage;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
 import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
-import org.spout.vanilla.window.DefaultWindow;
 import org.spout.vanilla.world.generator.VanillaBiome;
 
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
@@ -433,12 +433,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 
 	@EventHandler
-	public Message onWindowSetSlot(WindowSetSlotEvent event) {
+	public Message onWindowSetSlot(WindowSlotEvent event) {
 		return new WindowSlotMessage(event.getWindow(), event.getGlobalSlot(), event.getItem());
 	}
 
 	@EventHandler
-	public Message onWindowSetSlots(WindowSetSlotsEvent event) {
+	public Message onWindowSetSlots(WindowItemsEvent event) {
 		return new WindowItemsMessage(event.getWindow(), event.getItems());
 	}
 

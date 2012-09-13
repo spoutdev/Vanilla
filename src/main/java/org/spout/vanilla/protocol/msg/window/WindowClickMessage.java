@@ -28,7 +28,7 @@ package org.spout.vanilla.protocol.msg.window;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.components.misc.WindowComponent;
+import org.spout.vanilla.components.window.Window;
 
 public final class WindowClickMessage extends WindowMessage {
 	private final int slot;
@@ -36,7 +36,7 @@ public final class WindowClickMessage extends WindowMessage {
 	private final int transaction;
 	private final ItemStack item;
 
-	public WindowClickMessage(WindowComponent window, int slot, boolean rightClick, int transaction, boolean shift) {
+	public WindowClickMessage(Window window, int slot, boolean rightClick, int transaction, boolean shift) {
 		this(window.getInstanceId(), slot, rightClick, transaction, shift);
 	}
 
@@ -44,7 +44,7 @@ public final class WindowClickMessage extends WindowMessage {
 		this(windowInstanceId, slot, rightClick, transaction, shift, null);
 	}
 
-	public WindowClickMessage(WindowComponent window, int slot, boolean rightClick, int transaction, boolean shift, ItemStack item) {
+	public WindowClickMessage(Window window, int slot, boolean rightClick, int transaction, boolean shift, ItemStack item) {
 		this(window.getInstanceId(), slot, rightClick, transaction, shift, item);
 	}
 

@@ -37,15 +37,5 @@ public final class WindowCloseHandler extends MessageHandler<WindowCloseMessage>
 		if (!session.hasPlayer()) {
 			return;
 		}
-<<<<<<< HEAD
-
-		Player player = session.getPlayer();
-
-		WindowComponent component = player.get(WindowComponent.class);
-		if (component != null) {
-			component.close();
-		}
-=======
->>>>>>> Started Window system update
 	}
 }

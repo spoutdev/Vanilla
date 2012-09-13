@@ -24,8 +24,9 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.event.player;
+package org.spout.vanilla.event.entity;
 
+import org.spout.api.Source;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
@@ -34,15 +35,21 @@ import org.spout.api.event.player.PlayerEvent;
 /**
  * Event which is called when the hunger-level changes
  */
-public class PlayerHungerChangeEvent extends PlayerEvent implements Cancellable {
+public class EntityHungerChangeEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	private short hunger;
+	private final Source source;
 
-	public PlayerHungerChangeEvent(Player p, short hunger) {
+	public EntityHungerChangeEvent(Player p, Source source, short hunger) {
 		super(p);
 		this.hunger = hunger;
+		this.source = source;
 	}
 
+	public Source getSource() {
+		return source;
+	}
+	
 	@Override
 	public void setCancelled(boolean cancelled) {
 		super.setCancelled(cancelled);
@@ -52,7 +59,7 @@ public class PlayerHungerChangeEvent extends PlayerEvent implements Cancellable 
 	 * Get the Hunger level that the player will have.
 	 * @return The Hunger level
 	 */
-	public short getHunger() {
+	public short getChange() {
 		return hunger;
 	}
 
@@ -60,7 +67,7 @@ public class PlayerHungerChangeEvent extends PlayerEvent implements Cancellable 
 	 * Set the Hunger level that the player will have.
 	 * @param hunger The hunger level to set to. Between 0 and 20.
 	 */
-	public void setHunger(short hunger) {
+	public void setChange(short hunger) {
 		this.hunger = hunger;
 	}
 

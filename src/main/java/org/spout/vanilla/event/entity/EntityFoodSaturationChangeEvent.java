@@ -24,16 +24,47 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.gamemode;
+package org.spout.vanilla.event.entity;
 
-import org.spout.api.component.components.EntityComponent;
-import org.spout.api.entity.Entity;
+import org.spout.api.Source;
+import org.spout.api.entity.Player;
+import org.spout.api.event.Cancellable;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.player.PlayerEvent;
 
-public class CreativeComponent extends EntityComponent {
+public class EntityFoodSaturationChangeEvent extends PlayerEvent implements Cancellable {
+	private static HandlerList handlers = new HandlerList();
+	private float foodSaturation;
+	private final Source source;
+
+	public EntityFoodSaturationChangeEvent(Player p, Source source, float foodSaturation) {
+		super(p);
+		this.foodSaturation = foodSaturation;
+		this.source = source;
+	}
+
+	public Source getSource() {
+		return source;
+	}
 	@Override
-	public void onAttached() {
-		Entity holder = getOwner();
-		holder.detach(AdventureComponent.class);
-		holder.detach(SurvivalComponent.class);
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
+	}
+
+	public float getChange() {
+		return foodSaturation;
+	}
+
+	public void setChange(float foodSaturation) {
+		this.foodSaturation = foodSaturation;
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

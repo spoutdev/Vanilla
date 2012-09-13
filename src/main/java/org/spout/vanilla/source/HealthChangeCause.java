@@ -54,6 +54,10 @@ public enum HealthChangeCause implements Source {
 	 */
 	SPAWN,
 	/**
+	 * Health changed due to no food
+	 */
+	NO_FOOD,
+	/**
 	 * Health changed due to some unknown reason.
 	 */
 	UNKNOWN;

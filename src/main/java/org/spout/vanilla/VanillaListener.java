@@ -39,6 +39,7 @@ import org.spout.api.event.server.permissions.PermissionNodeEvent;
 
 import org.spout.vanilla.component.inventory.window.DefaultWindow;
 import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.misc.HungerComponent;
 import org.spout.vanilla.component.misc.PickupItemComponent;
 import org.spout.vanilla.component.misc.SleepComponent;
 import org.spout.vanilla.component.player.HUDComponent;
@@ -69,6 +70,7 @@ public class VanillaListener implements Listener {
 		player.add(PingComponent.class);
 		player.add(PickupItemComponent.class);
 		player.add(SleepComponent.class);
+		player.add(HungerComponent.class).setInfiniteHunger(false);
 	}
 
 	@EventHandler

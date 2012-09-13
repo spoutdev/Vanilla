@@ -150,8 +150,10 @@ public class HealthComponent extends EntityComponent {
 			} else {
 				getData().put(VanillaData.HEALTH, getHealth() + event.getChange());
 			}
+			if (getOwner() instanceof Player){
+				getOwner().add(HungerComponent.class).updatePlayer();
+			}
 		}
-
 		if (getOwner() instanceof Player) {
 			getOwner().getNetwork().callProtocolEvent(new PlayerHealthEvent(((Player) getOwner())));
 		}

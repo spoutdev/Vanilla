@@ -27,9 +27,7 @@
 package org.spout.vanilla.material.item;
 
 import org.spout.api.entity.Entity;
-
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.component.living.Human;
 
 public class Food extends VanillaItemMaterial {
 	private final FoodEffect[] effects;
@@ -43,9 +41,13 @@ public class Food extends VanillaItemMaterial {
 		return effects;
 	}
 
-	public void onEat(Entity entity, int slot) {
-		if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-			//TODO: Reimplement food less bad
+	public void onEat(Entity entity) {
+		if (entity.has(Human.class) && entity.get(Human.class).isSurvival()) {
+			for (FoodEffect effect : effects) {
+				if (effect.candoEffect(entity)) {
+					effect.doEffect(entity);
+				}
+			}
 		}
 	}
 }

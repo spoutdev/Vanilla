@@ -24,53 +24,25 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.material.item.food.effects;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.Player;
-import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.misc.HungerComponent;
+import org.spout.vanilla.material.item.FoodEffect;
+import org.spout.vanilla.source.FoodSaturationChangeCause;
 
-public abstract class FoodEffect {
+/**
+ * Class for food that modify the food saturation of a player
+ */
+public class FoodSaturation extends FoodEffect {
 
-	private float value;
-
-	public FoodEffect(int value) {
-		this.value = value;
+	public FoodSaturation(float value) {
+		super(value);
 	}
 
-	public FoodEffect(float value) {
-		this.value = value;
+	@Override
+	public void doEffect(Entity entity) {
+		entity.add(HungerComponent.class).setFoodSaturation(entity.add(HungerComponent.class).getFoodSaturation() + getValue(), FoodSaturationChangeCause.EATING);
 	}
 
-	/**
-	 * Retrieve the value of this food effect.
-	 * 
-	 * @return
-	 */
-	public float getValue() {
-		return value;
-	}
-
-	/**
-	 * Checks if the effect can be done.
-	 * 
-	 * @param entity The entity to check against.
-	 * @return true if the effect can be done else false.
-	 */
-	public boolean candoEffect(Entity entity) {
-		boolean result = false;
-		if (entity instanceof Player) {
-			if (entity.get(Human.class).isSurvival()) {
-				result = true;
-			}
-		}
-		return result;
-	}
-
-	/**
-	 * The Effect to run
-	 * 
-	 * @param entity The entity to run the effect on.
-	 */
-	public abstract void doEffect(Entity entity);
 }

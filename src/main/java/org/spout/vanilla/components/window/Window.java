@@ -181,7 +181,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 					inventory.setItem(slot, clicked);
 					// remove from cursor
 					cursorItem.setAmount(cursorItem.getAmount() - 1);
-					if (cursorItem.getAmount() < 1) {
+					if (cursorItem.isEmpty()) {
 						cursorItem = null;
 					}
 					return true;
@@ -195,7 +195,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 						clicked.setAmount(clicked.getAmount() + 1);
 						inventory.setItem(slot, clicked);
 						cursorItem.setAmount(cursorItem.getAmount() - 1);
-						if (cursorItem.getAmount() < 1) {
+						if (cursorItem.isEmpty()) {
 							cursorItem = null;
 						}
 						return true;
@@ -233,9 +233,14 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 			} else if (cursorItem != null) {
 				// slot is not empty; cursor is not empty.
 				// stack
-				clicked.stack(cursorItem);
-				inventory.setItem(slot, clicked);
-				return true;
+				if (cursorItem.equalsIgnoreSize(clicked)) {
+					clicked.stack(cursorItem);
+					inventory.setItem(slot, clicked);
+					if (cursorItem.isEmpty()) {
+						cursorItem = null;
+					}
+					return true;
+				}
 			} else {
 				// slot is not empty; cursor is empty.
 				// pick up stack

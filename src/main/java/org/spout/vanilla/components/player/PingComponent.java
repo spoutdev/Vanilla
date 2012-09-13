@@ -97,7 +97,6 @@ public class PingComponent extends EntityComponent {
 		}
 
 		if (responseHash != lastRequestHash) {
-			((Player) getHolder()).kick("Illegal KeepAlive response!");
 			return;
 		}
 		this.lastResponseTime = System.currentTimeMillis();

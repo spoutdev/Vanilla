@@ -139,15 +139,18 @@ public class Human extends VanillaEntity {
 		if (event.isCancelled()) {
 			return;
 		}
-		switch (event.getMode()) {
+		switch (mode = event.getMode()) {
 			case ADVENTURE:
 				holder.add(AdventureComponent.class);
+				break;
 			case CREATIVE:
 				holder.add(CreativeComponent.class);
+				break;
 			case SURVIVAL:
 				holder.add(SurvivalComponent.class);
+				break;
 		}
-		holder.getNetwork().callProtocolEvent(new PlayerGameStateEvent( (Player) holder, PlayerGameStateMessage.CHANGE_GAME_MODE, event.getMode()));
+		holder.getNetwork().callProtocolEvent(new PlayerGameStateEvent( (Player) holder, PlayerGameStateMessage.CHANGE_GAME_MODE, mode));
 		getData().put(VanillaData.GAMEMODE, mode);
 	}
 

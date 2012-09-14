@@ -36,7 +36,6 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
-import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryBase;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
@@ -50,16 +49,15 @@ import org.spout.vanilla.inventory.player.MainInventory;
 import org.spout.vanilla.inventory.player.PlayerInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.util.InventoryUtil;
-import org.spout.vanilla.util.intmap.SlotIndexCollection;
-import org.spout.vanilla.util.intmap.SlotIndexGrid;
-import org.spout.vanilla.util.intmap.SlotIndexRow;
+import org.spout.vanilla.window.util.SlotIndexCollection;
 import org.spout.vanilla.window.ClickArguments;
 import org.spout.vanilla.window.InventoryEntry;
 import org.spout.vanilla.window.WindowType;
+import org.spout.vanilla.window.util.SlotIndexGrid;
 
 public abstract class Window extends EntityComponent implements InventoryViewer {
 	private static final SlotIndexGrid MAIN = new SlotIndexGrid(9, 3);
-	private static final SlotIndexRow QUICK_BAR = new SlotIndexRow(9);
+	private static final SlotIndexGrid QUICK_BAR = new SlotIndexGrid(9, 1);
 	protected final TIntObjectMap<ItemStack> queuedInventoryUpdates = new TIntObjectHashMap<ItemStack>();
 	protected final Map<InventoryBase, SlotIndexCollection> inventories = new HashMap<InventoryBase, SlotIndexCollection>();
 	protected final int instanceId = InventoryUtil.nextWindowId();
@@ -76,10 +74,8 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 		}
 		// TODO: Fix SlotIndexCollections
 		PlayerInventory inventory = getHuman().getInventory().getInventory();
-		offset += MAIN.getSize();
 		inventories.put(inventory.getMain(), MAIN.translate(offset));
-		offset += QUICK_BAR.getSize();
-		inventories.put(inventory.getQuickbar(), QUICK_BAR.translate(offset));
+		inventories.put(inventory.getQuickbar(), QUICK_BAR.translate(offset + MAIN.getSize()));
 	}
 
 	@Override
@@ -92,7 +88,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 		// convert slots and update
 		SlotIndexCollection slots = this.inventories.get(inventory);
 		if (slots != null) {
-			slot = slots.getMinecraftSlot(slot);
+			slot = slots.getNativeSlot(slot);
 			queuedInventoryUpdates.put(slot, item);
 		}
 	}
@@ -153,7 +149,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 		for (Entry<InventoryBase, SlotIndexCollection> entry : inventories.entrySet()) {
 			InventoryBase inventory = entry.getKey();
 			for (int i = 0; i < inventory.getSize(); i++) {
-				nativeSlot = entry.getValue().getMinecraftSlot(i);
+				nativeSlot = entry.getValue().getNativeSlot(i);
 				if (nativeSlot < 0 || nativeSlot >= items.length) {
 					continue;
 				}
@@ -343,7 +339,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 		int slot;
 		for (Entry<InventoryBase, SlotIndexCollection> entry : inventories.entrySet()) {
 			System.out.println("For: " + entry.getKey().getClass().getCanonicalName());
-			slot = entry.getValue().getSpoutSlot(nativeSlot);
+			slot = entry.getValue().getSlot(nativeSlot);
 			if (slot != -1) {
 				return new InventoryEntry(entry.getKey(), slot);
 			}

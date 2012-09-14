@@ -24,41 +24,36 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.util.intmap;
+package org.spout.vanilla.window.util;
 
-/**
- * A reversed row implementation
- */
-public class SlotIndexRow extends SlotIndexCollection {
-	public SlotIndexRow(int size) {
-		super(size);
+import org.spout.api.util.StringUtil;
+
+public class SlotIndexCollection {
+	protected int[] slots;
+
+	public SlotIndexCollection(int... slots) {
+		this.slots = slots;
 	}
 
-	public SlotIndexRow(int size, int offset) {
-		super(size, offset);
+	public SlotIndexCollection(String elements) {
+		this(StringUtil.getIntArray(elements));
 	}
 
-	@Override
-	public SlotIndexRow translate(int offset) {
-		return new SlotIndexRow(this.getSize(), this.getOffset() + offset);
-	}
-
-	@Override
-	public int getSpoutSlot(int mcSlotIndex) {
-		mcSlotIndex -= this.getOffset();
-		if (containsMinecraftSlot(mcSlotIndex)) {
-			return this.getSize() - mcSlotIndex - 1;
-		} else {
-			return -1;
+	public int getSlot(int nativeSlot) {
+		for (int i = 0; i < slots.length; i++) {
+			int slot = slots[i];
+			if (slot == nativeSlot) {
+				return i;
+			}
 		}
+		return -1;
 	}
 
-	@Override
-	public int getMinecraftSlot(int spoutSlotIndex) {
-		if (containsSpoutSlot(spoutSlotIndex)) {
-			return this.getSize() - spoutSlotIndex - 1;
-		} else {
-			return -1;
-		}
+	public int getNativeSlot(int slot) {
+		return slots[slot];
+	}
+
+	public int[] getSlotArray() {
+		return slots;
 	}
 }

@@ -24,28 +24,43 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.components.window;
+package org.spout.vanilla.window.util;
 
-import org.spout.vanilla.inventory.player.PlayerInventory;
-import org.spout.vanilla.window.util.SlotIndexCollection;
-import org.spout.vanilla.window.WindowType;
-import org.spout.vanilla.window.util.SlotIndexGrid;
+public class SlotIndexGrid extends SlotIndexCollection {
+	private final int length, width, offset;
 
-public class DefaultWindow extends Window {
-	private static final SlotIndexCollection ARMOR_SLOTS = new SlotIndexGrid(1, 4, 5);
-	private static final SlotIndexCollection CRAFTING_SLOTS = new SlotIndexCollection("1-4, 0");
-
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		init(WindowType.DEFAULT, "Inventory", 9);
-		PlayerInventory inventory = getHuman().getInventory().getInventory();
-		inventories.put(inventory.getArmor(), ARMOR_SLOTS);
-		inventories.put(inventory.getMain(), CRAFTING_SLOTS);
+	public SlotIndexGrid(int length, int width, int offset) {
+		this.length = length;
+		this.width = width;
+		this.offset = offset;
+		slots = new int[getSize()];
+		int index = 0;
+		for (int w = 0; w < width; w++) {
+			for (int l = 0; l < length; l++) {
+				int slot = l + getSize() - (offset * w);
+				slots[index] = l + getSize() - (offset * w);
+				index++;
+			}
+		}
 	}
 
-	@Override
-	public int getInstanceId() {
-		return 0;
+	public SlotIndexGrid(int length, int width) {
+		this(length, width, 0);
+	}
+
+	public SlotIndexGrid translate(int offset) {
+		return new SlotIndexGrid(length, width, this.offset + offset);
+	}
+
+	public int getLength() {
+		return length;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getSize() {
+		return length * width;
 	}
 }

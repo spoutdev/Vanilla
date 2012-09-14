@@ -24,49 +24,26 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.util.intmap;
+package org.spout.vanilla.util;
 
-/**
- * A mathematic slot index map that inverts the slot in a fixed amount of steps<br>
- * For example, a 3x3 map would equal a regular Slot Index Map with the elements:<br><br>
- * <b>6-8, 3-5, 0-2</b>
- */
-public class SlotIndexGrid extends SlotIndexCollection {
-	private final int width, height;
+import org.junit.Test;
 
-	public SlotIndexGrid(int width, int height) {
-		this(width, height, 0);
-	}
+import org.spout.vanilla.window.util.SlotIndexCollection;
+import org.spout.vanilla.window.util.SlotIndexGrid;
 
-	public SlotIndexGrid(int width, int height, int offset) {
-		super(width * height, offset);
-		this.width = width;
-		this.height = height;
-	}
+import static org.junit.Assert.assertEquals;
 
-	private int convertSlot(int slot) {
-		if (containsSpoutSlot(slot)) {
-			final int row = this.height - (slot / this.width) - 1;
-			final int column = slot % this.width;
-			return this.width * row + column;
-		} else {
-			return -1;
+public class SlotIndexCollectionTest {
+	@Test
+	public void testSlotIndexGrid() {
+		SlotIndexGrid grid = new SlotIndexGrid(9, 3, 9);
+		SlotIndexCollection c = new SlotIndexCollection("27-35");
+		for (int i = 0; i < 9; i++) {
+			int nativeSlot = i + 27;
+			assertEquals(i, grid.getSlot(nativeSlot));
+			assertEquals(nativeSlot, grid.getNativeSlot(i));
+			assertEquals(i, c.getSlot(nativeSlot));
+			assertEquals(nativeSlot, c.getNativeSlot(i));
 		}
-	}
-
-	@Override
-	public SlotIndexGrid translate(int offset) {
-		return new SlotIndexGrid(this.width, this.height, this.getOffset() + offset);
-	}
-
-	@Override
-	public int getMinecraftSlot(int spoutSlotIndex) {
-		final int mcSlot = convertSlot(spoutSlotIndex);
-		return mcSlot == -1 ? -1 : mcSlot + this.getOffset();
-	}
-
-	@Override
-	public int getSpoutSlot(int mcSlotIndex) {
-		return convertSlot(mcSlotIndex - this.getOffset());
 	}
 }

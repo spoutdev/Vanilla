@@ -28,6 +28,7 @@ package org.spout.vanilla.world.generator.flat;
 
 import java.util.Random;
 
+import org.spout.api.generator.GeneratorPopulator;
 import org.spout.api.generator.Populator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
@@ -70,6 +71,11 @@ public class FlatGenerator implements VanillaGenerator {
 	}
 
 	@Override
+	public GeneratorPopulator[] getGeneratorPopulators() {
+		return new GeneratorPopulator[0];
+	}
+
+	@Override
 	public String getName() {
 		return "VanillaFlat";
 	}
@@ -81,7 +87,6 @@ public class FlatGenerator implements VanillaGenerator {
 		final int z = 16 - random.nextInt(32);
 		int y = world.getHeight();
 		for (; !world.getBlockMaterial(x, y, z).isSolid(); y--) {
-			;
 		}
 		return new Point(world, x, y + 1.5f, z);
 	}

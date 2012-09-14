@@ -27,39 +27,19 @@
 package org.spout.vanilla.world.generator.normal.biome.grassy;
 
 import org.spout.api.generator.biome.Decorator;
-import org.spout.api.geo.World;
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
+import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator.GroundCoverLayer;
+import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator.GroundCoverUniformLayer;
+import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator.GroundCoverVariableLayer;
 
 public abstract class GrassyBiome extends NormalBiome {
-	protected BlockMaterial topCover = VanillaMaterials.GRASS;
-
 	public GrassyBiome(int biomeId, Decorator... decorators) {
 		super(biomeId, decorators);
-	}
-
-	@Override
-	public int placeGroundCover(World world, int x, int y, int z) {
-		super.placeGroundCover(world, x, y, z);
-		final byte maxGroudCoverDepth = (byte) MathHelper.clamp(BLOCK_REPLACER.GetValue(x, 0, z) * 2 + 4, 2, 5);
-		for (byte depth = 0; depth < maxGroudCoverDepth; depth++) {
-			if (world.getBlockMaterial(x, y - depth, z).isMaterial(VanillaMaterials.AIR)) {
-				return maxGroudCoverDepth;
-			}
-			if (depth == 0 && y >= NormalGenerator.SEA_LEVEL) {
-				world.setBlockMaterial(x, y - depth, z, topCover, (short) 0, world);
-			} else {
-				world.setBlockMaterial(x, y - depth, z, VanillaMaterials.DIRT, (short) 0, world);
-			}
-		}
-		return maxGroudCoverDepth;
-	}
-
-	public BlockMaterial getTopCover() {
-		return topCover;
+		setTopCover(new GroundCoverLayer[]{
+					new GroundCoverUniformLayer(VanillaMaterials.GRASS, VanillaMaterials.DIRT, (byte) 1),
+					new GroundCoverVariableLayer(VanillaMaterials.DIRT, VanillaMaterials.DIRT, (byte) 1, (byte) 4)
+				});
 	}
 }

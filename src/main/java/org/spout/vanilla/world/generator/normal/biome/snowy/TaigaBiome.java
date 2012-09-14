@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome.icy;
+package org.spout.vanilla.world.generator.normal.biome.snowy;
 
 import java.util.Random;
 
@@ -38,7 +38,7 @@ import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
 
-public class TaigaBiome extends IcyBiome {
+public class TaigaBiome extends SnowyBiome {
 	public TaigaBiome(int biomeId) {
 		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new TaigaTreeWGOFactory()),
 				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory()), new MushroomDecorator(),

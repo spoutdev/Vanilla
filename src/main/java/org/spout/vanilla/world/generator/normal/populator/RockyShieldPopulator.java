@@ -26,23 +26,20 @@
  */
 package org.spout.vanilla.world.generator.normal.populator;
 
-import java.util.Random;
-
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
-import org.spout.api.generator.Populator;
+import org.spout.api.generator.GeneratorPopulator;
 import org.spout.api.generator.WorldGeneratorUtils;
-import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.material.BlockMaterial;
+import org.spout.api.generator.biome.BiomeManager;
+import org.spout.api.math.Vector3;
+import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
-public class RockyShieldPopulator extends Populator {
+public class RockyShieldPopulator implements GeneratorPopulator {
 	private static final Perlin SHIELD_BASE = new Perlin();
 	private static final Turbulence SHIELD = new Turbulence();
 
@@ -57,39 +54,38 @@ public class RockyShieldPopulator extends Populator {
 		SHIELD.setRoughness(3);
 	}
 
-	public RockyShieldPopulator() {
-		super(true);
-	}
-
 	@Override
-	public void populate(Chunk chunk, Random random) {
-		if (chunk.getY() != 4) {
-			return;
-		}
-		final int size = Chunk.BLOCKS.SIZE;
-		final int x = chunk.getBlockX();
-		final int z = chunk.getBlockZ();
-		final World world = chunk.getWorld();
-		final int seed = (int) (world.getSeed() * 73);
-		SHIELD_BASE.setSeed(seed);
-		SHIELD.setSeed(seed);
-		final double[][] noise = WorldGeneratorUtils.fastNoise(SHIELD, size, size, 4, x, 63, z);
-		for (int xx = 0; xx < size; xx++) {
-			for (int zz = 0; zz < size; zz++) {
+	public void populate(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
+		final Vector3 size = blockData.getSize();
+		final int sizeX = size.getFloorX();
+		final int sizeY = size.getFloorY();
+		final int sizeZ = size.getFloorZ();
+		SHIELD_BASE.setSeed((int) seed * 73);
+		SHIELD.setSeed((int) seed * 79);
+		final double[][] noise = WorldGeneratorUtils.fastNoise(SHIELD, sizeX, sizeZ, 4, x, 63, z);
+		for (int xx = 0; xx < sizeX; xx++) {
+			for (int zz = 0; zz < sizeZ; zz++) {
 				if (noise[xx][zz] > 0.92) {
-					final int y = world.getSurfaceHeight(x + xx, z + zz);
-					for (int yy = 0; yy >= -7; yy--) {
-						if (yy == 0) {
-							final Block block = world.getBlock(x + xx, y + yy, z + zz, world);
-							if (!canReplace(block.getMaterial())) {
-								continue;
-							}
-							block.setMaterial(block.getY() <= NormalGenerator.SEA_LEVEL ? VanillaMaterials.STATIONARY_WATER
-									: VanillaMaterials.AIR);
+					int yy = sizeY - 1;
+					for (; yy >= 0 && !canReplace(blockData.get(x + xx, y + yy, z + zz)); yy--) {
+					}
+					if (yy < 0) {
+						continue;
+					}
+					final int depthY = yy - 7;
+					final int surfaceY = yy;
+					for (; yy > depthY; yy--) {
+						if (yy < 0) {
+							break;
+						}
+						if (!canReplace(blockData.get(x + xx, y + yy, z + zz))) {
+							continue;
+						}
+						if (yy == surfaceY) {
+							blockData.set(x + xx, y + yy, z + zz, y + yy <= NormalGenerator.SEA_LEVEL
+									? VanillaMaterials.STATIONARY_WATER.getId() : VanillaMaterials.AIR.getId());
 						} else {
-							if (canReplace(world.getBlockMaterial(x + xx, y + yy, z + zz))) {
-								world.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.STONE, (short) 0, world);
-							}
+							blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.STONE.getId());
 						}
 					}
 				}
@@ -97,8 +93,9 @@ public class RockyShieldPopulator extends Populator {
 		}
 	}
 
-	private boolean canReplace(BlockMaterial material) {
-		return material.isMaterial(VanillaMaterials.GRASS, VanillaMaterials.MYCELIUM,
-				VanillaMaterials.DIRT, VanillaMaterials.SAND, VanillaMaterials.SANDSTONE);
+	private boolean canReplace(short id) {
+		return (id == VanillaMaterials.GRASS.getId() || id == VanillaMaterials.MYCELIUM.getId()
+				|| id == VanillaMaterials.DIRT.getId() || id == VanillaMaterials.SAND.getId()
+				|| id == VanillaMaterials.SANDSTONE.getId());
 	}
 }

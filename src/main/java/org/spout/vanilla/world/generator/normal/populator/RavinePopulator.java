@@ -28,65 +28,34 @@ package org.spout.vanilla.world.generator.normal.populator;
 
 import java.util.Random;
 
-import org.spout.api.generator.Populator;
-import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.SinusHelper;
 import org.spout.api.math.Vector3;
+import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.liquid.Water;
 
-public class RavinePopulator extends Populator {
-	private static final byte OVERLAP = 8;
-
-	public RavinePopulator() {
-		super(true);
-	}
-
+public class RavinePopulator extends OverlapingPopulator {
 	@Override
-	public void populate(Chunk chunk, Random random) {
-		if (chunk.getY() != 4) {
-			return;
-		}
-		final World world = chunk.getWorld();
-		final int chunkX = chunk.getX();
-		final int chunkZ = chunk.getZ();
-		final long worldSeed = world.getSeed();
-		final Random worldRandom = new Random(worldSeed);
-		final long firstSeed = worldRandom.nextLong();
-		final long secondSeed = worldRandom.nextLong();
-		for (int cx = chunkX - OVERLAP; cx <= chunkX + OVERLAP; cx++) {
-			for (int cz = chunkZ - OVERLAP; cz <= chunkZ + OVERLAP; cz++) {
-				final Random chunkRandom = new Random((cx * firstSeed) ^ (cz * secondSeed) ^ worldSeed);
-				generateRavine(world.getChunk(cx, 4, cz), chunk, chunkRandom);
-			}
-		}
-	}
-
-	private void generateRavine(Chunk chunk, Chunk originChunk, Random random) {
+	protected void generate(CuboidShortBuffer blockData, Vector3 chunk, Vector3 originChunk, Random random) {
 		if (random.nextInt(50) != 0) {
 			return;
 		}
 
-		final Point target = new Point(chunk.getWorld(), chunk.getBlockX(random),
-				random.nextInt(random.nextInt(40) + 8) + 20, chunk.getBlockZ(random));
-		final float randomHorizontalAngle = (float) (random.nextFloat() * Math.PI * 2);
-		final float randomVerticalAngle = ((random.nextFloat() - 0.5f) * 2) / 8;
-		final float horizontalScale = (random.nextFloat() * 2 + random.nextFloat()) * 2;
-		generateRavineNodes(originChunk, target, horizontalScale, 3, randomHorizontalAngle, randomVerticalAngle, 0, 0, random);
+		final Vector3 target = new Vector3(chunk.getX() + random.nextInt(16),
+				random.nextInt(random.nextInt(40) + 8) + 20, chunk.getZ() + random.nextInt(16));
+		final double randomHorizontalAngle = random.nextDouble() * Math.PI * 2;
+		final double randomVerticalAngle = ((random.nextDouble() - 0.5) * 2) / 8;
+		final double horizontalScale = (random.nextDouble() * 2 + random.nextDouble()) * 2;
+		generateRavineNodes(blockData, originChunk, target, horizontalScale, 3, randomHorizontalAngle, randomVerticalAngle, 0, 0, random);
 	}
 
-	private void generateRavineNodes(Chunk chunk, Point target, float horizontalScale, float verticalScale,
-									 float horizontalAngle, float verticalAngle, int startingNode, int nodeAmount, Random random) {
+	private void generateRavineNodes(CuboidShortBuffer blockData, Vector3 chunk, Vector3 target, double horizontalScale, double verticalScale,
+			double horizontalAngle, double verticalAngle, int startingNode, int nodeAmount, Random random) {
 
-		final Vector3 middle = new Vector3(chunk.getBlockX(8), 0, chunk.getBlockZ(8));
-		float horizontalOffset = 0;
-		float verticalOffset = 0;
+		final Vector3 middle = new Vector3(chunk.getX() + 8, 0, chunk.getZ() + 8);
+		double horizontalOffset = 0;
+		double verticalOffset = 0;
 
 		if (nodeAmount <= 0) {
 			final int size = (OVERLAP - 1) * 16;
@@ -102,37 +71,37 @@ public class RavinePopulator extends Populator {
 			lastNode = false;
 		}
 
-		final float[] horizontalScales = new float[128];
+		final double[] horizontalScales = new double[128];
 
 		for (short y = 0; y < 128; y++) {
-			final float xzScale = y == 0 || random.nextInt(3) == 0 ? 1 + random.nextFloat() * random.nextFloat() : 1;
+			final double xzScale = y == 0 || random.nextInt(3) == 0 ? 1 + random.nextDouble() * random.nextDouble() : 1;
 			horizontalScales[y] = xzScale * xzScale;
 		}
 
 		for (; startingNode < nodeAmount; startingNode++) {
-			float horizontalSize = (float) (1.5 + SinusHelper.sin(startingNode * (float) Math.PI / nodeAmount) * horizontalScale);
-			float verticalSize = horizontalSize * verticalScale;
-			target = target.add(SinusHelper.get3DAxis(horizontalAngle, verticalAngle));
+			double horizontalSize = 1.5 + SinusHelper.sin((float) (startingNode * Math.PI / nodeAmount)) * horizontalScale;
+			double verticalSize = horizontalSize * verticalScale;
+			target = target.add(SinusHelper.get3DAxis((float) horizontalAngle, (float) verticalAngle));
 
-			horizontalSize *= random.nextFloat() * 0.25 + 0.75;
-			verticalSize *= random.nextFloat() * 0.25 + 0.75;
+			horizontalSize *= random.nextDouble() * 0.25 + 0.75;
+			verticalSize *= random.nextDouble() * 0.25 + 0.75;
 
 			verticalAngle *= 0.7;
 			verticalAngle += verticalOffset * 0.05;
 			horizontalAngle += horizontalOffset * 0.05;
 			verticalOffset *= 0.8;
 			horizontalOffset *= 0.5;
-			verticalOffset += (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 2;
-			horizontalOffset += (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 4;
+			verticalOffset += (random.nextDouble() - random.nextDouble()) * random.nextDouble() * 2;
+			horizontalOffset += (random.nextDouble() - random.nextDouble()) * random.nextDouble() * 4;
 
 			if (!lastNode && random.nextInt(4) == 0) {
 				continue;
 			}
 
-			final float xOffset = target.getX() - middle.getX();
-			final float zOffset = target.getZ() - middle.getZ();
-			final float nodesLeft = nodeAmount - startingNode;
-			final float offsetHorizontalScale = horizontalScale + 18;
+			final double xOffset = target.getX() - middle.getX();
+			final double zOffset = target.getZ() - middle.getZ();
+			final double nodesLeft = nodeAmount - startingNode;
+			final double offsetHorizontalScale = horizontalScale + 18;
 
 			if ((xOffset * xOffset + zOffset * zOffset) - nodesLeft * nodesLeft > offsetHorizontalScale * offsetHorizontalScale) {
 				return;
@@ -145,11 +114,11 @@ public class RavinePopulator extends Populator {
 				continue;
 			}
 
-			final Point start = new Point(chunk.getWorld(), MathHelper.floor(target.getX() - horizontalSize) - chunk.getBlockX(-1),
-					MathHelper.floor(target.getY() - verticalSize) - 1, MathHelper.floor(target.getZ() - horizontalSize) - chunk.getBlockZ(-1));
-			final Point end = new Point(chunk.getWorld(), MathHelper.floor(target.getX() + horizontalSize) - chunk.getBlockX(1),
-					MathHelper.floor(target.getY() + verticalSize) + 1, MathHelper.floor(target.getZ() + horizontalSize) - chunk.getBlockZ(1));
-			final RavineNode node = new RavineNode(chunk, start, end, target, verticalSize, horizontalSize, horizontalScales);
+			final Vector3 start = new Vector3(MathHelper.floor(target.getX() - horizontalSize) - chunk.getFloorX() - 1,
+					MathHelper.floor(target.getY() - verticalSize) - 1, MathHelper.floor(target.getZ() - horizontalSize) - chunk.getFloorZ() - 1);
+			final Vector3 end = new Vector3(MathHelper.floor(target.getX() + horizontalSize) - chunk.getFloorX() + 1,
+					MathHelper.floor(target.getY() + verticalSize) + 1, MathHelper.floor(target.getZ() + horizontalSize) - chunk.getFloorZ() + 1);
+			final RavineNode node = new RavineNode(blockData, chunk, start, end, target, verticalSize, horizontalSize, horizontalScales);
 
 			if (node.canPlace()) {
 				node.place();
@@ -162,18 +131,18 @@ public class RavinePopulator extends Populator {
 	}
 
 	private static class RavineNode {
-		private final World world;
-		private final Chunk chunk;
-		private final Point start;
-		private final Point end;
-		private final Point target;
-		private final float verticalSize;
-		private final float horizontalSize;
-		private final float[] horizontalScales;
+		private final CuboidShortBuffer blockData;
+		private final Vector3 chunk;
+		private final Vector3 start;
+		private final Vector3 end;
+		private final Vector3 target;
+		private final double verticalSize;
+		private final double horizontalSize;
+		private final double[] horizontalScales;
 
-		private RavineNode(Chunk chunk, Point start, Point end, Point target,
-						   float verticalSize, float horizontalSize, float[] horizontalScales) {
-			this.world = chunk.getWorld();
+		private RavineNode(CuboidShortBuffer blockData, Vector3 chunk, Vector3 start, Vector3 end, Vector3 target,
+				double verticalSize, double horizontalSize, double[] horizontalScales) {
+			this.blockData = blockData;
 			this.chunk = chunk;
 			this.start = clamp(start);
 			this.end = clamp(end);
@@ -184,15 +153,16 @@ public class RavinePopulator extends Populator {
 		}
 
 		private boolean canPlace() {
-			for (int x = start.getBlockX(); x < end.getBlockX(); x++) {
-				for (int z = start.getBlockZ(); z < end.getBlockZ(); z++) {
-					for (int y = end.getBlockY() + 1; y >= start.getBlockY() - 1; y--) {
-						if (world.getBlockMaterial(chunk.getBlockX(x), y, chunk.getBlockZ(z)) instanceof Water) {
+			for (int x = start.getFloorX(); x < end.getFloorX(); x++) {
+				for (int z = start.getFloorZ(); z < end.getFloorZ(); z++) {
+					for (int y = end.getFloorY() + 1; y >= start.getFloorY() - 1; y--) {
+						if (blockData.get(chunk.getFloorX() + x, y, chunk.getFloorZ() + z)
+								== VanillaMaterials.WATER.getId()) {
 							return false;
 						}
-						if (y != start.getBlockY() - 1 && x != start.getBlockX() && x != end.getBlockX() - 1
-								&& z != start.getBlockZ() && z != end.getBlockZ() - 1) {
-							y = start.getBlockY();
+						if (y != start.getFloorY() - 1 && x != start.getFloorX() && x != end.getFloorX() - 1
+								&& z != start.getFloorZ() && z != end.getFloorZ() - 1) {
+							y = start.getFloorY();
 						}
 					}
 				}
@@ -201,26 +171,29 @@ public class RavinePopulator extends Populator {
 		}
 
 		private void place() {
-			for (int x = start.getBlockX(); x < end.getBlockX(); x++) {
-				final float xOffset = (chunk.getBlockX(x) + 0.5f - target.getX()) / horizontalSize;
-				for (int z = start.getBlockZ(); z < end.getBlockZ(); z++) {
-					final float zOffset = (chunk.getBlockZ(z) + 0.5f - target.getZ()) / horizontalSize;
+			for (int x = start.getFloorX(); x < end.getFloorX(); x++) {
+				final double xOffset = (chunk.getX() + x + 0.5 - target.getX()) / horizontalSize;
+				for (int z = start.getFloorZ(); z < end.getFloorZ(); z++) {
+					final double zOffset = (chunk.getZ() + z + 0.5 - target.getZ()) / horizontalSize;
 					if (xOffset * xOffset + zOffset * zOffset >= 1) {
 						continue;
 					}
-					for (int y = end.getBlockY() - 1; y >= start.getBlockY(); y--) {
-						final float yOffset = (y + 0.5f - target.getY()) / verticalSize;
+					for (int y = end.getFloorY() - 1; y >= start.getFloorY(); y--) {
+						final double yOffset = (y + 0.5 - target.getY()) / verticalSize;
 						if ((xOffset * xOffset + zOffset * zOffset) * horizontalScales[y] + (yOffset * yOffset) / 6 < 1) {
-							final Block block = world.getBlock(chunk.getBlockX(x), y, chunk.getBlockZ(z), world);
-							if (block.isMaterial(VanillaMaterials.STONE, VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
+							final int xx = chunk.getFloorX() + x;
+							final int zz = chunk.getFloorZ() + z;
+							final short id = blockData.get(xx, y, zz);
+							if (id == VanillaMaterials.STONE.getId() || id == VanillaMaterials.DIRT.getId()
+									|| id == VanillaMaterials.GRASS.getId()) {
 								if (y < 10) {
-									block.setMaterial(VanillaMaterials.STATIONARY_LAVA);
+									blockData.set(xx, y, zz, VanillaMaterials.STATIONARY_LAVA.getId());
 								} else {
-									if (block.isMaterial(VanillaMaterials.GRASS)
-											&& block.translate(BlockFace.BOTTOM).isMaterial(VanillaMaterials.DIRT)) {
-										block.translate(BlockFace.BOTTOM).setMaterial(VanillaMaterials.GRASS);
+									if (id == VanillaMaterials.GRASS.getId()
+											&& blockData.get(xx, y - 1, zz) == VanillaMaterials.DIRT.getId()) {
+										blockData.set(xx, y - 1, zz, VanillaMaterials.GRASS.getId());
 									}
-									block.setMaterial(VanillaMaterials.AIR);
+									blockData.set(xx, y, zz, VanillaMaterials.AIR.getId());
 								}
 							}
 						}
@@ -229,11 +202,11 @@ public class RavinePopulator extends Populator {
 			}
 		}
 
-		private static Point clamp(Point point) {
-			return new Point(point.getWorld(),
-					MathHelper.clamp(point.getBlockX(), 0, 16),
-					MathHelper.clamp(point.getBlockY(), 1, 120),
-					MathHelper.clamp(point.getBlockZ(), 0, 16));
+		private static Vector3 clamp(Vector3 point) {
+			return new Vector3(
+					MathHelper.clamp(point.getFloorX(), 0, 16),
+					MathHelper.clamp(point.getFloorY(), 1, 120),
+					MathHelper.clamp(point.getFloorZ(), 0, 16));
 		}
 	}
 }

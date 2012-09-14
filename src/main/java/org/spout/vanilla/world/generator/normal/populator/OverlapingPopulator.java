@@ -24,43 +24,38 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator;
+package org.spout.vanilla.world.generator.normal.populator;
 
-import java.util.Arrays;
+import java.util.Random;
 
-import org.spout.api.generator.biome.Biome;
+import org.spout.api.generator.GeneratorPopulator;
 import org.spout.api.generator.biome.BiomeManager;
-import org.spout.api.generator.biome.Simple2DBiomeManager;
-import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.geo.cuboid.Region;
+import org.spout.api.math.Vector3;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
-public abstract class VanillaBiomeChunkGenerator extends VanillaBiomeGenerator {
-	private final int height;
-	private final Biome biome;
-
-	public VanillaBiomeChunkGenerator(int height, Biome biome) {
-		this.height = height;
-		this.biome = biome;
-	}
+public abstract class OverlapingPopulator implements GeneratorPopulator {
+	protected static final byte OVERLAP = 8;
 
 	@Override
-	public BiomeManager generateBiomes(int chunkX, int chunkZ, World world) {
-		final BiomeManager biomeManager = new Simple2DBiomeManager(chunkX, chunkZ);
-		final byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
-		Arrays.fill(biomeData, (byte) biome.getId());
-		biomeManager.deserialize(biomeData);
-		return biomeManager;
-	}
-
-	@Override
-	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ, World world) {
-		if (chunkY < 0) {
-			super.generate(blockData, chunkX, chunkY, chunkZ, world);
-		} else if (chunkY * 16 < height) {
-			final int x = chunkX << Chunk.BLOCKS.BITS;
-			final int z = chunkZ << Chunk.BLOCKS.BITS;
-			generateTerrain(blockData, x, chunkY << Chunk.BLOCKS.BITS, z, world.getBiomeManager(x, z, true), world.getSeed());
+	public void populate(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
+		if (y >= Region.BLOCKS.SIZE) {
+			return;
+		}
+		final int chunkX = x >> Chunk.BLOCKS.BITS;
+		final int chunkZ = z >> Chunk.BLOCKS.BITS;
+		final Random worldRandom = new Random(seed);
+		final long firstSeed = worldRandom.nextLong();
+		final long secondSeed = worldRandom.nextLong();
+		for (int cx = chunkX - OVERLAP; cx <= chunkX + OVERLAP; cx++) {
+			for (int cz = chunkZ - OVERLAP; cz <= chunkZ + OVERLAP; cz++) {
+				final Random chunkRandom = new Random((cx * firstSeed) ^ (cz * secondSeed) ^ seed);
+				generate(blockData, new Vector3(cx << Chunk.BLOCKS.BITS, 0, cz << Chunk.BLOCKS.BITS),
+						new Vector3(chunkX << Chunk.BLOCKS.BITS, 0, chunkZ << Chunk.BLOCKS.BITS), chunkRandom);
+			}
 		}
 	}
+
+	protected abstract void generate(CuboidShortBuffer blockData, Vector3 chunk, Vector3 originChunk, Random random);
 }

@@ -36,8 +36,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.components.substance.material.Chest;
-import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.object.RandomObject;
 
@@ -63,13 +61,13 @@ public class LootChestObject extends RandomObject {
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
-		w.setBlockMaterial(x, y, z, VanillaMaterials.CHEST, (short) 0, w);
-		final Chest chest = (Chest) w.getBlockComponent(x, y, z);
-		final ChestInventory inv = chest.getInventory();
-		for (int i = 0; i < getMaxNumberOfStacks(); i++) {
-			final int slot = random.nextInt(inv.getSize());
-			inv.setItem(slot, getNextStack());
-		}
+		//w.setBlockMaterial(x, y, z, VanillaMaterials.CHEST, (short) 0, w);
+		//final Chest chest = (Chest) w.getBlockComponent(x, y, z);
+		//final ChestInventory inv = chest.getInventory();
+		//for (int i = 0; i < getMaxNumberOfStacks(); i++) {
+		//	final int slot = random.nextInt(inv.getSize());
+		//	inv.setItem(slot, getNextStack());
+		//}
 	}
 
 	public ItemStack getNextStack() {

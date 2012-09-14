@@ -38,10 +38,12 @@ import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.generator.biome.BiomeManager;
+import org.spout.api.generator.biome.BiomePopulator;
 import org.spout.api.generator.biome.BiomeSelector;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
@@ -52,8 +54,16 @@ import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.VanillaBiomeGenerator;
 import org.spout.vanilla.world.generator.VanillaBiomes;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
+import org.spout.vanilla.world.generator.normal.populator.CavePopulator;
+import org.spout.vanilla.world.generator.normal.populator.DungeonPopulator;
+import org.spout.vanilla.world.generator.normal.populator.FallingLiquidPopulator;
 import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator;
-import org.spout.vanilla.world.selector.VanillaBiomeSelector;
+import org.spout.vanilla.world.generator.normal.populator.OrePopulator;
+import org.spout.vanilla.world.generator.normal.populator.PondPopulator;
+import org.spout.vanilla.world.generator.normal.populator.RavinePopulator;
+import org.spout.vanilla.world.generator.normal.populator.RockyShieldPopulator;
+import org.spout.vanilla.world.generator.normal.populator.SnowPopulator;
+import org.spout.vanilla.world.generator.normal.selector.VanillaBiomeSelector;
 
 public class NormalGenerator extends VanillaBiomeGenerator {
 	public static final int HEIGHT = 256;
@@ -124,10 +134,15 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		// if you want to check out a particular biome, use this!
 		//setSelector(new PerBlockBiomeSelector(VanillaBiomes.MOUNTAINS));
 		setSelector(new VanillaBiomeSelector());
-		addPopulators(new GroundCoverPopulator() //, new RockyShieldPopulator(), new CavePopulator(), new RavinePopulator(),
-				//new PondPopulator(), new DungeonPopulator(), new OrePopulator(), new BiomePopulator(getBiomeMap()),
-				//new FallingLiquidPopulator(), new SnowPopulator()
-		);
+		addGeneratorPopulators(
+				new GroundCoverPopulator(), new RockyShieldPopulator(),
+				new CavePopulator(), new RavinePopulator()
+				);
+		addPopulators(
+				new PondPopulator(), new DungeonPopulator(), new OrePopulator(),
+				new BiomePopulator(),
+				new FallingLiquidPopulator(), new SnowPopulator()
+				);
 		register(VanillaBiomes.OCEAN);
 		register(VanillaBiomes.FROZEN_OCEAN);
 		register(VanillaBiomes.PLAINS);
@@ -158,9 +173,12 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 
 	@Override
 	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
+		if (y >= HEIGHT) {
+			return;
+		}
 		final Vector3 size = blockData.getSize();
 		final int sizeX = size.getFloorX();
-		final int sizeY = size.getFloorY();
+		final int sizeY = MathHelper.clamp(size.getFloorY(), 0, HEIGHT);
 		final int sizeZ = size.getFloorZ();
 		ELEVATION.setSeed((int) seed * 23);
 		ROUGHNESS.setSeed((int) seed * 29);
@@ -169,8 +187,8 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		BLOCK_REPLACER.setSeed((int) seed * 127);
 		final double[][][] noise = WorldGeneratorUtils.fastNoise(FINAL, sizeX, sizeY, sizeZ, 4, x, y, z);
 		final BiomeSelector selector = getSelector();
-		for (byte xx = 0; xx < sizeX; xx++) {
-			for (byte zz = 0; zz < sizeZ; zz++) {
+		for (int xx = 0; xx < sizeX; xx++) {
+			for (int zz = 0; zz < sizeZ; zz++) {
 				float maxSum = 0;
 				float minSum = 0;
 				byte count = 0;
@@ -194,7 +212,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 				final double smoothHeight = (maxElevation - minElevation) / 2d;
 				final double lowSmoothStart = minElevation + smoothHeight;
 				final double upperSmoothStart = maxElevation - smoothHeight;
-				for (byte yy = 0; yy < sizeY; yy++) {
+				for (int yy = 0; yy < sizeY; yy++) {
 					double noiseValue = noise[xx][yy][zz];
 					if (smoothHeight > 0) {
 						if (yy + y < lowSmoothStart) {

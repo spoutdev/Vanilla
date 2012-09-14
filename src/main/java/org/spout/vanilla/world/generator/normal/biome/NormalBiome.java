@@ -28,41 +28,25 @@ package org.spout.vanilla.world.generator.normal.biome;
 
 import java.util.Random;
 
-import net.royawesome.jlibnoise.NoiseQuality;
-import net.royawesome.jlibnoise.module.source.Perlin;
-
 import org.spout.api.generator.biome.Decorator;
-import org.spout.api.geo.World;
 
 import org.spout.vanilla.material.block.plant.TallGrass;
 import org.spout.vanilla.world.generator.VanillaBiome;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator.TallGrassFactory;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator.TreeWGOFactory;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
+import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator.GroundCoverLayer;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public abstract class NormalBiome extends VanillaBiome {
-	// a perlin for determining groud cover depth
-	protected static final Perlin BLOCK_REPLACER = new Perlin();
 	// elevation values
 	protected float min;
 	protected float max;
-
-	static {
-		BLOCK_REPLACER.setFrequency(0.35);
-		BLOCK_REPLACER.setLacunarity(1);
-		BLOCK_REPLACER.setNoiseQuality(NoiseQuality.FAST);
-		BLOCK_REPLACER.setPersistence(0.7);
-		BLOCK_REPLACER.setOctaveCount(1);
-	}
+	// ground cover
+	protected GroundCoverLayer[] groundCover = new GroundCoverLayer[0];
 
 	protected NormalBiome(int biomeId, Decorator... decorators) {
 		super(biomeId, decorators);
-	}
-
-	public int placeGroundCover(World world, int x, int y, int z) {
-		BLOCK_REPLACER.setSeed((int) world.getSeed() * 127);
-		return 0;
 	}
 
 	protected void setMinMax(float min, float max) {
@@ -76,6 +60,14 @@ public abstract class NormalBiome extends VanillaBiome {
 
 	public float getMax() {
 		return max;
+	}
+
+	protected void setTopCover(GroundCoverLayer[] groundCover) {
+		this.groundCover = groundCover;
+	}
+
+	public GroundCoverLayer[] getGroundCover() {
+		return groundCover;
 	}
 
 	public static class NormalTreeWGOFactory implements TreeWGOFactory {

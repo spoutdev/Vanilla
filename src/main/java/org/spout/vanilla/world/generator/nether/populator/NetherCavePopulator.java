@@ -28,78 +28,48 @@ package org.spout.vanilla.world.generator.nether.populator;
 
 import java.util.Random;
 
-import org.spout.api.generator.Populator;
-import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.SinusHelper;
 import org.spout.api.math.Vector3;
+import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.liquid.Lava;
+import org.spout.vanilla.world.generator.normal.populator.OverlapingPopulator;
 
-public class NetherCavePopulator extends Populator {
-	private static final byte OVERLAP = 8;
-
-	public NetherCavePopulator() {
-		super(true);
-	}
-
+public class NetherCavePopulator extends OverlapingPopulator {
 	@Override
-	public void populate(Chunk chunk, Random random) {
-		if (chunk.getY() != 4) {
-			return;
-		}
-		final World world = chunk.getWorld();
-		final int chunkX = chunk.getX();
-		final int chunkZ = chunk.getZ();
-		final long worldSeed = world.getSeed();
-		final Random worldRandom = new Random(worldSeed);
-		final long firstSeed = worldRandom.nextLong();
-		final long secondSeed = worldRandom.nextLong();
-		for (int cx = chunkX - OVERLAP; cx <= chunkX + OVERLAP; cx++) {
-			for (int cz = chunkZ - OVERLAP; cz <= chunkZ + OVERLAP; cz++) {
-				final Random chunkRandom = new Random((cx * firstSeed) ^ (cz * secondSeed) ^ worldSeed);
-				generateCave(world.getChunk(cx, 4, cz), chunk, chunkRandom);
-			}
-		}
-	}
-
-	private void generateCave(Chunk chunk, Chunk originChunk, Random random) {
+	protected void generate(CuboidShortBuffer blockData, Vector3 chunk, Vector3 originChunk, Random random) {
 		if (random.nextInt(5) != 0) {
 			return;
 		}
 
 		final int numberOfCaves = random.nextInt(10);
-		final World world = chunk.getWorld();
 
 		for (int caveCount = 0; caveCount < numberOfCaves; caveCount++) {
-			final Point target = new Point(world, chunk.getBlockX(random),
-					random.nextInt(random.nextInt(120) + 8), chunk.getBlockZ(random));
+			final Vector3 target = new Vector3(chunk.getX() + random.nextInt(16),
+					random.nextInt(random.nextInt(120) + 8), chunk.getZ() + random.nextInt(16));
 			int numberOfSmallCaves = 1;
 
 			if (random.nextInt(4) == 0) {
-				generateLargeCaveNode(originChunk, target, new Random(random.nextLong()));
+				generateLargeCaveNode(blockData, originChunk, target, new Random(random.nextLong()));
 				numberOfSmallCaves += random.nextInt(4);
 			}
 
 			for (int count = 0; count < numberOfSmallCaves; count++) {
-				final float randomHorizontalAngle = random.nextFloat() * (float) Math.PI * 2;
-				final float randomVerticalAngle = ((random.nextFloat() - 0.5f) * 2) / 8;
-				float horizontalScale = random.nextFloat() * 2 + random.nextFloat();
-				generateCaveBranch(originChunk, target, horizontalScale, 1, randomHorizontalAngle, randomVerticalAngle, 0, 0, new Random(random.nextLong()));
+				final double randomHorizontalAngle = random.nextDouble() * Math.PI * 2;
+				final double randomVerticalAngle = ((random.nextDouble() - 0.5f) * 2) / 8;
+				double horizontalScale = random.nextDouble() * 2 + random.nextDouble();
+				generateCaveBranch(blockData, originChunk, target, horizontalScale, 1, randomHorizontalAngle, randomVerticalAngle, 0, 0, new Random(random.nextLong()));
 			}
 		}
 	}
 
-	private void generateCaveBranch(Chunk chunk, Point target, float horizontalScale, float verticalScale,
-									float horizontalAngle, float verticalAngle, int startingNode, int nodeAmount, Random random) {
+	private void generateCaveBranch(CuboidShortBuffer blockData, Vector3 chunk, Vector3 target, double horizontalScale, double verticalScale,
+			double horizontalAngle, double verticalAngle, int startingNode, int nodeAmount, Random random) {
 
-		final Vector3 middle = new Vector3(chunk.getBlockX(8), 0, chunk.getBlockZ(8));
-		float horizontalOffset = 0;
-		float verticalOffset = 0;
+		final Vector3 middle = new Vector3(chunk.getX() + 8, 0, chunk.getZ() + 8);
+		double horizontalOffset = 0;
+		double verticalOffset = 0;
 		random = new Random(random.nextLong());
 
 		if (nodeAmount <= 0) {
@@ -119,9 +89,9 @@ public class NetherCavePopulator extends Populator {
 		}
 
 		for (; startingNode < nodeAmount; startingNode++) {
-			final float horizontalSize = (float) (1.5 + SinusHelper.sin(startingNode * (float) Math.PI / nodeAmount) * horizontalScale);
-			final float verticalSize = horizontalSize * verticalScale;
-			target = target.add(SinusHelper.get3DAxis(horizontalAngle, verticalAngle));
+			final double horizontalSize = 1.5 + SinusHelper.sin((float) (startingNode * Math.PI / nodeAmount)) * horizontalScale;
+			final double verticalSize = horizontalSize * verticalScale;
+			target = target.add(SinusHelper.get3DAxis((float) horizontalAngle, (float) verticalAngle));
 
 			if (extraVerticalScale) {
 				verticalAngle *= 0.92;
@@ -133,14 +103,14 @@ public class NetherCavePopulator extends Populator {
 			horizontalAngle += horizontalOffset * 0.1;
 			verticalOffset *= 0.9;
 			horizontalOffset *= 0.75;
-			verticalOffset += (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 2;
-			horizontalOffset += (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 4;
+			verticalOffset += (random.nextDouble() - random.nextDouble()) * random.nextDouble() * 2;
+			horizontalOffset += (random.nextDouble() - random.nextDouble()) * random.nextDouble() * 4;
 
 			if (!lastNode) {
 
 				if (startingNode == intersectionNode && horizontalScale > 1) {
-					generateCaveBranch(chunk, target, random.nextFloat() * 0.5f + 0.5f, 1, horizontalAngle - ((float) Math.PI / 2), verticalAngle / 3, startingNode, nodeAmount, new Random(random.nextLong()));
-					generateCaveBranch(chunk, target, random.nextFloat() * 0.5f + 0.5f, 1, horizontalAngle + ((float) Math.PI / 2), verticalAngle / 3, startingNode, nodeAmount, new Random(random.nextLong()));
+					generateCaveBranch(blockData, chunk, target, random.nextDouble() * 0.5f + 0.5f, 1, horizontalAngle - ((float) Math.PI / 2), verticalAngle / 3, startingNode, nodeAmount, new Random(random.nextLong()));
+					generateCaveBranch(blockData, chunk, target, random.nextDouble() * 0.5f + 0.5f, 1, horizontalAngle + ((float) Math.PI / 2), verticalAngle / 3, startingNode, nodeAmount, new Random(random.nextLong()));
 					return;
 				}
 
@@ -149,10 +119,10 @@ public class NetherCavePopulator extends Populator {
 				}
 			}
 
-			final float xOffset = target.getX() - middle.getX();
-			final float zOffset = target.getZ() - middle.getZ();
-			final float nodesLeft = nodeAmount - startingNode;
-			final float offsetHorizontalScale = horizontalScale + 18;
+			final double xOffset = target.getX() - middle.getX();
+			final double zOffset = target.getZ() - middle.getZ();
+			final double nodesLeft = nodeAmount - startingNode;
+			final double offsetHorizontalScale = horizontalScale + 18;
 
 			if ((xOffset * xOffset + zOffset * zOffset) - nodesLeft * nodesLeft > offsetHorizontalScale * offsetHorizontalScale) {
 				return;
@@ -165,11 +135,11 @@ public class NetherCavePopulator extends Populator {
 				continue;
 			}
 
-			final Point start = new Point(chunk.getWorld(), MathHelper.floor(target.getX() - horizontalSize) - chunk.getBlockX(-1),
-					MathHelper.floor(target.getY() - verticalSize) - 1, MathHelper.floor(target.getZ() - horizontalSize) - chunk.getBlockZ(-1));
-			final Point end = new Point(chunk.getWorld(), MathHelper.floor(target.getX() + horizontalSize) - chunk.getBlockX(1),
-					MathHelper.floor(target.getY() + verticalSize) + 1, MathHelper.floor(target.getZ() + horizontalSize) - chunk.getBlockZ(1));
-			final NetherCaveNode node = new NetherCaveNode(chunk, start, end, target, verticalSize, horizontalSize);
+			final Vector3 start = new Vector3(MathHelper.floor(target.getX() - horizontalSize) - chunk.getFloorX() - 1,
+					MathHelper.floor(target.getY() - verticalSize) - 1, MathHelper.floor(target.getZ() - horizontalSize) - chunk.getFloorZ() - 1);
+			final Vector3 end = new Vector3(MathHelper.floor(target.getX() + horizontalSize) - chunk.getFloorX() + 1,
+					MathHelper.floor(target.getY() + verticalSize) + 1, MathHelper.floor(target.getZ() + horizontalSize) - chunk.getFloorZ() + 1);
+			final NetherCaveNode node = new NetherCaveNode(blockData, chunk, start, end, target, verticalSize, horizontalSize);
 
 			if (node.canPlace()) {
 				node.place();
@@ -181,22 +151,22 @@ public class NetherCavePopulator extends Populator {
 		}
 	}
 
-	private void generateLargeCaveNode(Chunk chunk, Point target, Random random) {
-		generateCaveBranch(chunk, target, random.nextFloat() * 6 + 1, 0.5f, 0, 0, -1, -1, random);
+	private void generateLargeCaveNode(CuboidShortBuffer blockData, Vector3 chunk, Vector3 target, Random random) {
+		generateCaveBranch(blockData, chunk, target, random.nextFloat() * 6 + 1, 0.5f, 0, 0, -1, -1, random);
 	}
 
 	private static class NetherCaveNode {
-		private final World world;
-		private final Chunk chunk;
-		private final Point start;
-		private final Point end;
-		private final Point target;
-		private final float verticalSize;
-		private final float horizontalSize;
+		private final CuboidShortBuffer blockData;
+		private final Vector3 chunk;
+		private final Vector3 start;
+		private final Vector3 end;
+		private final Vector3 target;
+		private final double verticalSize;
+		private final double horizontalSize;
 
-		private NetherCaveNode(Chunk chunk, Point start, Point end, Point target,
-							   float verticalSize, float horizontalSize) {
-			this.world = chunk.getWorld();
+		private NetherCaveNode(CuboidShortBuffer blockData, Vector3 chunk, Vector3 start, Vector3 end, Vector3 target,
+				double verticalSize, double horizontalSize) {
+			this.blockData = blockData;
 			this.chunk = chunk;
 			this.start = clamp(start);
 			this.end = clamp(end);
@@ -206,15 +176,16 @@ public class NetherCavePopulator extends Populator {
 		}
 
 		private boolean canPlace() {
-			for (int x = start.getBlockX(); x < end.getBlockX(); x++) {
-				for (int z = start.getBlockZ(); z < end.getBlockZ(); z++) {
-					for (int y = end.getBlockY() + 1; y >= start.getBlockY() - 1; y--) {
-						if (world.getBlockMaterial(chunk.getBlockX(x), y, chunk.getBlockZ(z)) instanceof Lava) {
+			for (int x = start.getFloorX(); x < end.getFloorX(); x++) {
+				for (int z = start.getFloorZ(); z < end.getFloorZ(); z++) {
+					for (int y = end.getFloorY() + 1; y >= start.getFloorY() - 1; y--) {
+						if (blockData.get(chunk.getFloorX() + x, y, chunk.getFloorZ() + z)
+								== VanillaMaterials.LAVA.getId()) {
 							return false;
 						}
-						if (y != start.getBlockY() - 1 && x != start.getBlockX() && x != end.getBlockX() - 1
-								&& z != start.getBlockZ() && z != end.getBlockZ() - 1) {
-							y = start.getBlockY();
+						if (y != start.getFloorY() - 1 && x != start.getFloorX() && x != end.getFloorX() - 1
+								&& z != start.getFloorZ() && z != end.getFloorZ() - 1) {
+							y = start.getFloorY();
 						}
 					}
 				}
@@ -223,19 +194,21 @@ public class NetherCavePopulator extends Populator {
 		}
 
 		private void place() {
-			for (int x = start.getBlockX(); x < end.getBlockX(); x++) {
-				final float xOffset = (chunk.getBlockX(x) + 0.5f - target.getX()) / horizontalSize;
-				for (int z = start.getBlockZ(); z < end.getBlockZ(); z++) {
-					final float zOffset = (chunk.getBlockZ(z) + 0.5f - target.getZ()) / horizontalSize;
+			for (int x = start.getFloorX(); x < end.getFloorX(); x++) {
+				final double xOffset = (chunk.getX() + x + 0.5f - target.getX()) / horizontalSize;
+				for (int z = start.getFloorZ(); z < end.getFloorZ(); z++) {
+					final double zOffset = (chunk.getZ() + z + 0.5f - target.getZ()) / horizontalSize;
 					if (xOffset * xOffset + zOffset * zOffset >= 1) {
 						continue;
 					}
-					for (int y = end.getBlockY() - 1; y >= start.getBlockY(); y--) {
-						final float yOffset = (y + 0.5f - target.getY()) / verticalSize;
+					for (int y = end.getFloorY() - 1; y >= start.getFloorY(); y--) {
+						final double yOffset = (y + 0.5f - target.getY()) / verticalSize;
 						if (yOffset > -0.7 && xOffset * xOffset + yOffset * yOffset + zOffset * zOffset < 1) {
-							final Block block = world.getBlock(chunk.getBlockX(x), y, chunk.getBlockZ(z), world);
-							if (block.isMaterial(VanillaMaterials.NETHERRACK)) {
-								block.setMaterial(VanillaMaterials.AIR);
+							final int xx = chunk.getFloorX() + x;
+							final int zz = chunk.getFloorZ() + z;
+							final short id = blockData.get(xx, y, zz);
+							if (id == VanillaMaterials.NETHERRACK.getId()) {
+								blockData.set(xx, y, zz, VanillaMaterials.AIR.getId());
 							}
 						}
 					}
@@ -243,11 +216,11 @@ public class NetherCavePopulator extends Populator {
 			}
 		}
 
-		private static Point clamp(Point point) {
-			return new Point(point.getWorld(),
-					MathHelper.clamp(point.getBlockX(), 0, 16),
-					MathHelper.clamp(point.getBlockY(), 1, 120),
-					MathHelper.clamp(point.getBlockZ(), 0, 16));
+		private static Vector3 clamp(Vector3 point) {
+			return new Vector3(
+					MathHelper.clamp(point.getFloorX(), 0, 16),
+					MathHelper.clamp(point.getFloorY(), 1, 120),
+					MathHelper.clamp(point.getFloorZ(), 0, 16));
 		}
 	}
 }

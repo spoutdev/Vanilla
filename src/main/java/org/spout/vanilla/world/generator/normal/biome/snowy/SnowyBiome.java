@@ -24,16 +24,16 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome.icy;
+package org.spout.vanilla.world.generator.normal.biome.snowy;
 
-public class TundraHillsBiome extends TundraBiome {
-	public TundraHillsBiome(int biomeId) {
-		super(biomeId);
-		setMinMax(51, 90);
-	}
+import org.spout.api.generator.biome.Decorator;
 
-	@Override
-	public String getName() {
-		return "Tundra Hills";
+import org.spout.vanilla.data.Climate;
+import org.spout.vanilla.world.generator.normal.biome.grassy.GrassyBiome;
+
+public abstract class SnowyBiome extends GrassyBiome {
+	public SnowyBiome(int biomeId, Decorator... decorators) {
+		super(biomeId, decorators);
+		setClimate(Climate.COLD);
 	}
 }

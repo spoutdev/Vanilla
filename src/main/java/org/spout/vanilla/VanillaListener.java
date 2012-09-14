@@ -27,6 +27,7 @@
 package org.spout.vanilla;
 
 import org.spout.api.chat.style.ChatStyle;
+import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
 import org.spout.api.event.Order;
@@ -35,6 +36,7 @@ import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 
 import org.spout.vanilla.components.living.Human;
+import org.spout.vanilla.components.window.DefaultWindow;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
@@ -63,12 +65,14 @@ public class VanillaListener implements Listener {
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		Human human = event.getPlayer().add(Human.class);
-		human.setName(event.getPlayer().getName());
+		Player player = event.getPlayer();
+		Human human = player.add(Human.class);
+		human.setName(player.getName());
 		//TODO: We won't want to force this after player saving is hooked back up.
-		GameMode defaultMode = event.getPlayer().getWorld().getDataMap().get(VanillaData.GAMEMODE);
+		GameMode defaultMode = player.getWorld().getDataMap().get(VanillaData.GAMEMODE);
 		if (defaultMode != null) {
 			human.setGamemode(defaultMode);
 		}
+		player.add(DefaultWindow.class);
 	}
 }

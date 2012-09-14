@@ -56,11 +56,11 @@ public class WindowCreativeActionHandler extends MessageHandler<WindowCreativeAc
 		//			}
 		//		} else if (message.getSlot() == -1) {
 		//			active.setItemOnCursor(message.getItem());
-		//			active.onOutsideClick();
+		//			active.outsideClick();
 		//		} else {
 		//			Entry<InventoryBase, Integer> entry = active.getInventoryEntry(message.getSlot());
 		//			if (entry != null) {
-		//				active.onCreativeClick(entry.getKey(), entry.getValue(), message.getItem());
+		//				active.creativeClick(entry.getKey(), entry.getValue(), message.getItem());
 		//			}
 		//		}
 	}

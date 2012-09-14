@@ -26,10 +26,15 @@
  */
 package org.spout.vanilla.protocol.handler.window;
 
+import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.components.window.Window;
 import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
+import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
+import org.spout.vanilla.window.ClickArguments;
+import org.spout.vanilla.window.InventoryEntry;
 
 public final class WindowClickHandler extends MessageHandler<WindowClickMessage> {
 	@Override
@@ -37,5 +42,23 @@ public final class WindowClickHandler extends MessageHandler<WindowClickMessage>
 		if (!session.hasPlayer()) {
 			return;
 		}
+		Player player = session.getPlayer();
+		Window window = player.get(Window.class);
+		boolean result = false;
+		int slot = message.getSlot();
+		System.out.println("Window: " + window.getClass().getCanonicalName());
+		System.out.println("Window clicked at slot " + slot);
+		if (slot == 64537) {
+			System.out.println("Outside click");
+			result = window.outsideClick();
+		} else {
+			System.out.println("Getting entry");
+			InventoryEntry entry = window.getInventoryEntry(slot);
+			if (entry != null) {
+				System.out.println("Clicking");
+				result = window.click(entry.getInventory(), entry.getSlot(), new ClickArguments(message.isRightClick(), message.isShift()));
+			}
+		}
+		session.send(false, new WindowTransactionMessage(window, message.getTransaction(), result));
 	}
 }

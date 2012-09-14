@@ -24,11 +24,11 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome.icy;
+package org.spout.vanilla.world.generator.normal.biome.snowy;
 
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 
-public class FrozenOceanBiome extends IcyBiome {
+public class FrozenOceanBiome extends SnowyBiome {
 	public FrozenOceanBiome(int biomeId) {
 		super(biomeId, new SandAndClayDecorator());
 		setMinMax(44, 67);

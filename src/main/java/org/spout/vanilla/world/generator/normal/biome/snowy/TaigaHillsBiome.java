@@ -24,18 +24,16 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome.icy;
+package org.spout.vanilla.world.generator.normal.biome.snowy;
 
-import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
-
-public class FrozenRiverBiome extends IcyBiome {
-	public FrozenRiverBiome(int biomeId) {
-		super(biomeId, new SandAndClayDecorator());
-		setMinMax(49, 55);
+public class TaigaHillsBiome extends TaigaBiome {
+	public TaigaHillsBiome(int biomeId) {
+		super(biomeId);
+		setMinMax(46, 100);
 	}
 
 	@Override
 	public String getName() {
-		return "Frozen River";
+		return "Taiga Hills";
 	}
 }

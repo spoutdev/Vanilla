@@ -27,35 +27,20 @@
 package org.spout.vanilla.world.generator.normal.biome.sandy;
 
 import org.spout.api.generator.biome.Decorator;
-import org.spout.api.geo.World;
-import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
+import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator;
+import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator.GroundCoverVariableLayer;
 
 public abstract class SandyBiome extends NormalBiome {
 	public SandyBiome(int biomeId, Decorator... decorators) {
 		super(biomeId, decorators);
-		this.setClimate(Climate.WARM);
-	}
-
-	@Override
-	public int placeGroundCover(World world, int x, int y, int z) {
-		super.placeGroundCover(world, x, y, z);
-		final byte sandDepth = (byte) MathHelper.clamp(Math.round(BLOCK_REPLACER.GetValue(x, -5, z) * 0.5 + 3.5), 3, 4);
-		final byte sandstoneDepth = (byte) MathHelper.clamp(Math.round(BLOCK_REPLACER.GetValue(x, -6, z) + 2), 1, 3);
-		final byte maxGroudCoverDepth = (byte) (sandDepth + sandstoneDepth);
-		for (byte depth = 0; depth < maxGroudCoverDepth; depth++) {
-			if (world.getBlockMaterial(x, y - depth, z).isMaterial(VanillaMaterials.AIR)) {
-				return maxGroudCoverDepth;
-			}
-			if (depth < sandDepth) {
-				world.setBlockMaterial(x, y - depth, z, VanillaMaterials.SAND, (short) 0, world);
-			} else {
-				world.setBlockMaterial(x, y - depth, z, VanillaMaterials.SANDSTONE, (short) 0, world);
-			}
-		}
-		return maxGroudCoverDepth;
+		setClimate(Climate.WARM);
+		setTopCover(new GroundCoverPopulator.GroundCoverLayer[]{
+					new GroundCoverVariableLayer(VanillaMaterials.SAND, VanillaMaterials.SAND, (byte) 3, (byte) 4),
+					new GroundCoverVariableLayer(VanillaMaterials.SANDSTONE, VanillaMaterials.SANDSTONE, (byte) 1, (byte) 3)
+				});
 	}
 }

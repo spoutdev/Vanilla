@@ -30,13 +30,17 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.decorator.HugeMushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
+import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator;
 
 public class MushroomBiome extends GrassyBiome {
 	public MushroomBiome(int biomeId) {
 		super(biomeId, new SandAndClayDecorator(), new HugeMushroomDecorator(),
 				new MushroomDecorator((byte) 1, (byte) 1));
 		setMinMax(55, 90);
-		this.topCover = VanillaMaterials.MYCELIUM;
+		setTopCover(new GroundCoverPopulator.GroundCoverLayer[]{
+					new GroundCoverPopulator.GroundCoverUniformLayer(VanillaMaterials.MYCELIUM, VanillaMaterials.DIRT, (byte) 1),
+					new GroundCoverPopulator.GroundCoverVariableLayer(VanillaMaterials.DIRT, VanillaMaterials.DIRT, (byte) 1, (byte) 4)
+				});
 	}
 
 	@Override

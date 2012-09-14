@@ -36,8 +36,8 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.normal.biome.grassy.GrassyBiome;
-import org.spout.vanilla.world.generator.normal.biome.icy.IcyBiome;
 import org.spout.vanilla.world.generator.normal.biome.sandy.SandyBiome;
+import org.spout.vanilla.world.generator.normal.biome.snowy.SnowyBiome;
 import org.spout.vanilla.world.generator.object.RandomObject;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 
@@ -149,14 +149,14 @@ public class PondObject extends RandomObject implements RandomizableObject {
 							final BlockMaterial top;
 							final Biome biome = block.getBiomeType();
 							if (biome instanceof GrassyBiome) {
-								top = ((GrassyBiome) biome).getTopCover();
+								top = ((GrassyBiome) biome).getGroundCover()[0].getMaterial(true);
 							} else {
 								top = VanillaMaterials.GRASS;
 							}
 							block.setMaterial(top);
 						} else if (material == VanillaMaterials.STATIONARY_WATER
 								&& block.translate(0, 1, 0).isMaterial(VanillaMaterials.AIR)) {
-							if (block.getBiomeType() instanceof IcyBiome) {
+							if (block.getBiomeType() instanceof SnowyBiome) {
 								block.setMaterial(VanillaMaterials.ICE);
 							}
 						}

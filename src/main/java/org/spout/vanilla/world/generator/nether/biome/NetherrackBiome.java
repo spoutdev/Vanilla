@@ -26,9 +26,7 @@
  */
 package org.spout.vanilla.world.generator.nether.biome;
 
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaBiome;
-import org.spout.vanilla.world.generator.nether.decorator.BlockPatchDecorator;
 import org.spout.vanilla.world.generator.nether.decorator.FireDecorator;
 import org.spout.vanilla.world.generator.nether.decorator.GlowstoneDecorator;
 import org.spout.vanilla.world.generator.nether.decorator.LavaFallDecorator;
@@ -36,8 +34,7 @@ import org.spout.vanilla.world.generator.nether.decorator.NetherMushroomDecorato
 
 public class NetherrackBiome extends VanillaBiome {
 	public NetherrackBiome(int id) {
-		super(id, new BlockPatchDecorator(VanillaMaterials.SOUL_SAND), new BlockPatchDecorator(VanillaMaterials.GRAVEL),
-				new LavaFallDecorator(), new FireDecorator(), new GlowstoneDecorator(), new NetherMushroomDecorator());
+		super(id, new LavaFallDecorator(), new FireDecorator(), new GlowstoneDecorator(), new NetherMushroomDecorator());
 	}
 
 	@Override

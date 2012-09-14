@@ -37,7 +37,6 @@ public class SlotIndexGrid extends SlotIndexCollection {
 		int index = 0;
 		for (int w = 0; w < width; w++) {
 			for (int l = 0; l < length; l++) {
-				int slot = l + getSize() - (offset * w);
 				slots[index] = l + getSize() - (offset * w);
 				index++;
 			}

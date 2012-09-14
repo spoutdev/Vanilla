@@ -46,6 +46,8 @@ import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowItemsEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
 import org.spout.vanilla.event.window.WindowSlotEvent;
+import org.spout.vanilla.inventory.player.MainInventory;
+import org.spout.vanilla.inventory.player.PlayerInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.util.InventoryUtil;
 import org.spout.vanilla.util.intmap.SlotIndexCollection;
@@ -56,28 +58,32 @@ import org.spout.vanilla.window.InventoryEntry;
 import org.spout.vanilla.window.WindowType;
 
 public abstract class Window extends EntityComponent implements InventoryViewer {
+	private static final SlotIndexGrid MAIN = new SlotIndexGrid(9, 3);
+	private static final SlotIndexRow QUICK_BAR = new SlotIndexRow(9);
 	protected final TIntObjectMap<ItemStack> queuedInventoryUpdates = new TIntObjectHashMap<ItemStack>();
 	protected final Map<InventoryBase, SlotIndexCollection> inventories = new HashMap<InventoryBase, SlotIndexCollection>();
 	protected final int instanceId = InventoryUtil.nextWindowId();
 	protected int offset;
-	protected WindowType type = WindowType.DEFAULT;
-	protected boolean opened = false;
-	protected String title = null;
-	protected ItemStack cursorItem = null;
+	protected WindowType type;
+	protected boolean opened;
+	protected String title;
+	protected ItemStack cursorItem;
 
 	@Override
 	public void onAttached() {
 		if (!(getHolder() instanceof Player)) {
 			throw new IllegalStateException("A Window may only be attached to a player.");
 		}
-		System.out.println("Window attached.");
-		inventories.put(getHuman().getInventory().getInventory().getMain(), new SlotIndexGrid(9, 3, offset));
-		inventories.put(getHuman().getInventory().getInventory().getQuickbar(), new SlotIndexRow(9));
+		// TODO: Fix SlotIndexCollections
+		PlayerInventory inventory = getHuman().getInventory().getInventory();
+		offset += MAIN.getSize();
+		inventories.put(inventory.getMain(), MAIN.translate(offset));
+		offset += QUICK_BAR.getSize();
+		inventories.put(inventory.getQuickbar(), QUICK_BAR.translate(offset));
 	}
 
 	@Override
 	public void onDetached() {
-		System.out.println("Window detached. Closing...");
 		close();
 	}
 
@@ -157,46 +163,51 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowItemsEvent(this, items));
 	}
 
+	public boolean shiftClick(ItemStack stack, InventoryBase from, InventoryBase to) {
+		// look for the first available slot in the inventory
+		for (int i = 0; i < to.getSize(); i++) {
+			ItemStack index = to.getItem(i);
+			if (index == null) {
+				// put clicked item in empty slot
+				to.setItem(i, stack);
+				return true;
+			}
+			if (!index.equalsIgnoreSize(stack)) {
+				// can't stack different materials
+				continue;
+			}
+			index.stack(stack);
+			to.setItem(i, index);
+			if (stack.isEmpty()) {
+				return true;
+			}
+		}
+		return true;
+	}
+
 	public boolean click(InventoryBase inventory, int slot, ClickArguments args) {
+		System.out.println("Spout slot: " + slot);
 		ItemStack clicked = inventory.getItem(slot);
-		System.out.println("Window clicked in inventory: " + inventory.getClass().getCanonicalName());
 		if (args.isShiftClick()) {
-			System.out.println("Shift click");
+			System.out.println("Shift clicked");
 			if (clicked != null) {
 				System.out.println("Slot: " + clicked.getMaterial().getName());
+				PlayerInventory playerInventory = getHuman().getInventory().getInventory();
 				if (inventory instanceof PlayerQuickbar) {
-					System.out.println("In quickbar");
-					// look for the first available slot in the main inventory
-					Inventory main = getPlayer().get(Human.class).getInventory().getInventory().getMain();
-					for (int i = 0; i < main.getSize(); i++) {
-						ItemStack index = main.getItem(i);
-						if (index == null) {
-							// put clicked item in empty slot
-							System.out.println("Found empty slot in slot " + i);
-							main.setItem(i, clicked);
-							return true;
-						}
-						if (!index.equalsIgnoreSize(clicked)) {
-							// can't stack different materials
-							continue;
-						}
-						// stack, return if the clicked item is empty
-						System.out.println("Found stackable slot in slot " + i);
-						index.stack(clicked);
-						main.setItem(i, index);
-						if (clicked.isEmpty()) {
-							return true;
-						}
-					}
+					System.out.println("To main");
+					return shiftClick(clicked, inventory, playerInventory.getMain());
+				} else if (inventory instanceof MainInventory) {
+					System.out.println("To quickbar");
+					return shiftClick(clicked, inventory, playerInventory.getQuickbar());
 				}
 			}
 		} else if (args.isRightClick()) {
 			System.out.println("Right click");
 			if (clicked == null) {
-				System.out.println("Slot empty");
+				System.out.println("Empty slot");
 				if (cursorItem != null) {
 					System.out.println("Cursor: " + cursorItem.getMaterial().getName());
-					System.out.println("Adding one");
+					System.out.println("Add one");
 					// slot is empty with a not empty cursor
 					// add one
 					clicked = cursorItem.clone();
@@ -210,7 +221,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 					return true;
 				}
 			} else if (cursorItem != null) {
-				System.out.println("Slot is empty");
+				System.out.println("Slot: " + clicked.getMaterial().getName());
 				System.out.println("Cursor: " + cursorItem.getMaterial().getName());
 				// slot is not empty with not empty cursor
 				if (cursorItem.equalsIgnoreSize(clicked)) {
@@ -227,7 +238,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 						return true;
 					}
 				} else {
-					System.out.println("Can not stack: Swapping stacks...");
+					System.out.println("Materials don't match. Swapping stacks.");
 					// materials don't match
 					// swap stacks
 					ItemStack newCursor = clicked.clone();
@@ -236,8 +247,8 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 					return true;
 				}
 			} else {
-				System.out.println("Cursor is empty");
-				System.out.println("Splitting stack");
+				System.out.println("Slot: " + clicked.getMaterial().getName());
+				System.out.println("Empty cursor");
 				// slot is not empty with an empty cursor
 				// split the stack
 				int x = clicked.getAmount();
@@ -246,13 +257,14 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 				clicked.setAmount(y);
 				inventory.setItem(slot, clicked);
 				// cursor gets any remainder
+				cursorItem = clicked.clone();
 				cursorItem.setAmount(y + z);
 				return true;
 			}
 		} else {
 			System.out.println("Left click");
 			if (clicked == null) {
-				System.out.println("Slot is empty");
+				System.out.println("Empty slot");
 				if (cursorItem != null) {
 					System.out.println("Cursor: " + cursorItem.getMaterial().getName());
 					System.out.println("Put whole stack in slot");
@@ -264,7 +276,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 					return true;
 				}
 			} else if (cursorItem != null) {
-				System.out.println("Slot: " + clicked.getMaterial().getName());
+				System.out.println("Clicked: " + clicked.getMaterial().getName());
 				System.out.println("Cursor: " + cursorItem.getMaterial().getName());
 				// slot is not empty; cursor is not empty.
 				// stack
@@ -277,7 +289,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 					}
 					return true;
 				} else {
-					System.out.println("Materials don't match. Swapping stacks...");
+					System.out.println("Materials don't match. Swapping stacks.");
 					// materials don't match
 					// swap stacks
 					ItemStack newCursor = clicked.clone();
@@ -285,9 +297,8 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 					cursorItem = newCursor;
 				}
 			} else {
-				System.out.println("Slot: " + clicked.getMaterial().getName());
-				System.out.println("Cursor is empty");
-				System.out.println("Picking up slot stack");
+				System.out.println("Clicked: " + clicked.getMaterial().getName());
+				System.out.println("Empty cursor");
 				// slot is not empty; cursor is empty.
 				// pick up stack
 				cursorItem = clicked.clone();
@@ -331,6 +342,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 	public InventoryEntry getInventoryEntry(int nativeSlot) {
 		int slot;
 		for (Entry<InventoryBase, SlotIndexCollection> entry : inventories.entrySet()) {
+			System.out.println("For: " + entry.getKey().getClass().getCanonicalName());
 			slot = entry.getValue().getSpoutSlot(nativeSlot);
 			if (slot != -1) {
 				return new InventoryEntry(entry.getKey(), slot);

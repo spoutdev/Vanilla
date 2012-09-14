@@ -31,7 +31,10 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.components.living.Human;
+import org.spout.vanilla.components.window.Window;
 import org.spout.vanilla.protocol.msg.window.WindowCreativeActionMessage;
+import org.spout.vanilla.window.ClickArguments;
+import org.spout.vanilla.window.InventoryEntry;
 
 public class WindowCreativeActionHandler extends MessageHandler<WindowCreativeActionMessage> {
 	@Override
@@ -45,23 +48,23 @@ public class WindowCreativeActionHandler extends MessageHandler<WindowCreativeAc
 			holder.kick("Attempted to use the creative inventory while on survival.");
 			return;
 		}
-		//		Window active = controller.getActiveWindow();
-		//
-		//		if (message.getItem() == null) {
-		//			//Taking item from existing slot
-		//			active.setItemOnCursor(null);
-		//			Entry<InventoryBase, Integer> entry = active.getInventoryEntry(message.getSlot());
-		//			if (entry != null) {
-		//				active.onClick(entry.getKey(), entry.getValue(), new ClickArgs(false, false));
-		//			}
-		//		} else if (message.getSlot() == -1) {
-		//			active.setItemOnCursor(message.getItem());
-		//			active.outsideClick();
-		//		} else {
-		//			Entry<InventoryBase, Integer> entry = active.getInventoryEntry(message.getSlot());
-		//			if (entry != null) {
-		//				active.creativeClick(entry.getKey(), entry.getValue(), message.getItem());
-		//			}
-		//		}
+
+		Window window = holder.get(Window.class);
+		if (message.getItem() == null) {
+			//Taking item from existing slot
+			window.setCursorItem(null);
+			InventoryEntry entry = window.getInventoryEntry(message.getSlot());
+			if (entry != null) {
+				window.click(entry.getInventory(), entry.getSlot(), new ClickArguments(false, false));
+			}
+		} else if (message.getSlot() == -1) {
+			window.setCursorItem(message.getItem());
+			window.outsideClick();
+		} else {
+			InventoryEntry entry = window.getInventoryEntry(message.getSlot());
+			if (entry != null) {
+				window.creativeClick(entry.getInventory(), entry.getSlot(), message.getItem());
+			}
+		}
 	}
 }

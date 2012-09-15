@@ -371,6 +371,10 @@ public class TestCommands {
      * Well atleast some
      */
     public String replaceInvalidCharsWin(String s) {
-        return s.replaceAll("[\\/:*?\"<>|]", "-");
+        if(System.getProperty("os.name").toLowerCase().indexOf("win") >= 0){
+            return s.replaceAll("[\\/:*?\"<>|]", "-");
+        }else{
+            return s;
+        }
     }
 }

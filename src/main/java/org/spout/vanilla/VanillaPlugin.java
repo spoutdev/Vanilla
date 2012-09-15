@@ -41,7 +41,9 @@ import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
 import org.spout.api.command.annotated.SimpleInjector;
 import org.spout.api.component.components.NetworkComponent;
+import org.spout.api.component.components.ObserverComponent;
 import org.spout.api.exception.ConfigurationException;
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
@@ -242,9 +244,9 @@ public class VanillaPlugin extends CommonPlugin {
 				World world = engine.loadWorld(worldNode.getWorldName(), generator);
 
 				// Apply general settings
-				world.getComponentHolder().getData().put(VanillaData.GAMEMODE, GameMode.get(worldNode.GAMEMODE.getString()));
-				world.getComponentHolder().getData().put(VanillaData.DIFFICULTY, Difficulty.get(worldNode.DIFFICULTY.getString()));
-				world.getComponentHolder().getData().put(VanillaData.DIMENSION, Dimension.get(worldNode.SKY_TYPE.getString()));
+				world.getDataMap().put(VanillaData.GAMEMODE, GameMode.get(worldNode.GAMEMODE.getString()));
+				world.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.get(worldNode.DIFFICULTY.getString()));
+				world.getDataMap().put(VanillaData.DIMENSION, Dimension.get(worldNode.SKY_TYPE.getString()));
 
 				// Grab safe spawn if newly created world.
 				if (world.getAge() <= 0) {
@@ -304,6 +306,13 @@ public class VanillaPlugin extends CommonPlugin {
 			}
 
 			WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.getOrCreate(world);
+			
+			// Keep spawn loaded
+			if (worldConfig.LOADED_SPAWN.getBoolean()) {
+				world.createAndSpawnEntity(point, ObserverComponent.class, LoadOption.LOAD_GEN);
+			}
+
+			//TODO: Add sky back here.
 		}
 	}
 

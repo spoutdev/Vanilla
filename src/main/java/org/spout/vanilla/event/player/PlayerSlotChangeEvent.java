@@ -32,21 +32,17 @@ import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.inventory.special.InventorySlot;
 
 import org.spout.vanilla.components.living.Human;
-import org.spout.vanilla.components.misc.InventoryComponent;
+
 
 public class PlayerSlotChangeEvent extends PlayerEvent {
 	private static HandlerList handlers = new HandlerList();
 	private final int oldSlot;
 	private int newSlot;
 
-	public PlayerSlotChangeEvent(Player p, int oldslot, int newslot) {
+	public PlayerSlotChangeEvent(Player p, int oldSlot, int newSlot) {
 		super(p);
-		if (!p.has(InventoryComponent.class)) {
-			//TODO MissingComponentException mostly for events
-			throw new IllegalArgumentException("Player passed for slot change has no inventory component!");
-		}
-		this.oldSlot = oldslot;
-		this.newSlot = newslot;
+		this.oldSlot = oldSlot;
+		this.newSlot = newSlot;
 	}
 
 	/**
@@ -54,50 +50,23 @@ public class PlayerSlotChangeEvent extends PlayerEvent {
 	 * @return True if it changed, False if not
 	 */
 	public boolean hasChanged() {
-		return this.getOldSlotIndex() != this.getNewSlotIndex();
+		return oldSlot != newSlot;
 	}
 
 	/**
 	 * Gets the previously selected slot
 	 * @return previously selected slot
 	 */
-	public InventorySlot getOldSlot() {
-		return getPlayer().get(Human.class).getInventory().getInventory().getQuickbar().getSlotInventory(this.getOldSlotIndex());
+	public int getOldSlot() {
+		return oldSlot;
 	}
 
 	/**
 	 * Gets the newly selected slot
 	 * @return newly selected slot
 	 */
-	public InventorySlot getNewSlot() {
-		return getPlayer().get(Human.class).getInventory().getInventory().getQuickbar().getSlotInventory(this.getNewSlotIndex());
-	}
-
-	/**
-	 * Gets the previously selected slot index
-	 * @return previously selected slot index
-	 */
-	public int getOldSlotIndex() {
-		return this.oldSlot;
-	}
-
-	/**
-	 * Gets the newly selected slot index
-	 * @return newly selected slot index
-	 */
-	public int getNewSlotIndex() {
-		return this.newSlot;
-	}
-
-	/**
-	 * Sets the newly selected slot index
-	 * @param slot to select instead
-	 */
-	public void setNewSlotIndex(int slot) throws IndexOutOfBoundsException {
-		if (slot < 0 || slot > 8) {
-			throw new IndexOutOfBoundsException("Selected slot index must be 0 >= slot <= 8");
-		}
-		this.newSlot = slot;
+	public int getNewSlot() {
+		return newSlot;
 	}
 
 	@Override

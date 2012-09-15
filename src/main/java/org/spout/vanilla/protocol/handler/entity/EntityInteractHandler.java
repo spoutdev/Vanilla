@@ -57,7 +57,7 @@ public class EntityInteractHandler extends MessageHandler<EntityInteractMessage>
 			return;
 		}
 
-		ItemStack holding = player.getInventory().getCurrentItem();
+		ItemStack holding = player.getInventory().getQuickbar().getCurrentItem();
 		Material holdingMat = holding == null ? VanillaMaterials.AIR : holding.getMaterial();
 		if (holdingMat == null) {
 			holdingMat = VanillaMaterials.AIR;

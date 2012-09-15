@@ -32,7 +32,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.GenericMaterialSource;
@@ -44,8 +43,9 @@ import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.misc.HeadComponent;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.components.player.PlayerInventory;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class EmptyContainer extends BlockItem {
 	private HashMap<MaterialSource, FullContainer> fullContainers = new HashMap<MaterialSource, FullContainer>();
@@ -85,11 +85,10 @@ public class EmptyContainer extends BlockItem {
 			if (!entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 				return;
 			}
-			InventorySlot inv = entity.get(Human.class).getInventory().getInventory().getQuickbar().getCurrentSlotInventory();
-			if (inv != null) {
-				inv.addItemAmount(-1);
-				entity.get(Human.class).getInventory().getInventory().addItem(new ItemStack(cont, 1));
-			}
+			PlayerInventory inventory = entity.get(Human.class).getInventory();
+			PlayerQuickbar quickbar = inventory.getQuickbar();
+			quickbar.addItemAmount(quickbar.getCurrentSlot(), -1);
+			inventory.getMain().addItem(new ItemStack(cont, 1));
 		}
 	}
 

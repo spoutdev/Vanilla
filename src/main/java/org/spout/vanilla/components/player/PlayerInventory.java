@@ -24,40 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.inventory.player;
+package org.spout.vanilla.components.player;
 
-import org.spout.api.entity.Player;
-import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.special.InventoryBundle;
+import org.spout.api.component.components.EntityComponent;
 
-import org.spout.vanilla.inventory.VanillaInventory;
+import org.spout.vanilla.inventory.player.PlayerArmorInventory;
+import org.spout.vanilla.inventory.player.PlayerCraftingGrid;
+import org.spout.vanilla.inventory.player.PlayerMainInventory;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
 
 /**
  * Represents a players inventory
  */
-public class PlayerInventory extends InventoryBundle implements VanillaInventory {
+public class PlayerInventory extends EntityComponent {
 	private static final long serialVersionUID = 1L;
-	private final MainInventory main;
-	private final PlayerCraftingGrid craftingGrid;
-	private final PlayerArmorInventory armor;
-	private final PlayerQuickbar quickbar;
-	private final Player owner;
-
-	public PlayerInventory(Player owner) {
-		this.main = this.addInventory(new MainInventory(36));
-		this.craftingGrid = this.addInventory(new PlayerCraftingGrid());
-		this.armor = this.addInventory(new PlayerArmorInventory());
-		this.quickbar = new PlayerQuickbar(owner, this.main);
-		this.owner = owner;
-	}
-
-	/**
-	 * Gets the owner of this Player Inventory
-	 * @return the owner
-	 */
-	public Player getOwner() {
-		return this.owner;
-	}
+	private final PlayerMainInventory main = new PlayerMainInventory();
+	private final PlayerCraftingGrid craftingGrid = new PlayerCraftingGrid();
+	private final PlayerArmorInventory armor = new PlayerArmorInventory();
+	private final PlayerQuickbar quickbar = new PlayerQuickbar();
 
 	/**
 	 * Gets the quickbar slots of this player inventory
@@ -71,7 +55,7 @@ public class PlayerInventory extends InventoryBundle implements VanillaInventory
 	 * Gets the item inventory of this player inventory
 	 * @return an Inventory with the items
 	 */
-	public MainInventory getMain() {
+	public PlayerMainInventory getMain() {
 		return this.main;
 	}
 

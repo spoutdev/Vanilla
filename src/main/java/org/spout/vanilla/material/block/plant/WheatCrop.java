@@ -42,6 +42,7 @@ import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.BlockFlags;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Crop;
@@ -109,8 +110,8 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Random
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
-		InventorySlot inv = entity.get(Human.class).getInventory().getInventory().getQuickbar().getCurrentSlotInventory();
-		ItemStack current = inv.getItem();
+		PlayerQuickbar inv = entity.get(Human.class).getInventory().getQuickbar();
+		ItemStack current = inv.getCurrentItem();
 		if (current != null && current.isMaterial(Dye.BONE_MEAL)) {
 			if (this.getGrowthStage(block) != 0x7) {
 				if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {

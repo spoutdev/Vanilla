@@ -353,7 +353,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			player.getSession().send(false, true, idMsg);
 			player.getSession().setState(State.GAME);
 			for (int slot = 0; slot < 4; slot++) {
-				ItemStack slotItem = owner.get(Human.class).getInventory().getInventory().getArmor().getItem(slot);
+				ItemStack slotItem = owner.get(Human.class).getInventory().getArmor().getItem(slot);
 				player.getSession().send(false, new EntityEquipmentMessage(entityId, slot, slotItem));
 			}
 		} else {
@@ -420,7 +420,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (event.getWindow() instanceof DefaultWindow) {
 			return null; // no message for the default Window
 		}
-		int size = event.getWindow().getInventorySize() - event.getWindow().getHolder().get(Human.class).getInventory().getInventory().getMain().getSize();
+		int size = event.getWindow().getInventorySize() - event.getWindow().getHolder().get(Human.class).getInventory().getMain().getSize();
 		return new WindowOpenMessage(event.getWindow(), size);
 	}
 

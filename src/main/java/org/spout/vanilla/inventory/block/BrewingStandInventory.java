@@ -29,9 +29,7 @@ package org.spout.vanilla.inventory.block;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.inventory.VanillaInventory;
-
-public class BrewingStandInventory extends Inventory implements VanillaInventory {
+public class BrewingStandInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
 
 	public BrewingStandInventory() {

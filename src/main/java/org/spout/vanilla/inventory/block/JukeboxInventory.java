@@ -29,12 +29,10 @@ package org.spout.vanilla.inventory.block;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.inventory.VanillaInventory;
-
 /**
  * Represents the inventory of a {@link org.spout.vanilla.material.block.controlled.JukeboxBlock}.
  */
-public class JukeboxInventory extends Inventory implements VanillaInventory {
+public class JukeboxInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
 
 	public JukeboxInventory() {

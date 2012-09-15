@@ -44,6 +44,7 @@ import org.spout.api.math.IntVector3;
 import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.Spreading;
@@ -70,8 +71,8 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Rand
 		if (type != PlayerInteractEvent.Action.RIGHT_CLICK) {
 			return;
 		}
-		InventorySlot inv = entity.get(Human.class).getInventory().getInventory().getQuickbar().getCurrentSlotInventory();
-		ItemStack current = inv.getItem();
+		PlayerQuickbar inv = entity.get(Human.class).getInventory().getQuickbar();
+		ItemStack current = inv.getCurrentItem();
 		if (current != null && current.isMaterial(Dye.BONE_MEAL)) {
 			if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 				inv.addItemAmount(0, -1);

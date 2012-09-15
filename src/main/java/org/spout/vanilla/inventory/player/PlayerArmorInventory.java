@@ -28,57 +28,46 @@ package org.spout.vanilla.inventory.player;
 
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.inventory.special.InventorySlot;
-
-import org.spout.vanilla.inventory.VanillaInventory;
 
 /**
- * Represents the four armor slots on a {@link PlayerInventory}.
+ * Represents the four armor slots on a {@link org.spout.vanilla.components.player.PlayerInventory}.
  */
-public class PlayerArmorInventory extends Inventory implements VanillaInventory {
+public class PlayerArmorInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
-	private final InventorySlot helmet;
-	private final InventorySlot chestPlate;
-	private final InventorySlot leggings;
-	private final InventorySlot boots;
 
 	public PlayerArmorInventory() {
 		super(4);
-		this.helmet = new InventorySlot(this, 0);
-		this.chestPlate = new InventorySlot(this, 1);
-		this.leggings = new InventorySlot(this, 2);
-		this.boots = new InventorySlot(this, 3);
 	}
 
-	/**
-	 * Returns the current {@link ItemStack} in the helmet slot (slot 44) ; can return null.
-	 * @return helmet item stack
-	 */
-	public InventorySlot getHelmet() {
-		return this.helmet;
+	public ItemStack getBoots() {
+		return getItem(0);
 	}
 
-	/**
-	 * Returns the current {@link ItemStack} in the chest plate slot (slot 41) ; can return null.
-	 * @return chest plate item stack
-	 */
-	public InventorySlot getChestPlate() {
-		return this.chestPlate;
+	public void setBoots(ItemStack boots) {
+		setItem(0, boots);
 	}
 
-	/**
-	 * Returns the current {@link ItemStack} in the leggings slot (slot 37) ; can return null.
-	 * @return leggings item stack
-	 */
-	public InventorySlot getLeggings() {
-		return this.leggings;
+	public ItemStack getLeggings() {
+		return getItem(1);
 	}
 
-	/**
-	 * Returns the current {@link ItemStack} in the boots slot (slot 36) ; can return null.
-	 * @return boots item stack
-	 */
-	public InventorySlot getBoots() {
-		return this.boots;
+	public void setLeggings(ItemStack leggings) {
+		setItem(1, leggings);
+	}
+
+	public ItemStack getChestPlate() {
+		return getItem(2);
+	}
+
+	public void setChestPlate(ItemStack chestPlate) {
+		setItem(2, chestPlate);
+	}
+
+	public ItemStack getHelmet() {
+		return getItem(3);
+	}
+
+	public void setHelmet(ItemStack helmet) {
+		setItem(3, helmet);
 	}
 }

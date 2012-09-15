@@ -29,12 +29,11 @@ package org.spout.vanilla.inventory.block;
 import org.spout.api.inventory.Inventory;
 
 import org.spout.vanilla.components.substance.material.Dispenser;
-import org.spout.vanilla.inventory.VanillaInventory;
 
 /**
  * Represents a dispenser inventory belonging to a dispenser entity.
  */
-public class DispenserInventory extends Inventory implements VanillaInventory {
+public class DispenserInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
 	private final Dispenser owner;
 

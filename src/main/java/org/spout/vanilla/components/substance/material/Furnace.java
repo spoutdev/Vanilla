@@ -29,10 +29,10 @@ package org.spout.vanilla.components.substance.material;
 import org.spout.api.entity.Player;
 
 import org.spout.vanilla.components.window.Window;
-import org.spout.vanilla.inventory.InventoryOwner;
+import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
 
-public class Furnace extends WindowBlockComponent implements InventoryOwner {
+public class Furnace extends WindowBlockComponent implements Container {
 	@Override
 	public Window createWindow(Player player) {
 		// TODO Auto-generated method stub

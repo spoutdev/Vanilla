@@ -24,37 +24,14 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.components.misc;
+package org.spout.vanilla.inventory.player;
 
-import org.spout.api.component.Component;
-import org.spout.api.data.Data;
-import org.spout.api.entity.Player;
-import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.Inventory;
 
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.inventory.InventoryOwner;
-import org.spout.vanilla.inventory.player.PlayerInventory;
+public class PlayerMainInventory extends Inventory {
+	private static final long serialVersionUID = 1L;
 
-/**
- * Component that holds inventory references and handles inventory transactions.
- */
-public class InventoryComponent extends Component implements InventoryOwner {
-	
-	private PlayerInventory inventory;
-	@Override
-	public void onAttached() {
-		inventory = new PlayerInventory((Player) getHolder());
-	}
-	public ItemStack getCurrentItem() {
-		return getData().get(Data.HELD_ITEM);
-	}
-
-	public void setCurrentItem(ItemStack current) {
-		getData().put(Data.HELD_ITEM, current);
-	}
-
-	@Override
-	public PlayerInventory getInventory() {
-		return inventory;
+	public PlayerMainInventory() {
+		super(27);
 	}
 }

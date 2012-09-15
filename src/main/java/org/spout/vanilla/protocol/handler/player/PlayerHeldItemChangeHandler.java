@@ -30,7 +30,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.components.misc.InventoryComponent;
+import org.spout.vanilla.components.player.PlayerInventory;
 import org.spout.vanilla.protocol.msg.player.PlayerHeldItemChangeMessage;
 
 public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeldItemChangeMessage> {
@@ -46,7 +46,7 @@ public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeld
 		if (newSlot < 0 || newSlot > 8) {
 			return;
 		}
-		InventoryComponent inventory = player.add(InventoryComponent.class);
-		inventory.getInventory().getQuickbar().setCurrentSlot(newSlot);
+		PlayerInventory inventory = player.add(PlayerInventory.class);
+		inventory.getQuickbar().setCurrentSlot(newSlot);
 	}
 }

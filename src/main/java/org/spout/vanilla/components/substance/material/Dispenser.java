@@ -32,10 +32,10 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.components.window.Window;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.inventory.InventoryOwner;
+import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.material.block.controlled.DispenserBlock;
 
-public class Dispenser extends WindowBlockComponent implements InventoryOwner {
+public class Dispenser extends WindowBlockComponent implements Container {
 	@Override
 	public DispenserBlock getMaterial() {
 		return (DispenserBlock) super.getMaterial();

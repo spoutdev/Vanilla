@@ -39,6 +39,7 @@ import org.spout.vanilla.components.substance.Item;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.tool.ToolType;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -72,7 +73,8 @@ public class Shears extends Tool {
 			item.setItemStack(new ItemStack(VanillaMaterials.WOOL, col, rand.nextInt(3) + 1));
 
 			if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-				entity.get(Human.class).getInventory().getInventory().getQuickbar().getCurrentSlotInventory().addItemData(0, 1);
+				PlayerQuickbar quickbar = entity.get(Human.class).getInventory().getQuickbar();
+				quickbar.addItemData(quickbar.getCurrentSlot(), 1);
 			}
 		}
 	}

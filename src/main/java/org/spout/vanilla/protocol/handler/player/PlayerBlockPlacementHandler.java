@@ -54,6 +54,7 @@ import org.spout.vanilla.components.misc.HeadComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.tool.InteractTool;
 import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
@@ -64,10 +65,8 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		//refresh the client just in case it assumed something
 		player.getSession().send(false, new BlockChangeMessage(clickedBlock));
 		player.getSession().send(false, new BlockChangeMessage(alterBlock));
-		InventorySlot inv = player.get(Human.class).getInventory().getInventory().getQuickbar().getCurrentSlotInventory();
-		if (inv != null) {
-			inv.setItem(inv.getItem());
-		}
+		PlayerQuickbar inv = player.get(Human.class).getInventory().getQuickbar();
+		inv.setCurrentItem(inv.getCurrentItem());
 	}
 
 	@Override
@@ -79,8 +78,8 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		Player player = session.getPlayer();
 		EventManager eventManager = session.getEngine().getEventManager();
 		World world = player.getWorld();
-		InventorySlot currentSlot = player.get(Human.class).getInventory().getInventory().getQuickbar().getCurrentSlotInventory();
-		ItemStack holding = currentSlot.getItem();
+		PlayerQuickbar currentSlot = player.get(Human.class).getInventory().getQuickbar();
+		ItemStack holding = currentSlot.getCurrentItem();
 		Material holdingMat = holding == null ? null : holding.getMaterial();
 
 		/*
@@ -112,7 +111,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 			}
 
 			//Perform interaction event
-			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), currentSlot.getItem(), Action.RIGHT_CLICK, false));
+			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), currentSlot.getCurrentItem(), Action.RIGHT_CLICK, false));
 
 			//Get the target block and validate 
 			BlockMaterial clickedMaterial = clickedBlock.getMaterial();

@@ -30,14 +30,13 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.special.InventorySlot;
 
 import org.spout.vanilla.components.substance.material.Furnace;
-import org.spout.vanilla.inventory.VanillaInventory;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
 
 /**
  * Represents a furnace inventory belonging to a furnace entity.
  */
-public class FurnaceInventory extends Inventory implements VanillaInventory {
+public class FurnaceInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
 	private final Furnace owner;
 	private final InventorySlot output;

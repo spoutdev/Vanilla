@@ -29,13 +29,11 @@ package org.spout.vanilla.inventory.block;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.inventory.VanillaInventory;
-
 /**
  * Represents a enchantment table inventory belonging to an enchantment table
  * entity.
  */
-public class EnchantmentTableInventory extends Inventory implements VanillaInventory {
+public class EnchantmentTableInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
 
 	public EnchantmentTableInventory() {

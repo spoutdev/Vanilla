@@ -31,21 +31,21 @@ import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.inventory.special.InventorySlot;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.gamemode.AdventureComponent;
 import org.spout.vanilla.components.gamemode.CreativeComponent;
 import org.spout.vanilla.components.gamemode.SurvivalComponent;
 import org.spout.vanilla.components.misc.DiggingComponent;
-import org.spout.vanilla.components.misc.InventoryComponent;
 import org.spout.vanilla.components.misc.PickupItemComponent;
 import org.spout.vanilla.components.player.PingComponent;
+import org.spout.vanilla.components.player.PlayerInventory;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
 import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.protocol.entity.living.HumanEntityProtocol;
 import org.spout.vanilla.protocol.msg.player.PlayerGameStateMessage;
 import org.spout.vanilla.util.ItemUtil;
@@ -58,7 +58,7 @@ public class Human extends VanillaEntity {
 	public void onAttached() {
 		super.onAttached();
 		Entity holder = getHolder();
-		holder.add(InventoryComponent.class);
+		holder.add(PlayerInventory.class);
 		holder.add(PickupItemComponent.class);
 		holder.add(DiggingComponent.class);
 		holder.add(PingComponent.class);
@@ -154,8 +154,8 @@ public class Human extends VanillaEntity {
 		getData().put(VanillaData.GAMEMODE, mode);
 	}
 
-	public InventoryComponent getInventory() {
-		return getHolder().add(InventoryComponent.class);
+	public PlayerInventory getInventory() {
+		return getHolder().add(PlayerInventory.class);
 	}
 
 	/**
@@ -170,13 +170,13 @@ public class Human extends VanillaEntity {
 	 * Drops the player's current item.
 	 */
 	public void dropItem() {
-		InventorySlot slot = this.getInventory().getInventory().getQuickbar().getCurrentSlotInventory();
-		ItemStack current = slot.getItem();
+		PlayerQuickbar quickbar = getInventory().getQuickbar();
+		ItemStack current = quickbar.getCurrentItem();
 		if (current == null) {
 			return;
 		}
 		ItemStack drop = current.clone().setAmount(1);
-		slot.addItemAmount(-1);
+		quickbar.addItemAmount(quickbar.getCurrentSlot(), -1);
 		dropItem(drop);
 	}
 }

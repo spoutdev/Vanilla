@@ -35,6 +35,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.data.tool.ToolType;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
@@ -65,10 +66,8 @@ public class FlintAndSteel extends InteractTool {
 				clickedface = clickedface.getOpposite();
 				if (VanillaMaterials.FIRE.canPlace(target, (short) 0)) {
 					if (VanillaMaterials.FIRE.onPlacement(target, (short) 0)) {
-						InventorySlot inv = entity.get(Human.class).getInventory().getInventory().getQuickbar().getCurrentSlotInventory();
-						if (inv != null) {
-							inv.addItemData(0, 1);
-						}
+						PlayerQuickbar inv = entity.get(Human.class).getInventory().getQuickbar();
+						inv.addItemData(inv.getCurrentSlot(), 1);
 					}
 				}
 			}

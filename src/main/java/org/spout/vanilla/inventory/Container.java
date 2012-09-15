@@ -28,7 +28,7 @@ package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.InventoryBase;
 
-public interface InventoryOwner {
+public interface Container {
 	/**
 	 * Gets the inventory of this entity
 	 * @return The Inventory of this entity

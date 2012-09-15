@@ -39,7 +39,7 @@ import org.spout.api.inventory.special.InventoryRange;
 import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.Material;
 
-public class CraftingInventory extends Inventory implements VanillaInventory {
+public class CraftingInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
 	private final int columns, rows;
 	private final InventorySlot output;

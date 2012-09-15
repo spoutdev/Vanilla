@@ -44,7 +44,7 @@ public class Food extends VanillaItemMaterial {
 		return effects;
 	}
 
-	public void onEat(Entity entity, InventorySlot slot) {
+	public void onEat(Entity entity, int slot) {
 		if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 			//TODO: Reimplement food less bad
 		}

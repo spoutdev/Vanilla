@@ -45,8 +45,8 @@ import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowItemsEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
 import org.spout.vanilla.event.window.WindowSlotEvent;
-import org.spout.vanilla.inventory.player.MainInventory;
-import org.spout.vanilla.inventory.player.PlayerInventory;
+import org.spout.vanilla.inventory.player.PlayerMainInventory;
+import org.spout.vanilla.components.player.PlayerInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.util.InventoryUtil;
 import org.spout.vanilla.window.util.SlotIndexCollection;
@@ -72,7 +72,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 		if (!(getHolder() instanceof Player)) {
 			throw new IllegalStateException("A Window may only be attached to a player.");
 		}
-		PlayerInventory inventory = getHuman().getInventory().getInventory();
+		PlayerInventory inventory = getHuman().getInventory();
 		inventories.put(inventory.getMain(), MAIN.translate(offset));
 		inventories.put(inventory.getQuickbar(), QUICK_BAR.translate(offset + MAIN.getSize()));
 	}
@@ -190,11 +190,11 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 			System.out.println("Shift clicked");
 			if (clicked != null) {
 				System.out.println("Slot: " + clicked.getMaterial().getName());
-				PlayerInventory playerInventory = getHuman().getInventory().getInventory();
+				PlayerInventory playerInventory = getHuman().getInventory();
 				if (inventory instanceof PlayerQuickbar) {
 					System.out.println("To main");
 					return shiftClick(clicked, slot, inventory, playerInventory.getMain());
-				} else if (inventory instanceof MainInventory) {
+				} else if (inventory instanceof PlayerMainInventory) {
 					System.out.println("To quickbar");
 					return shiftClick(clicked, slot, inventory, playerInventory.getQuickbar());
 				}

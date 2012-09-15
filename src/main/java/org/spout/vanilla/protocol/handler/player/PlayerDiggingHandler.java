@@ -55,6 +55,7 @@ import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.PlayerFlags;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.Food;
@@ -71,7 +72,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		} else {
 			flags.add(PlayerFlags.CREATIVE);
 		}
-		ItemStack heldItem = human.getInventory().getInventory().getQuickbar().getCurrentItem();
+		ItemStack heldItem = human.getInventory().getQuickbar().getCurrentItem();
 		if (heldItem != null) {
 			heldItem.getMaterial().getItemFlags(heldItem, flags);
 		}
@@ -113,7 +114,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		}
 
 		if (state == PlayerDiggingMessage.STATE_DROP_ITEM && x == 0 && y == 0 && z == 0) {
-			ItemUtil.dropItem(player.getTransform().getPosition(), human.getInventory().getCurrentItem(), Vector3.ONE);
+			ItemUtil.dropItem(player.getTransform().getPosition(), human.getInventory().getQuickbar().getCurrentItem(), Vector3.ONE);
 			return;
 		}
 
@@ -123,8 +124,8 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 			isInteractable = false;
 		}
 
-		InventorySlot currentSlot = player.get(Human.class).getInventory().getInventory().getQuickbar().getCurrentSlotInventory();
-		ItemStack heldItem = currentSlot.getItem();
+		PlayerQuickbar currentSlot = player.get(Human.class).getInventory().getQuickbar();
+		ItemStack heldItem = currentSlot.getCurrentItem();
 
 		if (state == PlayerDiggingMessage.STATE_START_DIGGING) {
 			PlayerInteractEvent event = new PlayerInteractEvent(player, block.getPosition(), heldItem, Action.LEFT_CLICK, isInteractable);
@@ -178,7 +179,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				int totalDamage;
 
 				if (heldItem != null && heldItem.getMaterial() instanceof Tool) {
-					currentSlot.addItemData(((Tool) heldItem.getMaterial()).getDurabilityPenalty(heldItem));
+					currentSlot.addItemData(currentSlot.getCurrentSlot(), ((Tool) heldItem.getMaterial()).getDurabilityPenalty(heldItem));
 				}
 				if (heldItem == null) {
 					damageDone = ((int) diggingTicks * 1);
@@ -198,7 +199,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 			}
 		} else if (state == PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
 			if (heldItem.getMaterial() instanceof Food) {
-				((Food) heldItem.getMaterial()).onEat(player, currentSlot);
+				((Food) heldItem.getMaterial()).onEat(player, currentSlot.getCurrentSlot());
 			}
 		}
 	}

@@ -30,11 +30,11 @@ import org.spout.api.entity.Player;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.components.window.Window;
-import org.spout.vanilla.inventory.InventoryOwner;
+import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.material.block.controlled.BrewingStandBlock;
 
-public class BrewingStand extends WindowBlockComponent implements InventoryOwner {
+public class BrewingStand extends WindowBlockComponent implements Container {
 	@Override
 	public BrewingStandBlock getMaterial() {
 		return (BrewingStandBlock) super.getMaterial();

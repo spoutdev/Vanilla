@@ -33,7 +33,6 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -42,6 +41,7 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
@@ -49,7 +49,6 @@ import org.spout.vanilla.material.block.Spreading;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.solid.Log;
 import org.spout.vanilla.material.item.misc.Dye;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 
 public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel, DynamicMaterial {
@@ -97,8 +96,8 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 		if (type != Action.RIGHT_CLICK) {
 			return;
 		}
-		InventorySlot inv = entity.get(Human.class).getInventory().getInventory().getQuickbar().getCurrentSlotInventory();
-		ItemStack current = inv.getItem();
+		PlayerQuickbar inv = entity.get(Human.class).getInventory().getQuickbar();
+		ItemStack current = inv.getCurrentItem();
 		if (current != null && current.isMaterial(Dye.BONE_MEAL)) {
 			if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 				inv.addItemAmount(0, -1);

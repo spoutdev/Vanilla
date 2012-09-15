@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.components.window;
 
-import org.spout.vanilla.inventory.player.PlayerInventory;
+import org.spout.vanilla.components.player.PlayerInventory;
 import org.spout.vanilla.window.util.SlotIndexCollection;
 import org.spout.vanilla.window.WindowType;
 import org.spout.vanilla.window.util.SlotIndexGrid;
@@ -39,7 +39,7 @@ public class DefaultWindow extends Window {
 	public void onAttached() {
 		super.onAttached();
 		init(WindowType.DEFAULT, "Inventory", 9);
-		PlayerInventory inventory = getHuman().getInventory().getInventory();
+		PlayerInventory inventory = getHuman().getInventory();
 		inventories.put(inventory.getArmor(), ARMOR_SLOTS);
 		inventories.put(inventory.getMain(), CRAFTING_SLOTS);
 	}

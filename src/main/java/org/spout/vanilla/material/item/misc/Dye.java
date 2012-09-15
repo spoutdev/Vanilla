@@ -40,6 +40,7 @@ import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.living.Sheep;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Wool.WoolColor;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
@@ -130,9 +131,9 @@ public class Dye extends VanillaItemMaterial implements Placeable {
 				return;
 			}
 
-			InventorySlot inv = entity.get(Human.class).getInventory().getInventory().getQuickbar().getCurrentSlotInventory();
+			PlayerQuickbar inv = entity.get(Human.class).getInventory().getQuickbar();
 			if (inv != null) {
-				ItemStack holding = inv.getItem();
+				ItemStack holding = inv.getCurrentItem();
 				if (holding != null) {
 					//get color from holding item
 					other.get(Sheep.class).setColor(WoolColor.getById((short) (0xF - holding.getData())));

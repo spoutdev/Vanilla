@@ -29,9 +29,8 @@ package org.spout.vanilla.inventory.block;
 import org.spout.api.inventory.Inventory;
 
 import org.spout.vanilla.components.substance.material.Chest;
-import org.spout.vanilla.inventory.VanillaInventory;
 
-public class ChestInventory extends Inventory implements VanillaInventory {
+public class ChestInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
 	private final Chest owner;
 

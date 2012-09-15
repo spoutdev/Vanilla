@@ -34,14 +34,14 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.window.Window;
+import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.CraftingInventory;
-import org.spout.vanilla.inventory.InventoryOwner;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
  * A component that identifies the entity as a Villager.
  */
-public class Villager extends VanillaEntity implements InventoryOwner {
+public class Villager extends VanillaEntity implements Container {
 	@Override
 	public void onAttached() {
 		super.onAttached();

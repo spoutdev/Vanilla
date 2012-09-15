@@ -30,11 +30,11 @@ import org.spout.api.entity.Player;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.components.window.Window;
-import org.spout.vanilla.inventory.InventoryOwner;
+import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.material.block.controlled.ChestBlock;
 
-public class Chest extends WindowBlockComponent implements InventoryOwner {
+public class Chest extends WindowBlockComponent implements Container {
 	@Override
 	public ChestBlock getMaterial() {
 		return (ChestBlock) super.getMaterial();

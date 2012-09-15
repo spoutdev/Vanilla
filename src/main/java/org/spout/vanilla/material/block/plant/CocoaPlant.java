@@ -43,6 +43,7 @@ import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.BlockFlags;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.Plant;
@@ -128,8 +129,8 @@ public class CocoaPlant extends AbstractAttachable implements Plant, Growing, Ra
 
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
-		final InventorySlot inv = entity.get(Human.class).getInventory().getInventory().getQuickbar().getCurrentSlotInventory();
-		final ItemStack current = inv.getItem();
+		final PlayerQuickbar inv = entity.get(Human.class).getInventory().getQuickbar();
+		final ItemStack current = inv.getCurrentItem();
 		if (current != null && current.isMaterial(Dye.BONE_MEAL) && type == Action.RIGHT_CLICK) {
 			if (!isFullyGrown(block)) {
 				if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {

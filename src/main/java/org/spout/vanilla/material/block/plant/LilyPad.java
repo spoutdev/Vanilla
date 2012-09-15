@@ -38,6 +38,7 @@ import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.misc.HeadComponent;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.util.VanillaPlayerUtil;
@@ -77,9 +78,9 @@ public class LilyPad extends GroundAttachable {
 				if (!entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 					return;
 				}
-				InventorySlot inv = entity.get(Human.class).getInventory().getInventory().getQuickbar().getCurrentSlotInventory();
+				PlayerQuickbar inv = entity.get(Human.class).getInventory().getQuickbar();
 				if (inv != null) {
-					inv.addItemAmount(-1);
+					inv.addItemAmount(inv.getCurrentSlot(), -1);
 				}
 			}
 		}

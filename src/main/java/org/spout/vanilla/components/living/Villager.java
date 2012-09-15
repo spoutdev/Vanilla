@@ -33,7 +33,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.components.window.Window;
+import org.spout.vanilla.components.inventory.window.Window;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.CraftingInventory;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;

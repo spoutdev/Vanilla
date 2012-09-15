@@ -30,8 +30,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.components.window.Window;
-import org.spout.vanilla.window.WindowType;
+import org.spout.vanilla.components.inventory.window.Window;
+import org.spout.vanilla.inventory.window.WindowType;
 
 public final class WindowOpenMessage extends WindowMessage {
 	private final int slots;

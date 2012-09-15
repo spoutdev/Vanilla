@@ -28,7 +28,7 @@ package org.spout.vanilla.components.substance.material;
 
 import org.spout.api.entity.Player;
 
-import org.spout.vanilla.components.window.Window;
+import org.spout.vanilla.components.inventory.window.Window;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
 

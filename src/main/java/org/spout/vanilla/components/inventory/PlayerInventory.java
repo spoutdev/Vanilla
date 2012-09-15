@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.components.player;
+package org.spout.vanilla.components.inventory;
 
 import org.spout.api.component.components.EntityComponent;
 

@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.components.window;
+package org.spout.vanilla.components.inventory.window;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,14 +46,14 @@ import org.spout.vanilla.event.window.WindowItemsEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
 import org.spout.vanilla.event.window.WindowSlotEvent;
 import org.spout.vanilla.inventory.player.PlayerMainInventory;
-import org.spout.vanilla.components.player.PlayerInventory;
+import org.spout.vanilla.components.inventory.PlayerInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.util.InventoryUtil;
-import org.spout.vanilla.window.util.SlotIndexCollection;
-import org.spout.vanilla.window.ClickArguments;
-import org.spout.vanilla.window.InventoryEntry;
-import org.spout.vanilla.window.WindowType;
-import org.spout.vanilla.window.util.SlotIndexGrid;
+import org.spout.vanilla.inventory.window.util.SlotIndexCollection;
+import org.spout.vanilla.inventory.window.ClickArguments;
+import org.spout.vanilla.inventory.window.InventoryEntry;
+import org.spout.vanilla.inventory.window.WindowType;
+import org.spout.vanilla.inventory.window.util.SlotIndexGrid;
 
 public abstract class Window extends EntityComponent implements InventoryViewer {
 	private static final SlotIndexGrid MAIN = new SlotIndexGrid(9, 3);

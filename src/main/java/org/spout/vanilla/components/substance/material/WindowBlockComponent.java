@@ -33,7 +33,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 
-import org.spout.vanilla.components.window.Window;
+import org.spout.vanilla.components.inventory.window.Window;
 
 public abstract class WindowBlockComponent extends BlockComponent {
 	private HashMap<Player, Window> viewers = new HashMap<Player, Window>();

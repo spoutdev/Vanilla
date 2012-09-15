@@ -24,24 +24,42 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.window;
+package org.spout.vanilla.inventory.window.util;
 
-import org.spout.api.inventory.InventoryBase;
+public class SlotIndexGrid extends SlotIndexCollection {
+	private final int length, width, offset;
 
-public class InventoryEntry {
-	private final InventoryBase inventory;
-	private final int slot;
-
-	public InventoryEntry(InventoryBase inventory, int slot) {
-		this.inventory = inventory;
-		this.slot = slot;
+	public SlotIndexGrid(int length, int width, int offset) {
+		super(new int[length * width]);
+		this.length = length;
+		this.width = width;
+		this.offset = offset;
+		int index = 0;
+		for (int w = 0; w < width; w++) {
+			for (int l = 0; l < length; l++) {
+				slots[index] = l + getSize() - (offset * w);
+				index++;
+			}
+		}
 	}
 
-	public InventoryBase getInventory() {
-		return inventory;
+	public SlotIndexGrid(int length, int width) {
+		this(length, width, 0);
 	}
 
-	public int getSlot() {
-		return slot;
+	public SlotIndexGrid translate(int offset) {
+		return new SlotIndexGrid(length, width, this.offset + offset);
+	}
+
+	public int getLength() {
+		return length;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getSize() {
+		return length * width;
 	}
 }

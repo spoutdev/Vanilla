@@ -39,7 +39,7 @@ import org.spout.vanilla.components.gamemode.SurvivalComponent;
 import org.spout.vanilla.components.misc.DiggingComponent;
 import org.spout.vanilla.components.misc.PickupItemComponent;
 import org.spout.vanilla.components.player.PingComponent;
-import org.spout.vanilla.components.player.PlayerInventory;
+import org.spout.vanilla.components.inventory.PlayerInventory;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;

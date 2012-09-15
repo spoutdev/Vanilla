@@ -35,7 +35,7 @@ import org.spout.api.protocol.MessageCodec;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
-import org.spout.vanilla.window.WindowType;
+import org.spout.vanilla.inventory.window.WindowType;
 
 public final class WindowOpenCodec extends MessageCodec<WindowOpenMessage> {
 	public WindowOpenCodec() {

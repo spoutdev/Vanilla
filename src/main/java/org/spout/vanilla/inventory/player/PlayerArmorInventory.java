@@ -30,7 +30,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 /**
- * Represents the four armor slots on a {@link org.spout.vanilla.components.player.PlayerInventory}.
+ * Represents the four armor slots on a {@link org.spout.vanilla.components.inventory.PlayerInventory}.
  */
 public class PlayerArmorInventory extends Inventory {
 	private static final long serialVersionUID = 1L;

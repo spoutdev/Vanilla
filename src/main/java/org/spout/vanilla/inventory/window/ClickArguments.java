@@ -24,36 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.window.util;
+package org.spout.vanilla.inventory.window;
 
-import org.spout.api.util.StringUtil;
+import org.spout.api.inventory.InventoryBase;
 
-public class SlotIndexCollection {
-	protected int[] slots;
+public class ClickArguments extends InventoryEntry {
+	private final boolean rightClick, shiftClick;
 
-	public SlotIndexCollection(int[] slots) {
-		this.slots = slots;
+	public ClickArguments(InventoryBase inventory, int slot, boolean rightClick, boolean shiftClick) {
+		super(inventory, slot);
+		this.rightClick = rightClick;
+		this.shiftClick = shiftClick;
 	}
 
-	public SlotIndexCollection(String elements) {
-		this(StringUtil.getIntArray(elements));
+	public boolean isRightClick() {
+		return rightClick;
 	}
 
-	public int getSlot(int nativeSlot) {
-		for (int i = 0; i < slots.length; i++) {
-			int slot = slots[i];
-			if (slot == nativeSlot) {
-				return i;
-			}
-		}
-		return -1;
-	}
-
-	public int getNativeSlot(int slot) {
-		return slots[slot];
-	}
-
-	public int[] getSlotArray() {
-		return slots;
+	public boolean isShiftClick() {
+		return shiftClick;
 	}
 }

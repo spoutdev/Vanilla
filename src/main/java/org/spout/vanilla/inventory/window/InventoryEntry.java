@@ -24,28 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.components.window;
+package org.spout.vanilla.inventory.window;
 
-import org.spout.vanilla.components.player.PlayerInventory;
-import org.spout.vanilla.window.util.SlotIndexCollection;
-import org.spout.vanilla.window.WindowType;
-import org.spout.vanilla.window.util.SlotIndexGrid;
+import org.spout.api.inventory.InventoryBase;
 
-public class DefaultWindow extends Window {
-	private static final SlotIndexCollection ARMOR_SLOTS = new SlotIndexGrid(1, 4, 5);
-	private static final SlotIndexCollection CRAFTING_SLOTS = new SlotIndexCollection("1-4, 0");
+public class InventoryEntry {
+	private final InventoryBase inventory;
+	private final int slot;
 
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		init(WindowType.DEFAULT, "Inventory", 9);
-		PlayerInventory inventory = getHuman().getInventory();
-		inventories.put(inventory.getArmor(), ARMOR_SLOTS);
-		inventories.put(inventory.getMain(), CRAFTING_SLOTS);
+	public InventoryEntry(InventoryBase inventory, int slot) {
+		this.inventory = inventory;
+		this.slot = slot;
 	}
 
-	@Override
-	public int getInstanceId() {
-		return 0;
+	public InventoryBase getInventory() {
+		return inventory;
+	}
+
+	public int getSlot() {
+		return slot;
 	}
 }

@@ -31,10 +31,10 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.components.living.Human;
-import org.spout.vanilla.components.window.Window;
+import org.spout.vanilla.components.inventory.window.Window;
 import org.spout.vanilla.protocol.msg.window.WindowCreativeActionMessage;
-import org.spout.vanilla.window.ClickArguments;
-import org.spout.vanilla.window.InventoryEntry;
+import org.spout.vanilla.inventory.window.ClickArguments;
+import org.spout.vanilla.inventory.window.InventoryEntry;
 
 public class WindowCreativeActionHandler extends MessageHandler<WindowCreativeActionMessage> {
 	@Override

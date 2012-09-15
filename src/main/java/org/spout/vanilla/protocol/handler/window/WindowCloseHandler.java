@@ -30,8 +30,8 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.components.window.DefaultWindow;
-import org.spout.vanilla.components.window.Window;
+import org.spout.vanilla.components.inventory.window.DefaultWindow;
+import org.spout.vanilla.components.inventory.window.Window;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 
 public final class WindowCloseHandler extends MessageHandler<WindowCloseMessage> {

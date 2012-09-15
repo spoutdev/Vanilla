@@ -24,24 +24,39 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.window;
+package org.spout.vanilla.inventory.window;
 
-import org.spout.api.inventory.InventoryBase;
+import gnu.trove.map.TIntObjectMap;
+import gnu.trove.map.hash.TIntObjectHashMap;
 
-public class ClickArguments extends InventoryEntry {
-	private final boolean rightClick, shiftClick;
+public enum WindowType {
+	DEFAULT(-1),
+	CHEST(0),
+	CRAFTING_TABLE(1),
+	FURNACE(2),
+	DISPENSER(3),
+	ENCHANTMENT_TABLE(4),
+	BREWING_STAND(5),
+	VILLAGER(6);
 
-	public ClickArguments(InventoryBase inventory, int slot, boolean rightClick, boolean shiftClick) {
-		super(inventory, slot);
-		this.rightClick = rightClick;
-		this.shiftClick = shiftClick;
+	private final int id;
+	private static final TIntObjectMap<WindowType> idMap = new TIntObjectHashMap<WindowType>();
+
+	private WindowType(int id) {
+		this.id = id;
 	}
 
-	public boolean isRightClick() {
-		return rightClick;
+	public int getId() {
+		return id;
 	}
 
-	public boolean isShiftClick() {
-		return shiftClick;
+	static {
+		for (WindowType type : WindowType.values()) {
+			idMap.put(type.getId(), type);
+		}
+	}
+
+	public static WindowType get(int id) {
+		return idMap.get(id);
 	}
 }

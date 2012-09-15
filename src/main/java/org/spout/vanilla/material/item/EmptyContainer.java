@@ -43,7 +43,7 @@ import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.misc.HeadComponent;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.components.player.PlayerInventory;
+import org.spout.vanilla.components.inventory.PlayerInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaMaterials;
 

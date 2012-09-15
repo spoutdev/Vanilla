@@ -24,39 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.window;
+package org.spout.vanilla.components.inventory.window;
 
-import gnu.trove.map.TIntObjectMap;
-import gnu.trove.map.hash.TIntObjectHashMap;
+import org.spout.vanilla.components.inventory.PlayerInventory;
+import org.spout.vanilla.inventory.window.util.SlotIndexCollection;
+import org.spout.vanilla.inventory.window.WindowType;
+import org.spout.vanilla.inventory.window.util.SlotIndexGrid;
 
-public enum WindowType {
-	DEFAULT(-1),
-	CHEST(0),
-	CRAFTING_TABLE(1),
-	FURNACE(2),
-	DISPENSER(3),
-	ENCHANTMENT_TABLE(4),
-	BREWING_STAND(5),
-	VILLAGER(6);
+public class DefaultWindow extends Window {
+	private static final SlotIndexCollection ARMOR_SLOTS = new SlotIndexGrid(1, 4, 5);
+	private static final SlotIndexCollection CRAFTING_SLOTS = new SlotIndexCollection("1-4, 0");
 
-	private final int id;
-	private static final TIntObjectMap<WindowType> idMap = new TIntObjectHashMap<WindowType>();
-
-	private WindowType(int id) {
-		this.id = id;
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		init(WindowType.DEFAULT, "Inventory", 9);
+		PlayerInventory inventory = getHuman().getInventory();
+		inventories.put(inventory.getArmor(), ARMOR_SLOTS);
+		inventories.put(inventory.getMain(), CRAFTING_SLOTS);
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	static {
-		for (WindowType type : WindowType.values()) {
-			idMap.put(type.getId(), type);
-		}
-	}
-
-	public static WindowType get(int id) {
-		return idMap.get(id);
+	@Override
+	public int getInstanceId() {
+		return 0;
 	}
 }

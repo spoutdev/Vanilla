@@ -113,7 +113,7 @@ import org.spout.vanilla.protocol.msg.entity.effect.EntityRemoveEffectMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityVelocityMessage;
-import org.spout.vanilla.window.WindowType;
+import org.spout.vanilla.inventory.window.WindowType;
 
 import static org.spout.vanilla.protocol.ChannelBufferUtilsTest.TEST_PARAMS;
 

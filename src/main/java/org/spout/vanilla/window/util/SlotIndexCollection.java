@@ -31,7 +31,7 @@ import org.spout.api.util.StringUtil;
 public class SlotIndexCollection {
 	protected int[] slots;
 
-	public SlotIndexCollection(int... slots) {
+	public SlotIndexCollection(int[] slots) {
 		this.slots = slots;
 	}
 

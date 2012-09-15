@@ -30,10 +30,10 @@ public class SlotIndexGrid extends SlotIndexCollection {
 	private final int length, width, offset;
 
 	public SlotIndexGrid(int length, int width, int offset) {
+		super(new int[length * width]);
 		this.length = length;
 		this.width = width;
 		this.offset = offset;
-		slots = new int[getSize()];
 		int index = 0;
 		for (int w = 0; w < width; w++) {
 			for (int l = 0; l < length; l++) {

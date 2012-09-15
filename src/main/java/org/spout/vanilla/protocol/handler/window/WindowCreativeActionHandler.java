@@ -53,9 +53,9 @@ public class WindowCreativeActionHandler extends MessageHandler<WindowCreativeAc
 		if (message.getItem() == null) {
 			//Taking item from existing slot
 			window.setCursorItem(null);
-			InventoryEntry entry = window.getInventoryEntry(message.getSlot());
-			if (entry != null) {
-				window.click(entry.getInventory(), entry.getSlot(), new ClickArguments(false, false));
+			ClickArguments args = window.getClickArguments(message.getSlot(), false, false);
+			if (args != null) {
+				window.click(args);
 			}
 		} else if (message.getSlot() == -1) {
 			window.setCursorItem(message.getItem());

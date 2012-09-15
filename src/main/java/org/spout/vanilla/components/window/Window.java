@@ -72,7 +72,6 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 		if (!(getHolder() instanceof Player)) {
 			throw new IllegalStateException("A Window may only be attached to a player.");
 		}
-		// TODO: Fix SlotIndexCollections
 		PlayerInventory inventory = getHuman().getInventory().getInventory();
 		inventories.put(inventory.getMain(), MAIN.translate(offset));
 		inventories.put(inventory.getQuickbar(), QUICK_BAR.translate(offset + MAIN.getSize()));
@@ -81,6 +80,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 	@Override
 	public void onDetached() {
 		close();
+		getHolder().add(DefaultWindow.class);
 	}
 
 	@Override
@@ -127,8 +127,8 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 		for (InventoryBase inventory : inventories.keySet()) {
 			inventory.addViewer(this);
 		}
-		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowOpenEvent(this));
 		reload();
+		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowOpenEvent(this));
 	}
 
 	public void close() {
@@ -140,7 +140,6 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 			dropCursorItem();
 		}
 		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowCloseEvent(this));
-		getHolder().add(DefaultWindow.class);
 	}
 
 	public void reload() {
@@ -159,7 +158,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowItemsEvent(this, items));
 	}
 
-	public boolean shiftClick(ItemStack stack, InventoryBase from, InventoryBase to) {
+	public boolean shiftClick(ItemStack stack, int slot, InventoryBase from, InventoryBase to) {
 		// look for the first available slot in the inventory
 		for (int i = 0; i < to.getSize(); i++) {
 			ItemStack index = to.getItem(i);
@@ -174,6 +173,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 			}
 			index.stack(stack);
 			to.setItem(i, index);
+			from.setItem(slot, stack);
 			if (stack.isEmpty()) {
 				return true;
 			}
@@ -181,7 +181,9 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 		return true;
 	}
 
-	public boolean click(InventoryBase inventory, int slot, ClickArguments args) {
+	public boolean click(ClickArguments args) {
+		InventoryBase inventory = args.getInventory();
+		int slot = args.getSlot();
 		System.out.println("Spout slot: " + slot);
 		ItemStack clicked = inventory.getItem(slot);
 		if (args.isShiftClick()) {
@@ -191,10 +193,10 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 				PlayerInventory playerInventory = getHuman().getInventory().getInventory();
 				if (inventory instanceof PlayerQuickbar) {
 					System.out.println("To main");
-					return shiftClick(clicked, inventory, playerInventory.getMain());
+					return shiftClick(clicked, slot, inventory, playerInventory.getMain());
 				} else if (inventory instanceof MainInventory) {
 					System.out.println("To quickbar");
-					return shiftClick(clicked, inventory, playerInventory.getQuickbar());
+					return shiftClick(clicked, slot, inventory, playerInventory.getQuickbar());
 				}
 			}
 		} else if (args.isRightClick()) {
@@ -306,7 +308,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 	}
 
 	public void creativeClick(InventoryBase inventory, int clickedSlot, ItemStack item) {
-		this.setCursorItem(null);
+		cursorItem = null;
 		inventory.setItem(clickedSlot, item);
 	}
 
@@ -343,6 +345,14 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 			if (slot != -1) {
 				return new InventoryEntry(entry.getKey(), slot);
 			}
+		}
+		return null;
+	}
+
+	public ClickArguments getClickArguments(int nativeSlot, boolean rightClick, boolean shiftClick) {
+		InventoryEntry entry = getInventoryEntry(nativeSlot);
+		if (entry != null) {
+			return new ClickArguments(entry.getInventory(), entry.getSlot(), rightClick, shiftClick);
 		}
 		return null;
 	}

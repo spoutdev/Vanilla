@@ -52,11 +52,11 @@ public final class WindowClickHandler extends MessageHandler<WindowClickMessage>
 			System.out.println("Outside click");
 			result = window.outsideClick();
 		} else {
-			System.out.println("Getting entry");
-			InventoryEntry entry = window.getInventoryEntry(slot);
-			if (entry != null) {
+			System.out.println("Getting args");
+			ClickArguments args = window.getClickArguments(slot, message.isRightClick(), message.isShift());
+			if (args != null) {
 				System.out.println("Clicking");
-				result = window.click(entry.getInventory(), entry.getSlot(), new ClickArguments(message.isRightClick(), message.isShift()));
+				result = window.click(args);
 			}
 		}
 		session.send(false, new WindowTransactionMessage(window, message.getTransaction(), result));

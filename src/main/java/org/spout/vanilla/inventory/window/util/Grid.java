@@ -26,27 +26,12 @@
  */
 package org.spout.vanilla.inventory.window.util;
 
-public class SlotIndexGrid extends SlotIndexCollection {
-	private final int length, width, offset;
+public class Grid implements Iterable<Integer> {
+	private final int length, width;
 
-	public SlotIndexGrid(int length, int width, int offset) {
-		super(new int[length * width]);
+	public Grid(int length, int width) {
 		this.length = length;
 		this.width = width;
-		this.offset = offset;
-		Grid grid = new Grid(length, width);
-		GridIterator i = grid.iterator();
-		while (i.hasNext()) {
-			slots[i.next()] = i.getX() + grid.getSize() - (offset * i.getY());
-		}
-	}
-
-	public SlotIndexGrid(int length, int width) {
-		this(length, width, 0);
-	}
-
-	public SlotIndexGrid translate(int offset) {
-		return new SlotIndexGrid(length, width, this.offset + offset);
 	}
 
 	public int getLength() {
@@ -57,11 +42,12 @@ public class SlotIndexGrid extends SlotIndexCollection {
 		return width;
 	}
 
-	public int getOffset() {
-		return offset;
-	}
-
 	public int getSize() {
 		return length * width;
+	}
+
+	@Override
+	public GridIterator iterator() {
+		return new GridIterator(this);
 	}
 }

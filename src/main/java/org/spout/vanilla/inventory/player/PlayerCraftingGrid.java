@@ -31,11 +31,11 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.inventory.CraftingInventory;
 
 public class PlayerCraftingGrid extends CraftingInventory {
-	private static final int ROW_SIZE = 2, COLUMN_SIZE = 2;
+	private static final int LENGTH = 2, WIDTH = 2, OUTPUT_SLOT = 4;
 	private static final long serialVersionUID = 1L;
 
 	public PlayerCraftingGrid() {
-		super(COLUMN_SIZE, ROW_SIZE);
+		super(LENGTH, WIDTH, OUTPUT_SLOT);
 	}
 
 	/**
@@ -68,5 +68,9 @@ public class PlayerCraftingGrid extends CraftingInventory {
 	 */
 	public ItemStack getBottomRightInput() {
 		return getItem(3);
+	}
+
+	public ItemStack getOutput() {
+		return getItem(4);
 	}
 }

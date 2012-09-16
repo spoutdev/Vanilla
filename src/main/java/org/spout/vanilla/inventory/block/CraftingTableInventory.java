@@ -29,10 +29,10 @@ package org.spout.vanilla.inventory.block;
 import org.spout.vanilla.inventory.CraftingInventory;
 
 public class CraftingTableInventory extends CraftingInventory {
-	private static final int ROW_SIZE = 3, COLUMN_SIZE = 3;
+	private static final int LENGTH = 3, WIDTH = 3, OUTPUT_SLOT = 9;
 	private static final long serialVersionUID = 1L;
 
 	public CraftingTableInventory() {
-		super(COLUMN_SIZE, ROW_SIZE);
+		super(LENGTH, WIDTH, OUTPUT_SLOT);
 	}
 }

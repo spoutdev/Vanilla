@@ -26,20 +26,12 @@
  */
 package org.spout.vanilla.inventory.entity;
 
-import org.spout.api.inventory.RecipeManager;
-
 import org.spout.vanilla.inventory.CraftingInventory;
 
 public class VillagerInventory extends CraftingInventory {
 	private static final long serialVersionUID = 1L;
 
 	public VillagerInventory() {
-		super(2, 1);
-	}
-
-	@Override
-	public RecipeManager getRecipeManager() {
-		//TODO: Create local recipe manager for recipes the Villager supplies
-		return super.getRecipeManager();
+		super(2, 1, 2);
 	}
 }

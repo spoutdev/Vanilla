@@ -26,42 +26,46 @@
  */
 package org.spout.vanilla.inventory.window.util;
 
-public class SlotIndexGrid extends SlotIndexCollection {
-	private final int length, width, offset;
+import java.util.Iterator;
 
-	public SlotIndexGrid(int length, int width, int offset) {
-		super(new int[length * width]);
-		this.length = length;
-		this.width = width;
-		this.offset = offset;
-		Grid grid = new Grid(length, width);
-		GridIterator i = grid.iterator();
-		while (i.hasNext()) {
-			slots[i.next()] = i.getX() + grid.getSize() - (offset * i.getY());
+public class GridIterator implements Iterator<Integer> {
+	private final Grid grid;
+	private int index = -1, x = -1, y = 0;
+
+	public GridIterator(Grid grid) {
+		this.grid = grid;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	@Override
+	public boolean hasNext() {
+		return index != grid.getSize() - 1;
+	}
+
+	@Override
+	public Integer next() {
+		if (x != grid.getLength() - 1) {
+			x++;
+		} else {
+			x = 0;
+			y++;
 		}
+		return ++index;
 	}
 
-	public SlotIndexGrid(int length, int width) {
-		this(length, width, 0);
-	}
-
-	public SlotIndexGrid translate(int offset) {
-		return new SlotIndexGrid(length, width, this.offset + offset);
-	}
-
-	public int getLength() {
-		return length;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public int getOffset() {
-		return offset;
-	}
-
-	public int getSize() {
-		return length * width;
+	@Override
+	public void remove() {
+		index--;
 	}
 }

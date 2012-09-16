@@ -135,11 +135,14 @@ public class Human extends VanillaEntity {
 
 	public void setGamemode(GameMode mode) {
 		Entity holder = getHolder();
-		PlayerGameModeChangedEvent event = Spout.getEventManager().callEvent(new PlayerGameModeChangedEvent((Player) getHolder(), mode));
-		if (event.isCancelled()) {
-			return;
+		if (holder instanceof Player) {
+			PlayerGameModeChangedEvent event = Spout.getEventManager().callEvent(new PlayerGameModeChangedEvent((Player) getHolder(), mode));
+			if (event.isCancelled()) {
+				return;
+			}
+			mode = event.getMode();
 		}
-		switch (mode = event.getMode()) {
+		switch (mode) {
 			case ADVENTURE:
 				holder.add(AdventureComponent.class);
 				break;
@@ -150,7 +153,9 @@ public class Human extends VanillaEntity {
 				holder.add(SurvivalComponent.class);
 				break;
 		}
-		holder.getNetwork().callProtocolEvent(new PlayerGameStateEvent( (Player) holder, PlayerGameStateMessage.CHANGE_GAME_MODE, mode));
+		if (holder instanceof Player) {
+			holder.getNetwork().callProtocolEvent(new PlayerGameStateEvent( (Player) holder, PlayerGameStateMessage.CHANGE_GAME_MODE, mode));
+		}
 		getData().put(VanillaData.GAMEMODE, mode);
 	}
 

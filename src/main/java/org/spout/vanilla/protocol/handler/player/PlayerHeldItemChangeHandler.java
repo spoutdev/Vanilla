@@ -39,9 +39,7 @@ public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeld
 		if (!session.hasPlayer()) {
 			return;
 		}
-
 		Player player = session.getPlayer();
-
 		int newSlot = message.getSlot();
 		if (newSlot < 0 || newSlot > 8) {
 			return;

@@ -24,44 +24,36 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.inventory.window.util;
+package org.spout.vanilla.inventory.util;
 
-public class SlotIndexGrid extends SlotIndexCollection {
-	private final int length, width, offset;
+import org.spout.api.util.StringUtil;
 
-	public SlotIndexGrid(int length, int width, int offset) {
-		super(new int[length * width]);
-		this.length = length;
-		this.width = width;
-		this.offset = offset;
-		Grid grid = new Grid(length, width);
-		GridIterator i = grid.iterator();
-		while (i.hasNext()) {
-			slots[i.next()] = i.getX() + grid.getSize() - (offset * i.getY());
+public class SlotIndexCollection {
+	protected int[] slots;
+
+	public SlotIndexCollection(int[] slots) {
+		this.slots = slots;
+	}
+
+	public SlotIndexCollection(String elements) {
+		this(StringUtil.getIntArray(elements));
+	}
+
+	public int getSlot(int nativeSlot) {
+		for (int i = 0; i < slots.length; i++) {
+			int slot = slots[i];
+			if (slot == nativeSlot) {
+				return i;
+			}
 		}
+		return -1;
 	}
 
-	public SlotIndexGrid(int length, int width) {
-		this(length, width, 0);
+	public int getNativeSlot(int slot) {
+		return slots[slot];
 	}
 
-	public SlotIndexGrid translate(int offset) {
-		return new SlotIndexGrid(length, width, this.offset + offset);
-	}
-
-	public int getLength() {
-		return length;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public int getOffset() {
-		return offset;
-	}
-
-	public int getSize() {
-		return length * width;
+	public int[] getSlotArray() {
+		return slots;
 	}
 }

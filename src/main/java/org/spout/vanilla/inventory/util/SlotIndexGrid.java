@@ -24,48 +24,46 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.inventory.window.util;
+package org.spout.vanilla.inventory.util;
 
-import java.util.Iterator;
+import org.spout.api.inventory.util.Grid;
+import org.spout.api.inventory.util.GridIterator;
 
-public class GridIterator implements Iterator<Integer> {
+public class SlotIndexGrid extends SlotIndexCollection {
 	private final Grid grid;
-	private int index = -1, x = -1, y = 0;
+	private final int offset;
 
-	public GridIterator(Grid grid) {
+	public SlotIndexGrid(Grid grid, int offset) {
+		super(new int[grid.getSize()]);
 		this.grid = grid;
-	}
-
-	public int getIndex() {
-		return index;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	@Override
-	public boolean hasNext() {
-		return index != grid.getSize() - 1;
-	}
-
-	@Override
-	public Integer next() {
-		if (x != grid.getLength() - 1) {
-			x++;
-		} else {
-			x = 0;
-			y++;
+		this.offset = offset;
+		GridIterator i = grid.iterator();
+		while (i.hasNext()) {
+			slots[i.next()] = i.getX() + grid.getSize() - (offset * i.getY());
 		}
-		return ++index;
 	}
 
-	@Override
-	public void remove() {
-		index--;
+	public SlotIndexGrid(Grid grid) {
+		this(grid, 0);
+	}
+
+	public SlotIndexGrid(int length, int width, int offset) {
+		this(new Grid(length, width), offset);
+	}
+
+	public SlotIndexGrid(int length, int width) {
+		this(new Grid(length, width));
+	}
+
+	public SlotIndexGrid translate(int offset) {
+		return new SlotIndexGrid(grid.getLength(), grid.getWidth(), this.offset + offset);
+	}
+
+	public Grid getGrid() {
+		return grid;
+	}
+
+	public int getOffset() {
+		return offset;
 	}
 }

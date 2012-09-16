@@ -28,8 +28,8 @@ package org.spout.vanilla.util;
 
 import org.junit.Test;
 
-import org.spout.vanilla.inventory.window.util.SlotIndexCollection;
-import org.spout.vanilla.inventory.window.util.SlotIndexGrid;
+import org.spout.vanilla.inventory.util.SlotIndexCollection;
+import org.spout.vanilla.inventory.util.SlotIndexGrid;
 
 import static org.junit.Assert.assertEquals;
 

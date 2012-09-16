@@ -49,11 +49,11 @@ import org.spout.vanilla.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.components.inventory.PlayerInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.util.InventoryUtil;
-import org.spout.vanilla.inventory.window.util.SlotIndexCollection;
+import org.spout.vanilla.inventory.util.SlotIndexCollection;
 import org.spout.vanilla.inventory.window.ClickArguments;
 import org.spout.vanilla.inventory.window.InventoryEntry;
 import org.spout.vanilla.inventory.window.WindowType;
-import org.spout.vanilla.inventory.window.util.SlotIndexGrid;
+import org.spout.vanilla.inventory.util.SlotIndexGrid;
 
 public abstract class Window extends EntityComponent implements InventoryViewer {
 	private static final SlotIndexGrid MAIN = new SlotIndexGrid(9, 3);
@@ -74,7 +74,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 		}
 		PlayerInventory inventory = getHuman().getInventory();
 		inventories.put(inventory.getMain(), MAIN.translate(offset));
-		inventories.put(inventory.getQuickbar(), QUICK_BAR.translate(offset + MAIN.getSize()));
+		inventories.put(inventory.getQuickbar(), QUICK_BAR.translate(offset + MAIN.getGrid().getSize()));
 	}
 
 	@Override

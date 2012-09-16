@@ -28,33 +28,35 @@ package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.util.Grid;
+import org.spout.api.inventory.util.GridIterator;
 
 public class CraftingInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
-	private final int length, width, outputSlot, offset;
+	private final Grid grid;
+	private final int outputSlot, offset;
 
-	public CraftingInventory(int length, int width, int outputSlot, int offset) {
-		super(length * width + 1);
-		this.length = length;
-		this.width = width;
+	public CraftingInventory(Grid grid, int outputSlot, int offset) {
+		super(grid.getSize() + 1);
+		this.grid = grid;
 		this.outputSlot = outputSlot;
 		this.offset = offset;
 	}
 
+	public CraftingInventory(Grid grid, int outputSlot) {
+		this(grid, outputSlot, 0);
+	}
+
+	public CraftingInventory(int length, int width, int outputSlot, int offset) {
+		this(new Grid(length, width), outputSlot, offset);
+	}
+
 	public CraftingInventory(int length, int width, int outputSlot) {
-		this(length, width, outputSlot, 0);
+		this(new Grid(length, width), outputSlot);
 	}
 
-	public int getGridLength() {
-		return length;
-	}
-
-	public int getGridWidth() {
-		return width;
-	}
-
-	public int getGridSize() {
-		return length * width;
+	public Grid getGrid() {
+		return grid;
 	}
 
 	public int getOutputSlot() {
@@ -67,17 +69,16 @@ public class CraftingInventory extends Inventory {
 
 	@Override
 	public void onSlotChanged(int slot, ItemStack item) {
-		int index = 0;
-		for (int y = 0; y < width; y++) {
-			for (int x = 0; x < length; x++) {
-				if (index + offset == slot) {
-					updateOutput();
-					index++;
-				}
+		GridIterator i = grid.iterator();
+		while (i.hasNext()) {
+			if (i.next() + offset == slot) {
+				updateOutput();
+				return;
 			}
 		}
 	}
 
 	public void updateOutput() {
+		// TODO: Update output
 	}
 }

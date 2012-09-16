@@ -58,6 +58,7 @@ import org.spout.vanilla.world.generator.normal.populator.CavePopulator;
 import org.spout.vanilla.world.generator.normal.populator.DungeonPopulator;
 import org.spout.vanilla.world.generator.normal.populator.FallingLiquidPopulator;
 import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator;
+import org.spout.vanilla.world.generator.normal.populator.MineshaftPopulator;
 import org.spout.vanilla.world.generator.normal.populator.OrePopulator;
 import org.spout.vanilla.world.generator.normal.populator.PondPopulator;
 import org.spout.vanilla.world.generator.normal.populator.RavinePopulator;
@@ -139,6 +140,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 				new CavePopulator(), new RavinePopulator()
 				);
 		addPopulators(
+				new MineshaftPopulator(),
 				new PondPopulator(), new DungeonPopulator(), new OrePopulator(),
 				new BiomePopulator(),
 				new FallingLiquidPopulator(), new SnowPopulator()

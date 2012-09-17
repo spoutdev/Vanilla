@@ -32,18 +32,8 @@ import org.spout.vanilla.components.substance.material.Chest;
 
 public class ChestInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
-	private final Chest owner;
 
-	public ChestInventory(Chest owner) {
+	public ChestInventory() {
 		super(27);
-		this.owner = owner;
-	}
-
-	/**
-	 * Gets the {@link Chest} associated with the inventory.
-	 * @return chest
-	 */
-	public Chest getOwner() {
-		return owner;
 	}
 }

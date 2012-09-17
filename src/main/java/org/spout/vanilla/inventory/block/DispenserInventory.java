@@ -35,18 +35,8 @@ import org.spout.vanilla.components.substance.material.Dispenser;
  */
 public class DispenserInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
-	private final Dispenser owner;
 
 	public DispenserInventory(Dispenser owner) {
 		super(9);
-		this.owner = owner;
-	}
-
-	/**
-	 * Returns the dispenser entity that this inventory belongs to.
-	 * @return owner the dispenser entity
-	 */
-	public Dispenser getOwner() {
-		return owner;
 	}
 }

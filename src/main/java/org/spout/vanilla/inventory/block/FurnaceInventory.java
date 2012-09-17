@@ -38,19 +38,9 @@ import org.spout.vanilla.material.TimedCraftable;
  */
 public class FurnaceInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
-	private final Furnace owner;
 
-	public FurnaceInventory(Furnace owner) {
+	public FurnaceInventory() {
 		super(3);
-		this.owner = owner;
-	}
-
-	/**
-	 * Returns the furnace entity that this inventory belongs to.
-	 * @return owner the furnace entity
-	 */
-	public Furnace getOwner() {
-		return owner;
 	}
 
 	public ItemStack getOutput() {

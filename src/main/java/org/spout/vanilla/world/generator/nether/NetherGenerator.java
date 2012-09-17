@@ -48,8 +48,8 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
-import org.spout.vanilla.world.generator.VanillaUniqueBiomeGenerator;
 import org.spout.vanilla.world.generator.VanillaBiomes;
+import org.spout.vanilla.world.generator.VanillaUniqueBiomeGenerator;
 import org.spout.vanilla.world.generator.nether.decorator.BlockPatchDecorator;
 import org.spout.vanilla.world.generator.nether.populator.NetherCavePopulator;
 

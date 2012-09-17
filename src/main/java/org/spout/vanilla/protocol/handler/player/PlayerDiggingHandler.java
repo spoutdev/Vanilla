@@ -39,7 +39,6 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.basic.BasicAir;
 import org.spout.api.material.block.BlockFace;
@@ -60,8 +59,8 @@ import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.Food;
 import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerDiggingMessage;
+import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.util.ItemUtil;
 
 public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMessage> {
@@ -179,7 +178,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				int totalDamage;
 
 				if (heldItem != null && heldItem.getMaterial() instanceof Tool) {
-					currentSlot.addItemData(currentSlot.getCurrentSlot(), ((Tool) heldItem.getMaterial()).getDurabilityPenalty(heldItem));
+					currentSlot.addData(currentSlot.getCurrentSlot(), ((Tool) heldItem.getMaterial()).getDurabilityPenalty(heldItem));
 				}
 				if (heldItem == null) {
 					damageDone = ((int) diggingTicks * 1);

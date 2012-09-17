@@ -45,7 +45,7 @@ public class WindowCreativeActionMessage implements Message {
 		return slot;
 	}
 
-	public ItemStack getItem() {
+	public ItemStack get() {
 		return item;
 	}
 

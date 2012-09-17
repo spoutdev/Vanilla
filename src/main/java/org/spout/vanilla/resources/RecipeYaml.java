@@ -30,7 +30,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.spout.api.inventory.Recipe;
+import org.spout.api.inventory.recipe.Recipe;
 import org.spout.api.resource.Resource;
 
 public class RecipeYaml extends Resource {

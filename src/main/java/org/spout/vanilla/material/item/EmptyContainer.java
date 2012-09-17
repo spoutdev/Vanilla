@@ -39,11 +39,11 @@ import org.spout.api.material.source.MaterialSource;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
+import org.spout.vanilla.components.inventory.PlayerInventory;
 import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.misc.HeadComponent;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.components.inventory.PlayerInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -87,8 +87,8 @@ public class EmptyContainer extends BlockItem {
 			}
 			PlayerInventory inventory = entity.get(Human.class).getInventory();
 			PlayerQuickbar quickbar = inventory.getQuickbar();
-			quickbar.addItemAmount(quickbar.getCurrentSlot(), -1);
-			inventory.getMain().addItem(new ItemStack(cont, 1));
+			quickbar.addAmount(quickbar.getCurrentSlot(), -1);
+			inventory.getMain().add(new ItemStack(cont, 1));
 		}
 	}
 

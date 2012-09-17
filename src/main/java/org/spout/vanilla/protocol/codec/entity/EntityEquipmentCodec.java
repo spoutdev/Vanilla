@@ -55,7 +55,7 @@ public final class EntityEquipmentCodec extends MessageCodec<EntityEquipmentMess
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeInt(message.getEntityId());
 		buffer.writeShort(message.getSlot());
-		ChannelBufferUtils.writeItemStack(buffer, message.getItem());
+		ChannelBufferUtils.writeItemStack(buffer, message.get());
 		return buffer;
 	}
 }

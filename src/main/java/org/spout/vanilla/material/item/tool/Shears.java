@@ -41,7 +41,6 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Shears extends Tool {
 	private Random rand = new Random();
@@ -70,11 +69,11 @@ public class Shears extends Tool {
 
 			Entity entityItem = other.getWorld().createAndSpawnEntity(other.getTransform().getPosition(), Item.class, LoadOption.NO_LOAD);
 			Item item = entity.get(Item.class);
-			item.setItemStack(new ItemStack(VanillaMaterials.WOOL, col, rand.nextInt(3) + 1));
+			item.setStack(new ItemStack(VanillaMaterials.WOOL, col, rand.nextInt(3) + 1));
 
 			if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 				PlayerQuickbar quickbar = entity.get(Human.class).getInventory().getQuickbar();
-				quickbar.addItemData(quickbar.getCurrentSlot(), 1);
+				quickbar.addData(quickbar.getCurrentSlot(), 1);
 			}
 		}
 	}

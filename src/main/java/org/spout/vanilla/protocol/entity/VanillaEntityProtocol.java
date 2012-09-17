@@ -42,9 +42,9 @@ import org.spout.vanilla.protocol.msg.entity.EntityDestroyMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityHeadYawMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionYawMessage;
-import org.spout.vanilla.protocol.msg.entity.pos.EntityYawMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityVelocityMessage;
+import org.spout.vanilla.protocol.msg.entity.pos.EntityYawMessage;
 
 import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPosition;
 import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyRotation;

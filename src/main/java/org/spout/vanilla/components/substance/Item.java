@@ -45,11 +45,11 @@ public class Item extends EntityComponent {
 		}
 	}
 
-	public ItemStack getItemStack() {
+	public ItemStack getStack() {
 		return getData().get(Data.HELD_ITEM);
 	}
 
-	public void setItemStack(ItemStack stack) {
+	public void setStack(ItemStack stack) {
 		getData().put(Data.HELD_ITEM, stack);
 	}
 

@@ -39,7 +39,6 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.Placeable;
@@ -57,8 +56,8 @@ import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.tool.InteractTool;
-import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerBlockPlacementMessage;
+import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 
 public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBlockPlacementMessage> {
 	private void undoPlacement(Player player, Block clickedBlock, Block alterBlock) {
@@ -218,7 +217,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 					//GeneralEffects.BREAKBLOCK.playGlobal(target.getPosition(), target.getMaterial());
 					// Remove block from inventory if not in creative mode.
 					if (!player.has(CreativeComponent.class)) {
-						currentSlot.addItemAmount(0, -1);
+						currentSlot.addAmount(0, -1);
 					}
 				} else {
 					undoPlacement(player, clickedBlock, alterBlock);

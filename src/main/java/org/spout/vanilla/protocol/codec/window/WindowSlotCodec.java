@@ -55,7 +55,7 @@ public final class WindowSlotCodec extends MessageCodec<WindowSlotMessage> {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeByte(message.getWindowInstanceId());
 		buffer.writeShort(message.getSlot());
-		ChannelBufferUtils.writeItemStack(buffer, message.getItem());
+		ChannelBufferUtils.writeItemStack(buffer, message.get());
 		return buffer;
 	}
 }

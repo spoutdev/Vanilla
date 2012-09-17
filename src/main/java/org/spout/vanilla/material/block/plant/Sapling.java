@@ -100,7 +100,7 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 		ItemStack current = inv.getCurrentItem();
 		if (current != null && current.isMaterial(Dye.BONE_MEAL)) {
 			if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-				inv.addItemAmount(0, -1);
+				inv.addAmount(0, -1);
 			}
 			this.growTree(block);
 		}

@@ -80,7 +80,7 @@ public class EntityInteractHandler extends MessageHandler<EntityInteractMessage>
 					if (holdingMat instanceof Tool) {
 						// This is a bit of a hack due to the way Tool hierarchy is now (Only Swords can have a damage modifier, but Sword must be an interface and therefore is not able to contain getDamageModifier without code duplication)
 						damage += ((Tool) holdingMat).getDamageBonus(clickedEntity, holding);
-						//						player.getInventory().getQuickbar().getCurrentSlotInventory().addItemData(1); TODO: Reimplement durability change
+						//						player.getInventory().getQuickbar().getCurrentSlotInventory().addData(1); TODO: Reimplement durability change
 					}
 				}
 				if (damage != 0) {

@@ -46,10 +46,10 @@ public class PlayerQuickbar extends Inventory {
 	}
 
 	public ItemStack getCurrentItem() {
-		return getItem(currentSlot);
+		return get(currentSlot);
 	}
 
 	public void setCurrentItem(ItemStack item) {
-		setItem(currentSlot, item);
+		set(currentSlot, item);
 	}
 }

@@ -32,9 +32,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import org.spout.api.inventory.RecipeBuilder;
-import org.spout.api.inventory.RecipeTree;
-import org.spout.api.inventory.ShapedRecipe;
+import org.spout.api.inventory.recipe.RecipeBuilder;
+import org.spout.api.inventory.recipe.RecipeTree;
+import org.spout.api.inventory.recipe.ShapedRecipe;
 import org.spout.api.material.Material;
 
 import org.spout.vanilla.material.VanillaMaterials;

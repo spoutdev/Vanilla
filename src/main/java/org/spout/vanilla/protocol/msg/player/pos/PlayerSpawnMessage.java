@@ -81,7 +81,7 @@ public final class PlayerSpawnMessage extends EntityMessage {
 		return pitch;
 	}
 
-	public int getItemId() {
+	public int getId() {
 		return item;
 	}
 

@@ -27,7 +27,7 @@
 package org.spout.vanilla.inventory.block;
 
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.special.InventorySlot;
+import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.components.substance.material.Furnace;
 import org.spout.vanilla.material.Fuel;
@@ -39,16 +39,10 @@ import org.spout.vanilla.material.TimedCraftable;
 public class FurnaceInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
 	private final Furnace owner;
-	private final InventorySlot output;
-	private final InventorySlot fuel;
-	private final InventorySlot ingredient;
 
 	public FurnaceInventory(Furnace owner) {
 		super(3);
 		this.owner = owner;
-		this.output = this.createSlot(0);
-		this.fuel = this.createSlot(1);
-		this.ingredient = this.createSlot(2);
 	}
 
 	/**
@@ -59,28 +53,16 @@ public class FurnaceInventory extends Inventory {
 		return owner;
 	}
 
-	/**
-	 * Returns the {@link InventorySlot} of the output slot (slot 37)
-	 * @return output slot
-	 */
-	public InventorySlot getOutput() {
-		return this.output;
+	public ItemStack getOutput() {
+		return get(0);
 	}
 
-	/**
-	 * Returns the {@link InventorySlot} of the fuel slot (slot 35)
-	 * @return fuel slot
-	 */
-	public InventorySlot getFuel() {
-		return this.fuel;
+	public ItemStack getFuel() {
+		return get(1);
 	}
 
-	/**
-	 * Returns the {@link InventorySlot} of the ingredient slot (slot 38)
-	 * @return ingredient slot
-	 */
-	public InventorySlot getIngredient() {
-		return this.ingredient;
+	public ItemStack getIngredient() {
+		return get(2);
 	}
 
 	/**
@@ -88,7 +70,7 @@ public class FurnaceInventory extends Inventory {
 	 * @return true if has fuel in slot.
 	 */
 	public boolean hasFuel() {
-		return getFuel().getItem() != null && getFuel().getItem().getMaterial() instanceof Fuel;
+		return getFuel() != null && getFuel().getMaterial() instanceof Fuel;
 	}
 
 	/**
@@ -96,6 +78,6 @@ public class FurnaceInventory extends Inventory {
 	 * @return true if has ingredient in slot.
 	 */
 	public boolean hasIngredient() {
-		return getIngredient().getItem() != null && getIngredient().getItem().getMaterial() instanceof TimedCraftable;
+		return getIngredient() != null && getIngredient().getMaterial() instanceof TimedCraftable;
 	}
 }

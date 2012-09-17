@@ -47,9 +47,9 @@ import org.spout.api.protocol.Session;
 import org.spout.api.util.Named;
 
 import org.spout.vanilla.chat.VanillaStyleHandler;
+import org.spout.vanilla.protocol.msg.ServerPluginMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerChatMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerKickMessage;
-import org.spout.vanilla.protocol.msg.ServerPluginMessage;
 import org.spout.vanilla.protocol.plugin.RegisterPluginChannelCodec;
 import org.spout.vanilla.protocol.plugin.RegisterPluginChannelMessage;
 import org.spout.vanilla.protocol.plugin.RegisterPluginChannelMessageHandler;

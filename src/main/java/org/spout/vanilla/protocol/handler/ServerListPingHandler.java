@@ -33,8 +33,8 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.game.ServerListPingEvent;
-import org.spout.vanilla.protocol.msg.player.conn.PlayerKickMessage;
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
+import org.spout.vanilla.protocol.msg.player.conn.PlayerKickMessage;
 
 public class ServerListPingHandler extends MessageHandler<ServerListPingMessage> {
 	@Override

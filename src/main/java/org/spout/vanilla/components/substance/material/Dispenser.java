@@ -27,7 +27,7 @@
 package org.spout.vanilla.components.substance.material;
 
 import org.spout.api.entity.Player;
-import org.spout.api.inventory.InventoryBase;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.components.inventory.window.Window;
@@ -64,7 +64,7 @@ public class Dispenser extends WindowBlockComponent implements Container {
 	}
 
 	@Override
-	public InventoryBase getInventory() {
+	public Inventory getInventory() {
 		// TODO Auto-generated method stub
 		return null;
 	}

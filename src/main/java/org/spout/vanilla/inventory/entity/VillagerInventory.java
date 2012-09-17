@@ -30,8 +30,9 @@ import org.spout.vanilla.inventory.CraftingInventory;
 
 public class VillagerInventory extends CraftingInventory {
 	private static final long serialVersionUID = 1L;
+	private static final int LENGTH = 2, WIDTH = 1, OUTPUT_SLOT = 2;
 
 	public VillagerInventory() {
-		super(2, 1, 2);
+		super(LENGTH, WIDTH, OUTPUT_SLOT);
 	}
 }

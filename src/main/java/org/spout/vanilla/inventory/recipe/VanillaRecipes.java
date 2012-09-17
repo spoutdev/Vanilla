@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.spout.api.Spout;
-import org.spout.api.inventory.Recipe;
+import org.spout.api.inventory.recipe.Recipe;
 
 import org.spout.vanilla.resources.RecipeYaml;
 

@@ -62,8 +62,8 @@ import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.inventory.window.DefaultWindow;
+import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
@@ -94,35 +94,35 @@ import org.spout.vanilla.event.world.PlaySoundEffectEvent;
 import org.spout.vanilla.event.world.TimeUpdateEvent;
 import org.spout.vanilla.event.world.WeatherChangeEvent;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.msg.window.WindowItemsMessage;
-import org.spout.vanilla.protocol.msg.window.WindowSlotMessage;
-import org.spout.vanilla.protocol.msg.world.block.BlockActionMessage;
-import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
-import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
-import org.spout.vanilla.protocol.msg.world.EffectMessage;
-import org.spout.vanilla.protocol.msg.entity.EntityTileDataMessage;
-import org.spout.vanilla.protocol.msg.player.PlayerGameStateMessage;
-import org.spout.vanilla.protocol.msg.world.ExplosionMessage;
-import org.spout.vanilla.protocol.msg.player.PlayerHealthMessage;
-import org.spout.vanilla.protocol.msg.player.conn.PlayerPingMessage;
-import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionYawMessage;
-import org.spout.vanilla.protocol.msg.player.pos.PlayerRespawnMessage;
-import org.spout.vanilla.protocol.msg.player.PlayerSoundEffectMessage;
-import org.spout.vanilla.protocol.msg.player.conn.PlayerListMessage;
-import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnPositionMessage;
-import org.spout.vanilla.protocol.msg.player.PlayerTimeMessage;
-import org.spout.vanilla.protocol.msg.player.pos.PlayerYawMessage;
-import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
-import org.spout.vanilla.protocol.msg.player.PlayerCollectItemMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityTileDataMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityTeleportMessage;
+import org.spout.vanilla.protocol.msg.player.PlayerCollectItemMessage;
+import org.spout.vanilla.protocol.msg.player.PlayerGameStateMessage;
+import org.spout.vanilla.protocol.msg.player.PlayerHealthMessage;
+import org.spout.vanilla.protocol.msg.player.PlayerSoundEffectMessage;
+import org.spout.vanilla.protocol.msg.player.PlayerTimeMessage;
+import org.spout.vanilla.protocol.msg.player.conn.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerLoginRequestMessage;
+import org.spout.vanilla.protocol.msg.player.conn.PlayerPingMessage;
+import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionYawMessage;
+import org.spout.vanilla.protocol.msg.player.pos.PlayerRespawnMessage;
+import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnPositionMessage;
+import org.spout.vanilla.protocol.msg.player.pos.PlayerYawMessage;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
+import org.spout.vanilla.protocol.msg.window.WindowItemsMessage;
 import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
 import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
+import org.spout.vanilla.protocol.msg.window.WindowSlotMessage;
+import org.spout.vanilla.protocol.msg.world.EffectMessage;
+import org.spout.vanilla.protocol.msg.world.ExplosionMessage;
+import org.spout.vanilla.protocol.msg.world.block.BlockActionMessage;
+import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
+import org.spout.vanilla.protocol.msg.world.block.SignMessage;
+import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 import org.spout.vanilla.world.generator.VanillaBiome;
 
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
@@ -353,7 +353,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			player.getSession().send(false, true, idMsg);
 			player.getSession().setState(State.GAME);
 			for (int slot = 0; slot < 4; slot++) {
-				ItemStack slotItem = owner.get(Human.class).getInventory().getArmor().getItem(slot);
+				ItemStack slotItem = owner.get(Human.class).getInventory().getArmor().get(slot);
 				player.getSession().send(false, new EntityEquipmentMessage(entityId, slot, slotItem));
 			}
 		} else {
@@ -420,7 +420,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (event.getWindow() instanceof DefaultWindow) {
 			return null; // no message for the default Window
 		}
-		int size = event.getWindow().getInventorySize() - event.getWindow().getHolder().get(Human.class).getInventory().getMain().getSize();
+		int size = event.getWindow().getInventorySize() - event.getWindow().getHolder().get(Human.class).getInventory().getMain().size();
 		return new WindowOpenMessage(event.getWindow(), size);
 	}
 
@@ -434,12 +434,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onWindowSetSlot(WindowSlotEvent event) {
-		return new WindowSlotMessage(event.getWindow(), event.getGlobalSlot(), event.getItem());
+		return new WindowSlotMessage(event.getWindow(), event.getGlobalSlot(), event.get());
 	}
 
 	@EventHandler
 	public Message onWindowSetSlots(WindowItemsEvent event) {
-		return new WindowItemsMessage(event.getWindow(), event.getItems());
+		return new WindowItemsMessage(event.getWindow(), event.gets());
 	}
 
 	@EventHandler

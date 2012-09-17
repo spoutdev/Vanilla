@@ -41,7 +41,6 @@ import org.spout.api.protocol.Session;
 import org.spout.api.scheduler.TaskPriority;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.VanillaProtocol;
 
 public class LoginAuth implements Runnable {
 	private final static String URLBase = "http://session.minecraft.net/game/checkserver.jsp?";

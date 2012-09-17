@@ -50,7 +50,7 @@ public final class EntityEquipmentMessage extends EntityMessage {
 		return slot;
 	}
 
-	public ItemStack getItem() {
+	public ItemStack get() {
 		return item;
 	}
 

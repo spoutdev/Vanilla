@@ -67,7 +67,7 @@ public final class PlayerSpawnCodec extends MessageCodec<PlayerSpawnMessage> {
 		buffer.writeInt(message.getZ());
 		buffer.writeByte(message.getYaw());
 		buffer.writeByte(message.getPitch());
-		buffer.writeShort(message.getItemId());
+		buffer.writeShort(message.getId());
 		ChannelBufferUtils.writeParameters(buffer, message.getParameters());
 		return buffer;
 	}

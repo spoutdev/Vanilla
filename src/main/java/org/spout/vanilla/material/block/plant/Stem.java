@@ -32,7 +32,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -48,7 +47,6 @@ import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.util.VanillaBlockUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public abstract class Stem extends GroundAttachable implements Growing, Crop, RandomBlockMaterial {
 	private BlockMaterial lastMaterial;
@@ -113,7 +111,7 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Ra
 		if (current != null && current.isMaterial(Dye.BONE_MEAL)) {
 			if (this.getGrowthStage(block) != 0x7) {
 				if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-					inv.addItemAmount(0, -1);
+					inv.addAmount(0, -1);
 				}
 				this.setGrowthStage(block, 0x7);
 			}

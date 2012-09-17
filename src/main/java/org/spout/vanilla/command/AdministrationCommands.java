@@ -46,7 +46,6 @@ import org.spout.api.material.Material;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.misc.HealthComponent;
-
 import org.spout.vanilla.components.world.VanillaSky;
 import org.spout.vanilla.configuration.OpConfiguration;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -170,9 +169,9 @@ public class AdministrationCommands {
 
 		int count = args.getInteger(++index, 1);
 
-		player.add(Human.class).getInventory().getMain().addItem(new ItemStack(material, count));
+		player.add(Human.class).getInventory().getMain().add(new ItemStack(material, count));
 		//TODO inventory
-		//		controller.getInventory().getMain().addItem(new ItemStack(material, count)); DATAMAPS
+		//		controller.getInventory().getMain().add(new ItemStack(material, count)); DATAMAPS
 
 		source.sendMessage("Gave ", player.getName(), " ", count, " ", material.getDisplayName());
 	}

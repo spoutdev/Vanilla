@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.item;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.inventory.special.InventorySlot;
 
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;

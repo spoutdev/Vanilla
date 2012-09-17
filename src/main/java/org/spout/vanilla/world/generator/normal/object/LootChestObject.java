@@ -66,7 +66,7 @@ public class LootChestObject extends RandomObject {
 		//final ChestInventory inv = chest.getInventory();
 		//for (int i = 0; i < getMaxNumberOfStacks(); i++) {
 		//	final int slot = random.nextInt(inv.getSize());
-		//	inv.setItem(slot, getNextStack());
+		//	inv.set(slot, getNextStack());
 		//}
 	}
 

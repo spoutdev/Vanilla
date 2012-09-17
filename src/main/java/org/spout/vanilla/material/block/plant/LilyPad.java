@@ -29,7 +29,6 @@ package org.spout.vanilla.material.block.plant;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.BlockIterator;
@@ -41,7 +40,6 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.liquid.Water;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class LilyPad extends GroundAttachable {
 	public LilyPad(String name, int id) {
@@ -80,7 +78,7 @@ public class LilyPad extends GroundAttachable {
 				}
 				PlayerQuickbar inv = entity.get(Human.class).getInventory().getQuickbar();
 				if (inv != null) {
-					inv.addItemAmount(inv.getCurrentSlot(), -1);
+					inv.addAmount(inv.getCurrentSlot(), -1);
 				}
 			}
 		}

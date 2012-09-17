@@ -30,7 +30,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
@@ -44,7 +43,6 @@ import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Wool.WoolColor;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class Dye extends VanillaItemMaterial implements Placeable {
 	public static final Dye INK_SAC = new Dye("Ink Sac");
@@ -139,7 +137,7 @@ public class Dye extends VanillaItemMaterial implements Placeable {
 					other.get(Sheep.class).setColor(WoolColor.getById((short) (0xF - holding.getData())));
 
 					if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-						inv.addItemAmount(0, -1);
+						inv.addAmount(0, -1);
 					}
 				}
 			}

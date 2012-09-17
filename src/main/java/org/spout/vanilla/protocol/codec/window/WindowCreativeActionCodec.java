@@ -53,7 +53,7 @@ public class WindowCreativeActionCodec extends MessageCodec<WindowCreativeAction
 	public ChannelBuffer encode(WindowCreativeActionMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeShort(message.getSlot());
-		ChannelBufferUtils.writeItemStack(buffer, message.getItem());
+		ChannelBufferUtils.writeItemStack(buffer, message.get());
 		return buffer;
 	}
 }

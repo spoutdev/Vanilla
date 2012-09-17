@@ -45,7 +45,7 @@ public class EnchantmentTableInventory extends Inventory {
 	 * @return true if an item is present
 	 */
 	public boolean hasItem() {
-		return this.getItem(0) != null;
+		return this.get(0) != null;
 	}
 
 	/**
@@ -53,7 +53,7 @@ public class EnchantmentTableInventory extends Inventory {
 	 * return null.
 	 * @return ingredient item stack
 	 */
-	public ItemStack getItem() {
-		return getItem(0);
+	public ItemStack get() {
+		return get(0);
 	}
 }

@@ -57,7 +57,7 @@ public class ItemUtil {
 		//TODO: Handle velocity
 		Entity entity = position.getWorld().createEntity(position, Item.class);
 		Item item = entity.get(Item.class);
-		item.setItemStack(itemStack);
+		item.setStack(itemStack);
 		if (position.getWorld().getRegionFromBlock(position, LoadOption.NO_LOAD) != null) {
 			position.getWorld().spawnEntity(entity);
 		}

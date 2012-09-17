@@ -55,7 +55,7 @@ public final class WindowItemsCodec extends MessageCodec<WindowItemsMessage> {
 
 	@Override
 	public ChannelBuffer encode(WindowItemsMessage message) throws IOException {
-		ItemStack[] items = message.getItems();
+		ItemStack[] items = message.gets();
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeByte(message.getWindowInstanceId());
 		buffer.writeShort(items.length);

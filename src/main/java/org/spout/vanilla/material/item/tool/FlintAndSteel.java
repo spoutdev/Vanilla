@@ -29,7 +29,6 @@ package org.spout.vanilla.material.item.tool;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
@@ -37,7 +36,6 @@ import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class FlintAndSteel extends InteractTool {
 	public FlintAndSteel(String name, int id, short durability) {
@@ -67,7 +65,7 @@ public class FlintAndSteel extends InteractTool {
 				if (VanillaMaterials.FIRE.canPlace(target, (short) 0)) {
 					if (VanillaMaterials.FIRE.onPlacement(target, (short) 0)) {
 						PlayerQuickbar inv = entity.get(Human.class).getInventory().getQuickbar();
-						inv.addItemData(inv.getCurrentSlot(), 1);
+						inv.addData(inv.getCurrentSlot(), 1);
 					}
 				}
 			}

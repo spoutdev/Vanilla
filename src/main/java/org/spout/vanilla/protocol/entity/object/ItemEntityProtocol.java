@@ -51,10 +51,10 @@ public class ItemEntityProtocol extends VanillaEntityProtocol {
 		int z = (int) (entity.getTransform().getPosition().getZ() * 32);
 		int r = (int) (entity.getTransform().getYaw() * 32);
 		int p = (int) (entity.getTransform().getPitch() * 32);
-		if (pi.getItemStack().getMaterial() == null) {
-			int typeId = VanillaMaterials.getMinecraftId(pi.getItemStack().getMaterial());
+		if (pi.getStack().getMaterial() == null) {
+			int typeId = VanillaMaterials.getMinecraftId(pi.getStack().getMaterial());
 			if (typeId > 0) {
-				return Arrays.<Message>asList(new EntityItemMessage(id, typeId, pi.getItemStack().getAmount(), pi.getItemStack().getData(), x, y, z, r, p, (int) pi.getHolder().getTransform().getRoll()));
+				return Arrays.<Message>asList(new EntityItemMessage(id, typeId, pi.getStack().getAmount(), pi.getStack().getData(), x, y, z, r, p, (int) pi.getHolder().getTransform().getRoll()));
 			}
 		}
 		return Collections.emptyList();

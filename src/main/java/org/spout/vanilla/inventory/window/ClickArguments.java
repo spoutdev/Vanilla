@@ -26,12 +26,12 @@
  */
 package org.spout.vanilla.inventory.window;
 
-import org.spout.api.inventory.InventoryBase;
+import org.spout.api.inventory.Inventory;
 
 public class ClickArguments extends InventoryEntry {
 	private final boolean rightClick, shiftClick;
 
-	public ClickArguments(InventoryBase inventory, int slot, boolean rightClick, boolean shiftClick) {
+	public ClickArguments(Inventory inventory, int slot, boolean rightClick, boolean shiftClick) {
 		super(inventory, slot);
 		this.rightClick = rightClick;
 		this.shiftClick = shiftClick;

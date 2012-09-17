@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;

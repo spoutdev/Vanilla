@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.block.solid;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -38,10 +37,6 @@ import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.SpreadingSolid;
-import org.spout.vanilla.material.enchantment.Enchantments;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.util.EnchantmentUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
 public class Ice extends SpreadingSolid implements InitializableMaterial {

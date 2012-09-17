@@ -39,15 +39,15 @@ import org.spout.vanilla.world.generator.normal.biome.grassy.PlainBiome;
 import org.spout.vanilla.world.generator.normal.biome.grassy.RiverBiome;
 import org.spout.vanilla.world.generator.normal.biome.grassy.SmallMountainsBiome;
 import org.spout.vanilla.world.generator.normal.biome.grassy.SwampBiome;
+import org.spout.vanilla.world.generator.normal.biome.sandy.BeachBiome;
+import org.spout.vanilla.world.generator.normal.biome.sandy.DesertBiome;
+import org.spout.vanilla.world.generator.normal.biome.sandy.DesertHillsBiome;
 import org.spout.vanilla.world.generator.normal.biome.snowy.FrozenOceanBiome;
 import org.spout.vanilla.world.generator.normal.biome.snowy.FrozenRiverBiome;
 import org.spout.vanilla.world.generator.normal.biome.snowy.TaigaBiome;
 import org.spout.vanilla.world.generator.normal.biome.snowy.TaigaHillsBiome;
 import org.spout.vanilla.world.generator.normal.biome.snowy.TundraBiome;
 import org.spout.vanilla.world.generator.normal.biome.snowy.TundraHillsBiome;
-import org.spout.vanilla.world.generator.normal.biome.sandy.BeachBiome;
-import org.spout.vanilla.world.generator.normal.biome.sandy.DesertBiome;
-import org.spout.vanilla.world.generator.normal.biome.sandy.DesertHillsBiome;
 import org.spout.vanilla.world.generator.theend.biome.EndStoneBiome;
 
 public class VanillaBiomes {

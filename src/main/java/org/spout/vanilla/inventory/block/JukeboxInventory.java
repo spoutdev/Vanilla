@@ -44,7 +44,7 @@ public class JukeboxInventory extends Inventory {
 	 * @return item in slot
 	 */
 	public ItemStack getMusicSlot() {
-		return getItem(0);
+		return get(0);
 	}
 
 	/**
@@ -52,6 +52,6 @@ public class JukeboxInventory extends Inventory {
 	 * @param item in slot
 	 */
 	public void setMusicSlot(ItemStack item) {
-		setItem(0, item);
+		set(0, item);
 	}
 }

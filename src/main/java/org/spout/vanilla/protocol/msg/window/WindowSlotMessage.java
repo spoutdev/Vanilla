@@ -51,7 +51,7 @@ public final class WindowSlotMessage extends WindowMessage {
 		return slot;
 	}
 
-	public ItemStack getItem() {
+	public ItemStack get() {
 		return item;
 	}
 

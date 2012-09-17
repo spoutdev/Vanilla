@@ -36,8 +36,8 @@ import java.util.logging.Level;
 
 import org.spout.api.Spout;
 import org.spout.api.exception.ConfigurationException;
-import org.spout.api.inventory.Recipe;
-import org.spout.api.inventory.RecipeBuilder;
+import org.spout.api.inventory.recipe.Recipe;
+import org.spout.api.inventory.recipe.RecipeBuilder;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
 import org.spout.api.resource.BasicResourceLoader;

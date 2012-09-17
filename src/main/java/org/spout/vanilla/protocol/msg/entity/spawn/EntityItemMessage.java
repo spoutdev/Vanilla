@@ -79,7 +79,7 @@ public final class EntityItemMessage extends EntityMessage {
 		return roll;
 	}
 
-	public int getItemId() {
+	public int getId() {
 		return itemId;
 	}
 

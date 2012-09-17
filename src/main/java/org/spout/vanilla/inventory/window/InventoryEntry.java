@@ -26,18 +26,18 @@
  */
 package org.spout.vanilla.inventory.window;
 
-import org.spout.api.inventory.InventoryBase;
+import org.spout.api.inventory.Inventory;
 
 public class InventoryEntry {
-	private final InventoryBase inventory;
+	private final Inventory inventory;
 	private final int slot;
 
-	public InventoryEntry(InventoryBase inventory, int slot) {
+	public InventoryEntry(Inventory inventory, int slot) {
 		this.inventory = inventory;
 		this.slot = slot;
 	}
 
-	public InventoryBase getInventory() {
+	public Inventory getInventory() {
 		return inventory;
 	}
 

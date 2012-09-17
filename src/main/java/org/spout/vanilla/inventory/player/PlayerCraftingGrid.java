@@ -43,7 +43,7 @@ public class PlayerCraftingGrid extends CraftingInventory {
 	 * @return top left input item stack
 	 */
 	public ItemStack getTopLeftInput() {
-		return getItem(0);
+		return get(0);
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class PlayerCraftingGrid extends CraftingInventory {
 	 * @return top right item stack
 	 */
 	public ItemStack getTopRightInput() {
-		return getItem(1);
+		return get(1);
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class PlayerCraftingGrid extends CraftingInventory {
 	 * @return bottom left input item stack
 	 */
 	public ItemStack getBottomLeftInput() {
-		return getItem(2);
+		return get(2);
 	}
 
 	/**
@@ -67,10 +67,10 @@ public class PlayerCraftingGrid extends CraftingInventory {
 	 * @return bottom right input item stack
 	 */
 	public ItemStack getBottomRightInput() {
-		return getItem(3);
+		return get(3);
 	}
 
 	public ItemStack getOutput() {
-		return getItem(4);
+		return get(4);
 	}
 }

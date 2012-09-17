@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.controlled;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -68,7 +69,8 @@ public class ChestBlock extends ComponentMaterial implements Directional, Fuel {
 	public void onDestroy(Block block) {
 		Chest chest = block.getComponent();
 		//Drop items
-		ItemStack[] items = chest.getInventory().getContents();
+		Inventory inventory = chest.getInventory();
+		ItemStack[] items = inventory.toArray(new ItemStack[inventory.size()]);
 		Point position = block.getPosition();
 		for (ItemStack item : items) {
 			if (item == null) {

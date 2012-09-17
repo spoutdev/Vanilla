@@ -26,12 +26,12 @@
  */
 package org.spout.vanilla.inventory;
 
-import org.spout.api.inventory.InventoryBase;
+import org.spout.api.inventory.Inventory;
 
 public interface Container {
 	/**
 	 * Gets the inventory of this entity
 	 * @return The Inventory of this entity
 	 */
-	public InventoryBase getInventory();
+	public Inventory getInventory();
 }

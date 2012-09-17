@@ -35,8 +35,8 @@ import org.spout.api.event.Result;
 import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 
-import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.inventory.window.DefaultWindow;
+import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;

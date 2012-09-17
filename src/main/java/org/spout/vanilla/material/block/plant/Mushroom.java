@@ -33,7 +33,6 @@ import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.inventory.special.InventorySlot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.RandomBlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -50,7 +49,6 @@ import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.Spreading;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject;
 import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
 import org.spout.vanilla.world.generator.object.LargePlantObject;
@@ -75,7 +73,7 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Rand
 		ItemStack current = inv.getCurrentItem();
 		if (current != null && current.isMaterial(Dye.BONE_MEAL)) {
 			if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-				inv.addItemAmount(0, -1);
+				inv.addAmount(0, -1);
 			}
 			final BlockMaterial mushroomType = block.getMaterial();
 			final LargePlantObject mushroom;

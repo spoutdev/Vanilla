@@ -45,7 +45,7 @@ public class BrewingStandInventory extends Inventory {
 		if (index < 0 || index > 2) {
 			throw new IllegalArgumentException("The output index of the brewing stand must be between 0 and 2.");
 		}
-		return getItem(index);
+		return get(index);
 	}
 
 	/**
@@ -53,6 +53,6 @@ public class BrewingStandInventory extends Inventory {
 	 * @return {@link ItemStack} in input of brewing stand.
 	 */
 	public ItemStack getInput() {
-		return getItem(3);
+		return get(3);
 	}
 }

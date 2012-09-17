@@ -34,6 +34,7 @@ import org.spout.api.Spout;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.plugin.Platform;
+
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.player.network.PlayerKeepAliveEvent;
 import org.spout.vanilla.event.player.network.PlayerPingChangedEvent;

@@ -59,7 +59,7 @@ public final class EntityItemCodec extends MessageCodec<EntityItemMessage> {
 	public ChannelBuffer encode(EntityItemMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.buffer(24);
 		buffer.writeInt(message.getEntityId());
-		buffer.writeShort(message.getItemId());
+		buffer.writeShort(message.getId());
 		buffer.writeByte(message.getCount());
 		buffer.writeShort(message.getDamage());
 		buffer.writeInt(message.getX());

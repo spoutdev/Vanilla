@@ -73,7 +73,7 @@ public final class WindowClickMessage extends WindowMessage {
 		return transaction;
 	}
 
-	public ItemStack getItem() {
+	public ItemStack get() {
 		return item;
 	}
 

@@ -40,34 +40,34 @@ public class PlayerArmorInventory extends Inventory {
 	}
 
 	public ItemStack getBoots() {
-		return getItem(0);
+		return get(0);
 	}
 
 	public void setBoots(ItemStack boots) {
-		setItem(0, boots);
+		set(0, boots);
 	}
 
 	public ItemStack getLeggings() {
-		return getItem(1);
+		return get(1);
 	}
 
 	public void setLeggings(ItemStack leggings) {
-		setItem(1, leggings);
+		set(1, leggings);
 	}
 
 	public ItemStack getChestPlate() {
-		return getItem(2);
+		return get(2);
 	}
 
 	public void setChestPlate(ItemStack chestPlate) {
-		setItem(2, chestPlate);
+		set(2, chestPlate);
 	}
 
 	public ItemStack getHelmet() {
-		return getItem(3);
+		return get(3);
 	}
 
 	public void setHelmet(ItemStack helmet) {
-		setItem(3, helmet);
+		set(3, helmet);
 	}
 }

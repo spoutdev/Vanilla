@@ -28,8 +28,8 @@ package org.spout.vanilla.components.inventory.window;
 
 import org.spout.vanilla.components.inventory.PlayerInventory;
 import org.spout.vanilla.inventory.util.SlotIndexCollection;
-import org.spout.vanilla.inventory.window.WindowType;
 import org.spout.vanilla.inventory.util.SlotIndexGrid;
+import org.spout.vanilla.inventory.window.WindowType;
 
 public class DefaultWindow extends Window {
 	private static final SlotIndexCollection ARMOR_SLOTS = new SlotIndexGrid(1, 4, 5);

@@ -36,10 +36,10 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.components.gamemode.AdventureComponent;
 import org.spout.vanilla.components.gamemode.CreativeComponent;
 import org.spout.vanilla.components.gamemode.SurvivalComponent;
+import org.spout.vanilla.components.inventory.PlayerInventory;
 import org.spout.vanilla.components.misc.DiggingComponent;
 import org.spout.vanilla.components.misc.PickupItemComponent;
 import org.spout.vanilla.components.player.PingComponent;
-import org.spout.vanilla.components.inventory.PlayerInventory;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
@@ -181,7 +181,7 @@ public class Human extends VanillaEntity {
 			return;
 		}
 		ItemStack drop = current.clone().setAmount(1);
-		quickbar.addItemAmount(quickbar.getCurrentSlot(), -1);
+		quickbar.addAmount(quickbar.getCurrentSlot(), -1);
 		dropItem(drop);
 	}
 }

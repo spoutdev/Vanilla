@@ -30,11 +30,11 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.components.inventory.window.Window;
-import org.spout.vanilla.protocol.msg.window.WindowCreativeActionMessage;
+import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.inventory.window.ClickArguments;
 import org.spout.vanilla.inventory.window.InventoryEntry;
+import org.spout.vanilla.protocol.msg.window.WindowCreativeActionMessage;
 
 public class WindowCreativeActionHandler extends MessageHandler<WindowCreativeActionMessage> {
 	@Override
@@ -50,7 +50,7 @@ public class WindowCreativeActionHandler extends MessageHandler<WindowCreativeAc
 		}
 
 		Window window = holder.get(Window.class);
-		if (message.getItem() == null) {
+		if (message.get() == null) {
 			//Taking item from existing slot
 			window.setCursorItem(null);
 			ClickArguments args = window.getClickArguments(message.getSlot(), false, false);
@@ -58,12 +58,12 @@ public class WindowCreativeActionHandler extends MessageHandler<WindowCreativeAc
 				window.click(args);
 			}
 		} else if (message.getSlot() == -1) {
-			window.setCursorItem(message.getItem());
+			window.setCursorItem(message.get());
 			window.outsideClick();
 		} else {
 			InventoryEntry entry = window.getInventoryEntry(message.getSlot());
 			if (entry != null) {
-				window.creativeClick(entry.getInventory(), entry.getSlot(), message.getItem());
+				window.creativeClick(entry.getInventory(), entry.getSlot(), message.get());
 			}
 		}
 	}

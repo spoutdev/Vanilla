@@ -36,30 +36,30 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
-import org.spout.api.inventory.InventoryBase;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.components.inventory.PlayerInventory;
 import org.spout.vanilla.components.living.Human;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowItemsEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
 import org.spout.vanilla.event.window.WindowSlotEvent;
 import org.spout.vanilla.inventory.player.PlayerMainInventory;
-import org.spout.vanilla.components.inventory.PlayerInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.util.InventoryUtil;
 import org.spout.vanilla.inventory.util.SlotIndexCollection;
+import org.spout.vanilla.inventory.util.SlotIndexGrid;
 import org.spout.vanilla.inventory.window.ClickArguments;
 import org.spout.vanilla.inventory.window.InventoryEntry;
 import org.spout.vanilla.inventory.window.WindowType;
-import org.spout.vanilla.inventory.util.SlotIndexGrid;
+import org.spout.vanilla.util.InventoryUtil;
 
 public abstract class Window extends EntityComponent implements InventoryViewer {
 	private static final SlotIndexGrid MAIN = new SlotIndexGrid(9, 3);
 	private static final SlotIndexGrid QUICK_BAR = new SlotIndexGrid(9, 1);
 	protected final TIntObjectMap<ItemStack> queuedInventoryUpdates = new TIntObjectHashMap<ItemStack>();
-	protected final Map<InventoryBase, SlotIndexCollection> inventories = new HashMap<InventoryBase, SlotIndexCollection>();
+	protected final Map<Inventory, SlotIndexCollection> inventories = new HashMap<Inventory, SlotIndexCollection>();
 	protected final int instanceId = InventoryUtil.nextWindowId();
 	protected int offset;
 	protected WindowType type;
@@ -84,7 +84,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 	}
 
 	@Override
-	public void onSlotSet(InventoryBase inventory, int slot, ItemStack item) {
+	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
 		// convert slots and update
 		SlotIndexCollection slots = this.inventories.get(inventory);
 		if (slots != null) {
@@ -124,7 +124,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 
 	public void open() {
 		opened = true;
-		for (InventoryBase inventory : inventories.keySet()) {
+		for (Inventory inventory : inventories.keySet()) {
 			inventory.addViewer(this);
 		}
 		reload();
@@ -133,7 +133,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 
 	public void close() {
 		opened = false;
-		for (InventoryBase inventory : inventories.keySet()) {
+		for (Inventory inventory : inventories.keySet()) {
 			inventory.removeViewer(this);
 		}
 		if (getHuman().isSurvival()) {
@@ -145,26 +145,26 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 	public void reload() {
 		ItemStack[] items = new ItemStack[getInventorySize()];
 		int nativeSlot;
-		for (Entry<InventoryBase, SlotIndexCollection> entry : inventories.entrySet()) {
-			InventoryBase inventory = entry.getKey();
-			for (int i = 0; i < inventory.getSize(); i++) {
+		for (Entry<Inventory, SlotIndexCollection> entry : inventories.entrySet()) {
+			Inventory inventory = entry.getKey();
+			for (int i = 0; i < inventory.size(); i++) {
 				nativeSlot = entry.getValue().getNativeSlot(i);
 				if (nativeSlot < 0 || nativeSlot >= items.length) {
 					continue;
 				}
-				items[nativeSlot] = inventory.getItem(i);
+				items[nativeSlot] = inventory.get(i);
 			}
 		}
 		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowItemsEvent(this, items));
 	}
 
-	public boolean shiftClick(ItemStack stack, int slot, InventoryBase from, InventoryBase to) {
+	public boolean shiftClick(ItemStack stack, int slot, Inventory from, Inventory to) {
 		// look for the first available slot in the inventory
-		for (int i = 0; i < to.getSize(); i++) {
-			ItemStack index = to.getItem(i);
+		for (int i = 0; i < to.size(); i++) {
+			ItemStack index = to.get(i);
 			if (index == null) {
 				// put clicked item in empty slot
-				to.setItem(i, stack);
+				to.set(i, stack);
 				return true;
 			}
 			if (!index.equalsIgnoreSize(stack)) {
@@ -172,8 +172,8 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 				continue;
 			}
 			index.stack(stack);
-			to.setItem(i, index);
-			from.setItem(slot, stack);
+			to.set(i, index);
+			from.set(slot, stack);
 			if (stack.isEmpty()) {
 				return true;
 			}
@@ -182,10 +182,10 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 	}
 
 	public boolean click(ClickArguments args) {
-		InventoryBase inventory = args.getInventory();
+		Inventory inventory = args.getInventory();
 		int slot = args.getSlot();
 		System.out.println("Spout slot: " + slot);
-		ItemStack clicked = inventory.getItem(slot);
+		ItemStack clicked = inventory.get(slot);
 		if (args.isShiftClick()) {
 			System.out.println("Shift clicked");
 			if (clicked != null) {
@@ -210,7 +210,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 					// add one
 					clicked = cursorItem.clone();
 					clicked.setAmount(1);
-					inventory.setItem(slot, clicked);
+					inventory.set(slot, clicked);
 					// remove from cursor
 					cursorItem.setAmount(cursorItem.getAmount() - 1);
 					if (cursorItem.isEmpty()) {
@@ -228,7 +228,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 						System.out.println("Stacking");
 						// add one if can fit
 						clicked.setAmount(clicked.getAmount() + 1);
-						inventory.setItem(slot, clicked);
+						inventory.set(slot, clicked);
 						cursorItem.setAmount(cursorItem.getAmount() - 1);
 						if (cursorItem.isEmpty()) {
 							cursorItem = null;
@@ -240,7 +240,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 					// materials don't match
 					// swap stacks
 					ItemStack newCursor = clicked.clone();
-					inventory.setItem(slot, cursorItem);
+					inventory.set(slot, cursorItem);
 					cursorItem = newCursor;
 					return true;
 				}
@@ -253,7 +253,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 				int y = x / 2;
 				int z = x % 2;
 				clicked.setAmount(y);
-				inventory.setItem(slot, clicked);
+				inventory.set(slot, clicked);
 				// cursor gets any remainder
 				cursorItem = clicked.clone();
 				cursorItem.setAmount(y + z);
@@ -269,7 +269,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 					// slot is empty; cursor is not empty.
 					// put whole stack down
 					clicked = cursorItem.clone();
-					inventory.setItem(slot, clicked);
+					inventory.set(slot, clicked);
 					cursorItem = null;
 					return true;
 				}
@@ -281,7 +281,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 				if (cursorItem.equalsIgnoreSize(clicked)) {
 					System.out.println("Stacking");
 					clicked.stack(cursorItem);
-					inventory.setItem(slot, clicked);
+					inventory.set(slot, clicked);
 					if (cursorItem.isEmpty()) {
 						cursorItem = null;
 					}
@@ -291,7 +291,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 					// materials don't match
 					// swap stacks
 					ItemStack newCursor = clicked.clone();
-					inventory.setItem(slot, cursorItem);
+					inventory.set(slot, cursorItem);
 					cursorItem = newCursor;
 				}
 			} else {
@@ -300,16 +300,16 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 				// slot is not empty; cursor is empty.
 				// pick up stack
 				cursorItem = clicked.clone();
-				inventory.setItem(slot, null);
+				inventory.set(slot, null);
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public void creativeClick(InventoryBase inventory, int clickedSlot, ItemStack item) {
+	public void creativeClick(Inventory inventory, int clickedSlot, ItemStack item) {
 		cursorItem = null;
-		inventory.setItem(clickedSlot, item);
+		inventory.set(clickedSlot, item);
 	}
 
 	public boolean outsideClick() {
@@ -327,8 +327,8 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 
 	public int getInventorySize() {
 		int size = 0;
-		for (InventoryBase inventory : this.inventories.keySet()) {
-			size += inventory.getSize();
+		for (Inventory inventory : this.inventories.keySet()) {
+			size += inventory.size();
 		}
 		return size;
 	}
@@ -339,7 +339,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 
 	public InventoryEntry getInventoryEntry(int nativeSlot) {
 		int slot;
-		for (Entry<InventoryBase, SlotIndexCollection> entry : inventories.entrySet()) {
+		for (Entry<Inventory, SlotIndexCollection> entry : inventories.entrySet()) {
 			System.out.println("For: " + entry.getKey().getClass().getCanonicalName());
 			slot = entry.getValue().getSlot(nativeSlot);
 			if (slot != -1) {
@@ -365,15 +365,15 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 		return getHolder().get(Human.class);
 	}
 
-	public Map<InventoryBase, SlotIndexCollection> getInventories() {
+	public Map<Inventory, SlotIndexCollection> getInventories() {
 		return inventories;
 	}
 
-	public void addInventory(InventoryBase inventory, SlotIndexCollection slots) {
+	public void addInventory(Inventory inventory, SlotIndexCollection slots) {
 		inventories.put(inventory, slots);
 	}
 
-	public void removeInventory(InventoryBase inventory) {
+	public void removeInventory(Inventory inventory) {
 		inventories.remove(inventory);
 	}
 

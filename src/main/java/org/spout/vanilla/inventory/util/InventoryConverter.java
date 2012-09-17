@@ -24,23 +24,43 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.handler.window;
+package org.spout.vanilla.inventory.util;
 
-import org.spout.api.entity.Player;
-import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.inventory.Inventory;
+import org.spout.api.util.StringUtil;
 
-import org.spout.vanilla.components.inventory.window.DefaultWindow;
-import org.spout.vanilla.components.inventory.window.Window;
-import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
+public class InventoryConverter {
+	protected final Inventory inventory;
+	protected final int[] slots;
 
-public final class WindowCloseHandler extends MessageHandler<WindowCloseMessage> {
-	@Override
-	public void handleServer(Session session, WindowCloseMessage message) {
-		if (!session.hasPlayer()) {
-			return;
+	public InventoryConverter(Inventory inventory, int[] slots) {
+		this.inventory = inventory;
+		this.slots = slots;
+	}
+
+	public InventoryConverter(Inventory inventory, String elements) {
+		this(inventory, StringUtil.getIntArray(elements));
+	}
+
+	public int getSlot(int nativeSlot) {
+		for (int i = 0; i < slots.length; i++) {
+			int slot = slots[i];
+			if (slot == nativeSlot) {
+				return i;
+			}
 		}
-		Player player = session.getPlayer();
-		player.detach(Window.class);
+		return -1;
+	}
+
+	public int getNativeSlot(int slot) {
+		return slots[slot];
+	}
+
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public int[] getSlotArray() {
+		return slots;
 	}
 }

@@ -28,16 +28,19 @@ package org.spout.vanilla.util;
 
 import org.junit.Test;
 
-import org.spout.vanilla.inventory.util.SlotIndexCollection;
-import org.spout.vanilla.inventory.util.SlotIndexGrid;
+import org.spout.api.inventory.Inventory;
+
+import org.spout.vanilla.inventory.util.InventoryConverter;
+import org.spout.vanilla.inventory.util.InventoryGridConverter;
 
 import static org.junit.Assert.assertEquals;
 
 public class SlotIndexCollectionTest {
 	@Test
 	public void testSlotIndexGrid() {
-		SlotIndexGrid grid = new SlotIndexGrid(9, 3, 9);
-		SlotIndexCollection c = new SlotIndexCollection("27-35");
+		Inventory inventory = new Inventory(27);
+		InventoryGridConverter grid = new InventoryGridConverter(inventory, 9, 9);
+		InventoryConverter c = new InventoryConverter(inventory, "27-35");
 		for (int i = 0; i < 9; i++) {
 			int nativeSlot = i + 27;
 			assertEquals(i, grid.getSlot(nativeSlot));

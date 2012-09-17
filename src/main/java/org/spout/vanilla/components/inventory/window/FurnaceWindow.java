@@ -24,36 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.inventory.util;
+package org.spout.vanilla.components.inventory.window;
 
-import org.spout.api.util.StringUtil;
+import org.spout.vanilla.inventory.block.FurnaceInventory;
+import org.spout.vanilla.inventory.util.InventoryConverter;
+import org.spout.vanilla.inventory.window.WindowType;
 
-public class SlotIndexCollection {
-	protected int[] slots;
+public class FurnaceWindow extends Window {
+	private FurnaceInventory inventory;
 
-	public SlotIndexCollection(int[] slots) {
-		this.slots = slots;
+	@Override
+	public void onAttached() {
+		init(WindowType.FURNACE, "Furnace", 3);
+		converters.add(new InventoryConverter(inventory, "1, 0, 2"));
+		super.onAttached();
 	}
 
-	public SlotIndexCollection(String elements) {
-		this(StringUtil.getIntArray(elements));
-	}
-
-	public int getSlot(int nativeSlot) {
-		for (int i = 0; i < slots.length; i++) {
-			int slot = slots[i];
-			if (slot == nativeSlot) {
-				return i;
-			}
-		}
-		return -1;
-	}
-
-	public int getNativeSlot(int slot) {
-		return slots[slot];
-	}
-
-	public int[] getSlotArray() {
-		return slots;
+	public FurnaceWindow init(FurnaceInventory inventory) {
+		this.inventory = inventory;
+		return this;
 	}
 }

@@ -24,23 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.handler.window;
+package org.spout.vanilla.components.inventory.window;
 
-import org.spout.api.entity.Player;
-import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
+import org.spout.vanilla.inventory.util.InventoryConverter;
+import org.spout.vanilla.inventory.window.WindowType;
 
-import org.spout.vanilla.components.inventory.window.DefaultWindow;
-import org.spout.vanilla.components.inventory.window.Window;
-import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
+public class EnchantmentTableWindow extends Window {
+	private EnchantmentTableInventory inventory;
 
-public final class WindowCloseHandler extends MessageHandler<WindowCloseMessage> {
 	@Override
-	public void handleServer(Session session, WindowCloseMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-		Player player = session.getPlayer();
-		player.detach(Window.class);
+	public void onAttached() {
+		init(WindowType.ENCHANTMENT_TABLE, "Enchant", 1);
+		converters.add(new InventoryConverter(inventory, "0"));
+		super.onAttached();
+	}
+
+	public EnchantmentTableWindow init(EnchantmentTableInventory inventory) {
+		this.inventory = inventory;
+		return this;
 	}
 }

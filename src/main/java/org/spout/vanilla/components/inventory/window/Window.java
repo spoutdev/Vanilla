@@ -26,9 +26,8 @@
  */
 package org.spout.vanilla.components.inventory.window;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.HashSet;
+import java.util.Set;
 
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.TIntObjectMap;
@@ -48,18 +47,15 @@ import org.spout.vanilla.event.window.WindowOpenEvent;
 import org.spout.vanilla.event.window.WindowSlotEvent;
 import org.spout.vanilla.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.inventory.util.SlotIndexCollection;
-import org.spout.vanilla.inventory.util.SlotIndexGrid;
+import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.ClickArguments;
 import org.spout.vanilla.inventory.window.InventoryEntry;
 import org.spout.vanilla.inventory.window.WindowType;
 import org.spout.vanilla.util.InventoryUtil;
 
-public abstract class Window extends EntityComponent implements InventoryViewer {
-	private static final SlotIndexGrid MAIN = new SlotIndexGrid(9, 3);
-	private static final SlotIndexGrid QUICK_BAR = new SlotIndexGrid(9, 1);
+public class Window extends EntityComponent implements InventoryViewer {
 	protected final TIntObjectMap<ItemStack> queuedInventoryUpdates = new TIntObjectHashMap<ItemStack>();
-	protected final Map<Inventory, SlotIndexCollection> inventories = new HashMap<Inventory, SlotIndexCollection>();
+	protected final Set<InventoryConverter> converters = new HashSet<InventoryConverter>();
 	protected final int instanceId = InventoryUtil.nextWindowId();
 	protected int offset;
 	protected WindowType type;
@@ -72,9 +68,6 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 		if (!(getHolder() instanceof Player)) {
 			throw new IllegalStateException("A Window may only be attached to a player.");
 		}
-		PlayerInventory inventory = getHuman().getInventory();
-		inventories.put(inventory.getMain(), MAIN.translate(offset));
-		inventories.put(inventory.getQuickbar(), QUICK_BAR.translate(offset + MAIN.getGrid().getSize()));
 	}
 
 	@Override
@@ -86,7 +79,7 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 	@Override
 	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
 		// convert slots and update
-		SlotIndexCollection slots = this.inventories.get(inventory);
+		InventoryConverter slots = getInventoryConverter(inventory);
 		if (slots != null) {
 			slot = slots.getNativeSlot(slot);
 			queuedInventoryUpdates.put(slot, item);
@@ -116,16 +109,21 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 		queuedInventoryUpdates.clear();
 	}
 
-	public void init(WindowType type, String title, int offset) {
+	public Window init(WindowType type, String title, int offset) {
 		this.type = type;
 		this.title = title;
 		this.offset = offset;
+		return this;
+	}
+
+	public Window init(WindowType type, String title) {
+		return init(type, title);
 	}
 
 	public void open() {
 		opened = true;
-		for (Inventory inventory : inventories.keySet()) {
-			inventory.addViewer(this);
+		for (InventoryConverter converter : converters) {
+			converter.getInventory().addViewer(this);
 		}
 		reload();
 		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowOpenEvent(this));
@@ -133,8 +131,8 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 
 	public void close() {
 		opened = false;
-		for (Inventory inventory : inventories.keySet()) {
-			inventory.removeViewer(this);
+		for (InventoryConverter converter : converters) {
+			converter.getInventory().removeViewer(this);
 		}
 		if (getHuman().isSurvival()) {
 			dropCursorItem();
@@ -145,10 +143,10 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 	public void reload() {
 		ItemStack[] items = new ItemStack[getInventorySize()];
 		int nativeSlot;
-		for (Entry<Inventory, SlotIndexCollection> entry : inventories.entrySet()) {
-			Inventory inventory = entry.getKey();
+		for (InventoryConverter converter : converters) {
+			Inventory inventory = converter.getInventory();
 			for (int i = 0; i < inventory.size(); i++) {
-				nativeSlot = entry.getValue().getNativeSlot(i);
+				nativeSlot = converter.getNativeSlot(i);
 				if (nativeSlot < 0 || nativeSlot >= items.length) {
 					continue;
 				}
@@ -327,8 +325,8 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 
 	public int getInventorySize() {
 		int size = 0;
-		for (Inventory inventory : this.inventories.keySet()) {
-			size += inventory.size();
+		for (InventoryConverter converter : converters) {
+			size += converter.getInventory().size();
 		}
 		return size;
 	}
@@ -339,11 +337,11 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 
 	public InventoryEntry getInventoryEntry(int nativeSlot) {
 		int slot;
-		for (Entry<Inventory, SlotIndexCollection> entry : inventories.entrySet()) {
-			System.out.println("For: " + entry.getKey().getClass().getCanonicalName());
-			slot = entry.getValue().getSlot(nativeSlot);
+		for (InventoryConverter converter : converters) {
+			System.out.println("For: " + converter.getInventory().getClass().getCanonicalName());
+			slot = converter.getSlot(nativeSlot);
 			if (slot != -1) {
-				return new InventoryEntry(entry.getKey(), slot);
+				return new InventoryEntry(converter.getInventory(), slot);
 			}
 		}
 		return null;
@@ -365,16 +363,25 @@ public abstract class Window extends EntityComponent implements InventoryViewer 
 		return getHolder().get(Human.class);
 	}
 
-	public Map<Inventory, SlotIndexCollection> getInventories() {
-		return inventories;
+	public InventoryConverter getInventoryConverter(Inventory inventory) {
+		for (InventoryConverter converter : converters) {
+			if (converter.getInventory().equals(inventory)) {
+				return converter;
+			}
+		}
+		return null;
 	}
 
-	public void addInventory(Inventory inventory, SlotIndexCollection slots) {
-		inventories.put(inventory, slots);
+	public Set<InventoryConverter> getInventoryConverters() {
+		return converters;
 	}
 
-	public void removeInventory(Inventory inventory) {
-		inventories.remove(inventory);
+	public void addInventoryConverter(InventoryConverter converter) {
+		converters.add(converter);
+	}
+
+	public void removeInventoryConverter(InventoryConverter converter) {
+		converters.remove(converter);
 	}
 
 	public int getInstanceId() {

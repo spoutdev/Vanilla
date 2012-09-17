@@ -24,23 +24,40 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.handler.window;
+package org.spout.vanilla.components.inventory.window;
 
-import org.spout.api.entity.Player;
-import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.vanilla.inventory.block.ChestInventory;
+import org.spout.vanilla.inventory.util.InventoryGridConverter;
+import org.spout.vanilla.inventory.window.WindowType;
 
-import org.spout.vanilla.components.inventory.window.DefaultWindow;
-import org.spout.vanilla.components.inventory.window.Window;
-import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
+public class ChestWindow extends Window {
+	private String title;
+	private ChestInventory[] inventories;
 
-public final class WindowCloseHandler extends MessageHandler<WindowCloseMessage> {
 	@Override
-	public void handleServer(Session session, WindowCloseMessage message) {
-		if (!session.hasPlayer()) {
-			return;
+	public void onAttached() {
+		init(WindowType.CHEST, title, getSize());
+		for (int i = 0; i < inventories.length; i++) {
+			ChestInventory inventory = inventories[i];
+			if (inventory == null) {
+				continue;
+			}
+			converters.add(new InventoryGridConverter(inventory, 9, i * inventory.size()));
 		}
-		Player player = session.getPlayer();
-		player.detach(Window.class);
+		super.onAttached();
+	}
+
+	public ChestWindow init(String title, ChestInventory... inventories) {
+		this.title = title;
+		this.inventories = inventories;
+		return this;
+	}
+
+	public int getSize() {
+		int size = 0;
+		for (ChestInventory inventory : inventories) {
+			size += inventory.size();
+		}
+		return size;
 	}
 }

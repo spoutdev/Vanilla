@@ -27,21 +27,18 @@
 package org.spout.vanilla.components.inventory.window;
 
 import org.spout.vanilla.components.inventory.PlayerInventory;
-import org.spout.vanilla.inventory.util.SlotIndexCollection;
-import org.spout.vanilla.inventory.util.SlotIndexGrid;
+import org.spout.vanilla.inventory.util.InventoryConverter;
+import org.spout.vanilla.inventory.util.InventoryGridConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class DefaultWindow extends Window {
-	private static final SlotIndexCollection ARMOR_SLOTS = new SlotIndexGrid(1, 4, 5);
-	private static final SlotIndexCollection CRAFTING_SLOTS = new SlotIndexCollection("1-4, 0");
-
 	@Override
 	public void onAttached() {
-		super.onAttached();
 		init(WindowType.DEFAULT, "Inventory", 9);
 		PlayerInventory inventory = getHuman().getInventory();
-		inventories.put(inventory.getArmor(), ARMOR_SLOTS);
-		inventories.put(inventory.getMain(), CRAFTING_SLOTS);
+		converters.add(new InventoryGridConverter(inventory.getArmor(), 1, 5));
+		converters.add(new InventoryConverter(inventory.getCraftingGrid(), "3-4, 1-2, 0"));
+		super.onAttached();
 	}
 
 	@Override

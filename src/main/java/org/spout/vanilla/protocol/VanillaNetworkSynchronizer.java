@@ -62,8 +62,8 @@ import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.components.inventory.window.DefaultWindow;
-import org.spout.vanilla.components.living.Human;
+import org.spout.vanilla.component.inventory.window.DefaultWindow;
+import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;

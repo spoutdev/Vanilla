@@ -28,7 +28,7 @@ package org.spout.vanilla.inventory.block;
 
 import org.spout.api.inventory.Inventory;
 
-import org.spout.vanilla.components.substance.material.Dispenser;
+import org.spout.vanilla.component.substance.material.Dispenser;
 
 /**
  * Represents a dispenser inventory belonging to a dispenser entity.

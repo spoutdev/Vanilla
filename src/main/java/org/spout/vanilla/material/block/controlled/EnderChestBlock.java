@@ -30,7 +30,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.components.substance.material.EnderChest;
+import org.spout.vanilla.component.substance.material.EnderChest;
 import org.spout.vanilla.data.MoveReaction;
 
 public class EnderChestBlock extends ChestBlock {

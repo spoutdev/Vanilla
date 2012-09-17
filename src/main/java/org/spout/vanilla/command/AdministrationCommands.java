@@ -44,9 +44,9 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.components.living.Human;
-import org.spout.vanilla.components.misc.HealthComponent;
-import org.spout.vanilla.components.world.VanillaSky;
+import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.configuration.OpConfiguration;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;

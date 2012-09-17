@@ -33,7 +33,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.components.substance.MovingBlock;
+import org.spout.vanilla.component.substance.MovingBlock;
 import org.spout.vanilla.protocol.entity.BasicVehicleEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityVehicleMessage;

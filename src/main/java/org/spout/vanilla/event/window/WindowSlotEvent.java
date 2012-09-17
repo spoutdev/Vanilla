@@ -30,7 +30,7 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.components.inventory.window.Window;
+import org.spout.vanilla.component.inventory.window.Window;
 
 public class WindowSlotEvent extends WindowEvent {
 	private static HandlerList handlers = new HandlerList();

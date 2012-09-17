@@ -34,7 +34,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.components.substance.Projectile;
+import org.spout.vanilla.component.substance.Projectile;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityVehicleMessage;
 
 public class BasicProjectileEntityProtocol extends BasicEntityProtocol {

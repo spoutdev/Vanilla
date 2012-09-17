@@ -36,8 +36,8 @@ import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.components.misc.HeadComponent;
-import org.spout.vanilla.components.misc.VanillaPhysicsComponent;
+import org.spout.vanilla.component.misc.HeadComponent;
+import org.spout.vanilla.component.misc.VanillaPhysicsComponent;
 import org.spout.vanilla.protocol.msg.entity.EntityDestroyMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityHeadYawMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionMessage;

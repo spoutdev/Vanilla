@@ -33,7 +33,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.components.misc.HeadComponent;
+import org.spout.vanilla.component.misc.HeadComponent;
 
 public class VanillaPlayerUtil {
 	/**

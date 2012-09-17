@@ -31,8 +31,8 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.components.living.Wolf;
-import org.spout.vanilla.components.misc.HealthComponent;
+import org.spout.vanilla.component.living.Wolf;
+import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class WolfEntityProtocol extends BasicMobEntityProtocol {

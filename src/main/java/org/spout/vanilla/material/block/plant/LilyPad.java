@@ -33,8 +33,8 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.components.living.Human;
-import org.spout.vanilla.components.misc.HeadComponent;
+import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;

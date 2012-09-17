@@ -34,7 +34,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.components.living.Human;
+import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 
 public class FullContainer extends BlockItem {

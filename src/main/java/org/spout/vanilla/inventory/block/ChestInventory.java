@@ -28,8 +28,6 @@ package org.spout.vanilla.inventory.block;
 
 import org.spout.api.inventory.Inventory;
 
-import org.spout.vanilla.components.substance.material.Chest;
-
 public class ChestInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
 

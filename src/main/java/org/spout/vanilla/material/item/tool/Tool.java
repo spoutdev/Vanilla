@@ -36,10 +36,10 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.components.living.Silverfish;
-import org.spout.vanilla.components.living.Skeleton;
-import org.spout.vanilla.components.living.Spider;
-import org.spout.vanilla.components.living.Zombie;
+import org.spout.vanilla.component.living.Silverfish;
+import org.spout.vanilla.component.living.Skeleton;
+import org.spout.vanilla.component.living.Spider;
+import org.spout.vanilla.component.living.Zombie;
 import org.spout.vanilla.data.drops.flag.ToolEnchantFlags;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.enchantment.Enchantments;

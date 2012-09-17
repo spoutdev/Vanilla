@@ -29,7 +29,7 @@ package org.spout.vanilla.protocol.handler.player.conn;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.components.player.PingComponent;
+import org.spout.vanilla.component.player.PingComponent;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerPingMessage;
 
 public class PlayerPingHandler extends MessageHandler<PlayerPingMessage> {

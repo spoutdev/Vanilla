@@ -29,7 +29,7 @@ package org.spout.vanilla.material.block.pressureplate;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 
-import org.spout.vanilla.components.substance.Item;
+import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.block.PressurePlate;
 

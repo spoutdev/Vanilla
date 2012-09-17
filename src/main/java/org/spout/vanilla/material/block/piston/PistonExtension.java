@@ -31,7 +31,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.components.substance.material.Piston;
+import org.spout.vanilla.component.substance.material.Piston;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.block.ComponentMaterial;
 import org.spout.vanilla.material.block.Directional;

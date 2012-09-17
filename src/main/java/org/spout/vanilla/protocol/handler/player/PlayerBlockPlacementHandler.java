@@ -47,9 +47,9 @@ import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.components.gamemode.CreativeComponent;
-import org.spout.vanilla.components.living.Human;
-import org.spout.vanilla.components.misc.HeadComponent;
+import org.spout.vanilla.component.gamemode.CreativeComponent;
+import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;

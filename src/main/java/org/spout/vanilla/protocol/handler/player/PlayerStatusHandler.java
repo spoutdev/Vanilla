@@ -39,8 +39,8 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.components.living.Human;
-import org.spout.vanilla.components.misc.HealthComponent;
+import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.event.player.PlayerRespawnEvent;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.player.PlayerStatusMessage;

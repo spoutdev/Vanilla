@@ -28,7 +28,7 @@ package org.spout.vanilla.protocol.msg.window;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.components.inventory.window.Window;
+import org.spout.vanilla.component.inventory.window.Window;
 
 public final class WindowClickMessage extends WindowMessage {
 	private final int slot;

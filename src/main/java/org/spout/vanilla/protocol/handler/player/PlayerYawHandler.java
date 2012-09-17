@@ -30,8 +30,8 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.components.living.Human;
-import org.spout.vanilla.components.misc.HeadComponent;
+import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerYawMessage;
 
 import static org.spout.vanilla.protocol.ChannelBufferUtils.deProtocolifyRotation;

@@ -35,7 +35,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.exception.InvalidControllerException;
 
-import org.spout.vanilla.components.substance.projectile.Potion;
+import org.spout.vanilla.component.substance.projectile.Potion;
 
 public class PotionSplashEvent extends ProjectileHitEvent {
 	private static HandlerList handlers = new HandlerList();

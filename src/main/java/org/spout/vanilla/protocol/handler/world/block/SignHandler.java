@@ -31,7 +31,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.components.substance.material.Sign;
+import org.spout.vanilla.component.substance.material.Sign;
 import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 
 public class SignHandler extends MessageHandler<SignMessage> {

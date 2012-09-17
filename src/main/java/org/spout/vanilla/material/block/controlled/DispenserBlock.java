@@ -39,9 +39,9 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.components.substance.Item;
-import org.spout.vanilla.components.substance.material.Dispenser;
-import org.spout.vanilla.components.substance.projectile.Arrow;
+import org.spout.vanilla.component.substance.Item;
+import org.spout.vanilla.component.substance.material.Dispenser;
+import org.spout.vanilla.component.substance.projectile.Arrow;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.store.GeneralEffects;

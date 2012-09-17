@@ -40,7 +40,7 @@ import org.spout.api.math.IntVector3;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.components.misc.HeadComponent;
+import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;

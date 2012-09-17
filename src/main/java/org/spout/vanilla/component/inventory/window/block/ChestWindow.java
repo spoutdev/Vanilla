@@ -37,6 +37,7 @@ public class ChestWindow extends Window {
 
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		init(WindowType.CHEST, title, getSize());
 		for (int i = 0; i < inventories.length; i++) {
 			ChestInventory inventory = inventories[i];
@@ -45,7 +46,6 @@ public class ChestWindow extends Window {
 			}
 			converters.add(new InventoryGridConverter(inventory, 9, i * inventory.size()));
 		}
-		super.onAttached();
 	}
 
 	public ChestWindow init(String title, ChestInventory... inventories) {

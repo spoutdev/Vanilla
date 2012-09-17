@@ -34,11 +34,11 @@ import org.spout.vanilla.inventory.window.WindowType;
 public class DefaultWindow extends Window {
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		init(WindowType.DEFAULT, "Inventory", 9);
 		PlayerInventory inventory = getHuman().getInventory();
 		converters.add(new InventoryGridConverter(inventory.getArmor(), 1, 5));
 		converters.add(new InventoryConverter(inventory.getCraftingGrid(), "3-4, 1-2, 0"));
-		super.onAttached();
 	}
 
 	@Override

@@ -36,9 +36,9 @@ public class VillagerWindow extends Window {
 
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		init(WindowType.VILLAGER, "Villager", 3);
 		converters.add(new InventoryConverter(inventory, "0-2"));
-		super.onAttached();
 	}
 
 	public VillagerWindow init(VillagerInventory inventory) {

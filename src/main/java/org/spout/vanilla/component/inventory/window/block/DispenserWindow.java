@@ -36,6 +36,7 @@ public class DispenserWindow extends Window {
 
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		init(WindowType.DISPENSER, "Dispenser", 9);
 		converters.add(new InventoryGridConverter(inventory, 3));
 		super.onAttached();

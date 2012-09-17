@@ -35,18 +35,23 @@ import org.spout.vanilla.inventory.util.InventoryGridConverter;
 
 import static org.junit.Assert.assertEquals;
 
-public class SlotIndexCollectionTest {
+public class InventoryConverterTest {
 	@Test
 	public void testSlotIndexGrid() {
 		Inventory inventory = new Inventory(27);
 		InventoryGridConverter grid = new InventoryGridConverter(inventory, 9, 9);
 		InventoryConverter c = new InventoryConverter(inventory, "27-35");
+		Inventory inventory1 = new Inventory(9);
+		InventoryGridConverter grid1 = new InventoryGridConverter(inventory1, 9, 36);
 		for (int i = 0; i < 9; i++) {
 			int nativeSlot = i + 27;
+			int nativeSlot1 = i + 36;
 			assertEquals(i, grid.getSlot(nativeSlot));
 			assertEquals(nativeSlot, grid.getNativeSlot(i));
 			assertEquals(i, c.getSlot(nativeSlot));
 			assertEquals(nativeSlot, c.getNativeSlot(i));
+			assertEquals(i, grid1.getSlot(nativeSlot1));
+			assertEquals(nativeSlot1, grid1.getNativeSlot(i));
 		}
 	}
 }

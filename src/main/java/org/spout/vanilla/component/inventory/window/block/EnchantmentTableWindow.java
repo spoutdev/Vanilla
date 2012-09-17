@@ -36,9 +36,9 @@ public class EnchantmentTableWindow extends Window {
 
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		init(WindowType.ENCHANTMENT_TABLE, "Enchant", 1);
 		converters.add(new InventoryConverter(inventory, "0"));
-		super.onAttached();
 	}
 
 	public EnchantmentTableWindow init(EnchantmentTableInventory inventory) {

@@ -36,9 +36,9 @@ public class BrewingStandWindow extends Window {
 
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		init(WindowType.BREWING_STAND, "Brewing Stand", 4);
 		converters.add(new InventoryConverter(inventory, "0-3"));
-		super.onAttached();
 	}
 
 	public BrewingStandWindow init(BrewingStandInventory inventory) {

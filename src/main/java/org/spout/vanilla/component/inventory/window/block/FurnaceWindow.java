@@ -36,9 +36,9 @@ public class FurnaceWindow extends Window {
 
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		init(WindowType.FURNACE, "Furnace", 3);
 		converters.add(new InventoryConverter(inventory, "1, 0, 2"));
-		super.onAttached();
 	}
 
 	public FurnaceWindow init(FurnaceInventory inventory) {

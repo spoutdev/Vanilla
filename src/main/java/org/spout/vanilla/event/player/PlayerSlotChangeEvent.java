@@ -31,6 +31,9 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 
 
+/**
+ * Event which is called when a player changes an inv-slot
+ */
 public class PlayerSlotChangeEvent extends PlayerEvent {
 	private static HandlerList handlers = new HandlerList();
 	private final int oldSlot;

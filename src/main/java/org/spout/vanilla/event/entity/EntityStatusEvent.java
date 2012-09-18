@@ -31,6 +31,9 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 import org.spout.api.protocol.event.ProtocolEvent;
 
+/**
+ * Event which is called when an Entity changes its status
+ */
 public class EntityStatusEvent extends EntityEvent implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();
 	private byte status;

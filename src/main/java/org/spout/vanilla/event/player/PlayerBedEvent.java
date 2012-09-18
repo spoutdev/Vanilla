@@ -32,6 +32,9 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.geo.cuboid.Block;
 
+/**
+ * Event which is called when a player enters or leaves a bed
+ */
 public class PlayerBedEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	private Block bed;

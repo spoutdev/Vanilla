@@ -34,7 +34,7 @@ import org.spout.api.inventory.ItemStack;
 
 /**
  * Event which is called when a furnace finishes smelting an object, or a CraftingTable finishes crafting, or a player finishes crafting
- * todo implement event in CraftingInventory
+ * TODO implement event in CraftingInventory
  */
 public class CraftingResultEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();

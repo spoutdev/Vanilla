@@ -31,6 +31,9 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 
+/**
+ * Event which is called when the hunger-level changes
+ */
 public class PlayerHungerChangeEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	private short hunger;

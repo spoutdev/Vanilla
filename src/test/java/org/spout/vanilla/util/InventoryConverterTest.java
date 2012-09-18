@@ -30,28 +30,29 @@ import org.junit.Test;
 
 import org.spout.api.inventory.Inventory;
 
+import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.util.InventoryConverter;
-import org.spout.vanilla.inventory.util.InventoryGridConverter;
 
 import static org.junit.Assert.assertEquals;
 
 public class InventoryConverterTest {
+	private final Inventory main = new Inventory(27);
+
 	@Test
-	public void testSlotIndexGrid() {
-		Inventory inventory = new Inventory(27);
-		InventoryGridConverter grid = new InventoryGridConverter(inventory, 9, 9);
-		InventoryConverter c = new InventoryConverter(inventory, "27-35");
-		Inventory inventory1 = new Inventory(9);
-		InventoryGridConverter grid1 = new InventoryGridConverter(inventory1, 9, 36);
-		for (int i = 0; i < 9; i++) {
-			int nativeSlot = i + 27;
-			int nativeSlot1 = i + 36;
-			assertEquals(i, grid.getSlot(nativeSlot));
-			assertEquals(nativeSlot, grid.getNativeSlot(i));
-			assertEquals(i, c.getSlot(nativeSlot));
-			assertEquals(nativeSlot, c.getNativeSlot(i));
-			assertEquals(i, grid1.getSlot(nativeSlot1));
-			assertEquals(nativeSlot1, grid1.getNativeSlot(i));
+	public void testGridInventoryConverter() {
+		GridInventoryConverter converter = new GridInventoryConverter(main, 9, 9);
+		for (int a = 0; a < 9; a++) {
+			assertEquals(a, converter.getSlot(a + 27));
+			assertEquals(a + 27, converter.getNativeSlot(a));
+		}
+	}
+
+	@Test
+	public void testInventoryConverter() {
+		InventoryConverter converter = new InventoryConverter(main, "27-35");
+		for (int a = 0; a < 9; a++) {
+			assertEquals(a, converter.getSlot(a + 27));
+			assertEquals(a + 27, converter.getNativeSlot(a));
 		}
 	}
 }

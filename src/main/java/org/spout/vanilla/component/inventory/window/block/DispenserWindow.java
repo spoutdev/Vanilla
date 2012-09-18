@@ -28,7 +28,7 @@ package org.spout.vanilla.component.inventory.window.block;
 
 import org.spout.vanilla.component.inventory.window.Window;
 import org.spout.vanilla.inventory.block.DispenserInventory;
-import org.spout.vanilla.inventory.util.InventoryGridConverter;
+import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class DispenserWindow extends Window {
@@ -38,7 +38,7 @@ public class DispenserWindow extends Window {
 	public void onAttached() {
 		super.onAttached();
 		init(WindowType.DISPENSER, "Dispenser", 9);
-		converters.add(new InventoryGridConverter(inventory, 3));
+		converters.add(new GridInventoryConverter(inventory, 3));
 		super.onAttached();
 	}
 

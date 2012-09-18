@@ -30,33 +30,31 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.util.Grid;
 import org.spout.api.inventory.util.GridIterator;
 
-public class InventoryGridConverter extends InventoryConverter {
+public class GridInventoryConverter extends InventoryConverter {
 	private final Grid grid;
 	private final int offset;
 
-	public InventoryGridConverter(Inventory inventory, int length, int offset) {
+	public GridInventoryConverter(Inventory inventory, int length, int offset) {
 		super(inventory, new int[inventory.getGrid(length).getSize()]);
 		grid = inventory.getGrid(length);
 		this.offset = offset;
 		Grid grid = inventory.getGrid(length);
 		GridIterator i = grid.iterator();
+		int mod = offset * grid.getWidth();
 		while (i.hasNext()) {
-			int y = i.getY();
-			int next = i.next();
-			if (y == grid.getWidth() - 1) {
-				slots[next] = i.getIndex() + offset;
-				continue;
+			slots[i.next()] = i.getX() + mod;
+			if (i.getX() == grid.getLength() - 1) {
+				mod -= offset;
 			}
-			slots[next] = i.getX() + grid.getSize() - (offset * y);
 		}
 	}
 
-	public InventoryGridConverter(Inventory inventory, int length) {
+	public GridInventoryConverter(Inventory inventory, int length) {
 		this(inventory, length, 0);
 	}
 
-	public InventoryGridConverter translate(int offset) {
-		return new InventoryGridConverter(inventory, grid.getLength(), this.offset + offset);
+	public GridInventoryConverter translate(int offset) {
+		return new GridInventoryConverter(inventory, grid.getLength(), this.offset + offset);
 	}
 
 	public Grid getGrid() {

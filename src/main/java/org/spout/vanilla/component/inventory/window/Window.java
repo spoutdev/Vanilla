@@ -47,8 +47,8 @@ import org.spout.vanilla.event.window.WindowOpenEvent;
 import org.spout.vanilla.event.window.WindowSlotEvent;
 import org.spout.vanilla.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.util.InventoryConverter;
-import org.spout.vanilla.inventory.util.InventoryGridConverter;
 import org.spout.vanilla.inventory.window.ClickArguments;
 import org.spout.vanilla.inventory.window.InventoryEntry;
 import org.spout.vanilla.inventory.window.WindowType;
@@ -115,9 +115,9 @@ public class Window extends EntityComponent implements InventoryViewer {
 		this.title = title;
 		this.offset = offset;
 		PlayerInventory inventory = getHuman().getInventory();
-		InventoryGridConverter main = new InventoryGridConverter(inventory.getMain(), 9, offset);
+		GridInventoryConverter main = new GridInventoryConverter(inventory.getMain(), 9, offset);
 		converters.add(main);
-		converters.add(new InventoryGridConverter(inventory.getQuickbar(), 9, offset + main.getGrid().getSize()));
+		converters.add(new GridInventoryConverter(inventory.getQuickbar(), 9, offset + main.getGrid().getSize()));
 		return this;
 	}
 

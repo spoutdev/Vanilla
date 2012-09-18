@@ -28,7 +28,7 @@ package org.spout.vanilla.component.inventory.window.block;
 
 import org.spout.vanilla.component.inventory.window.Window;
 import org.spout.vanilla.inventory.block.ChestInventory;
-import org.spout.vanilla.inventory.util.InventoryGridConverter;
+import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class ChestWindow extends Window {
@@ -44,7 +44,7 @@ public class ChestWindow extends Window {
 			if (inventory == null) {
 				continue;
 			}
-			converters.add(new InventoryGridConverter(inventory, 9, i * inventory.size()));
+			converters.add(new GridInventoryConverter(inventory, 9, i * inventory.size()));
 		}
 	}
 

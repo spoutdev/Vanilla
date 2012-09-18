@@ -27,8 +27,8 @@
 package org.spout.vanilla.component.inventory.window;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
+import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.util.InventoryConverter;
-import org.spout.vanilla.inventory.util.InventoryGridConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class DefaultWindow extends Window {
@@ -37,7 +37,7 @@ public class DefaultWindow extends Window {
 		super.onAttached();
 		init(WindowType.DEFAULT, "Inventory", 9);
 		PlayerInventory inventory = getHuman().getInventory();
-		converters.add(new InventoryGridConverter(inventory.getArmor(), 1, 5));
+		converters.add(new GridInventoryConverter(inventory.getArmor(), 1, 5));
 		converters.add(new InventoryConverter(inventory.getCraftingGrid(), "3-4, 1-2, 0"));
 	}
 

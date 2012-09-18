@@ -128,7 +128,7 @@ public class SoundEffects {
 	public static final SoundEffect RANDOM_BURP = new SoundEffect("random.burp");
 	public static final SoundEffect RANDOM_CHESTCLOSED = new SoundEffect("random.chestclosed");
 	public static final SoundEffect RANDOM_CHESTOPEN = new SoundEffect("random.chestopen");
-	public static final SoundEffect RANDOM_CLICK = new SoundEffect("random.click");
+	public static final SoundEffect RANDOM_CLICK = new SoundEffect("random.onClick");
 	public static final SoundEffect RANDOM_DOOR_CLOSE = new SoundEffect("random.door_close");
 	public static final SoundEffect RANDOM_DOOR_OPEN = new SoundEffect("random.door_open");
 	public static final SoundEffect RANDOM_DRINK = new SoundEffect("random.drink");
@@ -144,7 +144,7 @@ public class SoundEffects {
 	public static final SoundEffect RANDOM_ORB = new SoundEffect("random.orb");
 	public static final SoundEffect RANDOM_POP = new SoundEffect("random.pop");
 	public static final SoundEffect RANDOM_SPLASH = new SoundEffect("random.splash");
-	public static final SoundEffect RANDOM_WOODCLICK = new SoundEffect("random.wood click");
+	public static final SoundEffect RANDOM_WOODCLICK = new SoundEffect("random.wood onClick");
 	public static final SoundEffect STEP_CLOTH = new SoundEffect("step.cloth");
 	public static final SoundEffect STEP_GRASS = new SoundEffect("step.grass");
 	public static final SoundEffect STEP_GRAVEL = new SoundEffect("step.gravel");

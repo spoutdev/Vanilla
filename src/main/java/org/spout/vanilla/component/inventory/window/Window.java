@@ -161,30 +161,19 @@ public class Window extends EntityComponent implements InventoryViewer {
 		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowItemsEvent(this, items));
 	}
 
-	public boolean shiftClick(ItemStack stack, int slot, Inventory from, Inventory to) {
-		// look for the first available slot in the inventory
-		for (int i = 0; i < to.size(); i++) {
-			ItemStack index = to.get(i);
-			if (index == null) {
-				// put clicked item in empty slot
-				to.set(i, stack);
-				return true;
-			}
-			if (!index.equalsIgnoreSize(stack)) {
-				// can't stack different materials
-				continue;
-			}
-			index.stack(stack);
-			to.set(i, index);
-			from.set(slot, stack);
-			if (stack.isEmpty()) {
-				return true;
-			}
+	public boolean onShiftClick(ItemStack stack, int slot, Inventory from) {
+		PlayerInventory inventory = getHuman().getInventory();
+		boolean result = false;
+		if (from instanceof PlayerQuickbar) {
+			result = inventory.getMain().add(stack);
+		} else if (from instanceof PlayerMainInventory) {
+			result = inventory.getQuickbar().add(stack);
 		}
-		return true;
+		from.set(slot, stack);
+		return result;
 	}
 
-	public boolean click(ClickArguments args) {
+	public boolean onClick(ClickArguments args) {
 		Inventory inventory = args.getInventory();
 		int slot = args.getSlot();
 		System.out.println("Spout slot: " + slot);
@@ -192,18 +181,10 @@ public class Window extends EntityComponent implements InventoryViewer {
 		if (args.isShiftClick()) {
 			System.out.println("Shift clicked");
 			if (clicked != null) {
-				System.out.println("Slot: " + clicked.getMaterial().getName());
-				PlayerInventory playerInventory = getHuman().getInventory();
-				if (inventory instanceof PlayerQuickbar) {
-					System.out.println("To main");
-					return shiftClick(clicked, slot, inventory, playerInventory.getMain());
-				} else if (inventory instanceof PlayerMainInventory) {
-					System.out.println("To quickbar");
-					return shiftClick(clicked, slot, inventory, playerInventory.getQuickbar());
-				}
+				return onShiftClick(clicked, slot, inventory);
 			}
 		} else if (args.isRightClick()) {
-			System.out.println("Right click");
+			System.out.println("Right onClick");
 			if (clicked == null) {
 				System.out.println("Empty slot");
 				if (cursorItem != null) {
@@ -263,7 +244,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 				return true;
 			}
 		} else {
-			System.out.println("Left click");
+			System.out.println("Left onClick");
 			if (clicked == null) {
 				System.out.println("Empty slot");
 				if (cursorItem != null) {

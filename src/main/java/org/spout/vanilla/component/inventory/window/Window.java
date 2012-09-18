@@ -122,7 +122,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 	}
 
 	public Window init(WindowType type, String title) {
-		return init(type, title);
+		return init(type, title, 0);
 	}
 
 	public void open() {

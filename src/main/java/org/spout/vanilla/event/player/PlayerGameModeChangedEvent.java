@@ -33,6 +33,9 @@ import org.spout.api.event.player.PlayerEvent;
 
 import org.spout.vanilla.data.GameMode;
 
+/**
+ * Event which is called when a player changes the gamemode
+ */
 public class PlayerGameModeChangedEvent extends PlayerEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	private GameMode mode;

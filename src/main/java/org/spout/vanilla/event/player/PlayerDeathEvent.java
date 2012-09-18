@@ -31,6 +31,9 @@ import org.spout.api.event.HandlerList;
 
 import org.spout.vanilla.event.entity.VanillaEntityDeathEvent;
 
+/**
+ * Event which is called when a player dies
+ */
 public class PlayerDeathEvent extends VanillaEntityDeathEvent {
 	private static HandlerList handlers = new HandlerList();
 

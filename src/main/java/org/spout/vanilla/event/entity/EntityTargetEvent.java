@@ -31,6 +31,9 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 
+/**
+ * Event which is called when an Entity targets something
+ */
 public class EntityTargetEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	private TargetReason reason;

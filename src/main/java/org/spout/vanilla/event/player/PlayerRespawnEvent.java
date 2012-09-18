@@ -35,6 +35,9 @@ import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.component.living.Human;
 
+/**
+ * Event which is called when a player respawns
+ */
 public class PlayerRespawnEvent extends EntitySpawnEvent {
 	private static HandlerList handlers = new HandlerList();
 	private Point point;

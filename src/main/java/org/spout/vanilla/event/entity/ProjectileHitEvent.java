@@ -32,6 +32,9 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 
+/**
+ * Event which is called when a projectile hits something
+ */
 public class ProjectileHitEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	private Source source;

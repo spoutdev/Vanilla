@@ -47,6 +47,10 @@ public class VanillaStyleHandler extends StyleHandler {
 	private final Pattern stylePattern;
 	private final Pattern styleExtractPattern;
 
+	/**
+	 * Creates a new VanillaStyleHandler and registers the default
+	 * VanillaStyleFormatters.
+	 */
 	public VanillaStyleHandler() {
 		super();
 		registerFormatter(ChatStyle.BLACK, new VanillaStyleFormatter('0'));
@@ -88,6 +92,9 @@ public class VanillaStyleHandler extends StyleHandler {
 		styleExtractPattern = Pattern.compile(styleExtractPatternString.toString());
 	}
 
+	/**
+	 * Registers the passed StyleFormatter on the engine.
+	 */
 	@Override
 	public void registerFormatter(ChatStyle style, StyleFormatter formatter) {
 		if (formatter instanceof VanillaStyleFormatter) {
@@ -96,18 +103,43 @@ public class VanillaStyleHandler extends StyleHandler {
 		super.registerFormatter(style, formatter);
 	}
 
+	/**
+	 * Gets the StylePattern of the VanillaStyleHandler.
+	 * 
+	 * @return The StylePattern.
+	 * 
+	 */
 	public Pattern getStylePattern() {
 		return stylePattern;
 	}
 
+	/**
+	 * Gets a ChatStyle by a char.
+	 * 
+	 * @param c
+	 *            The char to get the ChatStyle from.
+	 * @return The ChatStyle of the passed char.
+	 */
 	public ChatStyle byChar(char c) {
 		return BY_CHAR.get(c);
 	}
 
+	/**
+	 * Matches the passed String with the stylePattern of the
+	 * VanillaStyleHandler<br>
+	 * and replaces every subsequence with "".
+	 * 
+	 * @returns The striped String.
+	 */
 	public String stripStyle(String formatted) {
 		return stylePattern.matcher(formatted).replaceAll("");
 	}
 
+	/**
+	 * Extracts the ChatStyles from a String.
+	 * 
+	 * @returns The ChatSyles as ChatArguments.
+	 */
 	public ChatArguments extractArguments(String str) {
 		ChatArguments args = new ChatArguments();
 		Matcher matcher = styleExtractPattern.matcher(str);

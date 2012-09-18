@@ -28,18 +28,33 @@ package org.spout.vanilla.chat;
 
 import org.spout.api.chat.style.StyleFormatter;
 
+/**
+ * A formatter for formating Strings with a specific style.
+ */
 public class VanillaStyleFormatter implements StyleFormatter {
 	public static final String COLOR_CHAR = "\u00A7";
 	private final char styleChar;
 
+	/**
+	 * Creates a new VanillaStyleFormatter with the given stylechar.
+	 */
 	public VanillaStyleFormatter(char styleChar) {
 		this.styleChar = styleChar;
 	}
 
+	/**
+	 * Gets the stylechar of this VanillaStyleFormatter.
+	 */
 	public char getStyleChar() {
 		return styleChar;
 	}
 
+	/**
+	 * Formats/styles a String with the stylchar of this VanillaStyleFormatter.
+	 * 
+	 * @param text
+	 *            The text to format
+	 */
 	public String format(String text) {
 		return COLOR_CHAR + styleChar + text;
 	}

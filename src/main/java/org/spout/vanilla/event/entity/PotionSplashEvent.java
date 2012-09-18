@@ -37,6 +37,9 @@ import org.spout.api.exception.InvalidControllerException;
 
 import org.spout.vanilla.component.substance.projectile.Potion;
 
+/**
+ * Event which is called when a potion splashes
+ */
 public class PotionSplashEvent extends ProjectileHitEvent {
 	private static HandlerList handlers = new HandlerList();
 	private final Map<Entity, Double> entitiesAffected;

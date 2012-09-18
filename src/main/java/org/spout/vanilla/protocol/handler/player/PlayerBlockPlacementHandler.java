@@ -61,7 +61,6 @@ import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 
 public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBlockPlacementMessage> {
 	private void undoPlacement(Player player, Block clickedBlock, Block alterBlock) {
-		Thread.dumpStack();
 		//refresh the client just in case it assumed something
 		player.getSession().send(false, new BlockChangeMessage(clickedBlock));
 		player.getSession().send(false, new BlockChangeMessage(alterBlock));
@@ -74,15 +73,12 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		if (!session.hasPlayer()) {
 			return;
 		}
-		Spout.log("Handling server placement");
 		Player player = session.getPlayer();
 		EventManager eventManager = session.getEngine().getEventManager();
 		World world = player.getWorld();
 		PlayerQuickbar currentSlot = player.get(Human.class).getInventory().getQuickbar();
 		ItemStack holding = currentSlot.getCurrentItem();
 		Material holdingMat = holding == null ? null : holding.getMaterial();
-		System.out.println("Holding is: " + holding);
-		System.out.println("Holding Material is: " + holding);
 
 		/*
 		 * The notch client's packet sending is weird. Here's how it works: If
@@ -101,20 +97,15 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 			if (!event.isCancelled() && holdingMat != null) {
 				holdingMat.onInteract(player, Action.RIGHT_CLICK);
 			}
-			Spout.log("Its broke here");
 		} else {
-			Spout.log("Check 1");
 			//TODO: Validate the x/y/z coordinates of the message to check if it is in range of the player
 			//This is an anti-hack requirement (else hackers can load far-away chunks and crash the server)
 
 			//Get clicked block and validated face against it was placed
 			Block clickedBlock = world.getBlock(message.getX(), message.getY(), message.getZ(), player);
-			Spout.log("Check 2");
 			if (clickedBlock.getY() >= world.getHeight() || clickedBlock.getY() < 0) {
-				Spout.log("Either world height is less than Y or Y less than 0");
 				return;
 			}
-			Spout.log("Check 3");
 			//Perform interaction event
 			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), currentSlot.getCurrentItem(), Action.RIGHT_CLICK, false));
 
@@ -125,16 +116,13 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 			Block alterBlock = clickedBlock.translate(clickedFace);
 			BlockFace alterFace = clickedFace.getOpposite();
 
-			Spout.log("Check 4");
 			//check if the interaction was cancelled by the event
 			if (interactEvent.isCancelled()) {
-				Spout.log("Interact event was cancelled.");
 				undoPlacement(player, clickedBlock, alterBlock);
 				return;
 			}
 			short durability = 0;
 
-			Spout.log("Check 5");
 			//perform interaction on the server
 			if (holdingMat != null) {
 				if (holdingMat instanceof InteractTool) {
@@ -142,7 +130,6 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				}
 				holdingMat.onInteract(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
 			}
-			Spout.log("Check 6");
 			clickedMaterial.onInteractBy(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
 			//			if (clickedMaterial.hasController()) {
 			//				clickedMaterial.getController(clickedBlock).onInteract(player, Action.RIGHT_CLICK);
@@ -150,14 +137,11 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 
 			//TODO: Readd durability/breaking handling
 
-			Spout.log("Check 7");
 			if (clickedMaterial instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed()) {
-				Spout.log("Placement was suppressed for some reason...");
 				undoPlacement(player, clickedBlock, alterBlock);
 				return;
 			}
 
-			Spout.log("Check 8");
 			//if the material can be placed, place it
 			if (holdingMat != null && holdingMat instanceof Placeable) {
 				short placedData = holding.getData(); //TODO: shouldn't the sub-material deal with this?
@@ -166,7 +150,6 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				Block target;
 				BlockFace targetFace;
 
-				Spout.log("Check 9");
 				if (toPlace.canPlace(clickedBlock, placedData, clickedFace, message.getFace(), true)) {
 					target = clickedBlock;
 					targetFace = clickedFace;
@@ -174,18 +157,14 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 					target = alterBlock;
 					targetFace = alterFace;
 				} else {
-					Spout.log("Placement was suppressed for some reason 2...");
 					undoPlacement(player, clickedBlock, alterBlock);
 					return;
 				}
 
-				Spout.log("Check 10");
 				if (target.getY() >= world.getHeight() || target.getY() < 0) {
-					Spout.log("Either world height is less than Y or Y less than 0 part 2");
 					return;
 				}
 
-				Spout.log("Check 9 or 11");
 				//is the player not solid-colliding with the block?
 				if (toPlace instanceof BlockMaterial) {
 					BlockMaterial mat = (BlockMaterial) toPlace;
@@ -207,13 +186,11 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 
 						if (pos1.distance(tpos) < 0.6 || pos2.distance(tpos) < 0.6) {
 							undoPlacement(player, clickedBlock, alterBlock);
-							Spout.log("Distance check failed.");
 							return;
 						}
 					}
 				}
 
-				Spout.log("Check 11 or 13");
 				//Check if the player can place the block.
 				Collection<Protection> protections = Spout.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(alterBlock.getPosition());
 				for (Protection p : protections) {
@@ -224,7 +201,6 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 					}
 				}
 
-				Spout.log("About to perform placement check");
 				// Perform actual placement
 				if (toPlace.onPlacement(target, placedData, targetFace, message.getFace(), target == clickedBlock)) {
 					// Play sound

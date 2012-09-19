@@ -34,7 +34,7 @@ import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-
+import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.command.Command;
 import org.spout.api.exception.UnknownPacketException;
@@ -45,11 +45,13 @@ import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.protocol.Session;
 import org.spout.api.util.Named;
-
 import org.spout.vanilla.chat.VanillaStyleHandler;
 import org.spout.vanilla.protocol.msg.ServerPluginMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerChatMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerKickMessage;
+import org.spout.vanilla.protocol.netcache.ChunkNetCache;
+import org.spout.vanilla.protocol.netcache.protocol.ChunkCacheCodec;
+import org.spout.vanilla.protocol.netcache.protocol.ChunkCacheHandler;
 import org.spout.vanilla.protocol.plugin.RegisterPluginChannelCodec;
 import org.spout.vanilla.protocol.plugin.RegisterPluginChannelMessage;
 import org.spout.vanilla.protocol.plugin.RegisterPluginChannelMessageHandler;
@@ -60,6 +62,7 @@ public class VanillaProtocol extends Protocol {
 	public final static DefaultedKey<String> SESSION_ID = new DefaultedKeyImpl<String>("sessionid", "0000000000000000");
 	public final static DefaultedKey<String> HANDSHAKE_USERNAME = new DefaultedKeyImpl<String>("handshake_username", "");
 	public final static DefaultedKey<Long> LOGIN_TIME = new DefaultedKeyImpl<Long>("handshake_time", -1L);
+	public final static DefaultedKey<ChunkNetCache> CHUNK_NET_CACHE = new DefaultedKeyImpl<ChunkNetCache>("chunk_net_cache", (ChunkNetCache) null);
 	public static final DefaultedKey<ArrayList<String>> REGISTERED_CUSTOM_PACKETS = new DefaultedKey<ArrayList<String>>() {
 		private final List<String> defaultRestricted = Arrays.asList("REGISTER", "UNREGISTER");
 
@@ -78,6 +81,7 @@ public class VanillaProtocol extends Protocol {
 		/* PacketFA wrapped packets */
 		registerPacket(RegisterPluginChannelCodec.class, new RegisterPluginChannelMessageHandler());
 		registerPacket(UnregisterPluginChannelCodec.class, new UnregisterPluginChannelMessageHandler());
+		registerPacket(ChunkCacheCodec.class, new ChunkCacheHandler());
 	}
 
 	@Override

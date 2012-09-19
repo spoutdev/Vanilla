@@ -27,8 +27,8 @@
 package org.spout.vanilla.protocol.msg.world.chunk;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import org.spout.api.protocol.Message;
+import org.spout.api.protocol.Session;
 import org.spout.api.util.SpoutToStringStyle;
 
 public final class ChunkDataMessage implements Message {
@@ -38,12 +38,13 @@ public final class ChunkDataMessage implements Message {
 	private final byte[][] data;
 	private final byte[] biomeData;
 	private final boolean unload;
+	private final Session session;
 
-	public ChunkDataMessage(int x, int z, boolean contiguous, boolean[] hasAdditionalData, byte[][] data, byte[] biomeData) {
-		this(x, z, contiguous, hasAdditionalData, data, biomeData, false);
+	public ChunkDataMessage(int x, int z, boolean contiguous, boolean[] hasAdditionalData, byte[][] data, byte[] biomeData, Session session) {
+		this(x, z, contiguous, hasAdditionalData, data, biomeData, false, session);
 	}
 
-	public ChunkDataMessage(int x, int z, boolean contiguous, boolean[] hasAdditionalData, byte[][] data, byte[] biomeData, boolean unload) {
+	public ChunkDataMessage(int x, int z, boolean contiguous, boolean[] hasAdditionalData, byte[][] data, byte[] biomeData, boolean unload, Session session) {
 		if (!unload && (hasAdditionalData.length != data.length || data.length != 16)) {
 			throw new IllegalArgumentException("Data and hasAdditionalData must have a length of 16");
 		}
@@ -54,6 +55,7 @@ public final class ChunkDataMessage implements Message {
 		this.data = data;
 		this.biomeData = biomeData;
 		this.unload = unload;
+		this.session = session;
 	}
 
 	public int getX() {
@@ -82,6 +84,10 @@ public final class ChunkDataMessage implements Message {
 
 	public boolean shouldUnload() {
 		return unload;
+	}
+	
+	public Session getSession() {
+		return session;
 	}
 
 	@Override

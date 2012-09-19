@@ -29,16 +29,15 @@ package org.spout.vanilla.protocol.handler.player.conn;
 import java.security.SecureRandom;
 
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
-
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.security.SecurityHandler;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.auth.EncryptionKeyRequestMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerHandshakeMessage;
+import org.spout.vanilla.protocol.netcache.ChunkNetCache;
 
 public class PlayerHandshakeHandler extends MessageHandler<PlayerHandshakeMessage> {
 	@Override
@@ -55,6 +54,7 @@ public class PlayerHandshakeHandler extends MessageHandler<PlayerHandshakeMessag
 			session.disconnect(VanillaConfiguration.OUTDATED_SERVER_MESSAGE.getString());
 			return;
 		}
+		session.getDataMap().put(VanillaProtocol.CHUNK_NET_CACHE, new ChunkNetCache());
 		Session.State state = session.getState();
 		if (state == Session.State.EXCHANGE_HANDSHAKE) {
 			session.getDataMap().put(VanillaProtocol.LOGIN_TIME, System.currentTimeMillis());

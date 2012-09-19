@@ -37,6 +37,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.protocol.MessageCodec;
 
+import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 
 public final class ChunkDataCodec extends MessageCodec<ChunkDataMessage> {
@@ -119,7 +120,7 @@ public final class ChunkDataCodec extends MessageCodec<ChunkDataMessage> {
 			size += biomeData.length;
 		}
 
-		return new ChunkDataMessage(x, z, contiguous, hasAdditionalData, data, biomeData);
+		return new ChunkDataMessage(x, z, contiguous, hasAdditionalData, data, biomeData, null);
 	}
 
 	@Override
@@ -172,8 +173,10 @@ public final class ChunkDataCodec extends MessageCodec<ChunkDataMessage> {
 			index += message.getBiomeData().length;
 		}
 
+		uncompressedData = message.getSession().getDataMap().get(VanillaProtocol.CHUNK_NET_CACHE).handle(uncompressedData);
+		
 		byte[] compressedData = new byte[uncompressedSize];
-
+		
 		Deflater deflater = new Deflater(COMPRESSION_LEVEL);
 		deflater.setInput(uncompressedData);
 		deflater.finish();

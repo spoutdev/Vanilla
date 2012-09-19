@@ -295,7 +295,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				}
 			}
 
-			ChunkDataMessage CCMsg = new ChunkDataMessage(x, z, true, new boolean[16], packetChunkData, biomeData);
+			ChunkDataMessage CCMsg = new ChunkDataMessage(x, z, true, new boolean[16], packetChunkData, biomeData, player.getSession());
 			player.getSession().send(false, CCMsg);
 
 			chunks = chunkInit.getChunks(c);
@@ -305,7 +305,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 		byte[][] packetChunkData = new byte[16][];
 		packetChunkData[y] = fullChunkData;
-		ChunkDataMessage CCMsg = new ChunkDataMessage(x, z, false, new boolean[16], packetChunkData, null);
+		ChunkDataMessage CCMsg = new ChunkDataMessage(x, z, false, new boolean[16], packetChunkData, null, player.getSession());
 		player.getSession().send(false, CCMsg);
 
 		return chunks;
@@ -377,7 +377,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			if (column.isEmpty()) {
 				column = initializedChunks.remove(x, z);
 				activeChunks.remove(x, z);
-				session.send(false, new ChunkDataMessage(x, z, true, null, null, null, true));
+				session.send(false, new ChunkDataMessage(x, z, true, null, null, null, true, player.getSession()));
 			}
 		}
 	}

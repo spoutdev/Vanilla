@@ -170,7 +170,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new PlayerSoundEffectMessage("random.bow", 12.5f, 0.0f, 12.0f, 1.0f, 1.0f),
 			new EntityDestroyMessage(new int[]{2}),
 			new PlayerExperienceMessage(1.2F, (short) 2, (short) 3),
-			new ChunkDataMessage(1, 2, true, new boolean[16], new byte[][]{new byte[16 * 16 * 16 * 5 / 2], null, null, null, null, null, null, null, null, null, new byte[Chunk.BLOCKS.HALF_VOLUME * 5], null, null, null, null, null}, new byte[16 * 16]),
+			new ChunkDataMessage(1, 2, true, new boolean[16], new byte[][]{new byte[16 * 16 * 16 * 5 / 2], null, null, null, null, null, null, null, null, null, new byte[Chunk.BLOCKS.HALF_VOLUME * 5], null, null, null, null, null}, new byte[16 * 16], null),
 			new BlockBulkMessage(2, 3, new short[]{2, 3, 4, /**/ 3, 6, 4, /**/ 8, 5, 5}, new short[]{1, 2, 3}, new byte[]{3, 4, 5}),
 			new BlockChangeMessage(1, 2, 3, (short) 87, 2),
 			new BlockActionMessage(1, 2, 3, (byte) 4, (byte) 5, (byte) 29),

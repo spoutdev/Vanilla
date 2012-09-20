@@ -38,7 +38,6 @@ public enum WindowType {
 	ENCHANTMENT_TABLE(4),
 	BREWING_STAND(5),
 	VILLAGER(6);
-
 	private final int id;
 	private static final TIntObjectMap<WindowType> idMap = new TIntObjectHashMap<WindowType>();
 

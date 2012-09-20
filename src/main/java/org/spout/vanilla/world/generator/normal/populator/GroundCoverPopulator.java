@@ -95,7 +95,7 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 		}
 		return yy;
 	}
-	
+
 	public static abstract class GroundCoverLayer {
 		private final BlockMaterial aboveSea;
 		private final BlockMaterial bellowSea;
@@ -104,7 +104,7 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 			this.aboveSea = aboveSea;
 			this.bellowSea = bellowSea;
 		}
-		
+
 		public abstract byte getDepth(Random random);
 
 		public BlockMaterial getMaterial(boolean isBellowSea) {

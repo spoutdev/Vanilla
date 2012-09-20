@@ -154,7 +154,7 @@ public class Human extends VanillaEntity {
 				break;
 		}
 		if (holder instanceof Player) {
-			holder.getNetwork().callProtocolEvent(new PlayerGameStateEvent( (Player) holder, PlayerGameStateMessage.CHANGE_GAME_MODE, mode));
+			holder.getNetwork().callProtocolEvent(new PlayerGameStateEvent((Player) holder, PlayerGameStateMessage.CHANGE_GAME_MODE, mode));
 		}
 		getData().put(VanillaData.GAMEMODE, mode);
 	}

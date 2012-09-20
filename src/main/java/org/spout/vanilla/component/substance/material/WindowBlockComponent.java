@@ -33,9 +33,6 @@ import org.spout.api.component.components.BlockComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.inventory.InventoryViewer;
-
-import org.spout.vanilla.component.inventory.window.Window;
 
 public abstract class WindowBlockComponent extends BlockComponent {
 	private final Set<Player> viewers = new HashSet<Player>();

@@ -29,7 +29,6 @@ package org.spout.vanilla.component.substance.material;
 import org.spout.api.entity.Player;
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.component.inventory.window.Window;
 import org.spout.vanilla.component.inventory.window.block.CraftingTableWindow;
 import org.spout.vanilla.material.block.controlled.CraftingTableBlock;
 

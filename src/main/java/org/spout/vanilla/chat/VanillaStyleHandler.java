@@ -105,9 +105,7 @@ public class VanillaStyleHandler extends StyleHandler {
 
 	/**
 	 * Gets the StylePattern of the VanillaStyleHandler.
-	 * 
 	 * @return The StylePattern.
-	 * 
 	 */
 	public Pattern getStylePattern() {
 		return stylePattern;
@@ -115,9 +113,7 @@ public class VanillaStyleHandler extends StyleHandler {
 
 	/**
 	 * Gets a ChatStyle by a char.
-	 * 
-	 * @param c
-	 *            The char to get the ChatStyle from.
+	 * @param c The char to get the ChatStyle from.
 	 * @return The ChatStyle of the passed char.
 	 */
 	public ChatStyle byChar(char c) {
@@ -128,7 +124,6 @@ public class VanillaStyleHandler extends StyleHandler {
 	 * Matches the passed String with the stylePattern of the
 	 * VanillaStyleHandler<br>
 	 * and replaces every subsequence with "".
-	 * 
 	 * @returns The striped String.
 	 */
 	public String stripStyle(String formatted) {
@@ -137,7 +132,6 @@ public class VanillaStyleHandler extends StyleHandler {
 
 	/**
 	 * Extracts the ChatStyles from a String.
-	 * 
 	 * @returns The ChatSyles as ChatArguments.
 	 */
 	public ChatArguments extractArguments(String str) {

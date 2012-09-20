@@ -29,6 +29,7 @@ package org.spout.vanilla.protocol.netcache.protocol;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
@@ -42,7 +43,7 @@ public class ChunkCacheMessage implements Message {
 	public byte[] getData() {
 		return data;
 	}
-	
+
 	public String getChannel() {
 		return ChunkCacheCodec.channelName;
 	}
@@ -50,15 +51,15 @@ public class ChunkCacheMessage implements Message {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-			.append("hashes", data)
-			.toString();
+				.append("hashes", data)
+				.toString();
 	}
 
 	@Override
 	public int hashCode() {
 		return new HashCodeBuilder(39, 45)
-			.append(data)
-			.toHashCode();
+				.append(data)
+				.toHashCode();
 	}
 
 	@Override

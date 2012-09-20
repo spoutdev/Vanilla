@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.netcache.protocol;
 
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.protocol.VanillaProtocol;
 
 public class ChunkCacheHandler extends MessageHandler<ChunkCacheMessage> {

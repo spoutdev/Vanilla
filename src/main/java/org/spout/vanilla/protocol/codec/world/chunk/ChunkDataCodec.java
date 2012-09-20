@@ -33,9 +33,11 @@ import java.util.zip.Inflater;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 
@@ -176,9 +178,9 @@ public final class ChunkDataCodec extends MessageCodec<ChunkDataMessage> {
 		if (session != null) {
 			uncompressedData = message.getSession().getDataMap().get(VanillaProtocol.CHUNK_NET_CACHE).handle(uncompressedData);
 		}
-		
+
 		byte[] compressedData = new byte[uncompressedSize];
-		
+
 		Deflater deflater = new Deflater(COMPRESSION_LEVEL);
 		deflater.setInput(uncompressedData);
 		deflater.finish();

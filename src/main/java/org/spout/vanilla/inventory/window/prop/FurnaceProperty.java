@@ -32,7 +32,6 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 public enum FurnaceProperty implements WindowProperty {
 	PROGRESS_ARROW(0),
 	FIRE_ICON(1);
-
 	private final int id;
 	private static final TIntObjectMap<FurnaceProperty> idMap = new TIntObjectHashMap<FurnaceProperty>(FurnaceProperty.values().length);
 

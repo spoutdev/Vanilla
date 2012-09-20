@@ -38,8 +38,8 @@ public abstract class GrassyBiome extends NormalBiome {
 	public GrassyBiome(int biomeId, Decorator... decorators) {
 		super(biomeId, decorators);
 		setTopCover(new GroundCoverLayer[]{
-					new GroundCoverUniformLayer(VanillaMaterials.GRASS, VanillaMaterials.DIRT, (byte) 1),
-					new GroundCoverVariableLayer(VanillaMaterials.DIRT, VanillaMaterials.DIRT, (byte) 1, (byte) 4)
-				});
+				new GroundCoverUniformLayer(VanillaMaterials.GRASS, VanillaMaterials.DIRT, (byte) 1),
+				new GroundCoverVariableLayer(VanillaMaterials.DIRT, VanillaMaterials.DIRT, (byte) 1, (byte) 4)
+		});
 	}
 }

@@ -129,7 +129,7 @@ public class NetherGenerator extends VanillaUniqueBiomeGenerator {
 		addGeneratorPopulators(
 				new NetherCavePopulator(),
 				new BlockPatchDecorator(VanillaMaterials.SOUL_SAND), new BlockPatchDecorator(VanillaMaterials.GRAVEL)
-				);
+		);
 		register(VanillaBiomes.NETHERRACK);
 	}
 

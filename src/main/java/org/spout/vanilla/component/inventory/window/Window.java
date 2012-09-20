@@ -317,7 +317,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 		return true;
 	}
 
-
 	public void dropCursorItem() {
 		if (cursorItem != null) {
 			getHuman().dropItem(cursorItem);

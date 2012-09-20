@@ -51,9 +51,7 @@ public class VanillaStyleFormatter implements StyleFormatter {
 
 	/**
 	 * Formats/styles a String with the stylchar of this VanillaStyleFormatter.
-	 * 
-	 * @param text
-	 *            The text to format
+	 * @param text The text to format
 	 */
 	public String format(String text) {
 		return COLOR_CHAR + styleChar + text;

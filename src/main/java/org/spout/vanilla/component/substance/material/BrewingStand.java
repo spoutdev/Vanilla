@@ -29,7 +29,6 @@ package org.spout.vanilla.component.substance.material;
 import org.spout.api.entity.Player;
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.component.inventory.window.Window;
 import org.spout.vanilla.component.inventory.window.block.BrewingStandWindow;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;

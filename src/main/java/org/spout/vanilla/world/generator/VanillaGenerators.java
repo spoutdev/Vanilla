@@ -43,7 +43,6 @@ public class VanillaGenerators {
 
 	/**
 	 * Maps a Vanilla Generator to a certain name
-	 *
 	 * @param name of the generator
 	 * @param generator to map to the name
 	 * @return the generator
@@ -55,7 +54,6 @@ public class VanillaGenerators {
 
 	/**
 	 * Gets the Vanilla Generator mapped to a certain name
-	 *
 	 * @param name of the Generator
 	 * @return the Generator, or null if not found
 	 */

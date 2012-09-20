@@ -33,7 +33,6 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.protocol.entity.object.FallingBlockProtocol;
 
 public class MovingBlock extends EntityComponent {
-
 	//TODO: Put this in the datamap
 	VanillaBlockMaterial material;
 

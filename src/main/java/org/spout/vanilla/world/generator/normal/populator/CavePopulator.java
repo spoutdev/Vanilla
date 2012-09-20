@@ -69,7 +69,7 @@ public class CavePopulator extends OverlapingPopulator {
 	}
 
 	private void generateCaveBranch(CuboidShortBuffer blockData, Vector3 chunk, Vector3 target, double horizontalScale, double verticalScale,
-			double horizontalAngle, double verticalAngle, int startingNode, int nodeAmount, Random random) {
+									double horizontalAngle, double verticalAngle, int startingNode, int nodeAmount, Random random) {
 
 		final Vector3 middle = new Vector3(chunk.getX() + 8, 0, chunk.getZ() + 8);
 		double horizontalOffset = 0;
@@ -168,7 +168,7 @@ public class CavePopulator extends OverlapingPopulator {
 		private final double horizontalSize;
 
 		private CaveNode(CuboidShortBuffer blockData, Vector3 chunk, Vector3 start, Vector3 end, Vector3 target,
-				double verticalSize, double horizontalSize) {
+						 double verticalSize, double horizontalSize) {
 			this.blockData = blockData;
 			this.chunk = chunk;
 			this.start = clamp(start);

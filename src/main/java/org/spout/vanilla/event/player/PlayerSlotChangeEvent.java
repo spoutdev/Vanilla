@@ -30,7 +30,6 @@ import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 
-
 /**
  * Event which is called when a player changes an inv-slot
  */

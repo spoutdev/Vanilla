@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.msg.world.chunk;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.Session;
 import org.spout.api.util.SpoutToStringStyle;
@@ -85,7 +86,7 @@ public final class ChunkDataMessage implements Message {
 	public boolean shouldUnload() {
 		return unload;
 	}
-	
+
 	public Session getSession() {
 		return session;
 	}

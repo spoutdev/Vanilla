@@ -33,7 +33,6 @@ public enum EnchantmentTableProperty implements WindowProperty {
 	SLOT_1(0),
 	SLOT_2(1),
 	SLOT_3(2);
-
 	private final int id;
 	private static final TIntObjectMap<EnchantmentTableProperty> idMap = new TIntObjectHashMap<EnchantmentTableProperty>(EnchantmentTableProperty.values().length);
 

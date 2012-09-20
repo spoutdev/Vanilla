@@ -34,7 +34,7 @@ import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-import org.spout.api.Spout;
+
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.command.Command;
 import org.spout.api.exception.UnknownPacketException;
@@ -45,6 +45,7 @@ import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.protocol.Session;
 import org.spout.api.util.Named;
+
 import org.spout.vanilla.chat.VanillaStyleHandler;
 import org.spout.vanilla.protocol.msg.ServerPluginMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerChatMessage;

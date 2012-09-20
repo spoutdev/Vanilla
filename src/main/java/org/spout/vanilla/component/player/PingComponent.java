@@ -51,7 +51,6 @@ public class PingComponent extends EntityComponent {
 
 	/**
 	 * Retrieve the latest random hash sent to the client
-	 *
 	 * @return The latest random hash.
 	 */
 	public int getLastRequestHash() {
@@ -74,12 +73,10 @@ public class PingComponent extends EntityComponent {
 			Spout.getLogger().log(Level.WARNING, "PLAYER " + ((Player) getHolder()).getName() + " Reached connection Timeout!");
 			((Player) getHolder()).kick("Ping Timeout!");
 		}
-
 	}
 
 	/**
 	 * Gets the Player Ping in Milliseconds
-	 *
 	 * @return player ping in Milliseconds
 	 */
 	public long getPing() {
@@ -88,7 +85,6 @@ public class PingComponent extends EntityComponent {
 
 	/**
 	 * Re-sets the Time out times by validating the received hash code
-	 *
 	 * @param responseHash to validate against
 	 */
 	public void resetTimeout(int responseHash) {

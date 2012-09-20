@@ -36,23 +36,22 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.google.common.collect.Sets;
 
 public class ChunkNetCache implements Serializable {
-	
 	private final byte[] partition = new byte[2048];
 	private final Set<Long> hashSet;
 	private volatile boolean cacheEnabled = false;
-	
+
 	public ChunkNetCache() {
 		this(Sets.newSetFromMap(new ConcurrentHashMap<Long, Boolean>()));
 	}
-	
+
 	public ChunkNetCache(Set<Long> hashSet) {
 		this.hashSet = hashSet;
 	}
-	
+
 	public boolean isCacheEnabled() {
 		return cacheEnabled;
 	}
-	
+
 	public void handleCustomPacket(String channel, byte[] array) {
 		if (channel.equals("ChkCache:setHash")) {
 			cacheEnabled = true;
@@ -70,21 +69,21 @@ public class ChunkNetCache implements Serializable {
 	}
 
 	public byte[] handle(byte[] inflatedBuffer) {
-		
+
 		if (!cacheEnabled) {
 			return inflatedBuffer;
 		}
-		
+
 		int dataLength = inflatedBuffer.length;
 		int segments = dataLength >> 11;
 		if ((dataLength & 0x7FF) != 0) {
 			segments++;
 		}
-		
+
 		int newLength = dataLength + (segments << 3) + 8 + 4 + 1;
-		
+
 		byte[] newBuffer = new byte[newLength];
-		
+
 		for (int i = 0; i < segments; i++) {
 			PartitionChunk.copyFromChunkData(inflatedBuffer, i, partition, inflatedBuffer.length);
 			long hash = PartitionChunk.hash(partition);
@@ -97,9 +96,7 @@ public class ChunkNetCache implements Serializable {
 		long crc = PartitionChunk.hash(inflatedBuffer);
 		PartitionChunk.setHash(newBuffer, 0, crc, newLength - 13);
 		PartitionChunk.setInt(newBuffer, 0, dataLength, newLength - 5);
-		
+
 		return newBuffer;
-		
 	}
-	
 }

@@ -51,7 +51,7 @@ public class RavinePopulator extends OverlapingPopulator {
 	}
 
 	private void generateRavineNodes(CuboidShortBuffer blockData, Vector3 chunk, Vector3 target, double horizontalScale, double verticalScale,
-			double horizontalAngle, double verticalAngle, int startingNode, int nodeAmount, Random random) {
+									 double horizontalAngle, double verticalAngle, int startingNode, int nodeAmount, Random random) {
 
 		final Vector3 middle = new Vector3(chunk.getX() + 8, 0, chunk.getZ() + 8);
 		double horizontalOffset = 0;
@@ -141,7 +141,7 @@ public class RavinePopulator extends OverlapingPopulator {
 		private final double[] horizontalScales;
 
 		private RavineNode(CuboidShortBuffer blockData, Vector3 chunk, Vector3 start, Vector3 end, Vector3 target,
-				double verticalSize, double horizontalSize, double[] horizontalScales) {
+						   double verticalSize, double horizontalSize, double[] horizontalScales) {
 			this.blockData = blockData;
 			this.chunk = chunk;
 			this.start = clamp(start);

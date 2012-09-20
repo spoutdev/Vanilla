@@ -28,12 +28,13 @@ package org.spout.vanilla.protocol.netcache.protocol;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
+
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.util.Named;
 
 public class ChunkCacheCodec extends MessageCodec<ChunkCacheMessage> implements Named {
 	public static final String channelName = "ChkCache:setHash";
-	
+
 	public ChunkCacheCodec(int opcode) {
 		super(ChunkCacheMessage.class, opcode);
 	}

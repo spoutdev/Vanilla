@@ -306,7 +306,7 @@ public class VanillaPlugin extends CommonPlugin {
 			}
 
 			WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.getOrCreate(world);
-			
+
 			// Keep spawn loaded
 			if (worldConfig.LOADED_SPAWN.getBoolean()) {
 				world.createAndSpawnEntity(point, ObserverComponent.class, LoadOption.LOAD_GEN);

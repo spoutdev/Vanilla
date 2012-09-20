@@ -30,7 +30,6 @@ import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.component.inventory.window.Window;
 import org.spout.vanilla.component.inventory.window.block.EnchantmentTableWindow;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.EnchantmentTableInventory;

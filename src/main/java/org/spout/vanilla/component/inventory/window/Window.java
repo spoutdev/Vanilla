@@ -163,14 +163,25 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	public boolean onShiftClick(ItemStack stack, int slot, Inventory from) {
 		PlayerInventory inventory = getHuman().getInventory();
-		boolean result = false;
+		PlayerMainInventory main = inventory.getMain();
+		GridInventoryConverter converter = (GridInventoryConverter) getInventoryConverter(main);
+		if (converter == null) {
+			return false;
+		}
 		if (from instanceof PlayerQuickbar) {
-			result = inventory.getMain().add(stack);
+			main.add(converter.getSlot(offset), stack);
+			return true;
 		} else if (from instanceof PlayerMainInventory) {
-			result = inventory.getQuickbar().add(stack);
+			PlayerQuickbar quickbar = inventory.getQuickbar();
+			InventoryConverter quickbarConverter = getInventoryConverter(quickbar);
+			if (quickbarConverter == null) {
+				return false;
+			}
+			quickbar.add(converter.getSlot(offset + converter.getGrid().getSize()), stack);
+			return true;
 		}
 		from.set(slot, stack);
-		return result;
+		return false;
 	}
 
 	public boolean onClick(ClickArguments args) {

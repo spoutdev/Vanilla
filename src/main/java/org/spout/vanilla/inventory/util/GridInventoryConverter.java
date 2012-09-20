@@ -39,12 +39,8 @@ public class GridInventoryConverter extends InventoryConverter {
 		grid = inventory.getGrid(length);
 		this.offset = offset;
 		GridIterator i = grid.iterator();
-		int mod = offset * grid.getWidth();
 		while (i.hasNext()) {
-			slots[i.next()] = i.getX() + mod;
-			if (i.getX() == grid.getLength() - 1) {
-				mod -= offset;
-			}
+			slots[i.next()] = ((offset + grid.getSize()) - (length * i.getY())) - (length - i.getX());
 		}
 	}
 

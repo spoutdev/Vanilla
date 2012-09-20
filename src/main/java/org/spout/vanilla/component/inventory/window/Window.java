@@ -31,7 +31,9 @@ import java.util.Set;
 
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.TIntObjectMap;
+import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
+import gnu.trove.map.hash.TObjectIntHashMap;
 
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
@@ -44,6 +46,7 @@ import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowItemsEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
+import org.spout.vanilla.event.window.WindowPropertyEvent;
 import org.spout.vanilla.event.window.WindowSlotEvent;
 import org.spout.vanilla.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
@@ -52,10 +55,12 @@ import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.ClickArguments;
 import org.spout.vanilla.inventory.window.InventoryEntry;
 import org.spout.vanilla.inventory.window.WindowType;
+import org.spout.vanilla.inventory.window.prop.WindowProperty;
 import org.spout.vanilla.util.InventoryUtil;
 
 public class Window extends EntityComponent implements InventoryViewer {
 	protected final TIntObjectMap<ItemStack> queuedInventoryUpdates = new TIntObjectHashMap<ItemStack>();
+	protected final TObjectIntMap<WindowProperty> properties = new TObjectIntHashMap<WindowProperty>();
 	protected final Set<InventoryConverter> converters = new HashSet<InventoryConverter>();
 	protected final int instanceId = InventoryUtil.nextWindowId();
 	protected int offset;
@@ -380,6 +385,15 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	public void removeInventoryConverter(InventoryConverter converter) {
 		converters.remove(converter);
+	}
+
+	public void setPropertyValue(WindowProperty prop, int value) {
+		properties.put(prop, value);
+		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowPropertyEvent(this, prop.getId(), value));
+	}
+
+	public int getPropertyValue(WindowProperty prop) {
+		return properties.get(prop);
 	}
 
 	public int getInstanceId() {

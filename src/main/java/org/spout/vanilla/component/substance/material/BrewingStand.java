@@ -30,11 +30,14 @@ import org.spout.api.entity.Player;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.component.inventory.window.Window;
+import org.spout.vanilla.component.inventory.window.block.BrewingStandWindow;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.material.block.controlled.BrewingStandBlock;
 
 public class BrewingStand extends WindowBlockComponent implements Container {
+	private final BrewingStandInventory inventory = new BrewingStandInventory();
+
 	@Override
 	public BrewingStandBlock getMaterial() {
 		return (BrewingStandBlock) super.getMaterial();
@@ -49,14 +52,12 @@ public class BrewingStand extends WindowBlockComponent implements Container {
 	}
 
 	@Override
-	public Window createWindow(Player player) {
-		// TODO Auto-generated method stub
-		return null;
+	public BrewingStandInventory getInventory() {
+		return inventory;
 	}
 
 	@Override
-	public BrewingStandInventory getInventory() {
-		// TODO Auto-generated method stub
-		return null;
+	public void openWindow(Player player) {
+		player.add(BrewingStandWindow.class).init(inventory).open();
 	}
 }

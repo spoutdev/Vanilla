@@ -31,10 +31,14 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.component.inventory.window.Window;
+import org.spout.vanilla.component.inventory.window.block.EnchantmentTableWindow;
 import org.spout.vanilla.inventory.Container;
+import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.material.block.controlled.EnchantmentTableBlock;
 
 public class EnchantmentTable extends WindowBlockComponent implements Container {
+	private final EnchantmentTableInventory inventory = new EnchantmentTableInventory();
+
 	@Override
 	public EnchantmentTableBlock getMaterial() {
 		return (EnchantmentTableBlock) super.getMaterial();
@@ -49,14 +53,12 @@ public class EnchantmentTable extends WindowBlockComponent implements Container 
 	}
 
 	@Override
-	public Window createWindow(Player player) {
-		// TODO Auto-generated method stub
-		return null;
+	public Inventory getInventory() {
+		return inventory;
 	}
 
 	@Override
-	public Inventory getInventory() {
-		// TODO Auto-generated method stub
-		return null;
+	public void openWindow(Player player) {
+		player.add(EnchantmentTableWindow.class).init(inventory).open();
 	}
 }

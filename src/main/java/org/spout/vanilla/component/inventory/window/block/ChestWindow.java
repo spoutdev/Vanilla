@@ -32,13 +32,7 @@ import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class ChestWindow extends Window {
-	private String title;
-	private ChestInventory[] inventories;
-
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		init(WindowType.CHEST, title, getSize());
+	public ChestWindow init(String title, ChestInventory... inventories) {
 		for (int i = 0; i < inventories.length; i++) {
 			ChestInventory inventory = inventories[i];
 			if (inventory == null) {
@@ -46,19 +40,7 @@ public class ChestWindow extends Window {
 			}
 			converters.add(new GridInventoryConverter(inventory, 9, i * inventory.size()));
 		}
-	}
-
-	public ChestWindow init(String title, ChestInventory... inventories) {
-		this.title = title;
-		this.inventories = inventories;
+		init(WindowType.CHEST, title, getInventorySize());
 		return this;
-	}
-
-	public int getSize() {
-		int size = 0;
-		for (ChestInventory inventory : inventories) {
-			size += inventory.size();
-		}
-		return size;
 	}
 }

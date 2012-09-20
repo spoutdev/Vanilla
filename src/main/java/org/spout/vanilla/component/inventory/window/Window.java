@@ -302,12 +302,12 @@ public class Window extends EntityComponent implements InventoryViewer {
 		return false;
 	}
 
-	public void creativeClick(Inventory inventory, int clickedSlot, ItemStack item) {
+	public void onCreativeClick(Inventory inventory, int clickedSlot, ItemStack item) {
 		cursorItem = null;
 		inventory.set(clickedSlot, item);
 	}
 
-	public boolean outsideClick() {
+	public boolean onOutsideClick() {
 		dropCursorItem();
 		return true;
 	}

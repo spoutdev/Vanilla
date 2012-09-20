@@ -26,25 +26,32 @@
  */
 package org.spout.vanilla.component.substance.material;
 
-import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.spout.api.component.components.BlockComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.inventory.InventoryViewer;
 
 import org.spout.vanilla.component.inventory.window.Window;
 
 public abstract class WindowBlockComponent extends BlockComponent {
-	private HashMap<Player, Window> viewers = new HashMap<Player, Window>();
+	private final Set<Player> viewers = new HashSet<Player>();
 
-	public abstract Window createWindow(Player player);
+	public abstract void openWindow(Player player);
+
+	public final void doOpenWindow(Player player) {
+		viewers.add(player);
+		openWindow(player);
+	}
 
 	@Override
 	public void onInteract(Entity entity, Action type) {
 		super.onInteract(entity, type);
-		if (type == Action.RIGHT_CLICK) {
-			// TODO: Open window
+		if (type == Action.RIGHT_CLICK && entity instanceof Player) {
+			doOpenWindow((Player) entity);
 		}
 	}
 }

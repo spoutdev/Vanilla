@@ -32,18 +32,9 @@ import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class DispenserWindow extends Window {
-	private DispenserInventory inventory;
-
-	@Override
-	public void onAttached() {
-		super.onAttached();
+	public DispenserWindow init(DispenserInventory inventory) {
 		init(WindowType.DISPENSER, "Dispenser", 9);
 		converters.add(new GridInventoryConverter(inventory, 3));
-		super.onAttached();
-	}
-
-	public DispenserWindow init(DispenserInventory inventory) {
-		this.inventory = inventory;
 		return this;
 	}
 }

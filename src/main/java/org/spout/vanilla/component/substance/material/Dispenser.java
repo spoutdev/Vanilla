@@ -31,11 +31,15 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.component.inventory.window.Window;
+import org.spout.vanilla.component.inventory.window.block.DispenserWindow;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.Container;
+import org.spout.vanilla.inventory.block.DispenserInventory;
 import org.spout.vanilla.material.block.controlled.DispenserBlock;
 
 public class Dispenser extends WindowBlockComponent implements Container {
+	private final DispenserInventory inventory = new DispenserInventory();
+
 	@Override
 	public DispenserBlock getMaterial() {
 		return (DispenserBlock) super.getMaterial();
@@ -58,14 +62,12 @@ public class Dispenser extends WindowBlockComponent implements Container {
 	}
 
 	@Override
-	public Window createWindow(Player player) {
-		// TODO Auto-generated method stub
-		return null;
+	public Inventory getInventory() {
+		return inventory;
 	}
 
 	@Override
-	public Inventory getInventory() {
-		// TODO Auto-generated method stub
-		return null;
+	public void openWindow(Player player) {
+		player.add(DispenserWindow.class).init(inventory).open();
 	}
 }

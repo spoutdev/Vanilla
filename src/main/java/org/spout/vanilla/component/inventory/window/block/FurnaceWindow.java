@@ -32,17 +32,9 @@ import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class FurnaceWindow extends Window {
-	private FurnaceInventory inventory;
-
-	@Override
-	public void onAttached() {
-		super.onAttached();
+	public FurnaceWindow init(FurnaceInventory inventory) {
 		init(WindowType.FURNACE, "Furnace", 3);
 		converters.add(new InventoryConverter(inventory, "1, 0, 2"));
-	}
-
-	public FurnaceWindow init(FurnaceInventory inventory) {
-		this.inventory = inventory;
 		return this;
 	}
 }

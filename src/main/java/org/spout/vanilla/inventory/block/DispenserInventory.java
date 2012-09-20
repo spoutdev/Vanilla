@@ -36,7 +36,7 @@ import org.spout.vanilla.component.substance.material.Dispenser;
 public class DispenserInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
 
-	public DispenserInventory(Dispenser owner) {
+	public DispenserInventory() {
 		super(9);
 	}
 }

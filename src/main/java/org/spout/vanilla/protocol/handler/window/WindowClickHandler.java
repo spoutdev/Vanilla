@@ -49,7 +49,7 @@ public final class WindowClickHandler extends MessageHandler<WindowClickMessage>
 		System.out.println("Window clicked at slot " + slot);
 		if (slot == 64537) {
 			System.out.println("Outside onClick");
-			result = window.outsideClick();
+			result = window.onOutsideClick();
 		} else {
 			System.out.println("Getting args");
 			ClickArguments args = window.getClickArguments(slot, message.isRightClick(), message.isShift());

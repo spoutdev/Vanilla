@@ -32,17 +32,9 @@ import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class VillagerWindow extends Window {
-	private VillagerInventory inventory;
-
-	@Override
-	public void onAttached() {
-		super.onAttached();
+	public VillagerWindow init(VillagerInventory inventory) {
 		init(WindowType.VILLAGER, "Villager", 3);
 		converters.add(new InventoryConverter(inventory, "0-2"));
-	}
-
-	public VillagerWindow init(VillagerInventory inventory) {
-		this.inventory = inventory;
 		return this;
 	}
 }

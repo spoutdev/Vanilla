@@ -35,6 +35,9 @@ import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.material.block.controlled.ChestBlock;
 
 public class Chest extends WindowBlockComponent implements Container {
+	private final ChestInventory first = new ChestInventory();
+	private final ChestInventory second = new ChestInventory();
+
 	@Override
 	public ChestBlock getMaterial() {
 		return (ChestBlock) super.getMaterial();
@@ -49,14 +52,12 @@ public class Chest extends WindowBlockComponent implements Container {
 	}
 
 	@Override
-	public Window createWindow(Player player) {
-		// TODO Auto-generated method stub
-		return null;
+	public ChestInventory getInventory() {
+		return first;
 	}
 
 	@Override
-	public ChestInventory getInventory() {
-		// TODO Auto-generated method stub
-		return null;
+	public void openWindow(Player player) {
+		// TODO: Chest logic
 	}
 }

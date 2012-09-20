@@ -29,19 +29,20 @@ package org.spout.vanilla.component.substance.material;
 import org.spout.api.entity.Player;
 
 import org.spout.vanilla.component.inventory.window.Window;
+import org.spout.vanilla.component.inventory.window.block.FurnaceWindow;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
 
 public class Furnace extends WindowBlockComponent implements Container {
-	@Override
-	public Window createWindow(Player player) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	private final FurnaceInventory inventory = new FurnaceInventory();
 
 	@Override
 	public FurnaceInventory getInventory() {
-		// TODO Auto-generated method stub
-		return null;
+		return inventory;
+	}
+
+	@Override
+	public void openWindow(Player player) {
+		player.add(FurnaceWindow.class).init(inventory).open();
 	}
 }

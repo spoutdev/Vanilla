@@ -28,8 +28,8 @@ package org.spout.vanilla.component.inventory.window.block;
 
 import org.spout.vanilla.inventory.block.ChestInventory;
 
-public class DoubleChestInventory extends ChestWindow {
-	public DoubleChestInventory init(ChestInventory inventory1, ChestInventory inventory2) {
+public class DoubleChestWindow extends ChestWindow {
+	public DoubleChestWindow init(ChestInventory inventory1, ChestInventory inventory2) {
 		super.init("Double Chest", inventory1, inventory2);
 		return this;
 	}

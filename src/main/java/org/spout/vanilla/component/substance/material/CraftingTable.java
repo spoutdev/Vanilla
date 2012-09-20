@@ -30,6 +30,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.component.inventory.window.Window;
+import org.spout.vanilla.component.inventory.window.block.CraftingTableWindow;
 import org.spout.vanilla.material.block.controlled.CraftingTableBlock;
 
 public class CraftingTable extends WindowBlockComponent {
@@ -47,8 +48,7 @@ public class CraftingTable extends WindowBlockComponent {
 	}
 
 	@Override
-	public Window createWindow(Player player) {
-		// TODO Auto-generated method stub
-		return null;
+	public void openWindow(Player player) {
+		player.add(CraftingTableWindow.class).open();
 	}
 }

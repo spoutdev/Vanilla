@@ -32,17 +32,9 @@ import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class BrewingStandWindow extends Window {
-	private BrewingStandInventory inventory;
-
-	@Override
-	public void onAttached() {
-		super.onAttached();
+	public BrewingStandWindow init(BrewingStandInventory inventory) {
 		init(WindowType.BREWING_STAND, "Brewing Stand", 4);
 		converters.add(new InventoryConverter(inventory, "0-3"));
-	}
-
-	public BrewingStandWindow init(BrewingStandInventory inventory) {
-		this.inventory = inventory;
 		return this;
 	}
 }

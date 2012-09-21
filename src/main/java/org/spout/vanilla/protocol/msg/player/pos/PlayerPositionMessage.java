@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.msg.player.pos;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
@@ -49,6 +50,10 @@ public final class PlayerPositionMessage implements Message {
 
 	public double getY() {
 		return y;
+	}
+
+	public Vector3 getPosition() {
+		return new Vector3(x, y, z);
 	}
 
 	public double getStance() {

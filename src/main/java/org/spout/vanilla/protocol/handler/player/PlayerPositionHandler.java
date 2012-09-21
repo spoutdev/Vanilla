@@ -28,7 +28,6 @@ package org.spout.vanilla.protocol.handler.player;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
@@ -41,15 +40,12 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 			return;
 		}
 		Player holder = session.getPlayer();
-		Transform old = holder.getTransform().getTransform();
-		if (old != null) {
-			double dx = old.getPosition().getBlockX() - message.getX();
-			double dy = old.getPosition().getBlockY() - message.getY();
-			double dz = old.getPosition().getBlockZ() - message.getZ();
-			if (Math.abs(dx) + Math.abs(dy) + Math.abs(dz) > 4) {
-				return;
-			}
+
+		Point newPosition = new Point(message.getPosition(), holder.getWorld());
+		Point position = holder.getTransform().getPosition();
+
+		if (!position.equals(newPosition) && position.distance(newPosition) < 4) {
+			holder.getTransform().setPosition(newPosition);
 		}
-		holder.getTransform().setPosition(new Point(holder.getWorld(), (float) message.getX(), (float) message.getY(), (float) message.getZ()));
 	}
 }

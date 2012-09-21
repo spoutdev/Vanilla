@@ -85,8 +85,7 @@ public class TestCommands {
 		if (world != null) {
 			final Point loc = world.getSpawnPoint().getPosition();
 			world.getChunkFromBlock(loc);
-			player.getTransform().setPosition(loc);
-			player.getNetworkSynchronizer().setPositionDirty();
+			player.teleport(loc);
 		} else {
 			throw new CommandException("Please enter a valid world");
 		}
@@ -116,8 +115,7 @@ public class TestCommands {
 			Point loc = new Point(world, args.getInteger(2), args.getInteger(3), args.getInteger(4));
 			//Make sure the chunk the player is teleported to is loaded.
 			world.getChunkFromBlock(loc);
-			player.getTransform().setPosition(loc);
-			player.getNetworkSynchronizer().setPositionDirty();
+			player.teleport(loc);
 		} else {
 			throw new CommandException("Please enter a valid world");
 		}

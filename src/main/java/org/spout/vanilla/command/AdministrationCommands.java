@@ -115,8 +115,7 @@ public class AdministrationCommands {
 		}
 
 		point.getWorld().getChunkFromBlock(point);
-		player.getTransform().setPosition(point);
-		player.getNetworkSynchronizer().setPositionDirty();
+		player.teleport(point);
 	}
 
 	@Command(aliases = {"give"}, usage = "[player] <block> [amount] ", desc = "Lets a player spawn items", min = 1, max = 3)

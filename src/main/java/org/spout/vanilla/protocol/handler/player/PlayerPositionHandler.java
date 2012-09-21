@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.protocol.handler.player;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.MessageHandler;
@@ -43,9 +44,15 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 
 		Point newPosition = new Point(message.getPosition(), holder.getWorld());
 		Point position = holder.getTransform().getPosition();
-
-		if (!position.equals(newPosition) && position.distance(newPosition) < 4) {
-			holder.getTransform().setPosition(newPosition);
+		
+		if (holder.getNetworkSynchronizer().isTeleportPending()) {
+			if (position.getX() == newPosition.getX() && position.getZ() == newPosition.getZ()) {
+				holder.getNetworkSynchronizer().clearTeleportPending();
+			}
+		} else {
+			if (!position.equals(newPosition) && position.distance(newPosition) < 4) {
+				holder.getTransform().setPosition(newPosition);
+			}
 		}
 	}
 }

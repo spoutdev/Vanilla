@@ -147,7 +147,7 @@ public class VanillaPlugin extends CommonPlugin {
 			lanThread.start();
 		}
 
-		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol").get());
+		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol"));
 	}
 
 	@Override

@@ -9,5 +9,4 @@ load: startup
 platform: BOTH
 
 data:
-
     protocol: ${protocolVersion}

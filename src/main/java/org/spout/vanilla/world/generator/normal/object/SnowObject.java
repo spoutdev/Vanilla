@@ -43,7 +43,7 @@ import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.liquid.Water;
-import org.spout.vanilla.world.generator.VanillaBiome;
+import org.spout.vanilla.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.world.generator.object.RandomObject;
 
 public class SnowObject extends RandomObject implements Source {

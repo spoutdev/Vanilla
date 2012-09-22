@@ -38,7 +38,6 @@ import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.generator.biome.BiomeManager;
-import org.spout.api.generator.biome.selector.PerBlockBiomeSelector;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
@@ -48,12 +47,12 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
-import org.spout.vanilla.world.generator.VanillaBiomes;
-import org.spout.vanilla.world.generator.VanillaUniqueBiomeGenerator;
-import org.spout.vanilla.world.generator.nether.decorator.BlockPatchDecorator;
+import org.spout.vanilla.world.generator.biome.VanillaBiomes;
+import org.spout.vanilla.world.generator.VanillaSingleBiomeGenerator;
+import org.spout.vanilla.world.generator.nether.populator.BlockPatchPopulator;
 import org.spout.vanilla.world.generator.nether.populator.NetherCavePopulator;
 
-public class NetherGenerator extends VanillaUniqueBiomeGenerator {
+public class NetherGenerator extends VanillaSingleBiomeGenerator {
 	public static final int HEIGHT = 128;
 	public static final int SEA_LEVEL = 31;
 	// noise for generation
@@ -120,17 +119,16 @@ public class NetherGenerator extends VanillaUniqueBiomeGenerator {
 	}
 
 	public NetherGenerator() {
-		super(HEIGHT, VanillaBiomes.NETHERRACK);
+		super(VanillaBiomes.NETHERRACK);
 	}
 
 	@Override
 	public void registerBiomes() {
-		setSelector(new PerBlockBiomeSelector(VanillaBiomes.NETHERRACK));
+		super.registerBiomes();
+		register(VanillaBiomes.NETHERRACK);
 		addGeneratorPopulators(
 				new NetherCavePopulator(),
-				new BlockPatchDecorator(VanillaMaterials.SOUL_SAND), new BlockPatchDecorator(VanillaMaterials.GRAVEL)
-		);
-		register(VanillaBiomes.NETHERRACK);
+				new BlockPatchPopulator(VanillaMaterials.SOUL_SAND), new BlockPatchPopulator(VanillaMaterials.GRAVEL));
 	}
 
 	@Override
@@ -140,6 +138,9 @@ public class NetherGenerator extends VanillaUniqueBiomeGenerator {
 
 	@Override
 	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomeManager, long seed) {
+		if (y >= HEIGHT) {
+			return;
+		}
 		ELEVATION.setSeed((int) seed * 23);
 		ROUGHNESS.setSeed((int) seed * 29);
 		DETAIL.setSeed((int) seed * 17);
@@ -183,12 +184,13 @@ public class NetherGenerator extends VanillaUniqueBiomeGenerator {
 					}
 				}
 			}
-		} else if (y == HEIGHT - sizeY) {
+		}
+		if (y == HEIGHT - sizeY) {
 			for (int xx = 0; xx < sizeX; xx++) {
 				for (int zz = 0; zz < sizeZ; zz++) {
 					final byte bedrockDepth = (byte) Math.ceil(BLOCK_REPLACER.GetValue(x + xx, -73, z + zz)
 							* (BEDROCK_DEPTH / 2d) + BEDROCK_DEPTH / 2d);
-					for (int yy = HEIGHT - 1; yy > HEIGHT - bedrockDepth; yy--) {
+					for (int yy = HEIGHT - 1; yy >= HEIGHT - bedrockDepth - 1; yy--) {
 						blockData.set(x + xx, yy, z + zz, VanillaMaterials.BEDROCK.getId());
 					}
 				}

@@ -29,20 +29,24 @@ package org.spout.vanilla.world.generator;
 import java.util.Arrays;
 
 import org.spout.api.generator.GeneratorPopulator;
-import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.generator.biome.Simple2DBiomeManager;
+import org.spout.api.generator.biome.selector.PerBlockBiomeSelector;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.vanilla.world.generator.biome.VanillaBiome;
 
-public abstract class VanillaUniqueBiomeGenerator extends VanillaBiomeGenerator {
-	private final int height;
-	private final Biome biome;
+public abstract class VanillaSingleBiomeGenerator extends VanillaBiomeGenerator {
+	private final VanillaBiome biome;
 
-	public VanillaUniqueBiomeGenerator(int height, Biome biome) {
-		this.height = height;
+	public VanillaSingleBiomeGenerator(VanillaBiome biome) {
 		this.biome = biome;
+	}
+
+	@Override
+	public void registerBiomes() {
+		setSelector(new PerBlockBiomeSelector(biome));
 	}
 
 	@Override
@@ -58,7 +62,7 @@ public abstract class VanillaUniqueBiomeGenerator extends VanillaBiomeGenerator 
 	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ, World world) {
 		if (chunkY < 0) {
 			super.generate(blockData, chunkX, chunkY, chunkZ, world);
-		} else if (chunkY << Chunk.BLOCKS.BITS < height) {
+		} else {
 			final int x = chunkX << Chunk.BLOCKS.BITS;
 			final int y = chunkY << Chunk.BLOCKS.BITS;
 			final int z = chunkZ << Chunk.BLOCKS.BITS;

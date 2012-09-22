@@ -123,7 +123,7 @@ import org.spout.vanilla.protocol.msg.world.block.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
-import org.spout.vanilla.world.generator.VanillaBiome;
+import org.spout.vanilla.world.generator.biome.VanillaBiome;
 
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;

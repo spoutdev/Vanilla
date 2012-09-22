@@ -24,7 +24,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator;
+package org.spout.vanilla.world.generator.biome;
+
+import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.spout.vanilla.world.generator.nether.biome.NetherrackBiome;
 import org.spout.vanilla.world.generator.normal.biome.grassy.ForestBiome;
@@ -74,4 +79,28 @@ public class VanillaBiomes {
 	public static final VanillaBiome JUNGLE_HILLS = new JungleHillsBiome(22);
 	public static final VanillaBiome FROZEN_OCEAN = new FrozenOceanBiome(10);
 	public static final VanillaBiome ENDSTONE = new EndStoneBiome(22);
+	private static final Map<String, VanillaBiome> BY_NAME = new HashMap<String, VanillaBiome>();
+
+	static {
+		for (Field objectField : VanillaBiomes.class.getDeclaredFields()) {
+			objectField.setAccessible(true);
+			try {
+				final Object object = objectField.get(null);
+				if (object instanceof VanillaBiome) {
+					BY_NAME.put(objectField.getName().toLowerCase(), (VanillaBiome) object);
+				}
+			} catch (Exception ex) {
+				System.out.println("Could not properly reflect VanillaBiomes! Unexpected behaviour may occur, please report to http://issues.spout.org!");
+				ex.printStackTrace();
+			}
+		}
+	}
+
+	public static VanillaBiome byName(String name) {
+		return BY_NAME.get(name.toLowerCase());
+	}
+
+	public static Collection<VanillaBiome> getBiomes() {
+		return BY_NAME.values();
+	}
 }

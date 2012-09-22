@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.world.generator.theend.biome;
 
-import org.spout.vanilla.world.generator.VanillaBiome;
+import org.spout.vanilla.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.world.generator.theend.decorator.SpireDecorator;
 
 public class EndStoneBiome extends VanillaBiome {

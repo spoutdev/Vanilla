@@ -39,7 +39,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.world.generator.VanillaBiomes;
+import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 
 public class NetherWartBlock extends GroundAttachable implements Plant, Growing, RandomBlockMaterial {
 	public NetherWartBlock(String name, int id) {

@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla.world.generator;
 
+import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
@@ -35,29 +37,32 @@ import org.spout.vanilla.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 
 public class VanillaGenerators {
-	private static final Map<String, VanillaGenerator> generators = new ConcurrentHashMap<String, VanillaGenerator>();
-	public static final NormalGenerator NORMAL = addGenerator("normal", new NormalGenerator());
-	public static final NetherGenerator NETHER = addGenerator("nether", new NetherGenerator());
-	public static final FlatGenerator FLAT = addGenerator("flat", new FlatGenerator(64));
-	public static final TheEndGenerator THE_END = addGenerator("the_end", new TheEndGenerator());
+	public static final NormalGenerator NORMAL = new NormalGenerator();
+	public static final NetherGenerator NETHER = new NetherGenerator();
+	public static final FlatGenerator FLAT = new FlatGenerator(64);
+	public static final TheEndGenerator THE_END = new TheEndGenerator();
+	private static final Map<String, VanillaGenerator> BY_NAME = new HashMap<String, VanillaGenerator>();
 
-	/**
-	 * Maps a Vanilla Generator to a certain name
-	 * @param name of the generator
-	 * @param generator to map to the name
-	 * @return the generator
-	 */
-	public static <T extends VanillaGenerator> T addGenerator(String name, T generator) {
-		generators.put(name, generator);
-		return generator;
+	static {
+		for (Field objectField : VanillaGenerators.class.getDeclaredFields()) {
+			objectField.setAccessible(true);
+			try {
+				final Object object = objectField.get(null);
+				if (object instanceof VanillaGenerator) {
+					BY_NAME.put(objectField.getName().toLowerCase(), (VanillaGenerator) object);
+				}
+			} catch (Exception ex) {
+				System.out.println("Could not properly reflect VanillaGenerators! Unexpected behaviour may occur, please report to http://issues.spout.org!");
+				ex.printStackTrace();
+			}
+		}
 	}
 
-	/**
-	 * Gets the Vanilla Generator mapped to a certain name
-	 * @param name of the Generator
-	 * @return the Generator, or null if not found
-	 */
-	public static VanillaGenerator getGenerator(String name) {
-		return generators.get(name);
+	public static VanillaGenerator byName(String name) {
+		return BY_NAME.get(name.toLowerCase());
+	}
+
+	public static Collection<VanillaGenerator> getGenerators() {
+		return BY_NAME.values();
 	}
 }

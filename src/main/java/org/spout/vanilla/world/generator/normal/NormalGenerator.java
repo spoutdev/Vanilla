@@ -51,8 +51,9 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.world.generator.VanillaBiomeGenerator;
-import org.spout.vanilla.world.generator.VanillaBiomes;
+import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.normal.populator.CavePopulator;
 import org.spout.vanilla.world.generator.normal.populator.DungeonPopulator;
@@ -67,7 +68,7 @@ import org.spout.vanilla.world.generator.normal.populator.SnowPopulator;
 import org.spout.vanilla.world.generator.normal.selector.VanillaBiomeSelector;
 
 public class NormalGenerator extends VanillaBiomeGenerator {
-	public static final int HEIGHT = 256;
+	public static final int HEIGHT;
 	public static final int SEA_LEVEL = 63;
 	// noise for generation
 	private static final Perlin ELEVATION = new Perlin();
@@ -128,6 +129,15 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		BLOCK_REPLACER.setNoiseQuality(NoiseQuality.FAST);
 		BLOCK_REPLACER.setPersistence(0.7);
 		BLOCK_REPLACER.setOctaveCount(1);
+
+		int height = 0;
+		for (VanillaBiome biome : VanillaBiomes.getBiomes()) {
+			if (!(biome instanceof NormalBiome)) {
+				continue;
+			}
+			height = Math.max(height, (int) Math.ceil(((NormalBiome) biome).getMax()));
+		}
+		HEIGHT = (++height / 4) * 4 + 4;
 	}
 
 	@Override
@@ -137,14 +147,12 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		setSelector(new VanillaBiomeSelector());
 		addGeneratorPopulators(
 				new GroundCoverPopulator(), new RockyShieldPopulator(),
-				new CavePopulator(), new RavinePopulator()
-		);
+				new CavePopulator(), new RavinePopulator());
 		addPopulators(
 				new MineshaftPopulator(),
 				new PondPopulator(), new DungeonPopulator(), new OrePopulator(),
 				new BiomePopulator(),
-				new FallingLiquidPopulator(), new SnowPopulator()
-		);
+				new FallingLiquidPopulator(), new SnowPopulator());
 		register(VanillaBiomes.OCEAN);
 		register(VanillaBiomes.FROZEN_OCEAN);
 		register(VanillaBiomes.PLAINS);

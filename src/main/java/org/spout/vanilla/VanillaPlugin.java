@@ -237,7 +237,7 @@ public class VanillaPlugin extends CommonPlugin {
 			if (worldNode.LOAD.getBoolean()) {
 				// Obtain generator and start generating world
 				String generatorName = worldNode.GENERATOR.getString();
-				VanillaGenerator generator = VanillaGenerators.getGenerator(generatorName);
+				VanillaGenerator generator = VanillaGenerators.byName(generatorName);
 				if (generator == null) {
 					throw new IllegalArgumentException("Invalid generator name for world '" + worldNode.getWorldName() + "': " + generatorName);
 				}

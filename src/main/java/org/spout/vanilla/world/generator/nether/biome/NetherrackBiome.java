@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.world.generator.nether.biome;
 
-import org.spout.vanilla.world.generator.VanillaBiome;
+import org.spout.vanilla.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.world.generator.nether.decorator.FireDecorator;
 import org.spout.vanilla.world.generator.nether.decorator.GlowstoneDecorator;
 import org.spout.vanilla.world.generator.nether.decorator.LavaFallDecorator;

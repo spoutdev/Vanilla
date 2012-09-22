@@ -31,7 +31,7 @@ import java.util.Random;
 import org.spout.api.generator.biome.Decorator;
 
 import org.spout.vanilla.material.block.plant.TallGrass;
-import org.spout.vanilla.world.generator.VanillaBiome;
+import org.spout.vanilla.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator.TallGrassFactory;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator.TreeWGOFactory;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;

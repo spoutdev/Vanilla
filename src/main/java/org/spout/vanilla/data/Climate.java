@@ -29,7 +29,7 @@ package org.spout.vanilla.data;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.cuboid.Block;
 
-import org.spout.vanilla.world.generator.VanillaBiome;
+import org.spout.vanilla.world.generator.biome.VanillaBiome;
 
 /**
  * Enum of Biome climates

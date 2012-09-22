@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.nether.decorator;
+package org.spout.vanilla.world.generator.nether.populator;
 
 import java.util.Random;
 
@@ -43,13 +43,13 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
-public class BlockPatchDecorator implements GeneratorPopulator {
+public class BlockPatchPopulator implements GeneratorPopulator {
 	private final Perlin elevation = new Perlin();
 	private final Perlin shapeBase = new Perlin();
 	private final Turbulence shape = new Turbulence();
 	private final BlockMaterial material;
 
-	public BlockPatchDecorator(BlockMaterial material) {
+	public BlockPatchPopulator(BlockMaterial material) {
 		this.material = material;
 
 		elevation.setFrequency(0.01);

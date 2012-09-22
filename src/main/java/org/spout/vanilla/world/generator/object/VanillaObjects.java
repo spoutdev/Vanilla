@@ -27,6 +27,7 @@
 package org.spout.vanilla.world.generator.object;
 
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,8 +61,8 @@ import org.spout.vanilla.world.generator.structure.mineshaft.Mineshaft;
 import org.spout.vanilla.world.generator.theend.object.SpireObject;
 
 /**
- * IMPORTANT: These objects maybe be modified by plugins. There is no guarantee these will be MC
- * like. For unaltered objects, please create a new instance.
+ * IMPORTANT: These objects should not be used by plugins. Any modifications to
+ * these objects will affect the output of the vanilla generators.
  */
 public class VanillaObjects {
 	public static final BigTreeObject BIG_OAK_TREE = new BigTreeObject();
@@ -114,7 +115,7 @@ public class VanillaObjects {
 		for (Field objectField : VanillaObjects.class.getDeclaredFields()) {
 			objectField.setAccessible(true);
 			try {
-				Object object = objectField.get(null);
+				final Object object = objectField.get(null);
 				if (object instanceof WorldGeneratorObject) {
 					BY_NAME.put(objectField.getName().toLowerCase(), (WorldGeneratorObject) object);
 				}
@@ -127,5 +128,9 @@ public class VanillaObjects {
 
 	public static WorldGeneratorObject byName(String name) {
 		return BY_NAME.get(name.toLowerCase());
+	}
+	
+	public static Collection<WorldGeneratorObject> getObjects() {
+		return BY_NAME.values();
 	}
 }

@@ -38,7 +38,6 @@ import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.generator.biome.BiomeManager;
-import org.spout.api.generator.biome.selector.PerBlockBiomeSelector;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
@@ -48,17 +47,17 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
-import org.spout.vanilla.world.generator.VanillaBiomes;
-import org.spout.vanilla.world.generator.VanillaUniqueBiomeGenerator;
+import org.spout.vanilla.world.generator.biome.VanillaBiomes;
+import org.spout.vanilla.world.generator.VanillaSingleBiomeGenerator;
 
-public class TheEndGenerator extends VanillaUniqueBiomeGenerator {
+public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 	private static final int SEA_LEVEL = 63;
 	private static final int ISLAND_HEIGHT = 56;
 	private static final int ISLAND_OFFSET = 8;
 	private static final int ISLAND_RADIUS = 144;
 	private static final double ISLAND_TOTAL_OFFSET = ISLAND_OFFSET + ISLAND_HEIGHT / 2d;
 	private static final double ISLAND_HEIGHT_SCALE = ((double) ISLAND_RADIUS / (double) ISLAND_HEIGHT) * 2d;
-	public static final int HEIGHT = ISLAND_HEIGHT + ISLAND_OFFSET;
+	public static final int HEIGHT = ((ISLAND_HEIGHT + ISLAND_OFFSET + 1) / 4) * 4 + 4;
 	// noise for generation
 	private static final Perlin ELEVATION = new Perlin();
 	private static final Perlin ROUGHNESS = new Perlin();
@@ -110,12 +109,12 @@ public class TheEndGenerator extends VanillaUniqueBiomeGenerator {
 	}
 
 	public TheEndGenerator() {
-		super(HEIGHT, VanillaBiomes.ENDSTONE);
+		super(VanillaBiomes.ENDSTONE);
 	}
 
 	@Override
 	public void registerBiomes() {
-		setSelector(new PerBlockBiomeSelector(VanillaBiomes.ENDSTONE));
+		super.registerBiomes();
 		register(VanillaBiomes.ENDSTONE);
 	}
 

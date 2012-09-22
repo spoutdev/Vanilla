@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator;
+package org.spout.vanilla.world.generator.biome;
 
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.Decorator;

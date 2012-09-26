@@ -37,7 +37,7 @@ import org.spout.vanilla.event.player.network.PlayerPingEvent;
 public class PingComponent extends EntityComponent {
 	private Player player;
 	private final Random random = new Random();
-	private float timeout = 60;
+	private float timeout = 30;
 	private float timer = timeout;
 	private float ping;
 	private float lastRequest;

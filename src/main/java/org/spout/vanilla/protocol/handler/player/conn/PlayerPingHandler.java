@@ -39,10 +39,6 @@ public class PlayerPingHandler extends MessageHandler<PlayerPingMessage> {
 			session.disconnect("Illegal packet!");
 			return;
 		}
-
-		PingComponent ping = session.getPlayer().get(PingComponent.class);
-		if (ping != null) {
-			ping.resetTimeout(message.getPingId());
-		}
+		session.getPlayer().add(PingComponent.class).response(message.getPingId());
 	}
 }

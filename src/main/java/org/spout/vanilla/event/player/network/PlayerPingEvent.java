@@ -26,32 +26,24 @@
  */
 package org.spout.vanilla.event.player.network;
 
-import org.spout.api.entity.Player;
+import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.protocol.event.ProtocolEvent;
 
-public class PlayerPingChangedEvent extends PlayerEvent {
+public class PlayerPingEvent extends Event implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();
-	private long oldPing, newPing;
+	private int hash;
 
-	public PlayerPingChangedEvent(Player p, long oldPing, long newPing) {
-		super(p);
+	public PlayerPingEvent(int hash) {
+		this.hash = hash;
 	}
 
 	/**
-	 * Gets the previous Ping time
-	 * @return previous ping time in Milliseconds
+	 * Gets the Hash code for this ping message
+	 * @return ping unique code
 	 */
-	public long getOldPing() {
-		return this.oldPing;
-	}
-
-	/**
-	 * Gets the current Ping time
-	 * @return current ping time in Milliseconds
-	 */
-	public long getPing() {
-		return this.newPing;
+	public int getHash() {
+		return this.hash;
 	}
 
 	@Override

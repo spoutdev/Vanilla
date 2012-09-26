@@ -31,11 +31,11 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-public class PlayerUpdateUserListEvent extends PlayerEvent implements ProtocolEvent {
+public class PlayerListEvent extends PlayerEvent implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();
 	private long ping;
 
-	public PlayerUpdateUserListEvent(Player p, long pingDelayMS) {
+	public PlayerListEvent(Player p, long pingDelayMS) {
 		super(p);
 		this.ping = pingDelayMS;
 	}

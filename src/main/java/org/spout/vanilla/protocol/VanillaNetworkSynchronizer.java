@@ -80,9 +80,9 @@ import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
 import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
 import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
-import org.spout.vanilla.event.player.network.PlayerKeepAliveEvent;
-import org.spout.vanilla.event.player.network.PlayerUpdateStatsEvent;
-import org.spout.vanilla.event.player.network.PlayerUpdateUserListEvent;
+import org.spout.vanilla.event.player.network.PlayerHealthEvent;
+import org.spout.vanilla.event.player.network.PlayerListEvent;
+import org.spout.vanilla.event.player.network.PlayerPingEvent;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowItemsEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
@@ -479,12 +479,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 
 	@EventHandler
-	public Message onPlayerKeepAlive(PlayerKeepAliveEvent event) {
+	public Message onPlayerKeepAlive(PlayerPingEvent event) {
 		return new PlayerPingMessage(event.getHash());
 	}
 
 	@EventHandler
-	public Message onPlayerUpdateUserList(PlayerUpdateUserListEvent event) {
+	public Message onPlayerUpdateUserList(PlayerListEvent event) {
 		String name = event.getPlayer().getDisplayName();
 		return new PlayerListMessage(name, true, (short) event.getPingDelay());
 	}
@@ -500,7 +500,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 
 	@EventHandler
-	public Message onPlayerUpdateStats(PlayerUpdateStatsEvent event) {
+	public Message onPlayerUpdateStats(PlayerHealthEvent event) {
 		if (event.getPlayer() != owner) {
 			return null;
 		}

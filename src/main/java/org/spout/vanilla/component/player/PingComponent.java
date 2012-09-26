@@ -27,88 +27,68 @@
 package org.spout.vanilla.component.player;
 
 import java.util.Random;
-import java.util.logging.Level;
 
-import org.spout.api.Server;
 import org.spout.api.Spout;
+import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
-import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.event.player.network.PlayerKeepAliveEvent;
-import org.spout.vanilla.event.player.network.PlayerPingChangedEvent;
-import org.spout.vanilla.event.player.network.PlayerUpdateUserListEvent;
+import org.spout.vanilla.event.player.network.PlayerPingEvent;
 
 public class PingComponent extends EntityComponent {
-	private static final int MAX_USER_UPDATES = 40;
-	private int maxUserListUpdateCounter = MAX_USER_UPDATES;
-	private long lastRequestTime = System.currentTimeMillis();
-	private long lastResponseTime = System.currentTimeMillis();
-	private int lastRequestHash = 0;
-	private Random random = new Random();
-	private long ping = 0L;
+	private Player player;
+	private final Random random = new Random();
+	private float timeout = VanillaConfiguration.PLAYER_TIMEOUT_SECONDS.getFloat(60);
+	private float timer = 60;
+	private float ping;
+	private float lastRequest;
+	private int lastHash;
 
-	/**
-	 * Retrieve the latest random hash sent to the client
-	 * @return The latest random hash.
-	 */
-	public int getLastRequestHash() {
-		return lastRequestHash;
+	@Override
+	public void onAttached() {
+		if (!(getHolder() instanceof Player)) {
+			throw new IllegalStateException("PingComponent may only be attached to a player.");
+		}
+		player = (Player) getHolder();
 	}
 
 	@Override
 	public void onTick(float dt) {
-		long time = System.currentTimeMillis();
-
-		// Send a new request message after half the time-out time has passed
-		if ((time - lastRequestTime) > (VanillaConfiguration.PLAYER_TIMEOUT_MS.getLong() / 2)) {
-			lastRequestHash = random.nextInt();
-			getHolder().getNetwork().callProtocolEvent(new PlayerKeepAliveEvent(lastRequestHash));
-			lastRequestTime = time;
-			return;
+		timer -= dt;
+		if (timer <= timeout / 2) {
+			request();
 		}
-
-		if ((time - lastResponseTime) > VanillaConfiguration.PLAYER_TIMEOUT_MS.getLong()) {
-			Spout.getLogger().log(Level.WARNING, "PLAYER " + ((Player) getHolder()).getName() + " Reached connection Timeout!");
-			((Player) getHolder()).kick("Ping Timeout!");
+		if (timer <= 0) {
+			player.kick(ChatStyle.RED, "Connection timed out!");
 		}
 	}
 
 	/**
-	 * Gets the Player Ping in Milliseconds
-	 * @return player ping in Milliseconds
+	 * Gets the Player Ping in seconds
+	 * @return player ping in seconds
 	 */
-	public long getPing() {
+	public float getPing() {
 		return ping;
 	}
 
 	/**
 	 * Re-sets the Time out times by validating the received hash code
-	 * @param responseHash to validate against
+	 * @param hash of the message sent to validate against
 	 */
-	public void resetTimeout(int responseHash) {
-		Platform platform = Spout.getPlatform();
-		if (!platform.equals(Platform.SERVER) && !platform.equals(Platform.PROXY)) {
-			return;
+	public void response(int hash) {
+		if (hash == lastHash) {
+			ping = lastRequest - timer;
+			timer = timeout;
 		}
+	}
 
-		if (responseHash != lastRequestHash) {
-			return;
-		}
-		this.lastResponseTime = System.currentTimeMillis();
-		long oldPing = this.ping;
-		this.ping = this.lastResponseTime - this.lastRequestTime;
-		if (oldPing != this.ping) {
-			Player p = (Player) getHolder();
-			Spout.getEventManager().callDelayedEvent(new PlayerPingChangedEvent(p, oldPing, this.ping));
-			// Update the user lists for all players
-			if (maxUserListUpdateCounter >= MAX_USER_UPDATES) {
-				maxUserListUpdateCounter = 0;
-				for (Player player : ((Server) Spout.getEngine()).getOnlinePlayers()) {
-					player.getNetworkSynchronizer().callProtocolEvent(new PlayerUpdateUserListEvent(p, this.ping));
-				}
-			}
-		}
+	/**
+	 * Sends a new request to the client to return a ping message.
+	 */
+	public void request() {
+		lastRequest = timer;
+		lastHash = random.nextInt(Integer.MAX_VALUE);
+		player.getNetworkSynchronizer().callProtocolEvent(new PlayerPingEvent(lastHash));
 	}
 }

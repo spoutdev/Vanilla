@@ -28,19 +28,17 @@ package org.spout.vanilla.component.player;
 
 import java.util.Random;
 
-import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
 
-import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.player.network.PlayerPingEvent;
 
 public class PingComponent extends EntityComponent {
 	private Player player;
 	private final Random random = new Random();
-	private float timeout = VanillaConfiguration.PLAYER_TIMEOUT_SECONDS.getFloat(60);
-	private float timer = 60;
+	private float timeout = 60;
+	private float timer = timeout;
 	private float ping;
 	private float lastRequest;
 	private int lastHash;

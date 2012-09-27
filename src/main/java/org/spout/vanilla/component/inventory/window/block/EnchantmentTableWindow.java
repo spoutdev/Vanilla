@@ -34,7 +34,7 @@ import org.spout.vanilla.inventory.window.WindowType;
 public class EnchantmentTableWindow extends Window {
 	public EnchantmentTableWindow init(EnchantmentTableInventory inventory) {
 		init(WindowType.ENCHANTMENT_TABLE, "Enchant", 1);
-		converters.add(new InventoryConverter(inventory, "0"));
+		addInventoryConverter(new InventoryConverter(inventory, "0"));
 		return this;
 	}
 }

@@ -27,6 +27,7 @@
 package org.spout.vanilla.component.inventory.window;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import gnu.trove.iterator.TIntObjectIterator;
@@ -59,9 +60,9 @@ import org.spout.vanilla.inventory.window.prop.WindowProperty;
 import org.spout.vanilla.util.InventoryUtil;
 
 public class Window extends EntityComponent implements InventoryViewer {
+	private final Set<InventoryConverter> converters = new HashSet<InventoryConverter>();
 	protected final TIntObjectMap<ItemStack> queuedInventoryUpdates = new TIntObjectHashMap<ItemStack>();
 	protected final TObjectIntMap<WindowProperty> properties = new TObjectIntHashMap<WindowProperty>();
-	protected final Set<InventoryConverter> converters = new HashSet<InventoryConverter>();
 	protected final int instanceId = InventoryUtil.nextWindowId();
 	protected int offset;
 	protected WindowType type;
@@ -78,6 +79,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	@Override
 	public void onDetached() {
+		removeAllInventoryConverters();
 		close();
 		getHolder().add(DefaultWindow.class);
 	}
@@ -132,18 +134,12 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	public void open() {
 		opened = true;
-		for (InventoryConverter converter : converters) {
-			converter.getInventory().addViewer(this);
-		}
 		reload();
 		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowOpenEvent(this));
 	}
 
 	public void close() {
 		opened = false;
-		for (InventoryConverter converter : converters) {
-			converter.getInventory().removeViewer(this);
-		}
 		if (getHuman().isSurvival()) {
 			dropCursorItem();
 		}
@@ -379,11 +375,22 @@ public class Window extends EntityComponent implements InventoryViewer {
 	}
 
 	public void addInventoryConverter(InventoryConverter converter) {
+		converter.getInventory().addViewer(this);
 		converters.add(converter);
 	}
 
 	public void removeInventoryConverter(InventoryConverter converter) {
+		converter.getInventory().removeViewer(this);
 		converters.remove(converter);
+	}
+
+	public void removeAllInventoryConverters() {
+		Iterator<InventoryConverter> i = converters.iterator();
+		while (i.hasNext()) {
+			InventoryConverter converter = i.next();
+			converter.getInventory().removeViewer(this);
+			i.remove();
+		}
 	}
 
 	public void setPropertyValue(WindowProperty prop, int value) {

@@ -34,7 +34,7 @@ import org.spout.vanilla.inventory.window.WindowType;
 public class VillagerWindow extends Window {
 	public VillagerWindow init(VillagerInventory inventory) {
 		init(WindowType.VILLAGER, "Villager", 3);
-		converters.add(new InventoryConverter(inventory, "0-2"));
+		addInventoryConverter(new InventoryConverter(inventory, "0-2"));
 		return this;
 	}
 }

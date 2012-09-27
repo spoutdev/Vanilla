@@ -38,7 +38,7 @@ public class ChestWindow extends Window {
 			if (inventory == null) {
 				continue;
 			}
-			converters.add(new GridInventoryConverter(inventory, 9, i * inventory.size()));
+			addInventoryConverter(new GridInventoryConverter(inventory, 9, i * inventory.size()));
 		}
 		init(WindowType.CHEST, title, getInventorySize());
 		return this;

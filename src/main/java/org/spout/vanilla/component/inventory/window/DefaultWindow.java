@@ -36,8 +36,8 @@ public class DefaultWindow extends Window {
 		super.onAttached();
 		init(WindowType.DEFAULT, "Inventory", 9);
 		PlayerInventory inventory = getHuman().getInventory();
-		converters.add(new InventoryConverter(inventory.getArmor(), "8, 7, 6, 5"));
-		converters.add(new InventoryConverter(inventory.getCraftingGrid(), "3-4, 1-2, 0"));
+		addInventoryConverter(new InventoryConverter(inventory.getArmor(), "8, 7, 6, 5"));
+		addInventoryConverter(new InventoryConverter(inventory.getCraftingGrid(), "3-4, 1-2, 0"));
 	}
 
 	@Override

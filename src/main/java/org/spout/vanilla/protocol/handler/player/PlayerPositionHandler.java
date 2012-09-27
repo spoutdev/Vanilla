@@ -50,8 +50,13 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 				holder.getNetworkSynchronizer().clearTeleportPending();
 			}
 		} else {
-			if (!position.equals(newPosition) && position.distance(newPosition) < 4) {
-				holder.getTransform().setPosition(newPosition);
+			if (!position.equals(newPosition)) {
+				if (position.distance(newPosition) < 4) {
+					holder.getTransform().setPosition(newPosition);
+				} else {
+					holder.sendMessage("Restoring position due to fast movement");
+					holder.teleport(holder.getTransform().getTransform());
+				}
 			}
 		}
 	}

@@ -27,7 +27,7 @@
 package org.spout.vanilla.inventory.util;
 
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.util.Grid;
+import org.spout.api.inventory.shape.Grid;
 import org.spout.api.inventory.util.GridIterator;
 
 public class GridInventoryConverter extends InventoryConverter {
@@ -35,8 +35,8 @@ public class GridInventoryConverter extends InventoryConverter {
 	private final int offset;
 
 	public GridInventoryConverter(Inventory inventory, int length, int offset) {
-		super(inventory, new int[inventory.getGrid(length).getSize()]);
-		grid = inventory.getGrid(length);
+		super(inventory, new int[inventory.grid(length).getSize()]);
+		grid = inventory.grid(length);
 		this.offset = offset;
 		GridIterator i = grid.iterator();
 		while (i.hasNext()) {

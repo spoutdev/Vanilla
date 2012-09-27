@@ -28,7 +28,7 @@ package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.inventory.util.Grid;
+import org.spout.api.inventory.shape.Grid;
 import org.spout.api.inventory.util.GridIterator;
 
 public class CraftingInventory extends Inventory {

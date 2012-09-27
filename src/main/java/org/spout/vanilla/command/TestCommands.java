@@ -194,7 +194,11 @@ public class TestCommands {
 		}
 		if (count > 0) {
 			if (!isConsole) {
-				source.sendMessage(count, " entity(es) have been killed. The console has a listing of what controllers were killed.");
+				if(count == 1) {
+					source.sendMessage("1 entity has been killed. The console has a listing of what controller was killed.");
+				} else {
+					source.sendMessage(count, " entities have been killed. The console has a listing of what controllers were killed.");
+				}
 			}
 		} else {
 			source.sendMessage("No valid entities found to kill");

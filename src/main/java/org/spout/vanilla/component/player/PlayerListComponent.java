@@ -27,7 +27,7 @@
 package org.spout.vanilla.component.player;
 
 import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.util.LinkedHashMap;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -38,7 +38,7 @@ import org.spout.vanilla.event.player.network.PlayerListEvent;
 public class PlayerListComponent extends EntityComponent {
 	private Player player;
 	private Server server;
-	private final LinkedHashSet<String> players = new LinkedHashSet<String>();
+	private final LinkedHashMap<String, Long> players = new LinkedHashMap<String, Long>();
 	private final HashSet<String> temp = new HashSet<String>();
 	private float pollPeriod = 10;
 	private float timer = 0;
@@ -68,14 +68,19 @@ public class PlayerListComponent extends EntityComponent {
 		Player[] online = server.getOnlinePlayers();
 		temp.clear();
 		for (int i = 0; i < online.length; i++) {
+			if (online[i] == getHolder()) {
+				continue;
+			}
 			String name = online[i].getDisplayName();
+			long ping = (long) (1000.0F * online[i].add(PingComponent.class).getPing());
 			temp.add(name);
-			if (players.add(name)) {
-				player.getNetworkSynchronizer().callProtocolEvent(new PlayerListEvent(name, 0L, true));
+			Long oldPing = players.put(name, ping);
+			if (oldPing == null || !oldPing.equals(ping)) {
+				player.getNetworkSynchronizer().callProtocolEvent(new PlayerListEvent(name, ping, true));
 			}
 		}
-		for (String name : temp) {
-			if (!players.contains(name)) {
+		for (String name : players.keySet()) {
+			if (!temp.contains(name)) {
 				player.getNetworkSynchronizer().callProtocolEvent(new PlayerListEvent(name, 0L, false));
 			}
 		}

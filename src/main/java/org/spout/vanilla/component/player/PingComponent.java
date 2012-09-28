@@ -38,11 +38,11 @@ public class PingComponent extends EntityComponent {
 	private final Random random = new Random();
 	private float timeout = 30;
 	private float repeatRate = 4; // sends 4 pings per timeout period
-	private float pingTimer = 0;
+	private float pingTimer = timeout;
 	private float kickTimer = 0;
-	private float ping;
-	private float lastRequest;
-	private int lastHash;
+	private float ping = 0;
+	private float lastRequest = 0;
+	private int lastHash = 0;
 
 	@Override
 	public void onAttached() {

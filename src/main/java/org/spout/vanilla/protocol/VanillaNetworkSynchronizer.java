@@ -485,8 +485,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onPlayerUpdateUserList(PlayerListEvent event) {
-		String name = event.getPlayer().getDisplayName();
-		return new PlayerListMessage(name, true, (short) event.getPingDelay());
+		String name = event.getPlayerDisplayName();
+		return new PlayerListMessage(name, event.getOnline(), (short) event.getPingDelay());
 	}
 
 	@EventHandler

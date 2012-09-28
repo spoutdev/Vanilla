@@ -31,14 +31,15 @@ import java.util.Random;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
-
 import org.spout.vanilla.event.player.network.PlayerPingEvent;
 
 public class PingComponent extends EntityComponent {
 	private Player player;
 	private final Random random = new Random();
-	private float timeout = 15;
-	private float timer = timeout;
+	private float timeout = 30;
+	private float repeatRate = 4; // sends 4 pings per timeout period
+	private float pingTimer = 0;
+	private float kickTimer = 0;
 	private float ping;
 	private float lastRequest;
 	private int lastHash;
@@ -53,11 +54,12 @@ public class PingComponent extends EntityComponent {
 
 	@Override
 	public void onTick(float dt) {
-		timer -= dt;
-		if (timer <= timeout / 2) {
+		pingTimer += dt;
+		kickTimer += dt;
+		if (pingTimer > lastRequest + (timeout / repeatRate)) {
 			request();
 		}
-		if (timer <= 0) {
+		if (kickTimer > timeout) {
 			player.kick(ChatStyle.RED, "Connection timed out!");
 		}
 	}
@@ -76,8 +78,8 @@ public class PingComponent extends EntityComponent {
 	 */
 	public void response(int hash) {
 		if (hash == lastHash) {
-			ping = lastRequest - timer;
-			timer = timeout;
+			ping = lastRequest - pingTimer;
+			kickTimer = 0;
 		}
 	}
 
@@ -85,7 +87,7 @@ public class PingComponent extends EntityComponent {
 	 * Sends a new request to the client to return a ping message.
 	 */
 	public void request() {
-		lastRequest = timer;
+		lastRequest = pingTimer;
 		lastHash = random.nextInt(Integer.MAX_VALUE);
 		player.getNetworkSynchronizer().callProtocolEvent(new PlayerPingEvent(lastHash));
 	}

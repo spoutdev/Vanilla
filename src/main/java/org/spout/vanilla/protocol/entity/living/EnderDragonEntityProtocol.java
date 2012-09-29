@@ -36,13 +36,13 @@ import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class EnderDragonEntityProtocol extends BasicMobEntityProtocol {
 	public EnderDragonEntityProtocol() {
-		super(64);
+		super(63);
 	}
 
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) entity.add(HealthComponent.class).getHealth()));
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 16,  entity.add(HealthComponent.class).getHealth()));
 		return parameters;
 	}
 }

@@ -36,6 +36,7 @@ import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.CommandPermissions;
+import org.spout.api.component.Component;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
@@ -45,11 +46,17 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.Material;
+import org.spout.api.material.MaterialRegistry;
 import org.spout.api.protocol.NetworkSynchronizer;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.living.EnderDragon;
 import org.spout.vanilla.component.living.Enderman;
 import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.component.substance.MovingBlock;
+import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaBlockUtil;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
@@ -267,12 +274,38 @@ public class TestCommands {
 		}
 	}
 
-	@Command(aliases = "spawnmob", desc = "Spawns an enderman at your location")
+	@Command(aliases = "spawnmob", desc = "Spawns a VanillaEntity at your location", min = 1, max = 2)
+	@CommandPermissions("vanilla.command.spawnmob")
 	public void spawnmob(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
-			throw new CommandException("Only a player may spawn an enderman!");
+			throw new CommandException("Only a player may spawn a VanillaEntity!");
 		}
 		final Point pos = ((Player) source).getTransform().getPosition();
-		pos.getWorld().createAndSpawnEntity(pos, Enderman.class, LoadOption.NO_LOAD);
+		final String name = args.getString(0);
+		Class<? extends Component> clazz = null;
+		if (name.isEmpty()) {
+			throw new CommandException("It appears that you forgot to enter in the name of the VanillaEntity.");
+		} else if (name.equalsIgnoreCase("enderman")) {
+			clazz = Enderman.class;
+		} else if (name.equalsIgnoreCase("enderdragon")) {
+			clazz = EnderDragon.class;
+		} else if (name.equalsIgnoreCase("movingblock")) {
+			clazz = MovingBlock.class;
+		} else {
+			throw new CommandException(name + " was not a valid name for a VanillaEntity!");
+		}
+		Entity entity = pos.getWorld().createEntity(pos, clazz);
+		if (clazz.equals(MovingBlock.class)) {
+			if (args.length() == 2) {
+				final String materialName = args.getString(1);
+				final Material mat = MaterialRegistry.get(materialName);
+				if (mat instanceof VanillaBlockMaterial) {
+					entity.add(MovingBlock.class).setMaterial((VanillaBlockMaterial) mat);
+				}
+			} else {
+				entity.add(MovingBlock.class).setMaterial(VanillaMaterials.SAND);
+			}
+		}
+		pos.getWorld().spawnEntity(entity);
 	}
 }

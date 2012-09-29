@@ -29,10 +29,11 @@ package org.spout.vanilla.component.substance;
 import org.spout.api.component.components.EntityComponent;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.protocol.entity.object.FallingBlockProtocol;
 
-public class MovingBlock extends EntityComponent {
+public class MovingBlock extends VanillaEntity {
 	//TODO: Put this in the datamap
 	VanillaBlockMaterial material;
 

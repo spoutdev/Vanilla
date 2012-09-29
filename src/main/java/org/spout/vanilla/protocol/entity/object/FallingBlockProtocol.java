@@ -26,10 +26,12 @@
  */
 package org.spout.vanilla.protocol.entity.object;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
@@ -39,8 +41,6 @@ import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityVehicleMessage;
 
 public class FallingBlockProtocol extends BasicVehicleEntityProtocol {
-	public static final int BLOCK_TYPE_METADATA_INDEX = 30;
-
 	public FallingBlockProtocol() {
 		super(21);
 	}
@@ -48,8 +48,8 @@ public class FallingBlockProtocol extends BasicVehicleEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity) {
 		MovingBlock moving = entity.add(MovingBlock.class);
-		short spawnId = (short) moving.getMaterial().getMinecraftId();
-		List<Parameter<?>> parameters = Arrays.<Parameter<?>>asList(new Parameter<Short>(Parameter.TYPE_SHORT, BLOCK_TYPE_METADATA_INDEX, spawnId));
-		return Arrays.<Message>asList(new EntityVehicleMessage(entity.getId(), spawnId, entity.getTransform().getPosition()), new EntityMetadataMessage(entity.getId(), parameters));
+		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
+		//70 means FallingBlock ID type
+		return Arrays.<Message>asList(new EntityVehicleMessage(entity.getId(), 70, entity.getTransform().getPosition(), (short) moving.getMaterial().getMinecraftId(), new Vector3(0.3, 0.01, 0)), new EntityMetadataMessage(entity.getId(), parameters));
 	}
 }

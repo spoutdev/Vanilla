@@ -34,8 +34,8 @@ import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class EntityVehicleMessage extends EntityMessage {
-	private final int type, fireballId;
-	private final double x, y, z, fireballX, fireballY, fireballZ;
+	private final int type, objectId;
+	private final double x, y, z, objectX, objectY, objectZ;
 
 	public EntityVehicleMessage(int id, int type, Vector3 pos) {
 		this(id, type, pos.getX(), pos.getY(), pos.getZ());
@@ -55,10 +55,10 @@ public final class EntityVehicleMessage extends EntityMessage {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.fireballId = fbId;
-		this.fireballX = fbX;
-		this.fireballY = fbY;
-		this.fireballZ = fbZ;
+		this.objectId = fbId;
+		this.objectX = fbX;
+		this.objectY = fbY;
+		this.objectZ = fbZ;
 	}
 
 	public int getType() {
@@ -77,24 +77,24 @@ public final class EntityVehicleMessage extends EntityMessage {
 		return z;
 	}
 
-	public boolean hasFireball() {
-		return fireballId != 0;
+	public boolean hasObjectData() {
+		return objectId != 0;
 	}
 
-	public int getFireballId() {
-		return fireballId;
+	public int getObjectId() {
+		return objectId;
 	}
 
-	public double getFireballX() {
-		return fireballX;
+	public double getObjectSpeedX() {
+		return objectX;
 	}
 
-	public double getFireballY() {
-		return fireballY;
+	public double getObjectSpeedY() {
+		return objectY;
 	}
 
-	public double getFireballZ() {
-		return fireballZ;
+	public double getObjectSpeedZ() {
+		return objectZ;
 	}
 
 	@Override
@@ -105,10 +105,10 @@ public final class EntityVehicleMessage extends EntityMessage {
 				.append("x", x)
 				.append("y", y)
 				.append("z", z)
-				.append("fireballId", fireballId)
-				.append("fireballX", fireballX)
-				.append("fireballY", fireballY)
-				.append("fireballZ", fireballZ)
+				.append("objectid", objectId)
+				.append("objectspeedX", objectX)
+				.append("objectspeedY", objectY)
+				.append("objectspeedZ", objectZ)
 				.toString();
 	}
 
@@ -127,10 +127,9 @@ public final class EntityVehicleMessage extends EntityMessage {
 				.append(this.x, other.x)
 				.append(this.y, other.y)
 				.append(this.z, other.z)
-				.append(this.fireballId, other.fireballId)
-				.append(this.fireballX, other.fireballX)
-				.append(this.fireballY, other.fireballY)
-				.append(this.fireballZ, other.fireballZ)
+				.append(this.objectId, objectId)
+				.append(this.objectX, objectX)
+				.append(this.objectY, objectY)
 				.isEquals();
 	}
 }

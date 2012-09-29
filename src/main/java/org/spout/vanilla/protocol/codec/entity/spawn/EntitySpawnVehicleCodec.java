@@ -48,29 +48,29 @@ public final class EntitySpawnVehicleCodec extends MessageCodec<EntityVehicleMes
 		double x = buffer.readInt() / 32.0;
 		double y = buffer.readInt() / 32.0;
 		double z = buffer.readInt() / 32.0;
-		int fireballId = buffer.readInt();
-		if (fireballId != 0) {
-			double fireballX = buffer.readShort() / 8000.0;
-			double fireballY = buffer.readShort() / 8000.0;
-			double fireballZ = buffer.readShort() / 8000.0;
-			return new EntityVehicleMessage(id, type, x, y, z, fireballId, fireballX, fireballY, fireballZ);
+		int objectId = buffer.readInt();
+		if (objectId != 0) {
+			double objectX = buffer.readShort() / 8000.0;
+			double objectY = buffer.readShort() / 8000.0;
+			double objectZ = buffer.readShort() / 8000.0;
+			return new EntityVehicleMessage(id, type, x, y, z, objectId, objectX, objectY, objectZ);
 		}
 		return new EntityVehicleMessage(id, type, x, y, z);
 	}
 
 	@Override
 	public ChannelBuffer encode(EntityVehicleMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(message.hasFireball() ? 27 : 21);
+		ChannelBuffer buffer = ChannelBuffers.buffer(message.hasObjectData() ? 27 : 21);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeByte(message.getType());
 		buffer.writeInt(MathHelper.floor(message.getX() * 32.0));
 		buffer.writeInt(MathHelper.floor(message.getY() * 32.0));
 		buffer.writeInt(MathHelper.floor(message.getZ() * 32.0));
-		buffer.writeInt(message.getFireballId());
-		if (message.hasFireball()) {
-			buffer.writeShort((int) (message.getFireballX() * 8000.0));
-			buffer.writeShort((int) (message.getFireballY() * 8000.0));
-			buffer.writeShort((int) (message.getFireballZ() * 8000.0));
+		buffer.writeInt(message.getObjectId());
+		if (message.hasObjectData()) {
+			buffer.writeShort((int) (message.getObjectSpeedX() * 8000.0));
+			buffer.writeShort((int) (message.getObjectSpeedY() * 8000.0));
+			buffer.writeShort((int) (message.getObjectSpeedZ() * 8000.0));
 		}
 		return buffer;
 	}

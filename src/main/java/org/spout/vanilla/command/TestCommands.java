@@ -266,11 +266,9 @@ public class TestCommands {
 				entity.add(MovingBlock.class).setMaterial(VanillaMaterials.SAND);
 			}
 		} else if (clazz.equals(Human.class)) {
-			String npcName;
+			String npcName = "Steve";
 			if (args.length() == 2) {
 				npcName = args.getString(1);
-			} else {
-				npcName = "Steve";
 			}
 			entity.add(Human.class).setName(npcName);
 		}

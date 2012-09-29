@@ -30,7 +30,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.living.EnderDragonEntityProtocol;
 
 /**
- * A attribute that identifies the entity as an EnderDragon.
+ * A component that identifies the entity as an EnderDragon.
  */
 public class EnderDragon extends VanillaEntity {
 	@Override

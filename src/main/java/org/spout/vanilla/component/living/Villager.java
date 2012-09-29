@@ -39,7 +39,7 @@ import org.spout.vanilla.inventory.CraftingInventory;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
- * A attribute that identifies the entity as a Villager.
+ * A component that identifies the entity as a Villager.
  */
 public class Villager extends VanillaEntity implements Container {
 	@Override

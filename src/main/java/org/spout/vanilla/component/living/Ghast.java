@@ -30,7 +30,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.living.GhastEntityProtocol;
 
 /**
- * A attribute that identifies the entity as a Ghast.
+ * A component that identifies the entity as a Ghast.
  */
 public class Ghast extends VanillaEntity {
 	private boolean redEyes;

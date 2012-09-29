@@ -30,7 +30,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.living.BlazeEntityProtocol;
 
 /**
- * A attribute that identifies the entity as a Blaze.
+ * A component that identifies the entity as a Blaze.
  */
 public class Blaze extends VanillaEntity {
 	private boolean attacking = false;

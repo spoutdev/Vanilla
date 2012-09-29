@@ -30,7 +30,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
- * A attribute that identifies the entity as a Chicken.
+ * A component that identifies the entity as a Chicken.
  */
 public class Chicken extends VanillaEntity {
 	@Override

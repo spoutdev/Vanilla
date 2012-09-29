@@ -30,7 +30,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
- * A attribute that identifies the entity as a Squid.
+ * A component that identifies the entity as a Squid.
  */
 public class Squid extends VanillaEntity {
 	@Override

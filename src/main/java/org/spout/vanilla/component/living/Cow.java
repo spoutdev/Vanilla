@@ -30,7 +30,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
- * A attribute that identifies the entity as a Cow.
+ * A component that identifies the entity as a Cow.
  */
 public class Cow extends VanillaEntity {
 	@Override

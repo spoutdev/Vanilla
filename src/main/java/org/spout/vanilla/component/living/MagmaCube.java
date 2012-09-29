@@ -31,7 +31,7 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.living.MagmaCubeEntityProtocol;
 
 /**
- * A attribute that identifies the entity as a MagmaCube.
+ * A component that identifies the entity as a MagmaCube.
  */
 public class MagmaCube extends VanillaEntity {
 	@Override

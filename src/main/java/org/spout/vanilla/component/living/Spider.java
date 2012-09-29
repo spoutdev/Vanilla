@@ -30,7 +30,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.living.SpiderEntityProtocol;
 
 /**
- * A attribute that identifies the entity as a Spider.
+ * A component that identifies the entity as a Spider.
  */
 public class Spider extends VanillaEntity {
 	@Override

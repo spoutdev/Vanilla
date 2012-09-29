@@ -30,7 +30,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.living.CreeperEntityProtocol;
 
 /**
- * A attribute that identifies the entity as a Creeper.
+ * A component that identifies the entity as a Creeper.
  */
 public class Creeper extends VanillaEntity {
 	private byte fuse = -1;

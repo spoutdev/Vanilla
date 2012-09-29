@@ -113,7 +113,7 @@ public class HealthComponent extends EntityComponent {
 
 	/**
 	 * Sets the initial maximum health and sets the health to this value
-	 * @param maxHealth of this health attribute
+	 * @param maxHealth of this health component
 	 */
 	public void setSpawnHealth(int maxHealth) {
 		this.setMaxHealth(maxHealth);

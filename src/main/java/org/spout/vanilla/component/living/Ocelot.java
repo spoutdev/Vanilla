@@ -31,7 +31,7 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.living.OcelotEntityProtocol;
 
 /**
- * A attribute that identifies the entity as a Ocelot.
+ * A component that identifies the entity as a Ocelot.
  */
 public class Ocelot extends VanillaEntity {
 	@Override

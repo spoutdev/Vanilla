@@ -70,7 +70,7 @@ public class HeadComponent extends EntityComponent {
 	}
 
 	/**
-	 * Converts the yaw of this attribute into the official protocol's specifications.
+	 * Converts the yaw of this component into the official protocol's specifications.
 	 * @return
 	 */
 	public int getProtocolYaw() {

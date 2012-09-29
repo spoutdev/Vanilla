@@ -30,7 +30,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
- * A attribute that identifies the entity as a SnowMan.
+ * A component that identifies the entity as a SnowMan.
  */
 public class Snowman extends VanillaEntity {
 	@Override

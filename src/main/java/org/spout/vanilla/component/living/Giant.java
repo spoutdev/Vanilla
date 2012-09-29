@@ -30,7 +30,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
- * A attribute that identifies the entity as a Giant.
+ * A component that identifies the entity as a Giant.
  */
 public class Giant extends VanillaEntity {
 	@Override

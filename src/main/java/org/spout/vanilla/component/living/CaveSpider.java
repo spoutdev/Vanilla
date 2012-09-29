@@ -30,7 +30,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
- * A attribute that identifies the entity as a CaveSpider.
+ * A component that identifies the entity as a CaveSpider.
  */
 public class CaveSpider extends VanillaEntity {
 	@Override

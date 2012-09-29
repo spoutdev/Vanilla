@@ -45,7 +45,7 @@ public final class PlayerSoundEffectCodec extends MessageCodec<PlayerSoundEffect
 	 * Note to the people that like to move the mathematics involved:
 	 * THIS IS PART OF ENCODING AND DECODING
 	 * This task is not part of the one actually wishing to send or handle a message.
-	 * So don't move this attribute. Thank you.
+	 * So don't move this component. Thank you.
 	 */
 
 	@Override

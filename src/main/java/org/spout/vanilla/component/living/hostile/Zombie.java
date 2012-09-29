@@ -24,27 +24,20 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living;
+package org.spout.vanilla.component.living.hostile;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.living.PigEntityProtocol;
+import org.spout.vanilla.component.living.Hostile;
+import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
- * A component that identifies the entity as a Pig.
+ * A component that identifies the entity as a Zombie.
  */
-public class Pig extends VanillaEntity {
+public class Zombie extends VanillaEntity implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PigEntityProtocol());
-	}
-
-	public boolean isSaddled() {
-		return getHolder().getData().get(VanillaData.SADDLED);
-	}
-
-	public void setSaddled(boolean saddled) {
-		getHolder().getData().put(VanillaData.SADDLED, saddled);
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(54));
 	}
 }

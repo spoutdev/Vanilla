@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla;
 
-import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
@@ -40,7 +39,6 @@ import org.spout.vanilla.component.player.PlayerListComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.event.player.PlayerDeathEvent;
 
 public class VanillaListener implements Listener {
 	private final VanillaPlugin plugin;
@@ -53,13 +51,6 @@ public class VanillaListener implements Listener {
 	public void onPermissionNode(PermissionNodeEvent event) {
 		if (VanillaConfiguration.OPS.isOp(event.getSubject().getName())) {
 			event.setResult(Result.ALLOW);
-		}
-	}
-
-	@EventHandler
-	public void onPlayerDeath(PlayerDeathEvent event) {
-		if (VanillaConfiguration.HARDCORE_MODE.getBoolean()) {
-			event.getPlayer().ban(true, ChatStyle.RED, "Game Over");
 		}
 	}
 

@@ -24,18 +24,29 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living;
+package org.spout.vanilla.component.living.passive;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.component.living.Passive;
+import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.protocol.entity.living.PigEntityProtocol;
 
 /**
- * A component that identifies the entity as a CaveSpider.
+ * A component that identifies the entity as a Pig.
  */
-public class CaveSpider extends VanillaEntity {
+public class Pig extends VanillaEntity implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(59));
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PigEntityProtocol());
+	}
+
+	public boolean isSaddled() {
+		return getHolder().getData().get(VanillaData.SADDLED);
+	}
+
+	public void setSaddled(boolean saddled) {
+		getHolder().getData().put(VanillaData.SADDLED, saddled);
 	}
 }

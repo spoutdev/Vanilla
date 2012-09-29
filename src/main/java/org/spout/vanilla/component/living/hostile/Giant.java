@@ -24,18 +24,20 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living;
+package org.spout.vanilla.component.living.hostile;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.entity.living.SpiderEntityProtocol;
+import org.spout.vanilla.component.living.Hostile;
+import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
- * A component that identifies the entity as a Spider.
+ * A component that identifies the entity as a Giant.
  */
-public class Spider extends VanillaEntity {
+public class Giant extends VanillaEntity implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SpiderEntityProtocol());
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(53));
 	}
 }

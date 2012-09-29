@@ -24,18 +24,30 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living;
+package org.spout.vanilla.component.living.hostile;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.component.living.Hostile;
+import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.protocol.entity.living.BlazeEntityProtocol;
 
 /**
- * A component that identifies the entity as a IronGolem.
+ * A component that identifies the entity as a Blaze.
  */
-public class IronGolem extends VanillaEntity {
+public class Blaze extends VanillaEntity implements Hostile {
+	private boolean attacking = false;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(99)); //Index 16 (byte): Unknown, example: 1
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BlazeEntityProtocol());
+	}
+
+	public boolean isAttacking() {
+		return attacking;
+	}
+
+	public void setAttacking(boolean attacking) {
+		this.attacking = attacking;
 	}
 }

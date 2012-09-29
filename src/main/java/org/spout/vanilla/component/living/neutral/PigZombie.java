@@ -24,55 +24,20 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living;
+package org.spout.vanilla.component.living.neutral;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.living.WolfEntityProtocol;
+import org.spout.vanilla.component.living.Neutral;
+import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
- * A component that identifies the entity as a Wolf.
+ * A component that identifies the entity as a PigZombie.
  */
-public class Wolf extends VanillaEntity {
-	private boolean redEyes = false;
-
+public class PigZombie extends VanillaEntity implements Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new WolfEntityProtocol());
-	}
-
-	public boolean isTamed() {
-		return getHolder().getData().get(VanillaData.TAMED);
-	}
-
-	public void setTamed(boolean tamed) {
-		getHolder().getData().put(VanillaData.TAMED, tamed);
-	}
-
-	public String getOwner() {
-		return getHolder().getData().get(VanillaData.OWNER);
-	}
-
-	public void setOwner(String owner) {
-		if (isTamed()) {
-			getHolder().getData().put(VanillaData.OWNER, owner);
-		}
-	}
-
-	public boolean haveRedEyes() {
-		return redEyes;
-	}
-
-	public void setRedEyes(boolean redEyes) {
-		this.redEyes = redEyes;
-	}
-
-	public boolean isSitting() {
-		return getHolder().getData().get(VanillaData.SITTING);
-	}
-
-	public void setSitting(boolean sitting) {
-		getHolder().getData().put(VanillaData.SITTING, sitting);
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(57));
 	}
 }

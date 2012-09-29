@@ -24,25 +24,20 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.component.living.hostile;
 
-import java.util.List;
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.living.Hostile;
+import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.protocol.entity.living.EnderDragonEntityProtocol;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
-
-import org.spout.vanilla.component.living.passive.Pig;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
-
-public class PigEntityProtocol extends BasicMobEntityProtocol {
-	public PigEntityProtocol() {
-		super(90);
-	}
-
+/**
+ * A component that identifies the entity as an EnderDragon.
+ */
+public class EnderDragon extends VanillaEntity implements Hostile {
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (entity.add(Pig.class).isSaddled() ? 1 : 0)));
-		return parameters;
+	public void onAttached() {
+		super.onAttached();
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new EnderDragonEntityProtocol());
 	}
 }

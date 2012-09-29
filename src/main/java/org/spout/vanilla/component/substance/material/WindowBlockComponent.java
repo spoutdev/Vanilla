@@ -33,8 +33,9 @@ import org.spout.api.component.components.BlockComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.material.BlockMaterial;
 
-public abstract class WindowBlockComponent extends BlockComponent {
+public abstract class WindowBlockComponent<T extends BlockMaterial> extends BlockComponent<T> {
 	private final Set<Player> viewers = new HashSet<Player>();
 
 	public abstract void openWindow(Player player);

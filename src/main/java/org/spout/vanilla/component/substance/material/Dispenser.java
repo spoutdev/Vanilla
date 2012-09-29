@@ -28,7 +28,6 @@ package org.spout.vanilla.component.substance.material;
 
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
-import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.component.inventory.window.block.DispenserWindow;
 import org.spout.vanilla.data.VanillaData;
@@ -36,21 +35,8 @@ import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.DispenserInventory;
 import org.spout.vanilla.material.block.controlled.DispenserBlock;
 
-public class Dispenser extends WindowBlockComponent implements Container {
+public class Dispenser extends WindowBlockComponent<DispenserBlock> implements Container {
 	private final DispenserInventory inventory = new DispenserInventory();
-
-	@Override
-	public DispenserBlock getMaterial() {
-		return (DispenserBlock) super.getMaterial();
-	}
-
-	@Override
-	public void setMaterial(BlockMaterial material) {
-		if (!(material instanceof DispenserBlock)) {
-			throw new IllegalArgumentException("Material passed in must be an instance of a DispenserBlock.");
-		}
-		super.setMaterial(material);
-	}
 
 	public boolean isPowered() {
 		return getData().get(VanillaData.IS_POWERED);

@@ -24,37 +24,46 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living;
+package org.spout.vanilla.component.living.passive;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.entity.living.CreeperEntityProtocol;
+import org.spout.vanilla.component.living.Passive;
+import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.material.block.solid.Wool;
+import org.spout.vanilla.protocol.entity.living.SheepEntityProtocol;
 
 /**
- * A component that identifies the entity as a Creeper.
+ * A component that identifies the entity as a Sheep.
  */
-public class Creeper extends VanillaEntity {
-	private byte fuse = -1;
-	private boolean charged = false;
-
+public class Sheep extends VanillaEntity implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreeperEntityProtocol());
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SheepEntityProtocol());
 	}
 
-	public byte getFuse() {
-		return fuse;
+	public boolean isSheared() {
+		return getHolder().getData().get(VanillaData.SHEARED);
 	}
 
-	public void setFuse(byte fuse) {
-		this.fuse = fuse;
+	public void setSheared(boolean sheared) {
+		getHolder().getData().put(VanillaData.SHEARED, sheared);
 	}
 
-	public boolean isCharged() {
-		return charged;
+	/**
+	 * Gets the color of the sheep.
+	 * @return color of the sheep.
+	 */
+	public Wool.WoolColor getColor() {
+		return Wool.WoolColor.getById(getHolder().getData().get(VanillaData.WOOL_COLOR));
 	}
 
-	public void setCharged(boolean charged) {
-		this.charged = charged;
+	/**
+	 * Sets the color of the sheep.
+	 * @param color
+	 */
+	public void setColor(Wool.WoolColor color) {
+		getHolder().getData().put(VanillaData.WOOL_COLOR, color.getData());
 	}
 }

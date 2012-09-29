@@ -24,53 +24,20 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living;
+package org.spout.vanilla.component.living.passive;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.living.OcelotEntityProtocol;
+import org.spout.vanilla.component.living.Passive;
+import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
- * A component that identifies the entity as a Ocelot.
+ * A component that identifies the entity as a Cow.
  */
-public class Ocelot extends VanillaEntity {
+public class Cow extends VanillaEntity implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new OcelotEntityProtocol());
-	}
-
-	public boolean isTamed() {
-		return getHolder().getData().get(VanillaData.TAMED);
-	}
-
-	public void setTamed(boolean tamed) {
-		getHolder().getData().put(VanillaData.TAMED, tamed);
-	}
-
-	public String getOwner() {
-		return getHolder().getData().get(VanillaData.OWNER);
-	}
-
-	public void setOwner(String owner) {
-		if (isTamed()) {
-			getHolder().getData().put(VanillaData.OWNER, owner);
-		}
-	}
-
-	public byte getSkinId() {
-		return getHolder().getData().get(VanillaData.SKIN);
-	}
-
-	public void setSkinId(byte skinId) {
-		getHolder().getData().put(VanillaData.SKIN, skinId);
-	}
-
-	public boolean isSitting() {
-		return getHolder().getData().get(VanillaData.SITTING);
-	}
-
-	public void setSitting(boolean sitting) {
-		getHolder().getData().put(VanillaData.SITTING, sitting);
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(92));
 	}
 }

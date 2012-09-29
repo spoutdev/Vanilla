@@ -26,16 +26,9 @@
  */
 package org.spout.vanilla.component.living;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.entity.living.EndermanEntityProtocol;
-
 /**
- * A component that identifies the entity as an Enderman.
+ * Represents a passive entity. A passive entity will never attack another
+ * player even if the player provokes said entity.
  */
-public class Enderman extends VanillaEntity {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new EndermanEntityProtocol());
-	}
+public interface Passive {
 }

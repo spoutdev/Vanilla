@@ -24,44 +24,31 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living;
+package org.spout.vanilla.component.living.hostile;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.living.Hostile;
+import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.material.block.solid.Wool;
-import org.spout.vanilla.protocol.entity.living.SheepEntityProtocol;
+import org.spout.vanilla.protocol.entity.living.SlimeEntityProtocol;
 
 /**
- * A component that identifies the entity as a Sheep.
+ * A component that identifies the entity as a Slime.
  */
-public class Sheep extends VanillaEntity {
+public class Slime extends VanillaEntity implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SheepEntityProtocol());
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SlimeEntityProtocol());
 	}
 
-	public boolean isSheared() {
-		return getHolder().getData().get(VanillaData.SHEARED);
+	public byte getSize() {
+		return getHolder().getData().get(VanillaData.SLIME_SIZE);
 	}
 
-	public void setSheared(boolean sheared) {
-		getHolder().getData().put(VanillaData.SHEARED, sheared);
-	}
-
-	/**
-	 * Gets the color of the sheep.
-	 * @return color of the sheep.
-	 */
-	public Wool.WoolColor getColor() {
-		return Wool.WoolColor.getById(getHolder().getData().get(VanillaData.WOOL_COLOR));
-	}
-
-	/**
-	 * Sets the color of the sheep.
-	 * @param color
-	 */
-	public void setColor(Wool.WoolColor color) {
-		getHolder().getData().put(VanillaData.WOOL_COLOR, color.getData());
+	public void setSize(byte size) {
+		if (size >= 0 && size <= 4 && size != 3) {
+			getHolder().getData().put(VanillaData.SLIME_SIZE, size);
+		}
 	}
 }

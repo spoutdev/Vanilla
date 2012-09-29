@@ -27,25 +27,10 @@
 package org.spout.vanilla.component.substance.material;
 
 import org.spout.api.entity.Player;
-import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.component.inventory.window.block.CraftingTableWindow;
-import org.spout.vanilla.material.block.controlled.CraftingTableBlock;
 
-public class CraftingTable extends WindowBlockComponent {
-	@Override
-	public CraftingTableBlock getMaterial() {
-		return (CraftingTableBlock) super.getMaterial();
-	}
-
-	@Override
-	public void setMaterial(BlockMaterial material) {
-		if (!(material instanceof CraftingTableBlock)) {
-			throw new IllegalArgumentException("Material passed in must be an instance of a CraftingTableBlock.");
-		}
-		super.setMaterial(material);
-	}
-
+public class CraftingTable<CraftingTableBlock> extends WindowBlockComponent {
 	@Override
 	public void openWindow(Player player) {
 		player.add(CraftingTableWindow.class).open();

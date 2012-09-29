@@ -26,27 +26,9 @@
  */
 package org.spout.vanilla.component.living;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.living.MagmaCubeEntityProtocol;
-
 /**
- * A component that identifies the entity as a MagmaCube.
+ * Represents a hostile entity. A hostile entity will pursue the player
+ * unprovoked and will attack when possible.
  */
-public class MagmaCube extends VanillaEntity {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MagmaCubeEntityProtocol());
-	}
-
-	public byte getSize() {
-		return getHolder().getData().get(VanillaData.SLIME_SIZE);
-	}
-
-	public void setSize(byte size) {
-		if (size >= 0 && size <= 4 && size != 3) {
-			getHolder().getData().put(VanillaData.SLIME_SIZE, size);
-		}
-	}
+public interface Hostile {
 }

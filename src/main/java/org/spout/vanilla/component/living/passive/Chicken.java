@@ -24,18 +24,20 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living;
+package org.spout.vanilla.component.living.passive;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.living.Passive;
+import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
- * A component that identifies the entity as a MooshroomCow.
+ * A component that identifies the entity as a Chicken.
  */
-public class MooshroomCow extends VanillaEntity {
+public class Chicken extends VanillaEntity implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(96));
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(93));
 	}
 }

@@ -26,26 +26,10 @@
  */
 package org.spout.vanilla.component.living;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.entity.living.GhastEntityProtocol;
-
 /**
- * A component that identifies the entity as a Ghast.
+ * Represents an entity that is used for some kind of utility. A utility entity
+ * will not attack another player even if the player provokes said entity and
+ * an utility entity exists for the benefit of the player.
  */
-public class Ghast extends VanillaEntity {
-	private boolean redEyes;
-
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new GhastEntityProtocol());
-	}
-
-	public boolean haveRedEyes() {
-		return redEyes;
-	}
-
-	public void setRedEyes(boolean redEyes) {
-		this.redEyes = redEyes;
-	}
+public interface Utility extends Passive {
 }

@@ -24,29 +24,30 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living;
+package org.spout.vanilla.component.living.hostile;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.living.SlimeEntityProtocol;
+import org.spout.vanilla.component.living.Hostile;
+import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.protocol.entity.living.GhastEntityProtocol;
 
 /**
- * A component that identifies the entity as a Slime.
+ * A component that identifies the entity as a Ghast.
  */
-public class Slime extends VanillaEntity {
+public class Ghast extends VanillaEntity implements Hostile {
+	private boolean redEyes;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SlimeEntityProtocol());
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new GhastEntityProtocol());
 	}
 
-	public byte getSize() {
-		return getHolder().getData().get(VanillaData.SLIME_SIZE);
+	public boolean haveRedEyes() {
+		return redEyes;
 	}
 
-	public void setSize(byte size) {
-		if (size >= 0 && size <= 4 && size != 3) {
-			getHolder().getData().put(VanillaData.SLIME_SIZE, size);
-		}
+	public void setRedEyes(boolean redEyes) {
+		this.redEyes = redEyes;
 	}
 }

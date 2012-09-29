@@ -26,16 +26,9 @@
  */
 package org.spout.vanilla.component.living;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.entity.living.EnderDragonEntityProtocol;
-
 /**
- * A component that identifies the entity as an EnderDragon.
+ * Represents a neutral entity. A neutral entity will not attack unless
+ * provoked by another player.
  */
-public class EnderDragon extends VanillaEntity {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new EnderDragonEntityProtocol());
-	}
+public interface Neutral {
 }

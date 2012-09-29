@@ -24,43 +24,20 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living;
-
-import java.util.HashMap;
-
-import org.spout.api.Source;
-import org.spout.api.entity.Player;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+package org.spout.vanilla.component.living.hostile;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.inventory.window.Window;
-import org.spout.vanilla.inventory.Container;
-import org.spout.vanilla.inventory.CraftingInventory;
+import org.spout.vanilla.component.living.Hostile;
+import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
- * A component that identifies the entity as a Villager.
+ * A component that identifies the entity as a CaveSpider.
  */
-public class Villager extends VanillaEntity implements Container {
+public class CaveSpider extends VanillaEntity implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(120)); //Index 16 (int): Unknown, example: 0
-	}
-
-	private HashMap<Player, Window> viewers = new HashMap<Player, Window>();
-
-	@Override
-	public void onInteract(Action action, Source source) {
-		super.onInteract(action, source);
-		if (action == Action.RIGHT_CLICK) {
-			// TODO: Open window
-		}
-	}
-
-	@Override
-	public CraftingInventory getInventory() {
-		// TODO Auto-generated method stub
-		return null;
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(59));
 	}
 }

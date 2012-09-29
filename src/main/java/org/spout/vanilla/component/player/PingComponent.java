@@ -31,6 +31,7 @@ import java.util.Random;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
+
 import org.spout.vanilla.event.player.network.PlayerPingEvent;
 
 public class PingComponent extends EntityComponent {

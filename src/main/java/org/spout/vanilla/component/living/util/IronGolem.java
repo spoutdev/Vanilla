@@ -24,18 +24,20 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living;
+package org.spout.vanilla.component.living.util;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.living.Utility;
+import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
- * A component that identifies the entity as a Cow.
+ * A component that identifies the entity as a IronGolem.
  */
-public class Cow extends VanillaEntity {
+public class IronGolem extends VanillaEntity implements Utility {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(92));
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(99)); //Index 16 (byte): Unknown, example: 1
 	}
 }

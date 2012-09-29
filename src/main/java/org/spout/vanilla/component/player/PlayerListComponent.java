@@ -33,6 +33,7 @@ import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
+
 import org.spout.vanilla.event.player.network.PlayerListEvent;
 
 public class PlayerListComponent extends EntityComponent {
@@ -63,7 +64,7 @@ public class PlayerListComponent extends EntityComponent {
 			timer += pollPeriod;
 		}
 	}
-	
+
 	private void pollList() {
 		Player[] online = server.getOnlinePlayers();
 		temp.clear();

@@ -27,28 +27,14 @@
 package org.spout.vanilla.component.substance.material;
 
 import org.spout.api.entity.Player;
-import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.material.block.controlled.ChestBlock;
 
-public class Chest extends WindowBlockComponent implements Container {
+public class Chest extends WindowBlockComponent<ChestBlock> implements Container {
 	private final ChestInventory first = new ChestInventory();
 	private final ChestInventory second = new ChestInventory();
-
-	@Override
-	public ChestBlock getMaterial() {
-		return (ChestBlock) super.getMaterial();
-	}
-
-	@Override
-	public void setMaterial(BlockMaterial material) {
-		if (!(material instanceof ChestBlock)) {
-			throw new IllegalArgumentException("Material passed in must be an instance of a ChestBlock.");
-		}
-		super.setMaterial(material);
-	}
 
 	@Override
 	public ChestInventory getInventory() {

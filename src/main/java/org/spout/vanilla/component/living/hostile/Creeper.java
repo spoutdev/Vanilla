@@ -24,18 +24,39 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living;
+package org.spout.vanilla.component.living.hostile;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.component.living.Hostile;
+import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.protocol.entity.living.CreeperEntityProtocol;
 
 /**
- * A component that identifies the entity as a Squid.
+ * A component that identifies the entity as a Creeper.
  */
-public class Squid extends VanillaEntity {
+public class Creeper extends VanillaEntity implements Hostile {
+	private byte fuse = -1;
+	private boolean charged = false;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(94));
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreeperEntityProtocol());
+	}
+
+	public byte getFuse() {
+		return fuse;
+	}
+
+	public void setFuse(byte fuse) {
+		this.fuse = fuse;
+	}
+
+	public boolean isCharged() {
+		return charged;
+	}
+
+	public void setCharged(boolean charged) {
+		this.charged = charged;
 	}
 }

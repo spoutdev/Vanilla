@@ -36,7 +36,7 @@ import org.spout.api.material.source.DataSource;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.living.Human;
-import org.spout.vanilla.component.living.Sheep;
+import org.spout.vanilla.component.living.passive.Sheep;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;

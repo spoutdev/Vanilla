@@ -83,8 +83,10 @@ public class Window extends EntityComponent implements InventoryViewer {
 	@Override
 	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
 		InventoryConverter slots = getInventoryConverter(inventory);
+		System.out.println("Slot set");
 		if (slots != null) {
 			slot = slots.getNativeSlot(slot);
+			System.out.println("Updating slot");
 			getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowSlotEvent(this, inventory, slot, item));
 		}
 	}
@@ -100,8 +102,8 @@ public class Window extends EntityComponent implements InventoryViewer {
 		this.offset = offset;
 		PlayerInventory inventory = getHuman().getInventory();
 		GridInventoryConverter main = new GridInventoryConverter(inventory.getMain(), 9, offset);
-		converters.add(main);
-		converters.add(new GridInventoryConverter(inventory.getQuickbar(), 9, offset + main.getGrid().getSize()));
+		addInventoryConverter(main);
+		addInventoryConverter(new GridInventoryConverter(inventory.getQuickbar(), 9, offset + main.getGrid().getSize()));
 		return this;
 	}
 

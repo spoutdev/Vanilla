@@ -39,7 +39,7 @@ public final class WindowOpenMessage extends WindowMessage {
 	private final WindowType type;
 
 	public WindowOpenMessage(Window window, int slots) {
-		this(window.getInstanceId(), window.getType(), window.getTitle(), slots);
+		this(window.getId(), window.getType(), window.getTitle(), slots);
 	}
 
 	public WindowOpenMessage(int windowInstanceId, WindowType type, String title, int slots) {

@@ -37,7 +37,7 @@ public final class WindowItemsMessage extends WindowMessage {
 	private final ItemStack[] items;
 
 	public WindowItemsMessage(Window window, ItemStack[] items) {
-		this(window.getInstanceId(), items);
+		this(window.getId(), items);
 	}
 
 	public WindowItemsMessage(int windowInstanceId, ItemStack[] items) {

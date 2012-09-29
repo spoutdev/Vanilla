@@ -37,7 +37,7 @@ public abstract class WindowMessage implements Message {
 	private final int instanceId;
 
 	public WindowMessage(Window window) {
-		this.instanceId = window.getInstanceId();
+		this.instanceId = window.getId();
 	}
 
 	public WindowMessage(int instanceId) {

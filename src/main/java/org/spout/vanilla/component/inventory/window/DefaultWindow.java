@@ -41,7 +41,13 @@ public class DefaultWindow extends Window {
 	}
 
 	@Override
-	public int getInstanceId() {
+	public int getId() {
 		return 0;
 	}
+
+	@Override
+	public void open() {
+		throw new UnsupportedOperationException("A player's inventory window cannot be opened from the server.");
+	}
+
 }

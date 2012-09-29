@@ -53,11 +53,9 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		int p = (int) (entity.getTransform().getPitch() * 32);
 
 		int item = 0;
-		if (entity.has(PlayerInventory.class)) {
-			ItemStack hand = entity.get(PlayerInventory.class).getQuickbar().getCurrentItem();
-			if (hand != null) {
-				item = hand.getMaterial().getId();
-			}
+		ItemStack hand = human.getInventory().getQuickbar().getCurrentItem();
+		if (hand != null) {
+			item = hand.getMaterial().getId();
 		}
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 		parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 100));

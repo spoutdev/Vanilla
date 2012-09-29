@@ -434,7 +434,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onWindowSetSlot(WindowSlotEvent event) {
-		return new WindowSlotMessage(event.getWindow(), event.getGlobalSlot(), event.get());
+		return new WindowSlotMessage(event.getWindow(), event.getSlot(), event.getItem());
 	}
 
 	@EventHandler

@@ -37,7 +37,7 @@ public final class WindowTransactionMessage extends WindowMessage {
 	private final boolean accepted;
 
 	public WindowTransactionMessage(Window window, int transaction, boolean accepted) {
-		this(window.getInstanceId(), transaction, accepted);
+		this(window.getId(), transaction, accepted);
 	}
 
 	public WindowTransactionMessage(int windowInstanceId, int transaction, boolean accepted) {

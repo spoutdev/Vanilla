@@ -31,6 +31,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
+import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.protocol.msg.player.PlayerHeldItemChangeMessage;
 
 public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeldItemChangeMessage> {
@@ -39,12 +40,12 @@ public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeld
 		if (!session.hasPlayer()) {
 			return;
 		}
-		Player player = session.getPlayer();
+		Human human = session.getPlayer().add(Human.class);
 		int newSlot = message.getSlot();
 		if (newSlot < 0 || newSlot > 8) {
 			return;
 		}
-		PlayerInventory inventory = player.add(PlayerInventory.class);
+		PlayerInventory inventory = human.getInventory();
 		inventory.getQuickbar().setCurrentSlot(newSlot);
 	}
 }

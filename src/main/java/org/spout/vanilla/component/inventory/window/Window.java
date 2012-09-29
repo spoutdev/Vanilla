@@ -30,10 +30,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import gnu.trove.iterator.TIntObjectIterator;
-import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.TObjectIntMap;
-import gnu.trove.map.hash.TIntObjectHashMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 
 import org.spout.api.component.components.EntityComponent;
@@ -61,9 +58,8 @@ import org.spout.vanilla.util.InventoryUtil;
 
 public class Window extends EntityComponent implements InventoryViewer {
 	private final Set<InventoryConverter> converters = new HashSet<InventoryConverter>();
-	protected final TIntObjectMap<ItemStack> queuedInventoryUpdates = new TIntObjectHashMap<ItemStack>();
 	protected final TObjectIntMap<WindowProperty> properties = new TObjectIntHashMap<WindowProperty>();
-	protected final int instanceId = InventoryUtil.nextWindowId();
+	protected final int id = InventoryUtil.nextWindowId();
 	protected int offset;
 	protected WindowType type;
 	protected boolean opened;
@@ -86,35 +82,16 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	@Override
 	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
-		// convert slots and update
 		InventoryConverter slots = getInventoryConverter(inventory);
 		if (slots != null) {
 			slot = slots.getNativeSlot(slot);
-			queuedInventoryUpdates.put(slot, item);
+			getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowSlotEvent(this, inventory, slot, item));
 		}
 	}
 
 	@Override
 	public boolean canTick() {
-		return opened;
-	}
-
-	@Override
-	public void onTick(float dt) {
-		if (queuedInventoryUpdates.size() < 1) {
-			return;
-		}
-		TIntObjectIterator<ItemStack> iter = queuedInventoryUpdates.iterator();
-		while (iter.hasNext()) {
-			iter.advance();
-			int slot = iter.key();
-			InventoryEntry entry = getInventoryEntry(slot);
-			if (entry == null) {
-				continue;
-			}
-			getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowSlotEvent(this, entry.getInventory(), entry.getSlot(), slot, iter.value()));
-		}
-		queuedInventoryUpdates.clear();
+		return false;
 	}
 
 	public Window init(WindowType type, String title, int offset) {
@@ -140,9 +117,9 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	public void close() {
 		opened = false;
-		if (getHuman().isSurvival()) {
-			dropCursorItem();
-		}
+		//if (getHuman().isSurvival()) {
+			//dropCursorItem();
+		//}
 		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowCloseEvent(this));
 	}
 
@@ -335,9 +312,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 	public InventoryEntry getInventoryEntry(int nativeSlot) {
 		int slot;
 		for (InventoryConverter converter : converters) {
-			System.out.println("For: " + converter.getInventory().getClass().getCanonicalName());
 			slot = converter.getSlot(nativeSlot);
-			System.out.println("Slot: " + slot);
 			if (slot != -1) {
 				return new InventoryEntry(converter.getInventory(), slot);
 			}
@@ -393,17 +368,17 @@ public class Window extends EntityComponent implements InventoryViewer {
 		}
 	}
 
-	public void setPropertyValue(WindowProperty prop, int value) {
+	public void setProperty(WindowProperty prop, int value) {
 		properties.put(prop, value);
 		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowPropertyEvent(this, prop.getId(), value));
 	}
 
-	public int getPropertyValue(WindowProperty prop) {
+	public int getProperty(WindowProperty prop) {
 		return properties.get(prop);
 	}
 
-	public int getInstanceId() {
-		return instanceId;
+	public int getId() {
+		return id;
 	}
 
 	public WindowType getType() {

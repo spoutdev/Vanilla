@@ -58,7 +58,6 @@ public class Human extends VanillaEntity {
 	public void onAttached() {
 		super.onAttached();
 		Entity holder = getHolder();
-		holder.add(PlayerInventory.class);
 		holder.add(PickupItemComponent.class);
 		holder.add(DiggingComponent.class);
 		if (getHolder() instanceof Player) {
@@ -162,7 +161,7 @@ public class Human extends VanillaEntity {
 	}
 
 	public PlayerInventory getInventory() {
-		return getHolder().add(PlayerInventory.class);
+		return getData().get(VanillaData.INVENTORY);
 	}
 
 	/**

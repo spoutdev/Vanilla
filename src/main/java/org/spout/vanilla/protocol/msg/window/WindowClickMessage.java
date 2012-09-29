@@ -37,7 +37,7 @@ public final class WindowClickMessage extends WindowMessage {
 	private final ItemStack item;
 
 	public WindowClickMessage(Window window, int slot, boolean rightClick, int transaction, boolean shift) {
-		this(window.getInstanceId(), slot, rightClick, transaction, shift);
+		this(window.getId(), slot, rightClick, transaction, shift);
 	}
 
 	public WindowClickMessage(int windowInstanceId, int slot, boolean rightClick, int transaction, boolean shift) {
@@ -45,7 +45,7 @@ public final class WindowClickMessage extends WindowMessage {
 	}
 
 	public WindowClickMessage(Window window, int slot, boolean rightClick, int transaction, boolean shift, ItemStack item) {
-		this(window.getInstanceId(), slot, rightClick, transaction, shift, item);
+		this(window.getId(), slot, rightClick, transaction, shift, item);
 	}
 
 	public WindowClickMessage(int windowInstanceId, int slot, boolean rightClick, int transaction, boolean shift, ItemStack item) {

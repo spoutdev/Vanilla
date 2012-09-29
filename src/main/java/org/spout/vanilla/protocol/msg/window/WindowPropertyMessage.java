@@ -36,7 +36,7 @@ public final class WindowPropertyMessage extends WindowMessage {
 	private final int progressBar, value;
 
 	public WindowPropertyMessage(Window window, int progressBar, int value) {
-		this(window.getInstanceId(), progressBar, value);
+		this(window.getId(), progressBar, value);
 	}
 
 	public WindowPropertyMessage(int windowInstanceId, int progressBar, int value) {

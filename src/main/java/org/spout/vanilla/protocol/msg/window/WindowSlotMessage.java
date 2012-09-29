@@ -38,7 +38,7 @@ public final class WindowSlotMessage extends WindowMessage {
 	private final ItemStack item;
 
 	public WindowSlotMessage(Window window, int slot, ItemStack item) {
-		this(window.getInstanceId(), slot, item);
+		this(window.getId(), slot, item);
 	}
 
 	public WindowSlotMessage(int windowInstanceId, int slot, ItemStack item) {

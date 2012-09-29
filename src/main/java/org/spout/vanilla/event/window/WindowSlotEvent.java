@@ -34,15 +34,14 @@ import org.spout.vanilla.component.inventory.window.Window;
 
 public class WindowSlotEvent extends WindowEvent {
 	private static HandlerList handlers = new HandlerList();
-	private int slot, globalSlot;
+	private int slot;
 	private ItemStack item;
 	private Inventory inventory;
 
-	public WindowSlotEvent(Window window, Inventory inventory, int slot, int globalSlot, ItemStack item) {
+	public WindowSlotEvent(Window window, Inventory inventory, int slot, ItemStack item) {
 		super(window);
 		this.inventory = inventory;
 		this.slot = slot;
-		this.globalSlot = globalSlot;
 		this.item = item;
 	}
 
@@ -63,18 +62,10 @@ public class WindowSlotEvent extends WindowEvent {
 	}
 
 	/**
-	 * Gets the global slot in the Window that got changed
-	 * @return changed slot relative to the Window
-	 */
-	public int getGlobalSlot() {
-		return this.globalSlot;
-	}
-
-	/**
 	 * Gets the item the slot is set to
 	 * @return the item
 	 */
-	public ItemStack get() {
+	public ItemStack getItem() {
 		return this.item;
 	}
 

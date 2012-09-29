@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.component.inventory;
 
+import java.io.Serializable;
+
 import org.spout.api.component.components.EntityComponent;
 
 import org.spout.vanilla.inventory.player.PlayerArmorInventory;
@@ -36,7 +38,7 @@ import org.spout.vanilla.inventory.player.PlayerQuickbar;
 /**
  * Represents a players inventory
  */
-public class PlayerInventory extends EntityComponent {
+public class PlayerInventory implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private final PlayerMainInventory main = new PlayerMainInventory();
 	private final PlayerCraftingGrid craftingGrid = new PlayerCraftingGrid();

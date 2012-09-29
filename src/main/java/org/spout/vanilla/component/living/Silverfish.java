@@ -30,7 +30,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
- * A component that identifies the entity as a Silverfish.
+ * A attribute that identifies the entity as a Silverfish.
  */
 public class Silverfish extends VanillaEntity {
 	@Override

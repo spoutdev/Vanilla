@@ -40,6 +40,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
 import org.spout.api.generator.WorldGeneratorObject;
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
@@ -47,6 +48,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.NetworkSynchronizer;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.living.Enderman;
 import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.util.VanillaBlockUtil;
 import org.spout.vanilla.util.explosion.ExplosionModels;
@@ -263,5 +265,15 @@ public class TestCommands {
 			}
 			source.sendMessage("Chunk lighting is being initialized");
 		}
+	}
+
+	@Command(aliases = "spawnmob", desc = "Spawns an enderman at your location")
+	@CommandPermissions("vanilla.command.spawnmob")
+	public void spawnmob(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("Only a player may spawn an enderman");
+		}
+		final Point pos = ((Player) source).getTransform().getPosition();
+		pos.getWorld().createAndSpawnEntity(pos, Enderman.class, LoadOption.NO_LOAD);
 	}
 }

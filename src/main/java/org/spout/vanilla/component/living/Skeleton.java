@@ -30,7 +30,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
- * A component that identifies the entity as a Skeleton.
+ * A attribute that identifies the entity as a Skeleton.
  */
 public class Skeleton extends VanillaEntity {
 	@Override

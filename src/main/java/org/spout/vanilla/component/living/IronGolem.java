@@ -30,7 +30,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
- * A component that identifies the entity as a IronGolem.
+ * A attribute that identifies the entity as a IronGolem.
  */
 public class IronGolem extends VanillaEntity {
 	@Override

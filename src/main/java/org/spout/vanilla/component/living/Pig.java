@@ -31,7 +31,7 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.living.PigEntityProtocol;
 
 /**
- * A component that identifies the entity as a Pig.
+ * A attribute that identifies the entity as a Pig.
  */
 public class Pig extends VanillaEntity {
 	@Override

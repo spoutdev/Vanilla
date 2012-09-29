@@ -38,12 +38,14 @@ import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeGenerator;
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.living.Enderman;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.component.world.VanillaSky;
@@ -431,5 +433,14 @@ public class AdministrationCommands {
 		Point pos = player.getTransform().getPosition();
 		Biome biome = pos.getWorld().getBiome(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ());
 		source.sendMessage("Current biome: ", (biome != null ? biome.getName() : "none"));
+	}
+
+	@Command(aliases = {"spawn"}, usage = "<name>", desc = "Spawns a VanillaEntity!", min = 1, max = 1)
+	public void onSpawn(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("Only a player may call this command.");
+		}
+		Player player = (Player) source;
+		player.getWorld().createAndSpawnEntity(player.getTransform().getPosition(), Enderman.class, LoadOption.NO_LOAD);
 	}
 }

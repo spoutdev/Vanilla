@@ -30,7 +30,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.living.EndermanEntityProtocol;
 
 /**
- * A component that identifies the entity as an Enderman.
+ * A attribute that identifies the entity as an Enderman.
  */
 public class Enderman extends VanillaEntity {
 	@Override

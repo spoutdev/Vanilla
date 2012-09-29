@@ -32,7 +32,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
- * A component that identifies the entity as an EnderCrystal.
+ * A attribute that identifies the entity as an EnderCrystal.
  */
 public class EnderCrystal extends EntityComponent {
 	@Override

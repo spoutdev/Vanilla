@@ -193,7 +193,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 			}
 		}
 
-		// Spreading component
+		// Spreading attribute
 		int chanceFactor, firePower, netChance;
 		for (IntVector3 offset : SPREAD_RANGE) {
 

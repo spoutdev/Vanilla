@@ -64,7 +64,12 @@ public class BasicMobEntityProtocol extends BasicEntityProtocol {
 	public List<Message> getUpdateMessages(Entity entity) {
 		List<Message> messages = new ArrayList<Message>(super.getUpdateMessages(entity));
 		List<Parameter<?>> params = this.getSpawnParameters(entity);
-		if (!params.isEmpty() && !meta.equals(params)) {
+		if (!params.isEmpty()) {
+			if (meta != null) {
+				if (meta.equals(params)) {
+					return messages;
+				}
+			}
 			meta = params;
 			messages.add(new EntityMetadataMessage(entity.getId(), params));
 		}

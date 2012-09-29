@@ -76,24 +76,24 @@ public class MapColor {
 	}
 
 	/**
-	 * Gets the red component
-	 * @return the red component (0F - 1F)
+	 * Gets the red attribute
+	 * @return the red attribute (0F - 1F)
 	 */
 	public float getRed() {
 		return this.r;
 	}
 
 	/**
-	 * Gets the green component
-	 * @return the green component (0F - 1F)
+	 * Gets the green attribute
+	 * @return the green attribute (0F - 1F)
 	 */
 	public float getGreen() {
 		return this.g;
 	}
 
 	/**
-	 * Gets the blue component
-	 * @return the blue component (0F - 1F)
+	 * Gets the blue attribute
+	 * @return the blue attribute (0F - 1F)
 	 */
 	public float getBlue() {
 		return this.b;

@@ -31,7 +31,7 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.living.SlimeEntityProtocol;
 
 /**
- * A component that identifies the entity as a Slime.
+ * A attribute that identifies the entity as a Slime.
  */
 public class Slime extends VanillaEntity {
 	@Override

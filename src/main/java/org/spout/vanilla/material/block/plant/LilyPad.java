@@ -71,7 +71,7 @@ public class LilyPad extends GroundAttachable {
 			if (this.canPlace(block, (short) 0)) {
 				this.onPlacement(block, (short) 0);
 
-				//TODO Subtract from inventory component
+				//TODO Subtract from inventory attribute
 				// Subtract item
 				if (!entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 					return;

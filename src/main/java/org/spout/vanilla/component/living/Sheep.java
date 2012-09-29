@@ -32,7 +32,7 @@ import org.spout.vanilla.material.block.solid.Wool;
 import org.spout.vanilla.protocol.entity.living.SheepEntityProtocol;
 
 /**
- * A component that identifies the entity as a Sheep.
+ * A attribute that identifies the entity as a Sheep.
  */
 public class Sheep extends VanillaEntity {
 	@Override

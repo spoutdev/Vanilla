@@ -51,7 +51,7 @@ import org.spout.vanilla.protocol.msg.player.PlayerGameStateMessage;
 import org.spout.vanilla.util.ItemUtil;
 
 /**
- * A component that identifies the entity as a Vanilla player.
+ * A attribute that identifies the entity as a Vanilla player.
  */
 public class Human extends VanillaEntity {
 	@Override

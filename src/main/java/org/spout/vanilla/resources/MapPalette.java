@@ -79,9 +79,9 @@ public class MapPalette extends Resource {
 
 	/**
 	 * Gets the map color nearest to the RGB color specified
-	 * @param r component of the color (0 - 255)
-	 * @param g component of the color (0 - 255)
-	 * @param b component of the color (0 - 255)
+	 * @param r attribute of the color (0 - 255)
+	 * @param g attribute of the color (0 - 255)
+	 * @param b attribute of the color (0 - 255)
 	 * @return the MapColor nearest to the color
 	 */
 	public MapColor getColor(int r, int g, int b) {
@@ -96,9 +96,9 @@ public class MapPalette extends Resource {
 	/**
 	 * Gets the map color nearest to the RGB color specified<br>
 	 * Note: This is a slow function
-	 * @param r component of the color (0F - 1F)
-	 * @param g component of the color (0F - 1F)
-	 * @param b component of the color (0F - 1F)
+	 * @param r attribute of the color (0F - 1F)
+	 * @param g attribute of the color (0F - 1F)
+	 * @param b attribute of the color (0F - 1F)
 	 * @return the MapColor nearest to the color
 	 */
 	public MapColor getColor(float r, float g, float b) {
@@ -107,9 +107,9 @@ public class MapPalette extends Resource {
 
 	/**
 	 * Sets the map color nearest for the RGB color specified
-	 * @param r component of the color (0 - 255)
-	 * @param g component of the color (0 - 255)
-	 * @param b component of the color (0 - 255)
+	 * @param r attribute of the color (0 - 255)
+	 * @param g attribute of the color (0 - 255)
+	 * @param b attribute of the color (0 - 255)
 	 * @param color to set to
 	 */
 	public void setColor(int r, int g, int b, MapColor color) {

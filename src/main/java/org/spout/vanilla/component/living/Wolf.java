@@ -31,7 +31,7 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.living.WolfEntityProtocol;
 
 /**
- * A component that identifies the entity as a Wolf.
+ * A attribute that identifies the entity as a Wolf.
  */
 public class Wolf extends VanillaEntity {
 	private boolean redEyes = false;

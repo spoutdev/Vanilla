@@ -61,7 +61,9 @@ public class Human extends VanillaEntity {
 		holder.add(PlayerInventory.class);
 		holder.add(PickupItemComponent.class);
 		holder.add(DiggingComponent.class);
-		holder.add(PingComponent.class);
+		if (getHolder() instanceof Player) {
+			holder.add(PingComponent.class);
+		}
 		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
 	}
 

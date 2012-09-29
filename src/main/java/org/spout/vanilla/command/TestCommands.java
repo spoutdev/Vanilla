@@ -53,6 +53,7 @@ import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.EnderDragon;
 import org.spout.vanilla.component.living.Enderman;
+import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.component.substance.MovingBlock;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -98,12 +99,6 @@ public class TestCommands {
 		} else {
 			throw new CommandException("Please enter a valid world");
 		}
-	}
-
-	@Command(aliases = {"spawn"}, usage = "<spiral or disk> <number> <controller> ... <number> <controller>", desc = "Spawn up to 50 controllers!", min = 1, max = 10)
-	@CommandPermissions("vanilla.command.debug")
-	public void spawn(CommandContext args, CommandSource source) throws CommandException {
-
 	}
 
 	@Command(aliases = {"tppos"}, usage = "<name> <world> <x> <y> <z>", desc = "Teleport to coordinates!", min = 5, max = 5)
@@ -160,17 +155,6 @@ public class TestCommands {
 		}
 	}
 
-	@Command(aliases = {"block"}, desc = "Checks if the block below you has an entity", min = 0, max = 0)
-	@CommandPermissions("vanilla.command.debug")
-	public void checkBlock(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player)) {
-			throw new CommandException("Source must be player");
-		}
-
-		Player player = (Player) source;
-		Block block = player.getWorld().getBlock(player.getTransform().getPosition().subtract(0, 1, 0), player);
-	}
-
 	@Command(aliases = {"killall", "ka"}, desc = "Kill all non-player or world entities within a world", min = 0, max = 1)
 	@CommandPermissions("vanilla.command.debug")
 	public void killall(CommandContext args, CommandSource source) throws CommandException {
@@ -211,30 +195,6 @@ public class TestCommands {
 			}
 		} else {
 			source.sendMessage("No valid entities found to kill");
-		}
-	}
-
-	@Command(aliases = "rollcredits", desc = "Rolls the end credits for the game.", min = 0, max = 0)
-	@CommandPermissions("vanilla.command.debug")
-	public void rollCredits(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player)) {
-			throw new CommandException("You must be a player to view the credits.");
-		}
-	}
-
-	@Command(aliases = "speed", desc = "Applies speed", min = 2, max = 2)
-	@CommandPermissions("vanilla.command.debug")
-	public void speed(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player)) {
-			throw new CommandException("You must be a player to apply speed");
-		}
-	}
-
-	@Command(aliases = "npc", desc = "Spawns an npc at your location", min = 1, max = 1)
-	@CommandPermissions("vanilla.command.debug")
-	public void npc(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player)) {
-			throw new CommandException("Only a player may spawn an npc");
 		}
 	}
 
@@ -291,6 +251,8 @@ public class TestCommands {
 			clazz = EnderDragon.class;
 		} else if (name.equalsIgnoreCase("movingblock")) {
 			clazz = MovingBlock.class;
+		} else if (name.equalsIgnoreCase("npc")) {
+			clazz = Human.class;
 		} else {
 			throw new CommandException(name + " was not a valid name for a VanillaEntity!");
 		}
@@ -305,6 +267,14 @@ public class TestCommands {
 			} else {
 				entity.add(MovingBlock.class).setMaterial(VanillaMaterials.SAND);
 			}
+		} else if (clazz.equals(Human.class)) {
+			String npcName;
+			if (args.length() == 2) {
+				npcName = args.getString(1);
+			} else {
+				npcName = "Steve";
+			}
+			entity.add(Human.class).setName(npcName);
 		}
 		pos.getWorld().spawnEntity(entity);
 	}

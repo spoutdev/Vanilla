@@ -33,6 +33,8 @@ import java.util.Set;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 
+import org.spout.api.Spout;
+import org.spout.api.component.Component;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
@@ -66,6 +68,11 @@ public class Window extends EntityComponent implements InventoryViewer {
 	protected String title;
 	protected ItemStack cursorItem;
 
+	static {
+		Component.addDependency(Window.class, Human.class);
+		Component.addDependency(DefaultWindow.class, Human.class);
+	}
+	
 	@Override
 	public void onAttached() {
 		if (!(getHolder() instanceof Player)) {

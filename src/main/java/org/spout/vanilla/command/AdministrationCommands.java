@@ -44,6 +44,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.component.world.VanillaSky;
@@ -148,7 +149,6 @@ public class AdministrationCommands {
 		}
 
 		Material material;
-
 		if (args.isInteger(index)) {
 			material = VanillaMaterials.getMaterial((short) args.getInteger(index));
 		} else {
@@ -168,10 +168,12 @@ public class AdministrationCommands {
 
 		int count = args.getInteger(++index, 1);
 
-		player.add(Human.class).getInventory().getMain().add(new ItemStack(material, count));
-		//TODO inventory
-		//		controller.getInventory().getMain().add(new ItemStack(material, count)); DATAMAPS
-
+		PlayerInventory inventory = player.add(Human.class).getInventory();
+		ItemStack item = new ItemStack(material, count);
+		inventory.getQuickbar().add(item);
+		if (!item.isEmpty()) {
+			inventory.getMain().add(item);
+		}
 		source.sendMessage("Gave ", player.getName(), " ", count, " ", material.getDisplayName());
 	}
 

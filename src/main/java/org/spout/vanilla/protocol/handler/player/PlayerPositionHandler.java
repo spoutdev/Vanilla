@@ -51,11 +51,10 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 			}
 		} else {
 			if (!position.equals(newPosition)) {
-				if (position.distance(newPosition) < 4) {
+				if (position.distance(newPosition) < 100) {
 					holder.getTransform().setPosition(newPosition);
 				} else {
-					holder.sendMessage("Restoring position due to fast movement");
-					holder.teleport(holder.getTransform().getTransform());
+					holder.kick("Moved to quickly");
 				}
 			}
 		}

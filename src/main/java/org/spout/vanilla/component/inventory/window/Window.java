@@ -433,6 +433,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 			}
 			return;
 		}
-		getPlayer().getNetworkSynchronizer().callProtocolEvent(event);
+		getPlayer().getNetwork().callProtocolEvent(event, getPlayer());
 	}
 }

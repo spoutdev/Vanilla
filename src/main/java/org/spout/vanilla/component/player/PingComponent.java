@@ -28,6 +28,7 @@ package org.spout.vanilla.component.player;
 
 import java.util.Random;
 
+import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
@@ -43,6 +44,7 @@ public class PingComponent extends EntityComponent {
 	private float kickTimer = 0;
 	private float ping = 0;
 	private float lastRequest = 0;
+	private long lastRequestRealtime = 0;
 	private int lastHash = 0;
 
 	@Override
@@ -79,7 +81,7 @@ public class PingComponent extends EntityComponent {
 	 */
 	public void response(int hash) {
 		if (hash == lastHash) {
-			ping = lastRequest - pingTimer;
+			ping = (System.currentTimeMillis() - lastRequestRealtime) / 1000.0F;
 			kickTimer = 0;
 		}
 	}
@@ -89,6 +91,7 @@ public class PingComponent extends EntityComponent {
 	 */
 	public void request() {
 		lastRequest = pingTimer;
+		lastRequestRealtime = System.currentTimeMillis();
 		lastHash = random.nextInt(Integer.MAX_VALUE);
 		player.getNetworkSynchronizer().callProtocolEvent(new PlayerPingEvent(lastHash));
 	}

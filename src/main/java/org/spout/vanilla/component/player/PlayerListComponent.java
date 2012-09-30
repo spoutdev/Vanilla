@@ -27,13 +27,13 @@
 package org.spout.vanilla.component.player;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
-
 import org.spout.vanilla.event.player.network.PlayerListEvent;
 
 public class PlayerListComponent extends EntityComponent {
@@ -80,9 +80,12 @@ public class PlayerListComponent extends EntityComponent {
 				player.getNetworkSynchronizer().callProtocolEvent(new PlayerListEvent(name, ping, true));
 			}
 		}
-		for (String name : players.keySet()) {
+		Iterator<String> itr = players.keySet().iterator();
+		while (itr.hasNext()) {
+			String name = itr.next();
 			if (!temp.contains(name)) {
 				player.getNetworkSynchronizer().callProtocolEvent(new PlayerListEvent(name, 0L, false));
+				itr.remove();
 			}
 		}
 	}

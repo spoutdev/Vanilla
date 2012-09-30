@@ -178,7 +178,6 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 						//	return;
 						//}
 
-						Spout.log("Check 10 or 12");
 						//For now: simple distance checking
 						Point pos1 = player.getTransform().getPosition();
 						Point pos2 = player.add(HeadComponent.class).getPosition();

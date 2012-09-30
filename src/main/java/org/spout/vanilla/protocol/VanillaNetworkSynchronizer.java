@@ -331,13 +331,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		Difficulty difficulty = world.getComponentHolder().getData().get(VanillaData.DIFFICULTY);
 		Dimension dimension = world.getComponentHolder().getData().get(VanillaData.DIMENSION);
 		WorldType worldType = world.getComponentHolder().getData().get(VanillaData.WORLD_TYPE);
-		//The world the player is entering has a different gamemode...
-		if (gamemode != getPlayer().getData().get(VanillaData.GAMEMODE)) {
-			PlayerGameModeChangedEvent event = Spout.getEngine().getEventManager().callEvent(new PlayerGameModeChangedEvent(player, gamemode));
-			if (!event.isCancelled()) {
-				gamemode = event.getMode();
-			}
-		}
+		player.add(Human.class).setGamemode(gamemode, false);
 		//TODO Handle infinite height
 		if (first) {
 			first = false;

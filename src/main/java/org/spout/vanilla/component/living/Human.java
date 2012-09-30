@@ -131,14 +131,16 @@ public class Human extends VanillaEntity {
 		return getHolder() instanceof Player && VanillaConfiguration.OPS.isOp(getName());
 	}
 
-	public void setGamemode(GameMode mode) {
+	public void setGamemode(GameMode mode, boolean updateClient) {
 		Entity holder = getHolder();
 		if (holder instanceof Player) {
-			PlayerGameModeChangedEvent event = Spout.getEventManager().callEvent(new PlayerGameModeChangedEvent((Player) getHolder(), mode));
-			if (event.isCancelled()) {
-				return;
+			if (PlayerGameModeChangedEvent.getHandlerList().getRegisteredListeners().length > 0) {
+				PlayerGameModeChangedEvent event = Spout.getEventManager().callEvent(new PlayerGameModeChangedEvent((Player) getHolder(), mode));
+				if (event.isCancelled()) {
+					return;
+				}
+				mode = event.getMode();
 			}
-			mode = event.getMode();
 		}
 		switch (mode) {
 			case ADVENTURE:
@@ -151,10 +153,14 @@ public class Human extends VanillaEntity {
 				holder.add(SurvivalComponent.class);
 				break;
 		}
-		if (holder instanceof Player) {
+		if (holder instanceof Player && updateClient) {
 			holder.getNetwork().callProtocolEvent(new PlayerGameStateEvent((Player) holder, PlayerGameStateMessage.CHANGE_GAME_MODE, mode), (Player) getHolder());
 		}
 		getData().put(VanillaData.GAMEMODE, mode);
+	}
+
+	public void setGamemode(GameMode mode) {
+		setGamemode(mode, true);
 	}
 
 	public PlayerInventory getInventory() {

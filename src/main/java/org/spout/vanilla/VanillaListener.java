@@ -59,13 +59,7 @@ public class VanillaListener implements Listener {
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
-		Human human = player.add(Human.class);
-		human.setName(player.getName());
-		//TODO: We won't want to force this after player saving is hooked back up.
-		GameMode defaultMode = player.getWorld().getDataMap().get(VanillaData.GAMEMODE);
-		if (defaultMode != null) {
-			human.setGamemode(defaultMode);
-		}
+		player.add(Human.class).setName(player.getName());
 		player.add(DefaultWindow.class);
 		player.add(PlayerListComponent.class);
 		player.add(PingComponent.class);

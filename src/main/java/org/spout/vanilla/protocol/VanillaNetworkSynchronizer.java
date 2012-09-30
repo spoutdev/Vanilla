@@ -328,22 +328,16 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@Override
 	protected void worldChanged(World world) {
 		GameMode gamemode = world.getComponentHolder().getData().get(VanillaData.GAMEMODE);
-		//The world the player is entering has a different gamemode...
-		if (gamemode != null) {
-			if (gamemode != getPlayer().getData().get(VanillaData.GAMEMODE)) {
-				PlayerGameModeChangedEvent event = Spout.getEngine().getEventManager().callEvent(new PlayerGameModeChangedEvent(player, gamemode));
-				if (!event.isCancelled()) {
-					gamemode = event.getMode();
-				}
-			}
-		} else {
-			//The world has no gamemode setting in its map so default to the Player's GameMode.
-			gamemode = getPlayer().getData().get(VanillaData.GAMEMODE);
-		}
 		Difficulty difficulty = world.getComponentHolder().getData().get(VanillaData.DIFFICULTY);
 		Dimension dimension = world.getComponentHolder().getData().get(VanillaData.DIMENSION);
 		WorldType worldType = world.getComponentHolder().getData().get(VanillaData.WORLD_TYPE);
-
+		//The world the player is entering has a different gamemode...
+		if (gamemode != getPlayer().getData().get(VanillaData.GAMEMODE)) {
+			PlayerGameModeChangedEvent event = Spout.getEngine().getEventManager().callEvent(new PlayerGameModeChangedEvent(player, gamemode));
+			if (!event.isCancelled()) {
+				gamemode = event.getMode();
+			}
+		}
 		//TODO Handle infinite height
 		if (first) {
 			first = false;
@@ -353,7 +347,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			player.getSession().send(false, true, idMsg);
 			player.getSession().setState(State.GAME);
 			for (int slot = 0; slot < 4; slot++) {
-				ItemStack slotItem = owner.get(Human.class).getInventory().getArmor().get(slot);
+				ItemStack slotItem = player.add(Human.class).getInventory().getArmor().get(slot);
 				player.getSession().send(false, new EntityEquipmentMessage(entityId, slot, slotItem));
 			}
 		} else {

@@ -30,6 +30,7 @@ import org.spout.api.Source;
 import org.spout.api.Spout;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 
 import org.spout.vanilla.data.VanillaData;
@@ -59,14 +60,18 @@ public class HealthComponent extends EntityComponent {
 		if (isDying()) {
 			setDeathTicks(getDeathTicks() - 1);
 			if (getDeathTicks() <= 0) {
-				getHolder().remove();
+				if (!(getHolder() instanceof Player)) {
+					getHolder().remove();
+				}
 			}
 		} else if (isDead()) {
 			if (hasDeathAnimation()) {
 				setDeathTicks(DEATH_TIME_TICKS);
 				getHolder().getNetwork().callProtocolEvent(new EntityStatusEvent(getHolder(), EntityStatusMessage.ENTITY_DEAD));
 			} else {
-				getHolder().remove();
+				if (!(getHolder() instanceof Player)) {
+					getHolder().remove();
+				}
 			}
 			onDeath();
 		}

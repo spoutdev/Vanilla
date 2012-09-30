@@ -27,8 +27,10 @@
 package org.spout.vanilla.protocol.handler.player;
 
 import java.util.List;
+import java.util.Set;
 
 import org.spout.api.Spout;
+import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Event;
 import org.spout.api.event.player.PlayerConnectEvent;
@@ -70,14 +72,14 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 			player.getTransform().setPosition(point);
 			player.getNetworkSynchronizer().setRespawned();
 			Human human = player.add(Human.class);
-			//TODO add getHealth to Human...
 			human.getHolder().get(HealthComponent.class).setHealth(20, HealthChangeCause.SPAWN);
 
 			//send spawn to everyone else
 			EntityProtocol ep = player.getNetwork().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
 			if (ep != null) {
 				List<Message> messages = ep.getSpawnMessages(player);
-				for (Player otherPlayer : player.getWorld().getPlayers()) {
+				List<? extends Player> observers = player.getChunk().getObservingPlayers();
+				for (Player otherPlayer : observers) {
 					if (player == otherPlayer) {
 						continue;
 					}

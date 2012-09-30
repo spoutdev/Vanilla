@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
@@ -35,6 +36,7 @@ import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.vanilla.component.inventory.window.DefaultWindow;
 import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.player.PingComponent;
 import org.spout.vanilla.component.player.PlayerListComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
@@ -66,5 +68,6 @@ public class VanillaListener implements Listener {
 		}
 		player.add(DefaultWindow.class);
 		player.add(PlayerListComponent.class);
+		player.add(PingComponent.class);
 	}
 }

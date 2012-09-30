@@ -37,6 +37,8 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Tool;
@@ -84,6 +86,11 @@ public class EntityInteractHandler extends MessageHandler<EntityInteractMessage>
 					}
 				}
 				if (damage != 0) {
+					if (clicked instanceof Human) {
+						if (((Human) clicked).getGameMode() != GameMode.SURVIVAL) {
+							return;
+						}
+					}
 					if (!clicked.getHealth().isDead()) {
 						clicked.getHealth().damage(damage, DamageCause.ATTACK, playerEnt, damage > 0);
 					}

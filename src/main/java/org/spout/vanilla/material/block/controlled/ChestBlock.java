@@ -70,6 +70,11 @@ public class ChestBlock extends ComponentMaterial implements Directional, Fuel {
 		Chest chest = block.getComponent();
 		//Drop items
 		Inventory inventory = chest.getInventory();
+		//If null inventory then simply return
+		//TODO Fix this Windwaker
+		if (inventory == null) {
+			return;
+		}
 		ItemStack[] items = inventory.toArray(new ItemStack[inventory.size()]);
 		Point position = block.getPosition();
 		for (ItemStack item : items) {

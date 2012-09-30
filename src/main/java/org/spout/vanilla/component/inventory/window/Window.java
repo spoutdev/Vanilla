@@ -29,6 +29,7 @@ package org.spout.vanilla.component.inventory.window;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.logging.Level;
 
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
@@ -40,6 +41,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
@@ -94,7 +96,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 		if (slots != null) {
 			slot = slots.getNativeSlot(slot);
 			System.out.println("Updating slot");
-			getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowSlotEvent(this, inventory, slot, item));
+			callProtocolEvent(new WindowSlotEvent(this, inventory, slot, item));
 		}
 	}
 
@@ -121,7 +123,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 	public void open() {
 		opened = true;
 		reload();
-		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowOpenEvent(this));
+		callProtocolEvent(new WindowOpenEvent(this));
 	}
 
 	public void close() {
@@ -129,7 +131,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 		//if (getHuman().isSurvival()) {
 			//dropCursorItem();
 		//}
-		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowCloseEvent(this));
+		callProtocolEvent(new WindowCloseEvent(this));
 	}
 
 	public void reload() {
@@ -145,7 +147,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 				items[nativeSlot] = inventory.get(i);
 			}
 		}
-		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowItemsEvent(this, items));
+		callProtocolEvent(new WindowItemsEvent(this, items));
 	}
 
 	public boolean onShiftClick(ItemStack stack, int slot, Inventory from) {
@@ -379,7 +381,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	public void setProperty(WindowProperty prop, int value) {
 		properties.put(prop, value);
-		getPlayer().getNetworkSynchronizer().callProtocolEvent(new WindowPropertyEvent(this, prop.getId(), value));
+		callProtocolEvent(new WindowPropertyEvent(this, prop.getId(), value));
 	}
 
 	public int getProperty(WindowProperty prop) {
@@ -416,5 +418,21 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	public void setCursorItem(ItemStack cursorItem) {
 		this.cursorItem = cursorItem;
+	}
+	
+	private void callProtocolEvent(ProtocolEvent event) {
+		if (getPlayer() == null) {
+			if (Spout.debugMode()) {
+				Spout.getLogger().log(Level.WARNING, "Sending protocol message with null player", new Exception());
+			}
+			return;
+		}
+		if (getPlayer().getNetworkSynchronizer() == null) {
+			if (Spout.debugMode()) {
+				Spout.getLogger().log(Level.WARNING, "Sending protocol message with null network synchronizer", new Exception());
+			}
+			return;
+		}
+		getPlayer().getNetworkSynchronizer().callProtocolEvent(event);
 	}
 }

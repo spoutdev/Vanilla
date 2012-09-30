@@ -33,9 +33,12 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.spout.vanilla.configuration.VanillaConfiguration;
+
 import com.google.common.collect.Sets;
 
 public class ChunkNetCache implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private final byte[] partition = new byte[2048];
 	private final Set<Long> hashSet;
 	private volatile boolean cacheEnabled = false;
@@ -53,7 +56,7 @@ public class ChunkNetCache implements Serializable {
 	}
 
 	public void handleCustomPacket(String channel, byte[] array) {
-		if (channel.equals("ChkCache:setHash")) {
+		if (VanillaConfiguration.USE_CHUNK_CACHE.getBoolean() && channel.equals("ChkCache:setHash")) {
 			cacheEnabled = true;
 			if (array != null) {
 				DataInputStream din = new DataInputStream(new ByteArrayInputStream(array));

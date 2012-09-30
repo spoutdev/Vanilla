@@ -423,13 +423,13 @@ public class Window extends EntityComponent implements InventoryViewer {
 	private void callProtocolEvent(ProtocolEvent event) {
 		if (getPlayer() == null) {
 			if (Spout.debugMode()) {
-				Spout.getLogger().log(Level.WARNING, "Sending protocol message with null player", new Exception());
+				Spout.getLogger().log(Level.WARNING, "Sending protocol message with null player");
 			}
 			return;
 		}
 		if (getPlayer().getNetworkSynchronizer() == null) {
 			if (Spout.debugMode()) {
-				Spout.getLogger().log(Level.WARNING, "Sending protocol message with null network synchronizer", new Exception());
+				Spout.getLogger().log(Level.WARNING, "Sending protocol message with null network synchronizer");
 			}
 			return;
 		}

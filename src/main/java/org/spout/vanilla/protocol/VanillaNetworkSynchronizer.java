@@ -396,6 +396,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	public void syncEntity(Entity e, boolean spawn, boolean destroy, boolean update) {
+		super.syncEntity(e, spawn, destroy, update);
 		EntityProtocol ep = e.getNetwork().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
 		if (ep != null) {
 			List<Message> messages = new ArrayList<Message>(3);

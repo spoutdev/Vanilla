@@ -83,7 +83,7 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	public static final ConfigurationHolder ENCRYPT_STREAM_ALGORITHM = new ConfigurationHolder("AES", "encrypt", "stream-algorithm");
 	public static final ConfigurationHolder ENCRYPT_STREAM_WRAPPER = new ConfigurationHolder("CFB8", "encrypt", "stream-wrapper");
 	// Chunk Cache
-	public static final ConfigurationHolder USE_CHUNK_CACHE = new ConfigurationHolder(false, "cache", "chunks");
+	public static final ConfigurationHolder USE_CHUNK_CACHE = new ConfigurationHolder(true, "cache", "chunks");
 
 	public VanillaConfiguration(File dataFolder) {
 		super(new YamlConfiguration(new File(dataFolder, "config.yml")));

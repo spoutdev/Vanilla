@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
 
@@ -39,7 +40,7 @@ import com.google.common.collect.Sets;
 
 public class ChunkNetCache implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private final byte[] partition = new byte[2048];
+	private final AtomicReference<byte[]> partitionCache = new AtomicReference<byte[]>();
 	private final Set<Long> hashSet;
 	private volatile boolean cacheEnabled = false;
 
@@ -72,6 +73,12 @@ public class ChunkNetCache implements Serializable {
 	}
 
 	public byte[] handle(byte[] inflatedBuffer) {
+		
+		byte[] partition = partitionCache.getAndSet(null);
+		
+		if (partition == null) {
+			partition = new byte[2048];
+		}
 
 		if (!cacheEnabled) {
 			return inflatedBuffer;
@@ -100,6 +107,8 @@ public class ChunkNetCache implements Serializable {
 		PartitionChunk.setHash(newBuffer, 0, crc, newLength - 13);
 		PartitionChunk.setInt(newBuffer, 0, dataLength, newLength - 5);
 
+		partitionCache.set(partition);
+		
 		return newBuffer;
 	}
 }

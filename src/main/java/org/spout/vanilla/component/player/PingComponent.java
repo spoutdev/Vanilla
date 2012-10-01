@@ -39,7 +39,7 @@ public class PingComponent extends EntityComponent {
 	private Player player;
 	private final Random random = new Random();
 	private float timeout = 30;
-	private float repeatRate = 4; // sends 4 pings per timeout period
+	private float repeatRate = 7.5F; // sends 1 ping every 4 seconds
 	private float pingTimer = timeout;
 	private float kickTimer = 0;
 	private float ping = 0;

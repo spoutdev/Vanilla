@@ -38,14 +38,14 @@ import org.spout.vanilla.event.player.network.PlayerPingEvent;
 public class PingComponent extends EntityComponent {
 	private Player player;
 	private final Random random = new Random();
-	private float timeout = 30;
-	private float repeatRate = 7.5F; // sends 1 ping every 4 seconds
+	private final float timeout = 30;
+	private final int repeatRate = 8;
+	private final long[] pingTime = new long[repeatRate];
+	private final int[] pingHash = new int[repeatRate];
 	private float pingTimer = timeout;
 	private float kickTimer = 0;
 	private float ping = 0;
-	private float lastRequest = 0;
-	private long lastRequestRealtime = 0;
-	private int lastHash = 0;
+	private int lastRequestCount = 0;
 
 	@Override
 	public void onAttached() {
@@ -59,7 +59,9 @@ public class PingComponent extends EntityComponent {
 	public void onTick(float dt) {
 		pingTimer += dt;
 		kickTimer += dt;
-		if (pingTimer > lastRequest + (timeout / repeatRate)) {
+		float period = timeout / repeatRate;
+		if (pingTimer > period) {
+			pingTimer -= period;
 			request();
 		}
 		if (kickTimer > timeout) {
@@ -80,9 +82,12 @@ public class PingComponent extends EntityComponent {
 	 * @param hash of the message sent to validate against
 	 */
 	public void response(int hash) {
-		if (hash == lastHash) {
-			ping = (System.currentTimeMillis() - lastRequestRealtime) / 1000.0F;
-			kickTimer = 0;
+		for (int i = 0; i < pingTime.length; i++) {
+			if (hash == pingHash[i]) {
+				ping = (System.currentTimeMillis() - pingTime[i]) / 1000.0F;
+				kickTimer = 0;
+				return;
+			}
 		}
 	}
 
@@ -90,9 +95,13 @@ public class PingComponent extends EntityComponent {
 	 * Sends a new request to the client to return a ping message.
 	 */
 	public void request() {
-		lastRequest = pingTimer;
-		lastRequestRealtime = System.currentTimeMillis();
-		lastHash = random.nextInt(Integer.MAX_VALUE);
-		player.getNetworkSynchronizer().callProtocolEvent(new PlayerPingEvent(lastHash));
+		int hash = random.nextInt(Integer.MAX_VALUE);
+		pingTime[lastRequestCount] = System.currentTimeMillis();
+		pingHash[lastRequestCount] = hash;
+		lastRequestCount++;
+		if (lastRequestCount >= pingTime.length) {
+			lastRequestCount = 0;
+		}
+		player.getNetworkSynchronizer().callProtocolEvent(new PlayerPingEvent(hash));
 	}
 }

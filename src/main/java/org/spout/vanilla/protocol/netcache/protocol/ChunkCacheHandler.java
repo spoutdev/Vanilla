@@ -29,11 +29,13 @@ package org.spout.vanilla.protocol.netcache.protocol;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.component.player.PingComponent;
 import org.spout.vanilla.protocol.VanillaProtocol;
 
 public class ChunkCacheHandler extends MessageHandler<ChunkCacheMessage> {
 	@Override
 	public void handleServer(Session session, ChunkCacheMessage message) {
+		session.getPlayer().add(PingComponent.class).refresh();
 		session.getDataMap().get(VanillaProtocol.CHUNK_NET_CACHE).handleCustomPacket(message.getChannel(), message.getData());
 	}
 }

@@ -64,6 +64,7 @@ import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.window.DefaultWindow;
 import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
@@ -133,15 +134,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	private static final byte[] SOLID_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
 	private static final byte[] AIR_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
 	private static final double STANCE = 1.6D;
-	@SuppressWarnings("unused")
-	private static final int POSITION_UPDATE_TICKS = 20;
 	private boolean first = true;
 	private final TSyncIntPairObjectHashMap<TSyncIntHashSet> initializedChunks = new TSyncIntPairObjectHashMap<TSyncIntHashSet>();
 	private final ConcurrentLinkedQueue<Long> emptyColumns = new ConcurrentLinkedQueue<Long>();
 	private TSyncIntPairHashSet activeChunks = new TSyncIntPairHashSet();
 	private Object initChunkLock = new Object();
 	private final ChunkInit chunkInit;
-	private Player owner;
 
 	static {
 		int i = 0;
@@ -164,8 +162,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 
 	public VanillaNetworkSynchronizer(Session session) {
-		super(session, 3);
-		this.owner = session.getPlayer();
+		super(session, 0);
 		registerProtocolEvents(this);
 		chunkInit = ChunkInit.getChunkInit(VanillaConfiguration.CHUNK_INIT.getString("client"));
 	}
@@ -313,7 +310,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	protected void sendPosition(Point p, Quaternion rot) {
-		//TODO: Implement Spout Protocol
+		//TODO we have EntityProtocols in Vanilla....what does this actually do?
 		Session session = player.getSession();
 		if (p.distanceSquared(player.getTransform().getPosition()) >= 16) {
 			EntityTeleportMessage ETMMsg = new EntityTeleportMessage(player.getId(), (int) p.getX(), (int) p.getY(), (int) p.getZ(), (int) rot.getYaw(), (int) rot.getPitch());
@@ -387,7 +384,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		super.syncEntity(e, spawn, destroy, update);
 		EntityProtocol ep = e.getNetwork().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
 		if (ep != null) {
-			List<Message> messages = new ArrayList<Message>(3);
+			List<Message> messages = new ArrayList<Message>();
 			// Sync using vanilla protocol
 			if (destroy) {
 				messages.addAll(ep.getDestroyMessages(e));
@@ -490,9 +487,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onPlayerUpdateStats(PlayerHealthEvent event) {
-		if (event.getPlayer() != owner) {
-			return null;
-		}
 		//TODO: Fix these stats?
 		return new PlayerHealthMessage((short) player.get(Human.class).getHealth().getHealth(), (short) 0, 0);
 	}

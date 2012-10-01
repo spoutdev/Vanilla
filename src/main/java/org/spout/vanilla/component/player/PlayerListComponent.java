@@ -69,9 +69,6 @@ public class PlayerListComponent extends EntityComponent {
 		Player[] online = server.getOnlinePlayers();
 		temp.clear();
 		for (int i = 0; i < online.length; i++) {
-			if (online[i] == getHolder()) {
-				continue;
-			}
 			String name = online[i].getDisplayName();
 			long ping = (long) (1000.0F * online[i].add(PingComponent.class).getPing());
 			temp.add(name);

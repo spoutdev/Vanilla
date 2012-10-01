@@ -57,13 +57,6 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 
 	@Override
 	public List<Message> getUpdateMessages(Entity entity) {
-		if (!entity.getTransform().isDirty()) {
-			return Collections.emptyList();
-		}
-		// You have to use the last known CLIENT transform
-		// The last tick transform delta is not enough to properly send update messages
-		// For most entities, an update takes more than one tick before an update message is ready
-		// Do NOT use entity.getLastTransform() because it is not a delta since last tick!
 		Transform prevTransform = entity.getTransform().getTransform();
 		Transform newTransform = entity.getTransform().getTransformLive();
 
@@ -81,9 +74,9 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		int deltaY = newY - lastY;
 		int deltaZ = newZ - lastZ;
 
-		List<Message> messages = new ArrayList<Message>(3);
+		List<Message> messages = new ArrayList<Message>();
 
-		boolean looked = !prevTransform.getRotation().equals(newTransform.getRotation());
+		boolean looked = !entity.getTransform().isRotationDirty();
 
 		/*
 		 * Two scenarios:

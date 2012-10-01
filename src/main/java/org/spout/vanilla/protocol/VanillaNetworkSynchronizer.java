@@ -298,13 +298,17 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			chunks = chunkInit.getChunks(c);
 		}
 
-		byte[] fullChunkData = ChunkInit.getChunkFullData(c);
+		if (chunks == null || !chunks.contains(c)) { 
 
-		byte[][] packetChunkData = new byte[16][];
-		packetChunkData[y] = fullChunkData;
-		ChunkDataMessage CCMsg = new ChunkDataMessage(x, z, false, new boolean[16], packetChunkData, null, player.getSession());
-		player.getSession().send(false, CCMsg);
+			byte[] fullChunkData = ChunkInit.getChunkFullData(c);
 
+			byte[][] packetChunkData = new byte[16][];
+			packetChunkData[y] = fullChunkData;
+			ChunkDataMessage CCMsg = new ChunkDataMessage(x, z, false, new boolean[16], packetChunkData, null, player.getSession());
+			player.getSession().send(false, CCMsg);
+
+		}
+		
 		return chunks;
 	}
 

@@ -78,7 +78,7 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 			EntityProtocol ep = player.getNetwork().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
 			if (ep != null) {
 				List<Message> messages = ep.getSpawnMessages(player);
-				List<? extends Player> observers = player.getChunk().getObservingPlayers();
+				Set<? extends Player> observers = player.getChunk().getObservingPlayers();
 				for (Player otherPlayer : observers) {
 					if (player == otherPlayer) {
 						continue;

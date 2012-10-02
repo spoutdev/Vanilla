@@ -62,6 +62,10 @@ import org.spout.api.util.OutwardIterator;
 
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
+import org.spout.vanilla.component.world.VanillaSky;
+import org.spout.vanilla.component.world.sky.NetherSky;
+import org.spout.vanilla.component.world.sky.NormalSky;
+import org.spout.vanilla.component.world.sky.TheEndSky;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.configuration.WorldConfigurationNode;
 import org.spout.vanilla.data.Difficulty;
@@ -84,6 +88,8 @@ import org.spout.vanilla.service.protection.SpawnProtection;
 import org.spout.vanilla.thread.SpawnLoaderThread;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.generator.VanillaGenerators;
+import org.spout.vanilla.world.generator.nether.NetherGenerator;
+import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 
 public class VanillaPlugin extends CommonPlugin {
 	private static final int LOADER_THREAD_COUNT = 16;
@@ -312,7 +318,14 @@ public class VanillaPlugin extends CommonPlugin {
 				world.createAndSpawnEntity(point, ObserverComponent.class, LoadOption.LOAD_GEN);
 			}
 
-			//TODO: Add sky back here.
+			if (world.getGenerator() instanceof NetherGenerator) {
+				world.getComponentHolder().add(NetherSky.class).setHasWeather(false);
+			} else if (world.getGenerator() instanceof TheEndGenerator) {
+				world.getComponentHolder().add(TheEndSky.class).setHasWeather(false);
+			} else {
+				world.getComponentHolder().add(NormalSky.class);
+			}
+			VanillaSky sky = world.getComponentHolder().get(VanillaSky.class);
 		}
 	}
 

@@ -34,13 +34,37 @@ import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.event.world.TimeUpdateEvent;
+import org.spout.vanilla.event.world.WeatherChangeEvent;
 import org.spout.vanilla.util.VanillaMathHelper;
 import org.spout.vanilla.world.WeatherSimulator;
 
 public class NormalSky extends VanillaSky {
-	public NormalSky(World world) {
-		super(world, true);
-		this.getWorld().setSkyLight((byte) 15);
+	public NormalSky() {
+		super();
+		setHasWeather(true);
+	}
+
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		getWorld().setSkyLight(MAX_SKY_LIGHT);
+	}
+
+	@Override
+	public void updateTime(long time) {
+		this.updateCelestialTime(time, 1.0f);
+	}
+
+	@Override
+	public void updateWeather(Weather oldWeather, Weather newWeather) {
+		WeatherChangeEvent event = Spout.getEventManager().callEvent(new WeatherChangeEvent(this, oldWeather, newWeather));
+		if (event.isCancelled()) {
+			return;
+		}
+		this.getWorld().getDataMap().put(VanillaData.WEATHER, newWeather);
+		for (Player player : this.getWorld().getPlayers()) {
+			player.getNetworkSynchronizer().callProtocolEvent(event);
+		}
 	}
 
 	/**
@@ -59,23 +83,6 @@ public class NormalSky extends VanillaSky {
 
 		TimeUpdateEvent event = new TimeUpdateEvent(getWorld(), time);
 		for (Player player : getWorld().getPlayers()) {
-			player.getNetworkSynchronizer().callProtocolEvent(event);
-		}
-	}
-
-	@Override
-	public void updateTime(long time) {
-		this.updateCelestialTime(time, 1.0f);
-	}
-
-	@Override
-	public void updateWeather(Weather oldWeather, Weather newWeather) {
-		org.spout.vanilla.event.world.WeatherChangeEvent event = Spout.getEventManager().callEvent(new org.spout.vanilla.event.world.WeatherChangeEvent(this, oldWeather, newWeather));
-		if (event.isCancelled()) {
-			return;
-		}
-		this.getWorld().getDataMap().put(VanillaData.WEATHER, newWeather);
-		for (Player player : this.getWorld().getPlayers()) {
 			player.getNetworkSynchronizer().callProtocolEvent(event);
 		}
 	}

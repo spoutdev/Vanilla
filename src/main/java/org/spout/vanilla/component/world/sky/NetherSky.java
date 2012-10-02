@@ -32,9 +32,15 @@ import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.data.Weather;
 
 public class NetherSky extends VanillaSky {
-	public NetherSky(World world) {
-		super(world, false);
-		this.getWorld().setSkyLight(MIN_SKY_LIGHT);
+	public NetherSky() {
+		super();
+		setHasWeather(false);
+	}
+
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		getWorld().setSkyLight(MIN_SKY_LIGHT);
 	}
 
 	@Override

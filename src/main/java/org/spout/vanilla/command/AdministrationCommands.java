@@ -51,6 +51,7 @@ import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.configuration.OpConfiguration;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.Times;
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -211,26 +212,6 @@ public class AdministrationCommands {
 		}
 	}
 
-	public enum Times {
-		DAWN(0),
-		DAY(6000),
-		DUSK(12000),
-		NIGHT(18000);
-		private int time;
-
-		Times(int time) {
-			this.time = time;
-		}
-
-		public int getTime() {
-			return time;
-		}
-
-		public static Times get(String name) {
-			return valueOf(name.toUpperCase());
-		}
-	}
-
 	@Command(aliases = {"time"}, usage = "<add|set> <0-24000|day|night|dawn|dusk> [world]", desc = "Set the time of the server", min = 2, max = 3)
 	@CommandPermissions("vanilla.command.time")
 	public void time(CommandContext args, CommandSource source) throws CommandException {
@@ -270,7 +251,7 @@ public class AdministrationCommands {
 
 		VanillaSky sky = VanillaSky.getSky(world);
 		if (sky == null) {
-			throw new CommandException("The world '" + args.getString(2) + "' is not available.");
+			throw new CommandException("The sky for " + world.getName() + " is not available.");
 		}
 
 		sky.setTime(relative ? (sky.getTime() + time) : time);

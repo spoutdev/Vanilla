@@ -24,30 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.world.sky;
+package org.spout.vanilla.data;
 
-import org.spout.api.geo.World;
+public enum Times {
+	DAWN(0),
+	DAY(6000),
+	DUSK(12000),
+	NIGHT(18000);
+	private int time;
 
-import org.spout.vanilla.component.world.VanillaSky;
-import org.spout.vanilla.data.Weather;
-
-public class TheEndSky extends VanillaSky {
-	public TheEndSky() {
-		super();
-		setHasWeather(false);
+	Times(int time) {
+		this.time = time;
 	}
 
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getWorld().setSkyLight(MIN_SKY_LIGHT);
+	public int getTime() {
+		return time;
 	}
 
-	@Override
-	protected void updateTime(long time) {
-	}
-
-	@Override
-	public void updateWeather(Weather oldWeather, Weather newWeather) {
+	public static Times get(String name) {
+		return valueOf(name.toUpperCase());
 	}
 }

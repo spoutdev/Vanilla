@@ -29,6 +29,7 @@ package org.spout.vanilla.component.world;
 import java.util.HashMap;
 
 import org.spout.api.component.Component;
+import org.spout.api.component.components.WorldComponent;
 import org.spout.api.geo.World;
 
 import org.spout.vanilla.data.Weather;
@@ -37,41 +38,28 @@ import org.spout.vanilla.world.WeatherSimulator;
 /**
  * Represents a sky in Vanilla
  */
-public abstract class VanillaSky extends Component {
+public abstract class VanillaSky extends WorldComponent {
 	public static final byte MIN_SKY_LIGHT = 4;
 	public static final byte MAX_SKY_LIGHT = 15;
 	public static final byte SKY_LIGHT_RANGE = MAX_SKY_LIGHT - MIN_SKY_LIGHT;
 	protected long maxTime, time = 0, countdown = 20, rate;
 	private Long setTime;
-	private final World world;
 	private WeatherSimulator weather;
 	private static final HashMap<World, VanillaSky> skies = new HashMap<World, VanillaSky>();
 
-	public VanillaSky(World world, boolean hasWeather, long maxTime, long rate) {
-		this.maxTime = maxTime;
-		this.weather = hasWeather ? new WeatherSimulator(this) : null;
-		this.rate = rate;
-		this.world = world;
+	public VanillaSky() {
+		maxTime = 24000;
+		rate = 20;
 	}
 
-	public VanillaSky(World world, boolean hasWeather, long maxTime) {
-		this(world, hasWeather, maxTime, 20);
+	@Override
+	public void onAttached() {
+		setSky(getWorld(), this);
 	}
 
-	public VanillaSky(World world, boolean hasWeather) {
-		this(world, hasWeather, 24000, 20);
-	}
-
-	public VanillaSky(World world) {
-		this(world, false, 24000, 20);
-	}
-
-	public void onAttach() {
-		setSky(this.world, this);
-	}
-
-	public void onDetach() {
-		setSky(this.world, null);
+	@Override
+	public void onDetached() {
+		setSky(getWorld(), null);
 	}
 
 	@Override
@@ -92,10 +80,10 @@ public abstract class VanillaSky extends Component {
 			countdown = 20;
 			updateTime(time);
 		}
-		// Weather
-		if (this.hasWeather()) {
-			this.weather.onTick(dt);
-		}
+//		// Weather TODO this thing is possessed and needs to be fixed.
+//		if (this.hasWeather()) {
+//			this.weather.onTick(dt);
+//		}
 	}
 
 	/**
@@ -213,7 +201,7 @@ public abstract class VanillaSky extends Component {
 	 * @return world
 	 */
 	public World getWorld() {
-		return this.world;
+		return getHolder().getWorld();
 	}
 
 	public static void setSky(World world, VanillaSky sky) {

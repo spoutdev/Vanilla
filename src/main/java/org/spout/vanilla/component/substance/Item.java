@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.substance;
 
-import org.spout.api.component.components.EntityComponent;
 import org.spout.api.data.Data;
 import org.spout.api.inventory.ItemStack;
 
@@ -40,6 +39,7 @@ public class Item extends VanillaEntity {
 	public void onAttached() {
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
 	}
+
 	@Override
 	public boolean canTick() {
 		return true;

@@ -34,7 +34,6 @@ import org.spout.api.entity.Entity;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.entity.EntityCollectItemEvent;
 
 /**
@@ -46,6 +45,9 @@ public class PickupItemComponent extends EntityComponent {
 
 	@Override
 	public boolean canTick() {
+		if (!getHolder().getTransform().isPositionDirty()) {
+			return false;
+		}
 		nearbyEntities = getHolder().getWorld().getNearbyEntities(getHolder(), DISTANCE);
 		return !nearbyEntities.isEmpty();
 	}

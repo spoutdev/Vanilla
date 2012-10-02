@@ -34,6 +34,7 @@ import org.spout.api.util.config.ConfigurationHolderConfiguration;
 import org.spout.api.util.config.yaml.YamlConfiguration;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 
 public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	// General
@@ -73,15 +74,16 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	// Redstone-specific
 	public static final ConfigurationHolder REDSTONE_MIN_RANGE = new ConfigurationHolder(0, "redstone", "redstone-min-power-range");
 	public static final ConfigurationHolder REDSTONE_MAX_RANGE = new ConfigurationHolder(15, "redstone", "redstone-max-power-range");
-	public static final OpConfiguration OPS = new OpConfiguration(VanillaPlugin.getInstance().getDataFolder());
-	public static final WorldConfiguration WORLDS = new WorldConfiguration(VanillaPlugin.getInstance().getDataFolder());
-	public static final BiomeConfiguration BIOMES = new BiomeConfiguration(VanillaPlugin.getInstance().getDataFolder());
 	// Encryption
 	public static final ConfigurationHolder ENCRYPT_KEY_ALGORITHM = new ConfigurationHolder("RSA", "encrypt", "key-algorithm");
 	public static final ConfigurationHolder ENCRYPT_KEY_SIZE = new ConfigurationHolder(1024, "encrypt", "key-size");
 	public static final ConfigurationHolder ENCRYPT_KEY_PADDING = new ConfigurationHolder("PKCS1", "encrypt", "key-padding");
 	public static final ConfigurationHolder ENCRYPT_STREAM_ALGORITHM = new ConfigurationHolder("AES", "encrypt", "stream-algorithm");
 	public static final ConfigurationHolder ENCRYPT_STREAM_WRAPPER = new ConfigurationHolder("CFB8", "encrypt", "stream-wrapper");
+	// sub-configs
+	public static final OpConfiguration OPS = new OpConfiguration(VanillaPlugin.getInstance().getDataFolder());
+	public static final WorldConfiguration WORLDS = new WorldConfiguration(VanillaPlugin.getInstance().getDataFolder());
+	public static final YamlConfiguration BIOMES = new YamlConfiguration(new File(VanillaPlugin.getInstance().getDataFolder(), "biomes.yml"));
 
 	public VanillaConfiguration(File dataFolder) {
 		super(new YamlConfiguration(new File(dataFolder, "config.yml")));
@@ -89,7 +91,7 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 
 	@Override
 	public void load() throws ConfigurationException {
-		BIOMES.load();
+		VanillaBiomes.load(BIOMES);
 		BIOMES.save();
 		OPS.load();
 		OPS.save();
@@ -101,7 +103,7 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 
 	@Override
 	public void save() throws ConfigurationException {
-		BIOMES.save();
+		VanillaBiomes.save(BIOMES);
 		OPS.save();
 		WORLDS.save();
 		super.save();

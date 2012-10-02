@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.world.generator.normal.populator;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import org.spout.api.generator.GeneratorPopulator;
@@ -33,7 +35,9 @@ import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.MaterialRegistry;
 import org.spout.api.math.Vector3;
+import org.spout.api.util.config.ConfigurationNode;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -97,8 +101,10 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 	}
 
 	public static abstract class GroundCoverLayer {
-		private final BlockMaterial aboveSea;
-		private final BlockMaterial bellowSea;
+		private static final Map<String, GroundCoverLayerFactory> FACTORIES =
+				new HashMap<String, GroundCoverLayerFactory>();
+		private BlockMaterial aboveSea;
+		private BlockMaterial bellowSea;
 
 		public GroundCoverLayer(BlockMaterial aboveSea, BlockMaterial bellowSea) {
 			this.aboveSea = aboveSea;
@@ -110,13 +116,56 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 		public BlockMaterial getMaterial(boolean isBellowSea) {
 			return isBellowSea ? bellowSea : aboveSea;
 		}
+
+		public abstract String getTypeName();
+
+		public void load(ConfigurationNode node) {
+			final ConfigurationNode materials = node.getNode("materials");
+			aboveSea = (BlockMaterial) MaterialRegistry.get(materials.getNode("above-sea").
+					getString(aboveSea.getDisplayName()));
+			bellowSea = (BlockMaterial) MaterialRegistry.get(materials.getNode("bellow-sea").
+					getString(bellowSea.getDisplayName()));
+		}
+
+		public void save(ConfigurationNode node) {
+			node.getNode("type").setValue(getTypeName());
+			final ConfigurationNode materials = node.getNode("materials");
+			materials.getNode("above-sea").setValue(aboveSea.getDisplayName());
+			materials.getNode("bellow-sea").setValue(bellowSea.getDisplayName());
+		}
+
+		public static void register(String name, GroundCoverLayerFactory facory) {
+			FACTORIES.put(name, facory);
+		}
+
+		public static GroundCoverLayer loadNew(ConfigurationNode node) {
+			return FACTORIES.get(node.getNode("type").getString()).make(node);
+		}
 	}
 
 	public static class GroundCoverVariableLayer extends GroundCoverLayer {
-		private final byte minDepth;
-		private final byte maxDepth;
+		private byte minDepth;
+		private byte maxDepth;
 
-		public GroundCoverVariableLayer(BlockMaterial aboveSea, BlockMaterial bellowSea, byte minDepth, byte maxDepth) {
+		static {
+			register("variable", new GroundCoverLayerFactory() {
+				@Override
+				public GroundCoverLayer make(ConfigurationNode node) {
+					final ConfigurationNode materials = node.getNode("materials");
+					final BlockMaterial aboveSea = (BlockMaterial) MaterialRegistry.
+							get(materials.getNode("above-sea").getString());
+					final BlockMaterial bellowSea = (BlockMaterial) MaterialRegistry.
+							get(materials.getNode("bellow-sea").getString());
+					final ConfigurationNode depthNode = node.getNode("depth");
+					final byte minDepth = depthNode.getNode("min").getByte();
+					final byte maxDepth = depthNode.getNode("max").getByte();
+					return new GroundCoverVariableLayer(aboveSea, bellowSea, minDepth, maxDepth);
+				}
+			});
+		}
+
+		public GroundCoverVariableLayer(BlockMaterial aboveSea, BlockMaterial bellowSea,
+				byte minDepth, byte maxDepth) {
 			super(aboveSea, bellowSea);
 			this.minDepth = minDepth;
 			this.maxDepth = maxDepth;
@@ -126,12 +175,49 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 		public byte getDepth(Random random) {
 			return (byte) (random.nextInt(maxDepth - minDepth + 1) + minDepth);
 		}
+
+		@Override
+		public String getTypeName() {
+			return "variable";
+		}
+
+		@Override
+		public void load(ConfigurationNode node) {
+			super.load(node);
+			final ConfigurationNode depthNode = node.getNode("depth");
+			minDepth = depthNode.getNode("min").getByte(minDepth);
+			maxDepth = depthNode.getNode("max").getByte(maxDepth);
+		}
+
+		@Override
+		public void save(ConfigurationNode node) {
+			super.save(node);
+			final ConfigurationNode depthNode = node.getNode("depth");
+			depthNode.getNode("min").setValue(minDepth);
+			depthNode.getNode("max").setValue(maxDepth);
+		}
 	}
 
 	public static class GroundCoverUniformLayer extends GroundCoverLayer {
-		private final byte depth;
+		private byte depth;
 
-		public GroundCoverUniformLayer(BlockMaterial aboveSea, BlockMaterial bellowSea, byte depth) {
+		static {
+			register("uniform", new GroundCoverLayerFactory() {
+				@Override
+				public GroundCoverLayer make(ConfigurationNode node) {
+					final ConfigurationNode materials = node.getNode("materials");
+					final BlockMaterial aboveSea = (BlockMaterial) MaterialRegistry.
+							get(materials.getNode("above-sea").getString());
+					final BlockMaterial bellowSea = (BlockMaterial) MaterialRegistry.
+							get(materials.getNode("bellow-sea").getString());
+					final byte depth = node.getNode("depth").getByte();
+					return new GroundCoverUniformLayer(aboveSea, bellowSea, depth);
+				}
+			});
+		}
+
+		public GroundCoverUniformLayer(BlockMaterial aboveSea, BlockMaterial bellowSea,
+				byte depth) {
 			super(aboveSea, bellowSea);
 			this.depth = depth;
 		}
@@ -140,5 +226,26 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 		public byte getDepth(Random random) {
 			return depth;
 		}
+
+		@Override
+		public String getTypeName() {
+			return "uniform";
+		}
+
+		@Override
+		public void load(ConfigurationNode node) {
+			super.load(node);
+			depth = node.getNode("depth").getByte(depth);
+		}
+
+		@Override
+		public void save(ConfigurationNode node) {
+			super.save(node);
+			node.getNode("depth").setValue(depth);
+		}
+	}
+
+	public static interface GroundCoverLayerFactory {
+		public GroundCoverLayer make(ConfigurationNode node);
 	}
 }

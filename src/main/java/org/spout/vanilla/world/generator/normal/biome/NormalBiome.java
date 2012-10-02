@@ -29,6 +29,10 @@ package org.spout.vanilla.world.generator.normal.biome;
 import java.util.Random;
 
 import org.spout.api.generator.biome.Decorator;
+import org.spout.api.util.config.ConfigurationNode;
+import org.spout.api.util.config.annotated.Load;
+import org.spout.api.util.config.annotated.Save;
+import org.spout.api.util.config.annotated.Setting;
 
 import org.spout.vanilla.material.block.plant.TallGrass;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
@@ -40,36 +44,38 @@ import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public abstract class NormalBiome extends VanillaBiome {
 	// elevation values
+	@Setting
 	protected float min;
+	@Setting
 	protected float max;
 	// ground cover
 	protected GroundCoverLayer[] groundCover = new GroundCoverLayer[0];
-
+	
 	protected NormalBiome(int biomeId, Decorator... decorators) {
 		super(biomeId, decorators);
 	}
-
+	
 	protected void setMinMax(float min, float max) {
 		this.min = min;
 		this.max = max;
 	}
-
+	
 	public float getMin() {
 		return min;
 	}
-
+	
 	public float getMax() {
 		return max;
 	}
-
+	
 	protected void setTopCover(GroundCoverLayer[] groundCover) {
 		this.groundCover = groundCover;
 	}
-
+	
 	public GroundCoverLayer[] getGroundCover() {
 		return groundCover;
 	}
-
+	
 	public static class NormalTreeWGOFactory implements TreeWGOFactory {
 		@Override
 		public TreeObject make(Random random) {
@@ -79,7 +85,7 @@ public abstract class NormalBiome extends VanillaBiome {
 				return VanillaObjects.SMALL_OAK_TREE;
 			}
 		}
-
+		
 		@Override
 		public byte amount(Random random) {
 			if (random.nextInt(10) == 0) {
@@ -88,11 +94,35 @@ public abstract class NormalBiome extends VanillaBiome {
 			return 0;
 		}
 	}
-
+	
 	public static class NormalTallGrassFactory implements TallGrassFactory {
 		@Override
 		public TallGrass make(Random random) {
 			return TallGrass.TALL_GRASS;
+		}
+	}
+	
+	@Load
+	@SuppressWarnings("unused")
+	private void load(ConfigurationNode node) {
+		final ConfigurationNode groundCoverNode = node.getNode("ground-cover");
+		final int count = groundCoverNode.getKeys(false).size();
+		if (count == 0) {
+			save(node);
+			return;
+		}
+		groundCover = new GroundCoverLayer[count];
+		for (int i = 0; i < count; i++) {
+			groundCover[i] = GroundCoverLayer.loadNew(groundCoverNode.getNode(Integer.toString(i + 1)));
+		}
+	}
+	
+	@Save
+	private void save(ConfigurationNode node) {
+		final ConfigurationNode groundCoverNode = node.getNode("ground-cover");
+		byte number = 0;
+		for (GroundCoverLayer layer : groundCover) {
+			layer.save(groundCoverNode.getNode(Byte.toString(++number)));
 		}
 	}
 }

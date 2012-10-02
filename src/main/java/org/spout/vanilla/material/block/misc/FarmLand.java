@@ -27,7 +27,8 @@
 package org.spout.vanilla.material.block.misc;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.RandomBlockMaterial;
+import org.spout.api.geo.cuboid.Region;
+import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
@@ -40,7 +41,7 @@ import org.spout.vanilla.material.block.Crop;
 import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.util.VanillaBlockUtil;
 
-public class FarmLand extends VanillaBlockMaterial implements InitializableMaterial, RandomBlockMaterial {
+public class FarmLand extends VanillaBlockMaterial implements InitializableMaterial, DynamicMaterial {
 	private static final EffectRange WATER_CHECK_RANGE = new CuboidEffectRange(-4, 0, -4, 4, 1, 4);
 	private static final EffectRange CROP_CHECK_RANGE = new CuboidEffectRange(-1, 1, -1, 1, 1, 1);
 
@@ -95,12 +96,27 @@ public class FarmLand extends VanillaBlockMaterial implements InitializableMater
 	}
 
 	@Override
-	public void onRandomTick(Block block) {
+	public EffectRange getDynamicRange(){
+		return EffectRange.NEIGHBORS;
+	}
+
+	@Override
+	public void onPlacement(Block b, Region r, long currentTime){
+		//TODO : Delay before return to dirt ?
+		b.dynamicUpdate(30000 + currentTime);
+	}
+
+	@Override
+	public void onDynamicUpdate(Block block, Region region, long updateTime, int data){
 		if (VanillaBlockUtil.isRaining(block) || hasWaterNearby(block)) {
 			block.setData(7);
+			//TODO : Delay before return to dirt ?
+			block.dynamicUpdate(updateTime + 30000);
 		} else if (this.isWet(block)) {
 			// gradually reduce wet state
 			block.setData(block.getData() - 1);
+			//TODO : Delay before return to dirt ?
+			block.dynamicUpdate(updateTime + 30000);
 		} else if (!hasCropsNearby(block)) {
 			// not wet and has no crops connecting to this farm land, turn this block into dirt
 			block.setMaterial(VanillaMaterials.DIRT);

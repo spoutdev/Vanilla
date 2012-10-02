@@ -27,10 +27,11 @@
 package org.spout.vanilla.material.block.misc;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.RandomBlockMaterial;
+import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
-
+import org.spout.api.material.range.EffectRange;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
@@ -38,7 +39,7 @@ import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
-public class Snow extends GroundAttachable implements RandomBlockMaterial, InitializableMaterial {
+public class Snow extends GroundAttachable implements DynamicMaterial, InitializableMaterial {
 	private static final byte MIN_MELT_LIGHT = 11;
 
 	public Snow(String name, int id) {
@@ -71,14 +72,27 @@ public class Snow extends GroundAttachable implements RandomBlockMaterial, Initi
 	}
 
 	@Override
-	public void onRandomTick(Block block) {
+	public EffectRange getDynamicRange() {
+		return EffectRange.THIS;
+	}
+
+	@Override
+	public void onPlacement(Block b, Region r, long currentTime){
+		//TODO : Delay before next check ?
+		b.dynamicUpdate(60000 + currentTime);
+	}
+
+	@Override
+	public void onDynamicUpdate(Block block, Region region, long updateTime, int data){
 		if (block.getBlockLight() > MIN_MELT_LIGHT) {
-			short data = block.getData();
-			if (data > 0) {
-				block.setData(data - 1);
+			short dataBlock = block.getData();
+			if (dataBlock > 0) {
+				block.setData(dataBlock - 1);
 			} else {
 				block.setMaterial(VanillaMaterials.AIR);
 			}
 		}
+		//TODO : Delay before next check ?
+		block.dynamicUpdate(updateTime + 60000);
 	}
 }

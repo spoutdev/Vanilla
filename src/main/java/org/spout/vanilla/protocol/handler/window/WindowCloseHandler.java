@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.protocol.handler.window;
 
-import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
@@ -39,7 +38,6 @@ public final class WindowCloseHandler extends MessageHandler<WindowCloseMessage>
 		if (!session.hasPlayer()) {
 			return;
 		}
-		Player player = session.getPlayer();
-		player.detach(Window.class);
+		session.getPlayer().detach(Window.class);
 	}
 }

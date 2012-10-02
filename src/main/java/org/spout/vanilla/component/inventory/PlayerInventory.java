@@ -28,8 +28,6 @@ package org.spout.vanilla.component.inventory;
 
 import java.io.Serializable;
 
-import org.spout.api.component.components.EntityComponent;
-
 import org.spout.vanilla.inventory.player.PlayerArmorInventory;
 import org.spout.vanilla.inventory.player.PlayerCraftingGrid;
 import org.spout.vanilla.inventory.player.PlayerMainInventory;

@@ -74,7 +74,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 		Component.addDependency(Window.class, Human.class);
 		Component.addDependency(DefaultWindow.class, Human.class);
 	}
-	
+
 	@Override
 	public void onAttached() {
 		if (!(getHolder() instanceof Player)) {
@@ -129,7 +129,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 	public void close() {
 		opened = false;
 		//if (getHuman().isSurvival()) {
-			//dropCursorItem();
+		//dropCursorItem();
 		//}
 		callProtocolEvent(new WindowCloseEvent(this));
 	}
@@ -419,7 +419,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 	public void setCursorItem(ItemStack cursorItem) {
 		this.cursorItem = cursorItem;
 	}
-	
+
 	private void callProtocolEvent(ProtocolEvent event) {
 		if (getPlayer() == null) {
 			if (Spout.debugMode()) {

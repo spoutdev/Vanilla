@@ -129,7 +129,7 @@ public class VanillaObjects {
 	public static WorldGeneratorObject byName(String name) {
 		return BY_NAME.get(name.toLowerCase());
 	}
-	
+
 	public static Collection<WorldGeneratorObject> getObjects() {
 		return BY_NAME.values();
 	}

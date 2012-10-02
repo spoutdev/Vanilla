@@ -30,6 +30,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.component.player.PingComponent;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionMessage;
 
@@ -40,12 +41,12 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 			return;
 		}
 		Player holder = session.getPlayer();
-		
+
 		holder.add(PingComponent.class).refresh();
 
 		Point newPosition = new Point(message.getPosition(), holder.getWorld());
 		Point position = holder.getTransform().getPosition();
-		
+
 		if (holder.getNetworkSynchronizer().isTeleportPending()) {
 			if (position.getX() == newPosition.getX() && position.getZ() == newPosition.getZ()) {
 				holder.getNetworkSynchronizer().clearTeleportPending();

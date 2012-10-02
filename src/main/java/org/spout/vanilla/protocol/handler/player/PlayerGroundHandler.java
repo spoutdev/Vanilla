@@ -41,11 +41,8 @@ public class PlayerGroundHandler extends MessageHandler<PlayerGroundMessage> {
 		}
 
 		Player player = session.getPlayer();
-		Human human = player.get(Human.class);
-
-		if (human != null) {
-			human.setOnGround(message.isOnGround());
-		}
+		Human human = player.add(Human.class);
+		human.setOnGround(message.isOnGround());
 		//TODO check and apply fall damage!
 	}
 }

@@ -47,8 +47,8 @@ import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
-import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.world.generator.VanillaSingleBiomeGenerator;
+import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 
 public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 	private static final int SEA_LEVEL = 63;

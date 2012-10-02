@@ -28,7 +28,6 @@ package org.spout.vanilla.component.player;
 
 import java.util.Random;
 
-import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
@@ -97,7 +96,7 @@ public class PingComponent extends EntityComponent {
 			}
 		}
 	}
-	
+
 	/**
 	 * Re-sets the short timeout timer when any data is received from the client
 	 */

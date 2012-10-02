@@ -38,7 +38,6 @@ import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Tool;

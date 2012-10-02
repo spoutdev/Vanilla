@@ -42,7 +42,7 @@ public class EnderDragonEntityProtocol extends BasicMobEntityProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 16,  entity.add(HealthComponent.class).getHealth()));
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 16, entity.add(HealthComponent.class).getHealth()));
 		return parameters;
 	}
 }

@@ -40,8 +40,7 @@ public class ServerListPingHandler extends MessageHandler<ServerListPingMessage>
 	@Override
 	public void handleServer(Session session, ServerListPingMessage message) {
 		Server server = (Server) Spout.getEngine();
-		ServerListPingEvent event = new ServerListPingEvent(session.getAddress().getAddress(), VanillaConfiguration.MOTD.getString(), server.getOnlinePlayers().length, server.getMaxPlayers());
-		Spout.getEngine().getEventManager().callEvent(event);
+		ServerListPingEvent event = Spout.getEventManager().callEvent(new ServerListPingEvent(session.getAddress().getAddress(), VanillaConfiguration.MOTD.getString(), server.getOnlinePlayers().length, server.getMaxPlayers()));
 		session.send(false, true, new PlayerKickMessage(event.getMessage()));
 	}
 }

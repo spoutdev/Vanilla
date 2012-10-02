@@ -41,7 +41,7 @@ public class PlayerListEvent extends Event implements ProtocolEvent {
 		this.online = online;
 		this.playerDisplayName = playerDisplayName;
 	}
-	
+
 	/**
 	 * Gets the name of the player that this event relates to
 	 * @return the player's name
@@ -57,7 +57,7 @@ public class PlayerListEvent extends Event implements ProtocolEvent {
 	public boolean getOnline() {
 		return this.online;
 	}
-	
+
 	/**
 	 * Gets the network delay between the server and the player
 	 * @return true if the player is online

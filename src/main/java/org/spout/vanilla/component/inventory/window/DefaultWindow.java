@@ -49,5 +49,4 @@ public class DefaultWindow extends Window {
 	public void open() {
 		throw new UnsupportedOperationException("A player's inventory window cannot be opened from the server.");
 	}
-
 }

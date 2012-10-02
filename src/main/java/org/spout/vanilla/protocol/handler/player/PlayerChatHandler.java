@@ -46,25 +46,25 @@ public final class PlayerChatHandler extends MessageHandler<PlayerChatMessage> {
 		text = text.trim();
 
 		if (text.length() > 100) {
-			session.disconnect("Chat message is too long.");
-		} else {
-			String command;
-			ChatArguments args;
-			if (text.startsWith("/")) {
-				int spaceIndex = text.indexOf(" ");
-				if (spaceIndex != -1) {
-					command = text.substring(1, spaceIndex);
-					text = text.substring(spaceIndex + 1);
-				} else {
-					command = text.substring(1);
-					text = "";
-				}
-			} else {
-				command = "say";
-			}
-
-			args = ChatArguments.fromString(text, VanillaStyleHandler.ID);
-			player.processCommand(command, args);
+			//session.disconnect("Chat message is too long."); TODO Don't disconnect people...
+			text = text.substring(0, 99);
 		}
+		String command;
+		ChatArguments args;
+		if (text.startsWith("/")) {
+			int spaceIndex = text.indexOf(" ");
+			if (spaceIndex != -1) {
+				command = text.substring(1, spaceIndex);
+				text = text.substring(spaceIndex + 1);
+			} else {
+				command = text.substring(1);
+				text = "";
+			}
+		} else {
+			command = "say";
+		}
+
+		args = ChatArguments.fromString(text, VanillaStyleHandler.ID);
+		player.processCommand(command, args);
 	}
 }

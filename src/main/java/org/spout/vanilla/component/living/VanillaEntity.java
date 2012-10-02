@@ -31,6 +31,7 @@ import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.component.misc.VanillaPhysicsComponent;
 
 public abstract class VanillaEntity extends EntityComponent {
 	@Override
@@ -38,6 +39,7 @@ public abstract class VanillaEntity extends EntityComponent {
 		Entity holder = getHolder();
 		holder.add(HeadComponent.class);
 		holder.add(HealthComponent.class);
+		holder.add(VanillaPhysicsComponent.class);
 	}
 
 	public HeadComponent getHead() {
@@ -46,5 +48,9 @@ public abstract class VanillaEntity extends EntityComponent {
 
 	public HealthComponent getHealth() {
 		return getHolder().add(HealthComponent.class);
+	}
+
+	public VanillaPhysicsComponent getPhysics() {
+		return getHolder().add(VanillaPhysicsComponent.class);
 	}
 }

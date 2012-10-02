@@ -35,6 +35,7 @@ import org.spout.api.Spout;
 import org.spout.api.component.Component;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
+
 import org.spout.vanilla.event.player.network.PlayerListEvent;
 
 public class PlayerListComponent extends EntityComponent {

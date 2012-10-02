@@ -49,10 +49,10 @@ import org.spout.api.material.MaterialRegistry;
 import org.spout.api.protocol.NetworkSynchronizer;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.hostile.EnderDragon;
-import org.spout.vanilla.component.living.neutral.Enderman;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.component.living.hostile.EnderDragon;
+import org.spout.vanilla.component.living.neutral.Enderman;
 import org.spout.vanilla.component.substance.MovingBlock;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;

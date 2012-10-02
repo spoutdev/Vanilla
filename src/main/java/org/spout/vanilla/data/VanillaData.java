@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.data;
 
-import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;

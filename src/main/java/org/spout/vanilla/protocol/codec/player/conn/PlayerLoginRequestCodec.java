@@ -69,7 +69,6 @@ public final class PlayerLoginRequestCodec extends MessageCodec<PlayerLoginReque
 	public ChannelBuffer encodeToClient(PlayerLoginRequestMessage message) {
 		PlayerLoginRequestMessage server = message;
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		System.out.println(server.toString());
 		buffer.writeInt(server.getId());
 		ChannelBufferUtils.writeString(buffer, server.getWorldType());
 		buffer.writeByte(server.getGameMode());

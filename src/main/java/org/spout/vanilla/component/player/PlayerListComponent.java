@@ -32,6 +32,7 @@ import java.util.LinkedHashMap;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
+import org.spout.api.component.Component;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.vanilla.event.player.network.PlayerListEvent;
@@ -43,6 +44,10 @@ public class PlayerListComponent extends EntityComponent {
 	private final HashSet<String> temp = new HashSet<String>();
 	private float pollPeriod = 10;
 	private float timer = 0;
+
+	static {
+		Component.addDependency(PlayerListComponent.class, PingComponent.class);
+	}
 
 	@Override
 	public void onAttached() {

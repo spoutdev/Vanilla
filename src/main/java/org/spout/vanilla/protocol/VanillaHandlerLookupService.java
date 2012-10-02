@@ -47,7 +47,6 @@ import org.spout.vanilla.protocol.handler.player.PlayerTabCompleteHandler;
 import org.spout.vanilla.protocol.handler.player.PlayerYawHandler;
 import org.spout.vanilla.protocol.handler.player.conn.PlayerHandshakeHandler;
 import org.spout.vanilla.protocol.handler.player.conn.PlayerKickHandler;
-import org.spout.vanilla.protocol.handler.player.conn.PlayerLoginRequestHandler;
 import org.spout.vanilla.protocol.handler.player.conn.PlayerPingHandler;
 import org.spout.vanilla.protocol.handler.window.WindowClickHandler;
 import org.spout.vanilla.protocol.handler.window.WindowCloseHandler;
@@ -69,7 +68,6 @@ import org.spout.vanilla.protocol.msg.player.PlayerStatusMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerTabCompleteMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerHandshakeMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerKickMessage;
-import org.spout.vanilla.protocol.msg.player.conn.PlayerLoginRequestMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerPingMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionYawMessage;
@@ -83,7 +81,6 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 	public VanillaHandlerLookupService() {
 		try {
 			bind(PlayerHandshakeMessage.class, PlayerHandshakeHandler.class);
-			bind(PlayerLoginRequestMessage.class, PlayerLoginRequestHandler.class);
 			bind(PlayerChatMessage.class, PlayerChatHandler.class);
 			bind(PlayerGroundMessage.class, PlayerGroundHandler.class);
 			bind(PlayerPositionMessage.class, PlayerPositionHandler.class);

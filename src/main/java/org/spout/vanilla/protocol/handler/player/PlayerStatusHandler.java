@@ -26,21 +26,15 @@
  */
 package org.spout.vanilla.protocol.handler.player;
 
-import java.util.List;
 import java.util.Set;
 
 import org.spout.api.Spout;
-import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.event.Event;
 import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.protocol.EntityProtocol;
-import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.event.player.PlayerRespawnEvent;
@@ -51,51 +45,41 @@ import org.spout.vanilla.source.HealthChangeCause;
 public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 	@Override
 	public void handleServer(Session session, PlayerStatusMessage message) {
-		// TODO - need check if player has already connected
 		if (message.getStatus() == PlayerStatusMessage.INITIAL_SPAWN) {
-			playerConnect(session, (String) session.getDataMap().get("username"));
+			if (PlayerConnectEvent.getHandlerList().getRegisteredListeners().length > 0) {
+				Spout.getEventManager().callEvent(new PlayerConnectEvent(session, (String) session.getDataMap().get("username")));
+			}
+			if (Spout.getEngine().debugMode()) {
+				Spout.getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
+			}
 		} else if (message.getStatus() == PlayerStatusMessage.RESPAWN) {
 			if (!session.hasPlayer()) {
 				return;
 			}
-
 			Player player = session.getPlayer();
-			PlayerRespawnEvent event = new PlayerRespawnEvent(player, player.getTransform().getPosition().getWorld().getSpawnPoint().getPosition());
-			Spout.getEngine().getEventManager().callEvent(event);
+			Point point = player.getWorld().getSpawnPoint().getPosition();
+			if (PlayerRespawnEvent.getHandlerList().getRegisteredListeners().length > 0) {
+				PlayerRespawnEvent event = Spout.getEventManager().callEvent(new PlayerRespawnEvent(player, point));
 
-			if (event.isCancelled()) {
-				return;
+				if (event.isCancelled()) {
+					return;
+				}
+				point = event.getPoint();
 			}
-
 			//Set position for the server
-			Point point = event.getPoint();
-			player.getTransform().setPosition(point);
+			player.teleport(point);
 			player.getNetworkSynchronizer().setRespawned();
 			Human human = player.add(Human.class);
-			human.getHolder().get(HealthComponent.class).setHealth(20, HealthChangeCause.SPAWN);
+			human.getHealth().setHealth(human.getHealth().getMaxHealth(), HealthChangeCause.SPAWN);
 
 			//send spawn to everyone else
-			EntityProtocol ep = player.getNetwork().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
-			if (ep != null) {
-				List<Message> messages = ep.getSpawnMessages(player);
-				Set<? extends Player> observers = player.getChunk().getObservingPlayers();
-				for (Player otherPlayer : observers) {
-					if (player == otherPlayer) {
-						continue;
-					}
-					for (Message smessage : messages) {
-						otherPlayer.getSession().send(false, smessage);
-					}
+			Set<? extends Player> observers = player.getChunk().getObservingPlayers();
+			for (Player otherPlayer : observers) {
+				if (player == otherPlayer) {
+					continue;
 				}
+				otherPlayer.getNetworkSynchronizer().syncEntity(player, true, false, false);
 			}
-		}
-	}
-
-	public static void playerConnect(Session session, String name) {
-		Event event = new PlayerConnectEvent(session, name);
-		session.getEngine().getEventManager().callEvent(event);
-		if (Spout.getEngine().debugMode()) {
-			Spout.getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
 		}
 	}
 }

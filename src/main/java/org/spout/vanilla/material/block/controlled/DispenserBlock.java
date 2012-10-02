@@ -136,7 +136,7 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 			shootEffect = GeneralEffects.RANDOM_CLICK1;
 			position = position.subtract(0.0, 0.3, 0.0);
 			toLaunch = new Item();
-			((Item) toLaunch).setStack(item);
+			((Item) toLaunch).setItemStack(item);
 		}
 
 		if (toLaunch != null) {

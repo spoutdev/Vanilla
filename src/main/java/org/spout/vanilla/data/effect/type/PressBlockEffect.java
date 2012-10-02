@@ -65,7 +65,7 @@ public class PressBlockEffect extends Effect {
 		this.playGlobal(position, pressed, null);
 	}
 
-	public void playGlobal(Point position, boolean pressed, Entity ignore) {
+	public void playGlobal(Point position, boolean pressed, Player ignore) {
 		this.play(getNearbyPlayers(position, ignore), position, pressed);
 	}
 }

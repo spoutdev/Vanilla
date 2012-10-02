@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.component.substance.Item;
@@ -41,20 +42,18 @@ import org.spout.vanilla.protocol.msg.entity.spawn.EntityItemMessage;
 public class ItemEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity) {
-		Item pi = entity.get(Item.class);
-		if (pi == null) {
-			return Collections.emptyList();
-		}
+		Item item = entity.add(Item.class);
 		int id = entity.getId();
 		int x = (int) (entity.getTransform().getPosition().getX() * 32);
 		int y = (int) (entity.getTransform().getPosition().getY() * 32);
 		int z = (int) (entity.getTransform().getPosition().getZ() * 32);
 		int r = (int) (entity.getTransform().getYaw() * 32);
 		int p = (int) (entity.getTransform().getPitch() * 32);
-		if (pi.getStack().getMaterial() == null) {
-			int typeId = VanillaMaterials.getMinecraftId(pi.getStack().getMaterial());
+		ItemStack stack = item.getItemStack();
+		if (stack.getMaterial() != null) {
+			int typeId = VanillaMaterials.getMinecraftId(stack.getMaterial());
 			if (typeId > 0) {
-				return Arrays.<Message>asList(new EntityItemMessage(id, typeId, pi.getStack().getAmount(), pi.getStack().getData(), x, y, z, r, p, (int) pi.getHolder().getTransform().getRoll()));
+				return Arrays.<Message>asList(new EntityItemMessage(id, typeId, stack.getAmount(), stack.getData(), x, y, z, r, p, (int) entity.getTransform().getRoll()));
 			}
 		}
 		return Collections.emptyList();

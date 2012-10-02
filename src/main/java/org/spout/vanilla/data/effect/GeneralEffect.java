@@ -88,7 +88,7 @@ public class GeneralEffect extends Effect {
 		this.playGlobal(position, data, null);
 	}
 
-	public void playGlobal(Point position, int data, Entity ignore) {
+	public void playGlobal(Point position, int data, Player ignore) {
 		this.play(getNearbyPlayers(position, ignore), position, data);
 	}
 }

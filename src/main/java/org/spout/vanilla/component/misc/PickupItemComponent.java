@@ -26,23 +26,41 @@
  */
 package org.spout.vanilla.component.misc;
 
-import org.spout.api.component.components.EntityComponent;
+import java.util.List;
 
+import org.spout.api.component.components.EntityComponent;
+import org.spout.api.entity.Entity;
+
+import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.event.entity.EntityCollectItemEvent;
 
 /**
  * Component that adds a detector to entities to scan for and pickup items.
  */
 public class PickupItemComponent extends EntityComponent {
-	private final float DISTANCE = VanillaConfiguration.ITEM_PICKUP_RANGE.getFloat();
+	private final int DISTANCE = VanillaConfiguration.ITEM_PICKUP_RANGE.getInt();
+	private List<Entity> nearbyEntities;
 
 	@Override
 	public boolean canTick() {
-		return true;
+		nearbyEntities = getHolder().getWorld().getNearbyEntities(getHolder(), DISTANCE);
+		return !nearbyEntities.isEmpty();
 	}
 
 	@Override
 	public void onTick(float dt) {
-
+		for (Entity entity : nearbyEntities) {
+			if (!entity.has(Item.class) || !entity.get(Item.class).canBeCollected()) {
+				continue;
+			}
+			getHolder().getNetwork().callProtocolEvent(new EntityCollectItemEvent(getHolder(), entity));
+			if (getHolder().has(Human.class)) {
+				getHolder().get(Human.class).getInventory().getMain().add(entity.get(Item.class).getItemStack());
+			}
+			entity.remove();
+		}
 	}
 }

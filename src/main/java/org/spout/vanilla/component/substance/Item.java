@@ -30,9 +30,16 @@ import org.spout.api.component.components.EntityComponent;
 import org.spout.api.data.Data;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.protocol.entity.object.ItemEntityProtocol;
 
-public class Item extends EntityComponent {
+public class Item extends VanillaEntity {
+	@Override
+	public void onAttached() {
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
+	}
 	@Override
 	public boolean canTick() {
 		return true;
@@ -45,11 +52,11 @@ public class Item extends EntityComponent {
 		}
 	}
 
-	public ItemStack getStack() {
+	public ItemStack getItemStack() {
 		return getData().get(Data.HELD_ITEM);
 	}
 
-	public void setStack(ItemStack stack) {
+	public void setItemStack(ItemStack stack) {
 		getData().put(Data.HELD_ITEM, stack);
 	}
 
@@ -59,5 +66,9 @@ public class Item extends EntityComponent {
 
 	public void setUncollectableTicks(int uncollectableTicks) {
 		getData().put(VanillaData.UNCOLLECTABLE_TICKS, uncollectableTicks);
+	}
+
+	public boolean canBeCollected() {
+		return getUncollectableTicks() <= 0;
 	}
 }

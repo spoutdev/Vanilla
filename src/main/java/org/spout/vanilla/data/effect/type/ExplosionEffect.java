@@ -72,7 +72,7 @@ public class ExplosionEffect extends Effect {
 		this.playGlobal(position, size, null);
 	}
 
-	public void playGlobal(Point position, float size, Entity ignore) {
+	public void playGlobal(Point position, float size, Player ignore) {
 		this.play(getNearbyPlayers(position, ignore), position, size);
 	}
 }

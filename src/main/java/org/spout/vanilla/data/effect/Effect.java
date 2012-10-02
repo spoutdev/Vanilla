@@ -53,7 +53,7 @@ public abstract class Effect {
 	 * @param ignore Entity to ignore
 	 * @return a Set of nearby Players
 	 */
-	public List<Player> getNearbyPlayers(Point position, Entity ignore) {
+	public List<Player> getNearbyPlayers(Point position, Player ignore) {
 		return position.getWorld().getNearbyPlayers(position, ignore, this.getRange());
 	}
 
@@ -86,7 +86,7 @@ public abstract class Effect {
 	 * @param position to play at
 	 * @param ignore Entity to ignore
 	 */
-	public void playGlobal(Point position, Entity ignore) {
+	public void playGlobal(Point position, Player ignore) {
 		this.play(getNearbyPlayers(position, ignore), position);
 	}
 }

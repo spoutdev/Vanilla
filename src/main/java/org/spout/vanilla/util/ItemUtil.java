@@ -54,11 +54,11 @@ public class ItemUtil {
 	 * @return the Item entity
 	 */
 	public static Item dropItem(Point position, ItemStack itemStack, Vector3 velocity) {
-		//TODO: Handle velocity
 		Entity entity = position.getWorld().createEntity(position, Item.class);
-		Item item = entity.get(Item.class);
-		item.setStack(itemStack);
-		if (position.getWorld().getRegionFromBlock(position, LoadOption.NO_LOAD) != null) {
+		Item item = entity.add(Item.class);
+		item.setItemStack(itemStack);
+		item.getPhysics().setVelocity(velocity);
+		if (position.getChunk(LoadOption.NO_LOAD) != null) {
 			position.getWorld().spawnEntity(entity);
 		}
 		return item;

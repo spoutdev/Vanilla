@@ -60,16 +60,15 @@ public class Shears extends Tool {
 
 			if (sheep.isSheared()) {
 				//TODO: Also return if this is a baby sheep
-				System.out.println("Debug");
 				return;
 			}
 
 			sheep.setSheared(true);
 			short col = sheep.getColor().getData();
 
-			Entity entityItem = other.getWorld().createAndSpawnEntity(other.getTransform().getPosition(), Item.class, LoadOption.NO_LOAD);
-			Item item = entity.get(Item.class);
-			item.setStack(new ItemStack(VanillaMaterials.WOOL, col, rand.nextInt(3) + 1));
+			other.getWorld().createAndSpawnEntity(other.getTransform().getPosition(), Item.class, LoadOption.NO_LOAD);
+			Item item = entity.add(Item.class);
+			item.setItemStack(new ItemStack(VanillaMaterials.WOOL, col, rand.nextInt(3) + 1));
 
 			if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 				PlayerQuickbar quickbar = entity.get(Human.class).getInventory().getQuickbar();

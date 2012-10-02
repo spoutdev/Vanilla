@@ -61,7 +61,7 @@ public class BreakBlockEffect extends GeneralEffect {
 		this.playGlobal(position, material, null);
 	}
 
-	public void playGlobal(Point position, BlockMaterial material, Entity ignore) {
+	public void playGlobal(Point position, BlockMaterial material, Player ignore) {
 		this.play(getNearbyPlayers(position, ignore), position, material);
 	}
 }

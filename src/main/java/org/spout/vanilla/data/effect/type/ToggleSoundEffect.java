@@ -73,7 +73,7 @@ public class ToggleSoundEffect extends SoundEffect {
 		this.playGlobal(position, open, null);
 	}
 
-	public void playGlobal(Point position, boolean open, Entity ignore) {
+	public void playGlobal(Point position, boolean open, Player ignore) {
 		this.play(getNearbyPlayers(position, ignore), position, open);
 	}
 }

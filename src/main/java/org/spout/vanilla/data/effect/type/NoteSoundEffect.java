@@ -67,11 +67,11 @@ public class NoteSoundEffect extends SoundEffect {
 		this.play(getNearbyPlayers(position, null, volume), position, volume, tone);
 	}
 
-	public void playGlobal(Point position, Entity ignore, int tone) {
+	public void playGlobal(Point position, Player ignore, int tone) {
 		this.playGlobal(position, ignore, this.getDefaultVolume(), tone);
 	}
 
-	public void playGlobal(Point position, Entity ignore, float volume, int tone) {
+	public void playGlobal(Point position, Player ignore, float volume, int tone) {
 		this.play(getNearbyPlayers(position, ignore, volume), position, volume, tone);
 	}
 }

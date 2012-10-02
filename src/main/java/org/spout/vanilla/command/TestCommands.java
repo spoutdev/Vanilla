@@ -176,7 +176,7 @@ public class TestCommands {
 		List<Entity> entities = world.getAll();
 		int count = 0;
 		for (Entity entity : entities) {
-			if (entity instanceof Player) {
+			if (entity instanceof Player || !entity.has(VanillaEntity.class)) {
 				continue;
 			}
 			count++;
@@ -186,9 +186,9 @@ public class TestCommands {
 		if (count > 0) {
 			if (!isConsole) {
 				if (count == 1) {
-					source.sendMessage("1 entity has been killed. The console has a listing of what controller was killed.");
+					source.sendMessage("1 entity has been killed.");
 				} else {
-					source.sendMessage(count, " entities have been killed. The console has a listing of what controllers were killed.");
+					source.sendMessage(count, " entities have been killed.");
 				}
 			}
 		} else {
@@ -206,7 +206,7 @@ public class TestCommands {
 			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			player = ((Server) Spout.getEngine()).getPlayer(args.getString(1, ""), true);
+			player = Spout.getEngine().getPlayer(args.getString(1, ""), true);
 			if (player == null) {
 				source.sendMessage("Must be a player or send player name in arguments");
 				return;
@@ -240,7 +240,7 @@ public class TestCommands {
 		}
 		final Point pos = ((Player) source).getTransform().getPosition();
 		final String name = args.getString(0);
-		Class<? extends Component> clazz = null;
+		Class<? extends Component> clazz;
 		if (name.isEmpty()) {
 			throw new CommandException("It appears that you forgot to enter in the name of the VanillaEntity.");
 		} else if (name.equalsIgnoreCase("enderman")) {

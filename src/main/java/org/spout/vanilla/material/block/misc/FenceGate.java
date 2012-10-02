@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.misc;
 
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
@@ -64,7 +65,11 @@ public class FenceGate extends VanillaBlockMaterial implements Openable, Redston
 			return;
 		}
 		this.toggleOpen(block);
-		GeneralEffects.DOOR.playGlobal(block.getPosition(), isOpen(block), entity);
+		if (entity instanceof Player) {
+			GeneralEffects.DOOR.playGlobal(block.getPosition(), isOpen(block), (Player) entity);
+		} else {
+			GeneralEffects.DOOR.playGlobal(block.getPosition(), isOpen(block));
+		}
 	}
 
 	@Override

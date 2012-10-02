@@ -42,10 +42,10 @@ public class NoSoundEffect extends SoundEffect {
 	}
 
 	@Override
-	public void playGlobal(Point position, Entity ignore) {
+	public void playGlobal(Point position, Player ignore) {
 	}
 
 	@Override
-	public void playGlobal(Point position, float volume, float pitch, Entity ignore) {
+	public void playGlobal(Point position, float volume, float pitch, Player ignore) {
 	}
 }

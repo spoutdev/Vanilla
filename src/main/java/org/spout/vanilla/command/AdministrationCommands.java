@@ -270,7 +270,7 @@ public class AdministrationCommands {
 
 		VanillaSky sky = VanillaSky.getSky(world);
 		if (sky == null) {
-			throw new CommandException("The world '" + args.getString(2) + "' is not available.");
+			throw new CommandException("The world '" + world.getName() + "' is not available.");
 		}
 
 		sky.setTime(relative ? (sky.getTime() + time) : time);

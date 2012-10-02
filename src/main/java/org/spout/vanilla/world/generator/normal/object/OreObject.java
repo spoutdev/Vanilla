@@ -64,6 +64,7 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Gets the maximum height this ore should be placed
+	 *
 	 * @return maximum height
 	 */
 	public short getMaxHeight() {
@@ -72,6 +73,7 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Gets the amount of this ore placed per chunk
+	 *
 	 * @return placement count
 	 */
 	public byte getAmount() {
@@ -80,6 +82,7 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Gets the size of a cluster of this ore
+	 *
 	 * @return cluster size
 	 */
 	public byte getClusterSize() {
@@ -88,6 +91,7 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Gets the ore material used
+	 *
 	 * @return ore material
 	 */
 	public BlockMaterial getMaterial() {
@@ -117,6 +121,7 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Generates a cluster of this ore at the position using the random given
+	 *
 	 * @param world to place in
 	 * @param originX of the cluster
 	 * @param originY of the cluster
@@ -159,7 +164,7 @@ public class OreObject extends RandomObject {
 							for (int z = startZ; z <= endZ; z++) {
 								float sizeZ = (z + 0.5f - seedZ) / size;
 								sizeZ *= sizeZ;
-								if (sizeX + sizeY + sizeZ < 1 && world.getBlockMaterial(x, y, z) == VanillaMaterials.STONE) {
+								if (sizeX + sizeY + sizeZ < 1 && world.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.STONE)) {
 									world.setBlockMaterial(x, y, z, material, (short) 0, world);
 								}
 							}

@@ -48,17 +48,17 @@ public class SugarCaneStackObject extends LargePlantObject {
 	public boolean canPlaceObject(World w, int x, int y, int z) {
 		final BlockMaterial below = w.getBlockMaterial(x, y - 1, z);
 		return below.isMaterial(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.SAND)
-				&& w.getBlockMaterial(x, y, z) == VanillaMaterials.AIR
-				&& (w.getBlockMaterial(x - 1, y - 1, z) == VanillaMaterials.STATIONARY_WATER
-				|| w.getBlockMaterial(x + 1, y - 1, z) == VanillaMaterials.STATIONARY_WATER
-				|| w.getBlockMaterial(x, y - 1, z - 1) == VanillaMaterials.STATIONARY_WATER
-				|| w.getBlockMaterial(x, y - 1, z + 1) == VanillaMaterials.STATIONARY_WATER);
+				&& w.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.AIR)
+				&& (w.getBlockMaterial(x - 1, y - 1, z).isMaterial(VanillaMaterials.WATER)
+				|| w.getBlockMaterial(x + 1, y - 1, z).isMaterial(VanillaMaterials.WATER)
+				|| w.getBlockMaterial(x, y - 1, z - 1).isMaterial(VanillaMaterials.WATER)
+				|| w.getBlockMaterial(x, y - 1, z + 1).isMaterial(VanillaMaterials.WATER));
 	}
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
 		for (byte yy = 0; yy < totalHeight; yy++) {
-			if (w.getBlockMaterial(x, y + yy, z) != VanillaMaterials.AIR) {
+			if (!w.getBlockMaterial(x, y + yy, z).isMaterial(VanillaMaterials.AIR)) {
 				return;
 			}
 			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.SUGAR_CANE_BLOCK, (short) 0, w);

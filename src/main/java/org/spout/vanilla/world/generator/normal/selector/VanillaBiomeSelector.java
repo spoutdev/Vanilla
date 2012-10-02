@@ -77,6 +77,7 @@ public class VanillaBiomeSelector extends BiomeSelector {
 	private static final float TAIGA_HILLS_THRESHOLD = 0.5f;
 	private static final float TUNDRA_HILLS_THRESHOLD = 0.5f;
 	private static final float FROZEN_OCEAN_THRESHOLD = 0.4f;
+	private static final float MUSHROOM_LAND_THRESHOLD = -0.3f;
 	private static final float MUSHROOM_THRESHOLD = 0.85f;
 	private static final float MUSHROOM_SHORE_THRESHOLD = 0.78f;
 	//
@@ -140,88 +141,91 @@ public class VanillaBiomeSelector extends BiomeSelector {
 		detail.setSeed(intSeed * 13);
 
 		final float continentValue = (float) continents.GetValue(x, 0, z);
-		if (continentValue > CONTINENTS_THRESHOLD) {
-			if (continentValue > LAND_THRESHOLD) {
-				if (continentValue > SMALL_MOUNTAIN_THRESHOLD) {
-					if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
-						return RIVER;
+		if (continentValue > MUSHROOM_LAND_THRESHOLD) {
+			if (continentValue > CONTINENTS_THRESHOLD) {
+				if (continentValue > LAND_THRESHOLD) {
+					if (continentValue > SMALL_MOUNTAIN_THRESHOLD) {
+						if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
+							return RIVER;
+						}
+						if (continentValue > MOUNTAIN_THRESHOLD) {
+							return MOUNTAINS;
+						}
+						return SMALL_MOUNTAINS;
 					}
-					if (continentValue > MOUNTAIN_THRESHOLD) {
-						return MOUNTAINS;
+					final float landValue = (float) land.GetValue(x, 0, z) * 3.5f + 3.5f;
+					if (landValue > SWAMP_THRESHOLD) {
+						if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
+							return RIVER;
+						}
+						return SWAMP;
 					}
-					return SMALL_MOUNTAINS;
+					if (landValue > PLAINS_THRESHOLD) {
+						if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
+							return RIVER;
+						}
+						return PLAINS;
+					}
+					final float hillValue = (float) detail.GetValue(x, 500, z);
+					if (landValue > FOREST_THRESHOLD) {
+						if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
+							return RIVER;
+						}
+						if (hillValue > FOREST_HILLS_THRESHOLD) {
+							return FOREST_HILLS;
+						}
+						return FOREST;
+					}
+					if (landValue > JUNGLE_THRESHOLD) {
+						if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
+							return RIVER;
+						}
+						if (hillValue > JUNGLE_HILLS_THRESHOLD) {
+							return JUNGLE_HILLS;
+						}
+						return JUNGLE;
+					}
+					if (landValue > DESERT_THRESHOLD) {
+						if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
+							return RIVER;
+						}
+						if (hillValue > DESERT_HILLS_THRESHOLD) {
+							return DESERT_HILLS;
+						}
+						return DESERT;
+					}
+					final float frozenOceanValue = (float) detail.GetValue(x, 1000, z);
+					if (landValue > TAIGA_THRESHOLD) {
+						if (frozenOceanValue > FROZEN_OCEAN_THRESHOLD) {
+							return FROZEN_OCEAN;
+						}
+						if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
+							return FROZEN_RIVER;
+						}
+						if (hillValue > TAIGA_HILLS_THRESHOLD) {
+							return TAIGA_HILLS;
+						}
+						return TAIGA;
+					}
+					if (landValue > TUNDRA_THRESHOLD) {
+						if (frozenOceanValue > FROZEN_OCEAN_THRESHOLD) {
+							return FROZEN_OCEAN;
+						}
+						if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
+							return FROZEN_RIVER;
+						}
+						if (hillValue > TUNDRA_HILLS_THRESHOLD) {
+							return TUNDRA_HILLS;
+						}
+						return TUNDRA;
+					}
 				}
-				final float landValue = (float) land.GetValue(x, 0, z) * 3.5f + 3.5f;
-				if (landValue > SWAMP_THRESHOLD) {
-					if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
-						return RIVER;
-					}
-					return SWAMP;
+				if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
+					return RIVER;
 				}
-				if (landValue > PLAINS_THRESHOLD) {
-					if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
-						return RIVER;
-					}
-					return PLAINS;
-				}
-				final float hillValue = (float) detail.GetValue(x, 500, z);
-				if (landValue > FOREST_THRESHOLD) {
-					if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
-						return RIVER;
-					}
-					if (hillValue > FOREST_HILLS_THRESHOLD) {
-						return FOREST_HILLS;
-					}
-					return FOREST;
-				}
-				if (landValue > JUNGLE_THRESHOLD) {
-					if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
-						return RIVER;
-					}
-					if (hillValue > JUNGLE_HILLS_THRESHOLD) {
-						return JUNGLE_HILLS;
-					}
-					return JUNGLE;
-				}
-				if (landValue > DESERT_THRESHOLD) {
-					if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
-						return RIVER;
-					}
-					if (hillValue > DESERT_HILLS_THRESHOLD) {
-						return DESERT_HILLS;
-					}
-					return DESERT;
-				}
-				final float frozenOceanValue = (float) detail.GetValue(x, 1000, z);
-				if (landValue > TAIGA_THRESHOLD) {
-					if (frozenOceanValue > FROZEN_OCEAN_THRESHOLD) {
-						return FROZEN_OCEAN;
-					}
-					if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
-						return FROZEN_RIVER;
-					}
-					if (hillValue > TAIGA_HILLS_THRESHOLD) {
-						return TAIGA_HILLS;
-					}
-					return TAIGA;
-				}
-				if (landValue > TUNDRA_THRESHOLD) {
-					if (frozenOceanValue > FROZEN_OCEAN_THRESHOLD) {
-						return FROZEN_OCEAN;
-					}
-					if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
-						return FROZEN_RIVER;
-					}
-					if (hillValue > TUNDRA_HILLS_THRESHOLD) {
-						return TUNDRA_HILLS;
-					}
-					return TUNDRA;
-				}
+				return BEACH;
 			}
-			if (rivers.GetValue(x, 0, z) > RIVER_THRESHOLD) {
-				return RIVER;
-			}
-			return BEACH;
+			return OCEAN;
 		}
 		final float mushroomValue = (float) detail.GetValue(x, 0, z);
 		if (mushroomValue > MUSHROOM_THRESHOLD) {

@@ -28,7 +28,6 @@ package org.spout.vanilla.world.generator;
 
 import java.util.Arrays;
 
-import org.spout.api.generator.GeneratorPopulator;
 import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.generator.biome.Simple2DBiomeManager;
 import org.spout.api.generator.biome.selector.PerBlockBiomeSelector;
@@ -57,22 +56,5 @@ public abstract class VanillaSingleBiomeGenerator extends VanillaBiomeGenerator 
 		Arrays.fill(biomeData, (byte) biome.getId());
 		biomeManager.deserialize(biomeData);
 		return biomeManager;
-	}
-
-	@Override
-	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ, World world) {
-		if (chunkY < 0) {
-			super.generate(blockData, chunkX, chunkY, chunkZ, world);
-		} else {
-			final int x = chunkX << Chunk.BLOCKS.BITS;
-			final int y = chunkY << Chunk.BLOCKS.BITS;
-			final int z = chunkZ << Chunk.BLOCKS.BITS;
-			final long seed = world.getSeed();
-			final BiomeManager manager = world.getBiomeManager(x, z, true);
-			generateTerrain(blockData, x, y, z, manager, seed);
-			for (GeneratorPopulator generatorPopulator : getGeneratorPopulators()) {
-				generatorPopulator.populate(blockData, x, y, z, manager, seed);
-			}
-		}
 	}
 }

@@ -47,6 +47,7 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.api.util.map.TIntPairObjectHashMap;
 
 import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -68,8 +69,10 @@ import org.spout.vanilla.world.generator.normal.populator.SnowPopulator;
 import org.spout.vanilla.world.generator.normal.selector.VanillaBiomeSelector;
 
 public class NormalGenerator extends VanillaBiomeGenerator {
+	// numeric constants
 	public static final int HEIGHT;
 	public static final int SEA_LEVEL = 63;
+	private static final byte BEDROCK_DEPTH = 5;
 	// noise for generation
 	private static final Perlin ELEVATION = new Perlin();
 	private static final Perlin ROUGHNESS = new Perlin();
@@ -77,11 +80,8 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 	private static final Turbulence TURBULENCE = new Turbulence();
 	private static final ScalePoint SCALE = new ScalePoint();
 	private static final Clamp FINAL = new Clamp();
-	// a perlin for determining groud cover depth
-	protected static final Perlin BLOCK_REPLACER = new Perlin();
-	private static final byte BEDROCK_DEPTH = 5;
 	// smoothing stuff
-	private static final int SMOOTH_SIZE = 2;
+	private static final int SMOOTH_SIZE = 4;
 
 	static {
 		ELEVATION.setFrequency(0.2);
@@ -123,12 +123,6 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		FINAL.SetSourceModule(0, SCALE);
 		FINAL.setLowerBound(-1);
 		FINAL.setUpperBound(1);
-
-		BLOCK_REPLACER.setFrequency(0.35);
-		BLOCK_REPLACER.setLacunarity(1);
-		BLOCK_REPLACER.setNoiseQuality(NoiseQuality.FAST);
-		BLOCK_REPLACER.setPersistence(0.7);
-		BLOCK_REPLACER.setOctaveCount(1);
 
 		int height = 0;
 		for (VanillaBiome biome : VanillaBiomes.getBiomes()) {
@@ -194,9 +188,10 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		ROUGHNESS.setSeed((int) seed * 29);
 		DETAIL.setSeed((int) seed * 17);
 		TURBULENCE.setSeed((int) seed * 53);
-		BLOCK_REPLACER.setSeed((int) seed * 127);
+		final Random random = WorldGeneratorUtils.getRandom(seed, x, y, z, 6516);
 		final double[][][] noise = WorldGeneratorUtils.fastNoise(FINAL, sizeX, sizeY, sizeZ, 4, x, y, z);
 		final BiomeSelector selector = getSelector();
+		final TIntPairObjectHashMap<NormalBiome> biomeCache = new TIntPairObjectHashMap<NormalBiome>();
 		for (int xx = 0; xx < sizeX; xx++) {
 			for (int zz = 0; zz < sizeZ; zz++) {
 				float maxSum = 0;
@@ -204,33 +199,27 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 				byte count = 0;
 				for (int sx = -SMOOTH_SIZE; sx <= SMOOTH_SIZE; sx++) {
 					for (int sz = -SMOOTH_SIZE; sz <= SMOOTH_SIZE; sz++) {
+						final NormalBiome adjacent;
 						if (xx + sx < 0 || zz + sz < 0
 								|| xx + sx >= sizeX || zz + sz >= sizeZ) {
-							final NormalBiome adjacent = (NormalBiome) selector.pickBiome(x + xx + sx, y, z + zz + sz, seed);
-							minSum += adjacent.getMin();
-							maxSum += adjacent.getMax();
+							if (biomeCache.containsKey(x + xx + sx, z + zz + sz)) {
+								adjacent = biomeCache.get(x + xx + sx, z + zz + sz);
+							} else {
+								adjacent = (NormalBiome) selector.pickBiome(x + xx + sx, y, z + zz + sz, seed);
+								biomeCache.put(x + xx + sx, z + zz + sz, adjacent);
+							}
 						} else {
-							final NormalBiome adjacent = (NormalBiome) biomes.getBiome(xx + sx, y, zz + sz);
-							minSum += adjacent.getMin();
-							maxSum += adjacent.getMax();
+							adjacent = (NormalBiome) biomes.getBiome(xx + sx, y, zz + sz);
 						}
+						minSum += adjacent.getMin();
+						maxSum += adjacent.getMax();
 						count++;
 					}
 				}
 				final double minElevation = minSum / count;
-				final double maxElevation = maxSum / count;
-				final double smoothHeight = (maxElevation - minElevation) / 2d;
-				final double lowSmoothStart = minElevation + smoothHeight;
-				final double upperSmoothStart = maxElevation - smoothHeight;
+				final double smoothHeight = (maxSum / count - minElevation) / 2d;
 				for (int yy = 0; yy < sizeY; yy++) {
-					double noiseValue = noise[xx][yy][zz];
-					if (smoothHeight > 0) {
-						if (yy + y < lowSmoothStart) {
-							noiseValue += (1 / smoothHeight) * (lowSmoothStart - yy - y);
-						} else if (yy + y >= upperSmoothStart) {
-							noiseValue -= (1 / smoothHeight) * (y + yy - upperSmoothStart);
-						}
-					}
+					double noiseValue = noise[xx][yy][zz] - 1 / smoothHeight * (y + yy - smoothHeight - minElevation);
 					if (noiseValue >= 0) {
 						blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.STONE.getId());
 					} else {
@@ -246,8 +235,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 					}
 				}
 				if (y == 0) {
-					final byte bedrockDepth = (byte) Math.ceil(BLOCK_REPLACER.GetValue(x + xx, -5, z + zz)
-							* (BEDROCK_DEPTH / 2d) + BEDROCK_DEPTH / 2d);
+					final byte bedrockDepth = (byte) (random.nextInt(BEDROCK_DEPTH) + 1);
 					for (byte yy = 0; yy < bedrockDepth; yy++) {
 						blockData.set(x + xx, yy, z + zz, VanillaMaterials.BEDROCK.getId());
 					}

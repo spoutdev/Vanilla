@@ -42,7 +42,7 @@ public class WellObject extends WorldGeneratorObject {
 	// main materials
 	private BlockMaterial main = VanillaMaterials.SANDSTONE;
 	private BlockMaterial slab = Slab.SANDSTONE;
-	private BlockMaterial liquid = VanillaMaterials.STATIONARY_WATER;
+	private BlockMaterial liquid = VanillaMaterials.WATER;
 	// material we can place it on
 	private BlockMaterial placeableOn = VanillaMaterials.SAND;
 	// materials we can override
@@ -63,7 +63,8 @@ public class WellObject extends WorldGeneratorObject {
 		for (int xx = x - 2; xx < x + 3; xx++) {
 			for (int zz = z - 2; zz < z + 3; zz++) {
 				final Block block = w.getBlock(xx, y - 1, zz, w);
-				if (!overridable.contains(block.getMaterial()) || !overridable.contains(block.translate(BlockFace.BOTTOM).getMaterial())) {
+				if (!overridable.contains(block.getMaterial())
+						|| !overridable.contains(block.translate(BlockFace.BOTTOM).getMaterial())) {
 					return false;
 				}
 			}

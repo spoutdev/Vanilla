@@ -55,8 +55,8 @@ public class LootChestObject extends RandomObject {
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
 		final Block block = w.getBlock(x, y, z, w);
-		final Block above = block.translate(BlockFace.TOP);
-		return block.isMaterial(VanillaMaterials.AIR) && above.isMaterial(VanillaMaterials.AIR);
+		return block.isMaterial(VanillaMaterials.AIR)
+				&& block.translate(BlockFace.TOP).isMaterial(VanillaMaterials.AIR);
 	}
 
 	@Override
@@ -82,6 +82,7 @@ public class LootChestObject extends RandomObject {
 
 	/**
 	 * Adds a new material to the loot
+	 *
 	 * @param mat the material to add
 	 * @param probability the probability that it is selected
 	 * @param minItems minimum items of that material per stack

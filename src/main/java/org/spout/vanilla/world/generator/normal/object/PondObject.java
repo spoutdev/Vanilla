@@ -96,8 +96,7 @@ public class PondObject extends RandomObject implements RandomizableObject {
 	public void placeObject(World world, int x, int y, int z) {
 		x -= 8;
 		z -= 8;
-		Biome biome = world.getBiome(x, y, z);
-		boolean sandy = biome instanceof SandyBiome;
+		final boolean sandy = world.getBiome(x, y, z) instanceof SandyBiome;
 		for (byte px = 0; px < 16; px++) {
 			for (byte pz = 0; pz < 16; pz++) {
 				boolean columnHasWater = false;

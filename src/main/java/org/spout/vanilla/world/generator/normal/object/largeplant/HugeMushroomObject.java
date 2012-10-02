@@ -76,7 +76,8 @@ public class HugeMushroomObject extends LargePlantObject {
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
 		final BlockMaterial under = w.getBlockMaterial(x, y - 1, z);
-		if (under != VanillaMaterials.DIRT && under != VanillaMaterials.GRASS && under != VanillaMaterials.MYCELIUM) {
+		if (!under.isMaterial(VanillaMaterials.DIRT, VanillaMaterials.GRASS,
+				VanillaMaterials.MYCELIUM)) {
 			return false;
 		}
 		byte radiusToCheck = initCheckRadius;
@@ -318,7 +319,6 @@ public class HugeMushroomObject extends LargePlantObject {
 	}
 
 	public static enum HugeMushroomType {
-
 		RED(HugeMushroomShape.ROUND, VanillaMaterials.HUGE_RED_MUSHROOM, (byte) 2, (byte) 4),
 		BROWN(HugeMushroomShape.FLAT, VanillaMaterials.HUGE_BROWN_MUSHROOM, (byte) 3, (byte) 1);
 		//
@@ -352,7 +352,6 @@ public class HugeMushroomObject extends LargePlantObject {
 	}
 
 	public static enum HugeMushroomShape {
-
 		FLAT, ROUND;
 	}
 }

@@ -227,14 +227,12 @@ public class HealthComponent extends EntityComponent {
 	 */
 	public void damage(int amount, DamageCause cause, Entity damager, boolean sendHurtMessage) {
 		// TODO take potion effects into account
-		setHealth(getHealth() - amount, HealthChangeCause.DAMAGE);
 		EntityDamageEvent event = Spout.getEngine().getEventManager().callEvent(new EntityDamageEvent(getHolder(), amount, cause, sendHurtMessage, damager));
                 if (event.isCancelled()) {
                     return;
                 }
                 setHealth(getHealth() - event.getDamage(), HealthChangeCause.DAMAGE);	
                 lastDamager = event.getDamager();
-	
                 lastDamageCause = event.getDamageCause();	
                 if (event.getSendMessage()) {
 			getHolder().getNetwork().callProtocolEvent(new EntityAnimationEvent(getHolder(), EntityAnimationMessage.ANIMATION_HURT));

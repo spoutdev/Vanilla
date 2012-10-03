@@ -28,9 +28,9 @@ package org.spout.vanilla.data;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
+import org.spout.api.map.DefaultedKeyArray;
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.component.inventory.PlayerInventory;
 
 /**
@@ -55,7 +55,7 @@ public class VanillaData {
 	public static final DefaultedKey<Vector3> MOVEMENT_SPEED = new DefaultedKeyImpl<Vector3>("movement_speed", Vector3.ZERO);
 	public static final DefaultedKey<Integer> INTERACT_REACH = new DefaultedKeyImpl<Integer>("interact_reach", 5);
 	public static final DefaultedKey<Vector3> VELOCITY = new DefaultedKeyImpl<Vector3>("velocity", Vector3.ZERO);
-	public static final DefaultedKey<ItemStack[]> ITEMS = new DefaultedKeyImpl<ItemStack[]>("items", new ItemStack[36]);
+	public static final DefaultedKey<ItemStack[]> ITEMS = new DefaultedKeyArray<ItemStack>("items", 36, ItemStack.class);
 	//Entity data
 	public static final DefaultedKey<Boolean> IS_FALLING = new DefaultedKeyImpl<Boolean>("is_falling", false);
 	public static final DefaultedKey<Boolean> IS_ON_GROUND = new DefaultedKeyImpl<Boolean>("is_on_Ground", true);
@@ -91,5 +91,5 @@ public class VanillaData {
 	//Redstone-specific
 	public static final DefaultedKey<Boolean> IS_POWERED = new DefaultedKeyImpl<Boolean>("is_powered", false);
 	//Sign-specific
-	public static final DefaultedKey<String[]> SIGN_TEXT = new DefaultedKeyImpl<String[]>("sign_text", new String[4]);
+	public static final DefaultedKey<String[]> SIGN_TEXT = new DefaultedKeyArray<String>("sign_text", 4, String.class);
 }

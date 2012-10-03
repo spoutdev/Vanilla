@@ -35,6 +35,7 @@ import org.spout.api.event.entity.EntityHealthChangeEvent;
 
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
+import org.spout.vanilla.event.entity.EntityDamageEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
@@ -227,9 +228,15 @@ public class HealthComponent extends EntityComponent {
 	public void damage(int amount, DamageCause cause, Entity damager, boolean sendHurtMessage) {
 		// TODO take potion effects into account
 		setHealth(getHealth() - amount, HealthChangeCause.DAMAGE);
-		lastDamager = damager;
-		lastDamageCause = cause;
-		if (sendHurtMessage) {
+		EntityDamageEvent event = Spout.getEngine().getEventManager().callEvent(new EntityDamageEvent(getHolder(), amount, cause, sendHurtMessage, damager));
+                if (event.isCancelled()) {
+                    return;
+                }
+                setHealth(getHealth() - event.getDamage(), HealthChangeCause.DAMAGE);	
+                lastDamager = event.getDamager();
+	
+                lastDamageCause = event.getDamageCause();	
+                if (event.getSendMessage()) {
 			getHolder().getNetwork().callProtocolEvent(new EntityAnimationEvent(getHolder(), EntityAnimationMessage.ANIMATION_HURT));
 			getHolder().getNetwork().callProtocolEvent(new EntityStatusEvent(getHolder(), EntityStatusMessage.ENTITY_HURT));
 			//getHurtEffect().playGlobal(getParent().getParent().getPosition());

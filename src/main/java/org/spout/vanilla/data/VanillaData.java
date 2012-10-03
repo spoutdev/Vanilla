@@ -64,7 +64,7 @@ public class VanillaData {
 	//Human-specific
 	public static final DefaultedKey<Boolean> IS_SPRINTING = new DefaultedKeyImpl<Boolean>("is_sprinting", false);
 	public static final DefaultedKey<Boolean> IS_FLYING = new DefaultedKeyImpl<Boolean>("is_flying", false);
-	public static final DefaultedKey<PlayerInventory> INVENTORY = new DefaultedKeyImpl<PlayerInventory>("inventory", new PlayerInventory());
+	public static final DefaultedKey<PlayerInventory> INVENTORY = new PlayerInventoryDefaultedKey("inventory");
 	//Creature-specific
 	public static final DefaultedKey<Integer> LINE_OF_SIGHT = new DefaultedKeyImpl<Integer>("line_of_sight", 1);
 	//Item-specific

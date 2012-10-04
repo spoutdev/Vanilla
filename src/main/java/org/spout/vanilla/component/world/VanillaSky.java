@@ -28,7 +28,6 @@ package org.spout.vanilla.component.world;
 
 import java.util.HashMap;
 
-import org.spout.api.component.Component;
 import org.spout.api.component.components.WorldComponent;
 import org.spout.api.geo.World;
 
@@ -80,10 +79,10 @@ public abstract class VanillaSky extends WorldComponent {
 			countdown = 20;
 			updateTime(time);
 		}
-//		// Weather TODO this thing is possessed and needs to be fixed.
-//		if (this.hasWeather()) {
-//			this.weather.onTick(dt);
-//		}
+		//		// Weather TODO this thing is possessed and needs to be fixed.
+		//		if (this.hasWeather()) {
+		//			this.weather.onTick(dt);
+		//		}
 	}
 
 	/**

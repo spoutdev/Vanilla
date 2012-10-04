@@ -26,9 +26,17 @@
  */
 package org.spout.vanilla.component.living.neutral;
 
+import javax.vecmath.Vector3f;
+
+import com.bulletphysics.collision.shapes.BoxShape;
+import com.bulletphysics.dynamics.RigidBody;
+
+import org.spout.api.math.MathHelper;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Neutral;
 import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.component.misc.VanillaPhysicsComponent;
 import org.spout.vanilla.protocol.entity.living.EndermanEntityProtocol;
 
 /**
@@ -39,5 +47,11 @@ public class Enderman extends VanillaEntity implements Neutral {
 	public void onAttached() {
 		super.onAttached();
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new EndermanEntityProtocol());
+		VanillaPhysicsComponent physics = getHolder().add(VanillaPhysicsComponent.class);
+		physics.setCollisionShape(new BoxShape(MathHelper.toVector3f(0.75f, 3f, 0.75f)));
+		physics.setMass(10f);
+		Vector3f inertia = new Vector3f();
+		physics.getCollisionShape().calculateLocalInertia(physics.getMass(), inertia);
+		physics.setCollisionObject(new RigidBody(physics.getMass(), physics.getMotionState(), physics.getCollisionShape(), inertia));
 	}
 }

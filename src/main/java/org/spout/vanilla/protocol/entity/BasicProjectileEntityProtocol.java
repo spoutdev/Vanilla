@@ -48,7 +48,7 @@ public class BasicProjectileEntityProtocol extends BasicEntityProtocol {
 		Projectile projectile = entity.add(Projectile.class);
 		Entity shooter = projectile.getShooter();
 		int shooterid = shooter == null ? 0 : shooter.getId();
-		Vector3 velocity = entity.add(PhysicsComponent.class).getVelocity();
+		Vector3 velocity = entity.add(PhysicsComponent.class).getLinearVelocity();
 		return Arrays.<Message>asList(new EntityVehicleMessage(id, this.getSpawnID(), entity.getTransform().getPosition(), shooterid, velocity));
 	}
 }

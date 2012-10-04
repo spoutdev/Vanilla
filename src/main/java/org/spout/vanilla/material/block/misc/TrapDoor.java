@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.block.misc;
 
-import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -48,7 +47,7 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 	public TrapDoor(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.NESW).setHardness(3.0F).setResistance(5.0F).setTransparent();
-		this.setCollision(CollisionStrategy.SOLID);
+		this.setCollisionShape(BlockMaterial.BOX_SHAPE);
 	}
 
 	@Override

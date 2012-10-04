@@ -33,7 +33,6 @@ import org.spout.api.generator.biome.Simple2DBiomeManager;
 import org.spout.api.generator.biome.selector.PerBlockBiomeSelector;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
 

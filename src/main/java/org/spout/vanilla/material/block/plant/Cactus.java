@@ -77,7 +77,7 @@ public class Cactus extends StackGrowingBase implements TimedCraftable {
 			BlockMaterial mat;
 			for (BlockFace face : BlockFaces.NESW) {
 				mat = block.translate(face).getMaterial();
-				if (mat.isSolid() || this.deniedNeighbours.contains(mat)) {
+				if (!mat.isPenetrable() || this.deniedNeighbours.contains(mat)) {
 					return false;
 				}
 			}

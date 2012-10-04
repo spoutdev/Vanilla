@@ -77,7 +77,7 @@ public class PondObject extends RandomObject implements RandomizableObject {
 				for (byte py = 1; py < 5; py++) {
 					if (isWallBlock(px, py, pz, holeHeightMap)) {
 						final BlockMaterial material = world.getBlockMaterial(x + px, y - py, z + pz);
-						if (!material.isSolid() && material != liquid) {
+						if (material.isPenetrable() && material != liquid) {
 							return false;
 						}
 					}

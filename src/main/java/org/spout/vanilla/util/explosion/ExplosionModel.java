@@ -82,7 +82,7 @@ public abstract class ExplosionModel {
 			if (material == VanillaMaterials.AIR) {
 				if (fire) {
 					BlockMaterial below = block.translate(BlockFace.BOTTOM).getMaterial();
-					if (below.isSolid() && this.random.nextInt(3) == 0) {
+					if (!below.isPenetrable() && this.random.nextInt(3) == 0) {
 						block.setMaterial(VanillaMaterials.FIRE);
 					}
 				}

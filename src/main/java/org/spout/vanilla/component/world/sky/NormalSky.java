@@ -28,7 +28,6 @@ package org.spout.vanilla.component.world.sky;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
-import org.spout.api.geo.World;
 
 import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.data.VanillaData;

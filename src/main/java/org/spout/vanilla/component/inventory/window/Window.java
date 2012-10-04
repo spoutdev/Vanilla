@@ -128,9 +128,9 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	public void close() {
 		opened = false;
-		//if (getHuman().isSurvival()) {
-		//dropCursorItem();
-		//}
+		if (getHuman().isSurvival()) {
+			dropCursorItem();
+		}
 		callProtocolEvent(new WindowCloseEvent(this));
 	}
 

@@ -26,13 +26,11 @@
  */
 package org.spout.vanilla.material.block;
 
-import com.bulletphysics.collision.shapes.BoxShape;
-
+import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.data.effect.store.GeneralEffects;
@@ -45,7 +43,7 @@ import org.spout.vanilla.util.VanillaPlayerUtil;
 public abstract class DoorBlock extends GroundAttachable implements Openable, RedstoneTarget {
 	public DoorBlock(String name, int id) {
 		super(name, id);
-		this.setCollisionShape(new BoxShape(MathHelper.toVector3f(0.25f, 2f, 0.25f)));
+		this.setCollision(CollisionStrategy.SOLID);
 	}
 
 	@Override

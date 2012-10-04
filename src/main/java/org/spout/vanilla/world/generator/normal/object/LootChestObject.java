@@ -82,6 +82,7 @@ public class LootChestObject extends RandomObject {
 
 	/**
 	 * Adds a new material to the loot
+	 *
 	 * @param mat the material to add
 	 * @param probability the probability that it is selected
 	 * @param minItems minimum items of that material per stack

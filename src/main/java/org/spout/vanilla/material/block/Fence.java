@@ -26,11 +26,9 @@
  */
 package org.spout.vanilla.material.block;
 
-import com.bulletphysics.collision.shapes.BoxShape;
-
+import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.controlled.SignBase;
@@ -39,7 +37,7 @@ import org.spout.vanilla.material.block.misc.Torch;
 public abstract class Fence extends VanillaBlockMaterial {
 	public Fence(String name, int id) {
 		super(name, id);
-		this.setCollisionShape(new BoxShape(MathHelper.toVector3f(0.1f, 1f, 0.1f)));
+		this.setCollision(CollisionStrategy.SOLID);
 	}
 
 	@Override

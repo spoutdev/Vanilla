@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.component.world.sky;
 
+import org.spout.api.geo.World;
+
 import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.data.Weather;
 

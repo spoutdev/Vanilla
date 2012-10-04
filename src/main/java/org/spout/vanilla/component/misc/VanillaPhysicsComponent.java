@@ -53,7 +53,7 @@ public class VanillaPhysicsComponent extends PhysicsComponent {
 	 * @return
 	 */
 	public Vector3 getProtocolVelocity() {
-		final Vector3 velocity = getLinearVelocityLive();
+		final Vector3 velocity = getVelocity();
 		final float x = velocity.getX() * 32000;
 		final float y = velocity.getY() * 32000;
 		final float z = velocity.getZ() * 32000;

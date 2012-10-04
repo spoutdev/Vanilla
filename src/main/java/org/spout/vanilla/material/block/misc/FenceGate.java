@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -49,7 +50,7 @@ public class FenceGate extends VanillaBlockMaterial implements Openable, Redston
 	public FenceGate(String name, int id) {
 		super(name, id);
 		this.setHardness(2.0F).setResistance(3.0F).setTransparent();
-		this.setCollisionShape(BlockMaterial.BOX_SHAPE);
+		this.setCollision(CollisionStrategy.SOLID);
 	}
 
 	@Override

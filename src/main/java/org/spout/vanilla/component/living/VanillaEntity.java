@@ -40,6 +40,7 @@ public abstract class VanillaEntity extends EntityComponent {
 		holder.add(HeadComponent.class);
 		holder.add(HealthComponent.class);
 		holder.add(VanillaPhysicsComponent.class);
+		holder.setSavable(true);
 	}
 
 	public HeadComponent getHead() {

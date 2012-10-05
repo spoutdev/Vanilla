@@ -57,6 +57,7 @@ public class VanillaData {
 	public static final DefaultedKey<Vector3> VELOCITY = new DefaultedKeyImpl<Vector3>("velocity", Vector3.ZERO);
 	public static final DefaultedKey<ItemStack[]> ITEMS = new DefaultedKeyArray<ItemStack>("items", 36, ItemStack.class);
 	//Entity data
+	public static final DefaultedKey<Integer> ATTACHED_COUNT = new DefaultedKeyImpl<Integer>("attached_count", 0);
 	public static final DefaultedKey<Boolean> IS_FALLING = new DefaultedKeyImpl<Boolean>("is_falling", false);
 	public static final DefaultedKey<Boolean> IS_ON_GROUND = new DefaultedKeyImpl<Boolean>("is_on_Ground", true);
 	public static final DefaultedKey<Boolean> IS_JUMPING = new DefaultedKeyImpl<Boolean>("is_jumping", false);

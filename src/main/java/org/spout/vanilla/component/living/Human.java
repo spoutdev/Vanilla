@@ -60,6 +60,11 @@ public class Human extends VanillaEntity {
 		holder.add(PickupItemComponent.class);
 		holder.add(DiggingComponent.class);
 		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
+
+		//Add height offset if loading from disk
+		if (getAttachedCount() > 1) {
+			holder.getTransform().setPosition(holder.getTransform().getPosition().add(0, 1.85F, 0));
+		}
 	}
 
 	public boolean isOnGround() {

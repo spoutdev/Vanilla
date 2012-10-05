@@ -32,6 +32,7 @@ import org.spout.api.entity.Entity;
 import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.component.misc.VanillaPhysicsComponent;
+import org.spout.vanilla.data.VanillaData;
 
 public abstract class VanillaEntity extends EntityComponent {
 	@Override
@@ -41,6 +42,22 @@ public abstract class VanillaEntity extends EntityComponent {
 		holder.add(HealthComponent.class);
 		holder.add(VanillaPhysicsComponent.class);
 		holder.setSavable(true);
+		
+		//Tracks the number of times this component has been attached (i.e how many times it's been saved, then loaded. 1 = fresh entity)
+		holder.getData().put(VanillaData.ATTACHED_COUNT, getAttachedCount() + 1);
+	}
+
+	/**
+	 * A counter of how many times this component has been attached to an entity
+	 * 
+	 * Values > 1 indicate how many times this component has been saved to disk, and reloaded
+	 * 
+	 * Values == 1 indicate a new component that has never been saved and loaded.
+	 * 
+	 * @return attached count
+	 */
+	public final int getAttachedCount() {
+		return getHolder().getData().get(VanillaData.ATTACHED_COUNT);
 	}
 
 	public HeadComponent getHead() {

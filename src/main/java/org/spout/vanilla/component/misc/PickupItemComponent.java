@@ -60,7 +60,7 @@ public class PickupItemComponent extends EntityComponent {
 			}
 			getHolder().getNetwork().callProtocolEvent(new EntityCollectItemEvent(getHolder(), entity));
 			if (getHolder().has(Human.class)) {
-				getHolder().get(Human.class).getInventory().getMain().add(entity.get(Item.class).getItemStack());
+				getHolder().get(Human.class).getInventory().add(entity.get(Item.class).getItemStack());
 			}
 			entity.remove();
 		}

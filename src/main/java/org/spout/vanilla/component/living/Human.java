@@ -26,10 +26,14 @@
  */
 package org.spout.vanilla.component.living;
 
+import java.util.Random;
+
 import org.spout.api.Spout;
+import org.spout.api.component.components.DatatableComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.VanillaPlugin;
@@ -60,8 +64,12 @@ public class Human extends VanillaEntity {
 		holder.add(PickupItemComponent.class);
 		holder.add(DiggingComponent.class);
 		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
-	
-		getData().put(VanillaData.INVENTORY, getInventory());
+		DatatableComponent data = getData();
+		data.put(VanillaData.INVENTORY, new PlayerInventory());
+		//if (data.get(VanillaData.INVENTORY) == null) {
+			//System.out.println("Creating new inventory");
+			//data.put(VanillaData.INVENTORY, new PlayerInventory());
+		//}
 		//Add height offset if loading from disk
 		if (getAttachedCount() > 1 && holder instanceof Player) {
 			((Player)holder).teleport(holder.getTransform().getPosition().add(0, 1.85F, 0));

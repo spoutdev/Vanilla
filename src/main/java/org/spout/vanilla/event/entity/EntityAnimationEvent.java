@@ -31,17 +31,23 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 import org.spout.api.protocol.event.ProtocolEvent;
 
+import org.spout.vanilla.data.Animation;
+
 public class EntityAnimationEvent extends EntityEvent implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();
-	private byte animation;
+	private Animation animation;
 
-	public EntityAnimationEvent(Entity e, byte animation) {
+	public EntityAnimationEvent(Entity e, Animation animation) {
 		super(e);
 		this.animation = animation;
 	}
 
-	public byte getAnimation() {
-		return this.animation;
+	public Animation getAnimation() {
+		return animation;
+	}
+
+	public void setAnimation(Animation animation) {
+		this.animation = animation;
 	}
 
 	@Override

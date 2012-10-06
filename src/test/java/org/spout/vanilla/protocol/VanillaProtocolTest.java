@@ -36,6 +36,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.inventory.window.WindowType;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -146,7 +147,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new PlayerLocaleViewDistanceMessage("en_GB", PlayerLocaleViewDistanceMessage.VIEW_NORMAL, (byte) 0, (byte) 0),
 			new PlayerTabCompleteMessage("behindcursor"),
 			new PlayerBedMessage(0, 3, 42, 42, 42),
-			new EntityAnimationMessage(1234, EntityAnimationMessage.ANIMATION_HURT),
+			new EntityAnimationMessage(1234, (byte) Animation.DAMAGE_ANIMATION.getId()),
 			new EntityActionMessage(5, 2),
 			new PlayerSpawnMessage(24, "risaccess1", 8000, 28, 900, 0, 0, 89, new ArrayList<Parameter<?>>()),
 			new EntityItemMessage(1234, 89, 3, (short) 4, 1, 2, 3, 34, 56, 55),

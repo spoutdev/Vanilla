@@ -31,6 +31,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 
@@ -75,7 +76,7 @@ public class DiggingComponent extends EntityComponent {
 		}
 		previousDiggingTime = getDiggingTime();
 		isDigging = false;
-		getHolder().getNetwork().callProtocolEvent(new EntityAnimationEvent(getHolder(), EntityAnimationMessage.ANIMATION_NONE));
+		getHolder().getNetwork().callProtocolEvent(new EntityAnimationEvent(getHolder(), Animation.NONE));
 		if (!position.equals(diggingPosition)) {
 			return false;
 		}

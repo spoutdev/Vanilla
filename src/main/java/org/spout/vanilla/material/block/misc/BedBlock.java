@@ -26,21 +26,70 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import org.spout.api.chat.ChatArguments;
+import org.spout.api.chat.style.ChatStyle;
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.component.living.Hostile;
+import org.spout.vanilla.component.misc.SleepComponent;
+import org.spout.vanilla.component.world.VanillaSky;
+import org.spout.vanilla.data.Times;
+import org.spout.vanilla.event.player.network.PlayerBedEvent;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaPlayerUtil;
+import org.spout.vanilla.util.explosion.ExplosionModel;
+import org.spout.vanilla.util.explosion.ExplosionModelSpherical;
+import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
 public class BedBlock extends VanillaBlockMaterial implements InitializableMaterial {
+	public static final int NEARBY_MONSTER_RANGE = 8, NETHER_EXPLOSION_SIZE = 100;
+	public static final ChatArguments NEARBY_MONSTER_MESSAGE = new ChatArguments(ChatStyle.RED, "You must not rest, there are monsters nearby!");
+	public static final ChatArguments NOT_NIGHT_MESSAGE = new ChatArguments(ChatStyle.RED, "You can only sleep at night.");
+	public static final ChatArguments OCCUPIED_MESSAGE = new ChatArguments(ChatStyle.RED, "This bed is occupied.");
+
 	public BedBlock(String name, int id) {
 		super(name, id);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
+	}
+
+	@Override
+	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
+		if (!(entity instanceof Player) || type != Action.RIGHT_CLICK) {
+			return;
+		}
+
+		final Player player = (Player) entity;
+		final Block head = getCorrectHalf(block, true);
+		final World world = player.getWorld();
+		final VanillaSky sky = world.getComponentHolder().get(VanillaSky.class);
+
+		for (Entity e : world.getNearbyEntities(player, NEARBY_MONSTER_RANGE)) {
+			// TODO check for hostile mobs. Needs Entity#getComponents().
+		}
+
+		if (sky.getTime() < Times.NIGHT.getTime()) {
+			player.sendMessage(NOT_NIGHT_MESSAGE);
+			return;
+		}
+
+		if (isOccupied(head)) {
+			player.sendMessage(OCCUPIED_MESSAGE);
+			return;
+		}
+
+		setOccupied(head, player, true);
+		player.add(SleepComponent.class).setBed(head);
+		player.getNetwork().callProtocolEvent(new PlayerBedEvent(player, head, true));
 	}
 
 	@Override
@@ -61,11 +110,12 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 	 * @param bedBlock to get it of
 	 * @return True if occupied
 	 */
-	public void setOccupied(Block bedBlock, boolean occupied) {
+	public void setOccupied(Block bedBlock, Entity sleeper, boolean occupied) {
 		bedBlock = getCorrectHalf(bedBlock, false);
 		bedBlock.setDataBits(0x4, occupied);
 		//set to the same data for the head, but set the head flag
 		getCorrectHalf(bedBlock, true).setData(bedBlock.getData() | 0x8);
+		sleeper.add(SleepComponent.class).setSleeping(occupied);
 	}
 
 	/**
@@ -108,6 +158,10 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 		headBlock.setMaterial(this, 0x8);
 		setFacing(footBlock, facing);
 		setFacing(headBlock, facing);
+		if (headBlock.getWorld().getGenerator() instanceof NetherGenerator) {
+			ExplosionModel explosion = new ExplosionModelSpherical();
+			explosion.execute(headBlock.getPosition(), NETHER_EXPLOSION_SIZE, true, null);
+		}
 	}
 
 	@Override

@@ -26,14 +26,11 @@
  */
 package org.spout.vanilla.component.living;
 
-import java.util.Random;
-
 import org.spout.api.Spout;
 import org.spout.api.component.components.DatatableComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.VanillaPlugin;

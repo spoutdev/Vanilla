@@ -36,6 +36,7 @@ import gnu.trove.set.TIntSet;
 import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
@@ -63,7 +64,9 @@ import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.window.DefaultWindow;
 import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.misc.SleepComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
@@ -77,6 +80,7 @@ import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.event.entity.EntityCollectItemEvent;
 import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
+import org.spout.vanilla.event.player.network.PlayerBedEvent;
 import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
 import org.spout.vanilla.event.player.network.PlayerHealthEvent;
 import org.spout.vanilla.event.player.network.PlayerListEvent;
@@ -92,12 +96,14 @@ import org.spout.vanilla.event.world.PlaySoundEffectEvent;
 import org.spout.vanilla.event.world.TimeUpdateEvent;
 import org.spout.vanilla.event.world.WeatherChangeEvent;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.misc.BedBlock;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityTileDataMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityTeleportMessage;
+import org.spout.vanilla.protocol.msg.player.PlayerBedMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerCollectItemMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerGameStateMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerHealthMessage;
@@ -123,6 +129,7 @@ import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
 
+import static org.spout.vanilla.material.VanillaMaterials.BED_BLOCK;
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 
@@ -465,6 +472,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 
 	@EventHandler
+	public Message onPlayerBedEnter(PlayerBedEvent event) {
+		return new PlayerBedMessage(event.getPlayer(), event.getBed());
+	}
+
+	@EventHandler
 	public Message onPlayerKeepAlive(PlayerPingEvent event) {
 		return new PlayerPingMessage(event.getHash());
 	}
@@ -477,7 +489,16 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onEntityAnimation(EntityAnimationEvent event) {
-		return new EntityAnimationMessage(event.getEntity().getId(), event.getAnimation());
+		if (event.getAnimation() == Animation.LEAVE_BED) {
+			if (event.getEntity() instanceof Player) {
+				Player player = (Player) event.getEntity();
+				Block block = player.add(SleepComponent.class).getBed();
+				if (block != null && block.getMaterial() == VanillaMaterials.BED_BLOCK) {
+					((BedBlock) block.getMaterial()).setOccupied(block, player, false);
+				}
+			}
+		}
+		return new EntityAnimationMessage(event.getEntity().getId(), (byte) event.getAnimation().getId());
 	}
 
 	@EventHandler

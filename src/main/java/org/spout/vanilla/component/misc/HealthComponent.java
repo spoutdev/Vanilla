@@ -33,6 +33,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.entity.EntityHealthChangeEvent;
 
+import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.event.entity.EntityDamageEvent;
@@ -235,7 +236,7 @@ public class HealthComponent extends EntityComponent {
 		lastDamager = event.getDamager();
 		lastDamageCause = event.getDamageCause();
 		if (event.getSendMessage()) {
-			getHolder().getNetwork().callProtocolEvent(new EntityAnimationEvent(getHolder(), EntityAnimationMessage.ANIMATION_HURT));
+			getHolder().getNetwork().callProtocolEvent(new EntityAnimationEvent(getHolder(), Animation.DAMAGE_ANIMATION));
 			getHolder().getNetwork().callProtocolEvent(new EntityStatusEvent(getHolder(), EntityStatusMessage.ENTITY_HURT));
 			//getHurtEffect().playGlobal(getParent().getParent().getPosition());
 		}

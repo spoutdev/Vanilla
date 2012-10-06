@@ -30,15 +30,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.SpoutToStringStyle;
 
+import org.spout.vanilla.data.Animation;
+
 public final class EntityAnimationMessage extends EntityMessage {
-	public static final byte ANIMATION_NONE = 0;
-	public static final byte ANIMATION_SWING_ARM = 1;
-	public static final byte ANIMATION_HURT = 2;
-	public static final byte ANIMATION_LEAVE_BED = 3;
-	public static final byte ANIMATION_EAT_FOOD = 5;
-	public static final byte ANIMATION_UNKNOWN = 102;
-	public static final byte ANIMATION_CROUCH = 104;
-	public static final byte ANIMATION_UNCROUCH = 105;
 	private final byte animation;
 
 	public EntityAnimationMessage(int id, byte animation) {
@@ -46,8 +40,12 @@ public final class EntityAnimationMessage extends EntityMessage {
 		this.animation = animation;
 	}
 
-	public byte getAnimation() {
+	public byte getAnimationId() {
 		return animation;
+	}
+
+	public Animation getAnimation() {
+		return Animation.get(animation);
 	}
 
 	@Override

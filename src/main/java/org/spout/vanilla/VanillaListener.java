@@ -37,6 +37,7 @@ import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.vanilla.component.inventory.window.DefaultWindow;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.PickupItemComponent;
+import org.spout.vanilla.component.misc.SleepComponent;
 import org.spout.vanilla.component.player.PingComponent;
 import org.spout.vanilla.component.player.PlayerListComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -63,5 +64,6 @@ public class VanillaListener implements Listener {
 		player.add(PlayerListComponent.class);
 		player.add(PingComponent.class);
 		player.add(PickupItemComponent.class);
+		player.add(SleepComponent.class);
 	}
 }

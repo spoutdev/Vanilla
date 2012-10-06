@@ -26,10 +26,12 @@
  */
 package org.spout.vanilla.protocol.msg.player;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.cuboid.Block;
+
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class PlayerBedMessage extends EntityMessage {
-	// TODO: find a better name then used and possably rename this whole class
 	private final int used, x, y, z;
 
 	public PlayerBedMessage(int id, int used, int x, int y, int z) {
@@ -38,6 +40,10 @@ public final class PlayerBedMessage extends EntityMessage {
 		this.x = x;
 		this.y = y;
 		this.z = z;
+	}
+
+	public PlayerBedMessage(Entity entity, Block head) {
+		this(entity.getId(), 0, head.getX(), head.getY(), head.getZ());
 	}
 
 	public int getUsed() {

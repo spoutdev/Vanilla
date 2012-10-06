@@ -24,26 +24,27 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.event.player;
+package org.spout.vanilla.event.player.network;
 
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.protocol.event.ProtocolEvent;
 
 /**
  * Event which is called when a player enters or leaves a bed
  */
-public class PlayerBedEvent extends PlayerEvent implements Cancellable {
+public class PlayerBedEvent extends PlayerEvent implements Cancellable, ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();
-	private Block bed;
+	private final Block bed;
 	private boolean entered;
 
-	public PlayerBedEvent(Player p, Block bed) {
+	public PlayerBedEvent(Player p, Block bed, boolean entered) {
 		super(p);
 		this.bed = bed;
-		entered = false;
+		this.entered = entered;
 	}
 
 	/**
@@ -54,24 +55,12 @@ public class PlayerBedEvent extends PlayerEvent implements Cancellable {
 		return bed;
 	}
 
-	public void setBed(Block bed) {
-		this.bed = bed;
-	}
-
 	/**
 	 * Gets if the player entered the bed.
 	 * @return True if the bed was entered.
 	 */
 	public boolean isEntered() {
 		return entered;
-	}
-
-	/**
-	 * Gets if the player left the bed.
-	 * @return False if the bed was left.
-	 */
-	public boolean isLeft() {
-		return !entered;
 	}
 
 	/**

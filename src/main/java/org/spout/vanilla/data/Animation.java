@@ -24,34 +24,39 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.codec.entity;
+package org.spout.vanilla.data;
 
-import java.io.IOException;
+import gnu.trove.map.TIntObjectMap;
+import gnu.trove.map.hash.TIntObjectHashMap;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+public enum Animation {
+	NONE(0),
+	SWING_ARM(1),
+	DAMAGE_ANIMATION(2),
+	LEAVE_BED(3),
+	EAT_FOOD(4),
+	UNKNOWN_ANIMATION(102),
+	CROUCH(104),
+	UNCROUCH(105);
 
-import org.spout.api.protocol.MessageCodec;
+	private final int id;
+	private static final TIntObjectMap<Animation> idMap = new TIntObjectHashMap<Animation>();
 
-import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
-
-public final class EntityAnimationCodec extends MessageCodec<EntityAnimationMessage> {
-	public EntityAnimationCodec() {
-		super(EntityAnimationMessage.class, 0x12);
+	private Animation(int id) {
+		this.id = id;
 	}
 
-	@Override
-	public EntityAnimationMessage decode(ChannelBuffer buffer) throws IOException {
-		int id = buffer.readInt();
-		byte animation = buffer.readByte();
-		return new EntityAnimationMessage(id, animation);
+	public int getId() {
+		return id;
 	}
 
-	@Override
-	public ChannelBuffer encode(EntityAnimationMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(5);
-		buffer.writeInt(message.getEntityId());
-		buffer.writeByte(message.getAnimationId());
-		return buffer;
+	static {
+		for (Animation animation : Animation.values()) {
+			idMap.put(animation.getId(), animation);
+		}
+	}
+
+	public static Animation get(int id) {
+		return idMap.get(id);
 	}
 }

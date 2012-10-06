@@ -29,11 +29,14 @@ package org.spout.vanilla.protocol.handler.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.data.Animation;
+import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.protocol.msg.entity.EntityActionMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 
@@ -44,7 +47,8 @@ public final class EntityActionHandler extends MessageHandler<EntityActionMessag
 			return;
 		}
 
-		Human human = session.getPlayer().add(Human.class);
+		Player player = session.getPlayer();
+		Human human =  player.add(Human.class);
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 
 		switch (message.getAction()) {
@@ -57,7 +61,7 @@ public final class EntityActionHandler extends MessageHandler<EntityActionMessag
 				session.send(false, new EntityMetadataMessage(human.getHolder().getId(), parameters));
 				break;
 			case EntityActionMessage.ACTION_LEAVE_BED:
-				session.send(false, new EntityActionMessage(human.getHolder().getId(), EntityActionMessage.ACTION_LEAVE_BED));
+				player.getNetwork().callProtocolEvent(new EntityAnimationEvent(player, Animation.LEAVE_BED));
 				break;
 			case EntityActionMessage.ACTION_START_SPRINTING:
 				parameters.add(EntityMetadataMessage.Parameters.META_SPRINTING.get());

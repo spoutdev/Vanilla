@@ -29,15 +29,14 @@ package org.spout.vanilla.data;
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 
-public class PlayerInventoryDefaultedKey extends DefaultedKeyImpl<PlayerInventory>{
-
+public class PlayerInventoryDefaultedKey extends DefaultedKeyImpl<PlayerInventory> {
 	public PlayerInventoryDefaultedKey(String keyString) {
 		super(keyString, null);
 	}
-	
+
 	@Override
 	public PlayerInventory getDefaultValue() {
 		return new PlayerInventory();
 	}
-	
+
 }

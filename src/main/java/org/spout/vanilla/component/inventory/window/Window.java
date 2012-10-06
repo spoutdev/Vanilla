@@ -344,7 +344,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 	}
 
 	public Human getHuman() {
-		return getHolder().get(Human.class);
+		return getHolder().add(Human.class);
 	}
 
 	public InventoryConverter getInventoryConverter(Inventory inventory) {

@@ -62,6 +62,23 @@ public class AdministrationCommands {
 		this.plugin = plugin;
 	}
 
+	@Command(aliases = "clear", usage = "[player]", desc = "Clears your inventory", min = 0, max = 1)
+	@CommandPermissions("vanilla.command.clear")
+	public void clear(CommandContext args, CommandSource source) throws CommandException {
+		if (args.length() == 0) {
+			if (!(source instanceof Player)) {
+				throw new CommandException("You must be a player to clear your own inventory.");
+			}
+			((Player) source).add(Human.class).getInventory().clear();
+		}
+		if (args.length() == 1) {
+			Player player = args.getPlayer(0, false);
+			player.add(Human.class).getInventory().clear();
+			player.sendMessage(ChatStyle.BRIGHT_GREEN, "Your inventory has been cleared.");
+		}
+		source.sendMessage(ChatStyle.BRIGHT_GREEN, "Inventory cleared.");
+	}
+
 	@Command(aliases = {"tp", "teleport"}, usage = "[player] [player|x] [y] [z] [-w <world>]", flags = "w:", desc = "Teleport to a location", min = 1, max = 4)
 	@CommandPermissions("vanilla.command.tp")
 	public void tp(CommandContext args, CommandSource source) throws CommandException {
@@ -168,13 +185,7 @@ public class AdministrationCommands {
 		}
 
 		int count = args.getInteger(++index, 1);
-
-		PlayerInventory inventory = player.add(Human.class).getInventory();
-		ItemStack item = new ItemStack(material, count);
-		inventory.getQuickbar().add(item);
-		if (!item.isEmpty()) {
-			inventory.getMain().add(item);
-		}
+		player.add(Human.class).getInventory().add(new ItemStack(material, count));
 		source.sendMessage("Gave ", player.getName(), " ", count, " ", material.getDisplayName());
 	}
 

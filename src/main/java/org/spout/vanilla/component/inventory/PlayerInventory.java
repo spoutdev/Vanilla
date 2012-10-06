@@ -28,6 +28,10 @@ package org.spout.vanilla.component.inventory;
 
 import java.io.Serializable;
 
+import org.spout.api.entity.Player;
+import org.spout.api.inventory.ItemStack;
+
+import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.inventory.player.PlayerArmorInventory;
 import org.spout.vanilla.inventory.player.PlayerCraftingGrid;
 import org.spout.vanilla.inventory.player.PlayerMainInventory;
@@ -48,7 +52,7 @@ public class PlayerInventory implements Serializable {
 	 * @return the quickbar slots
 	 */
 	public PlayerQuickbar getQuickbar() {
-		return this.quickbar;
+		return quickbar;
 	}
 
 	/**
@@ -56,7 +60,7 @@ public class PlayerInventory implements Serializable {
 	 * @return an Inventory with the items
 	 */
 	public PlayerMainInventory getMain() {
-		return this.main;
+		return main;
 	}
 
 	/**
@@ -64,7 +68,7 @@ public class PlayerInventory implements Serializable {
 	 * @return an Inventory with the armor items
 	 */
 	public PlayerArmorInventory getArmor() {
-		return this.armor;
+		return armor;
 	}
 
 	/**
@@ -72,6 +76,31 @@ public class PlayerInventory implements Serializable {
 	 * @return an inventory with the crafting grid items
 	 */
 	public PlayerCraftingGrid getCraftingGrid() {
-		return this.craftingGrid;
+		return craftingGrid;
+	}
+
+	/**
+	 * Attempts to add the specified item to the quickbar and then the main if
+	 * not all of the item is transferred.
+	 *
+	 * @param item to add
+	 * @return true if item is completely transferred
+	 */
+	public boolean add(ItemStack item) {
+		quickbar.add(item);
+		if (!item.isEmpty()) {
+			return main.add(item);
+		}
+		return true;
+	}
+
+	/**
+	 * Clears all inventories
+	 */
+	public void clear() {
+		main.clear();
+		craftingGrid.clear();
+		armor.clear();
+		quickbar.clear();
 	}
 }

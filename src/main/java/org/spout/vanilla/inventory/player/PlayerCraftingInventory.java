@@ -30,11 +30,15 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.inventory.CraftingInventory;
 
-public class PlayerCraftingGrid extends CraftingInventory {
-	private static final int LENGTH = 2, WIDTH = 2, OUTPUT_SLOT = 4;
+/**
+ * Represents the crafting inventory in the player's inventory.
+ */
+public class PlayerCraftingInventory extends CraftingInventory {
 	private static final long serialVersionUID = 1L;
+	public static final int LENGTH = 2, WIDTH = 2, OUTPUT_SLOT = 4;
+	public static final int TOP_LEFT_SLOT = 0, TOP_RIGHT_SLOT = 1, BOTTOM_LEFT_SLOT = 2, BOTTOM_RIGHT_SLOT = 3, OUTPUT = 4;
 
-	public PlayerCraftingGrid() {
+	public PlayerCraftingInventory() {
 		super(LENGTH, WIDTH, OUTPUT_SLOT);
 	}
 
@@ -42,35 +46,35 @@ public class PlayerCraftingGrid extends CraftingInventory {
 	 * Returns the current {@link ItemStack} in the top left input in the crafting grid slot (slot 42) ; can return null.
 	 * @return top left input item stack
 	 */
-	public ItemStack getTopLeftInput() {
-		return get(0);
+	public ItemStack getTopLeft() {
+		return get(TOP_LEFT_SLOT);
 	}
 
 	/**
 	 * Returns the current {@link ItemStack} in the top right input in the crafting grid slot (slot 43) ; can return null.
 	 * @return top right item stack
 	 */
-	public ItemStack getTopRightInput() {
-		return get(1);
+	public ItemStack getTopRight() {
+		return get(TOP_RIGHT_SLOT);
 	}
 
 	/**
 	 * Returns the current {@link ItemStack} in the bottom left input in the crafting grid slot (slot 38) ; can return null.
 	 * @return bottom left input item stack
 	 */
-	public ItemStack getBottomLeftInput() {
-		return get(2);
+	public ItemStack getBottomLeft() {
+		return get(BOTTOM_LEFT_SLOT);
 	}
 
 	/**
 	 * Returns the current {@link ItemStack} in the bottom right input in the crafting grid slot (slot 39) ; can return null.
 	 * @return bottom right input item stack
 	 */
-	public ItemStack getBottomRightInput() {
-		return get(3);
+	public ItemStack getBottomRight() {
+		return get(BOTTOM_RIGHT_SLOT);
 	}
 
 	public ItemStack getOutput() {
-		return get(4);
+		return get(OUTPUT);
 	}
 }

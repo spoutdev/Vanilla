@@ -29,15 +29,50 @@ package org.spout.vanilla.inventory.window;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
+/**
+ * Represents a type of {@link org.spout.vanilla.component.inventory.window.Window}
+ */
 public enum WindowType {
+	/**
+	 * The default window seen when the player opens his inventory.
+	 */
 	DEFAULT(-1),
+	/**
+	 * The window seen when opening a
+	 * {@link org.spout.vanilla.component.substance.material.Chest}
+	 */
 	CHEST(0),
+	/**
+	 * The window seen when using a
+	 * {@link org.spout.vanilla.component.substance.material.CraftingTable}
+	 */
 	CRAFTING_TABLE(1),
+	/**
+	 * The window seen when opening a
+	 * {@link org.spout.vanilla.component.substance.material.Furnace}
+	 */
 	FURNACE(2),
+	/**
+	 * The window seen when opening a
+	 * {@link org.spout.vanilla.component.substance.material.Dispenser}
+	 */
 	DISPENSER(3),
+	/**
+	 * The window seen when using an
+	 * {@link org.spout.vanilla.component.substance.material.EnchantmentTable}
+	 */
 	ENCHANTMENT_TABLE(4),
+	/**
+	 * The window seen when using a
+	 * {@link org.spout.vanilla.component.substance.material.BrewingStand}
+	 */
 	BREWING_STAND(5),
+	/**
+	 * The window seen when trading with a
+	 * {@link org.spout.vanilla.component.living.passive.Villager}
+	 */
 	VILLAGER(6);
+
 	private final int id;
 	private static final TIntObjectMap<WindowType> idMap = new TIntObjectHashMap<WindowType>();
 
@@ -45,6 +80,12 @@ public enum WindowType {
 		this.id = id;
 	}
 
+	/**
+	 * Returns the id sent to the client in the
+	 * {@link org.spout.vanilla.protocol.msg.window.WindowOpenMessage}
+	 *
+	 * @return id of type
+	 */
 	public int getId() {
 		return id;
 	}
@@ -55,6 +96,12 @@ public enum WindowType {
 		}
 	}
 
+	/**
+	 * Returns a window type with the specified id.
+	 *
+	 * @param id of window type
+	 * @return window type with specified id
+	 */
 	public static WindowType get(int id) {
 		return idMap.get(id);
 	}

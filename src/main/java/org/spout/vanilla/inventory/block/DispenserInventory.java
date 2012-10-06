@@ -33,8 +33,9 @@ import org.spout.api.inventory.Inventory;
  */
 public class DispenserInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
+	public static final int SIZE = 9;
 
 	public DispenserInventory() {
-		super(9);
+		super(SIZE);
 	}
 }

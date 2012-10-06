@@ -29,11 +29,18 @@ package org.spout.vanilla.inventory.block;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
+/**
+ * Represents the inventory of a
+ * {@link org.spout.vanilla.component.substance.material.BrewingStand}
+ */
 public class BrewingStandInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
+	public static final int SIZE = 4;
+	public static final int[] OUTPUT_SLOTS = {0, 1, 2};
+	public static final int INPUT_SLOT = 3;
 
 	public BrewingStandInventory() {
-		super(4);
+		super(SIZE);
 	}
 
 	/**
@@ -42,8 +49,10 @@ public class BrewingStandInventory extends Inventory {
 	 * @return {@link ItemStack} in the output
 	 */
 	public ItemStack getOutput(int index) {
-		if (index < 0 || index > 2) {
-			throw new IllegalArgumentException("The output index of the brewing stand must be between 0 and 2.");
+		int firstSlot = OUTPUT_SLOTS[0];
+		int lastSlot = OUTPUT_SLOTS[OUTPUT_SLOTS.length - 1];
+		if (index < firstSlot || index > lastSlot) {
+			throw new IllegalArgumentException("The output index of the brewing stand must be between " + firstSlot + " and " + lastSlot + ".");
 		}
 		return get(index);
 	}
@@ -53,6 +62,6 @@ public class BrewingStandInventory extends Inventory {
 	 * @return {@link ItemStack} in input of brewing stand.
 	 */
 	public ItemStack getInput() {
-		return get(3);
+		return get(INPUT_SLOT);
 	}
 }

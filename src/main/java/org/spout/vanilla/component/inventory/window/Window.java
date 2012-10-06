@@ -60,6 +60,9 @@ import org.spout.vanilla.inventory.window.WindowType;
 import org.spout.vanilla.inventory.window.prop.WindowProperty;
 import org.spout.vanilla.util.InventoryUtil;
 
+/**
+ * Represents a Window that players can view to display an inventory.
+ */
 public class Window extends EntityComponent implements InventoryViewer {
 	private final Set<InventoryConverter> converters = new HashSet<InventoryConverter>();
 	protected final TObjectIntMap<WindowProperty> properties = new TObjectIntHashMap<WindowProperty>();
@@ -75,36 +78,14 @@ public class Window extends EntityComponent implements InventoryViewer {
 		Component.addDependency(DefaultWindow.class, Human.class);
 	}
 
-	@Override
-	public void onAttached() {
-		if (!(getHolder() instanceof Player)) {
-			throw new IllegalStateException("A Window may only be attached to a player.");
-		}
-	}
-
-	@Override
-	public void onDetached() {
-		removeAllInventoryConverters();
-		close();
-		getHolder().add(DefaultWindow.class);
-	}
-
-	@Override
-	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
-		InventoryConverter slots = getInventoryConverter(inventory);
-		System.out.println("Slot set");
-		if (slots != null) {
-			slot = slots.getNativeSlot(slot);
-			System.out.println("Updating slot");
-			callProtocolEvent(new WindowSlotEvent(this, inventory, slot, item));
-		}
-	}
-
-	@Override
-	public boolean canTick() {
-		return false;
-	}
-
+	/**
+	 * Initializes this window to the specified type, title, and offset of first main slot.
+	 *
+	 * @param type of window
+	 * @param title of window
+	 * @param offset of first slot
+	 * @return this
+	 */
 	public Window init(WindowType type, String title, int offset) {
 		this.type = type;
 		this.title = title;
@@ -116,16 +97,29 @@ public class Window extends EntityComponent implements InventoryViewer {
 		return this;
 	}
 
+	/**
+	 * Initializes this window to the specified type and title.
+	 *
+	 * @param type of window
+	 * @param title of window
+	 * @return this
+	 */
 	public Window init(WindowType type, String title) {
 		return init(type, title, 0);
 	}
 
+	/**
+	 * Opens the window on the client.
+	 */
 	public void open() {
 		opened = true;
 		reload();
 		callProtocolEvent(new WindowOpenEvent(this));
 	}
 
+	/**
+	 * Closes the window on the client.
+	 */
 	public void close() {
 		opened = false;
 		if (getHuman().isSurvival()) {
@@ -134,6 +128,10 @@ public class Window extends EntityComponent implements InventoryViewer {
 		callProtocolEvent(new WindowCloseEvent(this));
 	}
 
+	/**
+	 * Reloads all inventories that this window is watching to reflect on the
+	 * client.
+	 */
 	public void reload() {
 		ItemStack[] items = new ItemStack[getInventorySize()];
 		int nativeSlot;
@@ -150,6 +148,14 @@ public class Window extends EntityComponent implements InventoryViewer {
 		callProtocolEvent(new WindowItemsEvent(this, items));
 	}
 
+	/**
+	 * Called when a client clicks the window while holding shift.
+	 *
+	 * @param stack to manipulate
+	 * @param slot clicked
+	 * @param from inventory slot was in
+	 * @return true if click was successful
+	 */
 	public boolean onShiftClick(ItemStack stack, int slot, Inventory from) {
 		PlayerInventory inventory = getHuman().getInventory();
 		PlayerMainInventory main = inventory.getMain();
@@ -173,6 +179,12 @@ public class Window extends EntityComponent implements InventoryViewer {
 		return false;
 	}
 
+	/**
+	 * Called when the client clicks a window.
+	 *
+	 * @param args {@link ClickArguments} of the session
+	 * @return true if click is allowed
+	 */
 	public boolean onClick(ClickArguments args) {
 		Inventory inventory = args.getInventory();
 		int slot = args.getSlot();
@@ -291,16 +303,31 @@ public class Window extends EntityComponent implements InventoryViewer {
 		return false;
 	}
 
+	/**
+	 * Called when the client clicks the window while in creative mode.
+	 *
+	 * @param inventory clicked
+	 * @param clickedSlot slot clicked
+	 * @param item item that was put in quickbar
+	 */
 	public void onCreativeClick(Inventory inventory, int clickedSlot, ItemStack item) {
 		cursorItem = null;
 		inventory.set(clickedSlot, item);
 	}
 
+	/**
+	 * Called when the client clicks outside the bounds of a window
+	 *
+	 * @return true if click is permitted
+	 */
 	public boolean onOutsideClick() {
 		dropCursorItem();
 		return true;
 	}
 
+	/**
+	 * Drops the current item on the cursor into the world.
+	 */
 	public void dropCursorItem() {
 		if (cursorItem != null) {
 			getHuman().dropItem(cursorItem);
@@ -308,6 +335,11 @@ public class Window extends EntityComponent implements InventoryViewer {
 		}
 	}
 
+	/**
+	 * Gets the combined size of all watched inventories.
+	 *
+	 * @return size of all watching inventories
+	 */
 	public int getInventorySize() {
 		int size = 0;
 		for (InventoryConverter converter : converters) {
@@ -316,10 +348,22 @@ public class Window extends EntityComponent implements InventoryViewer {
 		return size;
 	}
 
+	/**
+	 * Returns true if the window is currently opened.
+	 *
+	 * @return true if opened
+	 */
 	public boolean isOpened() {
 		return opened;
 	}
 
+	/**
+	 * Returns an inventory entry with the inventory that the native slot
+	 * is mapped to for this window.
+	 *
+	 * @param nativeSlot clicked
+	 * @return inventory that was clicked
+	 */
 	public InventoryEntry getInventoryEntry(int nativeSlot) {
 		int slot;
 		for (InventoryConverter converter : converters) {
@@ -331,6 +375,15 @@ public class Window extends EntityComponent implements InventoryViewer {
 		return null;
 	}
 
+	/**
+	 * Returns the click arguments to send to
+	 * {@link #onClick(org.spout.vanilla.inventory.window.ClickArguments)}.
+	 *
+	 * @param nativeSlot slot clicked
+	 * @param rightClick true if client right clicked window
+	 * @param shiftClick true if client was holding down shift
+	 * @return new click arguments to send to click call
+	 */
 	public ClickArguments getClickArguments(int nativeSlot, boolean rightClick, boolean shiftClick) {
 		InventoryEntry entry = getInventoryEntry(nativeSlot);
 		if (entry != null) {
@@ -339,14 +392,30 @@ public class Window extends EntityComponent implements InventoryViewer {
 		return null;
 	}
 
+	/**
+	 * Gets the holder of this window casted to a player.
+	 *
+	 * @return player
+	 */
 	public Player getPlayer() {
 		return (Player) getHolder();
 	}
 
+	/**
+	 * Gets the Human component of the holder
+	 *
+	 * @return human
+	 */
 	public Human getHuman() {
 		return getHolder().add(Human.class);
 	}
 
+	/**
+	 * Gets an inventory converter from the specified inventory
+	 *
+	 * @param inventory to search for
+	 * @return converter with specified inventory
+	 */
 	public InventoryConverter getInventoryConverter(Inventory inventory) {
 		for (InventoryConverter converter : converters) {
 			if (converter.getInventory().equals(inventory)) {
@@ -356,15 +425,30 @@ public class Window extends EntityComponent implements InventoryViewer {
 		return null;
 	}
 
+	/**
+	 * Returns all inventory converters the window is watching
+	 *
+	 * @return all converters
+	 */
 	public Set<InventoryConverter> getInventoryConverters() {
 		return converters;
 	}
 
+	/**
+	 * Adds an inventory converter to start watching.
+	 *
+	 * @param converter
+	 */
 	public void addInventoryConverter(InventoryConverter converter) {
 		converter.getInventory().addViewer(this);
 		converters.add(converter);
 	}
 
+	/**
+	 * Removes an inventory converter to stop watching/
+	 *
+	 * @param converter
+	 */
 	public void removeInventoryConverter(InventoryConverter converter) {
 		converter.getInventory().removeViewer(this);
 		converters.remove(converter);
@@ -379,47 +463,110 @@ public class Window extends EntityComponent implements InventoryViewer {
 		}
 	}
 
+	/**
+	 * Sets a property of the window on the client.
+	 *
+	 * @param prop of the window
+	 * @param value of the property
+	 */
 	public void setProperty(WindowProperty prop, int value) {
 		properties.put(prop, value);
 		callProtocolEvent(new WindowPropertyEvent(this, prop.getId(), value));
 	}
 
+	/**
+	 * Returns the property of the window.
+	 *
+	 * @param prop of the window
+	 * @return value of specified property
+	 */
 	public int getProperty(WindowProperty prop) {
 		return properties.get(prop);
 	}
 
+	/**
+	 * Returns the unique id of this window.
+	 *
+	 * @return id of the window
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * Returns the {@link WindowType} of this window.
+	 *
+	 * @return type of window
+	 */
 	public WindowType getType() {
 		return type;
 	}
 
+	/**
+	 * Sets the type of this window. Changes will not be staged until window is
+	 * re-opened.
+	 *
+	 * @param type to set
+	 */
 	public void setType(WindowType type) {
 		this.type = type;
 	}
 
+	/**
+	 * Returns the title displayed on the window.
+	 *
+	 * @return title displayed on window
+	 */
 	public String getTitle() {
 		return title;
 	}
 
+	/**
+	 * Sets the title displayed on this window. Changes will not be staged
+	 * until window is re-opened.
+	 *
+	 * @param title to display
+	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
+	/**
+	 * Returns true if there is currently an {@link ItemStack} on the client's
+	 * cursor.
+	 *
+	 * @return true if item on cursor
+	 */
 	public boolean hasCursorItem() {
 		return cursorItem != null;
 	}
 
+	/**
+	 * Returns the {@link ItemStack} on the client's cursor.
+	 *
+	 * @return item on cursor
+	 */
 	public ItemStack getCursorItem() {
 		return cursorItem;
 	}
 
+	/**
+	 * Sets the current {@link ItemStack} on the cursor. Note that setting this
+	 * does not actually set the item on the client but rather is just for
+	 * internal use only for keeping track of the cursor item server side.
+	 * The server cannot set the cursor item on the client.
+	 *
+	 * @param cursorItem to set
+	 */
 	public void setCursorItem(ItemStack cursorItem) {
 		this.cursorItem = cursorItem;
 	}
 
+	/**
+	 * Attempts to call a {@link ProtocolEvent} for the player.
+	 *
+	 * @param event to call
+	 */
 	private void callProtocolEvent(ProtocolEvent event) {
 		if (getPlayer() == null) {
 			if (Spout.debugMode()) {
@@ -434,5 +581,35 @@ public class Window extends EntityComponent implements InventoryViewer {
 			return;
 		}
 		getPlayer().getNetworkSynchronizer().callProtocolEvent(event);
+	}
+
+	@Override
+	public void onAttached() {
+		if (!(getHolder() instanceof Player)) {
+			throw new IllegalStateException("A Window may only be attached to a player.");
+		}
+	}
+
+	@Override
+	public void onDetached() {
+		removeAllInventoryConverters();
+		close();
+		getHolder().add(DefaultWindow.class);
+	}
+
+	@Override
+	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
+		InventoryConverter slots = getInventoryConverter(inventory);
+		System.out.println("Slot set");
+		if (slots != null) {
+			slot = slots.getNativeSlot(slot);
+			System.out.println("Updating slot");
+			callProtocolEvent(new WindowSlotEvent(this, inventory, slot, item));
+		}
+	}
+
+	@Override
+	public boolean canTick() {
+		return false;
 	}
 }

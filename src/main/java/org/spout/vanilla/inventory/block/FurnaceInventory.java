@@ -37,21 +37,23 @@ import org.spout.vanilla.material.TimedCraftable;
  */
 public class FurnaceInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
+	public static final int SIZE = 3;
+	public static final int OUTPUT_SLOT = 0, FUEL_SLOT = 1, INGREDIENT_SLOT = 2;
 
 	public FurnaceInventory() {
-		super(3);
+		super(SIZE);
 	}
 
 	public ItemStack getOutput() {
-		return get(0);
+		return get(OUTPUT_SLOT);
 	}
 
 	public ItemStack getFuel() {
-		return get(1);
+		return get(FUEL_SLOT);
 	}
 
 	public ItemStack getIngredient() {
-		return get(2);
+		return get(INGREDIENT_SLOT);
 	}
 
 	/**

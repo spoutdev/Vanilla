@@ -34,24 +34,37 @@ import org.spout.api.inventory.ItemStack;
  */
 public class JukeboxInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
+	public static final int SIZE = 1;
+	public static final int SLOT = 0;
 
 	public JukeboxInventory() {
-		super(1);
+		super(SIZE);
+	}
+
+	/**
+	 * Returns true if the Jukebox has an {@link ItemStack} in it.
+	 *
+	 * @return true if Jukebox has item
+	 */
+	public boolean has() {
+		return get(SLOT) != null;
 	}
 
 	/**
 	 * Gets the {@link org.spout.api.inventory.ItemStack} in the Jukebox's music slot
+	 *
 	 * @return item in slot
 	 */
-	public ItemStack getMusicSlot() {
-		return get(0);
+	public ItemStack get() {
+		return get(SLOT);
 	}
 
 	/**
 	 * Sets the {@link org.spout.api.inventory.ItemStack} in the Jukebox's music slot
+	 *
 	 * @param item in slot
 	 */
-	public void setMusicSlot(ItemStack item) {
-		set(0, item);
+	public void set(ItemStack item) {
+		set(SLOT, item);
 	}
 }

@@ -31,6 +31,9 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.shape.Grid;
 import org.spout.api.inventory.util.GridIterator;
 
+/**
+ * Represents an inventory that contains a crafting matrix.
+ */
 public class CraftingInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
 	private final Grid grid;
@@ -55,14 +58,29 @@ public class CraftingInventory extends Inventory {
 		this(new Grid(length, width), outputSlot);
 	}
 
+	/**
+	 * Returns the grid of the slots that will have the output slot updated.
+	 *
+	 * @return grid of slots to trigger update
+	 */
 	public Grid getGrid() {
 		return grid;
 	}
 
+	/**
+	 * Returns the slot to update when a slot is updated in the crafting grid.
+	 *
+	 * @return slot to update
+	 */
 	public int getOutputSlot() {
 		return outputSlot;
 	}
 
+	/**
+	 * Returns the offset of the first slot in the crafting grid.
+	 *
+	 * @return offset of grid
+	 */
 	public int getOffset() {
 		return offset;
 	}
@@ -78,6 +96,10 @@ public class CraftingInventory extends Inventory {
 		}
 	}
 
+	/**
+	 * Assesses the crafting matrix to determine if an {@link ItemStack} should
+	 * be crafted to the {@link #outputSlot};
+	 */
 	public void updateOutput() {
 		// TODO: Update output
 	}

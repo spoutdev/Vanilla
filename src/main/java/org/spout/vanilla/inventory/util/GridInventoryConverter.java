@@ -30,6 +30,10 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.shape.Grid;
 import org.spout.api.inventory.util.GridIterator;
 
+/**
+ * Represents an {@link InventoryConverter} that converts slots given the
+ * length of a grid in an inventory.
+ */
 public class GridInventoryConverter extends InventoryConverter {
 	private final Grid grid;
 	private final int offset;
@@ -52,10 +56,20 @@ public class GridInventoryConverter extends InventoryConverter {
 		return new GridInventoryConverter(inventory, grid.getLength(), this.offset + offset);
 	}
 
+	/**
+	 * Returns the grid associated with this converter.
+	 *
+	 * @return grid
+	 */
 	public Grid getGrid() {
 		return grid;
 	}
 
+	/**
+	 * Returns the offset of the first slot in the grid.
+	 *
+	 * @return offset of first slot
+	 */
 	public int getOffset() {
 		return offset;
 	}

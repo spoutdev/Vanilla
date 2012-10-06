@@ -28,6 +28,9 @@ package org.spout.vanilla.inventory;
 
 import org.spout.api.inventory.Inventory;
 
+/**
+ * Represents anything that has an inventory.
+ */
 public interface Container {
 	/**
 	 * Gets the inventory of this entity

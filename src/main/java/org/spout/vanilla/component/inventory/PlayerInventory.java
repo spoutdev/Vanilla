@@ -28,12 +28,10 @@ package org.spout.vanilla.component.inventory;
 
 import java.io.Serializable;
 
-import org.spout.api.entity.Player;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.inventory.player.PlayerArmorInventory;
-import org.spout.vanilla.inventory.player.PlayerCraftingGrid;
+import org.spout.vanilla.inventory.player.PlayerCraftingInventory;
 import org.spout.vanilla.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 
@@ -43,7 +41,7 @@ import org.spout.vanilla.inventory.player.PlayerQuickbar;
 public class PlayerInventory implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private final PlayerMainInventory main = new PlayerMainInventory();
-	private final PlayerCraftingGrid craftingGrid = new PlayerCraftingGrid();
+	private final PlayerCraftingInventory craftingGrid = new PlayerCraftingInventory();
 	private final PlayerArmorInventory armor = new PlayerArmorInventory();
 	private final PlayerQuickbar quickbar = new PlayerQuickbar();
 
@@ -75,7 +73,7 @@ public class PlayerInventory implements Serializable {
 	 * Gets the crafting grid inventory of this player inventory
 	 * @return an inventory with the crafting grid items
 	 */
-	public PlayerCraftingGrid getCraftingGrid() {
+	public PlayerCraftingInventory getCraftingGrid() {
 		return craftingGrid;
 	}
 

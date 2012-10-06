@@ -28,10 +28,15 @@ package org.spout.vanilla.inventory.block;
 
 import org.spout.api.inventory.Inventory;
 
+/**
+ * Represents the inventory of a
+ * {@link org.spout.vanilla.component.substance.material.Chest}.
+ */
 public class ChestInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
+	public static final int SIZE = 27;
 
 	public ChestInventory() {
-		super(27);
+		super(SIZE);
 	}
 }

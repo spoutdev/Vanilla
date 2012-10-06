@@ -35,25 +35,29 @@ import org.spout.api.inventory.ItemStack;
  */
 public class EnchantmentTableInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
+	public static final int SIZE = 1;
+	public static final int SLOT = 0;
 
 	public EnchantmentTableInventory() {
-		super(1);
+		super(SIZE);
 	}
 
 	/**
 	 * Whether the inventory contains an item to enchant
+	 *
 	 * @return true if an item is present
 	 */
-	public boolean hasItem() {
-		return this.get(0) != null;
+	public boolean has() {
+		return get(SLOT) != null;
 	}
 
 	/**
-	 * Returns the {@link ItemStack} in the enchantment slot (slot 36); can
+	 * Returns the {@link ItemStack} in the enchantment slot; can
 	 * return null.
+	 *
 	 * @return ingredient item stack
 	 */
 	public ItemStack get() {
-		return get(0);
+		return get(SLOT);
 	}
 }

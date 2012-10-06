@@ -29,10 +29,24 @@ package org.spout.vanilla.inventory.window.prop;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
+/**
+ * Represents a property of
+ * {@link org.spout.vanilla.inventory.window.WindowType#ENCHANTMENT_TABLE}
+ */
 public enum EnchantmentTableProperty implements WindowProperty {
+	/**
+	 * The value of the first slot level.
+	 */
 	SLOT_1(0),
+	/**
+	 * The value of the second slot level.
+	 */
 	SLOT_2(1),
+	/**
+	 * The value of the third slot level.
+	 */
 	SLOT_3(2);
+
 	private final int id;
 	private static final TIntObjectMap<EnchantmentTableProperty> idMap = new TIntObjectHashMap<EnchantmentTableProperty>(EnchantmentTableProperty.values().length);
 
@@ -51,6 +65,12 @@ public enum EnchantmentTableProperty implements WindowProperty {
 		}
 	}
 
+	/**
+	 * Returns the property with the specified id
+	 *
+	 * @param id of property
+	 * @return property with specified id
+	 */
 	public static EnchantmentTableProperty get(int id) {
 		return idMap.get(id);
 	}

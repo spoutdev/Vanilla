@@ -30,8 +30,9 @@ import org.spout.api.inventory.Inventory;
 
 public class PlayerMainInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
+	public static final int SIZE = 27;
 
 	public PlayerMainInventory() {
-		super(27);
+		super(SIZE);
 	}
 }

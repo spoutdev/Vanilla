@@ -28,6 +28,9 @@ package org.spout.vanilla.inventory.window;
 
 import org.spout.api.inventory.Inventory;
 
+/**
+ * Represents an inventory mapped to a specified slot.
+ */
 public class InventoryEntry {
 	private final Inventory inventory;
 	private final int slot;
@@ -37,10 +40,20 @@ public class InventoryEntry {
 		this.slot = slot;
 	}
 
+	/**
+	 * Returns the inventory associated with this entry.
+	 *
+	 * @return inventory
+	 */
 	public Inventory getInventory() {
 		return inventory;
 	}
 
+	/**
+	 * Returns the slot value of the entry
+	 *
+	 * @return slot
+	 */
 	public int getSlot() {
 		return slot;
 	}

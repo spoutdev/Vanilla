@@ -28,6 +28,10 @@ package org.spout.vanilla.inventory.window;
 
 import org.spout.api.inventory.Inventory;
 
+/**
+ * Represents the arguments of a click on a
+ * {@link org.spout.vanilla.component.inventory.window.Window}
+ */
 public class ClickArguments extends InventoryEntry {
 	private final boolean rightClick, shiftClick;
 
@@ -37,10 +41,20 @@ public class ClickArguments extends InventoryEntry {
 		this.shiftClick = shiftClick;
 	}
 
+	/**
+	 * Returns true if the click was a right click
+	 *
+	 * @return true if window was right clicked
+	 */
 	public boolean isRightClick() {
 		return rightClick;
 	}
 
+	/**
+	 * Returns true if the client was holding shift when the window was clicked
+	 *
+	 * @return true if shift was being held down
+	 */
 	public boolean isShiftClick() {
 		return shiftClick;
 	}

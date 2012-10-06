@@ -34,40 +34,82 @@ import org.spout.api.inventory.ItemStack;
  */
 public class PlayerArmorInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
+	public static final int SIZE = 4;
+	public static final int BOOT_SLOT = 0, LEGGINGS_SLOT = 1, CHEST_PLATE_SLOT = 2, HELMET_SLOT = 3;
 
 	public PlayerArmorInventory() {
-		super(4);
+		super(SIZE);
 	}
 
+	/**
+	 * Returns the {@link ItemStack} in the boots slot.
+	 *
+	 * @return boots
+	 */
 	public ItemStack getBoots() {
-		return get(0);
+		return get(BOOT_SLOT);
 	}
 
+	/**
+	 * Sets the {@link ItemStack} in the boots slot.
+	 *
+	 * @param boots
+	 */
 	public void setBoots(ItemStack boots) {
-		set(0, boots);
+		set(BOOT_SLOT, boots);
 	}
 
+	/**
+	 * Returns the {@link ItemStack} in the leggings slot.
+	 *
+	 * @return leggings
+	 */
 	public ItemStack getLeggings() {
-		return get(1);
+		return get(LEGGINGS_SLOT);
 	}
 
+	/**
+	 * Sets the {@link ItemStack} in the leggings slot.
+	 *
+	 * @param leggings
+	 */
 	public void setLeggings(ItemStack leggings) {
-		set(1, leggings);
+		set(LEGGINGS_SLOT, leggings);
 	}
 
+	/**
+	 * Returns the {@link ItemStack} in the chest plate slot.
+	 *
+	 * @return chest plate
+	 */
 	public ItemStack getChestPlate() {
-		return get(2);
+		return get(CHEST_PLATE_SLOT);
 	}
 
+	/**
+	 * Sets the {@link ItemStack} in the chest plate slot.
+	 *
+	 * @param chestPlate
+	 */
 	public void setChestPlate(ItemStack chestPlate) {
-		set(2, chestPlate);
+		set(CHEST_PLATE_SLOT, chestPlate);
 	}
 
+	/**
+	 * Returns the {@link ItemStack} in the helmet slot
+	 *
+	 * @return helmet
+	 */
 	public ItemStack getHelmet() {
-		return get(3);
+		return get(HELMET_SLOT);
 	}
 
+	/**
+	 * Sets the {@link ItemStack} in the helmet slot.
+	 *
+	 * @param helmet
+	 */
 	public void setHelmet(ItemStack helmet) {
-		set(3, helmet);
+		set(HELMET_SLOT, helmet);
 	}
 }

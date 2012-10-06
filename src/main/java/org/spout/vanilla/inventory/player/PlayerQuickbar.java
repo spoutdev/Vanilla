@@ -31,10 +31,11 @@ import org.spout.api.inventory.ItemStack;
 
 public class PlayerQuickbar extends Inventory {
 	private static final long serialVersionUID = 1L;
+	public static final int SIZE = 9;
 	private int currentSlot = 0;
 
 	public PlayerQuickbar() {
-		super(9);
+		super(SIZE);
 	}
 
 	public int getCurrentSlot() {

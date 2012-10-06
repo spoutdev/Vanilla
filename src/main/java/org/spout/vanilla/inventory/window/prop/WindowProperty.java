@@ -26,6 +26,15 @@
  */
 package org.spout.vanilla.inventory.window.prop;
 
+/**
+ * Represents a property of a
+ * {@link org.spout.vanilla.component.inventory.window.Window}.
+ */
 public interface WindowProperty {
+	/**
+	 * Returns the id sent to the client of the property.
+	 *
+	 * @return id sent to the client
+	 */
 	public int getId();
 }

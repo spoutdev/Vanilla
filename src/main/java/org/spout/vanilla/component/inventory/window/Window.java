@@ -45,6 +45,7 @@ import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowItemsEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
@@ -567,7 +568,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 	 *
 	 * @param event to call
 	 */
-	private void callProtocolEvent(ProtocolEvent event) {
+	protected void callProtocolEvent(ProtocolEvent event) {
 		if (getPlayer() == null) {
 			if (Spout.debugMode()) {
 				Spout.getLogger().log(Level.WARNING, "Sending protocol message with null player");
@@ -602,9 +603,19 @@ public class Window extends EntityComponent implements InventoryViewer {
 		InventoryConverter slots = getInventoryConverter(inventory);
 		System.out.println("Slot set");
 		if (slots != null) {
-			slot = slots.getNativeSlot(slot);
+			int nativeSlot = slots.getNativeSlot(slot);
 			System.out.println("Updating slot");
-			callProtocolEvent(new WindowSlotEvent(this, inventory, slot, item));
+			callProtocolEvent(new WindowSlotEvent(this, inventory, nativeSlot, item));
+		}
+
+		// update held item
+		PlayerQuickbar quickbar = getHuman().getInventory().getQuickbar();
+		System.out.println("Slot: " + slot);
+		System.out.println("Current slot: " + quickbar.getCurrentSlot());
+		if (inventory instanceof PlayerQuickbar && slot == quickbar.getCurrentSlot()) {
+			System.out.println("Rendering held item");
+			Player player = getPlayer();
+			player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, 0, item));
 		}
 	}
 

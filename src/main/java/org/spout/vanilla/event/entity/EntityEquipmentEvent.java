@@ -24,33 +24,47 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.handler.player;
+package org.spout.vanilla.event.entity;
 
-import org.spout.api.entity.Player;
+import org.spout.api.entity.Entity;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.entity.EntityEvent;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.component.living.Human;
-import org.spout.vanilla.event.entity.EntityEquipmentEvent;
-import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.protocol.msg.player.PlayerHeldItemChangeMessage;
+public class EntityEquipmentEvent extends EntityEvent implements ProtocolEvent {
+	private static final HandlerList handlers = new HandlerList();
+	private int slot;
+	private ItemStack item;
 
-public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeldItemChangeMessage> {
+	public EntityEquipmentEvent(Entity e, int slot, ItemStack item) {
+		super(e);
+		this.slot = slot;
+		this.item = item;
+	}
+
+	public int getSlot() {
+		return slot;
+	}
+
+	public void setSlot(int slot) {
+		this.slot = slot;
+	}
+
+	public ItemStack getItem() {
+		return item;
+	}
+
+	public void setItem(ItemStack item) {
+		this.item = item;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
+
 	@Override
-	public void handleServer(Session session, PlayerHeldItemChangeMessage message) {
-		if (!session.hasPlayer()) {
-			return;
-		}
-		Human human = session.getPlayer().add(Human.class);
-		int newSlot = message.getSlot();
-		if (newSlot < 0 || newSlot > 8) {
-			return;
-		}
-		PlayerQuickbar quickbar = human.getInventory().getQuickbar();
-		quickbar.setCurrentSlot(newSlot);
-		ItemStack item = quickbar.getCurrentItem();
-		Player player = session.getPlayer();
-		player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, 0, item));
+	public HandlerList getHandlers() {
+		return handlers;
 	}
 }

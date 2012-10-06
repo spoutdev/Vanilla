@@ -26,7 +26,13 @@
  */
 package org.spout.vanilla.component.inventory.window;
 
+import org.spout.api.entity.Player;
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.component.inventory.PlayerInventory;
+import org.spout.vanilla.event.entity.EntityEquipmentEvent;
+import org.spout.vanilla.inventory.player.PlayerArmorInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
@@ -38,6 +44,15 @@ public class DefaultWindow extends Window {
 		PlayerInventory inventory = getHuman().getInventory();
 		addInventoryConverter(new InventoryConverter(inventory.getArmor(), "8, 7, 6, 5"));
 		addInventoryConverter(new InventoryConverter(inventory.getCraftingGrid(), "3-4, 1-2, 0"));
+	}
+
+	@Override
+	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
+		super.onSlotSet(inventory, slot, item);
+		if (inventory instanceof PlayerArmorInventory) {
+			Player player = getPlayer();
+			player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, slot + 1, item));
+		}
 	}
 
 	@Override

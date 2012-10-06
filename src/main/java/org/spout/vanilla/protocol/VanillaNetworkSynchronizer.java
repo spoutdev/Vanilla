@@ -78,6 +78,7 @@ import org.spout.vanilla.event.block.BlockControllerDataEvent;
 import org.spout.vanilla.event.block.SignUpdateEvent;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.event.entity.EntityCollectItemEvent;
+import org.spout.vanilla.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
 import org.spout.vanilla.event.player.network.PlayerBedEvent;
@@ -406,6 +407,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				this.session.send(false, message);
 			}
 		}
+	}
+
+	@EventHandler
+	public Message onEntityEquipment(EntityEquipmentEvent event) {
+		return new EntityEquipmentMessage(event.getEntity().getId(), event.getSlot(), event.getItem());
 	}
 
 	@EventHandler

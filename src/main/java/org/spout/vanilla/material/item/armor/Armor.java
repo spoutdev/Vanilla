@@ -64,9 +64,9 @@ public abstract class Armor extends VanillaItemMaterial implements Enchantable {
 			level = EnchantmentUtil.getEnchantmentLevel(item, Enchantments.PROTECTION);
 		} else if (EnchantmentUtil.hasEnchantment(item, Enchantments.BLAST_PROTECTION) && cause.equals(DamageCause.EXPLOSION)) {
 			level = EnchantmentUtil.getEnchantmentLevel(item, Enchantments.BLAST_PROTECTION);
-		} else if (EnchantmentUtil.hasEnchantment(item, Enchantments.FIRE_PROTECTION) && cause.equals(DamageCause.BURN, DamageCause.FIRE_CONTACT)) {
+		} else if (EnchantmentUtil.hasEnchantment(item, Enchantments.FIRE_PROTECTION) && cause.equals(DamageCause.BURN, DamageCause.FIRE_SOURCE)) {
 			level = EnchantmentUtil.getEnchantmentLevel(item, Enchantments.FIRE_PROTECTION);
-		} else if (EnchantmentUtil.hasEnchantment(item, Enchantments.PROJECTILE_PROTECTION) && cause.equals(DamageCause.ARROW, DamageCause.FIREBALL)) {
+		} else if (EnchantmentUtil.hasEnchantment(item, Enchantments.PROJECTILE_PROTECTION) && cause.equals(DamageCause.PROJECTILE, DamageCause.FIREBALL)) {
 			level = EnchantmentUtil.getEnchantmentLevel(item, Enchantments.PROJECTILE_PROTECTION);
 		}
 		amount += level * 3;

@@ -33,61 +33,67 @@ import org.spout.api.Source;
  */
 public enum DamageCause implements Source {
 	/**
-	 * Damaged by getting hit by an {@link Arrow}.
-	 */
-	ARROW(3),
-	/**
-	 * Damaged by another entity attacking.
-	 */
-	ATTACK(2),
-	/**
-	 * Damaged by continuing to burn after touching a source of fire.
-	 */
-	BURN(3),
-	/**
-	 * Damaged by touching cactus.
-	 */
-	CACTUS(1),
-	/**
-	 * Damaged by use of a command such as /kill.
-	 */
-	COMMAND,
-	/**
-	 * Damaged by an explosion.
-	 */
-	EXPLOSION(2),
-	/**
 	 * Damaged by falling.
 	 */
 	FALL,
-	/**
-	 * Damaged by getting hit by a {@link BlazeFireball} or {@link GhastFireball}.
-	 */
-	FIREBALL(2),
-	/**
-	 * Damaged by making contact with a source of fire.
-	 */
-	FIRE_CONTACT(3),
-	/**
-	 * Damaged due to starvation.
-	 */
-	STARVE,
 	/**
 	 * Damaged due to drowning.
 	 */
 	DROWN,
 	/**
-	 * Damage caused by suffocation.
+	 * Damaged by another entity attacking.
 	 */
-	SUFFOCATE,
-	/**
-	 * Damaged by an unknown source.
-	 */
-	UNKNOWN,
+	ATTACK(2),
 	/**
 	 * Damaged by falling into the Void.
 	 */
-	VOID;
+	VOID,
+	/**
+	 * Damaged by making contact with a source of fire.
+	 */
+	FIRE_SOURCE(3),
+	/**
+	 * Damaged by continuing to burn after touching a source of fire.
+	 */
+	BURN(3),
+	/**
+	 * Damaged by an explosion.
+	 */
+	EXPLOSION(2),
+	/**
+	 * Damaged by getting hit by an
+	 * {@link org.spout.vanilla.component.substance.Projectile}.
+	 */
+	PROJECTILE(3),
+	/**
+	 * Damaged by touching cactus.
+	 */
+	CACTUS(1),
+	/**
+	 * Damage caused by suffocation.
+	 */
+	SUFFOCATION,
+	/**
+	 * Damaged due to starvation.
+	 */
+	STARVATION,
+	/**
+	 * Damaged caused due to the wither effect.
+	 */
+	WITHERED,
+	/**
+	 * Damaged by getting hit by a {@link BlazeFireball} or {@link GhastFireball}.
+	 */
+	FIREBALL(2),
+	/**
+	 * Damaged by use of a command such as /kill.
+	 */
+	COMMAND,
+	/**
+	 * Damaged by an unknown source.
+	 */
+	UNKNOWN;
+
 	private int durabilityPenalty = 0;
 
 	private DamageCause() {

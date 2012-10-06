@@ -26,29 +26,54 @@
  */
 package org.spout.vanilla.component.substance;
 
-import org.spout.api.component.components.BlockComponent;
+import org.spout.api.component.components.EntityComponent;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.material.item.misc.PaintingItem;
+import org.spout.vanilla.data.PaintingType;
 import org.spout.vanilla.protocol.entity.object.PaintingEntityProtocol;
 
-public class Painting extends BlockComponent {
+public class Painting extends EntityComponent {
+	private PaintingType type;
+	private BlockFace face;
+
 	@Override
 	public void onAttached() {
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PaintingEntityProtocol());
 	}
 
-	//TODO Implement paintings.
-	public PaintingItem.PaintingStyle getStyle() {
-		return PaintingItem.PaintingStyle.Alban;
+	public PaintingType getType() {
+		return type;
+	}
+
+	public void setType(PaintingType type) {
+		this.type = type;
 	}
 
 	public BlockFace getFace() {
-		return BlockFace.BOTTOM;
+		return face;
 	}
 
-	public int getProtocolFace() {
-		return 1;
+	public void setFace(BlockFace face) {
+		this.face = face;
+	}
+
+	public int getNativeFace() {
+		return getNativeFace(face);
+	}
+
+	public static int getNativeFace(BlockFace face) {
+		switch (face) {
+			case NORTH:
+				return 1;
+			case SOUTH:
+				return 3;
+			case EAST:
+				return 0;
+			case WEST:
+				return 2;
+			default:
+				return -1;
+		}
 	}
 }

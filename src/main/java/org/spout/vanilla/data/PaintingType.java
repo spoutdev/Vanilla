@@ -86,23 +86,28 @@ public enum PaintingType {
 		final int x = pos.getBlockX();
 		final int y = pos.getBlockY();
 		final int z = pos.getBlockZ();
-		final int blockWidth = 16;
 
-		int centerWidth = Math.max(0, width / blockWidth / 2 - 1);
-		int centerHeight = height / blockWidth / 2;
+		final int blockWidth = 16;
+		final int centerHeight = height / blockWidth / 2;
+		final int centerWidth = width / blockWidth / 2 - 1;
 
 		int centerX = x;
-		int centerY = y - centerHeight;
+		int centerY = y + centerHeight;
 		int centerZ = z;
 
 		switch (direction) {
 			case NORTH:
-			case WEST:
-				centerZ += -centerWidth;
+				centerZ -= centerWidth;
 				break;
 			case SOUTH:
-			case EAST:
 				centerZ += centerWidth;
+				break;
+			case EAST:
+				centerX -= centerWidth;
+				break;
+			case WEST:
+				centerX += centerWidth;
+				break;
 		}
 
 		System.out.println("Facing: " + direction);

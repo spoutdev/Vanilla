@@ -24,10 +24,30 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity;
+package org.spout.vanilla.component.substance.object.projectile;
 
-public abstract class BasicVehicleEntityProtocol extends BasicObjectEntityProtocol {
-	public BasicVehicleEntityProtocol(int vehicleSpawnID) {
-		super(vehicleSpawnID);
+import org.spout.api.entity.Entity;
+
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.substance.object.ObjectEntity;
+import org.spout.vanilla.protocol.entity.BasicObjectEntityProtocol;
+
+public class Arrow extends ObjectEntity implements Projectile {
+	public static final int ID = 60;
+	private Entity shooter;
+
+	@Override
+	public void onAttached() {
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicObjectEntityProtocol(ID));
+	}
+
+	@Override
+	public Entity getShooter() {
+		return null;
+	}
+
+	@Override
+	public void setShooter(Entity shooter) {
+		this.shooter = shooter;
 	}
 }

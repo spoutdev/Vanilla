@@ -66,9 +66,9 @@ import org.spout.vanilla.protocol.msg.entity.pos.EntityYawMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityExperienceOrbMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityItemMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityMobMessage;
+import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityPaintingMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityThunderboltMessage;
-import org.spout.vanilla.protocol.msg.entity.spawn.EntityVehicleMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerAbilityMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerBedMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerBlockPlacementMessage;
@@ -152,7 +152,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new PlayerSpawnMessage(24, "risaccess1", 8000, 28, 900, 0, 0, 89, new ArrayList<Parameter<?>>()),
 			new EntityItemMessage(1234, 89, 3, (short) 4, 1, 2, 3, 34, 56, 55),
 			new PlayerCollectItemMessage(1234, 5678),
-			new EntityVehicleMessage(1, 3, 3.0, 654.0, 1234.0, 77, 0.54, 0.23, 0.7),
+			new EntityObjectMessage(1, (byte) 1, 100, 250, 300, (short) 50, (short) 100, (short) 200),
 			new EntityMobMessage(123, 255, 1, 2, 4, 34, 55, 33, (short) 0, (short) 0, (short) 0, TEST_PARAMS),
 			new EntityPaintingMessage(4, "KEBAB", 2, 3, 4, 56),
 			new EntityExperienceOrbMessage(34, 1, 2, 3, (short) 34),

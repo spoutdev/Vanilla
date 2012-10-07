@@ -24,9 +24,23 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.substance.projectile;
+package org.spout.vanilla.component.substance;
 
-import org.spout.vanilla.component.substance.Projectile;
+import org.spout.api.component.components.EntityComponent;
+import org.spout.api.entity.Entity;
 
-public class Arrow extends Projectile {
+import org.spout.vanilla.component.substance.object.projectile.Projectile;
+
+public class Potion extends EntityComponent implements Projectile {
+	private Entity shooter;
+
+	@Override
+	public Entity getShooter() {
+		return shooter;
+	}
+
+	@Override
+	public void setShooter(Entity shooter) {
+		this.shooter = shooter;
+	}
 }

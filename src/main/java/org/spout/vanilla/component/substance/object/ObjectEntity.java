@@ -24,24 +24,19 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity;
+package org.spout.vanilla.component.substance.object;
 
-import java.util.Arrays;
-import java.util.List;
+import org.spout.api.component.components.EntityComponent;
+import org.spout.api.math.Vector3;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.protocol.Message;
+public abstract class ObjectEntity extends EntityComponent {
+	private Vector3 velocity = new Vector3(0, 0, 0);
 
-import org.spout.vanilla.component.substance.object.ObjectEntity;
-import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
-
-public class BasicObjectEntityProtocol extends BasicEntityProtocol {
-	public BasicObjectEntityProtocol(int id) {
-		super(id);
+	public Vector3 getVelocity() {
+		return velocity;
 	}
 
-	@Override
-	public List<Message> getSpawnMessages(Entity entity) {
-		return Arrays.<Message>asList(new EntityObjectMessage(entity, (byte) getSpawnID()));
+	public void setVelocity(Vector3 velocity) {
+		this.velocity = velocity;
 	}
 }

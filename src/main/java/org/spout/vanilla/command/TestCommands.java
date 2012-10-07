@@ -52,7 +52,7 @@ import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.component.living.hostile.EnderDragon;
 import org.spout.vanilla.component.living.neutral.Enderman;
-import org.spout.vanilla.component.substance.MovingBlock;
+import org.spout.vanilla.component.substance.object.FallingBlock;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaBlockUtil;
@@ -247,22 +247,22 @@ public class TestCommands {
 		} else if (name.equalsIgnoreCase("enderdragon")) {
 			clazz = EnderDragon.class;
 		} else if (name.equalsIgnoreCase("movingblock")) {
-			clazz = MovingBlock.class;
+			clazz = FallingBlock.class;
 		} else if (name.equalsIgnoreCase("npc")) {
 			clazz = Human.class;
 		} else {
 			throw new CommandException(name + " was not a valid name for a VanillaEntity!");
 		}
 		Entity entity = pos.getWorld().createEntity(pos, clazz);
-		if (clazz.equals(MovingBlock.class)) {
+		if (clazz.equals(FallingBlock.class)) {
 			if (args.length() == 2) {
 				final String materialName = args.getString(1);
 				final Material mat = MaterialRegistry.get(materialName);
 				if (mat instanceof VanillaBlockMaterial) {
-					entity.add(MovingBlock.class).setMaterial((VanillaBlockMaterial) mat);
+					entity.add(FallingBlock.class).setMaterial((VanillaBlockMaterial) mat);
 				}
 			} else {
-				entity.add(MovingBlock.class).setMaterial(VanillaMaterials.SAND);
+				entity.add(FallingBlock.class).setMaterial(VanillaMaterials.SAND);
 			}
 		} else if (clazz.equals(Human.class)) {
 			String npcName = "Steve";

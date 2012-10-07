@@ -24,24 +24,17 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity;
+package org.spout.vanilla.component.substance.object.vehicle;
 
-import java.util.Arrays;
-import java.util.List;
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.substance.object.vehicle.Minecart;
+import org.spout.vanilla.protocol.entity.BasicObjectEntityProtocol;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.protocol.Message;
-
-import org.spout.vanilla.component.substance.object.ObjectEntity;
-import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
-
-public class BasicObjectEntityProtocol extends BasicEntityProtocol {
-	public BasicObjectEntityProtocol(int id) {
-		super(id);
-	}
+public class PoweredMinecart extends Minecart {
+	public static int ID = 12;
 
 	@Override
-	public List<Message> getSpawnMessages(Entity entity) {
-		return Arrays.<Message>asList(new EntityObjectMessage(entity, (byte) getSpawnID()));
+	public void onAttached() {
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicObjectEntityProtocol(ID));
 	}
 }

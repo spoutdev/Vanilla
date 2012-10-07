@@ -24,12 +24,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.object.vehicle;
+package org.spout.vanilla.component.substance.object.projectile;
 
-import org.spout.vanilla.protocol.entity.BasicVehicleEntityProtocol;
+import org.spout.api.entity.Entity;
 
-public class BoatEntityProtocol extends BasicVehicleEntityProtocol {
-	public BoatEntityProtocol() {
-		super(1);
-	}
+public interface Projectile {
+	public Entity getShooter();
+
+	public void setShooter(Entity shooter);
 }

@@ -34,43 +34,44 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.msg.entity.spawn.EntityVehicleMessage;
+import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
 
-public final class EntitySpawnVehicleCodec extends MessageCodec<EntityVehicleMessage> {
-	public EntitySpawnVehicleCodec() {
-		super(EntityVehicleMessage.class, 0x17);
+public final class EntitySpawnObjectCodec extends MessageCodec<EntityObjectMessage> {
+	public EntitySpawnObjectCodec() {
+		super(EntityObjectMessage.class, 0x17);
 	}
 
 	@Override
-	public EntityVehicleMessage decode(ChannelBuffer buffer) throws IOException {
-		int id = buffer.readInt();
-		int type = buffer.readUnsignedByte();
-		double x = buffer.readInt() / 32.0;
-		double y = buffer.readInt() / 32.0;
-		double z = buffer.readInt() / 32.0;
-		int objectId = buffer.readInt();
-		if (objectId != 0) {
-			double objectX = buffer.readShort() / 8000.0;
-			double objectY = buffer.readShort() / 8000.0;
-			double objectZ = buffer.readShort() / 8000.0;
-			return new EntityVehicleMessage(id, type, x, y, z, objectId, objectX, objectY, objectZ);
+	public EntityObjectMessage decode(ChannelBuffer buffer) throws IOException {
+		int entityId = buffer.readInt();
+		byte type = buffer.readByte();
+		int x = buffer.readInt();
+		int y = buffer.readInt();
+		int z = buffer.readInt();
+		int objectData = buffer.readInt();
+		if (objectData > 0) {
+			short speedX = buffer.readShort();
+			short speedY = buffer.readShort();
+			short speedZ = buffer.readShort();
+			return new EntityObjectMessage(entityId, type, x, y, z, speedX, speedY, speedZ);
 		}
-		return new EntityVehicleMessage(id, type, x, y, z);
+		return new EntityObjectMessage(entityId, type, x, y, z);
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityVehicleMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(message.hasObjectData() ? 27 : 21);
+	public ChannelBuffer encode(EntityObjectMessage message) throws IOException {
+		ChannelBuffer buffer = ChannelBuffers.buffer(message.hasObjectData() ? 36 : 24);
+		System.out.println(message);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeByte(message.getType());
-		buffer.writeInt(MathHelper.floor(message.getX() * 32.0));
-		buffer.writeInt(MathHelper.floor(message.getY() * 32.0));
-		buffer.writeInt(MathHelper.floor(message.getZ() * 32.0));
-		buffer.writeInt(message.getObjectId());
+		buffer.writeInt(message.getX());
+		buffer.writeInt(message.getY());
+		buffer.writeInt(message.getZ());
+		buffer.writeInt(message.hasObjectData() ? 1 : 0);
 		if (message.hasObjectData()) {
-			buffer.writeShort((int) (message.getObjectSpeedX() * 8000.0));
-			buffer.writeShort((int) (message.getObjectSpeedY() * 8000.0));
-			buffer.writeShort((int) (message.getObjectSpeedZ() * 8000.0));
+			buffer.writeShort(message.getSpeedX());
+			buffer.writeShort(message.getSpeedY());
+			buffer.writeShort(message.getSpeedZ());
 		}
 		return buffer;
 	}

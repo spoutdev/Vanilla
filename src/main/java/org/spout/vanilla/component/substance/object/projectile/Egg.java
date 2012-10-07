@@ -24,14 +24,30 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.substance.material;
+package org.spout.vanilla.component.substance.object.projectile;
 
-import org.spout.api.component.components.BlockComponent;
+import org.spout.api.entity.Entity;
 
-public class TNT extends BlockComponent {
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.substance.object.ObjectEntity;
+import org.spout.vanilla.protocol.entity.BasicObjectEntityProtocol;
+
+public class Egg extends ObjectEntity implements Projectile {
+	public static int ID = 62;
+	private Entity shooter;
+
 	@Override
 	public void onAttached() {
-		//TODO Does TNT have protocol?
-		//getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, );
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicObjectEntityProtocol(ID));
+	}
+
+	@Override
+	public Entity getShooter() {
+		return shooter;
+	}
+
+	@Override
+	public void setShooter(Entity shooter) {
+		this.shooter = shooter;
 	}
 }

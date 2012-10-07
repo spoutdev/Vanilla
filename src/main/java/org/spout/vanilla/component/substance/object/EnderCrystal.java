@@ -24,13 +24,19 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.substance;
+package org.spout.vanilla.component.substance.object;
 
-import org.spout.api.component.components.EntityComponent;
-import org.spout.api.entity.Entity;
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.protocol.entity.BasicObjectEntityProtocol;
 
-public class Projectile extends EntityComponent {
-	public Entity getShooter() {
-		return null;
+/**
+ * A component that identifies the entity as an EnderCrystal.
+ */
+public class EnderCrystal extends ObjectEntity {
+	public static final int ID = 51;
+
+	@Override
+	public void onAttached() {
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicObjectEntityProtocol(ID));
 	}
 }

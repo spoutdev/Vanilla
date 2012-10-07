@@ -24,32 +24,16 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.object;
+package org.spout.vanilla.component.substance.object;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.protocol.entity.BasicObjectEntityProtocol;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.math.Vector3;
-import org.spout.api.protocol.Message;
-import org.spout.api.util.Parameter;
-
-import org.spout.vanilla.component.substance.MovingBlock;
-import org.spout.vanilla.protocol.entity.BasicVehicleEntityProtocol;
-import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
-import org.spout.vanilla.protocol.msg.entity.spawn.EntityVehicleMessage;
-
-public class FallingBlockProtocol extends BasicVehicleEntityProtocol {
-	public FallingBlockProtocol() {
-		super(21);
-	}
+public class Tnt extends ObjectEntity {
+	public static final int ID = 50;
 
 	@Override
-	public List<Message> getSpawnMessages(Entity entity) {
-		MovingBlock moving = entity.add(MovingBlock.class);
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
-		//70 means FallingBlock ID type
-		return Arrays.<Message>asList(new EntityVehicleMessage(entity.getId(), 70, entity.getTransform().getPosition(), (short) moving.getMaterial().getMinecraftId(), new Vector3(0.3, 0.01, 0)), new EntityMetadataMessage(entity.getId(), parameters));
+	public void onAttached() {
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicObjectEntityProtocol(ID));
 	}
 }

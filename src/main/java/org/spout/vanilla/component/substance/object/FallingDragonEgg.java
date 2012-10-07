@@ -24,12 +24,16 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.object.vehicle;
+package org.spout.vanilla.component.substance.object;
 
-import org.spout.vanilla.protocol.entity.BasicVehicleEntityProtocol;
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.protocol.entity.BasicObjectEntityProtocol;
 
-public class PoweredMinecartEntityProtocol extends BasicVehicleEntityProtocol {
-	public PoweredMinecartEntityProtocol() {
-		super(11);
+public class FallingDragonEgg extends ObjectEntity {
+	public static final int ID = 74;
+
+	@Override
+	public void onAttached() {
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicObjectEntityProtocol(ID));
 	}
 }

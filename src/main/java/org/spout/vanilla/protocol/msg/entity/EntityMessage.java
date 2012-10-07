@@ -37,7 +37,10 @@ import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
  * A message meant for an Entity
  */
 public abstract class EntityMessage implements TransformableMessage {
-	private int id;
+	protected int id;
+
+	public EntityMessage() {
+	}
 
 	public EntityMessage(Entity entity) {
 		this(entity.getId());

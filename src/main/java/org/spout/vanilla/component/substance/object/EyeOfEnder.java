@@ -24,9 +24,16 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.substance.projectile;
+package org.spout.vanilla.component.substance.object;
 
-import org.spout.vanilla.component.substance.Projectile;
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.protocol.entity.BasicObjectEntityProtocol;
 
-public class Potion extends Projectile {
+public class EyeOfEnder extends ObjectEntity {
+	public static final int ID = 72;
+
+	@Override
+	public void onAttached() {
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicObjectEntityProtocol(ID));
+	}
 }

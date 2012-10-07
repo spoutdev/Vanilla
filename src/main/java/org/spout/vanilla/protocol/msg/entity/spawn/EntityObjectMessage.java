@@ -28,73 +28,81 @@ package org.spout.vanilla.protocol.msg.entity.spawn;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.SpoutToStringStyle;
 
+import org.spout.vanilla.component.substance.object.ObjectEntity;
+import org.spout.vanilla.component.substance.object.projectile.Projectile;
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
-public final class EntityVehicleMessage extends EntityMessage {
-	private final int type, objectId;
-	private final double x, y, z, objectX, objectY, objectZ;
+public final class EntityObjectMessage extends EntityMessage {
+	private final byte type;
+	private final int x, y, z;
+	private final short speedX, speedY, speedZ;
 
-	public EntityVehicleMessage(int id, int type, Vector3 pos) {
-		this(id, type, pos.getX(), pos.getY(), pos.getZ());
-	}
-
-	public EntityVehicleMessage(int id, int type, double x, double y, double z) {
-		this(id, type, x, y, z, 0, 0, 0, 0);
-	}
-
-	public EntityVehicleMessage(int id, int type, Vector3 pos, int fbId, Vector3 fbPos) {
-		this(id, type, pos.getX(), pos.getY(), pos.getZ(), fbId, fbPos.getX(), fbPos.getY(), fbPos.getZ());
-	}
-
-	public EntityVehicleMessage(int id, int type, double x, double y, double z, int fbId, double fbX, double fbY, double fbZ) {
-		super(id);
+	public EntityObjectMessage(int entityId, byte type, int x, int y, int z, short speedX, short speedY, short speedZ) {
+		super(entityId);
 		this.type = type;
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.objectId = fbId;
-		this.objectX = fbX;
-		this.objectY = fbY;
-		this.objectZ = fbZ;
+		this.speedX = speedX;
+		this.speedY = speedY;
+		this.speedZ = speedZ;
 	}
 
-	public int getType() {
+	public EntityObjectMessage(int entityId, byte type, int x, int y, int z) {
+		this(entityId, type, x, y, z, (short) 0, (short) 0, (short) 0);
+	}
+
+	public EntityObjectMessage(Entity entity, byte type) {
+		super(entity);
+		this.type = type;
+		Point pos = entity.getTransform().getPosition();
+		this.x = pos.getBlockX();
+		this.y = pos.getBlockY();
+		this.z = pos.getBlockZ();
+		Vector3 velocity = entity.get(ObjectEntity.class).getVelocity();
+		if (velocity == null) {
+			velocity = new Vector3(0, 0, 0);
+		}
+		this.speedX = (short) velocity.getFloorX();
+		this.speedY = (short) velocity.getFloorY();
+		this.speedZ = (short) velocity.getFloorZ();
+	}
+
+	public byte getType() {
 		return type;
 	}
 
-	public double getX() {
+	public int getX() {
 		return x;
 	}
 
-	public double getY() {
+	public int getY() {
 		return y;
 	}
 
-	public double getZ() {
+	public int getZ() {
 		return z;
 	}
 
 	public boolean hasObjectData() {
-		return objectId != 0;
+		return speedX != 0 || speedY != 0 || speedZ != 0;
 	}
 
-	public int getObjectId() {
-		return objectId;
+	public short getSpeedX() {
+		return speedX;
 	}
 
-	public double getObjectSpeedX() {
-		return objectX;
+	public short getSpeedY() {
+		return speedY;
 	}
 
-	public double getObjectSpeedY() {
-		return objectY;
-	}
-
-	public double getObjectSpeedZ() {
-		return objectZ;
+	public short getSpeedZ() {
+		return speedZ;
 	}
 
 	@Override
@@ -105,10 +113,9 @@ public final class EntityVehicleMessage extends EntityMessage {
 				.append("x", x)
 				.append("y", y)
 				.append("z", z)
-				.append("objectid", objectId)
-				.append("objectspeedX", objectX)
-				.append("objectspeedY", objectY)
-				.append("objectspeedZ", objectZ)
+				.append("speedX", speedX)
+				.append("speedY", speedY)
+				.append("speedZ", speedZ)
 				.toString();
 	}
 
@@ -120,16 +127,16 @@ public final class EntityVehicleMessage extends EntityMessage {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final EntityVehicleMessage other = (EntityVehicleMessage) obj;
+		final EntityObjectMessage other = (EntityObjectMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.getEntityId(), other.getEntityId())
 				.append(this.type, other.type)
 				.append(this.x, other.x)
 				.append(this.y, other.y)
 				.append(this.z, other.z)
-				.append(this.objectId, objectId)
-				.append(this.objectX, objectX)
-				.append(this.objectY, objectY)
+				.append(this.speedX, other.speedX)
+				.append(this.speedY, other.speedY)
+				.append(this.speedZ, speedZ)
 				.isEquals();
 	}
 }

@@ -32,15 +32,15 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.substance.material.TNT;
+import org.spout.vanilla.component.substance.object.Tnt;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.RedstoneUtil;
 
-public class TNTBlock extends Solid implements RedstoneTarget, Burnable {
-	public TNTBlock(String name, int id) {
+public class TntBlock extends Solid implements RedstoneTarget, Burnable {
+	public TntBlock(String name, int id) {
 		super(name, id);
 		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 1);
 	}
@@ -68,9 +68,9 @@ public class TNTBlock extends Solid implements RedstoneTarget, Burnable {
 	@Override
 	public void onIgnite(Block block) {
 		block.setMaterial(VanillaMaterials.AIR);
-		// spawn a primed TNTBlock
+		// spawn a primed TntBlock
 		Point point = block.getPosition();
-		point.getWorld().createAndSpawnEntity(point, TNT.class, LoadOption.NO_LOAD);
+		point.getWorld().createAndSpawnEntity(point, Tnt.class, LoadOption.NO_LOAD);
 	}
 
 	@Override

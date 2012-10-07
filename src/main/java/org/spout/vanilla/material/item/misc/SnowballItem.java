@@ -24,31 +24,31 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity;
+package org.spout.vanilla.material.item.misc;
 
-import java.util.Arrays;
-import java.util.List;
-
-import org.spout.api.component.components.PhysicsComponent;
 import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.LoadOption;
+import org.spout.api.geo.World;
 import org.spout.api.math.Vector3;
-import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.component.substance.Projectile;
-import org.spout.vanilla.protocol.msg.entity.spawn.EntityVehicleMessage;
+import org.spout.vanilla.component.substance.object.projectile.Snowball;
+import org.spout.vanilla.material.item.VanillaItemMaterial;
 
-public class BasicProjectileEntityProtocol extends BasicEntityProtocol {
-	public BasicProjectileEntityProtocol(int projectileSpawnID) {
-		super(projectileSpawnID);
+public class SnowballItem extends VanillaItemMaterial {
+	public SnowballItem(String name, int id) {
+		super(name, id);
 	}
 
 	@Override
-	public List<Message> getSpawnMessages(Entity entity) {
-		int id = entity.getId();
-		Projectile projectile = entity.add(Projectile.class);
-		Entity shooter = projectile.getShooter();
-		int shooterid = shooter == null ? 0 : shooter.getId();
-		Vector3 velocity = entity.add(PhysicsComponent.class).getVelocity();
-		return Arrays.<Message>asList(new EntityVehicleMessage(id, this.getSpawnID(), entity.getTransform().getPosition(), shooterid, velocity));
+	public void onInteract(Entity entity, Action type) {
+		super.onInteract(entity, type);
+		if (type == Action.RIGHT_CLICK) {
+			World world = entity.getWorld();
+			Snowball snowball = world.createEntity(entity.getTransform().getPosition(), Snowball.class).add(Snowball.class);
+			snowball.setVelocity(new Vector3(20, 20, 20)); // TODO: Correct this
+			snowball.setShooter(entity);
+			world.spawnEntity(snowball.getHolder());
+		}
 	}
 }

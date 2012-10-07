@@ -33,7 +33,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.component.substance.EnderCrystal;
+import org.spout.vanilla.component.substance.object.EnderCrystal;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.object.LargePlantObject;
 

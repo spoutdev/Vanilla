@@ -29,6 +29,9 @@ package org.spout.vanilla.data;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.block.BlockFace;
+
 public enum PaintingType {
 	KEBAB("Kebab", 16, 16),
 	AZTEC("Aztec", 16, 16),
@@ -49,7 +52,7 @@ public enum PaintingType {
 	STAGE("Stage", 32, 32),
 	VOID("Void", 32, 32),
 	SKULL_AND_ROSES("SkullAndRoses", 32, 32),
-	WITHER("Wither", 32, 32),
+	//WITHER("Wither", 32, 32),
 	FIGHTERS("Fighters", 64, 32),
 	SKELETON("Skeleton", 64, 48),
 	DONKEY_KONG("DonkeyKong", 64, 48),
@@ -77,6 +80,44 @@ public enum PaintingType {
 
 	public String getName() {
 		return name;
+	}
+
+	public Point getCenter(BlockFace direction, Point pos) {
+		final int x = pos.getBlockX();
+		final int y = pos.getBlockY();
+		final int z = pos.getBlockZ();
+		final int blockWidth = 16;
+
+		int centerWidth = Math.max(0, width / blockWidth / 2 - 1);
+		int centerHeight = height / blockWidth / 2;
+
+		int centerX = x;
+		int centerY = y - centerHeight;
+		int centerZ = z;
+
+		switch (direction) {
+			case NORTH:
+			case WEST:
+				centerZ += -centerWidth;
+				break;
+			case SOUTH:
+			case EAST:
+				centerZ += centerWidth;
+		}
+
+		System.out.println("Facing: " + direction);
+		System.out.println("Type: " + name);
+		System.out.println("centerX: " + centerX);
+		System.out.println("centerY: " + centerY);
+		System.out.println("centerZ: " + centerZ);
+
+		return new Point(pos.getWorld(), centerX, centerY, centerZ);
+	}
+
+	static {
+		for (PaintingType type : PaintingType.values()) {
+			nameMap.put(type.getName(), type);
+		}
 	}
 
 	public static PaintingType get(String name) {

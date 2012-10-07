@@ -27,6 +27,7 @@
 package org.spout.vanilla.component.substance;
 
 import org.spout.api.component.components.EntityComponent;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.VanillaPlugin;
@@ -65,9 +66,9 @@ public class Painting extends EntityComponent {
 	public static int getNativeFace(BlockFace face) {
 		switch (face) {
 			case NORTH:
-				return 1;
-			case SOUTH:
 				return 3;
+			case SOUTH:
+				return 1;
 			case EAST:
 				return 0;
 			case WEST:

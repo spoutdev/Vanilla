@@ -28,26 +28,36 @@ package org.spout.vanilla.protocol.msg.entity.spawn;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.SpoutToStringStyle;
 
+import org.spout.vanilla.component.substance.Painting;
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class EntityPaintingMessage extends EntityMessage {
-	private final int x, y, z, type;
+	private final int x, y, z, direction;
 	private final String title;
 
-	public EntityPaintingMessage(int id, String title, Vector3 position, int type) {
-		this(id, title, (int) position.getX(), (int) position.getY(), (int) position.getZ(), type);
-	}
-
-	public EntityPaintingMessage(int id, String title, int x, int y, int z, int type) {
-		super(id);
-		this.title = title;
+	public EntityPaintingMessage(int entityId, String title, int x, int y, int z, int direction) {
+		super(entityId);
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.type = type;
+		this.direction = direction;
+		this.title = title;
+	}
+
+	public EntityPaintingMessage(Painting painting) {
+		super(painting.getHolder());
+		Point pos = painting.getHolder().getTransform().getPosition();
+		x = pos.getBlockX();
+		y = pos.getBlockY();
+		z = pos.getBlockZ();
+		direction = painting.getNativeFace();
+		title = painting.getType().getName();
+		System.out.println(this);
 	}
 
 	public int getX() {
@@ -62,8 +72,8 @@ public final class EntityPaintingMessage extends EntityMessage {
 		return z;
 	}
 
-	public int getType() {
-		return type;
+	public int getDirection() {
+		return direction;
 	}
 
 	public String getTitle() {
@@ -77,7 +87,7 @@ public final class EntityPaintingMessage extends EntityMessage {
 				.append("x", x)
 				.append("y", y)
 				.append("z", z)
-				.append("type", type)
+				.append("direction", direction)
 				.append("title", title)
 				.toString();
 	}
@@ -96,7 +106,7 @@ public final class EntityPaintingMessage extends EntityMessage {
 				.append(this.x, other.x)
 				.append(this.y, other.y)
 				.append(this.z, other.z)
-				.append(this.type, other.type)
+				.append(this.direction, other.direction)
 				.append(this.title, other.title)
 				.isEquals();
 	}

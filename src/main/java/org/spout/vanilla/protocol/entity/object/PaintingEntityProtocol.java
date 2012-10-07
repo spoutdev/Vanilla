@@ -44,7 +44,6 @@ import org.spout.vanilla.util.VanillaMathHelper;
 public class PaintingEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity) {
-		Painting painting = entity.add(Painting.class);
-		return Arrays.<Message>asList(new EntityPaintingMessage(entity.getId(), painting.getType().getName(), entity.getTransform().getPosition(), painting.getNativeFace()));
+		return Arrays.<Message>asList(new EntityPaintingMessage(entity.add(Painting.class)));
 	}
 }

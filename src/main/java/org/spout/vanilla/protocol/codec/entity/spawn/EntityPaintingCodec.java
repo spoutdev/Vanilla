@@ -48,8 +48,8 @@ public final class EntityPaintingCodec extends MessageCodec<EntityPaintingMessag
 		int x = buffer.readInt();
 		int y = buffer.readInt();
 		int z = buffer.readInt();
-		int type = buffer.readInt();
-		return new EntityPaintingMessage(id, title, x, y, z, type);
+		int direction = buffer.readInt();
+		return new EntityPaintingMessage(id, title, x, y, z, direction);
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public final class EntityPaintingCodec extends MessageCodec<EntityPaintingMessag
 		buffer.writeInt(message.getX());
 		buffer.writeInt(message.getY());
 		buffer.writeInt(message.getZ());
-		buffer.writeInt(message.getType());
+		buffer.writeInt(message.getDirection());
 		return buffer;
 	}
 }

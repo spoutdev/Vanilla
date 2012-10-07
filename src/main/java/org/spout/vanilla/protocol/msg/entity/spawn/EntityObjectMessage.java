@@ -39,38 +39,49 @@ import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class EntityObjectMessage extends EntityMessage {
 	private final byte type;
-	private final int x, y, z;
+	private final int x, y, z, throwerId;
 	private final short speedX, speedY, speedZ;
 
-	public EntityObjectMessage(int entityId, byte type, int x, int y, int z, short speedX, short speedY, short speedZ) {
+	public EntityObjectMessage(Entity entity, byte type, int throwerId) {
+		super(entity);
+		this.type = type;
+		this.throwerId = throwerId;
+		Point pos = entity.getTransform().getPosition();
+
+		double p = 32d;
+		x = (int) Math.floor(pos.getX() * p);
+		y = (int) Math.floor(pos.getY() * p);
+		z = (int) Math.floor(pos.getZ() * p);
+
+		double v = 3.9d;
+		Vector3 factor = new Vector3(v, v, v);
+		Vector3 velocity = entity.get(ObjectEntity.class).getVelocity();
+		velocity = velocity.max(factor.multiply(-1)).min(factor);
+
+		double s = 8000d;
+		speedX = (short)(velocity.getX() * s);
+		speedY = (short)(velocity.getY() * s);
+		speedZ = (short)(velocity.getZ() * s);
+	}
+
+	public EntityObjectMessage(Entity entity, byte type) {
+		this(entity, type, 0);
+	}
+
+	public EntityObjectMessage(int entityId, byte type, int x, int y, int z, int throwerId, short speedX, short speedY, short speedZ) {
 		super(entityId);
 		this.type = type;
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		this.throwerId = throwerId;
 		this.speedX = speedX;
 		this.speedY = speedY;
 		this.speedZ = speedZ;
 	}
 
-	public EntityObjectMessage(int entityId, byte type, int x, int y, int z) {
-		this(entityId, type, x, y, z, (short) 0, (short) 0, (short) 0);
-	}
-
-	public EntityObjectMessage(Entity entity, byte type) {
-		super(entity);
-		this.type = type;
-		Point pos = entity.getTransform().getPosition();
-		this.x = pos.getBlockX();
-		this.y = pos.getBlockY();
-		this.z = pos.getBlockZ();
-		Vector3 velocity = entity.get(ObjectEntity.class).getVelocity();
-		if (velocity == null) {
-			velocity = new Vector3(0, 0, 0);
-		}
-		this.speedX = (short) velocity.getFloorX();
-		this.speedY = (short) velocity.getFloorY();
-		this.speedZ = (short) velocity.getFloorZ();
+	public EntityObjectMessage(int entityId, byte type, int x, int y, int z, int throwerId) {
+		this(entityId, type, x, y, z, throwerId, (short) 0, (short) 0, (short) 0);
 	}
 
 	public byte getType() {
@@ -89,8 +100,8 @@ public final class EntityObjectMessage extends EntityMessage {
 		return z;
 	}
 
-	public boolean hasObjectData() {
-		return speedX != 0 || speedY != 0 || speedZ != 0;
+	public int getThrowerId() {
+		return throwerId;
 	}
 
 	public short getSpeedX() {

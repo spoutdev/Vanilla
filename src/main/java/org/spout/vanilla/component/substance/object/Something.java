@@ -29,7 +29,7 @@ package org.spout.vanilla.component.substance.object;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.BasicObjectEntityProtocol;
 
-public class Tnt extends ObjectEntity {
+public class Something extends ObjectEntity {
 	public static final int ID = 50;
 
 	@Override

@@ -48,27 +48,28 @@ public final class EntitySpawnObjectCodec extends MessageCodec<EntityObjectMessa
 		int x = buffer.readInt();
 		int y = buffer.readInt();
 		int z = buffer.readInt();
-		int objectData = buffer.readInt();
-		if (objectData > 0) {
+		int throwerId = buffer.readInt();
+		if (throwerId > 0) {
 			short speedX = buffer.readShort();
 			short speedY = buffer.readShort();
 			short speedZ = buffer.readShort();
-			return new EntityObjectMessage(entityId, type, x, y, z, speedX, speedY, speedZ);
+			return new EntityObjectMessage(entityId, type, x, y, z, throwerId, speedX, speedY, speedZ);
 		}
-		return new EntityObjectMessage(entityId, type, x, y, z);
+		return new EntityObjectMessage(entityId, type, x, y, z, throwerId);
 	}
 
 	@Override
 	public ChannelBuffer encode(EntityObjectMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(message.hasObjectData() ? 36 : 24);
+		ChannelBuffer buffer = ChannelBuffers.buffer(message.getThrowerId() > 0 ? 27 : 21);
 		System.out.println(message);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeByte(message.getType());
 		buffer.writeInt(message.getX());
 		buffer.writeInt(message.getY());
 		buffer.writeInt(message.getZ());
-		buffer.writeInt(message.hasObjectData() ? 1 : 0);
-		if (message.hasObjectData()) {
+		int throwerId = message.getThrowerId();
+		buffer.writeInt(throwerId);
+		if (throwerId > 0) {
 			buffer.writeShort(message.getSpeedX());
 			buffer.writeShort(message.getSpeedY());
 			buffer.writeShort(message.getSpeedZ());

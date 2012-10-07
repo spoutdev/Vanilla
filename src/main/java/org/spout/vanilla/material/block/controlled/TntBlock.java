@@ -27,12 +27,14 @@
 package org.spout.vanilla.material.block.controlled;
 
 import org.spout.api.geo.LoadOption;
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.substance.object.Something;
+import org.spout.vanilla.component.substance.object.Tnt;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
@@ -69,8 +71,12 @@ public class TntBlock extends Solid implements RedstoneTarget, Burnable {
 	public void onIgnite(Block block) {
 		block.setMaterial(VanillaMaterials.AIR);
 		// spawn a primed TntBlock
-		Point point = block.getPosition();
-		point.getWorld().createAndSpawnEntity(point, Something.class, LoadOption.NO_LOAD);
+		Point pos = block.getPosition();
+		World world = pos.getWorld();
+		Tnt tnt = world.createEntity(pos, Tnt.class).add(Tnt.class);
+		double v = 0.5d;
+		tnt.setVelocity(pos.add(v, v, v));
+		world.spawnEntity(tnt.getHolder());
 	}
 
 	@Override

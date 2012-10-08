@@ -32,14 +32,14 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.RandomBlockMaterial;
+import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
-
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
@@ -53,7 +53,7 @@ import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomOb
 import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
 import org.spout.vanilla.world.generator.object.LargePlantObject;
 
-public class Mushroom extends GroundAttachable implements Spreading, Plant, RandomBlockMaterial {
+public class Mushroom extends GroundAttachable implements Spreading, Plant, DynamicMaterial {
 	private static final EffectRange MUSHROOM_RANGE = new CuboidEffectRange(-4, -1, -4, 4, 1, 4);
 	private static final int MAX_PER_GROUP = 5;
 
@@ -107,7 +107,18 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Rand
 	}
 
 	@Override
-	public void onRandomTick(Block block) {
+	public EffectRange getDynamicRange(){
+		return EffectRange.THIS_AND_NEIGHBORS;
+	}
+
+	@Override
+	public void onPlacement(Block b, Region r, long currentTime){
+		//TODO : delay before update
+		b.dynamicUpdate(currentTime + 30000);
+	}
+
+	@Override
+	public void onDynamicUpdate(Block block, Region region, long updateTime, int data){
 		Random rand = new Random(block.getWorld().getAge());
 		if (rand.nextInt(25) == 0) {
 			// can we spread?
@@ -130,5 +141,9 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Rand
 				this.onPlacement(block, (short) 0);
 			}
 		}
+
+		//TODO : delay before update
+		block.dynamicUpdate(updateTime + 30000);
+
 	}
 }

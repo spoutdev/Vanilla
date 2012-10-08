@@ -29,19 +29,19 @@ package org.spout.vanilla.material.block;
 import java.util.Random;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.RandomBlockMaterial;
+import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
-
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 /**
  * A solid material that can spread to other materials nearby
  */
-public abstract class SpreadingSolid extends Solid implements Spreading, RandomBlockMaterial {
+public abstract class SpreadingSolid extends Solid implements Spreading, DynamicMaterial {
 	private BlockMaterial replacedMaterial;
 	private static final EffectRange DEFAULT_SPREAD_RANGE = new CubicEffectRange(2);
 
@@ -140,7 +140,18 @@ public abstract class SpreadingSolid extends Solid implements Spreading, RandomB
 	}
 
 	@Override
-	public void onRandomTick(Block block) {
+	public EffectRange getDynamicRange(){
+		return EffectRange.NEIGHBORS;
+	}
+
+	@Override
+	public void onPlacement(Block b, Region r, long currentTime){
+		//TODO : Delay before dynamic update
+		b.dynamicUpdate(currentTime + 30000);
+	}
+
+	@Override
+	public void onDynamicUpdate(Block block, Region region, long updateTime, int data){
 		// Attempt to decay or spread this material
 		if (this.canDecayAt(block)) {
 			this.onDecay(block);

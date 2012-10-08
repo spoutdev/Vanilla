@@ -490,27 +490,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onPlayerBed(PlayerBedEvent event) {
-		Player player = event.getPlayer();
-		Block bed = event.getBed();
-		boolean entered = event.isEntered();
-		if (bed.getMaterial() == VanillaMaterials.BED_BLOCK) {
-			((BedBlock) bed.getMaterial()).setOccupied(bed, player, entered);
-		}
-		player.add(SleepComponent.class).setBed(entered ? bed : null);
-		return new PlayerBedMessage(player, bed);
+		return new PlayerBedMessage(event.getPlayer(), event.getBed());
 	}
 
 	@EventHandler
 	public Message onEntityAnimation(EntityAnimationEvent event) {
-		if (event.getAnimation() == Animation.LEAVE_BED) {
-			if (event.getEntity() instanceof Player) {
-				Player player = (Player) event.getEntity();
-				Block block = player.add(SleepComponent.class).getBed();
-				if (block != null && block.getMaterial() == VanillaMaterials.BED_BLOCK) {
-					((BedBlock) block.getMaterial()).setOccupied(block, player, false);
-				}
-			}
-		}
 		return new EntityAnimationMessage(event.getEntity().getId(), (byte) event.getAnimation().getId());
 	}
 

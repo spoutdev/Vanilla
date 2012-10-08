@@ -62,10 +62,10 @@ public class Human extends VanillaEntity {
 		holder.add(DiggingComponent.class);
 		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
 		DatatableComponent data = getData();
-		data.put(VanillaData.INVENTORY, new PlayerInventory());
-		//if (data.get(VanillaData.INVENTORY) == null) {
+		data.put(VanillaData.PLAYER_INVENTORY, new PlayerInventory());
+		//if (data.get(VanillaData.PLAYER_INVENTORY) == null) {
 			//System.out.println("Creating new inventory");
-			//data.put(VanillaData.INVENTORY, new PlayerInventory());
+			//data.put(VanillaData.PLAYER_INVENTORY, new PlayerInventory());
 		//}
 		//Add height offset if loading from disk
 		if (getAttachedCount() > 1 && holder instanceof Player) {
@@ -174,7 +174,7 @@ public class Human extends VanillaEntity {
 	}
 
 	public PlayerInventory getInventory() {
-		return getData().get(VanillaData.INVENTORY);
+		return getData().get(VanillaData.PLAYER_INVENTORY);
 	}
 
 	/**

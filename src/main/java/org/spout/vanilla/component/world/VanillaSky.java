@@ -100,7 +100,7 @@ public abstract class VanillaSky extends WorldComponent {
 		if (skipNight) {
 			setTime = Time.DAWN.getTime();
 			for (Player player : getWorld().getPlayers()) {
-				player.getNetwork().callProtocolEvent(new EntityAnimationEvent(player, Animation.LEAVE_BED));
+				player.add(SleepComponent.class).wake();
 			}
 		}
 

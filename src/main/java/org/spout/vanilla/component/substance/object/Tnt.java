@@ -26,52 +26,60 @@
  */
 package org.spout.vanilla.component.substance.object;
 
-import java.util.Random;
-
 import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.BasicObjectEntityProtocol;
 import org.spout.vanilla.util.explosion.ExplosionModel;
 import org.spout.vanilla.util.explosion.ExplosionModelSpherical;
 
 public class Tnt extends ObjectEntity implements Source {
 	public static final int ID = 50;
-	private final Random random = new Random();
-	private float fuse = random.nextInt(5) + 1;
-	private float explosionSize = 4;
-	private boolean makesFire = false;
 	private Entity holder;
 
 	public float getExplosionSize() {
-		return explosionSize;
+		return getData().get(VanillaData.EXPLOSION_SIZE);
 	}
 
 	public void setExplosionSize(float explosionSize) {
-		this.explosionSize = explosionSize;
+		getData().put(VanillaData.EXPLOSION_SIZE, explosionSize);
 	}
 
 	public boolean makesFire() {
-		return makesFire;
+		return getData().get(VanillaData.MAKES_FIRE);
+	}
+
+	public float getFuse() {
+		return getData().get(VanillaData.FUSE);
+	}
+
+	public void setFuse(float fuse) {
+		getData().put(VanillaData.FUSE, fuse);
+	}
+
+	public void pulse(float dt) {
+		setFuse(getFuse() - dt);
 	}
 
 	public void setMakesFire(boolean makesFire) {
-		this.makesFire = makesFire;
+		getData().put(VanillaData.MAKES_FIRE, makesFire);
 	}
 
 	@Override
 	public void onAttached() {
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicObjectEntityProtocol(ID));
 		holder = getHolder();
+
 	}
 
 	@Override
 	public void onTick(float dt) {
-		fuse -= dt;
-		if (fuse <= 0) {
+		pulse(dt);
+		if (getFuse() <= 0) {
 			ExplosionModel explosion = new ExplosionModelSpherical();
-			explosion.execute(holder.getTransform().getPosition(), explosionSize, makesFire, this);
+			explosion.execute(holder.getTransform().getPosition(), getExplosionSize(), makesFire(), this);
 			holder.remove();
 		}
 	}

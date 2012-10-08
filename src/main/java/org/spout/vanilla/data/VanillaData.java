@@ -26,6 +26,9 @@
  */
 package org.spout.vanilla.data;
 
+import java.util.Random;
+
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyArray;
@@ -37,6 +40,7 @@ import org.spout.vanilla.component.inventory.PlayerInventory;
  * * Common Vanilla-like data mappings that are found in Vanilla.
  */
 public class VanillaData {
+	private static final Random random = new Random();
 	//World-specific
 	public static final DefaultedKey<Dimension> DIMENSION = new DefaultedKeyImpl<Dimension>("dimension", Dimension.NORMAL);
 	public static final DefaultedKey<Difficulty> DIFFICULTY = new DefaultedKeyImpl<Difficulty>("difficulty", Difficulty.EASY);
@@ -55,7 +59,11 @@ public class VanillaData {
 	public static final DefaultedKey<Vector3> MOVEMENT_SPEED = new DefaultedKeyImpl<Vector3>("movement_speed", Vector3.ZERO);
 	public static final DefaultedKey<Integer> INTERACT_REACH = new DefaultedKeyImpl<Integer>("interact_reach", 5);
 	public static final DefaultedKey<Vector3> VELOCITY = new DefaultedKeyImpl<Vector3>("velocity", Vector3.ZERO);
-	public static final DefaultedKey<ItemStack[]> ITEMS = new DefaultedKeyArray<ItemStack>("items", 36, ItemStack.class);
+	public static final DefaultedKey<Inventory> ENTITY_INVENTORY = new DefaultedKeyImpl<Inventory>("inventory", null);
+	// TNT
+	public static final DefaultedKey<Float> FUSE = new DefaultedKeyImpl<Float>("fuse", (float) random.nextInt(5) + 1);
+	public static final DefaultedKey<Float> EXPLOSION_SIZE = new DefaultedKeyImpl<Float>("explosion_size", 4f);
+	public static final DefaultedKey<Boolean> MAKES_FIRE = new DefaultedKeyImpl<Boolean>("makes_fire", false);
 	//Entity data
 	public static final DefaultedKey<Integer> ATTACHED_COUNT = new DefaultedKeyImpl<Integer>("attached_count", 0);
 	public static final DefaultedKey<Boolean> IS_FALLING = new DefaultedKeyImpl<Boolean>("is_falling", false);
@@ -65,7 +73,7 @@ public class VanillaData {
 	//Human-specific
 	public static final DefaultedKey<Boolean> IS_SPRINTING = new DefaultedKeyImpl<Boolean>("is_sprinting", false);
 	public static final DefaultedKey<Boolean> IS_FLYING = new DefaultedKeyImpl<Boolean>("is_flying", false);
-	public static final DefaultedKey<PlayerInventory> INVENTORY = new DefaultedKeyImpl<PlayerInventory>("inventory", null);
+	public static final DefaultedKey<PlayerInventory> PLAYER_INVENTORY = new DefaultedKeyImpl<PlayerInventory>("inventory", null);
 	//Creature-specific
 	public static final DefaultedKey<Integer> LINE_OF_SIGHT = new DefaultedKeyImpl<Integer>("line_of_sight", 1);
 	//Item-specific

@@ -69,7 +69,6 @@ public class TntBlock extends Solid implements RedstoneTarget, Burnable {
 
 	@Override
 	public void onIgnite(Block block) {
-		block.setMaterial(VanillaMaterials.AIR);
 		// spawn a primed TntBlock
 		Point pos = block.getPosition();
 		World world = pos.getWorld();
@@ -77,6 +76,7 @@ public class TntBlock extends Solid implements RedstoneTarget, Burnable {
 		double v = 0.5d;
 		tnt.setVelocity(pos.add(v, v, v));
 		world.spawnEntity(tnt.getHolder());
+		block.setMaterial(VanillaMaterials.AIR);
 	}
 
 	@Override

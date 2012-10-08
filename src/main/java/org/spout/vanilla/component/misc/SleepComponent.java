@@ -35,30 +35,39 @@ import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.Time;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
+import org.spout.vanilla.event.player.network.PlayerBedEvent;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.misc.BedBlock;
 
 public class SleepComponent extends EntityComponent {
 	private final float sleepSeconds = 5;
 	private float sleepTimer = sleepSeconds;
 	private boolean sleeping, skipNight;
-	private Player player;
 	private Block bed;
+	private Player player;
 
 	public Block getBed() {
 		return bed;
 	}
 
-	public void setBed(Block bed) {
+	public void sleep(Block bed) {
+		sleeping = true;
 		this.bed = bed;
+		occupy(true);
+		player.getNetwork().callProtocolEvent(new PlayerBedEvent(player, bed, true));
 	}
 
-	public boolean isSleeping() {
-		return sleeping;
+	public void wake() {
+		sleeping = false;
+		skipNight = false;
+		occupy(false);
+		bed = null;
+		player.getNetworkSynchronizer().callProtocolEvent(new EntityAnimationEvent(player, Animation.LEAVE_BED));
 	}
 
-	public void setSleeping(boolean sleeping) {
-		this.sleeping = sleeping;
-		if (!sleeping) {
-			skipNight = false;
+	private void occupy(boolean occupy) {
+		if (bed != null && bed.getMaterial() == VanillaMaterials.BED_BLOCK) {
+			((BedBlock) bed.getMaterial()).setOccupied(bed, player, occupy);
 		}
 	}
 

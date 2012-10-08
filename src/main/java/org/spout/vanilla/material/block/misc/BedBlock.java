@@ -92,7 +92,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 			return;
 		}
 
-		player.getNetwork().callProtocolEvent(new PlayerBedEvent(player, head, true));
+		player.add(SleepComponent.class).sleep(head);
 	}
 
 	@Override
@@ -118,7 +118,6 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 		bedBlock.setDataBits(0x4, occupied);
 		//set to the same data for the head, but set the head flag
 		getCorrectHalf(bedBlock, true).setData(bedBlock.getData() | 0x8);
-		sleeper.add(SleepComponent.class).setSleeping(occupied);
 	}
 
 	/**

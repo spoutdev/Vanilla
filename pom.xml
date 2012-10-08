@@ -5,7 +5,7 @@
 	<name>Vanilla</name>
 	<groupId>org.spout</groupId>
 	<artifactId>vanilla</artifactId>
-	<version>1.3.2-SNAPSHOT</version>
+	<version>1.4.0-SNAPSHOT</version>
 	<url>http://www.spout.org</url>
 	<inceptionYear>2011</inceptionYear>
 	<description>Vanilla is a plugin for the Spout platform that provides vanilla Minecraft functionality.</description>
@@ -14,7 +14,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mainClass>org.spout.vanilla.VanillaPlugin</mainClass>
 		<spoutVersion>dev-SNAPSHOT</spoutVersion>
-		<protocolVersion>39</protocolVersion>
+		<protocolVersion>45</protocolVersion>
 		<buildNumber>0</buildNumber>
 		<powermock.version>1.4.12</powermock.version>
 	</properties>

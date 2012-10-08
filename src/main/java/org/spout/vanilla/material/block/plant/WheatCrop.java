@@ -32,9 +32,12 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.RandomBlockMaterial;
+import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.range.EffectRange;
+import org.spout.api.math.IntVector3;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.component.living.Human;
@@ -50,7 +53,7 @@ import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.util.VanillaBlockUtil;
 
-public class WheatCrop extends GroundAttachable implements Growing, Crop, RandomBlockMaterial, InitializableMaterial {
+public class WheatCrop extends GroundAttachable implements Growing, Crop, DynamicMaterial, InitializableMaterial {
 	public WheatCrop(String name, int id) {
 		super(name, id);
 		this.setResistance(0.0F).setHardness(0.0F).setTransparent();
@@ -123,14 +126,30 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Random
 	// TODO: Trampling
 
 	@Override
-	public void onRandomTick(Block block) {
-		if (!this.isFullyGrown(block) && block.translate(BlockFace.TOP).getLight() >= this.getMinimumLightToGrow()) {
-			// Grow using a calculated chance of growing
-			Random rand = new Random(block.getWorld().getAge());
-			int chance = VanillaBlockUtil.getCropGrowthChance(block);
-			if (rand.nextInt(chance + 1) == 0) {
-				this.setGrowthStage(block, this.getGrowthStage(block));
+	public EffectRange getDynamicRange(){
+		return EffectRange.THIS_AND_ABOVE;
+	}
+
+	@Override
+	public void onPlacement(Block b, Region r, long currentTime){
+		//TODO : delay before update
+		b.dynamicUpdate(currentTime + 30000);
+	}
+
+	@Override
+	public void onDynamicUpdate(Block block, Region region, long updateTime, int data){
+		if (!this.isFullyGrown(block)){
+			if (block.translate(BlockFace.TOP).getLight() >= this.getMinimumLightToGrow()) {
+				// Grow using a calculated chance of growing
+				Random rand = new Random(block.getWorld().getAge());
+				int chance = VanillaBlockUtil.getCropGrowthChance(block);
+				if (rand.nextInt(chance + 1) == 0) {
+					this.setGrowthStage(block, this.getGrowthStage(block));
+				}
 			}
+			//TODO : delay before update
+			block.dynamicUpdate(updateTime + 30000);
 		}
 	}
+
 }

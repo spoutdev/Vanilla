@@ -27,7 +27,7 @@
 package org.spout.vanilla.material.block.solid;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.RandomBlockMaterial;
+import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
@@ -36,7 +36,7 @@ import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.SpreadingSolid;
 
-public class Grass extends SpreadingSolid implements RandomBlockMaterial, InitializableMaterial {
+public class Grass extends SpreadingSolid implements DynamicMaterial, InitializableMaterial {
 	public Grass(String name, int id) {
 		super(name, id);
 		this.setHardness(0.6F).setResistance(0.8F).setStepSound(SoundEffects.STEP_GRASS);

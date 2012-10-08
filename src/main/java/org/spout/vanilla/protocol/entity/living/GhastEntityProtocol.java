@@ -32,11 +32,12 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.living.hostile.Ghast;
+import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class GhastEntityProtocol extends BasicMobEntityProtocol {
 	public GhastEntityProtocol() {
-		super(56);
+		super(EntityProtocolID.GHAST.getId());
 	}
 
 	@Override

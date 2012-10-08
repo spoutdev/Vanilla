@@ -29,6 +29,7 @@ package org.spout.vanilla.component.living.passive;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Passive;
 import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
@@ -38,6 +39,6 @@ public class Chicken extends VanillaEntity implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(93));
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(EntityProtocolID.CHICKEN.getId()));
 	}
 }

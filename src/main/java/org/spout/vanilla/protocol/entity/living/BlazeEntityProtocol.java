@@ -32,11 +32,12 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.living.hostile.Blaze;
+import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class BlazeEntityProtocol extends BasicMobEntityProtocol {
 	public BlazeEntityProtocol() {
-		super(61);
+		super(EntityProtocolID.BLAZE.getId());
 	}
 
 	@Override

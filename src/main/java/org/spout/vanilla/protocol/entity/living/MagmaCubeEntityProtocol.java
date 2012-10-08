@@ -32,11 +32,12 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.living.hostile.MagmaCube;
+import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class MagmaCubeEntityProtocol extends BasicMobEntityProtocol {
 	public MagmaCubeEntityProtocol() {
-		super(62);
+		super(EntityProtocolID.MAGMACUBE.getId());
 	}
 
 	@Override

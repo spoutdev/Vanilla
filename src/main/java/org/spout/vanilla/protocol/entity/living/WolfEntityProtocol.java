@@ -33,11 +33,12 @@ import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.living.neutral.Wolf;
 import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class WolfEntityProtocol extends BasicMobEntityProtocol {
 	public WolfEntityProtocol() {
-		super(95);
+		super(EntityProtocolID.WOLF.getId());
 	}
 
 	@Override

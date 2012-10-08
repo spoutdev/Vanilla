@@ -24,26 +24,21 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.component.living.neutral;
 
-import java.util.List;
-
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
-
-import org.spout.vanilla.component.living.passive.Pig;
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.living.Neutral;
+import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
-public class PigEntityProtocol extends BasicMobEntityProtocol {
-	public PigEntityProtocol() {
-		super(EntityProtocolID.PIG.getId());
-	}
-
+/**
+ * A component that identifies the entity as a Bat.
+ */
+public class Bat extends VanillaEntity implements Neutral {
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (entity.add(Pig.class).isSaddled() ? 1 : 0)));
-		return parameters;
+	public void onAttached() {
+		super.onAttached();
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(EntityProtocolID.BAT.getId()));
 	}
 }

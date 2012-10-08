@@ -32,11 +32,12 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.living.passive.Sheep;
+import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class SheepEntityProtocol extends BasicMobEntityProtocol {
 	public SheepEntityProtocol() {
-		super(91);
+		super(EntityProtocolID.SHEEP.getId());
 	}
 
 	@Override

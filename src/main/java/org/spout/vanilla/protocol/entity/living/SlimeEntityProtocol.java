@@ -32,11 +32,12 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.living.hostile.Slime;
+import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class SlimeEntityProtocol extends BasicMobEntityProtocol {
 	public SlimeEntityProtocol() {
-		super(55);
+		super(EntityProtocolID.SLIME.getId());
 	}
 
 	@Override

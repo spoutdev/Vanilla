@@ -30,9 +30,14 @@ import java.util.HashMap;
 
 import org.spout.api.component.Component;
 import org.spout.api.component.components.WorldComponent;
+import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 
+import org.spout.vanilla.component.misc.SleepComponent;
+import org.spout.vanilla.data.Animation;
+import org.spout.vanilla.data.Time;
 import org.spout.vanilla.data.Weather;
+import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.world.WeatherSimulator;
 
 /**
@@ -80,6 +85,25 @@ public abstract class VanillaSky extends WorldComponent {
 			countdown = 20;
 			updateTime(time);
 		}
+
+		// Sleeping players
+		boolean skipNight = false;
+		for (Player player : getWorld().getPlayers()) {
+			if (player.add(SleepComponent.class).canSkipNight()) {
+				skipNight = true;
+			} else {
+				skipNight = false;
+				break;
+			}
+		}
+
+		if (skipNight) {
+			setTime = Time.DAWN.getTime();
+			for (Player player : getWorld().getPlayers()) {
+				player.getNetwork().callProtocolEvent(new EntityAnimationEvent(player, Animation.LEAVE_BED));
+			}
+		}
+
 //		// Weather TODO this thing is possessed and needs to be fixed.
 //		if (this.hasWeather()) {
 //			this.weather.onTick(dt);

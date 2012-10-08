@@ -478,11 +478,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 
 	@EventHandler
-	public Message onPlayerBedEnter(PlayerBedEvent event) {
-		return new PlayerBedMessage(event.getPlayer(), event.getBed());
-	}
-
-	@EventHandler
 	public Message onPlayerKeepAlive(PlayerPingEvent event) {
 		return new PlayerPingMessage(event.getHash());
 	}
@@ -491,6 +486,18 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	public Message onPlayerUpdateUserList(PlayerListEvent event) {
 		String name = event.getPlayerDisplayName();
 		return new PlayerListMessage(name, event.getOnline(), (short) event.getPingDelay());
+	}
+
+	@EventHandler
+	public Message onPlayerBed(PlayerBedEvent event) {
+		Player player = event.getPlayer();
+		Block bed = event.getBed();
+		boolean entered = event.isEntered();
+		if (bed.getMaterial() == VanillaMaterials.BED_BLOCK) {
+			((BedBlock) bed.getMaterial()).setOccupied(bed, player, entered);
+		}
+		player.add(SleepComponent.class).setBed(entered ? bed : null);
+		return new PlayerBedMessage(player, bed);
 	}
 
 	@EventHandler

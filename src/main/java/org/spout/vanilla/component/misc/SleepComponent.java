@@ -33,15 +33,13 @@ import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.data.Animation;
-import org.spout.vanilla.data.Times;
+import org.spout.vanilla.data.Time;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.misc.BedBlock;
 
 public class SleepComponent extends EntityComponent {
 	private final float sleepSeconds = 5;
 	private float sleepTimer = sleepSeconds;
-	private boolean sleeping;
+	private boolean sleeping, skipNight;
 	private Player player;
 	private Block bed;
 
@@ -59,6 +57,13 @@ public class SleepComponent extends EntityComponent {
 
 	public void setSleeping(boolean sleeping) {
 		this.sleeping = sleeping;
+		if (!sleeping) {
+			skipNight = false;
+		}
+	}
+
+	public boolean canSkipNight() {
+		return skipNight;
 	}
 
 	@Override
@@ -80,14 +85,7 @@ public class SleepComponent extends EntityComponent {
 
 		// If sleep timer if finished try and skip to day
 		if (sleepTimer <= 0) {
-			World world = getHolder().getWorld();
-			for (Player player : world.getPlayers()) {
-				if (!player.add(SleepComponent.class).isSleeping()) {
-					return;
-				}
-			}
-			world.getComponentHolder().get(VanillaSky.class).setTime(Times.DAWN.getTime());
-			player.getNetwork().callProtocolEvent(new EntityAnimationEvent(player, Animation.LEAVE_BED));
+			skipNight = true;
 		}
 	}
 }

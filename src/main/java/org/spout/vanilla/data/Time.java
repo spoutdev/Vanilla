@@ -26,22 +26,23 @@
  */
 package org.spout.vanilla.data;
 
-public enum Times {
+public enum Time {
 	DAWN(0),
 	DAY(6000),
 	DUSK(12000),
 	NIGHT(18000);
-	private int time;
 
-	Times(int time) {
+	private long time;
+
+	private Time(long time) {
 		this.time = time;
 	}
 
-	public int getTime() {
+	public long getTime() {
 		return time;
 	}
 
-	public static Times get(String name) {
+	public static Time get(String name) {
 		return valueOf(name.toUpperCase());
 	}
 }

@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import org.spout.api.Source;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Entity;
@@ -39,9 +40,10 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.living.Hostile;
+import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.component.misc.SleepComponent;
 import org.spout.vanilla.component.world.VanillaSky;
-import org.spout.vanilla.data.Times;
+import org.spout.vanilla.data.Time;
 import org.spout.vanilla.event.player.network.PlayerBedEvent;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -51,8 +53,8 @@ import org.spout.vanilla.util.explosion.ExplosionModel;
 import org.spout.vanilla.util.explosion.ExplosionModelSpherical;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
-public class BedBlock extends VanillaBlockMaterial implements InitializableMaterial {
-	public static final int NEARBY_MONSTER_RANGE = 8, NETHER_EXPLOSION_SIZE = 100;
+public class BedBlock extends VanillaBlockMaterial implements InitializableMaterial, Source {
+	public static final int NEARBY_MONSTER_RANGE = 8, NETHER_EXPLOSION_SIZE = 4;
 	public static final ChatArguments NEARBY_MONSTER_MESSAGE = new ChatArguments(ChatStyle.RED, "You must not rest, there are monsters nearby!");
 	public static final ChatArguments NOT_NIGHT_MESSAGE = new ChatArguments(ChatStyle.RED, "You can only sleep at night.");
 	public static final ChatArguments OCCUPIED_MESSAGE = new ChatArguments(ChatStyle.RED, "This bed is occupied.");
@@ -74,10 +76,13 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 		final VanillaSky sky = world.getComponentHolder().get(VanillaSky.class);
 
 		for (Entity e : world.getNearbyEntities(player, NEARBY_MONSTER_RANGE)) {
-			// TODO check for hostile mobs. Needs Entity#getComponents().
+			if (e.get(VanillaEntity.class) instanceof Hostile) {
+				player.sendMessage(NEARBY_MONSTER_MESSAGE);
+				return;
+			}
 		}
 
-		if (sky.getTime() < Times.NIGHT.getTime()) {
+		if (sky.getTime() < Time.DUSK.getTime()) {
 			player.sendMessage(NOT_NIGHT_MESSAGE);
 			return;
 		}
@@ -87,8 +92,6 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 			return;
 		}
 
-		setOccupied(head, player, true);
-		player.add(SleepComponent.class).setBed(head);
 		player.getNetwork().callProtocolEvent(new PlayerBedEvent(player, head, true));
 	}
 
@@ -160,7 +163,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 		setFacing(headBlock, facing);
 		if (headBlock.getWorld().getGenerator() instanceof NetherGenerator) {
 			ExplosionModel explosion = new ExplosionModelSpherical();
-			explosion.execute(headBlock.getPosition(), NETHER_EXPLOSION_SIZE, true, null);
+			explosion.execute(headBlock.getPosition(), NETHER_EXPLOSION_SIZE, true, this);
 		}
 	}
 

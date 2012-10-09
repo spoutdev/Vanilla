@@ -33,11 +33,16 @@ import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.living.neutral.Wolf;
 import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class WolfEntityProtocol extends BasicMobEntityProtocol {
+	public final static int SIT_TAME_RED_EYES_INDEX = 16; // The MC metadata index for determining if the wolf is tamed, has red eyes, or is sitting.
+	public final static int OWNER_INDEX = 17; // The MC metadata index for the owner's name.
+	public final static int HEALTH_INDEX = 18; // The MC metadata index for the health of the wolf;
+
 	public WolfEntityProtocol() {
-		super(95);
+		super(EntityProtocolID.WOLF.getId());
 	}
 
 	@Override
@@ -48,9 +53,9 @@ public class WolfEntityProtocol extends BasicMobEntityProtocol {
 		data |= (wolf.isSitting() ? 1 : 0) & 0x01;
 		data |= (wolf.haveRedEyes() ? 1 : 0) & 0x02;
 		data |= (wolf.isTamed() ? 1 : 0) & 0x04;
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
-		parameters.add(new Parameter<String>(Parameter.TYPE_STRING, 17, wolf.getOwner()));
-		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 18, wolf.getHolder().get(HealthComponent.class).getHealth()));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SIT_TAME_RED_EYES_INDEX, data));
+		parameters.add(new Parameter<String>(Parameter.TYPE_STRING, OWNER_INDEX, wolf.getOwner()));
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, HEALTH_INDEX, wolf.getHolder().get(HealthComponent.class).getHealth()));
 		return parameters;
 	}
 }

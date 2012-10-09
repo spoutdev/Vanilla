@@ -31,11 +31,12 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class SpiderEntityProtocol extends BasicMobEntityProtocol {
 	public SpiderEntityProtocol() {
-		super(52);
+		super(EntityProtocolID.SPIDER.getId());
 	}
 
 	@Override

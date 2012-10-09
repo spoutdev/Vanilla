@@ -61,11 +61,11 @@ public class Ocelot extends VanillaEntity implements Passive {
 	}
 
 	public byte getSkinId() {
-		return getHolder().getData().get(VanillaData.SKIN);
+		return getHolder().getData().get(VanillaData.OCELOT_SKIN);
 	}
 
 	public void setSkinId(byte skinId) {
-		getHolder().getData().put(VanillaData.SKIN, skinId);
+		getHolder().getData().put(VanillaData.OCELOT_SKIN, skinId);
 	}
 
 	public boolean isSitting() {

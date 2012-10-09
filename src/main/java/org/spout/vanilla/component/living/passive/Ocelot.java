@@ -61,11 +61,11 @@ public class Ocelot extends LivingComponent implements Passive {
 	}
 
 	public byte getSkinId() {
-		return getOwner().getData().get(VanillaData.SKIN);
+		return getOwner().getData().get(VanillaData.OCELOT_SKIN);
 	}
 
 	public void setSkinId(byte skinId) {
-		getOwner().getData().put(VanillaData.SKIN, skinId);
+		getOwner().getData().put(VanillaData.OCELOT_SKIN, skinId);
 	}
 
 	public boolean isSitting() {

@@ -32,17 +32,20 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.living.hostile.MagmaCube;
+import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.CreatureProtocol;
 
 public class MagmaCubeEntityProtocol extends CreatureProtocol {
+	public final static int SIZE_INDEX = 16; // The MC metadata index determinig the size of the magma cube
+	
 	public MagmaCubeEntityProtocol() {
-		super(62);
+		super(EntityProtocolID.MAGMACUBE.getId());
 	}
 
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, entity.add(MagmaCube.class).getSize()));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SIZE_INDEX, entity.add(MagmaCube.class).getSize()));
 		return parameters;
 	}
 }

@@ -32,11 +32,16 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.living.passive.Ocelot;
+import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.CreatureProtocol;
 
 public class OcelotEntityProtocol extends CreatureProtocol {
+	public final static int SIT_TAME_INDEX = 16; // The MC metadata index for determining whether the ocelot is tamed or sitting.
+	public final static int OWNER_INDEX = 17; // The MC metadata index for the owner's name of the ocelot.
+	public final static int SKIN_INDEX = 18; // The MC metadata index for the ocelots texture.
+
 	public OcelotEntityProtocol() {
-		super(98);
+		super(EntityProtocolID.OCELOT.getId());
 	}
 
 	@Override
@@ -46,9 +51,9 @@ public class OcelotEntityProtocol extends CreatureProtocol {
 		byte data = 0;
 		data |= (ocelot.isSitting() ? 1 : 0) & 0x01;
 		data |= (ocelot.isTamed() ? 1 : 0) & 0x04;
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
-		parameters.add(new Parameter<String>(Parameter.TYPE_STRING, 17, ocelot.getOwnerName()));
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 18, ocelot.getSkinId()));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SIT_TAME_INDEX, data));
+		parameters.add(new Parameter<String>(Parameter.TYPE_STRING, OWNER_INDEX, ocelot.getOwnerName()));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SKIN_INDEX, ocelot.getSkinId()));
 		return parameters;
 	}
 }

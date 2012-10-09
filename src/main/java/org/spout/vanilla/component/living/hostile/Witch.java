@@ -30,32 +30,15 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;
 import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.CreatureProtocol;
 
 /**
- * A component that identifies the entity as a Zombie.
+ * A component that identifies the entity as a CaveSpider.
  */
-public class Zombie extends LivingComponent implements Hostile {
+public class Witch extends LivingComponent implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(EntityProtocolID.ZOMBIE.getId()));
-	}
-
-	/**
-	 * True if the zombie was once a villager, or is a Villager Zombie
-	 * @return true if this is a villager zombie
-	 */
-	public boolean wasVillager() {
-		return getOwner().getData().get(VanillaData.WAS_VILLAGER);
-	}
-	
-	/**
-	 * Sets if this is a villager zombie.
-	 * @param value
-	 */
-	public void setWasVillager(boolean value) {
-		getOwner().getData().put(VanillaData.WAS_VILLAGER, value);
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(EntityProtocolID.WITCH.getId()));
 	}
 }

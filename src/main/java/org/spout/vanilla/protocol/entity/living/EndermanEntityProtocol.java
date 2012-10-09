@@ -33,11 +33,15 @@ import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.CreatureProtocol;
 
 public class EndermanEntityProtocol extends CreatureProtocol {
+	public final static int ITEM_ID_INDEX = 16; // The MC metadata index for the item in the Enderman's hand.
+	public final static int ITEM_DATA_INDEX = 17; // The MC metadata indexfor the item data in the Enderman's hand.
+
 	public EndermanEntityProtocol() {
-		super(58);
+		super(EntityProtocolID.ENDERMAN.getId());
 	}
 
 	@Override
@@ -45,8 +49,8 @@ public class EndermanEntityProtocol extends CreatureProtocol {
 		ItemStack held = entity.getData().get(Data.HELD_ITEM);
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
 		if (held != null) {
-			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) held.getMaterial().getId()));
-			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, (byte) held.getData()));
+			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, ITEM_ID_INDEX, (byte) held.getMaterial().getId()));
+			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, ITEM_DATA_INDEX, (byte) held.getData()));
 		}
 		return parameters;
 	}

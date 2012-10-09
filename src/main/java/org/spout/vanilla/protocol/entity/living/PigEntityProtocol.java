@@ -36,6 +36,8 @@ import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class PigEntityProtocol extends BasicMobEntityProtocol {
+	public final static int SADDLE_INDEX = 16; // The MC metadata index for determining if the pig is saddled or not.
+
 	public PigEntityProtocol() {
 		super(EntityProtocolID.PIG.getId());
 	}
@@ -43,7 +45,7 @@ public class PigEntityProtocol extends BasicMobEntityProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (entity.add(Pig.class).isSaddled() ? 1 : 0)));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SADDLE_INDEX, (byte) (entity.add(Pig.class).isSaddled() ? 1 : 0)));
 		return parameters;
 	}
 }

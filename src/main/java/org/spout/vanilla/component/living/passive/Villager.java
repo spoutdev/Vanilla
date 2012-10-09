@@ -36,10 +36,9 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.window.Window;
 import org.spout.vanilla.component.living.Passive;
 import org.spout.vanilla.component.living.VanillaEntity;
-import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.CraftingInventory;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.protocol.entity.living.VillagerEntityProtocol;
 
 /**
  * A component that identifies the entity as a Villager.
@@ -48,7 +47,7 @@ public class Villager extends VanillaEntity implements Container, Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(EntityProtocolID.VILLAGER.getId())); //Index 16 (int): Unknown, example: 0
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new VillagerEntityProtocol());
 	}
 
 	private HashMap<Player, Window> viewers = new HashMap<Player, Window>();
@@ -65,5 +64,13 @@ public class Villager extends VanillaEntity implements Container, Passive {
 	public CraftingInventory getInventory() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	/**
+	 * The integer value associated with this villager type.
+	 * @return int 
+	 */
+	public int getVillagerTypeID() {
+		return 5; // Generic Villager ID.
 	}
 }

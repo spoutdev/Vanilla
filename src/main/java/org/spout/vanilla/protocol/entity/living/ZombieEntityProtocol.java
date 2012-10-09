@@ -35,17 +35,17 @@ import org.spout.vanilla.component.living.hostile.MagmaCube;
 import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
-public class MagmaCubeEntityProtocol extends BasicMobEntityProtocol {
-	public final static int SIZE_INDEX = 16; // The MC metadata index determinig the size of the magma cube
+public class ZombieEntityProtocol extends BasicMobEntityProtocol {
+	public final static int TYPE_INDEX = 16; // The MC metadata index determinig if this zombie was a villager or not
 	
-	public MagmaCubeEntityProtocol() {
+	public ZombieEntityProtocol() {
 		super(EntityProtocolID.MAGMACUBE.getId());
 	}
 
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SIZE_INDEX, entity.add(MagmaCube.class).getSize()));
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, TYPE_INDEX, 1));
 		return parameters;
 	}
 }

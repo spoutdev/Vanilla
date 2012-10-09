@@ -36,6 +36,7 @@ import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class SheepEntityProtocol extends BasicMobEntityProtocol {
+	public static int SHEAR_COLOR_INDEX = 16; // The MC metadata index for determining the color of the sheap and if it's been sheared.
 	public SheepEntityProtocol() {
 		super(EntityProtocolID.SHEEP.getId());
 	}
@@ -47,7 +48,7 @@ public class SheepEntityProtocol extends BasicMobEntityProtocol {
 		byte data = 0;
 		data |= (sheep.isSheared() ? 1 : 0) << 4;
 		data |= sheep.getColor().getData() & 0x0F;
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SHEAR_COLOR_INDEX, data));
 		return parameters;
 	}
 }

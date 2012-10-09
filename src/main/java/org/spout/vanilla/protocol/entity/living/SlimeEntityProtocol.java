@@ -36,6 +36,8 @@ import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class SlimeEntityProtocol extends BasicMobEntityProtocol {
+	public final static int SIZE_INDEX = 16; // The MC metadata index for determining the size of the slime.
+
 	public SlimeEntityProtocol() {
 		super(EntityProtocolID.SLIME.getId());
 	}
@@ -43,7 +45,7 @@ public class SlimeEntityProtocol extends BasicMobEntityProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, entity.add(Slime.class).getSize()));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SIZE_INDEX, entity.add(Slime.class).getSize()));
 		return parameters;
 	}
 }

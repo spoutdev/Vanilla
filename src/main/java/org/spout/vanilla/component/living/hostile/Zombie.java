@@ -36,9 +36,27 @@ import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
  * A component that identifies the entity as a Zombie.
  */
 public class Zombie extends VanillaEntity implements Hostile {
+	private boolean villager = false;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
 		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(EntityProtocolID.ZOMBIE.getId()));
+	}
+
+	/**
+	 * True if the zombie was once a villager, or is a Villager Zombie
+	 * @return true if this is a villager zombie
+	 */
+	public boolean wasVillager() {
+		return villager;
+	}
+	
+	/**
+	 * Sets if this is a villager zombie.
+	 * @param value
+	 */
+	public void setWasVillager(boolean value) {
+		villager = value;
 	}
 }

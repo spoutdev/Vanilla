@@ -36,6 +36,8 @@ import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class EnderDragonEntityProtocol extends BasicMobEntityProtocol {
+	public final static int HEALTH_INDEX = 16; // The MC metadata index to determine the Dragon's health
+	
 	public EnderDragonEntityProtocol() {
 		super(EntityProtocolID.ENDERDRAGON.getId());
 	}
@@ -43,7 +45,7 @@ public class EnderDragonEntityProtocol extends BasicMobEntityProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 16, entity.add(HealthComponent.class).getHealth()));
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, HEALTH_INDEX, entity.add(HealthComponent.class).getHealth()));
 		return parameters;
 	}
 }

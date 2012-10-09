@@ -37,6 +37,7 @@ import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 
 public abstract class BasicEntityProtocol extends VanillaEntityProtocol {
 	protected final int typeId;
+	private List<Parameter<?>> lastMeta;
 
 	public BasicEntityProtocol(int typeId) {
 		this.typeId = typeId;
@@ -57,7 +58,11 @@ public abstract class BasicEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public final List<Message> getUpdateMessages(Entity entity) {
 		List<Message> messages = super.getUpdateMessages(entity);
-		messages.add(new EntityMetadataMessage(entity.getId(), getUpdateParameters(entity)));
+		List<Parameter<?>> params = getUpdateParameters(entity);
+		if (lastMeta == null || !lastMeta.equals(params)) {
+			messages.add(new EntityMetadataMessage(entity.getId(), params));
+			lastMeta = params;
+		}
 		return messages;
 	}
 }

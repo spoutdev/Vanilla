@@ -24,28 +24,21 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.component.living.hostile;
 
-import java.util.List;
-
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
-
-import org.spout.vanilla.component.living.hostile.MagmaCube;
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.living.Hostile;
+import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
-public class MagmaCubeEntityProtocol extends BasicMobEntityProtocol {
-	public final static int SIZE_INDEX = 16; // The MC metadata index determinig the size of the magma cube
-	
-	public MagmaCubeEntityProtocol() {
-		super(EntityProtocolID.MAGMACUBE.getId());
-	}
-
+/**
+ * A component that identifies the entity as a CaveSpider.
+ */
+public class Witch extends VanillaEntity implements Hostile {
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SIZE_INDEX, entity.add(MagmaCube.class).getSize()));
-		return parameters;
+	public void onAttached() {
+		super.onAttached();
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(EntityProtocolID.WITCH.getId()));
 	}
 }

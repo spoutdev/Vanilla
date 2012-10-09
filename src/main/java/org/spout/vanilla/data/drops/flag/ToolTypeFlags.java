@@ -69,4 +69,8 @@ public class ToolTypeFlags {
 	 * A fishing rod was used
 	 */
 	public static final FlagSingle FISHING_ROD = new FlagSingle();
+	/**
+	 * A carrot on a stick was used
+	 */
+	public static final FlagSingle CARROT_ON_A_STICK = new FlagSingle();
 }

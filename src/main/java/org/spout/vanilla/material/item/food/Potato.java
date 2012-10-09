@@ -24,53 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data.drops.flag;
+package org.spout.vanilla.material.item.food;
 
-import org.spout.api.util.flag.FlagSingle;
+import org.spout.api.inventory.ItemStack;
 
-public class ToolTypeFlags {
-	/**
-	 * A tool other than the one displayed here was used
-	 */
-	public static final FlagSingle OTHER = new FlagSingle();
-	/**
-	 * A pickaxe was used
-	 */
-	public static final FlagSingle PICKAXE = new FlagSingle();
-	/**
-	 * An axe was used
-	 */
-	public static final FlagSingle AXE = new FlagSingle();
-	/**
-	 * A spade was used
-	 */
-	public static final FlagSingle SPADE = new FlagSingle();
-	/**
-	 * A hoe was used
-	 */
-	public static final FlagSingle HOE = new FlagSingle();
-	/**
-	 * A sword was used
-	 */
-	public static final FlagSingle SWORD = new FlagSingle();
-	/**
-	 * A bow was used
-	 */
-	public static final FlagSingle BOW = new FlagSingle();
-	/**
-	 * A flint and steel was used
-	 */
-	public static final FlagSingle FLINT_AND_STEEL = new FlagSingle();
-	/**
-	 * Shears were used
-	 */
-	public static final FlagSingle SHEARS = new FlagSingle();
-	/**
-	 * A fishing rod was used
-	 */
-	public static final FlagSingle FISHING_ROD = new FlagSingle();
-	/**
-	 * A carrot on a stick was used
-	 */
-	public static final FlagSingle CARROT_ON_A_STICK = new FlagSingle();
+import org.spout.vanilla.material.TimedCraftable;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.controlled.FurnaceBlock;
+import org.spout.vanilla.material.item.Food;
+import org.spout.vanilla.material.item.FoodEffect;
+
+public class Potato extends Food implements TimedCraftable {
+	public Potato(String name, int id, FoodEffect... type) {
+		super(name, id, type);
+	}
+
+	@Override
+	public ItemStack getResult() {
+		return new ItemStack(VanillaMaterials.BAKED_POTATO, 1);
+	}
+
+	@Override
+	public float getCraftTime() {
+		return FurnaceBlock.SMELT_TIME;
+	}
 }

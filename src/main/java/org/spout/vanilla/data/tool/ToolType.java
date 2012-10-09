@@ -41,6 +41,7 @@ public class ToolType {
 	public static final ToolType PICKAXE = new ToolType(ToolTypeFlags.PICKAXE);
 	public static final ToolType SPADE = new ToolType(ToolTypeFlags.SPADE);
 	public static final ToolType HOE = new ToolType(ToolTypeFlags.HOE);
+	public static final ToolType CARROT_ON_A_STICK = new ToolType(ToolTypeFlags.CARROT_ON_A_STICK);
 	private final Flag toolFlag;
 
 	public ToolType(Flag toolFlag) {

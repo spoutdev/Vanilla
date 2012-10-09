@@ -771,11 +771,9 @@ recipes:
     rows: ['AA']
 
   Stone Button:
-    type: Shaped
+    type: Shapeless
     result: STONE_BUTTON,1
-    ingredients:
-      A: STONE
-    rows: ['A', 'A']
+    ingredients: [STONE]
 
   Redstone Torch:
     type: Shaped
@@ -1262,3 +1260,29 @@ recipes:
       B: DIAMOND
       C: OBSIDIAN
     rows: [' A ', 'BCB', 'CCC']
+
+  Golden Carrot:
+    type: Shaped
+    result: GOLDEN_CARROT,1
+    ingredients:
+      A: GOLD_NUGGET
+      B: CARROT
+    rows: ['AAA', 'ABA', 'AAA']
+
+  Carrot on a Stick:
+    type: Shaped
+    result: CARROT_ON_A_STICK,1
+    ingredients:
+      A: FISHING_ROD
+      B: CARROT
+    rows: ['A', ' B']
+
+  Pumpkin Pie:
+    type: Shapeless
+    result: PUMPKIN_PIE,1
+    ingredients: [PUMPKIN, EGG, SUGAR]
+ 
+   Wood Button:
+    type: Shapeless
+    result: WOOD_BUTTON,1
+    ingredients: [OAK_PLANK]

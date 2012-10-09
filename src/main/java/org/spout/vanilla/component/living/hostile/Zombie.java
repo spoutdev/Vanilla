@@ -30,13 +30,13 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;
 import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.data.EntityProtocolID;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
  * A component that identifies the entity as a Zombie.
  */
 public class Zombie extends VanillaEntity implements Hostile {
-	private boolean villager = false;
 
 	@Override
 	public void onAttached() {
@@ -49,7 +49,7 @@ public class Zombie extends VanillaEntity implements Hostile {
 	 * @return true if this is a villager zombie
 	 */
 	public boolean wasVillager() {
-		return villager;
+		return getHolder().getData().get(VanillaData.WAS_VILLAGER);
 	}
 	
 	/**
@@ -57,6 +57,6 @@ public class Zombie extends VanillaEntity implements Hostile {
 	 * @param value
 	 */
 	public void setWasVillager(boolean value) {
-		villager = value;
+		getHolder().getData().put(VanillaData.WAS_VILLAGER, value);
 	}
 }

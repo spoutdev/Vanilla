@@ -24,28 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.material.item.food;
 
-import java.util.List;
+import org.spout.api.inventory.ItemStack;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
+import org.spout.vanilla.material.TimedCraftable;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.controlled.FurnaceBlock;
+import org.spout.vanilla.material.item.Food;
+import org.spout.vanilla.material.item.FoodEffect;
 
-import org.spout.vanilla.component.living.hostile.MagmaCube;
-import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
-
-public class MagmaCubeEntityProtocol extends BasicMobEntityProtocol {
-	public final static int SIZE_INDEX = 16; // The MC metadata index determinig the size of the magma cube
-	
-	public MagmaCubeEntityProtocol() {
-		super(EntityProtocolID.MAGMACUBE.getId());
+public class Potato extends Food implements TimedCraftable {
+	public Potato(String name, int id, FoodEffect... type) {
+		super(name, id, type);
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SIZE_INDEX, entity.add(MagmaCube.class).getSize()));
-		return parameters;
+	public ItemStack getResult() {
+		return new ItemStack(VanillaMaterials.BAKED_POTATO, 1);
+	}
+
+	@Override
+	public float getCraftTime() {
+		return FurnaceBlock.SMELT_TIME;
 	}
 }

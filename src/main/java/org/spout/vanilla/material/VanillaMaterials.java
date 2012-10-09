@@ -79,6 +79,7 @@ import org.spout.vanilla.material.block.misc.TrapDoor;
 import org.spout.vanilla.material.block.misc.TripWire;
 import org.spout.vanilla.material.block.misc.TripWireHook;
 import org.spout.vanilla.material.block.misc.Web;
+import org.spout.vanilla.material.block.misc.WoodButton;
 import org.spout.vanilla.material.block.ore.CoalOre;
 import org.spout.vanilla.material.block.ore.DiamondBlock;
 import org.spout.vanilla.material.block.ore.DiamondOre;
@@ -185,6 +186,7 @@ import org.spout.vanilla.material.item.armor.leather.LeatherBoots;
 import org.spout.vanilla.material.item.armor.leather.LeatherCap;
 import org.spout.vanilla.material.item.armor.leather.LeatherPants;
 import org.spout.vanilla.material.item.armor.leather.LeatherTunic;
+import org.spout.vanilla.material.item.food.Potato;
 import org.spout.vanilla.material.item.food.RawBeef;
 import org.spout.vanilla.material.item.food.RawChicken;
 import org.spout.vanilla.material.item.food.RawFish;
@@ -205,6 +207,7 @@ import org.spout.vanilla.material.item.misc.SnowballItem;
 import org.spout.vanilla.material.item.misc.SpawnEgg;
 import org.spout.vanilla.material.item.misc.Stick;
 import org.spout.vanilla.material.item.misc.StringItem;
+import org.spout.vanilla.material.item.tool.CarrotOnAStick;
 import org.spout.vanilla.material.item.tool.FishingRod;
 import org.spout.vanilla.material.item.tool.FlintAndSteel;
 import org.spout.vanilla.material.item.tool.Hoe;
@@ -358,6 +361,10 @@ public final class VanillaMaterials {
 	public static final TripWireHook TRIPWIRE_HOOK = new TripWireHook("Trip Wire Hook", 131);
 	public static final TripWire TRIPWIRE = new TripWire("Trip Wire", 132);
 	public static final CocoaPlant COCOA_PLANT = new CocoaPlant("Cocoa Plant", 127);
+	//public static final CommandBlock COMMAND_BLOCK = new CommandBlock("Command Block", 137);
+	//public static final BeaconBlock BEACON_BLOCK = new BeaconBlock("Beacon Block", 138);
+	//public static final CobblestoneWall COBBLESTONE_WALL = new CobblestoneWall("Cobblestone Wall", 139); //TODO: also determines mossy with data value.
+	public static final WoodButton WOOD_BUTTON = new WoodButton("Wood Button", 143);
 	/*
 	 * Items
 	 */
@@ -420,6 +427,7 @@ public final class VanillaMaterials {
 	public static final Bow BOW = new Bow("Bow", 261, (short) 385);
 	public static final VanillaItemMaterial ARROW = new VanillaItemMaterial("Arrow", 262);
 	public static final FishingRod FISHING_ROD = new FishingRod("Fishing Rod", 346, (short) 65);
+	public static final CarrotOnAStick CARROT_ON_A_STICK = new CarrotOnAStick("Carrot on a Stick", 398, (short) 25); //TODO: Check dur value
 	// == Buckets=
 	public static final EmptyContainer BUCKET = new EmptyContainer("Bucket", 325);
 	public static final FullContainer WATER_BUCKET = new FullContainer("Water Bucket", 326, WATER, BUCKET);
@@ -464,10 +472,6 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial COMPASS = new VanillaItemMaterial("Compass", 345);
 	public static final VanillaItemMaterial CLOCK = new VanillaItemMaterial("Clock", 347);
 	public static final VanillaItemMaterial GLOWSTONE_DUST = new VanillaItemMaterial("Glowstone Dust", 348);
-	//	public static final RawFish RAW_FISH = new RawFish("Raw Fish", 349, new FoodEffect(2, Hunger.class), new FoodEffect(1.2f, FoodSaturation.class));
-	//	public static final Food COOKED_FISH = new Food("Cooked Fish", 350, new FoodEffect(5, Hunger.class), new FoodEffect(6, FoodSaturation.class));
-	public static final RawFish RAW_FISH = new RawFish("Raw Fish", 349);
-	public static final Food COOKED_FISH = new Food("Cooked Fish", 350);
 	public static final Dye DYE = Dye.INK_SAC;
 	public static final VanillaItemMaterial BONE = new VanillaItemMaterial("Bone", 352);
 	public static final VanillaItemMaterial SUGAR = new VanillaItemMaterial("Sugar", 353);
@@ -479,6 +483,8 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial PUMPKIN_SEEDS = new VanillaItemMaterial("Pumpkin Seeds", 361);
 	public static final VanillaItemMaterial MELON_SEEDS = new VanillaItemMaterial("MelonBlock Seeds", 362);
 	// == Food ==
+	//	public static final RawFish RAW_FISH = new RawFish("Raw Fish", 349, new FoodEffect(2, Hunger.class), new FoodEffect(1.2f, FoodSaturation.class));
+	//	public static final Food COOKED_FISH = new Food("Cooked Fish", 350, new FoodEffect(5, Hunger.class), new FoodEffect(6, FoodSaturation.class));
 	//	public static final Food RED_APPLE = new Food("Apple", 260, new FoodEffect(4, Hunger.class), new FoodEffect(2.4f, FoodSaturation.class));
 	//	public static final Food MUSHROOM_SOUP = new Food("Mushroom Soup", 282, new FoodEffect(8, Hunger.class), new FoodEffect(9.6f, FoodSaturation.class));
 	//	public static final Food BREAD = new Food("Bread", 297, new FoodEffect(5, Hunger.class), new FoodEffect(6, FoodSaturation.class));
@@ -494,6 +500,8 @@ public final class VanillaMaterials {
 	//	public static final Food COOKED_CHICKEN = new Food("Cooked Chicken", 366, new FoodEffect(6, Hunger.class), new FoodEffect(7.2f, FoodSaturation.class));
 	//	public static final Food ROTTEN_FLESH = new Food("Rotten Flesh", 367, new FoodEffect(4, Hunger.class), new FoodEffect(0.8f, FoodSaturation.class), new FoodEffect(80, Poisoning.class));
 	//TODO: Reimplement food less bad!
+	public static final RawFish RAW_FISH = new RawFish("Raw Fish", 349);
+	public static final Food COOKED_FISH = new Food("Cooked Fish", 350);
 	public static final Food RED_APPLE = new Food("Apple", 260);
 	public static final Food MUSHROOM_SOUP = new Food("Mushroom Soup", 282);
 	public static final Food BREAD = new Food("Bread", 297);
@@ -508,6 +516,12 @@ public final class VanillaMaterials {
 	public static final RawChicken RAW_CHICKEN = new RawChicken("Raw Chicken", 365);
 	public static final Food COOKED_CHICKEN = new Food("Cooked Chicken", 366);
 	public static final Food ROTTEN_FLESH = new Food("Rotten Flesh", 367);
+	public static final Food CARROT = new Food("Carrot", 391);
+	public static final Potato POTATO = new Potato("Potato", 392);
+	public static final Food BAKED_POTATO = new Food("Baked Potato", 393);
+	public static final Food POISONOUS_POTATO = new Food("Poisonous Potato", 394);
+	public static final Food GOLDEN_CARROT = new Food("Golden Carrot", 396);
+	public static final Food PUMPKIN_PIE = new Food("Pumpkin Pie", 400);
 	// == Music Discs ==
 	public static final MusicDisc GOLD_MUSIC_DISC = new MusicDisc("Music Disc - 13", 2256).setMusic(Music.THIRTEEN);
 	public static final MusicDisc GREEN_MUSIC_DISC = new MusicDisc("Music Disc - cat", 2257).setMusic(Music.CAT);
@@ -527,6 +541,7 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial GOLD_NUGGET = new VanillaItemMaterial("Gold Nugget", 371);
 	public static final VanillaItemMaterial NETHER_WART = new VanillaItemMaterial("Nether Wart", 372);
 	public static final VanillaItemMaterial GLASS_BOTTLE = new VanillaItemMaterial("Glass Bottle", 374);
+	public static final VanillaItemMaterial NETHER_STAR = new VanillaItemMaterial("Nether Star", 399);
 	//	public static final Food SPIDER_EYE = new Food("Spider Eye", 375, new FoodEffect(2, Hunger.class), new FoodEffect(3.2f, FoodSaturation.class), new FoodEffect(100, Poisoning.class));
 	public static final Food SPIDER_EYE = new Food("Spider Eye", 375);
 	public static final VanillaItemMaterial FERMENTED_SPIDER_EYE = new VanillaItemMaterial("Fermented Spider Eye", 376);

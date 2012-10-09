@@ -32,11 +32,14 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.living.hostile.Ghast;
+import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class GhastEntityProtocol extends BasicMobEntityProtocol {
+	public final static int RED_EYES = 16; // The MC metadata index to determine ghast with red eyes.
+
 	public GhastEntityProtocol() {
-		super(56);
+		super(EntityProtocolID.GHAST.getId());
 	}
 
 	@Override
@@ -44,7 +47,7 @@ public class GhastEntityProtocol extends BasicMobEntityProtocol {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
 		Ghast ghast = entity.add(Ghast.class);
 		byte data = ghast.haveRedEyes() ? (byte) 1 : 0;
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, RED_EYES, data));
 
 		return parameters;
 	}

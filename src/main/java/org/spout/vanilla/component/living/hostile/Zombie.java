@@ -29,15 +29,34 @@ package org.spout.vanilla.component.living.hostile;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;
 import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.data.EntityProtocolID;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 /**
  * A component that identifies the entity as a Zombie.
  */
 public class Zombie extends VanillaEntity implements Hostile {
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(54));
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(EntityProtocolID.ZOMBIE.getId()));
+	}
+
+	/**
+	 * True if the zombie was once a villager, or is a Villager Zombie
+	 * @return true if this is a villager zombie
+	 */
+	public boolean wasVillager() {
+		return getHolder().getData().get(VanillaData.WAS_VILLAGER);
+	}
+	
+	/**
+	 * Sets if this is a villager zombie.
+	 * @param value
+	 */
+	public void setWasVillager(boolean value) {
+		getHolder().getData().put(VanillaData.WAS_VILLAGER, value);
 	}
 }

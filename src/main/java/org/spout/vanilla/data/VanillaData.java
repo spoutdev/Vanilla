@@ -107,9 +107,11 @@ public class VanillaData {
 	public static final DefaultedKey<Boolean> TAMED = new DefaultedKeyImpl<Boolean>("is_tamed", false);
 	public static final DefaultedKey<String> OWNER = new DefaultedKeyImpl<String>("owner", null);
 	//Ocelot-specific
-	public static final DefaultedKey<Byte> SKIN = new DefaultedKeyImpl<Byte>("skin", (byte) 0);
+	public static final DefaultedKey<Byte> OCELOT_SKIN = new DefaultedKeyImpl<Byte>("skin", (byte) 0);
 	//Redstone-specific
 	public static final DefaultedKey<Boolean> IS_POWERED = new DefaultedKeyImpl<Boolean>("is_powered", false);
 	//Sign-specific
 	public static final DefaultedKey<String[]> SIGN_TEXT = new DefaultedKeyArray<String>("sign_text", 4, String.class);
+	//Zombie Specific
+	public static final DefaultedKey<Boolean> WAS_VILLAGER = new DefaultedKeyImpl<Boolean>("was_villager", false);
 }

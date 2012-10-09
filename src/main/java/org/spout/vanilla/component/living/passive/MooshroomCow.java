@@ -29,6 +29,7 @@ package org.spout.vanilla.component.living.passive;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.component.living.Passive;
+import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.CreatureProtocol;
 
 /**
@@ -38,6 +39,6 @@ public class MooshroomCow extends LivingComponent implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(96));
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(EntityProtocolID.MUSHROOMCOW.getId()));
 	}
 }

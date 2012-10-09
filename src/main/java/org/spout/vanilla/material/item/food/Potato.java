@@ -24,38 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living.hostile;
+package org.spout.vanilla.material.item.food;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.Hostile;
-import org.spout.vanilla.component.living.LivingComponent;
-import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
+import org.spout.api.inventory.ItemStack;
 
-/**
- * A component that identifies the entity as a Zombie.
- */
-public class Zombie extends LivingComponent implements Hostile {
+import org.spout.vanilla.material.TimedCraftable;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.component.FurnaceBlock;
+import org.spout.vanilla.material.item.Food;
+import org.spout.vanilla.material.item.FoodEffect;
+
+public class Potato extends Food implements TimedCraftable {
+	public Potato(String name, int id, FoodEffect... type) {
+		super(name, id, type);
+	}
+
 	@Override
-	public void onAttached() {
-		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(EntityProtocolID.ZOMBIE.getId()));
+	public ItemStack getResult() {
+		return new ItemStack(VanillaMaterials.BAKED_POTATO, 1);
 	}
 
-	/**
-	 * True if the zombie was once a villager, or is a Villager Zombie
-	 * @return true if this is a villager zombie
-	 */
-	public boolean wasVillager() {
-		return getOwner().getData().get(VanillaData.WAS_VILLAGER);
-	}
-	
-	/**
-	 * Sets if this is a villager zombie.
-	 * @param value
-	 */
-	public void setWasVillager(boolean value) {
-		getOwner().getData().put(VanillaData.WAS_VILLAGER, value);
+	@Override
+	public float getCraftTime() {
+		return FurnaceBlock.SMELT_TIME;
 	}
 }

@@ -24,38 +24,29 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living.hostile;
+package org.spout.vanilla.protocol.entity.living;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.Hostile;
-import org.spout.vanilla.component.living.LivingComponent;
+import java.util.List;
+
+import org.spout.api.entity.Entity;
+import org.spout.api.util.Parameter;
+
+import org.spout.vanilla.component.living.passive.Villager;
 import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.CreatureProtocol;
 
-/**
- * A component that identifies the entity as a Zombie.
- */
-public class Zombie extends LivingComponent implements Hostile {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(EntityProtocolID.ZOMBIE.getId()));
+public class VillagerEntityProtocol extends CreatureProtocol {
+	public final static int TYPE_INDEX = 16; // The MC metadata index to determine the type of the villager
+	
+	public VillagerEntityProtocol() {
+		super(EntityProtocolID.VILLAGER.getId());
 	}
 
-	/**
-	 * True if the zombie was once a villager, or is a Villager Zombie
-	 * @return true if this is a villager zombie
-	 */
-	public boolean wasVillager() {
-		return getOwner().getData().get(VanillaData.WAS_VILLAGER);
-	}
-	
-	/**
-	 * Sets if this is a villager zombie.
-	 * @param value
-	 */
-	public void setWasVillager(boolean value) {
-		getOwner().getData().put(VanillaData.WAS_VILLAGER, value);
+	@Override
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
+		Villager villager = entity.get(Villager.class);
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, TYPE_INDEX, villager.getVillagerTypeID()));
+		return parameters;
 	}
 }

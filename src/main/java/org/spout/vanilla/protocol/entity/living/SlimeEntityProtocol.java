@@ -32,9 +32,9 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.living.hostile.Slime;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.protocol.entity.CreatureProtocol;
 
-public class SlimeEntityProtocol extends BasicMobEntityProtocol {
+public class SlimeEntityProtocol extends CreatureProtocol {
 	public SlimeEntityProtocol() {
 		super(55);
 	}

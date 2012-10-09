@@ -29,7 +29,7 @@ package org.spout.vanilla.component.living.util;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Utility;
 import org.spout.vanilla.component.living.VanillaEntity;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.protocol.entity.CreatureProtocol;
 
 /**
  * A component that identifies the entity as a SnowGolem.
@@ -38,6 +38,6 @@ public class SnowGolem extends VanillaEntity implements Utility {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(97));
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(97));
 	}
 }

@@ -29,7 +29,7 @@ package org.spout.vanilla.component.living.neutral;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Neutral;
 import org.spout.vanilla.component.living.VanillaEntity;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.protocol.entity.CreatureProtocol;
 
 /**
  * A component that identifies the entity as a PigZombie.
@@ -38,6 +38,6 @@ public class PigZombie extends VanillaEntity implements Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(57));
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(57));
 	}
 }

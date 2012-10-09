@@ -27,52 +27,24 @@
 package org.spout.vanilla.protocol.entity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
-import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
-import org.spout.vanilla.protocol.msg.entity.spawn.EntityMobMessage;
+import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
 
-public class BasicMobEntityProtocol extends BasicEntityProtocol {
-	private List<Parameter<?>> meta;
-
-	public BasicMobEntityProtocol(int mobSpawnID) {
-		super(mobSpawnID);
-	}
-
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		return new ArrayList<Parameter<?>>(0);
+public class ObjectEntityProtocol extends BasicEntityProtocol {
+	public ObjectEntityProtocol(int typeId) {
+		super(typeId);
 	}
 
 	@Override
 	public List<Message> getSpawnMessages(Entity entity) {
-		int id = entity.getId();
-		Vector3 position = entity.getTransform().getPosition().multiply(32).floor();
-		int yaw = (int) (entity.getTransform().getYaw() * 32);
-		int pitch = (int) (entity.getTransform().getPitch() * 32);
-		List<Parameter<?>> parameters = this.getSpawnParameters(entity);
-		//TODO Headyaw
-		return Arrays.<Message>asList(new EntityMobMessage(id, this.getSpawnID(), position, yaw, pitch, 0, (short) 0, (short) 0, (short) 0, parameters));
-	}
-
-	@Override
-	public List<Message> getUpdateMessages(Entity entity) {
-		List<Message> messages = new ArrayList<Message>(super.getUpdateMessages(entity));
-		List<Parameter<?>> params = this.getSpawnParameters(entity);
-		if (!params.isEmpty()) {
-			if (meta != null) {
-				if (meta.equals(params)) {
-					return messages;
-				}
-			}
-			meta = params;
-			messages.add(new EntityMetadataMessage(entity.getId(), params));
-		}
+		List<Message> messages = new ArrayList<Message>();
+		messages.add(new EntityObjectMessage(entity, (byte) typeId));
+		messages.add(new EntityMetadataMessage(entity.getId(), getSpawnParameters(entity)));
 		return messages;
 	}
 }

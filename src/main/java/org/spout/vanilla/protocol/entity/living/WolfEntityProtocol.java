@@ -33,9 +33,9 @@ import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.living.neutral.Wolf;
 import org.spout.vanilla.component.misc.HealthComponent;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.protocol.entity.CreatureProtocol;
 
-public class WolfEntityProtocol extends BasicMobEntityProtocol {
+public class WolfEntityProtocol extends CreatureProtocol {
 	public WolfEntityProtocol() {
 		super(95);
 	}

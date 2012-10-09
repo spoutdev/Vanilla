@@ -32,9 +32,9 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.living.hostile.Blaze;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.protocol.entity.CreatureProtocol;
 
-public class BlazeEntityProtocol extends BasicMobEntityProtocol {
+public class BlazeEntityProtocol extends CreatureProtocol {
 	public BlazeEntityProtocol() {
 		super(61);
 	}

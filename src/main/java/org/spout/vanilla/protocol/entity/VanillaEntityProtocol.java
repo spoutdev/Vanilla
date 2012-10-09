@@ -34,10 +34,12 @@ import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.component.misc.VanillaPhysicsComponent;
 import org.spout.vanilla.protocol.msg.entity.EntityDestroyMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityHeadYawMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionYawMessage;
@@ -50,7 +52,7 @@ import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyRotation;
 
 public abstract class VanillaEntityProtocol implements EntityProtocol {
 	@Override
-	public List<Message> getDestroyMessages(Entity entity) {
+	public final List<Message> getDestroyMessages(Entity entity) {
 		return Arrays.<Message>asList(new EntityDestroyMessage(new int[]{entity.getId()}));
 	}
 

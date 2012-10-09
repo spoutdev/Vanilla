@@ -32,9 +32,9 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.living.passive.Pig;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.protocol.entity.CreatureProtocol;
 
-public class PigEntityProtocol extends BasicMobEntityProtocol {
+public class PigEntityProtocol extends CreatureProtocol {
 	public PigEntityProtocol() {
 		super(90);
 	}

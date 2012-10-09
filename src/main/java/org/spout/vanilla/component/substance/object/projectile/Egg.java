@@ -30,7 +30,7 @@ import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.substance.object.ObjectEntity;
-import org.spout.vanilla.protocol.entity.BasicObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.ObjectEntityProtocol;
 
 public class Egg extends ObjectEntity implements Projectile {
 	public static int ID = 62;
@@ -38,7 +38,7 @@ public class Egg extends ObjectEntity implements Projectile {
 
 	@Override
 	public void onAttached() {
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicObjectEntityProtocol(ID));
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ID));
 	}
 
 	@Override

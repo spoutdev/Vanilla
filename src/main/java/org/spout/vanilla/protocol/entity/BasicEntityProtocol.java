@@ -26,14 +26,38 @@
  */
 package org.spout.vanilla.protocol.entity;
 
-public abstract class BasicEntityProtocol extends VanillaEntityProtocol {
-	private final int spawnID;
+import java.util.ArrayList;
+import java.util.List;
 
-	public BasicEntityProtocol(int spawnID) {
-		this.spawnID = spawnID;
+import org.spout.api.entity.Entity;
+import org.spout.api.protocol.Message;
+import org.spout.api.util.Parameter;
+
+import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
+
+public abstract class BasicEntityProtocol extends VanillaEntityProtocol {
+	protected final int typeId;
+
+	public BasicEntityProtocol(int typeId) {
+		this.typeId = typeId;
 	}
 
-	public int getSpawnID() {
-		return this.spawnID;
+	public int getTypeId() {
+		return typeId;
+	}
+
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		return new ArrayList<Parameter<?>>(0);
+	}
+
+	public List<Parameter<?>> getUpdateParameters(Entity entity) {
+		return new ArrayList<Parameter<?>>(0);
+	}
+
+	@Override
+	public final List<Message> getUpdateMessages(Entity entity) {
+		List<Message> messages = super.getUpdateMessages(entity);
+		messages.add(new EntityMetadataMessage(entity.getId(), getUpdateParameters(entity)));
+		return messages;
 	}
 }

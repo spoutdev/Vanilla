@@ -32,9 +32,9 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.misc.HealthComponent;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.protocol.entity.CreatureProtocol;
 
-public class EnderDragonEntityProtocol extends BasicMobEntityProtocol {
+public class EnderDragonEntityProtocol extends CreatureProtocol {
 	public EnderDragonEntityProtocol() {
 		super(63);
 	}

@@ -28,13 +28,14 @@ package org.spout.vanilla.component.substance.object.vehicle;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.substance.object.ObjectEntity;
-import org.spout.vanilla.protocol.entity.BasicObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.ObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
 
 public class Minecart extends ObjectEntity {
 	public static final int ID = 10;
 
 	@Override
 	public void onAttached() {
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicObjectEntityProtocol(ID));
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MinecartObjectEntityProtocol());
 	}
 }

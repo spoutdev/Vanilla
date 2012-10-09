@@ -24,20 +24,27 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living.hostile;
+package org.spout.vanilla.protocol.entity.object.vehicle;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.Hostile;
-import org.spout.vanilla.component.living.VanillaEntity;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
+import java.util.List;
 
-/**
- * A component that identifies the entity as a Giant.
- */
-public class Giant extends VanillaEntity implements Hostile {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(53));
+import org.spout.api.entity.Entity;
+import org.spout.api.util.Parameter;
+
+import org.spout.vanilla.component.substance.object.vehicle.Minecart;
+import org.spout.vanilla.protocol.entity.ObjectEntityProtocol;
+
+public class MinecartObjectEntityProtocol extends ObjectEntityProtocol {
+	public MinecartObjectEntityProtocol() {
+		super(Minecart.ID);
+	}
+
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		List<Parameter<?>> params = super.getSpawnParameters(entity);
+		params.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) 0)); // Powered flag
+		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 17, 0)); // Unknown flag; initialized to 0. (Probably time since last collision)
+		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 18, 1)); // Unknown flag; initialized to 1. (Probably acceleration)
+		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 19, 0)); // Damage taken; breaks at 40.
+		return params;
 	}
 }

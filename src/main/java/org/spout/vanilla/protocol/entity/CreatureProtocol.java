@@ -24,20 +24,31 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living.hostile;
+package org.spout.vanilla.protocol.entity;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.Hostile;
-import org.spout.vanilla.component.living.VanillaEntity;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
+import java.util.Arrays;
+import java.util.List;
 
-/**
- * A component that identifies the entity as a Giant.
- */
-public class Giant extends VanillaEntity implements Hostile {
+import org.spout.api.entity.Entity;
+import org.spout.api.math.Vector3;
+import org.spout.api.protocol.Message;
+import org.spout.api.util.Parameter;
+
+import org.spout.vanilla.protocol.msg.entity.spawn.EntityMobMessage;
+
+public class CreatureProtocol extends BasicEntityProtocol {
+	public CreatureProtocol(int id) {
+		super(id);
+	}
+
 	@Override
-	public void onAttached() {
-		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(53));
+	public List<Message> getSpawnMessages(Entity entity) {
+		int entityId = entity.getId();
+		Vector3 position = entity.getTransform().getPosition().multiply(32).floor();
+		int yaw = (int) (entity.getTransform().getYaw() * 32);
+		int pitch = (int) (entity.getTransform().getPitch() * 32);
+		List<Parameter<?>> parameters = this.getSpawnParameters(entity);
+		//TODO Headyaw
+		return Arrays.<Message>asList(new EntityMobMessage(entityId, this.typeId, position, yaw, pitch, 0, (short) 0, (short) 0, (short) 0, parameters));
 	}
 }

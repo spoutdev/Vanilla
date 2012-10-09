@@ -32,9 +32,9 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.living.passive.Ocelot;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.protocol.entity.CreatureProtocol;
 
-public class OcelotEntityProtocol extends BasicMobEntityProtocol {
+public class OcelotEntityProtocol extends CreatureProtocol {
 	public OcelotEntityProtocol() {
 		super(98);
 	}

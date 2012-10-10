@@ -24,27 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.plant;
+package org.spout.vanilla.material.block.solid;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.material.block.Solid;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Plant;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
+public class Wall extends Solid {
+	public static final Wall COBBLESTONE_WALL = new Wall("Cobblestone Wall");
+	public static final Wall MOSSY_COBBLESTONE_WALL = new Wall("Mossy Cobblestone Wall", 1, COBBLESTONE_WALL);
 
-public class Flower extends GroundAttachable implements Plant {
-	public Flower(String name, int id) {
-		super(name, id, (String)null);
-		this.setLiquidObstacle(false);
-		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
+	private Wall(String name) {
+		super((short) 0x0002, name, 139);
+		this.setHardness(1.5F).setResistance(10.0F);
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
-	@Override
-	public boolean canAttachTo(Block block, BlockFace face) {
-		if (super.canAttachTo(block, face)) {
-			return block.isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FARMLAND, VanillaMaterials.FLOWER_POT_BLOCK);
-		}
-		return false;
+	private Wall(String name, int data, Wall parent) {
+		super(name, 139, data, parent);
+		this.setHardness(1.5F).setResistance(10.0F);
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 }

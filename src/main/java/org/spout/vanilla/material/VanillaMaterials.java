@@ -67,6 +67,7 @@ import org.spout.vanilla.material.block.misc.EndPortalFrame;
 import org.spout.vanilla.material.block.misc.FarmLand;
 import org.spout.vanilla.material.block.misc.FenceGate;
 import org.spout.vanilla.material.block.misc.Fire;
+import org.spout.vanilla.material.block.misc.FlowerPotBlock;
 import org.spout.vanilla.material.block.misc.GlassPane;
 import org.spout.vanilla.material.block.misc.Ladder;
 import org.spout.vanilla.material.block.misc.Lever;
@@ -97,6 +98,7 @@ import org.spout.vanilla.material.block.ore.RedstoneOre;
 import org.spout.vanilla.material.block.piston.PistonBlock;
 import org.spout.vanilla.material.block.piston.PistonExtension;
 import org.spout.vanilla.material.block.plant.Cactus;
+import org.spout.vanilla.material.block.plant.Carrots;
 import org.spout.vanilla.material.block.plant.CocoaPlant;
 import org.spout.vanilla.material.block.plant.DeadBush;
 import org.spout.vanilla.material.block.plant.Flower;
@@ -104,6 +106,7 @@ import org.spout.vanilla.material.block.plant.LilyPad;
 import org.spout.vanilla.material.block.plant.MelonStem;
 import org.spout.vanilla.material.block.plant.Mushroom;
 import org.spout.vanilla.material.block.plant.NetherWartBlock;
+import org.spout.vanilla.material.block.plant.Potatoes;
 import org.spout.vanilla.material.block.plant.PumpkinStem;
 import org.spout.vanilla.material.block.plant.Sapling;
 import org.spout.vanilla.material.block.plant.SugarCaneBlock;
@@ -154,6 +157,7 @@ import org.spout.vanilla.material.block.solid.SoulSand;
 import org.spout.vanilla.material.block.solid.Sponge;
 import org.spout.vanilla.material.block.solid.Stone;
 import org.spout.vanilla.material.block.solid.StoneBrick;
+import org.spout.vanilla.material.block.solid.Wall;
 import org.spout.vanilla.material.block.solid.Wool;
 import org.spout.vanilla.material.block.stair.BrickStairs;
 import org.spout.vanilla.material.block.stair.CobblestoneStairs;
@@ -363,8 +367,12 @@ public final class VanillaMaterials {
 	public static final CocoaPlant COCOA_PLANT = new CocoaPlant("Cocoa Plant", 127);
 	//public static final CommandBlock COMMAND_BLOCK = new CommandBlock("Command Block", 137);
 	//public static final BeaconBlock BEACON_BLOCK = new BeaconBlock("Beacon Block", 138);
-	//public static final CobblestoneWall COBBLESTONE_WALL = new CobblestoneWall("Cobblestone Wall", 139); //TODO: also determines mossy with data value.
+	public static final Wall COBBLESTONE_WALL = Wall.COBBLESTONE_WALL; //TODO: verify these work right, may need to work like fences.
+	public static final FlowerPotBlock FLOWER_POT_BLOCK = new FlowerPotBlock("Flower Pot", 140);
+	public static final Carrots CARROTS = new Carrots("Carrots", 141);
+	public static final Potatoes POTATOES = new Potatoes("Potatoes", 142);
 	public static final WoodButton WOOD_BUTTON = new WoodButton("Wood Button", 143);
+	//public static final Head SKULL = Head.SKULL; - 144
 	/*
 	 * Items
 	 */
@@ -482,6 +490,7 @@ public final class VanillaMaterials {
 	public static final Shears SHEARS = new Shears("Shears", 359, (short) 238);
 	public static final VanillaItemMaterial PUMPKIN_SEEDS = new VanillaItemMaterial("Pumpkin Seeds", 361);
 	public static final VanillaItemMaterial MELON_SEEDS = new VanillaItemMaterial("MelonBlock Seeds", 362);
+	public static final VanillaItemMaterial FLOWER_POT = new VanillaItemMaterial("Flower Pot", 390);
 	// == Food ==
 	//	public static final RawFish RAW_FISH = new RawFish("Raw Fish", 349, new FoodEffect(2, Hunger.class), new FoodEffect(1.2f, FoodSaturation.class));
 	//	public static final Food COOKED_FISH = new Food("Cooked Fish", 350, new FoodEffect(5, Hunger.class), new FoodEffect(6, FoodSaturation.class));

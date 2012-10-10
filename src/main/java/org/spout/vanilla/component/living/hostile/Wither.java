@@ -24,27 +24,20 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.plant;
+package org.spout.vanilla.component.living.hostile;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.living.Hostile;
+import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.protocol.entity.living.WitherEntityProtocol;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Plant;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
-
-public class Flower extends GroundAttachable implements Plant {
-	public Flower(String name, int id) {
-		super(name, id, (String)null);
-		this.setLiquidObstacle(false);
-		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
-	}
-
+/**
+ * A component that identifies the entity as a Wither.
+ */
+public class Wither extends VanillaEntity implements Hostile {
 	@Override
-	public boolean canAttachTo(Block block, BlockFace face) {
-		if (super.canAttachTo(block, face)) {
-			return block.isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FARMLAND, VanillaMaterials.FLOWER_POT_BLOCK);
-		}
-		return false;
+	public void onAttached() {
+		super.onAttached();
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new WitherEntityProtocol());
 	}
 }

@@ -24,27 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.plant;
+package org.spout.vanilla.protocol.entity.living;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockFace;
+import java.util.List;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Plant;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.api.entity.Entity;
+import org.spout.api.util.Parameter;
 
-public class Flower extends GroundAttachable implements Plant {
-	public Flower(String name, int id) {
-		super(name, id, (String)null);
-		this.setLiquidObstacle(false);
-		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
+import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.data.EntityProtocolID;
+import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+
+public class WitherEntityProtocol extends BasicMobEntityProtocol {
+	public final static int HEALTH_INDEX = 16; // The MC metadata index to determine the Wither's health
+	
+	public WitherEntityProtocol() {
+		super(EntityProtocolID.WITHER.getId());
 	}
 
 	@Override
-	public boolean canAttachTo(Block block, BlockFace face) {
-		if (super.canAttachTo(block, face)) {
-			return block.isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FARMLAND, VanillaMaterials.FLOWER_POT_BLOCK);
-		}
-		return false;
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, HEALTH_INDEX, entity.add(HealthComponent.class).getHealth()));
+		return parameters;
 	}
 }

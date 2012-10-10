@@ -52,8 +52,8 @@ import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.util.VanillaBlockUtil;
 
-public class WheatCrop extends GroundAttachable implements Growing, Crop, DynamicMaterial, InitializableMaterial {
-	public WheatCrop(String name, int id) {
+public class Carrots extends GroundAttachable implements Growing, Crop, DynamicMaterial, InitializableMaterial {
+	public Carrots(String name, int id) {
 		super(name, id);
 		this.setResistance(0.0F).setHardness(0.0F).setTransparent();
 	}
@@ -61,17 +61,12 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 	@Override
 	public void initialize() {
 		getDrops().DEFAULT.clear();
-		getDrops().DEFAULT.add(VanillaMaterials.WHEAT, 1, 4).addFlags(BlockFlags.FULLY_GROWN);
-		getDrops().DEFAULT.add(VanillaMaterials.SEEDS, 0, 3).addFlags(BlockFlags.SEEDS);
+		getDrops().DEFAULT.add(VanillaMaterials.CARROT, 1, 4).addFlags(BlockFlags.FULLY_GROWN);
 	}
 
 	@Override
 	public void getBlockFlags(Block block, Set<Flag> flags) {
 		super.getBlockFlags(block, flags);
-		Random rand = new Random();
-		if (rand.nextInt(15) <= getGrowthStage(block)) {
-			flags.add(BlockFlags.SEEDS);
-		}
 		if (this.isFullyGrown(block)) {
 			flags.add(BlockFlags.FULLY_GROWN);
 		}
@@ -79,7 +74,7 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 
 	@Override
 	public int getGrowthStageCount() {
-		return 8;
+		return 4;
 	}
 
 	@Override
@@ -89,17 +84,17 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 
 	@Override
 	public int getGrowthStage(Block block) {
-		return block.getDataField(0x7);
+		return block.getDataField(0x3);
 	}
 
 	@Override
 	public void setGrowthStage(Block block, int stage) {
-		block.setData(stage & 0x7);
+		block.setData(stage & 0x3);
 	}
 
 	@Override
 	public boolean isFullyGrown(Block block) {
-		return block.getData() == 0x7;
+		return block.getData() == 0x3;
 	}
 
 	@Override
@@ -113,11 +108,11 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 		PlayerQuickbar inv = entity.get(Human.class).getInventory().getQuickbar();
 		ItemStack current = inv.getCurrentItem();
 		if (current != null && current.isMaterial(Dye.BONE_MEAL)) {
-			if (this.getGrowthStage(block) != 0x7) {
+			if (this.getGrowthStage(block) != 0x3) {
 				if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 					inv.addAmount(0, -1);
 				}
-				this.setGrowthStage(block, 0x7);
+				this.setGrowthStage(block, 0x3);
 			}
 		}
 	}
@@ -125,19 +120,19 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 	// TODO: Trampling
 
 	@Override
-	public EffectRange getDynamicRange() {
+	public EffectRange getDynamicRange(){
 		return EffectRange.THIS_AND_ABOVE;
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime) {
+	public void onPlacement(Block b, Region r, long currentTime){
 		//TODO : delay before update
 		b.dynamicUpdate(currentTime + 30000);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
-		if (!this.isFullyGrown(block)) {
+	public void onDynamicUpdate(Block block, Region region, long updateTime, int data){
+		if (!this.isFullyGrown(block)){
 			if (block.translate(BlockFace.TOP).getLight() >= this.getMinimumLightToGrow()) {
 				// Grow using a calculated chance of growing
 				Random rand = new Random(block.getWorld().getAge());
@@ -150,4 +145,5 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 			block.dynamicUpdate(updateTime + 30000);
 		}
 	}
+
 }

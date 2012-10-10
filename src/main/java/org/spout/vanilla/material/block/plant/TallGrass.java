@@ -79,7 +79,7 @@ public class TallGrass extends DeadBush implements Burnable, InitializableMateri
 	@Override
 	public boolean canAttachTo(Block block, BlockFace face) {
 		if (face == BlockFace.TOP) {
-			return block.isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT);
+			return block.isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FLOWER_POT_BLOCK);
 		}
 		return false;
 	}

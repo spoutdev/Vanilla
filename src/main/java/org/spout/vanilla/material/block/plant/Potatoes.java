@@ -27,22 +27,24 @@
 package org.spout.vanilla.material.block.plant;
 
 import java.util.Random;
+import java.util.Set;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
+import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.drops.flag.BlockFlags;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Crop;
 import org.spout.vanilla.material.block.Growing;
@@ -50,18 +52,30 @@ import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.util.VanillaBlockUtil;
 
-public abstract class Stem extends GroundAttachable implements Growing, Crop, DynamicMaterial {
-	private BlockMaterial lastMaterial;
-
-	public Stem(String name, int id) {
+public class Potatoes extends GroundAttachable implements Growing, Crop, DynamicMaterial, InitializableMaterial {
+	public Potatoes(String name, int id) {
 		super(name, id);
-		this.setLiquidObstacle(false);
 		this.setResistance(0.0F).setHardness(0.0F).setTransparent();
 	}
 
 	@Override
+	public void initialize() {
+		getDrops().DEFAULT.clear();
+		getDrops().DEFAULT.add(VanillaMaterials.POTATO, 1, 4).addFlags(BlockFlags.FULLY_GROWN);
+		getDrops().DEFAULT.add(VanillaMaterials.POISONOUS_POTATO).addFlags(BlockFlags.FULLY_GROWN).setChance(0.02);
+	}
+
+	@Override
+	public void getBlockFlags(Block block, Set<Flag> flags) {
+		super.getBlockFlags(block, flags);
+		if (this.isFullyGrown(block)) {
+			flags.add(BlockFlags.FULLY_GROWN);
+		}
+	}
+
+	@Override
 	public int getGrowthStageCount() {
-		return 8;
+		return 4;
 	}
 
 	@Override
@@ -71,33 +85,17 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 
 	@Override
 	public int getGrowthStage(Block block) {
-		return block.getDataField(0x7);
+		return block.getDataField(0x3);
 	}
 
 	@Override
 	public void setGrowthStage(Block block, int stage) {
-		block.setData(stage & 0x7);
+		block.setData(stage & 0x3);
 	}
 
 	@Override
 	public boolean isFullyGrown(Block block) {
-		return block.getData() == 0x7;
-	}
-
-	/**
-	 * Sets the material placed after this Stem is fully grown
-	 * @param material of the last stage
-	 */
-	public void setLastStageMaterial(BlockMaterial material) {
-		this.lastMaterial = material;
-	}
-
-	/**
-	 * Gets the material placed after this Stem is fully grown
-	 * @return material of the last stage
-	 */
-	public BlockMaterial getLastStageMaterial() {
-		return this.lastMaterial;
+		return block.getData() == 0x3;
 	}
 
 	@Override
@@ -106,58 +104,47 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 	}
 
 	@Override
-	public void onInteractBy(Entity entity, Block block, PlayerInteractEvent.Action type, BlockFace clickedFace) {
+	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
 		PlayerQuickbar inv = entity.get(Human.class).getInventory().getQuickbar();
 		ItemStack current = inv.getCurrentItem();
 		if (current != null && current.isMaterial(Dye.BONE_MEAL)) {
-			if (this.getGrowthStage(block) != 0x7) {
+			if (this.getGrowthStage(block) != 0x3) {
 				if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 					inv.addAmount(0, -1);
 				}
-				this.setGrowthStage(block, 0x7);
+				this.setGrowthStage(block, 0x3);
 			}
 		}
 	}
 
+	// TODO: Trampling
+
 	@Override
 	public EffectRange getDynamicRange(){
-		return EffectRange.THIS_AND_NEIGHBORS;
+		return EffectRange.THIS_AND_ABOVE;
 	}
 
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime){
-		//TODO : Delay before first grow
-		b.dynamicUpdate(10000 + currentTime);
+		//TODO : delay before update
+		b.dynamicUpdate(currentTime + 30000);
 	}
 
 	@Override
 	public void onDynamicUpdate(Block block, Region region, long updateTime, int data){
-		if (block.translate(BlockFace.TOP).getLight() < this.getMinimumLightToGrow()) {
-			block.dynamicUpdate(updateTime + 10000);
-			return;
-		}
-		int chance = VanillaBlockUtil.getCropGrowthChance(block) + 1;
-		Random rand = new Random(block.getWorld().getAge());
-		if (rand.nextInt(chance) == 0) {
-			if (isFullyGrown(block)) {
-				for (BlockFace face : BlockFaces.NESW) {
-					if (block.translate(face).isMaterial(this.getLastStageMaterial())) {
-						return;
-					}
+		if (!this.isFullyGrown(block)){
+			if (block.translate(BlockFace.TOP).getLight() >= this.getMinimumLightToGrow()) {
+				// Grow using a calculated chance of growing
+				Random rand = new Random(block.getWorld().getAge());
+				int chance = VanillaBlockUtil.getCropGrowthChance(block);
+				if (rand.nextInt(chance + 1) == 0) {
+					this.setGrowthStage(block, this.getGrowthStage(block));
 				}
-				Block spread = block.translate(BlockFaces.NESW.get(rand.nextInt(4)));
-				if (spread.isMaterial(VanillaMaterials.AIR)) {
-					BlockMaterial belowSpread = spread.translate(BlockFace.BOTTOM).getMaterial();
-					if (belowSpread.isMaterial(VanillaMaterials.FARMLAND, VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
-						spread.setMaterial(this.getLastStageMaterial());
-					}
-				}
-			} else {
-				block.addData(1);
 			}
+			//TODO : delay before update
+			block.dynamicUpdate(updateTime + 30000);
 		}
-
-		block.dynamicUpdate(updateTime + 10000);
 	}
+
 }

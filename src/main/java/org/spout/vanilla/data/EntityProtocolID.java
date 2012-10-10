@@ -24,28 +24,45 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.data;
 
-import java.util.List;
-
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
-
-import org.spout.vanilla.component.living.hostile.MagmaCube;
-import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
-
-public class MagmaCubeEntityProtocol extends BasicMobEntityProtocol {
-	public final static int SIZE_INDEX = 16; // The MC metadata index determinig the size of the magma cube
+public enum EntityProtocolID {
+	BAT(65),
+	BLAZE(61),
+	CAVESPIDER(59),
+	CHICKEN(93),
+	COW(92),
+	CREEPER(50),
+	ENDERDRAGON(63),
+	ENDERMAN(58),
+	GHAST(56),
+	GIANT(53),
+	IRONGOLEM(99),
+	MAGMACUBE(62),
+	MUSHROOMCOW(96),
+	OCELOT(98),
+	PIG(90),
+	PIGZOMBIE(57),
+	SHEEP(91),
+	SILVERFISH(60),
+	SKELETON(51),
+	SLIME(55),
+	SNOWGOLEM(97),
+	SPIDER(52),
+	SQUID(94),
+	VILLAGER(120),
+	WITCH(66),
+	WITHER(64),
+	WOLF(95),
+	ZOMBIE(54);
 	
-	public MagmaCubeEntityProtocol() {
-		super(EntityProtocolID.MAGMACUBE.getId());
+	private int id;
+	
+	EntityProtocolID(int id) {
+		this.id = id;
 	}
-
-	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SIZE_INDEX, entity.add(MagmaCube.class).getSize()));
-		return parameters;
+	
+	public int getId() {
+		return id;
 	}
 }

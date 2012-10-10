@@ -31,21 +31,22 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.living.hostile.MagmaCube;
+import org.spout.vanilla.component.living.hostile.WitherSkeleton;
 import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
-public class MagmaCubeEntityProtocol extends BasicMobEntityProtocol {
-	public final static int SIZE_INDEX = 16; // The MC metadata index determinig the size of the magma cube
-	
-	public MagmaCubeEntityProtocol() {
-		super(EntityProtocolID.MAGMACUBE.getId());
+public class SkeletonEntityProtocol extends BasicMobEntityProtocol {
+	public final static int TYPE_INDEX = 13; // The MC metadata index for determining the type of the skeleton
+
+	public SkeletonEntityProtocol(int data) {
+		super(EntityProtocolID.ENDERDRAGON.getId());
 	}
 
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SIZE_INDEX, entity.add(MagmaCube.class).getSize()));
+		int data = entity.has(WitherSkeleton.class) ? 1 : 0;
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, TYPE_INDEX, data));
 		return parameters;
 	}
 }

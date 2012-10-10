@@ -32,17 +32,20 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.living.hostile.Blaze;
+import org.spout.vanilla.data.EntityProtocolID;
 import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
 
 public class BlazeEntityProtocol extends BasicMobEntityProtocol {
+	public final static int ATTACK_INDEX = 16; // The MC metadata index to determine if the blaze is attacking
+
 	public BlazeEntityProtocol() {
-		super(61);
+		super(EntityProtocolID.BLAZE.getId());
 	}
 
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (entity.add(Blaze.class).isAttacking() ? 1 : 0)));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, ATTACK_INDEX, (byte) (entity.add(Blaze.class).isAttacking() ? 1 : 0)));
 		return parameters;
 	}
 }

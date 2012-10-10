@@ -29,7 +29,8 @@ package org.spout.vanilla.component.living.hostile;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;
 import org.spout.vanilla.component.living.VanillaEntity;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.data.EntityProtocolID;
+import org.spout.vanilla.protocol.entity.living.SkeletonEntityProtocol;
 
 /**
  * A component that identifies the entity as a Skeleton.
@@ -38,6 +39,6 @@ public class Skeleton extends VanillaEntity implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BasicMobEntityProtocol(51));
+		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SkeletonEntityProtocol(EntityProtocolID.SKELETON.getId()));
 	}
 }

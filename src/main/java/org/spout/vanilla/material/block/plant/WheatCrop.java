@@ -37,7 +37,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
-import org.spout.api.math.IntVector3;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.component.living.Human;
@@ -62,8 +61,8 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 	@Override
 	public void initialize() {
 		getDrops().DEFAULT.clear();
-		getDrops().DEFAULT.add(VanillaMaterials.WHEAT).addFlags(BlockFlags.FULLY_GROWN);
-		getDrops().DEFAULT.add(VanillaMaterials.SEEDS).addFlags(BlockFlags.SEEDS);
+		getDrops().DEFAULT.add(VanillaMaterials.WHEAT, 1, 4).addFlags(BlockFlags.FULLY_GROWN);
+		getDrops().DEFAULT.add(VanillaMaterials.SEEDS, 0, 3).addFlags(BlockFlags.SEEDS);
 	}
 
 	@Override

@@ -31,10 +31,8 @@ import java.util.Set;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
-import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.util.flag.Flag;
 
@@ -43,7 +41,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.util.VanillaBlockUtil;
 import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 
 public class NetherWartBlock extends GroundAttachable implements Plant, Growing, DynamicMaterial {

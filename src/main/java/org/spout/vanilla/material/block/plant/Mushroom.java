@@ -101,7 +101,7 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 	public boolean isValidPosition(Block block, BlockFace attachedFace, boolean seekAlternative) {
 		if (super.isValidPosition(block, attachedFace, seekAlternative)) {
 			final Block under = block.translate(BlockFace.BOTTOM);
-			return under.isMaterial(VanillaMaterials.MYCELIUM) || block.getLight() <= 12 && under.getMaterial().isOpaque();
+			return under.isMaterial(VanillaMaterials.MYCELIUM, VanillaMaterials.FLOWER_POT_BLOCK) || block.getLight() <= 12 && under.getMaterial().isOpaque();
 		}
 		return false;
 	}

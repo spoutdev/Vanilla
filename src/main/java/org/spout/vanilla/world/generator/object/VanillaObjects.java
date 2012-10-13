@@ -58,6 +58,7 @@ import org.spout.vanilla.world.generator.normal.object.tree.SpruceTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.SwampTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject.TreeType;
 import org.spout.vanilla.world.generator.structure.mineshaft.Mineshaft;
+import org.spout.vanilla.world.generator.structure.temple.Temple;
 import org.spout.vanilla.world.generator.theend.object.SpireObject;
 
 /**
@@ -98,7 +99,7 @@ public class VanillaObjects {
 	public static final SnowObject FALLING_SNOW = new SnowObject();
 	public static final GlowstonePatchObject GLOWSTONE_PATCH = new GlowstonePatchObject();
 	public static final Mineshaft MINESHAFT = new Mineshaft();
-	// for the '/obj' test command
+	public static final Temple TEMPLE = new Temple();
 	private static final Map<String, WorldGeneratorObject> BY_NAME = new HashMap<String, WorldGeneratorObject>();
 
 	static {
@@ -111,7 +112,6 @@ public class VanillaObjects {
 		CLAY_PATCH.setHeightRadius((byte) 1);
 		CLAY_PATCH.getOverridableMaterials().clear();
 		CLAY_PATCH.getOverridableMaterials().add(VanillaMaterials.DIRT);
-		// for the '/obj' test command
 		for (Field objectField : VanillaObjects.class.getDeclaredFields()) {
 			objectField.setAccessible(true);
 			try {
@@ -120,7 +120,8 @@ public class VanillaObjects {
 					BY_NAME.put(objectField.getName().toLowerCase(), (WorldGeneratorObject) object);
 				}
 			} catch (Exception ex) {
-				System.out.println("Could not properly reflect VanillaObjects! Unexpected behaviour may occur, please report to http://issues.spout.org!");
+				System.out.println("Could not properly reflect VanillaObjects! Unexpected behaviour may occur, "
+						+ "please report to http://issues.spout.org!");
 				ex.printStackTrace();
 			}
 		}

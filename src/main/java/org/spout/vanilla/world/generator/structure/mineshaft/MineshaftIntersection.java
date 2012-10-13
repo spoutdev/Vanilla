@@ -61,36 +61,37 @@ public class MineshaftIntersection extends StructureComponent {
 		// building objects
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
 		final SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
+		box.setPicker(picker);
 		// hollow out some space
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
 		if (height > 2) {
 			// for the extra floor
 			box.setMinMax(0, 0, 0, 2, 2, 4);
-			box.fill(picker, false);
+			box.fill(false);
 			box.offsetMinMax(-1, 0, 1, 1, 0, -1);
-			box.fill(picker, false);
+			box.fill(false);
 			box.setMinMax(0, height - 2, 0, 2, height, 4);
-			box.fill(picker, false);
+			box.fill(false);
 			box.offsetMinMax(-1, 0, 1, 1, 0, -1);
-			box.fill(picker, false);
+			box.fill(false);
 			box.setMinMax(0, 3, 1, 2, 3, 3);
-			box.fill(picker, false);
+			box.fill(false);
 		} else {
 			box.setMinMax(0, 0, 0, 2, height, 4);
-			box.fill(picker, false);
+			box.fill(false);
 			box.offsetMinMax(-1, 0, 1, 1, 0, -1);
-			box.fill(picker, false);
+			box.fill(false);
 		}
 		// wooden pillars
 		picker.setOuterMaterial(VanillaMaterials.PLANK);
 		box.setMinMax(0, 0, 1, 0, height, 1);
-		box.fill(picker, false);
+		box.fill(false);
 		box.setMinMax(0, 0, 3, 0, height, 3);
-		box.fill(picker, false);
+		box.fill(false);
 		box.setMinMax(2, 0, 1, 2, height, 1);
-		box.fill(picker, false);
+		box.fill(false);
 		box.setMinMax(2, 0, 3, 2, height, 3);
-		box.fill(picker, false);
+		box.fill(false);
 		// bridge gaps
 		for (int xx = -1; xx <= 3; xx++) {
 			for (int zz = 0; zz <= 4; zz++) {

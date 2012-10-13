@@ -55,16 +55,17 @@ public class MineshaftStaircase extends StructureComponent {
 		// building objects
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
 		final SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
+		box.setPicker(picker);
 		// case
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
 		box.setMinMax(0, 5, 0, 2, 7, 1);
-		box.fill(picker, false);
+		box.fill(false);
 		box.setMinMax(0, 0, 7, 2, 2, 8);
-		box.fill(picker, false);
+		box.fill(false);
 		// steps
 		for (byte steps = 0; steps < 5; steps++) {
 			box.setMinMax(0, 5 - steps - (steps >= 4 ? 0 : 1), 2 + steps, 2, 7 - steps, 2 + steps);
-			box.fill(picker, false);
+			box.fill(false);
 		}
 	}
 

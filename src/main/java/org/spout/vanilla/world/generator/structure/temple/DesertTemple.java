@@ -29,45 +29,38 @@ package org.spout.vanilla.world.generator.structure.temple;
 import java.util.Collections;
 import java.util.List;
 
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.block.BlockFaces;
-import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Sandstone;
 import org.spout.vanilla.material.block.solid.Wool;
 import org.spout.vanilla.world.generator.normal.object.LootChestObject;
-import org.spout.vanilla.world.generator.structure.ComplexLayoutPainter;
 import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.world.generator.structure.BlockMaterialLayout;
 import org.spout.vanilla.world.generator.structure.ComponentPlanePart;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructureComponent;
 
 public class DesertTemple extends StructureComponent {
-	private BlockMaterial CENTER_MATERIAL = Wool.BLUE_WOOL;
-	private BlockMaterial ACCENT_MATERIAL = Wool.ORANGE_WOOL;
-	private BlockMaterial PRIMARY_BLOCK = VanillaMaterials.SANDSTONE;
-	private BlockMaterial SMOOTH_BLOCK = Sandstone.SMOOTH;
-	private BlockMaterial GLYPH_BLOCK = Sandstone.DECORATIVE;
-	private LootChestObject lootChest = new LootChestObject();
-	private ComplexLayoutPainter centerCross = new ComplexLayoutPainter(this);
-	private ComplexLayoutPainter glyph = new ComplexLayoutPainter(this);
+	private static final LootChestObject LOOT_CHEST = new LootChestObject();
+	private static final BlockMaterialLayout CENTER_CROSS;
+	private static final BlockMaterialLayout GLYPH;
+
+	static {
+		LOOT_CHEST.addMaterial(VanillaMaterials.IRON_BARS, 0.1, 1, 3); //TODO Investigate how the materials are distributed
+		CENTER_CROSS = new BlockMaterialLayout("000o000\n000o000\n00o0o00\noo0b0oo\n00o0o00\n000o000\n000o000");
+		CENTER_CROSS.setBlockMaterial('0', VanillaMaterials.SANDSTONE);
+		CENTER_CROSS.setBlockMaterial('o', Wool.ORANGE_WOOL);
+		CENTER_CROSS.setBlockMaterial('b', Wool.BLUE_WOOL);
+		GLYPH = new BlockMaterialLayout("---\nooo\no=o\n-o-\no=o\n-o-\n-o-");
+		GLYPH.setBlockMaterial('-', Sandstone.SMOOTH);
+		GLYPH.setBlockMaterial('o', Wool.ORANGE_WOOL);
+		GLYPH.setBlockMaterial('=', Sandstone.DECORATIVE);
+	}
 
 	public DesertTemple(Structure parent) {
 		super(parent);
-		lootChest.addMaterial(VanillaMaterials.IRON_BARS, 0.1, 1, 3); //TODO Investigate how the materials are distributed
-		centerCross.setBlockMaterial('0', PRIMARY_BLOCK);
-		centerCross.setBlockMaterial('o', ACCENT_MATERIAL);
-		centerCross.setBlockMaterial('b', CENTER_MATERIAL);
-		centerCross.setLayout("000o000\n000o000\n00o0o00\noo0b0oo\n00o0o00\n000o000\n000o000");
-
-		glyph.setBlockMaterial('-', SMOOTH_BLOCK);
-		glyph.setBlockMaterial('o', ACCENT_MATERIAL);
-		glyph.setBlockMaterial('=', GLYPH_BLOCK);
-		glyph.setLayout("---\nooo\no=o\n-o-\no=o\n-o-\n-o-");
 	}
 
 	@Override
@@ -76,141 +69,51 @@ public class DesertTemple extends StructureComponent {
 
 	@Override
 	public void place() {
-		ComponentCuboidPart cuboid = new ComponentCuboidPart(this);
-		ComponentPlanePart plane = new ComponentPlanePart(this);
-		SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
-		final Vector3[] diagonalOffsets = {
-				new Vector3(-1, 0, -1),
-				new Vector3(1, 0, -1),
-				new Vector3(-1, 0, 1),
-				new Vector3(1, 0, 1),
-		};
-
-		//		int x = 0, y = 0, z = 0;
-
-		// Place the ground
-		picker.setOuterInnerMaterials(PRIMARY_BLOCK, PRIMARY_BLOCK);
-		cuboid.setMinMax(-10, -4, -10, 10, 0, 10);
-		cuboid.fill(picker, false);
-
-		// Build the pyramid
-		for (int i = 1; i <= 10; i++) {
-			plane.setMinMax(-i, 11 - i, -i, i, 11 - i, i);
-			picker.setOuterInnerMaterials(PRIMARY_BLOCK, VanillaMaterials.AIR);
-			if (i == 7) {
-				picker.setInnerMaterial(PRIMARY_BLOCK);
-			}
-			plane.fill(picker, false);
-			if (i == 7) {
-				plane.setMinMax(-1, 11 - i, -1, 1, 11 - i, 1);
-				picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
-				plane.fill(picker, false);
+		// building objects
+		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final ComponentPlanePart plane = new ComponentPlanePart(this);
+		final SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
+		box.setPicker(picker);
+		plane.setPicker(picker);
+		// size x, y, z = 21, 15, 21
+		// foundations
+		picker.setOuterInnerMaterials(VanillaMaterials.SANDSTONE, VanillaMaterials.SANDSTONE);
+		box.setMinMax(0, -4, 0, 20, 0, 20);
+		box.fill(false);
+		// pyramid
+		picker.setOuterInnerMaterials(VanillaMaterials.SANDSTONE, VanillaMaterials.AIR);
+		for (byte yy = 1; yy < 10; yy++) {
+			plane.setMinMax(yy, yy, yy, 20 - yy, yy, 20 - yy);
+			plane.fill(false);
+		}
+		// fill the land under
+		for (byte xx = 0; xx < 21; xx++) {
+			for (byte zz = 0; zz < 21; zz++) {
+				fillDownwards(xx, -5, zz, VanillaMaterials.SANDSTONE);
 			}
 		}
-
-		// Decorate the interior
-		//		setBlockMaterial(0, 0, 0, CENTER_MATERIAL);
-		for (Vector3 offset : diagonalOffsets) {
-			int x = (int) offset.getX();
-			int z = (int) offset.getZ();
-			//			setBlockMaterial(x, 0, z, ACCENT_MATERIAL);
-
-			// Set the piles
-			for (int yy = 1; yy <= 3; yy++) {
-				setBlockMaterial(x * 2, yy, z * 2, SMOOTH_BLOCK);
-			}
-		}
-
-		offsetPosition(-3, 0, -3);
-		centerCross.draw();
-		offsetPosition(3, 0, 3);
-
-		//		for (BlockFace face:BlockFaces.NESW) {
-		//			Vector3 offset = face.getOffset();
-		//			int x = (int) offset.getX();
-		//			int z = (int) offset.getZ();
-		//			setBlockMaterial(x * 2, 0, z * 2, ACCENT_MATERIAL);
-		//			setBlockMaterial(x * 3, 0, z * 3, ACCENT_MATERIAL);
-		//		}
-
-		// Dig the pitfall
-		for (int yy = -1; yy >= -14; yy--) {
-			BlockMaterial current = null;
-			if (yy >= -8) {
-				current = PRIMARY_BLOCK;
-			} else if (yy == -10) {
-				current = GLYPH_BLOCK;
-			} else {
-				current = SMOOTH_BLOCK;
-			}
-
-			plane.setMinMax(-2, yy, -2, 2, yy, 2);
-			picker.setOuterInnerMaterials(current, yy != -14 && yy != -12 ? VanillaMaterials.AIR : SMOOTH_BLOCK);
-			if (yy == -13) {
-				picker.setInnerMaterial(VanillaMaterials.TNT);
-			}
-			plane.fill(picker, false);
-
-			// Make room for the loot chests
-			if (yy == -10 || yy == -11) {
-				setBlockMaterial(2, yy, 0, VanillaMaterials.AIR);
-				setBlockMaterial(-2, yy, 0, VanillaMaterials.AIR);
-				setBlockMaterial(0, yy, -2, VanillaMaterials.AIR);
-				setBlockMaterial(0, yy, 2, VanillaMaterials.AIR);
-
-				setBlockMaterial(-3, yy, 0, current);
-				setBlockMaterial(3, yy, 0, current);
-				setBlockMaterial(0, yy, -3, current);
-				setBlockMaterial(0, yy, 3, current);
-			}
-		}
-
-		setBlockMaterial(0, -11, 0, VanillaMaterials.STONE_PRESSURE_PLATE); // Install the trigger
-
-		// Hide the loot
-		placeObject(2, -11, 0, lootChest);
-		placeObject(-2, -11, 0, lootChest);
-		placeObject(0, -11, 2, lootChest);
-		placeObject(0, -11, -2, lootChest);
-
-		// Build the towers
-		placeTower(-8, 1, -8);
-		placeTower(-8, 1, 8);
-
-		Quaternion backup = getRotation();
-		Quaternion q = new Quaternion(90, new Vector3(0, 1, 0));
-		//		q = q.rotate(90, 0, 0, 1);
-		setRotation(q);
-		offsetPosition(-10, 1, -10);
-		setRotationPoint(new Vector3(0, 0, 0));
-		glyph.draw();
-	}
-
-	private void placeTower(int x, int y, int z) {
-		offsetPosition(x, y, z);
-		ComponentPlanePart plane = new ComponentPlanePart(this);
-		SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
-		picker.setInnerMaterial(VanillaMaterials.AIR);
-		picker.setOuterMaterial(PRIMARY_BLOCK);
-		plane.setMinMax(-2, 0, -2, 2, 0, 2);
-		int width = 5, height = 9;
-		for (int yy = 0; yy < height; yy++) {
-			offsetPosition(0, 1, 0);
-			plane.fill(picker, false);
-		}
-
-		picker.setInnerMaterial(PRIMARY_BLOCK);
-		plane.setMinMax(-1, 1, -1, 1, 1, 1);
-		plane.fill(picker, false);
-
-		for (BlockFace face : BlockFaces.NESW) {
-			int xx = face.getOffset().getFloorX();
-			int yy = face.getOffset().getFloorY();
-			int zz = face.getOffset().getFloorZ();
-			setBlockMaterial(xx * 2, 0, zz * 2, VanillaMaterials.STAIRS_SANDSTONE);
-		}
-
-		offsetPosition(-x, -y - height, -z);
+		// first tower body
+		picker.setOuterInnerMaterials(VanillaMaterials.SANDSTONE, VanillaMaterials.AIR);
+		box.setMinMax(0, 0, 0, 4, 9, 4);
+		box.fill(false);
+		picker.setInnerMaterial(VanillaMaterials.SANDSTONE);
+		box.setMinMax(1, 10, 1, 3, 10, 3);
+		box.fill(false);
+		setBlockMaterial(2, 10, 0, VanillaMaterials.STAIRS_SANDSTONE, (short) 2);
+		setBlockMaterial(2, 10, 4, VanillaMaterials.STAIRS_SANDSTONE, (short) 3);
+		setBlockMaterial(0, 10, 2, VanillaMaterials.STAIRS_SANDSTONE, (short) 0);
+		setBlockMaterial(4, 10, 2, VanillaMaterials.STAIRS_SANDSTONE, (short) 1);
+		// second tower body
+		picker.setOuterInnerMaterials(VanillaMaterials.SANDSTONE, VanillaMaterials.AIR);
+		box.setMinMax(16, 0, 0, 20, 9, 4);
+		box.fill(false);
+		picker.setInnerMaterial(VanillaMaterials.SANDSTONE);
+		box.setMinMax(17, 10, 1, 19, 10, 3);
+		box.fill(false);
+		setBlockMaterial(18, 10, 0, VanillaMaterials.STAIRS_SANDSTONE, (short) 2);
+		setBlockMaterial(18, 10, 4, VanillaMaterials.STAIRS_SANDSTONE, (short) 3);
+		setBlockMaterial(16, 10, 2, VanillaMaterials.STAIRS_SANDSTONE, (short) 0);
+		setBlockMaterial(20, 10, 2, VanillaMaterials.STAIRS_SANDSTONE, (short) 1);
 	}
 
 	@Override

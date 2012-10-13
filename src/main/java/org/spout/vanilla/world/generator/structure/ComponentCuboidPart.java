@@ -33,7 +33,8 @@ import org.spout.vanilla.material.block.Liquid;
 
 public class ComponentCuboidPart extends ComponentPart {
 	protected IntVector3 min = new IntVector3(0, 0, 0);
-	protected IntVector3 max = new IntVector3(1, 1, 1);
+	protected IntVector3 max = new IntVector3(0, 0, 0);
+	private BlockMaterialPicker picker = new SimpleBlockMaterialPicker();
 
 	public ComponentCuboidPart(StructureComponent parent) {
 		super(parent);
@@ -91,20 +92,23 @@ public class ComponentCuboidPart extends ComponentPart {
 		offsetMax(maxXOff, maxYOdd, maxZOff);
 	}
 
+	public void setPicker(BlockMaterialPicker picker) {
+		this.picker = picker;
+	}
+
 	protected boolean isOuter(int xx, int yy, int zz) {
 		return xx == min.getX() || yy == min.getY() || zz == min.getZ()
-				|| xx == max.getZ() || yy == max.getY() || zz == max.getZ();
+				|| xx == max.getX() || yy == max.getY() || zz == max.getZ();
 	}
 
 	@Override
-	public void fill(BlockMaterialPicker picker, boolean ignoreAir) {
+	public void fill(boolean ignoreAir) {
 		final int endX = max.getX();
 		final int endY = max.getY();
 		final int endZ = max.getZ();
 		for (int xx = min.getX(); xx <= endX; xx++) {
 			for (int yy = min.getY(); yy <= endY; yy++) {
 				for (int zz = min.getZ(); zz <= endZ; zz++) {
-
 					if (!ignoreAir || !parent.getBlockMaterial(xx, yy, zz).isMaterial(VanillaMaterials.AIR)) {
 						parent.setBlockMaterial(xx, yy, zz, picker.get(isOuter(xx, yy, zz)));
 					}
@@ -114,18 +118,16 @@ public class ComponentCuboidPart extends ComponentPart {
 	}
 
 	@Override
-	public void randomFill(float odd, BlockMaterialPicker picker, boolean ignoreAir) {
+	public void randomFill(float odd, boolean ignoreAir) {
 		final int endX = max.getX();
 		final int endY = max.getY();
 		final int endZ = max.getZ();
 		for (int xx = min.getX(); xx <= endX; xx++) {
 			for (int yy = min.getY(); yy <= endY; yy++) {
 				for (int zz = min.getZ(); zz <= endZ; zz++) {
-
 					if (parent.getRandom().nextFloat() > odd) {
 						continue;
 					}
-
 					if (!ignoreAir || !parent.getBlockMaterial(xx, yy, zz).isMaterial(VanillaMaterials.AIR)) {
 						parent.setBlockMaterial(xx, yy, zz, picker.get(isOuter(xx, yy, zz)));
 					}
@@ -135,7 +137,7 @@ public class ComponentCuboidPart extends ComponentPart {
 	}
 
 	@Override
-	public void sphericalFill(BlockMaterialPicker picker, boolean ignoreAir) {
+	public void sphericalFill(boolean ignoreAir) {
 		final float xScale = max.getX() - min.getX() + 1;
 		final float yScale = max.getY() - min.getY() + 1;
 		final float zScale = max.getZ() - min.getZ() + 1;
@@ -144,19 +146,16 @@ public class ComponentCuboidPart extends ComponentPart {
 		final int endX = max.getX();
 		final int endY = max.getY();
 		final int endZ = max.getZ();
-
 		for (int xx = min.getX(); xx <= endX; xx++) {
 			final float dx = (xx - xOffset) / (xScale * 0.5f);
 			for (int yy = min.getY(); yy <= endY; yy++) {
 				final float dy = (yy - min.getY()) / yScale;
 				for (int zz = min.getZ(); zz <= endZ; zz++) {
 					final float dz = (zz - zOffset) / (zScale * 0.5f);
-
-					if (ignoreAir && !parent.getBlockMaterial(xx, yy, zz).isMaterial(VanillaMaterials.AIR)) {
-						continue;
-					}
-
 					if (dx * dx + dy * dy + dz * dz <= 1.05) {
+						if (ignoreAir && !parent.getBlockMaterial(xx, yy, zz).isMaterial(VanillaMaterials.AIR)) {
+							continue;
+						}
 						parent.setBlockMaterial(xx, yy, zz, picker.get(false));
 					}
 				}

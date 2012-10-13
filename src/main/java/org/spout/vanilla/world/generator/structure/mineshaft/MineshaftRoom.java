@@ -62,16 +62,17 @@ public class MineshaftRoom extends StructureComponent {
 		// building objects
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
 		final SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
+		box.setPicker(picker);
 		// basic room
 		picker.setOuterInnerMaterials(VanillaMaterials.DIRT, VanillaMaterials.AIR);
 		box.setMinMax(0, 0, 0, lenght, height, depth);
-		box.fill(picker, true);
+		box.fill(true);
 		picker.setOuterMaterial(VanillaMaterials.AIR);
 		box.setMinMax(0, 1, 0, lenght, 3, depth);
-		box.fill(picker, false);
+		box.fill(false);
 		// some 'decoration'
 		box.setMinMax(0, 4, 0, lenght, height, depth);
-		box.sphericalFill(picker, false);
+		box.sphericalFill(false);
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public class Temple extends Structure {
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
-		DesertTemple desertTemple = new DesertTemple(this);
+		final DesertTemple desertTemple = new DesertTemple(this);
 		desertTemple.setPosition(new Point(w, x, y, z));
 		desertTemple.place();
 	}

@@ -33,11 +33,11 @@ public abstract class ComponentPart {
 		this.parent = parent;
 	}
 
-	public abstract void fill(BlockMaterialPicker picker, boolean ignoreAir);
+	public abstract void fill(boolean ignoreAir);
 
-	public abstract void randomFill(float odd, BlockMaterialPicker picker, boolean ignoreAir);
+	public abstract void randomFill(float odd, boolean ignoreAir);
 
-	public abstract void sphericalFill(BlockMaterialPicker picker, boolean ignoreAir);
+	public abstract void sphericalFill(boolean ignoreAir);
 
 	public StructureComponent getParent() {
 		return parent;

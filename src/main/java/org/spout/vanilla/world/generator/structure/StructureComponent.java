@@ -33,13 +33,12 @@ import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.material.block.Attachable;
-import org.spout.vanilla.material.block.Directional;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Liquid;
 
 public abstract class StructureComponent {
 	protected Structure parent;
@@ -78,26 +77,46 @@ public abstract class StructureComponent {
 	}
 
 	public void setBlockMaterial(int xx, int yy, int zz, BlockMaterial material) {
+		setBlockMaterial(xx, yy, zz, material, (short) 0);
+	}
+
+	public void setBlockMaterial(int xx, int yy, int zz, BlockMaterial material, short data) {
 		final Vector3 transformed = transform(xx, yy, zz);
 		position.getWorld().setBlockMaterial(transformed.getFloorX(), transformed.getFloorY(), transformed.getFloorZ(),
-				material, material.getData(), position.getWorld());
-		if (material instanceof Attachable) {
-			final Attachable attachable = (Attachable) material;
-			final Block block = position.getWorld().getBlock(transformed, position.getWorld());
-			final BlockFace face = attachable.findAttachedFace(block);
-			if (face != null) {
-				attachable.setAttachedFace(block, face);
-			}
-		} else if (material instanceof Directional) {
-			final BlockFace face = BlockFace.fromYaw(rotation.getYaw());
-			final Block block = position.getWorld().getBlock(transformed, position.getWorld());
-			((Directional) material).setFacing(block, face);
-		}
+				material, data, position.getWorld());
+//		if (material instanceof Attachable) {
+//			final Attachable attachable = (Attachable) material;
+//			final Block block = getBlock(xx, yy, zz);
+//			attachable.setAttachedFace(block,
+//					BlockFace.fromYaw(attachable.getAttachedFace(block).getDirection().getYaw() + rotation.getYaw()));
+//		} else if (material instanceof Directional) {
+//			final Directional directional = (Directional) material;
+//			final Block block = getBlock(xx, yy, zz);
+//			directional.setFacing(block,
+//					BlockFace.fromYaw(directional.getFacing(block).getDirection().getYaw() + rotation.getYaw()));
+//		}
 	}
 
 	public void randomSetBlockMaterial(float odd, int xx, int yy, int zz, BlockMaterial material) {
+		randomSetBlockMaterial(odd, xx, yy, zz, material, (short) 0);
+	}
+
+	public void randomSetBlockMaterial(float odd, int xx, int yy, int zz, BlockMaterial material, short data) {
 		if (getRandom().nextFloat() > odd) {
-			setBlockMaterial(xx, yy, zz, material);
+			setBlockMaterial(xx, yy, zz, material, data);
+		}
+	}
+
+	public void fillDownwards(int xx, int yy, int zz, BlockMaterial material) {
+		fillDownwards(xx, yy, zz, material, (short) 0);
+	}
+
+	public void fillDownwards(int xx, int yy, int zz, BlockMaterial material, short data) {
+		Block block;
+		while ((block = getBlock(xx, yy, zz)).getMaterial().isMaterial(VanillaMaterials.AIR)
+				|| block.getMaterial() instanceof Liquid) {
+			block.setMaterial(material, data);
+			yy--;
 		}
 	}
 

@@ -26,67 +26,65 @@
  */
 package org.spout.vanilla.world.generator.structure;
 
-import gnu.trove.map.hash.TShortObjectHashMap;
+import gnu.trove.map.hash.TCharObjectHashMap;
 
 import org.spout.api.material.BlockMaterial;
 
-/**
- * Draws a plane with the defined complex layout
- * @author tux
- */
-public class ComplexLayoutPainter {
-	StructureComponent parent;
-	private short layout[][] = null;
-	private TShortObjectHashMap<BlockMaterial> style = new TShortObjectHashMap<BlockMaterial>();
-
-	public ComplexLayoutPainter(StructureComponent parent) {
-		this.parent = parent;
-	}
-
-	public void setBlockMaterial(char key, BlockMaterial material) {
-		style.put((short) key, material);
-	}
+public class BlockMaterialLayout {
+	private final char layout[][];
+	private final TCharObjectHashMap<BlockMaterial> style = new TCharObjectHashMap<BlockMaterial>();
 
 	/**
-	 * <p>Sets the layout by using a string. The string has to be formatted in alphanumeric codes</p>
-	 * <p><strong>Example:</strong></p>
+	 * <p>Constructs the layout using a string. The string has to be formatted
+	 * in alphanumeric codes</p> <p><strong>Example:</strong></p>
 	 * <p><pre>setLayout("00000\n00100\n01110\n00100\n00000", Wool.WHITE, Wool.RED);</pre></p>
-	 * <p>This would draw a red cross wrapped in white wool</p>
-	 * <p>The key index begins at 0-9, then a-z</p>
+	 * <p>This would draw a red cross wrapped in white wool</p> <p>The key index
+	 * begins at 0-9, then a-z</p>
+	 *
 	 * @param layout
-	 * @param materials
 	 */
-	public void setLayout(String layout) {
-		String lines[] = layout.split("\n");
-		int rows = lines.length;
-		int cols = lines[0].length();
-
+	public BlockMaterialLayout(String layout) {
+		final String lines[] = layout.split("\n");
+		this.layout = new char[lines.length][];
 		int row = 0;
-		this.layout = new short[rows][cols];
 		for (String line : lines) {
+			this.layout[row] = new char[line.length()];
 			for (int col = 0; col < line.length(); col++) {
-				this.layout[row][col] = (short) line.charAt(col);
+				this.layout[row][col] = line.charAt(col);
 			}
 			row++;
 		}
 	}
 
 	/**
-	 * Draws the set layout
-	 * @param x origin coord
-	 * @param y origin coord
-	 * @param z origin coord
+	 * Construct a layout from a 2D character array. Each character can then be
+	 * mapped to a material, and represents a block.
+	 *
+	 * @param layout
 	 */
-	public void draw() {
-		for (int zz = 0; zz < layout.length; zz++) {
-			for (int xx = 0; xx < layout[0].length; xx++) {
-				BlockMaterial material = style.get(layout[zz][xx]);
-				getParent().setBlockMaterial(xx, 0, zz, material);
-			}
-		}
+	public BlockMaterialLayout(char[][] layout) {
+		this.layout = layout;
 	}
 
-	public StructureComponent getParent() {
-		return parent;
+	/**
+	 * Map a character to a block material.
+	 *
+	 * @param key
+	 * @param material
+	 */
+	public void setBlockMaterial(char key, BlockMaterial material) {
+		style.put(key, material);
+	}
+
+	public int getRowLenght() {
+		return layout.length;
+	}
+
+	public int getColumnLenght(int row) {
+		return layout[row].length;
+	}
+
+	public BlockMaterial getBlockMaterial(int row, int column) {
+		return style.get(layout[row][column]);
 	}
 }

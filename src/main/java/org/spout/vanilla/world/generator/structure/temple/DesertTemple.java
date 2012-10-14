@@ -32,6 +32,7 @@ import java.util.List;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.misc.Slab;
 import org.spout.vanilla.material.block.solid.Sandstone;
 import org.spout.vanilla.material.block.solid.Wool;
 import org.spout.vanilla.world.generator.normal.object.LootChestObject;
@@ -69,51 +70,144 @@ public class DesertTemple extends StructureComponent {
 
 	@Override
 	public void place() {
-		// building objects
+		// Building objects
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
 		final ComponentPlanePart plane = new ComponentPlanePart(this);
 		final SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
 		box.setPicker(picker);
 		plane.setPicker(picker);
-		// size x, y, z = 21, 15, 21
-		// foundations
+		// Foundations
 		picker.setOuterInnerMaterials(VanillaMaterials.SANDSTONE, VanillaMaterials.SANDSTONE);
 		box.setMinMax(0, -4, 0, 20, 0, 20);
 		box.fill(false);
-		// pyramid
+		// Pyramid
 		picker.setOuterInnerMaterials(VanillaMaterials.SANDSTONE, VanillaMaterials.AIR);
+		plane.setMinMax(0, 0, 0, 20, 0, 20);
 		for (byte yy = 1; yy < 10; yy++) {
-			plane.setMinMax(yy, yy, yy, 20 - yy, yy, 20 - yy);
+			plane.offsetMinMax(1, 1, 1, -1, 1, -1);
 			plane.fill(false);
 		}
-		// fill the land under
+		// Fill the land under
 		for (byte xx = 0; xx < 21; xx++) {
 			for (byte zz = 0; zz < 21; zz++) {
-				fillDownwards(xx, -5, zz, VanillaMaterials.SANDSTONE);
+				fillDownwards(xx, -5, zz, (short) 50, VanillaMaterials.SANDSTONE);
 			}
 		}
-		// first tower body
+		// Tower bodies
 		picker.setOuterInnerMaterials(VanillaMaterials.SANDSTONE, VanillaMaterials.AIR);
 		box.setMinMax(0, 0, 0, 4, 9, 4);
 		box.fill(false);
+		box.offsetMinMax(16, 0, 0, 16, 0, 0);
+		box.fill(false);
 		picker.setInnerMaterial(VanillaMaterials.SANDSTONE);
 		box.setMinMax(1, 10, 1, 3, 10, 3);
+		box.fill(false);
+		box.offsetMinMax(16, 0, 0, 16, 0, 0);
 		box.fill(false);
 		setBlockMaterial(2, 10, 0, VanillaMaterials.STAIRS_SANDSTONE, (short) 2);
 		setBlockMaterial(2, 10, 4, VanillaMaterials.STAIRS_SANDSTONE, (short) 3);
 		setBlockMaterial(0, 10, 2, VanillaMaterials.STAIRS_SANDSTONE, (short) 0);
 		setBlockMaterial(4, 10, 2, VanillaMaterials.STAIRS_SANDSTONE, (short) 1);
-		// second tower body
-		picker.setOuterInnerMaterials(VanillaMaterials.SANDSTONE, VanillaMaterials.AIR);
-		box.setMinMax(16, 0, 0, 20, 9, 4);
-		box.fill(false);
-		picker.setInnerMaterial(VanillaMaterials.SANDSTONE);
-		box.setMinMax(17, 10, 1, 19, 10, 3);
-		box.fill(false);
 		setBlockMaterial(18, 10, 0, VanillaMaterials.STAIRS_SANDSTONE, (short) 2);
 		setBlockMaterial(18, 10, 4, VanillaMaterials.STAIRS_SANDSTONE, (short) 3);
 		setBlockMaterial(16, 10, 2, VanillaMaterials.STAIRS_SANDSTONE, (short) 0);
 		setBlockMaterial(20, 10, 2, VanillaMaterials.STAIRS_SANDSTONE, (short) 1);
+		// Entry way
+		picker.setOuterInnerMaterials(VanillaMaterials.SANDSTONE, VanillaMaterials.AIR);
+		box.setMinMax(8, 0, 0, 12, 4, 4);
+		box.fill(false);
+		picker.setOuterMaterial(VanillaMaterials.AIR);
+		box.offsetMinMax(1, 1, 0, -1, -1, 0);
+		box.fill(false);
+		setBlockMaterial(9, 1, 1, Sandstone.SMOOTH);
+		setBlockMaterial(9, 2, 1, Sandstone.SMOOTH);
+		setBlockMaterial(9, 3, 1, Sandstone.SMOOTH);
+		setBlockMaterial(10, 3, 1, Sandstone.SMOOTH);
+		setBlockMaterial(11, 3, 1, Sandstone.SMOOTH);
+		setBlockMaterial(11, 2, 1, Sandstone.SMOOTH);
+		setBlockMaterial(11, 1, 1, Sandstone.SMOOTH);
+		// Passage ways to the towers
+		picker.setOuterInnerMaterials(VanillaMaterials.SANDSTONE, VanillaMaterials.AIR);
+		box.setMinMax(4, 1, 1, 8, 3, 3);
+		box.fill(false);
+		picker.setOuterMaterial(VanillaMaterials.AIR);
+		box.offsetMinMax(0, 0, 1, 0, -1, -1);
+		box.fill(false);
+		picker.setOuterInnerMaterials(VanillaMaterials.SANDSTONE, VanillaMaterials.AIR);
+		box.setMinMax(12, 1, 1, 16, 3, 3);
+		box.fill(false);
+		picker.setOuterMaterial(VanillaMaterials.AIR);
+		box.offsetMinMax(0, 0, 1, 0, -1, -1);
+		box.fill(false);
+		// Second floor
+		picker.setOuterInnerMaterials(VanillaMaterials.SANDSTONE, VanillaMaterials.SANDSTONE);
+		box.setMinMax(5, 4, 5, 15, 4, 15);
+		box.fill(false);
+		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
+		box.offsetMinMax(4, 0, 4, -4, 0, -4);
+		box.fill(false);
+		// Columns on the first floor
+		picker.setOuterInnerMaterials(Sandstone.SMOOTH, Sandstone.SMOOTH);
+		box.setMinMax(8, 1, 8, 8, 3, 8);
+		box.fill(false);
+		box.offsetMinMax(4, 0, 0, 4, 0, 0);
+		box.fill(false);
+		box.offsetMinMax(-4, 0, 4, -4, 0, 4);
+		box.fill(false);
+		box.offsetMinMax(4, 0, 0, 4, 0, 0);
+		box.fill(false);
+		// Side passage ways to the pyramid on the second floor
+		picker.setOuterInnerMaterials(VanillaMaterials.SANDSTONE, VanillaMaterials.SANDSTONE);
+		box.setMinMax(1, 1, 5, 4, 4, 11);
+		box.fill(false);
+		box.offsetMinMax(15, 0, 0, 15, 0, 0);
+		box.fill(false);
+		// The door ways for the passages mentionned above
+		box.setMinMax(6, 7, 9, 6, 7, 11);
+		box.fill(false);
+		box.offsetMinMax(8, 0, 0, 8, 0, 0);
+		box.fill(false);
+		picker.setOuterInnerMaterials(Sandstone.SMOOTH, Sandstone.SMOOTH);
+		box.setMinMax(5, 5, 9, 5, 7, 11);
+		box.fill(false);
+		box.offsetMinMax(10, 0, 0, 10, 0, 0);
+		box.fill(false);
+		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
+		box.setMinMax(5, 5, 10, 6, 6, 10);
+		box.fill(false);
+		box.offsetMinMax(9, 0, 0, 9, 0, 0);
+		box.fill(false);
+		// Side entry ways to the towers on the second floor
+		box.setMinMax(2, 4, 4, 2, 6, 4);
+		box.fill(false);
+		box.offsetMinMax(16, 0, 0, 16, 0, 0);
+		box.fill(false);
+		// The staircases for the towers
+		setBlockMaterial(2, 4, 5, VanillaMaterials.STAIRS_SANDSTONE, (short) 2);
+		setBlockMaterial(2, 3, 4, VanillaMaterials.STAIRS_SANDSTONE, (short) 2);
+		setBlockMaterial(18, 4, 5, VanillaMaterials.STAIRS_SANDSTONE, (short) 2);
+		setBlockMaterial(18, 3, 4, VanillaMaterials.STAIRS_SANDSTONE, (short) 2);
+		picker.setOuterInnerMaterials(VanillaMaterials.SANDSTONE, VanillaMaterials.SANDSTONE);
+		box.setMinMax(1, 1, 3, 2, 2, 3);
+		box.fill(false);
+		box.offsetMinMax(17, 0, 0, 17, 0, 0);
+		box.fill(false);
+		setBlockMaterial(1, 1, 2, VanillaMaterials.STAIRS_SANDSTONE, (short) 0);
+		setBlockMaterial(19, 1, 2, VanillaMaterials.STAIRS_SANDSTONE, (short) 0);
+		setBlockMaterial(1, 2, 2, Slab.SANDSTONE);
+		setBlockMaterial(19, 2, 2, Slab.SANDSTONE);
+		setBlockMaterial(2, 1, 2, VanillaMaterials.STAIRS_SANDSTONE, (short) 1);
+		setBlockMaterial(18, 1, 2, VanillaMaterials.STAIRS_SANDSTONE, (short) 0);
+		// Stuff on the inside of the sides of the pyramid
+		box.setMinMax(4, 3, 5, 4, 3, 17);
+		box.fill(false);
+		box.offsetMinMax(12, 0, 0, 12, 0, 0);
+		box.fill(false);
+		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
+		box.setMinMax(3, 1, 5, 4, 2, 16);
+		box.fill(false);
+		box.offsetMinMax(12, 0, 0, 12, 0, 0);
+		box.fill(false);
 	}
 
 	@Override

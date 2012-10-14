@@ -87,9 +87,9 @@ public class ComponentCuboidPart extends ComponentPart {
 		max.add(new IntVector3(x, y, z));
 	}
 
-	public void offsetMinMax(int minXOff, int minYOff, int minZOff, int maxXOff, int maxYOdd, int maxZOff) {
+	public void offsetMinMax(int minXOff, int minYOff, int minZOff, int maxXOff, int maxYOff, int maxZOff) {
 		offsetMin(minXOff, minYOff, minZOff);
-		offsetMax(maxXOff, maxYOdd, maxZOff);
+		offsetMax(maxXOff, maxYOff, maxZOff);
 	}
 
 	public void setPicker(BlockMaterialPicker picker) {

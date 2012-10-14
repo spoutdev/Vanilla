@@ -77,7 +77,7 @@ public abstract class StructureComponent {
 	}
 
 	public void setBlockMaterial(int xx, int yy, int zz, BlockMaterial material) {
-		setBlockMaterial(xx, yy, zz, material, (short) 0);
+		setBlockMaterial(xx, yy, zz, material, material.getData());
 	}
 
 	public void setBlockMaterial(int xx, int yy, int zz, BlockMaterial material, short data) {
@@ -98,7 +98,7 @@ public abstract class StructureComponent {
 	}
 
 	public void randomSetBlockMaterial(float odd, int xx, int yy, int zz, BlockMaterial material) {
-		randomSetBlockMaterial(odd, xx, yy, zz, material, (short) 0);
+		randomSetBlockMaterial(odd, xx, yy, zz, material, material.getData());
 	}
 
 	public void randomSetBlockMaterial(float odd, int xx, int yy, int zz, BlockMaterial material, short data) {
@@ -107,14 +107,15 @@ public abstract class StructureComponent {
 		}
 	}
 
-	public void fillDownwards(int xx, int yy, int zz, BlockMaterial material) {
-		fillDownwards(xx, yy, zz, material, (short) 0);
+	public void fillDownwards(int xx, int yy, int zz, short limit, BlockMaterial material) {
+		fillDownwards(xx, yy, zz, limit, material, material.getData());
 	}
 
-	public void fillDownwards(int xx, int yy, int zz, BlockMaterial material, short data) {
+	public void fillDownwards(int xx, int yy, int zz, short limit, BlockMaterial material, short data) {
+		short counter = 0;
 		Block block;
-		while ((block = getBlock(xx, yy, zz)).getMaterial().isMaterial(VanillaMaterials.AIR)
-				|| block.getMaterial() instanceof Liquid) {
+		while (((block = getBlock(xx, yy, zz)).getMaterial().isMaterial(VanillaMaterials.AIR)
+				|| block.getMaterial() instanceof Liquid) && counter++ < limit) {
 			block.setMaterial(material, data);
 			yy--;
 		}

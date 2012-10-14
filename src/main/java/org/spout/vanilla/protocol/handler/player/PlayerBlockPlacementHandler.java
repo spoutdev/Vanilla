@@ -30,6 +30,7 @@ import java.util.Collection;
 
 import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
+import org.spout.api.component.components.BlockComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventManager;
 import org.spout.api.event.player.PlayerInteractEvent;
@@ -131,9 +132,10 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				holdingMat.onInteract(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
 			}
 			clickedMaterial.onInteractBy(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
-			//			if (clickedMaterial.hasController()) {
-			//				clickedMaterial.getController(clickedBlock).onInteract(player, Action.RIGHT_CLICK);
-			//			} TODO: Put block entity handling back in
+			BlockComponent component = clickedBlock.getComponent();
+			if (component != null) {
+				component.onInteract(player, Action.RIGHT_CLICK);
+			}
 
 			//TODO: Readd durability/breaking handling
 

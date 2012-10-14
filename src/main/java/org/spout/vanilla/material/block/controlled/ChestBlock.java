@@ -27,9 +27,6 @@
 package org.spout.vanilla.material.block.controlled;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
@@ -40,7 +37,6 @@ import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class ChestBlock extends Solid implements Directional, Fuel {
@@ -64,20 +60,17 @@ public class ChestBlock extends Solid implements Directional, Fuel {
 	@Override
 	public void onDestroy(Block block) {
 		Chest chest = (Chest) block.getComponent();
-		//Drop items
-		Inventory inventory = chest.getInventory();
-		//If null inventory then simply return
-		//TODO Fix this Windwaker
-		if (inventory == null) {
-			return;
-		}
-		ItemStack[] items = inventory.toArray(new ItemStack[inventory.size()]);
-		Point position = block.getPosition();
-		for (ItemStack item : items) {
-			if (item == null) {
-				continue;
+		chest.onDestroy(block);
+		for (BlockFace face : BlockFaces.NESW) {
+			if (block.translate(face).getMaterial().equals(this)) {
+				Block otherHalf = block.translate(face);
+				Chest other = (Chest) otherHalf.getComponent();
+				boolean top = true;
+				if (face == BlockFace.NORTH || face == BlockFace.EAST) {
+					top = false;
+				}
+				other.removeNeighbor(block, top);
 			}
-			ItemUtil.dropItemNaturally(position, item);
 		}
 		super.onDestroy(block);
 	}
@@ -141,11 +134,15 @@ public class ChestBlock extends Solid implements Directional, Fuel {
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock)) {
+			boolean top = true; // If this chest is the "first" inventory
 			BlockFace facing = VanillaPlayerUtil.getFacing(block.getSource()).getOpposite();
 			//search for neighbor and align
-			Block neigh;
+			Block neigh = null;
 			for (BlockFace face : BlockFaces.NESW) {
 				if ((neigh = block.translate(face)).getMaterial().equals(this)) {
+					if (face == BlockFace.NORTH || face == BlockFace.EAST) {
+						top = false;
+					}
 					if (face == facing || face == facing.getOpposite()) {
 						if (facing == BlockFace.NORTH || facing == BlockFace.SOUTH) {
 							facing = BlockFace.WEST;
@@ -158,6 +155,12 @@ public class ChestBlock extends Solid implements Directional, Fuel {
 				}
 			}
 			this.setFacing(block, facing);
+			Chest chest = (Chest) block.getComponent();			
+			if (neigh != null) {
+				Chest otherComp = (Chest) neigh.getComponent();
+				chest.addNeighbor(neigh, top);
+				otherComp.addNeighbor(block, !top);
+			}
 			return true;
 		}
 		return false;

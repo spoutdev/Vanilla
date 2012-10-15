@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block.controlled;
 
 import org.spout.api.Source;
+import org.spout.api.component.components.BlockComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
@@ -90,4 +91,9 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 
 	@Override
 	public abstract boolean canSupport(BlockMaterial material, BlockFace face);
+	
+	@Override
+	public BlockComponent<SignBase> getBlockComponent() {
+		return new Sign();
+	}
 }

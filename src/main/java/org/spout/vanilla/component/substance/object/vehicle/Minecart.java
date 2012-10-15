@@ -36,6 +36,6 @@ public class Minecart extends ObjectEntity {
 
 	@Override
 	public void onAttached() {
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MinecartObjectEntityProtocol());
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MinecartObjectEntityProtocol());
 	}
 }

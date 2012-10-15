@@ -38,6 +38,6 @@ public class Silverfish extends VanillaEntity implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(60));
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(60));
 	}
 }

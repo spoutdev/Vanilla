@@ -38,6 +38,6 @@ public class PigZombie extends VanillaEntity implements Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(57));
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(57));
 	}
 }

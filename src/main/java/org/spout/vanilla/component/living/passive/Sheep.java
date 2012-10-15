@@ -40,15 +40,15 @@ public class Sheep extends VanillaEntity implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SheepEntityProtocol());
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SheepEntityProtocol());
 	}
 
 	public boolean isSheared() {
-		return getHolder().getData().get(VanillaData.SHEARED);
+		return getOwner().getData().get(VanillaData.SHEARED);
 	}
 
 	public void setSheared(boolean sheared) {
-		getHolder().getData().put(VanillaData.SHEARED, sheared);
+		getOwner().getData().put(VanillaData.SHEARED, sheared);
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class Sheep extends VanillaEntity implements Passive {
 	 * @return color of the sheep.
 	 */
 	public Wool.WoolColor getColor() {
-		return Wool.WoolColor.getById(getHolder().getData().get(VanillaData.WOOL_COLOR));
+		return Wool.WoolColor.getById(getOwner().getData().get(VanillaData.WOOL_COLOR));
 	}
 
 	/**
@@ -64,6 +64,6 @@ public class Sheep extends VanillaEntity implements Passive {
 	 * @param color
 	 */
 	public void setColor(Wool.WoolColor color) {
-		getHolder().getData().put(VanillaData.WOOL_COLOR, color.getData());
+		getOwner().getData().put(VanillaData.WOOL_COLOR, color.getData());
 	}
 }

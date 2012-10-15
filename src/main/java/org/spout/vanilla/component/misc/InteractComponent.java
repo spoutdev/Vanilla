@@ -63,6 +63,6 @@ public class InteractComponent extends EntityComponent {
 	 * @return
 	 */
 	public BlockIterator getBlockView(int reach) {
-		return new BlockIterator(getHolder().getWorld(), getHolder().getTransform().getTransform(), reach);
+		return new BlockIterator(getOwner().getWorld(), getOwner().getTransform().getTransform(), reach);
 	}
 }

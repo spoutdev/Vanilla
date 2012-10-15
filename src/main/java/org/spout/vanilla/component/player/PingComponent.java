@@ -50,10 +50,10 @@ public class PingComponent extends EntityComponent {
 
 	@Override
 	public void onAttached() {
-		if (!(getHolder() instanceof Player)) {
+		if (!(getOwner() instanceof Player)) {
 			throw new IllegalStateException("PingComponent may only be attached to a player.");
 		}
-		player = (Player) getHolder();
+		player = (Player) getOwner();
 	}
 
 	@Override

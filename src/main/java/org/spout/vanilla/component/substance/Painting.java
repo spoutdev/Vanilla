@@ -40,7 +40,7 @@ public class Painting extends EntityComponent {
 
 	@Override
 	public void onAttached() {
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PaintingEntityProtocol());
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PaintingEntityProtocol());
 	}
 
 	public PaintingType getType() {

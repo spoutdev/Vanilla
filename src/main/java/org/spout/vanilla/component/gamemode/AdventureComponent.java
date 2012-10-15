@@ -32,7 +32,7 @@ import org.spout.api.entity.Entity;
 public class AdventureComponent extends EntityComponent {
 	@Override
 	public void onAttached() {
-		Entity holder = getHolder();
+		Entity holder = getOwner();
 		holder.detach(SurvivalComponent.class);
 		holder.detach(CreativeComponent.class);
 	}

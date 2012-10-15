@@ -37,7 +37,7 @@ import org.spout.vanilla.data.VanillaData;
 public abstract class VanillaEntity extends EntityComponent {
 	@Override
 	public void onAttached() {
-		Entity holder = getHolder();
+		Entity holder = getOwner();
 		holder.add(HeadComponent.class);
 		holder.add(HealthComponent.class);
 		holder.add(VanillaPhysicsComponent.class);
@@ -57,18 +57,18 @@ public abstract class VanillaEntity extends EntityComponent {
 	 * @return attached count
 	 */
 	public final int getAttachedCount() {
-		return getHolder().getData().get(VanillaData.ATTACHED_COUNT);
+		return getOwner().getData().get(VanillaData.ATTACHED_COUNT);
 	}
 
 	public HeadComponent getHead() {
-		return getHolder().add(HeadComponent.class);
+		return getOwner().add(HeadComponent.class);
 	}
 
 	public HealthComponent getHealth() {
-		return getHolder().add(HealthComponent.class);
+		return getOwner().add(HealthComponent.class);
 	}
 
 	public VanillaPhysicsComponent getPhysics() {
-		return getHolder().add(VanillaPhysicsComponent.class);
+		return getOwner().add(VanillaPhysicsComponent.class);
 	}
 }

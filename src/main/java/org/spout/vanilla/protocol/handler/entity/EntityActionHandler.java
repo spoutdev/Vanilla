@@ -54,23 +54,23 @@ public final class EntityActionHandler extends MessageHandler<EntityActionMessag
 		switch (message.getAction()) {
 			case EntityActionMessage.ACTION_CROUCH:
 				parameters.add(EntityMetadataMessage.Parameters.META_CROUCHED.get());
-				session.send(false, new EntityMetadataMessage(human.getHolder().getId(), parameters));
+				session.send(false, new EntityMetadataMessage(human.getOwner().getId(), parameters));
 				break;
 			case EntityActionMessage.ACTION_UNCROUCH:
 				parameters.add(EntityMetadataMessage.Parameters.META_CROUCHED.get());
-				session.send(false, new EntityMetadataMessage(human.getHolder().getId(), parameters));
+				session.send(false, new EntityMetadataMessage(human.getOwner().getId(), parameters));
 				break;
 			case EntityActionMessage.ACTION_LEAVE_BED:
 				player.getNetwork().callProtocolEvent(new EntityAnimationEvent(player, Animation.LEAVE_BED));
 				break;
 			case EntityActionMessage.ACTION_START_SPRINTING:
 				parameters.add(EntityMetadataMessage.Parameters.META_SPRINTING.get());
-				session.send(false, new EntityMetadataMessage(human.getHolder().getId(), parameters));
+				session.send(false, new EntityMetadataMessage(human.getOwner().getId(), parameters));
 				human.setSprinting(true);
 				break;
 			case EntityActionMessage.ACTION_STOP_SPRINTING:
 				parameters.add(EntityMetadataMessage.Parameters.META_SPRINTING.get());
-				session.send(false, new EntityMetadataMessage(human.getHolder().getId(), parameters));
+				session.send(false, new EntityMetadataMessage(human.getOwner().getId(), parameters));
 				human.setSprinting(false);
 				break;
 			default:

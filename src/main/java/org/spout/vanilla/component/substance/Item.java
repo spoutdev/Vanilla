@@ -37,7 +37,7 @@ import org.spout.vanilla.protocol.entity.object.ItemEntityProtocol;
 public class Item extends VanillaEntity {
 	@Override
 	public void onAttached() {
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
 	}
 
 	@Override

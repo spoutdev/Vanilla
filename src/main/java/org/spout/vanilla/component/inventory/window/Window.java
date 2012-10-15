@@ -399,7 +399,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 	 * @return player
 	 */
 	public Player getPlayer() {
-		return (Player) getHolder();
+		return (Player) getOwner();
 	}
 
 	/**
@@ -408,7 +408,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 	 * @return human
 	 */
 	public Human getHuman() {
-		return getHolder().add(Human.class);
+		return getOwner().add(Human.class);
 	}
 
 	/**
@@ -586,7 +586,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	@Override
 	public void onAttached() {
-		if (!(getHolder() instanceof Player)) {
+		if (!(getOwner() instanceof Player)) {
 			throw new IllegalStateException("A Window may only be attached to a player.");
 		}
 	}
@@ -595,7 +595,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 	public void onDetached() {
 		removeAllInventoryConverters();
 		close();
-		getHolder().add(DefaultWindow.class);
+		getOwner().add(DefaultWindow.class);
 	}
 
 	@Override

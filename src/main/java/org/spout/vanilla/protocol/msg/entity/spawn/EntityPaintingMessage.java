@@ -50,8 +50,8 @@ public final class EntityPaintingMessage extends EntityMessage {
 	}
 
 	public EntityPaintingMessage(Painting painting) {
-		super(painting.getHolder());
-		Point pos = painting.getHolder().getTransform().getPosition();
+		super(painting.getOwner());
+		Point pos = painting.getOwner().getTransform().getPosition();
 		x = pos.getBlockX();
 		y = pos.getBlockY();
 		z = pos.getBlockZ();

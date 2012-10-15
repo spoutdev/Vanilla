@@ -47,7 +47,7 @@ public class OcelotEntityProtocol extends CreatureProtocol {
 		data |= (ocelot.isSitting() ? 1 : 0) & 0x01;
 		data |= (ocelot.isTamed() ? 1 : 0) & 0x04;
 		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
-		parameters.add(new Parameter<String>(Parameter.TYPE_STRING, 17, ocelot.getOwner()));
+		parameters.add(new Parameter<String>(Parameter.TYPE_STRING, 17, ocelot.getOwnerName()));
 		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 18, ocelot.getSkinId()));
 		return parameters;
 	}

@@ -35,6 +35,6 @@ public class Boat extends ObjectEntity {
 
 	@Override
 	public void onAttached() {
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BoatObjectEntityProtocol());
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BoatObjectEntityProtocol());
 	}
 }

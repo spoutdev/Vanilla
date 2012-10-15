@@ -225,7 +225,7 @@ public abstract class VanillaSky extends WorldComponent {
 	 * @return world
 	 */
 	public World getWorld() {
-		return getHolder().getWorld();
+		return getOwner().getWorld();
 	}
 
 	public static void setSky(World world, VanillaSky sky) {

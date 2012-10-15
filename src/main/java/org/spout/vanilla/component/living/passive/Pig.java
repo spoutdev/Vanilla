@@ -39,14 +39,14 @@ public class Pig extends VanillaEntity implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PigEntityProtocol());
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PigEntityProtocol());
 	}
 
 	public boolean isSaddled() {
-		return getHolder().getData().get(VanillaData.SADDLED);
+		return getOwner().getData().get(VanillaData.SADDLED);
 	}
 
 	public void setSaddled(boolean saddled) {
-		getHolder().getData().put(VanillaData.SADDLED, saddled);
+		getOwner().getData().put(VanillaData.SADDLED, saddled);
 	}
 }

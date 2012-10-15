@@ -39,40 +39,40 @@ public class Ocelot extends VanillaEntity implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new OcelotEntityProtocol());
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new OcelotEntityProtocol());
 	}
 
 	public boolean isTamed() {
-		return getHolder().getData().get(VanillaData.TAMED);
+		return getOwner().getData().get(VanillaData.TAMED);
 	}
 
 	public void setTamed(boolean tamed) {
-		getHolder().getData().put(VanillaData.TAMED, tamed);
+		getOwner().getData().put(VanillaData.TAMED, tamed);
 	}
 
-	public String getOwner() {
-		return getHolder().getData().get(VanillaData.OWNER);
+	public String getOwnerName() {
+		return getOwner().getData().get(VanillaData.OWNER);
 	}
 
-	public void setOwner(String owner) {
+	public void setOwnerName(String owner) {
 		if (isTamed()) {
-			getHolder().getData().put(VanillaData.OWNER, owner);
+			getOwner().getData().put(VanillaData.OWNER, owner);
 		}
 	}
 
 	public byte getSkinId() {
-		return getHolder().getData().get(VanillaData.SKIN);
+		return getOwner().getData().get(VanillaData.SKIN);
 	}
 
 	public void setSkinId(byte skinId) {
-		getHolder().getData().put(VanillaData.SKIN, skinId);
+		getOwner().getData().put(VanillaData.SKIN, skinId);
 	}
 
 	public boolean isSitting() {
-		return getHolder().getData().get(VanillaData.SITTING);
+		return getOwner().getData().get(VanillaData.SITTING);
 	}
 
 	public void setSitting(boolean sitting) {
-		getHolder().getData().put(VanillaData.SITTING, sitting);
+		getOwner().getData().put(VanillaData.SITTING, sitting);
 	}
 }

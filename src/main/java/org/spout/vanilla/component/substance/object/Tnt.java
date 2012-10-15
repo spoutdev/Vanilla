@@ -69,8 +69,8 @@ public class Tnt extends ObjectEntity implements Source {
 
 	@Override
 	public void onAttached() {
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ID));
-		holder = getHolder();
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ID));
+		holder = getOwner();
 
 	}
 

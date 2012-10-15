@@ -39,16 +39,16 @@ public class MagmaCube extends VanillaEntity implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MagmaCubeEntityProtocol());
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MagmaCubeEntityProtocol());
 	}
 
 	public byte getSize() {
-		return getHolder().getData().get(VanillaData.SLIME_SIZE);
+		return getOwner().getData().get(VanillaData.SLIME_SIZE);
 	}
 
 	public void setSize(byte size) {
 		if (size >= 0 && size <= 4 && size != 3) {
-			getHolder().getData().put(VanillaData.SLIME_SIZE, size);
+			getOwner().getData().put(VanillaData.SLIME_SIZE, size);
 		}
 	}
 }

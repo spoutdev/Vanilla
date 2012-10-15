@@ -45,10 +45,10 @@ public class PickupItemComponent extends EntityComponent {
 
 	@Override
 	public boolean canTick() {
-		if (!getHolder().getTransform().isPositionDirty()) {
+		if (!getOwner().getTransform().isPositionDirty()) {
 			return false;
 		}
-		nearbyEntities = getHolder().getWorld().getNearbyEntities(getHolder(), DISTANCE);
+		nearbyEntities = getOwner().getWorld().getNearbyEntities(getOwner(), DISTANCE);
 		return !nearbyEntities.isEmpty();
 	}
 
@@ -58,9 +58,9 @@ public class PickupItemComponent extends EntityComponent {
 			if (!entity.has(Item.class) || !entity.get(Item.class).canBeCollected()) {
 				continue;
 			}
-			getHolder().getNetwork().callProtocolEvent(new EntityCollectItemEvent(getHolder(), entity));
-			if (getHolder().has(Human.class)) {
-				getHolder().get(Human.class).getInventory().add(entity.get(Item.class).getItemStack());
+			getOwner().getNetwork().callProtocolEvent(new EntityCollectItemEvent(getOwner(), entity));
+			if (getOwner().has(Human.class)) {
+				getOwner().get(Human.class).getInventory().add(entity.get(Item.class).getItemStack());
 			}
 			entity.remove();
 		}

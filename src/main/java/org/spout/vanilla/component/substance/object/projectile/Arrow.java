@@ -39,7 +39,7 @@ public class Arrow extends ObjectEntity implements Projectile {
 
 	@Override
 	public void onAttached() {
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ArrowObjectEntityProtocol());
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ArrowObjectEntityProtocol());
 	}
 
 	@Override

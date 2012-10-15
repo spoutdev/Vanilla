@@ -75,7 +75,7 @@ public class TntBlock extends Solid implements RedstoneTarget, Burnable {
 		Tnt tnt = world.createEntity(pos, Tnt.class).add(Tnt.class);
 		double v = 0.5d;
 		tnt.setVelocity(pos.add(v, v, v));
-		world.spawnEntity(tnt.getHolder());
+		world.spawnEntity(tnt.getOwner());
 		block.setMaterial(VanillaMaterials.AIR);
 	}
 

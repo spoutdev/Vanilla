@@ -49,8 +49,8 @@ public class WolfEntityProtocol extends CreatureProtocol {
 		data |= (wolf.haveRedEyes() ? 1 : 0) & 0x02;
 		data |= (wolf.isTamed() ? 1 : 0) & 0x04;
 		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, data));
-		parameters.add(new Parameter<String>(Parameter.TYPE_STRING, 17, wolf.getOwner()));
-		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 18, wolf.getHolder().get(HealthComponent.class).getHealth()));
+		parameters.add(new Parameter<String>(Parameter.TYPE_STRING, 17, wolf.getOwnerName()));
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 18, wolf.getOwner().get(HealthComponent.class).getHealth()));
 		return parameters;
 	}
 }

@@ -38,6 +38,6 @@ public class IronGolem extends VanillaEntity implements Utility {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(99)); //Index 16 (byte): Unknown, example: 1
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(99)); //Index 16 (byte): Unknown, example: 1
 	}
 }

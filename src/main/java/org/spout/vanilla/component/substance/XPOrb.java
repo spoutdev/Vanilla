@@ -34,7 +34,7 @@ import org.spout.vanilla.protocol.entity.object.XPOrbEntityProtocol;
 public class XPOrb extends VanillaEntity {
 	@Override
 	public void onAttached() {
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new XPOrbEntityProtocol());
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new XPOrbEntityProtocol());
 	}
 
 	public short getExperience() {

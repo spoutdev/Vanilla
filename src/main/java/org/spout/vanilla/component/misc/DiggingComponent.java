@@ -57,7 +57,7 @@ public class DiggingComponent extends EntityComponent {
 	 * @return true if successful
 	 */
 	public boolean startDigging(Point position) {
-		if (getHolder().getTransform().getPosition().getDistance(position) > 6) { // TODO: Actually get block reach from somewhere instead of just using 6
+		if (getOwner().getTransform().getPosition().getDistance(position) > 6) { // TODO: Actually get block reach from somewhere instead of just using 6
 			return false;
 		}
 		isDigging = true;
@@ -76,7 +76,7 @@ public class DiggingComponent extends EntityComponent {
 		}
 		previousDiggingTime = getDiggingTime();
 		isDigging = false;
-		getHolder().getNetwork().callProtocolEvent(new EntityAnimationEvent(getHolder(), Animation.NONE));
+		getOwner().getNetwork().callProtocolEvent(new EntityAnimationEvent(getOwner(), Animation.NONE));
 		if (!position.equals(diggingPosition)) {
 			return false;
 		}

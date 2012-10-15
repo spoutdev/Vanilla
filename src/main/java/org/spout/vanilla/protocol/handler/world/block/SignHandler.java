@@ -43,7 +43,7 @@ public class SignHandler extends MessageHandler<SignMessage> {
 
 		Player player = session.getPlayer();
 
-		BlockComponent component = player.getWorld().getBlockComponent(message.getX(), message.getY(), message.getZ());
+		BlockComponent<?> component = player.getWorld().getBlockComponent(message.getX(), message.getY(), message.getZ());
 		if (component == null || !(component instanceof Sign)) {
 			return;
 		}

@@ -47,7 +47,7 @@ public class Villager extends VanillaEntity implements Container, Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(120)); //Index 16 (int): Unknown, example: 0
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(120)); //Index 16 (int): Unknown, example: 0
 	}
 
 	private HashMap<Player, Window> viewers = new HashMap<Player, Window>();

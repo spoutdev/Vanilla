@@ -49,8 +49,8 @@ public class HeadComponent extends EntityComponent {
 
 	@Override
 	public void onTick(float dt) {
-		lastHeadYaw = (int) getHolder().getTransform().getYaw();
-		setYaw((int) getHolder().getTransform().getTransformLive().getRotation().getYaw());
+		lastHeadYaw = (int) getOwner().getTransform().getYaw();
+		setYaw((int) getOwner().getTransform().getTransformLive().getRotation().getYaw());
 	}
 
 	public boolean isDirty() {
@@ -114,21 +114,21 @@ public class HeadComponent extends EntityComponent {
 	 * @return the head position
 	 */
 	public Point getPosition() {
-		return getHolder().getTransform().getPosition().add(0.0f, this.getHeight(), 0.0f);
+		return getOwner().getTransform().getPosition().add(0.0f, this.getHeight(), 0.0f);
 	}
 
 	public Transform getHeadTransform() {
 		Transform trans = new Transform();
 		trans.setPosition(this.getPosition());
-		trans.setRotation(getHolder().getTransform().getRotation());
+		trans.setRotation(getOwner().getTransform().getRotation());
 		return trans;
 	}
 
 	public BlockIterator getBlockView() {
-		return getBlockView(getHolder().add(InteractComponent.class).getReach());
+		return getBlockView(getOwner().add(InteractComponent.class).getReach());
 	}
 
 	public BlockIterator getBlockView(int maxDistance) {
-		return new BlockIterator(getHolder().getWorld(), getHolder().getTransform().getTransform(), maxDistance);
+		return new BlockIterator(getOwner().getWorld(), getOwner().getTransform().getTransform(), maxDistance);
 	}
 }

@@ -38,6 +38,6 @@ public class EnderDragon extends VanillaEntity implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getHolder().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new EnderDragonEntityProtocol());
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new EnderDragonEntityProtocol());
 	}
 }

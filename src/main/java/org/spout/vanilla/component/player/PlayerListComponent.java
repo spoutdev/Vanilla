@@ -52,14 +52,14 @@ public class PlayerListComponent extends EntityComponent {
 
 	@Override
 	public void onAttached() {
-		if (!(getHolder() instanceof Player)) {
+		if (!(getOwner() instanceof Player)) {
 			throw new IllegalStateException("PingComponent may only be attached to a player.");
 		}
 		if (!(Spout.getEngine() instanceof Server)) {
 			throw new IllegalStateException("Player list components may only be attached server side");
 		}
 		server = (Server) Spout.getEngine();
-		player = (Player) getHolder();
+		player = (Player) getOwner();
 	}
 
 	@Override

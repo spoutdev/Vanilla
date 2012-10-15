@@ -24,24 +24,40 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.inventory.block;
 
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 
-public class Wall extends Solid {
-	public static final Wall COBBLESTONE_WALL = new Wall("Cobblestone Wall");
-	public static final Wall MOSSY_COBBLESTONE_WALL = new Wall("Mossy Cobblestone Wall", 1, COBBLESTONE_WALL);
+/**
+ * Represents a enchantment table inventory belonging to an enchantment table
+ * entity.
+ */
+public class BeaconInventory extends Inventory {
+	private static final long serialVersionUID = 1L;
+	public static final int SIZE = 1;
+	public static final int SLOT = 0;
 
-	private Wall(String name) {
-		super((short) 0x0002, name, 139);
-		this.setHardness(1.5F).setResistance(10.0F);
-		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
+	public BeaconInventory() {
+		super(SIZE);
 	}
 
-	private Wall(String name, int data, Wall parent) {
-		super(name, 139, data, parent);
-		this.setHardness(1.5F).setResistance(10.0F);
-		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
+	/**
+	 * Whether the inventory contains an item to enchant
+	 *
+	 * @return true if an item is present
+	 */
+	public boolean has() {
+		return get(SLOT) != null;
+	}
+
+	/**
+	 * Returns the {@link ItemStack} in the enchantment slot; can
+	 * return null.
+	 *
+	 * @return ingredient item stack
+	 */
+	public ItemStack get() {
+		return get(SLOT);
 	}
 }

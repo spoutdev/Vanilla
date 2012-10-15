@@ -54,9 +54,12 @@ import org.spout.vanilla.material.block.component.SignPost;
 import org.spout.vanilla.material.block.component.WallSign;
 import org.spout.vanilla.material.block.component.chest.ChestBlock;
 import org.spout.vanilla.material.block.component.chest.EnderChestBlock;
+import org.spout.vanilla.material.block.controlled.AnvilBlock;
+import org.spout.vanilla.material.block.controlled.BeaconBlock;
 import org.spout.vanilla.material.block.door.IronDoorBlock;
 import org.spout.vanilla.material.block.door.WoodenDoorBlock;
 import org.spout.vanilla.material.block.fence.NetherBrickFence;
+import org.spout.vanilla.material.block.fence.Wall;
 import org.spout.vanilla.material.block.fence.WoodenFence;
 import org.spout.vanilla.material.block.liquid.Lava;
 import org.spout.vanilla.material.block.liquid.Water;
@@ -157,7 +160,6 @@ import org.spout.vanilla.material.block.solid.SoulSand;
 import org.spout.vanilla.material.block.solid.Sponge;
 import org.spout.vanilla.material.block.solid.Stone;
 import org.spout.vanilla.material.block.solid.StoneBrick;
-import org.spout.vanilla.material.block.solid.Wall;
 import org.spout.vanilla.material.block.solid.Wool;
 import org.spout.vanilla.material.block.stair.BrickStairs;
 import org.spout.vanilla.material.block.stair.CobblestoneStairs;
@@ -366,13 +368,14 @@ public final class VanillaMaterials {
 	public static final TripWire TRIPWIRE = new TripWire("Trip Wire", 132);
 	public static final CocoaPlant COCOA_PLANT = new CocoaPlant("Cocoa Plant", 127);
 	//public static final CommandBlock COMMAND_BLOCK = new CommandBlock("Command Block", 137);
-	//public static final BeaconBlock BEACON_BLOCK = new BeaconBlock("Beacon Block", 138);
+	public static final BeaconBlock BEACON_BLOCK = new BeaconBlock("Beacon Block", 138);
 	public static final Wall COBBLESTONE_WALL = Wall.COBBLESTONE_WALL; //TODO: verify these work right, may need to work like fences.
 	public static final FlowerPotBlock FLOWER_POT_BLOCK = new FlowerPotBlock("Flower Pot", 140);
 	public static final Carrots CARROTS = new Carrots("Carrots", 141);
 	public static final Potatoes POTATOES = new Potatoes("Potatoes", 142);
 	public static final WoodButton WOOD_BUTTON = new WoodButton("Wood Button", 143);
 	//public static final Head SKULL = Head.SKULL; - 144
+	public static final AnvilBlock ANVIL = new AnvilBlock("Anvil", 145); // Anvil actually has 3 states, handled by data.
 	/*
 	 * Items
 	 */

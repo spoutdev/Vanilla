@@ -38,10 +38,12 @@ public class Potion extends VanillaItemMaterial {
 	private static final short EFFECT_FIRE_RESISTANCE = 3;
 	private static final short EFFECT_POISON = 4;
 	private static final short EFFECT_HEALING = 5;
+	private static final short EFFECT_NIGHT_VISION = 6;
 	private static final short EFFECT_WEAKNESS = 8;
 	private static final short EFFECT_STRENGTH = 9;
 	private static final short EFFECT_SLOWNESS = 10;
 	private static final short EFFECT_HARMING = 12;
+	private static final short EFFECT_INVISIBILITY = 14;
 	/*
 	* Potion tiers
 	 */
@@ -154,7 +156,12 @@ public class Potion extends VanillaItemMaterial {
 	public static final Potion SPLASH_HARMING_REVERTED = new Potion("Splash Potion of Harming", EFFECT_HARMING, TIER0, DURATION_EXTENDED, ACTION_SPLASH, WATER_BOTTLE);
 	public static final Potion HARMING_II = new Potion("Potion of Harming II", EFFECT_HARMING, TIER2, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
 	public static final Potion SPLASH_HARMING_II = new Potion("Splash Potion of Harming", EFFECT_HARMING, TIER2, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
-
+	public static final Potion NIGHT_VISION = new Potion("Potion of Night Vision", EFFECT_NIGHT_VISION, TIER0, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
+	public static final Potion NIGHT_VISION_EXTENDED = new Potion("Potion of Night Vision (Extended)", EFFECT_NIGHT_VISION, TIER0, DURATION_EXTENDED, ACTION_USE, WATER_BOTTLE);
+	public static final Potion INVISIBILITY = new Potion("Potion of Invisibility", EFFECT_INVISIBILITY, TIER0, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
+	public static final Potion INVISIBILITY_EXTENDED = new Potion("Potion of Invisibility (Extended)", EFFECT_INVISIBILITY, TIER0, DURATION_EXTENDED, ACTION_USE, WATER_BOTTLE);
+	//public static final Potion SPLASH_INVISIBILITY = new Potion("Splash Potion of Invisibility", );
+	//public static final Potion SPLASH_INVISIBILITY_EXTENDED = new Potion("Splash Potion of Invisibility (Extended)", );
 	private Potion(String name) {
 		super((short) 0x7FFF, name, 373);
 	}

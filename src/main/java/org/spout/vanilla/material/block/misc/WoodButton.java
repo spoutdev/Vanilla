@@ -48,7 +48,7 @@ public class WoodButton extends AttachedRedstoneSource implements PointAttachabl
 
 	public WoodButton(String name, int id) {
 		super(name, id);
-		this.setAttachable(BlockFaces.NESW).setLiquidObstacle(false).setHardness(0.5F).setResistance(0.8F).setTransparent();
+		this.setAttachable(BlockFaces.NESW).setLiquidObstacle(false).setHardness(0.5F).setResistance(1.5F).setTransparent();
 	}
 
 	@Override

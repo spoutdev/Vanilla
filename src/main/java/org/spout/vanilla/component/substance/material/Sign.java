@@ -27,20 +27,20 @@
 package org.spout.vanilla.component.substance.material;
 
 import org.spout.api.component.components.BlockComponent;
+import org.spout.api.entity.Player;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.material.block.controlled.SignBase;
+import org.spout.vanilla.event.block.SignUpdateEvent;
 
-public class Sign extends BlockComponent<SignBase> {
-	@Override
-	public SignBase getMaterial() {
-		return (SignBase) super.getMaterial();
-	}
-
+public class Sign extends BlockComponent {
 	public String[] getText() {
 		return getData().get(VanillaData.SIGN_TEXT);
 	}
 
 	public void setText(String[] text) {
 		getData().put(VanillaData.SIGN_TEXT, text);
+		SignUpdateEvent event = new SignUpdateEvent(this, text);
+		for (Player p : this.getOwner().getChunk().getObservingPlayers()) {
+			p.getNetworkSynchronizer().callProtocolEvent(event);
+		}
 	}
 }

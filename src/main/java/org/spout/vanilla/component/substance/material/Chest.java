@@ -30,9 +30,8 @@ import org.spout.api.entity.Player;
 
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.ChestInventory;
-import org.spout.vanilla.material.block.controlled.ChestBlock;
 
-public class Chest extends WindowBlockComponent<ChestBlock> implements Container {
+public class Chest extends WindowBlockComponent implements Container {
 	private final ChestInventory first = new ChestInventory();
 	private final ChestInventory second = new ChestInventory();
 

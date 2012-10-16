@@ -46,17 +46,17 @@ import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.ComponentMaterial;
 import org.spout.vanilla.material.block.Directional;
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.material.item.misc.Potion;
 import org.spout.vanilla.material.item.misc.SpawnEgg;
 import org.spout.vanilla.util.RedstoneUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class DispenserBlock extends ComponentMaterial implements Directional, RedstoneTarget {
+public class DispenserBlock extends Solid implements Directional, RedstoneTarget {
 	public DispenserBlock(String name, int id) {
-		super(Dispenser.class, name, id);
+		super(name, id);
 		this.setHardness(3.5F).setResistance(5.8F);
 	}
 
@@ -68,7 +68,7 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
-		Dispenser dispenser = block.getComponent();
+		Dispenser dispenser = (Dispenser) block.getComponent();
 		dispenser.setPowered(this.isReceivingPower(block));
 	}
 

@@ -26,12 +26,11 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import org.spout.vanilla.component.substance.material.MonsterSpawner;
-import org.spout.vanilla.material.block.ComponentMaterial;
+import org.spout.vanilla.material.block.Solid;
 
-public class MonsterSpawnerBlock extends ComponentMaterial {
+public class MonsterSpawnerBlock extends Solid {
 	public MonsterSpawnerBlock(String name, int id) {
-		super(MonsterSpawner.class, name, id);
+		super(name, id);
 		this.setHardness(5.0F).setResistance(8.3F).setTransparent();
 	}
 }

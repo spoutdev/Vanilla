@@ -33,14 +33,14 @@ import org.spout.vanilla.component.substance.material.NoteBlock;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.block.ComponentMaterial;
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.RedstoneUtil;
 
-public class NoteBlockBlock extends ComponentMaterial implements Fuel {
+public class NoteBlockBlock extends Solid implements Fuel {
 	public final float BURN_TIME = 15.f;
 
 	public NoteBlockBlock(String name, int id) {
-		super(NoteBlock.class, name, id);
+		super(name, id);
 		this.setHardness(0.8F).setResistance(1.3F);
 	}
 
@@ -67,7 +67,7 @@ public class NoteBlockBlock extends ComponentMaterial implements Fuel {
 	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
-		NoteBlock note = block.getComponent();
+		NoteBlock note = (NoteBlock) block.getComponent();
 		note.setPowered(isReceivingPower(block));
 	}
 

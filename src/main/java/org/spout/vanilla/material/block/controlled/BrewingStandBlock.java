@@ -28,13 +28,12 @@ package org.spout.vanilla.material.block.controlled;
 
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.substance.material.BrewingStand;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.block.ComponentMaterial;
+import org.spout.vanilla.material.block.Solid;
 
-public class BrewingStandBlock extends ComponentMaterial {
+public class BrewingStandBlock extends Solid {
 	public BrewingStandBlock(String name, int id) {
-		super(BrewingStand.class, name, id);
+		super(name, id);
 		this.setResistance(2.5F).setHardness(10.F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

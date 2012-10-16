@@ -30,12 +30,11 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.component.substance.material.EnderChest;
 import org.spout.vanilla.data.MoveReaction;
 
 public class EnderChestBlock extends ChestBlock {
 	public EnderChestBlock(String name, int id) {
-		super(EnderChest.class, name, id);
+		super(name, id);
 	}
 
 	@Override

@@ -38,20 +38,16 @@ import org.spout.vanilla.component.substance.material.Chest;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.block.ComponentMaterial;
 import org.spout.vanilla.material.block.Directional;
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class ChestBlock extends ComponentMaterial implements Directional, Fuel {
+public class ChestBlock extends Solid implements Directional, Fuel {
 	public final float BURN_TIME = 15.f;
 
 	public ChestBlock(String name, int id) {
-		this(Chest.class, name, id);
-	}
-
-	public ChestBlock(Class<? extends Chest> clazz, String name, int id) {
-		super(clazz, name, id);
+		super(name, id);
 		this.setHardness(2.5F).setResistance(4.2F).setTransparent();
 	}
 
@@ -67,7 +63,7 @@ public class ChestBlock extends ComponentMaterial implements Directional, Fuel {
 
 	@Override
 	public void onDestroy(Block block) {
-		Chest chest = block.getComponent();
+		Chest chest = (Chest) block.getComponent();
 		//Drop items
 		Inventory inventory = chest.getInventory();
 		//If null inventory then simply return

@@ -32,13 +32,12 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.substance.material.CraftingTable;
 import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.material.block.ComponentMaterial;
+import org.spout.vanilla.material.block.Solid;
 
-public class CraftingTableBlock extends ComponentMaterial {
+public class CraftingTableBlock extends Solid {
 	public CraftingTableBlock(String name, int id) {
-		super(CraftingTable.class, name, id);
+		super(name, id);
 		this.setHardness(4.2F);
 	}
 

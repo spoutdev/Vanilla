@@ -31,9 +31,8 @@ import org.spout.api.entity.Player;
 import org.spout.vanilla.component.inventory.window.block.FurnaceWindow;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
-import org.spout.vanilla.material.block.controlled.FurnaceBlock;
 
-public class Furnace extends WindowBlockComponent<FurnaceBlock> implements Container {
+public class Furnace extends WindowBlockComponent implements Container {
 	private final FurnaceInventory inventory = new FurnaceInventory();
 
 	@Override

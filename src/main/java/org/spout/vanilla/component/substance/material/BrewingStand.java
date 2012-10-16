@@ -31,9 +31,8 @@ import org.spout.api.entity.Player;
 import org.spout.vanilla.component.inventory.window.block.BrewingStandWindow;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
-import org.spout.vanilla.material.block.controlled.BrewingStandBlock;
 
-public class BrewingStand extends WindowBlockComponent<BrewingStandBlock> implements Container {
+public class BrewingStand extends WindowBlockComponent implements Container {
 	private final BrewingStandInventory inventory = new BrewingStandInventory();
 
 	@Override

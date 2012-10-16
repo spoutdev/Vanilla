@@ -29,13 +29,12 @@ package org.spout.vanilla.event.block;
 import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
 import org.spout.api.protocol.event.ProtocolEvent;
-
-import org.spout.vanilla.material.item.misc.Sign;
+import org.spout.vanilla.component.substance.material.Sign;
 
 public class SignUpdateEvent extends Event implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();
-	private Sign sign;
-	private String[] newLines;
+	private final Sign sign;
+	private final String[] newLines;
 
 	public SignUpdateEvent(Sign sign, String[] newLines) {
 		this.sign = sign;

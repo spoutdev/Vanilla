@@ -26,5 +26,5 @@
  */
 package org.spout.vanilla.component.substance.material;
 
-public class EnderChest<EnderChestBlock> extends Chest {
+public class EnderChest extends Chest {
 }

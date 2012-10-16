@@ -33,9 +33,8 @@ import org.spout.vanilla.component.inventory.window.block.DispenserWindow;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.DispenserInventory;
-import org.spout.vanilla.material.block.controlled.DispenserBlock;
 
-public class Dispenser extends WindowBlockComponent<DispenserBlock> implements Container {
+public class Dispenser extends WindowBlockComponent implements Container {
 	private final DispenserInventory inventory = new DispenserInventory();
 
 	public boolean isPowered() {

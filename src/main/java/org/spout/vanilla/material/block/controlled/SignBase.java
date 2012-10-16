@@ -91,9 +91,9 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 
 	@Override
 	public abstract boolean canSupport(BlockMaterial material, BlockFace face);
-	
+
 	@Override
-	public BlockComponent<SignBase> getBlockComponent() {
+	public BlockComponent getBlockComponent() {
 		return new Sign();
 	}
 }

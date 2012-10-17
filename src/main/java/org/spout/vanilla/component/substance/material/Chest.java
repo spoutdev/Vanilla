@@ -26,22 +26,84 @@
  */
 package org.spout.vanilla.component.substance.material;
 
+import java.util.Arrays;
+import org.apache.commons.lang3.ArrayUtils;
 import org.spout.api.entity.Player;
-
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.component.inventory.window.block.DoubleChestWindow;
+import org.spout.vanilla.component.inventory.window.block.SingleChestWindow;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.ChestInventory;
+import org.spout.vanilla.inventory.block.DoubleChestInventory;
+import org.spout.vanilla.util.ItemUtil;
 
 public class Chest extends WindowBlockComponent implements Container {
-	private final ChestInventory first = new ChestInventory();
-	private final ChestInventory second = new ChestInventory();
+	private ChestInventory inventory;
+
+	public Chest() {
+		inventory = new ChestInventory();
+	}
 
 	@Override
 	public ChestInventory getInventory() {
-		return first;
+		return inventory;
 	}
 
 	@Override
 	public void openWindow(Player player) {
+		if (inventory instanceof DoubleChestInventory) {
+			//player.add(DoubleChestWindow.class).init(inventory, inventory);
+		}
+		player.add(SingleChestWindow.class).init(inventory).open();
 		// TODO: Chest logic
 	}
+
+	public void addNeighbor(Block block, boolean first) {
+		Chest neighbor = (Chest) block.getComponent();
+		if (first) {
+			inventory = DoubleChestInventory.convert(inventory, neighbor.inventory);
+		} else {
+			inventory = DoubleChestInventory.convert(neighbor.inventory, inventory);
+		}
+	}
+
+	public void onDestroy(Block block) {
+		ItemStack[] items = inventory.toArray(new ItemStack[inventory.size()]);
+		Point position = block.getPosition();
+		for (ItemStack item : items) {
+			if (item == null) {
+				continue;
+			}
+			ItemUtil.dropItemNaturally(position, item);
+		}
+	}
+
+	/**
+	 * 
+	 * @param block
+	 * @param top whether to drop the top
+	 */
+	public void removeNeighbor(Block block, boolean top) {
+		ItemStack[] toDrop;
+		if (top) {
+			toDrop = ArrayUtils.subarray(inventory.toArray(new ItemStack[27]), 0, 27);
+			inventory = new ChestInventory();
+			inventory.addAll(Arrays.asList(ArrayUtils.subarray(inventory.toArray(new ItemStack[27]), 27, 52)));
+			
+		} else {
+			toDrop = ArrayUtils.subarray(inventory.toArray(new ItemStack[27]), 27, 52);
+			inventory = new ChestInventory();
+			inventory.addAll(Arrays.asList(ArrayUtils.subarray(inventory.toArray(new ItemStack[27]), 0, 27)));
+		}
+		Point position = block.getPosition();
+		for (ItemStack item : toDrop) {
+			if (item == null) {
+				continue;
+			}
+			ItemUtil.dropItemNaturally(position, item);
+		}
+	}
+	
 }

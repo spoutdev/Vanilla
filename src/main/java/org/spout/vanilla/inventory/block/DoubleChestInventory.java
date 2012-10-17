@@ -26,26 +26,33 @@
  */
 package org.spout.vanilla.inventory.block;
 
-import org.spout.api.inventory.Inventory;
+import java.util.Arrays;
+import org.apache.commons.lang3.ArrayUtils;
+import org.spout.api.inventory.ItemStack;
 
 /**
  * Represents the inventory of a
  * {@link org.spout.vanilla.component.substance.material.Chest}.
  */
-public class ChestInventory extends Inventory {
+public class DoubleChestInventory extends ChestInventory {
 	private static final long serialVersionUID = 1L;
-	public static final int SINGLE_SIZE = 27;
-	public static final int DOUBLE_SIZE = 52;
 
-	public ChestInventory() {
-		super(SINGLE_SIZE);
+	public DoubleChestInventory() {
+		super(DOUBLE_SIZE);
 	}
 	
-	protected ChestInventory(int size) {
-		super(size);
+	public static DoubleChestInventory convert(ChestInventory first, ChestInventory second) {
+		ItemStack[] firstArray = first.toArray(new ItemStack[1]);
+		ItemStack[] secondArray = second.toArray(new ItemStack[1]);
+		DoubleChestInventory inv = new DoubleChestInventory();
+		inv.addAll(Arrays.asList(ArrayUtils.addAll(firstArray, secondArray)));
+		return inv;
 	}
-	
+
+	@Override
 	public int getSize() {
-		return SINGLE_SIZE;
+		return DOUBLE_SIZE;
 	}
+	
+	
 }

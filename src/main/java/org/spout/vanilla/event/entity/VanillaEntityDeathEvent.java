@@ -31,7 +31,7 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityDeathEvent;
 
 /**
- * Event which is called when a VanillaEntity dies
+ * Event which is called when a LivingComponent dies
  */
 public class VanillaEntityDeathEvent extends EntityDeathEvent {
 	private static HandlerList handlers = new HandlerList();

@@ -34,8 +34,8 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.window.Window;
+import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.component.living.Passive;
-import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.CraftingInventory;
 import org.spout.vanilla.protocol.entity.CreatureProtocol;
@@ -43,7 +43,7 @@ import org.spout.vanilla.protocol.entity.CreatureProtocol;
 /**
  * A component that identifies the entity as a Villager.
  */
-public class Villager extends VanillaEntity implements Container, Passive {
+public class Villager extends LivingComponent implements Container, Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();

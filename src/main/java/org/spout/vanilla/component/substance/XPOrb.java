@@ -26,12 +26,13 @@
  */
 package org.spout.vanilla.component.substance;
 
+import org.spout.api.component.components.EntityComponent;
+
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.object.XPOrbEntityProtocol;
 
-public class XPOrb extends VanillaEntity {
+public class XPOrb extends EntityComponent {
 	@Override
 	public void onAttached() {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new XPOrbEntityProtocol());

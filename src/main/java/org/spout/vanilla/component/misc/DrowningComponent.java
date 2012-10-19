@@ -24,51 +24,62 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living;
+package org.spout.vanilla.component.misc;
 
+import org.spout.api.Source;
+import org.spout.api.component.Component;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Entity;
 
-import org.spout.vanilla.component.misc.HeadComponent;
-import org.spout.vanilla.component.misc.HealthComponent;
-import org.spout.vanilla.component.misc.VanillaPhysicsComponent;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.source.DamageCause;
 
-public abstract class VanillaEntity extends EntityComponent {
+public class DrowningComponent extends EntityComponent implements Source {
+	private Entity owner;
+	private HealthComponent health;
+	private HeadComponent head;
+	public static final float MAX_AIR = VanillaData.AIR_SECS.getDefaultValue();
+	private int damageTimer = 20;
+
+	static {
+		Component.addDependency(DrowningComponent.class, HealthComponent.class);
+		Component.addDependency(DrowningComponent.class, HeadComponent.class);
+	}
+
 	@Override
 	public void onAttached() {
-		Entity holder = getOwner();
-		holder.add(HeadComponent.class);
-		holder.add(HealthComponent.class);
-		holder.add(VanillaPhysicsComponent.class);
-		holder.setSavable(true);
-		
-		//Tracks the number of times this component has been attached (i.e how many times it's been saved, then loaded. 1 = fresh entity)
-		holder.getData().put(VanillaData.ATTACHED_COUNT, getAttachedCount() + 1);
+		owner = getOwner();
+		health = owner.add(HealthComponent.class);
+		head = owner.add(HeadComponent.class);
 	}
 
-	/**
-	 * A counter of how many times this component has been attached to an entity
-	 * 
-	 * Values > 1 indicate how many times this component has been saved to disk, and reloaded
-	 * 
-	 * Values == 1 indicate a new component that has never been saved and loaded.
-	 * 
-	 * @return attached count
-	 */
-	public final int getAttachedCount() {
-		return getOwner().getData().get(VanillaData.ATTACHED_COUNT);
+	@Override
+	public void onTick(float dt) {
+		if (owner.getWorld().getBlock(head.getPosition(), this).getMaterial() != VanillaMaterials.WATER) {
+			setAir(MAX_AIR);
+			return;
+		}
+
+		pulse(dt);
+		if (getAir() < 0) {
+			// out of air; damage one heart every second
+			if (damageTimer-- < 0) {
+				health.damage(2, DamageCause.DROWN);
+				damageTimer = 20;
+			}
+		}
 	}
 
-	public HeadComponent getHead() {
-		return getOwner().add(HeadComponent.class);
+	public float getAir() {
+		return getData().get(VanillaData.AIR_SECS);
 	}
 
-	public HealthComponent getHealth() {
-		return getOwner().add(HealthComponent.class);
+	public void setAir(float airSecs) {
+		getData().put(VanillaData.AIR_SECS, airSecs);
 	}
 
-	public VanillaPhysicsComponent getPhysics() {
-		return getOwner().add(VanillaPhysicsComponent.class);
+	public void pulse(float dt) {
+		setAir(getAir() - dt);
 	}
 }

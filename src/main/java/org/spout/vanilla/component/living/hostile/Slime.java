@@ -28,14 +28,14 @@ package org.spout.vanilla.component.living.hostile;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;
-import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.living.SlimeEntityProtocol;
 
 /**
  * A component that identifies the entity as a Slime.
  */
-public class Slime extends VanillaEntity implements Hostile {
+public class Slime extends LivingComponent implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();

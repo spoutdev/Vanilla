@@ -27,14 +27,14 @@
 package org.spout.vanilla.component.living.passive;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.component.living.Passive;
-import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.protocol.entity.CreatureProtocol;
 
 /**
  * A component that identifies the entity as a Squid.
  */
-public class Squid extends VanillaEntity implements Passive {
+public class Squid extends LivingComponent implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();

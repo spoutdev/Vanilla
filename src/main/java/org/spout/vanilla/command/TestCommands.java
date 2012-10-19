@@ -49,9 +49,10 @@ import org.spout.api.protocol.NetworkSynchronizer;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Human;
-import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.component.living.hostile.EnderDragon;
 import org.spout.vanilla.component.living.neutral.Enderman;
+import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.component.substance.object.FallingBlock;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -66,6 +67,15 @@ public class TestCommands {
 
 	public TestCommands(VanillaPlugin instance) {
 		plugin = instance;
+	}
+
+	@Command(aliases = "damage", usage = "<amount>", desc = "Damage yourself")
+	@CommandPermissions("vanilla.command.debug")
+	public void damage(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to damage yourself.");
+		}
+		((Player) source).add(HealthComponent.class).damage(args.getInteger(0));
 	}
 
 	@Command(aliases = {"explode"}, usage = "<explode>", desc = "Create an explosion")
@@ -175,12 +185,12 @@ public class TestCommands {
 		List<Entity> entities = world.getAll();
 		int count = 0;
 		for (Entity entity : entities) {
-			if (entity instanceof Player || !entity.has(VanillaEntity.class)) {
+			if (entity instanceof Player || !entity.has(LivingComponent.class)) {
 				continue;
 			}
 			count++;
 			entity.remove();
-			Spout.log(entity.get(VanillaEntity.class) + " was killed");
+			Spout.log(entity.get(LivingComponent.class) + " was killed");
 		}
 		if (count > 0) {
 			if (!isConsole) {
@@ -231,17 +241,17 @@ public class TestCommands {
 		}
 	}
 
-	@Command(aliases = "spawnmob", desc = "Spawns a VanillaEntity at your location", min = 1, max = 2)
+	@Command(aliases = "spawnmob", desc = "Spawns a LivingComponent at your location", min = 1, max = 2)
 	@CommandPermissions("vanilla.command.spawnmob")
 	public void spawnmob(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
-			throw new CommandException("Only a player may spawn a VanillaEntity!");
+			throw new CommandException("Only a player may spawn a LivingComponent!");
 		}
 		final Point pos = ((Player) source).getTransform().getPosition();
 		final String name = args.getString(0);
 		Class<? extends Component> clazz;
 		if (name.isEmpty()) {
-			throw new CommandException("It appears that you forgot to enter in the name of the VanillaEntity.");
+			throw new CommandException("It appears that you forgot to enter in the name of the LivingComponent.");
 		} else if (name.equalsIgnoreCase("enderman")) {
 			clazz = Enderman.class;
 		} else if (name.equalsIgnoreCase("enderdragon")) {
@@ -251,7 +261,7 @@ public class TestCommands {
 		} else if (name.equalsIgnoreCase("npc")) {
 			clazz = Human.class;
 		} else {
-			throw new CommandException(name + " was not a valid name for a VanillaEntity!");
+			throw new CommandException(name + " was not a valid name for a LivingComponent!");
 		}
 		Entity entity = pos.getWorld().createEntity(pos, clazz);
 		if (clazz.equals(FallingBlock.class)) {

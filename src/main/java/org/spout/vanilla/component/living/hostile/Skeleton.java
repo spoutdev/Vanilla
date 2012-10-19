@@ -28,13 +28,13 @@ package org.spout.vanilla.component.living.hostile;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;
-import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.protocol.entity.CreatureProtocol;
 
 /**
  * A component that identifies the entity as a Skeleton.
  */
-public class Skeleton extends VanillaEntity implements Hostile {
+public class Skeleton extends LivingComponent implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();

@@ -39,6 +39,7 @@ import org.spout.vanilla.component.gamemode.CreativeComponent;
 import org.spout.vanilla.component.gamemode.SurvivalComponent;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.misc.DiggingComponent;
+import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.component.misc.PickupItemComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
@@ -53,13 +54,16 @@ import org.spout.vanilla.util.ItemUtil;
 /**
  * A component that identifies the entity as a Vanilla player.
  */
-public class Human extends VanillaEntity {
+public class Human extends LivingComponent {
+	public static final int SPAWN_HEALTH = 20;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
 		Entity holder = getOwner();
 		holder.add(PickupItemComponent.class);
 		holder.add(DiggingComponent.class);
+		holder.add(HealthComponent.class).setSpawnHealth(SPAWN_HEALTH);
 		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
 		DatatableComponent data = getData();
 		data.put(VanillaData.PLAYER_INVENTORY, new PlayerInventory());

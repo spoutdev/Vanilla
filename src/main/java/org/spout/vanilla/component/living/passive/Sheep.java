@@ -28,7 +28,7 @@ package org.spout.vanilla.component.living.passive;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Passive;
-import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.block.solid.Wool;
 import org.spout.vanilla.protocol.entity.living.SheepEntityProtocol;
@@ -36,7 +36,7 @@ import org.spout.vanilla.protocol.entity.living.SheepEntityProtocol;
 /**
  * A component that identifies the entity as a Sheep.
  */
-public class Sheep extends VanillaEntity implements Passive {
+public class Sheep extends LivingComponent implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();

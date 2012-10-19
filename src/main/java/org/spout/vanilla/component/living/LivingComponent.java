@@ -24,54 +24,50 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.substance;
+package org.spout.vanilla.component.living;
 
 import org.spout.api.component.components.EntityComponent;
-import org.spout.api.data.Data;
-import org.spout.api.inventory.ItemStack;
+import org.spout.api.entity.Entity;
 
-import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.misc.DrowningComponent;
+import org.spout.vanilla.component.misc.HeadComponent;
+import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.component.misc.VanillaPhysicsComponent;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.object.ItemEntityProtocol;
 
-public class Item extends EntityComponent {
+public abstract class LivingComponent extends EntityComponent {
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
-		getOwner().add(VanillaPhysicsComponent.class);
+		Entity holder = getOwner();
+		holder.add(HeadComponent.class);
+		holder.add(HealthComponent.class);
+		holder.add(VanillaPhysicsComponent.class);
+		holder.add(DrowningComponent.class);
+		holder.setSavable(true);
+		
+		//Tracks the number of times this component has been attached (i.e how many times it's been saved, then loaded. 1 = fresh entity)
+		holder.getData().put(VanillaData.ATTACHED_COUNT, getAttachedCount() + 1);
 	}
 
-	@Override
-	public boolean canTick() {
-		return true;
+	/**
+	 * A counter of how many times this component has been attached to an entity
+	 * 
+	 * Values > 1 indicate how many times this component has been saved to disk, and reloaded
+	 * 
+	 * Values == 1 indicate a new component that has never been saved and loaded.
+	 * 
+	 * @return attached count
+	 */
+	public final int getAttachedCount() {
+		return getOwner().getData().get(VanillaData.ATTACHED_COUNT);
 	}
 
-	@Override
-	public void onTick(float dt) {
-		if (getUncollectableTicks() > 0) {
-			setUncollectableTicks(getUncollectableTicks() - 1);
-		}
+	public HeadComponent getHead() {
+		return getOwner().add(HeadComponent.class);
 	}
 
-	public ItemStack getItemStack() {
-		return getData().get(Data.HELD_ITEM);
-	}
-
-	public void setItemStack(ItemStack stack) {
-		getData().put(Data.HELD_ITEM, stack);
-	}
-
-	public int getUncollectableTicks() {
-		return getData().get(VanillaData.UNCOLLECTABLE_TICKS);
-	}
-
-	public void setUncollectableTicks(int uncollectableTicks) {
-		getData().put(VanillaData.UNCOLLECTABLE_TICKS, uncollectableTicks);
-	}
-
-	public boolean canBeCollected() {
-		return getUncollectableTicks() <= 0;
+	public HealthComponent getHealth() {
+		return getOwner().add(HealthComponent.class);
 	}
 
 	public VanillaPhysicsComponent getPhysics() {

@@ -27,14 +27,14 @@
 package org.spout.vanilla.component.living.neutral;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.component.living.Neutral;
-import org.spout.vanilla.component.living.VanillaEntity;
 import org.spout.vanilla.protocol.entity.CreatureProtocol;
 
 /**
  * A component that identifies the entity as a PigZombie.
  */
-public class PigZombie extends VanillaEntity implements Neutral {
+public class PigZombie extends LivingComponent implements Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();

@@ -28,14 +28,14 @@ package org.spout.vanilla.component.living.hostile;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;
-import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.living.MagmaCubeEntityProtocol;
 
 /**
  * A component that identifies the entity as a MagmaCube.
  */
-public class MagmaCube extends VanillaEntity implements Hostile {
+public class MagmaCube extends LivingComponent implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();

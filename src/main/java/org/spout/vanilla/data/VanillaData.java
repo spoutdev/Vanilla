@@ -48,7 +48,7 @@ public class VanillaData {
 	public static final DefaultedKey<WorldType> WORLD_TYPE = new DefaultedKeyImpl<WorldType>("world_type", WorldType.DEFAULT);
 	//Component-specific
 	public static final DefaultedKey<GameMode> GAMEMODE = new DefaultedKeyImpl<GameMode>("game_mode", GameMode.SURVIVAL);
-	public static final DefaultedKey<Integer> AIR_TICKS = new DefaultedKeyImpl<Integer>("air_ticks", 0);
+	public static final DefaultedKey<Float> AIR_SECS = new DefaultedKeyImpl<Float>("air_secs", 15f);
 	public static final DefaultedKey<Integer> DEATH_TICKS = new DefaultedKeyImpl<Integer>("death_ticks", 0);
 	public static final DefaultedKey<Integer> FIRE_TICKS = new DefaultedKeyImpl<Integer>("fire_ticks", 0);
 	public static final DefaultedKey<Long> GROWTH_TICKS = new DefaultedKeyImpl<Long>("growth_ticks", Long.valueOf(0));

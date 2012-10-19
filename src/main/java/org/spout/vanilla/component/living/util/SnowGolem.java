@@ -28,13 +28,13 @@ package org.spout.vanilla.component.living.util;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Utility;
-import org.spout.vanilla.component.living.VanillaEntity;
+import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.protocol.entity.CreatureProtocol;
 
 /**
  * A component that identifies the entity as a SnowGolem.
  */
-public class SnowGolem extends VanillaEntity implements Utility {
+public class SnowGolem extends LivingComponent implements Utility {
 	@Override
 	public void onAttached() {
 		super.onAttached();

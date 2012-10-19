@@ -44,7 +44,6 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.controlled.TntBlock;
 import org.spout.vanilla.util.VanillaBlockUtil;
 
 public class Fire extends VanillaBlockMaterial implements DynamicMaterial {

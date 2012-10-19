@@ -33,7 +33,7 @@ import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
-import org.spout.vanilla.material.block.controlled.FurnaceBlock;
+import org.spout.vanilla.material.block.component.FurnaceBlock;
 
 public class IronOre extends Ore implements TimedCraftable {
 	public IronOre(String name, int id) {

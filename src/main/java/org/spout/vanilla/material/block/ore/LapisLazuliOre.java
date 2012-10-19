@@ -34,7 +34,7 @@ import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
-import org.spout.vanilla.material.block.controlled.FurnaceBlock;
+import org.spout.vanilla.material.block.component.FurnaceBlock;
 import org.spout.vanilla.material.item.misc.Dye;
 
 public class LapisLazuliOre extends Ore implements TimedCraftable, InitializableMaterial {

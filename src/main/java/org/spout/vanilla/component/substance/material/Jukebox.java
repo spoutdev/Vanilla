@@ -26,8 +26,5 @@
  */
 package org.spout.vanilla.component.substance.material;
 
-import org.spout.api.component.components.BlockComponent;
-
-public class Jukebox extends BlockComponent {
-
+public class Jukebox extends VanillaBlockComponent {
 }

@@ -24,22 +24,48 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.controlled;
+package org.spout.vanilla.material.block.component;
 
-import org.spout.api.material.block.BlockFace;
+import org.spout.api.geo.cuboid.Block;
 
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.component.substance.material.Jukebox;
+import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.data.MoveReaction;
+import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Solid;
 
-public class BrewingStandBlock extends Solid {
-	public BrewingStandBlock(String name, int id) {
+public class JukeboxBlock extends Solid implements Fuel {
+	public final float BURN_TIME = 15.f;
+
+	public JukeboxBlock(String name, int id) {
 		super(name, id);
-		this.setResistance(2.5F).setHardness(10.F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
-		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
+		this.setHardness(2.0F).setResistance(10.0F);
 	}
 
 	@Override
-	public byte getLightLevel(short data) {
-		return 1;
+	public void onDestroy(Block block) {
+		//TODO Write Jukebox
+		//stopMusic();
+		super.onDestroy(block);
+	}
+
+	@Override
+	public MoveReaction getMoveReaction(Block block) {
+		return MoveReaction.DENY;
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASSGUITAR;
+	}
+
+	@Override
+	public float getFuelTime() {
+		return BURN_TIME;
+	}
+
+	@Override
+	public Jukebox getBlockComponent() {
+		return new Jukebox();
 	}
 }

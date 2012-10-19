@@ -24,22 +24,18 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.controlled;
+package org.spout.vanilla.material.block.component;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.component.substance.material.EnderChest;
 import org.spout.vanilla.data.MoveReaction;
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.block.Solid;
 
-public class EnchantmentTableBlock extends Solid implements Directional {
-	public EnchantmentTableBlock(String name, int id) {
+public class EnderChestBlock extends ChestBlock {
+	public EnderChestBlock(String name, int id) {
 		super(name, id);
-		this.setHardness(5.0F).setResistance(2000.0F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
-		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
 	@Override
@@ -48,8 +44,13 @@ public class EnchantmentTableBlock extends Solid implements Directional {
 	}
 
 	@Override
-	public Instrument getInstrument() {
-		return Instrument.BASSDRUM;
+	public BlockFace getFacing(Block block) {
+		return BlockFaces.EWNS.get(block.getData() - 2);
+	}
+
+	@Override
+	public void setFacing(Block block, BlockFace facing) {
+		block.setData((short) (BlockFaces.EWNS.indexOf(facing, 0) + 2));
 	}
 
 	@Override
@@ -58,11 +59,7 @@ public class EnchantmentTableBlock extends Solid implements Directional {
 	}
 
 	@Override
-	public BlockFace getFacing(Block block) {
-		return BlockFace.TOP;
-	}
-
-	@Override
-	public void setFacing(Block block, BlockFace facing) {
+	public EnderChest getBlockComponent() {
+		return new EnderChest();
 	}
 }

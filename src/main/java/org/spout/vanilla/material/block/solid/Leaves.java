@@ -35,7 +35,7 @@ import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.block.controlled.SignBase;
+import org.spout.vanilla.material.block.component.SignBase;
 
 public class Leaves extends Solid implements Burnable, InitializableMaterial {
 	public static final Leaves DEFAULT = new Leaves("Leaves");

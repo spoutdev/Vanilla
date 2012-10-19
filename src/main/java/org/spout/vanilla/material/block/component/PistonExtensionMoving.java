@@ -24,23 +24,21 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.substance.material;
+package org.spout.vanilla.material.block.component;
 
-import org.spout.api.entity.Player;
+import org.spout.vanilla.component.substance.material.Piston;
+import org.spout.vanilla.material.block.piston.PistonExtension;
 
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.event.block.SignUpdateEvent;
-
-public class Sign extends VanillaBlockComponent {
-	public String[] getText() {
-		return getData().get(VanillaData.SIGN_TEXT);
+/**
+ * A temporary block type with entity which animates the extension of the piston
+ */
+public class PistonExtensionMoving extends PistonExtension {
+	public PistonExtensionMoving(String name, int id) {
+		super(name, id);
+		this.setResistance(0.0F);
 	}
 
-	public void setText(String[] text) {
-		getData().put(VanillaData.SIGN_TEXT, text);
-		SignUpdateEvent event = new SignUpdateEvent(this, text);
-		for (Player p : this.getOwner().getChunk().getObservingPlayers()) {
-			p.getNetworkSynchronizer().callProtocolEvent(event);
-		}
+	public Piston getBlockComponent() {
+		return new Piston();
 	}
 }

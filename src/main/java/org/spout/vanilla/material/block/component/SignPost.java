@@ -24,13 +24,31 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.controlled;
+package org.spout.vanilla.material.block.component;
 
-import org.spout.vanilla.material.block.Solid;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 
-public class MonsterSpawnerBlock extends Solid {
-	public MonsterSpawnerBlock(String name, int id) {
+import org.spout.vanilla.material.block.misc.Torch;
+
+public class SignPost extends SignBase {
+	public SignPost(String name, int id) {
 		super(name, id);
-		this.setHardness(5.0F).setResistance(8.3F).setTransparent();
+	}
+
+	@Override
+	public boolean canSupport(BlockMaterial material, BlockFace face) {
+		// can only attach to the top of a block
+		if (face != BlockFace.TOP) {
+			return false;
+		}
+
+		// can only attach to signs and torches
+		return material instanceof SignBase || material instanceof Torch;
+	}
+
+	@Override
+	public BlockFace getAttachedFace(short data) {
+		return BlockFace.BOTTOM;
 	}
 }

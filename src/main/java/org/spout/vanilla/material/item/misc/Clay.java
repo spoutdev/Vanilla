@@ -30,7 +30,7 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.controlled.FurnaceBlock;
+import org.spout.vanilla.material.block.component.FurnaceBlock;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class Clay extends VanillaItemMaterial implements TimedCraftable {

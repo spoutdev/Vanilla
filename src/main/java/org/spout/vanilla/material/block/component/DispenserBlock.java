@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.controlled;
+package org.spout.vanilla.material.block.component;
 
 import java.util.Random;
 
@@ -169,5 +169,10 @@ public class DispenserBlock extends Solid implements Directional, RedstoneTarget
 	@Override
 	public boolean isReceivingPower(Block block) {
 		return RedstoneUtil.isReceivingPower(block);
+	}
+
+	@Override
+	public Dispenser getBlockComponent() {
+		return new Dispenser();
 	}
 }

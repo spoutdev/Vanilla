@@ -32,7 +32,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
-import org.spout.vanilla.material.block.controlled.SignBase;
+import org.spout.vanilla.material.block.component.SignBase;
 
 public class Glowstone extends Ore implements InitializableMaterial {
 	public Glowstone(String name, int id) {

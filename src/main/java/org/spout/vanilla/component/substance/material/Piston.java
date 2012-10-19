@@ -26,7 +26,5 @@
  */
 package org.spout.vanilla.component.substance.material;
 
-import org.spout.api.component.components.BlockComponent;
-
-public class Piston extends BlockComponent {
+public class Piston extends VanillaBlockComponent {
 }

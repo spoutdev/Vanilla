@@ -24,59 +24,19 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.controlled;
+package org.spout.vanilla.material.block.component;
 
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.substance.material.NoteBlock;
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.data.MoveReaction;
-import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.util.RedstoneUtil;
-
-public class NoteBlockBlock extends Solid implements Fuel {
-	public final float BURN_TIME = 15.f;
-
-	public NoteBlockBlock(String name, int id) {
+public class WallSign extends SignBase {
+	public WallSign(String name, int id) {
 		super(name, id);
-		this.setHardness(0.8F).setResistance(1.3F);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public boolean hasPhysics() {
-		return true;
-	}
-
-	@Override
-	public boolean isPlacementSuppressed() {
-		return true;
-	}
-
-	@Override
-	public MoveReaction getMoveReaction(Block block) {
-		return MoveReaction.DENY;
-	}
-
-	@Override
-	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
-	}
-
-	@Override
-	public void onUpdate(BlockMaterial oldMaterial, Block block) {
-		super.onUpdate(oldMaterial, block);
-		NoteBlock note = (NoteBlock) block.getComponent();
-		note.setPowered(isReceivingPower(block));
-	}
-
-	@Override
-	public float getFuelTime() {
-		return BURN_TIME;
-	}
-
-	public boolean isReceivingPower(Block block) {
-		return RedstoneUtil.isReceivingPower(block);
+	public boolean canSupport(BlockMaterial material, BlockFace face) {
+		return false;
 	}
 }

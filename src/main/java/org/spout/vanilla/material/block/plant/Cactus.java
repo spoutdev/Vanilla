@@ -39,7 +39,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.controlled.FurnaceBlock;
+import org.spout.vanilla.material.block.component.FurnaceBlock;
 import org.spout.vanilla.material.item.misc.Dye;
 
 public class Cactus extends StackGrowingBase implements TimedCraftable {

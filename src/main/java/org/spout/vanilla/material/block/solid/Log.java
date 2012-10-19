@@ -47,7 +47,7 @@ import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.block.controlled.FurnaceBlock;
+import org.spout.vanilla.material.block.component.FurnaceBlock;
 import org.spout.vanilla.material.block.plant.Sapling;
 import org.spout.vanilla.material.item.misc.Coal;
 import org.spout.vanilla.util.VanillaPlayerUtil;

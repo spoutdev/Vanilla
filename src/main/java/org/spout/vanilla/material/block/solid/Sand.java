@@ -34,7 +34,7 @@ import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.SolidMoving;
-import org.spout.vanilla.material.block.controlled.FurnaceBlock;
+import org.spout.vanilla.material.block.component.FurnaceBlock;
 
 public class Sand extends SolidMoving implements TimedCraftable {
 	public Sand(String name, int id) {

@@ -29,26 +29,26 @@ package org.spout.vanilla.component.substance.material;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.spout.api.component.components.BlockComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 
-public abstract class WindowBlockComponent extends BlockComponent {
+public abstract class WindowBlockComponent extends VanillaBlockComponent {
 	private final Set<Player> viewers = new HashSet<Player>();
 
+	/**
+	 * Opens a window for the given player.
+	 * @param player
+	 */
 	public abstract void openWindow(Player player);
-
-	public final void doOpenWindow(Player player) {
-		viewers.add(player);
-		openWindow(player);
-	}
 
 	@Override
 	public void onInteract(Entity entity, Action type) {
 		super.onInteract(entity, type);
 		if (type == Action.RIGHT_CLICK && entity instanceof Player) {
-			doOpenWindow((Player) entity);
+			Player player = (Player) entity;
+			viewers.add(player);
+			openWindow(player);
 		}
 	}
 }

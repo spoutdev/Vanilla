@@ -30,7 +30,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 /**
- * Represents the inventory of a {@link org.spout.vanilla.material.block.controlled.JukeboxBlock}.
+ * Represents the inventory of a {@link org.spout.vanilla.material.block.component.JukeboxBlock}.
  */
 public class JukeboxInventory extends Inventory {
 	private static final long serialVersionUID = 1L;

@@ -24,8 +24,9 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.controlled;
+package org.spout.vanilla.material.block.component;
 
+import org.spout.api.component.components.BlockComponent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
@@ -166,5 +167,10 @@ public class ChestBlock extends Solid implements Directional, Fuel {
 	@Override
 	public boolean isPlacementSuppressed() {
 		return true;
+	}
+
+	@Override
+	public Chest getBlockComponent() {
+		return new Chest();
 	}
 }

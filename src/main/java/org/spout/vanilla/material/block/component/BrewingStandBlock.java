@@ -24,16 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.controlled;
+package org.spout.vanilla.material.block.component;
 
-import org.spout.vanilla.material.block.piston.PistonExtension;
+import org.spout.api.material.block.BlockFace;
 
-/**
- * A temporary block type with entity which animates the extension of the piston
- */
-public class PistonExtensionMoving extends PistonExtension {
-	public PistonExtensionMoving(String name, int id) {
+import org.spout.vanilla.component.substance.material.BrewingStand;
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.material.block.Solid;
+
+public class BrewingStandBlock extends Solid {
+	public BrewingStandBlock(String name, int id) {
 		super(name, id);
-		this.setResistance(0.0F);
+		this.setResistance(2.5F).setHardness(10.F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
+	}
+
+	@Override
+	public byte getLightLevel(short data) {
+		return 1;
+	}
+
+	@Override
+	public BrewingStand getBlockComponent() {
+		return new BrewingStand();
 	}
 }

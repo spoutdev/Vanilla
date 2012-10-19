@@ -34,7 +34,7 @@ import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.block.controlled.FurnaceBlock;
+import org.spout.vanilla.material.block.component.FurnaceBlock;
 
 public class Cobblestone extends Solid implements TimedCraftable {
 	public Cobblestone(String name, int id) {

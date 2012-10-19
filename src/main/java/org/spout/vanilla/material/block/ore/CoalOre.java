@@ -34,7 +34,7 @@ import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
-import org.spout.vanilla.material.block.controlled.FurnaceBlock;
+import org.spout.vanilla.material.block.component.FurnaceBlock;
 
 public class CoalOre extends Ore implements TimedCraftable, InitializableMaterial {
 	public CoalOre(String name, int id) {

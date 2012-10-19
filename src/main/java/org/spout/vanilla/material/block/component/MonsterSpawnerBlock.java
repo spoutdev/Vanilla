@@ -24,19 +24,19 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.controlled;
+package org.spout.vanilla.material.block.component;
 
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.component.substance.material.MonsterSpawner;
+import org.spout.vanilla.material.block.Solid;
 
-public class WallSign extends SignBase {
-	public WallSign(String name, int id) {
+public class MonsterSpawnerBlock extends Solid {
+	public MonsterSpawnerBlock(String name, int id) {
 		super(name, id);
-		// TODO Auto-generated constructor stub
+		this.setHardness(5.0F).setResistance(8.3F).setTransparent();
 	}
 
 	@Override
-	public boolean canSupport(BlockMaterial material, BlockFace face) {
-		return false;
+	public MonsterSpawner getBlockComponent() {
+		return new MonsterSpawner();
 	}
 }

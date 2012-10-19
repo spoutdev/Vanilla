@@ -26,8 +26,5 @@
  */
 package org.spout.vanilla.component.substance.material;
 
-import org.spout.api.component.components.BlockComponent;
-
-public class MonsterSpawner extends BlockComponent {
-
+public class MonsterSpawner extends VanillaBlockComponent {
 }

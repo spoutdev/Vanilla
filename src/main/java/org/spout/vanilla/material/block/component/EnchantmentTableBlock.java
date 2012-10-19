@@ -24,40 +24,51 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.controlled;
+package org.spout.vanilla.material.block.component;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.entity.Player;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.component.substance.material.EnchantmentTable;
 import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.data.MoveReaction;
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Solid;
 
-public class CraftingTableBlock extends Solid {
-	public CraftingTableBlock(String name, int id) {
+public class EnchantmentTableBlock extends Solid implements Directional {
+	public EnchantmentTableBlock(String name, int id) {
 		super(name, id);
-		this.setHardness(4.2F);
+		this.setHardness(5.0F).setResistance(2000.0F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
+	}
+
+	@Override
+	public MoveReaction getMoveReaction(Block block) {
+		return MoveReaction.DENY;
 	}
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
-	}
-
-	@Override
-	public void onInteractBy(Entity entity, Block block, Action action, BlockFace face) {
-		if (action == Action.RIGHT_CLICK) {
-			//TODO open the window for players
-			if (!(entity instanceof Player)) {
-				return;
-			}
-		}
+		return Instrument.BASSDRUM;
 	}
 
 	@Override
 	public boolean isPlacementSuppressed() {
 		return true;
+	}
+
+	@Override
+	public BlockFace getFacing(Block block) {
+		return BlockFace.TOP;
+	}
+
+	@Override
+	public void setFacing(Block block, BlockFace facing) {
+	}
+
+	@Override
+	public EnchantmentTable getBlockComponent() {
+		return new EnchantmentTable();
 	}
 }

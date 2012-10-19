@@ -26,10 +26,9 @@
  */
 package org.spout.vanilla.component.substance.material;
 
-import org.spout.api.component.components.BlockComponent;
 import org.spout.vanilla.data.VanillaData;
 
-public class NoteBlock extends BlockComponent {
+public class NoteBlock extends VanillaBlockComponent {
 	public boolean isPowered() {
 		return getData().get(VanillaData.IS_POWERED);
 	}

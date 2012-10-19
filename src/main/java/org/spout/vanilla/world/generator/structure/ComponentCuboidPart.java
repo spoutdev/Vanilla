@@ -80,11 +80,11 @@ public class ComponentCuboidPart extends ComponentPart {
 	}
 
 	public void offsetMin(int x, int y, int z) {
-		min.add(new IntVector3(x, y, z));
+		offsetMin(new IntVector3(x, y, z));
 	}
 
 	public void offsetMax(int x, int y, int z) {
-		max.add(new IntVector3(x, y, z));
+		offsetMax(new IntVector3(x, y, z));
 	}
 
 	public void offsetMinMax(int minXOff, int minYOff, int minZOff, int maxXOff, int maxYOff, int maxZOff) {

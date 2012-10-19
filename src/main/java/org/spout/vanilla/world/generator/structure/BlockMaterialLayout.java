@@ -36,10 +36,10 @@ public class BlockMaterialLayout {
 
 	/**
 	 * <p>Constructs the layout using a string. The string has to be formatted
-	 * in alphanumeric codes</p> <p><strong>Example:</strong></p>
+	 * in alphanumeric codes.</p> <p><strong>Example:</strong></p>
 	 * <p><pre>setLayout("00000\n00100\n01110\n00100\n00000", Wool.WHITE, Wool.RED);</pre></p>
-	 * <p>This would draw a red cross wrapped in white wool</p> <p>The key index
-	 * begins at 0-9, then a-z</p>
+	 * <p>This would draw a red cross wrapped in white wool</p> <p>The '.' char
+	 * represents no material.</p>
 	 *
 	 * @param layout
 	 */
@@ -54,16 +54,19 @@ public class BlockMaterialLayout {
 			}
 			row++;
 		}
+		style.put('.', null);
 	}
 
 	/**
 	 * Construct a layout from a 2D character array. Each character can then be
-	 * mapped to a material, and represents a block.
+	 * mapped to a material, and represents a block. The '.' char represents no
+	 * material.
 	 *
 	 * @param layout
 	 */
 	public BlockMaterialLayout(char[][] layout) {
 		this.layout = layout;
+		style.put('.', null);
 	}
 
 	/**
@@ -71,8 +74,13 @@ public class BlockMaterialLayout {
 	 *
 	 * @param key
 	 * @param material
+	 * @throws IllegalArgumentException if the reserved '.' char is used as a
+	 * key.
 	 */
 	public void setBlockMaterial(char key, BlockMaterial material) {
+		if (key == '.') {
+			throw new IllegalArgumentException("The '.' char is reserved for no material");
+		}
 		style.put(key, material);
 	}
 
@@ -84,6 +92,11 @@ public class BlockMaterialLayout {
 		return layout[row].length;
 	}
 
+	/**
+	 * Returns the block material at the row and column position. Returns null
+	 * if no material is set at the position.
+	 *
+	 */
 	public BlockMaterial getBlockMaterial(int row, int column) {
 		return style.get(layout[row][column]);
 	}

@@ -29,6 +29,7 @@ package org.spout.vanilla.world.generator.structure;
 import gnu.trove.map.hash.TCharObjectHashMap;
 
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.math.IntVector3;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
@@ -37,13 +38,13 @@ import org.spout.vanilla.material.VanillaMaterials;
 /**
  * Draws a plane with the defined block material layout
  */
-public class LayoutPainterPart extends ComponentPart {
-	private Vector3 position = Vector3.ZERO;
+public class ComponentLayoutPainterPart extends ComponentPart {
+	private IntVector3 position = new IntVector3(0, 0, 0);
 	private Quaternion rotation = Quaternion.IDENTITY;
-	private Vector3 rotationPoint = Vector3.ZERO;
+	private IntVector3 rotationPoint = new IntVector3(0, 0, 0);
 	private BlockMaterialLayout layout = new BlockMaterialLayout("");
 
-	public LayoutPainterPart(StructureComponent parent) {
+	public ComponentLayoutPainterPart(StructureComponent parent) {
 		super(parent);
 	}
 
@@ -51,16 +52,40 @@ public class LayoutPainterPart extends ComponentPart {
 		this.layout = layout;
 	}
 
-	public void setPosition(Vector3 position) {
+	public void setPosition(int x, int y, int z) {
+		setPosition(new IntVector3(x, y, z));
+	}
+
+	public void setPosition(IntVector3 position) {
 		this.position = position;
+	}
+
+	public void offsetPosition(int xOff, int yOff, int zOff) {
+		offsetPosition(new IntVector3(xOff, yOff, zOff));
+	}
+
+	public void offsetPosition(IntVector3 offset) {
+		position.add(offset);
 	}
 
 	public void setRotation(Quaternion rotation) {
 		this.rotation = rotation;
 	}
 
-	public void setRotationPoint(Vector3 rotationPoint) {
+	public void setRotationPoint(int x, int y, int z) {
+		setRotationPoint(new IntVector3(x, y, z));
+	}
+
+	public void setRotationPoint(IntVector3 rotationPoint) {
 		this.rotationPoint = rotationPoint;
+	}
+
+	public void offsetRotationPoint(int xOff, int yOff, int zOff) {
+		offsetRotationPoint(new IntVector3(xOff, yOff, zOff));
+	}
+
+	public void offsetRotationPoint(IntVector3 offset) {
+		rotationPoint.add(offset);
 	}
 
 	@Override
@@ -68,7 +93,10 @@ public class LayoutPainterPart extends ComponentPart {
 		for (int xx = 0; xx < layout.getRowLenght(); xx++) {
 			for (int zz = 0; zz < layout.getColumnLenght(xx); zz++) {
 				if (!ignoreAir || !getBlockMaterial(xx, zz).isMaterial(VanillaMaterials.AIR)) {
-					setBlockMaterial(xx, zz, layout.getBlockMaterial(xx, zz));
+					final BlockMaterial material = layout.getBlockMaterial(xx, zz);
+					if (material != null) {
+						setBlockMaterial(xx, zz, material);
+					}
 				}
 			}
 		}
@@ -82,7 +110,10 @@ public class LayoutPainterPart extends ComponentPart {
 					continue;
 				}
 				if (!ignoreAir || !getBlockMaterial(xx, zz).isMaterial(VanillaMaterials.AIR)) {
-					setBlockMaterial(xx, zz, layout.getBlockMaterial(xx, zz));
+					final BlockMaterial material = layout.getBlockMaterial(xx, zz);
+					if (material != null) {
+						setBlockMaterial(xx, zz, material);
+					}
 				}
 			}
 		}
@@ -104,7 +135,10 @@ public class LayoutPainterPart extends ComponentPart {
 					if (ignoreAir && !getBlockMaterial(xx, zz).isMaterial(VanillaMaterials.AIR)) {
 						continue;
 					}
-					setBlockMaterial(xx, zz, layout.getBlockMaterial(xx, zz));
+					final BlockMaterial material = layout.getBlockMaterial(xx, zz);
+					if (material != null) {
+						setBlockMaterial(xx, zz, material);
+					}
 				}
 			}
 		}
@@ -121,8 +155,9 @@ public class LayoutPainterPart extends ComponentPart {
 	}
 
 	private Vector3 transform(int x, int z) {
+		final Vector3 rotPoint = new Vector3(rotationPoint.getX(), rotationPoint.getY(), rotationPoint.getZ());
 		return MathHelper.round(MathHelper.transform(new Vector3(x, 0, z).
-				subtract(rotationPoint), rotation).
-				add(rotationPoint).add(position));
+				subtract(rotPoint), rotation).
+				add(rotPoint).add(new Vector3(position.getX(), position.getY(), position.getZ())));
 	}
 }

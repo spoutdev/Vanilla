@@ -29,6 +29,9 @@ package org.spout.vanilla.world.generator.structure.temple;
 import java.util.Collections;
 import java.util.List;
 
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -38,6 +41,7 @@ import org.spout.vanilla.material.block.solid.Wool;
 import org.spout.vanilla.world.generator.normal.object.LootChestObject;
 import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
 import org.spout.vanilla.world.generator.structure.BlockMaterialLayout;
+import org.spout.vanilla.world.generator.structure.ComponentLayoutPainterPart;
 import org.spout.vanilla.world.generator.structure.ComponentPlanePart;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
@@ -46,18 +50,22 @@ import org.spout.vanilla.world.generator.structure.StructureComponent;
 public class DesertTemple extends StructureComponent {
 	private static final LootChestObject LOOT_CHEST = new LootChestObject();
 	private static final BlockMaterialLayout CENTER_CROSS;
-	private static final BlockMaterialLayout GLYPH;
+	private static final BlockMaterialLayout TOWER;
+	private static final BlockMaterialLayout DOOR;
 
 	static {
 		LOOT_CHEST.addMaterial(VanillaMaterials.IRON_BARS, 0.1, 1, 3); //TODO Investigate how the materials are distributed
-		CENTER_CROSS = new BlockMaterialLayout("000o000\n000o000\n00o0o00\noo0b0oo\n00o0o00\n000o000\n000o000");
-		CENTER_CROSS.setBlockMaterial('0', VanillaMaterials.SANDSTONE);
+		CENTER_CROSS = new BlockMaterialLayout("...o...\n...o...\n..o.o..\noo.b.oo\n..o.o..\n...o...\n...o...");
 		CENTER_CROSS.setBlockMaterial('o', Wool.ORANGE_WOOL);
 		CENTER_CROSS.setBlockMaterial('b', Wool.BLUE_WOOL);
-		GLYPH = new BlockMaterialLayout("---\nooo\no=o\n-o-\no=o\n-o-\n-o-");
-		GLYPH.setBlockMaterial('-', Sandstone.SMOOTH);
-		GLYPH.setBlockMaterial('o', Wool.ORANGE_WOOL);
-		GLYPH.setBlockMaterial('=', Sandstone.DECORATIVE);
+		TOWER = new BlockMaterialLayout("-oo-o--\n-o=o=oo\n-oo-o--");
+		TOWER.setBlockMaterial('-', Sandstone.SMOOTH);
+		TOWER.setBlockMaterial('o', Wool.ORANGE_WOOL);
+		TOWER.setBlockMaterial('=', Sandstone.DECORATIVE);
+		DOOR = new BlockMaterialLayout(".--\n-o-\n-=-\n-o-\n.--");
+		DOOR.setBlockMaterial('-', Sandstone.SMOOTH);
+		DOOR.setBlockMaterial('o', Wool.ORANGE_WOOL);
+		DOOR.setBlockMaterial('=', Sandstone.DECORATIVE);
 	}
 
 	public DesertTemple(Structure parent) {
@@ -73,6 +81,7 @@ public class DesertTemple extends StructureComponent {
 		// Building objects
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
 		final ComponentPlanePart plane = new ComponentPlanePart(this);
+		final ComponentLayoutPainterPart painter = new ComponentLayoutPainterPart(this);
 		final SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
 		box.setPicker(picker);
 		plane.setPicker(picker);
@@ -162,7 +171,7 @@ public class DesertTemple extends StructureComponent {
 		box.fill(false);
 		box.offsetMinMax(15, 0, 0, 15, 0, 0);
 		box.fill(false);
-		// The door ways for the passages mentionned above
+		// The door ways for the passages mentioned above
 		box.setMinMax(6, 7, 9, 6, 7, 11);
 		box.fill(false);
 		box.offsetMinMax(8, 0, 0, 8, 0, 0);
@@ -198,7 +207,7 @@ public class DesertTemple extends StructureComponent {
 		setBlockMaterial(19, 2, 2, Slab.SANDSTONE);
 		setBlockMaterial(2, 1, 2, VanillaMaterials.STAIRS_SANDSTONE, (short) 1);
 		setBlockMaterial(18, 1, 2, VanillaMaterials.STAIRS_SANDSTONE, (short) 0);
-		// Stuff on the inside of the sides of the pyramid
+		// Setup the spaces for the rows of columns inside
 		box.setMinMax(4, 3, 5, 4, 3, 17);
 		box.fill(false);
 		box.offsetMinMax(12, 0, 0, 12, 0, 0);
@@ -206,8 +215,76 @@ public class DesertTemple extends StructureComponent {
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
 		box.setMinMax(3, 1, 5, 4, 2, 16);
 		box.fill(false);
-		box.offsetMinMax(12, 0, 0, 12, 0, 0);
+		box.offsetMinMax(13, 0, 0, 13, 0, 0);
 		box.fill(false);
+		// Now place the columns
+		for (int zz = 5; zz < 18; zz += 2) {
+			setBlockMaterial(4, 1, zz, Sandstone.SMOOTH);
+			setBlockMaterial(4, 2, zz, Sandstone.DECORATIVE);
+			setBlockMaterial(16, 1, zz, Sandstone.SMOOTH);
+			setBlockMaterial(16, 2, zz, Sandstone.DECORATIVE);
+		}
+		// Apply the center cross above the loot pit, in the center of the pyramid
+		painter.setLayout(CENTER_CROSS);
+		painter.setPosition(7, 0, 7);
+		painter.fill(false);
+		// Apply the glyphs on the towers
+		painter.setRotation(new Quaternion(90, 1, 0, 0));
+		painter.setLayout(TOWER);
+		painter.setPosition(1, 8, 0);
+		painter.fill(false);
+		painter.offsetPosition(16, 0, 0);
+		painter.fill(false);
+		// Apply the glyph on the main door
+		painter.setLayout(DOOR);
+		painter.setPosition(8, 6, 0);
+		painter.fill(false);
+		// Dig the loot pit
+		picker.setOuterInnerMaterials(Sandstone.SMOOTH, Sandstone.SMOOTH);
+		box.setMinMax(8, -14, 8, 12, -11, 12);
+		box.fill(false);
+		picker.setOuterInnerMaterials(Sandstone.DECORATIVE, Sandstone.DECORATIVE);
+		box.offsetMinMax(0, 4, 0, 0, 1, 0);
+		box.fill(false);
+		picker.setOuterInnerMaterials(Sandstone.SMOOTH, Sandstone.SMOOTH);
+		box.offsetMinMax(0, 1, 0, 0, 1, 0);
+		box.fill(false);
+		picker.setOuterInnerMaterials(VanillaMaterials.SANDSTONE, VanillaMaterials.SANDSTONE);
+		box.setMinMax(8, -8, 8, 12, -1, 12);
+		box.fill(false);
+		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
+		box.offsetMinMax(1, -3, 1, -1, 0, -1);
+		box.fill(false);
+		// It's a trap! (TNT bellow the floor and stone pressure plate in the middle)
+		setBlockMaterial(10, -11, 10, VanillaMaterials.STONE_PRESSURE_PLATE);
+		picker.setOuterInnerMaterials(VanillaMaterials.TNT, VanillaMaterials.TNT);
+		box.setMinMax(9, -13, 9, 11, -13, 11);
+		box.fill(false);
+		// Setup the chest spaces
+		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
+		box.setMinMax(8, -11, 10, 8, -10, 10);
+		box.fill(false);
+		setBlockMaterial(7, -10, 10, Sandstone.DECORATIVE);
+		setBlockMaterial(7, -11, 10, Sandstone.SMOOTH);
+		box.offsetMinMax(4, 0, 0, 4, 0, 0);
+		box.fill(false);
+		setBlockMaterial(13, -10, 10, Sandstone.DECORATIVE);
+		setBlockMaterial(13, -11, 10, Sandstone.SMOOTH);
+		box.offsetMinMax(-2, 0, -2, -2, 0, -2);
+		box.fill(false);
+		setBlockMaterial(10, -10, 7, Sandstone.DECORATIVE);
+		setBlockMaterial(10, -11, 7, Sandstone.SMOOTH);
+		box.offsetMinMax(0, 0, 4, 0, 0, 4);
+		box.fill(false);
+		setBlockMaterial(10, -10, 13, Sandstone.DECORATIVE);
+		setBlockMaterial(10, -11, 13, Sandstone.SMOOTH);
+		// Place the loot chests
+		// TODO: Fix loot chest, add rotation support, and fix loot items for temples and mineshafts
+		// TODO: Fix set block material rotation
+		for (BlockFace face : BlockFaces.NSEW) {
+			final Vector3 chest = face.getOffset().multiply(2).add(10, -11, 10);
+			setBlockMaterial(chest.getFloorX(), chest.getFloorY(), chest.getFloorZ(), VanillaMaterials.CHEST);
+		}
 	}
 
 	@Override

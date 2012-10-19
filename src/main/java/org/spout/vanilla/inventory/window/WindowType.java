@@ -71,7 +71,17 @@ public enum WindowType {
 	 * The window seen when trading with a
 	 * {@link org.spout.vanilla.component.living.passive.Villager}
 	 */
-	VILLAGER(6);
+	VILLAGER(6),
+	/**
+	 * The window seen when using a
+	 * {@link org.spout.vanilla.component.substance.material.Beacon}
+	 */
+	BEACON(7),
+	/**
+	 * The window seen when using an
+	 * {@link org.spout.vanilla.component.substance.material.Anvil}
+	 */
+	ANVIL(8);
 
 	private final int id;
 	private static final TIntObjectMap<WindowType> idMap = new TIntObjectHashMap<WindowType>();

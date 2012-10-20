@@ -27,7 +27,6 @@
 package org.spout.vanilla.protocol;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -37,7 +36,6 @@ import gnu.trove.set.TIntSet;
 import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
-import org.spout.api.event.Event;
 import org.spout.api.event.EventHandler;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
@@ -99,6 +97,7 @@ import org.spout.vanilla.event.world.PlaySoundEffectEvent;
 import org.spout.vanilla.event.world.TimeUpdateEvent;
 import org.spout.vanilla.event.world.WeatherChangeEvent;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.controlled.VanillaComplexMaterial;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
@@ -647,22 +646,16 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			}
 			
 			for (BlockComponentSnapshot component : snapshot.getBlockComponents()) {
-				System.out.println("Found block component: " + component.getComponent().getName());
-				if (Sign.class.isAssignableFrom(component.getComponent())) {
-					Sign sign = (Sign)c.getBlockComponent(component.getX(), component.getY(), component.getZ());
-					updateEvents.add(new SignUpdateEvent(sign, sign.getText()));
-					System.out.println("Found sign component: " + Arrays.toString(sign.getText()));
+				BlockMaterial bm = c.getBlockMaterial(component.getX(), component.getY(), component.getZ());
+				if (bm instanceof VanillaComplexMaterial) {
+					ProtocolEvent event = ((VanillaComplexMaterial)bm).getUpdate(c.getWorld(), component.getX(), component.getY(), component.getZ());
+					if (event != null) {
+						updateEvents.add(event);
+					}
 				}
 			}
 
 			arrIndex = rawBlockIdArray.length + (rawBlockData.length >> 1);
-
-			// The old method which doesn't use the Minecraft data conversion function
-			/*
-			for (int i = 0; i < rawBlockData.length; i += 2) {
-				fullChunkData[arrIndex++] = (byte) ((rawBlockData[i + 1] << 4) | (rawBlockData[i] & 0xF));
-			}
-			*/
 
 			System.arraycopy(rawBlockLight, 0, fullChunkData, arrIndex, rawBlockLight.length);
 			arrIndex += rawBlockLight.length;

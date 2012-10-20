@@ -30,20 +30,23 @@ import org.spout.api.Source;
 import org.spout.api.component.components.BlockComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.LoadOption;
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.Vector3;
+import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.component.substance.material.Sign;
 import org.spout.vanilla.data.MoveReaction;
+import org.spout.vanilla.event.block.SignUpdateEvent;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 
-public abstract class SignBase extends AbstractAttachable implements InitializableMaterial {
+public abstract class SignBase extends AbstractAttachable implements InitializableMaterial, VanillaComplexMaterial {
 	public SignBase(String name, int id) {
 		super(name, id);
 		this.setAttachable(BlockFaces.NESWB).setHardness(1.0F).setResistance(1.6F).setOpacity((byte) 1);
@@ -93,7 +96,13 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 	public abstract boolean canSupport(BlockMaterial material, BlockFace face);
 
 	@Override
-	public BlockComponent getBlockComponent() {
+	public BlockComponent createBlockComponent() {
 		return new Sign();
+	}
+
+	@Override
+	public ProtocolEvent getUpdate(World world, int x, int y, int z) {
+		Sign sign = (Sign) world.getBlockComponent(x, y, z);
+		return new SignUpdateEvent(sign, sign.getText());
 	}
 }

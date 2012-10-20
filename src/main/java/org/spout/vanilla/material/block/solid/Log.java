@@ -64,7 +64,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	public static final short aliveMask = 0x0100;
 	public static final short heightMask = 0x0600;
 	private static final EffectRange dynamicRange = new CuboidEffectRange(-4, 0, -4, 4, 8, 4);
-	public final float BURN_TIME = 15.f;
+	public final float BURN_TIME = 15;
 	private final Sapling sapling;
 
 	private Log(String name, Sapling sapling) {

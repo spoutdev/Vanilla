@@ -48,12 +48,27 @@ import org.spout.api.material.MaterialRegistry;
 import org.spout.api.protocol.NetworkSynchronizer;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.inventory.window.block.BrewingStandWindow;
+import org.spout.vanilla.component.inventory.window.block.ChestWindow;
+import org.spout.vanilla.component.inventory.window.block.CraftingTableWindow;
+import org.spout.vanilla.component.inventory.window.block.DispenserWindow;
+import org.spout.vanilla.component.inventory.window.block.EnchantmentTableWindow;
+import org.spout.vanilla.component.inventory.window.block.FurnaceWindow;
+import org.spout.vanilla.component.inventory.window.entity.VillagerWindow;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.component.living.hostile.EnderDragon;
 import org.spout.vanilla.component.living.neutral.Enderman;
 import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.component.substance.material.Furnace;
 import org.spout.vanilla.component.substance.object.FallingBlock;
+import org.spout.vanilla.inventory.block.BrewingStandInventory;
+import org.spout.vanilla.inventory.block.ChestInventory;
+import org.spout.vanilla.inventory.block.DispenserInventory;
+import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
+import org.spout.vanilla.inventory.block.FurnaceInventory;
+import org.spout.vanilla.inventory.entity.VillagerInventory;
+import org.spout.vanilla.inventory.window.WindowType;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaBlockUtil;
@@ -67,6 +82,48 @@ public class TestCommands {
 
 	public TestCommands(VanillaPlugin instance) {
 		plugin = instance;
+	}
+
+	@Command(aliases = "window", usage = "<type>", desc = "Open a window.", min = 1, max = 1)
+	@CommandPermissions("vanilla.command.debug")
+	public void window(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to open  window.");
+		}
+
+		WindowType type;
+		try {
+			type = WindowType.valueOf(args.getString(0).toUpperCase());
+		} catch (IllegalArgumentException e) {
+			throw new CommandException("Window not found.");
+		}
+
+		Player player = (Player) source;
+		switch (type) {
+			case CHEST:
+				player.add(ChestWindow.class).init("Command Chest", new ChestInventory()).open();
+				break;
+			case CRAFTING_TABLE:
+				player.add(CraftingTableWindow.class).open();
+				break;
+			case FURNACE:
+				player.add(FurnaceWindow.class).init(new FurnaceInventory()).open();
+				break;
+			case DISPENSER:
+				player.add(DispenserWindow.class).init(new DispenserInventory()).open();
+				break;
+			case ENCHANTMENT_TABLE:
+				player.add(EnchantmentTableWindow.class).init(new EnchantmentTableInventory()).open();
+				break;
+			case BREWING_STAND:
+				player.add(BrewingStandWindow.class).init(new BrewingStandInventory()).open();
+				break;
+			case VILLAGER:
+				player.add(VillagerWindow.class).init(new VillagerInventory()).open();
+				break;
+			default:
+				throw new CommandException("Window not supported.");
+		}
 	}
 
 	@Command(aliases = "damage", usage = "<amount>", desc = "Damage yourself")

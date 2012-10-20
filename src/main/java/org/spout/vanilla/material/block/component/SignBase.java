@@ -45,6 +45,7 @@ import org.spout.vanilla.event.block.SignUpdateEvent;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
+import org.spout.vanilla.material.block.controlled.VanillaComplexMaterial;
 
 public abstract class SignBase extends AbstractAttachable implements InitializableMaterial, VanillaComplexMaterial {
 	public SignBase(String name, int id) {

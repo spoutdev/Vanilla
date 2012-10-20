@@ -43,7 +43,7 @@ import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.RedstoneUtil;
 
 public class TrapDoor extends AbstractAttachable implements Fuel, Openable, RedstoneTarget {
-	public final float BURN_TIME = 15.f;
+	public final float BURN_TIME = 15;
 
 	public TrapDoor(String name, int id) {
 		super(name, id);

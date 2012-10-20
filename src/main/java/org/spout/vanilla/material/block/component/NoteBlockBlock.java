@@ -37,7 +37,7 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.RedstoneUtil;
 
 public class NoteBlockBlock extends Solid implements Fuel {
-	public final float BURN_TIME = 15.f;
+	public final float BURN_TIME = 15;
 
 	public NoteBlockBlock(String name, int id) {
 		super(name, id);

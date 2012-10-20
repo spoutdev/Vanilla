@@ -43,9 +43,4 @@ public class BrewingStandBlock extends Solid {
 	public byte getLightLevel(short data) {
 		return 1;
 	}
-
-	@Override
-	public BrewingStand getBlockComponent() {
-		return new BrewingStand();
-	}
 }

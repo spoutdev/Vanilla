@@ -35,6 +35,7 @@ import org.spout.api.map.DefaultedKeyArray;
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.math.Vector3;
 import org.spout.vanilla.component.inventory.PlayerInventory;
+import org.spout.vanilla.inventory.block.FurnaceInventory;
 
 /**
  * * Common Vanilla-like data mappings that are found in Vanilla.
@@ -60,6 +61,10 @@ public class VanillaData {
 	public static final DefaultedKey<Integer> INTERACT_REACH = new DefaultedKeyImpl<Integer>("interact_reach", 5);
 	public static final DefaultedKey<Vector3> VELOCITY = new DefaultedKeyImpl<Vector3>("velocity", Vector3.ZERO);
 	public static final DefaultedKey<Inventory> ENTITY_INVENTORY = new DefaultedKeyImpl<Inventory>("inventory", null);
+	// Furnace
+	public static final DefaultedKey<FurnaceInventory> FURNACE_INVENTORY = new DefaultedKeyImpl<FurnaceInventory>("inventory", new FurnaceInventory());
+	public static final DefaultedKey<Float> FURNACE_FUEL = new DefaultedKeyImpl<Float>("fuel", 0f);
+	public static final DefaultedKey<Float> MAX_FURNACE_FUEL = new DefaultedKeyImpl<Float>("max_fuel", 0f);
 	// TNT
 	public static final DefaultedKey<Float> FUSE = new DefaultedKeyImpl<Float>("fuse", (float) random.nextInt(5) + 1);
 	public static final DefaultedKey<Float> EXPLOSION_SIZE = new DefaultedKeyImpl<Float>("explosion_size", 4f);

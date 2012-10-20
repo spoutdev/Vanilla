@@ -35,7 +35,7 @@ import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Solid;
 
 public class JukeboxBlock extends Solid implements Fuel {
-	public final float BURN_TIME = 15.f;
+	public final float BURN_TIME = 15;
 
 	public JukeboxBlock(String name, int id) {
 		super(name, id);
@@ -62,10 +62,5 @@ public class JukeboxBlock extends Solid implements Fuel {
 	@Override
 	public float getFuelTime() {
 		return BURN_TIME;
-	}
-
-	@Override
-	public Jukebox getBlockComponent() {
-		return new Jukebox();
 	}
 }

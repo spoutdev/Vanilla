@@ -57,9 +57,4 @@ public class EnderChestBlock extends ChestBlock {
 	public boolean isPlacementSuppressed() {
 		return true;
 	}
-
-	@Override
-	public EnderChest getBlockComponent() {
-		return new EnderChest();
-	}
 }

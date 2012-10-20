@@ -61,9 +61,4 @@ public class CraftingTableBlock extends Solid {
 	public boolean isPlacementSuppressed() {
 		return true;
 	}
-
-	@Override
-	public CraftingTable getBlockComponent() {
-		return new CraftingTable();
-	}
 }

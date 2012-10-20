@@ -44,7 +44,7 @@ public class Plank extends Solid implements Fuel, Burnable {
 	public static final Plank BIRCH = new Plank("Birch Plank", WoodType.BIRCH, PLANK);
 	public static final Plank JUNGLE = new Plank("Jungle Plank", WoodType.JUNGLE, PLANK);
 	private final WoodType type;
-	public final float BURN_TIME = 15.f;
+	public final float BURN_TIME = 15;
 
 	public Plank(String name) {
 		super((short) 0x0003, name, 05);

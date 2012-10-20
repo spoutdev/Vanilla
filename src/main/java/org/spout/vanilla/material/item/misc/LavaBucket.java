@@ -33,7 +33,7 @@ import org.spout.vanilla.material.item.EmptyContainer;
 import org.spout.vanilla.material.item.FullContainer;
 
 public class LavaBucket extends FullContainer implements Fuel {
-	public final float BURN_TIME = 1000.f;
+	public final float BURN_TIME = 1000;
 
 	public LavaBucket(String name, int id, BlockMaterial onPlaceMaterial, EmptyContainer emptyContainer) {
 		super(name, id, onPlaceMaterial, emptyContainer);

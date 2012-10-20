@@ -45,7 +45,7 @@ import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class ChestBlock extends Solid implements Directional, Fuel {
-	public final float BURN_TIME = 15.f;
+	public final float BURN_TIME = 15;
 
 	public ChestBlock(String name, int id) {
 		super(name, id);
@@ -167,10 +167,5 @@ public class ChestBlock extends Solid implements Directional, Fuel {
 	@Override
 	public boolean isPlacementSuppressed() {
 		return true;
-	}
-
-	@Override
-	public Chest getBlockComponent() {
-		return new Chest();
 	}
 }

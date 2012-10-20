@@ -34,9 +34,4 @@ public class MonsterSpawnerBlock extends Solid {
 		super(name, id);
 		this.setHardness(5.0F).setResistance(8.3F).setTransparent();
 	}
-
-	@Override
-	public MonsterSpawner getBlockComponent() {
-		return new MonsterSpawner();
-	}
 }

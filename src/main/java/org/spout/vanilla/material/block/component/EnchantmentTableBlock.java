@@ -66,9 +66,4 @@ public class EnchantmentTableBlock extends Solid implements Directional {
 	@Override
 	public void setFacing(Block block, BlockFace facing) {
 	}
-
-	@Override
-	public EnchantmentTable getBlockComponent() {
-		return new EnchantmentTable();
-	}
 }

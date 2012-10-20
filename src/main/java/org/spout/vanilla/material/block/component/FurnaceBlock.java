@@ -36,15 +36,14 @@ import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class FurnaceBlock extends Solid implements Directional {
+public class FurnaceBlock extends ComponentMaterial<Furnace> implements Directional {
 	public static final float SMELT_TIME = 10.f;
 	private final boolean burning;
 
 	public FurnaceBlock(String name, int id, boolean burning) {
-		super(name, id);
+		super(name, id, Furnace.class);
 		this.burning = burning;
 		this.setHardness(3.5F).setResistance(5.8F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
@@ -100,10 +99,5 @@ public class FurnaceBlock extends Solid implements Directional {
 	@Override
 	public MoveReaction getMoveReaction(Block block) {
 		return MoveReaction.DENY;
-	}
-
-	@Override
-	public Furnace getBlockComponent() {
-		return new Furnace();
 	}
 }

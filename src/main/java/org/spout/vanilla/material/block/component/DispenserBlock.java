@@ -170,9 +170,4 @@ public class DispenserBlock extends Solid implements Directional, RedstoneTarget
 	public boolean isReceivingPower(Block block) {
 		return RedstoneUtil.isReceivingPower(block);
 	}
-
-	@Override
-	public Dispenser getBlockComponent() {
-		return new Dispenser();
-	}
 }

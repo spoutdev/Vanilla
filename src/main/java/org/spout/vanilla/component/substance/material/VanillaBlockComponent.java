@@ -32,6 +32,6 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.material.block.BlockFace;
 
 public abstract class VanillaBlockComponent extends BlockComponent {
-	public void onInteract(Entity entity, Action action, BlockFace face) {
+	public void onInteractBy(Entity entity, Action action, BlockFace face) {
 	}
 }

@@ -97,7 +97,7 @@ import org.spout.vanilla.event.world.PlaySoundEffectEvent;
 import org.spout.vanilla.event.world.TimeUpdateEvent;
 import org.spout.vanilla.event.world.WeatherChangeEvent;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.controlled.VanillaComplexMaterial;
+import org.spout.vanilla.material.block.component.VanillaComplexMaterial;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;

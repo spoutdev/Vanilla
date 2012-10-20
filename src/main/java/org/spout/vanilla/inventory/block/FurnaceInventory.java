@@ -48,12 +48,24 @@ public class FurnaceInventory extends Inventory {
 		return get(OUTPUT_SLOT);
 	}
 
+	public void setOutput(ItemStack item) {
+		set(OUTPUT_SLOT, item);
+	}
+
 	public ItemStack getFuel() {
 		return get(FUEL_SLOT);
 	}
 
+	public void setFuel(ItemStack item) {
+		set(FUEL_SLOT, item);
+	}
+
 	public ItemStack getIngredient() {
 		return get(INGREDIENT_SLOT);
+	}
+
+	public void setIngredient(ItemStack item) {
+		set(INGREDIENT_SLOT, item);
 	}
 
 	/**

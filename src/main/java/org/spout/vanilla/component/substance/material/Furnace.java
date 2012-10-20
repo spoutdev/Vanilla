@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.component.substance.material;
 
+import org.apache.commons.collections.keyvalue.TiedMapEntry;
+
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.ItemStack;
 
@@ -36,9 +38,33 @@ import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
 import org.spout.vanilla.inventory.window.prop.FurnaceProperty;
 import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.TimedCraftable;
 
 public class Furnace extends WindowBlockComponent implements Container {
 	public final float MAX_FUEL_INCREMENT = 12.5f;
+	public final float MAX_SMELT_TIME_INCREMENT = 9f;
+
+	public float getMaxSmeltTime() {
+		return getData().get(VanillaData.MAX_SMELT_TIME);
+	}
+
+	public void setMaxSmeltTime(float maxSmeltTime) {
+		getData().put(VanillaData.MAX_SMELT_TIME, maxSmeltTime);
+	}
+
+	public float getSmeltTime() {
+		return getData().get(VanillaData.SMELT_TIME);
+	}
+
+	public void setSmeltTime(float smeltTime) {
+		getData().put(VanillaData.SMELT_TIME, smeltTime);
+		float maxSmeltTime = getMaxSmeltTime();
+		float increment = (MAX_SMELT_TIME_INCREMENT * 20) - ((MAX_SMELT_TIME_INCREMENT / maxSmeltTime) * (smeltTime * 20));
+		for (Player player : viewers) {
+			player.get(Window.class).setProperty(FurnaceProperty.PROGRESS_ARROW, (int) increment);
+		}
+	}
+
 
 	public float getMaxFuel() {
 		return getData().get(VanillaData.MAX_FURNACE_FUEL);
@@ -66,13 +92,50 @@ public class Furnace extends WindowBlockComponent implements Container {
 		setFuel(getFuel() - dt);
 	}
 
+	public void pulseSmeltTime(float dt) {
+		setSmeltTime(getSmeltTime() - dt);
+	}
+
+	public boolean canSmelt() {
+		FurnaceInventory inventory = getInventory();
+		ItemStack output = inventory.getOutput();
+		return inventory.hasIngredient() && (output == null || output.getMaterial() == ((TimedCraftable) inventory.getIngredient().getMaterial()).getResult().getMaterial());
+	}
+
+	public void smelt() {
+		FurnaceInventory inventory = getInventory();
+		if (!inventory.hasIngredient()) {
+			return;
+		}
+
+		ItemStack ingredient = inventory.getIngredient();
+		ItemStack output = inventory.getOutput();
+		if (output == null) {
+			inventory.setOutput(((TimedCraftable) ingredient.getMaterial()).getResult());
+		} else {
+			inventory.addAmount(FurnaceInventory.OUTPUT_SLOT, 1);
+		}
+		inventory.addAmount(FurnaceInventory.INGREDIENT_SLOT, -1);
+		setMaxSmeltTime(-1);
+		setSmeltTime(-1);
+	}
+
 	@Override
 	public void onTick(float dt) {
-		float fuel = getFuel();
+
+		final float fuel = getFuel();
+		final FurnaceInventory inventory = getInventory();
+
+		// Not burning
 		if (fuel <= 0) {
+			// Reset any progress
+			if (getSmeltTime() > 0) {
+				setSmeltTime(-1);
+				setMaxSmeltTime(-1);
+			}
+
 			// Try to light the furnace
-			FurnaceInventory inventory = getInventory();
-			if (inventory.hasFuel()) {
+			if (inventory.hasFuel() && inventory.hasIngredient()) {
 				float newFuel = ((Fuel) inventory.getFuel().getMaterial()).getFuelTime();
 				setMaxFuel(newFuel);
 				setFuel(newFuel);
@@ -81,9 +144,41 @@ public class Furnace extends WindowBlockComponent implements Container {
 			}
 		}
 
-		if (fuel >= 0) {
+		// Burning
+		if (fuel > 0) {
+
 			pulseFuel(dt);
-			return;
+			final float smeltTime = getSmeltTime();
+
+			if (smeltTime == -1) {
+				// Try to start smelting
+				if (inventory.hasIngredient()) {
+					if (!canSmelt()) {
+						return;
+					}
+					float newSmeltTime = ((TimedCraftable) inventory.getIngredient().getMaterial()).getCraftTime();
+					setMaxSmeltTime(newSmeltTime);
+					setSmeltTime(newSmeltTime);
+					return;
+				}
+			}
+
+			if (smeltTime <= 0) {
+				// Try to smelt the current ingredient
+				if (inventory.hasIngredient()) {
+					smelt();
+					return;
+				}
+			}
+
+			if (smeltTime > 0) {
+				// Reset progress if ingredient is gone
+				if (!inventory.hasIngredient()) {
+					setSmeltTime(-1);
+					return;
+				}
+				pulseSmeltTime(dt);
+			}
 		}
 	}
 

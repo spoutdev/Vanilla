@@ -68,7 +68,7 @@ public class BookShelf extends Solid implements Fuel, InitializableMaterial, Bur
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
+		return Instrument.BASS_GUITAR;
 	}
 
 	@Override

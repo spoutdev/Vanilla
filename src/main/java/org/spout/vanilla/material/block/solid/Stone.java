@@ -47,6 +47,6 @@ public class Stone extends Solid implements InitializableMaterial {
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.BASSDRUM;
+		return Instrument.BASS_DRUM;
 	}
 }

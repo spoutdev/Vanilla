@@ -62,7 +62,7 @@ public class Plank extends Solid implements Fuel, Burnable {
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
+		return Instrument.BASS_GUITAR;
 	}
 
 	@Override

@@ -79,7 +79,7 @@ public class FenceGate extends VanillaBlockMaterial implements Openable, Redston
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
+		return Instrument.BASS_GUITAR;
 	}
 
 	@Override

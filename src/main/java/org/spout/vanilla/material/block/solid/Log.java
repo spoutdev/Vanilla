@@ -91,7 +91,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
+		return Instrument.BASS_GUITAR;
 	}
 
 	@Override

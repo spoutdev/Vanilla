@@ -55,6 +55,6 @@ public class Sand extends SolidMoving implements TimedCraftable {
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.SNAREDRUM;
+		return Instrument.SNARE_DRUM;
 	}
 }

@@ -26,22 +26,80 @@
  */
 package org.spout.vanilla.component.substance.material;
 
+import org.spout.api.Source;
+import org.spout.api.component.ChunkComponentOwner;
+import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.component.inventory.window.block.ChestWindow;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.ChestInventory;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.util.VanillaBlockUtil;
 
-public class Chest extends WindowBlockComponent implements Container {
-	private final ChestInventory first = new ChestInventory();
-	private final ChestInventory second = new ChestInventory();
+public class Chest extends WindowBlockComponent implements Container, Source {
+	private boolean opened = false;
 
-	@Override
-	public ChestInventory getInventory() {
-		return first;
+	public void setDouble(boolean d) {
+		ChestInventory oldInventory = getInventory();
+		if ((d && oldInventory.size() == ChestInventory.DOUBLE_SIZE) || (!d && oldInventory.size() == ChestInventory.SINGLE_SIZE)) {
+			return;
+		}
+		ChestInventory newInventory = new ChestInventory(d);
+		newInventory.addAll(oldInventory);
+		getData().put(VanillaData.CHEST_INVENTORY, newInventory);
+	}
+
+	public void setOpened(Source source, boolean opened) {
+		if ((this.opened && opened) || (!this.opened && !opened)) {
+			return;
+		}
+		VanillaBlockUtil.playBlockAction(getBlock(source), (byte) 1, opened ? (byte) 1 : (byte) 0);
 	}
 
 	@Override
-	public void openWindow(Player player) {
-		// TODO: Chest logic
+	public void onTick(float dt) {
+		if (viewers.isEmpty()) {
+			setOpened(this, false);
+		}
+	}
+
+	@Override
+	public void onInteractBy(Entity entity, Action type, BlockFace clickedFace) {
+		if (type != Action.RIGHT_CLICK) {
+			return;
+		}
+		ChunkComponentOwner owner = getOwner();
+		Block block = getBlock(entity);
+		setDouble(VanillaMaterials.CHEST.isDouble(block));
+		setOpened(entity, true);
+		super.onInteractBy(entity, type, clickedFace);
+	}
+
+	@Override
+	public ChestInventory getInventory() {
+		return getData().get(VanillaData.CHEST_INVENTORY);
+	}
+
+	@Override
+	public void open(Player player) {
+		String title;
+		ChestInventory inventory = getInventory();
+		switch (inventory.size()) {
+			case ChestInventory.SINGLE_SIZE:
+				title = "Chest";
+				break;
+			case ChestInventory.DOUBLE_SIZE:
+				title = "Large chest";
+				break;
+			default:
+				title = "Unknown chest";
+				break;
+		}
+		player.add(ChestWindow.class).init(title, inventory).open();
 	}
 }

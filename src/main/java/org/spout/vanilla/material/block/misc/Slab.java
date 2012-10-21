@@ -79,7 +79,7 @@ public class Slab extends VanillaBlockMaterial implements Burnable {
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.BASSDRUM;
+		return Instrument.BASS_DRUM;
 	}
 
 	public DoubleSlab getDoubleType() {

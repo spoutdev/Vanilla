@@ -63,6 +63,7 @@ import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.inventory.window.DefaultWindow;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.substance.material.Sign;
@@ -424,7 +425,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (event.getWindow() instanceof DefaultWindow) {
 			return null; // no message for the default Window
 		}
-		int size = event.getWindow().getInventorySize() - event.getWindow().getOwner().get(Human.class).getInventory().getMain().size();
+		PlayerInventory inventory = event.getWindow().getHuman().getInventory();
+		int size = event.getWindow().getInventorySize() - (inventory.getMain().size() + inventory.getQuickbar().size());
 		return new WindowOpenMessage(event.getWindow(), size);
 	}
 

@@ -61,7 +61,7 @@ public class NoteBlockBlock extends Solid implements Fuel {
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
+		return Instrument.BASS_GUITAR;
 	}
 
 	@Override

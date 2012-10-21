@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.component.substance.material;
 
-import org.apache.commons.collections.keyvalue.TiedMapEntry;
-
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.ItemStack;
 
@@ -188,7 +186,7 @@ public class Furnace extends WindowBlockComponent implements Container {
 	}
 
 	@Override
-	public void openWindow(Player player) {
+	public void open(Player player) {
 		player.add(FurnaceWindow.class).init(getInventory()).open();
 	}
 }

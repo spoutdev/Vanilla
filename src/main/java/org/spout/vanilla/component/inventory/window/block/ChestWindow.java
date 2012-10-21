@@ -27,19 +27,14 @@
 package org.spout.vanilla.component.inventory.window.block;
 
 import org.spout.vanilla.component.inventory.window.Window;
+import org.spout.vanilla.component.substance.material.Chest;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class ChestWindow extends Window {
-	public ChestWindow init(String title, ChestInventory... inventories) {
-		for (int i = 0; i < inventories.length; i++) {
-			ChestInventory inventory = inventories[i];
-			if (inventory == null) {
-				continue;
-			}
-			addInventoryConverter(new GridInventoryConverter(inventory, 9, i * inventory.size()));
-		}
+	public ChestWindow init(String title, ChestInventory inventory) {
+		addInventoryConverter(new GridInventoryConverter(inventory, 9, inventory.size()));
 		init(WindowType.CHEST, title, getInventorySize());
 		return this;
 	}

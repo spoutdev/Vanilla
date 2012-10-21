@@ -37,6 +37,6 @@ public class WoodenPressurePlate extends PressurePlate {
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
+		return Instrument.BASS_GUITAR;
 	}
 }

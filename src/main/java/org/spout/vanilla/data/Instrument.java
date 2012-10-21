@@ -30,15 +30,22 @@ import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.effect.type.NoteSoundEffect;
 
 public enum Instrument {
-	PIANO(SoundEffects.NOTE_HARP),
-	BASSDRUM(SoundEffects.NOTE_BD),
-	SNAREDRUM(SoundEffects.NOTE_SNARE),
-	CLICK(SoundEffects.NOTE_HAT),
-	BASSGUITAR(SoundEffects.NOTE_BASSATTACK);
-	private NoteSoundEffect sound;
+	PIANO(SoundEffects.NOTE_HARP, 0),
+	BASS_DRUM(SoundEffects.NOTE_BD, 1),
+	SNARE_DRUM(SoundEffects.NOTE_SNARE, 2),
+	CLICK(SoundEffects.NOTE_HAT, 3),
+	BASS_GUITAR(SoundEffects.NOTE_BASSATTACK, 4);
 
-	private Instrument(NoteSoundEffect effect) {
+	private final NoteSoundEffect sound;
+	private final int id;
+
+	private Instrument(NoteSoundEffect effect, int id) {
 		this.sound = effect;
+		this.id = id;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public NoteSoundEffect getEffect() {

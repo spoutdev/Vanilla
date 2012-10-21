@@ -38,6 +38,7 @@ public final class WindowCloseHandler extends MessageHandler<WindowCloseMessage>
 		if (!session.hasPlayer()) {
 			return;
 		}
-		session.getPlayer().detach(Window.class);
+		Window window = session.getPlayer().detach(Window.class);
+		window.close();
 	}
 }

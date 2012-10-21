@@ -29,6 +29,7 @@ package org.spout.vanilla.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.spout.api.entity.Player;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
@@ -40,10 +41,17 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
 
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.event.block.BlockActionEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class VanillaBlockUtil {
 	private static final EffectRange FARMLAND_CHECK_RANGE = new CuboidEffectRange(-1, -1, -1, 1, -1, 1);
+
+	public static void playBlockAction(Block block, byte byte1, byte byte2) {
+		for (Player player : block.getChunk().getObservingPlayers()) {
+			player.getNetworkSynchronizer().callProtocolEvent(new BlockActionEvent(block, block.getMaterial(), byte1, byte2));
+		}
+	}
 
 	/**
 	 * Gets if rain is falling nearby the block specified

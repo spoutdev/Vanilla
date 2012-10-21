@@ -40,6 +40,6 @@ public class SoulSand extends Solid {
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.SNAREDRUM;
+		return Instrument.SNARE_DRUM;
 	}
 }

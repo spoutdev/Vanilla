@@ -45,7 +45,7 @@ public class WoodenStairs extends Stairs implements Fuel, Burnable {
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
+		return Instrument.BASS_GUITAR;
 	}
 
 	@Override

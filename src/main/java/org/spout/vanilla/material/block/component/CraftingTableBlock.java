@@ -32,7 +32,6 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.substance.material.CraftingTable;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.material.block.Solid;
 
@@ -44,7 +43,7 @@ public class CraftingTableBlock extends Solid {
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
+		return Instrument.BASS_GUITAR;
 	}
 
 	@Override

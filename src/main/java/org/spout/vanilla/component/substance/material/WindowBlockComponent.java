@@ -34,6 +34,8 @@ import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.component.inventory.window.Window;
+
 public abstract class WindowBlockComponent extends VanillaBlockComponent {
 	protected final Set<Player> viewers = new HashSet<Player>();
 
@@ -41,7 +43,19 @@ public abstract class WindowBlockComponent extends VanillaBlockComponent {
 	 * Opens a window for the given player.
 	 * @param player
 	 */
-	public abstract void openWindow(Player player);
+	public abstract void open(Player player);
+
+	public void close(Player player) {
+		Window window = player.detach(Window.class);
+		window.close();
+		viewers.remove(player);
+	}
+
+	public void closeAll() {
+		for (Player player : viewers) {
+			close(player);
+		}
+	}
 
 	public Set<Player> getViewers() {
 		return viewers;
@@ -53,7 +67,7 @@ public abstract class WindowBlockComponent extends VanillaBlockComponent {
 		if (action == Action.RIGHT_CLICK && entity instanceof Player) {
 			Player player = (Player) entity;
 			viewers.add(player);
-			openWindow(player);
+			open(player);
 		}
 	}
 }

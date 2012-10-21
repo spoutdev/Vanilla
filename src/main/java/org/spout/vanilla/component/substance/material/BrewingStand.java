@@ -41,7 +41,7 @@ public class BrewingStand extends WindowBlockComponent implements Container {
 	}
 
 	@Override
-	public void openWindow(Player player) {
+	public void open(Player player) {
 		player.add(BrewingStandWindow.class).init(inventory).open();
 	}
 }

@@ -34,9 +34,18 @@ import org.spout.api.inventory.Inventory;
  */
 public class ChestInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
-	public static final int SIZE = 27;
+	public static final int SINGLE_SIZE = 27;
+	public static final int DOUBLE_SIZE = SINGLE_SIZE * 2;
+
+	public ChestInventory(int size) {
+		super(size);
+	}
+
+	public ChestInventory(boolean d) {
+		this(d ? DOUBLE_SIZE : SINGLE_SIZE);
+	}
 
 	public ChestInventory() {
-		super(SIZE);
+		this(SINGLE_SIZE);
 	}
 }

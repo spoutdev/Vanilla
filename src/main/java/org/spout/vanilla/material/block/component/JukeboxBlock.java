@@ -28,7 +28,6 @@ package org.spout.vanilla.material.block.component;
 
 import org.spout.api.geo.cuboid.Block;
 
-import org.spout.vanilla.component.substance.material.Jukebox;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.Fuel;
@@ -56,7 +55,7 @@ public class JukeboxBlock extends Solid implements Fuel {
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
+		return Instrument.BASS_GUITAR;
 	}
 
 	@Override

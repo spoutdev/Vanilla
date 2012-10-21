@@ -81,7 +81,7 @@ public class DoubleSlab extends Solid implements Burnable {
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.BASSDRUM;
+		return Instrument.BASS_DRUM;
 	}
 
 	@Override

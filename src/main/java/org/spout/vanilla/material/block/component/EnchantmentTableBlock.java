@@ -29,7 +29,6 @@ package org.spout.vanilla.material.block.component;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.substance.material.EnchantmentTable;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
@@ -50,7 +49,7 @@ public class EnchantmentTableBlock extends Solid implements Directional {
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.BASSDRUM;
+		return Instrument.BASS_DRUM;
 	}
 
 	@Override

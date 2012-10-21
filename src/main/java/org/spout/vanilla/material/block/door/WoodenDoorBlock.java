@@ -66,6 +66,6 @@ public class WoodenDoorBlock extends DoorBlock implements InitializableMaterial 
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
+		return Instrument.BASS_GUITAR;
 	}
 }

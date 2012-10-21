@@ -24,78 +24,21 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.component;
+package org.spout.vanilla.material.block.component.chest;
 
-import org.spout.api.component.components.BlockComponent;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.substance.material.Chest;
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.data.MoveReaction;
-import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.util.ItemUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public class ChestBlock extends Solid implements Directional, Fuel {
+public class ChestBlock extends AbstractChestBlock<Chest> {
 	public final float BURN_TIME = 15;
 
 	public ChestBlock(String name, int id) {
-		super(name, id);
+		super(name, id, Chest.class);
 		this.setHardness(2.5F).setResistance(4.2F).setTransparent();
-	}
-
-	@Override
-	public float getFuelTime() {
-		return BURN_TIME;
-	}
-
-	@Override
-	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
-	}
-
-	@Override
-	public void onDestroy(Block block) {
-		Chest chest = (Chest) block.getComponent();
-		//Drop items
-		Inventory inventory = chest.getInventory();
-		//If null inventory then simply return
-		//TODO Fix this Windwaker
-		if (inventory == null) {
-			return;
-		}
-		ItemStack[] items = inventory.toArray(new ItemStack[inventory.size()]);
-		Point position = block.getPosition();
-		for (ItemStack item : items) {
-			if (item == null) {
-				continue;
-			}
-			ItemUtil.dropItemNaturally(position, item);
-		}
-		super.onDestroy(block);
-	}
-
-	@Override
-	public MoveReaction getMoveReaction(Block block) {
-		return MoveReaction.DENY;
-	}
-
-	@Override
-	public BlockFace getFacing(Block block) {
-		return BlockFaces.EWNS.get(block.getData() - 2);
-	}
-
-	@Override
-	public void setFacing(Block block, BlockFace facing) {
-		block.setData((short) (BlockFaces.EWNS.indexOf(facing, 0) + 2));
 	}
 
 	/**
@@ -137,35 +80,5 @@ public class ChestBlock extends Solid implements Directional, Fuel {
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock)) {
-			BlockFace facing = VanillaPlayerUtil.getFacing(block.getSource()).getOpposite();
-			//search for neighbor and align
-			Block neigh;
-			for (BlockFace face : BlockFaces.NESW) {
-				if ((neigh = block.translate(face)).getMaterial().equals(this)) {
-					if (face == facing || face == facing.getOpposite()) {
-						if (facing == BlockFace.NORTH || facing == BlockFace.SOUTH) {
-							facing = BlockFace.WEST;
-						} else {
-							facing = BlockFace.SOUTH;
-						}
-					}
-					this.setFacing(neigh, facing);
-					break;
-				}
-			}
-			this.setFacing(block, facing);
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	public boolean isPlacementSuppressed() {
-		return true;
 	}
 }

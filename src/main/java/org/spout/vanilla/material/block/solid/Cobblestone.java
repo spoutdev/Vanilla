@@ -54,6 +54,6 @@ public class Cobblestone extends Solid implements TimedCraftable {
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.BASSDRUM;
+		return Instrument.BASS_DRUM;
 	}
 }

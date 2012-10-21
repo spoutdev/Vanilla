@@ -24,13 +24,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.inventory.window.block;
+package org.spout.vanilla.material.block.component.chest;
 
-import org.spout.vanilla.inventory.block.ChestInventory;
+import org.spout.vanilla.component.substance.material.EnderChest;
 
-public class EnderChestWindow extends ChestWindow {
-	public EnderChestWindow init(ChestInventory inventory) {
-		super.init("Ender Chest", inventory);
-		return this;
+public class EnderChestBlock extends AbstractChestBlock<EnderChest> {
+	public EnderChestBlock(String name, int id) {
+		super(name, id, EnderChest.class);
 	}
 }

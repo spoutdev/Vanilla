@@ -42,7 +42,7 @@ public class EnchantmentTable extends WindowBlockComponent implements Container 
 	}
 
 	@Override
-	public void openWindow(Player player) {
+	public void open(Player player) {
 		player.add(EnchantmentTableWindow.class).init(inventory).open();
 	}
 }

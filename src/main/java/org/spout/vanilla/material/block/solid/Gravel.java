@@ -50,6 +50,6 @@ public class Gravel extends SolidMoving implements InitializableMaterial {
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.SNAREDRUM;
+		return Instrument.SNARE_DRUM;
 	}
 }

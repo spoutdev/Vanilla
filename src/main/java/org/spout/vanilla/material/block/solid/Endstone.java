@@ -40,6 +40,6 @@ public class Endstone extends Solid {
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.BASSDRUM;
+		return Instrument.BASS_DRUM;
 	}
 }

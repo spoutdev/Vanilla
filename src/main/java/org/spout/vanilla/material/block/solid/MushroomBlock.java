@@ -59,6 +59,6 @@ public class MushroomBlock extends Solid implements Fuel, InitializableMaterial 
 
 	@Override
 	public Instrument getInstrument() {
-		return Instrument.BASSGUITAR;
+		return Instrument.BASS_GUITAR;
 	}
 }

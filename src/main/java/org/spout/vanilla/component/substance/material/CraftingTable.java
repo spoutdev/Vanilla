@@ -32,7 +32,7 @@ import org.spout.vanilla.component.inventory.window.block.CraftingTableWindow;
 
 public class CraftingTable extends WindowBlockComponent {
 	@Override
-	public void openWindow(Player player) {
+	public void open(Player player) {
 		player.add(CraftingTableWindow.class).open();
 	}
 }

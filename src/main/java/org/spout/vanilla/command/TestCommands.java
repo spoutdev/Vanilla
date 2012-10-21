@@ -60,6 +60,7 @@ import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.component.living.hostile.EnderDragon;
 import org.spout.vanilla.component.living.neutral.Enderman;
 import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.component.substance.material.Chest;
 import org.spout.vanilla.component.substance.material.Furnace;
 import org.spout.vanilla.component.substance.object.FallingBlock;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
@@ -101,7 +102,7 @@ public class TestCommands {
 		Player player = (Player) source;
 		switch (type) {
 			case CHEST:
-				player.add(ChestWindow.class).init("Command Chest", new ChestInventory()).open();
+				player.add(ChestWindow.class).init(new Chest()).open();
 				break;
 			case CRAFTING_TABLE:
 				player.add(CraftingTableWindow.class).open();

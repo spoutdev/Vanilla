@@ -33,9 +33,29 @@ import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class ChestWindow extends Window {
-	public ChestWindow init(String title, ChestInventory inventory) {
+	private Chest chest;
+
+	/**
+	 * Initializes this window to view the specified {@link Chest}
+	 *
+	 * @param chest chest to view
+	 * @return this window
+	 */
+	public ChestWindow init(Chest chest) {
+		this.chest = chest;
+		ChestInventory inventory = chest.getInventory();
 		addInventoryConverter(new GridInventoryConverter(inventory, 9, inventory.size()));
-		init(WindowType.CHEST, title, getInventorySize());
+		init(WindowType.CHEST, inventory.getTitle(), getInventorySize());
 		return this;
+	}
+
+	public Chest getChest() {
+		return chest;
+	}
+
+	@Override
+	public void close() {
+		chest.close(getPlayer());
+		super.close();
 	}
 }

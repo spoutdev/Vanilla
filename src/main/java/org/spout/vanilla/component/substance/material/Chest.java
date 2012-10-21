@@ -27,13 +27,10 @@
 package org.spout.vanilla.component.substance.material;
 
 import org.spout.api.Source;
-import org.spout.api.component.ChunkComponentOwner;
-import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.component.inventory.window.Window;
 import org.spout.vanilla.component.inventory.window.block.ChestWindow;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.Container;
@@ -41,43 +38,39 @@ import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.VanillaBlockUtil;
 
-public class Chest extends WindowBlockComponent implements Container, Source {
+public class Chest extends ViewedBlockComponent implements Container {
 	private boolean opened = false;
 
+	/**
+	 * Sets the size of the Chest's inventory to either
+	 * {@link ChestInventory#DOUBLE_SIZE} or
+	 * {@link ChestInventory#SINGLE_SIZE}.
+	 *
+	 * @param d whether the chest should be a double or single chest
+	 */
 	public void setDouble(boolean d) {
+		// Return if chest is already specified size
 		ChestInventory oldInventory = getInventory();
 		if ((d && oldInventory.size() == ChestInventory.DOUBLE_SIZE) || (!d && oldInventory.size() == ChestInventory.SINGLE_SIZE)) {
 			return;
 		}
+
+		// Create new inventory and try to merge with the old inventory
 		ChestInventory newInventory = new ChestInventory(d);
 		newInventory.addAll(oldInventory);
 		getData().put(VanillaData.CHEST_INVENTORY, newInventory);
 	}
 
+	/**
+	 * Sets the open state of the chest.
+	 *
+	 * @param source {@link Source} who opened the chest
+	 * @param opened state of chest
+	 */
 	public void setOpened(Source source, boolean opened) {
-		if ((this.opened && opened) || (!this.opened && !opened)) {
-			return;
-		}
+		// Return if chest is already specified state
+		this.opened = opened;
 		VanillaBlockUtil.playBlockAction(getBlock(source), (byte) 1, opened ? (byte) 1 : (byte) 0);
-	}
-
-	@Override
-	public void onTick(float dt) {
-		if (viewers.isEmpty()) {
-			setOpened(this, false);
-		}
-	}
-
-	@Override
-	public void onInteractBy(Entity entity, Action type, BlockFace clickedFace) {
-		if (type != Action.RIGHT_CLICK) {
-			return;
-		}
-		ChunkComponentOwner owner = getOwner();
-		Block block = getBlock(entity);
-		setDouble(VanillaMaterials.CHEST.isDouble(block));
-		setOpened(entity, true);
-		super.onInteractBy(entity, type, clickedFace);
 	}
 
 	@Override
@@ -87,19 +80,22 @@ public class Chest extends WindowBlockComponent implements Container, Source {
 
 	@Override
 	public void open(Player player) {
-		String title;
-		ChestInventory inventory = getInventory();
-		switch (inventory.size()) {
-			case ChestInventory.SINGLE_SIZE:
-				title = "Chest";
-				break;
-			case ChestInventory.DOUBLE_SIZE:
-				title = "Large chest";
-				break;
-			default:
-				title = "Unknown chest";
-				break;
+		// Get the block at the component's position
+		final Block block = getBlock(player);
+
+		// Make sure it's the right size and open the chest if closed
+		setDouble(VanillaMaterials.CHEST.isDouble(block));
+		setOpened(player, true);
+
+		// Finally open the window
+		player.add(ChestWindow.class).init(this).open();
+	}
+
+	@Override
+	public void close(Player player) {
+		super.close(player);
+		if (viewers.isEmpty()) {
+			setOpened(player, false);
 		}
-		player.add(ChestWindow.class).init(title, inventory).open();
 	}
 }

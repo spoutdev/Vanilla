@@ -32,7 +32,7 @@ import org.spout.vanilla.component.inventory.window.block.BrewingStandWindow;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 
-public class BrewingStand extends WindowBlockComponent implements Container {
+public class BrewingStand extends ViewedBlockComponent implements Container {
 	private final BrewingStandInventory inventory = new BrewingStandInventory();
 
 	@Override

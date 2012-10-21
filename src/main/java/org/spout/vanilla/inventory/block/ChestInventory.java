@@ -42,10 +42,25 @@ public class ChestInventory extends Inventory {
 	}
 
 	public ChestInventory(boolean d) {
-		this(d ? DOUBLE_SIZE : SINGLE_SIZE);
+		this( d ? DOUBLE_SIZE : SINGLE_SIZE);
 	}
 
 	public ChestInventory() {
-		this(SINGLE_SIZE);
+		this(false);
+	}
+
+	public String getTitle(String def) {
+		switch (size()) {
+			case SINGLE_SIZE:
+				return "Chest";
+			case DOUBLE_SIZE:
+				return "Large chest";
+			default:
+				return def;
+		}
+	}
+
+	public String getTitle() {
+		return getTitle("Unknown chest");
 	}
 }

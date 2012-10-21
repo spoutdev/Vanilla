@@ -36,7 +36,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.component.inventory.window.Window;
 
-public abstract class WindowBlockComponent extends VanillaBlockComponent {
+public abstract class ViewedBlockComponent extends VanillaBlockComponent {
 	protected final Set<Player> viewers = new HashSet<Player>();
 
 	/**

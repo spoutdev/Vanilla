@@ -65,9 +65,8 @@ public abstract class AbstractChestBlock<T extends Chest> extends ComponentMater
 		Chest chest = (Chest) block.getComponent();
 		//Drop items
 		Inventory inventory = chest.getInventory();
-		ItemStack[] items = inventory.toArray(new ItemStack[inventory.size()]);
 		Point position = block.getPosition();
-		for (ItemStack item : items) {
+		for (ItemStack item : inventory) {
 			if (item == null) {
 				continue;
 			}

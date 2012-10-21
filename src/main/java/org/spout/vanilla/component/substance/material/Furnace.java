@@ -38,7 +38,7 @@ import org.spout.vanilla.inventory.window.prop.FurnaceProperty;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
 
-public class Furnace extends WindowBlockComponent implements Container {
+public class Furnace extends ViewedBlockComponent implements Container {
 	public final float MAX_FUEL_INCREMENT = 12.5f;
 	public final float MAX_SMELT_TIME_INCREMENT = 9f;
 

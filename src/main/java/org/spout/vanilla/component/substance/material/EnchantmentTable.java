@@ -33,7 +33,7 @@ import org.spout.vanilla.component.inventory.window.block.EnchantmentTableWindow
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
 
-public class EnchantmentTable extends WindowBlockComponent implements Container {
+public class EnchantmentTable extends ViewedBlockComponent implements Container {
 	private final EnchantmentTableInventory inventory = new EnchantmentTableInventory();
 
 	@Override

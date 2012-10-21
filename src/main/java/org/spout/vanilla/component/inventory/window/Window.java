@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla.component.inventory.window;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -65,7 +67,7 @@ import org.spout.vanilla.util.InventoryUtil;
  * Represents a Window that players can view to display an inventory.
  */
 public class Window extends EntityComponent implements InventoryViewer {
-	private final Set<InventoryConverter> converters = new HashSet<InventoryConverter>();
+	private final List<InventoryConverter> converters = new ArrayList<InventoryConverter>();
 	protected final TObjectIntMap<WindowProperty> properties = new TObjectIntHashMap<WindowProperty>();
 	protected final int id = InventoryUtil.nextWindowId();
 	protected int offset;
@@ -431,7 +433,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 	 *
 	 * @return all converters
 	 */
-	public Set<InventoryConverter> getInventoryConverters() {
+	public List<InventoryConverter> getInventoryConverters() {
 		return converters;
 	}
 

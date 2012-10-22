@@ -34,13 +34,15 @@ import org.spout.api.util.SpoutToStringStyle;
 public class PlayerLocaleViewDistanceMessage implements Message {
 	public static byte VIEW_FAR = 0, VIEW_NORMAL = 1, VIEW_SHORT = 2, VIEW_TINY = 3;
 	private String locale;
+	private boolean showCape;
 	private byte viewDistance, chatFlags, difficulty;
 
-	public PlayerLocaleViewDistanceMessage(String locale, byte viewDistance, byte chatFlags, byte difficulty) {
+	public PlayerLocaleViewDistanceMessage(String locale, byte viewDistance, byte chatFlags, byte difficulty, boolean showCape) {
 		this.locale = locale;
 		this.viewDistance = viewDistance;
 		this.chatFlags = chatFlags;
 		this.difficulty = difficulty;
+		this.showCape = showCape;
 	}
 
 	@Override
@@ -74,31 +76,19 @@ public class PlayerLocaleViewDistanceMessage implements Message {
 		return locale;
 	}
 
-	public void setLocale(String locale) {
-		this.locale = locale;
-	}
-
 	public byte getViewDistance() {
 		return viewDistance;
-	}
-
-	public void setViewDistance(byte viewDistance) {
-		this.viewDistance = viewDistance;
 	}
 
 	public byte getChatFlags() {
 		return chatFlags;
 	}
 
-	public void setChatFlags(byte chatFlags) {
-		this.chatFlags = chatFlags;
-	}
-
 	public byte getDifficulty() {
 		return difficulty;
 	}
 
-	public void setDifficulty(byte difficulty) {
-		this.difficulty = difficulty;
+	public boolean getShowCape() {
+		return showCape;
 	}
 }

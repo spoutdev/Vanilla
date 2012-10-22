@@ -47,7 +47,8 @@ public final class EffectCodec extends MessageCodec<EffectMessage> {
 		int y = buffer.readUnsignedByte();
 		int z = buffer.readInt();
 		int data = buffer.readInt();
-		return new EffectMessage(id, x, y, z, data);
+		boolean noVolumeDecrease = buffer.readByte() != 0;
+		return new EffectMessage(id, x, y, z, data, noVolumeDecrease);
 	}
 
 	@Override
@@ -58,6 +59,7 @@ public final class EffectCodec extends MessageCodec<EffectMessage> {
 		buffer.writeByte(message.getY());
 		buffer.writeInt(message.getZ());
 		buffer.writeInt(message.getData());
+		buffer.writeByte(message.getNoVolumeDecrease() ? 1 : 0);
 		return buffer;
 	}
 }

@@ -34,14 +34,16 @@ import org.spout.api.event.HandlerList;
 public class ServerListPingEvent extends Event {
 	private static HandlerList handlers = new HandlerList();
 	private InetAddress address;
-	private String motd;
-	private int numPlayers, maxPlayers;
+	private String motd, protocolVersionString;
+	private int numPlayers, maxPlayers, protocolVersion;
 
-	public ServerListPingEvent(InetAddress address, String motd, int numPlayers, int maxPlayers) {
+	public ServerListPingEvent(InetAddress address, int protocolVersion, String protocolVersionString, String motd, int numPlayers, int maxPlayers) {
 		this.address = address;
 		this.motd = motd;
 		this.numPlayers = numPlayers;
 		this.maxPlayers = maxPlayers;
+		this.protocolVersion = protocolVersion;
+		this.protocolVersionString = protocolVersionString;
 	}
 
 	/**
@@ -108,9 +110,41 @@ public class ServerListPingEvent extends Event {
 	 * @return packet message
 	 */
 	public String getMessage() {
-		return motd + "\u00A7" + numPlayers + "\u00A7" + maxPlayers + "\u00A7";
+		return "\u00A7" + "\u0000" + protocolVersion + "\u0000" + protocolVersionString + "\u0000" + motd + "\u0000" + numPlayers + "\u0000" + maxPlayers + "\u0000";
 	}
 
+	/**
+	 * Gets the current protocol version.
+	 * @return The current protocol version.
+	 */
+	public int getProtocolVersion() {
+		return protocolVersion;
+	}
+
+	/**
+	 * Sets the current protocol version.
+	 * @param protocolVersion The protocol version.
+	 */
+	public void setProtocolVersion(int protocolVersion) {
+		this.protocolVersion = protocolVersion;
+	}
+
+	/**
+	 * Gets the current protocol version in a string. Usually the Version string (Ex. 1.3)
+	 * @return The current protocol version in a string
+	 */
+	public String getProtocolVersionString() {
+		return protocolVersionString;
+	}
+
+	/**
+	 * Sets the current protocol version in a string. Usually the Version string (Ex. 1.3)
+	 * @param protocolVersionString The current protocol version in a string.
+	 */
+	public void setProtocolVersionString(String protocolVersionString) {
+		this.protocolVersionString = protocolVersionString;
+	}
+	
 	@Override
 	public HandlerList getHandlers() {
 		return handlers;

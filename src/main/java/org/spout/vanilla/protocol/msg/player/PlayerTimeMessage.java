@@ -32,14 +32,19 @@ import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
 public final class PlayerTimeMessage implements Message {
-	private final long time;
+	private final long time, dayTime;
 
-	public PlayerTimeMessage(long time) {
+	public PlayerTimeMessage(long time, long dayTime) {
 		this.time = time;
+		this.dayTime = dayTime;
 	}
 
-	public long getTime() {
+	public long getWorldAgeTime() {
 		return time;
+	}
+
+	public long getDayTime() {
+		return dayTime;
 	}
 
 	@Override

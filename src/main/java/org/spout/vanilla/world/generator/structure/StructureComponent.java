@@ -84,17 +84,17 @@ public abstract class StructureComponent {
 		final Vector3 transformed = transform(xx, yy, zz);
 		position.getWorld().setBlockMaterial(transformed.getFloorX(), transformed.getFloorY(), transformed.getFloorZ(),
 				material, data, position.getWorld());
-//		if (material instanceof Attachable) {
-//			final Attachable attachable = (Attachable) material;
-//			final Block block = getBlock(xx, yy, zz);
-//			attachable.setAttachedFace(block,
-//					BlockFace.fromYaw(attachable.getAttachedFace(block).getDirection().getYaw() + rotation.getYaw()));
-//		} else if (material instanceof Directional) {
-//			final Directional directional = (Directional) material;
-//			final Block block = getBlock(xx, yy, zz);
-//			directional.setFacing(block,
-//					BlockFace.fromYaw(directional.getFacing(block).getDirection().getYaw() + rotation.getYaw()));
-//		}
+		//		if (material instanceof Attachable) {
+		//			final Attachable attachable = (Attachable) material;
+		//			final Block block = getBlock(xx, yy, zz);
+		//			attachable.setAttachedFace(block,
+		//					BlockFace.fromYaw(attachable.getAttachedFace(block).getDirection().getYaw() + rotation.getYaw()));
+		//		} else if (material instanceof Directional) {
+		//			final Directional directional = (Directional) material;
+		//			final Block block = getBlock(xx, yy, zz);
+		//			directional.setFacing(block,
+		//					BlockFace.fromYaw(directional.getFacing(block).getDirection().getYaw() + rotation.getYaw()));
+		//		}
 	}
 
 	public void randomSetBlockMaterial(float odd, int xx, int yy, int zz, BlockMaterial material) {

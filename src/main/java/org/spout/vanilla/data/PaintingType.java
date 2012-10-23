@@ -59,7 +59,6 @@ public enum PaintingType {
 	POINTER("Pointer", 64, 64),
 	PIG_SCENE("Pigscene", 64, 64),
 	FLAMING_SKULL("Flaming Skull", 64, 64);
-
 	private final String name;
 	private final int width, height;
 	private static final Map<String, PaintingType> nameMap = new HashMap<String, PaintingType>();

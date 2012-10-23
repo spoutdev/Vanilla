@@ -27,7 +27,6 @@
 package org.spout.vanilla.inventory.util;
 
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.StringUtil;
 
 /**
@@ -62,7 +61,6 @@ public class InventoryConverter {
 
 	/**
 	 * Returns a slot sent from the client in the proper Spout format.
-	 *
 	 * @param nativeSlot slot sent from the client
 	 * @return slot in the proper Spout format
 	 */
@@ -78,7 +76,6 @@ public class InventoryConverter {
 
 	/**
 	 * Returns a slot to send to the client from the specified 'Spout slot'.
-	 *
 	 * @param slot 'Spout formatted' slot to convert to slot sent to and from
 	 * the client
 	 * @return slot received and sent to and from the client
@@ -89,7 +86,6 @@ public class InventoryConverter {
 
 	/**
 	 * Returns the inventory associated with the converter
-	 *
 	 * @return inventory
 	 */
 	public Inventory getInventory() {
@@ -99,7 +95,6 @@ public class InventoryConverter {
 	/**
 	 * Returns the 'Spout formatted slots' mapped to the 'native slots' in an
 	 * array.
-	 *
 	 * @return slot mapping array
 	 */
 	public int[] toArray() {

@@ -38,7 +38,6 @@ public enum Animation {
 	UNKNOWN_ANIMATION(102),
 	CROUCH(104),
 	UNCROUCH(105);
-
 	private final int id;
 	private static final TIntObjectMap<Animation> idMap = new TIntObjectHashMap<Animation>();
 

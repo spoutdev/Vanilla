@@ -29,11 +29,11 @@ package org.spout.vanilla.data;
 import java.util.Random;
 
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyArray;
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
@@ -84,7 +84,7 @@ public class VanillaData {
 	public static final DefaultedKey<Boolean> IS_SPRINTING = new DefaultedKeyImpl<Boolean>("is_sprinting", false);
 	public static final DefaultedKey<Boolean> IS_FLYING = new DefaultedKeyImpl<Boolean>("is_flying", false);
 	public static final DefaultedKey<PlayerInventory> PLAYER_INVENTORY = new DefaultedKeyImpl<PlayerInventory>("inventory", new PlayerInventory());
-    public static final DefaultedKey<ChestInventory> ENDER_CHEST_INVENTORY = new DefaultedKeyImpl<ChestInventory>("ender_chest_inventory", new ChestInventory());
+	public static final DefaultedKey<ChestInventory> ENDER_CHEST_INVENTORY = new DefaultedKeyImpl<ChestInventory>("ender_chest_inventory", new ChestInventory());
 	//Creature-specific
 	public static final DefaultedKey<Integer> LINE_OF_SIGHT = new DefaultedKeyImpl<Integer>("line_of_sight", 1);
 	//Item-specific

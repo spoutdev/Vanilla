@@ -43,7 +43,6 @@ public class ClickArguments extends InventoryEntry {
 
 	/**
 	 * Returns true if the click was a right click
-	 *
 	 * @return true if window was right clicked
 	 */
 	public boolean isRightClick() {
@@ -52,7 +51,6 @@ public class ClickArguments extends InventoryEntry {
 
 	/**
 	 * Returns true if the client was holding shift when the window was clicked
-	 *
 	 * @return true if shift was being held down
 	 */
 	public boolean isShiftClick() {

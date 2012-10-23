@@ -72,7 +72,6 @@ public enum WindowType {
 	 * {@link org.spout.vanilla.component.living.passive.Villager}
 	 */
 	VILLAGER(6);
-
 	private final int id;
 	private static final TIntObjectMap<WindowType> idMap = new TIntObjectHashMap<WindowType>();
 
@@ -83,7 +82,6 @@ public enum WindowType {
 	/**
 	 * Returns the id sent to the client in the
 	 * {@link org.spout.vanilla.protocol.msg.window.WindowOpenMessage}
-	 *
 	 * @return id of type
 	 */
 	public int getId() {
@@ -98,7 +96,6 @@ public enum WindowType {
 
 	/**
 	 * Returns a window type with the specified id.
-	 *
 	 * @param id of window type
 	 * @return window type with specified id
 	 */

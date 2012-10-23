@@ -40,6 +40,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
+
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
@@ -107,18 +108,18 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 	}
 
 	@Override
-	public EffectRange getDynamicRange(){
+	public EffectRange getDynamicRange() {
 		return EffectRange.THIS_AND_NEIGHBORS;
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime){
+	public void onPlacement(Block b, Region r, long currentTime) {
 		//TODO : delay before update
 		b.dynamicUpdate(currentTime + 30000);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region region, long updateTime, int data){
+	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
 		Random rand = new Random(block.getWorld().getAge());
 		if (rand.nextInt(25) == 0) {
 			// can we spread?
@@ -144,6 +145,5 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 
 		//TODO : delay before update
 		block.dynamicUpdate(updateTime + 30000);
-
 	}
 }

@@ -27,21 +27,16 @@
 package org.spout.vanilla.material.block.component.chest;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.substance.material.AbstractChest;
-import org.spout.vanilla.component.substance.material.Chest;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.component.ComponentMaterial;
-import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public abstract class AbstractChestBlock extends ComponentMaterial implements Directional, Fuel {

@@ -34,7 +34,6 @@ import org.spout.api.math.Vector3;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.component.substance.object.ObjectEntity;
-import org.spout.vanilla.component.substance.object.projectile.Projectile;
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class EntityObjectMessage extends EntityMessage {
@@ -59,9 +58,9 @@ public final class EntityObjectMessage extends EntityMessage {
 		velocity = velocity.max(factor.multiply(-1)).min(factor);
 
 		double s = 8000d;
-		speedX = (short)(velocity.getX() * s);
-		speedY = (short)(velocity.getY() * s);
-		speedZ = (short)(velocity.getZ() * s);
+		speedX = (short) (velocity.getX() * s);
+		speedY = (short) (velocity.getY() * s);
+		speedZ = (short) (velocity.getZ() * s);
 	}
 
 	public EntityObjectMessage(Entity entity, byte type) {

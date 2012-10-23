@@ -44,7 +44,6 @@ public class EnchantmentTableInventory extends Inventory {
 
 	/**
 	 * Whether the inventory contains an item to enchant
-	 *
 	 * @return true if an item is present
 	 */
 	public boolean has() {
@@ -54,7 +53,6 @@ public class EnchantmentTableInventory extends Inventory {
 	/**
 	 * Returns the {@link ItemStack} in the enchantment slot; can
 	 * return null.
-	 *
 	 * @return ingredient item stack
 	 */
 	public ItemStack get() {

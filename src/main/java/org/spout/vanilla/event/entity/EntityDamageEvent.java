@@ -29,6 +29,7 @@ package org.spout.vanilla.event.entity;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
+
 import org.spout.vanilla.source.DamageCause;
 
 public class EntityDamageEvent extends EntityEvent {

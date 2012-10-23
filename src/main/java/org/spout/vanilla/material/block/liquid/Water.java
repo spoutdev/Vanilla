@@ -97,17 +97,17 @@ public class Water extends Liquid implements DynamicMaterial {
 	}
 
 	@Override
-	public EffectRange getDynamicRange(){
+	public EffectRange getDynamicRange() {
 		return EffectRange.NEIGHBORS;
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime){
+	public void onPlacement(Block b, Region r, long currentTime) {
 		b.dynamicUpdate(getFlowDelay() + currentTime);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region region, long updateTime, int data){
+	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
 		//TODO: This should really be in the tick task of the sky entity
 		// Water freezing
 		if (!isSource(block)) {
@@ -122,17 +122,16 @@ public class Water extends Liquid implements DynamicMaterial {
 		if (VanillaMaterials.ICE.canDecayAt(block)) {
 			return;
 		}
-		
+
 		// Has nearby non-water blocks?
 		EffectIterator iterator = EffectRange.NEIGHBORS.iterator();
-		while(iterator.hasNext()){
+		while (iterator.hasNext()) {
 			if (!(block.translate(iterator.next()).getMaterial() instanceof Water)) {
 				block.setMaterial(VanillaMaterials.ICE);
 				return;
 			}
 		}
-		
+
 		block.dynamicUpdate(updateTime + getFlowDelay());
 	}
-
 }

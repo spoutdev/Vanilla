@@ -28,7 +28,6 @@ package org.spout.vanilla.protocol.codec.entity.spawn;
 
 import java.io.IOException;
 
-import net.royawesome.jlibnoise.MathHelper;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 

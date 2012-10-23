@@ -80,7 +80,6 @@ public class PlayerInventory implements Serializable {
 	/**
 	 * Attempts to add the specified item to the quickbar and then the main if
 	 * not all of the item is transferred.
-	 *
 	 * @param item to add
 	 * @return true if item is completely transferred
 	 */

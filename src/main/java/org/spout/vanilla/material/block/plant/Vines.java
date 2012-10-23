@@ -48,7 +48,6 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.Spreading;
-import org.spout.vanilla.util.VanillaBlockUtil;
 
 public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Burnable, DynamicMaterial {
 	private static final EffectRange VINE_RANGE = new CuboidEffectRange(-4, -1, -4, 4, 1, 4);
@@ -264,18 +263,18 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 	}
 
 	@Override
-	public EffectRange getDynamicRange(){
+	public EffectRange getDynamicRange() {
 		return EffectRange.THIS_AND_NEIGHBORS;
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime){
+	public void onPlacement(Block b, Region r, long currentTime) {
 		//TODO : Delay before first grow
 		b.dynamicUpdate(10000 + currentTime);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region region, long updateTime, int data){
+	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
 		Random rand = new Random(block.getWorld().getAge());
 		if (rand.nextInt(4) != 0) {
 			return;
@@ -391,5 +390,4 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 
 		block.dynamicUpdate(updateTime + 10000);
 	}
-
 }

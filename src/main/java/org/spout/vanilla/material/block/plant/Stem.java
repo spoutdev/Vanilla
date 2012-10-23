@@ -37,11 +37,9 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.material.range.EffectIterator;
 import org.spout.api.material.range.EffectRange;
 
 import org.spout.vanilla.component.living.Human;
-import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
@@ -49,7 +47,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Crop;
 import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.util.VanillaBlockUtil;
 
@@ -124,18 +121,18 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 	}
 
 	@Override
-	public EffectRange getDynamicRange(){
+	public EffectRange getDynamicRange() {
 		return EffectRange.THIS_AND_NEIGHBORS;
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime){
+	public void onPlacement(Block b, Region r, long currentTime) {
 		//TODO : Delay before first grow
 		b.dynamicUpdate(10000 + currentTime);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region region, long updateTime, int data){
+	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
 		if (block.translate(BlockFace.TOP).getLight() < this.getMinimumLightToGrow()) {
 			block.dynamicUpdate(updateTime + 10000);
 			return;

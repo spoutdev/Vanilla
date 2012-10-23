@@ -36,6 +36,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
+
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 /**
@@ -140,18 +141,18 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 	}
 
 	@Override
-	public EffectRange getDynamicRange(){
+	public EffectRange getDynamicRange() {
 		return EffectRange.NEIGHBORS;
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime){
+	public void onPlacement(Block b, Region r, long currentTime) {
 		//TODO : Delay before dynamic update
 		b.dynamicUpdate(currentTime + 30000);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region region, long updateTime, int data){
+	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
 		// Attempt to decay or spread this material
 		if (this.canDecayAt(block)) {
 			this.onDecay(block);

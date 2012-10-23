@@ -27,8 +27,8 @@
 package org.spout.vanilla.component.living.util;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.Utility;
 import org.spout.vanilla.component.living.LivingComponent;
+import org.spout.vanilla.component.living.Utility;
 import org.spout.vanilla.protocol.entity.CreatureProtocol;
 
 /**

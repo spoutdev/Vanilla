@@ -68,20 +68,20 @@ public class ChestBlock extends AbstractChestBlock {
 		return getOtherHalf(block) != null;
 	}
 
-    @Override
-    public void onDestroy(Block block) {
-        Chest chest = (Chest) block.getComponent();
-        //Drop items
-        Inventory inventory = chest.getInventory();
-        Point position = block.getPosition();
-        for (ItemStack item : inventory) {
-            if (item == null) {
-                continue;
-            }
-            ItemUtil.dropItemNaturally(position, item);
-        }
-        super.onDestroy(block);
-    }
+	@Override
+	public void onDestroy(Block block) {
+		Chest chest = (Chest) block.getComponent();
+		//Drop items
+		Inventory inventory = chest.getInventory();
+		Point position = block.getPosition();
+		for (ItemStack item : inventory) {
+			if (item == null) {
+				continue;
+			}
+			ItemUtil.dropItemNaturally(position, item);
+		}
+		super.onDestroy(block);
+	}
 
 	@Override
 	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {

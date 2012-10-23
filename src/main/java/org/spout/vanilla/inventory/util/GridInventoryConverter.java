@@ -56,7 +56,6 @@ public class GridInventoryConverter extends InventoryConverter {
 
 	/**
 	 * Returns the grid associated with this converter.
-	 *
 	 * @return grid
 	 */
 	public Grid getGrid() {

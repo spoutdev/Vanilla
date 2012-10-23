@@ -64,7 +64,6 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Gets the maximum height this ore should be placed
-	 *
 	 * @return maximum height
 	 */
 	public short getMaxHeight() {
@@ -73,7 +72,6 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Gets the amount of this ore placed per chunk
-	 *
 	 * @return placement count
 	 */
 	public byte getAmount() {
@@ -82,7 +80,6 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Gets the size of a cluster of this ore
-	 *
 	 * @return cluster size
 	 */
 	public byte getClusterSize() {
@@ -91,7 +88,6 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Gets the ore material used
-	 *
 	 * @return ore material
 	 */
 	public BlockMaterial getMaterial() {
@@ -121,7 +117,6 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Generates a cluster of this ore at the position using the random given
-	 *
 	 * @param world to place in
 	 * @param originX of the cluster
 	 * @param originY of the cluster

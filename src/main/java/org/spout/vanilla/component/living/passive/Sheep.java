@@ -27,8 +27,8 @@
 package org.spout.vanilla.component.living.passive;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.Passive;
 import org.spout.vanilla.component.living.LivingComponent;
+import org.spout.vanilla.component.living.Passive;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.block.solid.Wool;
 import org.spout.vanilla.protocol.entity.living.SheepEntityProtocol;

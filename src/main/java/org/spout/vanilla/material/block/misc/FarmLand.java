@@ -96,18 +96,18 @@ public class FarmLand extends VanillaBlockMaterial implements InitializableMater
 	}
 
 	@Override
-	public EffectRange getDynamicRange(){
+	public EffectRange getDynamicRange() {
 		return EffectRange.NEIGHBORS;
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime){
+	public void onPlacement(Block b, Region r, long currentTime) {
 		//TODO : Delay before return to dirt ?
 		b.dynamicUpdate(30000 + currentTime);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region region, long updateTime, int data){
+	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
 		if (VanillaBlockUtil.isRaining(block) || hasWaterNearby(block)) {
 			block.setData(7);
 			//TODO : Delay before return to dirt ?

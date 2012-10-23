@@ -43,7 +43,6 @@ public class JukeboxInventory extends Inventory {
 
 	/**
 	 * Returns true if the Jukebox has an {@link ItemStack} in it.
-	 *
 	 * @return true if Jukebox has item
 	 */
 	public boolean has() {
@@ -52,7 +51,6 @@ public class JukeboxInventory extends Inventory {
 
 	/**
 	 * Gets the {@link org.spout.api.inventory.ItemStack} in the Jukebox's music slot
-	 *
 	 * @return item in slot
 	 */
 	public ItemStack get() {
@@ -61,7 +59,6 @@ public class JukeboxInventory extends Inventory {
 
 	/**
 	 * Sets the {@link org.spout.api.inventory.ItemStack} in the Jukebox's music slot
-	 *
 	 * @param item in slot
 	 */
 	public void set(ItemStack item) {

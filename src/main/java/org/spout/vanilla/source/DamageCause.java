@@ -93,7 +93,6 @@ public enum DamageCause implements Source {
 	 * Damaged by an unknown source.
 	 */
 	UNKNOWN;
-
 	private int durabilityPenalty = 0;
 
 	private DamageCause() {

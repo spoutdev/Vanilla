@@ -43,7 +43,6 @@ public class PlayerArmorInventory extends Inventory {
 
 	/**
 	 * Returns the {@link ItemStack} in the boots slot.
-	 *
 	 * @return boots
 	 */
 	public ItemStack getBoots() {
@@ -52,7 +51,6 @@ public class PlayerArmorInventory extends Inventory {
 
 	/**
 	 * Sets the {@link ItemStack} in the boots slot.
-	 *
 	 * @param boots
 	 */
 	public void setBoots(ItemStack boots) {
@@ -61,7 +59,6 @@ public class PlayerArmorInventory extends Inventory {
 
 	/**
 	 * Returns the {@link ItemStack} in the leggings slot.
-	 *
 	 * @return leggings
 	 */
 	public ItemStack getLeggings() {
@@ -70,7 +67,6 @@ public class PlayerArmorInventory extends Inventory {
 
 	/**
 	 * Sets the {@link ItemStack} in the leggings slot.
-	 *
 	 * @param leggings
 	 */
 	public void setLeggings(ItemStack leggings) {
@@ -79,7 +75,6 @@ public class PlayerArmorInventory extends Inventory {
 
 	/**
 	 * Returns the {@link ItemStack} in the chest plate slot.
-	 *
 	 * @return chest plate
 	 */
 	public ItemStack getChestPlate() {
@@ -88,7 +83,6 @@ public class PlayerArmorInventory extends Inventory {
 
 	/**
 	 * Sets the {@link ItemStack} in the chest plate slot.
-	 *
 	 * @param chestPlate
 	 */
 	public void setChestPlate(ItemStack chestPlate) {
@@ -97,7 +91,6 @@ public class PlayerArmorInventory extends Inventory {
 
 	/**
 	 * Returns the {@link ItemStack} in the helmet slot
-	 *
 	 * @return helmet
 	 */
 	public ItemStack getHelmet() {
@@ -106,7 +99,6 @@ public class PlayerArmorInventory extends Inventory {
 
 	/**
 	 * Sets the {@link ItemStack} in the helmet slot.
-	 *
 	 * @param helmet
 	 */
 	public void setHelmet(ItemStack helmet) {

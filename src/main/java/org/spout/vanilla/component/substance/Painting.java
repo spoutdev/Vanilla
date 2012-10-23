@@ -27,7 +27,6 @@
 package org.spout.vanilla.component.substance;
 
 import org.spout.api.component.components.EntityComponent;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.VanillaPlugin;

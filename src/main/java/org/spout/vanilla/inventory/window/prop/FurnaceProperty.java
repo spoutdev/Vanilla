@@ -42,7 +42,6 @@ public enum FurnaceProperty implements WindowProperty {
 	 * The value of the fire icon on the furnace.
 	 */
 	FIRE_ICON(1);
-
 	private final int id;
 	private static final TIntObjectMap<FurnaceProperty> idMap = new TIntObjectHashMap<FurnaceProperty>(FurnaceProperty.values().length);
 
@@ -63,7 +62,6 @@ public enum FurnaceProperty implements WindowProperty {
 
 	/**
 	 * Returns the property from the specified id.
-	 *
 	 * @param id of property
 	 * @return property with specified id
 	 */

@@ -42,7 +42,6 @@ public class InventoryEntry {
 
 	/**
 	 * Returns the inventory associated with this entry.
-	 *
 	 * @return inventory
 	 */
 	public Inventory getInventory() {
@@ -51,7 +50,6 @@ public class InventoryEntry {
 
 	/**
 	 * Returns the slot value of the entry
-	 *
 	 * @return slot
 	 */
 	public int getSlot() {

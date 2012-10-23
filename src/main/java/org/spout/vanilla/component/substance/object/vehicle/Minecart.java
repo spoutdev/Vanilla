@@ -28,7 +28,6 @@ package org.spout.vanilla.component.substance.object.vehicle;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.substance.object.ObjectEntity;
-import org.spout.vanilla.protocol.entity.ObjectEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
 
 public class Minecart extends ObjectEntity {

@@ -46,7 +46,6 @@ public enum EnchantmentTableProperty implements WindowProperty {
 	 * The value of the third slot level.
 	 */
 	SLOT_3(2);
-
 	private final int id;
 	private static final TIntObjectMap<EnchantmentTableProperty> idMap = new TIntObjectHashMap<EnchantmentTableProperty>(EnchantmentTableProperty.values().length);
 
@@ -67,7 +66,6 @@ public enum EnchantmentTableProperty implements WindowProperty {
 
 	/**
 	 * Returns the property with the specified id
-	 *
 	 * @param id of property
 	 * @return property with specified id
 	 */

@@ -42,7 +42,7 @@ public class ChestInventory extends Inventory {
 	}
 
 	public ChestInventory(boolean d) {
-		this( d ? DOUBLE_SIZE : SINGLE_SIZE);
+		this(d ? DOUBLE_SIZE : SINGLE_SIZE);
 	}
 
 	public ChestInventory() {

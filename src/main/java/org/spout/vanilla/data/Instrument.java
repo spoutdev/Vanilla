@@ -35,7 +35,6 @@ public enum Instrument {
 	SNARE_DRUM(SoundEffects.NOTE_SNARE, 2),
 	CLICK(SoundEffects.NOTE_HAT, 3),
 	BASS_GUITAR(SoundEffects.NOTE_BASSATTACK, 4);
-
 	private final NoteSoundEffect sound;
 	private final int id;
 

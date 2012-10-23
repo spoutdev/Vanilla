@@ -49,11 +49,11 @@ import org.spout.api.protocol.NetworkSynchronizer;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.window.block.BrewingStandWindow;
-import org.spout.vanilla.component.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.component.inventory.window.block.CraftingTableWindow;
 import org.spout.vanilla.component.inventory.window.block.DispenserWindow;
 import org.spout.vanilla.component.inventory.window.block.EnchantmentTableWindow;
 import org.spout.vanilla.component.inventory.window.block.FurnaceWindow;
+import org.spout.vanilla.component.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.component.inventory.window.entity.VillagerWindow;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.living.LivingComponent;

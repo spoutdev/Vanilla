@@ -28,7 +28,6 @@ package org.spout.vanilla.material.block.component;
 
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.substance.material.BrewingStand;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.block.Solid;
 

@@ -63,7 +63,6 @@ public class Furnace extends ViewedBlockComponent implements Container {
 		}
 	}
 
-
 	public float getMaxFuel() {
 		return getData().get(VanillaData.MAX_FURNACE_FUEL);
 	}

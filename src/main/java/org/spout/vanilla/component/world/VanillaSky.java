@@ -28,16 +28,13 @@ package org.spout.vanilla.component.world;
 
 import java.util.HashMap;
 
-import org.spout.api.component.Component;
 import org.spout.api.component.components.WorldComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 
 import org.spout.vanilla.component.misc.SleepComponent;
-import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.Time;
 import org.spout.vanilla.data.Weather;
-import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.world.WeatherSimulator;
 
 /**
@@ -104,10 +101,10 @@ public abstract class VanillaSky extends WorldComponent {
 			}
 		}
 
-//		// Weather TODO this thing is possessed and needs to be fixed.
-//		if (this.hasWeather()) {
-//			this.weather.onTick(dt);
-//		}
+		//		// Weather TODO this thing is possessed and needs to be fixed.
+		//		if (this.hasWeather()) {
+		//			this.weather.onTick(dt);
+		//		}
 	}
 
 	/**

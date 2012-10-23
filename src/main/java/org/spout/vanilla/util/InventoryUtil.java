@@ -26,9 +26,6 @@
  */
 package org.spout.vanilla.util;
 
-import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
-
 public class InventoryUtil {
 	private static int windowId = 0;
 

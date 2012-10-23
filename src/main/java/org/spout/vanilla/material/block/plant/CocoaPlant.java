@@ -39,6 +39,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.util.flag.Flag;
+
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
@@ -116,35 +117,34 @@ public class CocoaPlant extends AbstractAttachable implements Plant, Growing, Dy
 	}
 
 	@Override
-	public EffectRange getDynamicRange(){
+	public EffectRange getDynamicRange() {
 		return EffectRange.NEIGHBORS;
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime){
+	public void onPlacement(Block b, Region r, long currentTime) {
 		//TODO : Add a grow test delay ?
 		b.dynamicUpdate(30000 + currentTime);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region region, long updateTime, int data){
+	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
 		if (new Random().nextInt(5) != 0) {
 			//TODO : Add a grow test delay ?
 			block.dynamicUpdate(updateTime + 30000);
 			return;
 		}
-		
+
 		int growthStage = getGrowthStage(block);
-		
+
 		if (growthStage < getGrowthStageCount() - 1) {
 			setGrowthStage(block, ++growthStage);
 		}
-		
-		if(growthStage < getGrowthStageCount() - 1){
+
+		if (growthStage < getGrowthStageCount() - 1) {
 			//TODO : Add a grow test delay ?
 			block.dynamicUpdate(updateTime + 30000);
 		}
-		
 	}
 
 	@Override

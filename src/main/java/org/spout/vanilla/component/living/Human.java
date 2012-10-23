@@ -27,7 +27,6 @@
 package org.spout.vanilla.component.living;
 
 import org.spout.api.Spout;
-import org.spout.api.component.components.DatatableComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -68,7 +67,7 @@ public class Human extends LivingComponent {
 		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
 		//Add height offset if loading from disk
 		if (getAttachedCount() > 1 && holder instanceof Player) {
-			((Player)holder).teleport(holder.getTransform().getPosition().add(0, 1.85F, 0));
+			((Player) holder).teleport(holder.getTransform().getPosition().add(0, 1.85F, 0));
 		}
 	}
 
@@ -176,9 +175,9 @@ public class Human extends LivingComponent {
 		return getData().get(VanillaData.PLAYER_INVENTORY);
 	}
 
-    public ChestInventory getEnderChestInventory() {
-        return getData().get(VanillaData.ENDER_CHEST_INVENTORY);
-    }
+	public ChestInventory getEnderChestInventory() {
+		return getData().get(VanillaData.ENDER_CHEST_INVENTORY);
+	}
 
 	/**
 	 * Drops the item specified into the direction the player looks

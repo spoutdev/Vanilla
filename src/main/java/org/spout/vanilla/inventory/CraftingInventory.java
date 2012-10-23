@@ -60,7 +60,6 @@ public class CraftingInventory extends Inventory {
 
 	/**
 	 * Returns the grid of the slots that will have the output slot updated.
-	 *
 	 * @return grid of slots to trigger update
 	 */
 	public Grid getGrid() {
@@ -69,7 +68,6 @@ public class CraftingInventory extends Inventory {
 
 	/**
 	 * Returns the slot to update when a slot is updated in the crafting grid.
-	 *
 	 * @return slot to update
 	 */
 	public int getOutputSlot() {
@@ -78,7 +76,6 @@ public class CraftingInventory extends Inventory {
 
 	/**
 	 * Returns the offset of the first slot in the crafting grid.
-	 *
 	 * @return offset of grid
 	 */
 	public int getOffset() {

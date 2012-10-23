@@ -28,18 +28,13 @@ package org.spout.vanilla.protocol.entity.object;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.material.block.BlockFace;
 import org.spout.api.protocol.Message;
 
 import org.spout.vanilla.component.substance.Painting;
-import org.spout.vanilla.data.PaintingType;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityPaintingMessage;
-import org.spout.vanilla.util.VanillaBlockUtil;
-import org.spout.vanilla.util.VanillaMathHelper;
 
 public class PaintingEntityProtocol extends VanillaEntityProtocol {
 	@Override

@@ -273,7 +273,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		initChunk(c.getBase());
 
 		Collection<Chunk> chunks = null;
-		
+
 		List<ProtocolEvent> events = new ArrayList<ProtocolEvent>();
 
 		if (activeChunks.add(x, z)) {
@@ -314,7 +314,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			ChunkDataMessage CCMsg = new ChunkDataMessage(x, z, false, new boolean[16], packetChunkData, null, player.getSession());
 			player.getSession().send(false, CCMsg);
 		}
-		
+
 		for (ProtocolEvent e : events) {
 			this.callProtocolEvent(e);
 		}
@@ -445,10 +445,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onWindowItems(WindowItemsEvent event) {
-        System.out.println("Sending items...");
-        for (ItemStack item : event.getItems()) {
-            System.out.println(item == null ? "null" : item.getMaterial().getName());
-        }
+		System.out.println("Sending items...");
+		for (ItemStack item : event.getItems()) {
+			System.out.println(item == null ? "null" : item.getMaterial().getName());
+		}
 		return new WindowItemsMessage(event.getWindow(), event.getItems());
 	}
 
@@ -650,11 +650,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 				arrIndex++;
 			}
-			
+
 			for (BlockComponentSnapshot component : snapshot.getBlockComponents()) {
 				BlockMaterial bm = c.getBlockMaterial(component.getX(), component.getY(), component.getZ());
 				if (bm instanceof VanillaComplexMaterial) {
-					ProtocolEvent event = ((VanillaComplexMaterial)bm).getUpdate(c.getWorld(), component.getX(), component.getY(), component.getZ());
+					ProtocolEvent event = ((VanillaComplexMaterial) bm).getUpdate(c.getWorld(), component.getX(), component.getY(), component.getZ());
 					if (event != null) {
 						updateEvents.add(event);
 					}

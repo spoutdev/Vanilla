@@ -33,7 +33,6 @@ import org.spout.api.math.MathHelper;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
-import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 
 public class DiggingComponent extends EntityComponent {
 	private boolean isDigging;

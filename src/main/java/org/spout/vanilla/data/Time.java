@@ -31,7 +31,6 @@ public enum Time {
 	DAY(6000),
 	DUSK(12000),
 	NIGHT(18000);
-
 	private long time;
 
 	private Time(long time) {

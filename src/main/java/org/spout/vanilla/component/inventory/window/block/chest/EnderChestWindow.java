@@ -24,44 +24,18 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.codec.window;
+package org.spout.vanilla.component.inventory.window.block.chest;
 
-import java.io.IOException;
+import org.spout.vanilla.inventory.block.ChestInventory;
+import org.spout.vanilla.inventory.util.GridInventoryConverter;
+import org.spout.vanilla.inventory.window.WindowType;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.protocol.MessageCodec;
-
-import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.window.WindowItemsMessage;
-
-public final class WindowItemsCodec extends MessageCodec<WindowItemsMessage> {
-	public WindowItemsCodec() {
-		super(WindowItemsMessage.class, 0x68);
-	}
-
+public class EnderChestWindow extends AbstractChestWindow {
 	@Override
-	public WindowItemsMessage decode(ChannelBuffer buffer) throws IOException {
-		byte id = buffer.readByte();
-		short count = buffer.readShort();
-		ItemStack[] items = new ItemStack[count];
-		for (int slot = 0; slot < count; slot++) {
-			items[slot] = ChannelBufferUtils.readItemStack(buffer);
-		}
-		return new WindowItemsMessage(id, items);
-	}
-
-	@Override
-	public ChannelBuffer encode(WindowItemsMessage message) throws IOException {
-		ItemStack[] items = message.getItems();
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		buffer.writeByte(message.getWindowInstanceId());
-		buffer.writeShort(items.length);
-		for (ItemStack item : items) {
-			ChannelBufferUtils.writeItemStack(buffer, item);
-		}
-		return buffer;
+	public void onAttached() {
+		super.onAttached();
+		ChestInventory inventory = getHuman().getEnderChestInventory();
+		init(WindowType.CHEST, "Ender chest", inventory.size());
+		addInventoryConverter(new GridInventoryConverter(inventory, 9));
 	}
 }

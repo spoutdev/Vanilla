@@ -27,13 +27,17 @@
 package org.spout.vanilla.material.block.component.chest;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.substance.material.Chest;
+import org.spout.vanilla.util.ItemUtil;
 
-public class ChestBlock extends AbstractChestBlock<Chest> {
+public class ChestBlock extends AbstractChestBlock {
 	public final float BURN_TIME = 15;
 
 	public ChestBlock(String name, int id) {
@@ -63,6 +67,21 @@ public class ChestBlock extends AbstractChestBlock<Chest> {
 	public boolean isDouble(Block block) {
 		return getOtherHalf(block) != null;
 	}
+
+    @Override
+    public void onDestroy(Block block) {
+        Chest chest = (Chest) block.getComponent();
+        //Drop items
+        Inventory inventory = chest.getInventory();
+        Point position = block.getPosition();
+        for (ItemStack item : inventory) {
+            if (item == null) {
+                continue;
+            }
+            ItemUtil.dropItemNaturally(position, item);
+        }
+        super.onDestroy(block);
+    }
 
 	@Override
 	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {

@@ -26,5 +26,14 @@
  */
 package org.spout.vanilla.component.substance.material;
 
-public class EnderChest extends Chest {
+import org.spout.api.entity.Player;
+
+import org.spout.vanilla.component.inventory.window.block.chest.EnderChestWindow;
+
+public class EnderChest extends AbstractChest {
+	@Override
+	public void open(Player player) {
+		player.add(EnderChestWindow.class).init(this).open();
+		super.open(player);
+	}
 }

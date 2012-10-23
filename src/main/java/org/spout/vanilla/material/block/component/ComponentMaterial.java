@@ -39,15 +39,15 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.component.substance.material.VanillaBlockComponent;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
-public class ComponentMaterial<T extends VanillaBlockComponent> extends VanillaBlockMaterial implements ComplexMaterial {
-	private final Class<T> componentType;
+public class ComponentMaterial extends VanillaBlockMaterial implements ComplexMaterial {
+	private final Class<? extends BlockComponent> componentType;
 
-	public ComponentMaterial(String name, int id, Class<T> componentType) {
+	public ComponentMaterial(String name, int id, Class<? extends BlockComponent> componentType) {
 		super(name, id);
 		this.componentType = componentType;
 	}
 
-	public T spawn(Point pos) {
+	public BlockComponent spawn(Point pos) {
 		return pos.getWorld().createAndSpawnEntity(pos, componentType, LoadOption.NO_LOAD).add(componentType);
 	}
 

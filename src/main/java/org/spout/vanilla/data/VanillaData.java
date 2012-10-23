@@ -83,7 +83,8 @@ public class VanillaData {
 	//Human-specific
 	public static final DefaultedKey<Boolean> IS_SPRINTING = new DefaultedKeyImpl<Boolean>("is_sprinting", false);
 	public static final DefaultedKey<Boolean> IS_FLYING = new DefaultedKeyImpl<Boolean>("is_flying", false);
-	public static final DefaultedKey<PlayerInventory> PLAYER_INVENTORY = new DefaultedKeyImpl<PlayerInventory>("inventory", null);
+	public static final DefaultedKey<PlayerInventory> PLAYER_INVENTORY = new DefaultedKeyImpl<PlayerInventory>("inventory", new PlayerInventory());
+    public static final DefaultedKey<ChestInventory> ENDER_CHEST_INVENTORY = new DefaultedKeyImpl<ChestInventory>("ender_chest_inventory", new ChestInventory());
 	//Creature-specific
 	public static final DefaultedKey<Integer> LINE_OF_SIGHT = new DefaultedKeyImpl<Integer>("line_of_sight", 1);
 	//Item-specific

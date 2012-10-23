@@ -24,44 +24,44 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.codec.window;
+package org.spout.vanilla.component.substance.material;
 
-import java.io.IOException;
+import org.spout.api.Source;
+import org.spout.api.entity.Player;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import org.spout.vanilla.util.VanillaBlockUtil;
 
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.protocol.MessageCodec;
+public abstract class AbstractChest extends ViewedBlockComponent {
+	private boolean opened = false;
 
-import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.window.WindowItemsMessage;
+	/**
+	 * Whether the chest is toggled open.
+	 * @return true if chest is opened
+	 */
+	public boolean isOpened() {
+		return opened;
+	}
 
-public final class WindowItemsCodec extends MessageCodec<WindowItemsMessage> {
-	public WindowItemsCodec() {
-		super(WindowItemsMessage.class, 0x68);
+	/**
+	 * Sets the open state of the chest.
+	 * @param source {@link org.spout.api.Source} who opened the chest
+	 * @param opened state of chest
+	 */
+	public void setOpened(Source source, boolean opened) {
+		this.opened = opened;
+		VanillaBlockUtil.playBlockAction(getBlock(source), (byte) 1, opened ? (byte) 1 : (byte) 0);
 	}
 
 	@Override
-	public WindowItemsMessage decode(ChannelBuffer buffer) throws IOException {
-		byte id = buffer.readByte();
-		short count = buffer.readShort();
-		ItemStack[] items = new ItemStack[count];
-		for (int slot = 0; slot < count; slot++) {
-			items[slot] = ChannelBufferUtils.readItemStack(buffer);
-		}
-		return new WindowItemsMessage(id, items);
+	public void open(Player player) {
+		setOpened(player, true);
 	}
 
 	@Override
-	public ChannelBuffer encode(WindowItemsMessage message) throws IOException {
-		ItemStack[] items = message.getItems();
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		buffer.writeByte(message.getWindowInstanceId());
-		buffer.writeShort(items.length);
-		for (ItemStack item : items) {
-			ChannelBufferUtils.writeItemStack(buffer, item);
+	public void close(Player player) {
+		super.close(player);
+		if (viewers.isEmpty()) {
+			setOpened(player, false);
 		}
-		return buffer;
 	}
 }

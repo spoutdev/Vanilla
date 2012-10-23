@@ -26,26 +26,28 @@
  */
 package org.spout.vanilla.component.substance.material;
 
-import org.spout.api.Source;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 
-import org.spout.vanilla.component.inventory.window.Window;
-import org.spout.vanilla.component.inventory.window.block.ChestWindow;
+import org.spout.vanilla.component.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.util.VanillaBlockUtil;
 
-public class Chest extends ViewedBlockComponent implements Container {
-	private boolean opened = false;
+public class Chest extends AbstractChest implements Container {
+	/**
+	 * Whether the chest has a double inventory.
+	 * @return true if has a double inventory.
+	 */
+	public boolean isDouble() {
+		return getInventory().size() == ChestInventory.DOUBLE_SIZE;
+	}
 
 	/**
 	 * Sets the size of the Chest's inventory to either
 	 * {@link ChestInventory#DOUBLE_SIZE} or
 	 * {@link ChestInventory#SINGLE_SIZE}.
-	 *
 	 * @param d whether the chest should be a double or single chest
 	 */
 	public void setDouble(boolean d) {
@@ -61,18 +63,6 @@ public class Chest extends ViewedBlockComponent implements Container {
 		getData().put(VanillaData.CHEST_INVENTORY, newInventory);
 	}
 
-	/**
-	 * Sets the open state of the chest.
-	 *
-	 * @param source {@link Source} who opened the chest
-	 * @param opened state of chest
-	 */
-	public void setOpened(Source source, boolean opened) {
-		// Return if chest is already specified state
-		this.opened = opened;
-		VanillaBlockUtil.playBlockAction(getBlock(source), (byte) 1, opened ? (byte) 1 : (byte) 0);
-	}
-
 	@Override
 	public ChestInventory getInventory() {
 		return getData().get(VanillaData.CHEST_INVENTORY);
@@ -85,17 +75,10 @@ public class Chest extends ViewedBlockComponent implements Container {
 
 		// Make sure it's the right size and open the chest if closed
 		setDouble(VanillaMaterials.CHEST.isDouble(block));
-		setOpened(player, true);
 
 		// Finally open the window
 		player.add(ChestWindow.class).init(this).open();
-	}
 
-	@Override
-	public void close(Player player) {
-		super.close(player);
-		if (viewers.isEmpty()) {
-			setOpened(player, false);
-		}
+		super.open(player);
 	}
 }

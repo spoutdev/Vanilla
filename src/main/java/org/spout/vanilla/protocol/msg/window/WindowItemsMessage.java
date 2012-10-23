@@ -45,7 +45,7 @@ public final class WindowItemsMessage extends WindowMessage {
 		this.items = items;
 	}
 
-	public ItemStack[] gets() {
+	public ItemStack[] getItems() {
 		return items;
 	}
 

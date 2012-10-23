@@ -36,12 +36,10 @@ import org.spout.api.inventory.util.GridIterator;
  */
 public class GridInventoryConverter extends InventoryConverter {
 	private final Grid grid;
-	private final int offset;
 
 	public GridInventoryConverter(Inventory inventory, int length, int offset) {
-		super(inventory, new int[inventory.grid(length).getSize()]);
+		super(inventory, new int[inventory.grid(length).getSize()], offset);
 		grid = inventory.grid(length);
-		this.offset = offset;
 		GridIterator i = grid.iterator();
 		while (i.hasNext()) {
 			slots[i.next()] = ((offset + grid.getSize()) - (length * i.getY())) - (length - i.getX());
@@ -63,14 +61,5 @@ public class GridInventoryConverter extends InventoryConverter {
 	 */
 	public Grid getGrid() {
 		return grid;
-	}
-
-	/**
-	 * Returns the offset of the first slot in the grid.
-	 *
-	 * @return offset of first slot
-	 */
-	public int getOffset() {
-		return offset;
 	}
 }

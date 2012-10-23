@@ -27,10 +27,8 @@
 package org.spout.vanilla.component.inventory.window;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 
 import gnu.trove.map.TObjectIntMap;
@@ -83,7 +81,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Initializes this window to the specified type, title, and offset of first main slot.
-	 *
 	 * @param type of window
 	 * @param title of window
 	 * @param offset of first slot
@@ -102,7 +99,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Initializes this window to the specified type and title.
-	 *
 	 * @param type of window
 	 * @param title of window
 	 * @return this
@@ -116,8 +112,8 @@ public class Window extends EntityComponent implements InventoryViewer {
 	 */
 	public void open() {
 		opened = true;
-		reload();
 		callProtocolEvent(new WindowOpenEvent(this));
+		reload();
 	}
 
 	/**
@@ -137,23 +133,29 @@ public class Window extends EntityComponent implements InventoryViewer {
 	 */
 	public void reload() {
 		ItemStack[] items = new ItemStack[getInventorySize()];
-		int nativeSlot;
-		for (InventoryConverter converter : converters) {
-			Inventory inventory = converter.getInventory();
-			for (int i = 0; i < inventory.size(); i++) {
-				nativeSlot = converter.getNativeSlot(i);
-				if (nativeSlot < 0 || nativeSlot >= items.length) {
-					continue;
+		for (int n = 0; n < items.length; n++) {
+
+			Inventory inventory = null;
+			int slot = -1;
+
+			for (InventoryConverter converter : converters) {
+				slot = converter.convert(n);
+				if (slot != -1) {
+					inventory = converter.getInventory();
+					break;
 				}
-				items[nativeSlot] = inventory.get(i);
+			}
+
+			if (inventory != null) {
+				items[n] = inventory.get(slot);
 			}
 		}
+
 		callProtocolEvent(new WindowItemsEvent(this, items));
 	}
 
 	/**
 	 * Called when a client clicks the window while holding shift.
-	 *
 	 * @param stack to manipulate
 	 * @param slot clicked
 	 * @param from inventory slot was in
@@ -167,7 +169,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 			return false;
 		}
 		if (from instanceof PlayerQuickbar) {
-			main.add(converter.getSlot(offset), stack);
+			main.add(converter.convert(offset), stack);
 			return true;
 		} else if (from instanceof PlayerMainInventory) {
 			PlayerQuickbar quickbar = inventory.getQuickbar();
@@ -175,7 +177,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 			if (quickbarConverter == null) {
 				return false;
 			}
-			quickbar.add(converter.getSlot(offset + converter.getGrid().getSize()), stack);
+			quickbar.add(converter.convert(offset + converter.getGrid().getSize()), stack);
 			return true;
 		}
 		from.set(slot, stack);
@@ -184,27 +186,26 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Called when the client clicks a window.
-	 *
 	 * @param args {@link ClickArguments} of the session
 	 * @return true if click is allowed
 	 */
 	public boolean onClick(ClickArguments args) {
 		Inventory inventory = args.getInventory();
 		int slot = args.getSlot();
-		System.out.println("Spout slot: " + slot);
+		debug("Spout slot: " + slot);
 		ItemStack clicked = inventory.get(slot);
 		if (args.isShiftClick()) {
-			System.out.println("Shift clicked");
+			debug("Shift clicked");
 			if (clicked != null) {
 				return onShiftClick(clicked, slot, inventory);
 			}
 		} else if (args.isRightClick()) {
-			System.out.println("Right onClick");
+			debug("Right onClick");
 			if (clicked == null) {
-				System.out.println("Empty slot");
+				debug("Empty slot");
 				if (cursorItem != null) {
-					System.out.println("Cursor: " + cursorItem.getMaterial().getName());
-					System.out.println("Add one");
+					debug("Cursor: " + cursorItem.getMaterial().getName());
+					debug("Add one");
 					// slot is empty with a not empty cursor
 					// add one
 					clicked = cursorItem.clone();
@@ -218,13 +219,13 @@ public class Window extends EntityComponent implements InventoryViewer {
 					return true;
 				}
 			} else if (cursorItem != null) {
-				System.out.println("Slot: " + clicked.getMaterial().getName());
-				System.out.println("Cursor: " + cursorItem.getMaterial().getName());
+				debug("Slot: " + clicked.getMaterial().getName());
+				debug("Cursor: " + cursorItem.getMaterial().getName());
 				// slot is not empty with not empty cursor
 				if (cursorItem.equalsIgnoreSize(clicked)) {
 					// only stack materials that are the same
 					if (clicked.getMaxStackSize() > clicked.getAmount()) {
-						System.out.println("Stacking");
+						debug("Stacking");
 						// add one if can fit
 						clicked.setAmount(clicked.getAmount() + 1);
 						inventory.set(slot, clicked);
@@ -235,7 +236,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 						return true;
 					}
 				} else {
-					System.out.println("Materials don't match. Swapping stacks.");
+					debug("Materials don't match. Swapping stacks.");
 					// materials don't match
 					// swap stacks
 					ItemStack newCursor = clicked.clone();
@@ -244,8 +245,8 @@ public class Window extends EntityComponent implements InventoryViewer {
 					return true;
 				}
 			} else {
-				System.out.println("Slot: " + clicked.getMaterial().getName());
-				System.out.println("Empty cursor");
+				debug("Slot: " + clicked.getMaterial().getName());
+				debug("Empty cursor");
 				// slot is not empty with an empty cursor
 				// split the stack
 				int x = clicked.getAmount();
@@ -259,12 +260,12 @@ public class Window extends EntityComponent implements InventoryViewer {
 				return true;
 			}
 		} else {
-			System.out.println("Left onClick");
+			debug("Left onClick");
 			if (clicked == null) {
-				System.out.println("Empty slot");
+				debug("Empty slot");
 				if (cursorItem != null) {
-					System.out.println("Cursor: " + cursorItem.getMaterial().getName());
-					System.out.println("Put whole stack in slot");
+					debug("Cursor: " + cursorItem.getMaterial().getName());
+					debug("Put whole stack in slot");
 					// slot is empty; cursor is not empty.
 					// put whole stack down
 					clicked = cursorItem.clone();
@@ -273,12 +274,12 @@ public class Window extends EntityComponent implements InventoryViewer {
 					return true;
 				}
 			} else if (cursorItem != null) {
-				System.out.println("Clicked: " + clicked.getMaterial().getName());
-				System.out.println("Cursor: " + cursorItem.getMaterial().getName());
+				debug("Clicked: " + clicked.getMaterial().getName());
+				debug("Cursor: " + cursorItem.getMaterial().getName());
 				// slot is not empty; cursor is not empty.
 				// stack
 				if (cursorItem.equalsIgnoreSize(clicked)) {
-					System.out.println("Stacking");
+					debug("Stacking");
 					clicked.stack(cursorItem);
 					inventory.set(slot, clicked);
 					if (cursorItem.isEmpty()) {
@@ -286,7 +287,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 					}
 					return true;
 				} else {
-					System.out.println("Materials don't match. Swapping stacks.");
+					debug("Materials don't match. Swapping stacks.");
 					// materials don't match
 					// swap stacks
 					ItemStack newCursor = clicked.clone();
@@ -294,8 +295,8 @@ public class Window extends EntityComponent implements InventoryViewer {
 					cursorItem = newCursor;
 				}
 			} else {
-				System.out.println("Clicked: " + clicked.getMaterial().getName());
-				System.out.println("Empty cursor");
+				debug("Clicked: " + clicked.getMaterial().getName());
+				debug("Empty cursor");
 				// slot is not empty; cursor is empty.
 				// pick up stack
 				cursorItem = clicked.clone();
@@ -308,7 +309,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Called when the client clicks the window while in creative mode.
-	 *
 	 * @param inventory clicked
 	 * @param clickedSlot slot clicked
 	 * @param item item that was put in quickbar
@@ -320,7 +320,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Called when the client clicks outside the bounds of a window
-	 *
 	 * @return true if click is permitted
 	 */
 	public boolean onOutsideClick() {
@@ -340,7 +339,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Gets the combined size of all watched inventories.
-	 *
 	 * @return size of all watching inventories
 	 */
 	public int getInventorySize() {
@@ -353,7 +351,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Returns true if the window is currently opened.
-	 *
 	 * @return true if opened
 	 */
 	public boolean isOpened() {
@@ -363,14 +360,13 @@ public class Window extends EntityComponent implements InventoryViewer {
 	/**
 	 * Returns an inventory entry with the inventory that the native slot
 	 * is mapped to for this window.
-	 *
 	 * @param nativeSlot clicked
 	 * @return inventory that was clicked
 	 */
 	public InventoryEntry getInventoryEntry(int nativeSlot) {
 		int slot;
 		for (InventoryConverter converter : converters) {
-			slot = converter.getSlot(nativeSlot);
+			slot = converter.convert(nativeSlot);
 			if (slot != -1) {
 				return new InventoryEntry(converter.getInventory(), slot);
 			}
@@ -381,7 +377,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 	/**
 	 * Returns the click arguments to send to
 	 * {@link #onClick(org.spout.vanilla.inventory.window.ClickArguments)}.
-	 *
 	 * @param nativeSlot slot clicked
 	 * @param rightClick true if client right clicked window
 	 * @param shiftClick true if client was holding down shift
@@ -397,7 +392,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Gets the holder of this window casted to a player.
-	 *
 	 * @return player
 	 */
 	public Player getPlayer() {
@@ -406,7 +400,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Gets the Human component of the holder
-	 *
 	 * @return human
 	 */
 	public Human getHuman() {
@@ -415,7 +408,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Gets an inventory converter from the specified inventory
-	 *
 	 * @param inventory to search for
 	 * @return converter with specified inventory
 	 */
@@ -430,7 +422,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Returns all inventory converters the window is watching
-	 *
 	 * @return all converters
 	 */
 	public List<InventoryConverter> getInventoryConverters() {
@@ -439,7 +430,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Adds an inventory converter to start watching.
-	 *
 	 * @param converter
 	 */
 	public void addInventoryConverter(InventoryConverter converter) {
@@ -449,7 +439,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Removes an inventory converter to stop watching/
-	 *
 	 * @param converter
 	 */
 	public void removeInventoryConverter(InventoryConverter converter) {
@@ -468,7 +457,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Sets a property of the window on the client.
-	 *
 	 * @param prop of the window
 	 * @param value of the property
 	 */
@@ -479,7 +467,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Returns the property of the window.
-	 *
 	 * @param prop of the window
 	 * @return value of specified property
 	 */
@@ -489,7 +476,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Returns the unique id of this window.
-	 *
 	 * @return id of the window
 	 */
 	public int getId() {
@@ -498,7 +484,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Returns the {@link WindowType} of this window.
-	 *
 	 * @return type of window
 	 */
 	public WindowType getType() {
@@ -508,7 +493,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 	/**
 	 * Sets the type of this window. Changes will not be staged until window is
 	 * re-opened.
-	 *
 	 * @param type to set
 	 */
 	public void setType(WindowType type) {
@@ -517,7 +501,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Returns the title displayed on the window.
-	 *
 	 * @return title displayed on window
 	 */
 	public String getTitle() {
@@ -527,7 +510,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 	/**
 	 * Sets the title displayed on this window. Changes will not be staged
 	 * until window is re-opened.
-	 *
 	 * @param title to display
 	 */
 	public void setTitle(String title) {
@@ -537,7 +519,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 	/**
 	 * Returns true if there is currently an {@link ItemStack} on the client's
 	 * cursor.
-	 *
 	 * @return true if item on cursor
 	 */
 	public boolean hasCursorItem() {
@@ -546,7 +527,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Returns the {@link ItemStack} on the client's cursor.
-	 *
 	 * @return item on cursor
 	 */
 	public ItemStack getCursorItem() {
@@ -558,7 +538,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 	 * does not actually set the item on the client but rather is just for
 	 * internal use only for keeping track of the cursor item server side.
 	 * The server cannot set the cursor item on the client.
-	 *
 	 * @param cursorItem to set
 	 */
 	public void setCursorItem(ItemStack cursorItem) {
@@ -567,23 +546,28 @@ public class Window extends EntityComponent implements InventoryViewer {
 
 	/**
 	 * Attempts to call a {@link ProtocolEvent} for the player.
-	 *
 	 * @param event to call
 	 */
 	protected void callProtocolEvent(ProtocolEvent event) {
 		if (getPlayer() == null) {
-			if (Spout.debugMode()) {
-				Spout.getLogger().log(Level.WARNING, "Sending protocol message with null player");
-			}
+			debug(Level.WARNING, "Sending protocol message with null player");
 			return;
 		}
 		if (getPlayer().getNetworkSynchronizer() == null) {
-			if (Spout.debugMode()) {
-				Spout.getLogger().log(Level.WARNING, "Sending protocol message with null network synchronizer");
-			}
+			debug(Level.WARNING, "Sending protocol message with null network synchronizer");
 			return;
 		}
 		getPlayer().getNetworkSynchronizer().callProtocolEvent(event);
+	}
+
+	private void debug(Level level, String msg) {
+		if (Spout.debugMode()) {
+			Spout.getLogger().log(level, msg);
+		}
+	}
+
+	private void debug(String msg) {
+		debug(Level.INFO, msg);
 	}
 
 	@Override
@@ -603,19 +587,16 @@ public class Window extends EntityComponent implements InventoryViewer {
 	@Override
 	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
 		InventoryConverter slots = getInventoryConverter(inventory);
-		System.out.println("Slot set");
 		if (slots != null) {
-			int nativeSlot = slots.getNativeSlot(slot);
-			System.out.println("Updating slot");
+			int nativeSlot = slots.revert(slot);
 			callProtocolEvent(new WindowSlotEvent(this, inventory, nativeSlot, item));
 		}
 
 		// update held item
 		PlayerQuickbar quickbar = getHuman().getInventory().getQuickbar();
-		System.out.println("Slot: " + slot);
-		System.out.println("Current slot: " + quickbar.getCurrentSlot());
+		debug("Slot: " + slot);
+		debug("Current slot: " + quickbar.getCurrentSlot());
 		if (inventory instanceof PlayerQuickbar && slot == quickbar.getCurrentSlot()) {
-			System.out.println("Rendering held item");
 			Player player = getPlayer();
 			player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, 0, item));
 		}

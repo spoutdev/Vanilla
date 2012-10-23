@@ -444,8 +444,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 
 	@EventHandler
-	public Message onWindowSetSlots(WindowItemsEvent event) {
-		return new WindowItemsMessage(event.getWindow(), event.gets());
+	public Message onWindowItems(WindowItemsEvent event) {
+        System.out.println("Sending items...");
+        for (ItemStack item : event.getItems()) {
+            System.out.println(item == null ? "null" : item.getMaterial().getName());
+        }
+		return new WindowItemsMessage(event.getWindow(), event.getItems());
 	}
 
 	@EventHandler

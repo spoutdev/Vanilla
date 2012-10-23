@@ -46,6 +46,7 @@ import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
 import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
+import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.protocol.entity.living.HumanEntityProtocol;
 import org.spout.vanilla.protocol.msg.player.PlayerGameStateMessage;
@@ -65,12 +66,6 @@ public class Human extends LivingComponent {
 		holder.add(DiggingComponent.class);
 		holder.add(HealthComponent.class).setSpawnHealth(SPAWN_HEALTH);
 		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
-		DatatableComponent data = getData();
-		data.put(VanillaData.PLAYER_INVENTORY, new PlayerInventory());
-		//if (data.get(VanillaData.PLAYER_INVENTORY) == null) {
-			//System.out.println("Creating new inventory");
-			//data.put(VanillaData.PLAYER_INVENTORY, new PlayerInventory());
-		//}
 		//Add height offset if loading from disk
 		if (getAttachedCount() > 1 && holder instanceof Player) {
 			((Player)holder).teleport(holder.getTransform().getPosition().add(0, 1.85F, 0));
@@ -180,6 +175,10 @@ public class Human extends LivingComponent {
 	public PlayerInventory getInventory() {
 		return getData().get(VanillaData.PLAYER_INVENTORY);
 	}
+
+    public ChestInventory getEnderChestInventory() {
+        return getData().get(VanillaData.ENDER_CHEST_INVENTORY);
+    }
 
 	/**
 	 * Drops the item specified into the direction the player looks

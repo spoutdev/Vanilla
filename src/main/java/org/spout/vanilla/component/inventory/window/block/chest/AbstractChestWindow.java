@@ -24,32 +24,20 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.inventory.window.block;
+package org.spout.vanilla.component.inventory.window.block.chest;
 
 import org.spout.vanilla.component.inventory.window.Window;
-import org.spout.vanilla.component.substance.material.Chest;
-import org.spout.vanilla.inventory.block.ChestInventory;
-import org.spout.vanilla.inventory.util.GridInventoryConverter;
-import org.spout.vanilla.inventory.window.WindowType;
+import org.spout.vanilla.component.substance.material.AbstractChest;
 
-public class ChestWindow extends Window {
-	private Chest chest;
+public class AbstractChestWindow extends Window {
+	private AbstractChest chest;
 
-	/**
-	 * Initializes this window to view the specified {@link Chest}
-	 *
-	 * @param chest chest to view
-	 * @return this window
-	 */
-	public ChestWindow init(Chest chest) {
+	public AbstractChestWindow init(AbstractChest chest) {
 		this.chest = chest;
-		ChestInventory inventory = chest.getInventory();
-		addInventoryConverter(new GridInventoryConverter(inventory, 9, inventory.size()));
-		init(WindowType.CHEST, inventory.getTitle(), getInventorySize());
 		return this;
 	}
 
-	public Chest getChest() {
+	public AbstractChest getChest() {
 		return chest;
 	}
 

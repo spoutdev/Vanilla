@@ -27,6 +27,7 @@
 package org.spout.vanilla.inventory.util;
 
 import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.StringUtil;
 
 /**
@@ -35,14 +36,28 @@ import org.spout.api.util.StringUtil;
 public class InventoryConverter {
 	protected final Inventory inventory;
 	protected final int[] slots;
+	protected final int offset;
 
-	public InventoryConverter(Inventory inventory, int[] slots) {
+	public InventoryConverter(Inventory inventory, int[] slots, int offset) {
 		this.inventory = inventory;
 		this.slots = slots;
+		this.offset = offset;
+	}
+
+	public InventoryConverter(Inventory inventory, int[] slots) {
+		this(inventory, slots, 0);
+	}
+
+	public InventoryConverter(Inventory inventory, String elements, int offset) {
+		this(inventory, StringUtil.getIntArray(elements), offset);
 	}
 
 	public InventoryConverter(Inventory inventory, String elements) {
-		this(inventory, StringUtil.getIntArray(elements));
+		this(inventory, elements, 0);
+	}
+
+	public int getOffset() {
+		return offset;
 	}
 
 	/**
@@ -51,7 +66,7 @@ public class InventoryConverter {
 	 * @param nativeSlot slot sent from the client
 	 * @return slot in the proper Spout format
 	 */
-	public int getSlot(int nativeSlot) {
+	public int convert(int nativeSlot) {
 		for (int i = 0; i < slots.length; i++) {
 			int slot = slots[i];
 			if (slot == nativeSlot) {
@@ -68,7 +83,7 @@ public class InventoryConverter {
 	 * the client
 	 * @return slot received and sent to and from the client
 	 */
-	public int getNativeSlot(int slot) {
+	public int revert(int slot) {
 		return slots[slot];
 	}
 

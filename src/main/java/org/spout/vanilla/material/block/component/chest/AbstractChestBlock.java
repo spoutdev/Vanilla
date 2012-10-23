@@ -34,6 +34,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.component.substance.material.AbstractChest;
 import org.spout.vanilla.component.substance.material.Chest;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.MoveReaction;
@@ -43,10 +44,10 @@ import org.spout.vanilla.material.block.component.ComponentMaterial;
 import org.spout.vanilla.util.ItemUtil;
 import org.spout.vanilla.util.VanillaPlayerUtil;
 
-public abstract class AbstractChestBlock<T extends Chest> extends ComponentMaterial<T> implements Directional, Fuel {
+public abstract class AbstractChestBlock extends ComponentMaterial implements Directional, Fuel {
 	public final float BURN_TIME = 15;
 
-	public AbstractChestBlock(String name, int id, Class<T> componentType) {
+	public AbstractChestBlock(String name, int id, Class<? extends AbstractChest> componentType) {
 		super(name, id, componentType);
 	}
 
@@ -58,21 +59,6 @@ public abstract class AbstractChestBlock<T extends Chest> extends ComponentMater
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.BASS_GUITAR;
-	}
-
-	@Override
-	public void onDestroy(Block block) {
-		Chest chest = (Chest) block.getComponent();
-		//Drop items
-		Inventory inventory = chest.getInventory();
-		Point position = block.getPosition();
-		for (ItemStack item : inventory) {
-			if (item == null) {
-				continue;
-			}
-			ItemUtil.dropItemNaturally(position, item);
-		}
-		super.onDestroy(block);
 	}
 
 	@Override

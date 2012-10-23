@@ -24,35 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.util;
+package org.spout.vanilla.component.inventory.window.block.chest;
 
-import org.junit.Test;
-
-import org.spout.api.inventory.Inventory;
-
+import org.spout.vanilla.component.substance.material.Chest;
+import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.util.GridInventoryConverter;
-import org.spout.vanilla.inventory.util.InventoryConverter;
+import org.spout.vanilla.inventory.window.WindowType;
 
-import static org.junit.Assert.assertEquals;
-
-public class InventoryConverterTest {
-	private final Inventory main = new Inventory(27);
-
-	@Test
-	public void testGridInventoryConverter() {
-		GridInventoryConverter converter = new GridInventoryConverter(main, 9, 9);
-		for (int a = 0; a < 9; a++) {
-			assertEquals(a, converter.convert(a + 27));
-			assertEquals(a + 27, converter.revert(a));
-		}
-	}
-
-	@Test
-	public void testInventoryConverter() {
-		InventoryConverter converter = new InventoryConverter(main, "27-35");
-		for (int a = 0; a < 9; a++) {
-			assertEquals(a, converter.convert(a + 27));
-			assertEquals(a + 27, converter.revert(a));
-		}
+public class ChestWindow extends AbstractChestWindow {
+	/**
+	 * Initializes this window to view the specified {@link Chest}
+	 * @param chest chest to view
+	 * @return this window
+	 */
+	public ChestWindow init(Chest chest) {
+		super.init(chest);
+		ChestInventory inventory = chest.getInventory();
+		addInventoryConverter(new GridInventoryConverter(inventory, 9));
+		init(WindowType.CHEST, inventory.getTitle(), getInventorySize());
+		return this;
 	}
 }

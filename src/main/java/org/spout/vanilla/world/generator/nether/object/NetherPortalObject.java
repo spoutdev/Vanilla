@@ -81,16 +81,16 @@ public class NetherPortalObject extends RotatableObject implements RandomizableO
 		for (byte xx = -2; xx < 2; xx++) {
 			for (byte yy = -1; yy < 4; yy++) {
 				if (xx == -2 || xx == 1 || yy == -1 || yy == 3) {
-					setBlockMaterial(world, x + xx, y + yy, z, VanillaMaterials.OBSIDIAN, (short) 0, world);
+					setBlockMaterial(world, x + xx, y + yy, z, VanillaMaterials.OBSIDIAN, (short) 0);
 				} else {
-					setBlockMaterial(world, x + xx, y + yy, z, VanillaMaterials.PORTAL, (short) 0, world);
+					setBlockMaterial(world, x + xx, y + yy, z, VanillaMaterials.PORTAL, (short) 0);
 				}
 			}
 		}
 		if (floating) {
 			for (byte xx = -1; xx < 1; xx++) {
 				for (byte zz = -1; zz < 2; zz++) {
-					setBlockMaterial(world, x + xx, y - 1, z + zz, VanillaMaterials.OBSIDIAN, (short) 0, world);
+					setBlockMaterial(world, x + xx, y - 1, z + zz, VanillaMaterials.OBSIDIAN, (short) 0);
 				}
 			}
 		}

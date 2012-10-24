@@ -26,8 +26,11 @@
  */
 package org.spout.vanilla.world.generator.structure.temple;
 
+import java.util.Random;
+
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.math.Quaternion;
 
 import org.spout.vanilla.world.generator.structure.Structure;
 
@@ -41,6 +44,7 @@ public class Temple extends Structure {
 	public void placeObject(World w, int x, int y, int z) {
 		final DesertTemple desertTemple = new DesertTemple(this);
 		desertTemple.setPosition(new Point(w, x, y, z));
+		desertTemple.setRotation(new Quaternion(new Random().nextInt(4) * 90, 0, 1, 0));
 		desertTemple.place();
 	}
 }

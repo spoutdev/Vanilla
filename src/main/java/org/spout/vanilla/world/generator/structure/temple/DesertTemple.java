@@ -279,11 +279,12 @@ public class DesertTemple extends StructureComponent {
 		setBlockMaterial(10, -10, 13, Sandstone.DECORATIVE);
 		setBlockMaterial(10, -11, 13, Sandstone.SMOOTH);
 		// Place the loot chests
-		// TODO: Fix loot chest, add rotation support, and fix loot items for temples and mineshafts
-		// TODO: Fix set block material rotation
+		// TODO: Fix loot chest, and fix loot items for temples and mineshafts
 		for (BlockFace face : BlockFaces.NSEW) {
-			final Vector3 chest = face.getOffset().multiply(2).add(10, -11, 10);
-			setBlockMaterial(chest.getFloorX(), chest.getFloorY(), chest.getFloorZ(), VanillaMaterials.CHEST);
+			final Vector3 chestPos = face.getOffset().multiply(2).add(10, -11, 10);
+			final LootChestObject chest = new LootChestObject();
+			chest.setRotation(face.getDirection());
+			placeObject(chestPos.getFloorX(), chestPos.getFloorY(), chestPos.getFloorZ(), chest);
 		}
 	}
 

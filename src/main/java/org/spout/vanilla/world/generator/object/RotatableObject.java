@@ -32,9 +32,12 @@ import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
+import org.spout.vanilla.material.block.Attachable;
+import org.spout.vanilla.material.block.Directional;
 
 public abstract class RotatableObject extends RandomObject {
 	protected Quaternion rotation = Quaternion.IDENTITY;
@@ -53,9 +56,20 @@ public abstract class RotatableObject extends RandomObject {
 		return world.getBlockMaterial(rotated.getFloorX(), rotated.getFloorY(), rotated.getFloorZ());
 	}
 
-	protected void setBlockMaterial(World world, int x, int y, int z, BlockMaterial material, short data, Source source) {
+	protected void setBlockMaterial(World world, int x, int y, int z, BlockMaterial material, short data) {
 		final Vector3 rotated = applyRotation(x, y, z);
-		world.setBlockMaterial(rotated.getFloorX(), rotated.getFloorY(), rotated.getFloorZ(), material, data, source);
+		world.setBlockMaterial(rotated.getFloorX(), rotated.getFloorY(), rotated.getFloorZ(), material, data, world);
+		if (material instanceof Attachable) {
+			final Attachable attachable = (Attachable) material;
+			final Block block = world.getBlock(rotated, world);
+			attachable.setAttachedFace(block,
+					BlockFace.fromYaw(attachable.getAttachedFace(block).getDirection().getYaw() + rotation.getYaw()));
+		} else if (material instanceof Directional) {
+			final Directional directional = (Directional) material;
+			final Block block = world.getBlock(rotated, world);
+			directional.setFacing(block,
+					BlockFace.fromYaw(directional.getFacing(block).getDirection().getYaw() + rotation.getYaw()));
+		}
 	}
 
 	private Vector3 applyRotation(int x, int y, int z) {
@@ -68,5 +82,9 @@ public abstract class RotatableObject extends RandomObject {
 
 	public void setRotation(Quaternion rotation) {
 		this.rotation = rotation;
+	}
+
+	public void addRotation(Quaternion rotation) {
+		this.rotation = this.rotation.multiply(rotation);
 	}
 }

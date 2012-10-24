@@ -33,12 +33,16 @@ import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Attachable;
+import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.world.generator.object.RotatableObject;
 
 public abstract class StructureComponent {
 	protected Structure parent;
@@ -84,17 +88,17 @@ public abstract class StructureComponent {
 		final Vector3 transformed = transform(xx, yy, zz);
 		position.getWorld().setBlockMaterial(transformed.getFloorX(), transformed.getFloorY(), transformed.getFloorZ(),
 				material, data, position.getWorld());
-		//		if (material instanceof Attachable) {
-		//			final Attachable attachable = (Attachable) material;
-		//			final Block block = getBlock(xx, yy, zz);
-		//			attachable.setAttachedFace(block,
-		//					BlockFace.fromYaw(attachable.getAttachedFace(block).getDirection().getYaw() + rotation.getYaw()));
-		//		} else if (material instanceof Directional) {
-		//			final Directional directional = (Directional) material;
-		//			final Block block = getBlock(xx, yy, zz);
-		//			directional.setFacing(block,
-		//					BlockFace.fromYaw(directional.getFacing(block).getDirection().getYaw() + rotation.getYaw()));
-		//		}
+		if (material instanceof Attachable) {
+			final Attachable attachable = (Attachable) material;
+			final Block block = position.getWorld().getBlock(transformed, position.getWorld());
+			attachable.setAttachedFace(block,
+					BlockFace.fromYaw(attachable.getAttachedFace(block).getDirection().getYaw() + rotation.getYaw()));
+		} else if (material instanceof Directional) {
+			final Directional directional = (Directional) material;
+			final Block block = position.getWorld().getBlock(transformed, position.getWorld());
+			directional.setFacing(block,
+					BlockFace.fromYaw(directional.getFacing(block).getDirection().getYaw() + rotation.getYaw()));
+		}
 	}
 
 	public void randomSetBlockMaterial(float odd, int xx, int yy, int zz, BlockMaterial material) {
@@ -122,6 +126,9 @@ public abstract class StructureComponent {
 	}
 
 	public void placeObject(int xx, int yy, int zz, WorldGeneratorObject object) {
+		if (object instanceof RotatableObject) {
+			((RotatableObject) object).addRotation(rotation);
+		}
 		final Vector3 transformed = transform(xx, yy, zz);
 		if (object.canPlaceObject(position.getWorld(), transformed.getFloorX(), transformed.getFloorY(), transformed.getFloorZ())) {
 			object.placeObject(position.getWorld(), transformed.getFloorX(), transformed.getFloorY(), transformed.getFloorZ());

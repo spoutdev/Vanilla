@@ -24,16 +24,35 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.substance.material;
+package org.spout.vanilla.inventory.util;
 
-import org.spout.api.entity.Player;
+import org.junit.Test;
 
-import org.spout.vanilla.component.inventory.window.block.chest.EnderChestWindow;
+import org.spout.api.inventory.Inventory;
 
-public class EnderChest extends AbstractChest {
-	@Override
-	public void open(Player player) {
-		player.add(EnderChestWindow.class).init(this).open();
-		super.open(player);
+import org.spout.vanilla.inventory.util.GridInventoryConverter;
+import org.spout.vanilla.inventory.util.InventoryConverter;
+
+import static org.junit.Assert.assertEquals;
+
+public class InventoryConverterTest {
+	private final Inventory main = new Inventory(27);
+
+	@Test
+	public void testGridInventoryConverter() {
+		GridInventoryConverter converter = new GridInventoryConverter(main, 9, 9);
+		for (int a = 0; a < 9; a++) {
+			assertEquals(a, converter.convert(a + 27));
+			assertEquals(a + 27, converter.revert(a));
+		}
+	}
+
+	@Test
+	public void testInventoryConverter() {
+		InventoryConverter converter = new InventoryConverter(main, "27-35");
+		for (int a = 0; a < 9; a++) {
+			assertEquals(a, converter.convert(a + 27));
+			assertEquals(a + 27, converter.revert(a));
+		}
 	}
 }

@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.block.component.chest;
 
-import org.spout.vanilla.component.substance.material.EnderChest;
+import org.spout.vanilla.component.substance.material.chest.EnderChest;
 
 public class EnderChestBlock extends AbstractChestBlock {
 	public EnderChestBlock(String name, int id) {

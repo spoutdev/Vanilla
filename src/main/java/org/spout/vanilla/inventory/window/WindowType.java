@@ -39,7 +39,7 @@ public enum WindowType {
 	DEFAULT(-1),
 	/**
 	 * The window seen when opening a
-	 * {@link org.spout.vanilla.component.substance.material.Chest}
+	 * {@link org.spout.vanilla.component.substance.material.chest.Chest}
 	 */
 	CHEST(0),
 	/**

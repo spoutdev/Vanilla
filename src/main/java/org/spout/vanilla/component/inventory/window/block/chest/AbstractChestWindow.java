@@ -27,7 +27,7 @@
 package org.spout.vanilla.component.inventory.window.block.chest;
 
 import org.spout.vanilla.component.inventory.window.Window;
-import org.spout.vanilla.component.substance.material.AbstractChest;
+import org.spout.vanilla.component.substance.material.chest.AbstractChest;
 
 public class AbstractChestWindow extends Window {
 	private AbstractChest chest;

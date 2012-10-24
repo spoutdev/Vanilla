@@ -34,7 +34,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.substance.material.Chest;
+import org.spout.vanilla.component.substance.material.chest.Chest;
 import org.spout.vanilla.util.ItemUtil;
 
 public class ChestBlock extends AbstractChestBlock {

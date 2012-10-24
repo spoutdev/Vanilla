@@ -26,16 +26,38 @@
  */
 package org.spout.vanilla.material.block.component;
 
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.component.substance.material.BrewingStand;
+import org.spout.vanilla.component.substance.material.chest.Chest;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.util.ItemUtil;
 
-public class BrewingStandBlock extends Solid {
+public class BrewingStandBlock extends ComponentMaterial {
 	public BrewingStandBlock(String name, int id) {
-		super(name, id);
+		super(name, id, BrewingStand.class);
 		this.setResistance(2.5F).setHardness(10.F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
+	}
+
+	@Override
+	public void onDestroy(Block block) {
+		Chest chest = (Chest) block.getComponent();
+		//Drop items
+		Inventory inventory = chest.getInventory();
+		Point position = block.getPosition();
+		for (ItemStack item : inventory) {
+			if (item == null) {
+				continue;
+			}
+			ItemUtil.dropItemNaturally(position, item);
+		}
+		super.onDestroy(block);
 	}
 
 	@Override

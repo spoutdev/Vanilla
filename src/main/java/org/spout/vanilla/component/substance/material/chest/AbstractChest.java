@@ -24,11 +24,13 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.substance.material;
+package org.spout.vanilla.component.substance.material.chest;
 
 import org.spout.api.Source;
 import org.spout.api.entity.Player;
 
+import org.spout.vanilla.component.substance.material.ViewedBlockComponent;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.util.VanillaBlockUtil;
 
 public abstract class AbstractChest extends ViewedBlockComponent {
@@ -49,7 +51,7 @@ public abstract class AbstractChest extends ViewedBlockComponent {
 	 */
 	public void setOpened(Source source, boolean opened) {
 		this.opened = opened;
-		VanillaBlockUtil.playBlockAction(getBlock(source), (byte) 1, opened ? (byte) 1 : (byte) 0);
+		VanillaBlockMaterial.playBlockAction(getBlock(source), (byte) 1, opened ? (byte) 1 : (byte) 0);
 	}
 
 	@Override

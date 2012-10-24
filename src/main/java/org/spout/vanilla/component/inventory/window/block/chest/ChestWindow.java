@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.component.inventory.window.block.chest;
 
-import org.spout.vanilla.component.substance.material.Chest;
+import org.spout.vanilla.component.substance.material.chest.Chest;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;

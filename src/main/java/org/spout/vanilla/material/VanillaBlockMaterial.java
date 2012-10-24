@@ -404,10 +404,9 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 * @param arg1 for the action
 	 * @param arg2 for the action
 	 */
-	public void playBlockAction(Block block, byte arg1, byte arg2) {
-		BlockActionEvent event = new BlockActionEvent(block, this, arg1, arg2);
-		Point position = block.getPosition();
-		for (Player player : position.getWorld().getNearbyPlayers(position, 48)) {
+	public static void playBlockAction(Block block, byte arg1, byte arg2) {
+		BlockActionEvent event = new BlockActionEvent(block, block.getMaterial(), arg1, arg2);
+		for (Player player : block.getChunk().getObservingPlayers()) {
 			player.getNetworkSynchronizer().callProtocolEvent(event);
 		}
 	}

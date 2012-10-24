@@ -1,6 +1,7 @@
 # By default, includedata is false. This means all the INGREDIENTS are treated as their parent.
 # Includedata does NOT affect the data in the result
 recipes:
+  # Crafting recipes
   OakPlank:
     type: Shapeless
     result: OAK_PLANK,4
@@ -1262,3 +1263,92 @@ recipes:
       B: DIAMOND
       C: OBSIDIAN
     rows: [' A ', 'BCB', 'CCC']
+
+  # Furnace recipes
+
+  # Food
+  Cooked Porkchop:
+    type: Furnace
+    result: COOKED_PORKCHOP,1
+    ingredient: RAW_PORKCHOP
+
+  Steak:
+    type: Furnace
+    result: STEAK,1
+    ingredient: RAW_BEEF
+
+  Cooked Chicken:
+    type: Furnace
+    result: COOKED_CHICKEN,1
+    ingredient: RAW_CHICKEN
+
+  Cooked Fish:
+    type: Furnace
+    result: COOKED_FISH,1
+    ingredient: RAW_FISH
+
+  # Materials
+  Iron Ingot:
+    type: Furnace
+    result: IRON_INGOT,1
+    ingredient: IRON_ORE
+
+  Gold Ingot:
+    type: Furnace
+    result: GOLD_INGOT,1
+    ingredient: GOLD_ORE
+
+  Diamond:
+    type: Furnace
+    result: DIAMOND,1
+    ingredient: DIAMOND_ORE
+
+  Lapis Lazuli:
+    type: Furnace
+    result: LAPIS_LAZULI,1
+    ingredient: LAPIS_LAZULI_ORE
+    includedata: true
+
+  Redstone Dust:
+    type: Furnace
+    result: REDSTONE_DUST,1
+    ingredient: REDSTONE_ORE
+
+  Coal:
+    type: Furnace
+    result: COAL,1
+    ingredient: COAL_ORE
+    includedata: true
+
+  Emerald:
+    type: Furnace
+    result: EMERALD,1
+    ingredient: EMERALD_ORE
+
+  Glass:
+    type: Furnace
+    result: GLASS,1
+    ingredient: SAND
+
+  Stone:
+    type: Furnace
+    result: STONE,1
+    ingredient: COBBLESTONE
+
+  Brick:
+    type: Furnace
+    result: BRICK,1
+    ingredient: CLAY
+
+  # Misc
+  Charcoal:
+    type: Furnace
+    result: CHARCOAL,1
+    ingredient: LOG
+    includedata: true
+
+  Cactus Green:
+    type: Furnace
+    result: CACTUS_GREEN,1
+    ingredient: CACTUS
+    includedata: true

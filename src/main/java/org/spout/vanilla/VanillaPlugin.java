@@ -167,8 +167,8 @@ public class VanillaPlugin extends CommonPlugin {
 
 		VanillaMaterials.initialize();
 		MapPalette.DEFAULT = (MapPalette) Spout.getFilesystem().getResource("mappalette://Vanilla/resources/map/mapColorPalette.dat");
-		RecipeYaml.DEFAULT = (RecipeYaml) Spout.getFilesystem().getResource("recipe://Vanilla/resources/recipes.yml");
-		VanillaRecipes.initialize();
+		//RecipeYaml.DEFAULT = (RecipeYaml) Spout.getFilesystem().getResource("recipe://Vanilla/resources/recipes.yml");
+		//VanillaRecipes.initialize();
 
 		getLogger().info("loaded");
 	}

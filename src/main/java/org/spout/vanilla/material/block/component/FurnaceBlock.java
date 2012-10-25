@@ -36,7 +36,7 @@ import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.util.VanillaPlayerUtil;
+import org.spout.vanilla.util.PlayerUtil;
 
 public class FurnaceBlock extends ComponentMaterial implements Directional {
 	public static final float SMELT_TIME = 10.f;
@@ -84,7 +84,7 @@ public class FurnaceBlock extends ComponentMaterial implements Directional {
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock)) {
-			this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
+			this.setFacing(block, PlayerUtil.getFacing(block.getSource()).getOpposite());
 			return true;
 		}
 

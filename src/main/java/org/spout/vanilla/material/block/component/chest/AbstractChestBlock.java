@@ -37,7 +37,7 @@ import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.component.ComponentMaterial;
-import org.spout.vanilla.util.VanillaPlayerUtil;
+import org.spout.vanilla.util.PlayerUtil;
 
 public abstract class AbstractChestBlock extends ComponentMaterial implements Directional, Fuel {
 	public final float BURN_TIME = 15;
@@ -74,7 +74,7 @@ public abstract class AbstractChestBlock extends ComponentMaterial implements Di
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock)) {
-			BlockFace facing = VanillaPlayerUtil.getFacing(block.getSource()).getOpposite();
+			BlockFace facing = PlayerUtil.getFacing(block.getSource()).getOpposite();
 			//search for neighbor and align
 			Block neigh;
 			for (BlockFace face : BlockFaces.NESW) {

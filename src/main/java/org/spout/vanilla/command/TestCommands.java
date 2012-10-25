@@ -70,7 +70,6 @@ import org.spout.vanilla.inventory.entity.VillagerInventory;
 import org.spout.vanilla.inventory.window.WindowType;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.util.VanillaBlockUtil;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
@@ -290,7 +289,7 @@ public class TestCommands {
 			player.getNetworkSynchronizer().sendChunk(player.getChunk());
 			source.sendMessage("Chunk resent");
 		} else if (args.getString(0, "").contains("relight")) {
-			for (Chunk chunk : VanillaBlockUtil.getChunkColumn(player.getChunk())) {
+			for (Chunk chunk : VanillaBlockMaterial.getChunkColumn(player.getChunk())) {
 				chunk.initLighting();
 			}
 			source.sendMessage("Chunk lighting is being initialized");

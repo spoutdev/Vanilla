@@ -59,15 +59,15 @@ import org.spout.vanilla.inventory.window.ClickArguments;
 import org.spout.vanilla.inventory.window.InventoryEntry;
 import org.spout.vanilla.inventory.window.WindowType;
 import org.spout.vanilla.inventory.window.prop.WindowProperty;
-import org.spout.vanilla.util.InventoryUtil;
 
 /**
  * Represents a Window that players can view to display an inventory.
  */
 public class Window extends EntityComponent implements InventoryViewer {
+	private static int windowId = 0;
 	private final List<InventoryConverter> converters = new ArrayList<InventoryConverter>();
 	protected final TObjectIntMap<WindowProperty> properties = new TObjectIntHashMap<WindowProperty>();
-	protected final int id = InventoryUtil.nextWindowId();
+	protected final int id = windowId++;
 	protected int offset;
 	protected WindowType type;
 	protected boolean opened;

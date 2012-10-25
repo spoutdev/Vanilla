@@ -46,8 +46,8 @@ import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.util.RedstoneUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class RedstoneRepeater extends GroundAttachable implements Directional, RedstoneSource, RedstoneTarget, DynamicMaterial, InitializableMaterial {
 	private static final EffectRange[] physicsRanges;
@@ -95,7 +95,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
 		block.setMaterial(this);
-		this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()));
+		this.setFacing(block, PlayerUtil.getFacing(block.getSource()));
 		return true;
 	}
 

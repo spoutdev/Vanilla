@@ -50,6 +50,7 @@ import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.DiggingComponent;
+import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.PlayerFlags;
@@ -61,7 +62,6 @@ import org.spout.vanilla.material.item.Food;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.msg.player.PlayerDiggingMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
-import org.spout.vanilla.util.ItemUtil;
 
 public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMessage> {
 	private void breakBlock(BlockMaterial blockMaterial, Block block, Human human) {
@@ -113,7 +113,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		}
 
 		if (state == PlayerDiggingMessage.STATE_DROP_ITEM && x == 0 && y == 0 && z == 0) {
-			ItemUtil.dropItem(player.getTransform().getPosition(), human.getInventory().getQuickbar().getCurrentItem(), Vector3.ONE);
+			Item.drop(player.getTransform().getPosition(), human.getInventory().getQuickbar().getCurrentItem(), Vector3.ONE);
 			return;
 		}
 

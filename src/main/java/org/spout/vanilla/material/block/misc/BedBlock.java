@@ -47,7 +47,7 @@ import org.spout.vanilla.data.Time;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.util.VanillaPlayerUtil;
+import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.util.explosion.ExplosionModel;
 import org.spout.vanilla.util.explosion.ExplosionModelSpherical;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
@@ -180,7 +180,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace face, Vector3 clickedPos, boolean isClicked) {
 		if (face == BlockFace.BOTTOM) {
-			BlockFace facing = VanillaPlayerUtil.getFacing(block.getSource());
+			BlockFace facing = PlayerUtil.getFacing(block.getSource());
 			Block head = block.translate(facing);
 			// Check if the head block can be placed
 			if (this.canPlace(head, data, face, clickedPos, false)) {

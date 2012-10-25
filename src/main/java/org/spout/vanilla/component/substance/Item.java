@@ -28,7 +28,11 @@ package org.spout.vanilla.component.substance;
 
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.data.Data;
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.LoadOption;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.misc.VanillaPhysicsComponent;
@@ -76,5 +80,34 @@ public class Item extends EntityComponent {
 
 	public VanillaPhysicsComponent getPhysics() {
 		return getOwner().add(VanillaPhysicsComponent.class);
+	}
+
+	/**
+	 * Drops an item at the position with the item stack specified with a natural random velocity
+	 * @param position to spawn the item
+	 * @param itemStack to set to the item
+	 * @return the Item entity
+	 */
+	public static Item dropNaturally(Point position, ItemStack itemStack) {
+		Vector3 velocity = new Vector3(Math.random() * 0.2 - 0.1, 0.2, Math.random() * 0.2 - 0.1);
+		return drop(position, itemStack, velocity);
+	}
+
+	/**
+	 * Drops an item at the position with the item stack specified
+	 * @param position to spawn the item
+	 * @param itemStack to set to the item
+	 * @param velocity to drop at
+	 * @return the Item entity
+	 */
+	public static Item drop(Point position, ItemStack itemStack, Vector3 velocity) {
+		Entity entity = position.getWorld().createEntity(position, Item.class);
+		Item item = entity.add(Item.class);
+		item.setItemStack(itemStack);
+		item.getPhysics().setVelocity(velocity);
+		if (position.getChunk(LoadOption.NO_LOAD) != null) {
+			position.getWorld().spawnEntity(entity);
+		}
+		return item;
 	}
 }

@@ -40,6 +40,7 @@ import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.misc.DiggingComponent;
 import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.component.misc.PickupItemComponent;
+import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
@@ -49,7 +50,6 @@ import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.protocol.entity.living.HumanEntityProtocol;
 import org.spout.vanilla.protocol.msg.player.PlayerGameStateMessage;
-import org.spout.vanilla.util.ItemUtil;
 
 /**
  * A component that identifies the entity as a Vanilla player.
@@ -184,7 +184,7 @@ public class Human extends LivingComponent {
 	 * @param item to drop
 	 */
 	public void dropItem(ItemStack item) {
-		ItemUtil.dropItemNaturally(this.getOwner().getTransform().getPosition(), item);
+		Item.dropNaturally(this.getOwner().getTransform().getPosition(), item);
 	}
 
 	/**

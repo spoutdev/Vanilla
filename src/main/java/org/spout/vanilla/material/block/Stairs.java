@@ -33,7 +33,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.util.bytebit.ByteBitSet;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.util.VanillaPlayerUtil;
+import org.spout.vanilla.util.PlayerUtil;
 
 public abstract class Stairs extends VanillaBlockMaterial implements Directional {
 	private final ByteBitSet[] occlusion;
@@ -78,7 +78,7 @@ public abstract class Stairs extends VanillaBlockMaterial implements Directional
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedMaterial) {
 		block.setMaterial(this);
-		this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
+		this.setFacing(block, PlayerUtil.getFacing(block.getSource()).getOpposite());
 		this.setTop(block, against == BlockFace.TOP || (BlockFaces.NESW.contains(against) && clickedPos.getY() > 0.5f));
 		return true;
 	}

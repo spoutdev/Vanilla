@@ -34,7 +34,7 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.event.world.TimeUpdateEvent;
 import org.spout.vanilla.event.world.WeatherChangeEvent;
-import org.spout.vanilla.util.VanillaMathHelper;
+import org.spout.vanilla.util.MathHelper;
 import org.spout.vanilla.world.WeatherSimulator;
 
 public class NormalSky extends VanillaSky {
@@ -72,7 +72,7 @@ public class NormalSky extends VanillaSky {
 	 * @param timeFactor unknown factor, use 1.0f
 	 */
 	public void updateCelestialTime(long time, float timeFactor) {
-		float celestial = VanillaMathHelper.getRealCelestialAngle(time, timeFactor);
+		float celestial = MathHelper.getRealCelestialAngle(time, timeFactor);
 		WeatherSimulator weather = this.getWeatherSimulator();
 		if (weather != null) {
 			celestial = (float) ((double) celestial * (1.0d - (double) (weather.getRainStrength(timeFactor) * 5f) / 16d));

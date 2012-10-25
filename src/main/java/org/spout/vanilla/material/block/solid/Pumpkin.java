@@ -34,7 +34,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.util.VanillaPlayerUtil;
+import org.spout.vanilla.util.PlayerUtil;
 
 public class Pumpkin extends Solid implements Directional {
 	private final boolean lantern;
@@ -63,7 +63,7 @@ public class Pumpkin extends Solid implements Directional {
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock)) {
-			this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
+			this.setFacing(block, PlayerUtil.getFacing(block.getSource()).getOpposite());
 			return true;
 		}
 

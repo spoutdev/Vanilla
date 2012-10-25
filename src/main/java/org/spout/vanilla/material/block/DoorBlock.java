@@ -37,8 +37,8 @@ import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.util.RedstoneUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public abstract class DoorBlock extends GroundAttachable implements Openable, RedstoneTarget {
 	public DoorBlock(String name, int id) {
@@ -165,7 +165,7 @@ public abstract class DoorBlock extends GroundAttachable implements Openable, Re
 
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace face, Vector3 clickedPos, boolean isClicked) {
-		BlockFace facing = VanillaPlayerUtil.getFacing(block.getSource()).getOpposite();
+		BlockFace facing = PlayerUtil.getFacing(block.getSource()).getOpposite();
 		Block above = block.translate(BlockFace.TOP);
 		if (!above.getMaterial().isPlacementObstacle()) {
 			Block left = block.translate(BlockFaces.NESW.previous(facing, 1));

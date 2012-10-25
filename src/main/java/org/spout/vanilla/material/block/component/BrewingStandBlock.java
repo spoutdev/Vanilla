@@ -32,11 +32,10 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.component.substance.material.BrewingStand;
 import org.spout.vanilla.component.substance.material.chest.Chest;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.util.ItemUtil;
 
 public class BrewingStandBlock extends ComponentMaterial {
 	public BrewingStandBlock(String name, int id) {
@@ -55,7 +54,7 @@ public class BrewingStandBlock extends ComponentMaterial {
 			if (item == null) {
 				continue;
 			}
-			ItemUtil.dropItemNaturally(position, item);
+			Item.dropNaturally(position, item);
 		}
 		super.onDestroy(block);
 	}

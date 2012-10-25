@@ -50,7 +50,7 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.component.FurnaceBlock;
 import org.spout.vanilla.material.block.plant.Sapling;
 import org.spout.vanilla.material.item.misc.Coal;
-import org.spout.vanilla.util.VanillaPlayerUtil;
+import org.spout.vanilla.util.PlayerUtil;
 
 public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable, Burnable, Directional {
 	public static final Log DEFAULT = new Log("Wood", Sapling.DEFAULT);
@@ -144,7 +144,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
 		block.setMaterial(this);
-		this.setFacing(block, VanillaPlayerUtil.getBlockFacing(block));
+		this.setFacing(block, PlayerUtil.getBlockFacing(block));
 		return true;
 	}
 

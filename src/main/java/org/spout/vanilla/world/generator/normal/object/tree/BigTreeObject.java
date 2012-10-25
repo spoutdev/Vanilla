@@ -41,7 +41,7 @@ import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.plant.Sapling;
-import org.spout.vanilla.util.VanillaMathHelper;
+import org.spout.vanilla.util.MathHelper;
 
 public class BigTreeObject extends TreeObject {
 	private float trunkHeightMultiplier = 0.618f;
@@ -190,8 +190,8 @@ public class BigTreeObject extends TreeObject {
 				final BlockIterator branch = new BlockIterator(base, group);
 				final Vector3 diff = group.subtract(base);
 				final BlockFace facing;
-				if (VanillaMathHelper.getLookAtPitch(diff) < 135) {
-					facing = BlockFace.fromYaw(VanillaMathHelper.getLookAtYaw(diff));
+				if (MathHelper.getLookAtPitch(diff) < 135) {
+					facing = BlockFace.fromYaw(MathHelper.getLookAtYaw(diff));
 				} else {
 					facing = BlockFace.TOP;
 				}

@@ -44,7 +44,6 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.util.VanillaBlockUtil;
 
 public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	private static final EffectRange SPREAD_RANGE = new CuboidEffectRange(-1, -1, -1, 1, 4, 1);
@@ -160,7 +159,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 
 		if (this.canDegrade(b)) {
 			// Fires without source burn less long, rain fades out fire
-			if (VanillaBlockUtil.hasRainNearby(b) || (!hasBurningSource(b) && blockData > 3)) {
+			if (VanillaBlockMaterial.hasRainNearby(b) || (!hasBurningSource(b) && blockData > 3)) {
 				this.onDestroy(b);
 				return;
 			}
@@ -186,7 +185,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 					sBlock.setMaterial(VanillaMaterials.AIR); // prevent drops
 				}
 				// Put fire in it's place?
-				if (rand.nextInt(blockData + 10) < 5 && hasBurningSource(sBlock) && !VanillaBlockUtil.isRaining(sBlock)) {
+				if (rand.nextInt(blockData + 10) < 5 && hasBurningSource(sBlock) && !VanillaBlockMaterial.isRaining(sBlock)) {
 					sBlock.setMaterial(this, Math.min(15, blockData + rand.nextInt(5) / 4));
 				}
 			}
@@ -226,7 +225,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 				chanceFactor = 100;
 			}
 			netChance = (firePower + 40) / (blockData + 30);
-			if (netChance <= 0 || rand.nextInt(chanceFactor) > netChance || VanillaBlockUtil.hasRainNearby(sBlock)) {
+			if (netChance <= 0 || rand.nextInt(chanceFactor) > netChance || VanillaBlockMaterial.hasRainNearby(sBlock)) {
 				continue;
 			}
 

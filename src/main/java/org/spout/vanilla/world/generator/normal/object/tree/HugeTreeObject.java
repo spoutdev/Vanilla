@@ -40,7 +40,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.plant.Sapling;
-import org.spout.vanilla.util.VanillaMathHelper;
+import org.spout.vanilla.util.MathHelper;
 
 public class HugeTreeObject extends TreeObject {
 	// size control
@@ -101,7 +101,7 @@ public class HugeTreeObject extends TreeObject {
 				final Block block = w.getBlock(x + bx, y + yy + by, z + bz, w);
 				block.setMaterial(VanillaMaterials.LOG);
 				block.setData(logMetadata);
-				VanillaMaterials.LOG.setFacing(block, BlockFace.fromYaw(VanillaMathHelper.getLookAtYaw(new Vector3(bx, by, bz))));
+				VanillaMaterials.LOG.setFacing(block, BlockFace.fromYaw(MathHelper.getLookAtYaw(new Vector3(bx, by, bz))));
 			}
 		}
 		for (byte yy = -1; yy < totalHeight - 1; yy++) {

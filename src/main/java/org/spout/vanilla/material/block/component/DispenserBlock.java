@@ -51,8 +51,8 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.material.item.misc.Potion;
 import org.spout.vanilla.material.item.misc.SpawnEgg;
+import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.util.RedstoneUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class DispenserBlock extends Solid implements Directional, RedstoneTarget {
 	public DispenserBlock(String name, int id) {
@@ -160,7 +160,7 @@ public class DispenserBlock extends Solid implements Directional, RedstoneTarget
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock)) {
-			this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()).getOpposite());
+			this.setFacing(block, PlayerUtil.getFacing(block.getSource()).getOpposite());
 			return true;
 		}
 		return false;

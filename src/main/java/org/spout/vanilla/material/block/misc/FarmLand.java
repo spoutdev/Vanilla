@@ -39,7 +39,6 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Crop;
 import org.spout.vanilla.material.block.liquid.Water;
-import org.spout.vanilla.util.VanillaBlockUtil;
 
 public class FarmLand extends VanillaBlockMaterial implements InitializableMaterial, DynamicMaterial {
 	private static final EffectRange WATER_CHECK_RANGE = new CuboidEffectRange(-4, 0, -4, 4, 1, 4);
@@ -108,7 +107,7 @@ public class FarmLand extends VanillaBlockMaterial implements InitializableMater
 
 	@Override
 	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
-		if (VanillaBlockUtil.isRaining(block) || hasWaterNearby(block)) {
+		if (VanillaBlockMaterial.isRaining(block) || hasWaterNearby(block)) {
 			block.setData(7);
 			//TODO : Delay before return to dirt ?
 			block.dynamicUpdate(updateTime + 30000);

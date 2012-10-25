@@ -28,11 +28,10 @@ package org.spout.vanilla.util;
 
 import java.util.Random;
 
-import org.spout.api.math.MathHelper;
 import org.spout.api.math.SinusHelper;
 import org.spout.api.math.Vector3;
 
-public class VanillaMathHelper {
+public class MathHelper {
 	/**
 	 * Gets the celestial angle at a certain time of the day
 	 * @param timeMillis time
@@ -47,7 +46,7 @@ public class VanillaMathHelper {
 			timeFactor--;
 		}
 
-		float value = ((float) MathHelper.cos(timeFactor * MathHelper.PI) + 1.0f) / 2.0f;
+		float value = ((float) org.spout.api.math.MathHelper.cos(timeFactor * org.spout.api.math.MathHelper.PI) + 1.0f) / 2.0f;
 		timeFactor += (1.0f - value - timeFactor) / 3f;
 		return timeFactor;
 	}
@@ -60,9 +59,9 @@ public class VanillaMathHelper {
 	 * @return celestial angle, a value from 0 to 1
 	 */
 	public static float getRealCelestialAngle(long timeMillis, float timeMillisTune) {
-		float celestial = VanillaMathHelper.getCelestialAngle(timeMillis, timeMillisTune);
-		celestial *= MathHelper.TWO_PI;
-		celestial = 1.0f - ((float) MathHelper.cos(celestial) * 2.0f + 0.5f);
+		float celestial = MathHelper.getCelestialAngle(timeMillis, timeMillisTune);
+		celestial *= org.spout.api.math.MathHelper.TWO_PI;
+		celestial = 1.0f - ((float) org.spout.api.math.MathHelper.cos(celestial) * 2.0f + 0.5f);
 		if (celestial < 0) {
 			celestial = 0.0f;
 		} else if (celestial > 1) {
@@ -103,6 +102,6 @@ public class VanillaMathHelper {
 	}
 
 	public static float getLookAtPitch(Vector3 offset) {
-		return (float) -Math.toDegrees(Math.atan(offset.getY() / MathHelper.length(offset.getX(), offset.getZ())));
+		return (float) -Math.toDegrees(Math.atan(offset.getY() / org.spout.api.math.MathHelper.length(offset.getX(), offset.getZ())));
 	}
 }

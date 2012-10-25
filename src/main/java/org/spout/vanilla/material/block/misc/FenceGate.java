@@ -43,8 +43,8 @@ import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Openable;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.util.RedstoneUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class FenceGate extends VanillaBlockMaterial implements Openable, RedstoneTarget {
 	public FenceGate(String name, int id) {
@@ -117,7 +117,7 @@ public class FenceGate extends VanillaBlockMaterial implements Openable, Redston
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
 		block.setMaterial(this);
-		this.setFacing(block, VanillaPlayerUtil.getFacing(block.getSource()));
+		this.setFacing(block, PlayerUtil.getFacing(block.getSource()));
 		return true;
 	}
 

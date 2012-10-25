@@ -40,8 +40,8 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.util.RedstoneUtil;
-import org.spout.vanilla.util.VanillaPlayerUtil;
 
 public class PistonBlock extends VanillaBlockMaterial implements Directional, RedstoneTarget, InitializableMaterial {
 	public static final BlockFaces BTEWNS = new BlockFaces(BlockFace.BOTTOM, BlockFace.TOP, BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH);
@@ -247,7 +247,7 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
 		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock)) {
-			this.setFacing(block, VanillaPlayerUtil.getBlockFacing(block));
+			this.setFacing(block, PlayerUtil.getBlockFacing(block));
 			return true;
 		}
 		return false;

@@ -43,12 +43,12 @@ import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Crop;
 import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
-import org.spout.vanilla.util.VanillaBlockUtil;
 
 public abstract class Stem extends GroundAttachable implements Growing, Crop, DynamicMaterial {
 	private BlockMaterial lastMaterial;
@@ -137,7 +137,7 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 			block.dynamicUpdate(updateTime + 10000);
 			return;
 		}
-		int chance = VanillaBlockUtil.getCropGrowthChance(block) + 1;
+		int chance = VanillaBlockMaterial.getCropGrowthChance(block) + 1;
 		Random rand = new Random(block.getWorld().getAge());
 		if (rand.nextInt(chance) == 0) {
 			if (isFullyGrown(block)) {

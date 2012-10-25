@@ -35,7 +35,7 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.misc.HeadComponent;
 
-public class VanillaPlayerUtil {
+public class PlayerUtil {
 	/**
 	 * Gets the required facing for a Block to look at a possible Entity in the Source
 	 * @param block to get the facing for

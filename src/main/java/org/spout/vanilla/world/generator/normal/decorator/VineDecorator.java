@@ -66,12 +66,11 @@ public class VineDecorator extends Decorator {
 						block.setMaterial(VanillaMaterials.VINES);
 						block.setData(block.translate(BlockFace.TOP));
 					} else {
-						faceCheck:
 						for (final BlockFace face : BlockFaces.NESW) {
 							if (VanillaMaterials.VINES.canPlace(block, (short) 0, face, face.getOffset(), false)) {
 								block.setMaterial(VanillaMaterials.VINES);
 								VanillaMaterials.VINES.setFaceAttached(block, face, true);
-								break faceCheck;
+								break;
 							}
 						}
 					}

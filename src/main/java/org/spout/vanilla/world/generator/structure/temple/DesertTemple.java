@@ -282,9 +282,8 @@ public class DesertTemple extends StructureComponent {
 		// TODO: Fix loot chest, and fix loot items for temples and mineshafts
 		for (BlockFace face : BlockFaces.NSEW) {
 			final Vector3 chestPos = face.getOffset().multiply(2).add(10, -11, 10);
-			final LootChestObject chest = new LootChestObject();
-			chest.setRotation(face.getDirection());
-			placeObject(chestPos.getFloorX(), chestPos.getFloorY(), chestPos.getFloorZ(), chest);
+			LOOT_CHEST.setRotation(face.getDirection());
+			placeObject(chestPos.getFloorX(), chestPos.getFloorY(), chestPos.getFloorZ(), LOOT_CHEST);
 		}
 	}
 

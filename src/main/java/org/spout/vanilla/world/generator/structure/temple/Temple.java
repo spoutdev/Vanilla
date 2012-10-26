@@ -44,7 +44,7 @@ public class Temple extends Structure {
 	public void placeObject(World w, int x, int y, int z) {
 		final DesertTemple desertTemple = new DesertTemple(this);
 		desertTemple.setPosition(new Point(w, x, y, z));
-		desertTemple.setRotation(new Quaternion(new Random().nextInt(4) * 90, 0, 1, 0));
+		desertTemple.setRotation(new Quaternion(random.nextInt(4) * 90, 0, 1, 0));
 		desertTemple.place();
 	}
 }

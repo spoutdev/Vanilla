@@ -187,7 +187,7 @@ public class RavinePopulator extends OverlapingPopulator {
 							if (id == VanillaMaterials.STONE.getId() || id == VanillaMaterials.DIRT.getId()
 									|| id == VanillaMaterials.GRASS.getId()) {
 								if (y < 10) {
-									blockData.set(xx, y, zz, VanillaMaterials.STATIONARY_LAVA.getId());
+									blockData.set(xx, y, zz, VanillaMaterials.LAVA.getId());
 								} else {
 									if (id == VanillaMaterials.GRASS.getId()
 											&& blockData.get(xx, y - 1, zz) == VanillaMaterials.DIRT.getId()) {

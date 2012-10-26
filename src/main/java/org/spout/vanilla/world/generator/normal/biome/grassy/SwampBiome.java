@@ -45,7 +45,7 @@ public class SwampBiome extends GrassyBiome {
 				new TallGrassDecorator(new NormalTallGrassFactory()), new DeadBushDecorator(), new LilyPadDecorator(),
 				new MushroomDecorator((byte) 1, (byte) 3), new SugarCaneDecorator((byte) 6, (byte) 25, (byte) 2),
 				new PumpkinDecorator());
-		setMinMax(60, 67);
+		setMinMax(59, 66);
 	}
 
 	@Override

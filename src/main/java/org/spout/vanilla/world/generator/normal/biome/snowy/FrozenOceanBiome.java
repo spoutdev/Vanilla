@@ -31,7 +31,7 @@ import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 public class FrozenOceanBiome extends SnowyBiome {
 	public FrozenOceanBiome(int biomeId) {
 		super(biomeId, new SandAndClayDecorator());
-		setMinMax(40, 67);
+		setMinMax(40, 65);
 	}
 
 	@Override

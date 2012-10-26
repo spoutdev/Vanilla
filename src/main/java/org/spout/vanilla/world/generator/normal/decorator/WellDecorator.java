@@ -41,7 +41,6 @@ import org.spout.vanilla.world.generator.object.VanillaObjects;
  */
 public class WellDecorator extends Decorator {
 	// a well object for generation
-	// the object isn't random, so we can use a static instance
 	private static final WellObject WELL = VanillaObjects.DESERT_WELL;
 	// generation odd, 'ODD' chunk per chunk
 	private static final short ODD = 1000;

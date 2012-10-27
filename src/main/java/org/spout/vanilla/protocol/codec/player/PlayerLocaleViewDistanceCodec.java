@@ -47,7 +47,8 @@ public class PlayerLocaleViewDistanceCodec extends MessageCodec<PlayerLocaleView
 		byte viewDistance = buffer.readByte();
 		byte chatFlags = buffer.readByte();
 		byte difficulty = buffer.readByte();
-		return new PlayerLocaleViewDistanceMessage(locale, viewDistance, chatFlags, difficulty);
+		boolean showCape = buffer.readByte() != 0;
+		return new PlayerLocaleViewDistanceMessage(locale, viewDistance, chatFlags, difficulty, showCape);
 	}
 
 	@Override
@@ -57,6 +58,7 @@ public class PlayerLocaleViewDistanceCodec extends MessageCodec<PlayerLocaleView
 		buffer.writeByte(message.getViewDistance());
 		buffer.writeByte(message.getChatFlags());
 		buffer.writeByte(message.getDifficulty());
+		buffer.writeByte(message.getShowCape() ? 1 : 0);
 		return buffer;
 	}
 }

@@ -38,7 +38,6 @@ import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.component.living.Passive;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.CraftingInventory;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
 import org.spout.vanilla.protocol.entity.living.VillagerEntityProtocol;
 
 /**

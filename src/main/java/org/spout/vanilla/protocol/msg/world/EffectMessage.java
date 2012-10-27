@@ -36,17 +36,18 @@ public final class EffectMessage implements Message {
 	private final int id;
 	private final int x, y, z;
 	private final int data;
-
+	private final boolean noVolumeDecrease;
 	public EffectMessage(int id, Block block, int data) {
-		this(id, block.getX(), block.getY(), block.getZ(), data);
+		this(id, block.getX(), block.getY(), block.getZ(), data, false);
 	}
 
-	public EffectMessage(int id, int x, int y, int z, int data) {
+	public EffectMessage(int id, int x, int y, int z, int data, boolean noVolumeDecrease) {
 		this.id = id;
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		this.data = data;
+		this.noVolumeDecrease = noVolumeDecrease;
 	}
 
 	public int getId() {
@@ -67,6 +68,10 @@ public final class EffectMessage implements Message {
 
 	public int getData() {
 		return data;
+	}
+
+	public boolean getNoVolumeDecrease() {
+		return noVolumeDecrease;
 	}
 
 	@Override

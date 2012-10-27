@@ -24,34 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.codec.player;
+package org.spout.vanilla.material.block.solid;
 
-import java.io.IOException;
+import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.material.block.Solid;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+public class Wall extends Solid {
+	public static final Wall COBBLESTONE_WALL = new Wall("Cobblestone Wall");
+	public static final Wall MOSSY_COBBLESTONE_WALL = new Wall("Mossy Cobblestone Wall", 1, COBBLESTONE_WALL);
 
-import org.spout.api.protocol.MessageCodec;
-
-import org.spout.vanilla.protocol.msg.player.PlayerTimeMessage;
-
-public final class PlayerTimeCodec extends MessageCodec<PlayerTimeMessage> {
-	public PlayerTimeCodec() {
-		super(PlayerTimeMessage.class, 0x04);
+	private Wall(String name) {
+		super((short) 0x0002, name, 139);
+		this.setHardness(1.5F).setResistance(10.0F);
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
-	@Override
-	public PlayerTimeMessage decode(ChannelBuffer buffer) throws IOException {
-		long worldAge = buffer.readLong();
-		long dayTime = buffer.readLong();
-		return new PlayerTimeMessage(worldAge, dayTime);
-	}
-
-	@Override
-	public ChannelBuffer encode(PlayerTimeMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(8);
-		buffer.writeLong(message.getWorldAgeTime());
-		buffer.writeLong(message.getDayTime());
-		return buffer;
+	private Wall(String name, int data, Wall parent) {
+		super(name, 139, data, parent);
+		this.setHardness(1.5F).setResistance(10.0F);
+		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 }

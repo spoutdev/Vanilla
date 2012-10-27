@@ -28,16 +28,21 @@ package org.spout.vanilla.protocol.entity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
+import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.component.misc.VanillaPhysicsComponent;
 import org.spout.vanilla.protocol.msg.entity.EntityDestroyMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityHeadYawMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionYawMessage;
@@ -49,13 +54,22 @@ import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPosition;
 import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyRotation;
 
 public abstract class VanillaEntityProtocol implements EntityProtocol {
+	private List<Parameter<?>> lastMeta;
+
+	public List<Parameter<?>> getUpdateParameters(Entity entity) {
+		return Collections.emptyList();
+	}
+
 	@Override
 	public final List<Message> getDestroyMessages(Entity entity) {
 		return Arrays.<Message>asList(new EntityDestroyMessage(new int[]{entity.getId()}));
 	}
 
 	@Override
-	public List<Message> getUpdateMessages(Entity entity) {
+	public final List<Message> getUpdateMessages(Entity entity) {
+
+		// Movement
+
 		Transform prevTransform = entity.getTransform().getTransform();
 		Transform newTransform = entity.getTransform().getTransformLive();
 
@@ -95,14 +109,28 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 			}
 		}
 
-		VanillaPhysicsComponent physics = entity.add(VanillaPhysicsComponent.class);
-		if (physics.isVelocityDirty()) {
-			messages.add(new EntityVelocityMessage(entity.getId(), physics.getProtocolVelocity()));
-		}
+		// Head movement
+
 		HeadComponent head = entity.add(HeadComponent.class);
 		if (head.isDirty()) {
 			messages.add(new EntityHeadYawMessage(entity.getId(), head.getProtocolYaw()));
 		}
+
+		// Physics
+
+		VanillaPhysicsComponent physics = entity.add(VanillaPhysicsComponent.class);
+		if (physics.isVelocityDirty()) {
+			messages.add(new EntityVelocityMessage(entity.getId(), physics.getProtocolVelocity()));
+		}
+
+		// Extra metadata
+
+		List<Parameter<?>> params = getUpdateParameters(entity);
+		if (lastMeta == null || !lastMeta.equals(params)) {
+			messages.add(new EntityMetadataMessage(entity.getId(), params));
+			lastMeta = params;
+		}
+
 		return messages;
 	}
 }

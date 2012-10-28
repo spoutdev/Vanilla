@@ -58,10 +58,11 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 			if (!position.equals(newPosition)) {
 				//TODO: better movement checking
 				final double dx = position.getX() - newPosition.getX();
+				final double dy = position.getY() - newPosition.getY();
 				final double dz = position.getZ() - newPosition.getZ();
-				final double distHorizontal = dx * dx * dz * dz;
+				final double dist = dx * dx + dy * dy + dz * dz;
 				WorldConfigurationNode node = VanillaConfiguration.WORLDS.get(holder.getWorld());
-				if (distHorizontal < (holder.get(Human.class).isSprinting() ? 4D : 1D) || node.ALLOW_FLIGHT.getBoolean()) {
+				if (dist < 100 || node.ALLOW_FLIGHT.getBoolean()) {
 					holder.getTransform().setPosition(newPosition);
 					holder.get(Human.class).setOnGround(message.isOnGround());
 				} else {

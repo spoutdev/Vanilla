@@ -124,7 +124,8 @@ public class HealthComponent extends EntityComponent {
 	 */
 	public void setSpawnHealth(int maxHealth) {
 		this.setMaxHealth(maxHealth);
-		this.setHealth(maxHealth, HealthChangeCause.SPAWN);
+		//Do not call setHealth yet, network has not been initialized if loading from file
+		getData().put(VanillaData.HEALTH, getMaxHealth());
 	}
 
 	/**
@@ -151,10 +152,8 @@ public class HealthComponent extends EntityComponent {
 			}
 		}
 
-		Entity owner = getOwner();
-		if (owner instanceof Player) {
-			Player player = (Player) owner;
-			player.getNetworkSynchronizer().callProtocolEvent(new PlayerHealthEvent(player));
+		if (getOwner() instanceof Player) {
+			getOwner().getNetwork().callProtocolEvent(new PlayerHealthEvent(((Player)getOwner())));
 		}
 	}
 

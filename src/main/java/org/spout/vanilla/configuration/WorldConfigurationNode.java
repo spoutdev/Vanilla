@@ -43,6 +43,7 @@ public final class WorldConfigurationNode extends ConfigurationHolderConfigurati
 	public final ConfigurationHolder SKY_TYPE = new ConfigurationHolder("normal", "sky-type");
 	public final ConfigurationHolder SPAWN_ANIMALS = new ConfigurationHolder(true, "spawn-animals");
 	public final ConfigurationHolder SPAWN_MONSTERS = new ConfigurationHolder(true, "spawn-monster");
+	public final ConfigurationHolder ALLOW_FLIGHT = new ConfigurationHolder(false, "allow-flight");
 	private final String name;
 	private final WorldConfiguration parent;
 

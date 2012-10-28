@@ -311,7 +311,7 @@ public class VanillaPlugin extends CommonPlugin {
 				}
 			}
 
-			WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.getOrCreate(world);
+			WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.get(world);
 
 			// Keep spawn loaded
 			if (worldConfig.LOADED_SPAWN.getBoolean()) {

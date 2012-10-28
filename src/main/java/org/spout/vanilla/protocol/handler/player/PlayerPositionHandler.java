@@ -31,7 +31,10 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.player.PingComponent;
+import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.configuration.WorldConfigurationNode;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionMessage;
 
 public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMessage> {
@@ -53,10 +56,16 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 			}
 		} else {
 			if (!position.equals(newPosition)) {
-				if (position.distance(newPosition) < 100) {
+				//TODO: better movement checking
+				final double dx = position.getX() - newPosition.getX();
+				final double dz = position.getZ() - newPosition.getZ();
+				final double distHorizontal = dx * dx * dz * dz;
+				WorldConfigurationNode node = VanillaConfiguration.WORLDS.get(holder.getWorld());
+				if (distHorizontal < (holder.get(Human.class).isSprinting() ? 4D : 1D) || node.ALLOW_FLIGHT.getBoolean()) {
 					holder.getTransform().setPosition(newPosition);
+					holder.get(Human.class).setOnGround(message.isOnGround());
 				} else {
-					holder.kick("Moved to quickly");
+					holder.kick("Moved too quickly");
 				}
 			}
 		}

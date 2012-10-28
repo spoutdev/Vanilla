@@ -45,10 +45,10 @@ public class WorldConfiguration extends YamlConfiguration {
 	public WorldConfiguration(File dataFolder) {
 		super(new File(dataFolder, "worlds.yml"));
 		//TODO: Allow the creation of sub-sections for configuration holders
-		NORMAL = getOrCreate("world").setDefaults("normal", "normal");
-		FLAT = getOrCreate("world_flat").setDefaults("normal", "flat");
-		NETHER = getOrCreate("world_nether").setDefaults("nether", "nether");
-		END = getOrCreate("world_the_end").setDefaults("the_end", "the_end");
+		NORMAL = get("world").setDefaults("normal", "normal");
+		FLAT = get("world_flat").setDefaults("normal", "flat");
+		NETHER = get("world_nether").setDefaults("nether", "nether");
+		END = get("world_the_end").setDefaults("the_end", "the_end");
 	}
 
 	public Collection<WorldConfigurationNode> getAll() {
@@ -61,8 +61,8 @@ public class WorldConfiguration extends YamlConfiguration {
 	 * @param world of the configuration
 	 * @return the World configuration node
 	 */
-	public WorldConfigurationNode getOrCreate(World world) {
-		return getOrCreate(world.getName());
+	public WorldConfigurationNode get(World world) {
+		return get(world.getName());
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class WorldConfiguration extends YamlConfiguration {
 	 * @param worldname of the configuration
 	 * @return the World configuration node
 	 */
-	public WorldConfigurationNode getOrCreate(String worldname) {
+	public WorldConfigurationNode get(String worldname) {
 		synchronized (worldNodes) {
 			WorldConfigurationNode node = worldNodes.get(worldname);
 			if (node == null) {

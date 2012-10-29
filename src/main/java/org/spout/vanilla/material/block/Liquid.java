@@ -328,4 +328,9 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	public EffectRange getDynamicRange() {
 		return EffectRange.THIS_AND_NEIGHBORS;
 	}
+	
+	@Override
+	public boolean isFaceRendered(BlockFace face, BlockMaterial neighbor) {
+		return neighbor != this;
+	}
 }

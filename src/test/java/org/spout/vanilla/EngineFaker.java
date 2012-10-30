@@ -38,9 +38,9 @@ public class EngineFaker {
 	static {
 		Engine engine = PowerMockito.mock(Engine.class);
 		try {
-			PowerMockito.when(engine, Engine.class.getMethod("getPlatform", null)).withNoArguments().thenReturn(Platform.SERVER);
+			PowerMockito.when(engine, Engine.class.getMethod("getPlatform", (Class[])null)).withNoArguments().thenReturn(Platform.SERVER);
 		} catch (Exception e) {
-			engine = null;
+			throw new RuntimeException(e);
 		}
 		Spout.setEngine(engine);
 		engineInstance = engine;

@@ -37,11 +37,19 @@ import org.spout.vanilla.material.VanillaMaterials;
 
 public class Solid extends VanillaBlockMaterial {
 	public Solid(String name, int id) {
-		this((short) 0, name, id);
+		this(name, id, (String) null);
+	}
+	
+	public Solid(String name, int id, String model) {
+		this((short) 0, name, id, model);
+	}
+	
+	public Solid(short dataMask, String name, int id) {
+		this(dataMask, name, id, (String) null);
 	}
 
-	public Solid(short dataMask, String name, int id) {
-		super(dataMask, name, id);
+	public Solid(short dataMask, String name, int id, String model) {
+		super(dataMask, name, id, model);
 		this.setCollision(CollisionStrategy.SOLID).setOpaque();
 	}
 

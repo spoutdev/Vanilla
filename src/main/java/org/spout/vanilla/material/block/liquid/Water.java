@@ -39,7 +39,7 @@ import org.spout.vanilla.material.block.Liquid;
 
 public class Water extends Liquid implements DynamicMaterial {
 	public Water(String name, int id, boolean flowing) {
-		super(name, id, flowing);
+		super(name, id, flowing, "model://Vanilla/resources/materials/block/liquid/water/water.spm");
 		this.setFlowDelay(250);
 		//TODO: Allow this to get past the tests
 		//this.setFlowDelay(VanillaConfiguration.WATER_DELAY.getInt());

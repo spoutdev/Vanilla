@@ -43,9 +43,13 @@ import org.spout.vanilla.util.flowing.LiquidModel;
 public abstract class Liquid extends VanillaBlockMaterial implements DynamicMaterial, Source {
 	private final boolean flowing;
 	private int delay;
-
+	
 	public Liquid(String name, int id, boolean flowing) {
-		super(name, id);
+		this(name, id, flowing, (String) null);
+	}
+
+	public Liquid(String name, int id, boolean flowing, String model) {
+		super(name, id, model);
 		this.flowing = flowing;
 		this.setLiquidObstacle(false).setHardness(100.0F).setResistance(166.7F).setOpacity(2).setCollision(CollisionStrategy.SOFT);
 		this.getDrops().clear();

@@ -28,6 +28,8 @@ package org.spout.vanilla;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
+
+import java.awt.Color;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
@@ -36,6 +38,8 @@ import java.util.logging.Level;
 import org.spout.api.Engine;
 import org.spout.api.Server;
 import org.spout.api.Spout;
+import org.spout.api.Client;
+import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.command.CommandRegistrationsFactory;
 import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
@@ -48,8 +52,13 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
+import org.spout.api.gui.Screen;
+import org.spout.api.gui.Widget;
+import org.spout.api.gui.component.LabelComponent;
+import org.spout.api.gui.component.TexturedRectComponent;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
+import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.plugin.Platform;
@@ -58,6 +67,8 @@ import org.spout.api.plugin.ServiceManager;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.PortBinding;
 import org.spout.api.protocol.Protocol;
+import org.spout.api.render.Font;
+import org.spout.api.render.RenderMaterial;
 import org.spout.api.util.OutwardIterator;
 
 import org.spout.vanilla.command.AdministrationCommands;
@@ -154,6 +165,11 @@ public class VanillaPlugin extends CommonPlugin {
 		}
 
 		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol"));
+		
+		if (engine.getPlatform()==Platform.CLIENT) {
+			setupGUI();
+		}
+		
 	}
 
 	@Override
@@ -234,6 +250,32 @@ public class VanillaPlugin extends CommonPlugin {
 				}
 			});
 		}
+	}
+	
+	private void setupGUI() {
+		float aspectRatio = 0.75f; // This is temporary it will be applied directly by the engine
+		Screen vanillaScreen = new Screen();
+		
+		// Sample texture
+		RenderMaterial guiTex = (RenderMaterial)Spout.getFilesystem().getResource("material://Vanilla/resources/gui/GUIMaterial.smt");
+		Widget rectWidget = new Widget();
+		TexturedRectComponent rect = rectWidget.add(TexturedRectComponent.class);
+		rect.setRenderMaterial(guiTex);
+		rect.setColor(Color.WHITE);
+		rect.setSprite(new Rectangle(-0.71f*aspectRatio, -1f, 1.42f*aspectRatio, 0.17f));
+		rect.setSource(new Rectangle(0, 0, 0.71f, 0.085f));
+		vanillaScreen.attachWidget(this, rectWidget);
+		
+		// Sample text
+		Font font = (Font)Spout.getFilesystem().getResource("font://Spout/resources/resources/fonts/ubuntu/Ubuntu-M.ttf");
+		Widget txtWidget = new Widget();
+		txtWidget.setGeometry(new Rectangle(-0.6f*aspectRatio, -0.9f, 0, 0)); // Position on the screen (between -1 and 1)
+		LabelComponent txt = txtWidget.add(LabelComponent.class);
+		txt.setFont(font);
+		txt.setText(ChatStyle.WHITE+"Hello gui from vanilla !");
+		vanillaScreen.attachWidget(this, txtWidget);
+		
+		((Client) engine).getScreenStack().openScreen(vanillaScreen);
 	}
 
 	private void setupWorlds() {

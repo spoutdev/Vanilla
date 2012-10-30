@@ -38,11 +38,11 @@ import org.spout.vanilla.material.item.armor.Armor;
 import org.spout.vanilla.source.DamageCause;
 
 public class DamageTest {
-	@Test
-	public void testDamageModifier() {
-		
+	static {
 		EngineFaker.setupEngine();
-		
+	}
+	@Test
+	public void testDamageModifier() {		
 		ItemStack test = new ItemStack(VanillaMaterials.DIAMOND_CHESTPLATE, 1);
 		Enchantment.addEnchantment(test, Enchantments.PROTECTION, 4, false);
 		assertTrue(Enchantment.hasEnchantment(test, Enchantments.PROTECTION));

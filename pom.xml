@@ -16,6 +16,7 @@
 		<spoutVersion>dev-SNAPSHOT</spoutVersion>
 		<protocolVersion>39</protocolVersion>
 		<buildNumber>0</buildNumber>
+		<powermock.version>1.4.12</powermock.version>
 	</properties>
 
 	<!-- Organization -->
@@ -79,6 +80,18 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.10</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-module-junit4</artifactId>
+			<version>${powermock.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.powermock</groupId>
+			<artifactId>powermock-api-mockito</artifactId>
+			<version>${powermock.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

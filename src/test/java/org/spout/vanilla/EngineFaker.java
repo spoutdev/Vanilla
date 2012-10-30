@@ -24,30 +24,29 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.item;
+package org.spout.vanilla;
 
-import static org.junit.Assert.assertTrue;
+import org.powermock.api.mockito.PowerMockito;
+import org.spout.api.Engine;
+import org.spout.api.Spout;
+import org.spout.api.plugin.Platform;
 
-import org.junit.Test;
-import org.spout.api.inventory.ItemStack;
-import org.spout.vanilla.EngineFaker;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.enchantment.Enchantment;
-import org.spout.vanilla.material.enchantment.Enchantments;
-import org.spout.vanilla.material.item.armor.Armor;
-import org.spout.vanilla.source.DamageCause;
-
-public class DamageTest {
-	@Test
-	public void testDamageModifier() {
-		
-		EngineFaker.setupEngine();
-		
-		ItemStack test = new ItemStack(VanillaMaterials.DIAMOND_CHESTPLATE, 1);
-		Enchantment.addEnchantment(test, Enchantments.PROTECTION, 4, false);
-		assertTrue(Enchantment.hasEnchantment(test, Enchantments.PROTECTION));
-
-		Armor armor = (Armor) test.getMaterial();
-		assertTrue((int) Math.ceil(.04 * (armor.getBaseProtection() + armor.getProtection(test, DamageCause.CACTUS))) == 1);
+public class EngineFaker {
+	
+	private final static Engine engineInstance;
+	
+	static {
+		Engine engine = PowerMockito.mock(Engine.class);
+		try {
+			PowerMockito.when(engine, Engine.class.getMethod("getPlatform", null)).withNoArguments().thenReturn(Platform.SERVER);
+		} catch (Exception e) {
+			engine = null;
+		}
+		Spout.setEngine(engine);
+		engineInstance = engine;
+	}
+	
+	public static Engine setupEngine() {
+		return engineInstance;
 	}
 }

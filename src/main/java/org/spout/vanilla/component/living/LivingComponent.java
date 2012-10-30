@@ -62,14 +62,14 @@ public abstract class LivingComponent extends EntityComponent {
 	}
 
 	public HeadComponent getHead() {
-		return getOwner().add(HeadComponent.class);
+		return getOwner().get(HeadComponent.class);
 	}
 
 	public HealthComponent getHealth() {
-		return getOwner().add(HealthComponent.class);
+		return getOwner().get(HealthComponent.class);
 	}
 
 	public VanillaPhysicsComponent getPhysics() {
-		return getOwner().add(VanillaPhysicsComponent.class);
+		return getOwner().get(VanillaPhysicsComponent.class);
 	}
 }

@@ -98,7 +98,10 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 
 		short minecraftID = VanillaMaterials.getMinecraftId(blockMaterial);
 		BlockFace clickedFace = message.getFace();
-		Human human = player.add(Human.class);
+		Human human = player.get(Human.class);
+		if (human == null) {
+			return;
+		}
 
 		// Don't block protections if dropping an item, silly Notch...
 		if (state != PlayerDiggingMessage.STATE_DROP_ITEM && state != PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
@@ -160,7 +163,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 					VanillaMaterials.FIRE.onDestroy(neigh);
 					GeneralEffects.RANDOM_FIZZ.playGlobal(block.getPosition());
 				} else if (human.isSurvival() && blockMaterial.getHardness() != 0.0f) {
-					player.add(DiggingComponent.class).startDigging(new Point(w, x, y, z));
+					player.get(DiggingComponent.class).startDigging(new Point(w, x, y, z));
 				} else {
 					// insta-break
 					breakBlock(blockMaterial, block, human);
@@ -168,7 +171,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				}
 			}
 		} else if (state == PlayerDiggingMessage.STATE_DONE_DIGGING) {
-			if (!player.add(DiggingComponent.class).stopDigging(new Point(w, x, y, z)) || !isInteractable) {
+			if (!player.get(DiggingComponent.class).stopDigging(new Point(w, x, y, z)) || !isInteractable) {
 				return;
 			}
 

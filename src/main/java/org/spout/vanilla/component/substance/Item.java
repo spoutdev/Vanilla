@@ -79,7 +79,7 @@ public class Item extends EntityComponent {
 	}
 
 	public VanillaPhysicsComponent getPhysics() {
-		return getOwner().add(VanillaPhysicsComponent.class);
+		return getOwner().get(VanillaPhysicsComponent.class);
 	}
 
 	/**

@@ -70,6 +70,10 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 		}
 
 		final Player player = (Player) entity;
+		if (!player.has(SleepComponent.class)) {
+			return;
+		}
+
 		final Block head = getCorrectHalf(block, true);
 		final World world = player.getWorld();
 		final VanillaSky sky = world.getComponentHolder().get(VanillaSky.class);
@@ -91,7 +95,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 			return;
 		}
 
-		player.add(SleepComponent.class).sleep(head);
+		player.get(SleepComponent.class).sleep(head);
 	}
 
 	@Override

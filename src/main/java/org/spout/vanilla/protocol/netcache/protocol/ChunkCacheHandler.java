@@ -35,7 +35,9 @@ import org.spout.vanilla.protocol.VanillaProtocol;
 public class ChunkCacheHandler extends MessageHandler<ChunkCacheMessage> {
 	@Override
 	public void handleServer(Session session, ChunkCacheMessage message) {
-		session.getPlayer().add(PingComponent.class).refresh();
+		if (session.getPlayer().has(PingComponent.class)) {
+			session.getPlayer().get(PingComponent.class).refresh();
+		}
 		session.getDataMap().get(VanillaProtocol.CHUNK_NET_CACHE).handleCustomPacket(message.getChannel(), message.getData());
 	}
 }

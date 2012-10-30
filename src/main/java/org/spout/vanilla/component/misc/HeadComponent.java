@@ -43,6 +43,11 @@ public class HeadComponent extends EntityComponent {
 	private int lastHeadYaw = 0;
 
 	@Override
+	public void onAttached() {
+		
+	}
+
+	@Override
 	public boolean canTick() {
 		return true;
 	}
@@ -125,7 +130,7 @@ public class HeadComponent extends EntityComponent {
 	}
 
 	public BlockIterator getBlockView() {
-		return getBlockView(getOwner().add(InteractComponent.class).getReach());
+		return getBlockView(getOwner().get(InteractComponent.class).getReach());
 	}
 
 	public BlockIterator getBlockView(int maxDistance) {

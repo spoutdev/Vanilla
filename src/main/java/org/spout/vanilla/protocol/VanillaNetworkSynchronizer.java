@@ -342,7 +342,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		Difficulty difficulty = world.getComponentHolder().getData().get(VanillaData.DIFFICULTY);
 		Dimension dimension = world.getComponentHolder().getData().get(VanillaData.DIMENSION);
 		WorldType worldType = world.getComponentHolder().getData().get(VanillaData.WORLD_TYPE);
-		player.add(Human.class).setGamemode(gamemode, false);
+		if (player.has(Human.class)) {
+			player.get(Human.class).setGamemode(gamemode, false);
+		}
 		//TODO Handle infinite height
 		if (first) {
 			first = false;
@@ -351,9 +353,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			PlayerLoginRequestMessage idMsg = new PlayerLoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) server.getMaxPlayers());
 			player.getSession().send(false, true, idMsg);
 			player.getSession().setState(State.GAME);
-			for (int slot = 0; slot < 4; slot++) {
-				ItemStack slotItem = player.add(Human.class).getInventory().getArmor().get(slot);
-				player.getSession().send(false, new EntityEquipmentMessage(entityId, slot, slotItem));
+			if (player.has(Human.class)) {
+				for (int slot = 0; slot < 4; slot++) {
+					ItemStack slotItem = player.get(Human.class).getInventory().getArmor().get(slot);
+					player.getSession().send(false, new EntityEquipmentMessage(entityId, slot, slotItem));
+				}
 			}
 		} else {
 			player.getSession().send(false, new PlayerRespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.toString()));

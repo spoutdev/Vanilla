@@ -68,8 +68,10 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 			//Set position for the server
 			player.teleport(point);
 			player.getNetworkSynchronizer().setRespawned();
-			Human human = player.add(Human.class);
-			human.getHealth().setHealth(human.getHealth().getMaxHealth(), HealthChangeCause.SPAWN);
+			Human human = player.get(Human.class);
+			if (human != null) {
+				human.getHealth().setHealth(human.getHealth().getMaxHealth(), HealthChangeCause.SPAWN);
+			}
 
 			//send spawn to everyone else
 			Set<? extends Player> observers = player.getChunk().getObservingPlayers();

@@ -111,15 +111,15 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 
 		// Head movement
 
-		HeadComponent head = entity.add(HeadComponent.class);
-		if (head.isDirty()) {
+		HeadComponent head = entity.get(HeadComponent.class);
+		if (head != null && head.isDirty()) {
 			messages.add(new EntityHeadYawMessage(entity.getId(), head.getProtocolYaw()));
 		}
 
 		// Physics
 
-		VanillaPhysicsComponent physics = entity.add(VanillaPhysicsComponent.class);
-		if (physics.isVelocityDirty()) {
+		VanillaPhysicsComponent physics = entity.get(VanillaPhysicsComponent.class);
+		if (physics != null && physics.isVelocityDirty()) {
 			messages.add(new EntityVelocityMessage(entity.getId(), physics.getProtocolVelocity()));
 		}
 

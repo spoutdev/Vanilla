@@ -179,11 +179,13 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 						//}
 
 						//For now: simple distance checking
-						Point pos1 = player.getTransform().getPosition();
-						Point pos2 = player.add(HeadComponent.class).getPosition();
 						Point tpos = target.getPosition();
-
-						if (pos1.distance(tpos) < 0.6 || pos2.distance(tpos) < 0.6) {
+						if (player.getTransform().getPosition().distance(tpos) < 0.6) {
+							undoPlacement(player, clickedBlock, alterBlock);
+							return;
+						}
+						HeadComponent head = player.get(HeadComponent.class);
+						if (head != null && head.getPosition().distance(tpos) < 0.6) {
 							undoPlacement(player, clickedBlock, alterBlock);
 							return;
 						}

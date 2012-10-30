@@ -35,7 +35,6 @@ import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 
 import org.spout.api.Spout;
-import org.spout.api.component.Component;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
@@ -73,11 +72,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 	protected boolean opened;
 	protected String title;
 	protected ItemStack cursorItem;
-
-	static {
-		Component.addDependency(Window.class, Human.class);
-		Component.addDependency(DefaultWindow.class, Human.class);
-	}
 
 	/**
 	 * Initializes this window to the specified type, title, and offset of first main slot.

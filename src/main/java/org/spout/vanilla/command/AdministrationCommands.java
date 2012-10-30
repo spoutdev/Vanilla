@@ -68,11 +68,11 @@ public class AdministrationCommands {
 			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to clear your own inventory.");
 			}
-			((Player) source).add(Human.class).getInventory().clear();
+			((Player) source).get(Human.class).getInventory().clear();
 		}
 		if (args.length() == 1) {
 			Player player = args.getPlayer(0, false);
-			player.add(Human.class).getInventory().clear();
+			player.get(Human.class).getInventory().clear();
 			player.sendMessage(ChatStyle.BRIGHT_GREEN, "Your inventory has been cleared.");
 		}
 		source.sendMessage(ChatStyle.BRIGHT_GREEN, "Inventory cleared.");
@@ -184,7 +184,7 @@ public class AdministrationCommands {
 		}
 
 		int count = args.getInteger(++index, 1);
-		player.add(Human.class).getInventory().add(new ItemStack(material, count));
+		player.get(Human.class).getInventory().add(new ItemStack(material, count));
 		source.sendMessage("Gave ", player.getName(), " ", count, " ", material.getDisplayName());
 	}
 
@@ -392,14 +392,14 @@ public class AdministrationCommands {
 			if (!(source instanceof Player)) {
 				throw new CommandException("Don't be silly...you cannot kill yourself as the console.");
 			}
-			((Player) source).add(HealthComponent.class).kill(source);
+			((Player) source).get(HealthComponent.class).kill(source);
 		} else {
 			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
 			Player victim = ((Server) Spout.getEngine()).getPlayer(args.getString(0), true);
 			if (victim != null) {
-				victim.add(HealthComponent.class).kill(source);
+				victim.get(HealthComponent.class).kill(source);
 			}
 		}
 	}

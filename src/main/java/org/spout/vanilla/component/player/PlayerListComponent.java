@@ -32,7 +32,6 @@ import java.util.LinkedHashMap;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
-import org.spout.api.component.Component;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
 
@@ -45,10 +44,6 @@ public class PlayerListComponent extends EntityComponent {
 	private final HashSet<String> temp = new HashSet<String>();
 	private float pollPeriod = 10;
 	private float timer = 0;
-
-	static {
-		Component.addDependency(PlayerListComponent.class, PingComponent.class);
-	}
 
 	@Override
 	public void onAttached() {
@@ -75,12 +70,14 @@ public class PlayerListComponent extends EntityComponent {
 		Player[] online = server.getOnlinePlayers();
 		temp.clear();
 		for (int i = 0; i < online.length; i++) {
-			String name = online[i].getDisplayName();
-			long ping = (long) (1000.0F * online[i].add(PingComponent.class).getPing());
-			temp.add(name);
-			Long oldPing = players.put(name, ping);
-			if (oldPing == null || !oldPing.equals(ping)) {
-				player.getNetworkSynchronizer().callProtocolEvent(new PlayerListEvent(name, ping, true));
+			if (online[i].has(PingComponent.class)) {
+				String name = online[i].getDisplayName();
+				long ping = (long) (1000.0F * online[i].get(PingComponent.class).getPing());
+				temp.add(name);
+				Long oldPing = players.put(name, ping);
+				if (oldPing == null || !oldPing.equals(ping)) {
+					player.getNetworkSynchronizer().callProtocolEvent(new PlayerListEvent(name, ping, true));
+				}
 			}
 		}
 		Iterator<String> itr = players.keySet().iterator();

@@ -86,7 +86,8 @@ public abstract class VanillaSky extends WorldComponent {
 		// Sleeping players
 		boolean skipNight = false;
 		for (Player player : getWorld().getPlayers()) {
-			if (player.add(SleepComponent.class).canSkipNight()) {
+			SleepComponent c = player.get(SleepComponent.class);
+			if (c == null || c.canSkipNight()) {
 				skipNight = true;
 			} else {
 				skipNight = false;

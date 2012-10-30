@@ -45,7 +45,9 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 		}
 		Player holder = session.getPlayer();
 
-		holder.add(PingComponent.class).refresh();
+		if (holder.has(PingComponent.class)) {
+			holder.get(PingComponent.class).refresh();
+		}
 
 		Point newPosition = new Point(message.getPosition(), holder.getWorld());
 		Point position = holder.getTransform().getPosition();

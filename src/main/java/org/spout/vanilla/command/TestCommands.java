@@ -130,7 +130,7 @@ public class TestCommands {
 		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to damage yourself.");
 		}
-		((Player) source).add(HealthComponent.class).damage(args.getInteger(0));
+		((Player) source).get(HealthComponent.class).damage(args.getInteger(0));
 	}
 
 	@Command(aliases = {"explode"}, usage = "<explode>", desc = "Create an explosion")

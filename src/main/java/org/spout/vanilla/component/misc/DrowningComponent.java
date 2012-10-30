@@ -27,7 +27,6 @@
 package org.spout.vanilla.component.misc;
 
 import org.spout.api.Source;
-import org.spout.api.component.Component;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Entity;
 
@@ -35,17 +34,15 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.source.DamageCause;
 
+/**
+ * The drowning component requires a health component and head component
+ */
 public class DrowningComponent extends EntityComponent implements Source {
 	private Entity owner;
 	private HealthComponent health;
 	private HeadComponent head;
 	public static final float MAX_AIR = VanillaData.AIR_SECS.getDefaultValue();
 	private int damageTimer = 20;
-
-	static {
-		Component.addDependency(DrowningComponent.class, HealthComponent.class);
-		Component.addDependency(DrowningComponent.class, HeadComponent.class);
-	}
 
 	@Override
 	public void onAttached() {
@@ -61,7 +58,7 @@ public class DrowningComponent extends EntityComponent implements Source {
 			return;
 		}
 
-		pulse(dt);
+		setAir(getAir() - dt);
 		if (getAir() < 0) {
 			// out of air; damage one heart every second
 			if (damageTimer-- < 0) {
@@ -77,9 +74,5 @@ public class DrowningComponent extends EntityComponent implements Source {
 
 	public void setAir(float airSecs) {
 		getData().put(VanillaData.AIR_SECS, airSecs);
-	}
-
-	public void pulse(float dt) {
-		setAir(getAir() - dt);
 	}
 }

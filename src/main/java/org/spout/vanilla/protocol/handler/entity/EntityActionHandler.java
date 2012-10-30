@@ -48,30 +48,34 @@ public final class EntityActionHandler extends MessageHandler<EntityActionMessag
 		}
 
 		Player player = session.getPlayer();
-		Human human = player.add(Human.class);
+		Human human = player.get(Human.class);
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 
 		switch (message.getAction()) {
 			case EntityActionMessage.ACTION_CROUCH:
 				parameters.add(EntityMetadataMessage.Parameters.META_CROUCHED.get());
-				session.send(false, new EntityMetadataMessage(human.getOwner().getId(), parameters));
+				session.send(false, new EntityMetadataMessage(player.getId(), parameters));
 				break;
 			case EntityActionMessage.ACTION_UNCROUCH:
 				parameters.add(EntityMetadataMessage.Parameters.META_CROUCHED.get());
-				session.send(false, new EntityMetadataMessage(human.getOwner().getId(), parameters));
+				session.send(false, new EntityMetadataMessage(player.getId(), parameters));
 				break;
 			case EntityActionMessage.ACTION_LEAVE_BED:
 				player.getNetwork().callProtocolEvent(new EntityAnimationEvent(player, Animation.LEAVE_BED));
 				break;
 			case EntityActionMessage.ACTION_START_SPRINTING:
 				parameters.add(EntityMetadataMessage.Parameters.META_SPRINTING.get());
-				session.send(false, new EntityMetadataMessage(human.getOwner().getId(), parameters));
-				human.setSprinting(true);
+				session.send(false, new EntityMetadataMessage(player.getId(), parameters));
+				if (human != null) {
+					human.setSprinting(true);
+				}
 				break;
 			case EntityActionMessage.ACTION_STOP_SPRINTING:
 				parameters.add(EntityMetadataMessage.Parameters.META_SPRINTING.get());
-				session.send(false, new EntityMetadataMessage(human.getOwner().getId(), parameters));
-				human.setSprinting(false);
+				session.send(false, new EntityMetadataMessage(player.getId(), parameters));
+				if (human != null) {
+					human.setSprinting(false);
+				}
 				break;
 			default:
 				break;

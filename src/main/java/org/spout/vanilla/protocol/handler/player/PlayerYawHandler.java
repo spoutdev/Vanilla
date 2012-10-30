@@ -47,6 +47,8 @@ public final class PlayerYawHandler extends MessageHandler<PlayerYawMessage> {
 		holder.getTransform().setPitch(deProtocolifyRotation((int) message.getPitch()));
 		holder.getTransform().setYaw(deProtocolifyRotation((int) message.getYaw()));
 		holder.getTransform().setRoll(deProtocolifyRotation((int) message.getRoll()));
-		holder.add(HeadComponent.class).setLooking(message.getLookingAtVector());
+		if (holder.has(HeadComponent.class)) {
+			holder.get(HeadComponent.class).setLooking(message.getLookingAtVector());
+		}
 	}
 }

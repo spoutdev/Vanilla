@@ -26,25 +26,31 @@
  */
 package org.spout.vanilla.world.generator.structure.temple;
 
-import java.util.Random;
+import org.spout.api.generator.biome.Biome;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Quaternion;
 
+import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.world.generator.structure.Structure;
 
 public class Temple extends Structure {
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		return true;
+		return y >= 64;
 	}
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
-		final DesertTemple desertTemple = new DesertTemple(this);
-		desertTemple.setPosition(new Point(w, x, y, z));
-		desertTemple.setRotation(new Quaternion(random.nextInt(4) * 90, 0, 1, 0));
-		desertTemple.place();
+		final Biome biome = w.getBiome(x, y, z);
+		if (biome == VanillaBiomes.DESERT || biome == VanillaBiomes.DESERT_HILLS) {
+			final DesertTemple desertTemple = new DesertTemple(this);
+			desertTemple.setPosition(new Point(w, x, y, z));
+			desertTemple.setRotation(new Quaternion(random.nextInt(4) * 90, 0, 1, 0));
+			if (desertTemple.canPlace()) {
+				desertTemple.place();
+			}
+		}
 	}
 }

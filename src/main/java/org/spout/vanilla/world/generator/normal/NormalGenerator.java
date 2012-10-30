@@ -66,6 +66,7 @@ import org.spout.vanilla.world.generator.normal.populator.PondPopulator;
 import org.spout.vanilla.world.generator.normal.populator.RavinePopulator;
 import org.spout.vanilla.world.generator.normal.populator.RockyShieldPopulator;
 import org.spout.vanilla.world.generator.normal.populator.SnowPopulator;
+import org.spout.vanilla.world.generator.normal.populator.TemplePopulator;
 import org.spout.vanilla.world.generator.normal.selector.VanillaBiomeSelector;
 
 public class NormalGenerator extends VanillaBiomeGenerator {
@@ -143,7 +144,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 				new GroundCoverPopulator(), new RockyShieldPopulator(),
 				new CavePopulator(), new RavinePopulator());
 		addPopulators(
-				new MineshaftPopulator(),
+				new MineshaftPopulator(), new TemplePopulator(),
 				new PondPopulator(), new DungeonPopulator(), new OrePopulator(),
 				new BiomePopulator(),
 				new FallingLiquidPopulator(), new SnowPopulator());

@@ -29,41 +29,41 @@ package org.spout.vanilla.world.generator.normal.populator;
 import java.util.Random;
 
 import org.spout.api.generator.Populator;
-import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.math.BitSize;
 
 import org.spout.vanilla.world.generator.object.VanillaObjects;
-import org.spout.vanilla.world.generator.structure.mineshaft.Mineshaft;
+import org.spout.vanilla.world.generator.structure.temple.Temple;
 
-public class MineshaftPopulator extends Populator {
-	private static final Mineshaft MINESHAFT = VanillaObjects.MINESHAFT;
-	private static final BitSize SPACING = new BitSize(8);
-	private static final int ODD = 3;
-	private static final int BASE_Y = 35;
-	private static final int RAND_Y = 11;
+public class TemplePopulator extends Populator {
+	private static final Temple temple = VanillaObjects.TEMPLE;
+	private static final short ODD = 400;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {
 			return;
 		}
-		if (chunk.getBlockX() % SPACING.SIZE != 0 || chunk.getBlockZ() % SPACING.SIZE != 0) {
+		if (random.nextInt(ODD) != 0) {
 			return;
 		}
-		final int spacingX = chunk.getBlockX() >> SPACING.BITS;
-		final int spacingZ = chunk.getBlockZ() >> SPACING.BITS;
+		temple.setRandom(random);
 		final World world = chunk.getWorld();
-		random = WorldGeneratorUtils.getRandom(world, spacingX, 0, spacingZ, 26471);
-		if (random.nextInt(ODD) == 0) {
-			MINESHAFT.setRandom(random);
-			final int x = chunk.getBlockX(random);
-			final int y = random.nextInt(RAND_Y) + BASE_Y;
-			final int z = chunk.getBlockZ(random);
-			if (MINESHAFT.canPlaceObject(world, x, y, z)) {
-				MINESHAFT.placeObject(world, x, y, z);
+		final int x = chunk.getBlockX(random);
+		final int z = chunk.getBlockZ(random);
+		final int y = getAverageHeight(world, x, z, 21, 21);
+		if (temple.canPlaceObject(world, x, y, z)) {
+			temple.placeObject(world, x, y, z);
+		}
+	}
+
+	private int getAverageHeight(World world, int x, int z, int sizeX, int sizeZ) {
+		int sum = 0;
+		for (int xx = 0; xx < sizeX; xx++) {
+			for (int zz = 0; zz < sizeZ; zz++) {
+				sum += world.getSurfaceHeight(x + xx, z + zz);
 			}
 		}
+		return sum / (sizeX * sizeZ);
 	}
 }

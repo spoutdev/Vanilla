@@ -41,7 +41,8 @@ import org.spout.vanilla.world.generator.structure.StructureComponent;
 import org.spout.vanilla.world.generator.structure.StructureComponent.BoundingBox;
 
 public class Mineshaft extends Structure {
-	private static final byte MAX_SIZE = 100;
+	private static final byte MAX_SIZE_BASE = 50;
+	private static final byte MAX_SIZE_RAND = 50;
 
 	public Mineshaft() {
 	}
@@ -52,7 +53,7 @@ public class Mineshaft extends Structure {
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		return true;
+		return y >= 20;
 	}
 
 	@Override
@@ -63,13 +64,15 @@ public class Mineshaft extends Structure {
 		room.setPosition(new Point(w, x, y, z));
 		room.randomize();
 		activeBranches.add(room);
+		byte size = (byte) (random.nextInt(MAX_SIZE_RAND) + MAX_SIZE_BASE);
 		byte count = 0;
 		while (!activeBranches.isEmpty()) {
 			final StructureComponent active = activeBranches.get(0);
 			final BoundingBox activeBox = active.getBoundingBox();
-			if (!collides(activeBox, active.getLastComponent(), placed) && active.canPlace()) {
+			if (!collides(activeBox, active.getLastComponent(), placed) && active.canPlace()
+					&& active.getPosition().getY() >= 20) {
 				active.place();
-				if (++count >= MAX_SIZE) {
+				if (++count > size) {
 					return;
 				}
 				placed.add(activeBox);

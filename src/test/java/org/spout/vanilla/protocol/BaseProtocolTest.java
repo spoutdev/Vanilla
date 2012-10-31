@@ -37,6 +37,7 @@ import org.junit.Test;
 import org.spout.api.protocol.CodecLookupService;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
+import org.spout.vanilla.EngineFaker;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -47,6 +48,7 @@ public abstract class BaseProtocolTest {
 	private final Message[] testMessages;
 
 	protected BaseProtocolTest(CodecLookupService codecLookup, Message[] testMessages) {
+		EngineFaker.setupEngine();
 		this.codecLookup = codecLookup;
 		this.testMessages = testMessages;
 	}

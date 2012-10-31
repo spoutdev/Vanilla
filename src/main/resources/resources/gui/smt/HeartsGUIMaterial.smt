@@ -32,6 +32,6 @@ RenderState:
 # Names match up to the name in the shader.  
 
 MaterialParams:
-    Diffuse: texture://Vanilla/resources/gui/gui.png
+    Diffuse: texture://Vanilla/resources/gui/icons.png
     Color: color(1,1,1,1)
     

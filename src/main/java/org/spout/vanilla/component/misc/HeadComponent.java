@@ -44,7 +44,7 @@ public class HeadComponent extends EntityComponent {
 
 	@Override
 	public void onAttached() {
-		
+
 	}
 
 	@Override

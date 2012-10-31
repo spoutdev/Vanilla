@@ -43,7 +43,7 @@ import org.spout.vanilla.util.flowing.LiquidModel;
 public abstract class Liquid extends VanillaBlockMaterial implements DynamicMaterial, Source {
 	private final boolean flowing;
 	private int delay;
-	
+
 	public Liquid(String name, int id, boolean flowing) {
 		this(name, id, flowing, (String) null);
 	}
@@ -332,7 +332,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	public EffectRange getDynamicRange() {
 		return EffectRange.THIS_AND_NEIGHBORS;
 	}
-	
+
 	@Override
 	public boolean isFaceRendered(BlockFace face, BlockMaterial neighbor) {
 		return neighbor != this;

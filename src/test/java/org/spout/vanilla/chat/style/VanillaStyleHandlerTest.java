@@ -35,9 +35,6 @@ import org.spout.vanilla.chat.VanillaStyleHandler;
 
 import static org.junit.Assert.fail;
 
-/**
- * @author zml2008
- */
 public class VanillaStyleHandlerTest {
 	@Test
 	public void testInclusion() {

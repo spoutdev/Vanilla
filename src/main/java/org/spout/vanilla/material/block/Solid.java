@@ -39,11 +39,11 @@ public class Solid extends VanillaBlockMaterial {
 	public Solid(String name, int id) {
 		this(name, id, (String) null);
 	}
-	
+
 	public Solid(String name, int id, String model) {
 		this((short) 0, name, id, model);
 	}
-	
+
 	public Solid(short dataMask, String name, int id) {
 		this(dataMask, name, id, (String) null);
 	}

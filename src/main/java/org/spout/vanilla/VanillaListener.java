@@ -26,18 +26,22 @@
  */
 package org.spout.vanilla;
 
+import org.spout.api.Client;
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
 import org.spout.api.event.Order;
 import org.spout.api.event.Result;
 import org.spout.api.event.player.PlayerJoinEvent;
+import org.spout.api.event.server.ClientEnableEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 
 import org.spout.vanilla.component.inventory.window.DefaultWindow;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.PickupItemComponent;
 import org.spout.vanilla.component.misc.SleepComponent;
+import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.component.player.PingComponent;
 import org.spout.vanilla.component.player.PlayerListComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -65,5 +69,11 @@ public class VanillaListener implements Listener {
 		player.add(PingComponent.class);
 		player.add(PickupItemComponent.class);
 		player.add(SleepComponent.class);
+	}
+
+	@EventHandler
+	public void onClientEnable(ClientEnableEvent event) {
+		final HUDComponent HUD = ((Client) Spout.getEngine()).getActivePlayer().add(HUDComponent.class);
+		HUD.openHUD();
 	}
 }

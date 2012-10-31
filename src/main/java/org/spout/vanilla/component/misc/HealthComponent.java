@@ -153,7 +153,7 @@ public class HealthComponent extends EntityComponent {
 		}
 
 		if (getOwner() instanceof Player) {
-			getOwner().getNetwork().callProtocolEvent(new PlayerHealthEvent(((Player)getOwner())));
+			getOwner().getNetwork().callProtocolEvent(new PlayerHealthEvent(((Player) getOwner())));
 		}
 	}
 

@@ -28,7 +28,6 @@ package org.spout.vanilla;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
-
 import java.awt.Color;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -73,6 +72,7 @@ import org.spout.api.util.OutwardIterator;
 
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.TestCommands;
+import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.component.world.sky.NetherSky;
 import org.spout.vanilla.component.world.sky.NormalSky;
@@ -165,11 +165,6 @@ public class VanillaPlugin extends CommonPlugin {
 		}
 
 		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol"));
-		
-		if (engine.getPlatform()==Platform.CLIENT) {
-			setupGUI();
-		}
-		
 	}
 
 	@Override
@@ -250,32 +245,6 @@ public class VanillaPlugin extends CommonPlugin {
 				}
 			});
 		}
-	}
-	
-	private void setupGUI() {
-		float aspectRatio = 0.75f; // This is temporary it will be applied directly by the engine
-		Screen vanillaScreen = new Screen();
-		
-		// Sample texture
-		RenderMaterial guiTex = (RenderMaterial)Spout.getFilesystem().getResource("material://Vanilla/resources/gui/GUIMaterial.smt");
-		Widget rectWidget = new Widget();
-		TexturedRectComponent rect = rectWidget.add(TexturedRectComponent.class);
-		rect.setRenderMaterial(guiTex);
-		rect.setColor(Color.WHITE);
-		rect.setSprite(new Rectangle(-0.71f*aspectRatio, -1f, 1.42f*aspectRatio, 0.17f));
-		rect.setSource(new Rectangle(0, 0, 0.71f, 0.085f));
-		vanillaScreen.attachWidget(this, rectWidget);
-		
-		// Sample text
-		Font font = (Font)Spout.getFilesystem().getResource("font://Spout/resources/resources/fonts/ubuntu/Ubuntu-M.ttf");
-		Widget txtWidget = new Widget();
-		txtWidget.setGeometry(new Rectangle(-0.6f*aspectRatio, -0.9f, 0, 0)); // Position on the screen (between -1 and 1)
-		LabelComponent txt = txtWidget.add(LabelComponent.class);
-		txt.setFont(font);
-		txt.setText(ChatStyle.WHITE+"Hello gui from vanilla !");
-		vanillaScreen.attachWidget(this, txtWidget);
-		
-		((Client) engine).getScreenStack().openScreen(vanillaScreen);
 	}
 
 	private void setupWorlds() {

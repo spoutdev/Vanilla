@@ -81,7 +81,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	public VanillaBlockMaterial(String name, int id) {
 		this((short) 0, name, id);
 	}
-	
+
 	public VanillaBlockMaterial(String name, int id, String model) {
 		this((short) 0, name, id, model);
 	}
@@ -89,7 +89,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	public VanillaBlockMaterial(short dataMask, String name, int id) {
 		this(dataMask, name, id, (String) null);
 	}
-	
+
 	public VanillaBlockMaterial(short dataMask, String name, int id, String model) {
 		super(dataMask, name, model);
 		this.minecraftId = id;
@@ -414,7 +414,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	// Utilities
-
 	private static final EffectRange FARMLAND_CHECK_RANGE = new CuboidEffectRange(-1, -1, -1, 1, -1, 1);
 
 	/**

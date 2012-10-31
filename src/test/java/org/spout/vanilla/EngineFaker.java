@@ -26,10 +26,9 @@
  */
 package org.spout.vanilla;
 
-import java.nio.file.FileSystem;
-
 import org.powermock.api.mockito.PowerMockito;
 import org.spout.api.Engine;
+import org.spout.api.FileSystem;
 import org.spout.api.Spout;
 import org.spout.api.plugin.Platform;
 
@@ -42,8 +41,8 @@ public class EngineFaker {
 		FileSystem filesystem = PowerMockito.mock(FileSystem.class);
 		try {
 			PowerMockito.when(engine, Engine.class.getMethod("getPlatform", (Class[])null)).withNoArguments().thenReturn(Platform.SERVER);
-			PowerMockito.when(engine, Engine.class.getMethod("getFileSystem", (Class[])null)).withNoArguments().thenReturn(filesystem);
-			PowerMockito.when(filesystem, FileSystem.class.getMethod("getResource", new Class[] {String.class})).withNoArguments().thenReturn(null);
+			PowerMockito.stub(Engine.class.getMethod("getFilesystem", (Class[])null)).andReturn(filesystem);
+			PowerMockito.stub(FileSystem.class.getMethod("getResource", new Class[] {String.class})).andReturn(null);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

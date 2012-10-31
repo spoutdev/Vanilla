@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.material.block.liquid;
 
+import java.util.Random;
+
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.DynamicMaterial;
@@ -103,12 +105,14 @@ public class Water extends Liquid implements DynamicMaterial {
 
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
-		b.dynamicUpdate(getFlowDelay() + currentTime);
+		b.dynamicUpdate(60000 + new Random(b.getWorld().getAge()).nextInt(60000) + currentTime);
+		super.onPlacement(b, r, currentTime);
 	}
 
 	@Override
 	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
-		//TODO: This should really be in the tick task of the sky entity
+		super.onDynamicUpdate(block, region, updateTime, data);
+		
 		// Water freezing
 		if (!isSource(block)) {
 			return;
@@ -124,14 +128,15 @@ public class Water extends Liquid implements DynamicMaterial {
 		}
 
 		// Has nearby non-water blocks?
-		EffectIterator iterator = EffectRange.NEIGHBORS.iterator();
-		while (iterator.hasNext()) {
-			if (!(block.translate(iterator.next()).getMaterial() instanceof Water)) {
-				block.setMaterial(VanillaMaterials.ICE);
-				return;
+		Random rand = new Random(block.getWorld().getAge());
+		if (rand.nextInt(1000) == 0) {
+			EffectIterator iterator = EffectRange.NEIGHBORS.iterator();
+			while (iterator.hasNext()) {
+				if (!(block.translate(iterator.next()).getMaterial() instanceof Water)) {
+					block.setMaterial(VanillaMaterials.ICE);
+					return;
+				}
 			}
 		}
-
-		block.dynamicUpdate(updateTime + getFlowDelay());
 	}
 }

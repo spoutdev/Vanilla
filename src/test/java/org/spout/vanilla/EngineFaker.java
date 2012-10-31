@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla;
 
+import java.nio.file.FileSystem;
+
 import org.powermock.api.mockito.PowerMockito;
 import org.spout.api.Engine;
 import org.spout.api.Spout;
@@ -37,8 +39,11 @@ public class EngineFaker {
 	
 	static {
 		Engine engine = PowerMockito.mock(Engine.class);
+		FileSystem filesystem = PowerMockito.mock(FileSystem.class);
 		try {
 			PowerMockito.when(engine, Engine.class.getMethod("getPlatform", (Class[])null)).withNoArguments().thenReturn(Platform.SERVER);
+			PowerMockito.when(engine, Engine.class.getMethod("getFileSystem", (Class[])null)).withNoArguments().thenReturn(filesystem);
+			PowerMockito.when(filesystem, FileSystem.class.getMethod("getResource", new Class[] {String.class})).withNoArguments().thenReturn(null);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

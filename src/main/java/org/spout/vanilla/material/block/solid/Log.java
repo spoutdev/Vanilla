@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.Random;
+
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
@@ -151,7 +153,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
 		if (b.isDataBitSet(aliveMask)) {
-			b.dynamicUpdate(currentTime + 10000);
+			b.dynamicUpdate(currentTime + getGrowthTime(b));
 		}
 	}
 
@@ -189,10 +191,14 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 				trunk.setData(data & dataMask);
 			}
 			b.setDataField(heightMask, expectHeight + 1);
-			b.dynamicUpdate(updateTime + 10000);
+			b.dynamicUpdate(updateTime + getGrowthTime(b));
 		} else {
 			b.setData(data & dataMask);
 		}
+	}
+
+	private long getGrowthTime(Block block) {
+		return 60000L + (new Random(block.getWorld().getAge()).nextInt(60000)) * 3;
 	}
 
 	@Override

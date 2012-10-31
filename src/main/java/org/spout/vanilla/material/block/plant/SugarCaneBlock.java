@@ -55,7 +55,7 @@ public class SugarCaneBlock extends StackGrowingBase implements InitializableMat
 
 	@Override
 	public long getGrowTime(Block block) {
-		return (150 * 1000) + new Random(block.getWorld().getAge()).nextInt(21000) - 10000;
+		return 180000L + new Random(block.getWorld().getAge()).nextInt(180000);
 	}
 
 	@Override

@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.Random;
+
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -60,5 +62,10 @@ public class Grass extends SpreadingSolid implements DynamicMaterial, Initializa
 	public boolean canDecayAt(Block block) {
 		block = block.translate(BlockFace.TOP);
 		return block.getMaterial().getOpacity() > 1 && block.getLight() < 4;
+	}
+
+	@Override
+	public long getSpreadingTime(Block b) {
+		return 120000L + new Random(b.getWorld().getAge()).nextInt(60000) * 5;
 	}
 }

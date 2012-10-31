@@ -138,7 +138,7 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
-		b.dynamicUpdate(currentTime + 10000);
+		b.dynamicUpdate(currentTime + getGrowthTime(b));
 	}
 
 	@Override
@@ -147,5 +147,9 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 		b.setMaterial(Log.DEFAULT);
 		b.setData(oldData & dataMask);
 		b.setDataBits(Log.aliveMask);
+	}
+
+	private long getGrowthTime(Block block) {
+		return 240000L + new Random(block.getWorld().getAge()).nextInt(240000);
 	}
 }

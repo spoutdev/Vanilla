@@ -102,7 +102,7 @@ public class NetherWartBlock extends GroundAttachable implements Plant, Growing,
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
 		//TODO : Delay before first grow
-		b.dynamicUpdate(10000 + currentTime);
+		b.dynamicUpdate(getGrowthTime(b) + currentTime);
 	}
 
 	@Override
@@ -113,7 +113,7 @@ public class NetherWartBlock extends GroundAttachable implements Plant, Growing,
 		Random rand = new Random(block.getWorld().getAge());
 		if (rand.nextInt(10) != 0) {
 			//TODO : Delay before first grow
-			block.dynamicUpdate(updateTime + 10000);
+			block.dynamicUpdate(updateTime + getGrowthTime(block));
 			return;
 		}
 		int minLight = this.getMinimumLightToGrow();
@@ -124,6 +124,10 @@ public class NetherWartBlock extends GroundAttachable implements Plant, Growing,
 		}
 		this.setGrowthStage(block, this.getGrowthStage(block) + 1);
 		//TODO : Delay before first grow
-		block.dynamicUpdate(updateTime + 10000);
+		block.dynamicUpdate(updateTime + getGrowthTime(block));
+	}
+
+	private long getGrowthTime(Block block) {
+		return 120000L + new Random(block.getWorld().getAge()).nextInt(120000);
 	}
 }

@@ -132,7 +132,7 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
 		//TODO : delay before update
-		b.dynamicUpdate(currentTime + 30000);
+		b.dynamicUpdate(currentTime + getGrowthTime(b));
 	}
 
 	@Override
@@ -147,7 +147,11 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 				}
 			}
 			//TODO : delay before update
-			block.dynamicUpdate(updateTime + 30000);
+			block.dynamicUpdate(updateTime + getGrowthTime(block));
 		}
+	}
+
+	private long getGrowthTime(Block block) {
+		return 60000L + new Random(block.getWorld().getAge()).nextInt(60000);
 	}
 }

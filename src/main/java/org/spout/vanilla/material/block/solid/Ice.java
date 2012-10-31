@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.Random;
+
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -99,5 +101,10 @@ public class Ice extends SpreadingSolid implements InitializableMaterial {
 	@Override
 	public boolean canSpreadTo(Block from, Block to) {
 		return super.canSpreadTo(from, to) && VanillaMaterials.WATER.isSource(to);
+	}
+
+	@Override
+	public long getSpreadingTime(Block b) {
+		return 120000L + new Random(b.getWorld().getAge()).nextInt(60000) * 5;
 	}
 }

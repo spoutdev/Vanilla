@@ -53,7 +53,8 @@ public class Cactus extends StackGrowingBase implements TimedCraftable {
 
 	@Override
 	public long getGrowTime(Block block) {
-		return (150 * 1000) + new Random(block.getWorld().getAge()).nextInt(21000) - 10000;
+		//Requires 16 minutes
+		return (16 * 60 * 1000) + new Random(block.getWorld().getAge()).nextInt(21000) - 10000;
 	}
 
 	@Override

@@ -123,15 +123,13 @@ public class CocoaPlant extends AbstractAttachable implements Plant, Growing, Dy
 
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
-		//TODO : Add a grow test delay ?
-		b.dynamicUpdate(30000 + currentTime);
+		b.dynamicUpdate(getGrowthTime(b) + currentTime);
 	}
 
 	@Override
 	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
 		if (new Random().nextInt(5) != 0) {
-			//TODO : Add a grow test delay ?
-			block.dynamicUpdate(updateTime + 30000);
+			block.dynamicUpdate(updateTime + getGrowthTime(block));
 			return;
 		}
 
@@ -142,9 +140,12 @@ public class CocoaPlant extends AbstractAttachable implements Plant, Growing, Dy
 		}
 
 		if (growthStage < getGrowthStageCount() - 1) {
-			//TODO : Add a grow test delay ?
-			block.dynamicUpdate(updateTime + 30000);
+			block.dynamicUpdate(updateTime + getGrowthTime(block));
 		}
+	}
+	
+	private long getGrowthTime(Block block) {
+		return 60000L + new Random(block.getWorld().getAge()).nextInt(60000);
 	}
 
 	@Override

@@ -115,7 +115,7 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
 		//TODO : delay before update
-		b.dynamicUpdate(currentTime + 30000);
+		b.dynamicUpdate(currentTime + getGrowthTime(b));
 	}
 
 	@Override
@@ -144,6 +144,10 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 		}
 
 		//TODO : delay before update
-		block.dynamicUpdate(updateTime + 30000);
+		block.dynamicUpdate(updateTime + getGrowthTime(block));
+	}
+	
+	private long getGrowthTime(Block block) {
+		return 120000L + new Random(block.getWorld().getAge()).nextInt(120000);
 	}
 }

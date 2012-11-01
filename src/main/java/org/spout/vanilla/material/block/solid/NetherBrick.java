@@ -31,7 +31,7 @@ import org.spout.vanilla.material.block.Solid;
 
 public class NetherBrick extends Solid {
 	public NetherBrick(String name, int id) {
-		super(name, id);
+		super(name, id, "model://Vanilla/resources/materials/block/solid/netherbrick/netherbrick.spm");
 		this.setHardness(2.0F).setResistance(10.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

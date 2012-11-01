@@ -38,7 +38,7 @@ import org.spout.vanilla.material.block.Liquid;
 
 public class Lava extends Liquid {
 	public Lava(String name, int id, boolean flowing) {
-		super(name, id, flowing);
+		super(name, id, flowing, "model://Vanilla/resources/materials/block/liquid/lava/lava.spm");
 		this.setFlowDelay(1500);
 		//TODO: Allow this to get past the tests
 		//this.setFlowDelay(VanillaConfiguration.LAVA_DELAY.getInt());

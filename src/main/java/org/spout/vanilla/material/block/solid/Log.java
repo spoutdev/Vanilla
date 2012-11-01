@@ -55,10 +55,10 @@ import org.spout.vanilla.material.item.misc.Coal;
 import org.spout.vanilla.util.PlayerUtil;
 
 public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable, Burnable, Directional {
-	public static final Log DEFAULT = new Log("Wood", Sapling.DEFAULT);
-	public static final Log SPRUCE = new Log("Spruce Wood", 1, DEFAULT, Sapling.SPRUCE);
-	public static final Log BIRCH = new Log("Birch Wood", 2, DEFAULT, Sapling.BIRCH);
-	public static final Log JUNGLE = new Log("Jungle Wood", 3, DEFAULT, Sapling.JUNGLE);
+	public static final Log DEFAULT = new Log("Wood", Sapling.DEFAULT, "model://Vanilla/resources/materials/block/solid/oakwood/oakwood.spm");
+	public static final Log SPRUCE = new Log("Spruce Wood", 1, DEFAULT, Sapling.SPRUCE, "model://Vanilla/resources/materials/block/solid/sprucewood/sprucewood.spm");
+	public static final Log BIRCH = new Log("Birch Wood", 2, DEFAULT, Sapling.BIRCH, "model://Vanilla/resources/materials/block/solid/birchwood/birchwood.spm");
+	public static final Log JUNGLE = new Log("Jungle Wood", 3, DEFAULT, Sapling.JUNGLE, "model://Vanilla/resources/materials/block/solid/junglewood/junglewood.spm");
 	private static final BlockFaces DIRECTION_OPPOS = new BlockFaces(BlockFace.BOTTOM, BlockFace.NORTH, BlockFace.EAST);
 	private static final BlockFaces DIRECTION_FACES = new BlockFaces(BlockFace.TOP, BlockFace.SOUTH, BlockFace.WEST, BlockFace.THIS);
 	private static final short dataMask = 0x0003;
@@ -69,15 +69,15 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	public final float BURN_TIME = 15;
 	private final Sapling sapling;
 
-	private Log(String name, Sapling sapling) {
-		super(dataMask, name, 17);
+	private Log(String name, Sapling sapling, String model) {
+		super(dataMask, name, 17, model);
 		this.setHardness(2.0F).setResistance(10.F).setStepSound(SoundEffects.STEP_WOOD);
 		this.addMiningType(ToolType.AXE);
 		this.sapling = sapling;
 	}
 
-	private Log(String name, int data, Log parent, Sapling sapling) {
-		super(name, 17, data, parent);
+	private Log(String name, int data, Log parent, Sapling sapling, String model) {
+		super(name, 17, data, parent, model);
 		this.setHardness(2.0F).setResistance(10.F).setStepSound(SoundEffects.STEP_WOOD);
 		this.addMiningType(ToolType.AXE);
 		this.sapling = sapling;

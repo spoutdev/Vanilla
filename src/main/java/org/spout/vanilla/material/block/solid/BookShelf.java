@@ -42,7 +42,7 @@ public class BookShelf extends Solid implements Fuel, InitializableMaterial, Bur
 	public final float BURN_TIME = 15;
 
 	public BookShelf(String name, int id) {
-		super(name, id);
+		super(name, id,"model://Vanilla/resources/materials/block/solid/bookshelf/bookshelf.spm");
 		this.setHardness(1.5F).setResistance(2.5F).addMiningType(ToolType.AXE).setMiningLevel(ToolLevel.WOOD);
 	}
 

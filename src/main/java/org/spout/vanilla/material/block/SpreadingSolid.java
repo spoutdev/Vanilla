@@ -46,16 +46,16 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 	private BlockMaterial replacedMaterial;
 	private static final EffectRange DEFAULT_SPREAD_RANGE = new CubicEffectRange(2);
 
-	public SpreadingSolid(short dataMask, String name, int id) {
-		super(dataMask, name, id);
+	public SpreadingSolid(short dataMask, String name, int id, String model) {
+		super(dataMask, name, id, model);
 	}
 
-	public SpreadingSolid(String name, int id, int data, VanillaBlockMaterial parent) {
-		super(name, id, data, parent);
+	public SpreadingSolid(String name, int id, int data, VanillaBlockMaterial parent, String model) {
+		super(name, id, data, parent, model);
 	}
 
-	public SpreadingSolid(String name, int id) {
-		super(name, id);
+	public SpreadingSolid(String name, int id, String model) {
+		super(name, id, model);
 	}
 
 	/**

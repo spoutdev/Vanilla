@@ -48,16 +48,16 @@ public abstract class AttachedRedstoneSource extends AbstractAttachable implemen
 		}
 	}
 
-	protected AttachedRedstoneSource(short dataMask, String name, int id) {
-		super(dataMask, name, id);
+	protected AttachedRedstoneSource(short dataMask, String name, int id, String model) {
+		super(dataMask, name, id, model);
 	}
 
-	protected AttachedRedstoneSource(String name, int id) {
-		super(name, id);
+	protected AttachedRedstoneSource(String name, int id, String model) {
+		super(name, id, model);
 	}
 
-	public AttachedRedstoneSource(String name, int id, int data, VanillaBlockMaterial parent) {
-		super(name, id, data, parent);
+	public AttachedRedstoneSource(String name, int id, int data, VanillaBlockMaterial parent, String model) {
+		super(name, id, data, parent, model);
 	}
 
 	@Override

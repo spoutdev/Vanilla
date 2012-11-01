@@ -46,7 +46,7 @@ public class Ice extends SpreadingSolid implements InitializableMaterial {
 	private static final EffectRange ICE_SPREAD_RANGE = new CubicEffectRange(1);
 
 	public Ice(String name, int id) {
-		super(name, id);
+		super(name, id, "model://Vanilla/resources/materials/block/solid/iceblock/iceblock.spm");
 		this.setHardness(0.5F).setResistance(0.8F).setOcclusion((short) 0, BlockFaces.NONE).setOpacity((byte) 2);
 		this.getDrops().clear();
 	}

@@ -40,7 +40,7 @@ public class Pumpkin extends Solid implements Directional {
 	private final boolean lantern;
 
 	public Pumpkin(String name, int id, boolean lantern) {
-		super(name, id);
+		super(name, id, "model://Vanilla/resources/materials/block/solid/pumkin/pumkin.spm");
 		this.lantern = lantern;
 		this.setHardness(1.0F).setResistance(1.7F).addMiningType(ToolType.AXE);
 	}

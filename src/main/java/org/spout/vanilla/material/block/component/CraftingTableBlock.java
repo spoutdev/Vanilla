@@ -37,7 +37,7 @@ import org.spout.vanilla.material.block.Solid;
 
 public class CraftingTableBlock extends Solid {
 	public CraftingTableBlock(String name, int id) {
-		super(name, id);
+		super(name, id, "model://Vanilla/resources/materials/block/solid/craftingtable/craftingtable.spm");
 		this.setHardness(4.2F);
 	}
 

@@ -39,7 +39,7 @@ public class WoodenStairs extends Stairs implements Fuel, Burnable {
 	public final float BURN_TIME = 15;
 
 	public WoodenStairs(String name, int id) {
-		super(name, id);
+		super(name, id, (String)null);
 		this.setHardness(2.0F).setResistance(10.0F);
 	}
 

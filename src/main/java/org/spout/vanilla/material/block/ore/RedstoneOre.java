@@ -40,7 +40,7 @@ public class RedstoneOre extends Ore implements TimedCraftable, InitializableMat
 	private final boolean glowing;
 
 	public RedstoneOre(String name, int id, boolean glowing) {
-		super(name, id);
+		super(name, id, "model://Vanilla/resources/materials/block/solid/redstoneore/redstoneore.spm");
 		this.glowing = glowing;
 		this.setHardness(3.0F).setResistance(5.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.STONE);
 	}

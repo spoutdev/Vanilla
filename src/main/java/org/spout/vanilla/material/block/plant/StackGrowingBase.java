@@ -46,15 +46,15 @@ public abstract class StackGrowingBase extends GroundAttachable implements Plant
 	private static EffectRange dynamicRange = new CuboidEffectRange(0, 0, 0, 0, 1, 0);
 
 	public StackGrowingBase(short dataMask, String name, int id) {
-		super(dataMask, name, id);
+		super(dataMask, name, id, (String)null);
 	}
 
 	public StackGrowingBase(String name, int id, int data, VanillaBlockMaterial parent) {
-		super(name, id, data, parent);
+		super(name, id, data, parent, (String)null);
 	}
 
 	public StackGrowingBase(String name, int id) {
-		super(name, id);
+		super(name, id, (String)null);
 	}
 
 	@Override

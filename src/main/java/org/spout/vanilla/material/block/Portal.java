@@ -33,8 +33,8 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 public abstract class Portal extends VanillaBlockMaterial {
 	private BlockMaterial frameMaterial;
 
-	public Portal(String name, int id) {
-		super(name, id);
+	public Portal(String name, int id, String model) {
+		super(name, id, model);
 		this.setHardness(-1.0F).setResistance(0.0F).setTransparent();
 		getDrops().DEFAULT.clear();
 	}

@@ -78,16 +78,8 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	private Set<ToolType> miningTypes = new HashSet<ToolType>();
 	private ToolLevel miningLevel = ToolLevel.NONE;
 
-	public VanillaBlockMaterial(String name, int id) {
-		this((short) 0, name, id);
-	}
-
 	public VanillaBlockMaterial(String name, int id, String model) {
 		this((short) 0, name, id, model);
-	}
-
-	public VanillaBlockMaterial(short dataMask, String name, int id) {
-		this(dataMask, name, id, (String) null);
 	}
 
 	public VanillaBlockMaterial(short dataMask, String name, int id, String model) {
@@ -99,8 +91,8 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		this.getDrops().DEFAULT.add(this);
 	}
 
-	public VanillaBlockMaterial(String name, int id, int data, VanillaBlockMaterial parent) {
-		super(name, data, parent);
+	public VanillaBlockMaterial(String name, int id, int data, VanillaBlockMaterial parent, String model) {
+		super(name, data, parent, model);
 		this.minecraftId = id;
 		this.setCollision(CollisionStrategy.NOCOLLIDE);
 		this.setTransparent();

@@ -32,6 +32,7 @@ import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventManager;
+import org.spout.api.event.Result;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.Protection;
@@ -93,8 +94,13 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		BlockFace clickedFace = message.getDirection();
 		if (clickedFace == BlockFace.THIS) {
 			// Right clicked air with an item.
-			PlayerInteractEvent event = eventManager.callEvent(new PlayerInteractEvent(player, null, holding, Action.RIGHT_CLICK, true));
-			if (!event.isCancelled() && holdingMat != null) {
+			PlayerInteractEvent event = eventManager.callEvent(new PlayerInteractEvent(player, null, holding, Action.RIGHT_CLICK, true, clickedFace));
+			
+			//May have been changed by the event
+			holding = currentSlot.getCurrentItem();
+			holdingMat = holding == null ? null : holding.getMaterial();
+			
+			if (event.useItemInHand() != Result.DENY && holdingMat != null) {
 				holdingMat.onInteract(player, Action.RIGHT_CLICK);
 			}
 		} else {
@@ -107,8 +113,12 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				return;
 			}
 			//Perform interaction event
-			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), currentSlot.getCurrentItem(), Action.RIGHT_CLICK, false));
+			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), currentSlot.getCurrentItem(), Action.RIGHT_CLICK, false, clickedFace));
 
+			//May have been changed by the event
+			holding = currentSlot.getCurrentItem();
+			holdingMat = holding == null ? null : holding.getMaterial();
+			
 			//Get the target block and validate 
 			BlockMaterial clickedMaterial = clickedBlock.getMaterial();
 
@@ -137,9 +147,11 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 
 			//TODO: Readd durability/breaking handling
 
-			if (clickedMaterial instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed()) {
-				undoPlacement(player, clickedBlock, alterBlock);
-				return;
+			if (interactEvent.useItemInHand() != Result.ALLOW) {
+				if (clickedMaterial instanceof VanillaBlockMaterial && (((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed())) {
+					undoPlacement(player, clickedBlock, alterBlock);
+					return;
+				}
 			}
 
 			//if the material can be placed, place it
@@ -150,7 +162,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				Block target;
 				BlockFace targetFace;
 
-				if (toPlace.canPlace(clickedBlock, placedData, clickedFace, message.getFace(), true)) {
+				if (toPlace.canPlace(clickedBlock, placedData, clickedFace, message.getFace(), true) || interactEvent.useItemInHand() == Result.ALLOW) {
 					target = clickedBlock;
 					targetFace = clickedFace;
 				} else if (toPlace.canPlace(alterBlock, placedData, alterFace, message.getFace(), false)) {

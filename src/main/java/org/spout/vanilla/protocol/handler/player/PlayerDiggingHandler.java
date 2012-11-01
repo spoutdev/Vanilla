@@ -32,6 +32,7 @@ import java.util.HashSet;
 import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Player;
+import org.spout.api.event.Result;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.Protection;
@@ -130,9 +131,15 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		ItemStack heldItem = currentSlot.getCurrentItem();
 
 		if (state == PlayerDiggingMessage.STATE_START_DIGGING) {
-			PlayerInteractEvent event = new PlayerInteractEvent(player, block.getPosition(), heldItem, Action.LEFT_CLICK, isInteractable);
+			PlayerInteractEvent event = new PlayerInteractEvent(player, block.getPosition(), heldItem, Action.LEFT_CLICK, isInteractable, clickedFace);
 			if (Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
 				return;
+			}
+
+			if (event.useItemInHand() == Result.ALLOW) {
+				isInteractable |= true;
+			} else if (event.useItemInHand() == Result.DENY) {
+				isInteractable = false;
 			}
 
 			// Perform interactions
@@ -141,14 +148,18 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				return;
 			} else if (heldItem == null) {
 				// interacting with block using fist
-				blockMaterial.onInteractBy(player, block, Action.LEFT_CLICK, clickedFace);
+				if (event.interactWithBlock() != Result.DENY) { 
+					blockMaterial.onInteractBy(player, block, Action.LEFT_CLICK, clickedFace);
+				}
 			} else if (!isInteractable) {
 				// interacting with nothing using item
 				heldItem.getMaterial().onInteract(player, Action.LEFT_CLICK);
 			} else {
 				// interacting with block using item
 				heldItem.getMaterial().onInteract(player, block, Action.LEFT_CLICK, clickedFace);
-				blockMaterial.onInteractBy(player, block, Action.LEFT_CLICK, clickedFace);
+				if (event.interactWithBlock() != Result.DENY) { 
+					blockMaterial.onInteractBy(player, block, Action.LEFT_CLICK, clickedFace);
+				}
 			}
 			// Interaction with entity TODO: Add block entity interaction back
 			//			if (blockMaterial.hasController()) {

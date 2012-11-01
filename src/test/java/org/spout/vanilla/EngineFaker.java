@@ -46,6 +46,8 @@ public class EngineFaker {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
+		if (engine == null) throw new NullPointerException("Engine is null");
+		if (engine.getPlatform() == null) throw new NullPointerException("Platform is null");
 		Spout.setEngine(engine);
 		engineInstance = engine;
 	}

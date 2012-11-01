@@ -47,13 +47,13 @@ import org.spout.vanilla.VanillaPlugin;
 public class HUDComponent extends EntityComponent {
 	//The main HUD screen
 	private final Screen HUD = new Screen();
-	private final float aspectRatio = 0.75f; // This is temporary it will be applied directly by the engine
+	private final float ratio = 0.75f; // This is temporary it will be applied directly by the engine
 	//The materials used to construct the render
 	private final RenderMaterial hotbarMaterial = (RenderMaterial) Spout.getFilesystem().getResource("material://Vanilla/resources/gui/smt/HotbarGUIMaterial.smt");
 	private final RenderMaterial heartsMaterial = (RenderMaterial) Spout.getFilesystem().getResource("material://Vanilla/resources/gui/smt/HeartsGUIMaterial.smt");
 	//The core elements of the main HUD
 	private final Widget hotbar = new Widget();
-	private final Widget hearts = new Widget();
+	private final Widget[] hearts = new Widget[10];
 
 	@Override
 	public void onAttached() {
@@ -69,29 +69,36 @@ public class HUDComponent extends EntityComponent {
 	public void openHUD() {
 		((Client) Spout.getEngine()).getScreenStack().openScreen(HUD);
 	}
-
+	
 	private void constructHUD() {
 		//Setup the hotbar
 		final TexturedRectComponent hotbarRectangle = hotbar.add(TexturedRectComponent.class);
 		hotbarRectangle.setRenderMaterial(hotbarMaterial);
 		hotbarRectangle.setColor(Color.WHITE);
-		hotbarRectangle.setSprite(new Rectangle(-0.71f * aspectRatio, -1f, 1.42f * aspectRatio, 0.17f));
+		hotbarRectangle.setSprite(new Rectangle(-0.71f * ratio, -1f, 1.42f * ratio, 0.17f));
 		hotbarRectangle.setSource(new Rectangle(0, 0, 0.71f, 0.085f));
 		HUD.attachWidget(VanillaPlugin.getInstance(), hotbar);
+		
 		//Setup the hearts display
-		final float leftYBound = 0.5f * aspectRatio;
-		float y = leftYBound;
-		for (int i = 0; i < 10; i++) {
-			final TexturedRectComponent heart = hearts.add(TexturedRectComponent.class);
+		float dx = 0.05f * ratio;
+		float x = -0.71f * ratio;
+		for (int i=0 ; i < 10; i++) {
+			hearts[i] = new Widget();
+			final TexturedRectComponent heart = hearts[i].add(TexturedRectComponent.class);
 			heart.setRenderMaterial(heartsMaterial);
 			heart.setColor(Color.WHITE);
-			if (i == 0) {
-				heart.setSprite(new Rectangle(-0.50f * aspectRatio, -0.9f, y, 0.05f));
-			} else {
-				heart.setSprite(new Rectangle(-0.50f * aspectRatio, -0.9f, y - 0.20f, 0.05f));
-			}
+			heart.setSprite(new Rectangle(x, -0.83f, 0.05f*ratio, 0.05f));
 			heart.setSource(new Rectangle(53f/256f, 0, 9f/256f, 9f/256f));
-			HUD.attachWidget(VanillaPlugin.getInstance(), hearts);
+			HUD.attachWidget(VanillaPlugin.getInstance(), hearts[i]);
+			x += dx;
 		}
+		
+		//TODO: Armor bar
+		
+		//TODO: Exp bar
+		
+		//TODO: Food bar
+		
+		//TODO: Pumpkin head
 	}
 }

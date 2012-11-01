@@ -100,7 +100,11 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	public VanillaBlockMaterial(String name, int id, int data, VanillaBlockMaterial parent) {
-		super(name, data, parent);
+		this(name, id, data, parent, (String) null);
+	}
+	
+	public VanillaBlockMaterial(String name, int id, int data, VanillaBlockMaterial parent, String model) {
+		super(name, data, parent, model);
 		this.minecraftId = id;
 		this.setCollision(CollisionStrategy.NOCOLLIDE);
 		this.setTransparent();

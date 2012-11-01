@@ -31,7 +31,7 @@ import org.spout.vanilla.material.block.PressurePlate;
 
 public class WoodenPressurePlate extends PressurePlate {
 	public WoodenPressurePlate(String name, int id) {
-		super(name, id);
+		super(name, id, (String)null);
 		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 0);
 	}
 

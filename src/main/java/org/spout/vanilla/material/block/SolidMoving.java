@@ -34,13 +34,6 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class SolidMoving extends Solid {
-	public SolidMoving(short dataMask, String name, int id) {
-		this(dataMask, name, id, (String) null);
-	}
-	
-	public SolidMoving(short dataMask, String name, int id, String model) {
-		super(dataMask, name, id, model);
-	}
 
 	public SolidMoving(String name, int id, int data, VanillaBlockMaterial parent) {
 		this(name, id, data, parent, (String) null);
@@ -48,10 +41,6 @@ public class SolidMoving extends Solid {
 	
 	public SolidMoving(String name, int id, int data, VanillaBlockMaterial parent, String model) {
 		super(name, id, data, parent, model);
-	}
-
-	public SolidMoving(String name, int id) {
-		super(name, id);
 	}
 	
 	public SolidMoving(String name, int id, String model) {

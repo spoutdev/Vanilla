@@ -40,7 +40,7 @@ import org.spout.vanilla.material.block.SpreadingSolid;
 
 public class Grass extends SpreadingSolid implements DynamicMaterial, InitializableMaterial {
 	public Grass(String name, int id) {
-		super(name, id);
+		super(name, id, "model://Vanilla/resources/materials/block/solid/grass/grass.spm");
 		this.setHardness(0.6F).setResistance(0.8F).setStepSound(SoundEffects.STEP_GRASS);
 		this.addMiningType(ToolType.SPADE);
 	}

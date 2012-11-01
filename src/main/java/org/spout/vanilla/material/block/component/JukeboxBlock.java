@@ -37,7 +37,7 @@ public class JukeboxBlock extends Solid implements Fuel {
 	public final float BURN_TIME = 15;
 
 	public JukeboxBlock(String name, int id) {
-		super(name, id);
+		super(name, id, "model://Vanilla/resources/materials/block/solid/jukebox/jukebox.spm");
 		this.setHardness(2.0F).setResistance(10.0F);
 	}
 

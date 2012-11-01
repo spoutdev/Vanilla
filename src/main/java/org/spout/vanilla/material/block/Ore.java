@@ -29,8 +29,9 @@ package org.spout.vanilla.material.block;
 import org.spout.vanilla.data.Instrument;
 
 public abstract class Ore extends Solid {
-	public Ore(String name, int id) {
-		super(name, id);
+	
+	public Ore(String name, int id, String model) {
+		super(name, id, model);
 		this.setHardness(3.0F).setResistance(5.0F);
 	}
 

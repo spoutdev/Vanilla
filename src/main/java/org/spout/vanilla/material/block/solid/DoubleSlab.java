@@ -34,28 +34,28 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.misc.Slab;
 
 public class DoubleSlab extends Solid implements Burnable {
-	public static final DoubleSlab STONE = new DoubleSlab((short) 0x7, "Stone Double Slab", 43, false, Slab.STONE);
-	public static final DoubleSlab SANDSTONE = new DoubleSlab("Sandstone Double Slab", 0x1, STONE, Slab.SANDSTONE);
-	public static final DoubleSlab STONE_WOOD = new DoubleSlab("Wooden Double Slab", 0x2, STONE, Slab.STONE_WOOD);
-	public static final DoubleSlab COBBLESTONE = new DoubleSlab("Cobblestone Double Slab", 0x3, STONE, Slab.COBBLESTONE);
-	public static final DoubleSlab BRICK = new DoubleSlab("Brick Double Slab", 0x4, STONE, Slab.BRICK);
-	public static final DoubleSlab STONE_BRICK = new DoubleSlab("Stone Brick Double Slab", 0x5, STONE, Slab.STONE_BRICK);
-	public static final DoubleSlab OAK_WOOD = new DoubleSlab((short) 0x3, "Oak Wooden Double Slab", 125, true, Slab.OAK_WOOD);
-	public static final DoubleSlab SPRUCE_WOOD = new DoubleSlab("Spruce Wooden Double Slab", 0x1, OAK_WOOD, Slab.SPRUCE_WOOD);
-	public static final DoubleSlab BIRCH_WOOD = new DoubleSlab("Birch Wooden Double Slab", 0x2, OAK_WOOD, Slab.BIRCH_WOOD);
-	public static final DoubleSlab JUNGLE_WOOD = new DoubleSlab("Jungle Wooden Double Slab", 0x3, OAK_WOOD, Slab.JUNGLE_WOOD);
+	public static final DoubleSlab STONE = new DoubleSlab((short) 0x7, "Stone Double Slab", 43, false, Slab.STONE,"model://Vanilla/resources/materials/block/solid/doubleslabs/doubleslabs.spm");
+	public static final DoubleSlab SANDSTONE = new DoubleSlab("Sandstone Double Slab", 0x1, STONE, Slab.SANDSTONE,"model://Vanilla/resources/materials/block/solid/doubleslabs/doubleslabs.spm");
+	public static final DoubleSlab STONE_WOOD = new DoubleSlab("Wooden Double Slab", 0x2, STONE, Slab.STONE_WOOD,"model://Vanilla/resources/materials/block/solid/doubleslabs/doubleslabs.spm");
+	public static final DoubleSlab COBBLESTONE = new DoubleSlab("Cobblestone Double Slab", 0x3, STONE, Slab.COBBLESTONE,"model://Vanilla/resources/materials/block/solid/doubleslabs/doubleslabs.spm");
+	public static final DoubleSlab BRICK = new DoubleSlab("Brick Double Slab", 0x4, STONE, Slab.BRICK,"model://Vanilla/resources/materials/block/solid/doubleslabs/doubleslabs.spm");
+	public static final DoubleSlab STONE_BRICK = new DoubleSlab("Stone Brick Double Slab", 0x5, STONE, Slab.STONE_BRICK,"model://Vanilla/resources/materials/block/solid/doubleslabs/doubleslabs.spm");
+	public static final DoubleSlab OAK_WOOD = new DoubleSlab((short) 0x3, "Oak Wooden Double Slab", 125, true, Slab.OAK_WOOD,"model://Vanilla/resources/materials/block/solid/doubleslabs/doubleslabs.spm");
+	public static final DoubleSlab SPRUCE_WOOD = new DoubleSlab("Spruce Wooden Double Slab", 0x1, OAK_WOOD, Slab.SPRUCE_WOOD,"model://Vanilla/resources/materials/block/solid/doubleslabs/doubleslabs.spm");
+	public static final DoubleSlab BIRCH_WOOD = new DoubleSlab("Birch Wooden Double Slab", 0x2, OAK_WOOD, Slab.BIRCH_WOOD,"model://Vanilla/resources/materials/block/solid/doubleslabs/doubleslabs.spm");
+	public static final DoubleSlab JUNGLE_WOOD = new DoubleSlab("Jungle Wooden Double Slab", 0x3, OAK_WOOD, Slab.JUNGLE_WOOD,"model://Vanilla/resources/materials/block/solid/doubleslabs/doubleslabs.spm");
 	private Slab singletype;
 	private final boolean wood;
 
-	private DoubleSlab(short datamask, String name, int id, boolean wood, Slab slab) {
-		super(datamask, name, id);
+	private DoubleSlab(short datamask, String name, int id, boolean wood, Slab slab, String model) {
+		super(datamask, name, id, model);
 		this.wood = wood;
 		this.setSingleType(slab).setHardness(2.0F).setResistance(10.0F);
 		this.addMiningType(wood ? ToolType.AXE : ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
-	private DoubleSlab(String name, int data, DoubleSlab parent, Slab slab) {
-		super(name, parent.getMinecraftId(), data, parent);
+	private DoubleSlab(String name, int data, DoubleSlab parent, Slab slab, String model) {
+		super(name, parent.getMinecraftId(), data, parent, model);
 		this.wood = parent.wood;
 		this.setSingleType(slab).setHardness(2.0F).setResistance(10.0F);
 		this.addMiningType(wood ? ToolType.AXE : ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);

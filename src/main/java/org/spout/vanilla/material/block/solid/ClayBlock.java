@@ -34,7 +34,7 @@ import org.spout.vanilla.material.block.Solid;
 
 public class ClayBlock extends Solid implements InitializableMaterial {
 	public ClayBlock(String name, int id) {
-		super(name, id);
+		super(name, id, "model://Vanilla/resources/materials/block/solid/clayblock/clayblock.spm");
 		this.setHardness(0.6F).setResistance(1.0F).setStepSound(SoundEffects.STEP_GRAVEL);
 		this.addMiningType(ToolType.SPADE);
 	}

@@ -33,7 +33,7 @@ import org.spout.vanilla.material.block.DoorBlock;
 
 public class IronDoorBlock extends DoorBlock implements InitializableMaterial {
 	public IronDoorBlock(String name, int id) {
-		super(name, id);
+		super(name, id, (String)null );
 		this.setHardness(5.0F).setResistance(8.3F).setOpacity((byte) 1);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

@@ -38,16 +38,16 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Attachable;
 
 public abstract class AbstractAttachable extends VanillaBlockMaterial implements Attachable {
-	protected AbstractAttachable(short dataMask, String name, int id) {
-		super(dataMask, name, id);
+	protected AbstractAttachable(short dataMask, String name, int id, String model) {
+		super(dataMask, name, id, model);
 	}
 
-	protected AbstractAttachable(String name, int id) {
-		super(name, id);
+	protected AbstractAttachable(String name, int id, String model) {
+		super(name, id, model);
 	}
 
-	public AbstractAttachable(String name, int id, int data, VanillaBlockMaterial parent) {
-		super(name, id, data, parent);
+	public AbstractAttachable(String name, int id, int data, VanillaBlockMaterial parent, String model) {
+		super(name, id, data, parent, model);
 	}
 
 	private ByteBitSet attachableFaces = new ByteBitSet(BlockFaces.NONE);

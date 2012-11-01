@@ -42,8 +42,8 @@ import org.spout.vanilla.util.PlayerUtil;
 public abstract class AbstractChestBlock extends ComponentMaterial implements Directional, Fuel {
 	public final float BURN_TIME = 15;
 
-	public AbstractChestBlock(String name, int id, Class<? extends AbstractChest> componentType) {
-		super(name, id, componentType);
+	public AbstractChestBlock(String name, int id, Class<? extends AbstractChest> componentType, String model) {
+		super(name, id, componentType, model);
 	}
 
 	@Override

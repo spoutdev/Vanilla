@@ -42,8 +42,8 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 public class ComponentMaterial extends VanillaBlockMaterial implements ComplexMaterial {
 	private final Class<? extends BlockComponent> componentType;
 
-	public ComponentMaterial(String name, int id, Class<? extends BlockComponent> componentType) {
-		super(name, id);
+	public ComponentMaterial(String name, int id, Class<? extends BlockComponent> componentType, String model) {
+		super(name, id, model);
 		this.componentType = componentType;
 	}
 

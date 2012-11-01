@@ -32,7 +32,7 @@ import org.spout.vanilla.material.block.Solid;
 
 public class DiamondBlock extends Solid {
 	public DiamondBlock(String name, int id) {
-		super(name, id);
+		super(name, id, "model://Vanilla/resources/materials/block/solid/diamondblock/diamondblock.spm");
 		this.setHardness(5.0F).setResistance(10.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.IRON);
 	}
 }

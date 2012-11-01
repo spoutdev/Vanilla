@@ -39,7 +39,7 @@ public class WoodenFence extends Fence implements Fuel, Burnable {
 	public final float BURN_TIME = 15;
 
 	public WoodenFence(String name, int id) {
-		super(name, id);
+		super(name, id, (String) null);
 		this.setResistance(5.0F);
 	}
 

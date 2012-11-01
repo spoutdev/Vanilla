@@ -353,8 +353,8 @@ public final class VanillaMaterials {
 	public static final BrewingStandBlock BREWING_STAND_BLOCK = new BrewingStandBlock("Brewing Stand", 117);
 	public static final CauldronBlock CAULDRON_BLOCK = new CauldronBlock("Cauldron", 118);
 	public static final DragonEgg DRAGON_EGG = new DragonEgg("Dragon Egg", 122);
-	public static final RedstoneLamp REDSTONE_LAMP_OFF = new RedstoneLamp("Redstone Lamp", 123, false);
-	public static final RedstoneLamp REDSTONE_LAMP_ON = new RedstoneLamp("Redstone Lamp (On)", 124, true);
+	public static final RedstoneLamp REDSTONE_LAMP_OFF = new RedstoneLamp("Redstone Lamp", 123, false, "model://Vanilla/resources/materials/block/solid/redstonelampoff/redstonelampoff.spm");
+	public static final RedstoneLamp REDSTONE_LAMP_ON = new RedstoneLamp("Redstone Lamp (On)", 124, true, "model://Vanilla/resources/materials/block/solid/redstonelampon/redstonelampon.spm");
 	public static final TripWireHook TRIPWIRE_HOOK = new TripWireHook("Trip Wire Hook", 131);
 	public static final TripWire TRIPWIRE = new TripWire("Trip Wire", 132);
 	public static final CocoaPlant COCOA_PLANT = new CocoaPlant("Cocoa Plant", 127);

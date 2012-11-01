@@ -32,7 +32,7 @@ import org.spout.vanilla.material.block.Solid;
 
 public class Brick extends Solid {
 	public Brick(String name, int id) {
-		super(name, id);
+		super(name, id, "model://Vanilla/resources/materials/block/solid/bricks/bricks.spm");
 		this.setHardness(2.0F).setResistance(10.0F);
 		getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

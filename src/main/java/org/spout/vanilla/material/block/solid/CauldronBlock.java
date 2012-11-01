@@ -30,7 +30,7 @@ import org.spout.vanilla.material.block.Solid;
 
 public class CauldronBlock extends Solid {
 	public CauldronBlock(String name, int id) {
-		super(name, id);
+		super(name, id, (String)null);
 		this.setHardness(2.0F).setResistance(3.3F);
 	}
 }

@@ -34,7 +34,7 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class EndPortalFrame extends VanillaBlockMaterial {
 	public EndPortalFrame(String name, int id) {
-		super(name, id);
+		super(name, id, (String)null);
 		this.setHardness(-1.0F).setResistance(6000000.0F);
 		this.setOcclusion((short) 0, BlockFace.BOTTOM);
 	}

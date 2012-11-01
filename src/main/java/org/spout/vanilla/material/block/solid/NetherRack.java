@@ -31,7 +31,7 @@ import org.spout.vanilla.material.block.Solid;
 
 public class NetherRack extends Solid {
 	public NetherRack(String name, int id) {
-		super(name, id);
+		super(name, id, "model://Vanilla/resources/materials/block/solid/netherrack/netherrack.spm");
 		this.setHardness(0.6F).setResistance(0.6F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

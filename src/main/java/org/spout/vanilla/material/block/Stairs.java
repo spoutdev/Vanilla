@@ -38,8 +38,8 @@ import org.spout.vanilla.util.PlayerUtil;
 public abstract class Stairs extends VanillaBlockMaterial implements Directional {
 	private final ByteBitSet[] occlusion;
 
-	public Stairs(String name, int id) {
-		super(name, id);
+	public Stairs(String name, int id, String model) {
+		super(name, id, model);
 		this.occlusion = new ByteBitSet[8];
 		for (int i = 0; i < 4; i++) {
 			this.occlusion[i] = new ByteBitSet(BlockFaces.NSEW.get(i).getOpposite(), BlockFace.BOTTOM);

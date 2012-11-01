@@ -54,7 +54,7 @@ import org.spout.vanilla.material.item.misc.Dye;
 
 public class WheatCrop extends GroundAttachable implements Growing, Crop, DynamicMaterial, InitializableMaterial {
 	public WheatCrop(String name, int id) {
-		super(name, id);
+		super(name, id, (String)null);
 		this.setResistance(0.0F).setHardness(0.0F).setTransparent();
 	}
 

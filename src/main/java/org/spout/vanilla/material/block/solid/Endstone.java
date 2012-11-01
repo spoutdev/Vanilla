@@ -33,7 +33,7 @@ import org.spout.vanilla.material.block.Solid;
 
 public class Endstone extends Solid {
 	public Endstone(String name, int id) {
-		super(name, id);
+		super(name, id, "model://Vanilla/resources/materials/block/solid/endstone/endstone.spm");
 		this.setHardness(3.0F).setResistance(15.0F);
 		getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE, ToolLevelFlags.WOOD_UP);
 	}

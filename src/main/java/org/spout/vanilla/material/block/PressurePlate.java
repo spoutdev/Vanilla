@@ -45,8 +45,8 @@ public abstract class PressurePlate extends GroundAttachable implements Redstone
 	public static final int TICK_DELAY = 1000;
 	private static final EffectRange physicsRange = new ListEffectRange(new CubicEffectRange(1), new CuboidEffectRange(0, -2, 0, 0, -1, 0));
 
-	public PressurePlate(String name, int id) {
-		super(name, id);
+	public PressurePlate(String name, int id, String model) {
+		super(name, id, model);
 		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
 	}
 

@@ -33,19 +33,19 @@ import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.block.Solid;
 
 public class Sandstone extends Solid {
-	public static final Sandstone SANDSTONE = new Sandstone("Sandstone");
-	public static final Sandstone DECORATIVE = new Sandstone("Decorative Sandstone", SandstoneType.DECORATIVE, SANDSTONE);
-	public static final Sandstone SMOOTH = new Sandstone("Smooth Sandstone", SandstoneType.SMOOTH, SANDSTONE);
+	public static final Sandstone SANDSTONE = new Sandstone("Sandstone","model://Vanilla/resources/materials/block/solid/sandstone/sandstone.spm");
+	public static final Sandstone DECORATIVE = new Sandstone("Decorative Sandstone", SandstoneType.DECORATIVE, SANDSTONE,"model://Vanilla/resources/materials/block/solid/cheseledsandstone/cheseledsandstone.spm");
+	public static final Sandstone SMOOTH = new Sandstone("Smooth Sandstone", SandstoneType.SMOOTH, SANDSTONE,"model://Vanilla/resources/materials/block/solid/smoothsandstone/smoothsandstone.spm");
 	private final SandstoneType type;
 
-	private Sandstone(String name) {
-		super((short) 0x0003, name, 24);
+	private Sandstone(String name, String model) {
+		super((short) 0x0003, name, 24, model);
 		this.type = SandstoneType.SANDSTONE;
 		this.setHardness(0.8F).setResistance(1.3F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
-	private Sandstone(String name, SandstoneType type, Sandstone parent) {
-		super(name, 24, type.getData(), parent);
+	private Sandstone(String name, SandstoneType type, Sandstone parent, String model) {
+		super(name, 24, type.getData(), parent, model);
 		this.type = type;
 		this.setHardness(0.8F).setResistance(1.3F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}

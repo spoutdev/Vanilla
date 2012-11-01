@@ -60,13 +60,13 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 	private static final short dataMask = 0x3;
 
 	private Sapling(String name) {
-		super(dataMask, name, 6);
+		super(dataMask, name, 6, (String)null);
 		this.setLiquidObstacle(false);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}
 
 	private Sapling(String name, int data, Sapling parent) {
-		super(name, 6, data, parent);
+		super(name, 6, data, parent, (String)null);
 		this.setLiquidObstacle(false);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}

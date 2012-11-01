@@ -32,18 +32,18 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class GroundAttachable extends AbstractAttachable {
-	public GroundAttachable(short dataMask, String name, int id) {
-		super(dataMask, name, id);
+	public GroundAttachable(short dataMask, String name, int id, String model) {
+		super(dataMask, name, id, model);
 		this.setAttachable(BlockFace.BOTTOM);
 	}
 
-	public GroundAttachable(String name, int id) {
-		super(name, id);
+	public GroundAttachable(String name, int id, String model) {
+		super(name, id, model);
 		this.setAttachable(BlockFace.BOTTOM);
 	}
 
-	public GroundAttachable(String name, int id, int data, VanillaBlockMaterial parent) {
-		super(name, id, data, parent);
+	public GroundAttachable(String name, int id, int data, VanillaBlockMaterial parent, String model) {
+		super(name, id, data, parent, model);
 		this.setAttachable(BlockFace.BOTTOM);
 	}
 

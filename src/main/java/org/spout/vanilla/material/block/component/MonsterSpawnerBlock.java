@@ -30,7 +30,7 @@ import org.spout.vanilla.material.block.Solid;
 
 public class MonsterSpawnerBlock extends Solid {
 	public MonsterSpawnerBlock(String name, int id) {
-		super(name, id);
+		super(name, id, "model://Vanilla/resources/materials/block/solid/mobspawner/mobspawner.spm");
 		this.setHardness(5.0F).setResistance(8.3F).setTransparent();
 	}
 }

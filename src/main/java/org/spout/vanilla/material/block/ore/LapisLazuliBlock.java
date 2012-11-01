@@ -32,7 +32,7 @@ import org.spout.vanilla.material.block.Solid;
 
 public class LapisLazuliBlock extends Solid {
 	public LapisLazuliBlock(String name, int id) {
-		super(name, id);
+		super(name, id, "model://Vanilla/resources/materials/block/solid/lapislazuliblock/lapislazuliblock.spm");
 		this.setHardness(3.0F).setResistance(5.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.STONE);
 	}
 }

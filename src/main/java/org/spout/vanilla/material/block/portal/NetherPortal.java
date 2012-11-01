@@ -36,7 +36,7 @@ import org.spout.vanilla.material.block.Portal;
 
 public class NetherPortal extends Portal {
 	public NetherPortal(String name, int id) {
-		super(name, id);
+		super(name, id, (String)null);
 		this.setHardness(-1.0F).setResistance(0.0F);
 	}
 

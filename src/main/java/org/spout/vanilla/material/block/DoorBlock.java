@@ -41,8 +41,8 @@ import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.util.RedstoneUtil;
 
 public abstract class DoorBlock extends GroundAttachable implements Openable, RedstoneTarget {
-	public DoorBlock(String name, int id) {
-		super(name, id);
+	public DoorBlock(String name, int id, String model) {
+		super(name, id, model);
 		this.setCollision(CollisionStrategy.SOLID);
 	}
 

@@ -38,7 +38,7 @@ import org.spout.vanilla.material.block.component.FurnaceBlock;
 
 public class EmeraldOre extends Ore implements InitializableMaterial, TimedCraftable {
 	public EmeraldOre(String name, int id) {
-		super(name, id);
+		super(name, id, (String)null);
 		this.setHardness(3.0F).setResistance(5.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.IRON);
 	}
 

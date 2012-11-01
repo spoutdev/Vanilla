@@ -55,11 +55,6 @@ public class FlintAndSteel extends InteractTool {
 				// Default fire creation
 				Block target = block.translate(clickedface);
 
-				// Handle the creation of portals
-				if (VanillaMaterials.PORTAL.createPortal(target.translate(BlockFace.BOTTOM))) {
-					return;
-				}
-
 				// Default fire placement
 				clickedface = clickedface.getOpposite();
 				if (VanillaMaterials.FIRE.canPlace(target, (short) 0)) {
@@ -67,6 +62,11 @@ public class FlintAndSteel extends InteractTool {
 						PlayerQuickbar inv = entity.get(Human.class).getInventory().getQuickbar();
 						inv.addData(inv.getCurrentSlot(), 1);
 					}
+				}
+				
+				// Handle the creation of portals
+				if (VanillaMaterials.PORTAL.createPortal(target.translate(BlockFace.BOTTOM))) {
+					return;
 				}
 			}
 		}

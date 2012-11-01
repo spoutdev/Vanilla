@@ -33,6 +33,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Portal;
+import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 
 public class NetherPortal extends Portal {
 	public NetherPortal(String name, int id) {
@@ -56,6 +57,10 @@ public class NetherPortal extends Portal {
 	 * @return True if it was successful, False if not
 	 */
 	public boolean createPortal(Block bottomBlock) {
+		//  Check if the portal is being created in the End.
+		if (bottomBlock.getWorld().getGenerator() instanceof TheEndGenerator) {
+			return false;
+		}
 		Block above = bottomBlock.translate(BlockFace.TOP);
 		// Find out what direction to create the portal to
 		BlockFace direction = null;
@@ -98,6 +103,21 @@ public class NetherPortal extends Portal {
 		}
 		if (!corner2.isMaterial(VanillaMaterials.OBSIDIAN)) {
 			return false;
+		}
+		// Validate that there are no portals touching the proposed one.
+		corner1 = above;
+		corner2 = above.translate(direction);
+		for (int i = 0; i < 3; i++) {
+			// Check if there is another nether portal touching the proposed one
+			for (BlockFace side : BlockFaces.NESW) {
+				// If so, don't build the current one, and extinguish the fire.
+				if (corner1.translate(side).isMaterial(VanillaMaterials.PORTAL) || corner2.translate(side).isMaterial(VanillaMaterials.PORTAL)) {
+					above.setMaterial(VanillaMaterials.AIR);
+					return false;
+				}
+			}
+			corner1 = corner1.translate(BlockFace.TOP);
+			corner2 = corner2.translate(BlockFace.TOP);
 		}
 		// Validated, time to create the portal
 		corner1 = above;

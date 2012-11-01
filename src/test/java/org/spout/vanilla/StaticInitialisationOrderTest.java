@@ -42,6 +42,7 @@ import static org.junit.Assert.fail;
 public class StaticInitialisationOrderTest {
 	@Test
 	public void materialStaticInitialisationTest() {
+		EngineFaker.setupEngine();
 		try {
 			new Stone("Test Stone", 87945);
 			VanillaMaterials.initialize();

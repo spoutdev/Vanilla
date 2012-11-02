@@ -38,10 +38,10 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.component.SignBase;
 
 public class Leaves extends Solid implements Burnable, InitializableMaterial {
-	public static final Leaves DEFAULT = new Leaves("Leaves", (String)null);
-	public static final Leaves SPRUCE = new Leaves("Spruce Leaves", 1, DEFAULT, (String)null);
-	public static final Leaves BIRCH = new Leaves("Birch Leaves", 2, DEFAULT, (String)null);
-	public static final Leaves JUNGLE = new Leaves("Jungle Leaves", 3, DEFAULT, (String)null);
+	public static final Leaves DEFAULT = new Leaves("Leaves", "model://Vanilla/resources/materials/block/solid/oakleaves/oakleaves.spm");
+	public static final Leaves SPRUCE = new Leaves("Spruce Leaves", 1, DEFAULT, "model://Vanilla/resources/materials/block/solid/spruceleaves/spruceleaves.spm");
+	public static final Leaves BIRCH = new Leaves("Birch Leaves", 2, DEFAULT, "model://Vanilla/resources/materials/block/solid/birchleaves/birchleaves.spm");
+	public static final Leaves JUNGLE = new Leaves("Jungle Leaves", 3, DEFAULT, "model://Vanilla/resources/materials/block/solid/jungleleaves/jungleleaves.spm");
 
 	private Leaves(String name, String model) {
 		super((short) 0x0003, name, 18, model);

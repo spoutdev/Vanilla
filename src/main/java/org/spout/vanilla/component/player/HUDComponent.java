@@ -30,17 +30,21 @@ import java.awt.Color;
 
 import org.spout.api.Client;
 import org.spout.api.Spout;
+import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.gui.Screen;
 import org.spout.api.gui.Widget;
+import org.spout.api.gui.component.LabelComponent;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
 import org.spout.api.plugin.Platform;
+import org.spout.api.render.Font;
 import org.spout.api.render.RenderMaterial;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.data.VanillaData;
 
 /**
  * Component attached to clients-only inwhich serves to update the Heads Up Display.
@@ -49,9 +53,12 @@ public class HUDComponent extends EntityComponent {
 	// The main HUD screen
 	private final Screen HUD = new Screen();
 	private final float ratio = 0.75f; // This is temporary it will be applied directly by the engine
+	
 	// The materials used to construct the render
 	private final RenderMaterial hotbarMaterial = (RenderMaterial) Spout.getFilesystem().getResource("material://Vanilla/resources/gui/smt/HotbarGUIMaterial.smt");
 	private final RenderMaterial iconsMaterial = (RenderMaterial) Spout.getFilesystem().getResource("material://Vanilla/resources/gui/smt/IconsGUIMaterial.smt");
+	private final Font font = (Font) Spout.getFilesystem().getResource("font://Spout/resources/resources/fonts/ubuntu/Ubuntu-M.ttf");
+	
 	// The core elements of the main HUD
 	private final Widget hotbar = new Widget();
 	private final Widget hearts = new Widget();
@@ -59,10 +66,8 @@ public class HUDComponent extends EntityComponent {
 	private final Widget bubbles = new Widget();
 	private final Widget armor = new Widget();
 	private final Widget hunger = new Widget();
-
-	// Used for animation
-	private float bubbleCounter = 0;
-	private int bubbleIndex = 10;
+	
+	private final float maxSecsBubbles = VanillaData.AIR_SECS.getDefaultValue();
 
 	@Override
 	public void onAttached() {
@@ -77,39 +82,42 @@ public class HUDComponent extends EntityComponent {
 
 	@Override
 	public void onTick(float dt) {
-		// Anim demos
-
-		// Demo bubble index :
-		bubbleCounter += dt;
-
-		final RenderPartsHolderComponent b = bubbles.get(RenderPartsHolderComponent.class);
-		if (bubbleCounter >= 0.01f) {
-			if (bubbleIndex != 10) {
-				b.get(bubbleIndex).setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Empty
+		
+		// Remaining air handling
+		final float secsBubbles = getData().get(VanillaData.AIR_SECS);
+		if (secsBubbles==maxSecsBubbles) {
+			hideBubbles();
+		} else {
+			final float nbBubExact = secsBubbles / maxSecsBubbles * 10f;
+			final int nbBub = (int) nbBubExact;
+			int bubId = 0;
+			for (RenderPart bub : bubbles.get(RenderPartsHolderComponent.class).getRenderParts()) {
+				if (bubId>nbBub) {
+					bub.setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Empty
+				} else if (bubId==nbBub) {
+					if (nbBubExact-nbBub >= 0.02f) {
+						bub.setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Empty
+					} else {
+						bub.setSource(new Rectangle(25f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Explode
+					}
+				} else {
+					bub.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // full
+				}
+				bubId++;
 			}
 		}
-		if (bubbleCounter >= 2f) { // 1sec
-			if (bubbleIndex != 0) {
-				b.get(bubbleIndex - 1).setSource(new Rectangle(25f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Explode
-			} else {
-				bubbleIndex = 11;
-				showBubbles();
-			}
-			bubbleIndex--;
-			bubbleCounter = 0;
-			bubbles.update();
-		}
+		bubbles.update();
 	}
 
 	public void hideBubbles() {
 		for (RenderPart part : bubbles.get(RenderPartsHolderComponent.class).getRenderParts()) {
-			part.setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f));
+			part.setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // empty
 		}
 	}
 
 	public void showBubbles() {
 		for (RenderPart part : bubbles.get(RenderPartsHolderComponent.class).getRenderParts()) {
-			part.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f));
+			part.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // full
 		}
 	}
 
@@ -149,7 +157,14 @@ public class HUDComponent extends EntityComponent {
 		expBarRect.setRenderMaterial(iconsMaterial);
 		expBarRect.setColor(Color.WHITE);
 		expRect.add(expBarRect, 0);
+		
+		final LabelComponent lvlTxt = exp.add(LabelComponent.class);
+		exp.setGeometry(new Rectangle(0, -0.82f, 0, 0));
+		lvlTxt.setFont(font);
+		lvlTxt.setText(ChatStyle.BRIGHT_GREEN+"50");
+		
 		setExp(0.5f);
+		
 		HUD.attachWidget(VanillaPlugin.getInstance(), exp);
 
 		float dx = 0.07f * ratio;

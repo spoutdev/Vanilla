@@ -47,19 +47,21 @@ import org.spout.vanilla.VanillaPlugin;
  * Component attached to clients-only inwhich serves to update the Heads Up Display.
  */
 public class HUDComponent extends EntityComponent {
-	//The main HUD screen
+	// The main HUD screen
 	private final Screen HUD = new Screen();
 	private final float ratio = 0.75f; // This is temporary it will be applied directly by the engine
-	//The materials used to construct the render
+	// The materials used to construct the render
 	private final RenderMaterial hotbarMaterial = (RenderMaterial) Spout.getFilesystem().getResource("material://Vanilla/resources/gui/smt/HotbarGUIMaterial.smt");
-	private final RenderMaterial heartsMaterial = (RenderMaterial) Spout.getFilesystem().getResource("material://Vanilla/resources/gui/smt/HeartsGUIMaterial.smt");
-	//The core elements of the main HUD
+	private final RenderMaterial iconsMaterial = (RenderMaterial) Spout.getFilesystem().getResource("material://Vanilla/resources/gui/smt/IconsGUIMaterial.smt");
+	// The core elements of the main HUD
 	private final Widget hotbar = new Widget();
 	private final Widget hearts = new Widget();
 	private final Widget exp = new Widget();
 	private final Widget bubbles = new Widget();
-	
-	//Used for animation
+	private final Widget armor = new Widget();
+	private final Widget hunger = new Widget();
+
+	// Used for animation
 	private float bubbleCounter = 0;
 	private int bubbleIndex = 10;
 
@@ -73,23 +75,24 @@ public class HUDComponent extends EntityComponent {
 		}
 		constructHUD();
 	}
-	
+
 	@Override
 	public void onTick(float dt) {
 		// Anim demos
-		
+
 		// Demo bubble index :
 		bubbleCounter += dt;
-		
+
 		final RenderPartsHolderComponent b = bubbles.get(RenderPartsHolderComponent.class);
-		if (bubbleCounter>=0.01f) {
-			if (bubbleIndex!=10)
-				b.get(bubbleIndex).setSource(new Rectangle(34f/256f, 18f/256f, 9f/256f, 9f/256f)); // Empty
+		if (bubbleCounter >= 0.01f) {
+			if (bubbleIndex != 10) {
+				b.get(bubbleIndex).setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Empty
+			}
 		}
-		if (bubbleCounter>=2f) { // 1sec
-			if (bubbleIndex!=0)
-				b.get(bubbleIndex-1).setSource(new Rectangle(25f/256f, 18f/256f, 9f/256f, 9f/256f)); // Explode
-			else {
+		if (bubbleCounter >= 2f) { // 1sec
+			if (bubbleIndex != 0) {
+				b.get(bubbleIndex - 1).setSource(new Rectangle(25f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Explode
+			} else {
 				bubbleIndex = 11;
 				showBubbles();
 			}
@@ -101,89 +104,109 @@ public class HUDComponent extends EntityComponent {
 
 	public void hideBubbles() {
 		for (RenderPart part : bubbles.get(RenderPartsHolderComponent.class).getRenderParts()) {
-			part.setSource(new Rectangle(34f/256f, 18f/256f, 9f/256f, 9f/256f));
+			part.setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f));
 		}
 	}
-	
+
 	public void showBubbles() {
 		for (RenderPart part : bubbles.get(RenderPartsHolderComponent.class).getRenderParts()) {
-			part.setSource(new Rectangle(16f/256f, 18f/256f, 9f/256f, 9f/256f));
+			part.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f));
 		}
 	}
-	
+
 	public void openHUD() {
 		((Client) Spout.getEngine()).getScreenStack().openScreen(HUD);
 	}
-	
+
 	private void constructHUD() {
-		//Setup the hotbar
+		float x = -0.71f * ratio;
+
+		// Setup the hotbar
 		final TexturedRectComponent hotbarRectangle = hotbar.add(TexturedRectComponent.class);
 		hotbarRectangle.setRenderMaterial(hotbarMaterial);
 		hotbarRectangle.setColor(Color.WHITE);
-		hotbarRectangle.setSprite(new Rectangle(-0.71f * ratio, -1f, 1.42f * ratio, 0.17f));
+		hotbarRectangle.setSprite(new Rectangle(x, -1f, 1.42f * ratio, 0.17f));
 		hotbarRectangle.setSource(new Rectangle(0, 0, 0.71f, 0.085f));
 		HUD.attachWidget(VanillaPlugin.getInstance(), hotbar);
-		
-		//Setup the hearts display
+
+		// Setup experience bar
+		final RenderPartsHolderComponent expRect = exp.add(RenderPartsHolderComponent.class);
+		final RenderPart expBgRect = new RenderPart();
+		expBgRect.setRenderMaterial(iconsMaterial);
+		expBgRect.setColor(Color.WHITE);
+		expBgRect.setSprite(new Rectangle(x, -0.82f, 1.81f * ratio, 0.05f));
+		expBgRect.setSource(new Rectangle(0, 64f / 256f, 0.91f, 0.019f));
+		expRect.add(expBgRect, 1);
+		HUD.attachWidget(VanillaPlugin.getInstance(), exp);
+
+		float dx = 0.07f * ratio;
+
+		// Setup the hearts display
 		final RenderPartsHolderComponent heartsRect = hearts.add(RenderPartsHolderComponent.class);
-		float dx = 0.05f * ratio;
-		float x = -0.71f * ratio;
-		for (int i=0 ; i < 10; i++) {
+		for (int i = 0; i < 10; i++) {
 			final RenderPart heartRect = new RenderPart();
-			heartRect.setRenderMaterial(heartsMaterial);
+			heartRect.setRenderMaterial(iconsMaterial);
 			heartRect.setColor(Color.WHITE);
-			heartRect.setSprite(new Rectangle(x, -0.8f, 0.05f*ratio, 0.05f));
-			heartRect.setSource(new Rectangle(53f/256f, 0, 9f/256f, 9f/256f));
+			heartRect.setSprite(new Rectangle(x, -0.76f, 0.09f * ratio, 0.09f));
+			heartRect.setSource(new Rectangle(53f / 256f, 0, 9f / 256f, 9f / 256f));
 			x += dx;
 			heartsRect.add(heartRect);
 		}
 		HUD.attachWidget(VanillaPlugin.getInstance(), hearts);
 
-		//  Setup exp bar
-		final RenderPartsHolderComponent expRect = exp.add(RenderPartsHolderComponent.class);
-		final RenderPart expBgRect = new RenderPart();
-		expBgRect.setRenderMaterial(heartsMaterial);
-		expBgRect.setColor(Color.WHITE);
-		expBgRect.setSprite(new Rectangle(-0.71f*ratio, -0.83f, 1.42f*ratio, 0.03f));
-		expBgRect.setSource(new Rectangle(0, 64f/256f, 182f/256, 5f/256f));
-		expRect.add(expBgRect, 1);
-		
-		final RenderPart expBarRect = new RenderPart();
-		expBarRect.setRenderMaterial(heartsMaterial);
-		expBarRect.setColor(Color.WHITE);
-		expRect.add(expBarRect, 0);
-		setExp(0.5f);
-		HUD.attachWidget(VanillaPlugin.getInstance(), exp);
-		
 		// Setup bubbles display
 		final RenderPartsHolderComponent bubblesRect = bubbles.add(RenderPartsHolderComponent.class);
-		x = 0.66f * ratio;
-		for (int i=0 ; i<10 ; i++) {
+		x = 0.01f * ratio;
+		for (int i = 0; i < 10; i++) {
 			final RenderPart bubbleRect = new RenderPart();
-			bubbleRect.setRenderMaterial(heartsMaterial);
+			bubbleRect.setRenderMaterial(iconsMaterial);
 			bubbleRect.setColor(Color.WHITE);
-			bubbleRect.setSprite(new Rectangle(x, -0.75f, 0.05f*ratio, 0.05f));
-			bubbleRect.setSource(new Rectangle(16f/256f, 18f/256f, 9f/256f, 9f/256f));
-			x -= dx;
+			bubbleRect.setSprite(new Rectangle(x, -0.67f, 0.07f * ratio, 0.07f));
+			bubbleRect.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f));
+			x += dx;
 			bubblesRect.add(bubbleRect);
 		}
 		HUD.attachWidget(VanillaPlugin.getInstance(), bubbles);
-		
-		//TODO: Armor bar
-		
-		//TODO: Food bar
-		
-		//TODO: Pumpkin head
+
+		// Setup the hunger display
+		final RenderPartsHolderComponent hungerRect = hunger.add(RenderPartsHolderComponent.class);
+		x = -0.01f * ratio;
+		for (int i = 0; i < 10; i++) {
+			final RenderPart hungerPart = new RenderPart();
+			hungerPart.setRenderMaterial(iconsMaterial);
+			hungerPart.setColor(Color.WHITE);
+			hungerPart.setSprite(new Rectangle(x, -0.76f, 0.09f * ratio, 0.09f));
+			hungerPart.setSource(new Rectangle(15f / 256f, 36f / 256f, 10f / 256f, 9f / 256f));
+			x += dx;
+			hungerRect.add(hungerPart);
+		}
+		HUD.attachWidget(VanillaPlugin.getInstance(), hunger);
+
+		// Setup the armor display
+		final RenderPartsHolderComponent armorRect = armor.add(RenderPartsHolderComponent.class);
+		x = -0.71f * ratio;
+		for (int i = 0; i < 10; i++) {
+			final RenderPart armorPart = new RenderPart();
+			armorPart.setRenderMaterial(iconsMaterial);
+			armorPart.setColor(Color.WHITE);
+			armorPart.setSprite(new Rectangle(x, -0.69f, 0.09f * ratio, 0.09f));
+			armorPart.setSource(new Rectangle(43f / 256f, 9f / 256f, 12f / 256f, 12f / 256f));
+			x += dx;
+			armorRect.add(armorPart);
+		}
+		HUD.attachWidget(VanillaPlugin.getInstance(), armor);
+
+		// TODO: Pumpkin head
 	}
-	
+
 	/**
 	 * Modify the advancement of the xp bar.
-	 * @param pcent : The advancement between 0 and 1
+	 * @param percent The advancement between 0 and 1
 	 */
-	public void setExp(float pcent) {
+	public void setExp(float percent) {
 		final RenderPart rect = exp.get(RenderPartsHolderComponent.class).get(1);
-		rect.setSprite(new Rectangle(-0.71f*ratio, -0.83f, 1.42f*ratio*pcent, 0.03f));
-		rect.setSource(new Rectangle(0, 69f/256f, 182f/256f*pcent, 5f/256f));
+		rect.setSprite(new Rectangle(-0.71f * ratio, -0.83f, 1.42f * ratio * percent, 0.03f));
+		rect.setSource(new Rectangle(0, 69f / 256f, 182f / 256f * percent, 5f / 256f));
 		exp.update();
 	}
 }

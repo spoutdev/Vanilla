@@ -35,7 +35,6 @@ import org.spout.api.entity.Player;
 import org.spout.api.gui.Screen;
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
-import org.spout.api.gui.component.TexturedRectComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
 import org.spout.api.plugin.Platform;
@@ -122,11 +121,19 @@ public class HUDComponent extends EntityComponent {
 		float x = -0.71f * ratio;
 
 		// Setup the hotbar
-		final TexturedRectComponent hotbarRectangle = hotbar.add(TexturedRectComponent.class);
-		hotbarRectangle.setRenderMaterial(hotbarMaterial);
-		hotbarRectangle.setColor(Color.WHITE);
-		hotbarRectangle.setSprite(new Rectangle(x, -1f, 1.42f * ratio, 0.17f));
-		hotbarRectangle.setSource(new Rectangle(0, 0, 0.71f, 0.085f));
+		final RenderPartsHolderComponent hotbarRect = hotbar.add(RenderPartsHolderComponent.class);
+		final RenderPart hotbarBgRect = new RenderPart();
+		hotbarBgRect.setRenderMaterial(hotbarMaterial);
+		hotbarBgRect.setColor(Color.WHITE);
+		hotbarBgRect.setSprite(new Rectangle(x, -1f, 1.42f * ratio, 0.17f));
+		hotbarBgRect.setSource(new Rectangle(0, 0, 0.71f, 0.085f));
+		hotbarRect.add(hotbarBgRect, 1);
+
+		final RenderPart hotbarSlotRect = new RenderPart();
+		hotbarSlotRect.setRenderMaterial(hotbarMaterial);
+		hotbarSlotRect.setColor(Color.WHITE);
+		hotbarRect.add(hotbarSlotRect, 0);
+		setHotbarSlot(4);
 		HUD.attachWidget(VanillaPlugin.getInstance(), hotbar);
 
 		// Setup experience bar
@@ -137,6 +144,12 @@ public class HUDComponent extends EntityComponent {
 		expBgRect.setSprite(new Rectangle(x, -0.82f, 1.81f * ratio, 0.05f));
 		expBgRect.setSource(new Rectangle(0, 64f / 256f, 0.91f, 0.019f));
 		expRect.add(expBgRect, 1);
+
+		final RenderPart expBarRect = new RenderPart();
+		expBarRect.setRenderMaterial(iconsMaterial);
+		expBarRect.setColor(Color.WHITE);
+		expRect.add(expBarRect, 0);
+		setExp(0.5f);
 		HUD.attachWidget(VanillaPlugin.getInstance(), exp);
 
 		float dx = 0.07f * ratio;
@@ -200,12 +213,27 @@ public class HUDComponent extends EntityComponent {
 	}
 
 	/**
+	 * Sets the selected hotbar slot
+	 * @param slot Index of the slot to set
+	 */
+	public void setHotbarSlot(int slot) {
+		if (slot < 0 || slot > 8) {
+			throw new IllegalArgumentException("Slot must be between 0 and 8");
+		}
+
+		final RenderPart rect = hotbar.get(RenderPartsHolderComponent.class).get(1);
+		rect.setSprite(new Rectangle(-0.72f * ratio + (slot * .1175f), -1f, 0.23f * ratio, 0.23f * ratio));
+		rect.setSource(new Rectangle(0, 22f / 256f, 30f / 256f, 24f / 256f));
+		hotbar.update();
+	}
+
+	/**
 	 * Modify the advancement of the xp bar.
 	 * @param percent The advancement between 0 and 1
 	 */
 	public void setExp(float percent) {
 		final RenderPart rect = exp.get(RenderPartsHolderComponent.class).get(1);
-		rect.setSprite(new Rectangle(-0.71f * ratio, -0.83f, 1.42f * ratio * percent, 0.03f));
+		rect.setSprite(new Rectangle(-0.71f * ratio, -0.82f, 1.81f * ratio * percent, 0.05f));
 		rect.setSource(new Rectangle(0, 69f / 256f, 182f / 256f * percent, 5f / 256f));
 		exp.update();
 	}

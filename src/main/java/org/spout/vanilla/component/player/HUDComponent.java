@@ -133,7 +133,7 @@ public class HUDComponent extends EntityComponent {
 		hotbarSlotRect.setRenderMaterial(hotbarMaterial);
 		hotbarSlotRect.setColor(Color.WHITE);
 		hotbarRect.add(hotbarSlotRect, 0);
-		setHotbarSlot(4);
+		setHotbarSlot(0);
 		HUD.attachWidget(VanillaPlugin.getInstance(), hotbar);
 
 		// Setup experience bar
@@ -141,7 +141,7 @@ public class HUDComponent extends EntityComponent {
 		final RenderPart expBgRect = new RenderPart();
 		expBgRect.setRenderMaterial(iconsMaterial);
 		expBgRect.setColor(Color.WHITE);
-		expBgRect.setSprite(new Rectangle(x, -0.82f, 1.81f * ratio, 0.05f));
+		expBgRect.setSprite(new Rectangle(x, -0.82f, 1.81f * ratio, 0.04f));
 		expBgRect.setSource(new Rectangle(0, 64f / 256f, 0.91f, 0.019f));
 		expRect.add(expBgRect, 1);
 
@@ -152,7 +152,7 @@ public class HUDComponent extends EntityComponent {
 		setExp(0.5f);
 		HUD.attachWidget(VanillaPlugin.getInstance(), exp);
 
-		float dx = 0.07f * ratio;
+		float dx = 0.06f * ratio;
 
 		// Setup the hearts display
 		final RenderPartsHolderComponent heartsRect = hearts.add(RenderPartsHolderComponent.class);
@@ -160,38 +160,49 @@ public class HUDComponent extends EntityComponent {
 			final RenderPart heartRect = new RenderPart();
 			heartRect.setRenderMaterial(iconsMaterial);
 			heartRect.setColor(Color.WHITE);
-			heartRect.setSprite(new Rectangle(x, -0.76f, 0.09f * ratio, 0.09f));
+			heartRect.setSprite(new Rectangle(x + 0.005f, -0.77f, 0.065f * ratio, 0.065f));
 			heartRect.setSource(new Rectangle(53f / 256f, 0, 9f / 256f, 9f / 256f));
-			x += dx;
 			heartsRect.add(heartRect);
+			x += dx;
+		}
+
+		x = -0.71f * ratio;
+		for (int i = 0; i < 10; i++) {
+			final RenderPart heartBgRect = new RenderPart();
+			heartBgRect.setRenderMaterial(iconsMaterial);
+			heartBgRect.setColor(Color.WHITE);
+			heartBgRect.setSprite(new Rectangle(x, -0.77f, 0.065f * ratio, 0.065f));
+			heartBgRect.setSource(new Rectangle(16f / 256f, 0, 9f / 256f, 9f / 256f));
+			heartsRect.add(heartBgRect);
+			x += dx;
 		}
 		HUD.attachWidget(VanillaPlugin.getInstance(), hearts);
 
 		// Setup bubbles display
 		final RenderPartsHolderComponent bubblesRect = bubbles.add(RenderPartsHolderComponent.class);
-		x = 0.01f * ratio;
+		x = 0.09f * ratio;
 		for (int i = 0; i < 10; i++) {
 			final RenderPart bubbleRect = new RenderPart();
 			bubbleRect.setRenderMaterial(iconsMaterial);
 			bubbleRect.setColor(Color.WHITE);
-			bubbleRect.setSprite(new Rectangle(x, -0.67f, 0.07f * ratio, 0.07f));
+			bubbleRect.setSprite(new Rectangle(x, -0.69f, 0.06f * ratio, 0.06f));
 			bubbleRect.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f));
-			x += dx;
 			bubblesRect.add(bubbleRect);
+			x += dx;
 		}
 		HUD.attachWidget(VanillaPlugin.getInstance(), bubbles);
 
 		// Setup the hunger display
 		final RenderPartsHolderComponent hungerRect = hunger.add(RenderPartsHolderComponent.class);
-		x = -0.01f * ratio;
+		x = 0.09f * ratio;
 		for (int i = 0; i < 10; i++) {
 			final RenderPart hungerPart = new RenderPart();
 			hungerPart.setRenderMaterial(iconsMaterial);
 			hungerPart.setColor(Color.WHITE);
-			hungerPart.setSprite(new Rectangle(x, -0.76f, 0.09f * ratio, 0.09f));
-			hungerPart.setSource(new Rectangle(15f / 256f, 36f / 256f, 10f / 256f, 9f / 256f));
-			x += dx;
+			hungerPart.setSprite(new Rectangle(x, -0.77f, 0.075f * ratio, 0.07f));
+			hungerPart.setSource(new Rectangle(25f / 256f, 36f / 256f, -10f / 256f, 9f / 256f));
 			hungerRect.add(hungerPart);
+			x += dx;
 		}
 		HUD.attachWidget(VanillaPlugin.getInstance(), hunger);
 
@@ -202,10 +213,10 @@ public class HUDComponent extends EntityComponent {
 			final RenderPart armorPart = new RenderPart();
 			armorPart.setRenderMaterial(iconsMaterial);
 			armorPart.setColor(Color.WHITE);
-			armorPart.setSprite(new Rectangle(x, -0.69f, 0.09f * ratio, 0.09f));
+			armorPart.setSprite(new Rectangle(x, -0.71f, 0.08f * ratio, 0.08f));
 			armorPart.setSource(new Rectangle(43f / 256f, 9f / 256f, 12f / 256f, 12f / 256f));
-			x += dx;
 			armorRect.add(armorPart);
+			x += dx;
 		}
 		HUD.attachWidget(VanillaPlugin.getInstance(), armor);
 
@@ -233,7 +244,7 @@ public class HUDComponent extends EntityComponent {
 	 */
 	public void setExp(float percent) {
 		final RenderPart rect = exp.get(RenderPartsHolderComponent.class).get(1);
-		rect.setSprite(new Rectangle(-0.71f * ratio, -0.82f, 1.81f * ratio * percent, 0.05f));
+		rect.setSprite(new Rectangle(-0.71f * ratio, -0.82f, 1.81f * ratio * percent, 0.04f));
 		rect.setSource(new Rectangle(0, 69f / 256f, 182f / 256f * percent, 5f / 256f));
 		exp.update();
 	}

@@ -100,6 +100,6 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 	@Override
 	public ProtocolEvent getUpdate(World world, int x, int y, int z) {
 		Sign sign = (Sign) world.getBlockComponent(x, y, z);
-		return new SignUpdateEvent(sign, sign.getText());
+		return new SignUpdateEvent(sign, sign.getText(), null);
 	}
 }

@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.protocol.handler.world.block;
 
-import java.util.Arrays;
-
 import org.spout.api.component.components.BlockComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
@@ -56,7 +54,6 @@ public class SignHandler extends MessageHandler<SignMessage> {
 		}
 
 		Sign sign = (Sign) component;
-		sign.setText(text);
-		System.out.println("Setting sign text to " + Arrays.toString(sign.getText()));
+		sign.setText(text, player);
 	}
 }

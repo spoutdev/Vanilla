@@ -26,28 +26,59 @@
  */
 package org.spout.vanilla.event.block;
 
+import org.spout.api.Source;
+import org.spout.api.event.Cancellable;
 import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.component.substance.material.Sign;
 
-public class SignUpdateEvent extends Event implements ProtocolEvent {
+/**
+ * Event which is called when the text on a sign changes
+ */
+public class SignUpdateEvent extends Event implements ProtocolEvent, Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	private final Sign sign;
 	private final String[] newLines;
+	private final Source source;
 
-	public SignUpdateEvent(Sign sign, String[] newLines) {
+	public SignUpdateEvent(Sign sign, String[] newLines, Source source) {
 		this.sign = sign;
 		this.newLines = newLines;
+		this.source = source;
 	}
 
+	/**
+	 * Get the source of the changes
+	 * 
+	 * @return source which changes the text on a sign
+	 */
+	public Source getSource() {
+		return source;
+	}
+
+	/**
+	 * Get the sign which text is being changed
+	 * 
+	 * @return sign which is being changed
+	 */
 	public Sign getSign() {
 		return sign;
 	}
 
+	/**
+	 * Get the text which should be placed on the sign. 
+	 * 
+	 * @return text which is placed on the sign 1 - 4 lines
+	 */
 	public String[] getLines() {
 		return newLines;
+	}
+
+	@Override
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
 	}
 
 	public static HandlerList getHandlerList() {

@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.component.substance.material;
 
+import org.spout.api.Source;
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 
 import org.spout.vanilla.data.VanillaData;
@@ -36,11 +38,22 @@ public class Sign extends VanillaBlockComponent {
 		return getData().get(VanillaData.SIGN_TEXT);
 	}
 
-	public void setText(String[] text) {
-		getData().put(VanillaData.SIGN_TEXT, text);
-		SignUpdateEvent event = new SignUpdateEvent(this, text);
-		for (Player p : this.getOwner().getChunk().getObservingPlayers()) {
-			p.getNetworkSynchronizer().callProtocolEvent(event);
+	public void setText(String[] text, Source source) {
+		if (text == null || text.length != 4) {
+			throw new IllegalArgumentException("Text must be an array of length 4");
+		}
+		if (source == null) {
+			throw new IllegalArgumentException("Source may not be null");
+		}
+		SignUpdateEvent event = new SignUpdateEvent(this, text, source);
+		//Call event to plugins, allow them to alter it
+		Spout.getEventManager().callEvent(event);
+		//Send event to protocol
+		if (!event.isCancelled()) {
+			for (Player p : this.getOwner().getChunk().getObservingPlayers()) {
+				p.getNetworkSynchronizer().callProtocolEvent(event);
+			}
+			getData().put(VanillaData.SIGN_TEXT, event.getLines());
 		}
 	}
 }

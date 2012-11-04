@@ -27,6 +27,8 @@
 package org.spout.vanilla.component.player;
 
 import java.awt.Color;
+import java.util.List;
+import java.util.Random;
 
 import org.spout.api.Client;
 import org.spout.api.Spout;
@@ -71,6 +73,7 @@ public class HUDComponent extends EntityComponent {
 	private final Widget armor = new Widget();
 	private final Widget hunger = new Widget();
 
+	private final Random random = new Random();
 	private final float maxSecsBubbles = VanillaData.AIR_SECS.getDefaultValue();
 
 	@Override
@@ -85,7 +88,7 @@ public class HUDComponent extends EntityComponent {
 		initHUD();
 		// TODO: Call these methods in DrowningComponent, HealthComponent, etc.
 		setArmor(15);
-		setHealth(15);
+		setHealth(getData().get(VanillaData.HEALTH));
 		setHotbarSlot(0);
 		setHunger(15);
 	}
@@ -97,7 +100,7 @@ public class HUDComponent extends EntityComponent {
 
 	@Override
 	public void onTick(float dt) {
-		// Remaining air handling
+		// Animate air meter
 		final float secsBubbles = getData().get(VanillaData.AIR_SECS);
 		if (secsBubbles == maxSecsBubbles) {
 			hideBubbles();
@@ -121,6 +124,29 @@ public class HUDComponent extends EntityComponent {
 			}
 		}
 		bubbles.update();
+
+		// Animate health bar
+		if (getData().get(VanillaData.HEALTH) <= 4) {
+			List<RenderPart> parts = hearts.get(RenderPartsHolderComponent.class).getRenderParts();
+			float x = START_X;
+			for (int i = 0; i < 10; i++) {
+				RenderPart heart = parts.get(i);
+				RenderPart heartBg = parts.get(i + 10);
+				float y = -0.77f;
+
+				if (random.nextBoolean()) {
+					y = -0.765f; // Twitch up
+				} else {
+					y = -0.775f; // Twitch down
+				}
+				heart.setSprite(new Rectangle(x + 0.005f, y, 0.065f * SCALE, 0.065f));
+				heartBg.setSprite(new Rectangle(x, y, 0.065f * SCALE, 0.065f));
+
+				x += 0.06f * SCALE;
+			}
+
+			hearts.update();
+		}
 	}
 
 	public void hideBubbles() {

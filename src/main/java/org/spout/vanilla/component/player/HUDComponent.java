@@ -48,7 +48,7 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.VanillaData;
 
 /**
- * Component attached to clients-only inwhich serves to update the Heads Up Display.
+ * Component attached to clients-only that updates the Heads Up Display.
  */
 public class HUDComponent extends EntityComponent {
 	private static final float SCALE = 0.75f; // TODO: Apply directly from engine
@@ -80,7 +80,18 @@ public class HUDComponent extends EntityComponent {
 		if (Spout.getPlatform() != Platform.CLIENT) {
 			throw new IllegalStateException("This component is only attached to clients!");
 		}
-		constructHUD();
+
+		initHUD();
+		// TODO: Call these methods in DrowningComponent, HealthComponent, etc.
+		setArmor(15);
+		setHealth(15);
+		setHotbarSlot(0);
+		setHunger(15);
+	}
+
+	@Override
+	public boolean canTick() {
+		return true; // getOwner().get(Human.class) == null ? false : getOwner().get(Human.class).isSurvival();
 	}
 
 	@Override
@@ -103,7 +114,7 @@ public class HUDComponent extends EntityComponent {
 						bub.setSource(new Rectangle(25f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Explode
 					}
 				} else {
-					bub.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // full
+					bub.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Full
 				}
 				bubId++;
 			}
@@ -112,14 +123,14 @@ public class HUDComponent extends EntityComponent {
 	}
 
 	public void hideBubbles() {
-		for (RenderPart part : bubbles.get(RenderPartsHolderComponent.class).getRenderParts()) {
-			part.setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // empty
+		for (RenderPart bubble : bubbles.get(RenderPartsHolderComponent.class).getRenderParts()) {
+			bubble.setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Empty
 		}
 	}
 
 	public void showBubbles() {
-		for (RenderPart part : bubbles.get(RenderPartsHolderComponent.class).getRenderParts()) {
-			part.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // full
+		for (RenderPart bubble : bubbles.get(RenderPartsHolderComponent.class).getRenderParts()) {
+			bubble.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Full
 		}
 	}
 
@@ -127,7 +138,116 @@ public class HUDComponent extends EntityComponent {
 		((Client) Spout.getEngine()).getScreenStack().openScreen(HUD);
 	}
 
-	private void constructHUD() {
+	/**
+	 * Sets the amount of armor to display.
+	 * @param amount Amount of armor to display
+	 */
+	public void setArmor(int amount) {
+		RenderPartsHolderComponent armorRect = armor.get(RenderPartsHolderComponent.class);
+
+		if (amount == 0) {
+			for (RenderPart armorPart : armorRect.getRenderParts()) {
+				armorPart.setSource(new Rectangle(52f / 256f, 9f / 256f, 12f / 256f, 12f / 256f)); // No icon
+			}
+		} else {
+			for (int i = 0; i < 10; i++) {
+				float x = 0;
+				if (amount >= 2) {
+					x = 43f; // Full
+					amount -= 2;
+				} else if (amount == 1) {
+					x = 25f; // Half
+					amount = 0;
+				} else if (amount == 0) {
+					x = 16f; // Empty
+				}
+				armorRect.get(i).setSource(new Rectangle(x / 256f, 9f / 256f, 9f / 256f, 9f / 256f));
+			}
+		}
+
+		armor.update();
+	}
+
+	/**
+	 * Modify the advancement of the xp bar.
+	 * @param percent The advancement between 0 and 1
+	 */
+	public void setExp(float percent) {
+		final RenderPart rect = exp.get(RenderPartsHolderComponent.class).get(1);
+		rect.setSprite(new Rectangle(START_X, -0.82f, 1.81f * SCALE * percent, 0.04f));
+		rect.setSource(new Rectangle(0, 69f / 256f, 182f / 256f * percent, 5f / 256f));
+		exp.update();
+	}
+
+	/**
+	 * Sets the amount of health to display.
+	 * @param amount Amount of health to display
+	 */
+	public void setHealth(int amount) {
+		RenderPartsHolderComponent heartsRect = hearts.get(RenderPartsHolderComponent.class);
+
+		for (int i = 0; i < 10; i++) {
+			float x = 0;
+			if (amount == 0) {
+				x = 124f; // Empty
+			} else if (amount == 1) {
+				x = 62f; // Half
+				amount = 0;
+			} else {
+				x = 53f; // Full
+				amount -= 2;
+			}
+			heartsRect.get(i).setSource(new Rectangle(x / 256f, VanillaConfiguration.HARDCORE_MODE.getBoolean() ? 45f / 256f : 0, 9f / 256f, 9f / 256f));
+		}
+
+		hearts.update();
+	}
+
+	/**
+	 * Sets the selected hotbar slot.
+	 * @param slot Index of the slot to set
+	 */
+	public void setHotbarSlot(int slot) {
+		if (slot < 0 || slot > 8) {
+			throw new IllegalArgumentException("Slot must be between 0 and 8");
+		}
+
+		final RenderPart rect = hotbar.get(RenderPartsHolderComponent.class).get(1);
+		rect.setSprite(new Rectangle(-0.72f * SCALE + (slot * .1175f), -1.005f, 0.24f * SCALE, 0.24f * SCALE));
+		hotbar.update();
+	}
+
+	/**
+	 * Sets the amount of hunger to display.
+	 * @param amount Amount of hunger to display
+	 */
+	public void setHunger(int amount) {
+		RenderPartsHolderComponent hungerRect = hunger.get(RenderPartsHolderComponent.class);
+
+		if (amount == 0) {
+			for (RenderPart hungerPart : hungerRect.getRenderParts()) {
+				hungerPart.setSource(new Rectangle(142f / 256f, 27f / 256f, 9f / 256f, 9f / 256f)); // Empty
+			}
+		} else {
+			for (int i = 9; i >= 0; i--) {
+				float x = 0;
+				if (amount >= 2) {
+					x = 52f; // Full
+					amount -= 2;
+				} else if (amount == 1) {
+					x = 61f; // Half
+					amount = 0;
+				} else if (amount == 0) {
+					x = 142f; // Empty
+				}
+				hungerRect.get(i).setSource(new Rectangle(x / 256f, 27f / 256f, 9f / 256f, 9f / 256f));
+			}
+		}
+
+		hunger.update();
+	}
+
+	private void initHUD() {
 		float x = START_X;
 
 		// Setup the hotbar
@@ -142,180 +262,116 @@ public class HUDComponent extends EntityComponent {
 		final RenderPart hotbarSlotRect = new RenderPart();
 		hotbarSlotRect.setRenderMaterial(hotbarMaterial);
 		hotbarSlotRect.setColor(Color.WHITE);
+		hotbarSlotRect.setSource(new Rectangle(0, 22f / 256f, 30f / 256f, 24f / 256f));
 		hotbarRect.add(hotbarSlotRect, 0);
-		setHotbarSlot(0);
 		HUD.attachWidget(VanillaPlugin.getInstance(), hotbar);
 
-		// Setup experience bar
-		final RenderPartsHolderComponent expRect = exp.add(RenderPartsHolderComponent.class);
-		final RenderPart expBgRect = new RenderPart();
-		expBgRect.setRenderMaterial(iconsMaterial);
-		expBgRect.setColor(Color.WHITE);
-		expBgRect.setSprite(new Rectangle(x, -0.82f, 1.81f * SCALE, 0.04f));
-		expBgRect.setSource(new Rectangle(0, 64f / 256f, 0.91f, 0.019f));
-		expRect.add(expBgRect, 1);
-
-		final RenderPart expBarRect = new RenderPart();
-		expBarRect.setRenderMaterial(iconsMaterial);
-		expBarRect.setColor(Color.WHITE);
-		expRect.add(expBarRect, 0);
-
+		// Experience level text
 		final LabelComponent lvlTxt = exp.add(LabelComponent.class);
 		exp.setGeometry(new Rectangle(-0.02f, -0.79f, 0, 0));
 		lvlTxt.setFont(font);
 		lvlTxt.setText(ChatStyle.BRIGHT_GREEN + "50");
 
-		setExp(0.5f);
+		// Setup survival-specific HUD components
+		boolean survival = true; // getOwner().get(Human.class).isSurvival()
+		if (survival) {
+			// Experience bar
+			final RenderPartsHolderComponent expRect = exp.add(RenderPartsHolderComponent.class);
+			final RenderPart expBgRect = new RenderPart();
+			expBgRect.setRenderMaterial(iconsMaterial);
+			expBgRect.setColor(Color.WHITE);
+			expBgRect.setSprite(new Rectangle(x, -0.82f, 1.81f * SCALE, 0.04f));
+			expBgRect.setSource(new Rectangle(0, 64f / 256f, 0.91f, 0.019f));
+			expRect.add(expBgRect);
 
-		HUD.attachWidget(VanillaPlugin.getInstance(), exp);
+			final RenderPart expBarRect = new RenderPart();
+			expBarRect.setRenderMaterial(iconsMaterial);
+			expBarRect.setColor(Color.WHITE);
+			expRect.add(expBarRect);
+			setExp(0);
 
-		float dx = 0.06f * SCALE;
+			float dx = 0.06f * SCALE;
 
-		// Setup the hearts display
-		final RenderPartsHolderComponent heartsRect = hearts.add(RenderPartsHolderComponent.class);
-		float y = VanillaConfiguration.HARDCORE_MODE.getBoolean() ? 45f / 256f : 0;
-		for (int i = 0; i < 10; i++) {
-			final RenderPart heartRect = new RenderPart();
-			heartRect.setRenderMaterial(iconsMaterial);
-			heartRect.setColor(Color.WHITE);
-			heartRect.setSprite(new Rectangle(x + 0.005f, -0.77f, 0.065f * SCALE, 0.065f));
-			heartRect.setSource(new Rectangle(53f / 256f, y, 9f / 256f, 9f / 256f));
-			heartsRect.add(heartRect);
-			x += dx;
-		}
-
-		x = START_X;
-		for (int i = 0; i < 10; i++) {
-			final RenderPart heartBgRect = new RenderPart();
-			heartBgRect.setRenderMaterial(iconsMaterial);
-			heartBgRect.setColor(Color.WHITE);
-			heartBgRect.setSprite(new Rectangle(x, -0.77f, 0.065f * SCALE, 0.065f));
-			heartBgRect.setSource(new Rectangle(16f / 256f, y, 9f / 256f, 9f / 256f));
-			heartsRect.add(heartBgRect);
-			x += dx;
-		}
-		HUD.attachWidget(VanillaPlugin.getInstance(), hearts);
-
-		// Setup bubbles display
-		final RenderPartsHolderComponent bubblesRect = bubbles.add(RenderPartsHolderComponent.class);
-		x = 0.09f * SCALE;
-		for (int i = 0; i < 10; i++) {
-			final RenderPart bubbleRect = new RenderPart();
-			bubbleRect.setRenderMaterial(iconsMaterial);
-			bubbleRect.setColor(Color.WHITE);
-			bubbleRect.setSprite(new Rectangle(x, -0.69f, 0.06f * SCALE, 0.06f));
-			bubbleRect.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f));
-			bubblesRect.add(bubbleRect);
-			x += dx;
-		}
-		HUD.attachWidget(VanillaPlugin.getInstance(), bubbles);
-
-		// Setup the hunger display
-		final RenderPartsHolderComponent hungerRect = hunger.add(RenderPartsHolderComponent.class);
-		x = 0.09f * SCALE;
-		for (int i = 0; i < 10; i++) {
-			final RenderPart hungerPart = new RenderPart();
-			hungerPart.setRenderMaterial(iconsMaterial);
-			hungerPart.setColor(Color.WHITE);
-			hungerPart.setSprite(new Rectangle(x, -0.77f, 0.075f * SCALE, 0.07f));
-			hungerPart.setSource(new Rectangle(25f / 256f, 36f / 256f, -10f / 256f, 9f / 256f));
-			hungerRect.add(hungerPart);
-			x += dx;
-		}
-		HUD.attachWidget(VanillaPlugin.getInstance(), hunger);
-
-		// Setup the armor display
-		setArmorStrength(10);
-	}
-
-	/**
-	 * Sets the amount of armor to display.
-	 * @param strength Amount of armor to display
-	 */
-	public void setArmorStrength(int strength) {
-		RenderPartsHolderComponent armorRect;
-		if (!armor.has(RenderPartsHolderComponent.class)) {
-			if (strength == 0) {
-				return;
+			// Health bar
+			final RenderPartsHolderComponent heartsRect = hearts.add(RenderPartsHolderComponent.class);
+			float y = VanillaConfiguration.HARDCORE_MODE.getBoolean() ? 45f / 256f : 0;
+			for (int i = 0; i < 10; i++) {
+				final RenderPart heart = new RenderPart();
+				heart.setRenderMaterial(iconsMaterial);
+				heart.setColor(Color.WHITE);
+				heart.setSprite(new Rectangle(x + 0.005f, -0.77f, 0.065f * SCALE, 0.065f));
+				heart.setSource(new Rectangle(53f / 256f, y, 9f / 256f, 9f / 256f));
+				heartsRect.add(heart);
+				x += dx;
 			}
 
-			// Initialize armor if not already done
-			armorRect = armor.add(RenderPartsHolderComponent.class);
-			float x = START_X;
-			float dx = 0.06f * SCALE;
+			x = START_X;
+			for (int i = 0; i < 10; i++) {
+				final RenderPart heartBg = new RenderPart();
+				heartBg.setRenderMaterial(iconsMaterial);
+				heartBg.setColor(Color.WHITE);
+				heartBg.setSprite(new Rectangle(x, -0.77f, 0.065f * SCALE, 0.065f));
+				heartBg.setSource(new Rectangle(16f / 256f, y, 9f / 256f, 9f / 256f));
+				heartsRect.add(heartBg);
+				x += dx;
+			}
+
+			HUD.attachWidget(VanillaPlugin.getInstance(), hearts);
+
+			// Air meter
+			final RenderPartsHolderComponent bubblesRect = bubbles.add(RenderPartsHolderComponent.class);
+			x = 0.09f * SCALE;
+			for (int i = 0; i < 10; i++) {
+				final RenderPart bubble = new RenderPart();
+				bubble.setRenderMaterial(iconsMaterial);
+				bubble.setColor(Color.WHITE);
+				bubble.setSprite(new Rectangle(x, -0.69f, 0.06f * SCALE, 0.06f));
+				bubble.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f));
+				bubblesRect.add(bubble);
+				x += dx;
+			}
+			HUD.attachWidget(VanillaPlugin.getInstance(), bubbles);
+
+			// Hunger bar
+			final RenderPartsHolderComponent hungerRect = hunger.add(RenderPartsHolderComponent.class);
+			x = 0.09f * SCALE;
+			for (int i = 0; i < 10; i++) {
+				final RenderPart hunger = new RenderPart();
+				hunger.setRenderMaterial(iconsMaterial);
+				hunger.setColor(Color.WHITE);
+				hunger.setSprite(new Rectangle(x, -0.77f, 0.075f * SCALE, 0.07f));
+				hunger.setSource(new Rectangle(52f / 256f, 27f / 256f, 9f / 256f, 9f / 256f));
+				hungerRect.add(hunger);
+				x += dx;
+			}
+
+			x = 0.09f * SCALE;
+			for (int i = 0; i < 10; i++) {
+				final RenderPart hungerBg = new RenderPart();
+				hungerBg.setRenderMaterial(iconsMaterial);
+				hungerBg.setColor(Color.WHITE);
+				hungerBg.setSprite(new Rectangle(x, -0.77f, 0.075f * SCALE, 0.07f));
+				hungerBg.setSource(new Rectangle(16f / 256f, 27f / 256f, 9f / 256f, 9f / 256f));
+				hungerRect.add(hungerBg);
+				x += dx;
+			}
+			HUD.attachWidget(VanillaPlugin.getInstance(), hunger);
+
+			// Armor bar
+			final RenderPartsHolderComponent armorRect = armor.add(RenderPartsHolderComponent.class);
+			x = START_X;
 			for (int i = 0; i < 10; i++) {
 				final RenderPart armorPart = new RenderPart();
 				armorPart.setRenderMaterial(iconsMaterial);
 				armorPart.setColor(Color.WHITE);
 				armorPart.setSprite(new Rectangle(x, -0.7f, 0.06f * SCALE, 0.06f));
-				Rectangle rect = null;
-				if (strength >= 2) {
-					rect = new Rectangle(43f / 256f, 9f / 256f, 9f / 256f, 9f / 256f); // Full
-					strength -= 2;
-				} else if (strength == 1) {
-					rect = new Rectangle(25f / 256f, 9f / 256f, 9f / 256f, 9f / 256f); // Half
-					strength = 0;
-				} else if (strength == 0) {
-					rect = new Rectangle(16f / 256f, 9f / 256f, 9f / 256f, 9f / 256f); // Empty
-				}
-				armorPart.setSource(rect);
+				armorPart.setSource(new Rectangle(52f / 256f, 9f / 256f, 12f / 256f, 12f / 256f));
 				armorRect.add(armorPart);
 				x += dx;
 			}
 			HUD.attachWidget(VanillaPlugin.getInstance(), armor);
-		} else {
-			armorRect = armor.get(RenderPartsHolderComponent.class);
-			if (strength == 0) {
-				for (RenderPart armorPart : armorRect.getRenderParts()) {
-					armorPart.setSource(new Rectangle(52f / 256f, 9f / 256f, 12f / 256f, 12f / 256f)); // No icon
-				}
-			} else {
-				for (int i = 0; i < 10; i++) {
-					Rectangle rect = null;
-					if (strength >= 2) {
-						rect = new Rectangle(43f / 256f, 9f / 256f, 9f / 256f, 9f / 256f); // Full
-						strength -= 2;
-					} else if (strength == 1) {
-						rect = new Rectangle(25f / 256f, 9f / 256f, 9f / 256f, 9f / 256f); // Half
-						strength = 0;
-					} else if (strength == 0) {
-						rect = new Rectangle(16f / 256f, 9f / 256f, 9f / 256f, 9f / 256f); // Empty
-					}
-					armorRect.get(i).setSource(rect);
-				}
-			}
-
-			armor.update();
-		}
-	}
-
-	public void setHealth(int health) {
-
-	}
-
-	/**
-	 * Sets the selected hotbar slot.
-	 * @param slot Index of the slot to set
-	 */
-	public void setHotbarSlot(int slot) {
-		if (slot < 0 || slot > 8) {
-			throw new IllegalArgumentException("Slot must be between 0 and 8");
 		}
 
-		final RenderPart rect = hotbar.get(RenderPartsHolderComponent.class).get(1);
-		rect.setSprite(new Rectangle(-0.72f * SCALE + (slot * .1175f), -1f, 0.23f * SCALE, 0.23f * SCALE));
-		rect.setSource(new Rectangle(0, 22f / 256f, 30f / 256f, 24f / 256f));
-		hotbar.update();
-	}
-
-	/**
-	 * Modify the advancement of the xp bar.
-	 * @param percent The advancement between 0 and 1
-	 */
-	public void setExp(float percent) {
-		final RenderPart rect = exp.get(RenderPartsHolderComponent.class).get(1);
-		rect.setSprite(new Rectangle(START_X, -0.82f, 1.81f * SCALE * percent, 0.04f));
-		rect.setSource(new Rectangle(0, 69f / 256f, 182f / 256f * percent, 5f / 256f));
-		exp.update();
+		HUD.attachWidget(VanillaPlugin.getInstance(), exp);
 	}
 }

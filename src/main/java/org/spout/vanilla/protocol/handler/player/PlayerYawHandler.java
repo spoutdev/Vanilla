@@ -33,8 +33,6 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerYawMessage;
 
-import static org.spout.vanilla.protocol.ChannelBufferUtils.deProtocolifyRotation;
-
 public final class PlayerYawHandler extends MessageHandler<PlayerYawMessage> {
 	@Override
 	public void handleServer(Session session, PlayerYawMessage message) {
@@ -44,9 +42,8 @@ public final class PlayerYawHandler extends MessageHandler<PlayerYawMessage> {
 
 		Player holder = session.getPlayer();
 
-		holder.getTransform().setPitch(deProtocolifyRotation((int) message.getPitch()));
-		holder.getTransform().setYaw(deProtocolifyRotation((int) message.getYaw()));
-		holder.getTransform().setRoll(deProtocolifyRotation((int) message.getRoll()));
+		holder.getTransform().setPitch(message.getPitch());
+		holder.getTransform().setYaw(message.getYaw());
 		if (holder.has(HeadComponent.class)) {
 			holder.get(HeadComponent.class).setLooking(message.getLookingAtVector());
 		}

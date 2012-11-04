@@ -162,7 +162,6 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 
 				Block target;
 				BlockFace targetFace;
-
 				if (toPlace.canPlace(clickedBlock, placedData, clickedFace, message.getFace(), true) || interactEvent.useItemInHand() == Result.ALLOW) {
 					target = clickedBlock;
 					targetFace = clickedFace;

@@ -26,24 +26,13 @@
  */
 package org.spout.vanilla.protocol.handler.entity.pos;
 
-import org.spout.api.entity.Player;
-import org.spout.api.math.MathHelper;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-
-import org.spout.vanilla.component.misc.HeadComponent;
-import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityHeadYawMessage;
 
 public class EntityHeadYawHandler extends MessageHandler<EntityHeadYawMessage> {
 	@Override
-	public void handleServer(Session session, EntityHeadYawMessage message) {
-		if (!session.hasPlayer() || !session.getPlayer().has(HeadComponent.class)) {
-			return;
-		}
-
-		Player holder = session.getPlayer();
-		HeadComponent head = holder.get(HeadComponent.class);
-		head.setYaw(MathHelper.floor(ChannelBufferUtils.deProtocolifyRotation(message.getHeadYaw())));
+	public void handleClient(Session session, EntityHeadYawMessage message) {
+		
 	}
 }

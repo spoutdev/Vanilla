@@ -34,8 +34,17 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.block.SignUpdateEvent;
 
 public class Sign extends VanillaBlockComponent {
+
+	/**
+	 * Gets a copy of the text from this sign
+	 * 
+	 * @return copy of the text
+	 */
 	public String[] getText() {
-		return getData().get(VanillaData.SIGN_TEXT);
+		String[] raw = getData().get(VanillaData.SIGN_TEXT);
+		String[] copy = new String[raw.length];
+		System.arraycopy(raw, 0, copy, 0, raw.length);
+		return copy;
 	}
 
 	/**

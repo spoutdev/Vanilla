@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block.component;
 
 import org.spout.api.component.components.BlockComponent;
+import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.event.cause.EntityCause;
 import org.spout.api.geo.World;
@@ -34,9 +35,9 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.math.Vector3;
 import org.spout.api.protocol.event.ProtocolEvent;
 
+import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.component.substance.material.Sign;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.event.block.SignUpdateEvent;
@@ -70,22 +71,23 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 		if (attachedFace == BlockFace.BOTTOM) {
 			short data = 0;
 			if (cause instanceof EntityCause) {
-				Vector3 direction = block.getPosition().subtract((((EntityCause) cause).getSource()).getTransform().getPosition());
-				float rotation = direction.rotationTo(Vector3.RIGHT).getYaw();
-				rotation = (rotation / 360f) * 16f;
-				data = (short) rotation;
+				Entity entity = ((EntityCause) cause).getSource();
+				float yaw = entity.getTransform().getYaw();
+				float rotation = (yaw + 180F) * 16F / 360F;
+				data = (short) (rotation + 0.5F);
+				data &= 15;
 			}
-			block.setMaterial(VanillaMaterials.SIGN_POST, data);
+			block.setMaterial(VanillaMaterials.SIGN_POST, data, cause);
 		} else {
 			// get the data for this face
-			short data = (short) (BlockFaces.NSWE.indexOf(attachedFace, 0) + 2);
-			block.setMaterial(VanillaMaterials.WALL_SIGN, data);
+			short data = (short) (BlockFaces.WESN.indexOf(attachedFace, 0) + 2);
+			block.setMaterial(VanillaMaterials.WALL_SIGN, data, cause);
 		}
 	}
 
 	@Override
 	public BlockFace getAttachedFace(short data) {
-		return BlockFaces.NSWE.get(data - 2);
+		return BlockFaces.WESN.get(data - 2);
 	}
 
 	@Override

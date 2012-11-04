@@ -48,8 +48,8 @@ public class Wool extends Solid implements Burnable {
 	public static final Wool PINK_WOOL = new Wool("Pink Wool", WoolColor.PINK, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/pinkwool/pinkwool.spm");
 	public static final Wool GRAY_WOOL = new Wool("Gray Wool", WoolColor.GRAY, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/graywool/graywool.spm");
 	public static final Wool SILVER_WOOL = new Wool("Light Gray Wool", WoolColor.SILVER, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/lightgraywool/lightgraywool.spm");
-	public static final Wool CYAN_WOOL = new Wool("Cyan Wool", WoolColor.CYAN, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/whitewool/dispenser.spm");
-	public static final Wool PURPLE_WOOL = new Wool("Purple Wool", WoolColor.PURPLE, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/cyanwool/cyanwool.spm");
+	public static final Wool CYAN_WOOL = new Wool("Cyan Wool", WoolColor.CYAN, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/cyanwool/cyanwool.spm");
+	public static final Wool PURPLE_WOOL = new Wool("Purple Wool", WoolColor.PURPLE, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/purplewool/purplewool.spm");
 	public static final Wool BLUE_WOOL = new Wool("Blue Wool", WoolColor.BLUE, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/bluewool/bluewool.spm");
 	public static final Wool BROWN_WOOL = new Wool("Brown Wool", WoolColor.BROWN, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/brownwool/brownwool.spm");
 	public static final Wool GREEN_WOOL = new Wool("Green Wool", WoolColor.GREEN, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/greenwool/greenwool.spm");

@@ -67,6 +67,12 @@ public class HeadComponent extends EntityComponent {
 	 * @param headYaw
 	 */
 	public void setYaw(int headYaw) {
+		while (headYaw < 0) {
+			headYaw += 360;
+		}
+		while (headYaw > 360) {
+			headYaw -= 360;
+		}
 		getData().put(VanillaData.HEAD_YAW, headYaw);
 	}
 

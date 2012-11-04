@@ -35,7 +35,7 @@ import java.util.Set;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.event.block.BlockChangeEvent;
+import org.spout.api.event.Cause;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
@@ -43,7 +43,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.material.block.BlockSnapshot;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
@@ -112,23 +111,16 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	/**
 	 * Called when this block is destroyed because of an explosion
-	 * @param block that got ignited
+	 * 
+	 * @param block that got ignition
+	 * @param the cause of the ignition
 	 */
-	public void onIgnite(Block block) {
+	public void onIgnite(Block block, Cause<?> cause) {
 		HashSet<Flag> dropFlags = new HashSet<Flag>();
 		if (Math.random() > 0.3) {
 			dropFlags.add(DropFlags.NO_DROPS);
 		}
-		this.destroy(block, dropFlags);
-	}
-
-	@Override
-	public boolean destroy(Block block, Set<Flag> flags) {
-		BlockChangeEvent event = new BlockChangeEvent(block, new BlockSnapshot(block, this, block.getData()), block.getSource());
-		if (event.isCancelled()) {
-			return false;
-		}
-		return super.destroy(block, flags);
+		this.destroy(block, dropFlags, cause);
 	}
 
 	@Override

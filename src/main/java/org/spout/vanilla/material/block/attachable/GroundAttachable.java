@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.attachable;
 
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
@@ -53,7 +54,7 @@ public class GroundAttachable extends AbstractAttachable {
 	}
 
 	@Override
-	public void setAttachedFace(Block block, BlockFace attachedFace) {
+	public void setAttachedFace(Block block, BlockFace attachedFace, Cause<?> cause) {
 		block.setData(0);
 	}
 

@@ -56,6 +56,7 @@ import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.PlayerFlags;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
+import org.spout.vanilla.event.cause.PlayerBreakCause;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -76,7 +77,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		if (heldItem != null) {
 			heldItem.getMaterial().getItemFlags(heldItem, flags);
 		}
-		blockMaterial.destroy(block, flags);
+		blockMaterial.destroy(block, flags, new PlayerBreakCause((Player)human.getOwner(), block));
 	}
 
 	@Override
@@ -94,7 +95,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 
 		World w = player.getWorld();
 		Point point = new Point(w, x, y, z);
-		Block block = w.getBlock(point, player);
+		Block block = w.getBlock(point);
 		BlockMaterial blockMaterial = block.getMaterial();
 
 		short minecraftID = VanillaMaterials.getMinecraftId(blockMaterial);
@@ -171,7 +172,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				boolean fire = neigh.getMaterial().equals(VanillaMaterials.FIRE);
 				if (fire) {
 					// put out fire
-					VanillaMaterials.FIRE.onDestroy(neigh);
+					VanillaMaterials.FIRE.onDestroy(neigh, new PlayerBreakCause(player, neigh));
 					GeneralEffects.RANDOM_FIZZ.playGlobal(block.getPosition());
 				} else if (human.isSurvival() && blockMaterial.getHardness() != 0.0f) {
 					player.get(DiggingComponent.class).startDigging(new Point(w, x, y, z));

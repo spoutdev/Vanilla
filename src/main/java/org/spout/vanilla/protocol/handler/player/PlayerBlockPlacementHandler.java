@@ -54,6 +54,7 @@ import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.event.cause.PlayerPlacementCause;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.tool.InteractTool;
@@ -108,7 +109,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 			//This is an anti-hack requirement (else hackers can load far-away chunks and crash the server)
 
 			//Get clicked block and validated face against it was placed
-			Block clickedBlock = world.getBlock(message.getX(), message.getY(), message.getZ(), player);
+			Block clickedBlock = world.getBlock(message.getX(), message.getY(), message.getZ());
 			if (clickedBlock.getY() >= world.getHeight() || clickedBlock.getY() < 0) {
 				return;
 			}
@@ -213,9 +214,11 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 						return;
 					}
 				}
+				
+				PlayerPlacementCause cause = new PlayerPlacementCause(player, holdingMat, target);
 
 				// Perform actual placement
-				if (toPlace.onPlacement(target, placedData, targetFace, message.getFace(), target == clickedBlock)) {
+				if (toPlace.onPlacement(target, placedData, targetFace, message.getFace(), target == clickedBlock, cause)) {
 					// Play sound
 					BlockMaterial material = target.getMaterial();
 					SoundEffect sound;

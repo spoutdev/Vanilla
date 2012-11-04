@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.piston;
 
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -74,14 +75,14 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 	}
 
 	@Override
-	public void onDestroy(Block block) {
+	public void onDestroy(Block block, Cause<?> cause) {
 		if (this.isExtended(block)) {
 			Block extension = block.translate(this.getFacing(block));
 			if (extension.getMaterial() instanceof PistonExtension) {
-				extension.setMaterial(VanillaMaterials.AIR);
+				extension.setMaterial(VanillaMaterials.AIR, cause);
 			}
 		}
-		super.onDestroy(block);
+		super.onDestroy(block, cause);
 	}
 
 	@Override
@@ -155,7 +156,7 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 					reac = this.getReaction(previous);
 					if (reac == MoveReaction.BREAK) {
 						//break block
-						nextMat.getSubMaterial(nextData).destroy(previous);
+						nextMat.getSubMaterial(nextData).destroy(previous, toCause(block));
 						previous.setMaterial(prevMat, prevData);
 						break;
 					} else if (reac == MoveReaction.ALLOW) {
@@ -245,9 +246,9 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock)) {
-			this.setFacing(block, PlayerUtil.getBlockFacing(block));
+	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause)) {
+			this.setFacing(block, PlayerUtil.getBlockFacing(block, cause));
 			return true;
 		}
 		return false;

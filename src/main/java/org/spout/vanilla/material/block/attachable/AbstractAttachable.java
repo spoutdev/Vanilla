@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.attachable;
 
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -115,7 +116,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
 		if (!this.isValidPosition(block, this.getAttachedFace(block), false)) {
-			this.destroy(block);
+			this.destroy(block, block.getMaterial().toCause(block));
 		}
 	}
 
@@ -169,7 +170,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
+	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		if (!this.canAttachTo(block.translate(against), against.getOpposite())) {
 			if (this.canSeekAttachedAlternative()) {
 				against = this.findAttachedFace(block);
@@ -180,14 +181,14 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 				return false;
 			}
 		}
-		this.handlePlacement(block, data, against);
+		this.handlePlacement(block, data, against, cause);
 		return true;
 	}
 
 	@Override
-	public void handlePlacement(Block block, short data, BlockFace against) {
-		block.setMaterial(this, data);
-		this.setAttachedFace(block, against);
+	public void handlePlacement(Block block, short data, BlockFace against, Cause<?> cause) {
+		block.setMaterial(this, data, cause);
+		this.setAttachedFace(block, against, cause);
 		block.queueUpdate(EffectRange.THIS);
 	}
 

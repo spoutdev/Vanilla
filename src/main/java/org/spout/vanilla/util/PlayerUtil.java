@@ -26,8 +26,9 @@
  */
 package org.spout.vanilla.util;
 
-import org.spout.api.Source;
 import org.spout.api.entity.Entity;
+import org.spout.api.event.Cause;
+import org.spout.api.event.cause.EntityCause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
@@ -37,13 +38,14 @@ import org.spout.vanilla.component.misc.HeadComponent;
 
 public class PlayerUtil {
 	/**
-	 * Gets the required facing for a Block to look at a possible Entity in the Source
+	 * Gets the required facing for a Block to look at a possible Entity in the cause
+	 * 
 	 * @param block to get the facing for
 	 * @return The block facing
 	 */
-	public static BlockFace getBlockFacing(Block block) {
-		if (block.getSource() instanceof Entity) {
-			return getBlockFacing(block, (Entity) block.getSource());
+	public static BlockFace getBlockFacing(Block block, Cause<?> cause) {
+		if (cause instanceof EntityCause) {
+			return getBlockFacing(block, ((EntityCause) cause).getSource());
 		} else {
 			return BlockFace.TOP;
 		}
@@ -74,21 +76,32 @@ public class PlayerUtil {
 	}
 
 	/**
-	 * Tries to find the facing direction by inspecting the source<br>
-	 * If no facing can be found, NORTH is returned
-	 * @param source to get it of
+	 * Calculates the facing direction of the entity based on it's
+	 * head if it has one, or it's yaw if not.
+	 * 
+	 * @param entity
 	 * @return the face
 	 */
-	public static BlockFace getFacing(Source source) {
-		if (source instanceof Entity) {
-			Entity e = (Entity) source;
-			float yaw;
-			if (e.has(HeadComponent.class)) {
-				yaw = e.get(HeadComponent.class).getYaw();
-			} else {
-				yaw = e.getTransform().getYaw();
-			}
-			return BlockFace.fromYaw(yaw);
+	public static BlockFace getFacing(Entity entity) {
+		float yaw;
+		if (entity.has(HeadComponent.class)) {
+			yaw = entity.get(HeadComponent.class).getYaw();
+		} else {
+			yaw = entity.getTransform().getYaw();
+		}
+		return BlockFace.fromYaw(yaw);
+	}
+
+	/**
+	 * Tries to calculate the facing direction from the cause
+	 * if possible. Returns BlockFace.NORTH if not.
+	 * 
+	 * @param cause
+	 * @return the face
+	 */
+	public static BlockFace getFacing(Cause<?> cause) {
+		if (cause instanceof EntityCause) {
+			return getFacing(((EntityCause)cause).getSource());
 		}
 		return BlockFace.NORTH;
 	}

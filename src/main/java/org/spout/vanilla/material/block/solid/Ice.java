@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.solid;
 
 import java.util.Random;
 
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -63,9 +64,9 @@ public class Ice extends SpreadingSolid implements InitializableMaterial {
 	}
 
 	@Override
-	public void onDestroy(Block block) {
+	public void onDestroy(Block block, Cause<?> cause) {
 		if (!(block.getWorld().getGenerator() instanceof NetherGenerator) || block.translate(BlockFace.BOTTOM).getMaterial() != VanillaMaterials.AIR) {
-			//TODO: Fix detroying ice
+			block.setMaterial(VanillaMaterials.WATER, cause);
 		}
 		super.onDecay(block);
 	}

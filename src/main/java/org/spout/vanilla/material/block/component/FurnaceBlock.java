@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.component;
 
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -82,9 +83,9 @@ public class FurnaceBlock extends ComponentMaterial implements Directional {
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock)) {
-			this.setFacing(block, PlayerUtil.getFacing(block.getSource()).getOpposite());
+	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause)) {
+			this.setFacing(block, PlayerUtil.getFacing(cause).getOpposite());
 			return true;
 		}
 

@@ -72,7 +72,7 @@ public abstract class StructureComponent {
 	}
 
 	public Block getBlock(int xx, int yy, int zz) {
-		return position.getWorld().getBlock(transform(xx, yy, zz), position.getWorld());
+		return position.getWorld().getBlock(transform(xx, yy, zz));
 	}
 
 	public BlockMaterial getBlockMaterial(int xx, int yy, int zz) {
@@ -87,15 +87,15 @@ public abstract class StructureComponent {
 	public void setBlockMaterial(int xx, int yy, int zz, BlockMaterial material, short data) {
 		final Vector3 transformed = transform(xx, yy, zz);
 		position.getWorld().setBlockMaterial(transformed.getFloorX(), transformed.getFloorY(), transformed.getFloorZ(),
-				material, data, position.getWorld());
+				material, data, null);
 		if (material instanceof Attachable) {
 			final Attachable attachable = (Attachable) material;
-			final Block block = position.getWorld().getBlock(transformed, position.getWorld());
+			final Block block = position.getWorld().getBlock(transformed);
 			attachable.setAttachedFace(block,
-					BlockFace.fromYaw(attachable.getAttachedFace(block).getDirection().getYaw() + rotation.getYaw()));
+					BlockFace.fromYaw(attachable.getAttachedFace(block).getDirection().getYaw() + rotation.getYaw()), null);
 		} else if (material instanceof Directional) {
 			final Directional directional = (Directional) material;
-			final Block block = position.getWorld().getBlock(transformed, position.getWorld());
+			final Block block = position.getWorld().getBlock(transformed);
 			directional.setFacing(block,
 					BlockFace.fromYaw(directional.getFacing(block).getDirection().getYaw() + rotation.getYaw()));
 		}

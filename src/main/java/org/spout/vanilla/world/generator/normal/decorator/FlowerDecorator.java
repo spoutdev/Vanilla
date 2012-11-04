@@ -67,8 +67,8 @@ public class FlowerDecorator extends Decorator {
 				final int zz = z - 7 + random.nextInt(15);
 				final int yy = getHighestWorkableBlock(world, xx, zz);
 				if (yy != -1 && world.getBlockMaterial(xx, yy, zz).isMaterial(VanillaMaterials.AIR)
-						&& canFlowerStay(world.getBlock(xx, yy, zz, world))) {
-					world.setBlockMaterial(xx, yy, zz, flower, (short) 0, world);
+						&& canFlowerStay(world.getBlock(xx, yy, zz))) {
+					world.setBlockMaterial(xx, yy, zz, flower, (short) 0, null);
 				}
 			}
 			if (count == amount - 1 && random.nextInt(4) == 0) {

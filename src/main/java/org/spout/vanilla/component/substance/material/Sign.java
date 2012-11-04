@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.component.substance.material;
 
-import org.spout.api.Source;
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
+import org.spout.api.event.Cause;
 
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.block.SignUpdateEvent;
@@ -38,14 +38,25 @@ public class Sign extends VanillaBlockComponent {
 		return getData().get(VanillaData.SIGN_TEXT);
 	}
 
-	public void setText(String[] text, Source source) {
+	/**
+	 * Sets the text on this sign. The text must be 4 lines, no longer than 16 chars in length
+	 * 
+	 * @param text to set
+	 * @param cause of the sign change
+	 */
+	public void setText(String[] text, Cause<?> cause) {
 		if (text == null || text.length != 4) {
 			throw new IllegalArgumentException("Text must be an array of length 4");
 		}
-		if (source == null) {
+		if (cause == null) {
 			throw new IllegalArgumentException("Source may not be null");
 		}
-		SignUpdateEvent event = new SignUpdateEvent(this, text, source);
+		for (int i = 0; i < 4; i++) {
+			if (text[i].length() > 16) {
+				text[i] = text[i].substring(0, 16);
+			}
+		}
+		SignUpdateEvent event = new SignUpdateEvent(this, text, cause);
 		//Call event to plugins, allow them to alter it
 		Spout.getEventManager().callEvent(event);
 		//Send event to protocol

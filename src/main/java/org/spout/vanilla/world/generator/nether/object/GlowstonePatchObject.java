@@ -63,7 +63,7 @@ public class GlowstonePatchObject extends RandomObject implements RandomizableOb
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		final Block block = w.getBlock(x, y, z, w);
+		final Block block = w.getBlock(x, y, z);
 		return block.isMaterial(VanillaMaterials.AIR)
 				&& block.translate(BlockFace.TOP).isMaterial(attachTo);
 	}
@@ -72,7 +72,7 @@ public class GlowstonePatchObject extends RandomObject implements RandomizableOb
 	public void placeObject(World w, int x, int y, int z) {
 		final Vector3 seed = new Vector3(x, y, z);
 		final List<BlockComponent> blocks = new ArrayList<BlockComponent>();
-		blocks.add(new BlockComponent(w.getBlock(seed, w)));
+		blocks.add(new BlockComponent(w.getBlock(seed)));
 		byte count = 0;
 		while (!blocks.isEmpty() && count < totalSize) {
 			final BlockComponent current = blocks.get(0);

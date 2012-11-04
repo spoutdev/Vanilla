@@ -60,8 +60,8 @@ public class NetherMushroomDecorator extends Decorator {
 				final int zz = z - 7 + random.nextInt(15);
 				final int yy = getHighestWorkableBlock(world, xx, y, zz);
 				if (yy != -1 && world.getBlockMaterial(xx, yy, zz) == VanillaMaterials.AIR
-						&& mushroom.isValidPosition(world.getBlock(xx, yy, zz, world), BlockFace.BOTTOM, false)) {
-					world.setBlockMaterial(xx, yy, zz, mushroom, (short) 0, world);
+						&& mushroom.isValidPosition(world.getBlock(xx, yy, zz), BlockFace.BOTTOM, false)) {
+					world.setBlockMaterial(xx, yy, zz, mushroom, (short) 0, null);
 				}
 			}
 		}

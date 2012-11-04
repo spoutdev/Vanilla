@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
@@ -93,9 +94,9 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		block.setMaterial(this);
-		this.setFacing(block, PlayerUtil.getFacing(block.getSource()));
+	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		block.setMaterial(this, cause);
+		this.setFacing(block, PlayerUtil.getFacing(cause));
 		return true;
 	}
 

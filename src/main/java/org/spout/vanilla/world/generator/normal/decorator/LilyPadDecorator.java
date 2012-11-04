@@ -60,8 +60,8 @@ public class LilyPadDecorator extends Decorator {
 				final int zz = z - 7 + random.nextInt(15);
 				final int yy = getHighestWorkableBlock(world, xx, zz);
 				if (yy != -1 && world.getBlockMaterial(xx, yy, zz) == VanillaMaterials.AIR
-						&& VanillaMaterials.LILY_PAD.canAttachTo(world.getBlock(xx, yy - 1, zz, world), BlockFace.TOP)) {
-					world.setBlockMaterial(xx, yy, zz, VanillaMaterials.LILY_PAD, (short) 0, world);
+						&& VanillaMaterials.LILY_PAD.canAttachTo(world.getBlock(xx, yy - 1, zz), BlockFace.TOP)) {
+					world.setBlockMaterial(xx, yy, zz, VanillaMaterials.LILY_PAD, (short) 0, null);
 				}
 			}
 		}

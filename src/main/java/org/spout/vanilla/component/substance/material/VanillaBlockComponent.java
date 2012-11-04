@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.substance.material;
 
-import org.spout.api.Source;
 import org.spout.api.component.ChunkComponentOwner;
 import org.spout.api.component.components.BlockComponent;
 import org.spout.api.entity.Entity;
@@ -38,8 +37,8 @@ public abstract class VanillaBlockComponent extends BlockComponent {
 	public void onInteractBy(Entity entity, Action action, BlockFace face) {
 	}
 
-	public Block getBlock(Source source) {
+	public Block getBlock() {
 		ChunkComponentOwner owner = getOwner();
-		return owner.getChunk().getWorld().getBlock(owner.getX(), owner.getY(), owner.getZ(), source);
+		return owner.getChunk().getWorld().getBlock(owner.getX(), owner.getY(), owner.getZ());
 	}
 }

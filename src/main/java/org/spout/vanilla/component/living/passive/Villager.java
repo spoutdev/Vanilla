@@ -28,7 +28,7 @@ package org.spout.vanilla.component.living.passive;
 
 import java.util.HashMap;
 
-import org.spout.api.Source;
+import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 
@@ -53,8 +53,8 @@ public class Villager extends LivingComponent implements Container, Passive {
 	private HashMap<Player, Window> viewers = new HashMap<Player, Window>();
 
 	@Override
-	public void onInteract(Action action, Source source) {
-		super.onInteract(action, source);
+	public void onInteract(Action action, Entity entity) {
+		super.onInteract(action, entity);
 		if (action == Action.RIGHT_CLICK) {
 			// TODO: Open window
 		}

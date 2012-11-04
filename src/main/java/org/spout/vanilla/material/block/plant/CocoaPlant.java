@@ -30,6 +30,7 @@ import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
@@ -74,7 +75,7 @@ public class CocoaPlant extends AbstractAttachable implements Plant, Growing, Dy
 	}
 
 	@Override
-	public void setAttachedFace(Block block, BlockFace attachedFace) {
+	public void setAttachedFace(Block block, BlockFace attachedFace, Cause<?> cause) {
 		block.setDataField(DIRECTION_MASK, BlockFaces.WNES.indexOf(attachedFace, 0));
 	}
 

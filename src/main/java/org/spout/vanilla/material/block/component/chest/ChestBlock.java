@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.component.chest;
 
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
@@ -69,7 +70,7 @@ public class ChestBlock extends AbstractChestBlock {
 	}
 
 	@Override
-	public void onDestroy(Block block) {
+	public void onDestroy(Block block, Cause<?> cause) {
 		Chest chest = (Chest) block.getComponent();
 		//Drop items
 		Inventory inventory = chest.getInventory();
@@ -80,7 +81,7 @@ public class ChestBlock extends AbstractChestBlock {
 			}
 			Item.dropNaturally(position, item);
 		}
-		super.onDestroy(block);
+		super.onDestroy(block, cause);
 	}
 
 	@Override

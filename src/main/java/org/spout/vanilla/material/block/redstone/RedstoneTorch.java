@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.redstone;
 
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.BlockMaterial;
@@ -64,9 +65,9 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	}
 
 	@Override
-	public void handlePlacement(Block block, short data, BlockFace against) {
-		block.setMaterial(VanillaMaterials.REDSTONE_TORCH_ON);
-		this.setAttachedFace(block, against);
+	public void handlePlacement(Block block, short data, BlockFace against, Cause<?> cause) {
+		block.setMaterial(VanillaMaterials.REDSTONE_TORCH_ON, cause);
+		this.setAttachedFace(block, against, cause);
 	}
 
 	public boolean isPowered() {

@@ -26,12 +26,10 @@
  */
 package org.spout.vanilla.source;
 
-import org.spout.api.Source;
-
 /**
  * Represents the source of a health change.
  */
-public enum HealthChangeCause implements Source {
+public enum HealthChangeCause{
 	/**
 	 * Health changed due to the execution of a command.
 	 */

@@ -47,7 +47,7 @@ public class EmeraldOreDecorator extends Decorator {
 			final int x = chunk.getBlockX(random);
 			final int y = random.nextInt(28) + 4;
 			final int z = chunk.getBlockZ(random);
-			final Block block = world.getBlock(x, y, z, world);
+			final Block block = world.getBlock(x, y, z);
 			if (block.isMaterial(VanillaMaterials.STONE)) {
 				block.setMaterial(VanillaMaterials.EMERALD_ORE);
 			}

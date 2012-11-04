@@ -62,7 +62,7 @@ public class WellObject extends WorldGeneratorObject {
 		}
 		for (int xx = x - 2; xx < x + 3; xx++) {
 			for (int zz = z - 2; zz < z + 3; zz++) {
-				final Block block = w.getBlock(xx, y - 1, zz, w);
+				final Block block = w.getBlock(xx, y - 1, zz);
 				if (!overridable.contains(block.getMaterial())
 						|| !overridable.contains(block.translate(BlockFace.BOTTOM).getMaterial())) {
 					return false;
@@ -79,31 +79,31 @@ public class WellObject extends WorldGeneratorObject {
 			for (int zz = z - 2; zz < z + 3; zz++) {
 				for (int yy = y - 1; yy < y + 5; yy++) {
 					if (yy > y - 2 && yy < y + 1) {
-						w.setBlockMaterial(xx, yy, zz, main, (short) 0, w);
+						w.setBlockMaterial(xx, yy, zz, main, (short) 0, null);
 					}
 					if (yy == y) {
 						if ((xx == x && z == zz) || ((xx == x - 1 || xx == x + 1) && zz == z) || ((zz == z + 1 || zz == z - 1) && x == xx)) {
-							w.setBlockMaterial(xx, yy, zz, liquid, (short) 0, w);
+							w.setBlockMaterial(xx, yy, zz, liquid, (short) 0, null);
 						}
 					}
 					if (yy == y + 1) {
 						if (xx == x - 2 || xx == x + 2 || zz == z - 2 || zz == z + 2) {
-							w.setBlockMaterial(xx, yy, zz, main, (short) 0, w);
+							w.setBlockMaterial(xx, yy, zz, main, (short) 0, null);
 						}
 						if (((xx == x - 2 || xx == x + 2) && zz == z) || ((zz == z + 2 || zz == z - 2) && x == xx)) {
-							w.setBlockMaterial(xx, yy, zz, slab, slab.getData(), w);
+							w.setBlockMaterial(xx, yy, zz, slab, slab.getData(), null);
 						}
 					}
 					if (yy == y + 4 && xx > x - 2 && xx < x + 2 && zz > z - 2 && zz < z + 2) {
 						if (xx == x && zz == z) {
-							w.setBlockMaterial(xx, yy, zz, main, (short) 0, w);
+							w.setBlockMaterial(xx, yy, zz, main, (short) 0, null);
 						} else {
-							w.setBlockMaterial(xx, yy, zz, slab, slab.getData(), w);
+							w.setBlockMaterial(xx, yy, zz, slab, slab.getData(), null);
 						}
 					}
 					if (yy > y && yy < y + 4) {
 						if ((xx == x - 1 || xx == x + 1) && (zz == z + 1 || zz == z - 1)) {
-							w.setBlockMaterial(xx, yy, zz, main, (short) 0, w);
+							w.setBlockMaterial(xx, yy, zz, main, (short) 0, null);
 						}
 					}
 				}

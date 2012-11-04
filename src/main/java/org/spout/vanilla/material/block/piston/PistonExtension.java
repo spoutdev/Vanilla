@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.piston;
 
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -42,13 +43,13 @@ public class PistonExtension extends Solid implements Directional {
 	}
 
 	@Override
-	public void onDestroy(Block block) {
+	public void onDestroy(Block block, Cause<?> cause) {
 		block = block.translate(this.getFacing(block).getOpposite());
 		BlockMaterial mat = block.getMaterial();
 		if (mat instanceof PistonBlock) {
-			mat.onDestroy(block);
+			mat.onDestroy(block, cause);
 		} else {
-			super.onDestroy(block);
+			super.onDestroy(block, cause);
 		}
 	}
 

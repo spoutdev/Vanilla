@@ -30,8 +30,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Map;
 
-import org.spout.api.Source;
 import org.spout.api.entity.Entity;
+import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
 import org.spout.api.exception.InvalidControllerException;
 
@@ -45,8 +45,8 @@ public class PotionSplashEvent extends ProjectileHitEvent {
 	private final Map<Entity, Double> entitiesAffected;
 	private Potion potion;
 
-	public PotionSplashEvent(Entity e, Source source, Map<Entity, Double> entitiesAffected) throws InvalidControllerException {
-		super(e, source);
+	public PotionSplashEvent(Entity e, Cause<?> cause, Map<Entity, Double> entitiesAffected) throws InvalidControllerException {
+		super(e, cause);
 		if (!e.has(Potion.class)) {
 			throw new InvalidControllerException();
 		}

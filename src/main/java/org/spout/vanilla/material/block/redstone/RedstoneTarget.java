@@ -26,12 +26,12 @@
  */
 package org.spout.vanilla.material.block.redstone;
 
-import org.spout.api.Source;
 import org.spout.api.geo.cuboid.Block;
 
-public interface RedstoneTarget extends Source {
+public interface RedstoneTarget{
 	/**
-	 * Checks if a block is receiving power from neighbouring blocks.
+	 * Checks if a block is receiving power from neighboring blocks.
+	 * 
 	 * @param block to check
 	 * @return True if the block is receiving power
 	 */

@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.misc;
 
-import org.spout.api.Source;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Entity;
 
@@ -37,7 +36,7 @@ import org.spout.vanilla.source.DamageCause;
 /**
  * The drowning component requires a health component and head component
  */
-public class DrowningComponent extends EntityComponent implements Source {
+public class DrowningComponent extends EntityComponent{
 	private Entity owner;
 	private HealthComponent health;
 	private HeadComponent head;
@@ -53,7 +52,7 @@ public class DrowningComponent extends EntityComponent implements Source {
 
 	@Override
 	public void onTick(float dt) {
-		if (owner.getWorld().getBlock(head.getPosition(), this).getMaterial() != VanillaMaterials.WATER) {
+		if (owner.getWorld().getBlock(head.getPosition()).getMaterial() != VanillaMaterials.WATER) {
 			setAir(MAX_AIR);
 			return;
 		}

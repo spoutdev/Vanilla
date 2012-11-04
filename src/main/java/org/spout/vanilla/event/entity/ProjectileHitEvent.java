@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.event.entity;
 
-import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
+import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 
@@ -37,27 +37,29 @@ import org.spout.api.event.entity.EntityEvent;
  */
 public class ProjectileHitEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private Source source;
+	private Cause<?> cause;
 
-	public ProjectileHitEvent(Entity e, Source source) {
+	public ProjectileHitEvent(Entity e, Cause<?> cause) {
 		super(e);
-		this.source = source;
+		this.cause = cause;
 	}
 
 	/**
-	 * Gets the source of this event.
-	 * @return An Source that is the source of the event.
+	 * Gets the cause of this event.
+	 * 
+	 * @return cause
 	 */
-	public Source getSource() {
-		return source;
+	public Cause<?> getCause() {
+		return cause;
 	}
 
 	/**
-	 * Sets the source of this event.
-	 * @param source The source of this event.
+	 * Sets the cause of this event.
+	 * 
+	 * @param cause
 	 */
-	public void setSource(Source source) {
-		this.source = source;
+	public void setCause(Cause<?> cause) {
+		this.cause = cause;
 	}
 
 	@Override

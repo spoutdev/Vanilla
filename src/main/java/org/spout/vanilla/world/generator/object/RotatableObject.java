@@ -28,7 +28,6 @@ package org.spout.vanilla.world.generator.object;
 
 import java.util.Random;
 
-import org.spout.api.Source;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
@@ -49,7 +48,7 @@ public abstract class RotatableObject extends RandomObject {
 	}
 
 	protected Block getBlock(World world, int x, int y, int z) {
-		return world.getBlock(applyRotation(x, y, z), world);
+		return world.getBlock(applyRotation(x, y, z));
 	}
 
 	protected BlockMaterial getBlockMaterial(World world, int x, int y, int z) {
@@ -59,15 +58,15 @@ public abstract class RotatableObject extends RandomObject {
 
 	protected void setBlockMaterial(World world, int x, int y, int z, BlockMaterial material, short data) {
 		final Vector3 rotated = applyRotation(x, y, z);
-		world.setBlockMaterial(rotated.getFloorX(), rotated.getFloorY(), rotated.getFloorZ(), material, data, world);
+		world.setBlockMaterial(rotated.getFloorX(), rotated.getFloorY(), rotated.getFloorZ(), material, data, null);
 		if (material instanceof Attachable) {
 			final Attachable attachable = (Attachable) material;
-			final Block block = world.getBlock(rotated, world);
+			final Block block = world.getBlock(rotated);
 			attachable.setAttachedFace(block,
-					BlockFace.fromYaw(attachable.getAttachedFace(block).getDirection().getYaw() + rotation.getYaw()));
+					BlockFace.fromYaw(attachable.getAttachedFace(block).getDirection().getYaw() + rotation.getYaw()), null);
 		} else if (material instanceof Directional) {
 			final Directional directional = (Directional) material;
-			final Block block = world.getBlock(rotated, world);
+			final Block block = world.getBlock(rotated);
 			directional.setFacing(block,
 					BlockFace.fromYaw(directional.getFacing(block).getDirection().getYaw() + rotation.getYaw()));
 		}

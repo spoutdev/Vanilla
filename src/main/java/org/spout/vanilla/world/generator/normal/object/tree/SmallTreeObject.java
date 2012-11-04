@@ -85,7 +85,7 @@ public class SmallTreeObject extends TreeObject {
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
-		w.setBlockMaterial(x, y - 1, z, VanillaMaterials.DIRT, (short) 0, w);
+		w.setBlockMaterial(x, y - 1, z, VanillaMaterials.DIRT, (short) 0, null);
 		for (byte yy = (byte) (totalHeight - leavesHeight); yy < totalHeight + 1; yy++) {
 			final byte yRadius = (byte) (yy - totalHeight);
 			final byte xzRadius = (byte) ((radiusIncrease + 1) - yRadius / 2);
@@ -95,13 +95,13 @@ public class SmallTreeObject extends TreeObject {
 					if (Math.abs(xx) != xzRadius || Math.abs(zz) != xzRadius
 							|| random.nextBoolean() && yRadius != 0
 							&& !(material instanceof Solid || material instanceof Liquid)) {
-						w.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.LEAVES, leavesMetadata, w);
+						w.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.LEAVES, leavesMetadata, null);
 					}
 				}
 			}
 		}
 		for (byte yy = 0; yy < totalHeight; yy++) {
-			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.LOG, logMetadata, w);
+			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.LOG, logMetadata, null);
 			if (addLogVines) {
 				placeVines(w, x, y + yy, z, (byte) 3, false);
 			}
@@ -128,9 +128,9 @@ public class SmallTreeObject extends TreeObject {
 						if (random.nextInt(odd) != 0) {
 							continue;
 						}
-						final Block block = w.getBlock(position.add(face.getOffset()), w);
+						final Block block = w.getBlock(position.add(face.getOffset()));
 						block.setMaterial(VanillaMaterials.COCOA_PLANT);
-						VanillaMaterials.COCOA_PLANT.setAttachedFace(block, face.getOpposite());
+						VanillaMaterials.COCOA_PLANT.setAttachedFace(block, face.getOpposite(), null);
 						VanillaMaterials.COCOA_PLANT.setGrowthStage(block, random.nextInt(3));
 					}
 				}
@@ -146,7 +146,7 @@ public class SmallTreeObject extends TreeObject {
 			}
 			final BlockFace facing = face.getOpposite();
 			for (byte yy = 0; yy < lenght; yy++) {
-				final Block block = w.getBlock(face.getOffset().add(x, y - yy, z), w);
+				final Block block = w.getBlock(face.getOffset().add(x, y - yy, z));
 				if (block.isMaterial(VanillaMaterials.AIR)) {
 					block.setMaterial(VanillaMaterials.VINES);
 					VanillaMaterials.VINES.setFaceAttached(block, facing, true);

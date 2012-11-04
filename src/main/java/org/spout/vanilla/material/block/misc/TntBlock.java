@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import org.spout.api.event.Cause;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
@@ -66,7 +67,7 @@ public class TntBlock extends Solid implements RedstoneTarget, Burnable {
 	}
 
 	@Override
-	public void onIgnite(Block block) {
+	public void onIgnite(Block block, Cause<?> cause) {
 		// spawn a primed TntBlock
 		Point pos = block.getPosition();
 		World world = pos.getWorld();
@@ -74,14 +75,15 @@ public class TntBlock extends Solid implements RedstoneTarget, Burnable {
 		double v = 0.5d;
 		tnt.setVelocity(pos.add(v, v, v));
 		world.spawnEntity(tnt.getOwner());
-		block.setMaterial(VanillaMaterials.AIR);
+		block.setMaterial(VanillaMaterials.AIR, cause);
 	}
 
 	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
-		if (this.isReceivingPower(block)) {
-			this.onIgnite(block);
+		Block powerSource = RedstoneUtil.getReceivingPowerLocation(block);
+		if (powerSource != null) {
+			this.onIgnite(block, toCause(powerSource));
 		}
 	}
 

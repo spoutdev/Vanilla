@@ -75,7 +75,7 @@ public class PineTreeObject extends TreeObject {
 		if (leavesSizeY == -1 || leavesAbsoluteMaxRadius == -1) {
 			findRandomLeavesSize();
 		}
-		w.setBlockMaterial(x, y - 1, z, VanillaMaterials.DIRT, (short) 0, w);
+		w.setBlockMaterial(x, y - 1, z, VanillaMaterials.DIRT, (short) 0, null);
 		byte leavesRadius = (byte) random.nextInt(2);
 		byte leavesMaxRadius = 1;
 		final byte leavesBottomY = (byte) (totalHeight - leavesSizeY);
@@ -85,7 +85,7 @@ public class PineTreeObject extends TreeObject {
 			for (byte xx = (byte) -leavesRadius; xx < leavesRadius + 1; xx++) {
 				for (byte zz = (byte) -leavesRadius; zz < leavesRadius + 1; zz++) {
 					if (Math.abs(xx) != leavesRadius || Math.abs(zz) != leavesRadius || leavesRadius <= 0) {
-						w.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.LEAVES, leavesMetadata, w);
+						w.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.LEAVES, leavesMetadata, null);
 					}
 				}
 			}
@@ -101,7 +101,7 @@ public class PineTreeObject extends TreeObject {
 		}
 		final byte trunkHeightReducer = (byte) random.nextInt(3);
 		for (int yy = 0; yy < totalHeight - trunkHeightReducer; yy++) {
-			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.LOG, logMetadata, w);
+			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.LOG, logMetadata, null);
 		}
 	}
 

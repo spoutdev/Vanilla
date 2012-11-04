@@ -29,6 +29,8 @@ package org.spout.vanilla.material.block.plant;
 import java.util.Random;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.Cause;
+import org.spout.api.event.cause.EntityCause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.BlockMaterial;
@@ -131,7 +133,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 		if (block.getData() == 0) {
 			//check if there is a block above it can attach to, else destroy
 			if (!this.canAttachTo(above, BlockFace.BOTTOM)) {
-				this.onDestroy(block);
+				this.onDestroy(block, above.getMaterial().toCause(above));
 			}
 		}
 	}
@@ -147,10 +149,10 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 		return this.canAttachTo(block.getMaterial(), face);
 	}
 
-	public BlockFace getTracedFace(Block block) {
-		if (block.getMaterial().equals(VanillaMaterials.VINES) && block.getSource() instanceof Entity) {
+	public BlockFace getTracedFace(Block block, Cause<?> cause) {
+		if (block.getMaterial().equals(VanillaMaterials.VINES) && cause instanceof EntityCause) {
 			//get block by block tracing from the player view
-			Entity entity = (Entity) block.getSource();
+			Entity entity = ((EntityCause) cause).getSource();
 			if (entity.has(HeadComponent.class)) {
 				BlockIterator iter = entity.get(HeadComponent.class).getBlockView();
 				Block next;
@@ -204,10 +206,10 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short dat, BlockFace face, Vector3 clickedPos, boolean isClicked) {
+	public boolean onPlacement(Block block, short dat, BlockFace face, Vector3 clickedPos, boolean isClicked, Cause<?> cause) {
 		if (block.getMaterial().equals(VanillaMaterials.VINES)) {
 			if (isClicked) {
-				face = getTracedFace(block);
+				face = getTracedFace(block, cause);
 				if (face == null) {
 					return false;
 				}
@@ -239,7 +241,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 					return false;
 				}
 
-				block.setMaterial(VanillaMaterials.VINES);
+				block.setMaterial(VanillaMaterials.VINES, cause);
 				return true;
 
 			default:
@@ -251,7 +253,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 					return false;
 				}
 
-				block.setMaterial(VanillaMaterials.VINES);
+				block.setMaterial(VanillaMaterials.VINES, cause);
 				this.setFaceAttached(block, face, true);
 				return true;
 		}

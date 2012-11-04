@@ -98,7 +98,7 @@ public class HugeTreeObject extends TreeObject {
 				final int bx = (int) (randomOffset.getX() * branchLengthCount + 1.5f);
 				final int by = -3 + branchLengthCount / 2;
 				final int bz = (int) (randomOffset.getY() * branchLengthCount + 1.5f);
-				final Block block = w.getBlock(x + bx, y + yy + by, z + bz, w);
+				final Block block = w.getBlock(x + bx, y + yy + by, z + bz);
 				block.setMaterial(VanillaMaterials.LOG);
 				block.setData(logMetadata);
 				VanillaMaterials.LOG.setFacing(block, BlockFace.fromYaw(MathHelper.getLookAtYaw(new Vector3(bx, by, bz))));
@@ -108,9 +108,9 @@ public class HugeTreeObject extends TreeObject {
 			for (byte xx = 0; xx < 2; xx++) {
 				for (byte zz = 0; zz < 2; zz++) {
 					if (yy == -1) {
-						w.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.DIRT, (short) 0, w);
+						w.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.DIRT, (short) 0, null);
 					} else {
-						w.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.LOG, logMetadata, w);
+						w.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.LOG, logMetadata, null);
 						if (addVines && yy > 0) {
 							placeVines(w, x + xx, y + yy, z + zz, (byte) 3);
 						}
@@ -118,7 +118,7 @@ public class HugeTreeObject extends TreeObject {
 				}
 			}
 		}
-		w.setBlockMaterial(x, y + totalHeight - 1, z, VanillaMaterials.LOG, logMetadata, w);
+		w.setBlockMaterial(x, y + totalHeight - 1, z, VanillaMaterials.LOG, logMetadata, null);
 	}
 
 	private void generateLeaves(World world, int x, int y, int z, byte sizeIncrease) {
@@ -132,7 +132,7 @@ public class HugeTreeObject extends TreeObject {
 							&& (xx > -1 || zz > -1 || circle < radius * radius)
 							&& ((xx < 1 && zz < 1) || circle < (radius + 1) * (radius + 1))
 							&& (random.nextInt(4) != 0 || circle < (radius - 1) * (radius - 1))) {
-						world.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.LEAVES, leavesMetadata, world);
+						world.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.LEAVES, leavesMetadata, null);
 					}
 				}
 			}
@@ -141,16 +141,16 @@ public class HugeTreeObject extends TreeObject {
 
 	private void placeVines(World w, int x, int y, int z, byte faceOdd) {
 		if (w.getBlockMaterial(x + 1, y, z) == VanillaMaterials.AIR && random.nextInt(faceOdd) != 0) {
-			w.setBlockMaterial(x + 1, y, z, VanillaMaterials.VINES, (short) 2, w);
+			w.setBlockMaterial(x + 1, y, z, VanillaMaterials.VINES, (short) 2, null);
 		}
 		if (w.getBlockMaterial(x - 1, y, z) == VanillaMaterials.AIR && random.nextInt(faceOdd) > 0) {
-			w.setBlockMaterial(x - 1, y, z, VanillaMaterials.VINES, (short) 8, w);
+			w.setBlockMaterial(x - 1, y, z, VanillaMaterials.VINES, (short) 8, null);
 		}
 		if (w.getBlockMaterial(x, y, z + 1) == VanillaMaterials.AIR && random.nextInt(faceOdd) > 0) {
-			w.setBlockMaterial(x, y, z + 1, VanillaMaterials.VINES, (short) 4, w);
+			w.setBlockMaterial(x, y, z + 1, VanillaMaterials.VINES, (short) 4, null);
 		}
 		if (w.getBlockMaterial(x, y, z - 1) == VanillaMaterials.AIR && random.nextInt(faceOdd) > 0) {
-			w.setBlockMaterial(x, y, z - 1, VanillaMaterials.VINES, (short) 1, w);
+			w.setBlockMaterial(x, y, z - 1, VanillaMaterials.VINES, (short) 1, null);
 		}
 	}
 

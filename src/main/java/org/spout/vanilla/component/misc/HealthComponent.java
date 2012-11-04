@@ -26,19 +26,17 @@
  */
 package org.spout.vanilla.component.misc;
 
-import org.spout.api.Source;
 import org.spout.api.Spout;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.event.entity.EntityHealthChangeEvent;
-
 import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.event.entity.EntityDamageEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
 import org.spout.vanilla.event.player.network.PlayerHealthEvent;
+import org.spout.vanilla.protocol.handler.player.EntityHealthChangeEvent;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 import org.spout.vanilla.source.DamageCause;
 import org.spout.vanilla.source.HealthChangeCause;
@@ -141,8 +139,8 @@ public class HealthComponent extends EntityComponent {
 	 * @param health hitpoints value to set to
 	 * @param source of the change
 	 */
-	public void setHealth(int health, Source source) {
-		EntityHealthChangeEvent event = new EntityHealthChangeEvent(getOwner(), source, health - getHealth());
+	public void setHealth(int health, HealthChangeCause cause) {
+		EntityHealthChangeEvent event = new EntityHealthChangeEvent(getOwner(), cause, health - getHealth());
 		Spout.getEngine().getEventManager().callEvent(event);
 		if (!event.isCancelled()) {
 			if (getHealth() + event.getChange() > getMaxHealth()) {
@@ -161,8 +159,8 @@ public class HealthComponent extends EntityComponent {
 	 * Sets the health value to 0
 	 * @param source of the change
 	 */
-	public void kill(Source source) {
-		setHealth(0, source);
+	public void kill(HealthChangeCause cause) {
+		setHealth(0, cause);
 	}
 
 	/**

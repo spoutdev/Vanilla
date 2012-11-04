@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block.misc;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
@@ -78,8 +79,8 @@ public class StoneButton extends AttachedRedstoneSource implements PointAttachab
 	}
 
 	@Override
-	public void setAttachedFace(Block block, BlockFace attachedFace) {
-		block.setData((short) (BlockFaces.NSEW.indexOf(attachedFace, 3) + 1));
+	public void setAttachedFace(Block block, BlockFace attachedFace, Cause<?> cause) {
+		block.setData((short) (BlockFaces.NSEW.indexOf(attachedFace, 3) + 1), cause);
 	}
 
 	@Override

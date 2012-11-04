@@ -61,7 +61,7 @@ public class CactusStackObject extends LargePlantObject {
 			if (!canPlaceObject(w, x, y + yy, z)) {
 				return;
 			}
-			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.CACTUS, (short) 0, w);
+			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.CACTUS, (short) 0, null);
 		}
 	}
 

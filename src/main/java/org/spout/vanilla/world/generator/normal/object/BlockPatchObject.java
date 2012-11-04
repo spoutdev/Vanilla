@@ -73,7 +73,7 @@ public class BlockPatchObject extends RandomObject implements RandomizableObject
 				if (xx * xx + zz * zz <= totalRadius * totalRadius) {
 					for (byte yy = (byte) -heightRadius; yy <= heightRadius; yy++) {
 						if (overridable.contains(world.getBlockMaterial(x + xx, y + yy, z + zz))) {
-							world.setBlockMaterial(x + xx, y + yy, z + zz, material, (short) 0, world);
+							world.setBlockMaterial(x + xx, y + yy, z + zz, material, (short) 0, null);
 						}
 					}
 				}

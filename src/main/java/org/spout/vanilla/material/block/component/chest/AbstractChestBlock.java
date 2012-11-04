@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.component.chest;
 
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -72,9 +73,9 @@ public abstract class AbstractChestBlock extends ComponentMaterial implements Di
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock)) {
-			BlockFace facing = PlayerUtil.getFacing(block.getSource()).getOpposite();
+	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause)) {
+			BlockFace facing = PlayerUtil.getFacing(cause).getOpposite();
 			//search for neighbor and align
 			Block neigh;
 			for (BlockFace face : BlockFaces.NESW) {

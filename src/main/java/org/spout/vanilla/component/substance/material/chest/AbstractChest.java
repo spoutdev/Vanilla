@@ -26,9 +26,7 @@
  */
 package org.spout.vanilla.component.substance.material.chest;
 
-import org.spout.api.Source;
 import org.spout.api.entity.Player;
-
 import org.spout.vanilla.component.substance.material.ViewedBlockComponent;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
@@ -45,12 +43,12 @@ public abstract class AbstractChest extends ViewedBlockComponent {
 
 	/**
 	 * Sets the open state of the chest.
-	 * @param source {@link org.spout.api.Source} who opened the chest
+	 * @param player who opened the chest
 	 * @param opened state of chest
 	 */
-	public void setOpened(Source source, boolean opened) {
+	public void setOpened(Player player, boolean opened) {
 		this.opened = opened;
-		VanillaBlockMaterial.playBlockAction(getBlock(source), (byte) 1, opened ? (byte) 1 : (byte) 0);
+		VanillaBlockMaterial.playBlockAction(getBlock(), (byte) 1, opened ? (byte) 1 : (byte) 0);
 	}
 
 	@Override

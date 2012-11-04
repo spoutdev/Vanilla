@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.item;
 
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Placeable;
@@ -57,8 +58,8 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		return this.onPlaceMaterial.onPlacement(block, this.onPlaceData, against, clickedPos, isClickedBlock);
+	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		return this.onPlaceMaterial.onPlacement(block, this.onPlaceData, against, clickedPos, isClickedBlock, cause);
 	}
 
 	@Override
@@ -67,8 +68,8 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 	}
 
 	@Override
-	public final boolean onPlacement(Block block, short data) {
-		return this.onPlacement(block, data, BlockFace.BOTTOM, Vector3.UNIT_Y, false);
+	public final boolean onPlacement(Block block, short data, Cause<?> cause) {
+		return this.onPlacement(block, data, BlockFace.BOTTOM, Vector3.UNIT_Y, false, cause);
 	}
 
 	/**

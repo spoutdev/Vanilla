@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.collision.CollisionStrategy;
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -69,11 +70,11 @@ public abstract class DoorBlock extends GroundAttachable implements Openable, Re
 	}
 
 	@Override
-	public void onDestroy(Block block) {
+	public void onDestroy(Block block, Cause<?> cause) {
 		Block top = getCorrectHalf(block, true);
 		Block bottom = getCorrectHalf(block, false);
-		top.setMaterial(VanillaMaterials.AIR);
-		bottom.setMaterial(VanillaMaterials.AIR);
+		top.setMaterial(VanillaMaterials.AIR, cause);
+		bottom.setMaterial(VanillaMaterials.AIR, cause);
 	}
 
 	@Override
@@ -164,8 +165,8 @@ public abstract class DoorBlock extends GroundAttachable implements Openable, Re
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace face, Vector3 clickedPos, boolean isClicked) {
-		BlockFace facing = PlayerUtil.getFacing(block.getSource()).getOpposite();
+	public boolean onPlacement(Block block, short data, BlockFace face, Vector3 clickedPos, boolean isClicked, Cause<?> cause) {
+		BlockFace facing = PlayerUtil.getFacing(cause).getOpposite();
 		Block above = block.translate(BlockFace.TOP);
 		if (!above.getMaterial().isPlacementObstacle()) {
 			Block left = block.translate(BlockFaces.NESW.previous(facing, 1));

@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.rail;
 
 import org.spout.api.collision.BoundingBox;
 import org.spout.api.collision.CollisionStrategy;
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -140,13 +141,14 @@ public abstract class RailBase extends GroundAttachable {
 		RailsState state = this.getState(block);
 		if (state.isSloped()) {
 			// Check if the facing side is still supporting
-			BlockMaterial att = block.translate(state.getDirections()[0]).getMaterial();
+			Block facing = block.translate(state.getDirections()[0]);
+			BlockMaterial att = facing.getMaterial();
 			if (att instanceof VanillaBlockMaterial) {
 				if (((VanillaBlockMaterial) att).canSupport(this, BlockFace.TOP)) {
 					return;
 				}
 			}
-			this.onDestroy(block);
+			this.onDestroy(block, toCause(facing));
 		}
 	}
 
@@ -158,8 +160,8 @@ public abstract class RailBase extends GroundAttachable {
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		if (!super.onPlacement(block, data, against, clickedPos, isClickedBlock)) {
+	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		if (!super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause)) {
 			return false;
 		}
 

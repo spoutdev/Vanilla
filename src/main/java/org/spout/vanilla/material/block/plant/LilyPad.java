@@ -27,6 +27,9 @@
 package org.spout.vanilla.material.block.plant;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
+import org.spout.api.event.Cause;
+import org.spout.api.event.cause.EntityCause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
@@ -37,6 +40,7 @@ import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.event.cause.PlayerBreakCause;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.liquid.Water;
@@ -69,7 +73,13 @@ public class LilyPad extends GroundAttachable {
 			}
 			Block block = iterator.next().translate(BlockFace.TOP);
 			if (this.canPlace(block, (short) 0)) {
-				this.onPlacement(block, (short) 0);
+				Cause<Entity> cause;
+				if (entity instanceof Player) {
+					cause = new PlayerBreakCause((Player)entity, block);
+				} else {
+					cause = new EntityCause(entity);
+				}
+				this.onPlacement(block, (short) 0, cause);
 
 				//TODO Subtract from inventory component
 				// Subtract item

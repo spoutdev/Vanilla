@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.solid;
 
 import java.util.Random;
 
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
@@ -144,9 +145,9 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		block.setMaterial(this);
-		this.setFacing(block, PlayerUtil.getBlockFacing(block));
+	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		block.setMaterial(this, cause);
+		this.setFacing(block, PlayerUtil.getBlockFacing(block, cause));
 		return true;
 	}
 

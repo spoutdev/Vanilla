@@ -54,7 +54,7 @@ public class FireDecorator extends Decorator {
 				final int zz = z - 7 + random.nextInt(15);
 				final int yy = getHighestWorkableBlock(world, xx, y, zz);
 				if (yy != -1 && world.getBlockMaterial(xx, yy, zz).isMaterial(VanillaMaterials.AIR)) {
-					world.setBlockMaterial(xx, yy, zz, VanillaMaterials.FIRE, (short) 0, world);
+					world.setBlockMaterial(xx, yy, zz, VanillaMaterials.FIRE, (short) 0, null);
 				}
 			}
 		}

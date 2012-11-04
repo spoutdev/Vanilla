@@ -139,7 +139,7 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 			}
 			// try to place at last
 			if (block.isMaterial(VanillaMaterials.AIR) && this.canPlace(block, (short) 0)) {
-				this.onPlacement(block, (short) 0);
+				this.onPlacement(block, (short) 0, toCause(block));
 			}
 		}
 

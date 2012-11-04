@@ -53,6 +53,7 @@ import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.Time;
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.source.HealthChangeCause;
 
 public class AdministrationCommands {
 	private final VanillaPlugin plugin;
@@ -392,14 +393,14 @@ public class AdministrationCommands {
 			if (!(source instanceof Player)) {
 				throw new CommandException("Don't be silly...you cannot kill yourself as the console.");
 			}
-			((Player) source).get(HealthComponent.class).kill(source);
+			((Player) source).get(HealthComponent.class).kill(HealthChangeCause.COMMAND);
 		} else {
 			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
 			Player victim = ((Server) Spout.getEngine()).getPlayer(args.getString(0), true);
 			if (victim != null) {
-				victim.get(HealthComponent.class).kill(source);
+				victim.get(HealthComponent.class).kill(HealthChangeCause.COMMAND);
 			}
 		}
 	}

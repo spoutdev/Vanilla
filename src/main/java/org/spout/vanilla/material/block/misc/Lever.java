@@ -26,8 +26,9 @@
  */
 package org.spout.vanilla.material.block.misc;
 
-import org.spout.api.Source;
 import org.spout.api.entity.Entity;
+import org.spout.api.event.Cause;
+import org.spout.api.event.cause.EntityCause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
@@ -87,14 +88,13 @@ public class Lever extends AttachedRedstoneSource implements Toggleable {
 	}
 
 	@Override
-	public void setAttachedFace(Block block, BlockFace attachedFace) {
+	public void setAttachedFace(Block block, BlockFace attachedFace, Cause<?> cause) {
 		short data;
 		if (attachedFace == BlockFace.BOTTOM) {
-			Source source = block.getSource();
 			data = (short) (5 + Math.random());
-			if (source instanceof Entity) {
+			if (cause instanceof EntityCause) {
 				// set data using direction
-				Vector3 direction = block.getPosition().subtract(((Entity) source).getTransform().getPosition());
+				Vector3 direction = block.getPosition().subtract((((EntityCause) cause).getSource()).getTransform().getPosition());
 				direction = direction.abs();
 				if (direction.getX() > direction.getZ()) {
 					data = 6;

@@ -68,7 +68,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
 		if (!this.canPlace(block, block.getData())) {
-			this.onDestroy(block);
+			this.onDestroy(block, toCause(block));
 		}
 	}
 
@@ -160,13 +160,13 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 		if (this.canDegrade(b)) {
 			// Fires without source burn less long, rain fades out fire
 			if (VanillaBlockMaterial.hasRainNearby(b) || (!hasBurningSource(b) && blockData > 3)) {
-				this.onDestroy(b);
+				this.onDestroy(b, null);
 				return;
 			}
 
 			// If fire is done with and the block below can not fuel fire, destroy
 			if (blockData == 15 && rand.nextInt(4) == 0 && !hasBurningSource(b, BlockFace.BOTTOM)) {
-				this.onDestroy(b);
+				this.onDestroy(b, null);
 				return;
 			}
 		}
@@ -180,7 +180,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 			if (mat instanceof Burnable && rand.nextInt(((Burnable) mat).getCombustChance()) < chance) {
 				// Destroy the old block
 				if (mat instanceof TntBlock) {
-					((TntBlock) mat).onIgnite(sBlock); // Ignite TntBlock
+					((TntBlock) mat).onIgnite(sBlock, toCause(b)); // Ignite TntBlock
 				} else {
 					sBlock.setMaterial(VanillaMaterials.AIR); // prevent drops
 				}

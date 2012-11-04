@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.material.block.component;
 
-import org.spout.api.Source;
 import org.spout.api.component.components.BlockComponent;
-import org.spout.api.entity.Entity;
+import org.spout.api.event.Cause;
+import org.spout.api.event.cause.EntityCause;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
@@ -56,8 +56,8 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 	}
 
 	@Override
-	public void handlePlacement(Block block, short data, BlockFace attachedFace) {
-		this.setAttachedFace(block, attachedFace);
+	public void handlePlacement(Block block, short data, BlockFace attachedFace, Cause<?> cause) {
+		this.setAttachedFace(block, attachedFace, cause);
 	}
 
 	@Override
@@ -66,14 +66,13 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 	}
 
 	@Override
-	public void setAttachedFace(Block block, BlockFace attachedFace) {
+	public void setAttachedFace(Block block, BlockFace attachedFace, Cause<?> cause) {
 		if (attachedFace == BlockFace.BOTTOM) {
-			Source source = block.getSource();
 			short data = 0;
-			if (source instanceof Entity) {
-				Vector3 direction = block.getPosition().subtract(((Entity) source).getTransform().getPosition());
+			if (cause instanceof EntityCause) {
+				Vector3 direction = block.getPosition().subtract((((EntityCause) cause).getSource()).getTransform().getPosition());
 				float rotation = direction.rotationTo(Vector3.RIGHT).getYaw();
-				rotation = rotation / 360f * 16f;
+				rotation = (rotation / 360f) * 16f;
 				data = (short) rotation;
 			}
 			block.setMaterial(VanillaMaterials.SIGN_POST, data);

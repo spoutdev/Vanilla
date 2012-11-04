@@ -29,12 +29,13 @@ package org.spout.vanilla.util.explosion;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.spout.api.Source;
+import org.spout.api.event.Cause;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
+import org.spout.vanilla.material.VanillaMaterials;
 
-public class ExplosionModelSpherical extends ExplosionModel implements Source {
+public class ExplosionModelSpherical extends ExplosionModel {
 	public ExplosionModelSpherical() {
 		this.layers.add(new ExplosionLayer(this));
 		this.root = this.layers.get(0).slots[0];
@@ -52,18 +53,18 @@ public class ExplosionModelSpherical extends ExplosionModel implements Source {
 	}
 
 	public synchronized void execute(Point position, float size) {
-		this.execute(position, size, this);
+		this.execute(position, size, VanillaMaterials.TNT.toCause(position));
 	}
 
-	public synchronized void execute(Point position, float size, Source source) {
-		this.execute(position, size, false, source);
+	public synchronized void execute(Point position, float size, Cause<?> cause) {
+		this.execute(position, size, false, cause);
 	}
 
 	public synchronized void execute(Point position, boolean fire, float size) {
-		this.execute(position, size, fire, this);
+		this.execute(position, size, fire, VanillaMaterials.TNT.toCause(position));
 	}
 
-	public synchronized void execute(Point position, float size, boolean fire, Source source) {
+	public synchronized void execute(Point position, float size, boolean fire, Cause<?> cause) {
 		int xoff = position.getBlockX();
 		int yoff = position.getBlockY();
 		int zoff = position.getBlockZ();
@@ -95,7 +96,7 @@ public class ExplosionModelSpherical extends ExplosionModel implements Source {
 				//this block has been destroyed
 				if (!slot.block.destroy) {
 					slot.block.destroy = true;
-					Block block = world.getBlock(slot.block.realx, slot.block.realy, slot.block.realz, this);
+					Block block = world.getBlock(slot.block.realx, slot.block.realy, slot.block.realz);
 					blocksToDestroy.add(block);
 				}
 
@@ -127,6 +128,6 @@ public class ExplosionModelSpherical extends ExplosionModel implements Source {
 		}
 
 		//perform the final block changes, entity damage and explosion messages
-		super.execute(position, size, fire, source);
+		super.execute(position, size, fire, cause);
 	}
 }

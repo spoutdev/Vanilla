@@ -111,19 +111,19 @@ public class DungeonObject extends RandomObject implements RandomizableObject {
 					if (xx == -radiusX - 1 || yy == -1 || zz == -radiusZ - 1
 							|| xx == radiusX + 1 || yy == height + 1 || zz == radiusZ + 1) {
 						if (yy > -1 && w.getBlockMaterial(x + xx, y + yy - 1, z + zz).isMaterial(VanillaMaterials.AIR)) {
-							w.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.AIR, (short) 0, w);
+							w.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.AIR, (short) 0, null);
 							continue;
 						}
 						if (w.getBlockMaterial(x + xx, y + yy, z + zz).isMaterial(VanillaMaterials.AIR)) {
 							continue;
 						}
 						if (yy == -1 && random.nextInt(4) != 0) {
-							w.setBlockMaterial(x + xx, y + yy, z + zz, secondWallMaterial, (short) 0, w);
+							w.setBlockMaterial(x + xx, y + yy, z + zz, secondWallMaterial, (short) 0, null);
 						} else {
-							w.setBlockMaterial(x + xx, y + yy, z + zz, firstWallMaterial, (short) 0, w);
+							w.setBlockMaterial(x + xx, y + yy, z + zz, firstWallMaterial, (short) 0, null);
 						}
 					} else {
-						w.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.AIR, (short) 0, w);
+						w.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.AIR, (short) 0, null);
 					}
 				}
 			}
@@ -134,7 +134,7 @@ public class DungeonObject extends RandomObject implements RandomizableObject {
 			for (byte attempts = 0; attempts < 6; attempts++) {
 				final int xx = random.nextInt(radiusX * 2 + 1) - radiusX + x;
 				final int zz = random.nextInt(radiusZ * 2 + 1) - radiusZ + z;
-				final Block middle = w.getBlock(xx, y, zz, w);
+				final Block middle = w.getBlock(xx, y, zz);
 				if (!middle.getMaterial().isMaterial(VanillaMaterials.AIR)) {
 					continue;
 				}
@@ -158,7 +158,7 @@ public class DungeonObject extends RandomObject implements RandomizableObject {
 			}
 		}
 		if (addSpawner) {
-			w.setBlockMaterial(x, y, z, VanillaMaterials.MONSTER_SPAWNER, (short) 0, w);
+			w.setBlockMaterial(x, y, z, VanillaMaterials.MONSTER_SPAWNER, (short) 0, null);
 		}
 	}
 

@@ -101,23 +101,23 @@ public class PondObject extends RandomObject implements RandomizableObject {
 			for (byte pz = 0; pz < 16; pz++) {
 				boolean columnHasWater = false;
 				for (byte py = (byte) -holeHeightMap[16 * px + pz]; py < 0; py++) {
-					world.setBlockMaterial(px + x, py + y, pz + z, liquid, (short) 0, world);
+					world.setBlockMaterial(px + x, py + y, pz + z, liquid, (short) 0, null);
 					columnHasWater = true;
 				}
 				if (stoneWalls) {
 					for (byte py = 1; py < 5; py++) {
 						if (isWallBlock(px, py, pz, holeHeightMap)) {
-							world.setBlockMaterial(x + px, y - py, z + pz, VanillaMaterials.STONE, (short) 0, world);
+							world.setBlockMaterial(x + px, y - py, z + pz, VanillaMaterials.STONE, (short) 0, null);
 						}
 					}
 				}
 				for (byte py = 0; py < topHeightMap[16 * px + pz]; py++) {
-					world.setBlockMaterial(px + x, py + y, pz + z, VanillaMaterials.AIR, (short) 0, world);
+					world.setBlockMaterial(px + x, py + y, pz + z, VanillaMaterials.AIR, (short) 0, null);
 				}
 				if (stonyTop) {
 					for (byte py = 1; py < 5; py++) {
 						if (isWallBlock(px, py, pz, topHeightMap)) {
-							final Block block = world.getBlock(px + x, py + y - 1, pz + z, world);
+							final Block block = world.getBlock(px + x, py + y - 1, pz + z);
 							if (random.nextBoolean() && block.getMaterial().isOpaque()) {
 								block.setMaterial(VanillaMaterials.STONE);
 							}
@@ -127,7 +127,7 @@ public class PondObject extends RandomObject implements RandomizableObject {
 				if (sandy && columnHasWater) {
 					int ty = topHeightMap[16 * px + pz] + y;
 					if (world.getBlockMaterial(x + px, ty, z + pz).equals(VanillaMaterials.SAND)) {
-						world.setBlockMaterial(x + px, ty, z + pz, VanillaMaterials.SANDSTONE, (short) 0, world);
+						world.setBlockMaterial(x + px, ty, z + pz, VanillaMaterials.SANDSTONE, (short) 0, null);
 					}
 				}
 			}
@@ -141,7 +141,7 @@ public class PondObject extends RandomObject implements RandomizableObject {
 		for (byte px = 0; px < 16; px++) {
 			for (byte pz = 0; pz < 16; pz++) {
 				for (byte py = -1; py < 4; py++) {
-					final Block block = world.getBlock(x + px, y + py, z + pz, world);
+					final Block block = world.getBlock(x + px, y + py, z + pz);
 					if (block.isAtSurface()) {
 						final BlockMaterial material = block.getMaterial();
 						if (material == VanillaMaterials.DIRT) {

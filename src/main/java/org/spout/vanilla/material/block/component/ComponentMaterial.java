@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.component;
 
 import org.spout.api.component.components.BlockComponent;
 import org.spout.api.entity.Entity;
+import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
@@ -68,8 +69,8 @@ public class ComponentMaterial extends VanillaBlockMaterial implements ComplexMa
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock)) {
+	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause)) {
 			spawn(block.getPosition());
 			return true;
 		}

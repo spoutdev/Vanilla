@@ -59,9 +59,9 @@ public class ShrubObject extends TreeObject {
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
-		w.setBlockMaterial(x, y - 1, z, VanillaMaterials.DIRT, (short) 0, w);
+		w.setBlockMaterial(x, y - 1, z, VanillaMaterials.DIRT, (short) 0, null);
 		for (byte yy = 0; yy < totalHeight; yy++) {
-			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.LOG, logMetadata, w);
+			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.LOG, logMetadata, null);
 		}
 		for (byte yy = radius; yy > -1; yy--) {
 			for (byte xx = (byte) -yy; xx < yy + 1; xx++) {
@@ -71,7 +71,7 @@ public class ShrubObject extends TreeObject {
 					}
 					final BlockMaterial material = w.getBlockMaterial(x + xx, y - yy + radius, z + zz);
 					if (!(material instanceof Solid || material instanceof Liquid)) {
-						w.setBlockMaterial(x + xx, y - yy + radius, z + zz, VanillaMaterials.LEAVES, leavesMetadata, w);
+						w.setBlockMaterial(x + xx, y - yy + radius, z + zz, VanillaMaterials.LEAVES, leavesMetadata, null);
 					}
 				}
 			}

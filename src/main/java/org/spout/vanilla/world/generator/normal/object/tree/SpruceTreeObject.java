@@ -75,13 +75,13 @@ public class SpruceTreeObject extends TreeObject {
 		if (leavesBottomY == -1 || leavesMaxRadius == -1) {
 			findRandomLeavesSize();
 		}
-		w.setBlockMaterial(x, y - 1, z, VanillaMaterials.DIRT, (short) 0, w);
+		w.setBlockMaterial(x, y - 1, z, VanillaMaterials.DIRT, (short) 0, null);
 		byte leavesRadius = 0;
 		for (byte yy = totalHeight; yy >= leavesBottomY; yy--) {
 			for (byte xx = (byte) -leavesRadius; xx < leavesRadius + 1; xx++) {
 				for (byte zz = (byte) -leavesRadius; zz < leavesRadius + 1; zz++) {
 					if (Math.abs(xx) != leavesRadius || Math.abs(zz) != leavesRadius || leavesRadius <= 0) {
-						w.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.LEAVES, leavesMetadata, w);
+						w.setBlockMaterial(x + xx, y + yy, z + zz, VanillaMaterials.LEAVES, leavesMetadata, null);
 					}
 				}
 			}
@@ -92,7 +92,7 @@ public class SpruceTreeObject extends TreeObject {
 			}
 		}
 		for (int yy = 0; yy < totalHeight - 1; yy++) {
-			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.LOG, logMetadata, w);
+			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.LOG, logMetadata, null);
 		}
 	}
 

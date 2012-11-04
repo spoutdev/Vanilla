@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.item.misc;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
@@ -113,13 +114,13 @@ public class Dye extends VanillaItemMaterial implements Placeable {
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		return this == COCOA_BEANS && VanillaMaterials.COCOA_PLANT.onPlacement(block, data, against, clickedPos, isClickedBlock);
+	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		return this == COCOA_BEANS && VanillaMaterials.COCOA_PLANT.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data) {
-		return this == COCOA_BEANS && VanillaMaterials.COCOA_PLANT.onPlacement(block, data);
+	public boolean onPlacement(Block block, short data, Cause<?> cause) {
+		return this == COCOA_BEANS && VanillaMaterials.COCOA_PLANT.onPlacement(block, data, cause);
 	}
 
 	@Override

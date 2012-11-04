@@ -24,39 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.event.cause;
 
-import org.spout.api.event.Cause;
+import org.spout.api.entity.Player;
+import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.material.block.attachable.AbstractAttachable;
-import org.spout.vanilla.material.block.attachable.PointAttachable;
-
-public class Torch extends AbstractAttachable implements PointAttachable {
-	public Torch(String name, int id) {
-		super(name, id, (String)null);
-		this.setAttachable(BlockFaces.NSEWB).setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();
+/**
+ * Caused when a player breaks a block
+ */
+public class PlayerBreakCause extends PlayerCause{
+	private final Block block;
+	public PlayerBreakCause(Player player, Block block) {
+		super(player);
+		this.block = block;
 	}
 
-	@Override
-	public void setAttachedFace(Block block, BlockFace attachedFace, Cause<?> cause) {
-		block.setData((short) (BlockFaces.NSEWB.indexOf(attachedFace, 4) + 1), cause);
-	}
-
-	@Override
-	public BlockFace getAttachedFace(short data) {
-		return BlockFaces.NSEWB.get(data - 1, BlockFace.BOTTOM);
-	}
-
-	@Override
-	public byte getLightLevel(short data) {
-		return 14;
-	}
-
-	@Override
-	public boolean canSeekAttachedAlternative() {
-		return true;
+	/**
+	 * Gets the block being broken
+	 * 
+	 * @return broken
+	 */
+	public Block getBlock() {
+		return block;
 	}
 }

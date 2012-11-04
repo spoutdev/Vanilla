@@ -162,7 +162,7 @@ public class BigTreeObject extends TreeObject {
 				final float sizeZ = Math.abs(z - zz) + 0.5f;
 				if (sizeX * sizeX + sizeZ * sizeZ <= size * size) {
 					if (overridable.contains(world.getBlockMaterial(xx, y, zz))) {
-						world.setBlockMaterial(xx, y, zz, VanillaMaterials.LEAVES, leavesMetadata, world);
+						world.setBlockMaterial(xx, y, zz, VanillaMaterials.LEAVES, leavesMetadata, null);
 					}
 				}
 			}

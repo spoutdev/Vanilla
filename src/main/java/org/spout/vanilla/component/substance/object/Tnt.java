@@ -26,16 +26,16 @@
  */
 package org.spout.vanilla.component.substance.object;
 
-import org.spout.api.Source;
 import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.ObjectEntityProtocol;
 import org.spout.vanilla.util.explosion.ExplosionModel;
 import org.spout.vanilla.util.explosion.ExplosionModelSpherical;
 
-public class Tnt extends ObjectEntity implements Source {
+public class Tnt extends ObjectEntity{
 	public static final int ID = 50;
 	private Entity holder;
 
@@ -78,7 +78,7 @@ public class Tnt extends ObjectEntity implements Source {
 		pulse(dt);
 		if (getFuse() <= 0) {
 			ExplosionModel explosion = new ExplosionModelSpherical();
-			explosion.execute(holder.getTransform().getPosition(), getExplosionSize(), makesFire(), this);
+			explosion.execute(holder.getTransform().getPosition(), getExplosionSize(), makesFire(), VanillaMaterials.TNT.toCause(holder.getTransform().getPosition()));
 			holder.remove();
 		}
 	}

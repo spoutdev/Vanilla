@@ -26,12 +26,10 @@
  */
 package org.spout.vanilla.source;
 
-import org.spout.api.Source;
-
 /**
  * Represents a source of damage.
  */
-public enum DamageCause implements Source {
+public enum DamageCause{
 	/**
 	 * Damaged by falling.
 	 */

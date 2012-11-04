@@ -98,7 +98,7 @@ public class HugeMushroomObject extends LargePlantObject {
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
-		w.setBlockMaterial(x, y - 1, z, VanillaMaterials.DIRT, (short) 0, w);
+		w.setBlockMaterial(x, y - 1, z, VanillaMaterials.DIRT, (short) 0, null);
 		switch (shape) {
 			case FLAT:
 				generateHugeFlatMushroom(w, x, y, z);
@@ -123,13 +123,13 @@ public class HugeMushroomObject extends LargePlantObject {
 					} else {
 						data = 0;
 					}
-					world.setBlockMaterial(xx, yy, zz, capMaterial, data, world);
+					world.setBlockMaterial(xx, yy, zz, capMaterial, data, null);
 				}
 			}
 		}
 		final short data = useTextureMetadata ? (short) 10 : (short) 0;
 		for (int yy = y; yy < capYStart; yy++) { // generate stem
-			world.setBlockMaterial(x, yy, z, stemMaterial, data, world);
+			world.setBlockMaterial(x, yy, z, stemMaterial, data, null);
 		}
 	}
 
@@ -155,13 +155,13 @@ public class HugeMushroomObject extends LargePlantObject {
 					} else {
 						data = 0;
 					}
-					world.setBlockMaterial(xx, yy, zz, capMaterial, data, world);
+					world.setBlockMaterial(xx, yy, zz, capMaterial, data, null);
 				}
 			}
 		}
 		final short data = useTextureMetadata ? (short) 10 : (short) 0;
 		for (int yy = y; yy < totalHeight + y; yy++) { // generate stem
-			world.setBlockMaterial(x, yy, z, stemMaterial, data, world);
+			world.setBlockMaterial(x, yy, z, stemMaterial, data, null);
 		}
 	}
 

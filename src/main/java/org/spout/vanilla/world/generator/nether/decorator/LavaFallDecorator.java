@@ -57,7 +57,7 @@ public class LavaFallDecorator extends Decorator {
 			final int x = chunk.getBlockX(random);
 			final int y = random.nextInt(NetherGenerator.HEIGHT);
 			final int z = chunk.getBlockZ(random);
-			final Block block = world.getBlock(x, y, z, world);
+			final Block block = world.getBlock(x, y, z);
 			if (isValidSourcePoint(block)) {
 				block.setMaterial(VanillaMaterials.LAVA);
 				liquids.add(block);

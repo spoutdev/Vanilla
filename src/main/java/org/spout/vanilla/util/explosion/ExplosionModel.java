@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import org.spout.api.Source;
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
@@ -63,7 +63,7 @@ public abstract class ExplosionModel {
 		return this.blockList;
 	}
 
-	public synchronized void execute(Point position, float size, boolean fire, Source source) {
+	public synchronized void execute(Point position, float size, boolean fire, Cause<?> cause) {
 		//reset all blocks for the next explosion
 		for (ExplosionBlockSlot block : this.blockList) {
 			block.isSet = false;
@@ -89,9 +89,9 @@ public abstract class ExplosionModel {
 			} else if (material != VanillaMaterials.FIRE) {
 				//TODO: Item dropping yield?
 				if (material instanceof VanillaBlockMaterial) {
-					((VanillaBlockMaterial) material).onIgnite(block);
+					((VanillaBlockMaterial) material).onIgnite(block, cause);
 				} else {
-					material.destroy(block);
+					material.destroy(block, cause);
 				}
 				block.setMaterial(VanillaMaterials.AIR);
 			}

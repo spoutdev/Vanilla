@@ -72,7 +72,7 @@ public class Chest extends AbstractChest implements Container {
 	@Override
 	public void open(Player player) {
 		// Get the block at the component's position
-		final Block block = getBlock(player);
+		final Block block = getBlock();
 
 		// Make sure it's the right size and open the chest if closed
 		setDouble(VanillaMaterials.CHEST.isDouble(block));

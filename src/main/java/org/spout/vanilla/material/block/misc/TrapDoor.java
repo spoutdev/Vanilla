@@ -29,6 +29,7 @@ package org.spout.vanilla.material.block.misc;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
+import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
@@ -105,8 +106,8 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 	}
 
 	@Override
-	public void setAttachedFace(Block block, BlockFace attachedFace) {
-		block.setData((short) BlockFaces.WESN.indexOf(attachedFace, 0));
+	public void setAttachedFace(Block block, BlockFace attachedFace, Cause<?> cause) {
+		block.setData((short) BlockFaces.WESN.indexOf(attachedFace, 0), cause);
 	}
 
 	@Override

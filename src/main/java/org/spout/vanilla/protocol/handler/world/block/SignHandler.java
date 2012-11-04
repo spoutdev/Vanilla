@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.handler.world.block;
 
 import org.spout.api.component.components.BlockComponent;
 import org.spout.api.entity.Player;
+import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
@@ -54,6 +55,6 @@ public class SignHandler extends MessageHandler<SignMessage> {
 		}
 
 		Sign sign = (Sign) component;
-		sign.setText(text, player);
+		sign.setText(text, new PlayerCause(player));
 	}
 }

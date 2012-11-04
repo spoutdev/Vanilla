@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.event.block;
 
-import org.spout.api.Source;
 import org.spout.api.event.Cancellable;
+import org.spout.api.event.Cause;
 import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
 import org.spout.api.protocol.event.ProtocolEvent;
@@ -41,21 +41,21 @@ public class SignUpdateEvent extends Event implements ProtocolEvent, Cancellable
 	private static HandlerList handlers = new HandlerList();
 	private final Sign sign;
 	private final String[] newLines;
-	private final Source source;
+	private final Cause<?> cause;
 
-	public SignUpdateEvent(Sign sign, String[] newLines, Source source) {
+	public SignUpdateEvent(Sign sign, String[] newLines, Cause<?> cause) {
 		this.sign = sign;
 		this.newLines = newLines;
-		this.source = source;
+		this.cause = cause;
 	}
 
 	/**
-	 * Get the source of the changes
+	 * Get the cause of the changes
 	 * 
-	 * @return source which changes the text on a sign
+	 * @return cause which changes the text on a sign
 	 */
-	public Source getSource() {
-		return source;
+	public Cause<?> getSource() {
+		return cause;
 	}
 
 	/**

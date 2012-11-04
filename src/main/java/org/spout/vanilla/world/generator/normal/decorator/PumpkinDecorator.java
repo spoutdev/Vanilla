@@ -59,7 +59,7 @@ public class PumpkinDecorator extends Decorator {
 			final int zz = z - 7 + random.nextInt(15);
 			final int yy = getHighestWorkableBlock(world, xx, zz);
 			if (yy != -1 && world.getBlockMaterial(xx, yy, zz) == VanillaMaterials.AIR) {
-				world.setBlockMaterial(xx, yy, zz, VanillaMaterials.PUMPKIN_BLOCK, (short) random.nextInt(4), world);
+				world.setBlockMaterial(xx, yy, zz, VanillaMaterials.PUMPKIN_BLOCK, (short) random.nextInt(4), null);
 			}
 		}
 	}

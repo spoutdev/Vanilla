@@ -30,6 +30,7 @@ import java.awt.Color;
 
 import org.spout.api.Client;
 import org.spout.api.Spout;
+import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
@@ -270,7 +271,7 @@ public class HUDComponent extends EntityComponent {
 		final LabelComponent lvlTxt = exp.add(LabelComponent.class);
 		exp.setGeometry(new Rectangle(-0.02f, -0.79f, 0, 0));
 		lvlTxt.setFont(font);
-		lvlTxt.setText(ChatStyle.BRIGHT_GREEN + "50");
+		lvlTxt.setText(new ChatArguments(ChatStyle.BRIGHT_GREEN, "50"));
 
 		// Setup survival-specific HUD components
 		boolean survival = true; // getOwner().get(Human.class).isSurvival()

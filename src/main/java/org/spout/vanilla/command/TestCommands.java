@@ -37,6 +37,7 @@ import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.CommandPermissions;
 import org.spout.api.component.Component;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.EntityPrefab;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
 import org.spout.api.generator.WorldGeneratorObject;
@@ -79,6 +80,7 @@ import org.spout.vanilla.world.generator.object.VanillaObjects;
 public class TestCommands {
 	@SuppressWarnings("unused")
 	private final VanillaPlugin plugin;
+	private final EntityPrefab human = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/resources/mob/prefabs/human.sep");
 
 	public TestCommands(VanillaPlugin instance) {
 		plugin = instance;
@@ -88,7 +90,7 @@ public class TestCommands {
 	@CommandPermissions("vanilla.command.debug")
 	public void window(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player) && Spout.getPlatform()!=Platform.CLIENT) {
-			throw new CommandException("You must be a player to open  window.");
+			throw new CommandException("You must be a player to open a window.");
 		}
 		Player player;
 		if (Spout.getPlatform()!=Platform.CLIENT) {
@@ -316,12 +318,20 @@ public class TestCommands {
 	@Command(aliases = "spawnmob", desc = "Spawns a LivingComponent at your location", min = 1, max = 2)
 	@CommandPermissions("vanilla.command.spawnmob")
 	public void spawnmob(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player)) {
+		if (!(source instanceof Player) && Spout.getPlatform()!=Platform.CLIENT) {
 			throw new CommandException("Only a player may spawn a LivingComponent!");
 		}
-		final Point pos = ((Player) source).getTransform().getPosition();
+		Player player;
+		if (Spout.getPlatform()!=Platform.CLIENT) {
+			player = (Player) source;
+		} else {
+			player = ((Client)Spout.getEngine()).getActivePlayer();
+		}
+		
+		final Point pos = player.getTransform().getPosition();
 		final String name = args.getString(0);
 		Class<? extends Component> clazz;
+		// TODO: Make entity prefabs for all entities
 		if (name.isEmpty()) {
 			throw new CommandException("It appears that you forgot to enter in the name of the LivingComponent.");
 		} else if (name.equalsIgnoreCase("enderman")) {
@@ -351,8 +361,10 @@ public class TestCommands {
 			if (args.length() == 2) {
 				npcName = args.getString(1);
 			}
-			entity.add(Human.class).setName(npcName);
+			entity = human.createEntity(pos);
+			entity.get(Human.class).setName(npcName);
 		}
+		entity.setSavable(false);
 		pos.getWorld().spawnEntity(entity);
 	}
 }

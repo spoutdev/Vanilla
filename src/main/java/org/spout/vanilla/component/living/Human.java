@@ -27,10 +27,13 @@
 package org.spout.vanilla.component.living;
 
 import org.spout.api.Spout;
+import org.spout.api.chat.ChatArguments;
+import org.spout.api.component.components.TextModelComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.gamemode.AdventureComponent;
@@ -68,6 +71,10 @@ public class Human extends LivingComponent {
 		//Add height offset if loading from disk
 		if (getAttachedCount() > 1 && holder instanceof Player) {
 			((Player) holder).teleport(holder.getTransform().getPosition().add(0, 1.85F, 0));
+		}
+		if (getOwner().has(TextModelComponent.class)) {
+			getOwner().get(TextModelComponent.class).setSize(0.5f);
+			getOwner().get(TextModelComponent.class).setTranslation(new Vector3(0, 3f, 0));
 		}
 	}
 
@@ -129,6 +136,9 @@ public class Human extends LivingComponent {
 
 	public void setName(String name) {
 		getData().put(Data.NAME, name);
+		if (getOwner().has(TextModelComponent.class)) {
+			getOwner().get(TextModelComponent.class).setText(new ChatArguments(name));
+		}
 	}
 
 	public GameMode getGameMode() {

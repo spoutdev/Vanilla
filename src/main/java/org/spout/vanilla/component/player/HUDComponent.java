@@ -320,6 +320,8 @@ public class HUDComponent extends EntityComponent {
 	}
 
 	private void initHUD() {
+		HUD.setTakesInput(false);
+		
 		float x = START_X;
 
 		// Setup the hotbar

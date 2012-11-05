@@ -76,6 +76,8 @@ public class HUDComponent extends EntityComponent {
 	private final Random random = new Random();
 	private final float maxSecsBubbles = VanillaData.AIR_SECS.getDefaultValue();
 
+	private int hungerTicks;
+
 	@Override
 	public void onAttached() {
 		if (!(getOwner() instanceof Player)) {
@@ -125,14 +127,16 @@ public class HUDComponent extends EntityComponent {
 		}
 		bubbles.update();
 
+		float x = START_X;
+		float y = -0.77f;
+		float dx = 0.06f * SCALE;
+
 		// Animate health bar
 		if (getData().get(VanillaData.HEALTH) <= 4) {
 			List<RenderPart> parts = hearts.get(RenderPartsHolderComponent.class).getRenderParts();
-			float x = START_X;
 			for (int i = 0; i < 10; i++) {
 				RenderPart heart = parts.get(i);
 				RenderPart heartBg = parts.get(i + 10);
-				float y = -0.77f;
 
 				if (random.nextBoolean()) {
 					y = -0.765f; // Twitch up
@@ -142,10 +146,50 @@ public class HUDComponent extends EntityComponent {
 				heart.setSprite(new Rectangle(x + 0.005f, y, 0.065f * SCALE, 0.065f));
 				heartBg.setSprite(new Rectangle(x, y, 0.065f * SCALE, 0.065f));
 
-				x += 0.06f * SCALE;
+				x += dx;
 			}
 
 			hearts.update();
+		}
+
+		// Animate hunger bar
+		int saturation = 0; // TODO: getData().get(VanillaData.FOOD_SATURATION);
+		if (saturation <= 0) {
+			List<RenderPart> parts = hunger.get(RenderPartsHolderComponent.class).getRenderParts();
+			if (hungerTicks == 98) {
+				x = 0.09f * SCALE;
+				y = -0.77f;
+				for (int i = 0; i < 10; i++) {
+					RenderPart part = parts.get(i);
+					RenderPart partBg = parts.get(i + 10);
+
+					int rand = random.nextInt(3);
+					if (rand == 0) {
+						y = -0.765f; // Twitch up
+					} else if (rand == 1) {
+						y = -0.775f; // Twitch down
+					}
+					part.setSprite(new Rectangle(x, y, 0.075f * SCALE, 0.07f));
+					partBg.setSprite(new Rectangle(x, y, 0.075f * SCALE, 0.07f));
+
+					x += dx;
+				}
+				hungerTicks++;
+
+				hunger.update();
+			} else if (hungerTicks == 100) {
+				// Reset hunger bar to normal
+				x = 0.09f * SCALE;
+				for (int i = 0; i < 10; i++) {
+					parts.get(i).setSprite(new Rectangle(x, -0.77f, 0.075f * SCALE, 0.07f));
+					parts.get(i + 10).setSprite(new Rectangle(x, -0.77f, 0.075f * SCALE, 0.07f));
+					x += dx;
+				}
+
+				hungerTicks = 0;
+			} else {
+				hungerTicks++;
+			}
 		}
 	}
 

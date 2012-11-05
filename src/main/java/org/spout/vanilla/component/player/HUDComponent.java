@@ -47,6 +47,7 @@ import org.spout.api.render.Font;
 import org.spout.api.render.RenderMaterial;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.VanillaData;
 
@@ -97,7 +98,7 @@ public class HUDComponent extends EntityComponent {
 
 	@Override
 	public boolean canTick() {
-		return true; // getOwner().get(Human.class) == null ? false : getOwner().get(Human.class).isSurvival();
+		return getOwner().get(Human.class) == null ? false : getOwner().get(Human.class).isSurvival();
 	}
 
 	@Override
@@ -344,7 +345,7 @@ public class HUDComponent extends EntityComponent {
 		lvlTxt.setText(new ChatArguments(ChatStyle.BRIGHT_GREEN, "50"));
 
 		// Setup survival-specific HUD components
-		boolean survival = true; // getOwner().get(Human.class).isSurvival()
+		boolean survival = getOwner().get(Human.class).isSurvival();
 		if (survival) {
 			// Experience bar
 			final RenderPartsHolderComponent expRect = exp.add(RenderPartsHolderComponent.class);

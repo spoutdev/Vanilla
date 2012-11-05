@@ -30,6 +30,7 @@ import org.spout.api.Spout;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
+import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
@@ -147,6 +148,10 @@ public class HealthComponent extends EntityComponent {
 				getData().put(VanillaData.HEALTH, getMaxHealth());
 			} else {
 				getData().put(VanillaData.HEALTH, getHealth() + event.getChange());
+			}
+			
+			if (getOwner().has(HUDComponent.class)) {
+				getOwner().get(HUDComponent.class).setHealth(getData().get(VanillaData.HEALTH));
 			}
 		}
 

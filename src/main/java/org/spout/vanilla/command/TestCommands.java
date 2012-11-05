@@ -45,9 +45,11 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
+import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.NetworkSynchronizer;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.inventory.window.DefaultWindow;
 import org.spout.vanilla.component.inventory.window.block.BrewingStandWindow;
 import org.spout.vanilla.component.inventory.window.block.CraftingTableWindow;
 import org.spout.vanilla.component.inventory.window.block.DispenserWindow;
@@ -85,19 +87,27 @@ public class TestCommands {
 	@Command(aliases = "window", usage = "<type>", desc = "Open a window.", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.debug")
 	public void window(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player)) {
+		if (!(source instanceof Player) && Spout.getPlatform()!=Platform.CLIENT) {
 			throw new CommandException("You must be a player to open  window.");
 		}
-
+		Player player;
+		if (Spout.getPlatform()!=Platform.CLIENT) {
+			player = (Player) source;
+		} else {
+			player = ((Client)Spout.getEngine()).getActivePlayer();
+		}
+		
 		WindowType type;
 		try {
 			type = WindowType.valueOf(args.getString(0).toUpperCase());
 		} catch (IllegalArgumentException e) {
 			throw new CommandException("Window not found.");
 		}
-
-		Player player = (Player) source;
+		
 		switch (type) {
+			case DEFAULT:
+				player.get(DefaultWindow.class).open();
+				break;
 			case CHEST:
 				player.add(ChestWindow.class).init(new Chest()).open();
 				break;
@@ -127,10 +137,17 @@ public class TestCommands {
 	@Command(aliases = "damage", usage = "<amount>", desc = "Damage yourself")
 	@CommandPermissions("vanilla.command.debug")
 	public void damage(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player)) {
+		if (!(source instanceof Player) && Spout.getPlatform()!=Platform.CLIENT) {
 			throw new CommandException("You must be a player to damage yourself.");
 		}
-		((Player) source).get(HealthComponent.class).damage(args.getInteger(0));
+		Player player;
+		if (Spout.getPlatform()!=Platform.CLIENT) {
+			player = (Player) source;
+		} else {
+			player = ((Client)Spout.getEngine()).getActivePlayer();
+		}
+		
+		player.get(HealthComponent.class).damage(args.getInteger(0));
 	}
 
 	@Command(aliases = {"explode"}, usage = "<explode>", desc = "Create an explosion")

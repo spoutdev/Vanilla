@@ -56,6 +56,7 @@ import org.spout.vanilla.world.generator.VanillaBiomeGenerator;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
+import org.spout.vanilla.world.generator.normal.biome.selector.NormalBiomeSelector;
 import org.spout.vanilla.world.generator.normal.populator.CavePopulator;
 import org.spout.vanilla.world.generator.normal.populator.DungeonPopulator;
 import org.spout.vanilla.world.generator.normal.populator.FallingLiquidPopulator;
@@ -67,7 +68,6 @@ import org.spout.vanilla.world.generator.normal.populator.RavinePopulator;
 import org.spout.vanilla.world.generator.normal.populator.RockyShieldPopulator;
 import org.spout.vanilla.world.generator.normal.populator.SnowPopulator;
 import org.spout.vanilla.world.generator.normal.populator.TemplePopulator;
-import org.spout.vanilla.world.generator.normal.selector.VanillaBiomeSelector;
 
 public class NormalGenerator extends VanillaBiomeGenerator {
 	// numeric constants
@@ -139,7 +139,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 	public void registerBiomes() {
 		// if you want to check out a particular biome, use this!
 		//setSelector(new PerBlockBiomeSelector(VanillaBiomes.MOUNTAINS));
-		setSelector(new VanillaBiomeSelector());
+		setSelector(new NormalBiomeSelector());
 		addGeneratorPopulators(
 				new GroundCoverPopulator(), new RockyShieldPopulator(),
 				new CavePopulator(), new RavinePopulator());

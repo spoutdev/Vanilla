@@ -24,40 +24,40 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.biome;
+package org.spout.vanilla.world.generator.normal.biome.selector;
 
-import org.spout.api.generator.biome.Biome;
-import org.spout.api.generator.biome.Decorator;
+import net.royawesome.jlibnoise.module.modifier.Turbulence;
+import net.royawesome.jlibnoise.module.source.Perlin;
 
-import org.spout.vanilla.data.Climate;
+import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorElement;
+import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorLayer;
 
-public abstract class VanillaBiome extends Biome implements BiomeSelectorElement {
-	private final int biomeId;
-	private Climate climate = Climate.MODERATE;
+public class FrozenOceanLayer implements BiomeSelectorLayer {
+	private static final float FROZEN_OCEAN_START = 0.4f;
+	private static final float FROZEN_OCEAN_END = 1;
+	private final Perlin oceanBase = new Perlin();
+	private final Turbulence ocean = new Turbulence();
 
-	protected VanillaBiome(int biomeId, Decorator... decorators) {
-		super(decorators);
-		this.biomeId = biomeId;
+	public FrozenOceanLayer(double scale) {
+		oceanBase.setFrequency(0.01 / scale);
+		oceanBase.setOctaveCount(1);
+		ocean.SetSourceModule(0, oceanBase);
+		ocean.setFrequency(0.03);
+		ocean.setPower(20);
+		ocean.setRoughness(1);
 	}
 
-	public int getBiomeId() {
-		return biomeId;
-	}
-
-	/**
-	 * Gets the Climate of this Biome
-	 * @return the climate
-	 */
-	public Climate getClimate() {
-		return this.climate;
-	}
-
-	/**
-	 * Sets the Climate for this Biome
-	 * @param climate to set to
-	 */
-	public void setClimate(Climate climate) {
-		this.climate = climate;
+	@Override
+	public BiomeSelectorElement pick(int x, int y, int z, long seed) {
+		oceanBase.setSeed((int) seed * 11);
+		ocean.setSeed((int) seed * 13);
+		final float value = (float) ocean.GetValue(x, 1000, z);
+		if (value > FROZEN_OCEAN_START
+				&& value <= FROZEN_OCEAN_END) {
+			return VanillaBiomes.FROZEN_OCEAN;
+		} else {
+			return null;
+		}
 	}
 }

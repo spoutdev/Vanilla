@@ -24,40 +24,20 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.biome;
+package org.spout.vanilla.world.generator.normal.biome.selector;
 
-import org.spout.api.generator.biome.Biome;
-import org.spout.api.generator.biome.Decorator;
-
-import org.spout.vanilla.data.Climate;
+import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorElement;
+import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorLayer;
 
-public abstract class VanillaBiome extends Biome implements BiomeSelectorElement {
-	private final int biomeId;
-	private Climate climate = Climate.MODERATE;
-
-	protected VanillaBiome(int biomeId, Decorator... decorators) {
-		super(decorators);
-		this.biomeId = biomeId;
-	}
-
-	public int getBiomeId() {
-		return biomeId;
-	}
-
-	/**
-	 * Gets the Climate of this Biome
-	 * @return the climate
-	 */
-	public Climate getClimate() {
-		return this.climate;
-	}
-
-	/**
-	 * Sets the Climate for this Biome
-	 * @param climate to set to
-	 */
-	public void setClimate(Climate climate) {
-		this.climate = climate;
+public class MountainsLayer implements BiomeSelectorLayer {
+	@Override
+	public BiomeSelectorElement pick(int x, int y, int z, long seed) {
+		final BiomeSelectorElement element = NormalBiomeSelector.RIVER.pick(x, y, z, seed);
+		if (element == null) {
+			return VanillaBiomes.MOUNTAINS;
+		} else {
+			return element;
+		}
 	}
 }

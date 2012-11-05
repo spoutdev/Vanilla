@@ -24,40 +24,45 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.biome;
+package org.spout.vanilla.world.generator.normal.biome.selector;
 
-import org.spout.api.generator.biome.Biome;
-import org.spout.api.generator.biome.Decorator;
+import net.royawesome.jlibnoise.module.modifier.Turbulence;
+import net.royawesome.jlibnoise.module.source.Perlin;
 
-import org.spout.vanilla.data.Climate;
+import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorElement;
+import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorLayer;
 
-public abstract class VanillaBiome extends Biome implements BiomeSelectorElement {
-	private final int biomeId;
-	private Climate climate = Climate.MODERATE;
+public class ForestLayer implements BiomeSelectorLayer {
+	private static final float HILLS_START = 0.5f;
+	private static final float HILLS_END = 1f;
+	private final Perlin hillsBase = new Perlin();
+	private final Turbulence hills = new Turbulence();
 
-	protected VanillaBiome(int biomeId, Decorator... decorators) {
-		super(decorators);
-		this.biomeId = biomeId;
+	public ForestLayer(double scale) {
+		hillsBase.setFrequency(0.01 / scale);
+		hillsBase.setOctaveCount(1);
+		hills.SetSourceModule(0, hillsBase);
+		hills.setFrequency(0.03);
+		hills.setPower(20);
+		hills.setRoughness(1);
 	}
 
-	public int getBiomeId() {
-		return biomeId;
-	}
-
-	/**
-	 * Gets the Climate of this Biome
-	 * @return the climate
-	 */
-	public Climate getClimate() {
-		return this.climate;
-	}
-
-	/**
-	 * Sets the Climate for this Biome
-	 * @param climate to set to
-	 */
-	public void setClimate(Climate climate) {
-		this.climate = climate;
+	@Override
+	public BiomeSelectorElement pick(int x, int y, int z, long seed) {
+		hillsBase.setSeed((int) seed * 11);
+		hills.setSeed((int) seed * 13);
+		final BiomeSelectorElement element = NormalBiomeSelector.RIVER.pick(x, y, z, seed);
+		if (element == null) {
+			final float value = (float) hills.GetValue(x, 500, z);
+			if (value > HILLS_START
+					&& value <= HILLS_END) {
+				return VanillaBiomes.FOREST_HILLS;
+			} else {
+				return VanillaBiomes.FOREST;
+			}
+		} else {
+			return element;
+		}
 	}
 }

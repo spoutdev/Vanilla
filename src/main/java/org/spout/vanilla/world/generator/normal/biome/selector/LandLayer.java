@@ -24,40 +24,42 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.biome;
+package org.spout.vanilla.world.generator.normal.biome.selector;
 
-import org.spout.api.generator.biome.Biome;
-import org.spout.api.generator.biome.Decorator;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-import org.spout.vanilla.data.Climate;
+import net.royawesome.jlibnoise.module.modifier.Turbulence;
+import net.royawesome.jlibnoise.module.source.Voronoi;
+
+import org.spout.api.math.MathHelper;
 import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorElement;
 
-public abstract class VanillaBiome extends Biome implements BiomeSelectorElement {
-	private final int biomeId;
-	private Climate climate = Climate.MODERATE;
+import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorLayer;
 
-	protected VanillaBiome(int biomeId, Decorator... decorators) {
-		super(decorators);
-		this.biomeId = biomeId;
+public class LandLayer implements BiomeSelectorLayer {
+	private final List<BiomeSelectorElement> selectorElements = new ArrayList<BiomeSelectorElement>();
+	private final Voronoi landBase = new Voronoi();
+	private final Turbulence land = new Turbulence();
+
+	public LandLayer(double scale) {
+		landBase.setFrequency(0.007 / scale);
+		landBase.setDisplacement(1);
+		land.SetSourceModule(0, landBase);
+		land.setFrequency(0.004);
+		land.setPower(70);
 	}
 
-	public int getBiomeId() {
-		return biomeId;
+	@Override
+	public BiomeSelectorElement pick(int x, int y, int z, long seed) {
+		landBase.setSeed((int) seed * 11);
+		land.setSeed((int) seed * 13);
+		final float size = selectorElements.size() / 2f;
+		return selectorElements.get(MathHelper.floor(land.GetValue(x, 0, z) * size + size));
 	}
-
-	/**
-	 * Gets the Climate of this Biome
-	 * @return the climate
-	 */
-	public Climate getClimate() {
-		return this.climate;
-	}
-
-	/**
-	 * Sets the Climate for this Biome
-	 * @param climate to set to
-	 */
-	public void setClimate(Climate climate) {
-		this.climate = climate;
+	
+	public void addLandElements(BiomeSelectorElement... selectorElements) {
+		this.selectorElements.addAll(Arrays.asList(selectorElements));
 	}
 }

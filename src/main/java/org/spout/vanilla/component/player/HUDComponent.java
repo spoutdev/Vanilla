@@ -96,7 +96,7 @@ public class HUDComponent extends EntityComponent {
 		setArmor(15);
 		setHealth(getData().get(VanillaData.HEALTH));
 		setHotbarSlot(0);
-		setHunger(15);
+		setHunger(15, false);
 	}
 
 	@Override
@@ -305,8 +305,8 @@ public class HUDComponent extends EntityComponent {
 	 * Sets the health display.
 	 * @param amount Amount of health to display
 	 * @param animate Whether to animate health bar
-	 * @param poison Whether to display poisoned hearts
-	 * @param wither Whether to display wither hearts
+	 * @param poison Whether health bar should use poisoned texture
+	 * @param wither Whether health bar should use wither texture
 	 */
 	public void setHealth(int amount, boolean animate, boolean poison, boolean wither) {
 		RenderPartsHolderComponent heartsRect = hearts.get(RenderPartsHolderComponent.class);
@@ -361,27 +361,42 @@ public class HUDComponent extends EntityComponent {
 	/**
 	 * Sets the amount of hunger to display.
 	 * @param amount Amount of hunger to display
+	 * @param hungry Whether bar should use hunger effect texture
 	 */
-	public void setHunger(int amount) {
+	public void setHunger(int amount, boolean hungry) {
 		RenderPartsHolderComponent hungerRect = hunger.get(RenderPartsHolderComponent.class);
 
+		float foregroundX = 52f;
+		float backgroundX = 16f;
+		if (hungry) {
+			foregroundX = 88f;
+			backgroundX = 133f;
+		}
+
 		if (amount == 0) {
-			for (RenderPart hungerPart : hungerRect.getRenderParts()) {
-				hungerPart.setSource(new Rectangle(142f / 256f, 27f / 256f, 9f / 256f, 9f / 256f)); // Empty
+			for (int i = 0; i < 10; i++) {
+				hungerRect.get(i).setSource(new Rectangle(142f / 256f, 27f / 256f, 9f / 256f, 9f / 256f)); // Foreground
+			}
+			for (int i = 10; i < 20; i++) {
+				hungerRect.get(i).setSource(new Rectangle(backgroundX / 256f, 27f / 256f, 9f / 256f, 9f / 256f)); // Background
 			}
 		} else {
 			for (int i = 9; i >= 0; i--) {
-				float x = 0;
-				if (amount >= 2) {
-					x = 52f; // Full
-					amount -= 2;
-				} else if (amount == 1) {
-					x = 61f; // Half
-					amount = 0;
-				} else if (amount == 0) {
+				float x = foregroundX;
+				if (amount == 0) {
 					x = 142f; // Empty
+				} else if (amount == 1) {
+					x += 9f; // Half
+					amount = 0;
+				} else {
+					x = foregroundX; // Full
+					amount -= 2;
 				}
 				hungerRect.get(i).setSource(new Rectangle(x / 256f, 27f / 256f, 9f / 256f, 9f / 256f));
+			}
+
+			for (int i = 19; i >= 10; i--) {
+				hungerRect.get(i).setSource(new Rectangle(backgroundX / 256f, 27f / 256f, 9f / 256f, 9f / 256f));
 			}
 		}
 

@@ -26,22 +26,10 @@
  */
 package org.spout.vanilla.component.inventory.window;
 
-import java.awt.Color;
-
-import org.spout.api.Client;
-import org.spout.api.Spout;
 import org.spout.api.entity.Player;
-import org.spout.api.gui.Screen;
-import org.spout.api.gui.Widget;
-import org.spout.api.gui.component.RenderPartsHolderComponent;
-import org.spout.api.gui.render.RenderPart;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.Rectangle;
-import org.spout.api.plugin.Platform;
-import org.spout.api.render.RenderMaterial;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.inventory.player.PlayerArmorInventory;
@@ -49,10 +37,6 @@ import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class DefaultWindow extends Window {
-	private static final float SCALE = 0.75f; // TODO: Apply directly from engine
-	private final Screen windowScreen = new Screen();
-	private final RenderMaterial bgMaterial = (RenderMaterial) Spout.getFilesystem().getResource("material://Vanilla/resources/gui/smt/InventoryGUIMaterial.smt");
-	
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -60,21 +44,6 @@ public class DefaultWindow extends Window {
 		PlayerInventory inventory = getHuman().getInventory();
 		addInventoryConverter(new InventoryConverter(inventory.getArmor(), "8, 7, 6, 5"));
 		addInventoryConverter(new InventoryConverter(inventory.getCraftingGrid(), "3-4, 1-2, 0"));
-		
-		if (Spout.getPlatform() == Platform.CLIENT) {
-			initScreen();
-		}
-	}
-	
-	private void initScreen() {
-		Widget background = new Widget();
-		RenderPart bg = new RenderPart();
-		bg.setRenderMaterial(bgMaterial);
-		bg.setColor(Color.WHITE);
-		bg.setSprite(new Rectangle(-0.5f * SCALE, -0.5f, 1f * SCALE, 1f));
-		bg.setSource(new Rectangle(0, 0, 176f / 256f, 166f / 256f));
-		background.add(RenderPartsHolderComponent.class).add(bg);
-		windowScreen.attachWidget(VanillaPlugin.getInstance(), background);
 	}
 
 	@Override
@@ -93,10 +62,6 @@ public class DefaultWindow extends Window {
 
 	@Override
 	public void open() {
-		if (Spout.getPlatform() == Platform.SERVER) {
-			throw new UnsupportedOperationException("A player's inventory window cannot be opened from the server.");
-		}
-		
-		((Client) Spout.getEngine()).getScreenStack().openScreen(windowScreen);
+		throw new UnsupportedOperationException("A player's inventory window cannot be opened from the server.");
 	}
 }

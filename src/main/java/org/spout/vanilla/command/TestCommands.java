@@ -62,6 +62,7 @@ import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.component.living.hostile.EnderDragon;
 import org.spout.vanilla.component.living.neutral.Enderman;
 import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.component.substance.material.chest.Chest;
 import org.spout.vanilla.component.substance.object.FallingBlock;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
@@ -134,6 +135,15 @@ public class TestCommands {
 			throw new CommandException("You must be a player to damage yourself.");
 		}
 		((Player) source).get(HealthComponent.class).damage(args.getInteger(0));
+	}
+	
+	@Command(aliases = "hunger", usage = "<amount> <hungry>", desc = "Modify your hunger", min = 2, max = 2)
+	@CommandPermissions("vanilla.command.debug")
+	public void hunger(CommandContext args, CommandSource source) throws CommandException {
+		if(Spout.getPlatform() != Platform.CLIENT) {
+			throw new CommandException("Only clients can modify the hunger bar.");
+		}
+		((Client) Spout.getEngine()).getActivePlayer().get(HUDComponent.class).setHunger(args.getInteger(0), Boolean.valueOf(args.getString(1)));
 	}
 
 	@Command(aliases = {"explode"}, usage = "<explode>", desc = "Create an explosion")

@@ -26,10 +26,17 @@
  */
 package org.spout.vanilla.world.generator.biome;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+
+import org.spout.api.exception.ConfigurationException;
+import org.spout.api.util.config.Configuration;
+import org.spout.api.util.config.annotated.AnnotatedObjectConfiguration;
+import org.spout.api.util.config.yaml.YamlConfiguration;
 
 import org.spout.vanilla.world.generator.nether.biome.NetherrackBiome;
 import org.spout.vanilla.world.generator.normal.biome.grassy.ForestBiome;
@@ -93,6 +100,32 @@ public class VanillaBiomes {
 				System.out.println("Could not properly reflect VanillaBiomes! Unexpected behaviour may occur, please report to http://issues.spout.org!");
 				ex.printStackTrace();
 			}
+		}
+	}
+
+	public static void load(Configuration config) {
+		final AnnotatedObjectConfiguration biomes =
+				new AnnotatedObjectConfiguration(config);
+		for (Entry<String, VanillaBiome> entry : BY_NAME.entrySet()) {
+			biomes.addObject(entry.getValue(), entry.getKey());
+		}
+		try {
+			biomes.load();
+		} catch (ConfigurationException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	public static void save(Configuration config) {
+		final AnnotatedObjectConfiguration biomes =
+				new AnnotatedObjectConfiguration(config);
+		for (Entry<String, VanillaBiome> entry : BY_NAME.entrySet()) {
+			biomes.addObject(entry.getValue(), entry.getKey());
+		}
+		try {
+			biomes.save();
+		} catch (ConfigurationException ex) {
+			ex.printStackTrace();
 		}
 	}
 

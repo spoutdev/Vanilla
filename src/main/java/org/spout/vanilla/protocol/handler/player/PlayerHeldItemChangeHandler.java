@@ -26,12 +26,15 @@
  */
 package org.spout.vanilla.protocol.handler.player;
 
+import org.spout.api.Client;
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.protocol.msg.player.PlayerHeldItemChangeMessage;
@@ -55,5 +58,11 @@ public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeld
 		ItemStack item = quickbar.getCurrentItem();
 		Player player = session.getPlayer();
 		player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, 0, item));
+	}
+	
+	@Override
+	public void handleClient(Session session, PlayerHeldItemChangeMessage message) {
+		Player player = ((Client) Spout.getEngine()).getActivePlayer();
+		player.get(HUDComponent.class).setHotbarSlot(message.getSlot());
 	}
 }

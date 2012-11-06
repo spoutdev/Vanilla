@@ -43,11 +43,6 @@ import org.spout.vanilla.protocol.netcache.ChunkNetCache;
 
 public class PlayerHandshakeHandler extends MessageHandler<PlayerHandshakeMessage> {
 	@Override
-	public void handleClient(Session session, PlayerHandshakeMessage message) {
-		// TODO Compatibility for SpoutClient
-	}
-
-	@Override
 	public void handleServer(Session session, PlayerHandshakeMessage message) {
 		if (message.getProtocolVersion() < VanillaPlugin.MINECRAFT_PROTOCOL_ID) {
 			session.disconnect(VanillaConfiguration.OUTDATED_CLIENT_MESSAGE.getString());

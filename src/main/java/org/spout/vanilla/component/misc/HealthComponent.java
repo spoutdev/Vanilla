@@ -151,7 +151,7 @@ public class HealthComponent extends EntityComponent {
 			}
 			
 			if (getOwner().has(HUDComponent.class)) {
-				getOwner().get(HUDComponent.class).setHealth(getData().get(VanillaData.HEALTH));
+				getOwner().get(HUDComponent.class).setHealth(getData().get(VanillaData.HEALTH), true, true, false);
 			}
 		}
 

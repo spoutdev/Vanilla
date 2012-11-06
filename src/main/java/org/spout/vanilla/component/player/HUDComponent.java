@@ -78,6 +78,8 @@ public class HUDComponent extends EntityComponent {
 	private final float maxSecsBubbles = VanillaData.AIR_SECS.getDefaultValue();
 
 	private int hungerTicks;
+	private int heartAnimationTicks;
+	private boolean animateHearts;
 
 	@Override
 	public void onAttached() {
@@ -128,11 +130,41 @@ public class HUDComponent extends EntityComponent {
 		}
 		bubbles.update();
 
+		// Animate health bar
+		List<RenderPart> heartParts = hearts.get(RenderPartsHolderComponent.class).getRenderParts();
+		if (animateHearts) {
+			float x = 0;
+			if (heartAnimationTicks == 3) {
+				// Flash off
+				x = 16f;
+				heartAnimationTicks++;
+			} else if (heartAnimationTicks == 6) {
+				// Flash on
+				x = 25f;
+				heartAnimationTicks++;
+			} else if (heartAnimationTicks == 9) {
+				// Flash off final time
+				x = 16f;
+				heartAnimationTicks = 0;
+				animateHearts = false;
+			} else {
+				heartAnimationTicks++;
+			}
+
+			if (x != 0) {
+				float y = VanillaConfiguration.HARDCORE_MODE.getBoolean() ? 45f / 256f : 0;
+				for (int i = 10; i < 20; i++) {
+					heartParts.get(i).setSource(new Rectangle(x / 256f, y, 9f / 256f, 9f / 256f));
+				}
+
+				hearts.update();
+			}
+		}
+
 		float x = START_X;
 		float y = -0.77f;
 		float dx = 0.06f * SCALE;
 
-		// Animate health bar
 		if (getData().get(VanillaData.HEALTH) <= 4) {
 			List<RenderPart> parts = hearts.get(RenderPartsHolderComponent.class).getRenderParts();
 			for (int i = 0; i < 10; i++) {
@@ -252,24 +284,60 @@ public class HUDComponent extends EntityComponent {
 	}
 
 	/**
-	 * Sets the amount of health to display.
+	 * Sets the health display.
 	 * @param amount Amount of health to display
 	 */
 	public void setHealth(int amount) {
+		setHealth(amount, false, false, false);
+	}
+
+	/**
+	 * Sets the health display.
+	 * @param amount Amount of health to display
+	 * @param animate Whether to animate health bar
+	 */
+	public void setHealth(int amount, boolean animate) {
+		setHealth(amount, animate, false, false);
+	}
+
+	/**
+	 * Sets the health display.
+	 * @param amount Amount of health to display
+	 * @param animate Whether to animate health bar
+	 * @param poison Whether to display poisoned hearts
+	 * @param wither Whether to display wither hearts
+	 */
+	public void setHealth(int amount, boolean animate, boolean poison, boolean wither) {
 		RenderPartsHolderComponent heartsRect = hearts.get(RenderPartsHolderComponent.class);
+		float y = VanillaConfiguration.HARDCORE_MODE.getBoolean() ? 45f / 256f : 0;
+
+		float baseX = 53f;
+		if (poison) {
+			baseX = 89f;
+		} else if (wither) {
+			// TODO: Wither texture x = 115f
+		}
 
 		for (int i = 0; i < 10; i++) {
-			float x = 0;
+			float x = baseX;
 			if (amount == 0) {
 				x = 124f; // Empty
 			} else if (amount == 1) {
-				x = 62f; // Half
+				x += 9f; // Half
 				amount = 0;
 			} else {
-				x = 53f; // Full
+				x = baseX; // Full
 				amount -= 2;
 			}
-			heartsRect.get(i).setSource(new Rectangle(x / 256f, VanillaConfiguration.HARDCORE_MODE.getBoolean() ? 45f / 256f : 0, 9f / 256f, 9f / 256f));
+			heartsRect.get(i).setSource(new Rectangle(x / 256f, y, 9f / 256f, 9f / 256f));
+		}
+
+		if (animate) {
+			for (int i = 10; i < 20; i++) {
+				heartsRect.get(i).setSource(new Rectangle(25f / 256f, y, 9f / 256f, 9f / 256f)); // Flash on
+			}
+
+			animateHearts = true;
 		}
 
 		hearts.update();
@@ -321,7 +389,7 @@ public class HUDComponent extends EntityComponent {
 
 	private void initHUD() {
 		HUD.setTakesInput(false);
-		
+
 		float x = START_X;
 
 		// Setup the hotbar

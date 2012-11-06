@@ -40,6 +40,7 @@ import org.spout.api.gui.Screen;
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.LabelComponent;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
+import org.spout.api.gui.component.TexturedRectComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
 import org.spout.api.plugin.Platform;
@@ -66,6 +67,7 @@ public class HUDComponent extends EntityComponent {
 	private final Font font = (Font) Spout.getFilesystem().getResource("font://Spout/resources/resources/fonts/ubuntu/Ubuntu-M.ttf");
 
 	// The core elements of the main HUD
+	private final Widget crosshair = new Widget();
 	private final Widget hotbar = new Widget();
 	private final Widget hearts = new Widget();
 	private final Widget exp = new Widget();
@@ -390,6 +392,14 @@ public class HUDComponent extends EntityComponent {
 		HUD.setTakesInput(false);
 
 		float x = START_X;
+
+		// Setup crosshairs
+		final TexturedRectComponent crosshairRect = crosshair.add(TexturedRectComponent.class);
+		crosshairRect.setRenderMaterial(iconsMaterial);
+		crosshairRect.setColor(Color.WHITE);
+		crosshairRect.setSprite(new Rectangle(-0.005f, -0.005f, 0.05f * SCALE, 0.05f));
+		crosshairRect.setSource(new Rectangle(4f / 256f, 4f / 256f, 7f / 256f, 7f / 256f));
+		HUD.attachWidget(VanillaPlugin.getInstance(), crosshair);
 
 		// Setup the hotbar
 		final RenderPartsHolderComponent hotbarRect = hotbar.add(RenderPartsHolderComponent.class);

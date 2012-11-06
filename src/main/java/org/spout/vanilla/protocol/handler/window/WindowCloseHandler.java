@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.protocol.handler.window;
 
+import org.spout.api.Client;
+import org.spout.api.Spout;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
@@ -40,5 +42,10 @@ public final class WindowCloseHandler extends MessageHandler<WindowCloseMessage>
 		}
 		Window window = session.getPlayer().detach(Window.class);
 		window.close();
+	}
+	
+	@Override
+	public void handleClient(Session session, WindowCloseMessage message) {
+		((Client) Spout.getEngine()).getScreenStack().closeTopScreen();
 	}
 }

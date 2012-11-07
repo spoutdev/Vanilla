@@ -412,8 +412,8 @@ public class HUDComponent extends EntityComponent {
 		final TexturedRectComponent crosshairRect = crosshair.add(TexturedRectComponent.class);
 		crosshairRect.setRenderMaterial(iconsMaterial);
 		crosshairRect.setColor(Color.WHITE);
-		crosshairRect.setSprite(new Rectangle(-0.025f * SCALE, -0.025f, 0.05f * SCALE, 0.05f));
-		crosshairRect.setSource(new Rectangle(4f / 256f, 4f / 256f, 7f / 256f, 7f / 256f));
+		crosshairRect.setSprite(new Rectangle(-0.0625f * SCALE, -0.0625f, 0.125f * SCALE, 0.125f));
+		crosshairRect.setSource(new Rectangle(0f / 256f, 0f / 256f, 16f / 256f, 16f / 256f));
 		HUD.attachWidget(VanillaPlugin.getInstance(), crosshair);
 
 		// Setup the hotbar

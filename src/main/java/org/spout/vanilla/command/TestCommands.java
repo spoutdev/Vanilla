@@ -131,10 +131,16 @@ public class TestCommands {
 	@Command(aliases = "damage", usage = "<amount>", desc = "Damage yourself")
 	@CommandPermissions("vanilla.command.debug")
 	public void damage(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player)) {
-			throw new CommandException("You must be a player to damage yourself.");
+		if (!(source instanceof Player) && Spout.getPlatform()!=Platform.CLIENT) {
+			throw new CommandException("You must be a player to damage yourself!");
 		}
-		((Player) source).get(HealthComponent.class).damage(args.getInteger(0));
+		Player player;
+		if (Spout.getPlatform()!=Platform.CLIENT) {
+			player = (Player) source;
+		} else {
+			player = ((Client)Spout.getEngine()).getActivePlayer();
+		}
+		player.get(HealthComponent.class).damage(args.getInteger(0));
 	}
 	
 	@Command(aliases = "hunger", usage = "<amount> <hungry>", desc = "Modify your hunger", min = 2, max = 2)

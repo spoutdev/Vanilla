@@ -59,6 +59,11 @@ public abstract class PressurePlate extends GroundAttachable implements Redstone
 		return block.isDataBitSet(0x1);
 	}
 
+	@Override
+	public short getRedstonePowerStrength(short data) {
+		return ((data & 0x1) == 1) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	}
+
 	/**
 	 * Sets whether this pressure plate is pressed down
 	 * @param block to set it of

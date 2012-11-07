@@ -125,4 +125,9 @@ public class DetectorRail extends RailBase implements RedstoneSource, DynamicMat
 		//TODO: Check if a minecart is on top of this block right now...
 		this.setPowering(block, false);
 	}
+
+	@Override
+	public short getRedstonePowerStrength(short data) {
+		return ((data & 0x8) == 1) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	}
 }

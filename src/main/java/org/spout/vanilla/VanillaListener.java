@@ -33,10 +33,11 @@ import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
 import org.spout.api.event.Order;
 import org.spout.api.event.Result;
+import org.spout.api.event.block.BlockChangeEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.server.ClientEnableEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
-
+import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.component.inventory.window.DefaultWindow;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.PickupItemComponent;
@@ -45,6 +46,8 @@ import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.component.player.PingComponent;
 import org.spout.vanilla.component.player.PlayerListComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.event.block.RedstoneChangeEvent;
+import org.spout.vanilla.material.block.redstone.RedstoneSource;
 
 public class VanillaListener implements Listener {
 	private final VanillaPlugin plugin;
@@ -75,5 +78,46 @@ public class VanillaListener implements Listener {
 	public void onClientEnable(ClientEnableEvent event) {
 		final HUDComponent HUD = ((Client) Spout.getEngine()).getActivePlayer().add(HUDComponent.class);
 		HUD.openHUD();
+	}
+
+	@EventHandler
+	public void onBlockChange(BlockChangeEvent event) {
+		if (event.isCancelled()) {
+			return;
+		}
+
+		if (RedstoneChangeEvent.getHandlerList().getRegisteredListeners().length == 0) {
+			return;
+		}
+
+		//Redstone event
+		BlockMaterial oldMat = event.getBlock().getMaterial();
+		BlockMaterial newMat = event.getSnapshot().getMaterial();
+		short prevData = event.getBlock().getData();
+		short newData = event.getSnapshot().getData();
+		//RedstoneChangeEvent
+		//Three possibilities here:
+		//1.) Redstone source material was placed, generating power
+		//2.) Redstone source material was removed, removing power
+		//3.) Redstone source material's data level changed, indicating change in power
+		short prevPower = -1;
+		short newPower =  -1;
+		if (!(oldMat instanceof RedstoneSource) && newMat instanceof RedstoneSource) {
+			prevPower = 0;
+			newPower = ((RedstoneSource)newMat).getRedstonePowerStrength(newData);
+		} else if (!(newMat instanceof RedstoneSource) && oldMat instanceof RedstoneSource) {
+			prevPower = ((RedstoneSource)oldMat).getRedstonePowerStrength(prevData);
+			newPower = 0;
+		} else if (newMat == oldMat && oldMat instanceof RedstoneSource) {
+			prevPower = ((RedstoneSource)oldMat).getRedstonePowerStrength(prevData);
+			newPower = ((RedstoneSource)newMat).getRedstonePowerStrength(newData);
+		}
+		if (prevPower != -1) {
+			RedstoneChangeEvent redstoneEvent = new RedstoneChangeEvent(event.getBlock(), event.getCause(), prevPower, newPower);
+			Spout.getEventManager().callEvent(redstoneEvent);
+			if (redstoneEvent.isCancelled()) {
+				event.setCancelled(true);
+			}
+		}
 	}
 }

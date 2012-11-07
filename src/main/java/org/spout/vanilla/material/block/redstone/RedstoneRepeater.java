@@ -204,4 +204,9 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 	public EffectRange getPhysicsRange(short data) {
 		return physicsRanges[data & 0x3];
 	}
+
+	@Override
+	public short getRedstonePowerStrength(short data) {
+		return this.isPowered() ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	}
 }

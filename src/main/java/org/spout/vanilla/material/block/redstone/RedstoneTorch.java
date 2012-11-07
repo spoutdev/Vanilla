@@ -134,4 +134,9 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	public EffectRange getPhysicsRange(short data) {
 		return physicsRange;
 	}
+
+	@Override
+	public short getRedstonePowerStrength(short data) {
+		return isPowered() ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	}
 }

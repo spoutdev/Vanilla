@@ -117,4 +117,9 @@ public class StoneButton extends AttachedRedstoneSource implements PointAttachab
 	public EffectRange getDynamicRange() {
 		return EffectRange.THIS;
 	}
+
+	@Override
+	public short getRedstonePowerStrength(short data) {
+		return ((data & 0x8) == 1) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	}
 }

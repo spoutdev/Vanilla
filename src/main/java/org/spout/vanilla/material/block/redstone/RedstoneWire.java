@@ -256,4 +256,9 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 	public EffectRange getMaximumPhysicsRange(short data) {
 		return maximumPhysicsRange;
 	}
+
+	@Override
+	public short getRedstonePowerStrength(short data) {
+		return (short) (data & 0xF);
+	}
 }

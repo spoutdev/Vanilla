@@ -112,4 +112,9 @@ public class Lever extends AttachedRedstoneSource implements Toggleable {
 	public BlockFace getAttachedFace(short data) {
 		return BlockFaces.NSEWB.get((data & 0x7) - 1);
 	}
+
+	@Override
+	public short getRedstonePowerStrength(short data) {
+		return ((data & 0x8) == 1) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	}
 }

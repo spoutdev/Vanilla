@@ -53,4 +53,12 @@ public interface RedstoneSource  {
 	 * @return True if this redstone source block provides power
 	 */
 	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode);
+
+	/**
+	 * Gets the amount of redstone power this material generates for itself
+	 * 
+	 * @param data
+	 * @return power strength
+	 */
+	public short getRedstonePowerStrength(short data);
 }

@@ -120,4 +120,9 @@ public class TripWireHook extends AttachedRedstoneSource implements Toggleable, 
 			}
 		}
 	}
+
+	@Override
+	public short getRedstonePowerStrength(short data) {
+		return ((data & 0x8) == 1) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	}
 }

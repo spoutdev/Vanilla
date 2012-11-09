@@ -36,18 +36,21 @@ import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.CommandPermissions;
 import org.spout.api.component.Component;
+import org.spout.api.component.components.HitBlockComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityPrefab;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
 import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
 import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.NetworkSynchronizer;
+import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.window.block.BrewingStandWindow;
@@ -86,6 +89,31 @@ public class TestCommands {
 		plugin = instance;
 	}
 
+	@Command(aliases = "traceray", desc = "Set all blocks that cross your view to stone.")
+	@CommandPermissions("vanilla.command.debug")
+	public void traceray(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player) && Spout.getPlatform()!=Platform.CLIENT) {
+			throw new CommandException("You must be a player to trace a ray!");
+		}
+		Player player;
+		if (Spout.getPlatform()!=Platform.CLIENT) {
+			player = (Player) source;
+		} else {
+			player = ((Client)Spout.getEngine()).getActivePlayer();
+		}
+		
+		BlockIterator blockIt = player.get(HitBlockComponent.class).getAlignedBlocks();
+		
+		Block block = null;
+		while (blockIt.hasNext()) {
+			block = blockIt.next();
+			if (block.getMaterial().isPlacementObstacle()) {
+				break;
+			}
+			block.setMaterial(VanillaMaterials.STONE);
+		}
+	}
+	
 	@Command(aliases = "window", usage = "<type>", desc = "Open a window.", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.debug")
 	public void window(CommandContext args, CommandSource source) throws CommandException {

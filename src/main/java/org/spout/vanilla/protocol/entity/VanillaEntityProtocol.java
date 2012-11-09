@@ -29,18 +29,16 @@ package org.spout.vanilla.protocol.entity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
+import org.spout.api.component.components.PhysicsComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Transform;
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.misc.HeadComponent;
-import org.spout.vanilla.component.misc.VanillaPhysicsComponent;
 import org.spout.vanilla.protocol.msg.entity.EntityDestroyMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityHeadYawMessage;
@@ -118,9 +116,9 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 
 		// Physics
 
-		VanillaPhysicsComponent physics = entity.get(VanillaPhysicsComponent.class);
+		PhysicsComponent physics = entity.get(PhysicsComponent.class);
 		if (physics != null && physics.isVelocityDirty()) {
-			messages.add(new EntityVelocityMessage(entity.getId(), physics.getProtocolVelocity()));
+			messages.add(new EntityVelocityMessage(entity.getId(), getProtocolVelocity(physics.getLinearVelocity())));
 		}
 
 		// Extra metadata
@@ -132,5 +130,12 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		}
 
 		return messages;
+	}
+
+	public static Vector3 getProtocolVelocity(Vector3 velocity) {
+		final float x = velocity.getX() * 32000;
+		final float y = velocity.getY() * 32000;
+		final float z = velocity.getZ() * 32000;
+		return new Vector3(x, y, z);
 	}
 }

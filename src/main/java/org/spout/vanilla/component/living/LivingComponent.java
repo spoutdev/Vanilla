@@ -27,12 +27,12 @@
 package org.spout.vanilla.component.living;
 
 import org.spout.api.component.components.EntityComponent;
+import org.spout.api.component.components.PhysicsComponent;
 import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.component.misc.DrowningComponent;
 import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.component.misc.HealthComponent;
-import org.spout.vanilla.component.misc.VanillaPhysicsComponent;
 import org.spout.vanilla.data.VanillaData;
 
 public abstract class LivingComponent extends EntityComponent {
@@ -41,7 +41,7 @@ public abstract class LivingComponent extends EntityComponent {
 		Entity holder = getOwner();
 		holder.add(HeadComponent.class);
 		holder.add(HealthComponent.class);
-		holder.add(VanillaPhysicsComponent.class);
+		holder.add(PhysicsComponent.class);
 		holder.add(DrowningComponent.class);
 		holder.setSavable(true);
 
@@ -69,7 +69,7 @@ public abstract class LivingComponent extends EntityComponent {
 		return getOwner().get(HealthComponent.class);
 	}
 
-	public VanillaPhysicsComponent getPhysics() {
-		return getOwner().get(VanillaPhysicsComponent.class);
+	public PhysicsComponent getPhysics() {
+		return getOwner().get(PhysicsComponent.class);
 	}
 }

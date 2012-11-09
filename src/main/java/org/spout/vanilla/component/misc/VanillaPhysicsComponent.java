@@ -24,6 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
+/*
 package org.spout.vanilla.component.misc;
 
 import org.spout.api.component.components.PhysicsComponent;
@@ -38,7 +39,7 @@ import org.spout.api.math.Vector3;
  * - Velocity is clamped at a min of -0.9 and a max of 0.9 blocks per tick
  * - Protocol velocity values are simply multiplying blocks by the max block units. This leaves
  * a maximum of 28800 per axis per tick for protocol motion.
- */
+ *//*
 public class VanillaPhysicsComponent extends PhysicsComponent {
 	@Override
 	public void setVelocity(Vector3 velocity) {
@@ -48,10 +49,10 @@ public class VanillaPhysicsComponent extends PhysicsComponent {
 		super.setVelocity(new Vector3(x, y, z));
 	}
 
-	/**
+	*//**
 	 * Gets the velocity scaled for the official protocol's specifications
 	 * @return
-	 */
+	 *//*
 	public Vector3 getProtocolVelocity() {
 		final Vector3 velocity = getVelocity();
 		final float x = velocity.getX() * 32000;
@@ -60,3 +61,4 @@ public class VanillaPhysicsComponent extends PhysicsComponent {
 		return new Vector3(x, y, z);
 	}
 }
+*/

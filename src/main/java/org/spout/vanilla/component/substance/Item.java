@@ -27,6 +27,7 @@
 package org.spout.vanilla.component.substance;
 
 import org.spout.api.component.components.EntityComponent;
+import org.spout.api.component.components.PhysicsComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.LoadOption;
@@ -35,7 +36,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.misc.VanillaPhysicsComponent;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.object.ItemEntityProtocol;
 
@@ -43,7 +43,7 @@ public class Item extends EntityComponent {
 	@Override
 	public void onAttached() {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
-		getOwner().add(VanillaPhysicsComponent.class);
+		getOwner().add(PhysicsComponent.class);
 	}
 
 	@Override
@@ -78,8 +78,8 @@ public class Item extends EntityComponent {
 		return getUncollectableTicks() <= 0;
 	}
 
-	public VanillaPhysicsComponent getPhysics() {
-		return getOwner().get(VanillaPhysicsComponent.class);
+	public PhysicsComponent getPhysics() {
+		return getOwner().get(PhysicsComponent.class);
 	}
 
 	/**

@@ -85,7 +85,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		if (!session.hasPlayer()) {
 			return;
 		}
-
+		
 		Player player = session.getPlayer();
 
 		int x = message.getX();
@@ -212,8 +212,10 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				}
 			}
 		} else if (state == PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
+			
 			if (heldItem.getMaterial() instanceof Food) {
-				((Food) heldItem.getMaterial()).onEat(player, currentSlot.getCurrentSlot());
+				((Food) heldItem.getMaterial()).onEat(player);
+				currentSlot.addAmount(currentSlot.getCurrentSlot(), -1);
 			}
 		}
 	}

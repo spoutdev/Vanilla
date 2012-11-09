@@ -85,6 +85,10 @@ public class VanillaData {
 	public static final DefaultedKey<Boolean> IS_FLYING = new DefaultedKeyImpl<Boolean>("is_flying", false);
 	public static final DefaultedKey<PlayerInventory> PLAYER_INVENTORY = new DefaultedKeyImpl<PlayerInventory>("inventory", new PlayerInventory());
 	public static final DefaultedKey<ChestInventory> ENDER_CHEST_INVENTORY = new DefaultedKeyImpl<ChestInventory>("ender_chest_inventory", new ChestInventory());
+	public static final DefaultedKey<Short> HUNGER = new DefaultedKeyImpl<Short>("hunger", (short) 20);
+	public static final DefaultedKey<Short> MAX_HUNGER = new DefaultedKeyImpl<Short>("max_hunger", (short) 20);
+	public static final DefaultedKey<Float> EXHAUSTION = new DefaultedKeyImpl<Float>("exhaustion", 0.0f);
+	public static final DefaultedKey<Float> FOOD_SATURATION = new DefaultedKeyImpl<Float>("food_saturation", 5.0f);
 	//Creature-specific
 	public static final DefaultedKey<Integer> LINE_OF_SIGHT = new DefaultedKeyImpl<Integer>("line_of_sight", 1);
 	//Item-specific

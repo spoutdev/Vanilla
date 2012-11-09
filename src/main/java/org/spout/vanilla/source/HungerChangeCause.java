@@ -24,16 +24,19 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.gamemode;
+package org.spout.vanilla.source;
 
-import org.spout.api.component.components.EntityComponent;
-import org.spout.api.entity.Entity;
+import org.spout.api.Source;
 
-public class SurvivalComponent extends EntityComponent {
-	@Override
-	public void onAttached() {
-		Entity holder = getOwner();
-		holder.detach(AdventureComponent.class);
-		holder.detach(CreativeComponent.class);
-	}
+
+public enum HungerChangeCause implements Source {
+
+	/**
+	 * Food level changed due to eating
+	 */
+	EATING,
+	/**
+	 * Fodo level changed due to low food saturation
+	 */
+	LOW_FOOD_SATURATION
 }

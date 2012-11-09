@@ -66,6 +66,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.inventory.window.DefaultWindow;
 import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.misc.HungerComponent;
 import org.spout.vanilla.component.substance.material.Sign;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.Difficulty;
@@ -520,8 +521,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onPlayerUpdateStats(PlayerHealthEvent event) {
-		//TODO: Fix these stats?
-		return new PlayerHealthMessage((short) player.get(Human.class).getHealth().getHealth(), (short) 0, 0);
+		return new PlayerHealthMessage((short) player.get(Human.class).getHealth().getHealth(), player.get(HungerComponent.class).getHunger(), player.get(HungerComponent.class).getFoodSaturation());
 	}
 
 	@EventHandler

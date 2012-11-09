@@ -36,8 +36,10 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.living.LivingComponent;
+import org.spout.vanilla.component.misc.HungerComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Tool;
@@ -73,8 +75,10 @@ public class EntityInteractHandler extends MessageHandler<EntityInteractMessage>
 
 			LivingComponent clicked = clickedEntity.get(LivingComponent.class);
 			if (clicked != null) {
-				//TODO: Reimplement exhaustion values
-
+				player.getOwner().get(HungerComponent.class).addExhaustion(ExhaustionLevel.ATTACK_ENEMY.getAmount());
+				if (clickedEntity.has(HungerComponent.class)) {
+					clickedEntity.get(HungerComponent.class).addExhaustion(ExhaustionLevel.RECEIVE_DAMAGE.getAmount());
+				}
 				int damage = 1;
 				if (holding != null && holdingMat instanceof VanillaMaterial) {
 					damage = ((VanillaMaterial) holdingMat).getDamage();

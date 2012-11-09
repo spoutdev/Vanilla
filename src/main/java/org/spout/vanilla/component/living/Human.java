@@ -36,12 +36,10 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.gamemode.AdventureComponent;
-import org.spout.vanilla.component.gamemode.CreativeComponent;
-import org.spout.vanilla.component.gamemode.SurvivalComponent;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.misc.DiggingComponent;
 import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.component.misc.HungerComponent;
 import org.spout.vanilla.component.misc.PickupItemComponent;
 import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -77,7 +75,7 @@ public class Human extends LivingComponent {
 			getOwner().get(TextModelComponent.class).setTranslation(new Vector3(0, 3f, 0));
 		}
 	}
-
+	
 	public boolean isOnGround() {
 		return getOwner().getData().get(VanillaData.IS_ON_GROUND);
 	}
@@ -159,17 +157,6 @@ public class Human extends LivingComponent {
 				}
 				mode = event.getMode();
 			}
-		}
-		switch (mode) {
-			case ADVENTURE:
-				holder.add(AdventureComponent.class);
-				break;
-			case CREATIVE:
-				holder.add(CreativeComponent.class);
-				break;
-			case SURVIVAL:
-				holder.add(SurvivalComponent.class);
-				break;
 		}
 		if (holder instanceof Player && updateClient) {
 			holder.getNetwork().callProtocolEvent(new PlayerGameStateEvent((Player) holder, PlayerGameStateMessage.CHANGE_GAME_MODE, mode), (Player) getOwner());

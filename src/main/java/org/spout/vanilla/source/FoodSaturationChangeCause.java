@@ -24,16 +24,18 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.gamemode;
+package org.spout.vanilla.source;
 
-import org.spout.api.component.components.EntityComponent;
-import org.spout.api.entity.Entity;
+import org.spout.api.Source;
 
-public class AdventureComponent extends EntityComponent {
-	@Override
-	public void onAttached() {
-		Entity holder = getOwner();
-		holder.detach(SurvivalComponent.class);
-		holder.detach(CreativeComponent.class);
-	}
+public enum FoodSaturationChangeCause implements Source {
+
+	/**
+	 * The food saturation changed because of high exhaustion
+	 */
+	EXHAUSTION,
+	/**
+	 * The food saturation changed due to eating
+	 */
+	EATING
 }

@@ -35,6 +35,9 @@ import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.player.PingComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.configuration.WorldConfigurationNode;
+import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.misc.HungerComponent;
+import org.spout.vanilla.data.ExhaustionLevel;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionMessage;
 
 public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMessage> {
@@ -71,6 +74,21 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 					holder.kick("Moved too quickly");
 				}
 			}
+		}
+		
+		Human human = holder.add(Human.class);
+		//Player is jumping
+		if (message.getY() > holder.getTransform().getPosition().getY()) {
+			if (!human.isJumping()) {
+				human.setJumping(true);
+				float level = ExhaustionLevel.JUMPING.getAmount();
+				if (human.isSprinting()) {
+					level = ExhaustionLevel.SPRINT_JUMP.getAmount();
+				}
+				holder.get(HungerComponent.class).addExhaustion(level);
+			}
+		} else {
+			human.setJumping(false);
 		}
 	}
 }

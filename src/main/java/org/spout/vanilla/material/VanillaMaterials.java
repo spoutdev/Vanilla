@@ -189,6 +189,9 @@ import org.spout.vanilla.material.item.food.RawBeef;
 import org.spout.vanilla.material.item.food.RawChicken;
 import org.spout.vanilla.material.item.food.RawFish;
 import org.spout.vanilla.material.item.food.RawPorkchop;
+import org.spout.vanilla.material.item.food.effects.FoodSaturation;
+import org.spout.vanilla.material.item.food.effects.Hunger;
+import org.spout.vanilla.material.item.food.effects.Poisoning;
 import org.spout.vanilla.material.item.minecart.MinecartItem;
 import org.spout.vanilla.material.item.minecart.PoweredMinecartItem;
 import org.spout.vanilla.material.item.minecart.StorageMinecartItem;
@@ -479,35 +482,20 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial PUMPKIN_SEEDS = new VanillaItemMaterial("Pumpkin Seeds", 361);
 	public static final VanillaItemMaterial MELON_SEEDS = new VanillaItemMaterial("MelonBlock Seeds", 362);
 	// == Food ==
-	//	public static final Food RED_APPLE = new Food("Apple", 260, new FoodEffect(4, Hunger.class), new FoodEffect(2.4f, FoodSaturation.class));
-	//	public static final Food MUSHROOM_SOUP = new Food("Mushroom Soup", 282, new FoodEffect(8, Hunger.class), new FoodEffect(9.6f, FoodSaturation.class));
-	//	public static final Food BREAD = new Food("Bread", 297, new FoodEffect(5, Hunger.class), new FoodEffect(6, FoodSaturation.class));
-	//	public static final RawPorkchop RAW_PORKCHOP = new RawPorkchop("Raw Porkchop", 319, new FoodEffect(3, Hunger.class), new FoodEffect(1.8f, FoodSaturation.class));
-	//	public static final Food COOKED_PORKCHOP = new Food("Cooked Porkchop", 320, new FoodEffect(8, Hunger.class), new FoodEffect(12.8f, FoodSaturation.class));
-	//	// TODO : Regen health for 4 secs
-	//	public static final Food GOLDEN_APPLE = new Food("Golden Apple", 322, new FoodEffect(10, Hunger.class), new FoodEffect(9.6f, FoodSaturation.class));
-	//	public static final Food MELON_SLICE = new Food("MelonBlock Slice", 360, new FoodEffect(2, Hunger.class), new FoodEffect(1.2f, FoodSaturation.class));
-	//	public static final Food COOKIE = new Food("Cookie", 357, new FoodEffect(2, Hunger.class), new FoodEffect(0.4f, FoodSaturation.class));
-	//	public static final RawBeef RAW_BEEF = new RawBeef("Raw Beef", 363, new FoodEffect(3, Hunger.class), new FoodEffect(1.8f, FoodSaturation.class));
-	//	public static final Food STEAK = new Food("Steak", 364, new FoodEffect(8, Hunger.class), new FoodEffect(12.8f, FoodSaturation.class));
-	//	public static final RawChicken RAW_CHICKEN = new RawChicken("Raw Chicken", 365, new FoodEffect(2, Hunger.class), new FoodEffect(1.2f, FoodSaturation.class), new FoodEffect(30, Poisoning.class));
-	//	public static final Food COOKED_CHICKEN = new Food("Cooked Chicken", 366, new FoodEffect(6, Hunger.class), new FoodEffect(7.2f, FoodSaturation.class));
-	//	public static final Food ROTTEN_FLESH = new Food("Rotten Flesh", 367, new FoodEffect(4, Hunger.class), new FoodEffect(0.8f, FoodSaturation.class), new FoodEffect(80, Poisoning.class));
-	//TODO: Reimplement food less bad!
-	public static final Food RED_APPLE = new Food("Apple", 260);
-	public static final Food MUSHROOM_SOUP = new Food("Mushroom Soup", 282);
-	public static final Food BREAD = new Food("Bread", 297);
-	public static final RawPorkchop RAW_PORKCHOP = new RawPorkchop("Raw Porkchop", 319);
-	public static final Food COOKED_PORKCHOP = new Food("Cooked Porkchop", 320);
-	//	// TODO : Regen health for 4 secs
-	public static final Food GOLDEN_APPLE = new Food("Golden Apple", 322);
-	public static final Food MELON_SLICE = new Food("MelonBlock Slice", 360);
-	public static final Food COOKIE = new Food("Cookie", 357);
-	public static final RawBeef RAW_BEEF = new RawBeef("Raw Beef", 363);
-	public static final Food STEAK = new Food("Steak", 364);
-	public static final RawChicken RAW_CHICKEN = new RawChicken("Raw Chicken", 365);
-	public static final Food COOKED_CHICKEN = new Food("Cooked Chicken", 366);
-	public static final Food ROTTEN_FLESH = new Food("Rotten Flesh", 367);
+	public static final Food RED_APPLE = new Food("Apple", 260, new Hunger(4), new FoodSaturation(2.4f));
+	public static final Food MUSHROOM_SOUP = new Food("Mushroom Soup", 282, new Hunger(8), new FoodSaturation(9.6f));
+	public static final Food BREAD = new Food("Bread", 297, new Hunger(5), new FoodSaturation(6));
+	public static final RawPorkchop RAW_PORKCHOP = new RawPorkchop("Raw Porkchop", 319, new Hunger(3), new FoodSaturation(1.8f));
+	public static final Food COOKED_PORKCHOP = new Food("Cooked Porkchop", 320, new Hunger(8), new FoodSaturation(12.8f));
+	// TODO : Regen health for 4 secs
+	public static final Food GOLDEN_APPLE = new Food("Golden Apple", 322, new Hunger(10), new FoodSaturation(9.6f));
+	public static final Food MELON_SLICE = new Food("MelonBlock Slice", 360, new Hunger(2), new FoodSaturation(1.2f));
+	public static final Food COOKIE = new Food("Cookie", 357, new Hunger(2), new FoodSaturation(0.4f));
+	public static final RawBeef RAW_BEEF = new RawBeef("Raw Beef", 363, new Hunger(3), new FoodSaturation(1.8f));
+	public static final Food STEAK = new Food("Steak", 364, new Hunger(8), new FoodSaturation(12.8f));
+	public static final RawChicken RAW_CHICKEN = new RawChicken("Raw Chicken", 365, new Hunger(2), new FoodSaturation(1.2f), new Poisoning(30));
+	public static final Food COOKED_CHICKEN = new Food("Cooked Chicken", 366, new Hunger(6), new FoodSaturation(7.2f));
+	public static final Food ROTTEN_FLESH = new Food("Rotten Flesh", 367, new Hunger(4), new FoodSaturation(0.8f), new Poisoning(80));
 	// == Music Discs ==
 	public static final MusicDisc GOLD_MUSIC_DISC = new MusicDisc("Music Disc - 13", 2256).setMusic(Music.THIRTEEN);
 	public static final MusicDisc GREEN_MUSIC_DISC = new MusicDisc("Music Disc - cat", 2257).setMusic(Music.CAT);

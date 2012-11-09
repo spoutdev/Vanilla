@@ -24,41 +24,25 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.event.player;
+package org.spout.vanilla.material.item.food.effects;
 
-import org.spout.api.entity.Player;
-import org.spout.api.event.Cancellable;
-import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.entity.Entity;
+import org.spout.vanilla.component.misc.HungerComponent;
+import org.spout.vanilla.material.item.FoodEffect;
+import org.spout.vanilla.source.HungerChangeCause;
 
-public class PlayerFoodSaturationChangeEvent extends PlayerEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
-	private float foodSaturation;
+/**
+ * Class for food that modify the hunger level of a player
+ */
+public class Hunger extends FoodEffect {
 
-	public PlayerFoodSaturationChangeEvent(Player p, float foodSaturation) {
-		super(p);
-		this.setFoodSaturation(foodSaturation);
+	public Hunger(int value) {
+		super(value);
 	}
 
 	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
+	public void doEffect(Entity entity) {
+		entity.add(HungerComponent.class).setHunger((short) (entity.add(HungerComponent.class).getHunger() + getValue()), HungerChangeCause.EATING);
 	}
 
-	public float getFoodSaturation() {
-		return foodSaturation;
-	}
-
-	public void setFoodSaturation(float foodSaturation) {
-		this.foodSaturation = foodSaturation;
-	}
-
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
 }

@@ -32,6 +32,7 @@ import org.spout.api.entity.Entity;
 import org.spout.vanilla.component.misc.DrowningComponent;
 import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.component.misc.HungerComponent;
 import org.spout.vanilla.component.misc.VanillaPhysicsComponent;
 import org.spout.vanilla.data.VanillaData;
 
@@ -43,6 +44,8 @@ public abstract class LivingComponent extends EntityComponent {
 		holder.add(HealthComponent.class);
 		holder.add(VanillaPhysicsComponent.class);
 		holder.add(DrowningComponent.class);
+		HungerComponent hunger = holder.add(HungerComponent.class);
+		hunger.setInfiniteHunger(true);
 		holder.setSavable(true);
 
 		//Tracks the number of times this component has been attached (i.e how many times it's been saved, then loaded. 1 = fresh entity)

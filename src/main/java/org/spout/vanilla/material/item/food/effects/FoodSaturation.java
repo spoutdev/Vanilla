@@ -24,39 +24,25 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.source;
+package org.spout.vanilla.material.item.food.effects;
+
+import org.spout.api.entity.Entity;
+import org.spout.vanilla.component.misc.HungerComponent;
+import org.spout.vanilla.material.item.FoodEffect;
+import org.spout.vanilla.source.FoodSaturationChangeCause;
 
 /**
- * Represents the source of a health change.
+ * Class for food that modify the food saturation of a player
  */
-public enum HealthChangeCause{
-	/**
-	 * Health changed due to the execution of a command.
-	 */
-	COMMAND,
-	/**
-	 * Health changed due to being damaged.
-	 * @see {@link DamageCause}
-	 */
-	DAMAGE,
-	/**
-	 * Health changed due to regeneration cycle.
-	 */
-	REGENERATION,
-	/**
-	 * Health changed due to eating.
-	 */
-	EATING,
-	/**
-	 * Health changed due to the entity spawning.
-	 */
-	SPAWN,
-	/**
-	 * Health changed due to no food
-	 */
-	NO_FOOD,
-	/**
-	 * Health changed due to some unknown reason.
-	 */
-	UNKNOWN;
+public class FoodSaturation extends FoodEffect {
+
+	public FoodSaturation(float value) {
+		super(value);
+	}
+
+	@Override
+	public void doEffect(Entity entity) {
+		entity.add(HungerComponent.class).setFoodSaturation(entity.add(HungerComponent.class).getFoodSaturation() + getValue(), FoodSaturationChangeCause.EATING);
+	}
+
 }

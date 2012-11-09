@@ -26,5 +26,51 @@
  */
 package org.spout.vanilla.material.item;
 
-public class FoodEffect {
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
+import org.spout.vanilla.component.living.Human;
+
+public abstract class FoodEffect {
+
+	private float value;
+
+	public FoodEffect(int value) {
+		this.value = value;
+	}
+
+	public FoodEffect(float value) {
+		this.value = value;
+	}
+
+	/**
+	 * Retrieve the value of this food effect.
+	 * 
+	 * @return
+	 */
+	public float getValue() {
+		return value;
+	}
+
+	/**
+	 * Checks if the effect can be done.
+	 * 
+	 * @param entity The entity to check against.
+	 * @return true if the effect can be done else false.
+	 */
+	public boolean candoEffect(Entity entity) {
+		boolean result = false;
+		if (entity instanceof Player) {
+			if (entity.get(Human.class).isSurvival()) {
+				result = true;
+			}
+		}
+		return result;
+	}
+
+	/**
+	 * The Effect to run
+	 * 
+	 * @param entity The entity to run the effect on.
+	 */
+	public abstract void doEffect(Entity entity);
 }

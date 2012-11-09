@@ -24,29 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.protocol.entity.object;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
+import org.spout.api.protocol.Message;
 
-import org.spout.vanilla.component.living.hostile.WitherSkeleton;
-import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.BasicEntityProtocol;
+import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
+import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
 
-public class SkeletonEntityProtocol extends CreatureProtocol {
-	public final static int TYPE_INDEX = 13; // The MC metadata index for determining the type of the skeleton
-
-	public SkeletonEntityProtocol(int data) {
-		super(EntityProtocolID.ENDERDRAGON.getId());
+public class ObjectEntityProtocol extends BasicEntityProtocol {
+	public ObjectEntityProtocol(ObjectType type) {
+		super(type.getId());
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		int data = entity.has(WitherSkeleton.class) ? 1 : 0;
-		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, TYPE_INDEX, data));
-		return parameters;
+	public List<Message> getSpawnMessages(Entity entity) {
+		List<Message> messages = new ArrayList<Message>();
+		messages.add(new EntityObjectMessage(entity, (byte) typeId));
+		messages.add(new EntityMetadataMessage(entity.getId(), getSpawnParameters(entity)));
+		return messages;
 	}
 }

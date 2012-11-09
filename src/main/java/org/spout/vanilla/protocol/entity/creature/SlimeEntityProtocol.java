@@ -24,27 +24,26 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.protocol.entity.creature;
 
 import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
+import org.spout.vanilla.component.living.hostile.Slime;
 
-public class ZombieEntityProtocol extends CreatureProtocol {
-	public final static int TYPE_INDEX = 16; // The MC metadata index determinig if this zombie was a villager or not
-	
-	public ZombieEntityProtocol() {
-		super(EntityProtocolID.MAGMACUBE.getId());
+public class SlimeEntityProtocol extends CreatureProtocol {
+	public final static int SIZE_INDEX = 16; // The MC metadata index for determining the size of the slime.
+
+	public SlimeEntityProtocol() {
+		super(CreatureType.SLIME);
 	}
 
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, TYPE_INDEX, 1));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SIZE_INDEX, entity.add(Slime.class).getSize()));
 		return parameters;
 	}
 }

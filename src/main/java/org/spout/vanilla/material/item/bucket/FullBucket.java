@@ -24,23 +24,29 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item.misc;
+package org.spout.vanilla.material.item.bucket;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.item.EmptyContainer;
-import org.spout.vanilla.material.item.FullContainer;
+import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.item.BlockItem;
 
-public class LavaBucket extends FullContainer implements Fuel {
-	public final float BURN_TIME = 1000;
-
-	public LavaBucket(String name, int id, BlockMaterial onPlaceMaterial, EmptyContainer emptyContainer) {
-		super(name, id, onPlaceMaterial, emptyContainer);
+public class FullBucket extends BlockItem {
+	public FullBucket(String name, int id, BlockMaterial place) {
+		super(name, id, place);
 	}
 
 	@Override
-	public float getFuelTime() {
-		return BURN_TIME;
+	public void onInteract(Entity entity, Block block, Action type, BlockFace face) {
+		super.onInteract(entity, block, type, face);
+		if (type == Action.RIGHT_CLICK) {
+			entity.get(Human.class).getInventory().getQuickbar().setCurrentItem(new ItemStack(VanillaMaterials.BUCKET, 1));
+		}
 	}
 }

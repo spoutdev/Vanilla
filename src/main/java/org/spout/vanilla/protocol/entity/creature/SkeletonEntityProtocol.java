@@ -24,29 +24,27 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.protocol.entity.creature;
 
 import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.living.hostile.Creeper;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
+import org.spout.vanilla.component.living.hostile.WitherSkeleton;
 
-public class CreeperEntityProtocol extends CreatureProtocol {
-	public final static int FUSE_INDEX = 16; // The MC metadata index to determine the fuse.
-	public final static int CHARGE_INDEX = 17; // The MC metadata index to determine if the creeper is charged.
+public class SkeletonEntityProtocol extends CreatureProtocol {
+	public final static int TYPE_INDEX = 13; // The MC metadata index for determining the type of the skeleton
 
-	public CreeperEntityProtocol() {
-		super(50);
+	public SkeletonEntityProtocol() {
+		super(CreatureType.SKELETON);
 	}
 
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, FUSE_INDEX, entity.add(Creeper.class).getFuse()));
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, CHARGE_INDEX, (byte) (entity.add(Creeper.class).isCharged() ? 1 : 0)));
+		int data = entity.has(WitherSkeleton.class) ? 1 : 0;
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, TYPE_INDEX, data));
 		return parameters;
 	}
 }

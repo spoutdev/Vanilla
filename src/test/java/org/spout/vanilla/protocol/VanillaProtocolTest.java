@@ -135,7 +135,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new PlayerLoginRequestMessage(0, "nether", (byte) 0, (byte) 0, (byte) 0, (short) 10),
 			new PlayerHandshakeMessage((byte) 42, "Spouty", "SpoutTron", 9001),
 			new PlayerChatMessage("<Spouty> This is a thing called a chat message"),
-			new PlayerTimeMessage(666L),
+			new PlayerTimeMessage(333L, 666L),
 			new EntityEquipmentMessage(234, 3, new ItemStack(VanillaMaterials.PLANK, 3, 55)),
 			new PlayerSpawnPositionMessage(42, 42, 42),
 			new EntityInteractMessage(1123, 4455, true),

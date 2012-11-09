@@ -24,28 +24,12 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.material.block.misc;
 
-import java.util.List;
+import org.spout.vanilla.material.block.Solid;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
-
-import org.spout.vanilla.component.living.passive.Pig;
-import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
-
-public class PigEntityProtocol extends CreatureProtocol {
-	public final static int SADDLE_INDEX = 16; // The MC metadata index for determining if the pig is saddled or not.
-
-	public PigEntityProtocol() {
-		super(EntityProtocolID.PIG.getId());
-	}
-
-	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SADDLE_INDEX, (byte) (entity.add(Pig.class).isSaddled() ? 1 : 0)));
-		return parameters;
+public class CommandBlock extends Solid {
+	public CommandBlock(String name, int id) {
+		super(name, id, null);
 	}
 }

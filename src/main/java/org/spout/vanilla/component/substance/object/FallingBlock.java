@@ -28,15 +28,15 @@ package org.spout.vanilla.component.substance.object;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.protocol.entity.ObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.ObjectType;
 
 public class FallingBlock extends ObjectEntity {
 	private VanillaBlockMaterial material;
-	public static final int ID = 70;
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ID));
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.FALLING_OBJECT));
 	}
 
 	public void setMaterial(VanillaBlockMaterial material) {

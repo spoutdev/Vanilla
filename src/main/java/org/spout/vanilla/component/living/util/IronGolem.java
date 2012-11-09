@@ -29,8 +29,8 @@ package org.spout.vanilla.component.living.util;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.component.living.Utility;
-import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
 
 /**
  * A component that identifies the entity as a IronGolem.
@@ -39,6 +39,6 @@ public class IronGolem extends LivingComponent implements Utility {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(EntityProtocolID.IRONGOLEM.getId())); //Index 16 (byte): Unknown, example: 1
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.IRON_GOLEM)); //Index 16 (byte): Unknown, example: 1
 	}
 }

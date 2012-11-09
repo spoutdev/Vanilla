@@ -29,8 +29,8 @@ package org.spout.vanilla.component.living.passive;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.component.living.Passive;
-import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
 
 /**
  * A component that identifies the entity as a Cow.
@@ -39,6 +39,6 @@ public class Cow extends LivingComponent implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(EntityProtocolID.COW.getId()));
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.COW));
 	}
 }

@@ -24,28 +24,27 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.protocol.entity.creature;
 
 import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.misc.HealthComponent;
-import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.protocol.entity.BasicMobEntityProtocol;
+import org.spout.vanilla.component.living.passive.Villager;
 
-public class WitherEntityProtocol extends BasicMobEntityProtocol {
-	public final static int HEALTH_INDEX = 16; // The MC metadata index to determine the Wither's health
+public class VillagerEntityProtocol extends CreatureProtocol {
+	public final static int TYPE_INDEX = 16; // The MC metadata index to determine the type of the villager
 	
-	public WitherEntityProtocol() {
-		super(EntityProtocolID.WITHER.getId());
+	public VillagerEntityProtocol() {
+		super(CreatureType.VILLAGER);
 	}
 
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, HEALTH_INDEX, entity.add(HealthComponent.class).getHealth()));
+		Villager villager = entity.get(Villager.class);
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, TYPE_INDEX, villager.getVillagerTypeID()));
 		return parameters;
 	}
 }

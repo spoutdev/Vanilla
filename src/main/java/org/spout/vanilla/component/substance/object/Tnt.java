@@ -31,12 +31,12 @@ import org.spout.api.entity.Entity;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.ObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.ObjectType;
 import org.spout.vanilla.util.explosion.ExplosionModel;
 import org.spout.vanilla.util.explosion.ExplosionModelSpherical;
 
 public class Tnt extends ObjectEntity{
-	public static final int ID = 50;
 	private Entity holder;
 
 	public float getExplosionSize() {
@@ -69,7 +69,7 @@ public class Tnt extends ObjectEntity{
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ID));
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.PRIMED_TNT));
 		holder = getOwner();
 	}
 

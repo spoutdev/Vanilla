@@ -29,7 +29,7 @@ package org.spout.vanilla.component.living.hostile;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;
 import org.spout.vanilla.component.living.LivingComponent;
-import org.spout.vanilla.protocol.entity.living.BlazeEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.BlazeEntityProtocol;
 
 /**
  * A component that identifies the entity as a Blaze.

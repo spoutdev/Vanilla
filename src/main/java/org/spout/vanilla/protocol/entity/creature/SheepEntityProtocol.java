@@ -24,28 +24,30 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.protocol.entity.creature;
 
 import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.living.hostile.MagmaCube;
-import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
+import org.spout.vanilla.component.living.passive.Sheep;
 
-public class MagmaCubeEntityProtocol extends CreatureProtocol {
-	public final static int SIZE_INDEX = 16; // The MC metadata index determinig the size of the magma cube
-	
-	public MagmaCubeEntityProtocol() {
-		super(EntityProtocolID.MAGMACUBE.getId());
+public class SheepEntityProtocol extends CreatureProtocol {
+	public static int SHEAR_COLOR_INDEX = 16; // The MC metadata index for determining the color of the sheap and if it's been sheared.
+
+	public SheepEntityProtocol() {
+		super(CreatureType.SHEEP);
 	}
 
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SIZE_INDEX, entity.add(MagmaCube.class).getSize()));
+		Sheep sheep = entity.add(Sheep.class);
+		byte data = 0;
+		data |= (sheep.isSheared() ? 1 : 0) << 4;
+		data |= sheep.getColor().getData() & 0x0F;
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SHEAR_COLOR_INDEX, data));
 		return parameters;
 	}
 }

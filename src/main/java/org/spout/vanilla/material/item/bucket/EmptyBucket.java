@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.material.item.bucket;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -36,31 +36,31 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.item.VanillaItemMaterial;
 
-public class FullContainer extends BlockItem {
-	private Material container;
-
-	public FullContainer(String name, int id, BlockMaterial onPlaceMaterial, EmptyContainer emptyContainer) {
-		this(name, id, onPlaceMaterial, (short) 0, emptyContainer);
-	}
-
-	public FullContainer(String name, int id, BlockMaterial onPlaceMaterial, short onPlaceData, EmptyContainer emptyContainer) {
-		super(name, id, onPlaceMaterial, onPlaceData);
-		this.container = emptyContainer;
-		emptyContainer.register(this);
-	}
-
-	public Material getContainer() {
-		return container;
+public class EmptyBucket extends VanillaItemMaterial {
+	public EmptyBucket(String name, int id) {
+		super(name, id);
+		setMaxStackSize(16);
 	}
 
 	@Override
-	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedFace) {
-		super.onInteract(entity, block, type, clickedFace);
-
-		PlayerQuickbar inv = entity.get(Human.class).getInventory().getQuickbar();
-		if (inv != null && inv.getCurrentItem() == null) {
-			inv.setCurrentItem(new ItemStack(getContainer(), 1));
+	public void onInteract(Entity entity, Block block, Action action, BlockFace clickedFace) {
+		if (action == Action.RIGHT_CLICK) {
+			BlockMaterial mat = block.getMaterial();
+			boolean success = false;
+			PlayerQuickbar quickbar = entity.get(Human.class).getInventory().getQuickbar();
+			Material filled; // material to fill the bucket with
+			if (mat == VanillaMaterials.WATER) {
+				filled = VanillaMaterials.WATER_BUCKET;
+			} else if (mat == VanillaMaterials.LAVA) {
+				filled = VanillaMaterials.LAVA_BUCKET;
+			} else {
+				return;
+			}
+			quickbar.addAmount(quickbar.getCurrentSlot(), -1);
+			quickbar.add(new ItemStack(filled, 1));
 		}
 	}
 }

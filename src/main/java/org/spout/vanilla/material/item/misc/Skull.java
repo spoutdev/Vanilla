@@ -30,11 +30,19 @@ import org.spout.vanilla.material.block.controlled.SkullBlock;
 import org.spout.vanilla.material.item.BlockItem;
 
 public class Skull extends BlockItem {
+	public static final Skull SKELETON_SKULL = new Skull("Skeleton Skull");
+	public static final Skull WITHER_SKELETON_SKULL = new Skull("Wither Skeleton Skull", 1, SkullBlock.WITHER_SKELETON_SKULL);
+	public static final Skull ZOMBIE_HEAD = new Skull("Zombie Head", 2, SkullBlock.ZOMBIE_HEAD);
+	public static final Skull HEAD = new Skull("Head", 3, SkullBlock.HEAD);
+	public static final Skull CREEPER_HEAD = new Skull("Creeper Head", 4, SkullBlock.CREEPER_HEAD);
 
 	private Skull(String name) {
-		super(name, 397, SkullBlock.SKELETON_SKULL);
+		super((short) 0x4, name, 397, SkullBlock.SKELETON_SKULL);
 	}
 
+	private Skull(String name, int data, SkullBlock placed) {
+		super(name, 397, data, SKELETON_SKULL, placed);
+	}
 
 	@Override
 	public Skull getParentMaterial() {

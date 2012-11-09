@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.material.block.controlled;
 
-import org.spout.api.Source;
 import org.spout.api.entity.Entity;
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -40,24 +40,24 @@ import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 
 public class SkullBlock extends AbstractAttachable {
 	public static final SkullBlock SKELETON_SKULL = new SkullBlock("Skeleton Skull", 144);
-	public static final SkullBlock WITHER_SKELETON_SKULL = new SkullBlock("Wither Skeleton Skull", (short) 1, SKELETON_SKULL);
-	public static final SkullBlock ZOMBIE_HEAD = new SkullBlock("Zombie Head", (short) 2, SKELETON_SKULL);
-	public static final SkullBlock HEAD = new SkullBlock("Head", (short) 3, SKELETON_SKULL);
-	public static final SkullBlock CREEPER_HEAD = new SkullBlock("Creeper Head", (short) 4, SKELETON_SKULL);
+	public static final SkullBlock WITHER_SKELETON_SKULL = new SkullBlock("Wither Skeleton Skull", 1, SKELETON_SKULL);
+	public static final SkullBlock ZOMBIE_HEAD = new SkullBlock("Zombie Head", 2, SKELETON_SKULL);
+	public static final SkullBlock HEAD = new SkullBlock("Head", 3, SKELETON_SKULL);
+	public static final SkullBlock CREEPER_HEAD = new SkullBlock("Creeper Head", 4, SKELETON_SKULL);
 
-	public SkullBlock(String name, int id) {
-		super((short) 0x4, name, id);
+	private SkullBlock(String name, int id) {
+		super((short) 0x4, name, id, null);
 		this.setAttachable(BlockFaces.NESWB).setHardness(1.0F).setResistance(3.0F).setOpaque();
 	}
 
-	public SkullBlock(String name, int data, SkullBlock parent) {
-		super(name, parent.getId(), data, parent);
+	private SkullBlock(String name, int data, SkullBlock parent) {
+		super(name, parent.getId(), data, parent, null);
 		this.setAttachable(BlockFaces.NESWB).setHardness(1.0F).setResistance(3.0F).setOpaque();
 	}
 
 	@Override
-	public void handlePlacement(Block block, short data, BlockFace attachedFace) {
-		this.setAttachedFace(block, attachedFace);
+	public void handlePlacement(Block block, short data, BlockFace against, Cause<?> cause) {
+		this.setAttachedFace(block, against, cause);
 	}
 
 	@Override
@@ -66,11 +66,11 @@ public class SkullBlock extends AbstractAttachable {
 	}
 
 	@Override
-	public void setAttachedFace(Block block, BlockFace attachedFace) {
+	public void setAttachedFace(Block block, BlockFace attachedFace, Cause<?> cause) {
 		//TODO: data alteration ok? looks wrong
 		if (attachedFace == BlockFace.BOTTOM) {
-			Source source = block.getSource();
 			short data = 0;
+			Object source = cause.getSource();
 			if (source instanceof Entity) {
 				Vector3 direction = block.getPosition().subtract(((Entity) source).getTransform().getPosition());
 				float rotation = direction.rotationTo(Vector3.RIGHT).getYaw();

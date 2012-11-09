@@ -75,8 +75,8 @@ public class DungeonObject extends RandomObject implements RandomizableObject {
 				.addMaterial(VanillaMaterials.BUCKET, oneOnEleven, 1, 1)
 				.addMaterial(Dye.COCOA_BEANS, oneOnEleven, 1, 3)
 				.addMaterial(VanillaMaterials.REDSTONE_DUST, oneOnEleven / 2.0, 1, 4)
-				.addMaterial(VanillaMaterials.GOLD_MUSIC_DISC, oneOnEleven / 10.0, 1, 1)
-				.addMaterial(VanillaMaterials.GREEN_MUSIC_DISC, oneOnEleven / 10.0, 1, 1)
+				.addMaterial(VanillaMaterials.MUSIC_DISK_13, oneOnEleven / 10.0, 1, 1)
+				.addMaterial(VanillaMaterials.MUSIC_DISK_CAT, oneOnEleven / 10.0, 1, 1)
 				.addMaterial(VanillaMaterials.GOLDEN_APPLE, oneOnEleven / 100.0, 1, 1);
 	}
 

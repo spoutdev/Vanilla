@@ -27,16 +27,15 @@
 package org.spout.vanilla.component.substance.object;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.entity.ObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.ObjectType;
 
 /**
  * A component that identifies the entity as an EnderCrystal.
  */
 public class EnderCrystal extends ObjectEntity {
-	public static final int ID = 51;
-
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ID));
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.ENDER_CRYSTAL));
 	}
 }

@@ -29,7 +29,7 @@ package org.spout.vanilla.component.living.neutral;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.component.living.Neutral;
-import org.spout.vanilla.protocol.entity.living.EndermanEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.EndermanEntityProtocol;
 
 /**
  * A component that identifies the entity as an Enderman.

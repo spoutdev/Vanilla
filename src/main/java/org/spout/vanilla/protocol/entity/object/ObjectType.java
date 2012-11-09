@@ -24,28 +24,35 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.protocol.entity.object;
 
-import java.util.List;
+public enum ObjectType {
+	BOAT(1),
+	MINECART(10),
+	STORAGE_MINECART(11),
+	POWERED_MINECART(12),
+	PRIMED_TNT(50),
+	ENDER_CRYSTAL(51),
+	ARROW(60),
+	SNOWBALL(61),
+	EGG(62),
+	ENDER_PEARL(65),
+	WITHER_SKULL(66),
+	FALLING_OBJECT(70),
+	ITEM_FRAME(71),
+	EYE_OF_ENDER(72),
+	POTION(73),
+	DRAGON_EGG(74),
+	EXP_BOTTLE(75),
+	FISHING_BOB(90);
 
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
+	private final int id;
 
-import org.spout.vanilla.component.living.hostile.Slime;
-import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
-
-public class SlimeEntityProtocol extends CreatureProtocol {
-	public final static int SIZE_INDEX = 16; // The MC metadata index for determining the size of the slime.
-
-	public SlimeEntityProtocol() {
-		super(EntityProtocolID.SLIME.getId());
+	private ObjectType(int id) {
+		this.id = id;
 	}
 
-	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SIZE_INDEX, entity.add(Slime.class).getSize()));
-		return parameters;
+	public int getId() {
+		return id;
 	}
 }

@@ -47,14 +47,14 @@ public class Plank extends Solid implements Fuel, Burnable {
 	public final float BURN_TIME = 15;
 
 	public Plank(String name, String model) {
-		super((short) 0x0003, name, 05, model);
+		super((short) 0x0003, name, 5, model);
 		this.type = WoodType.OAK;
 		this.setHardness(0.8F).setResistance(1.3F).setStepSound(SoundEffects.STEP_WOOD);
 		this.addMiningType(ToolType.AXE);
 	}
 
 	public Plank(String name, WoodType type, Plank parent, String model) {
-		super(name, 05, type.getData(), parent, model);
+		super(name, 5, type.getData(), parent, model);
 		this.type = type;
 		this.setHardness(0.8F).setResistance(1.3F).setStepSound(SoundEffects.STEP_WOOD);
 		this.addMiningType(ToolType.AXE);

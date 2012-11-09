@@ -45,16 +45,16 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.BlockFlags;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.InitializableMaterial;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Crop;
 import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
-import org.spout.vanilla.util.VanillaBlockUtil;
 
 public class Potatoes extends GroundAttachable implements Growing, Crop, DynamicMaterial, InitializableMaterial {
 	public Potatoes(String name, int id) {
-		super(name, id);
+		super(name, id, null);
 		this.setResistance(0.0F).setHardness(0.0F).setTransparent();
 	}
 
@@ -137,7 +137,7 @@ public class Potatoes extends GroundAttachable implements Growing, Crop, Dynamic
 			if (block.translate(BlockFace.TOP).getLight() >= this.getMinimumLightToGrow()) {
 				// Grow using a calculated chance of growing
 				Random rand = new Random(block.getWorld().getAge());
-				int chance = VanillaBlockUtil.getCropGrowthChance(block);
+				int chance = VanillaBlockMaterial.getCropGrowthChance(block);
 				if (rand.nextInt(chance + 1) == 0) {
 					this.setGrowthStage(block, this.getGrowthStage(block));
 				}

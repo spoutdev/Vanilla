@@ -24,28 +24,26 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.protocol.entity.creature;
 
 import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.misc.HealthComponent;
-import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
+import org.spout.vanilla.component.living.hostile.MagmaCube;
 
-public class EnderDragonEntityProtocol extends CreatureProtocol {
-	public final static int HEALTH_INDEX = 16; // The MC metadata index to determine the Dragon's health
+public class MagmaCubeEntityProtocol extends CreatureProtocol {
+	public final static int SIZE_INDEX = 16; // The MC metadata index determinig the size of the magma cube
 	
-	public EnderDragonEntityProtocol() {
-		super(EntityProtocolID.ENDERDRAGON.getId());
+	public MagmaCubeEntityProtocol() {
+		super(CreatureType.MAGMA_CUBE);
 	}
 
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, HEALTH_INDEX, entity.add(HealthComponent.class).getHealth()));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SIZE_INDEX, entity.add(MagmaCube.class).getSize()));
 		return parameters;
 	}
 }

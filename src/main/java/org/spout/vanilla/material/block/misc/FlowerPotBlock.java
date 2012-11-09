@@ -31,9 +31,27 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class FlowerPotBlock extends VanillaBlockMaterial implements InitializableMaterial {
-	public FlowerPotBlock(String name, int id) {
-		super(name, id);
-		this.setHardness(0.0F).setResistance(0.0f).setTransparent();
+	public static final FlowerPotBlock EMPTY = new FlowerPotBlock("Empty Flower Pot");
+	public static final FlowerPotBlock ROSE = new FlowerPotBlock("Rose Flower Pot", 1);
+	public static final FlowerPotBlock DANDELION = new FlowerPotBlock("Dandelion Flower Pot", 2);
+	public static final FlowerPotBlock OAK_SAPLING = new FlowerPotBlock("Oak Sapling Flower Pot", 3);
+	public static final FlowerPotBlock SPRUCE_SAPLING = new FlowerPotBlock("Spruce Sapling Flower Pot", 4);
+	public static final FlowerPotBlock BIRCH_SAPLING = new FlowerPotBlock("Birch Sapling Flower Pot", 5);
+	public static final FlowerPotBlock JUNGLE_TREE_SAPLING = new FlowerPotBlock("Jungle Tree Sapling Flower Pot", 6);
+	public static final FlowerPotBlock RED_MUSHROOM = new FlowerPotBlock("Red Mushroom Flower Pot", 7);
+	public static final FlowerPotBlock BROWN_MUSHROOM = new FlowerPotBlock("Brown Mushroom Flower Pot", 8);
+	public static final FlowerPotBlock CACTUS = new FlowerPotBlock("Cactus Flower Pot", 9);
+	public static final FlowerPotBlock DEAD_BUSH = new FlowerPotBlock("Dead Bush Flower Pot", 10);
+	public static final FlowerPotBlock FERN = new FlowerPotBlock("Fern Flower Pot", 11);
+
+	private FlowerPotBlock(String name) {
+		super((short) 0xB, name, 140, null); // TODO: This data mask is wrong
+		setHardness(0.0f).setResistance(0.0f).setTransparent();
+	}
+
+	private FlowerPotBlock(String name, int data) {
+		super(name, 140, data, EMPTY, null);
+		setHardness(0.0f).setResistance(0.0f).setTransparent();
 	}
 
 	@Override

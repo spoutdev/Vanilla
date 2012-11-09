@@ -24,36 +24,26 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.protocol.entity.creature;
 
 import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.living.passive.Ocelot;
-import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
+import org.spout.vanilla.component.misc.HealthComponent;
 
-public class OcelotEntityProtocol extends CreatureProtocol {
-	public final static int SIT_TAME_INDEX = 16; // The MC metadata index for determining whether the ocelot is tamed or sitting.
-	public final static int OWNER_INDEX = 17; // The MC metadata index for the owner's name of the ocelot.
-	public final static int SKIN_INDEX = 18; // The MC metadata index for the ocelots texture.
-
-	public OcelotEntityProtocol() {
-		super(EntityProtocolID.OCELOT.getId());
+public class EnderDragonEntityProtocol extends CreatureProtocol {
+	public final static int HEALTH_INDEX = 16; // The MC metadata index to determine the Dragon's health
+	
+	public EnderDragonEntityProtocol() {
+		super(CreatureType.ENDER_DRAGON);
 	}
 
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		Ocelot ocelot = entity.add(Ocelot.class);
-		byte data = 0;
-		data |= (ocelot.isSitting() ? 1 : 0) & 0x01;
-		data |= (ocelot.isTamed() ? 1 : 0) & 0x04;
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SIT_TAME_INDEX, data));
-		parameters.add(new Parameter<String>(Parameter.TYPE_STRING, OWNER_INDEX, ocelot.getOwnerName()));
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SKIN_INDEX, ocelot.getSkinId()));
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, HEALTH_INDEX, entity.add(HealthComponent.class).getHealth()));
 		return parameters;
 	}
 }

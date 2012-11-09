@@ -29,63 +29,55 @@ package org.spout.vanilla.material.item;
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.Material;
 import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.GenericMaterialSource;
 import org.spout.api.material.source.MaterialSource;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.material.VanillaBlockMaterial;
+
 /**
  * A simplistic class which redirects placement requests to another (official) block material<br>
  * Can be used to store multi-block creations
  */
 public class BlockItem extends VanillaItemMaterial implements Placeable {
-	private short onPlaceData;
-	private BlockMaterial onPlaceMaterial;
+	private final BlockMaterial place;
 
-	public BlockItem(String name, int id, BlockMaterial onPlaceMaterial) {
-		this(name, id, onPlaceMaterial, onPlaceMaterial.getData());
+	public BlockItem(String name, int id, int data, Material parent, BlockMaterial place) {
+		super(name, id, data, parent);
+		this.place = place;
 	}
 
-	public BlockItem(String name, int id, BlockMaterial onPlaceMaterial, short onPlaceData) {
+	public BlockItem(String name, int id, BlockMaterial place) {
 		super(name, id);
-		this.setPlacedBlock(new GenericMaterialSource(onPlaceMaterial, onPlaceData));
+		this.place = place;
+	}
+
+	public BlockItem(short dataMask, String name, int id, BlockMaterial place) {
+		super(dataMask, name, id);
+		this.place = place;
 	}
 
 	@Override
 	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		return this.onPlaceMaterial.canPlace(block, this.onPlaceData, against, clickedPos, isClickedBlock);
+		return place.canPlace(block, place.getData(), against, clickedPos, isClickedBlock);
 	}
 
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
-		return this.onPlaceMaterial.onPlacement(block, this.onPlaceData, against, clickedPos, isClickedBlock, cause);
+		return place.onPlacement(block, place.getData(), against, clickedPos, isClickedBlock, cause);
 	}
 
 	@Override
 	public final boolean canPlace(Block block, short data) {
-		return this.canPlace(block, data, BlockFace.BOTTOM, Vector3.UNIT_Y, false);
+		return canPlace(block, data, BlockFace.BOTTOM, Vector3.UNIT_Y, false);
 	}
 
 	@Override
 	public final boolean onPlacement(Block block, short data, Cause<?> cause) {
-		return this.onPlacement(block, data, BlockFace.BOTTOM, Vector3.UNIT_Y, false, cause);
-	}
-
-	/**
-	 * Sets the block material this block item places
-	 * @param blockmaterial to set to
-	 * @return this block item
-	 */
-	public BlockItem setPlacedBlock(MaterialSource blockmaterial) {
-		if (blockmaterial == null || blockmaterial.getMaterial() == null) {
-			throw new NullPointerException("Block block can not be null");
-		}
-
-		this.onPlaceMaterial = (BlockMaterial) blockmaterial.getMaterial();
-		this.onPlaceData = blockmaterial.getData();
-
-		return this;
+		return onPlacement(block, data, BlockFace.BOTTOM, Vector3.UNIT_Y, false, cause);
 	}
 
 	/**
@@ -93,22 +85,6 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 	 * @return the Block material
 	 */
 	public BlockMaterial getPlacedMaterial() {
-		return this.onPlaceMaterial;
-	}
-
-	/**
-	 * Gets the block data this block item places
-	 * @return the Block data
-	 */
-	public short getPlacedData() {
-		return this.onPlaceData;
-	}
-
-	/**
-	 * Gets the material and data this block item placed
-	 * @return the Block material and data
-	 */
-	public MaterialSource getPlacedBlock() {
-		return new GenericMaterialSource(this.onPlaceMaterial, this.onPlaceData);
+		return place;
 	}
 }

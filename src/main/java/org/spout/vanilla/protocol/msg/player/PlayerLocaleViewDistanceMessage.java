@@ -35,12 +35,14 @@ public class PlayerLocaleViewDistanceMessage implements Message {
 	public static byte VIEW_FAR = 0, VIEW_NORMAL = 1, VIEW_SHORT = 2, VIEW_TINY = 3;
 	private String locale;
 	private byte viewDistance, chatFlags, difficulty;
+	private boolean showCape;
 
-	public PlayerLocaleViewDistanceMessage(String locale, byte viewDistance, byte chatFlags, byte difficulty) {
+	public PlayerLocaleViewDistanceMessage(String locale, byte viewDistance, byte chatFlags, byte difficulty, boolean showCape) {
 		this.locale = locale;
 		this.viewDistance = viewDistance;
 		this.chatFlags = chatFlags;
 		this.difficulty = difficulty;
+		this.showCape = showCape;
 	}
 
 	@Override
@@ -50,6 +52,7 @@ public class PlayerLocaleViewDistanceMessage implements Message {
 				.append("viewdistance", viewDistance)
 				.append("chatflags", chatFlags)
 				.append("difficulty", difficulty)
+				.append("show_cape", showCape)
 				.toString();
 	}
 
@@ -67,6 +70,7 @@ public class PlayerLocaleViewDistanceMessage implements Message {
 				.append(this.viewDistance, other.viewDistance)
 				.append(this.chatFlags, other.chatFlags)
 				.append(this.difficulty, other.difficulty)
+				.append(this.showCape, other.showCape)
 				.isEquals();
 	}
 
@@ -100,5 +104,9 @@ public class PlayerLocaleViewDistanceMessage implements Message {
 
 	public void setDifficulty(byte difficulty) {
 		this.difficulty = difficulty;
+	}
+
+	public boolean showsCape() {
+		return showCape;
 	}
 }

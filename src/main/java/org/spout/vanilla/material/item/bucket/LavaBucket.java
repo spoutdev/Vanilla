@@ -24,20 +24,20 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.controlled;
+package org.spout.vanilla.material.item.bucket;
 
-import org.spout.vanilla.component.substance.material.Beacon;
-import org.spout.vanilla.material.block.component.ComponentMaterial;
+import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.VanillaMaterials;
 
-public class BeaconBlock extends ComponentMaterial {
-	public BeaconBlock(String name, int id) {
-		super(name, id, Beacon.class, null);
-		this.setResistance(3.0F).setHardness(15.0F);
-		//TODO: Block needs to do special stuff when it is the top of a pyramid.
+public class LavaBucket extends FullBucket implements Fuel {
+	public final float BURN_TIME = 1000;
+
+	public LavaBucket(String name, int id) {
+		super(name, id, VanillaMaterials.LAVA);
 	}
 
 	@Override
-	public boolean isPlacementSuppressed() {
-		return true;
+	public float getFuelTime() {
+		return BURN_TIME;
 	}
 }

@@ -32,11 +32,12 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.substance.object.vehicle.Boat;
-import org.spout.vanilla.protocol.entity.ObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.ObjectType;
 
 public class BoatObjectEntityProtocol extends ObjectEntityProtocol {
 	public BoatObjectEntityProtocol() {
-		super(Boat.ID);
+		super(ObjectType.BOAT);
 	}
 
 	@Override

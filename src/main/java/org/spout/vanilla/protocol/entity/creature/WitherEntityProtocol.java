@@ -24,31 +24,26 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity;
+package org.spout.vanilla.protocol.entity.creature;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.math.Vector3;
-import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.protocol.msg.entity.spawn.EntityMobMessage;
+import org.spout.vanilla.component.misc.HealthComponent;
 
-public class CreatureProtocol extends BasicEntityProtocol {
-	public CreatureProtocol(int id) {
-		super(id);
+public class WitherEntityProtocol extends CreatureProtocol {
+	public final static int HEALTH_INDEX = 16; // The MC metadata index to determine the Wither's health
+	
+	public WitherEntityProtocol() {
+		super(CreatureType.WITHER);
 	}
 
 	@Override
-	public List<Message> getSpawnMessages(Entity entity) {
-		int entityId = entity.getId();
-		Vector3 position = entity.getTransform().getPosition().multiply(32).floor();
-		int yaw = (int) (entity.getTransform().getYaw() * 32);
-		int pitch = (int) (entity.getTransform().getPitch() * 32);
-		List<Parameter<?>> parameters = this.getSpawnParameters(entity);
-		//TODO Headyaw
-		return Arrays.<Message>asList(new EntityMobMessage(entityId, this.typeId, position, yaw, pitch, 0, (short) 0, (short) 0, (short) 0, parameters));
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, HEALTH_INDEX, entity.add(HealthComponent.class).getHealth()));
+		return parameters;
 	}
 }

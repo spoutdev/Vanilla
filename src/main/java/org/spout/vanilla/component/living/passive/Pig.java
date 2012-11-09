@@ -30,7 +30,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.component.living.Passive;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.living.PigEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.PigEntityProtocol;
 
 /**
  * A component that identifies the entity as a Pig.

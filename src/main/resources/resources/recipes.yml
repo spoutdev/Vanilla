@@ -447,9 +447,9 @@ recipes:
       B: REDSTONE_WIRE
     rows: [' A ', 'ABA', ' A ']
 
-  Map:
+  Empty Map:
     type: Shaped
-    result: MAP,1
+    result: EMPTY_MAP,1
     ingredients:
       A: PAPER
       B: COMPASS
@@ -1261,6 +1261,37 @@ recipes:
       B: DIAMOND
       C: OBSIDIAN
     rows: [' A ', 'BCB', 'CCC']
+
+  Beacon:
+    type: Shaped
+    result: BEACON,1
+    ingredients:
+      A: GLASS
+      B: NETHER_STAR
+      C: OBSIDIAN
+    rows: ['AAA', 'ABA', 'CCC']
+
+  Mossy Cobblestone Wall:
+    type: Shaped
+    result: MOSSY_COBBLESTONE_WALL,6
+    ingredients:
+      A: MOSSY_COBBLESTONE
+    rows: ['AAA', 'AAA']
+
+  Cobblestone Wall:
+    type: Shaped
+    result: COBBLESTONE_WALL,6
+    ingredients:
+      A: COBBLESTONE
+    rows: ['AAA', 'AAA']
+
+  Anvil:
+    type: Shaped
+    result: ANVIL
+    ingredients:
+      A: IRON_BLOCK
+      B: IRON_INGOT
+    rows: ['AAA', ' B ', 'BBB']
 
   Golden Carrot:
     type: Shaped

@@ -24,45 +24,29 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.data;
+package org.spout.vanilla.protocol.entity.creature;
 
-public enum EntityProtocolID {
-	BAT(65),
-	BLAZE(61),
-	CAVESPIDER(59),
-	CHICKEN(93),
-	COW(92),
-	CREEPER(50),
-	ENDERDRAGON(63),
-	ENDERMAN(58),
-	GHAST(56),
-	GIANT(53),
-	IRONGOLEM(99),
-	MAGMACUBE(62),
-	MUSHROOMCOW(96),
-	OCELOT(98),
-	PIG(90),
-	PIGZOMBIE(57),
-	SHEEP(91),
-	SILVERFISH(60),
-	SKELETON(51),
-	SLIME(55),
-	SNOWGOLEM(97),
-	SPIDER(52),
-	SQUID(94),
-	VILLAGER(120),
-	WITCH(66),
-	WITHER(64),
-	WOLF(95),
-	ZOMBIE(54);
-	
-	private int id;
-	
-	EntityProtocolID(int id) {
-		this.id = id;
+import java.util.List;
+
+import org.spout.api.entity.Entity;
+import org.spout.api.util.Parameter;
+
+import org.spout.vanilla.component.living.hostile.Ghast;
+
+public class GhastEntityProtocol extends CreatureProtocol {
+	public final static int RED_EYES = 16; // The MC metadata index to determine ghast with red eyes.
+
+	public GhastEntityProtocol() {
+		super(CreatureType.GHAST);
 	}
-	
-	public int getId() {
-		return id;
+
+	@Override
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
+		Ghast ghast = entity.add(Ghast.class);
+		byte data = ghast.haveRedEyes() ? (byte) 1 : 0;
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, RED_EYES, data));
+
+		return parameters;
 	}
 }

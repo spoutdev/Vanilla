@@ -24,28 +24,32 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.protocol.entity.creature;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.math.Vector3;
+import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.living.hostile.Blaze;
-import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.BasicEntityProtocol;
+import org.spout.vanilla.protocol.msg.entity.spawn.EntityMobMessage;
 
-public class BlazeEntityProtocol extends CreatureProtocol {
-	public final static int ATTACK_INDEX = 16; // The MC metadata index to determine if the blaze is attacking
-
-	public BlazeEntityProtocol() {
-		super(EntityProtocolID.BLAZE.getId());
+public class CreatureProtocol extends BasicEntityProtocol {
+	public CreatureProtocol(CreatureType type) {
+		super(type.getId());
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, ATTACK_INDEX, (byte) (entity.add(Blaze.class).isAttacking() ? 1 : 0)));
-		return parameters;
+	public List<Message> getSpawnMessages(Entity entity) {
+		int entityId = entity.getId();
+		Vector3 position = entity.getTransform().getPosition().multiply(32).floor();
+		int yaw = (int) (entity.getTransform().getYaw() * 32);
+		int pitch = (int) (entity.getTransform().getPitch() * 32);
+		List<Parameter<?>> parameters = this.getSpawnParameters(entity);
+		//TODO Headyaw
+		return Arrays.<Message>asList(new EntityMobMessage(entityId, this.typeId, position, yaw, pitch, 0, (short) 0, (short) 0, (short) 0, parameters));
 	}
 }

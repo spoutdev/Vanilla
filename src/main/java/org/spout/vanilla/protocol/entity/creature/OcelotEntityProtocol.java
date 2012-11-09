@@ -24,40 +24,34 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.protocol.entity.creature;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.living.Human;
-import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
-import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
+import org.spout.vanilla.component.living.passive.Ocelot;
 
-public class HumanEntityProtocol extends VanillaEntityProtocol {
+public class OcelotEntityProtocol extends CreatureProtocol {
+	public final static int SIT_TAME_INDEX = 16; // The MC metadata index for determining whether the ocelot is tamed or sitting.
+	public final static int OWNER_INDEX = 17; // The MC metadata index for the owner's name of the ocelot.
+	public final static int SKIN_INDEX = 18; // The MC metadata index for the ocelots texture.
+
+	public OcelotEntityProtocol() {
+		super(CreatureType.OCELOT);
+	}
+
 	@Override
-	public List<Message> getSpawnMessages(Entity entity) {
-		Human human = entity.add(Human.class);
-
-		int id = entity.getId();
-		int x = (int) (entity.getTransform().getPosition().getX() * 32);
-		int y = (int) (entity.getTransform().getPosition().getY() * 32);
-		int z = (int) (entity.getTransform().getPosition().getZ() * 32);
-		int r = (int) (-entity.getTransform().getYaw() * 32);
-		int p = (int) (entity.getTransform().getPitch() * 32);
-
-		int item = 0;
-		ItemStack hand = human.getInventory().getQuickbar().getCurrentItem();
-		if (hand != null) {
-			item = hand.getMaterial().getId();
-		}
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
-		parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 100));
-		return Arrays.<Message>asList(new PlayerSpawnMessage(id, human.getName(), x, y, z, r, p, item, parameters));
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
+		Ocelot ocelot = entity.add(Ocelot.class);
+		byte data = 0;
+		data |= (ocelot.isSitting() ? 1 : 0) & 0x01;
+		data |= (ocelot.isTamed() ? 1 : 0) & 0x04;
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SIT_TAME_INDEX, data));
+		parameters.add(new Parameter<String>(Parameter.TYPE_STRING, OWNER_INDEX, ocelot.getOwnerName()));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SKIN_INDEX, ocelot.getSkinId()));
+		return parameters;
 	}
 }

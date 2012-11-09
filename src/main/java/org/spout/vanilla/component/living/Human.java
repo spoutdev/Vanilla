@@ -51,7 +51,7 @@ import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
 import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.protocol.entity.living.HumanEntityProtocol;
+import org.spout.vanilla.protocol.entity.HumanEntityProtocol;
 import org.spout.vanilla.protocol.msg.player.PlayerGameStateMessage;
 
 /**

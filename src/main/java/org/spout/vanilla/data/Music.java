@@ -38,7 +38,8 @@ public enum Music {
 	STAL(2263, "stal", "C418"),
 	STRAD(2264, "strad", "C418"),
 	WARD(2265, "ward", "C418"),
-	ELEVEN(2266, "11", "C418");
+	ELEVEN(2266, "11", "C418"),
+	WAIT(2267, "wait", "C418");
 	private final int id;
 	private final String name;
 	private final String author;

@@ -24,29 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.protocol.entity.creature;
 
 import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.living.passive.Villager;
-import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
-
-public class VillagerEntityProtocol extends CreatureProtocol {
-	public final static int TYPE_INDEX = 16; // The MC metadata index to determine the type of the villager
+public class ZombieEntityProtocol extends CreatureProtocol {
+	public final static int TYPE_INDEX = 16; // The MC metadata index determinig if this zombie was a villager or not
 	
-	public VillagerEntityProtocol() {
-		super(EntityProtocolID.VILLAGER.getId());
+	public ZombieEntityProtocol() {
+		super(CreatureType.MAGMA_CUBE);
 	}
 
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		Villager villager = entity.get(Villager.class);
-		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, TYPE_INDEX, villager.getVillagerTypeID()));
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, TYPE_INDEX, 1));
 		return parameters;
 	}
 }

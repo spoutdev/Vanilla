@@ -30,7 +30,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.component.living.Neutral;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.living.WolfEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.WolfEntityProtocol;
 
 /**
  * A component that identifies the entity as a Wolf.

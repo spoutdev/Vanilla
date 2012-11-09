@@ -24,34 +24,45 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.protocol.entity.creature;
 
-import java.util.List;
-
-import org.spout.api.data.Data;
-import org.spout.api.entity.Entity;
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.util.Parameter;
-
-import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
-
-public class EndermanEntityProtocol extends CreatureProtocol {
-	public final static int ITEM_ID_INDEX = 16; // The MC metadata index for the item in the Enderman's hand.
-	public final static int ITEM_DATA_INDEX = 17; // The MC metadata indexfor the item data in the Enderman's hand.
-
-	public EndermanEntityProtocol() {
-		super(EntityProtocolID.ENDERMAN.getId());
+public enum CreatureType {
+	BAT(65),
+	BLAZE(61),
+	CAVE_SPIDER(59),
+	CHICKEN(93),
+	COW(92),
+	CREEPER(50),
+	ENDER_DRAGON(63),
+	ENDERMAN(58),
+	GHAST(56),
+	GIANT(53),
+	IRON_GOLEM(99),
+	MAGMA_CUBE(62),
+	MUSHROOM_COW(96),
+	OCELOT(98),
+	PIG(90),
+	PIG_ZOMBIE(57),
+	SHEEP(91),
+	SILVERFISH(60),
+	SKELETON(51),
+	SLIME(55),
+	SNOW_GOLEM(97),
+	SPIDER(52),
+	SQUID(94),
+	VILLAGER(120),
+	WITCH(66),
+	WITHER(64),
+	WOLF(95),
+	ZOMBIE(54);
+	
+	private int id;
+	
+	private CreatureType(int id) {
+		this.id = id;
 	}
-
-	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		ItemStack held = entity.getData().get(Data.HELD_ITEM);
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		if (held != null) {
-			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, ITEM_ID_INDEX, (byte) held.getMaterial().getId()));
-			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, ITEM_DATA_INDEX, (byte) held.getData()));
-		}
-		return parameters;
+	
+	public int getId() {
+		return id;
 	}
 }

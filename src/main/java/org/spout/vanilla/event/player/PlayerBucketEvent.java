@@ -53,7 +53,7 @@ public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
 
 	/**
 	 * Get the resulting bucket in hand after the bucket event.
-	 * @return Bucket held in hand after the event.
+	 * @return EmptyBucket held in hand after the event.
 	 */
 	public ItemStack getBucket() {
 		return bucket;

@@ -27,13 +27,14 @@
 package org.spout.vanilla.component.substance.object;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.entity.ObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.ObjectType;
 
 public class FallingDragonEgg extends ObjectEntity {
 	public static final int ID = 74;
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ID));
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.DRAGON_EGG));
 	}
 }

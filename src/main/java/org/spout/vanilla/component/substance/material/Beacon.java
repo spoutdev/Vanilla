@@ -32,9 +32,8 @@ import org.spout.api.inventory.Inventory;
 import org.spout.vanilla.component.inventory.window.block.BeaconWindow;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.BeaconInventory;
-import org.spout.vanilla.material.block.controlled.EnchantmentTableBlock;
 
-public class Beacon extends WindowBlockComponent<EnchantmentTableBlock> implements Container {
+public class Beacon extends ViewedBlockComponent implements Container {
 	private final BeaconInventory inventory = new BeaconInventory();
 
 	@Override
@@ -43,7 +42,7 @@ public class Beacon extends WindowBlockComponent<EnchantmentTableBlock> implemen
 	}
 
 	@Override
-	public void openWindow(Player player) {
+	public void open(Player player) {
 		player.add(BeaconWindow.class).init(inventory).open();
 	}
 }

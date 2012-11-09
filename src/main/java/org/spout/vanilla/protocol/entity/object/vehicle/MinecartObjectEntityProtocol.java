@@ -32,11 +32,12 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.substance.object.vehicle.Minecart;
-import org.spout.vanilla.protocol.entity.ObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.ObjectType;
 
 public class MinecartObjectEntityProtocol extends ObjectEntityProtocol {
 	public MinecartObjectEntityProtocol() {
-		super(Minecart.ID);
+		super(ObjectType.MINECART);
 	}
 
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {

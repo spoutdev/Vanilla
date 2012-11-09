@@ -24,20 +24,31 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.controlled;
+package org.spout.vanilla.protocol.entity.creature;
 
-import org.spout.vanilla.component.substance.material.Beacon;
-import org.spout.vanilla.material.block.component.ComponentMaterial;
+import java.util.List;
 
-public class BeaconBlock extends ComponentMaterial {
-	public BeaconBlock(String name, int id) {
-		super(name, id, Beacon.class, null);
-		this.setResistance(3.0F).setHardness(15.0F);
-		//TODO: Block needs to do special stuff when it is the top of a pyramid.
+import org.spout.api.data.Data;
+import org.spout.api.entity.Entity;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.util.Parameter;
+
+public class EndermanEntityProtocol extends CreatureProtocol {
+	public final static int ITEM_ID_INDEX = 16; // The MC metadata index for the item in the Enderman's hand.
+	public final static int ITEM_DATA_INDEX = 17; // The MC metadata indexfor the item data in the Enderman's hand.
+
+	public EndermanEntityProtocol() {
+		super(CreatureType.ENDERMAN);
 	}
 
 	@Override
-	public boolean isPlacementSuppressed() {
-		return true;
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		ItemStack held = entity.getData().get(Data.HELD_ITEM);
+		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
+		if (held != null) {
+			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, ITEM_ID_INDEX, (byte) held.getMaterial().getId()));
+			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, ITEM_DATA_INDEX, (byte) held.getData()));
+		}
+		return parameters;
 	}
 }

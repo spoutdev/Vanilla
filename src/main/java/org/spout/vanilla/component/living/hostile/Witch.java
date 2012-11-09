@@ -29,8 +29,8 @@ package org.spout.vanilla.component.living.hostile;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;
 import org.spout.vanilla.component.living.LivingComponent;
-import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
+import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
 
 /**
  * A component that identifies the entity as a CaveSpider.
@@ -39,6 +39,6 @@ public class Witch extends LivingComponent implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(EntityProtocolID.WITCH.getId()));
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.WITCH));
 	}
 }

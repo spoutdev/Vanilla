@@ -32,10 +32,16 @@ import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
 
 public final class PlayerTimeMessage implements Message {
+	private final long age;
 	private final long time;
 
-	public PlayerTimeMessage(long time) {
+	public PlayerTimeMessage(long age, long time) {
+		this.age = age;
 		this.time = time;
+	}
+
+	public long getAge() {
+		return age;
 	}
 
 	public long getTime() {
@@ -45,6 +51,7 @@ public final class PlayerTimeMessage implements Message {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("age", age)
 				.append("time", time)
 				.toString();
 	}

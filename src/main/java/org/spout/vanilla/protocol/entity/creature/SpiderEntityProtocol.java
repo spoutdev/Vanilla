@@ -24,38 +24,22 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.protocol.entity.creature;
 
 import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.living.neutral.Wolf;
-import org.spout.vanilla.component.misc.HealthComponent;
-import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
-
-public class WolfEntityProtocol extends CreatureProtocol {
-	public final static int SIT_TAME_RED_EYES_INDEX = 16; // The MC metadata index for determining if the wolf is tamed, has red eyes, or is sitting.
-	public final static int OWNER_INDEX = 17; // The MC metadata index for the owner's name.
-	public final static int HEALTH_INDEX = 18; // The MC metadata index for the health of the wolf;
-
-	public WolfEntityProtocol() {
-		super(EntityProtocolID.WOLF.getId());
+public class SpiderEntityProtocol extends CreatureProtocol {
+	public SpiderEntityProtocol() {
+		super(CreatureType.SPIDER);
 	}
 
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		Wolf wolf = entity.add(Wolf.class);
-		byte data = 0;
-		data |= (wolf.isSitting() ? 1 : 0) & 0x01;
-		data |= (wolf.haveRedEyes() ? 1 : 0) & 0x02;
-		data |= (wolf.isTamed() ? 1 : 0) & 0x04;
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SIT_TAME_RED_EYES_INDEX, data));
-		parameters.add(new Parameter<String>(Parameter.TYPE_STRING, OWNER_INDEX, wolf.getOwnerName()));
-		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, HEALTH_INDEX, wolf.getOwner().get(HealthComponent.class).getHealth()));
+		//TODO: index 16 (byte): Aggression level
 		return parameters;
 	}
 }

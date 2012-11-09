@@ -31,7 +31,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.block.PressurePlate;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.block.controlled.SignBase;
+import org.spout.vanilla.material.block.component.SignBase;
 import org.spout.vanilla.material.block.misc.Torch;
 
 public class Wall extends Solid {
@@ -39,13 +39,13 @@ public class Wall extends Solid {
 	public static final Wall MOSSY_COBBLESTONE_WALL = new Wall("Mossy Cobblestone Wall", (short) 1, COBBLESTONE_WALL);
 
 	private Wall(String name) {
-		super((short) 0x1, name, 139);
+		super((short) 0x1, name, 139, null);
 		this.setHardness(1.5F).setResistance(10.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
 	private Wall(String name, int data, Wall parent) {
-		super(name, parent.getId(), data, parent);
+		super(name, parent.getId(), data, parent, null);
 		this.setHardness(1.5F).setResistance(10.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

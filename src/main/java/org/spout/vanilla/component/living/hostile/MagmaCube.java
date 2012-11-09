@@ -30,7 +30,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;
 import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.living.MagmaCubeEntityProtocol;
+import org.spout.vanilla.protocol.entity.creature.MagmaCubeEntityProtocol;
 
 /**
  * A component that identifies the entity as a MagmaCube.

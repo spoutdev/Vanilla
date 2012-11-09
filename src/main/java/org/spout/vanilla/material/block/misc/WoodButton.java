@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block.misc;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
@@ -47,7 +48,7 @@ public class WoodButton extends AttachedRedstoneSource implements PointAttachabl
 	public static final int TICK_DELAY = 1000;
 
 	public WoodButton(String name, int id) {
-		super(name, id);
+		super(name, id, null);
 		this.setAttachable(BlockFaces.NESW).setLiquidObstacle(false).setHardness(0.5F).setResistance(1.5F).setTransparent();
 	}
 
@@ -59,6 +60,11 @@ public class WoodButton extends AttachedRedstoneSource implements PointAttachabl
 	@Override
 	public boolean canAttachTo(Block block, BlockFace face) {
 		return face != BlockFace.TOP && super.canAttachTo(block, face);
+	}
+
+	@Override
+	public void setAttachedFace(Block block, BlockFace attachedFace, Cause<?> cause) {
+		block.setData((short) (BlockFaces.NSEW.indexOf(attachedFace, 3) + 1));
 	}
 
 	@Override
@@ -75,11 +81,6 @@ public class WoodButton extends AttachedRedstoneSource implements PointAttachabl
 		if (type != Action.LEFT_CLICK || !entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.CREATIVE)) {
 			this.setPressed(block, true);
 		}
-	}
-
-	@Override
-	public void setAttachedFace(Block block, BlockFace attachedFace) {
-		block.setData((short) (BlockFaces.NSEW.indexOf(attachedFace, 3) + 1));
 	}
 
 	@Override

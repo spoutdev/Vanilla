@@ -34,7 +34,7 @@ import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.AnvilInventory;
 import org.spout.vanilla.material.block.controlled.AnvilBlock;
 
-public class Anvil extends WindowBlockComponent<AnvilBlock> implements Container {
+public class Anvil extends ViewedBlockComponent implements Container {
 	private final AnvilInventory inventory = new AnvilInventory();
 
 	@Override
@@ -43,7 +43,7 @@ public class Anvil extends WindowBlockComponent<AnvilBlock> implements Container
 	}
 
 	@Override
-	public void openWindow(Player player) {
+	public void open(Player player) {
 		player.add(AnvilWindow.class).init(inventory).open();
 	}
 }

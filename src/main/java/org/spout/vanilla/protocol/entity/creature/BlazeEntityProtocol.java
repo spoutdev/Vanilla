@@ -24,31 +24,26 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.living;
+package org.spout.vanilla.protocol.entity.creature;
 
 import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.living.hostile.Ghast;
-import org.spout.vanilla.data.EntityProtocolID;
-import org.spout.vanilla.protocol.entity.CreatureProtocol;
+import org.spout.vanilla.component.living.hostile.Blaze;
 
-public class GhastEntityProtocol extends CreatureProtocol {
-	public final static int RED_EYES = 16; // The MC metadata index to determine ghast with red eyes.
+public class BlazeEntityProtocol extends CreatureProtocol {
+	public final static int ATTACK_INDEX = 16; // The MC metadata index to determine if the blaze is attacking
 
-	public GhastEntityProtocol() {
-		super(EntityProtocolID.GHAST.getId());
+	public BlazeEntityProtocol() {
+		super(CreatureType.BLAZE);
 	}
 
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		Ghast ghast = entity.add(Ghast.class);
-		byte data = ghast.haveRedEyes() ? (byte) 1 : 0;
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, RED_EYES, data));
-
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, ATTACK_INDEX, (byte) (entity.add(Blaze.class).isAttacking() ? 1 : 0)));
 		return parameters;
 	}
 }

@@ -42,12 +42,13 @@ public final class PlayerTimeCodec extends MessageCodec<PlayerTimeMessage> {
 
 	@Override
 	public PlayerTimeMessage decode(ChannelBuffer buffer) throws IOException {
-		return new PlayerTimeMessage(buffer.readLong());
+		return new PlayerTimeMessage(buffer.readLong(), buffer.readLong());
 	}
 
 	@Override
 	public ChannelBuffer encode(PlayerTimeMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(8);
+		ChannelBuffer buffer = ChannelBuffers.buffer(16);
+		buffer.writeLong(message.getAge());
 		buffer.writeLong(message.getTime());
 		return buffer;
 	}

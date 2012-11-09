@@ -24,20 +24,26 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.material.block.controlled;
+package org.spout.vanilla.protocol.entity.creature;
 
-import org.spout.vanilla.component.substance.material.Beacon;
-import org.spout.vanilla.material.block.component.ComponentMaterial;
+import java.util.List;
 
-public class BeaconBlock extends ComponentMaterial {
-	public BeaconBlock(String name, int id) {
-		super(name, id, Beacon.class, null);
-		this.setResistance(3.0F).setHardness(15.0F);
-		//TODO: Block needs to do special stuff when it is the top of a pyramid.
+import org.spout.api.entity.Entity;
+import org.spout.api.util.Parameter;
+
+import org.spout.vanilla.component.living.passive.Pig;
+
+public class PigEntityProtocol extends CreatureProtocol {
+	public final static int SADDLE_INDEX = 16; // The MC metadata index for determining if the pig is saddled or not.
+
+	public PigEntityProtocol() {
+		super(CreatureType.PIG);
 	}
 
 	@Override
-	public boolean isPlacementSuppressed() {
-		return true;
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SADDLE_INDEX, (byte) (entity.add(Pig.class).isSaddled() ? 1 : 0)));
+		return parameters;
 	}
 }

@@ -24,27 +24,28 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity;
+package org.spout.vanilla.protocol.entity.creature;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.protocol.Message;
+import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
-import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
+import org.spout.vanilla.component.living.hostile.Creeper;
 
-public class ObjectEntityProtocol extends BasicEntityProtocol {
-	public ObjectEntityProtocol(int typeId) {
-		super(typeId);
+public class CreeperEntityProtocol extends CreatureProtocol {
+	public final static int FUSE_INDEX = 16; // The MC metadata index to determine the fuse.
+	public final static int CHARGE_INDEX = 17; // The MC metadata index to determine if the creeper is charged.
+
+	public CreeperEntityProtocol() {
+		super(CreatureType.CREEPER);
 	}
 
 	@Override
-	public List<Message> getSpawnMessages(Entity entity) {
-		List<Message> messages = new ArrayList<Message>();
-		messages.add(new EntityObjectMessage(entity, (byte) typeId));
-		messages.add(new EntityMetadataMessage(entity.getId(), getSpawnParameters(entity)));
-		return messages;
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, FUSE_INDEX, entity.add(Creeper.class).getFuse()));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, CHARGE_INDEX, (byte) (entity.add(Creeper.class).isCharged() ? 1 : 0)));
+		return parameters;
 	}
 }

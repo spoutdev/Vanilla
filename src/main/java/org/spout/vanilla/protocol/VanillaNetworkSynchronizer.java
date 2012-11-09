@@ -557,7 +557,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onTimeUpdate(TimeUpdateEvent event) {
-		return new PlayerTimeMessage(event.getNewTime());
+		return new PlayerTimeMessage(event.getWorld().getAge(), event.getNewTime());
 	}
 
 	@EventHandler

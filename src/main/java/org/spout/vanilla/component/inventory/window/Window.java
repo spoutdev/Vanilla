@@ -44,6 +44,7 @@ import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowItemsEvent;
@@ -115,7 +116,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 	 */
 	public void close() {
 		opened = false;
-		if (getHuman().isSurvival()) {
+		if (getHuman() == null || getHuman().isSurvival()) {
 			dropCursorItem();
 		}
 		callProtocolEvent(new WindowCloseEvent(this));
@@ -326,7 +327,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 	 */
 	public void dropCursorItem() {
 		if (cursorItem != null) {
-			getHuman().dropItem(cursorItem);
+			Item.dropNaturally(this.getOwner().getTransform().getPosition(), cursorItem);
 			cursorItem = null;
 		}
 	}
@@ -397,7 +398,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 	 * @return human
 	 */
 	public Human getHuman() {
-		return getOwner().add(Human.class);
+		return getOwner().get(Human.class);
 	}
 
 	/**
@@ -575,7 +576,9 @@ public class Window extends EntityComponent implements InventoryViewer {
 	public void onDetached() {
 		removeAllInventoryConverters();
 		close();
-		getOwner().add(DefaultWindow.class);
+		if (!getOwner().isRemoved()) {
+			getOwner().add(DefaultWindow.class);
+		}
 	}
 
 	@Override

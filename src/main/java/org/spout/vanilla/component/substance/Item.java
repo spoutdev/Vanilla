@@ -104,7 +104,7 @@ public class Item extends EntityComponent {
 		Entity entity = position.getWorld().createEntity(position, Item.class);
 		Item item = entity.add(Item.class);
 		item.setItemStack(itemStack);
-		item.getPhysics().setVelocity(velocity);
+		item.getPhysics().setLinearVelocity(velocity);
 		if (position.getChunk(LoadOption.NO_LOAD) != null) {
 			position.getWorld().spawnEntity(entity);
 		}

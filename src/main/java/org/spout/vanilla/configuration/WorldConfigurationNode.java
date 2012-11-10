@@ -37,7 +37,7 @@ import org.spout.api.util.config.MapConfiguration;
 public final class WorldConfigurationNode extends ConfigurationHolderConfiguration {
 	public final ConfigurationHolder LOAD = new ConfigurationHolder(true, "load");
 	public final ConfigurationHolder GENERATOR = new ConfigurationHolder("normal", "generator");
-	public final ConfigurationHolder LOADED_SPAWN = new ConfigurationHolder(true, "keep-spawn-loaded");
+	public final ConfigurationHolder LOADED_SPAWN = new ConfigurationHolder(false, "keep-spawn-loaded");
 	public final ConfigurationHolder GAMEMODE = new ConfigurationHolder("creative", "game-mode");
 	public final ConfigurationHolder DIFFICULTY = new ConfigurationHolder("normal", "difficulty");
 	public final ConfigurationHolder SKY_TYPE = new ConfigurationHolder("normal", "sky-type");

@@ -39,11 +39,13 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.object.ItemEntityProtocol;
 
+import com.bulletphysics.collision.shapes.BoxShape;
+
 public class Item extends EntityComponent {
 	@Override
 	public void onAttached() {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
-		getOwner().add(PhysicsComponent.class);
+		getOwner().add(PhysicsComponent.class).setCollisionShape(new BoxShape(0.25F, 0.25F, 0.25F));
 	}
 
 	@Override

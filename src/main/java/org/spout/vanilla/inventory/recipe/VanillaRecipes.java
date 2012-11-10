@@ -42,7 +42,7 @@ public class VanillaRecipes {
 		yamlRecipes.clear();
 		for (String key : RecipeYaml.DEFAULT.getRecipes().keySet()) {
 			Recipe recipe = RecipeYaml.DEFAULT.getRecipes().get(key);
-			Spout.getEngine().getRecipeManager().register(VanillaPlugin.getInstance(), recipe);
+			Spout.getEngine().getRecipeManager().register(recipe);
 			yamlRecipes.put(key, recipe);
 		}
 	}

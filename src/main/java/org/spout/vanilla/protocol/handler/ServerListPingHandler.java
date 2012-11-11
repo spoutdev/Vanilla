@@ -31,6 +31,7 @@ import org.spout.api.Spout;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.game.ServerListPingEvent;
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
@@ -40,7 +41,9 @@ public class ServerListPingHandler extends MessageHandler<ServerListPingMessage>
 	@Override
 	public void handleServer(Session session, ServerListPingMessage message) {
 		Server server = (Server) Spout.getEngine();
+		String protocol = VanillaPlugin.getInstance().getDescription().getData("protocol");
+		String mcV = VanillaPlugin.getInstance().getDescription().getVersion().trim().split(" ")[0];
 		ServerListPingEvent event = Spout.getEventManager().callEvent(new ServerListPingEvent(session.getAddress().getAddress(), VanillaConfiguration.MOTD.getString(), server.getOnlinePlayers().length, server.getMaxPlayers()));
-		session.send(false, true, new PlayerKickMessage(event.getMessage()));
+		session.send(false, true, new PlayerKickMessage('\u00A7' + "1" + '\u0000' + protocol + '\u0000' + mcV + '\u0000' + event.getMessage()));
 	}
 }

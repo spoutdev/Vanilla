@@ -108,7 +108,7 @@ public class ServerListPingEvent extends Event {
 	 * @return packet message
 	 */
 	public String getMessage() {
-		return motd + "\u00A7" + numPlayers + "\u00A7" + maxPlayers + "\u00A7";
+		return motd + '\u0000' + numPlayers + '\u0000' + maxPlayers + '\u0000';
 	}
 
 	@Override

@@ -33,6 +33,10 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
+import org.spout.nbt.CompoundMap;
+import org.spout.nbt.CompoundTag;
+import org.spout.nbt.StringTag;
+import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityItemMessage;
 
 public final class EntityItemCodec extends MessageCodec<EntityItemMessage> {
@@ -44,8 +48,19 @@ public final class EntityItemCodec extends MessageCodec<EntityItemMessage> {
 	public EntityItemMessage decode(ChannelBuffer buffer) throws IOException {
 		int id = buffer.readInt();
 		int itemId = buffer.readUnsignedShort();
-		int count = buffer.readUnsignedByte();
-		int damage = buffer.readUnsignedShort();
+		int count = 1;
+		int damage = 0;
+		if (itemId != -1) {
+			count = buffer.readUnsignedByte();
+			damage = buffer.readUnsignedShort();
+		}
+		buffer.markReaderIndex();
+		int strLen = buffer.readShort();
+		if (strLen != -1) {
+			buffer.resetReaderIndex();
+			//TODO: NBT Data?
+			ChannelBufferUtils.readCompound(buffer);
+		}
 		int x = buffer.readInt();
 		int y = buffer.readInt();
 		int z = buffer.readInt();
@@ -57,11 +72,12 @@ public final class EntityItemCodec extends MessageCodec<EntityItemMessage> {
 
 	@Override
 	public ChannelBuffer encode(EntityItemMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(24);
+		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeInt(message.getEntityId());
 		buffer.writeShort(message.getId());
 		buffer.writeByte(message.getCount());
 		buffer.writeShort(message.getDamage());
+		buffer.writeShort(-1); //TODO: NBT data?
 		buffer.writeInt(message.getX());
 		buffer.writeInt(message.getY());
 		buffer.writeInt(message.getZ());

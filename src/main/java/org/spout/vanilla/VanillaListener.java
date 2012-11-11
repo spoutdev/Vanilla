@@ -37,7 +37,9 @@ import org.spout.api.event.block.BlockChangeEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.server.ClientEnableEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
+import org.spout.api.keyboard.Input;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.plugin.Platform;
 import org.spout.vanilla.component.inventory.window.DefaultWindow;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.PickupItemComponent;
@@ -46,6 +48,7 @@ import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.component.player.PingComponent;
 import org.spout.vanilla.component.player.PlayerListComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.entity.state.VanillaPlayerInputState;
 import org.spout.vanilla.event.block.RedstoneChangeEvent;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 
@@ -78,6 +81,24 @@ public class VanillaListener implements Listener {
 	public void onClientEnable(ClientEnableEvent event) {
 		final HUDComponent HUD = ((Client) Spout.getEngine()).getActivePlayer().add(HUDComponent.class);
 		HUD.openHUD();
+		
+		((Client) Spout.getEngine()).getActivePlayer().addInputState(VanillaPlugin.class, VanillaPlayerInputState.DEFAULT_STATE);
+
+		if(Spout.getEngine().getPlatform() == Platform.CLIENT){
+			Input input = ((Client)Spout.getEngine()).getInput();
+			input.bind(VanillaConfiguration.FORWARD.getString(), "+Forward");
+			input.bind(VanillaConfiguration.BACKWARD.getString(), "+BackWard");
+			input.bind(VanillaConfiguration.LEFT.getString(), "+Left");
+			input.bind(VanillaConfiguration.RIGHT.getString(), "+Right");
+			input.bind(VanillaConfiguration.UP.getString(), "+Jump");
+			input.bind(VanillaConfiguration.DOWN.getString(), "+Crouch");
+			input.bind("KEY_F3", "debug_infos");
+			input.bind("KEY_SCROLLDOWN", "+Select_Down");
+			input.bind("KEY_SCROLLUP", "+Select_Up");
+			input.bind("MOUSE_BUTTON0", "+FIRE_1");
+			input.bind("MOUSE_BUTTON1", "+INTERACT");
+			input.bind("MOUSE_BUTTON2", "+FIRE_2");
+		}
 	}
 
 	@EventHandler

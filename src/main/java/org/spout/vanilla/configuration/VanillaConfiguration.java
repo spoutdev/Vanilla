@@ -86,6 +86,12 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	public static final OpConfiguration OPS = new OpConfiguration(VanillaPlugin.getInstance().getDataFolder());
 	public static final WorldConfiguration WORLDS = new WorldConfiguration(VanillaPlugin.getInstance().getDataFolder());
 	public static final YamlConfiguration BIOMES = new YamlConfiguration(new File(VanillaPlugin.getInstance().getDataFolder(), "biomes.yml"));
+	public static final ConfigurationHolder FORWARD = new ConfigurationHolder("KEY_W", "forward");
+	public static final ConfigurationHolder BACKWARD = new ConfigurationHolder("KEY_S", "backward");
+	public static final ConfigurationHolder LEFT = new ConfigurationHolder("KEY_A", "left");
+	public static final ConfigurationHolder RIGHT = new ConfigurationHolder("KEY_D", "right");
+	public static final ConfigurationHolder UP = new ConfigurationHolder("KEY_SPACE", "up");
+	public static final ConfigurationHolder DOWN = new ConfigurationHolder("KEY_LSHIFT", "down");
 
 	public VanillaConfiguration(File dataFolder) {
 		super(new YamlConfiguration(new File(dataFolder, "config.yml")));

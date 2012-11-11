@@ -40,6 +40,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.data.GameMode;
@@ -145,6 +146,11 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 
 		//TODO : delay before update
 		block.dynamicUpdate(updateTime + getGrowthTime(block));
+	}
+
+	@Override
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
+		return super.canPlace(block, data, against, clickedPos, isClickedBlock) && block.getMaterial() != VanillaMaterials.FLOWER_POT_BLOCK;
 	}
 	
 	private long getGrowthTime(Block block) {

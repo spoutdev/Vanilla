@@ -26,19 +26,18 @@
  */
 package org.spout.vanilla;
 
-import javax.jmdns.JmDNS;
-import javax.jmdns.ServiceInfo;
-import java.awt.Color;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.logging.Level;
 
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceInfo;
+
+import org.spout.api.Client;
 import org.spout.api.Engine;
 import org.spout.api.Server;
 import org.spout.api.Spout;
-import org.spout.api.Client;
-import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.command.CommandRegistrationsFactory;
 import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
@@ -51,13 +50,9 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
-import org.spout.api.gui.Screen;
-import org.spout.api.gui.Widget;
-import org.spout.api.gui.component.LabelComponent;
-import org.spout.api.gui.component.TexturedRectComponent;
+import org.spout.api.keyboard.Input;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
-import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.plugin.Platform;
@@ -66,13 +61,10 @@ import org.spout.api.plugin.ServiceManager;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.PortBinding;
 import org.spout.api.protocol.Protocol;
-import org.spout.api.render.Font;
-import org.spout.api.render.RenderMaterial;
 import org.spout.api.util.OutwardIterator;
-
 import org.spout.vanilla.command.AdministrationCommands;
+import org.spout.vanilla.command.InputCommands;
 import org.spout.vanilla.command.TestCommands;
-import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.component.world.sky.NetherSky;
 import org.spout.vanilla.component.world.sky.NormalSky;
@@ -83,7 +75,6 @@ import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.inventory.recipe.VanillaRecipes;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.LANThread;
@@ -91,7 +82,6 @@ import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.rcon.RemoteConnectionCore;
 import org.spout.vanilla.protocol.rcon.RemoteConnectionServer;
 import org.spout.vanilla.resources.MapPalette;
-import org.spout.vanilla.resources.RecipeYaml;
 import org.spout.vanilla.resources.loader.MapPaletteLoader;
 import org.spout.vanilla.resources.loader.RecipeLoader;
 import org.spout.vanilla.service.VanillaProtectionService;
@@ -146,6 +136,9 @@ public class VanillaPlugin extends CommonPlugin {
 		if (engine.debugMode()) {
 			engine.getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
 		}
+
+		InputCommands.setupInputCommands(this, engine.getRootCommand());
+		
 		getEngine().getEventManager().registerEvents(new VanillaListener(this), this);
 
 		//Configuration

@@ -43,7 +43,9 @@ public class AbstractChestWindow extends Window {
 
 	@Override
 	public void close() {
-		chest.close(getPlayer());
+		if (chest != null) {
+			chest.close(getPlayer());
+		}
 		super.close();
 	}
 }

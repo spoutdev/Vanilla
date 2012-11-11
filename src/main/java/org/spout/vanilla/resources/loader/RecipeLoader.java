@@ -113,6 +113,17 @@ public class RecipeLoader extends BasicResourceLoader<RecipeYaml> {
 				} catch (IllegalStateException ex) {
 					Spout.getLogger().log(Level.WARNING, "Error when adding recipe {0} because: {1}", new Object[]{key, ex.getMessage()});
 				}
+			} else if (recipe.getNode("type").getString().equalsIgnoreCase("Smelted")) {
+				for (String rowString : recipe.getNode("ingredients").getStringList(new ArrayList<String>())) {
+					Material ingredient = MaterialRegistry.get(rowString);
+					if (ingredient == null) continue;
+					builder.addIngredient(ingredient);
+				}
+				try {
+					recipes.put(key, builder.buildSmeltedRecipe());
+				} catch (IllegalStateException ex) {
+					Spout.getLogger().log(Level.WARNING, "Error when adding recipe {0} because: {1}", new Object[]{key, ex.getMessage()});
+				}
 			} else {
 				if (Spout.debugMode()) {
 					Spout.log("Unknown type " + recipe.getNode("type") + " when loading recipe from recipes.yml");

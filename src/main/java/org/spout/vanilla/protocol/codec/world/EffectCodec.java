@@ -53,13 +53,13 @@ public final class EffectCodec extends MessageCodec<EffectMessage> {
 
 	@Override
 	public ChannelBuffer encode(EffectMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(17);
+		ChannelBuffer buffer = ChannelBuffers.buffer(18);
 		buffer.writeInt(message.getId());
 		buffer.writeInt(message.getX());
 		buffer.writeByte(message.getY());
 		buffer.writeInt(message.getZ());
 		buffer.writeInt(message.getData());
-		buffer.writeByte(message.hasVolumeDecrease() ? 0 : 1);
+		buffer.writeByte(message.hasVolumeDecrease() ? 1 : 0);
 		return buffer;
 	}
 }

@@ -45,7 +45,7 @@ public class FlowerPotBlock extends VanillaBlockMaterial implements Initializabl
 	public static final FlowerPotBlock FERN = new FlowerPotBlock("Fern Flower Pot", 11);
 
 	private FlowerPotBlock(String name) {
-		super((short) 0xB, name, 140, null); // TODO: This data mask is wrong
+		super((short) 0xF, name, 140, null);
 		setHardness(0.0f).setResistance(0.0f).setTransparent();
 	}
 

@@ -39,6 +39,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.vanilla.EngineFaker;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -68,11 +69,23 @@ public abstract class BaseProtocolTest {
 	public void testMessageEncoding() throws IOException {
 		for (Message message : testMessages) {
 			MessageCodec codec = codecLookup.find(message.getClass());
-			ChannelBuffer encoded = codec.encodeToServer(message);
-			Message decoded = codec.decodeFromClient(encoded);
+			ChannelBuffer encoded;
+			Message decoded;
+			try {
+				encoded = codec.encodeToServer(message);
+				decoded = codec.decodeFromClient(encoded);
+			} catch (Throwable t) {
+				fail("Failed (C -> S) for: " + message.getClass().getName() + ", " + message);
+				return;
+			}
 			assertEquals("Failed (C -> S) for: " + message.getClass().getName(), message, decoded);
-			encoded = codec.encodeToClient(message);
-			decoded = codec.decodeFromServer(encoded);
+			try {
+				encoded = codec.encodeToClient(message);
+				decoded = codec.decodeFromServer(encoded);
+			} catch (Throwable t) {
+				fail("Failed (S -> C) for: " + message.getClass().getName() + ", " + message);
+				return;
+			}
 			assertEquals("Failed (S -> C) for: " + message.getClass().getName(), message, decoded);
 		}
 	}

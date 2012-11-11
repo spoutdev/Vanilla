@@ -37,7 +37,7 @@ public class Skull extends BlockItem {
 	public static final Skull CREEPER_HEAD = new Skull("Creeper Head", 4, SkullBlock.CREEPER_HEAD);
 
 	private Skull(String name) {
-		super((short) 0x4, name, 397, SkullBlock.SKELETON_SKULL);
+		super((short) 0x7, name, 397, SkullBlock.SKELETON_SKULL);
 	}
 
 	private Skull(String name, int data, SkullBlock placed) {

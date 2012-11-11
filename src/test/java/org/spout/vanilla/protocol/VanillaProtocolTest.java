@@ -148,7 +148,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new PlayerDiggingMessage(PlayerDiggingMessage.STATE_START_DIGGING, 1, 2, 3, BlockFace.NORTH),
 			new PlayerBlockPlacementMessage(1, 2, 3, BlockFace.NORTH, new Vector3(0.1875F, 0.5F, 0.0F)),
 			new PlayerHeldItemChangeMessage(4),
-			new PlayerLocaleViewDistanceMessage("en_GB", PlayerLocaleViewDistanceMessage.VIEW_NORMAL, (byte) 0, (byte) 0),
+			new PlayerLocaleViewDistanceMessage("en_GB", PlayerLocaleViewDistanceMessage.VIEW_NORMAL, (byte) 0, (byte) 0, true),
 			new PlayerTabCompleteMessage("behindcursor"),
 			new PlayerBedMessage(0, 3, 42, 42, 42),
 			new EntityAnimationMessage(1234, (byte) Animation.DAMAGE_ANIMATION.getId()),

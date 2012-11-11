@@ -46,7 +46,7 @@ public class SkullBlock extends AbstractAttachable {
 	public static final SkullBlock CREEPER_HEAD = new SkullBlock("Creeper Head", 4, SKELETON_SKULL);
 
 	private SkullBlock(String name, int id) {
-		super((short) 0x4, name, id, null);
+		super((short) 0x7, name, id, null);
 		this.setAttachable(BlockFaces.NESWB).setHardness(1.0F).setResistance(3.0F).setOpaque();
 	}
 

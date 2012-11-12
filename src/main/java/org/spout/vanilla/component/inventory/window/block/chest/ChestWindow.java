@@ -41,7 +41,13 @@ public class ChestWindow extends AbstractChestWindow {
 		super.init(chest);
 		ChestInventory inventory = chest.getInventory();
 		addInventoryConverter(new GridInventoryConverter(inventory, 9));
-		init(WindowType.CHEST, inventory.getTitle(), getInventorySize());
+		init(WindowType.CHEST, inventory.getTitle(), getSize());
+		return this;
+	}
+
+	public ChestWindow init(ChestInventory inventory, String title) {
+		addInventoryConverter(new GridInventoryConverter(inventory, 9));
+		init(WindowType.CHEST, title, getSize());
 		return this;
 	}
 }

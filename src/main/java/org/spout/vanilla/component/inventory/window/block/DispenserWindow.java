@@ -33,7 +33,11 @@ import org.spout.vanilla.inventory.window.WindowType;
 
 public class DispenserWindow extends Window {
 	public DispenserWindow init(DispenserInventory inventory) {
-		init(WindowType.DISPENSER, "Dispenser", 9);
+		return init(inventory, title);
+	}
+
+	public DispenserWindow init(DispenserInventory inventory, String title) {
+		init(WindowType.DISPENSER, title, 9);
 		addInventoryConverter(new GridInventoryConverter(inventory, 3));
 		return this;
 	}

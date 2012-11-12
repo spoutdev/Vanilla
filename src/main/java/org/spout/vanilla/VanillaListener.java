@@ -81,7 +81,8 @@ public class VanillaListener implements Listener {
 	public void onClientEnable(ClientEnableEvent event) {
 		Player player = ((Client) Spout.getEngine()).getActivePlayer();
 		player.add(HUDComponent.class).openHUD();
-		player.add(DefaultWindow.class).open();
+		player.add(PlayerInventory.class);
+		player.add(DefaultWindow.class).open(0);
 	}
 
 	@EventHandler

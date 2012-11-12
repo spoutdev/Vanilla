@@ -24,21 +24,23 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.inventory.window.entity;
+package org.spout.vanilla.protocol.handler.window;
+
+import org.spout.api.entity.Player;
+import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.component.inventory.window.Window;
-import org.spout.vanilla.inventory.entity.VillagerInventory;
-import org.spout.vanilla.inventory.util.InventoryConverter;
-import org.spout.vanilla.inventory.window.WindowType;
+import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
 
-public class VillagerWindow extends Window {
-	public VillagerWindow init(VillagerInventory inventory, String title) {
-		init(WindowType.VILLAGER, title, 3);
-		addInventoryConverter(new InventoryConverter(inventory, "0-2"));
-		return this;
-	}
-
-	public VillagerWindow init(VillagerInventory inventory) {
-		return init(inventory, "Villager");
+public class WindowPropertyHandler extends MessageHandler<WindowPropertyMessage> {
+	@Override
+	public void handleClient(Session session, WindowPropertyMessage msg) {
+		if (!session.hasPlayer() || !session.getPlayer().has(Window.class)) {
+			return;
+		}
+		Player player = session.getPlayer();
+		Window window = player.get(Window.class);
+		window.setProperty(msg.getProgressBar(), msg.getValue());
 	}
 }

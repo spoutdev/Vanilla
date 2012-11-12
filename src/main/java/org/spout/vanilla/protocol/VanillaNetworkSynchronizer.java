@@ -430,7 +430,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return null; // no message for the default Window
 		}
 		PlayerInventory inventory = event.getWindow().getPlayerInventory();
-		int size = event.getWindow().getInventorySize() - (inventory.getMain().size() + inventory.getQuickbar().size());
+		int size = event.getWindow().getSize() - (inventory.getMain().size() + inventory.getQuickbar().size());
 		return new WindowOpenMessage(event.getWindow(), size);
 	}
 

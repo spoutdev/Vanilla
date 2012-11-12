@@ -38,4 +38,9 @@ public class CraftingTableWindow extends Window {
 		init(WindowType.CRAFTING_TABLE, "Crafting", 10);
 		addInventoryConverter(new InventoryConverter(new CraftingTableInventory(), "1-3, 4-6, 7-9, 0"));
 	}
+
+	public CraftingTableWindow init(String title) {
+		init(WindowType.CRAFTING_TABLE, title, 10);
+		return this;
+	}
 }

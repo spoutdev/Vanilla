@@ -43,7 +43,7 @@ public class DefaultWindow extends Window {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		init(WindowType.DEFAULT, "Inventory", "material://Vanilla/resources/gui/smt/InventoryGUIMaterial.smt", new Vector2(256, 256), 9);
+		init(WindowType.DEFAULT, "Inventory", 9);
 		PlayerInventory inventory = getPlayerInventory();
 		addInventoryConverter(new InventoryConverter(inventory.getArmor(), "8, 7, 6, 5"));
 		addInventoryConverter(new InventoryConverter(inventory.getCraftingGrid(), "3-4, 1-2, 0"));

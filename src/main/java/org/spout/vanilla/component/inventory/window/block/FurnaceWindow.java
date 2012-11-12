@@ -33,7 +33,11 @@ import org.spout.vanilla.inventory.window.WindowType;
 
 public class FurnaceWindow extends Window {
 	public FurnaceWindow init(FurnaceInventory inventory) {
-		init(WindowType.FURNACE, "Furnace", 3);
+		return init(inventory, "Furnace");
+	}
+
+	public FurnaceWindow init(FurnaceInventory inventory, String title) {
+		init(WindowType.FURNACE, title, 3);
 		addInventoryConverter(new InventoryConverter(inventory, "1, 0, 2"));
 		return this;
 	}

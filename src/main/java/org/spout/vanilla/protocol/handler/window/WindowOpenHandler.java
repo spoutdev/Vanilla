@@ -40,6 +40,7 @@ import org.spout.vanilla.component.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.component.inventory.window.entity.VillagerWindow;
 import org.spout.vanilla.component.substance.material.chest.Chest;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
+import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.block.DispenserInventory;
 import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
@@ -55,25 +56,26 @@ public class WindowOpenHandler extends MessageHandler<WindowOpenMessage> {
 			case DEFAULT:
 				break;
 			case CHEST:
-				player.add(ChestWindow.class).init(new Chest()).open();
+				ChestInventory inventory = new ChestInventory(message.getSlots());
+				player.add(ChestWindow.class).init(inventory, message.getTitle()).open(message.getWindowInstanceId());
 				break;
 			case CRAFTING_TABLE:
-				player.add(CraftingTableWindow.class).open();
+				player.add(CraftingTableWindow.class).init(message.getTitle()).open(message.getWindowInstanceId());
 				break;
 			case FURNACE:
-				player.add(FurnaceWindow.class).init(new FurnaceInventory()).open();
+				player.add(FurnaceWindow.class).init(new FurnaceInventory(), message.getTitle()).open(message.getWindowInstanceId());
 				break;
 			case DISPENSER:
-				player.add(DispenserWindow.class).init(new DispenserInventory()).open();
+				player.add(DispenserWindow.class).init(new DispenserInventory(), message.getTitle()).open(message.getWindowInstanceId());
 				break;
 			case ENCHANTMENT_TABLE:
-				player.add(EnchantmentTableWindow.class).init(new EnchantmentTableInventory()).open();
+				player.add(EnchantmentTableWindow.class).init(new EnchantmentTableInventory(), message.getTitle()).open(message.getWindowInstanceId());
 				break;
 			case BREWING_STAND:
-				player.add(BrewingStandWindow.class).init(new BrewingStandInventory()).open();
+				player.add(BrewingStandWindow.class).init(new BrewingStandInventory(), message.getTitle()).open(message.getWindowInstanceId());
 				break;
 			case VILLAGER:
-				player.add(VillagerWindow.class).init(new VillagerInventory()).open();
+				player.add(VillagerWindow.class).init(new VillagerInventory(), message.getTitle()).open(message.getWindowInstanceId());
 				break;
 			default:
 				break;

@@ -24,21 +24,32 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.inventory.window.entity;
+package org.spout.vanilla.protocol.handler.window;
+
+import org.spout.api.entity.Player;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.component.inventory.window.Window;
-import org.spout.vanilla.inventory.entity.VillagerInventory;
-import org.spout.vanilla.inventory.util.InventoryConverter;
-import org.spout.vanilla.inventory.window.WindowType;
+import org.spout.vanilla.inventory.window.InventoryEntry;
+import org.spout.vanilla.protocol.msg.window.WindowItemsMessage;
 
-public class VillagerWindow extends Window {
-	public VillagerWindow init(VillagerInventory inventory, String title) {
-		init(WindowType.VILLAGER, title, 3);
-		addInventoryConverter(new InventoryConverter(inventory, "0-2"));
-		return this;
-	}
+public class WindowItemsHandler extends MessageHandler<WindowItemsMessage> {
+	public void handleClient(Session session, WindowItemsMessage msg) {
+		if (!session.hasPlayer() || !session.getPlayer().has(Window.class)) {
+			return;
+		}
 
-	public VillagerWindow init(VillagerInventory inventory) {
-		return init(inventory, "Villager");
+		Player player = session.getPlayer();
+		Window window = player.get(Window.class);
+		ItemStack[] slots = msg.getItems();
+		for (int i = 0; i < slots.length; i++) {
+			InventoryEntry entry = window.getInventoryEntry(i);
+			if (entry == null) {
+				return;
+			}
+			entry.getInventory().set(entry.getSlot(), slots[i]);
+		}
 	}
 }

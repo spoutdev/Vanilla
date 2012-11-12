@@ -109,12 +109,9 @@ public class VanillaPlugin extends CommonPlugin {
 
 	@Override
 	public void onEnable() {
+
 		//Config
-		try {
-			config.load();
-		} catch (ConfigurationException e) {
-			getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
-		}
+		config.load();
 
 		// Universal Plug and Play
 		if (getEngine() instanceof Server) {

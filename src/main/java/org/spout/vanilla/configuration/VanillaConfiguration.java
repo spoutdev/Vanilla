@@ -27,6 +27,7 @@
 package org.spout.vanilla.configuration;
 
 import java.io.File;
+import java.util.logging.Level;
 
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.util.config.ConfigurationHolder;
@@ -92,22 +93,30 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	}
 
 	@Override
-	public void load() throws ConfigurationException {
-		VanillaBiomes.load(BIOMES);
-		BIOMES.save();
-		OPS.load();
-		OPS.save();
-		WORLDS.load();
-		WORLDS.save();
-		super.load();
-		super.save();
+	public void load() {
+		try {
+			VanillaBiomes.load(BIOMES);
+			BIOMES.save();
+			OPS.load();
+			OPS.save();
+			WORLDS.load();
+			WORLDS.save();
+			super.load();
+			super.save();
+		} catch (ConfigurationException e) {
+			VanillaPlugin.getInstance().getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
+		}
 	}
 
 	@Override
-	public void save() throws ConfigurationException {
-		VanillaBiomes.save(BIOMES);
-		OPS.save();
-		WORLDS.save();
-		super.save();
+	public void save() {
+		try {
+			VanillaBiomes.save(BIOMES);
+			OPS.save();
+			WORLDS.save();
+			super.save();
+		} catch (ConfigurationException e) {
+			VanillaPlugin.getInstance().getLogger().log(Level.WARNING, "Error saving Vanilla configuration: ", e);
+		}
 	}
 }

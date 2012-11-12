@@ -48,11 +48,11 @@ import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.component.gamemode.CreativeComponent;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.event.cause.PlayerPlacementCause;
@@ -230,7 +230,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 					sound.playGlobal(target.getPosition(), 0.8f, 0.8f);
 					//GeneralEffects.BREAKBLOCK.playGlobal(target.getPosition(), target.getMaterial());
 					// Remove block from inventory if not in creative mode.
-					if (!player.has(CreativeComponent.class)) {
+					if (player.get(Human.class).getGameMode() != GameMode.CREATIVE) {
 						currentSlot.addAmount(0, -1);
 					}
 				} else {

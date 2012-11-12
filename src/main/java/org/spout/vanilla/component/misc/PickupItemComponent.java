@@ -31,6 +31,7 @@ import java.util.List;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Entity;
 
+import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -59,8 +60,8 @@ public class PickupItemComponent extends EntityComponent {
 				continue;
 			}
 			getOwner().getNetwork().callProtocolEvent(new EntityCollectItemEvent(getOwner(), entity));
-			if (getOwner().has(Human.class)) {
-				getOwner().get(Human.class).getInventory().add(entity.get(Item.class).getItemStack());
+			if (getOwner().has(PlayerInventory.class)) {
+				getOwner().get(PlayerInventory.class).add(entity.get(Item.class).getItemStack());
 			}
 			entity.remove();
 		}

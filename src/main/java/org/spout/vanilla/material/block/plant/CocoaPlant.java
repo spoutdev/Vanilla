@@ -41,6 +41,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.util.flag.Flag;
 
+import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
@@ -151,7 +152,7 @@ public class CocoaPlant extends AbstractAttachable implements Plant, Growing, Dy
 
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
-		final PlayerQuickbar inv = entity.get(Human.class).getInventory().getQuickbar();
+		final PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
 		final ItemStack current = inv.getCurrentItem();
 		if (current != null && current.isMaterial(Dye.BONE_MEAL) && type == Action.RIGHT_CLICK) {
 			if (!isFullyGrown(block)) {

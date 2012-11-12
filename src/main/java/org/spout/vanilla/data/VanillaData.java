@@ -37,6 +37,10 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
+import org.spout.vanilla.inventory.player.PlayerArmorInventory;
+import org.spout.vanilla.inventory.player.PlayerCraftingInventory;
+import org.spout.vanilla.inventory.player.PlayerMainInventory;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.block.component.FurnaceBlock;
 
 /**
@@ -83,7 +87,11 @@ public class VanillaData {
 	//Human-specific
 	public static final DefaultedKey<Boolean> IS_SPRINTING = new DefaultedKeyImpl<Boolean>("is_sprinting", false);
 	public static final DefaultedKey<Boolean> IS_FLYING = new DefaultedKeyImpl<Boolean>("is_flying", false);
-	public static final DefaultedKey<PlayerInventory> PLAYER_INVENTORY = new DefaultedKeyImpl<PlayerInventory>("inventory", new PlayerInventory());
+	// Inventory
+	public static final DefaultedKey<PlayerMainInventory> MAIN_INVENTORY = new DefaultedKeyImpl<PlayerMainInventory>("main", new PlayerMainInventory());
+	public static final DefaultedKey<PlayerCraftingInventory> CRAFTING_INVENTORY = new DefaultedKeyImpl<PlayerCraftingInventory>("crafting", new PlayerCraftingInventory());
+	public static final DefaultedKey<PlayerArmorInventory> ARMOR_INVENTORY = new DefaultedKeyImpl<PlayerArmorInventory>("armor", new PlayerArmorInventory());
+	public static final DefaultedKey<PlayerQuickbar> QUICKBAR_INVENTORY = new DefaultedKeyImpl<PlayerQuickbar>("quickbar", new PlayerQuickbar());
 	public static final DefaultedKey<ChestInventory> ENDER_CHEST_INVENTORY = new DefaultedKeyImpl<ChestInventory>("ender_chest_inventory", new ChestInventory());
 	//Creature-specific
 	public static final DefaultedKey<Integer> LINE_OF_SIGHT = new DefaultedKeyImpl<Integer>("line_of_sight", 1);

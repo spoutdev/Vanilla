@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.component.inventory;
 
-import java.io.Serializable;
-
+import org.spout.api.component.components.EntityComponent;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.player.PlayerArmorInventory;
 import org.spout.vanilla.inventory.player.PlayerCraftingInventory;
 import org.spout.vanilla.inventory.player.PlayerMainInventory;
@@ -38,19 +39,13 @@ import org.spout.vanilla.inventory.player.PlayerQuickbar;
 /**
  * Represents a players inventory
  */
-public class PlayerInventory implements Serializable {
-	private static final long serialVersionUID = 1L;
-	private final PlayerMainInventory main = new PlayerMainInventory();
-	private final PlayerCraftingInventory craftingGrid = new PlayerCraftingInventory();
-	private final PlayerArmorInventory armor = new PlayerArmorInventory();
-	private final PlayerQuickbar quickbar = new PlayerQuickbar();
-
+public class PlayerInventory extends EntityComponent {
 	/**
 	 * Gets the quickbar slots of this player inventory
 	 * @return the quickbar slots
 	 */
 	public PlayerQuickbar getQuickbar() {
-		return quickbar;
+		return getData().get(VanillaData.QUICKBAR_INVENTORY);
 	}
 
 	/**
@@ -58,7 +53,7 @@ public class PlayerInventory implements Serializable {
 	 * @return an Inventory with the items
 	 */
 	public PlayerMainInventory getMain() {
-		return main;
+		return getData().get(VanillaData.MAIN_INVENTORY);
 	}
 
 	/**
@@ -66,7 +61,7 @@ public class PlayerInventory implements Serializable {
 	 * @return an Inventory with the armor items
 	 */
 	public PlayerArmorInventory getArmor() {
-		return armor;
+		return getData().get(VanillaData.ARMOR_INVENTORY);
 	}
 
 	/**
@@ -74,7 +69,11 @@ public class PlayerInventory implements Serializable {
 	 * @return an inventory with the crafting grid items
 	 */
 	public PlayerCraftingInventory getCraftingGrid() {
-		return craftingGrid;
+		return getData().get(VanillaData.CRAFTING_INVENTORY);
+	}
+
+	public ChestInventory getEnderChestInventory() {
+		return getData().get(VanillaData.ENDER_CHEST_INVENTORY);
 	}
 
 	/**
@@ -84,9 +83,9 @@ public class PlayerInventory implements Serializable {
 	 * @return true if item is completely transferred
 	 */
 	public boolean add(ItemStack item) {
-		quickbar.add(item);
+		getQuickbar().add(item);
 		if (!item.isEmpty()) {
-			return main.add(item);
+			return getMain().add(item);
 		}
 		return true;
 	}
@@ -95,9 +94,9 @@ public class PlayerInventory implements Serializable {
 	 * Clears all inventories
 	 */
 	public void clear() {
-		main.clear();
-		craftingGrid.clear();
-		armor.clear();
-		quickbar.clear();
+		getMain().clear();
+		getCraftingGrid().clear();
+		getArmor().clear();
+		getQuickbar().clear();
 	}
 }

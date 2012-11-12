@@ -34,6 +34,7 @@ import org.spout.api.material.Material;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -54,11 +55,11 @@ public class EntityInteractHandler extends MessageHandler<EntityInteractMessage>
 		Player playerEnt = session.getPlayer();
 		Human player = playerEnt.get(Human.class);
 		Entity clickedEntity = playerEnt.getWorld().getEntity(message.getTarget());
-		if (clickedEntity == null || player == null) {
+		if (clickedEntity == null || player == null || !playerEnt.has(PlayerInventory.class)) {
 			return;
 		}
 
-		ItemStack holding = player.getInventory().getQuickbar().getCurrentItem();
+		ItemStack holding = playerEnt.get(PlayerInventory.class).getQuickbar().getCurrentItem();
 		Material holdingMat = holding == null ? VanillaMaterials.AIR : holding.getMaterial();
 		if (holdingMat == null) {
 			holdingMat = VanillaMaterials.AIR;

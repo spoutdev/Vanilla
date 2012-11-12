@@ -34,7 +34,7 @@ public class EnderChestWindow extends AbstractChestWindow {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		ChestInventory inventory = getHuman().getEnderChestInventory();
+		ChestInventory inventory = getPlayerInventory().getEnderChestInventory();
 		init(WindowType.CHEST, "Ender chest", inventory.size());
 		addInventoryConverter(new GridInventoryConverter(inventory, 9));
 	}

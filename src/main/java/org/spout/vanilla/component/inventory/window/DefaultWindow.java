@@ -26,9 +26,12 @@
  */
 package org.spout.vanilla.component.inventory.window;
 
+import org.spout.api.Client;
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.event.entity.EntityEquipmentEvent;
@@ -40,8 +43,8 @@ public class DefaultWindow extends Window {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		init(WindowType.DEFAULT, "Inventory", 9);
-		PlayerInventory inventory = getHuman().getInventory();
+		init(WindowType.DEFAULT, "Inventory", "material://Vanilla/resources/gui/smt/InventoryGUIMaterial.smt", new Vector2(256, 256), 9);
+		PlayerInventory inventory = getPlayerInventory();
 		addInventoryConverter(new InventoryConverter(inventory.getArmor(), "8, 7, 6, 5"));
 		addInventoryConverter(new InventoryConverter(inventory.getCraftingGrid(), "3-4, 1-2, 0"));
 	}
@@ -62,6 +65,9 @@ public class DefaultWindow extends Window {
 
 	@Override
 	public void open() {
-		throw new UnsupportedOperationException("A player's inventory window cannot be opened from the server.");
+		if (!(Spout.getEngine() instanceof Client)) {
+			throw new UnsupportedOperationException("A player's inventory window cannot be opened from the server.");
+		}
+		super.open();
 	}
 }

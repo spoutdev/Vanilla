@@ -49,6 +49,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.util.flag.Flag;
 
+import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.DiggingComponent;
 import org.spout.vanilla.component.substance.Item;
@@ -73,7 +74,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		} else {
 			flags.add(PlayerFlags.CREATIVE);
 		}
-		ItemStack heldItem = human.getInventory().getQuickbar().getCurrentItem();
+		ItemStack heldItem = human.getOwner().add(PlayerInventory.class).getQuickbar().getCurrentItem();
 		if (heldItem != null) {
 			heldItem.getMaterial().getItemFlags(heldItem, flags);
 		}
@@ -118,7 +119,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		}
 
 		if (state == PlayerDiggingMessage.STATE_DROP_ITEM && x == 0 && y == 0 && z == 0) {
-			Item.drop(player.getTransform().getPosition(), human.getInventory().getQuickbar().getCurrentItem(), Vector3.ONE);
+			Item.drop(player.getTransform().getPosition(), human.getOwner().add(PlayerInventory.class).getQuickbar().getCurrentItem(), Vector3.ONE);
 			return;
 		}
 
@@ -128,7 +129,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 			isInteractable = false;
 		}
 
-		PlayerQuickbar currentSlot = player.get(Human.class).getInventory().getQuickbar();
+		PlayerQuickbar currentSlot = player.get(PlayerInventory.class).getQuickbar();
 		ItemStack heldItem = currentSlot.getCurrentItem();
 
 		if (state == PlayerDiggingMessage.STATE_START_DIGGING) {

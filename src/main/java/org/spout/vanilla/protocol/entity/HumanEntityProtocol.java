@@ -35,6 +35,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
@@ -52,7 +53,7 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		int p = (int) (entity.getTransform().getPitch() * 32);
 
 		int item = 0;
-		ItemStack hand = human.getInventory().getQuickbar().getCurrentItem();
+		ItemStack hand = entity.add(PlayerInventory.class).getQuickbar().getCurrentItem();
 		if (hand != null) {
 			item = hand.getMaterial().getId();
 		}

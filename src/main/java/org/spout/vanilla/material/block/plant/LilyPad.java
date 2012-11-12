@@ -36,6 +36,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.BlockIterator;
 
+import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.data.GameMode;
@@ -86,7 +87,7 @@ public class LilyPad extends GroundAttachable {
 				if (!entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 					return;
 				}
-				PlayerQuickbar inv = entity.get(Human.class).getInventory().getQuickbar();
+				PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
 				if (inv != null) {
 					inv.addAmount(inv.getCurrentSlot(), -1);
 				}

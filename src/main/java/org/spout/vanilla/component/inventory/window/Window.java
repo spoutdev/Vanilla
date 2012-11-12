@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.component.inventory.window;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -37,11 +38,21 @@ import gnu.trove.map.hash.TObjectIntHashMap;
 import org.spout.api.Spout;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
+import org.spout.api.gui.Screen;
+import org.spout.api.gui.Widget;
+import org.spout.api.gui.component.RenderPartsHolderComponent;
+import org.spout.api.gui.component.TexturedRectComponent;
+import org.spout.api.gui.render.RenderPart;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.Rectangle;
+import org.spout.api.math.Vector2;
+import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.render.RenderMaterial;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.substance.Item;
@@ -74,6 +85,13 @@ public class Window extends EntityComponent implements InventoryViewer {
 	protected String title;
 	protected ItemStack cursorItem;
 
+	protected final Screen popup = new Screen();
+	protected RenderMaterial backgroundMaterial;
+	protected Widget background;
+	protected Vector2 extents;
+
+
+
 	/**
 	 * Initializes this window to the specified type, title, and offset of first main slot.
 	 * @param type of window
@@ -81,14 +99,18 @@ public class Window extends EntityComponent implements InventoryViewer {
 	 * @param offset of first slot
 	 * @return this
 	 */
-	public Window init(WindowType type, String title, int offset) {
+	public Window init(WindowType type, String title, String backgroundMaterial, Vector2 extents, int offset) {
 		this.type = type;
 		this.title = title;
 		this.offset = offset;
-		PlayerInventory inventory = getHuman().getInventory();
+		PlayerInventory inventory = getPlayerInventory();
 		GridInventoryConverter main = new GridInventoryConverter(inventory.getMain(), 9, offset);
 		addInventoryConverter(main);
 		addInventoryConverter(new GridInventoryConverter(inventory.getQuickbar(), 9, offset + main.getGrid().getSize()));
+		if (Spout.getPlatform() == Platform.CLIENT) {
+			this.backgroundMaterial = (RenderMaterial) Spout.getFilesystem().getResource(backgroundMaterial);
+			this.extents = extents;
+		}
 		return this;
 	}
 
@@ -98,8 +120,12 @@ public class Window extends EntityComponent implements InventoryViewer {
 	 * @param title of window
 	 * @return this
 	 */
-	public Window init(WindowType type, String title) {
-		return init(type, title, 0);
+	public Window init(WindowType type, String title, String backgroundMaterial, Vector2 extents) {
+		return init(type, title, backgroundMaterial, extents, 0);
+	}
+
+	public Window init(WindowType type, String title, int offset) {
+		return init(type, title, null, null, offset);
 	}
 
 	/**
@@ -107,8 +133,24 @@ public class Window extends EntityComponent implements InventoryViewer {
 	 */
 	public void open() {
 		opened = true;
-		callProtocolEvent(new WindowOpenEvent(this));
-		reload();
+		switch (Spout.getPlatform()) {
+			case PROXY:
+			case SERVER:
+				callProtocolEvent(new WindowOpenEvent(this));
+				reload();
+				break;
+			case CLIENT:
+				TexturedRectComponent backgroundRect = background.add(TexturedRectComponent.class);
+				backgroundRect.setRenderMaterial(backgroundMaterial);
+				backgroundRect.setColor(Color.WHITE);
+				Rectangle rect = new Rectangle(Vector2.ZERO, extents);
+				backgroundRect.setSprite(rect);
+				backgroundRect.setSource(rect);
+				popup.attachWidget(VanillaPlugin.getInstance(), background);
+				break;
+			default:
+				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform().toString());
+		}
 	}
 
 	/**
@@ -157,7 +199,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 	 * @return true if click was successful
 	 */
 	public boolean onShiftClick(ItemStack stack, int slot, Inventory from) {
-		PlayerInventory inventory = getHuman().getInventory();
+		PlayerInventory inventory = getPlayerInventory();
 		PlayerMainInventory main = inventory.getMain();
 		GridInventoryConverter converter = (GridInventoryConverter) getInventoryConverter(main);
 		if (converter == null) {
@@ -195,7 +237,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 				return onShiftClick(clicked, slot, inventory);
 			}
 		} else if (args.isRightClick()) {
-			debug("Right onClick");
+			debug("Right click");
 			if (clicked == null) {
 				debug("Empty slot");
 				if (cursorItem != null) {
@@ -255,7 +297,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 				return true;
 			}
 		} else {
-			debug("Left onClick");
+			debug("Left click");
 			if (clicked == null) {
 				debug("Empty slot");
 				if (cursorItem != null) {
@@ -393,12 +435,16 @@ public class Window extends EntityComponent implements InventoryViewer {
 		return (Player) getOwner();
 	}
 
-	/**
-	 * Gets the Human component of the holder
-	 * @return human
-	 */
 	public Human getHuman() {
 		return getOwner().get(Human.class);
+	}
+
+	/**
+	 * Gets the PlayerInvemtory component of the holder
+	 * @return human
+	 */
+	public PlayerInventory getPlayerInventory() {
+		return getOwner().get(PlayerInventory.class);
 	}
 
 	/**
@@ -590,7 +636,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 		}
 
 		// update held item
-		PlayerQuickbar quickbar = getHuman().getInventory().getQuickbar();
+		PlayerQuickbar quickbar = getPlayerInventory().getQuickbar();
 		debug("Slot: " + slot);
 		debug("Current slot: " + quickbar.getCurrentSlot());
 		if (inventory instanceof PlayerQuickbar && slot == quickbar.getCurrentSlot()) {

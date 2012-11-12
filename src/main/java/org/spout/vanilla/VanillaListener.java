@@ -38,6 +38,8 @@ import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.server.ClientEnableEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.material.BlockMaterial;
+
+import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.inventory.window.DefaultWindow;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.PickupItemComponent;
@@ -67,6 +69,7 @@ public class VanillaListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		player.add(Human.class).setName(player.getName());
+		player.add(PlayerInventory.class);
 		player.add(DefaultWindow.class);
 		player.add(PlayerListComponent.class);
 		player.add(PingComponent.class);
@@ -76,8 +79,9 @@ public class VanillaListener implements Listener {
 
 	@EventHandler
 	public void onClientEnable(ClientEnableEvent event) {
-		final HUDComponent HUD = ((Client) Spout.getEngine()).getActivePlayer().add(HUDComponent.class);
-		HUD.openHUD();
+		Player player = ((Client) Spout.getEngine()).getActivePlayer();
+		player.add(HUDComponent.class).openHUD();
+		player.add(DefaultWindow.class).open();
 	}
 
 	@EventHandler

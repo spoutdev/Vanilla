@@ -49,6 +49,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.component.gamemode.CreativeComponent;
+import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -66,7 +67,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		//refresh the client just in case it assumed something
 		player.getSession().send(false, new BlockChangeMessage(clickedBlock));
 		player.getSession().send(false, new BlockChangeMessage(alterBlock));
-		PlayerQuickbar inv = player.get(Human.class).getInventory().getQuickbar();
+		PlayerQuickbar inv = player.get(PlayerInventory.class).getQuickbar();
 		inv.setCurrentItem(inv.getCurrentItem());
 	}
 
@@ -78,7 +79,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		Player player = session.getPlayer();
 		EventManager eventManager = session.getEngine().getEventManager();
 		World world = player.getWorld();
-		PlayerQuickbar currentSlot = player.get(Human.class).getInventory().getQuickbar();
+		PlayerQuickbar currentSlot = player.get(PlayerInventory.class).getQuickbar();
 		ItemStack holding = currentSlot.getCurrentItem();
 		Material holdingMat = holding == null ? null : holding.getMaterial();
 

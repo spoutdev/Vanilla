@@ -49,7 +49,6 @@ import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
 import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
-import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.protocol.entity.HumanEntityProtocol;
 import org.spout.vanilla.protocol.msg.player.PlayerGameStateMessage;
@@ -181,14 +180,6 @@ public class Human extends LivingComponent {
 		setGamemode(mode, true);
 	}
 
-	public PlayerInventory getInventory() {
-		return getData().get(VanillaData.PLAYER_INVENTORY);
-	}
-
-	public ChestInventory getEnderChestInventory() {
-		return getData().get(VanillaData.ENDER_CHEST_INVENTORY);
-	}
-
 	/**
 	 * Drops the item specified into the direction the player looks
 	 * @param item to drop
@@ -201,11 +192,16 @@ public class Human extends LivingComponent {
 	 * Drops the player's current item.
 	 */
 	public void dropItem() {
-		PlayerQuickbar quickbar = getInventory().getQuickbar();
+		if (!getOwner().has(PlayerInventory.class)) {
+			return;
+		}
+
+		PlayerQuickbar quickbar = getOwner().get(PlayerInventory.class).getQuickbar();
 		ItemStack current = quickbar.getCurrentItem();
 		if (current == null) {
 			return;
 		}
+
 		ItemStack drop = current.clone().setAmount(1);
 		quickbar.addAmount(quickbar.getCurrentSlot(), -1);
 		dropItem(drop);

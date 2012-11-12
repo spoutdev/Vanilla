@@ -33,6 +33,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.BlockItem;
@@ -46,7 +47,7 @@ public class FullBucket extends BlockItem {
 	public void onInteract(Entity entity, Block block, Action type, BlockFace face) {
 		super.onInteract(entity, block, type, face);
 		if (type == Action.RIGHT_CLICK) {
-			entity.get(Human.class).getInventory().getQuickbar().setCurrentItem(new ItemStack(VanillaMaterials.BUCKET, 1));
+			entity.get(PlayerInventory.class).getQuickbar().setCurrentItem(new ItemStack(VanillaMaterials.BUCKET, 1));
 		}
 	}
 }

@@ -44,6 +44,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.component.world.VanillaSky;
@@ -69,11 +70,11 @@ public class AdministrationCommands {
 			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to clear your own inventory.");
 			}
-			((Player) source).get(Human.class).getInventory().clear();
+			((Player) source).get(PlayerInventory.class).clear();
 		}
 		if (args.length() == 1) {
 			Player player = args.getPlayer(0, false);
-			player.get(Human.class).getInventory().clear();
+			player.get(PlayerInventory.class).clear();
 			player.sendMessage(ChatStyle.BRIGHT_GREEN, "Your inventory has been cleared.");
 		}
 		source.sendMessage(ChatStyle.BRIGHT_GREEN, "Inventory cleared.");
@@ -185,7 +186,7 @@ public class AdministrationCommands {
 		}
 
 		int count = args.getInteger(++index, 1);
-		player.get(Human.class).getInventory().add(new ItemStack(material, count));
+		player.get(PlayerInventory.class).add(new ItemStack(material, count));
 		source.sendMessage("Gave ", player.getName(), " ", count, " ", material.getDisplayName());
 	}
 

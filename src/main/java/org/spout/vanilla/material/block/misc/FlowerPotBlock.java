@@ -32,6 +32,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.InitializableMaterial;
@@ -65,10 +66,10 @@ public class FlowerPotBlock extends VanillaBlockMaterial implements Initializabl
 
 	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteract(entity, block, type, clickedFace);
-		if (type != Action.RIGHT_CLICK || !entity.has(Human.class)) {
+		if (type != Action.RIGHT_CLICK || !entity.has(PlayerInventory.class)) {
 			return;
 		}
-		PlayerQuickbar quickbar = entity.get(Human.class).getInventory().getQuickbar();
+		PlayerQuickbar quickbar = entity.get(PlayerInventory.class).getQuickbar();
 		Material held = quickbar.getCurrentItem().getMaterial();
 		int data;
 		if (held == VanillaMaterials.ROSE) {

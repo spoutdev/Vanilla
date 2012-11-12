@@ -33,6 +33,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.event.entity.EntityEquipmentEvent;
@@ -53,7 +54,7 @@ public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeld
 		if (newSlot < 0 || newSlot > 8) {
 			return;
 		}
-		PlayerQuickbar quickbar = human.getInventory().getQuickbar();
+		PlayerQuickbar quickbar = session.getPlayer().add(PlayerInventory.class).getQuickbar();
 		quickbar.setCurrentSlot(newSlot);
 		ItemStack item = quickbar.getCurrentItem();
 		Player player = session.getPlayer();

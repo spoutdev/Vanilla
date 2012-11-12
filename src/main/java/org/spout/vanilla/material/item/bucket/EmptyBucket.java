@@ -34,6 +34,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -50,7 +51,7 @@ public class EmptyBucket extends VanillaItemMaterial {
 		if (action == Action.RIGHT_CLICK) {
 			BlockMaterial mat = block.getMaterial();
 			boolean success = false;
-			PlayerQuickbar quickbar = entity.get(Human.class).getInventory().getQuickbar();
+			PlayerQuickbar quickbar = entity.get(PlayerInventory.class).getQuickbar();
 			Material filled; // material to fill the bucket with
 			if (mat == VanillaMaterials.WATER) {
 				filled = VanillaMaterials.WATER_BUCKET;

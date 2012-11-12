@@ -90,7 +90,7 @@ public class BigTreeObject extends TreeObject {
 				generateGroupLayer(w, groupX, yy, groupZ, getLeafGroupLayerSize((byte) (yy - groupY)));
 			}
 		}
-		final BlockIterator trunk = new BlockIterator(new Point(w, x, y, z), new Point(w, x, y + trunkHeight, z));
+		final BlockIterator trunk = new BlockIterator(new Point(w, x, y - 1, z), new Point(w, x, y + trunkHeight, z));
 		while (trunk.hasNext()) {
 			trunk.next().setMaterial(VanillaMaterials.LOG, logMetadata);
 		}

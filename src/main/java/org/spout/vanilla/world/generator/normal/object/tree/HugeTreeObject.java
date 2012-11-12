@@ -89,9 +89,10 @@ public class HugeTreeObject extends TreeObject {
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
-		generateLeaves(w, x, y + totalHeight, z, (byte) 2);
-		final byte leavesEnd = (byte) (totalHeight - 2 - random.nextInt(4));
-		for (byte yy = (byte) (totalHeight / 2); yy < leavesEnd; yy += random.nextInt(4) + 2) {
+		final byte height = totalHeight;
+		generateLeaves(w, x, y + height, z, (byte) 2);
+		final byte leavesEnd = (byte) (height - 2 - random.nextInt(4));
+		for (byte yy = (byte) (height / 2); yy < leavesEnd; yy += random.nextInt(4) + 2) {
 			Vector2 randomOffset = SinusHelper.getRandom2DAxis(random);
 			generateLeaves(w, (int) (x + (randomOffset.getX() * 4f + 0.5f)), y + yy, (int) (z + (randomOffset.getY() * 4f + 0.5f)), (byte) 0);
 			for (byte branchLengthCount = 0; branchLengthCount < branchLength; branchLengthCount++) {
@@ -104,7 +105,7 @@ public class HugeTreeObject extends TreeObject {
 				VanillaMaterials.LOG.setFacing(block, BlockFace.fromYaw(MathHelper.getLookAtYaw(new Vector3(bx, by, bz))));
 			}
 		}
-		for (byte yy = -1; yy < totalHeight - 1; yy++) {
+		for (byte yy = -1; yy < height - 1; yy++) {
 			for (byte xx = 0; xx < 2; xx++) {
 				for (byte zz = 0; zz < 2; zz++) {
 					if (yy == -1) {
@@ -118,7 +119,7 @@ public class HugeTreeObject extends TreeObject {
 				}
 			}
 		}
-		w.setBlockMaterial(x, y + totalHeight - 1, z, VanillaMaterials.LOG, logMetadata, null);
+		w.setBlockMaterial(x, y + height - 1, z, VanillaMaterials.LOG, logMetadata, null);
 	}
 
 	private void generateLeaves(World world, int x, int y, int z, byte sizeIncrease) {

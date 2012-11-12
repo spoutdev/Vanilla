@@ -83,10 +83,13 @@ import org.spout.vanilla.world.generator.object.VanillaObjects;
 public class TestCommands {
 	@SuppressWarnings("unused")
 	private final VanillaPlugin plugin;
-	private final EntityPrefab human = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/resources/mob/prefabs/human.sep");
+	private EntityPrefab human;
 
 	public TestCommands(VanillaPlugin instance) {
 		plugin = instance;
+		if (Spout.getPlatform() == Platform.CLIENT) {
+			human = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/resources/mob/prefabs/human.sep");
+		}
 	}
 
 	@Command(aliases = "traceray", desc = "Set all blocks that cross your view to stone.")

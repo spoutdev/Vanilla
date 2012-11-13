@@ -68,6 +68,9 @@ public class VanillaData {
 	public static final DefaultedKey<Vector3> VELOCITY = new DefaultedKeyImpl<Vector3>("velocity", Vector3.ZERO);
 	public static final DefaultedKey<Inventory> ENTITY_INVENTORY = new DefaultedKeyImpl<Inventory>("inventory", null);
 	public static final DefaultedKey<ChestInventory> CHEST_INVENTORY = new DefaultedKeyImpl<ChestInventory>("chest_inventory", new ChestInventory());
+	public static final DefaultedKey<Integer> HUNGER = new DefaultedKeyImpl<Integer>("hunger", 20);
+	public static final DefaultedKey<Float> FOOD_SATURATION = new DefaultedKeyImpl<Float>("food_saturation", 5f);
+	public static final DefaultedKey<Float> EXHAUSTION = new DefaultedKeyImpl<Float>("exhaustion", 0f);
 	// Furnace
 	public static final DefaultedKey<FurnaceInventory> FURNACE_INVENTORY = new DefaultedKeyImpl<FurnaceInventory>("inventory", new FurnaceInventory());
 	public static final DefaultedKey<Float> FURNACE_FUEL = new DefaultedKeyImpl<Float>("fuel", 0f);

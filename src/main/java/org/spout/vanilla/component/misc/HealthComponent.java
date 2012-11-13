@@ -239,6 +239,13 @@ public class HealthComponent extends EntityComponent {
 		setHealth(getHealth() - event.getDamage(), HealthChangeCause.DAMAGE);
 		lastDamager = event.getDamager();
 		lastDamageCause = event.getDamageCause();
+
+		// Add exhaustion to damaged
+		if (getOwner().has(HungerComponent.class)) {
+			HungerComponent hungerComponent = getOwner().get(HungerComponent.class);
+			hungerComponent.setExhaustion(hungerComponent.getExhaustion() + 0.3f);
+		}
+
 		if (event.getSendMessage()) {
 			getOwner().getNetwork().callProtocolEvent(new EntityAnimationEvent(getOwner(), Animation.DAMAGE_ANIMATION));
 			getOwner().getNetwork().callProtocolEvent(new EntityStatusEvent(getOwner(), EntityStatusMessage.ENTITY_HURT));

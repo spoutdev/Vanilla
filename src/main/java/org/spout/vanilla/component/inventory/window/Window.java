@@ -47,6 +47,7 @@ import org.spout.api.gui.component.TexturedRectComponent;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.event.ProtocolEvent;
@@ -88,8 +89,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 	// Client only
 	protected final Screen popup = new Screen();
 	protected final Widget background = new Widget();
-	protected RenderMaterial backgroundMaterial;
-	protected Vector2 extents;
 
 	/**
 	 * Returns the {@link RenderMaterial} of the specified {@link WindowType}
@@ -160,12 +159,11 @@ public class Window extends EntityComponent implements InventoryViewer {
 				break;
 			case CLIENT:
 				// Setup the window to render
-				this.backgroundMaterial = getRenderMaterial(type);
-				this.extents = extents;
 				TexturedRectComponent backgroundRect = background.add(TexturedRectComponent.class);
-				backgroundRect.setRenderMaterial(this.backgroundMaterial);
+				backgroundRect.setRenderMaterial(getRenderMaterial(type));
+				backgroundRect.setSprite(new Rectangle(-0.5f, -0.5f, 1, 1));
+				backgroundRect.setSource(new Rectangle(0.25f, 0.25f, 0.5f, 0.5f));
 				backgroundRect.setColor(Color.WHITE);
-				// set sprite and source
 				popup.attachWidget(VanillaPlugin.getInstance(), background); // attach background to screen
 				break;
 			default:
@@ -203,7 +201,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			throw new IllegalArgumentException("Supply an id for the window.");
 		}
-
 		opened = true;
 		callProtocolEvent(new WindowOpenEvent(this));
 		reload();
@@ -218,7 +215,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 		if (Spout.getPlatform() == Platform.SERVER) {
 			throw new IllegalArgumentException("Use argumentless open() method");
 		}
-
 		opened = true;
 		this.id = id;
 		((Client) Spout.getEngine()).getScreenStack().openScreen(popup);

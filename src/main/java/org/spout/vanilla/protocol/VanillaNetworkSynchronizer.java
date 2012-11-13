@@ -26,26 +26,24 @@
  */
 package org.spout.vanilla.protocol;
 
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
+import gnu.trove.set.TIntSet;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import gnu.trove.set.TIntSet;
-
 import org.spout.api.Server;
 import org.spout.api.Spout;
+import org.spout.api.component.components.BlockComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventHandler;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.geo.cuboid.ChunkSnapshot;
-import org.spout.api.geo.cuboid.ChunkSnapshot.BlockComponentSnapshot;
-import org.spout.api.geo.cuboid.ChunkSnapshot.EntityType;
-import org.spout.api.geo.cuboid.ChunkSnapshot.ExtraData;
-import org.spout.api.geo.cuboid.ChunkSnapshot.SnapshotType;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
@@ -61,7 +59,6 @@ import org.spout.api.util.hashing.IntPairHashed;
 import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
 import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.inventory.window.DefaultWindow;
@@ -100,6 +97,7 @@ import org.spout.vanilla.event.world.TimeUpdateEvent;
 import org.spout.vanilla.event.world.WeatherChangeEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.component.VanillaComplexMaterial;
+import org.spout.vanilla.protocol.container.VanillaContainer;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
@@ -131,9 +129,6 @@ import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
-
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
 	private static final int SOLID_BLOCK_ID = 1; // Initializer block ID
@@ -635,46 +630,30 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 
 		public static byte[] getChunkFullData(Chunk c, List<ProtocolEvent> updateEvents) {
-			ChunkSnapshot snapshot = c.getSnapshot(SnapshotType.BOTH, EntityType.BLOCK_COMPONENTS, ExtraData.NO_EXTRA_DATA);
-			short[] rawBlockIdArray = snapshot.getBlockIds();
-			short[] rawBlockData = snapshot.getBlockData();
-			byte[] rawBlockLight = snapshot.getBlockLight();
-			byte[] rawSkyLight = snapshot.getSkyLight();
-			byte[] fullChunkData = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
 
-			int arrIndex = 0;
-			BlockMaterial material1, material2;
-			for (int i = 0; i < rawBlockIdArray.length; i += 2) {
-				material1 = BlockMaterial.get(rawBlockIdArray[i]);
-				material2 = BlockMaterial.get(rawBlockIdArray[i + 1]);
-				// data
-				fullChunkData[arrIndex + rawBlockIdArray.length] = (byte) ((getMinecraftData(material2, rawBlockData[i + 1]) << 4) | (getMinecraftData(material1, rawBlockData[i])));
-				// id
-				fullChunkData[i] = (byte) (getMinecraftId(material1) & 0xFF);
-				fullChunkData[i + 1] = (byte) (getMinecraftId(material2) & 0xFF);
-
-				arrIndex++;
-			}
-
-			for (BlockComponentSnapshot component : snapshot.getBlockComponents()) {
-				BlockMaterial bm = c.getBlockMaterial(component.getX(), component.getY(), component.getZ());
+			VanillaContainer container = new VanillaContainer();
+			c.fillBlockContainer(container);
+			container.setLightMode(true);
+			c.fillBlockLightContainer(container);
+			container.setLightMode(false);
+			c.fillSkyLightContainer(container);
+			c.fillBlockComponentContainer(container);
+			
+			int[] componentX = container.getXArray();
+			int[] componentY = container.getYArray();
+			int[] componentZ = container.getZArray();
+			
+			for (int i = 0; i < container.getBlockComponentCount(); i++) {
+				BlockMaterial bm = c.getBlockMaterial(componentX[i], componentY[i], componentZ[i]);
 				if (bm instanceof VanillaComplexMaterial) {
-					ProtocolEvent event = ((VanillaComplexMaterial) bm).getUpdate(c.getWorld(), component.getX(), component.getY(), component.getZ());
+					ProtocolEvent event = ((VanillaComplexMaterial) bm).getUpdate(c.getWorld(), componentX[i], componentY[i], componentZ[i]);
 					if (event != null) {
 						updateEvents.add(event);
 					}
 				}
 			}
-
-			arrIndex = rawBlockIdArray.length + (rawBlockData.length >> 1);
-
-			System.arraycopy(rawBlockLight, 0, fullChunkData, arrIndex, rawBlockLight.length);
-			arrIndex += rawBlockLight.length;
-
-			System.arraycopy(rawSkyLight, 0, fullChunkData, arrIndex, rawSkyLight.length);
-
-			arrIndex += rawSkyLight.length;
-			return fullChunkData;
+			
+			return container.getChunkFullData();
 		}
 
 		private static byte[] getEmptyChunk(int[][] heights, BlockMaterial[][] materials, Point p) {

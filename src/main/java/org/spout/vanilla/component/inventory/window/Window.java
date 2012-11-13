@@ -252,18 +252,10 @@ public class Window extends EntityComponent implements InventoryViewer {
 		}
 
 		ItemStack[] items = new ItemStack[getSize()];
-		for (int n = 0; n < items.length; n++) {
-			Inventory inventory = null;
-			int slot = -1;
-			for (InventoryConverter converter : converters) {
-				slot = converter.convert(n);
-				if (slot != -1) {
-					inventory = converter.getInventory();
-					break;
-				}
-			}
-			if (inventory != null) {
-				items[n] = inventory.get(slot);
+		for (int i = 0; i < items.length; i++) {
+			InventoryEntry entry = getInventoryEntry(i);
+			if (entry != null) {
+				items[i] = entry.getInventory().get(entry.getSlot());
 			}
 		}
 
@@ -285,24 +277,18 @@ public class Window extends EntityComponent implements InventoryViewer {
 		}
 
 		PlayerInventory inventory = getPlayerInventory();
-		PlayerMainInventory main = inventory.getMain();
-		GridInventoryConverter converter = (GridInventoryConverter) getInventoryConverter(main);
-		if (converter == null) {
-			return false;
-		}
+		Inventory to = null;
 		if (from instanceof PlayerQuickbar) {
-			main.add(converter.convert(offset), stack);
-			return true;
+			to = inventory.getMain();
 		} else if (from instanceof PlayerMainInventory) {
-			PlayerQuickbar quickbar = inventory.getQuickbar();
-			InventoryConverter quickbarConverter = getInventoryConverter(quickbar);
-			if (quickbarConverter == null) {
-				return false;
-			}
-			quickbar.add(converter.convert(offset + converter.getGrid().getSize()), stack);
+			to = inventory.getQuickbar();
+		}
+
+		if (to != null) {
+			to.add(stack);
+			from.set(slot, stack);
 			return true;
 		}
-		from.set(slot, stack);
 		return false;
 	}
 
@@ -806,7 +792,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 				debug("Current slot: " + quickbar.getCurrentSlot());
 				if (inventory instanceof PlayerQuickbar && slot == quickbar.getCurrentSlot()) {
 					Player player = getPlayer();
-					player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, 0, item));
+					player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, 0, item)); // TODO: Setting boots too for some reason...?
 				}
 				break;
 			case CLIENT:

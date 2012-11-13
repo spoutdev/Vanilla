@@ -162,18 +162,6 @@ public class HungerComponent extends EntityComponent {
 		}
 
 		setExhaustion(exhaustion);
-
-		if (Spout.debugMode()) {
-			Logger log = Spout.getLogger();
-			log.info("Health: " + health);
-			log.info("Hunger: " + hunger);
-			log.info("Moved: " + distance);
-			log.info("Exhaustion: " + exhaustion);
-			log.info("Food Saturation: " + foodSaturation);
-			log.info("Sprinting: " + sprinting);
-			log.info("Jumping: " + jumping);
-			log.info("Digging: " + digging);
-		}
 	}
 
 	public int getHunger() {

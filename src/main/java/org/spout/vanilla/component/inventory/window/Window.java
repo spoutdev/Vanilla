@@ -47,6 +47,7 @@ import org.spout.api.gui.component.TexturedRectComponent;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
@@ -277,18 +278,36 @@ public class Window extends EntityComponent implements InventoryViewer {
 		}
 
 		PlayerInventory inventory = getPlayerInventory();
-		Inventory to = null;
 		if (from instanceof PlayerQuickbar) {
-			to = inventory.getMain();
-		} else if (from instanceof PlayerMainInventory) {
-			to = inventory.getQuickbar();
-		}
 
-		if (to != null) {
-			to.add(stack);
-			from.set(slot, stack);
+			// Custom adding for shift clicking
+
+			final PlayerMainInventory main = inventory.getMain();
+			final int height = 3;
+			final int length = 9;
+
+			for (int y = height - 1; y >= 0; y--) {
+				for (int x = 0; x < length; x++) {
+					int x1 = length * y;
+					int x2 = x1 + length - 1;
+					main.add(x1, x2, stack);
+					from.set(slot, stack.isEmpty() ? null : stack);
+					if (stack.isEmpty()) {
+						break;
+					}
+				}
+				break;
+			}
+
 			return true;
 		}
+
+		if (from instanceof PlayerMainInventory) {
+			inventory.getQuickbar().add(stack);
+			from.set(slot, stack.isEmpty() ? null : stack);
+			return true;
+		}
+
 		return false;
 	}
 

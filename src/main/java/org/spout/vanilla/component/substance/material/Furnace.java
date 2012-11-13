@@ -29,7 +29,7 @@ package org.spout.vanilla.component.substance.material;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.component.inventory.window.Window;
+import org.spout.vanilla.component.inventory.window.WindowHolder;
 import org.spout.vanilla.component.inventory.window.block.FurnaceWindow;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.Container;
@@ -59,7 +59,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 		float maxSmeltTime = getMaxSmeltTime();
 		float increment = (MAX_SMELT_TIME_INCREMENT * 20) - ((MAX_SMELT_TIME_INCREMENT / maxSmeltTime) * (smeltTime * 20));
 		for (Player player : viewers) {
-			player.get(Window.class).setProperty(FurnaceProperty.PROGRESS_ARROW, (int) increment);
+			player.get(WindowHolder.class).getActiveWindow().setProperty(FurnaceProperty.PROGRESS_ARROW, (int) increment);
 		}
 	}
 
@@ -81,7 +81,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 		float maxFuel = getMaxFuel();
 		float increment = MAX_FUEL_INCREMENT / maxFuel * (fuel * 20);
 		for (Player player : viewers) {
-			player.get(Window.class).setProperty(FurnaceProperty.FIRE_ICON, (int) increment);
+			player.get(WindowHolder.class).getActiveWindow().setProperty(FurnaceProperty.FIRE_ICON, (int) increment);
 		}
 	}
 
@@ -186,6 +186,6 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	@Override
 	public void open(Player player) {
-		player.add(FurnaceWindow.class).init(getInventory()).open();
+		player.get(WindowHolder.class).open(new FurnaceWindow(player, getInventory()));
 	}
 }

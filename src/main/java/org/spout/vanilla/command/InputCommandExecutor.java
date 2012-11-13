@@ -33,8 +33,8 @@ import org.spout.api.command.CommandSource;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
 
-import org.spout.vanilla.component.inventory.window.DefaultWindow;
 import org.spout.vanilla.component.inventory.window.Window;
+import org.spout.vanilla.component.inventory.window.WindowHolder;
 
 public class InputCommandExecutor implements CommandExecutor {
 	@Override
@@ -45,9 +45,9 @@ public class InputCommandExecutor implements CommandExecutor {
 
 		String name = command.getPreferredName();
 		if (name.equalsIgnoreCase("+toggle_inventory")) {
-			Window window = ((Player) source).add(DefaultWindow.class);
+			Window window = ((Player) source).get(WindowHolder.class).getActiveWindow();
 			if (window.isOpened()) {
-				window.close();
+				((Player) source).get(WindowHolder.class).close();
 			} else {
 				window.open();
 			}

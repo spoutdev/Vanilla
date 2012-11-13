@@ -31,6 +31,8 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
+import org.spout.vanilla.component.inventory.window.WindowHolder;
 import org.spout.vanilla.component.inventory.window.block.BrewingStandWindow;
 import org.spout.vanilla.component.inventory.window.block.CraftingTableWindow;
 import org.spout.vanilla.component.inventory.window.block.DispenserWindow;
@@ -38,7 +40,6 @@ import org.spout.vanilla.component.inventory.window.block.EnchantmentTableWindow
 import org.spout.vanilla.component.inventory.window.block.FurnaceWindow;
 import org.spout.vanilla.component.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.component.inventory.window.entity.VillagerWindow;
-import org.spout.vanilla.component.substance.material.chest.Chest;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.block.DispenserInventory;
@@ -52,30 +53,31 @@ public class WindowOpenHandler extends MessageHandler<WindowOpenMessage> {
 	@Override
 	public void handleClient(Session session, WindowOpenMessage message) {
 		Player player = ((Client) Spout.getEngine()).getActivePlayer();
+		String title = message.getTitle();
 		switch (message.getType()) {
 			case DEFAULT:
 				break;
 			case CHEST:
 				ChestInventory inventory = new ChestInventory(message.getSlots());
-				player.add(ChestWindow.class).init(inventory, message.getTitle()).open();
+				player.get(WindowHolder.class).open(new ChestWindow(player, inventory, title));
 				break;
 			case CRAFTING_TABLE:
-				player.add(CraftingTableWindow.class).init(message.getTitle()).open();
+				player.get(WindowHolder.class).open(new CraftingTableWindow(player, title));
 				break;
 			case FURNACE:
-				player.add(FurnaceWindow.class).init(new FurnaceInventory(), message.getTitle()).open();
+				player.get(WindowHolder.class).open(new FurnaceWindow(player, new FurnaceInventory(), title));
 				break;
 			case DISPENSER:
-				player.add(DispenserWindow.class).init(new DispenserInventory(), message.getTitle()).open();
+				player.get(WindowHolder.class).open(new DispenserWindow(player, new DispenserInventory(), title));
 				break;
 			case ENCHANTMENT_TABLE:
-				player.add(EnchantmentTableWindow.class).init(new EnchantmentTableInventory(), message.getTitle()).open();
+				player.get(WindowHolder.class).open(new EnchantmentTableWindow(player, new EnchantmentTableInventory(), title));
 				break;
 			case BREWING_STAND:
-				player.add(BrewingStandWindow.class).init(new BrewingStandInventory(), message.getTitle()).open();
+				player.get(WindowHolder.class).open(new BrewingStandWindow(player, new BrewingStandInventory(), title));
 				break;
 			case VILLAGER:
-				player.add(VillagerWindow.class).init(new VillagerInventory(), message.getTitle()).open();
+				player.get(WindowHolder.class).open(new VillagerWindow(player, new VillagerInventory(), title));
 				break;
 			default:
 				break;

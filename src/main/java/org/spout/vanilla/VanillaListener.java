@@ -41,6 +41,7 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.inventory.window.DefaultWindow;
+import org.spout.vanilla.component.inventory.window.WindowHolder;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.HungerComponent;
 import org.spout.vanilla.component.misc.PickupItemComponent;
@@ -71,7 +72,7 @@ public class VanillaListener implements Listener {
 		Player player = event.getPlayer();
 		player.add(Human.class).setName(player.getName());
 		player.add(PlayerInventory.class);
-		player.add(DefaultWindow.class);
+		player.add(WindowHolder.class);
 		player.add(PlayerListComponent.class);
 		player.add(PingComponent.class);
 		player.add(PickupItemComponent.class);

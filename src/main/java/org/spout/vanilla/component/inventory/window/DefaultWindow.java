@@ -31,7 +31,6 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.event.entity.EntityEquipmentEvent;
@@ -40,10 +39,8 @@ import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class DefaultWindow extends Window {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		init(WindowType.DEFAULT, "Inventory", 9);
+	public DefaultWindow(Player owner) {
+		super(owner, WindowType.DEFAULT, "Inventory", 9);
 		PlayerInventory inventory = getPlayerInventory();
 		addInventoryConverter(new InventoryConverter(inventory.getArmor(), "8, 7, 6, 5"));
 		addInventoryConverter(new InventoryConverter(inventory.getCraftingGrid(), "3-4, 1-2, 0"));

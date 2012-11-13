@@ -32,17 +32,18 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.component.inventory.window.Window;
+import org.spout.vanilla.component.inventory.window.WindowHolder;
 import org.spout.vanilla.inventory.window.InventoryEntry;
 import org.spout.vanilla.protocol.msg.window.WindowItemsMessage;
 
 public class WindowItemsHandler extends MessageHandler<WindowItemsMessage> {
 	public void handleClient(Session session, WindowItemsMessage msg) {
-		if (!session.hasPlayer() || !session.getPlayer().has(Window.class)) {
+		if (!session.hasPlayer() || !session.getPlayer().has(WindowHolder.class)) {
 			return;
 		}
 
 		Player player = session.getPlayer();
-		Window window = player.get(Window.class);
+		Window window = player.get(WindowHolder.class).getActiveWindow();
 		ItemStack[] slots = msg.getItems();
 		for (int i = 0; i < slots.length; i++) {
 			InventoryEntry entry = window.getInventoryEntry(i);

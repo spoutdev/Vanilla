@@ -26,28 +26,21 @@
  */
 package org.spout.vanilla.component.inventory.window.block.chest;
 
+import org.spout.api.entity.Player;
 import org.spout.vanilla.component.substance.material.chest.Chest;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class ChestWindow extends AbstractChestWindow {
-	/**
-	 * Initializes this window to view the specified {@link Chest}
-	 * @param chest chest to view
-	 * @return this window
-	 */
-	public ChestWindow init(Chest chest) {
-		super.init(chest);
-		ChestInventory inventory = chest.getInventory();
-		addInventoryConverter(new GridInventoryConverter(inventory, 9));
-		init(WindowType.CHEST, inventory.getTitle(), getSize());
-		return this;
+
+	public ChestWindow(Player owner, Chest chest) {
+		super(owner, chest, WindowType.CHEST, chest.getInventory().getTitle(), chest.getInventory().size());
+		addInventoryConverter(new GridInventoryConverter(chest.getInventory(), 9));
 	}
 
-	public ChestWindow init(ChestInventory inventory, String title) {
-		addInventoryConverter(new GridInventoryConverter(inventory, 9));
-		init(WindowType.CHEST, title, getSize());
-		return this;
+	public ChestWindow(Player owner, ChestInventory inv, String title) {
+		super(owner, WindowType.CHEST, title, inv.size());
+		addInventoryConverter(new GridInventoryConverter(inv, 9));
 	}
 }

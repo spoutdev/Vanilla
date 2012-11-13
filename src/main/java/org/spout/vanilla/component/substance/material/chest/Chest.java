@@ -29,8 +29,8 @@ package org.spout.vanilla.component.substance.material.chest;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 
+import org.spout.vanilla.component.inventory.window.WindowHolder;
 import org.spout.vanilla.component.inventory.window.block.chest.ChestWindow;
-import org.spout.vanilla.component.substance.material.chest.AbstractChest;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.ChestInventory;
@@ -78,7 +78,7 @@ public class Chest extends AbstractChest implements Container {
 		setDouble(VanillaMaterials.CHEST.isDouble(block));
 
 		// Finally open the window
-		player.add(ChestWindow.class).init(this).open();
+		player.get(WindowHolder.class).open(new ChestWindow(player, this));
 
 		super.open(player);
 	}

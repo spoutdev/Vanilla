@@ -31,7 +31,7 @@ import org.spout.api.Spout;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.component.inventory.window.Window;
+import org.spout.vanilla.component.inventory.window.WindowHolder;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 
 public final class WindowCloseHandler extends MessageHandler<WindowCloseMessage> {
@@ -40,8 +40,7 @@ public final class WindowCloseHandler extends MessageHandler<WindowCloseMessage>
 		if (!session.hasPlayer()) {
 			return;
 		}
-		Window window = session.getPlayer().detach(Window.class);
-		window.close();
+		session.getPlayer().get(WindowHolder.class).close();
 	}
 	
 	@Override

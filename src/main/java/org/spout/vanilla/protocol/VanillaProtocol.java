@@ -35,20 +35,24 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
+import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.command.Command;
 import org.spout.api.exception.UnknownPacketException;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
+import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.protocol.Session;
 import org.spout.api.util.Named;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.chat.VanillaStyleHandler;
 import org.spout.vanilla.protocol.msg.ServerPluginMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerChatMessage;
+import org.spout.vanilla.protocol.msg.player.conn.PlayerHandshakeMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerKickMessage;
 import org.spout.vanilla.protocol.netcache.ChunkNetCache;
 import org.spout.vanilla.protocol.netcache.protocol.ChunkCacheCodec;
@@ -129,9 +133,7 @@ public class VanillaProtocol extends Protocol {
 
 	@Override
 	public Message getIntroductionMessage(String playerName) {
-		//return new PlayerHandshakeMessage(VanillaPlugin.MINECRAFT_PROTOCOL_ID, playerName); //TODO Fix this Raphfrk
-
-		return null;
+		return new PlayerHandshakeMessage(VanillaPlugin.MINECRAFT_PROTOCOL_ID, playerName, "127.0.0.1", 25565); //TODO Fix this Raphfrk
 	}
 
 	public static MessageCodec<?> getCodec(String name, Protocol activeProtocol) {

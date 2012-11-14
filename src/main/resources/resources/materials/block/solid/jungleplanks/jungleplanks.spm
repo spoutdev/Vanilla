@@ -1,2 +1,2 @@
-Mesh: texturemesh://Vanilla/resources/materials/block/solid/jungleplanks/jungleplanks.uvs
+Mesh: cubemesh://Vanilla/resources/materials/block/solid/jungleplanks/jungleplanks.uvs
 Material: material://Vanilla/resources/materials/terrain.smt

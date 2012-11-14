@@ -1,2 +1,2 @@
-Mesh: texturemesh://Vanilla/resources/materials/block/solid/smoothsandstone/smoothsandstone.uvs
+Mesh: cubemesh://Vanilla/resources/materials/block/solid/smoothsandstone/smoothsandstone.uvs
 Material: material://Vanilla/resources/materials/terrain.smt

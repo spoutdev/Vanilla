@@ -1,2 +1,2 @@
-Mesh: texturemesh://Vanilla/resources/materials/block/solid/dispenser/dispenser.uvs
+Mesh: cubemesh://Vanilla/resources/materials/block/solid/dispenser/dispenser.uvs
 Material: material://Vanilla/resources/materials/terrain.smt

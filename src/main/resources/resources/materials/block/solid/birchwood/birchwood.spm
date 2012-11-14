@@ -1,2 +1,2 @@
-Mesh: texturemesh://Vanilla/resources/materials/block/solid/birchwood/birchwood.uvs
+Mesh: cubemesh://Vanilla/resources/materials/block/solid/birchwood/birchwood.uvs
 Material: material://Vanilla/resources/materials/terrain.smt

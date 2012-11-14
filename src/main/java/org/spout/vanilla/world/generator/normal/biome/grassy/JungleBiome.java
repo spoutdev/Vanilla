@@ -38,8 +38,11 @@ import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator.TallGrassFactory;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.VineDecorator;
+import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.HugeTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.ShrubObject;
+import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
-import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class JungleBiome extends GrassyBiome {
 	public JungleBiome(int biomeId) {
@@ -63,15 +66,21 @@ public class JungleBiome extends GrassyBiome {
 		@Override
 		public TreeObject make(Random random) {
 			if (random.nextInt(10) == 0) {
-				return VanillaObjects.BIG_OAK_TREE;
+				return new BigTreeObject();
 			}
 			if (random.nextInt(2) == 0) {
-				return VanillaObjects.JUNGLE_SHRUB;
+				return new ShrubObject();
 			}
 			if (random.nextInt(3) == 0) {
-				return VanillaObjects.HUGE_JUNGLE_TREE;
+				return new HugeTreeObject();
 			}
-			return VanillaObjects.SMALL_JUNGLE_TREE;
+			final SmallTreeObject tree = new SmallTreeObject();
+			tree.setTreeType(TreeObject.TreeType.JUNGLE);
+			tree.setBaseHeight((byte) 4);
+			tree.setRandomHeight((byte) 10);
+			tree.addLogVines(true);
+			tree.addCocoaPlants(true);
+			return tree;
 		}
 	}
 

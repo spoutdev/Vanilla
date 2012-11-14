@@ -60,11 +60,7 @@ public class HugeMushroomObject extends LargePlantObject {
 
 	public HugeMushroomObject(Random random, HugeMushroomType type) {
 		super(random, (byte) 3, (byte) 4);
-		shape = type.shape;
-		capMaterial = type.material;
-		stemMaterial = type.material;
-		capRadius = type.capRadius;
-		capThickness = type.capThickness;
+		setHugeMushroomType(type);
 		overridable.add(VanillaMaterials.AIR);
 		overridable.add(VanillaMaterials.LEAVES);
 		overridable.add(VanillaMaterials.RED_MUSHROOM);
@@ -281,7 +277,7 @@ public class HugeMushroomObject extends LargePlantObject {
 	}
 
 	private void checkIfUseTextureMetadata() {
-		useTextureMetadata = (capMaterial instanceof MushroomBlock && stemMaterial instanceof MushroomBlock);
+		useTextureMetadata = capMaterial instanceof MushroomBlock && stemMaterial instanceof MushroomBlock;
 	}
 
 	public void setCapRadius(byte capRadius) {
@@ -316,6 +312,14 @@ public class HugeMushroomObject extends LargePlantObject {
 
 	public Set<BlockMaterial> getOverridableMaterials() {
 		return overridable;
+	}
+
+	public final void setHugeMushroomType(HugeMushroomType type) {
+		shape = type.shape;
+		capMaterial = type.material;
+		stemMaterial = type.material;
+		capRadius = type.capRadius;
+		capThickness = type.capThickness;
 	}
 
 	public static enum HugeMushroomType {

@@ -36,8 +36,8 @@ import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
+import org.spout.vanilla.world.generator.normal.object.tree.SwampTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
-import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class SwampBiome extends GrassyBiome {
 	public SwampBiome(int biomeId) {
@@ -61,7 +61,7 @@ public class SwampBiome extends GrassyBiome {
 
 		@Override
 		public TreeObject make(Random random) {
-			return VanillaObjects.SWAMP_TREE;
+			return new SwampTreeObject();
 		}
 	}
 }

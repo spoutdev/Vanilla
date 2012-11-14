@@ -33,10 +33,8 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.world.generator.normal.object.DungeonObject;
-import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class DungeonPopulator extends Populator {
-	private static final DungeonObject DUNGEON = VanillaObjects.DUNGEON;
 	private static final byte ATTEMPTS = 8;
 
 	@Override
@@ -44,15 +42,16 @@ public class DungeonPopulator extends Populator {
 		if (chunk.getY() != 4) {
 			return;
 		}
-		DUNGEON.setRandom(random);
+		final DungeonObject dungeon = new DungeonObject();
+		dungeon.setRandom(random);
 		final World world = chunk.getWorld();
 		for (byte count = 0; count < ATTEMPTS; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = random.nextInt(128);
-			DUNGEON.randomize();
-			if (DUNGEON.canPlaceObject(world, x, y, z)) {
-				DUNGEON.placeObject(world, x, y, z);
+			dungeon.randomize();
+			if (dungeon.canPlaceObject(world, x, y, z)) {
+				dungeon.placeObject(world, x, y, z);
 			}
 		}
 	}

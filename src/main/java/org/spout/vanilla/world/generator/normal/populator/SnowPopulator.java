@@ -37,11 +37,9 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.world.generator.normal.object.SnowObject;
-import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class SnowPopulator extends Populator {
 	private static final Perlin SNOW_HEIGHT = new Perlin();
-	private static final SnowObject SNOW = VanillaObjects.FALLING_SNOW;
 
 	static {
 		SNOW_HEIGHT.setFrequency(0.2D);
@@ -59,18 +57,19 @@ public class SnowPopulator extends Populator {
 		final World world = chunk.getWorld();
 		final int seed = (int) (world.getSeed() * 51);
 		SNOW_HEIGHT.setSeed(seed);
-		SNOW.setRandom(random);
+		final SnowObject snow = new SnowObject();
+		snow.setRandom(random);
 		final int x = chunk.getBlockX();
 		final int z = chunk.getBlockZ();
 		double[][] heights = WorldGeneratorUtils.fastNoise(SNOW_HEIGHT, 16, 16, 4, x, 63, z);
 		for (byte xx = 0; xx < 16; xx++) {
 			for (byte zz = 0; zz < 16; zz++) {
-				if (!SNOW.canPlaceObject(world, x + xx, 63, z + zz)) {
+				if (!snow.canPlaceObject(world, x + xx, 63, z + zz)) {
 					continue;
 				}
 				int count = (int) ((heights[xx][zz] + 1) * 4.0);
 				for (int i = 0; i < count; i++) {
-					SNOW.placeObject(world, x + xx, 0, z + zz);
+					snow.placeObject(world, x + xx, 0, z + zz);
 				}
 			}
 		}

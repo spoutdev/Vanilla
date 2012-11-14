@@ -35,8 +35,9 @@ import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
+import org.spout.vanilla.world.generator.normal.object.tree.PineTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.SpruceTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
-import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class TaigaBiome extends SnowyBiome {
 	public TaigaBiome(int biomeId) {
@@ -60,9 +61,9 @@ public class TaigaBiome extends SnowyBiome {
 		@Override
 		public TreeObject make(Random random) {
 			if (random.nextInt(3) == 0) {
-				return VanillaObjects.SPRUCE_TREE;
+				return new SpruceTreeObject();
 			}
-			return VanillaObjects.PINE_TREE;
+			return new PineTreeObject();
 		}
 	}
 }

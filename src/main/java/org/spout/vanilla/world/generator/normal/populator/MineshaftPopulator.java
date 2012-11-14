@@ -34,11 +34,9 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.math.BitSize;
 
-import org.spout.vanilla.world.generator.object.VanillaObjects;
 import org.spout.vanilla.world.generator.structure.mineshaft.Mineshaft;
 
 public class MineshaftPopulator extends Populator {
-	private static final Mineshaft MINESHAFT = VanillaObjects.MINESHAFT;
 	private static final BitSize SPACING = new BitSize(8);
 	private static final int ODD = 3;
 	private static final int BASE_Y = 35;
@@ -56,13 +54,14 @@ public class MineshaftPopulator extends Populator {
 		final int spacingZ = chunk.getBlockZ() >> SPACING.BITS;
 		final World world = chunk.getWorld();
 		random = WorldGeneratorUtils.getRandom(world, spacingX, 0, spacingZ, 26471);
+		final Mineshaft mineshaft = new Mineshaft();
 		if (random.nextInt(ODD) == 0) {
-			MINESHAFT.setRandom(random);
+			mineshaft.setRandom(random);
 			final int x = chunk.getBlockX(random);
 			final int y = random.nextInt(RAND_Y) + BASE_Y;
 			final int z = chunk.getBlockZ(random);
-			if (MINESHAFT.canPlaceObject(world, x, y, z)) {
-				MINESHAFT.placeObject(world, x, y, z);
+			if (mineshaft.canPlaceObject(world, x, y, z)) {
+				mineshaft.placeObject(world, x, y, z);
 			}
 		}
 	}

@@ -33,31 +33,26 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.world.generator.normal.object.OreObject;
-import org.spout.vanilla.world.generator.object.VanillaObjects;
+import org.spout.vanilla.world.generator.normal.object.OreObject.OreType;
 
 public class OrePopulator extends Populator {
-	private static final OreObject[] ORES;
-
-	static {
-		ORES = new OreObject[]{
-				VanillaObjects.DIRT_ORE,
-				VanillaObjects.GRAVEL_ORE,
-				VanillaObjects.COAL_ORE,
-				VanillaObjects.IRON_ORE,
-				VanillaObjects.REDSTONE_ORE,
-				VanillaObjects.LAPIS_LAZULI_ORE,
-				VanillaObjects.GOLD_ORE,
-				VanillaObjects.DIAMOND_ORE
-		};
-	}
-
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {
 			return;
 		}
 		final World world = chunk.getWorld();
-		for (OreObject ore : ORES) {
+		final OreObject[] ores = new OreObject[]{
+			new OreObject(OreType.DIRT),
+			new OreObject(OreType.GRAVEL),
+			new OreObject(OreType.COAL),
+			new OreObject(OreType.IRON),
+			new OreObject(OreType.REDSTONE),
+			new OreObject(OreType.GOLD),
+			new OreObject(OreType.LAPIS_LAZULI),
+			new OreObject(OreType.DIAMOND)
+		};
+		for (OreObject ore : ores) {
 			ore.setRandom(random);
 			for (byte i = 0; i < ore.getAmount(); i++) {
 				final int x = chunk.getBlockX(random);

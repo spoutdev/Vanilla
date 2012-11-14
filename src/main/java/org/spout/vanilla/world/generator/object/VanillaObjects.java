@@ -62,8 +62,7 @@ import org.spout.vanilla.world.generator.structure.temple.Temple;
 import org.spout.vanilla.world.generator.theend.object.SpireObject;
 
 /**
- * IMPORTANT: These objects should not be used by plugins. Any modifications to
- * these objects will affect the output of the vanilla generators.
+ * Reference objects. NOT THREAD SAFE.
  */
 public class VanillaObjects {
 	public static final BigTreeObject BIG_OAK_TREE = new BigTreeObject();

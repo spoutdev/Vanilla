@@ -33,14 +33,12 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.world.generator.normal.object.PondObject;
-import org.spout.vanilla.world.generator.object.VanillaObjects;
+import org.spout.vanilla.world.generator.normal.object.PondObject.PondType;
 
 public class PondPopulator extends Populator {
 	private static final byte WATER_ODD = 4;
 	private static final byte LAVA_ODD = 8;
 	private static final byte LAVA_SURFACE_ODD = 10;
-	private static final PondObject WATER_POND = VanillaObjects.WATER_POND;
-	private static final PondObject LAVA_POND = VanillaObjects.LAVA_POND;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -52,10 +50,11 @@ public class PondPopulator extends Populator {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = random.nextInt(128);
-			WATER_POND.setRandom(random);
-			WATER_POND.randomize();
-			if (WATER_POND.canPlaceObject(world, x, y, z)) {
-				WATER_POND.placeObject(world, x, y, z);
+			final PondObject pond = new PondObject(PondType.WATER);
+			pond.setRandom(random);
+			pond.randomize();
+			if (pond.canPlaceObject(world, x, y, z)) {
+				pond.placeObject(world, x, y, z);
 			}
 		}
 		if (random.nextInt(LAVA_ODD) == 0) {
@@ -65,10 +64,11 @@ public class PondPopulator extends Populator {
 			if (y >= 63 && random.nextInt(LAVA_SURFACE_ODD) != 0) {
 				return;
 			}
-			LAVA_POND.setRandom(random);
-			LAVA_POND.randomize();
-			if (LAVA_POND.canPlaceObject(world, x, y, z)) {
-				LAVA_POND.placeObject(world, x, y, z);
+			final PondObject pond = new PondObject(PondType.LAVA);
+			pond.setRandom(random);
+			pond.randomize();
+			if (pond.canPlaceObject(world, x, y, z)) {
+				pond.placeObject(world, x, y, z);
 			}
 		}
 	}

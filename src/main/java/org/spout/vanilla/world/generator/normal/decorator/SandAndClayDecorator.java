@@ -36,14 +36,11 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.world.generator.normal.object.BlockPatchObject;
-import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class SandAndClayDecorator extends Decorator {
 	private static final byte FIRST_SAND_ROUND = 3;
 	private static final byte SECOND_SAND_ROUND = 1;
 	private static final byte CLAY_ROUND = 1;
-	private static final BlockPatchObject SAND = VanillaObjects.SAND_PATCH;
-	private static final BlockPatchObject CLAY = VanillaObjects.CLAY_PATCH;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -51,33 +48,38 @@ public class SandAndClayDecorator extends Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		SAND.setRandom(random);
-		CLAY.setRandom(random);
+		final BlockPatchObject sand = new BlockPatchObject(VanillaMaterials.SAND);
 		for (byte count = 0; count < FIRST_SAND_ROUND; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = getHighestWorkableBlock(world, x, z);
-			SAND.randomize();
-			if (y != -1 && SAND.canPlaceObject(world, x, y, z)) {
-				SAND.placeObject(world, x, y, z);
+			sand.randomize();
+			if (y != -1 && sand.canPlaceObject(world, x, y, z)) {
+				sand.placeObject(world, x, y, z);
 			}
 		}
+		final BlockPatchObject clay = new BlockPatchObject(VanillaMaterials.CLAY_BLOCK);
+		clay.setHeightRadius((byte) 1);
+		clay.getOverridableMaterials().clear();
+		clay.getOverridableMaterials().add(VanillaMaterials.DIRT);
+		sand.setRandom(random);
+		clay.setRandom(random);
 		for (byte count = 0; count < CLAY_ROUND; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = getHighestWorkableBlock(world, x, z);
-			CLAY.randomize();
-			if (y != -1 && CLAY.canPlaceObject(world, x, y, z)) {
-				CLAY.placeObject(world, x, y, z);
+			clay.randomize();
+			if (y != -1 && clay.canPlaceObject(world, x, y, z)) {
+				clay.placeObject(world, x, y, z);
 			}
 		}
 		for (byte count = 0; count < SECOND_SAND_ROUND; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = getHighestWorkableBlock(world, x, z);
-			SAND.randomize();
-			if (y != -1 && SAND.canPlaceObject(world, x, y, z)) {
-				SAND.placeObject(world, x, y, z);
+			sand.randomize();
+			if (y != -1 && sand.canPlaceObject(world, x, y, z)) {
+				sand.placeObject(world, x, y, z);
 			}
 		}
 	}

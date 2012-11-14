@@ -34,10 +34,8 @@ import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 import org.spout.vanilla.world.generator.nether.object.GlowstonePatchObject;
-import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class GlowstoneDecorator extends Decorator {
-	private static final GlowstonePatchObject GLOWSTONE = VanillaObjects.GLOWSTONE_PATCH;
 	private static final byte BASE_AMOUNT = 10;
 	private static final byte RAND_AMOUNT = 10;
 
@@ -47,14 +45,15 @@ public class GlowstoneDecorator extends Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		GLOWSTONE.setRandom(random);
+		final GlowstonePatchObject glowstone = new GlowstonePatchObject();
+		glowstone.setRandom(random);
 		for (byte amount = (byte) (random.nextInt(RAND_AMOUNT) + BASE_AMOUNT); amount > 0; amount--) {
 			final int x = chunk.getBlockX(random);
 			final int y = random.nextInt(NetherGenerator.HEIGHT);
 			final int z = chunk.getBlockZ(random);
-			GLOWSTONE.randomize();
-			if (GLOWSTONE.canPlaceObject(world, x, y, z)) {
-				GLOWSTONE.placeObject(world, x, y, z);
+			glowstone.randomize();
+			if (glowstone.canPlaceObject(world, x, y, z)) {
+				glowstone.placeObject(world, x, y, z);
 			}
 		}
 	}

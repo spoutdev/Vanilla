@@ -32,11 +32,9 @@ import org.spout.api.generator.Populator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
-import org.spout.vanilla.world.generator.object.VanillaObjects;
 import org.spout.vanilla.world.generator.structure.temple.Temple;
 
 public class TemplePopulator extends Populator {
-	private static final Temple temple = VanillaObjects.TEMPLE;
 	private static final short ODD = 400;
 
 	@Override
@@ -47,6 +45,7 @@ public class TemplePopulator extends Populator {
 		if (random.nextInt(ODD) != 0) {
 			return;
 		}
+		final Temple temple = new Temple();
 		temple.setRandom(random);
 		final World world = chunk.getWorld();
 		final int x = chunk.getBlockX(random);

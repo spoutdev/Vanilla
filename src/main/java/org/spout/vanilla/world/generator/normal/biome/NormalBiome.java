@@ -38,9 +38,10 @@ import org.spout.vanilla.material.block.plant.TallGrass;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator.TallGrassFactory;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator.TreeWGOFactory;
+import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator.GroundCoverLayer;
-import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public abstract class NormalBiome extends VanillaBiome {
 	// elevation values
@@ -80,9 +81,9 @@ public abstract class NormalBiome extends VanillaBiome {
 		@Override
 		public TreeObject make(Random random) {
 			if (random.nextInt(10) == 0) {
-				return VanillaObjects.BIG_OAK_TREE;
+				return new BigTreeObject();
 			} else {
-				return VanillaObjects.SMALL_OAK_TREE;
+				return new SmallTreeObject();
 			}
 		}
 		

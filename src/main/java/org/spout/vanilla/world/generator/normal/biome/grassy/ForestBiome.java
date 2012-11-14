@@ -35,8 +35,9 @@ import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
+import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
-import org.spout.vanilla.world.generator.object.VanillaObjects;
+import org.spout.vanilla.world.generator.normal.object.tree.TreeObject.TreeType;
 
 public class ForestBiome extends GrassyBiome {
 	public ForestBiome(int biomeId) {
@@ -55,7 +56,9 @@ public class ForestBiome extends GrassyBiome {
 		@Override
 		public TreeObject make(Random random) {
 			if (random.nextInt(5) == 0) {
-				return VanillaObjects.SMALL_BIRCH_TREE;
+				final SmallTreeObject tree = new SmallTreeObject();
+				tree.setTreeType(TreeType.BIRCH);
+				return tree;
 			}
 			return super.make(random);
 		}

@@ -37,7 +37,6 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.plant.Sapling;
 import org.spout.vanilla.world.generator.object.LargePlantObject;
-import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public abstract class TreeObject extends LargePlantObject {
 	// metadata control
@@ -116,23 +115,29 @@ public abstract class TreeObject extends LargePlantObject {
 					&& firstSapling.translate(0, 0, 1).isMaterial(Sapling.JUNGLE)
 					&& firstSapling.translate(1, 0, 0).isMaterial(Sapling.JUNGLE)) {
 				pos = firstSapling;
-				tree = VanillaObjects.HUGE_JUNGLE_TREE;
+				tree = new HugeTreeObject();
 			} else {
-				tree = VanillaObjects.SMALL_JUNGLE_TREE;
+				tree = new SmallTreeObject();
+				tree.setTreeType(TreeObject.TreeType.JUNGLE);
+				tree.setBaseHeight((byte) 4);
+				tree.setRandomHeight((byte) 10);
+				((SmallTreeObject) tree).addLogVines(true);
+				((SmallTreeObject) tree).addCocoaPlants(true);
 			}
 		} else if (sapling == Sapling.BIRCH) {
-			tree = VanillaObjects.SMALL_BIRCH_TREE;
+			tree = new SmallTreeObject();
+			tree.setTreeType(TreeObject.TreeType.BIRCH);
 		} else if (sapling == Sapling.SPRUCE) {
 			if (random.nextBoolean()) {
-				tree = VanillaObjects.PINE_TREE;
+				tree = new PineTreeObject();
 			} else {
-				tree = VanillaObjects.SPRUCE_TREE;
+				tree = new SpruceTreeObject();
 			}
 		} else {
 			if (random.nextInt(10) == 0) {
-				tree = VanillaObjects.BIG_OAK_TREE;
+				tree = new BigTreeObject();
 			} else {
-				tree = VanillaObjects.SMALL_OAK_TREE;
+				tree = new SmallTreeObject();
 			}
 		}
 		tree.setRandom(random);

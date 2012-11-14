@@ -34,14 +34,11 @@ import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.object.WellObject;
-import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 /**
  * Decorator that decorates a biome with a well structure.
  */
 public class WellDecorator extends Decorator {
-	// a well object for generation
-	private static final WellObject WELL = VanillaObjects.DESERT_WELL;
 	// generation odd, 'ODD' chunk per chunk
 	private static final short ODD = 1000;
 
@@ -60,8 +57,9 @@ public class WellDecorator extends Decorator {
 		if (y == -1) {
 			return;
 		}
-		if (WELL.canPlaceObject(world, x, y, z)) {
-			WELL.placeObject(world, x, y, z);
+		final WellObject well = new WellObject();
+		if (well.canPlaceObject(world, x, y, z)) {
+			well.placeObject(world, x, y, z);
 		}
 	}
 

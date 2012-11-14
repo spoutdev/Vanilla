@@ -1,2 +1,2 @@
-Mesh: texturemesh://Vanilla/resources/materials/block/solid/ironore/ironore.uvs
+Mesh: cubemesh://Vanilla/resources/materials/block/solid/ironore/ironore.uvs
 Material: material://Vanilla/resources/materials/terrain.smt

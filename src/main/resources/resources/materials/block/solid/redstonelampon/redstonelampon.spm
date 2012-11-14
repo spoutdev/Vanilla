@@ -1,2 +1,2 @@
-Mesh: texturemesh://Vanilla/resources/materials/block/solid/redstonelampon/redstonelampon.uvs
+Mesh: cubemesh://Vanilla/resources/materials/block/solid/redstonelampon/redstonelampon.uvs
 Material: material://Vanilla/resources/materials/terrain.smt

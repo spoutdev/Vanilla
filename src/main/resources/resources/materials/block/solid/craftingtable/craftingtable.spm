@@ -1,2 +1,2 @@
-Mesh: texturemesh://Vanilla/resources/materials/block/solid/craftingtable/craftingtable.uvs
+Mesh: cubemesh://Vanilla/resources/materials/block/solid/craftingtable/craftingtable.uvs
 Material: material://Vanilla/resources/materials/terrain.smt

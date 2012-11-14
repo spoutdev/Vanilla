@@ -1,2 +1,2 @@
-Mesh: texturemesh://Vanilla/resources/materials/block/solid/furnace/furnace.uvs
+Mesh: cubemesh://Vanilla/resources/materials/block/solid/furnace/furnace.uvs
 Material: material://Vanilla/resources/materials/terrain.smt

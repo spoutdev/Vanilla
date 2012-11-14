@@ -1,2 +1,2 @@
-Mesh: texturemesh://Vanilla/resources/materials/block/solid/circlestonebrick/circlestonebrick.uvs
+Mesh: cubemesh://Vanilla/resources/materials/block/solid/circlestonebrick/circlestonebrick.uvs
 Material: material://Vanilla/resources/materials/terrain.smt

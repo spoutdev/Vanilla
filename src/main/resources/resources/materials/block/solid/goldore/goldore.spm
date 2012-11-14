@@ -1,2 +1,2 @@
-Mesh: texturemesh://Vanilla/resources/materials/block/solid/goldore/goldore.uvs
+Mesh: cubemesh://Vanilla/resources/materials/block/solid/goldore/goldore.uvs
 Material: material://Vanilla/resources/materials/terrain.smt

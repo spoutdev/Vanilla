@@ -1,2 +1,2 @@
-Mesh: texturemesh://Vanilla/resources/materials/block/solid/greenwool/greenwool.uvs
+Mesh: cubemesh://Vanilla/resources/materials/block/solid/greenwool/greenwool.uvs
 Material: material://Vanilla/resources/materials/terrain.smt

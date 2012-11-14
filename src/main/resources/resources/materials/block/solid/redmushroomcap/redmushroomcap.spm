@@ -1,2 +1,2 @@
-Mesh: texturemesh://Vanilla/resources/materials/block/solid/redmushroomcap/redmushroomcap.uvs
+Mesh: cubemesh://Vanilla/resources/materials/block/solid/redmushroomcap/redmushroomcap.uvs
 Material: material://Vanilla/resources/materials/terrain.smt

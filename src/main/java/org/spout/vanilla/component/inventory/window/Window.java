@@ -90,6 +90,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 	// Client only
 	public static final float WIDTH = 0.6875f;
 	public static final float HEIGHT = 0.6484375f;
+	public static final float SCALE = 0.75f;
 	protected final Screen popup = new Screen();
 	protected final Widget background = new Widget();
 
@@ -164,9 +165,8 @@ public class Window extends EntityComponent implements InventoryViewer {
 				// Setup the window to render
 				TexturedRectComponent backgroundRect = background.add(TexturedRectComponent.class);
 				backgroundRect.setRenderMaterial(getRenderMaterial(type));
-				backgroundRect.setSprite(new Rectangle(-0.5f, -0.5f, 1.25f, 1));
+				backgroundRect.setSprite(new Rectangle(-WIDTH * SCALE, -WIDTH, HEIGHT * 2 * SCALE, HEIGHT * 2));
 				backgroundRect.setSource(new Rectangle(0, 0, WIDTH, HEIGHT));
-				backgroundRect.setColor(Color.WHITE);
 				popup.attachWidget(VanillaPlugin.getInstance(), background); // attach background to screen
 				break;
 			default:

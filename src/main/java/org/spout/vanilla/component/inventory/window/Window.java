@@ -95,57 +95,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 	protected final Widget background = new Widget();
 
 	/**
-	 * Returns the {@link RenderMaterial} of the specified {@link WindowType}
-	 *
-	 * @param type of window
-	 * @return material to render
-	 */
-	@ClientOnly
-	public static RenderMaterial getRenderMaterial(WindowType type) {
-		if (Spout.getPlatform() != Platform.CLIENT) {
-			throw new IllegalStateException("Cannot get render material on the server.");
-		}
-
-		String uri;
-		switch (type) {
-			case DEFAULT:
-				uri = "material://Vanilla/resources/gui/smt/InventoryGUIMaterial.smt";
-				break;
-			case CHEST:
-				uri = "material://Vanilla/resources/gui/smt/ContainerGUIMaterial.smt";
-				break;
-			case CRAFTING_TABLE:
-				uri = "material://Vanilla/resources/gui/smt/CraftingGUIMaterial.smt";
-				break;
-			case FURNACE:
-				uri = "material://Vanilla/resources/gui/smt/FurnaceGUIMaterial.smt";
-				break;
-			case DISPENSER:
-				uri = "material://Vanilla/resources/gui/smt/TrapGUIMaterial.smt";
-				break;
-			case ENCHANTMENT_TABLE:
-				uri = "material://Vanilla/resources/gui/smt/EnchantGUIMaterial.smt";
-				break;
-			case BREWING_STAND:
-				uri = "material://Vanilla/resources/gui/smt/AlchemyGUIMaterial.smt";
-				break;
-			case VILLAGER:
-				uri = null; // TODO: Missing...
-				break;
-			case BEACON:
-				uri = null; // TODO: Missing...
-				break;
-			case ANVIL:
-				uri = null; // TODO: Missing...
-				break;
-			default:
-				throw new IllegalArgumentException("Unknown window type: " + type.toString());
-		}
-
-		return (RenderMaterial) Spout.getEngine().getFilesystem().getResource(uri);
-	}
-
-	/**
 	 * Initializes the window to the specified arguments.
 	 *
 	 * @param type of window to render
@@ -164,7 +113,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 			case CLIENT:
 				// Setup the window to render
 				TexturedRectComponent backgroundRect = background.add(TexturedRectComponent.class);
-				backgroundRect.setRenderMaterial(getRenderMaterial(type));
+				backgroundRect.setRenderMaterial(type.getRenderMaterial());
 				backgroundRect.setSprite(new Rectangle(-WIDTH * SCALE, -WIDTH, HEIGHT * 2 * SCALE, HEIGHT * 2));
 				backgroundRect.setSource(new Rectangle(0, 0, WIDTH, HEIGHT));
 				popup.attachWidget(VanillaPlugin.getInstance(), background); // attach background to screen

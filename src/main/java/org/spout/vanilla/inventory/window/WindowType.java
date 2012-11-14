@@ -29,6 +29,9 @@ package org.spout.vanilla.inventory.window;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
+import org.spout.api.Spout;
+import org.spout.api.render.RenderMaterial;
+
 /**
  * Represents a type of {@link org.spout.vanilla.component.inventory.window.Window}
  */
@@ -36,58 +39,60 @@ public enum WindowType {
 	/**
 	 * The default window seen when the player opens his inventory.
 	 */
-	DEFAULT(-1),
+	DEFAULT(-1, "Inventory"),
 	/**
 	 * The window seen when opening a
 	 * {@link org.spout.vanilla.component.substance.material.chest.Chest}
 	 */
-	CHEST(0),
+	CHEST(0, "Container"),
 	/**
 	 * The window seen when using a
 	 * {@link org.spout.vanilla.component.substance.material.CraftingTable}
 	 */
-	CRAFTING_TABLE(1),
+	CRAFTING_TABLE(1, "Crafting"),
 	/**
 	 * The window seen when opening a
 	 * {@link org.spout.vanilla.component.substance.material.Furnace}
 	 */
-	FURNACE(2),
+	FURNACE(2, "Furnace"),
 	/**
 	 * The window seen when opening a
 	 * {@link org.spout.vanilla.component.substance.material.Dispenser}
 	 */
-	DISPENSER(3),
+	DISPENSER(3, "Trap"),
 	/**
 	 * The window seen when using an
 	 * {@link org.spout.vanilla.component.substance.material.EnchantmentTable}
 	 */
-	ENCHANTMENT_TABLE(4),
+	ENCHANTMENT_TABLE(4, "Enchant"),
 	/**
 	 * The window seen when using a
 	 * {@link org.spout.vanilla.component.substance.material.BrewingStand}
 	 */
-	BREWING_STAND(5),
+	BREWING_STAND(5, "Alchemy"),
 	/**
 	 * The window seen when trading with a
 	 * {@link org.spout.vanilla.component.living.passive.Villager}
 	 */
-	VILLAGER(6),
+	VILLAGER(6, null), // TODO: Mising texture
 	/**
 	 * The window seen when using a
 	 * {@link org.spout.vanilla.component.substance.material.Beacon}
 	 */
-	BEACON(7),
+	BEACON(7, null), // TODO: Missing texture
 	/**
 	 * The window seen when using an
 	 * {@link org.spout.vanilla.component.substance.material.Anvil}
 	 */
-	ANVIL(8);
+	ANVIL(8, null); // TODO: Missing texture
 
 	private final int id;
+	private final String material;
 	private static final TIntObjectMap<WindowType> idMap = new TIntObjectHashMap<WindowType>();
 
-	private WindowType(int id) {
+	private WindowType(int id, String material) {
 		this.id = id;
+		this.material = "material://Vanilla/resources/gui/smt/" + material + "GUIMaterial.smt";
 	}
 
 	/**
@@ -97,6 +102,15 @@ public enum WindowType {
 	 */
 	public int getId() {
 		return id;
+	}
+
+	/**
+	 * Returns the {@link RenderMaterial} for the GUI
+	 *
+	 * @return render material
+	 */
+	public RenderMaterial getRenderMaterial() {
+		return (RenderMaterial) Spout.getEngine().getFilesystem().getResource(material);
 	}
 
 	static {

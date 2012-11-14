@@ -1,2 +1,2 @@
-Mesh: texturemesh://Vanilla/resources/materials/block/solid/melon/melon.uvs
+Mesh: cubemesh://Vanilla/resources/materials/block/solid/melon/melon.uvs
 Material: material://Vanilla/resources/materials/terrain.smt

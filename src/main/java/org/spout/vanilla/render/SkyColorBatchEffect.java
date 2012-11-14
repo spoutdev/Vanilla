@@ -33,7 +33,15 @@ public class SkyColorBatchEffect implements BatchEffect {
 
 	@Override
 	public void preBatch(SnapshotRender snapshotRender) {
+		/*if(snapshotRender.getMesh() instanceof TextureMesh){
+			TextureMesh mesh = new TextureMesh((TextureMesh) snapshotRender.getMesh()); // Work on copy
+			
+			snapshotRender.setMesh(mesh);
+		}else if(snapshotRender.getMesh() instanceof CubeMesh){
+			CubeMesh mesh = (CubeMesh) snapshotRender.getMesh();
 
+			snapshotRender.setMesh(mesh);
+		}*/
 	}
 
 	@Override

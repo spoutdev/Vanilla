@@ -1,2 +1,2 @@
-Mesh: texturemesh://Vanilla/resources/materials/block/solid/lightgraywool/lightgraywool.uvs
+Mesh: cubemesh://Vanilla/resources/materials/block/solid/lightgraywool/lightgraywool.uvs
 Material: material://Vanilla/resources/materials/terrain.smt

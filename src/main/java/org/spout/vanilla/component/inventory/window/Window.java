@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.inventory.window;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -36,28 +35,28 @@ import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 
 import org.spout.api.Client;
-import org.spout.api.ClientOnly;
 import org.spout.api.ServerOnly;
 import org.spout.api.Spout;
+import org.spout.api.chat.ChatArguments;
+import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.gui.Screen;
 import org.spout.api.gui.Widget;
+import org.spout.api.gui.component.LabelComponent;
 import org.spout.api.gui.component.TexturedRectComponent;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.math.Rectangle;
-import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.event.ProtocolEvent;
-import org.spout.api.render.RenderMaterial;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.substance.Item;
+import org.spout.vanilla.data.RenderMaterials;
 import org.spout.vanilla.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowItemsEvent;
@@ -93,6 +92,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 	public static final float SCALE = 0.75f;
 	protected final Screen popup = new Screen();
 	protected final Widget background = new Widget();
+	protected final Widget label = new Widget();
 
 	/**
 	 * Initializes the window to the specified arguments.
@@ -116,8 +116,17 @@ public class Window extends EntityComponent implements InventoryViewer {
 				backgroundRect.setRenderMaterial(type.getRenderMaterial());
 				backgroundRect.setSprite(new Rectangle(-WIDTH * SCALE, -WIDTH, HEIGHT * 2 * SCALE, HEIGHT * 2));
 				backgroundRect.setSource(new Rectangle(0, 0, WIDTH, HEIGHT));
+
+				// Draw title
+				LabelComponent labelComponent = label.add(LabelComponent.class);
+				labelComponent.setFont(RenderMaterials.FONT);
+				labelComponent.setText(new ChatArguments(ChatStyle.GRAY, title));
+				label.setGeometry(new Rectangle(0.1f, 0.5f, 0, 0));
+
 				popup.setGrabsMouse(false);
-				popup.attachWidget(VanillaPlugin.getInstance(), background); // attach background to screen
+				VanillaPlugin plugin = VanillaPlugin.getInstance();
+				popup.attachWidget(plugin, background);
+				popup.attachWidget(plugin, label);
 				break;
 			default:
 				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform().toString());

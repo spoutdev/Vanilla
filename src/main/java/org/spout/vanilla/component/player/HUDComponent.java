@@ -44,11 +44,10 @@ import org.spout.api.gui.component.TexturedRectComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
 import org.spout.api.plugin.Platform;
-import org.spout.api.render.Font;
-import org.spout.api.render.RenderMaterial;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.data.RenderMaterials;
 import org.spout.vanilla.data.VanillaData;
 
 /**
@@ -60,11 +59,6 @@ public class HUDComponent extends EntityComponent {
 
 	// The main HUD screen
 	private final Screen HUD = new Screen();
-
-	// The materials used to construct the render
-	private final RenderMaterial hotbarMaterial = (RenderMaterial) Spout.getFilesystem().getResource("material://Vanilla/resources/gui/smt/HotbarGUIMaterial.smt");
-	private final RenderMaterial iconsMaterial = (RenderMaterial) Spout.getFilesystem().getResource("material://Vanilla/resources/gui/smt/IconsGUIMaterial.smt");
-	private final Font font = (Font) Spout.getFilesystem().getResource("font://Spout/resources/resources/fonts/ubuntu/Ubuntu-M.ttf");
 
 	// The core elements of the main HUD
 	private final Widget crosshair = new Widget();
@@ -410,7 +404,7 @@ public class HUDComponent extends EntityComponent {
 
 		// Setup crosshairs
 		final TexturedRectComponent crosshairRect = crosshair.add(TexturedRectComponent.class);
-		crosshairRect.setRenderMaterial(iconsMaterial);
+		crosshairRect.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
 		crosshairRect.setColor(Color.WHITE);
 		crosshairRect.setSprite(new Rectangle(-0.0625f * SCALE, -0.0625f, 0.125f * SCALE, 0.125f));
 		crosshairRect.setSource(new Rectangle(0f / 256f, 0f / 256f, 16f / 256f, 16f / 256f));
@@ -419,14 +413,14 @@ public class HUDComponent extends EntityComponent {
 		// Setup the hotbar
 		final RenderPartsHolderComponent hotbarRect = hotbar.add(RenderPartsHolderComponent.class);
 		final RenderPart hotbarBgRect = new RenderPart();
-		hotbarBgRect.setRenderMaterial(hotbarMaterial);
+		hotbarBgRect.setRenderMaterial(RenderMaterials.HOTBAR_MATERIAL);
 		hotbarBgRect.setColor(Color.WHITE);
 		hotbarBgRect.setSprite(new Rectangle(x, -1f, 1.42f * SCALE, 0.17f));
 		hotbarBgRect.setSource(new Rectangle(0, 0, 0.71f, 0.085f));
 		hotbarRect.add(hotbarBgRect, 1);
 
 		final RenderPart hotbarSlotRect = new RenderPart();
-		hotbarSlotRect.setRenderMaterial(hotbarMaterial);
+		hotbarSlotRect.setRenderMaterial(RenderMaterials.HOTBAR_MATERIAL);
 		hotbarSlotRect.setColor(Color.WHITE);
 		hotbarSlotRect.setSource(new Rectangle(0, 22f / 256f, 30f / 256f, 24f / 256f));
 		hotbarRect.add(hotbarSlotRect, 0);
@@ -435,7 +429,7 @@ public class HUDComponent extends EntityComponent {
 		// Experience level text
 		final LabelComponent lvlTxt = exp.add(LabelComponent.class);
 		exp.setGeometry(new Rectangle(-0.02f, -0.79f, 0, 0));
-		lvlTxt.setFont(font);
+		lvlTxt.setFont(RenderMaterials.FONT);
 		lvlTxt.setText(new ChatArguments(ChatStyle.BRIGHT_GREEN, "50"));
 
 		// Setup survival-specific HUD components
@@ -444,14 +438,14 @@ public class HUDComponent extends EntityComponent {
 			// Experience bar
 			final RenderPartsHolderComponent expRect = exp.add(RenderPartsHolderComponent.class);
 			final RenderPart expBgRect = new RenderPart();
-			expBgRect.setRenderMaterial(iconsMaterial);
+			expBgRect.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
 			expBgRect.setColor(Color.WHITE);
 			expBgRect.setSprite(new Rectangle(x, -0.82f, 1.81f * SCALE, 0.04f));
 			expBgRect.setSource(new Rectangle(0, 64f / 256f, 0.91f, 0.019f));
 			expRect.add(expBgRect);
 
 			final RenderPart expBarRect = new RenderPart();
-			expBarRect.setRenderMaterial(iconsMaterial);
+			expBarRect.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
 			expBarRect.setColor(Color.WHITE);
 			expRect.add(expBarRect);
 			setExp(0);
@@ -463,7 +457,7 @@ public class HUDComponent extends EntityComponent {
 			float y = VanillaConfiguration.HARDCORE_MODE.getBoolean() ? 45f / 256f : 0;
 			for (int i = 0; i < 10; i++) {
 				final RenderPart heart = new RenderPart();
-				heart.setRenderMaterial(iconsMaterial);
+				heart.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
 				heart.setColor(Color.WHITE);
 				heart.setSprite(new Rectangle(x + 0.005f, -0.77f, 0.065f * SCALE, 0.065f));
 				heart.setSource(new Rectangle(53f / 256f, y, 9f / 256f, 9f / 256f));
@@ -474,7 +468,7 @@ public class HUDComponent extends EntityComponent {
 			x = START_X;
 			for (int i = 0; i < 10; i++) {
 				final RenderPart heartBg = new RenderPart();
-				heartBg.setRenderMaterial(iconsMaterial);
+				heartBg.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
 				heartBg.setColor(Color.WHITE);
 				heartBg.setSprite(new Rectangle(x, -0.77f, 0.065f * SCALE, 0.065f));
 				heartBg.setSource(new Rectangle(16f / 256f, y, 9f / 256f, 9f / 256f));
@@ -489,7 +483,7 @@ public class HUDComponent extends EntityComponent {
 			x = 0.09f * SCALE;
 			for (int i = 0; i < 10; i++) {
 				final RenderPart bubble = new RenderPart();
-				bubble.setRenderMaterial(iconsMaterial);
+				bubble.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
 				bubble.setColor(Color.WHITE);
 				bubble.setSprite(new Rectangle(x, -0.69f, 0.06f * SCALE, 0.06f));
 				bubble.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f));
@@ -503,7 +497,7 @@ public class HUDComponent extends EntityComponent {
 			x = 0.09f * SCALE;
 			for (int i = 0; i < 10; i++) {
 				final RenderPart hunger = new RenderPart();
-				hunger.setRenderMaterial(iconsMaterial);
+				hunger.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
 				hunger.setColor(Color.WHITE);
 				hunger.setSprite(new Rectangle(x, -0.77f, 0.075f * SCALE, 0.07f));
 				hunger.setSource(new Rectangle(52f / 256f, 27f / 256f, 9f / 256f, 9f / 256f));
@@ -514,7 +508,7 @@ public class HUDComponent extends EntityComponent {
 			x = 0.09f * SCALE;
 			for (int i = 0; i < 10; i++) {
 				final RenderPart hungerBg = new RenderPart();
-				hungerBg.setRenderMaterial(iconsMaterial);
+				hungerBg.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
 				hungerBg.setColor(Color.WHITE);
 				hungerBg.setSprite(new Rectangle(x, -0.77f, 0.075f * SCALE, 0.07f));
 				hungerBg.setSource(new Rectangle(16f / 256f, 27f / 256f, 9f / 256f, 9f / 256f));
@@ -528,7 +522,7 @@ public class HUDComponent extends EntityComponent {
 			x = START_X;
 			for (int i = 0; i < 10; i++) {
 				final RenderPart armorPart = new RenderPart();
-				armorPart.setRenderMaterial(iconsMaterial);
+				armorPart.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
 				armorPart.setColor(Color.WHITE);
 				armorPart.setSprite(new Rectangle(x, -0.7f, 0.06f * SCALE, 0.06f));
 				armorPart.setSource(new Rectangle(52f / 256f, 9f / 256f, 12f / 256f, 12f / 256f));

@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol;
 
 import org.spout.api.protocol.HandlerLookupService;
 
+import org.spout.vanilla.protocol.handler.EncryptionKeyRequestHandler;
 import org.spout.vanilla.protocol.handler.EncryptionKeyResponseHandler;
 import org.spout.vanilla.protocol.handler.ServerListPingHandler;
 import org.spout.vanilla.protocol.handler.entity.EntityActionHandler;
@@ -53,6 +54,7 @@ import org.spout.vanilla.protocol.handler.window.WindowCloseHandler;
 import org.spout.vanilla.protocol.handler.window.WindowCreativeActionHandler;
 import org.spout.vanilla.protocol.handler.world.block.SignHandler;
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
+import org.spout.vanilla.protocol.msg.auth.EncryptionKeyRequestMessage;
 import org.spout.vanilla.protocol.msg.auth.EncryptionKeyResponseMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityActionMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
@@ -102,6 +104,7 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(PlayerAbilityMessage.class, PlayerAbilityHandler.class);
 			bind(ServerListPingMessage.class, ServerListPingHandler.class);
 			bind(PlayerStatusMessage.class, PlayerStatusHandler.class);
+			bind(EncryptionKeyRequestMessage.class, EncryptionKeyRequestHandler.class);
 			bind(EncryptionKeyResponseMessage.class, EncryptionKeyResponseHandler.class);
 			bind(PlayerTabCompleteMessage.class, PlayerTabCompleteHandler.class);
 		} catch (Exception ex) {

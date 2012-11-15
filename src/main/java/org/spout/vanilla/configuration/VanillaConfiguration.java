@@ -83,6 +83,9 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	public static final ConfigurationHolder ENCRYPT_STREAM_WRAPPER = new ConfigurationHolder("CFB8", "encrypt", "stream-wrapper");
 	// Chunk Cache
 	public static final ConfigurationHolder USE_CHUNK_CACHE = new ConfigurationHolder(true, "cache", "chunks");
+	// Client
+	public static final ConfigurationHolder USERNAME = new ConfigurationHolder("Spouty", "client", "username");
+	public static final ConfigurationHolder PASSWORD = new ConfigurationHolder("", "client", "password");
 	// sub-configs
 	public static final OpConfiguration OPS = new OpConfiguration(VanillaPlugin.getInstance().getDataFolder());
 	public static final WorldConfiguration WORLDS = new WorldConfiguration(VanillaPlugin.getInstance().getDataFolder());

@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import org.spout.api.Spout;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -47,6 +48,7 @@ import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Vector3;
+import org.spout.api.plugin.Platform;
 import org.spout.api.util.flag.Flag;
 import org.spout.api.util.flag.FlagBundle;
 
@@ -64,6 +66,7 @@ import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.event.block.BlockActionEvent;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
+import org.spout.vanilla.render.BatchEffects;
 
 public abstract class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial {
 	public static short REDSTONE_POWER_MAX = 15;
@@ -79,6 +82,8 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	public VanillaBlockMaterial(String name, int id, String model) {
 		this((short) 0, name, id, model);
+		if(Spout.getEngine().getPlatform() == Platform.CLIENT)
+			addBatchEffect(BatchEffects.SKYCOLOR);
 	}
 
 	public VanillaBlockMaterial(short dataMask, String name, int id, String model) {
@@ -88,6 +93,8 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		this.setTransparent();
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
+		if(Spout.getEngine().getPlatform() == Platform.CLIENT)
+			addBatchEffect(BatchEffects.SKYCOLOR);
 	}
 
 	public VanillaBlockMaterial(String name, int id, int data, VanillaBlockMaterial parent, String model) {
@@ -97,6 +104,8 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		this.setTransparent();
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
+		if(Spout.getEngine().getPlatform() == Platform.CLIENT)
+			addBatchEffect(BatchEffects.SKYCOLOR);
 	}
 
 	@Override

@@ -116,6 +116,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 				backgroundRect.setRenderMaterial(type.getRenderMaterial());
 				backgroundRect.setSprite(new Rectangle(-WIDTH * SCALE, -WIDTH, HEIGHT * 2 * SCALE, HEIGHT * 2));
 				backgroundRect.setSource(new Rectangle(0, 0, WIDTH, HEIGHT));
+				popup.setGrabsMouse(false);
 				popup.attachWidget(VanillaPlugin.getInstance(), background); // attach background to screen
 				break;
 			default:

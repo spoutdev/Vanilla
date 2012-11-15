@@ -28,26 +28,53 @@ package org.spout.vanilla.data;
 
 import org.spout.api.FileSystem;
 import org.spout.api.Spout;
+import org.spout.api.plugin.Platform;
 import org.spout.api.render.Font;
 import org.spout.api.render.RenderMaterial;
 
-public class RenderMaterials {
+public final class RenderMaterials {
 	private static final FileSystem fileSystem = Spout.getFilesystem();
-	public static final Font FONT = (Font) fileSystem.getResource("font://Spout/resources/resources/fonts/ubuntu/Ubuntu-M.ttf");
-	public static final RenderMaterial HOTBAR_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/HotbarGUIMaterial.smt");
-	public static final RenderMaterial ICONS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/IconsGUIMaterial.smt");
-	public static final RenderMaterial INVENTORY_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/InventoryGUIMaterial.smt");
-	public static final RenderMaterial CONTAINER_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/ContainerGUIMaterial.smt");
-	public static final RenderMaterial CRAFTING_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/CraftingGUIMaterial.smt");
-	public static final RenderMaterial FURNACE_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/FurnaceGUIMaterial.smt");
-	public static final RenderMaterial TRAP_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/TrapGUIMaterial.smt");
-	public static final RenderMaterial ENCHANT_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/InventoryGUIMaterial.smt");
-	public static final RenderMaterial ALCHEMY_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/InventoryGUIMaterial.smt");
+	
+	public static final Font FONT;
+	public static final RenderMaterial HOTBAR_MATERIAL;
+	public static final RenderMaterial ICONS_MATERIAL;
+	public static final RenderMaterial INVENTORY_MATERIAL;
+	public static final RenderMaterial CONTAINER_MATERIAL;
+	public static final RenderMaterial CRAFTING_MATERIAL;
+	public static final RenderMaterial FURNACE_MATERIAL;
+	public static final RenderMaterial TRAP_MATERIAL;
+	public static final RenderMaterial ENCHANT_MATERIAL;
+	public static final RenderMaterial ALCHEMY_MATERIAL;
 	// TODO: Missing textures
 	public static final RenderMaterial VILLAGER_MATERIAL = null;
 	public static final RenderMaterial BEACON_MATERIAL = null;
 	public static final RenderMaterial ANVIL_MATERIAL = null;
-
-	private RenderMaterials() {
+	
+	static {
+		if (Spout.getPlatform() == Platform.CLIENT) {
+			FONT = (Font) fileSystem.getResource("font://Spout/resources/resources/fonts/ubuntu/Ubuntu-M.ttf");
+			HOTBAR_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/HotbarGUIMaterial.smt");
+			ICONS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/IconsGUIMaterial.smt");
+			INVENTORY_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/InventoryGUIMaterial.smt");
+			CONTAINER_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/ContainerGUIMaterial.smt");
+			CRAFTING_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/CraftingGUIMaterial.smt");
+			FURNACE_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/FurnaceGUIMaterial.smt");
+			TRAP_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/TrapGUIMaterial.smt");
+			ENCHANT_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/InventoryGUIMaterial.smt");
+			ALCHEMY_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/InventoryGUIMaterial.smt");
+		} else {
+			FONT = null;
+			HOTBAR_MATERIAL = null;
+			ICONS_MATERIAL = null;
+			INVENTORY_MATERIAL = null;
+			CONTAINER_MATERIAL = null;
+			CRAFTING_MATERIAL = null;
+			FURNACE_MATERIAL = null;
+			TRAP_MATERIAL = null;
+			ENCHANT_MATERIAL = null;
+			ALCHEMY_MATERIAL = null;
+		}
 	}
+
+	private RenderMaterials() {}
 }

@@ -44,7 +44,7 @@ public final class EntityItemDataCodec extends MessageCodec<EntityItemDataMessag
 	public EntityItemDataMessage decode(ChannelBuffer buffer) throws IOException {
 		short type = buffer.readShort();
 		short id = buffer.readShort();
-		short size = buffer.readUnsignedByte();
+		int size = buffer.readUnsignedShort();
 		byte[] data = new byte[size];
 		buffer.readBytes(data);
 		return new EntityItemDataMessage(type, id, data);
@@ -55,7 +55,7 @@ public final class EntityItemDataCodec extends MessageCodec<EntityItemDataMessag
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeShort(message.getType());
 		buffer.writeShort(message.getId());
-		buffer.writeByte(message.getData().length);
+		buffer.writeShort(message.getData().length);
 		buffer.writeBytes(message.getData());
 		return buffer;
 	}

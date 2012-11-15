@@ -117,6 +117,31 @@ public class TestCommands {
 		}
 	}
 	
+	@Command(aliases = "torch", desc = "Place a torch.")
+	@CommandPermissions("vanilla.command.debug")
+	public void torch(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player) && Spout.getPlatform()!=Platform.CLIENT) {
+			throw new CommandException("You must be a player to trace a ray!");
+		}
+		Player player;
+		if (Spout.getPlatform()!=Platform.CLIENT) {
+			player = (Player) source;
+		} else {
+			player = ((Client)Spout.getEngine()).getActivePlayer();
+		}
+		
+		BlockIterator blockIt = player.get(HitBlockComponent.class).getAlignedBlocks();
+		
+		Block block = null;
+		while (blockIt.hasNext()) {
+			block = blockIt.next();
+			if (block.getMaterial().isPlacementObstacle()) {
+				block.setMaterial(VanillaMaterials.TORCH);
+				break;
+			}
+		}
+	}
+	
 	@Command(aliases = "window", usage = "<type>", desc = "Open a window.", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.debug")
 	public void window(CommandContext args, CommandSource source) throws CommandException {

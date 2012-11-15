@@ -87,6 +87,7 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	public static final OpConfiguration OPS = new OpConfiguration(VanillaPlugin.getInstance().getDataFolder());
 	public static final WorldConfiguration WORLDS = new WorldConfiguration(VanillaPlugin.getInstance().getDataFolder());
 	public static final YamlConfiguration BIOMES = new YamlConfiguration(new File(VanillaPlugin.getInstance().getDataFolder(), "biomes.yml"));
+	public static final InputConfiguration INPUT = new InputConfiguration();
 
 	public VanillaConfiguration(File dataFolder) {
 		super(new YamlConfiguration(new File(dataFolder, "config.yml")));
@@ -101,6 +102,8 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 			OPS.save();
 			WORLDS.load();
 			WORLDS.save();
+			INPUT.load();
+			INPUT.save();
 			super.load();
 			super.save();
 		} catch (ConfigurationException e) {
@@ -114,6 +117,7 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 			VanillaBiomes.save(BIOMES);
 			OPS.save();
 			WORLDS.save();
+			INPUT.save();
 			super.save();
 		} catch (ConfigurationException e) {
 			VanillaPlugin.getInstance().getLogger().log(Level.WARNING, "Error saving Vanilla configuration: ", e);

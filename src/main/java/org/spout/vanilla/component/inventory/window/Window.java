@@ -148,28 +148,20 @@ public class Window extends EntityComponent implements InventoryViewer {
 	/**
 	 * Opens the window from the server on the client.
 	 */
-	@ServerOnly
 	public void open() {
-		if (Spout.getPlatform() == Platform.CLIENT) {
-			throw new IllegalArgumentException("Supply an id for the window.");
+		switch (Spout.getPlatform()) {
+			case PROXY:
+			case SERVER:
+				opened = true;
+				callProtocolEvent(new WindowOpenEvent(this));
+				reload();
+				break;
+			case CLIENT:
+				opened = true;
+				this.id = id;
+				((Client) Spout.getEngine()).getScreenStack().openScreen(popup);
+				break;
 		}
-		opened = true;
-		callProtocolEvent(new WindowOpenEvent(this));
-		reload();
-	}
-
-	/**
-	 * Opens the window from the client
-	 * @param id sent from the server
-	 */
-	@ClientOnly
-	public void open(int id) {
-		if (Spout.getPlatform() == Platform.SERVER) {
-			throw new IllegalArgumentException("Use argumentless open() method");
-		}
-		opened = true;
-		this.id = id;
-		((Client) Spout.getEngine()).getScreenStack().openScreen(popup);
 	}
 
 	/**

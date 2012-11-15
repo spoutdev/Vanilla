@@ -57,25 +57,25 @@ public class WindowOpenHandler extends MessageHandler<WindowOpenMessage> {
 				break;
 			case CHEST:
 				ChestInventory inventory = new ChestInventory(message.getSlots());
-				player.add(ChestWindow.class).init(inventory, message.getTitle()).open(message.getWindowInstanceId());
+				player.add(ChestWindow.class).init(inventory, message.getTitle()).open();
 				break;
 			case CRAFTING_TABLE:
-				player.add(CraftingTableWindow.class).init(message.getTitle()).open(message.getWindowInstanceId());
+				player.add(CraftingTableWindow.class).init(message.getTitle()).open();
 				break;
 			case FURNACE:
-				player.add(FurnaceWindow.class).init(new FurnaceInventory(), message.getTitle()).open(message.getWindowInstanceId());
+				player.add(FurnaceWindow.class).init(new FurnaceInventory(), message.getTitle()).open();
 				break;
 			case DISPENSER:
-				player.add(DispenserWindow.class).init(new DispenserInventory(), message.getTitle()).open(message.getWindowInstanceId());
+				player.add(DispenserWindow.class).init(new DispenserInventory(), message.getTitle()).open();
 				break;
 			case ENCHANTMENT_TABLE:
-				player.add(EnchantmentTableWindow.class).init(new EnchantmentTableInventory(), message.getTitle()).open(message.getWindowInstanceId());
+				player.add(EnchantmentTableWindow.class).init(new EnchantmentTableInventory(), message.getTitle()).open();
 				break;
 			case BREWING_STAND:
-				player.add(BrewingStandWindow.class).init(new BrewingStandInventory(), message.getTitle()).open(message.getWindowInstanceId());
+				player.add(BrewingStandWindow.class).init(new BrewingStandInventory(), message.getTitle()).open();
 				break;
 			case VILLAGER:
-				player.add(VillagerWindow.class).init(new VillagerInventory(), message.getTitle()).open(message.getWindowInstanceId());
+				player.add(VillagerWindow.class).init(new VillagerInventory(), message.getTitle()).open();
 				break;
 			default:
 				break;

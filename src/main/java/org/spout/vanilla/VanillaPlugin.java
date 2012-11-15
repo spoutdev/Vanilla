@@ -33,6 +33,7 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.logging.Level;
 
+import org.spout.api.Client;
 import org.spout.api.Engine;
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -42,12 +43,13 @@ import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
 import org.spout.api.command.annotated.SimpleInjector;
 import org.spout.api.component.components.NetworkComponent;
 import org.spout.api.component.components.ObserverComponent;
-import org.spout.api.exception.ConfigurationException;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
+import org.spout.api.input.InputManager;
+import org.spout.api.input.Keyboard;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
@@ -61,11 +63,13 @@ import org.spout.api.protocol.Protocol;
 import org.spout.api.util.OutwardIterator;
 
 import org.spout.vanilla.command.AdministrationCommands;
+import org.spout.vanilla.command.InputCommandExecutor;
 import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.component.world.sky.NetherSky;
 import org.spout.vanilla.component.world.sky.NormalSky;
 import org.spout.vanilla.component.world.sky.TheEndSky;
+import org.spout.vanilla.configuration.InputConfiguration;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.configuration.WorldConfigurationNode;
 import org.spout.vanilla.data.Difficulty;
@@ -131,6 +135,17 @@ public class VanillaPlugin extends CommonPlugin {
 			engine.getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
 		}
 		getEngine().getEventManager().registerEvents(new VanillaListener(this), this);
+
+		InputCommandExecutor exe = new InputCommandExecutor();
+		engine.getRootCommand().addSubCommand(this, "+toggle_inventory").setArgBounds(0, 0).setHelp("Opens or closes the player's inventory.")
+				.setExecutor(Platform.CLIENT, exe);
+		// TODO: Fix SpoutPlayer:190 -> handle null commands correctly
+		engine.getRootCommand().addSubCommand(this, "-toggle_inventory").setExecutor(Platform.CLIENT, exe);
+
+		if (Spout.getPlatform() == Platform.CLIENT) {
+			InputManager input = ((Client) Spout.getEngine()).getInputManager();
+			input.bind(Keyboard.get(InputConfiguration.TOGGLE_INVENTORY.getString()), "toggle_inventory");
+		}
 
 		//Configuration
 		VanillaBlockMaterial.REDSTONE_POWER_MAX = (short) VanillaConfiguration.REDSTONE_MAX_RANGE.getInt();

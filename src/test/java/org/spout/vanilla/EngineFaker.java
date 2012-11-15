@@ -41,13 +41,13 @@ public class EngineFaker {
 		FileSystem filesystem = PowerMockito.mock(FileSystem.class);
 		try {
 			PowerMockito.when(engine, Engine.class.getMethod("getPlatform", (Class[])null)).withNoArguments().thenReturn(Platform.SERVER);
-			PowerMockito.stub(Engine.class.getMethod("getFilesystem", (Class[])null)).andReturn(filesystem);
-			PowerMockito.stub(FileSystem.class.getMethod("getResource", new Class[] {String.class})).andReturn(null);
+			PowerMockito.when(engine, Engine.class.getMethod("getFilesystem", (Class[])null)).withNoArguments().thenReturn(filesystem);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 		if (engine == null) throw new NullPointerException("Engine is null");
 		if (engine.getPlatform() == null) throw new NullPointerException("Platform is null");
+		if (engine.getFilesystem() == null) throw new NullPointerException("FileSystem is null");
 		Spout.setEngine(engine);
 		engineInstance = engine;
 	}

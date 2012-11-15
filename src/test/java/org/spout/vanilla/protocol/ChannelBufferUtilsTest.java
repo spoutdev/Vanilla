@@ -45,7 +45,6 @@ import org.spout.nbt.CompoundMap;
 import org.spout.nbt.IntTag;
 import org.spout.nbt.StringTag;
 
-import org.spout.vanilla.EngineFaker;
 import org.spout.vanilla.material.VanillaMaterials;
 
 import static org.junit.Assert.assertEquals;
@@ -68,9 +67,6 @@ import static org.spout.vanilla.protocol.ChannelBufferUtils.writeVector2;
 import static org.spout.vanilla.protocol.ChannelBufferUtils.writeVector3;
 
 public class ChannelBufferUtilsTest {
-	static {
-		EngineFaker.setupEngine();
-	}
 	public static final List<Parameter<?>> TEST_PARAMS = new ArrayList<Parameter<?>>();
 
 	static {

@@ -40,9 +40,6 @@ import org.spout.api.protocol.MessageCodec;
 import org.spout.vanilla.EngineFaker;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 public abstract class BaseProtocolTest {
 	private final CodecLookupService codecLookup;

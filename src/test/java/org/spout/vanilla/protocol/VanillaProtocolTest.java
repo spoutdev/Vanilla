@@ -36,7 +36,6 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.EngineFaker;
 import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.inventory.window.WindowType;
@@ -120,9 +119,6 @@ import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 import static org.spout.vanilla.protocol.ChannelBufferUtilsTest.TEST_PARAMS;
 
 public class VanillaProtocolTest extends BaseProtocolTest {
-	static {
-		EngineFaker.setupEngine();
-	}
 	private static final VanillaCodecLookupService CODEC_LOOKUP = new VanillaCodecLookupService();
 	static boolean[] allFalse = new boolean[16];
 	static byte[] chunkData = new byte[10240];

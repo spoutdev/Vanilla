@@ -139,8 +139,6 @@ public class VanillaPlugin extends CommonPlugin {
 		InputCommandExecutor exe = new InputCommandExecutor();
 		engine.getRootCommand().addSubCommand(this, "+toggle_inventory").setArgBounds(0, 0).setHelp("Opens or closes the player's inventory.")
 				.setExecutor(Platform.CLIENT, exe);
-		// TODO: Fix SpoutPlayer:190 -> handle null commands correctly
-		engine.getRootCommand().addSubCommand(this, "-toggle_inventory").setExecutor(Platform.CLIENT, exe);
 
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			InputManager input = ((Client) Spout.getEngine()).getInputManager();

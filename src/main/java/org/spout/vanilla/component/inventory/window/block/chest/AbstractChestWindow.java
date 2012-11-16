@@ -26,15 +26,21 @@
  */
 package org.spout.vanilla.component.inventory.window.block.chest;
 
+import org.spout.api.entity.Player;
 import org.spout.vanilla.component.inventory.window.Window;
 import org.spout.vanilla.component.substance.material.chest.AbstractChest;
+import org.spout.vanilla.inventory.window.WindowType;
 
 public class AbstractChestWindow extends Window {
 	private AbstractChest chest;
 
-	public AbstractChestWindow init(AbstractChest chest) {
+	public AbstractChestWindow(Player owner, AbstractChest chest, WindowType type, String title, int offset) {
+		super(owner, type, title, offset);
 		this.chest = chest;
-		return this;
+	}
+
+	public AbstractChestWindow(Player owner, WindowType type, String title, int offset) {
+		super(owner, type, title, offset);
 	}
 
 	public AbstractChest getChest() {

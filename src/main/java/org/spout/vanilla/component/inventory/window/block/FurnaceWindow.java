@@ -26,19 +26,19 @@
  */
 package org.spout.vanilla.component.inventory.window.block;
 
+import org.spout.api.entity.Player;
 import org.spout.vanilla.component.inventory.window.Window;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class FurnaceWindow extends Window {
-	public FurnaceWindow init(FurnaceInventory inventory) {
-		return init(inventory, "Furnace");
+	public FurnaceWindow(Player owner, FurnaceInventory inventory) {
+		this(owner, inventory, "Furnace");
 	}
 
-	public FurnaceWindow init(FurnaceInventory inventory, String title) {
-		init(WindowType.FURNACE, title, 3);
+	public FurnaceWindow(Player owner, FurnaceInventory inventory, String title) {
+		super(owner, WindowType.FURNACE, title, 3);
 		addInventoryConverter(new InventoryConverter(inventory, "1, 0, 2"));
-		return this;
 	}
 }

@@ -29,6 +29,7 @@ package org.spout.vanilla.component.substance.material;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 
+import org.spout.vanilla.component.inventory.window.WindowHolder;
 import org.spout.vanilla.component.inventory.window.block.DispenserWindow;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.Container;
@@ -52,6 +53,6 @@ public class Dispenser extends ViewedBlockComponent implements Container {
 
 	@Override
 	public void open(Player player) {
-		player.add(DispenserWindow.class).init(inventory).open();
+		player.get(WindowHolder.class).open(new DispenserWindow(player, inventory));
 	}
 }

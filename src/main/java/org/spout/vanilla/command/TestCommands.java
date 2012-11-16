@@ -53,6 +53,7 @@ import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.inventory.window.WindowHolder;
 import org.spout.vanilla.component.inventory.window.block.BrewingStandWindow;
 import org.spout.vanilla.component.inventory.window.block.CraftingTableWindow;
 import org.spout.vanilla.component.inventory.window.block.DispenserWindow;
@@ -159,25 +160,25 @@ public class TestCommands {
 		Player player = (Player) source;
 		switch (type) {
 			case CHEST:
-				player.add(ChestWindow.class).init(new Chest()).open();
+				player.get(WindowHolder.class).open(new ChestWindow(player, new Chest()));
 				break;
 			case CRAFTING_TABLE:
-				player.add(CraftingTableWindow.class).open();
+				player.get(WindowHolder.class).open(new CraftingTableWindow(player));
 				break;
 			case FURNACE:
-				player.add(FurnaceWindow.class).init(new FurnaceInventory()).open();
+				player.get(WindowHolder.class).open(new FurnaceWindow(player, new FurnaceInventory()));
 				break;
 			case DISPENSER:
-				player.add(DispenserWindow.class).init(new DispenserInventory()).open();
+				player.get(WindowHolder.class).open(new DispenserWindow(player, new DispenserInventory()));
 				break;
 			case ENCHANTMENT_TABLE:
-				player.add(EnchantmentTableWindow.class).init(new EnchantmentTableInventory()).open();
+				player.get(WindowHolder.class).open(new EnchantmentTableWindow(player, new EnchantmentTableInventory()));
 				break;
 			case BREWING_STAND:
-				player.add(BrewingStandWindow.class).init(new BrewingStandInventory()).open();
+				player.get(WindowHolder.class).open(new BrewingStandWindow(player, new BrewingStandInventory()));
 				break;
 			case VILLAGER:
-				player.add(VillagerWindow.class).init(new VillagerInventory()).open();
+				player.get(WindowHolder.class).open(new VillagerWindow(player, new VillagerInventory()));
 				break;
 			default:
 				throw new CommandException("Window not supported.");

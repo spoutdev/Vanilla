@@ -26,15 +26,16 @@
  */
 package org.spout.vanilla.component.inventory.window.block;
 
+import org.spout.api.entity.Player;
 import org.spout.vanilla.component.inventory.window.Window;
 import org.spout.vanilla.inventory.block.AnvilInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class AnvilWindow extends Window {
-	public AnvilWindow init(AnvilInventory inventory) {
-		init(WindowType.ANVIL, "Anvil", 1);
+
+	public AnvilWindow(Player owner, AnvilInventory inventory) {
+		super(owner, WindowType.ANVIL, "Anvil", 1);
 		addInventoryConverter(new InventoryConverter(inventory, "0"));
-		return this;
 	}
 }

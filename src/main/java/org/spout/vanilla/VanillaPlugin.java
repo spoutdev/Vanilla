@@ -76,6 +76,7 @@ import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.inventory.recipe.VanillaRecipes;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.LANThread;
@@ -83,6 +84,7 @@ import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.rcon.RemoteConnectionCore;
 import org.spout.vanilla.protocol.rcon.RemoteConnectionServer;
 import org.spout.vanilla.resources.MapPalette;
+import org.spout.vanilla.resources.RecipeYaml;
 import org.spout.vanilla.resources.loader.MapPaletteLoader;
 import org.spout.vanilla.resources.loader.RecipeLoader;
 import org.spout.vanilla.service.VanillaProtectionService;
@@ -175,8 +177,8 @@ public class VanillaPlugin extends CommonPlugin {
 
 		VanillaMaterials.initialize();
 		MapPalette.DEFAULT = (MapPalette) Spout.getFilesystem().getResource("mappalette://Vanilla/resources/map/mapColorPalette.dat");
-		//RecipeYaml.DEFAULT = (RecipeYaml) Spout.getFilesystem().getResource("recipe://Vanilla/resources/recipes.yml");
-		//VanillaRecipes.initialize();
+		RecipeYaml.DEFAULT = (RecipeYaml) Spout.getFilesystem().getResource("recipe://Vanilla/resources/recipes.yml");
+		VanillaRecipes.initialize();
 
 		getLogger().info("loaded");
 	}

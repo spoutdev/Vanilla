@@ -26,21 +26,19 @@
  */
 package org.spout.vanilla.component.inventory.window.block;
 
+import org.spout.api.entity.Player;
 import org.spout.vanilla.component.inventory.window.Window;
 import org.spout.vanilla.inventory.block.CraftingTableInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class CraftingTableWindow extends Window {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		init(WindowType.CRAFTING_TABLE, "Crafting", 10);
-		addInventoryConverter(new InventoryConverter(new CraftingTableInventory(), "1-3, 4-6, 7-9, 0"));
+	public CraftingTableWindow(Player owner) {
+		this(owner, "Crafting");
 	}
 
-	public CraftingTableWindow init(String title) {
-		init(WindowType.CRAFTING_TABLE, title, 10);
-		return this;
+	public CraftingTableWindow(Player owner, String title) {
+		super(owner, WindowType.CRAFTING_TABLE, title, 10);
+		addInventoryConverter(new InventoryConverter(new CraftingTableInventory(), "1-3, 4-6, 7-9, 0"));
 	}
 }

@@ -34,7 +34,6 @@ import org.spout.api.render.RenderMaterial;
 
 public final class RenderMaterials {
 	private static final FileSystem fileSystem = Spout.getFilesystem();
-	
 	public static final Font FONT;
 	public static final RenderMaterial HOTBAR_MATERIAL;
 	public static final RenderMaterial ICONS_MATERIAL;
@@ -45,6 +44,7 @@ public final class RenderMaterials {
 	public static final RenderMaterial TRAP_MATERIAL;
 	public static final RenderMaterial ENCHANT_MATERIAL;
 	public static final RenderMaterial ALCHEMY_MATERIAL;
+	public static final RenderMaterial ITEMS_MATERIAL;
 	// TODO: Missing textures
 	public static final RenderMaterial VILLAGER_MATERIAL = null;
 	public static final RenderMaterial BEACON_MATERIAL = null;
@@ -62,6 +62,7 @@ public final class RenderMaterials {
 			TRAP_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/TrapGUIMaterial.smt");
 			ENCHANT_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/InventoryGUIMaterial.smt");
 			ALCHEMY_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/InventoryGUIMaterial.smt");
+			ITEMS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/ItemsGUIMaterial.smt");
 		} else {
 			FONT = null;
 			HOTBAR_MATERIAL = null;
@@ -73,8 +74,10 @@ public final class RenderMaterials {
 			TRAP_MATERIAL = null;
 			ENCHANT_MATERIAL = null;
 			ALCHEMY_MATERIAL = null;
+			ITEMS_MATERIAL = null;
 		}
 	}
 
-	private RenderMaterials() {}
+	private RenderMaterials() {
+	}
 }

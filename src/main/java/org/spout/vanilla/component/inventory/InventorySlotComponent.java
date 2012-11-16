@@ -24,17 +24,37 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.inventory.window.block;
+package org.spout.vanilla.component.inventory;
 
-import org.spout.api.entity.Player;
-import org.spout.vanilla.component.inventory.window.Window;
-import org.spout.vanilla.inventory.block.AnvilInventory;
-import org.spout.vanilla.inventory.util.InventoryConverter;
-import org.spout.vanilla.inventory.window.WindowType;
+import java.util.Arrays;
+import java.util.List;
 
-public class AnvilWindow extends Window {
-	public AnvilWindow(Player owner, AnvilInventory inventory) {
-		super(owner, WindowType.ANVIL, "Anvil", 1);
-		addInventoryConverter(new InventoryConverter(inventory, "0"));
+import org.spout.api.component.components.WidgetComponent;
+import org.spout.api.gui.render.RenderPart;
+import org.spout.api.input.KeyEvent;
+import org.spout.api.math.IntVector2;
+
+public class InventorySlotComponent extends WidgetComponent {
+	private RenderItemStack item;
+
+	public void setRenderItemStack(RenderItemStack item) {
+		this.item = item;
+	}
+
+	@Override
+	public List<RenderPart> getRenderParts() {
+		return Arrays.<RenderPart>asList(item);
+	}
+
+	@Override
+	public void onClicked(IntVector2 position, boolean mouseDown) {
+	}
+
+	@Override
+	public void onKey(KeyEvent event) {
+	}
+
+	@Override
+	public void onMouseMove(IntVector2 position) {
 	}
 }

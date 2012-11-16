@@ -47,12 +47,16 @@ import org.spout.api.gui.component.TexturedRectComponent;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.math.Rectangle;
+import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.inventory.InventorySlotComponent;
 import org.spout.vanilla.component.inventory.PlayerInventory;
+import org.spout.vanilla.component.inventory.RenderItemStack;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.data.RenderMaterials;
@@ -70,6 +74,7 @@ import org.spout.vanilla.inventory.window.ClickArguments;
 import org.spout.vanilla.inventory.window.InventoryEntry;
 import org.spout.vanilla.inventory.window.WindowType;
 import org.spout.vanilla.inventory.window.prop.WindowProperty;
+import org.spout.vanilla.material.VanillaMaterials;
 
 /**
  * Represents a Window that players can view to display an inventory.
@@ -90,42 +95,18 @@ public abstract class Window implements InventoryViewer {
 	// Client only
 	public static final float WIDTH = 0.6875f;
 	public static final float HEIGHT = 0.6484375f;
-	public static final float SCALE = 0.75f;
+	public static final float FIRST_SLOT_X = -0.475f;
+	public static final float FIRST_SLOT_Y = -0.63f;
+	public static final float SLOT_WIDTH = 0.1f;
+	public static final float SLOT_HEIGHT = SLOT_WIDTH;
+	private static final float SCALE = 0.75f;
 	protected final Screen popup = new Screen();
 	protected final Widget background = new Widget();
 	protected final Widget label = new Widget();
 
 	public Window(Player owner, WindowType type, String title, int offset) {
+
 		this.owner = owner;
-
-		switch (Spout.getPlatform()) {
-			case PROXY:
-			case SERVER:
-				// Initialize the window id on the server
-				id = windowId++;
-				break;
-			case CLIENT:
-				// Setup the window to render
-				TexturedRectComponent backgroundRect = background.add(TexturedRectComponent.class);
-				backgroundRect.setRenderMaterial(type.getRenderMaterial());
-				backgroundRect.setSprite(new Rectangle(-WIDTH * SCALE, -WIDTH, HEIGHT * 2 * SCALE, HEIGHT * 2));
-				backgroundRect.setSource(new Rectangle(0, 0, WIDTH, HEIGHT));
-
-				// Draw title
-				LabelComponent labelComponent = label.add(LabelComponent.class);
-				labelComponent.setFont(RenderMaterials.FONT);
-				labelComponent.setText(new ChatArguments(ChatStyle.GRAY, title));
-				label.setGeometry(new Rectangle(0.1f, 0.5f, 0, 0));
-
-				popup.setGrabsMouse(false);
-				VanillaPlugin plugin = VanillaPlugin.getInstance();
-				popup.attachWidget(plugin, background);
-				popup.attachWidget(plugin, label);
-				break;
-			default:
-				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform().toString());
-		}
-
 		this.type = type;
 		this.title = title;
 		this.offset = offset;
@@ -134,6 +115,34 @@ public abstract class Window implements InventoryViewer {
 		GridInventoryConverter main = new GridInventoryConverter(inventory.getMain(), 9, offset);
 		addInventoryConverter(main);
 		addInventoryConverter(new GridInventoryConverter(inventory.getQuickbar(), 9, offset + main.getGrid().getSize()));
+
+		switch (Spout.getPlatform()) {
+			case PROXY:
+			case SERVER:
+				// Initialize the window id on the server
+				id = windowId++;
+				break;
+			case CLIENT:
+				VanillaPlugin plugin = VanillaPlugin.getInstance();
+				popup.setGrabsMouse(false);
+
+				// Setup the window to render
+				TexturedRectComponent backgroundRect = background.add(TexturedRectComponent.class);
+				backgroundRect.setRenderMaterial(type.getRenderMaterial());
+				backgroundRect.setSprite(new Rectangle(-WIDTH * SCALE, -WIDTH, HEIGHT * 2 * SCALE, HEIGHT * 2));
+				backgroundRect.setSource(new Rectangle(0, 0, WIDTH, HEIGHT));
+				popup.attachWidget(plugin, background);
+
+				// Draw title
+				LabelComponent labelComponent = label.add(LabelComponent.class);
+				labelComponent.setFont(RenderMaterials.FONT);
+				labelComponent.setText(new ChatArguments(ChatStyle.GRAY, title));
+				label.setGeometry(new Rectangle(0.1f, 0.5f, 0, 0));
+				popup.attachWidget(plugin, label);
+				break;
+			default:
+				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform().toString());
+		}
 	}
 	
 	public Window(Player owner, WindowType type, String title) {
@@ -153,7 +162,6 @@ public abstract class Window implements InventoryViewer {
 				break;
 			case CLIENT:
 				opened = true;
-				this.id = id;
 				((Client) Spout.getEngine()).getScreenStack().openScreen(popup);
 				break;
 		}

@@ -26,19 +26,19 @@
  */
 package org.spout.vanilla.component.inventory.window.entity;
 
+import org.spout.api.entity.Player;
 import org.spout.vanilla.component.inventory.window.Window;
 import org.spout.vanilla.inventory.entity.VillagerInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class VillagerWindow extends Window {
-	public VillagerWindow init(VillagerInventory inventory, String title) {
-		init(WindowType.VILLAGER, title, 3);
+	public VillagerWindow(Player owner, VillagerInventory inventory, String title) {
+		super(owner, WindowType.VILLAGER, title, 3);
 		addInventoryConverter(new InventoryConverter(inventory, "0-2"));
-		return this;
 	}
 
-	public VillagerWindow init(VillagerInventory inventory) {
-		return init(inventory, "Villager");
+	public VillagerWindow(Player owner, VillagerInventory inventory) {
+		this(owner, inventory, "Villager");
 	}
 }

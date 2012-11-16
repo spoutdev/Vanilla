@@ -29,10 +29,10 @@ package org.spout.vanilla.component.substance.material;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 
+import org.spout.vanilla.component.inventory.window.WindowHolder;
 import org.spout.vanilla.component.inventory.window.block.AnvilWindow;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.AnvilInventory;
-import org.spout.vanilla.material.block.controlled.AnvilBlock;
 
 public class Anvil extends ViewedBlockComponent implements Container {
 	private final AnvilInventory inventory = new AnvilInventory();
@@ -44,6 +44,6 @@ public class Anvil extends ViewedBlockComponent implements Container {
 
 	@Override
 	public void open(Player player) {
-		player.add(AnvilWindow.class).init(inventory).open();
+		player.get(WindowHolder.class).open(new AnvilWindow(player, inventory));
 	}
 }

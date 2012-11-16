@@ -83,6 +83,13 @@ recipes:
       A: DIAMOND
     rows: ['AAA', 'AAA', 'AAA']
 
+  Emerald Block:
+    type: Shaped
+    result: EMERALD_BLOCK,1
+    ingredients:
+      A: EMERALD
+    rows: ['AAA', 'AAA', 'AAA']
+
   Lapis Lazuli Block:
     type: Shaped
     result: LAPIS_LAZULI_BLOCK,1
@@ -935,6 +942,11 @@ recipes:
     result: DIAMOND,9
     ingredients: [DIAMOND_BLOCK]
 
+  Emeralds:
+    type: Shapeless
+    result: EMERALD,9
+    ingredients: [EMERALD_BLOCK]
+
   Lapis Lazuli:
     type: Shapeless
     result: LAPIS_LAZULI_ORE,9
@@ -1041,7 +1053,7 @@ recipes:
   Light Gray Dye:
     type: Shapeless
     result: LIGHT_GRAY_DYE,2
-    ingredients: [BONE_MEAL, INK_SACK]
+    ingredients: [BONE_MEAL, INK_SAC]
     includedata: true
 
   Light Gray Dye 2:
@@ -1053,7 +1065,7 @@ recipes:
   Gray Dye:
     type: Shapeless
     result: GRAY_DYE,2
-    ingredients: [BONE_MEAL, INK_SACK]
+    ingredients: [BONE_MEAL, INK_SAC]
     includedata: true
 
   Rose Red:
@@ -1107,7 +1119,7 @@ recipes:
   Magenta Dye 3:
     type: Shapeless
     result: MAGENTA_DYE,3
-    ingredients: [LAPIS_LAZULI_ORE,PINK, ROSE_RED]
+    ingredients: [LAPIS_LAZULI_ORE, PINK DYE, ROSE_RED]
     includedata: true
 
   Pink Dye:
@@ -1125,13 +1137,13 @@ recipes:
   Gray Wool:
     type: Shapeless
     result: GRAY_WOOL,1
-    ingredients: [WHITE_WHITE_WOOL, GRAY_DYE]
+    ingredients: [WHITE_WOOL, GRAY_DYE]
     includedata: true
 
   Black Wool:
     type: Shapeless
     result: BLACK_WOOL,1
-    ingredients: [WHITE_WOOL, INK_SACK]
+    ingredients: [WHITE_WOOL, INK_SAC]
     includedata: true
 
   Red Wool:
@@ -1243,10 +1255,11 @@ recipes:
     result: FERMENTED_SPIDER_EYE,1
     ingredients: [SPIDER_EYE, BROWN_MUSHROOM, SUGAR]
 
-  Blaze Powder:
-    type: Shapeless
-    result: GLISTERING_MELONBLOCK,1
-    ingredients: [MELON_SLICE, GOLD_NUGGET]
+# TODO melon slice has been commented out in VanillaMaterials
+#  Glistering MelonBlock:
+#    type: Shapeless
+#    result: GLISTERING_MELONBLOCK,1
+#    ingredients: [MELON_SLICE, GOLD_NUGGET]
 
   Gold Nugget:
     type: Shapeless
@@ -1264,7 +1277,7 @@ recipes:
 
   Beacon:
     type: Shaped
-    result: BEACON,1
+    result: BEACON_BLOCK,1
     ingredients:
       A: GLASS
       B: NETHER_STAR
@@ -1275,7 +1288,7 @@ recipes:
     type: Shaped
     result: MOSSY_COBBLESTONE_WALL,6
     ingredients:
-      A: MOSSY_COBBLESTONE
+      A: MOSS_STONE
     rows: ['AAA', 'AAA']
 
   Cobblestone Wall:
@@ -1287,7 +1300,7 @@ recipes:
 
   Anvil:
     type: Shaped
-    result: ANVIL
+    result: ANVIL,1
     ingredients:
       A: IRON_BLOCK
       B: IRON_INGOT
@@ -1314,7 +1327,7 @@ recipes:
     result: PUMPKIN_PIE,1
     ingredients: [PUMPKIN, EGG, SUGAR]
 
-   Wood Button:
+  Wood Button:
     type: Shapeless
     result: WOOD_BUTTON,1
     ingredients: [OAK_PLANK]
@@ -1364,9 +1377,9 @@ recipes:
     ingredients: [LAPIS_LAZULI_ORE]
     includedata: true
 
-  Redstone Dust:
+  Redstone Wire:
     type: Smelted
-    result: REDSTONE_DUST,1
+    result: REDSTONE_Wire,1
     ingredients: [REDSTONE_ORE]
 
   Coal:
@@ -1399,7 +1412,7 @@ recipes:
   Charcoal:
     type: Smelted
     result: CHARCOAL,1
-    ingredients: [LOG]
+    ingredients: [WOOD]
     includedata: true
 
   Cactus Green:

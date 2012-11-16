@@ -26,19 +26,19 @@
  */
 package org.spout.vanilla.component.inventory.window.block;
 
+import org.spout.api.entity.Player;
 import org.spout.vanilla.component.inventory.window.Window;
 import org.spout.vanilla.inventory.block.DispenserInventory;
 import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class DispenserWindow extends Window {
-	public DispenserWindow init(DispenserInventory inventory) {
-		return init(inventory, title);
+	public DispenserWindow(Player owner, DispenserInventory inventory) {
+		this(owner, inventory, "Dispenser");
 	}
 
-	public DispenserWindow init(DispenserInventory inventory, String title) {
-		init(WindowType.DISPENSER, title, 9);
+	public DispenserWindow(Player owner, DispenserInventory inventory, String title) {
+		super(owner, WindowType.DISPENSER, title, 9);
 		addInventoryConverter(new GridInventoryConverter(inventory, 3));
-		return this;
 	}
 }

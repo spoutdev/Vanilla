@@ -39,7 +39,6 @@ import org.spout.api.ServerOnly;
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;
-import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.gui.Screen;
 import org.spout.api.gui.Widget;
@@ -75,10 +74,12 @@ import org.spout.vanilla.inventory.window.prop.WindowProperty;
 /**
  * Represents a Window that players can view to display an inventory.
  */
-public class Window extends EntityComponent implements InventoryViewer {
+public abstract class Window implements InventoryViewer {
+	// TODO should all of these be final?
+	private final Player owner;
 	private final List<InventoryConverter> converters = new ArrayList<InventoryConverter>();
 	protected final TObjectIntMap<Integer> properties = new TObjectIntHashMap<Integer>();
-	protected int offset;
+	protected final int offset;
 	protected WindowType type;
 	protected boolean opened;
 	protected String title;
@@ -94,15 +95,8 @@ public class Window extends EntityComponent implements InventoryViewer {
 	protected final Widget background = new Widget();
 	protected final Widget label = new Widget();
 
-	/**
-	 * Initializes the window to the specified arguments.
-	 *
-	 * @param type of window to render
-	 * @param title of the window
-	 * @param offset the offset of the first slot in main
-	 * @return this window
-	 */
-	public Window init(WindowType type, String title, int offset) {
+	public Window(Player owner, WindowType type, String title, int offset) {
+		this.owner = owner;
 
 		switch (Spout.getPlatform()) {
 			case PROXY:
@@ -140,19 +134,10 @@ public class Window extends EntityComponent implements InventoryViewer {
 		GridInventoryConverter main = new GridInventoryConverter(inventory.getMain(), 9, offset);
 		addInventoryConverter(main);
 		addInventoryConverter(new GridInventoryConverter(inventory.getQuickbar(), 9, offset + main.getGrid().getSize()));
-
-		return this;
 	}
-
-	/**
-	 * Initializes the window to the specified arguments.
-	 *
-	 * @param type of the window to render
-	 * @param title of the window
-	 * @return
-	 */
-	public Window init(WindowType type, String title) {
-		return init(type, title, 0);
+	
+	public Window(Player owner, WindowType type, String title) {
+		this(owner, type, title, 0);
 	}
 
 	/**
@@ -173,11 +158,13 @@ public class Window extends EntityComponent implements InventoryViewer {
 				break;
 		}
 	}
-
+	
 	/**
 	 * Closes this window
+	 * 
 	 */
 	public void close() {
+		removeAllInventoryConverters();
 		opened = false;
 		switch (Spout.getPlatform()) {
 			case PROXY:
@@ -448,7 +435,7 @@ public class Window extends EntityComponent implements InventoryViewer {
 		}
 
 		if (cursorItem != null) {
-			Item.dropNaturally(this.getOwner().getTransform().getPosition(), cursorItem);
+			Item.dropNaturally(this.owner.getTransform().getPosition(), cursorItem);
 			cursorItem = null;
 		}
 	}
@@ -514,8 +501,8 @@ public class Window extends EntityComponent implements InventoryViewer {
 	 *
 	 * @return player
 	 */
-	public Player getPlayer() {
-		return (Player) getOwner();
+	public final Player getPlayer() {
+		return owner;
 	}
 
 	/**
@@ -523,8 +510,8 @@ public class Window extends EntityComponent implements InventoryViewer {
 	 *
 	 * @return human
 	 */
-	public Human getHuman() {
-		return getOwner().get(Human.class);
+	public final Human getHuman() {
+		return owner.get(Human.class);
 	}
 
 	/**
@@ -532,8 +519,8 @@ public class Window extends EntityComponent implements InventoryViewer {
 	 *
 	 * @return player inventory
 	 */
-	public PlayerInventory getPlayerInventory() {
-		return getOwner().get(PlayerInventory.class);
+	public final PlayerInventory getPlayerInventory() {
+		return owner.get(PlayerInventory.class);
 	}
 
 	/**
@@ -732,22 +719,6 @@ public class Window extends EntityComponent implements InventoryViewer {
 	}
 
 	@Override
-	public void onAttached() {
-		if (!(getOwner() instanceof Player)) {
-			throw new IllegalStateException("A Window may only be attached to a player.");
-		}
-	}
-
-	@Override
-	public void onDetached() {
-		removeAllInventoryConverters();
-		close();
-		if (!getOwner().isRemoved()) {
-			getOwner().add(DefaultWindow.class);
-		}
-	}
-
-	@Override
 	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
 		switch (Spout.getPlatform()) {
 			case PROXY:
@@ -775,8 +746,10 @@ public class Window extends EntityComponent implements InventoryViewer {
 		}
 	}
 
-	@Override
 	public boolean canTick() {
 		return false;
+	}
+	
+	public void onTick(float dt) {
 	}
 }

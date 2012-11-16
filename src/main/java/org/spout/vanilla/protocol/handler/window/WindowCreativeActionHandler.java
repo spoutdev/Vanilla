@@ -31,6 +31,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.component.inventory.window.Window;
+import org.spout.vanilla.component.inventory.window.WindowHolder;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.inventory.window.ClickArguments;
 import org.spout.vanilla.inventory.window.InventoryEntry;
@@ -49,7 +50,7 @@ public class WindowCreativeActionHandler extends MessageHandler<WindowCreativeAc
 			return;
 		}
 
-		Window window = holder.get(Window.class);
+		Window window = holder.get(WindowHolder.class).getActiveWindow();
 		if (message.get() == null) {
 			//Taking item from existing slot
 			window.setCursorItem(null);

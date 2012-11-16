@@ -59,7 +59,7 @@ public class RecipeLoader extends BasicResourceLoader<RecipeYaml> {
 		try {
 			config.load();
 		} catch (ConfigurationException ex) {
-			Spout.getLogger().warning("Unable to load recipes.yml");
+			Spout.getLogger().warning("Unable to load recipes.yml: " + ex.getMessage());
 		}
 		ConfigurationNode recipesNode = config.getChild("recipes");
 		for (String key : recipesNode.getKeys(false)) {
@@ -69,13 +69,17 @@ public class RecipeLoader extends BasicResourceLoader<RecipeYaml> {
 			String[] resultString = recipe.getNode("result").getString().split(",");
 			Material matched = MaterialRegistry.get(resultString[0]);
 			if (matched == null) {
-				Spout.getLogger().log(Level.WARNING, "Unknown material: {0}", resultString[0]);
+				Spout.getLogger().log(Level.WARNING, "Unknown material result for {1}: {0}", new Object[] {resultString[0], key});
 				continue;
 			}
 			int amount;
 			try {
 				amount = Integer.parseInt(resultString[1]);
 			} catch (NumberFormatException numberFormatException) {
+				Spout.getLogger().log(Level.WARNING, "Unknown number for {1}: {0}", new Object[] {resultString[1], key});
+				amount = 1;
+			} catch (IndexOutOfBoundsException ex) {
+				Spout.getLogger().log(Level.WARNING, "Wrong number of parts for {1}: {0} should have a \",<amount>\" at the end of it.", new Object[] {recipe.getNode("result").getString(), key});
 				amount = 1;
 			}
 			builder.setResult(matched, amount);
@@ -83,7 +87,7 @@ public class RecipeLoader extends BasicResourceLoader<RecipeYaml> {
 				for (String inKey : recipe.getNode("ingredients").getKeys(false)) {
 					Material ingredient = MaterialRegistry.get(recipe.getNode("ingredients").getNode(inKey).getString());
 					if (ingredient == null) {
-						Spout.getLogger().log(Level.WARNING, "Unknown material ingredient: {0}", recipe.getNode("ingredients").getNode(inKey).getString());
+						Spout.getLogger().log(Level.WARNING, "Unknown material ingredient for {1}: {0}", new Object[] {recipe.getNode("ingredients").getNode(inKey).getString(), key});
 						continue;
 					}
 					builder.setIngredient(inKey.charAt(0), ingredient);
@@ -105,7 +109,10 @@ public class RecipeLoader extends BasicResourceLoader<RecipeYaml> {
 			} else if (recipe.getNode("type").getString().equalsIgnoreCase("Shapeless")) {
 				for (String rowString : recipe.getNode("ingredients").getStringList(new ArrayList<String>())) {
 					Material ingredient = MaterialRegistry.get(rowString);
-					if (ingredient == null) continue;
+					if (ingredient == null) {
+						Spout.getLogger().log(Level.WARNING, "Unknown material ingredient for {1}: {0}", new Object[] {rowString, key});
+						continue;
+					}
 					builder.addIngredient(ingredient);
 				}
 				try {
@@ -116,7 +123,10 @@ public class RecipeLoader extends BasicResourceLoader<RecipeYaml> {
 			} else if (recipe.getNode("type").getString().equalsIgnoreCase("Smelted")) {
 				for (String rowString : recipe.getNode("ingredients").getStringList(new ArrayList<String>())) {
 					Material ingredient = MaterialRegistry.get(rowString);
-					if (ingredient == null) continue;
+					if (ingredient == null) {
+						Spout.getLogger().log(Level.WARNING, "Unknown material ingredient for {1}: {0}", new Object[] {recipe.getNode("ingredients").getNode(rowString).getString(), key});
+						continue;
+					}
 					builder.addIngredient(ingredient);
 				}
 				try {

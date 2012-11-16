@@ -26,16 +26,15 @@
  */
 package org.spout.vanilla.component.inventory.window.block.chest;
 
+import org.spout.api.entity.Player;
+import org.spout.vanilla.component.substance.material.chest.EnderChest;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class EnderChestWindow extends AbstractChestWindow {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		ChestInventory inventory = getPlayerInventory().getEnderChestInventory();
-		init(WindowType.CHEST, "Ender chest", inventory.size());
+	public EnderChestWindow(Player owner, EnderChest chest, ChestInventory inventory) {
+		super(owner, chest, WindowType.CHEST, "Ender chest", inventory.size());
 		addInventoryConverter(new GridInventoryConverter(inventory, 9));
 	}
 }

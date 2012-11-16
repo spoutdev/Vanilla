@@ -26,20 +26,19 @@
  */
 package org.spout.vanilla.component.inventory.window.block;
 
+import org.spout.api.entity.Player;
 import org.spout.vanilla.component.inventory.window.Window;
 import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class EnchantmentTableWindow extends Window {
-	public EnchantmentTableWindow init(EnchantmentTableInventory inventory, String title) {
-		init(WindowType.ENCHANTMENT_TABLE, title, 1);
+	public EnchantmentTableWindow(Player owner, EnchantmentTableInventory inventory, String title) {
+		super(owner, WindowType.ENCHANTMENT_TABLE, title, 1);
 		addInventoryConverter(new InventoryConverter(inventory, "0"));
-		return this;
-
 	}
 
-	public EnchantmentTableWindow init(EnchantmentTableInventory inventory) {
-		return init(inventory, "Enchant");
+	public EnchantmentTableWindow(Player owner, EnchantmentTableInventory inventory) {
+		this(owner, inventory, "Enchant");
 	}
 }

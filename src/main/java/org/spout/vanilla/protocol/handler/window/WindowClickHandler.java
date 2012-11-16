@@ -26,11 +26,14 @@
  */
 package org.spout.vanilla.protocol.handler.window;
 
+import java.util.logging.Level;
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.component.inventory.window.Window;
+import org.spout.vanilla.component.inventory.window.WindowHolder;
 import org.spout.vanilla.inventory.window.ClickArguments;
 import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
@@ -42,22 +45,28 @@ public final class WindowClickHandler extends MessageHandler<WindowClickMessage>
 			return;
 		}
 		Player player = session.getPlayer();
-		Window window = player.get(Window.class);
+		Window window = player.get(WindowHolder.class).getActiveWindow();
 		boolean result = false;
 		int slot = message.getSlot();
-		System.out.println("Window: " + window.getClass().getCanonicalName());
-		System.out.println("Window clicked at slot " + slot);
+		debug("Window: " + window.getClass().getCanonicalName());
+		debug("Window clicked at slot " + slot);
 		if (slot == 64537) {
-			System.out.println("Outside onClick");
+			debug("Outside onClick");
 			result = window.onOutsideClick();
 		} else {
-			System.out.println("Getting args");
+			debug("Getting args");
 			ClickArguments args = window.getClickArguments(slot, message.isRightClick(), message.isShift());
 			if (args != null) {
-				System.out.println("Clicking");
+				debug("Clicking");
 				result = window.onClick(args);
 			}
 		}
 		session.send(false, new WindowTransactionMessage(window, message.getTransaction(), result));
+	}
+	
+	private void debug(String msg) {
+		if (Spout.debugMode()) {
+			Spout.getLogger().log(Level.INFO, msg);
+		}
 	}
 }

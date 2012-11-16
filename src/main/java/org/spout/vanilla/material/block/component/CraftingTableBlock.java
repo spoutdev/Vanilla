@@ -31,6 +31,8 @@ import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.component.inventory.window.WindowHolder;
+import org.spout.vanilla.component.inventory.window.block.CraftingTableWindow;
 
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.material.block.Solid;
@@ -49,10 +51,10 @@ public class CraftingTableBlock extends Solid {
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action action, BlockFace face) {
 		if (action == Action.RIGHT_CLICK) {
-			//TODO open the window for players
 			if (!(entity instanceof Player)) {
 				return;
 			}
+			((Player) entity).get(WindowHolder.class).open(new CraftingTableWindow((Player) entity));
 		}
 	}
 

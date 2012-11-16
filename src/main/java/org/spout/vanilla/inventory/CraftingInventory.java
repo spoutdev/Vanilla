@@ -26,10 +26,19 @@
  */
 package org.spout.vanilla.inventory;
 
+import java.awt.Window;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+
+import org.spout.api.Spout;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.recipe.Recipe;
+import org.spout.api.inventory.recipe.RecipeManager;
 import org.spout.api.inventory.shape.Grid;
 import org.spout.api.inventory.util.GridIterator;
+import org.spout.api.material.Material;
 
 /**
  * Represents an inventory that contains a crafting matrix.
@@ -84,6 +93,10 @@ public class CraftingInventory extends Inventory {
 
 	@Override
 	public void onSlotChanged(int slot, ItemStack item) {
+		if (slot == outputSlot + offset) {
+			craft();
+			return;
+		}
 		GridIterator i = grid.iterator();
 		while (i.hasNext()) {
 			if (i.next() + offset == slot) {
@@ -92,12 +105,57 @@ public class CraftingInventory extends Inventory {
 			}
 		}
 	}
+	
+	/**
+	 * Crafts the current recipe, subtracting all the requirements from the crafting grid
+	 */
+	public void craft() {
+		GridIterator iterator = grid.iterator();
+		while (iterator.hasNext()) {
+			addAmount(iterator.next(), -1);
+		}
+	}
 
 	/**
 	 * Assesses the crafting matrix to determine if an {@link ItemStack} should
 	 * be crafted to the {@link #outputSlot};
 	 */
 	public void updateOutput() {
-		// TODO: Update output
+		GridIterator iterator = grid.iterator();
+		int rowSize = getGrid().getLength();
+		List<List<Material>> materials = new ArrayList<List<Material>>();
+		List<Material> current = new ArrayList<Material>();
+		List<Material> shapeless = new ArrayList<Material>();
+		int cntr = 0;
+		while (iterator.hasNext()) {
+			ItemStack item = get(iterator.next());
+			cntr++;
+			Material mat = null;
+			if (item != null) {
+				mat = item.getMaterial();
+			}
+			current.add(mat);
+			if (mat != null) {
+				shapeless.add(mat);
+			}
+			if (cntr >= rowSize) {
+				materials.add(current);
+				current = new ArrayList<Material>();
+				cntr = 0;
+			}
+		}
+		RecipeManager recipeManager = Spout.getEngine().getRecipeManager();
+		Recipe recipe = recipeManager.matchShapedRecipe(materials);
+		if (recipe == null) {
+			recipe = recipeManager.matchShapelessRecipe(shapeless);
+		}
+		if (recipe != null) {
+			set(getOutputSlot(), recipe.getResult());
+			if (Spout.debugMode()) {
+				Spout.getLogger().log(Level.INFO, "Found result " + recipe.getResult().toString());
+			}
+			return;
+		}
+		set(getOutputSlot(), null);
 	}
 }

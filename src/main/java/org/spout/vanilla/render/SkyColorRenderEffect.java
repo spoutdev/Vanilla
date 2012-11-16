@@ -26,31 +26,64 @@
  */
 package org.spout.vanilla.render;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
+import java.nio.FloatBuffer;
 
-import org.spout.api.Spout;
-import org.spout.api.material.block.BlockFace;
-import org.spout.api.model.mesh.OrientedMesh;
-import org.spout.api.model.mesh.OrientedMeshFace;
-import org.spout.api.model.mesh.Vertex;
-import org.spout.api.render.BatchEffect;
-import org.spout.api.render.SnapshotRender;
-import org.spout.api.render.Texture;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
+import org.spout.api.render.WorldRenderEffect;
 
-public class SkyColorRenderEffect implements BatchEffect {
+public class SkyColorRenderEffect implements WorldRenderEffect {
+	
+	private final static FloatBuffer ambient = BufferUtils.createFloatBuffer(4);
+	private final static FloatBuffer diffuse = BufferUtils.createFloatBuffer(4);
+	private final static FloatBuffer specular = BufferUtils.createFloatBuffer(4);
+	
+	private final static FloatBuffer lightDir = BufferUtils.createFloatBuffer(4);
+	
+	private final static FloatBuffer white = BufferUtils.createFloatBuffer(4);
+	
+	static{
+		ambient.clear();
+		ambient.put(0.1f).put(0.1f).put(0.1f).put(1f);
+		ambient.flip();
+		
+		diffuse.clear();
+		diffuse.put(0.75f).put(0.75f).put(0.75f).put(1f);
+		diffuse.flip();
+		
+		specular.clear();
+		specular.put(1f).put(1f).put(1f).put(1f);
+		specular.flip();
+		
+		lightDir.clear();
+		lightDir.put(1f).put(0f).put(0f).put(0f);
+		lightDir.flip();
+		
+		white.clear();
+		white.put(1f).put(1f).put(1f).put(1f);
+		white.flip();
+	}
 	
 	@Override
-	public void preBatch(SnapshotRender snapshotRender) {
+	public void preRender() {		
+		GL11.glEnable(GL11.GL_LIGHTING);
+		//GL11.glEnable(GL11.GL_COLOR_MATERIAL);
+		GL11.glEnable(GL11.GL_LIGHT0);
 
+		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_AMBIENT, ambient);
+		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_SPECULAR, specular);
+		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_DIFFUSE, diffuse);
+		GL11.glLight(GL11.GL_LIGHT0, GL11.GL_POSITION, lightDir);
+		
+		GL11.glMaterial(GL11.GL_FRONT,GL11.GL_AMBIENT_AND_DIFFUSE, white);
+		GL11.glMaterial(GL11.GL_FRONT,GL11.GL_SPECULAR, white);
 	}
 
 	@Override
-	public void postBatch(SnapshotRender snapshotRender) {
-
+	public void postRender() {
+		GL11.glDisable(GL11.GL_LIGHTING);
+		//GL11.glDisable(GL11.GL_COLOR_MATERIAL);
+		GL11.glDisable(GL11.GL_LIGHT0);	
 	}
 
 }

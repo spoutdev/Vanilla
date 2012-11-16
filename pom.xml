@@ -17,6 +17,7 @@
 		<protocolVersion>49</protocolVersion>
 		<buildNumber>0</buildNumber>
 		<powermock.version>1.4.12</powermock.version>
+		<lwjglVersion>2.8.3</lwjglVersion>
 	</properties>
 
 	<!-- Organization -->
@@ -93,6 +94,18 @@
 			<artifactId>powermock-api-mockito</artifactId>
 			<version>${powermock.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjgl.lwjgl</groupId>
+			<artifactId>lwjgl</artifactId>
+			<version>${lwjglVersion}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.lwjgl.lwjgl</groupId>
+			<artifactId>lwjgl_util</artifactId>
+			<version>${lwjglVersion}</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 

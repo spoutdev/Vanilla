@@ -83,6 +83,7 @@ import org.spout.vanilla.protocol.LANThread;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.rcon.RemoteConnectionCore;
 import org.spout.vanilla.protocol.rcon.RemoteConnectionServer;
+import org.spout.vanilla.render.BatchEffects;
 import org.spout.vanilla.resources.MapPalette;
 import org.spout.vanilla.resources.RecipeYaml;
 import org.spout.vanilla.resources.loader.MapPaletteLoader;
@@ -336,6 +337,9 @@ public class VanillaPlugin extends CommonPlugin {
 				world.getComponentHolder().add(NormalSky.class);
 			}
 			VanillaSky sky = world.getComponentHolder().get(VanillaSky.class);
+			
+			if(Spout.getEngine().getPlatform() == Platform.CLIENT)
+				world.addWorldRenderEffect(BatchEffects.SKYCOLOR_RENDER);
 		}
 	}
 

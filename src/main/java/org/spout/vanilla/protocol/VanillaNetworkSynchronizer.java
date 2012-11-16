@@ -37,7 +37,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
-import org.spout.api.component.components.BlockComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventHandler;
 import org.spout.api.generator.biome.Biome;
@@ -61,7 +60,7 @@ import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.inventory.window.DefaultWindow;
+import org.spout.vanilla.inventory.window.DefaultWindow;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.HungerComponent;
 import org.spout.vanilla.component.substance.material.Sign;

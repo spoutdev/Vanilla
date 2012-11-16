@@ -34,7 +34,7 @@ import org.spout.api.render.RenderMaterial;
 import org.spout.vanilla.data.RenderMaterials;
 
 /**
- * Represents a type of {@link org.spout.vanilla.component.inventory.window.Window}
+ * Represents a type of {@link Window}
  */
 public enum WindowType {
 	/**

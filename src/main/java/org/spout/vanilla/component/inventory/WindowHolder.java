@@ -24,13 +24,16 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.inventory.window;
+package org.spout.vanilla.component.inventory;
 
 import java.util.logging.Level;
 
 import org.spout.api.Spout;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
+
+import org.spout.vanilla.inventory.window.DefaultWindow;
+import org.spout.vanilla.inventory.window.Window;
 
 public class WindowHolder extends EntityComponent {
 	private DefaultWindow DEFAULT_WINDOW;

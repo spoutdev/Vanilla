@@ -24,21 +24,37 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.inventory.window.block;
+package org.spout.vanilla.inventory.window.gui;
 
-import org.spout.api.entity.Player;
-import org.spout.vanilla.component.inventory.window.Window;
-import org.spout.vanilla.inventory.block.DispenserInventory;
-import org.spout.vanilla.inventory.util.GridInventoryConverter;
-import org.spout.vanilla.inventory.window.WindowType;
+import java.util.Arrays;
+import java.util.List;
 
-public class DispenserWindow extends Window {
-	public DispenserWindow(Player owner, DispenserInventory inventory) {
-		this(owner, inventory, "Dispenser");
+import org.spout.api.component.components.WidgetComponent;
+import org.spout.api.gui.render.RenderPart;
+import org.spout.api.input.KeyEvent;
+import org.spout.api.math.IntVector2;
+
+public class InventorySlotComponent extends WidgetComponent {
+	private RenderItemStack item;
+
+	public void setRenderItemStack(RenderItemStack item) {
+		this.item = item;
 	}
 
-	public DispenserWindow(Player owner, DispenserInventory inventory, String title) {
-		super(owner, WindowType.DISPENSER, title, 9);
-		addInventoryConverter(new GridInventoryConverter(inventory, 3));
+	@Override
+	public List<RenderPart> getRenderParts() {
+		return Arrays.<RenderPart>asList(item);
+	}
+
+	@Override
+	public void onClicked(IntVector2 position, boolean mouseDown) {
+	}
+
+	@Override
+	public void onKey(KeyEvent event) {
+	}
+
+	@Override
+	public void onMouseMove(IntVector2 position) {
 	}
 }

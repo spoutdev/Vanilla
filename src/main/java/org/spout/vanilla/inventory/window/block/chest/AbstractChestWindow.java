@@ -24,39 +24,34 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.inventory;
+package org.spout.vanilla.inventory.window.block.chest;
 
-import org.spout.api.gui.render.RenderPart;
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.Rectangle;
-import org.spout.api.math.Vector2;
+import org.spout.api.entity.Player;
+import org.spout.vanilla.inventory.window.Window;
+import org.spout.vanilla.component.substance.material.chest.AbstractChest;
+import org.spout.vanilla.inventory.window.WindowType;
 
-import org.spout.vanilla.data.RenderMaterials;
+public class AbstractChestWindow extends Window {
+	private AbstractChest chest;
 
-public class RenderItemStack extends RenderPart {
-	private static final float SCALE = 0.75f;
-	public static final float WIDTH = 0.0625f;
-	public static final float HEIGHT = WIDTH;
-	public static final Vector2 SPRITE_EXTENTS = new Vector2(HEIGHT * 2 * SCALE, HEIGHT * 2);
-	private final ItemStack item;
-	private Vector2 pos = Vector2.ZERO;
-
-	public RenderItemStack(ItemStack item) {
-		this.item = item;
-		setRenderMaterial(RenderMaterials.ITEMS_MATERIAL);
-		setSource(new Rectangle(0, 0, WIDTH, HEIGHT)); // TODO: get source from materials
+	public AbstractChestWindow(Player owner, AbstractChest chest, WindowType type, String title, int offset) {
+		super(owner, type, title, offset);
+		this.chest = chest;
 	}
 
-	public ItemStack getItem() {
-		return item;
+	public AbstractChestWindow(Player owner, WindowType type, String title, int offset) {
+		super(owner, type, title, offset);
 	}
 
-	public Vector2 getPosition() {
-		return pos;
+	public AbstractChest getChest() {
+		return chest;
 	}
 
-	public void setPosition(Vector2 pos) {
-		setSprite(new Rectangle(pos, SPRITE_EXTENTS));
-		this.pos = pos;
+	@Override
+	public void close() {
+		if (chest != null) {
+			chest.close(getPlayer());
+		}
+		super.close();
 	}
 }

@@ -29,8 +29,8 @@ package org.spout.vanilla.component.substance.material.chest;
 import org.spout.api.entity.Player;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 
-import org.spout.vanilla.component.inventory.window.WindowHolder;
-import org.spout.vanilla.component.inventory.window.block.chest.EnderChestWindow;
+import org.spout.vanilla.component.inventory.WindowHolder;
+import org.spout.vanilla.inventory.window.block.chest.EnderChestWindow;
 
 public class EnderChest extends AbstractChest {
 	@Override

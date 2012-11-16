@@ -24,34 +24,21 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.inventory.window.block.chest;
+package org.spout.vanilla.inventory.window.block;
 
 import org.spout.api.entity.Player;
-import org.spout.vanilla.component.inventory.window.Window;
-import org.spout.vanilla.component.substance.material.chest.AbstractChest;
+import org.spout.vanilla.inventory.window.Window;
+import org.spout.vanilla.inventory.block.FurnaceInventory;
+import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
-public class AbstractChestWindow extends Window {
-	private AbstractChest chest;
-
-	public AbstractChestWindow(Player owner, AbstractChest chest, WindowType type, String title, int offset) {
-		super(owner, type, title, offset);
-		this.chest = chest;
+public class FurnaceWindow extends Window {
+	public FurnaceWindow(Player owner, FurnaceInventory inventory) {
+		this(owner, inventory, "Furnace");
 	}
 
-	public AbstractChestWindow(Player owner, WindowType type, String title, int offset) {
-		super(owner, type, title, offset);
-	}
-
-	public AbstractChest getChest() {
-		return chest;
-	}
-
-	@Override
-	public void close() {
-		if (chest != null) {
-			chest.close(getPlayer());
-		}
-		super.close();
+	public FurnaceWindow(Player owner, FurnaceInventory inventory, String title) {
+		super(owner, WindowType.FURNACE, title, 3);
+		addInventoryConverter(new InventoryConverter(inventory, "1, 0, 2"));
 	}
 }

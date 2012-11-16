@@ -24,21 +24,39 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.inventory.window.block;
+package org.spout.vanilla.inventory.window.gui;
 
-import org.spout.api.entity.Player;
-import org.spout.vanilla.component.inventory.window.Window;
-import org.spout.vanilla.inventory.block.CraftingTableInventory;
-import org.spout.vanilla.inventory.util.InventoryConverter;
-import org.spout.vanilla.inventory.window.WindowType;
+import org.spout.api.gui.render.RenderPart;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.Rectangle;
+import org.spout.api.math.Vector2;
 
-public class CraftingTableWindow extends Window {
-	public CraftingTableWindow(Player owner) {
-		this(owner, "Crafting");
+import org.spout.vanilla.data.RenderMaterials;
+
+public class RenderItemStack extends RenderPart {
+	private static final float SCALE = 0.75f;
+	public static final float WIDTH = 0.0625f;
+	public static final float HEIGHT = WIDTH;
+	public static final Vector2 SPRITE_EXTENTS = new Vector2(HEIGHT * 2 * SCALE, HEIGHT * 2);
+	private final ItemStack item;
+	private Vector2 pos = Vector2.ZERO;
+
+	public RenderItemStack(ItemStack item) {
+		this.item = item;
+		setRenderMaterial(RenderMaterials.ITEMS_MATERIAL);
+		setSource(new Rectangle(0, 0, WIDTH, HEIGHT)); // TODO: get source from materials
 	}
 
-	public CraftingTableWindow(Player owner, String title) {
-		super(owner, WindowType.CRAFTING_TABLE, title, 10);
-		addInventoryConverter(new InventoryConverter(new CraftingTableInventory(), "1-3, 4-6, 7-9, 0"));
+	public ItemStack getItem() {
+		return item;
+	}
+
+	public Vector2 getPosition() {
+		return pos;
+	}
+
+	public void setPosition(Vector2 pos) {
+		setSprite(new Rectangle(pos, SPRITE_EXTENTS));
+		this.pos = pos;
 	}
 }

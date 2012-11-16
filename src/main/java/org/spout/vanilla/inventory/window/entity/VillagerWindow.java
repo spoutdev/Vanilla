@@ -24,37 +24,21 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.inventory;
+package org.spout.vanilla.inventory.window.entity;
 
-import java.util.Arrays;
-import java.util.List;
+import org.spout.api.entity.Player;
+import org.spout.vanilla.inventory.window.Window;
+import org.spout.vanilla.inventory.entity.VillagerInventory;
+import org.spout.vanilla.inventory.util.InventoryConverter;
+import org.spout.vanilla.inventory.window.WindowType;
 
-import org.spout.api.component.components.WidgetComponent;
-import org.spout.api.gui.render.RenderPart;
-import org.spout.api.input.KeyEvent;
-import org.spout.api.math.IntVector2;
-
-public class InventorySlotComponent extends WidgetComponent {
-	private RenderItemStack item;
-
-	public void setRenderItemStack(RenderItemStack item) {
-		this.item = item;
+public class VillagerWindow extends Window {
+	public VillagerWindow(Player owner, VillagerInventory inventory, String title) {
+		super(owner, WindowType.VILLAGER, title, 3);
+		addInventoryConverter(new InventoryConverter(inventory, "0-2"));
 	}
 
-	@Override
-	public List<RenderPart> getRenderParts() {
-		return Arrays.<RenderPart>asList(item);
-	}
-
-	@Override
-	public void onClicked(IntVector2 position, boolean mouseDown) {
-	}
-
-	@Override
-	public void onKey(KeyEvent event) {
-	}
-
-	@Override
-	public void onMouseMove(IntVector2 position) {
+	public VillagerWindow(Player owner, VillagerInventory inventory) {
+		this(owner, inventory, "Villager");
 	}
 }

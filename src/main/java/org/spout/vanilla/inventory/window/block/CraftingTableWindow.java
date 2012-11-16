@@ -24,17 +24,21 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.inventory.window.block;
+package org.spout.vanilla.inventory.window.block;
 
 import org.spout.api.entity.Player;
-import org.spout.vanilla.component.inventory.window.Window;
-import org.spout.vanilla.inventory.block.BeaconInventory;
+import org.spout.vanilla.inventory.window.Window;
+import org.spout.vanilla.inventory.block.CraftingTableInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
-public class BeaconWindow extends Window {
-	public BeaconWindow(Player owner, BeaconInventory inventory) {
-		super(owner, WindowType.BEACON, "Beacon", 1);
-		addInventoryConverter(new InventoryConverter(inventory, "0"));
+public class CraftingTableWindow extends Window {
+	public CraftingTableWindow(Player owner) {
+		this(owner, "Crafting");
+	}
+
+	public CraftingTableWindow(Player owner, String title) {
+		super(owner, WindowType.CRAFTING_TABLE, title, 10);
+		addInventoryConverter(new InventoryConverter(new CraftingTableInventory(), "1-3, 4-6, 7-9, 0"));
 	}
 }

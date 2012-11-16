@@ -28,7 +28,7 @@ package org.spout.vanilla.inventory.window.prop;
 
 /**
  * Represents a property of a
- * {@link org.spout.vanilla.component.inventory.window.Window}.
+ * {@link org.spout.vanilla.inventory.window.Window}.
  */
 public interface WindowProperty {
 	/**

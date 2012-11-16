@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.inventory.window;
+package org.spout.vanilla.inventory.window;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -47,16 +47,12 @@ import org.spout.api.gui.component.TexturedRectComponent;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.math.Rectangle;
-import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.inventory.InventorySlotComponent;
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.inventory.RenderItemStack;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.data.RenderMaterials;
@@ -70,11 +66,7 @@ import org.spout.vanilla.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.util.InventoryConverter;
-import org.spout.vanilla.inventory.window.ClickArguments;
-import org.spout.vanilla.inventory.window.InventoryEntry;
-import org.spout.vanilla.inventory.window.WindowType;
 import org.spout.vanilla.inventory.window.prop.WindowProperty;
-import org.spout.vanilla.material.VanillaMaterials;
 
 /**
  * Represents a Window that players can view to display an inventory.

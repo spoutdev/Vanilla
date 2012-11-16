@@ -33,7 +33,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.inventory.window.Window;
+import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.component.living.Passive;
 import org.spout.vanilla.inventory.Container;

@@ -24,17 +24,21 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.inventory.window.block.chest;
+package org.spout.vanilla.inventory.window.block;
 
 import org.spout.api.entity.Player;
-import org.spout.vanilla.component.substance.material.chest.EnderChest;
-import org.spout.vanilla.inventory.block.ChestInventory;
+import org.spout.vanilla.inventory.window.Window;
+import org.spout.vanilla.inventory.block.DispenserInventory;
 import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
-public class EnderChestWindow extends AbstractChestWindow {
-	public EnderChestWindow(Player owner, EnderChest chest, ChestInventory inventory) {
-		super(owner, chest, WindowType.CHEST, "Ender chest", inventory.size());
-		addInventoryConverter(new GridInventoryConverter(inventory, 9));
+public class DispenserWindow extends Window {
+	public DispenserWindow(Player owner, DispenserInventory inventory) {
+		this(owner, inventory, "Dispenser");
+	}
+
+	public DispenserWindow(Player owner, DispenserInventory inventory, String title) {
+		super(owner, WindowType.DISPENSER, title, 9);
+		addInventoryConverter(new GridInventoryConverter(inventory, 3));
 	}
 }

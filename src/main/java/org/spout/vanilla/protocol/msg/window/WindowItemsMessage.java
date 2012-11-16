@@ -31,7 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.component.inventory.window.Window;
+import org.spout.vanilla.inventory.window.Window;
 
 public final class WindowItemsMessage extends WindowMessage {
 	private final ItemStack[] items;

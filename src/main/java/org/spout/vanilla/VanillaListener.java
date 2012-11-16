@@ -40,8 +40,7 @@ import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.inventory.window.DefaultWindow;
-import org.spout.vanilla.component.inventory.window.WindowHolder;
+import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.HungerComponent;
 import org.spout.vanilla.component.misc.PickupItemComponent;

@@ -30,7 +30,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.component.inventory.window.Window;
+import org.spout.vanilla.inventory.window.Window;
 
 public final class WindowTransactionMessage extends WindowMessage {
 	private final int transaction;

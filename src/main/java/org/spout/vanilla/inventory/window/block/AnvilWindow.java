@@ -24,21 +24,17 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.inventory.window.block;
+package org.spout.vanilla.inventory.window.block;
 
 import org.spout.api.entity.Player;
-import org.spout.vanilla.component.inventory.window.Window;
-import org.spout.vanilla.inventory.block.FurnaceInventory;
+import org.spout.vanilla.inventory.window.Window;
+import org.spout.vanilla.inventory.block.AnvilInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
-public class FurnaceWindow extends Window {
-	public FurnaceWindow(Player owner, FurnaceInventory inventory) {
-		this(owner, inventory, "Furnace");
-	}
-
-	public FurnaceWindow(Player owner, FurnaceInventory inventory, String title) {
-		super(owner, WindowType.FURNACE, title, 3);
-		addInventoryConverter(new InventoryConverter(inventory, "1, 0, 2"));
+public class AnvilWindow extends Window {
+	public AnvilWindow(Player owner, AnvilInventory inventory) {
+		super(owner, WindowType.ANVIL, "Anvil", 1);
+		addInventoryConverter(new InventoryConverter(inventory, "0"));
 	}
 }

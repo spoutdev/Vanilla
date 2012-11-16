@@ -30,7 +30,7 @@ import org.spout.api.inventory.Inventory;
 
 /**
  * Represents the arguments of a click on a
- * {@link org.spout.vanilla.component.inventory.window.Window}
+ * {@link Window}
  */
 public class ClickArguments extends InventoryEntry {
 	private final boolean rightClick, shiftClick;

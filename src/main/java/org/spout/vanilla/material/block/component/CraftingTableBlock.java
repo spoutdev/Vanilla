@@ -31,8 +31,8 @@ import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
-import org.spout.vanilla.component.inventory.window.WindowHolder;
-import org.spout.vanilla.component.inventory.window.block.CraftingTableWindow;
+import org.spout.vanilla.component.inventory.WindowHolder;
+import org.spout.vanilla.inventory.window.block.CraftingTableWindow;
 
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.material.block.Solid;

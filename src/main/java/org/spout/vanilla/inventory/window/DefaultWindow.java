@@ -24,21 +24,46 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.inventory.window.entity;
+package org.spout.vanilla.inventory.window;
 
+import org.spout.api.Client;
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
-import org.spout.vanilla.component.inventory.window.Window;
-import org.spout.vanilla.inventory.entity.VillagerInventory;
-import org.spout.vanilla.inventory.util.InventoryConverter;
-import org.spout.vanilla.inventory.window.WindowType;
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 
-public class VillagerWindow extends Window {
-	public VillagerWindow(Player owner, VillagerInventory inventory, String title) {
-		super(owner, WindowType.VILLAGER, title, 3);
-		addInventoryConverter(new InventoryConverter(inventory, "0-2"));
+import org.spout.vanilla.component.inventory.PlayerInventory;
+import org.spout.vanilla.event.entity.EntityEquipmentEvent;
+import org.spout.vanilla.inventory.player.PlayerArmorInventory;
+import org.spout.vanilla.inventory.util.InventoryConverter;
+
+public class DefaultWindow extends Window {
+	public DefaultWindow(Player owner) {
+		super(owner, WindowType.DEFAULT, "Inventory", 9);
+		PlayerInventory inventory = getPlayerInventory();
+		addInventoryConverter(new InventoryConverter(inventory.getArmor(), "8, 7, 6, 5"));
+		addInventoryConverter(new InventoryConverter(inventory.getCraftingGrid(), "3-4, 1-2, 0"));
 	}
 
-	public VillagerWindow(Player owner, VillagerInventory inventory) {
-		this(owner, inventory, "Villager");
+	@Override
+	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
+		super.onSlotSet(inventory, slot, item);
+		if (inventory instanceof PlayerArmorInventory) {
+			Player player = getPlayer();
+			player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, slot + 1, item));
+		}
+	}
+
+	@Override
+	public int getId() {
+		return 0;
+	}
+
+	@Override
+	public void open() {
+		if (!(Spout.getEngine() instanceof Client)) {
+			throw new UnsupportedOperationException("A player's inventory window cannot be opened from the server.");
+		}
+		super.open();
 	}
 }

@@ -171,7 +171,9 @@ public class Human extends LivingComponent {
 	 * @param item to drop
 	 */
 	public void dropItem(ItemStack item) {
-		Item.dropNaturally(this.getOwner().getTransform().getPosition(), item);
+		float yaw = getOwner().getTransform().getYaw();
+		Vector3 impulse = new Vector3(Math.cos(yaw), 0.4F, Math.sin(yaw));
+		Item.drop(this.getOwner().getTransform().getPosition(), item, impulse);
 	}
 
 	/**

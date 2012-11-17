@@ -56,9 +56,6 @@ public class DrowningComponent extends EntityComponent{
 			setAir(MAX_AIR);
 			return;
 		}
-		// For some reason the drowning component isn't called
-		System.out.println("underwater!");
-
 		setAir(getAir() - dt);
 		if (getAir() < 0) {
 			// out of air; damage one heart every second

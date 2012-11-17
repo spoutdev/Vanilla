@@ -91,7 +91,7 @@ public class Item extends EntityComponent {
 	 * @return the Item entity
 	 */
 	public static Item dropNaturally(Point position, ItemStack itemStack) {
-		Vector3 velocity = new Vector3(Math.random() * 0.2 - 0.1, 0.2, Math.random() * 0.2 - 0.1);
+		Vector3 velocity = new Vector3(Math.random() * 2, 0.3, Math.random() * 2);
 		return drop(position, itemStack, velocity);
 	}
 
@@ -106,7 +106,7 @@ public class Item extends EntityComponent {
 		Entity entity = position.getWorld().createEntity(position, Item.class);
 		Item item = entity.add(Item.class);
 		item.setItemStack(itemStack);
-		item.getPhysics().setLinearVelocity(velocity);
+		item.getPhysics().applyImpulse(velocity);
 		if (position.getChunk(LoadOption.NO_LOAD) != null) {
 			position.getWorld().spawnEntity(entity);
 		}

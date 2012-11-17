@@ -28,9 +28,15 @@ package org.spout.vanilla.protocol.msg;
 
 
 public abstract class VanillaBlockDataChannelMessage extends VanillaMessage {
+	
+	public static final int CHANNEL_ID = 1;
 
 	protected VanillaBlockDataChannelMessage() {
-		super(1);
+		super(CHANNEL_ID);
+	}
+	
+	protected VanillaBlockDataChannelMessage(int channelId) {
+		super(channelId);
 	}
 
 }

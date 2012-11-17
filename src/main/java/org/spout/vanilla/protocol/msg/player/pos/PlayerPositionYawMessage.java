@@ -39,6 +39,11 @@ public final class PlayerPositionYawMessage extends VanillaMainChannelMessage {
 		position = new PlayerPositionMessage(x, y, z, stance, onGround);
 		rotation = new PlayerYawMessage(yaw, pitch, onGround);
 	}
+	
+	public PlayerPositionYawMessage(double x, double y, double z, double stance, float yaw, float pitch, boolean onGround, int channelId) {
+		super(channelId);
+		position = new PlayerPositionMessage(x, y, z, stance, onGround);
+		rotation = new PlayerYawMessage(yaw, pitch, onGround);	}
 
 	public PlayerPositionMessage getPlayerPositionMessage() {
 		return position;

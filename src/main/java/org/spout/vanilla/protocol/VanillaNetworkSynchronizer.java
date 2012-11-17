@@ -60,7 +60,6 @@ import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.inventory.window.DefaultWindow;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.HungerComponent;
 import org.spout.vanilla.component.substance.material.Sign;
@@ -94,9 +93,11 @@ import org.spout.vanilla.event.world.PlayParticleEffectEvent;
 import org.spout.vanilla.event.world.PlaySoundEffectEvent;
 import org.spout.vanilla.event.world.TimeUpdateEvent;
 import org.spout.vanilla.event.world.WeatherChangeEvent;
+import org.spout.vanilla.inventory.window.DefaultWindow;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.component.VanillaComplexMaterial;
 import org.spout.vanilla.protocol.container.VanillaContainer;
+import org.spout.vanilla.protocol.msg.VanillaBlockDataChannelMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
@@ -133,7 +134,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	private static final int SOLID_BLOCK_ID = 1; // Initializer block ID
 	private static final byte[] SOLID_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
 	private static final byte[] AIR_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
-	private static final double STANCE = 1.6D;
+	private static final double STANCE = 1.62001D;
 	private boolean first = true;
 	private final TSyncIntPairObjectHashMap<TSyncIntHashSet> initializedChunks = new TSyncIntPairObjectHashMap<TSyncIntHashSet>();
 	private final ConcurrentLinkedQueue<Long> emptyColumns = new ConcurrentLinkedQueue<Long>();
@@ -162,7 +163,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 
 	public VanillaNetworkSynchronizer(Session session) {
-		super(session, 0);
+		// The minimum block distance is a radius for sending chunks before login/respawn
+		// It needs to be > 0 for reliable login and preventing falling through the world
+		super(session, 3);
 		registerProtocolEvents(this);
 		chunkInit = ChunkInit.getChunkInit(VanillaConfiguration.CHUNK_INIT.getString("client"));
 	}
@@ -326,7 +329,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			PlayerYawMessage PLMsg = new PlayerYawMessage(rot.getYaw(), rot.getPitch(), true);
 			session.sendAll(false, ETMMsg, PLMsg);
 		} else {
-			PlayerPositionYawMessage PPLMsg = new PlayerPositionYawMessage(p.getX(), p.getY() + STANCE, p.getZ(), STANCE, rot.getYaw(), rot.getPitch(), true);
+			PlayerPositionYawMessage PPLMsg = new PlayerPositionYawMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), rot.getYaw(), rot.getPitch(), true, VanillaBlockDataChannelMessage.CHANNEL_ID);
 			session.send(false, PPLMsg);
 		}
 	}

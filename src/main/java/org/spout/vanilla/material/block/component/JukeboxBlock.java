@@ -29,16 +29,17 @@ package org.spout.vanilla.material.block.component;
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 
+import org.spout.vanilla.component.substance.material.Jukebox;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Solid;
 
-public class JukeboxBlock extends Solid implements Fuel {
+public class JukeboxBlock extends ComponentMaterial implements Fuel {
 	public final float BURN_TIME = 15;
 
 	public JukeboxBlock(String name, int id) {
-		super(name, id, "model://Vanilla/resources/materials/block/solid/jukebox/jukebox.spm");
+		super(name, id, Jukebox.class, "model://Vanilla/resources/materials/block/solid/jukebox/jukebox.spm");
 		this.setHardness(2.0F).setResistance(10.0F);
 	}
 

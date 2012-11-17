@@ -36,11 +36,11 @@ import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.RedstoneUtil;
 
-public class NoteBlockBlock extends Solid implements Fuel {
+public class NoteBlockBlock extends ComponentMaterial implements Fuel {
 	public final float BURN_TIME = 15;
 
 	public NoteBlockBlock(String name, int id) {
-		super(name, id, "model://Vanilla/resources/materials/block/solid/noteblock/noteblock.spm");
+		super(name, id, NoteBlock.class, "model://Vanilla/resources/materials/block/solid/noteblock/noteblock.spm");
 		this.setHardness(0.8F).setResistance(1.3F);
 	}
 

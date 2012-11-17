@@ -24,16 +24,33 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.substance.material;
+package org.spout.vanilla.material.block.component;
 
-import org.spout.api.entity.Player;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.component.substance.material.Anvil;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.component.ComponentMaterial;
 
-import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.inventory.window.block.CraftingTableWindow;
-
-public class CraftingTable extends ViewedBlockComponent {
+public class AnvilBlock extends ComponentMaterial {
+	public AnvilBlock(String name, int id) {
+		super(name, id, Anvil.class, null);
+		this.setHardness(5.0F).setResistance(6000.0F);
+	}
+	
 	@Override
-	public void open(Player player) {
-		player.get(WindowHolder.class).open(new CraftingTableWindow(player));
+	public boolean hasPhysics() {
+		return true;
+	}
+
+	@Override
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
+		if (!block.translate(BlockFace.BOTTOM).getMaterial().isPlacementObstacle()) {
+			// turn this block into a mobile block
+			//block.getWorld().createAndSpawnEntity(block.getPosition(), block.getComponent().getClass(), LoadOption.NO_LOAD);
+			block.setMaterial(VanillaMaterials.AIR);
+		}
 	}
 }

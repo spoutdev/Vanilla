@@ -72,14 +72,13 @@ import org.spout.vanilla.inventory.window.prop.WindowProperty;
  * Represents a Window that players can view to display an inventory.
  */
 public abstract class Window implements InventoryViewer {
-	// TODO should all of these be final?
 	private final Player owner;
 	private final List<InventoryConverter> converters = new ArrayList<InventoryConverter>();
 	protected final TObjectIntMap<Integer> properties = new TObjectIntHashMap<Integer>();
 	protected final int offset;
-	protected WindowType type;
+	protected final WindowType type;
+	protected final String title;
 	protected boolean opened;
-	protected String title;
 	protected ItemStack cursorItem;
 	private static int windowId = 0;
 	protected int id = -1;
@@ -639,30 +638,12 @@ public abstract class Window implements InventoryViewer {
 	}
 
 	/**
-	 * Sets the type of the window.
-	 *
-	 * @param type
-	 */
-	public void setType(WindowType type) {
-		this.type = type;
-	}
-
-	/**
 	 * Returns the title of the window.
 	 *
 	 * @return title
 	 */
 	public String getTitle() {
 		return title;
-	}
-
-	/**
-	 * Sets the title of the window.
-	 *
-	 * @param title
-	 */
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	/**

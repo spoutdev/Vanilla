@@ -36,52 +36,37 @@ import org.spout.vanilla.inventory.window.DefaultWindow;
 import org.spout.vanilla.inventory.window.Window;
 
 public class WindowHolder extends EntityComponent {
-	private DefaultWindow DEFAULT_WINDOW;
-
+	private DefaultWindow defaultWindow;
 	private Window activeWindow;
-	
-	/**
-	 * @return the activeWindow
-	 */
+
 	public Window getActiveWindow() {
 		return activeWindow;
 	}
 	
 	public DefaultWindow getDefaultWindow() {
-		return DEFAULT_WINDOW;
+		return defaultWindow;
 	}
 
-	/**
-	 * 
-	 * @param <T>
-	 * @param newWindow
-	 * @return The new Window
-	 */
-	public <T extends Window> T open(T newWindow) {
-		closeActive();
-		debug("Opening " + newWindow.getClass().getCanonicalName());
-		newWindow.open();
-		this.activeWindow = newWindow;
-		return newWindow;
+	public void open(Window window) {
+		close();
+		debug("Opening " + window.getClass().getCanonicalName());
+		window.open();
+		this.activeWindow = window;
 	}
 	
 	public void close() {
-		if (closeActive()) {
-			this.activeWindow = DEFAULT_WINDOW;
+		if (activeWindow instanceof DefaultWindow) {
+			return;
 		}
+		debug("Closing " + activeWindow.getClass().getCanonicalName());
+		activeWindow.close();
+		activeWindow = defaultWindow;
 	}
-	
-	private boolean closeActive() {
-		if (activeWindow == null) { // So if called during close(), won't cause infinite loop
-			return false;
+
+	private void debug(String msg) {
+		if (Spout.debugMode()) {
+			Spout.getLogger().log(Level.INFO, msg);
 		}
-		Window oldWindow = this.activeWindow;
-		this.activeWindow = null;
-		if (this.activeWindow != null) {
-			debug("Closing " + oldWindow.getClass().getCanonicalName());
-			oldWindow.close();
-		}
-		return true;
 	}
 
 	@Override
@@ -89,19 +74,13 @@ public class WindowHolder extends EntityComponent {
 		if (!(getOwner() instanceof Player)) {
 			throw new IllegalStateException("A Window may only be attached to a player.");
 		}
-		DEFAULT_WINDOW = new DefaultWindow((Player)getOwner());
-		this.activeWindow = DEFAULT_WINDOW;
+		defaultWindow = new DefaultWindow((Player) getOwner());
+		this.activeWindow = defaultWindow;
 	}
 
 	@Override
 	public void onDetached() {
 		activeWindow.close();
-	}
-
-	private void debug(String msg) {
-		if (Spout.debugMode()) {
-			Spout.getLogger().log(Level.INFO, msg);
-		}
 	}
 
 	@Override

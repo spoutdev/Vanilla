@@ -46,7 +46,6 @@ public abstract class ViewedBlockComponent extends VanillaBlockComponent {
 	public abstract void open(Player player);
 
 	public void close(Player player) {
-		player.get(WindowHolder.class).close();
 		viewers.remove(player);
 	}
 

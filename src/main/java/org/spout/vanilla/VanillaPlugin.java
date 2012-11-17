@@ -138,9 +138,8 @@ public class VanillaPlugin extends CommonPlugin {
 		}
 		getEngine().getEventManager().registerEvents(new VanillaListener(this), this);
 
-		InputCommandExecutor exe = new InputCommandExecutor();
 		engine.getRootCommand().addSubCommand(this, "+toggle_inventory").setArgBounds(0, 0).setHelp("Opens or closes the player's inventory.")
-				.setExecutor(Platform.CLIENT, exe);
+				.setExecutor(Platform.CLIENT, new InputCommandExecutor());
 
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			InputManager input = ((Client) Spout.getEngine()).getInputManager();

@@ -47,9 +47,9 @@ public class BrewingStandBlock extends ComponentMaterial {
 
 	@Override
 	public void onDestroy(Block block, Cause<?> cause) {
-		Chest chest = (Chest) block.getComponent();
+		BrewingStand brewingStand = (BrewingStand) block.getComponent();
 		//Drop items
-		Inventory inventory = chest.getInventory();
+		Inventory inventory = brewingStand.getInventory();
 		Point position = block.getPosition();
 		for (ItemStack item : inventory) {
 			if (item == null) {

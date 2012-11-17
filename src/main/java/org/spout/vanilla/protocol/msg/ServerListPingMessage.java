@@ -27,7 +27,7 @@
 package org.spout.vanilla.protocol.msg;
 
 
-public class ServerListPingMessage extends VanillaMessage {
+public class ServerListPingMessage extends VanillaMainChannelMessage {
 	@Override
 	public String toString() {
 		return getClass().getSimpleName() + "{}";

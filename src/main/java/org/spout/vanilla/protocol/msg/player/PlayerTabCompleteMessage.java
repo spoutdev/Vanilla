@@ -28,9 +28,9 @@ package org.spout.vanilla.protocol.msg.player;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.util.SpoutToStringStyle;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public class PlayerTabCompleteMessage extends VanillaMessage {
+public class PlayerTabCompleteMessage extends VanillaMainChannelMessage {
 	private String text;
 
 	public PlayerTabCompleteMessage(String text) {

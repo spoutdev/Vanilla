@@ -28,9 +28,9 @@ package org.spout.vanilla.protocol.msg.player.conn;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.util.SpoutToStringStyle;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public class PlayerListMessage extends VanillaMessage {
+public class PlayerListMessage extends VanillaMainChannelMessage {
 	private final String playerName;
 	private final boolean playerOnline;
 	private final short ping;

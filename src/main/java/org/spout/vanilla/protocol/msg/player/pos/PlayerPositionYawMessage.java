@@ -29,9 +29,9 @@ package org.spout.vanilla.protocol.msg.player.pos;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.SpoutToStringStyle;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public final class PlayerPositionYawMessage extends VanillaMessage {
+public final class PlayerPositionYawMessage extends VanillaMainChannelMessage {
 	private final PlayerPositionMessage position;
 	private final PlayerYawMessage rotation;
 

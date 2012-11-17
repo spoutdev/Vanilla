@@ -24,55 +24,13 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.msg.player.pos;
+package org.spout.vanilla.protocol.msg;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.spout.api.util.SpoutToStringStyle;
-import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public final class PlayerSpawnPositionMessage extends VanillaMainChannelMessage {
-	private final int x, y, z;
+public abstract class VanillaBlockDataChannelMessage extends VanillaMessage {
 
-	public PlayerSpawnPositionMessage(int x, int y, int z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+	protected VanillaBlockDataChannelMessage() {
+		super(1);
 	}
 
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public int getZ() {
-		return z;
-	}
-
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("x", x)
-				.append("y", y)
-				.append("z", z)
-				.toString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final PlayerSpawnPositionMessage other = (PlayerSpawnPositionMessage) obj;
-		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.x, other.x)
-				.append(this.y, other.y)
-				.append(this.z, other.z)
-				.isEquals();
-	}
 }

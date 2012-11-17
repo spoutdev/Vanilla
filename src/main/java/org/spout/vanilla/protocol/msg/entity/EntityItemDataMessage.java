@@ -31,9 +31,9 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public class EntityItemDataMessage extends VanillaMessage {
+public class EntityItemDataMessage extends VanillaMainChannelMessage {
 	private final short type, id;
 	private final byte[] data;
 

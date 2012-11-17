@@ -30,9 +30,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaBlockDataChannelMessage;
 
-public final class BlockChangeMessage extends VanillaMessage {
+public final class BlockChangeMessage extends VanillaBlockDataChannelMessage {
 	private final int x, y, z, metadata;
 	private final short type;
 

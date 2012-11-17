@@ -29,9 +29,9 @@ package org.spout.vanilla.protocol.msg.window;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.SpoutToStringStyle;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public class WindowCreativeActionMessage extends VanillaMessage {
+public class WindowCreativeActionMessage extends VanillaMainChannelMessage {
 	private final short slot;
 	private final ItemStack item;
 

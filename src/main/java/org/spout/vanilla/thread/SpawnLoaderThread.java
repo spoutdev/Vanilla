@@ -34,6 +34,7 @@ import org.spout.api.geo.World;
 import org.spout.api.math.IntVector3;
 
 public class SpawnLoaderThread extends Thread {
+	private final static AtomicInteger idCounter = new AtomicInteger(0);
 	private final static AtomicInteger size = new AtomicInteger();
 	private final static ConcurrentLinkedQueue<IntPoint3> queue = new ConcurrentLinkedQueue<IntPoint3>();
 	private final int step;
@@ -41,6 +42,7 @@ public class SpawnLoaderThread extends Thread {
 	private final String initChunkType;
 
 	public SpawnLoaderThread(int total, int step, String initChunkType) {
+		super("Spawn Loader Thread - " + idCounter.getAndIncrement());
 		this.step = step;
 		this.total = total;
 		this.initChunkType = initChunkType;

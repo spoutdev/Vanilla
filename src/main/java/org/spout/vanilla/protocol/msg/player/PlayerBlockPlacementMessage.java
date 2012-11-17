@@ -31,9 +31,9 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.SpoutToStringStyle;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public final class PlayerBlockPlacementMessage extends VanillaMessage {
+public final class PlayerBlockPlacementMessage extends VanillaMainChannelMessage {
 	private final int x, y, z;
 	private Vector3 face;
 	private BlockFace direction;

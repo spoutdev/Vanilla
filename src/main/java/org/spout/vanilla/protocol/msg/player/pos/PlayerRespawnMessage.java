@@ -28,9 +28,9 @@ package org.spout.vanilla.protocol.msg.player.pos;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.util.SpoutToStringStyle;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public final class PlayerRespawnMessage extends VanillaMessage {
+public final class PlayerRespawnMessage extends VanillaMainChannelMessage {
 	private final byte difficulty, mode;
 	private final int worldHeight, dimension;
 	private final String worldType;

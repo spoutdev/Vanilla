@@ -27,12 +27,12 @@
 package org.spout.vanilla.protocol.msg.window;
 
 import org.spout.vanilla.inventory.window.Window;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 /**
  * An abstraction of messages meant for Windows
  */
-public abstract class WindowMessage extends VanillaMessage {
+public abstract class WindowMessage extends VanillaMainChannelMessage {
 	private final int instanceId;
 
 	public WindowMessage(Window window) {

@@ -28,9 +28,9 @@ package org.spout.vanilla.protocol.msg.player;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.util.SpoutToStringStyle;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public class PlayerStatusMessage extends VanillaMessage {
+public class PlayerStatusMessage extends VanillaMainChannelMessage {
 	public static final byte INITIAL_SPAWN = 0;
 	public static final byte RESPAWN = 1;
 	private final byte status;

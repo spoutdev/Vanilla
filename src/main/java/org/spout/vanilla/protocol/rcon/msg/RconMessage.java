@@ -30,12 +30,12 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.util.SpoutToStringStyle;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 /**
  * Base class for messages passed through the rcon protocol
  */
-public class RconMessage extends VanillaMessage {
+public class RconMessage extends VanillaMainChannelMessage {
 	private final String payload;
 
 	public RconMessage(String payload) {

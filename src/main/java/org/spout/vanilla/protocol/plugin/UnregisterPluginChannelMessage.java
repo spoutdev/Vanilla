@@ -37,9 +37,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.protocol.VanillaProtocol;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public class UnregisterPluginChannelMessage extends VanillaMessage {
+public class UnregisterPluginChannelMessage extends VanillaMainChannelMessage {
 	private final List<String> types;
 
 	public UnregisterPluginChannelMessage(Collection<MessageCodec<?>> codecs) {

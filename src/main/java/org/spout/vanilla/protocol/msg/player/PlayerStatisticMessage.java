@@ -28,9 +28,9 @@ package org.spout.vanilla.protocol.msg.player;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.util.SpoutToStringStyle;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public final class PlayerStatisticMessage extends VanillaMessage {
+public final class PlayerStatisticMessage extends VanillaMainChannelMessage {
 	private final int id;
 	private final byte amount;
 

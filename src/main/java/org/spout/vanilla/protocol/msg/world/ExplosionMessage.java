@@ -29,9 +29,9 @@ package org.spout.vanilla.protocol.msg.world;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.SpoutToStringStyle;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public final class ExplosionMessage extends VanillaMessage {
+public final class ExplosionMessage extends VanillaMainChannelMessage {
 	private final double x, y, z;
 	private final float radius;
 	private final byte[] coordinates;

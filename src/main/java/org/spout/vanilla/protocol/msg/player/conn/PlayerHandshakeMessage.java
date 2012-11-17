@@ -28,9 +28,9 @@ package org.spout.vanilla.protocol.msg.player.conn;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.util.SpoutToStringStyle;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public final class PlayerHandshakeMessage extends VanillaMessage {
+public final class PlayerHandshakeMessage extends VanillaMainChannelMessage {
 	private final byte protoVersion;
 	private final String username, hostname;
 	private final int port;

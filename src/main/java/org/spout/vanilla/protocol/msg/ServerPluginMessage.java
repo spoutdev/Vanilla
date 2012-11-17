@@ -64,7 +64,7 @@ import org.spout.api.protocol.Protocol;
 import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.protocol.VanillaProtocol;
 
-public class ServerPluginMessage extends VanillaMessage {
+public class ServerPluginMessage extends VanillaMainChannelMessage {
 	private final byte[] data;
 	private final String type;
 

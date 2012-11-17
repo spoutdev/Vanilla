@@ -29,9 +29,9 @@ package org.spout.vanilla.protocol.msg.player;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.SpoutToStringStyle;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public class PlayerSoundEffectMessage extends VanillaMessage {
+public class PlayerSoundEffectMessage extends VanillaMainChannelMessage {
 	private final float x, y, z, volume, pitch;
 	private final String soundName;
 

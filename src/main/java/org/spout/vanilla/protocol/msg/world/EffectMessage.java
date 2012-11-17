@@ -29,9 +29,9 @@ package org.spout.vanilla.protocol.msg.world;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.util.SpoutToStringStyle;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public final class EffectMessage extends VanillaMessage {
+public final class EffectMessage extends VanillaMainChannelMessage {
 	private final int id;
 	private final int x, y, z;
 	private final int data;

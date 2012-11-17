@@ -30,9 +30,15 @@ import org.spout.api.protocol.Message;
 
 public abstract class VanillaMessage implements Message {
 
+	private final int channelId;
+	
+	protected VanillaMessage(int channelId) {
+		this.channelId = channelId;
+	}
+	
 	@Override
 	public int getChannelId() {
-		return 0;
+		return channelId;
 	}
 	
 }

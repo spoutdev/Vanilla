@@ -28,9 +28,9 @@ package org.spout.vanilla.protocol.msg.player;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.util.SpoutToStringStyle;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public final class PlayerHealthMessage extends VanillaMessage {
+public final class PlayerHealthMessage extends VanillaMainChannelMessage {
 	private final short health, food;
 	private final float foodSaturation;
 

@@ -28,9 +28,9 @@ package org.spout.vanilla.protocol.msg.window;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.util.SpoutToStringStyle;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public class WindowEnchantItemMessage extends VanillaMessage {
+public class WindowEnchantItemMessage extends VanillaMainChannelMessage {
 	private final int transaction, enchantment;
 
 	public WindowEnchantItemMessage(int transaction, int enchantment) {

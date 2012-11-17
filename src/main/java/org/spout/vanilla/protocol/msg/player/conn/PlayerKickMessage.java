@@ -30,9 +30,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.protocol.proxy.RedirectMessage;
 import org.spout.api.util.SpoutToStringStyle;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public final class PlayerKickMessage extends VanillaMessage implements RedirectMessage {
+public final class PlayerKickMessage extends VanillaMainChannelMessage implements RedirectMessage {
 	private final String reason;
 	private String hostname;
 	private int port;

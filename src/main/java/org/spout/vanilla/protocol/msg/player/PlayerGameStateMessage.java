@@ -29,9 +29,9 @@ package org.spout.vanilla.protocol.msg.player;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public final class PlayerGameStateMessage extends VanillaMessage {
+public final class PlayerGameStateMessage extends VanillaMainChannelMessage {
 	public static final byte INVALID_BED = 0;
 	public static final byte BEGIN_RAINING = 1;
 	public static final byte END_RAINING = 2;

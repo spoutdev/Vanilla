@@ -27,13 +27,12 @@
 package org.spout.vanilla.protocol.msg.player.pos;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import org.spout.api.math.SinusHelper;
 import org.spout.api.math.Vector3;
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
-public final class PlayerYawMessage implements Message {
+public final class PlayerYawMessage extends VanillaMessage {
 	private final float yaw, pitch, roll;
 	private final boolean onGround;
 	private final Vector3 lookingAt;

@@ -27,11 +27,10 @@
 package org.spout.vanilla.protocol.msg.player;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
-public final class PlayerGroundMessage implements Message {
+public final class PlayerGroundMessage extends VanillaMessage {
 	private final boolean onGround;
 
 	public PlayerGroundMessage(boolean onGround) {

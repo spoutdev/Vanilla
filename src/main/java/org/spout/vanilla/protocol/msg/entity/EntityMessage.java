@@ -31,12 +31,13 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.proxy.ConnectionInfo;
 import org.spout.api.protocol.proxy.TransformableMessage;
 
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
 /**
  * A message meant for an Entity
  */
-public abstract class EntityMessage implements TransformableMessage {
+public abstract class EntityMessage extends VanillaMessage implements TransformableMessage {
 	protected int id;
 
 	public EntityMessage() {

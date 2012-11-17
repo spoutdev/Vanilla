@@ -27,15 +27,13 @@
 package org.spout.vanilla.protocol.msg.entity;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
-
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
-public class EntityItemDataMessage implements Message {
+public class EntityItemDataMessage extends VanillaMessage {
 	private final short type, id;
 	private final byte[] data;
 

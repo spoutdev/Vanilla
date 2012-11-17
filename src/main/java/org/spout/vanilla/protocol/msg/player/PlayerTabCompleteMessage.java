@@ -27,11 +27,10 @@
 package org.spout.vanilla.protocol.msg.player;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
-public class PlayerTabCompleteMessage implements Message {
+public class PlayerTabCompleteMessage extends VanillaMessage {
 	private String text;
 
 	public PlayerTabCompleteMessage(String text) {

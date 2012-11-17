@@ -27,11 +27,10 @@
 package org.spout.vanilla.protocol.msg.player;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
-public final class PlayerTimeMessage implements Message {
+public final class PlayerTimeMessage extends VanillaMessage {
 	private final long age;
 	private final long time;
 

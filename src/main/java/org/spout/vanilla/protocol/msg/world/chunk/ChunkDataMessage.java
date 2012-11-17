@@ -27,12 +27,11 @@
 package org.spout.vanilla.protocol.msg.world.chunk;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import org.spout.api.protocol.Message;
 import org.spout.api.protocol.Session;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
-public final class ChunkDataMessage implements Message {
+public final class ChunkDataMessage extends VanillaMessage {
 	private final int x, z;
 	private final boolean contiguous;
 	private final boolean[] hasAdditionalData;

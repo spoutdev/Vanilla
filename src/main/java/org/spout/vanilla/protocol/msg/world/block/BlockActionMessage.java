@@ -27,12 +27,11 @@
 package org.spout.vanilla.protocol.msg.world.block;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
-public final class BlockActionMessage implements Message {
+public final class BlockActionMessage extends VanillaMessage {
 	private final int x, y, z;
 	private final byte firstByte, secondByte;
 	private short blockId;

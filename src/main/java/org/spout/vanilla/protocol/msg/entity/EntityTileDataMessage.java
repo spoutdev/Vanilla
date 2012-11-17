@@ -27,13 +27,11 @@
 package org.spout.vanilla.protocol.msg.entity;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
-
 import org.spout.nbt.CompoundMap;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
-public class EntityTileDataMessage implements Message {
+public class EntityTileDataMessage extends VanillaMessage {
 	private final int x;
 	private final int y;
 	private final int z;

@@ -27,12 +27,11 @@
 package org.spout.vanilla.protocol.msg.player;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
-public final class PlayerDiggingMessage implements Message {
+public final class PlayerDiggingMessage extends VanillaMessage {
 	public static final int STATE_START_DIGGING = 0;
 	public static final int STATE_DONE_DIGGING = 2;
 	public static final int STATE_UPDATE_BLOCK = 3;//This should be ignored - the client does not use it, and it could be abused.

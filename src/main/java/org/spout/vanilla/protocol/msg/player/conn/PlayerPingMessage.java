@@ -27,11 +27,10 @@
 package org.spout.vanilla.protocol.msg.player.conn;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
-public final class PlayerPingMessage implements Message {
+public final class PlayerPingMessage extends VanillaMessage {
 	private final int pingId;
 
 	public PlayerPingMessage(int pingId) {

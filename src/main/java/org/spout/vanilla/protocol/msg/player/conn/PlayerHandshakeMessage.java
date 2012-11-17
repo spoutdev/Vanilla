@@ -27,11 +27,10 @@
 package org.spout.vanilla.protocol.msg.player.conn;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
-public final class PlayerHandshakeMessage implements Message {
+public final class PlayerHandshakeMessage extends VanillaMessage {
 	private final byte protoVersion;
 	private final String username, hostname;
 	private final int port;

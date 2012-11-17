@@ -27,11 +27,10 @@
 package org.spout.vanilla.protocol.msg.player.pos;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
-public final class PlayerRespawnMessage implements Message {
+public final class PlayerRespawnMessage extends VanillaMessage {
 	private final byte difficulty, mode;
 	private final int worldHeight, dimension;
 	private final String worldType;

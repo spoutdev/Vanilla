@@ -27,11 +27,10 @@
 package org.spout.vanilla.protocol.msg.world.block;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
-public final class SignMessage implements Message {
+public final class SignMessage extends VanillaMessage {
 	private final int x, y, z;
 	private final String[] message;
 

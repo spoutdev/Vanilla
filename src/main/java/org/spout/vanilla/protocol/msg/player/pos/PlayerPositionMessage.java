@@ -27,12 +27,11 @@
 package org.spout.vanilla.protocol.msg.player.pos;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import org.spout.api.math.Vector3;
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
-public final class PlayerPositionMessage implements Message {
+public final class PlayerPositionMessage extends VanillaMessage {
 	private final double x, y, z, stance;
 	private final boolean onGround;
 

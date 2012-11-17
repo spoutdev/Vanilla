@@ -27,14 +27,13 @@
 package org.spout.vanilla.protocol.msg.player;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
-public final class PlayerBlockPlacementMessage implements Message {
+public final class PlayerBlockPlacementMessage extends VanillaMessage {
 	private final int x, y, z;
 	private Vector3 face;
 	private BlockFace direction;

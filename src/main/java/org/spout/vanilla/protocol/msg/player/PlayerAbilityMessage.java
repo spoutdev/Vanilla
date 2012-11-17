@@ -27,11 +27,10 @@
 package org.spout.vanilla.protocol.msg.player;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
-public class PlayerAbilityMessage implements Message {
+public class PlayerAbilityMessage extends VanillaMessage {
 	private final boolean godMode, isFlying, canFly, creativeMode;
 	private final byte flyingSpeed, walkingSpeed;
 

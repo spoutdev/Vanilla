@@ -27,13 +27,11 @@
 package org.spout.vanilla.protocol.msg.player;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
-
 import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
-public final class PlayerGameStateMessage implements Message {
+public final class PlayerGameStateMessage extends VanillaMessage {
 	public static final byte INVALID_BED = 0;
 	public static final byte BEGIN_RAINING = 1;
 	public static final byte END_RAINING = 2;

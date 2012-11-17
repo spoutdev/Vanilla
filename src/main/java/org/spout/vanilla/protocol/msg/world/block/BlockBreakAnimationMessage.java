@@ -27,13 +27,12 @@
 package org.spout.vanilla.protocol.msg.world.block;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
-public class BlockBreakAnimationMessage implements Message {
+public class BlockBreakAnimationMessage extends VanillaMessage {
 	private final int entityId;
 	private final int x, y, z;
 	private final byte stage;

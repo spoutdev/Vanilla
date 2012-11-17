@@ -27,11 +27,10 @@
 package org.spout.vanilla.protocol.msg.player;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
-import org.spout.api.protocol.Message;
 import org.spout.api.util.SpoutToStringStyle;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
-public class PlayerLocaleViewDistanceMessage implements Message {
+public class PlayerLocaleViewDistanceMessage extends VanillaMessage {
 	public static byte VIEW_FAR = 0, VIEW_NORMAL = 1, VIEW_SHORT = 2, VIEW_TINY = 3;
 	private String locale;
 	private byte viewDistance, chatFlags, difficulty;

@@ -26,14 +26,13 @@
  */
 package org.spout.vanilla.protocol.msg.window;
 
-import org.spout.api.protocol.Message;
-
 import org.spout.vanilla.inventory.window.Window;
+import org.spout.vanilla.protocol.msg.VanillaMessage;
 
 /**
  * An abstraction of messages meant for Windows
  */
-public abstract class WindowMessage implements Message {
+public abstract class WindowMessage extends VanillaMessage {
 	private final int instanceId;
 
 	public WindowMessage(Window window) {

@@ -24,50 +24,15 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.msg.window;
+package org.spout.vanilla.protocol.msg;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.util.SpoutToStringStyle;
-import org.spout.vanilla.protocol.msg.VanillaMessage;
+import org.spout.api.protocol.Message;
 
-public class WindowCreativeActionMessage extends VanillaMessage {
-	private final short slot;
-	private final ItemStack item;
-
-	public WindowCreativeActionMessage(short slot, ItemStack item) {
-		this.slot = slot;
-		this.item = item;
-	}
-
-	public short getSlot() {
-		return slot;
-	}
-
-	public ItemStack get() {
-		return item;
-	}
+public abstract class VanillaMessage implements Message {
 
 	@Override
-	public String toString() {
-		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("slot", slot)
-				.append("item", item)
-				.toString();
+	public int getChannelId() {
+		return 0;
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final WindowCreativeActionMessage other = (WindowCreativeActionMessage) obj;
-		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.slot, other.slot)
-				.append(this.item, other.item)
-				.isEquals();
-	}
+	
 }

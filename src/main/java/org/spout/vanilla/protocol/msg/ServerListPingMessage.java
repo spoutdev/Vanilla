@@ -26,9 +26,8 @@
  */
 package org.spout.vanilla.protocol.msg;
 
-import org.spout.api.protocol.Message;
 
-public class ServerListPingMessage implements Message {
+public class ServerListPingMessage extends VanillaMessage {
 	@Override
 	public String toString() {
 		return getClass().getSimpleName() + "{}";

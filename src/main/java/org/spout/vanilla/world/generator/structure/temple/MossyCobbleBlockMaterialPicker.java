@@ -26,38 +26,22 @@
  */
 package org.spout.vanilla.world.generator.structure.temple;
 
-import org.spout.api.generator.biome.Biome;
+import java.util.Random;
 
-import org.spout.api.geo.World;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.Quaternion;
+import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.world.generator.biome.VanillaBiomes;
-import org.spout.vanilla.world.generator.structure.Structure;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.structure.BlockMaterialPicker;
 
-public class Temple extends Structure {
-	@Override
-	public boolean canPlaceObject(World w, int x, int y, int z) {
-		return y >= 64;
+public class MossyCobbleBlockMaterialPicker implements BlockMaterialPicker {
+	private final Random random;
+
+	public MossyCobbleBlockMaterialPicker(Random random) {
+		this.random = random;
 	}
 
 	@Override
-	public void placeObject(World w, int x, int y, int z) {
-		final Biome biome = w.getBiome(x, y, z);
-		if (biome == VanillaBiomes.DESERT || biome == VanillaBiomes.DESERT_HILLS) {
-			final DesertTemple desertTemple = new DesertTemple(this);
-			desertTemple.setPosition(new Point(w, x, y, z));
-			desertTemple.setRotation(new Quaternion(random.nextInt(4) * 90, 0, 1, 0));
-			if (desertTemple.canPlace()) {
-				desertTemple.place();
-			}
-		} else {
-			final JungleTemple jungleTemple = new JungleTemple(this);
-			jungleTemple.setPosition(new Point(w, x, y, z));
-			jungleTemple.setRotation(new Quaternion(random.nextInt(4) * 90, 0, 1, 0));
-			if (jungleTemple.canPlace()) {
-				jungleTemple.place();
-			}
-		}
+	public BlockMaterial get(boolean outer) {
+		return random.nextFloat() < 0.4 ? VanillaMaterials.COBBLESTONE : VanillaMaterials.MOSS_STONE;
 	}
 }

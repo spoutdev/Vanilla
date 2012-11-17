@@ -299,6 +299,6 @@ public class DesertTemple extends StructureComponent {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		return new BoundingBox(new Vector3(-10, -14, -10), new Vector3(10, 10, 10));
+		return new BoundingBox(new Vector3(0, 0, 0), new Vector3(21, 15, 21));
 	}
 }

@@ -28,13 +28,13 @@ package org.spout.vanilla.component.living.hostile;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;
-import org.spout.vanilla.component.living.LivingComponent;
+import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.protocol.entity.creature.WitherEntityProtocol;
 
 /**
  * A component that identifies the entity as a Wither.
  */
-public class Wither extends LivingComponent implements Hostile {
+public class Wither extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();

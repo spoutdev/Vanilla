@@ -28,13 +28,13 @@ package org.spout.vanilla.component.living.hostile;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;
-import org.spout.vanilla.component.living.LivingComponent;
+import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.protocol.entity.creature.SpiderEntityProtocol;
 
 /**
  * A component that identifies the entity as a Spider.
  */
-public class Spider extends LivingComponent implements Hostile {
+public class Spider extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();

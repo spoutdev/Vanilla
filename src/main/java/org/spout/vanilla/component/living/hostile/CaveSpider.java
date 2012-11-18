@@ -28,14 +28,14 @@ package org.spout.vanilla.component.living.hostile;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;
-import org.spout.vanilla.component.living.LivingComponent;
+import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 /**
  * A component that identifies the entity as a CaveSpider.
  */
-public class CaveSpider extends LivingComponent implements Hostile {
+public class CaveSpider extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();

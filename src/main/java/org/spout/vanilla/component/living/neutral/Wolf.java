@@ -27,7 +27,7 @@
 package org.spout.vanilla.component.living.neutral;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.LivingComponent;
+import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.living.Neutral;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.creature.WolfEntityProtocol;
@@ -35,7 +35,7 @@ import org.spout.vanilla.protocol.entity.creature.WolfEntityProtocol;
 /**
  * A component that identifies the entity as a Wolf.
  */
-public class Wolf extends LivingComponent implements Neutral {
+public class Wolf extends Living implements Neutral {
 	private boolean redEyes = false;
 
 	@Override

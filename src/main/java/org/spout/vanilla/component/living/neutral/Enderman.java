@@ -27,14 +27,14 @@
 package org.spout.vanilla.component.living.neutral;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.LivingComponent;
+import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.living.Neutral;
 import org.spout.vanilla.protocol.entity.creature.EndermanEntityProtocol;
 
 /**
  * A component that identifies the entity as an Enderman.
  */
-public class Enderman extends LivingComponent implements Neutral {
+public class Enderman extends Living implements Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();

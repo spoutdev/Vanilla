@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.protocol.entity;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,6 +45,6 @@ public abstract class BasicEntityProtocol extends VanillaEntityProtocol {
 	}
 
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		return Collections.emptyList();
+		return new ArrayList<Parameter<?>>();
 	}
 }

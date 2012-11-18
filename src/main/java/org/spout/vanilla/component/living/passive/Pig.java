@@ -27,7 +27,7 @@
 package org.spout.vanilla.component.living.passive;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.LivingComponent;
+import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.living.Passive;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.creature.PigEntityProtocol;
@@ -35,7 +35,7 @@ import org.spout.vanilla.protocol.entity.creature.PigEntityProtocol;
 /**
  * A component that identifies the entity as a Pig.
  */
-public class Pig extends LivingComponent implements Passive {
+public class Pig extends Living implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();

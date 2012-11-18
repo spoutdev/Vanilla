@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living;
+package org.spout.vanilla.component.living.passive;
 
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
@@ -37,6 +37,7 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
+import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.misc.DiggingComponent;
 import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.component.misc.PickupItemComponent;
@@ -53,7 +54,7 @@ import org.spout.vanilla.protocol.msg.player.PlayerGameStateMessage;
 /**
  * A component that identifies the entity as a Vanilla player.
  */
-public class Human extends LivingComponent {
+public class Human extends Living {
 	public static final int SPAWN_HEALTH = 20;
 
 	@Override

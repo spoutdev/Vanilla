@@ -31,7 +31,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.living.passive.Human;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.player.network.PlayerHealthEvent;
 import org.spout.vanilla.material.VanillaMaterials;

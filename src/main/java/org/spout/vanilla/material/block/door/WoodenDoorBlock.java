@@ -32,7 +32,7 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.living.passive.Human;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.InitializableMaterial;

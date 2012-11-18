@@ -36,7 +36,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.living.passive.Human;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
 
 public class HumanEntityProtocol extends VanillaEntityProtocol {

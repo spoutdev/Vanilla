@@ -54,8 +54,8 @@ import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.component.living.Human;
-import org.spout.vanilla.component.living.LivingComponent;
+import org.spout.vanilla.component.living.Living;
+import org.spout.vanilla.component.living.passive.Human;
 import org.spout.vanilla.component.living.hostile.EnderDragon;
 import org.spout.vanilla.component.living.neutral.Enderman;
 import org.spout.vanilla.component.misc.HealthComponent;
@@ -316,12 +316,12 @@ public class TestCommands {
 		List<Entity> entities = world.getAll();
 		int count = 0;
 		for (Entity entity : entities) {
-			if (entity instanceof Player || !entity.has(LivingComponent.class)) {
+			if (entity instanceof Player || !entity.has(Living.class)) {
 				continue;
 			}
 			count++;
 			entity.remove();
-			Spout.log(entity.get(LivingComponent.class) + " was killed");
+			Spout.log(entity.get(Living.class) + " was killed");
 		}
 		if (count > 0) {
 			if (!isConsole) {
@@ -372,11 +372,11 @@ public class TestCommands {
 		}
 	}
 
-	@Command(aliases = "spawnmob", desc = "Spawns a LivingComponent at your location", min = 1, max = 2)
+	@Command(aliases = "spawnmob", desc = "Spawns a Living at your location", min = 1, max = 2)
 	@CommandPermissions("vanilla.command.spawnmob")
 	public void spawnmob(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player) && Spout.getPlatform() != Platform.CLIENT) {
-			throw new CommandException("Only a player may spawn a LivingComponent!");
+			throw new CommandException("Only a player may spawn a Living!");
 		}
 		Player player;
 		if (Spout.getPlatform() != Platform.CLIENT) {
@@ -390,7 +390,7 @@ public class TestCommands {
 		Class<? extends Component> clazz;
 		// TODO: Make entity prefabs for all entities
 		if (name.isEmpty()) {
-			throw new CommandException("It appears that you forgot to enter in the name of the LivingComponent.");
+			throw new CommandException("It appears that you forgot to enter in the name of the Living.");
 		} else if (name.equalsIgnoreCase("enderman")) {
 			clazz = Enderman.class;
 		} else if (name.equalsIgnoreCase("enderdragon")) {
@@ -400,7 +400,7 @@ public class TestCommands {
 		} else if (name.equalsIgnoreCase("npc")) {
 			clazz = Human.class;
 		} else {
-			throw new CommandException(name + " was not a valid name for a LivingComponent!");
+			throw new CommandException(name + " was not a valid name for a Living!");
 		}
 		Entity entity = pos.getWorld().createEntity(pos, clazz);
 		if (clazz.equals(FallingBlock.class)) {

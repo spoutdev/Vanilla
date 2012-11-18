@@ -35,8 +35,8 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.Human;
-import org.spout.vanilla.component.living.LivingComponent;
+import org.spout.vanilla.component.living.passive.Human;
+import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.material.VanillaMaterial;
@@ -72,7 +72,7 @@ public class EntityInteractHandler extends MessageHandler<EntityInteractMessage>
 				return;
 			}
 
-			LivingComponent clicked = clickedEntity.get(LivingComponent.class);
+			Living clicked = clickedEntity.get(Living.class);
 			if (clicked != null) {
 				//TODO: Reimplement exhaustion values
 

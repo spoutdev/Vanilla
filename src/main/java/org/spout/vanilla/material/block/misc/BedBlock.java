@@ -40,7 +40,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.living.Hostile;
-import org.spout.vanilla.component.living.LivingComponent;
+import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.misc.SleepComponent;
 import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.data.Time;
@@ -79,7 +79,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 		final VanillaSky sky = world.getComponentHolder().get(VanillaSky.class);
 
 		for (Entity e : world.getNearbyEntities(player, NEARBY_MONSTER_RANGE)) {
-			if (e.get(LivingComponent.class) instanceof Hostile) {
+			if (e.get(Living.class) instanceof Hostile) {
 				player.sendMessage(NEARBY_MONSTER_MESSAGE);
 				return;
 			}

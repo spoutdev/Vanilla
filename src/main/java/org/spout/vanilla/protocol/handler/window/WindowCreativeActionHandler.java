@@ -31,7 +31,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.living.passive.Human;
 import org.spout.vanilla.inventory.window.ClickArguments;
 import org.spout.vanilla.inventory.window.InventoryEntry;
 import org.spout.vanilla.inventory.window.Window;

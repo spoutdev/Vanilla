@@ -31,7 +31,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.component.living.Human;
+import org.spout.vanilla.component.living.passive.Human;
 import org.spout.vanilla.component.player.PingComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.configuration.WorldConfigurationNode;

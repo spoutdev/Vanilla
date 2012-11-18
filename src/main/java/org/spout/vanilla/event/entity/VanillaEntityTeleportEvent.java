@@ -32,7 +32,7 @@ import org.spout.api.event.entity.EntityTeleportEvent;
 import org.spout.api.geo.discrete.Point;
 
 /**
- * Event which is called when a LivingComponent gets teleported
+ * Event which is called when a Living gets teleported
  */
 public class VanillaEntityTeleportEvent extends EntityTeleportEvent {
 	private static HandlerList handlers = new HandlerList();

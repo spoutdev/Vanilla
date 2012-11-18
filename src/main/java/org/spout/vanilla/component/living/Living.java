@@ -35,7 +35,7 @@ import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.data.VanillaData;
 
-public abstract class LivingComponent extends EntityComponent {
+public abstract class Living extends EntityComponent {
 	@Override
 	public void onAttached() {
 		Entity holder = getOwner();

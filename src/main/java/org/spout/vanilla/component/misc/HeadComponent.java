@@ -55,7 +55,7 @@ public class HeadComponent extends EntityComponent {
 	@Override
 	public void onTick(float dt) {
 		lastHeadYaw = (int) getOwner().getTransform().getYaw();
-		setYaw((int) getOwner().getTransform().getTransformLive().getRotation().getYaw());
+		setYaw((int) -getOwner().getTransform().getTransformLive().getRotation().getYaw());
 	}
 
 	public boolean isDirty() {

@@ -34,7 +34,6 @@ import java.util.List;
 
 import org.spout.api.Spout;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.MathHelper;
 import org.spout.api.model.mesh.OrientedMesh;
 import org.spout.api.model.mesh.OrientedMeshFace;
 import org.spout.api.model.mesh.Vertex;
@@ -45,7 +44,7 @@ import org.spout.api.render.Texture;
 public class SkyColorBatchEffect implements BatchEffect {
 
 	private static final Texture light = (Texture)Spout.getEngine().getFilesystem().getResource("texture://Vanilla/resources/light.png");
-	private static final float step = 255f / 16f;
+	//private static final float step = 255f / 16f;
 	
 	@Override
 	public void preBatch(SnapshotRender snapshotRender) {

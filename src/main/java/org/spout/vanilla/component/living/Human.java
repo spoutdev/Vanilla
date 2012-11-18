@@ -62,10 +62,10 @@ public class Human extends LivingComponent {
 		Entity holder = getOwner();
 		holder.add(PickupItemComponent.class);
 		holder.add(DiggingComponent.class);
-		holder.add(HealthComponent.class).setSpawnHealth(SPAWN_HEALTH);
 		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
 		//Add height offset if loading from disk
 		if (getAttachedCount() > 1 && holder instanceof Player) {
+			holder.add(HealthComponent.class).setSpawnHealth(SPAWN_HEALTH);
 			((Player) holder).teleport(holder.getTransform().getPosition().add(0, 1.85F, 0));
 		}
 		if (getOwner().has(TextModelComponent.class)) {

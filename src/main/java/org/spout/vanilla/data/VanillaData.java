@@ -31,10 +31,9 @@ import java.util.Random;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyArray;
+import org.spout.api.map.DefaultedKeyFactory;
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.math.Vector3;
-
-import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
 import org.spout.vanilla.inventory.player.PlayerArmorInventory;
@@ -67,12 +66,12 @@ public class VanillaData {
 	public static final DefaultedKey<Integer> INTERACT_REACH = new DefaultedKeyImpl<Integer>("interact_reach", 5);
 	public static final DefaultedKey<Vector3> VELOCITY = new DefaultedKeyImpl<Vector3>("velocity", Vector3.ZERO);
 	public static final DefaultedKey<Inventory> ENTITY_INVENTORY = new DefaultedKeyImpl<Inventory>("inventory", null);
-	public static final DefaultedKey<ChestInventory> CHEST_INVENTORY = new DefaultedKeyImpl<ChestInventory>("chest_inventory", new ChestInventory());
+	public static final DefaultedKey<ChestInventory> CHEST_INVENTORY = new DefaultedKeyFactory<ChestInventory>("chest_inventory", ChestInventory.class);
 	public static final DefaultedKey<Integer> HUNGER = new DefaultedKeyImpl<Integer>("hunger", 20);
 	public static final DefaultedKey<Float> FOOD_SATURATION = new DefaultedKeyImpl<Float>("food_saturation", 5f);
 	public static final DefaultedKey<Float> EXHAUSTION = new DefaultedKeyImpl<Float>("exhaustion", 0f);
 	// Furnace
-	public static final DefaultedKey<FurnaceInventory> FURNACE_INVENTORY = new DefaultedKeyImpl<FurnaceInventory>("inventory", new FurnaceInventory());
+	public static final DefaultedKey<FurnaceInventory> FURNACE_INVENTORY = new DefaultedKeyFactory<FurnaceInventory>("inventory", FurnaceInventory.class);
 	public static final DefaultedKey<Float> FURNACE_FUEL = new DefaultedKeyImpl<Float>("fuel", 0f);
 	public static final DefaultedKey<Float> MAX_FURNACE_FUEL = new DefaultedKeyImpl<Float>("max_fuel", 0f);
 	public static final DefaultedKey<Float> SMELT_TIME = new DefaultedKeyImpl<Float>("smelt_time", -1f);
@@ -91,11 +90,11 @@ public class VanillaData {
 	public static final DefaultedKey<Boolean> IS_SPRINTING = new DefaultedKeyImpl<Boolean>("is_sprinting", false);
 	public static final DefaultedKey<Boolean> IS_FLYING = new DefaultedKeyImpl<Boolean>("is_flying", false);
 	// Inventory
-	public static final DefaultedKey<PlayerMainInventory> MAIN_INVENTORY = new DefaultedKeyImpl<PlayerMainInventory>("main", new PlayerMainInventory());
-	public static final DefaultedKey<PlayerCraftingInventory> CRAFTING_INVENTORY = new DefaultedKeyImpl<PlayerCraftingInventory>("crafting", new PlayerCraftingInventory());
-	public static final DefaultedKey<PlayerArmorInventory> ARMOR_INVENTORY = new DefaultedKeyImpl<PlayerArmorInventory>("armor", new PlayerArmorInventory());
-	public static final DefaultedKey<PlayerQuickbar> QUICKBAR_INVENTORY = new DefaultedKeyImpl<PlayerQuickbar>("quickbar", new PlayerQuickbar());
-	public static final DefaultedKey<ChestInventory> ENDER_CHEST_INVENTORY = new DefaultedKeyImpl<ChestInventory>("ender_chest_inventory", new ChestInventory());
+	public static final DefaultedKey<PlayerMainInventory> MAIN_INVENTORY = new DefaultedKeyFactory<PlayerMainInventory>("main", PlayerMainInventory.class);
+	public static final DefaultedKey<PlayerCraftingInventory> CRAFTING_INVENTORY = new DefaultedKeyFactory<PlayerCraftingInventory>("crafting", PlayerCraftingInventory.class);
+	public static final DefaultedKey<PlayerArmorInventory> ARMOR_INVENTORY = new DefaultedKeyFactory<PlayerArmorInventory>("armor", PlayerArmorInventory.class);
+	public static final DefaultedKey<PlayerQuickbar> QUICKBAR_INVENTORY = new DefaultedKeyFactory<PlayerQuickbar>("quickbar", PlayerQuickbar.class);
+	public static final DefaultedKey<ChestInventory> ENDER_CHEST_INVENTORY = new DefaultedKeyFactory<ChestInventory>("ender_chest_inventory", ChestInventory.class);
 	//Creature-specific
 	public static final DefaultedKey<Integer> LINE_OF_SIGHT = new DefaultedKeyImpl<Integer>("line_of_sight", 1);
 	//Item-specific

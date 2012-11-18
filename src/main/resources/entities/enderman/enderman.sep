@@ -1,0 +1,8 @@
+Name: "Enderman"
+Components:
+    - org.spout.engine.entity.component.EntityRendererComponent
+Data:
+    Health: 20
+    Damages: 1
+    Size: 3
+    Model: model://Vanilla/resources/entities/enderman/enderman.spm

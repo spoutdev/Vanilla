@@ -27,8 +27,8 @@
 package org.spout.vanilla.component.substance.material.chest;
 
 import org.spout.api.entity.Player;
-import org.spout.vanilla.component.inventory.PlayerInventory;
 
+import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.inventory.window.block.chest.EnderChestWindow;
 

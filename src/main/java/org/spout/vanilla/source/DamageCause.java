@@ -29,7 +29,7 @@ package org.spout.vanilla.source;
 /**
  * Represents a source of damage.
  */
-public enum DamageCause{
+public enum DamageCause {
 	/**
 	 * Damaged by falling.
 	 */

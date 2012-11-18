@@ -168,7 +168,6 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 			setFacing(footBlock, facing);
 			setFacing(headBlock, facing);
 		}
-		
 	}
 
 	@Override
@@ -199,7 +198,6 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 
 	/**
 	 * Gets the top or face door block when either of the blocks is given
-	 * 
 	 * @param bedBlock the top or bottom bed block
 	 * @param head whether to get the top block, if false, gets the bottom block
 	 * @return the requested bed half block

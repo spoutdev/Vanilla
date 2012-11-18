@@ -26,9 +26,6 @@
  */
 package org.spout.vanilla.component.misc;
 
-import java.util.logging.Logger;
-
-import org.spout.api.Spout;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;

@@ -35,7 +35,7 @@ import org.spout.vanilla.component.misc.HealthComponent;
 
 public class EnderDragonEntityProtocol extends CreatureProtocol {
 	public final static int HEALTH_INDEX = 16; // The MC metadata index to determine the Dragon's health
-	
+
 	public EnderDragonEntityProtocol() {
 		super(CreatureType.ENDER_DRAGON);
 	}

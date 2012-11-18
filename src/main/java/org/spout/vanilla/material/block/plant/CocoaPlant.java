@@ -42,7 +42,6 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.BlockFlags;
@@ -59,7 +58,7 @@ public class CocoaPlant extends AbstractAttachable implements Plant, Growing, Dy
 	private static final int GROWTH_MASK = 0xC;
 
 	public CocoaPlant(String name, int id) {
-		super(name, id, (String)null);
+		super(name, id, (String) null);
 		this.setAttachable(BlockFaces.NESW);
 	}
 
@@ -145,7 +144,7 @@ public class CocoaPlant extends AbstractAttachable implements Plant, Growing, Dy
 			block.dynamicUpdate(updateTime + getGrowthTime(block));
 		}
 	}
-	
+
 	private long getGrowthTime(Block block) {
 		return 60000L + new Random(block.getWorld().getAge()).nextInt(60000);
 	}

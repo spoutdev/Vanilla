@@ -34,10 +34,8 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.block.SignUpdateEvent;
 
 public class Sign extends VanillaBlockComponent {
-
 	/**
 	 * Gets a copy of the text from this sign
-	 * 
 	 * @return copy of the text
 	 */
 	public String[] getText() {
@@ -49,7 +47,6 @@ public class Sign extends VanillaBlockComponent {
 
 	/**
 	 * Sets the text on this sign. The text must be 4 lines, no longer than 16 chars in length
-	 * 
 	 * @param text to set
 	 * @param cause of the sign change
 	 */

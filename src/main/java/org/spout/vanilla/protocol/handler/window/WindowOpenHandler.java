@@ -33,6 +33,12 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.component.inventory.WindowHolder;
+import org.spout.vanilla.inventory.block.BrewingStandInventory;
+import org.spout.vanilla.inventory.block.ChestInventory;
+import org.spout.vanilla.inventory.block.DispenserInventory;
+import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
+import org.spout.vanilla.inventory.block.FurnaceInventory;
+import org.spout.vanilla.inventory.entity.VillagerInventory;
 import org.spout.vanilla.inventory.window.block.BrewingStandWindow;
 import org.spout.vanilla.inventory.window.block.CraftingTableWindow;
 import org.spout.vanilla.inventory.window.block.DispenserWindow;
@@ -40,16 +46,9 @@ import org.spout.vanilla.inventory.window.block.EnchantmentTableWindow;
 import org.spout.vanilla.inventory.window.block.FurnaceWindow;
 import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.inventory.window.entity.VillagerWindow;
-import org.spout.vanilla.inventory.block.BrewingStandInventory;
-import org.spout.vanilla.inventory.block.ChestInventory;
-import org.spout.vanilla.inventory.block.DispenserInventory;
-import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
-import org.spout.vanilla.inventory.block.FurnaceInventory;
-import org.spout.vanilla.inventory.entity.VillagerInventory;
 import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
 
 public class WindowOpenHandler extends MessageHandler<WindowOpenMessage> {
-
 	@Override
 	public void handleClient(Session session, WindowOpenMessage message) {
 		Player player = ((Client) Spout.getEngine()).getActivePlayer();

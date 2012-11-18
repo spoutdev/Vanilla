@@ -78,7 +78,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		if (heldItem != null) {
 			heldItem.getMaterial().getItemFlags(heldItem, flags);
 		}
-		blockMaterial.destroy(block, flags, new PlayerBreakCause((Player)human.getOwner(), block));
+		blockMaterial.destroy(block, flags, new PlayerBreakCause((Player) human.getOwner(), block));
 	}
 
 	@Override
@@ -152,7 +152,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				return;
 			} else if (heldItem == null) {
 				// interacting with block using fist
-				if (event.interactWithBlock() != Result.DENY) { 
+				if (event.interactWithBlock() != Result.DENY) {
 					blockMaterial.onInteractBy(player, block, Action.LEFT_CLICK, clickedFace);
 				}
 			} else if (!isInteractable) {
@@ -161,7 +161,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 			} else {
 				// interacting with block using item
 				heldItem.getMaterial().onInteract(player, block, Action.LEFT_CLICK, clickedFace);
-				if (event.interactWithBlock() != Result.DENY) { 
+				if (event.interactWithBlock() != Result.DENY) {
 					blockMaterial.onInteractBy(player, block, Action.LEFT_CLICK, clickedFace);
 				}
 			}

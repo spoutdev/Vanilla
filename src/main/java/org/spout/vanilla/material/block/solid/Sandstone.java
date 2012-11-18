@@ -33,9 +33,9 @@ import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.block.Solid;
 
 public class Sandstone extends Solid {
-	public static final Sandstone SANDSTONE = new Sandstone("Sandstone","model://Vanilla/resources/materials/block/solid/sandstone/sandstone.spm");
-	public static final Sandstone DECORATIVE = new Sandstone("Decorative Sandstone", SandstoneType.DECORATIVE, SANDSTONE,"model://Vanilla/resources/materials/block/solid/cheseledsandstone/cheseledsandstone.spm");
-	public static final Sandstone SMOOTH = new Sandstone("Smooth Sandstone", SandstoneType.SMOOTH, SANDSTONE,"model://Vanilla/resources/materials/block/solid/smoothsandstone/smoothsandstone.spm");
+	public static final Sandstone SANDSTONE = new Sandstone("Sandstone", "model://Vanilla/resources/materials/block/solid/sandstone/sandstone.spm");
+	public static final Sandstone DECORATIVE = new Sandstone("Decorative Sandstone", SandstoneType.DECORATIVE, SANDSTONE, "model://Vanilla/resources/materials/block/solid/cheseledsandstone/cheseledsandstone.spm");
+	public static final Sandstone SMOOTH = new Sandstone("Smooth Sandstone", SandstoneType.SMOOTH, SANDSTONE, "model://Vanilla/resources/materials/block/solid/smoothsandstone/smoothsandstone.spm");
 	private final SandstoneType type;
 
 	private Sandstone(String name, String model) {

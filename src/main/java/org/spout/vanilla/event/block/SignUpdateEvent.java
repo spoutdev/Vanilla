@@ -51,7 +51,6 @@ public class SignUpdateEvent extends Event implements ProtocolEvent, Cancellable
 
 	/**
 	 * Get the cause of the changes
-	 * 
 	 * @return cause which changes the text on a sign
 	 */
 	public Cause<?> getSource() {
@@ -60,7 +59,6 @@ public class SignUpdateEvent extends Event implements ProtocolEvent, Cancellable
 
 	/**
 	 * Get the sign which text is being changed
-	 * 
 	 * @return sign which is being changed
 	 */
 	public Sign getSign() {
@@ -68,8 +66,7 @@ public class SignUpdateEvent extends Event implements ProtocolEvent, Cancellable
 	}
 
 	/**
-	 * Get the text which should be placed on the sign. 
-	 * 
+	 * Get the text which should be placed on the sign.
 	 * @return text which is placed on the sign 1 - 4 lines
 	 */
 	public String[] getLines() {

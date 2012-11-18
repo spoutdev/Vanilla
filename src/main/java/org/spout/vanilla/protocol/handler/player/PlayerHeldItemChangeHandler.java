@@ -60,7 +60,7 @@ public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeld
 		Player player = session.getPlayer();
 		player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, 0, item));
 	}
-	
+
 	@Override
 	public void handleClient(Session session, PlayerHeldItemChangeMessage message) {
 		Player player = ((Client) Spout.getEngine()).getActivePlayer();

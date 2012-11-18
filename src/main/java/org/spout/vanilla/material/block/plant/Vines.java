@@ -56,7 +56,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 	private static final int MAX_PER_GROUP = 5;
 
 	public Vines(String name, int id) {
-		super(name, id, (String)null);
+		super(name, id, (String) null);
 		this.setLiquidObstacle(false);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
 		this.getDrops().DEFAULT.clear().add(this).addFlags(ToolTypeFlags.SHEARS);

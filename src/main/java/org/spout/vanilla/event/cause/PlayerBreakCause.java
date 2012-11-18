@@ -33,8 +33,9 @@ import org.spout.api.geo.cuboid.Block;
 /**
  * Caused when a player breaks a block
  */
-public class PlayerBreakCause extends PlayerCause{
+public class PlayerBreakCause extends PlayerCause {
 	private final Block block;
+
 	public PlayerBreakCause(Player player, Block block) {
 		super(player);
 		this.block = block;
@@ -42,7 +43,6 @@ public class PlayerBreakCause extends PlayerCause{
 
 	/**
 	 * Gets the block being broken
-	 * 
 	 * @return broken
 	 */
 	public Block getBlock() {

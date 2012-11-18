@@ -30,10 +30,10 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.ChestInventory;
+import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Chest extends AbstractChest implements Container {

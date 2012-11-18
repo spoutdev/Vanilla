@@ -37,7 +37,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
@@ -48,7 +47,7 @@ import org.spout.vanilla.material.block.liquid.Water;
 
 public class LilyPad extends GroundAttachable {
 	public LilyPad(String name, int id) {
-		super(name, id, (String)null);
+		super(name, id, (String) null);
 		this.setHardness(0.0F).setResistance(0.3F).setTransparent();
 	}
 
@@ -76,7 +75,7 @@ public class LilyPad extends GroundAttachable {
 			if (this.canPlace(block, (short) 0)) {
 				Cause<Entity> cause;
 				if (entity instanceof Player) {
-					cause = new PlayerBreakCause((Player)entity, block);
+					cause = new PlayerBreakCause((Player) entity, block);
 				} else {
 					cause = new EntityCause(entity);
 				}

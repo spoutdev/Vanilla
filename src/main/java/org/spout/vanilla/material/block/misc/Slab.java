@@ -44,16 +44,16 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.solid.DoubleSlab;
 
 public class Slab extends VanillaBlockMaterial implements Burnable {
-	public static final Slab STONE = new Slab((short) 0x7, "Stone Slab", 44, false, (String)null);
-	public static final Slab SANDSTONE = new Slab("Sandstone Slab", 1, STONE, (String)null);
-	public static final Slab STONE_WOOD = new Slab("Wooden Slab", 2, STONE, (String)null);
-	public static final Slab COBBLESTONE = new Slab("Cobblestone Slab", 3, STONE, (String)null);
-	public static final Slab BRICK = new Slab("Brick Slab", 4, STONE, (String)null);
-	public static final Slab STONE_BRICK = new Slab("Stone Brick Slab", 5, STONE, (String)null);
-	public static Slab OAK_WOOD = new Slab((short) 0x3, "Oak Wooden Slab", 126, true, (String)null);
-	public static final Slab SPRUCE_WOOD = new Slab("Spruce Wooden Slab", 0x1, OAK_WOOD, (String)null);
-	public static final Slab BIRCH_WOOD = new Slab("Birch Wooden Slab", 0x2, OAK_WOOD, (String)null);
-	public static final Slab JUNGLE_WOOD = new Slab("Jungle Wooden Slab", 0x3, OAK_WOOD, (String)null);
+	public static final Slab STONE = new Slab((short) 0x7, "Stone Slab", 44, false, (String) null);
+	public static final Slab SANDSTONE = new Slab("Sandstone Slab", 1, STONE, (String) null);
+	public static final Slab STONE_WOOD = new Slab("Wooden Slab", 2, STONE, (String) null);
+	public static final Slab COBBLESTONE = new Slab("Cobblestone Slab", 3, STONE, (String) null);
+	public static final Slab BRICK = new Slab("Brick Slab", 4, STONE, (String) null);
+	public static final Slab STONE_BRICK = new Slab("Stone Brick Slab", 5, STONE, (String) null);
+	public static Slab OAK_WOOD = new Slab((short) 0x3, "Oak Wooden Slab", 126, true, (String) null);
+	public static final Slab SPRUCE_WOOD = new Slab("Spruce Wooden Slab", 0x1, OAK_WOOD, (String) null);
+	public static final Slab BIRCH_WOOD = new Slab("Birch Wooden Slab", 0x2, OAK_WOOD, (String) null);
+	public static final Slab JUNGLE_WOOD = new Slab("Jungle Wooden Slab", 0x3, OAK_WOOD, (String) null);
 	private DoubleSlab doubletype;
 	private final boolean wood;
 	private final ByteBitSet occlusionTop = new ByteBitSet(BlockFace.TOP);

@@ -160,6 +160,7 @@ public class Potion extends VanillaItemMaterial {
 	public static final Potion NIGHT_VISION_EXTENDED = new Potion("Potion of Night Vision (Extended)", EFFECT_NIGHT_VISION, TIER0, DURATION_EXTENDED, ACTION_USE, WATER_BOTTLE);
 	public static final Potion INVISIBILITY = new Potion("Potion of Invisibility", EFFECT_INVISIBILITY, TIER0, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
 	public static final Potion INVISIBILITY_EXTENDED = new Potion("Potion of Invisibility (Extended)", EFFECT_INVISIBILITY, TIER0, DURATION_EXTENDED, ACTION_USE, WATER_BOTTLE);
+
 	//public static final Potion SPLASH_INVISIBILITY = new Potion("Splash Potion of Invisibility", );
 	//public static final Potion SPLASH_INVISIBILITY_EXTENDED = new Potion("Splash Potion of Invisibility (Extended)", );
 	private Potion(String name) {

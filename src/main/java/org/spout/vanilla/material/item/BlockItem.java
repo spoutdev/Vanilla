@@ -32,11 +32,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.source.GenericMaterialSource;
-import org.spout.api.material.source.MaterialSource;
 import org.spout.api.math.Vector3;
-
-import org.spout.vanilla.material.VanillaBlockMaterial;
 
 /**
  * A simplistic class which redirects placement requests to another (official) block material<br>

@@ -97,11 +97,11 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		if (clickedFace == BlockFace.THIS) {
 			// Right clicked air with an item.
 			PlayerInteractEvent event = eventManager.callEvent(new PlayerInteractEvent(player, null, holding, Action.RIGHT_CLICK, true, clickedFace));
-			
+
 			//May have been changed by the event
 			holding = currentSlot.getCurrentItem();
 			holdingMat = holding == null ? null : holding.getMaterial();
-			
+
 			if (event.useItemInHand() != Result.DENY && holdingMat != null) {
 				holdingMat.onInteract(player, Action.RIGHT_CLICK);
 			}
@@ -120,7 +120,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 			//May have been changed by the event
 			holding = currentSlot.getCurrentItem();
 			holdingMat = holding == null ? null : holding.getMaterial();
-			
+
 			//Get the target block and validate 
 			BlockMaterial clickedMaterial = clickedBlock.getMaterial();
 
@@ -214,7 +214,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 						return;
 					}
 				}
-				
+
 				PlayerPlacementCause cause = new PlayerPlacementCause(player, holdingMat, target);
 
 				// Perform actual placement

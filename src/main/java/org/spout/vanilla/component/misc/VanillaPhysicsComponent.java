@@ -50,9 +50,9 @@ public class VanillaPhysicsComponent extends PhysicsComponent {
 	}
 
 	*//**
-	 * Gets the velocity scaled for the official protocol's specifications
-	 * @return
-	 *//*
+ * Gets the velocity scaled for the official protocol's specifications
+ * @return
+ *//*
 	public Vector3 getProtocolVelocity() {
 		final Vector3 velocity = getVelocity();
 		final float x = velocity.getX() * 32000;

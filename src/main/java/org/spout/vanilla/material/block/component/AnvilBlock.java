@@ -29,16 +29,16 @@ package org.spout.vanilla.material.block.component;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.component.substance.material.Anvil;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.component.ComponentMaterial;
 
 public class AnvilBlock extends ComponentMaterial {
 	public AnvilBlock(String name, int id) {
 		super(name, id, Anvil.class, null);
 		this.setHardness(5.0F).setResistance(6000.0F);
 	}
-	
+
 	@Override
 	public boolean hasPhysics() {
 		return true;

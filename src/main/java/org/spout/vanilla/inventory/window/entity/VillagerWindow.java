@@ -27,9 +27,10 @@
 package org.spout.vanilla.inventory.window.entity;
 
 import org.spout.api.entity.Player;
-import org.spout.vanilla.inventory.window.Window;
+
 import org.spout.vanilla.inventory.entity.VillagerInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
+import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class VillagerWindow extends Window {

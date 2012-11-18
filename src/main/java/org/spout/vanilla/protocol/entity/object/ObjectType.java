@@ -45,7 +45,6 @@ public enum ObjectType {
 	DRAGON_EGG(74),
 	EXP_BOTTLE(75),
 	FISHING_BOB(90);
-
 	private final int id;
 
 	private ObjectType(int id) {

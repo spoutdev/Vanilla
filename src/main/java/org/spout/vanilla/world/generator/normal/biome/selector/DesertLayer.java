@@ -47,7 +47,7 @@ public class DesertLayer implements BiomeSelectorLayer {
 		hills.setPower(20);
 		hills.setRoughness(1);
 	}
-	
+
 	@Override
 	public BiomeSelectorElement pick(int x, int y, int z, long seed) {
 		hillsBase.setSeed((int) seed * 11);

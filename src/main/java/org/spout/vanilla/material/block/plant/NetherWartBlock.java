@@ -45,7 +45,7 @@ import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 
 public class NetherWartBlock extends GroundAttachable implements Plant, Growing, DynamicMaterial {
 	public NetherWartBlock(String name, int id) {
-		super(name, id, (String)null);
+		super(name, id, (String) null);
 		this.setLiquidObstacle(false);
 		this.setResistance(0.0F).setHardness(0.0F).setOpacity((byte) 0);
 		this.getDrops().DEFAULT.clear();

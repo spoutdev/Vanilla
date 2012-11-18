@@ -44,7 +44,7 @@ import org.spout.vanilla.material.block.AttachedRedstoneSource;
 
 public class Lever extends AttachedRedstoneSource implements Toggleable {
 	public Lever(String name, int id) {
-		super(name, id, (String)null);
+		super(name, id, (String) null);
 		this.setAttachable(BlockFaces.NESWB).setLiquidObstacle(false).setHardness(0.5F).setResistance(1.7F).setTransparent();
 	}
 

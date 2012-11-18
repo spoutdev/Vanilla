@@ -26,23 +26,10 @@
  */
 package org.spout.vanilla.render;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-
-import org.spout.api.Spout;
-import org.spout.api.material.block.BlockFace;
-import org.spout.api.model.mesh.OrientedMesh;
-import org.spout.api.model.mesh.OrientedMeshFace;
-import org.spout.api.model.mesh.Vertex;
 import org.spout.api.render.BatchEffect;
 import org.spout.api.render.SnapshotRender;
-import org.spout.api.render.Texture;
 
 public class SkyColorRenderEffect implements BatchEffect {
-	
 	@Override
 	public void preBatch(SnapshotRender snapshotRender) {
 
@@ -52,5 +39,4 @@ public class SkyColorRenderEffect implements BatchEffect {
 	public void postBatch(SnapshotRender snapshotRender) {
 
 	}
-
 }

@@ -56,6 +56,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
+
 import org.spout.vanilla.source.HealthChangeCause;
 
 /**
@@ -75,7 +76,6 @@ public class EntityHealthChangeEvent extends EntityEvent implements Cancellable 
 
 	/**
 	 * Gets the cause of the event.
-	 * 
 	 * @return The source that caused this event.
 	 */
 	public HealthChangeCause getCause() {

@@ -35,7 +35,6 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.component.substance.material.BrewingStand;
-import org.spout.vanilla.component.substance.material.chest.Chest;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 
 public class BrewingStandBlock extends ComponentMaterial {

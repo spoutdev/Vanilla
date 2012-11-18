@@ -30,6 +30,6 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class LockedChest extends VanillaBlockMaterial {
 	public LockedChest(String name, int id) {
-		super(name, id, (String)null);
+		super(name, id, (String) null);
 	}
 }

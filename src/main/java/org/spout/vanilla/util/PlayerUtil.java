@@ -39,7 +39,6 @@ import org.spout.vanilla.component.misc.HeadComponent;
 public class PlayerUtil {
 	/**
 	 * Gets the required facing for a Block to look at a possible Entity in the cause
-	 * 
 	 * @param block to get the facing for
 	 * @return The block facing
 	 */
@@ -78,7 +77,6 @@ public class PlayerUtil {
 	/**
 	 * Calculates the facing direction of the entity based on it's
 	 * head if it has one, or it's yaw if not.
-	 * 
 	 * @param entity
 	 * @return the face
 	 */
@@ -95,13 +93,12 @@ public class PlayerUtil {
 	/**
 	 * Tries to calculate the facing direction from the cause
 	 * if possible. Returns BlockFace.NORTH if not.
-	 * 
 	 * @param cause
 	 * @return the face
 	 */
 	public static BlockFace getFacing(Cause<?> cause) {
 		if (cause instanceof EntityCause) {
-			return getFacing(((EntityCause)cause).getSource());
+			return getFacing(((EntityCause) cause).getSource());
 		}
 		return BlockFace.NORTH;
 	}

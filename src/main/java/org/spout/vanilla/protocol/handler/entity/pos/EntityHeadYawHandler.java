@@ -28,11 +28,12 @@ package org.spout.vanilla.protocol.handler.entity.pos;
 
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.protocol.msg.entity.pos.EntityHeadYawMessage;
 
 public class EntityHeadYawHandler extends MessageHandler<EntityHeadYawMessage> {
 	@Override
 	public void handleClient(Session session, EntityHeadYawMessage message) {
-		
+
 	}
 }

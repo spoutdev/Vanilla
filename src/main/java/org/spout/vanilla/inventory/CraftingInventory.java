@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.inventory;
 
-import java.awt.Window;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -105,7 +104,7 @@ public class CraftingInventory extends Inventory {
 			}
 		}
 	}
-	
+
 	/**
 	 * Crafts the current recipe, subtracting all the requirements from the crafting grid
 	 */

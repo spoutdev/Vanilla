@@ -32,9 +32,10 @@ import org.spout.api.protocol.ChannelProcessor;
 import org.spout.api.protocol.ProcessorHandler;
 import org.spout.api.protocol.ProcessorSetupMessage;
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public class EncryptionKeyResponseMessage  extends VanillaMainChannelMessage implements ProcessorSetupMessage {
+public class EncryptionKeyResponseMessage extends VanillaMainChannelMessage implements ProcessorSetupMessage {
 	private final byte[] secret, verifyToken;
 	private final boolean locking; //TODO: Locking is not used in the codec...should locking be removed?
 	private ChannelProcessor processor;

@@ -33,8 +33,8 @@ import org.spout.api.command.CommandSource;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
 
-import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.component.inventory.WindowHolder;
+import org.spout.vanilla.inventory.window.Window;
 
 public class InputCommandExecutor implements CommandExecutor {
 	@Override

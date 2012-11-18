@@ -30,9 +30,9 @@ import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 
 import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.inventory.window.block.AnvilWindow;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.AnvilInventory;
+import org.spout.vanilla.inventory.window.block.AnvilWindow;
 
 public class Anvil extends ViewedBlockComponent implements Container {
 	private final AnvilInventory inventory = new AnvilInventory();

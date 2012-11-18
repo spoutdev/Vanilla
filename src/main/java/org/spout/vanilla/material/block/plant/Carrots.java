@@ -40,7 +40,6 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.BlockFlags;
@@ -121,19 +120,19 @@ public class Carrots extends GroundAttachable implements Growing, Crop, DynamicM
 	// TODO: Trampling
 
 	@Override
-	public EffectRange getDynamicRange(){
+	public EffectRange getDynamicRange() {
 		return EffectRange.THIS_AND_ABOVE;
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime){
+	public void onPlacement(Block b, Region r, long currentTime) {
 		//TODO : delay before update
 		b.dynamicUpdate(currentTime + 30000);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region region, long updateTime, int data){
-		if (!this.isFullyGrown(block)){
+	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
+		if (!this.isFullyGrown(block)) {
 			if (block.translate(BlockFace.TOP).getLight() >= this.getMinimumLightToGrow()) {
 				// Grow using a calculated chance of growing
 				Random rand = new Random(block.getWorld().getAge());
@@ -146,5 +145,4 @@ public class Carrots extends GroundAttachable implements Growing, Crop, DynamicM
 			block.dynamicUpdate(updateTime + 30000);
 		}
 	}
-
 }

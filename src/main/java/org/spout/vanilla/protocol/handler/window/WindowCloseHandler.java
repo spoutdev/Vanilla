@@ -42,7 +42,7 @@ public final class WindowCloseHandler extends MessageHandler<WindowCloseMessage>
 		}
 		session.getPlayer().get(WindowHolder.class).close();
 	}
-	
+
 	@Override
 	public void handleClient(Session session, WindowCloseMessage message) {
 		((Client) Spout.getEngine()).getScreenStack().closeTopScreen();

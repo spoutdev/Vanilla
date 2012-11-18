@@ -54,13 +54,6 @@ import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.inventory.window.block.BrewingStandWindow;
-import org.spout.vanilla.inventory.window.block.CraftingTableWindow;
-import org.spout.vanilla.inventory.window.block.DispenserWindow;
-import org.spout.vanilla.inventory.window.block.EnchantmentTableWindow;
-import org.spout.vanilla.inventory.window.block.FurnaceWindow;
-import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
-import org.spout.vanilla.inventory.window.entity.VillagerWindow;
 import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.component.living.hostile.EnderDragon;
@@ -75,6 +68,13 @@ import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
 import org.spout.vanilla.inventory.entity.VillagerInventory;
 import org.spout.vanilla.inventory.window.WindowType;
+import org.spout.vanilla.inventory.window.block.BrewingStandWindow;
+import org.spout.vanilla.inventory.window.block.CraftingTableWindow;
+import org.spout.vanilla.inventory.window.block.DispenserWindow;
+import org.spout.vanilla.inventory.window.block.EnchantmentTableWindow;
+import org.spout.vanilla.inventory.window.block.FurnaceWindow;
+import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
+import org.spout.vanilla.inventory.window.entity.VillagerWindow;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.explosion.ExplosionModels;
@@ -96,18 +96,18 @@ public class TestCommands {
 	@Command(aliases = "traceray", desc = "Set all blocks that cross your view to stone.")
 	@CommandPermissions("vanilla.command.debug")
 	public void traceray(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player) && Spout.getPlatform()!=Platform.CLIENT) {
+		if (!(source instanceof Player) && Spout.getPlatform() != Platform.CLIENT) {
 			throw new CommandException("You must be a player to trace a ray!");
 		}
 		Player player;
-		if (Spout.getPlatform()!=Platform.CLIENT) {
+		if (Spout.getPlatform() != Platform.CLIENT) {
 			player = (Player) source;
 		} else {
-			player = ((Client)Spout.getEngine()).getActivePlayer();
+			player = ((Client) Spout.getEngine()).getActivePlayer();
 		}
-		
+
 		BlockIterator blockIt = player.get(HitBlockComponent.class).getAlignedBlocks();
-		
+
 		Block block = null;
 		while (blockIt.hasNext()) {
 			block = blockIt.next();
@@ -117,22 +117,22 @@ public class TestCommands {
 			block.setMaterial(VanillaMaterials.STONE);
 		}
 	}
-	
+
 	@Command(aliases = "torch", desc = "Place a torch.")
 	@CommandPermissions("vanilla.command.debug")
 	public void torch(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player) && Spout.getPlatform()!=Platform.CLIENT) {
+		if (!(source instanceof Player) && Spout.getPlatform() != Platform.CLIENT) {
 			throw new CommandException("You must be a player to trace a ray!");
 		}
 		Player player;
-		if (Spout.getPlatform()!=Platform.CLIENT) {
+		if (Spout.getPlatform() != Platform.CLIENT) {
 			player = (Player) source;
 		} else {
-			player = ((Client)Spout.getEngine()).getActivePlayer();
+			player = ((Client) Spout.getEngine()).getActivePlayer();
 		}
-		
+
 		BlockIterator blockIt = player.get(HitBlockComponent.class).getAlignedBlocks();
-		
+
 		Block block = null;
 		while (blockIt.hasNext()) {
 			block = blockIt.next();
@@ -142,7 +142,7 @@ public class TestCommands {
 			}
 		}
 	}
-	
+
 	@Command(aliases = "window", usage = "<type>", desc = "Open a window.", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.debug")
 	public void window(CommandContext args, CommandSource source) throws CommandException {
@@ -188,22 +188,22 @@ public class TestCommands {
 	@Command(aliases = "damage", usage = "<amount>", desc = "Damage yourself")
 	@CommandPermissions("vanilla.command.debug")
 	public void damage(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player) && Spout.getPlatform()!=Platform.CLIENT) {
+		if (!(source instanceof Player) && Spout.getPlatform() != Platform.CLIENT) {
 			throw new CommandException("You must be a player to damage yourself!");
 		}
 		Player player;
-		if (Spout.getPlatform()!=Platform.CLIENT) {
+		if (Spout.getPlatform() != Platform.CLIENT) {
 			player = (Player) source;
 		} else {
-			player = ((Client)Spout.getEngine()).getActivePlayer();
+			player = ((Client) Spout.getEngine()).getActivePlayer();
 		}
 		player.get(HealthComponent.class).damage(args.getInteger(0));
 	}
-	
+
 	@Command(aliases = "hunger", usage = "<amount> <hungry>", desc = "Modify your hunger", min = 2, max = 2)
 	@CommandPermissions("vanilla.command.debug")
 	public void hunger(CommandContext args, CommandSource source) throws CommandException {
-		if(Spout.getPlatform() != Platform.CLIENT) {
+		if (Spout.getPlatform() != Platform.CLIENT) {
 			throw new CommandException("Only clients can modify the hunger bar.");
 		}
 		((Client) Spout.getEngine()).getActivePlayer().get(HUDComponent.class).setHunger(args.getInteger(0), Boolean.valueOf(args.getString(1)));
@@ -375,16 +375,16 @@ public class TestCommands {
 	@Command(aliases = "spawnmob", desc = "Spawns a LivingComponent at your location", min = 1, max = 2)
 	@CommandPermissions("vanilla.command.spawnmob")
 	public void spawnmob(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player) && Spout.getPlatform()!=Platform.CLIENT) {
+		if (!(source instanceof Player) && Spout.getPlatform() != Platform.CLIENT) {
 			throw new CommandException("Only a player may spawn a LivingComponent!");
 		}
 		Player player;
-		if (Spout.getPlatform()!=Platform.CLIENT) {
+		if (Spout.getPlatform() != Platform.CLIENT) {
 			player = (Player) source;
 		} else {
-			player = ((Client)Spout.getEngine()).getActivePlayer();
+			player = ((Client) Spout.getEngine()).getActivePlayer();
 		}
-		
+
 		final Point pos = player.getTransform().getPosition();
 		final String name = args.getString(0);
 		Class<? extends Component> clazz;

@@ -40,7 +40,6 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
@@ -55,7 +54,7 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 	private BlockMaterial lastMaterial;
 
 	public Stem(String name, int id) {
-		super(name, id, (String)null);
+		super(name, id, (String) null);
 		this.setLiquidObstacle(false);
 		this.setResistance(0.0F).setHardness(0.0F).setTransparent();
 	}

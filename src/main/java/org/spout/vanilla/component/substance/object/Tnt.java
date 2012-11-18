@@ -36,7 +36,7 @@ import org.spout.vanilla.protocol.entity.object.ObjectType;
 import org.spout.vanilla.util.explosion.ExplosionModel;
 import org.spout.vanilla.util.explosion.ExplosionModelSpherical;
 
-public class Tnt extends ObjectEntity{
+public class Tnt extends ObjectEntity {
 	private Entity holder;
 
 	public float getExplosionSize() {

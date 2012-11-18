@@ -58,10 +58,12 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.jboss.netty.buffer.ChannelBuffers;
+
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.protocol.VanillaProtocol;
 
 public class ServerPluginMessage extends VanillaMainChannelMessage {

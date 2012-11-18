@@ -57,7 +57,6 @@ public class RedstoneUtil {
 
 	/**
 	 * Gets if the given block receives Redstone power or not
-	 * 
 	 * @param block to get it of
 	 * @return True if it receives power, False if not
 	 */
@@ -67,8 +66,7 @@ public class RedstoneUtil {
 
 	/**
 	 * Gets the block that is powering this block, or null if none
-	 * 
-	 * @param block to get source of power of 
+	 * @param block to get source of power of
 	 * @return Source of redstone power, or null if none
 	 */
 	public static Block getReceivingPowerLocation(Block block) {

@@ -34,7 +34,6 @@ import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.block.Solid;
 
 public class EnchantmentTableBlock extends ComponentMaterial implements Directional {
 	public EnchantmentTableBlock(String name, int id) {

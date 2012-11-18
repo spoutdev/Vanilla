@@ -46,7 +46,6 @@ public class ProjectileHitEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Gets the cause of this event.
-	 * 
 	 * @return cause
 	 */
 	public Cause<?> getCause() {
@@ -55,7 +54,6 @@ public class ProjectileHitEvent extends EntityEvent implements Cancellable {
 
 	/**
 	 * Sets the cause of this event.
-	 * 
 	 * @param cause
 	 */
 	public void setCause(Cause<?> cause) {

@@ -27,13 +27,13 @@
 package org.spout.vanilla.inventory.window.block.chest;
 
 import org.spout.api.entity.Player;
+
 import org.spout.vanilla.component.substance.material.chest.Chest;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class ChestWindow extends AbstractChestWindow {
-
 	public ChestWindow(Player owner, Chest chest) {
 		super(owner, chest, WindowType.CHEST, chest.getInventory().getTitle(), chest.getInventory().size());
 		addInventoryConverter(new GridInventoryConverter(chest.getInventory(), 9));

@@ -49,7 +49,7 @@ public final class RenderMaterials {
 	public static final RenderMaterial VILLAGER_MATERIAL = null;
 	public static final RenderMaterial BEACON_MATERIAL = null;
 	public static final RenderMaterial ANVIL_MATERIAL = null;
-	
+
 	static {
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			FONT = (Font) fileSystem.getResource("font://Spout/resources/resources/fonts/ubuntu/Ubuntu-M.ttf");

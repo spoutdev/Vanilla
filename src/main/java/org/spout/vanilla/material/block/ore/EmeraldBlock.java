@@ -32,7 +32,7 @@ import org.spout.vanilla.material.block.Solid;
 
 public class EmeraldBlock extends Solid {
 	public EmeraldBlock(String name, int id) {
-		super(name, id, (String)null);
+		super(name, id, (String) null);
 		this.setHardness(5.0F).setResistance(10.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.IRON);
 	}
 }

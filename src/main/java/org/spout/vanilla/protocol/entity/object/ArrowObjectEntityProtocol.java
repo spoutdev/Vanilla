@@ -31,8 +31,6 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.substance.object.projectile.Arrow;
-
 public class ArrowObjectEntityProtocol extends ObjectEntityProtocol {
 	public ArrowObjectEntityProtocol() {
 		super(ObjectType.ARROW);

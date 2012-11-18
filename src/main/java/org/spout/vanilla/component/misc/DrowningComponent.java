@@ -36,7 +36,7 @@ import org.spout.vanilla.source.DamageCause;
 /**
  * The drowning component requires a health component and head component
  */
-public class DrowningComponent extends EntityComponent{
+public class DrowningComponent extends EntityComponent {
 	private Entity owner;
 	private HealthComponent health;
 	private HeadComponent head;

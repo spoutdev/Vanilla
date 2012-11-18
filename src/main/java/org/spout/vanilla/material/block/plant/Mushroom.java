@@ -43,7 +43,6 @@ import org.spout.api.math.IntVector3;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
@@ -61,7 +60,7 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 	private static final int MAX_PER_GROUP = 5;
 
 	public Mushroom(String name, int id) {
-		super(name, id, (String)null);
+		super(name, id, (String) null);
 		this.setLiquidObstacle(false);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}
@@ -153,7 +152,7 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
 		return super.canPlace(block, data, against, clickedPos, isClickedBlock) && block.getMaterial() != VanillaMaterials.FLOWER_POT_BLOCK;
 	}
-	
+
 	private long getGrowthTime(Block block) {
 		return 120000L + new Random(block.getWorld().getAge()).nextInt(120000);
 	}

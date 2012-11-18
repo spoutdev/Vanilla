@@ -345,4 +345,12 @@ public class VanillaPlugin extends CommonPlugin {
 	public static VanillaPlugin getInstance() {
 		return instance;
 	}
+
+	/**
+	 * Gets the configuration instance for Vanilla
+	 * @return the configuration instance
+	 */
+	public VanillaConfiguration getConfig() {
+		return config;
+	}
 }

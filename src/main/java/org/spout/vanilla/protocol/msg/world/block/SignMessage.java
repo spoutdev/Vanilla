@@ -27,7 +27,9 @@
 package org.spout.vanilla.protocol.msg.world.block;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.protocol.msg.VanillaBlockDataChannelMessage;
 
 public final class SignMessage extends VanillaBlockDataChannelMessage {

@@ -51,32 +51,32 @@ public abstract class NormalBiome extends VanillaBiome {
 	protected float max;
 	// ground cover
 	protected GroundCoverLayer[] groundCover = new GroundCoverLayer[0];
-	
+
 	protected NormalBiome(int biomeId, Decorator... decorators) {
 		super(biomeId, decorators);
 	}
-	
+
 	protected void setMinMax(float min, float max) {
 		this.min = min;
 		this.max = max;
 	}
-	
+
 	public float getMin() {
 		return min;
 	}
-	
+
 	public float getMax() {
 		return max;
 	}
-	
+
 	protected void setTopCover(GroundCoverLayer[] groundCover) {
 		this.groundCover = groundCover;
 	}
-	
+
 	public GroundCoverLayer[] getGroundCover() {
 		return groundCover;
 	}
-	
+
 	public static class NormalTreeWGOFactory implements TreeWGOFactory {
 		@Override
 		public TreeObject make(Random random) {
@@ -86,7 +86,7 @@ public abstract class NormalBiome extends VanillaBiome {
 				return new SmallTreeObject();
 			}
 		}
-		
+
 		@Override
 		public byte amount(Random random) {
 			if (random.nextInt(10) == 0) {
@@ -95,14 +95,14 @@ public abstract class NormalBiome extends VanillaBiome {
 			return 0;
 		}
 	}
-	
+
 	public static class NormalTallGrassFactory implements TallGrassFactory {
 		@Override
 		public TallGrass make(Random random) {
 			return TallGrass.TALL_GRASS;
 		}
 	}
-	
+
 	@Load
 	@SuppressWarnings("unused")
 	private void load(ConfigurationNode node) {
@@ -117,7 +117,7 @@ public abstract class NormalBiome extends VanillaBiome {
 			groundCover[i] = GroundCoverLayer.loadNew(groundCoverNode.getNode(Integer.toString(i + 1)));
 		}
 	}
-	
+
 	@Save
 	private void save(ConfigurationNode node) {
 		final ConfigurationNode groundCoverNode = node.getNode("ground-cover");

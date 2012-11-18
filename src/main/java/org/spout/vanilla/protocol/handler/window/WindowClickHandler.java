@@ -27,14 +27,15 @@
 package org.spout.vanilla.protocol.handler.window;
 
 import java.util.logging.Level;
+
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.inventory.window.ClickArguments;
+import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
 
@@ -63,7 +64,7 @@ public final class WindowClickHandler extends MessageHandler<WindowClickMessage>
 		}
 		session.send(false, new WindowTransactionMessage(window, message.getTransaction(), result));
 	}
-	
+
 	private void debug(String msg) {
 		if (Spout.debugMode()) {
 			Spout.getLogger().log(Level.INFO, msg);

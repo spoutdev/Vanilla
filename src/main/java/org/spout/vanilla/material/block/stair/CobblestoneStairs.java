@@ -31,7 +31,7 @@ import org.spout.vanilla.material.block.Stairs;
 
 public class CobblestoneStairs extends Stairs {
 	public CobblestoneStairs(String name, int id) {
-		super(name, id, (String)null);
+		super(name, id, (String) null);
 		this.setHardness(2.0F).setResistance(10.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

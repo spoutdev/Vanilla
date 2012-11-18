@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.component.substance;
 
+import com.bulletphysics.collision.shapes.BoxShape;
+
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.component.components.PhysicsComponent;
 import org.spout.api.data.Data;
@@ -38,8 +40,6 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.object.ItemEntityProtocol;
-
-import com.bulletphysics.collision.shapes.BoxShape;
 
 public class Item extends EntityComponent {
 	@Override

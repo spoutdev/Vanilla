@@ -34,8 +34,10 @@ import java.util.List;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 

@@ -27,8 +27,9 @@
 package org.spout.vanilla.inventory.window.block.chest;
 
 import org.spout.api.entity.Player;
-import org.spout.vanilla.inventory.window.Window;
+
 import org.spout.vanilla.component.substance.material.chest.AbstractChest;
+import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class AbstractChestWindow extends Window {

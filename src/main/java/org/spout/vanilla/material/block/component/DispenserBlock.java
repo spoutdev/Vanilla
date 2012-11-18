@@ -48,7 +48,6 @@ import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.material.item.misc.Potion;
 import org.spout.vanilla.material.item.misc.SpawnEgg;

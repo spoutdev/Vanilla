@@ -34,6 +34,7 @@ import org.spout.api.map.DefaultedKeyArray;
 import org.spout.api.map.DefaultedKeyFactory;
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
 import org.spout.vanilla.inventory.player.PlayerArmorInventory;

@@ -30,9 +30,9 @@ import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 
 import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.inventory.window.block.EnchantmentTableWindow;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
+import org.spout.vanilla.inventory.window.block.EnchantmentTableWindow;
 
 public class EnchantmentTable extends ViewedBlockComponent implements Container {
 	private final EnchantmentTableInventory inventory = new EnchantmentTableInventory();

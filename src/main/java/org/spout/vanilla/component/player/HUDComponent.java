@@ -56,10 +56,8 @@ import org.spout.vanilla.data.VanillaData;
 public class HUDComponent extends EntityComponent {
 	private static final float SCALE = 0.75f; // TODO: Apply directly from engine
 	private static final float START_X = -0.71f * SCALE;
-
 	// The main HUD screen
 	private final Screen HUD = new Screen();
-
 	// The core elements of the main HUD
 	private final Widget crosshair = new Widget();
 	private final Widget hotbar = new Widget();
@@ -68,10 +66,8 @@ public class HUDComponent extends EntityComponent {
 	private final Widget bubbles = new Widget();
 	private final Widget armor = new Widget();
 	private final Widget hunger = new Widget();
-
 	private final Random random = new Random();
 	private final float maxSecsBubbles = VanillaData.AIR_SECS.getDefaultValue();
-
 	private int hungerTicks;
 	private int heartAnimationTicks;
 	private boolean animateHearts;

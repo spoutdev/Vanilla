@@ -38,6 +38,7 @@ import org.spout.api.geo.cuboid.Block;
 public class RedstoneChangeEvent extends BlockEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	private final int prev, current;
+
 	public RedstoneChangeEvent(Block block, Cause<?> reason, int prev, int current) {
 		super(block, reason);
 		this.prev = prev;
@@ -46,10 +47,10 @@ public class RedstoneChangeEvent extends BlockEvent implements Cancellable {
 
 	/**
 	 * Gets the redstone power level before the block change occurred.
-	 * 
+	 * <p/>
 	 * <p>Note: Because RedstoneChangeEvent occurs <i>before</i> the block
 	 * change event has finished, you can also inspect the block to find the
-	 * previous power.</p> 
+	 * previous power.</p>
 	 * @return prev power
 	 */
 	public int getPreviousPower() {
@@ -59,10 +60,10 @@ public class RedstoneChangeEvent extends BlockEvent implements Cancellable {
 	/**
 	 * Gets the new power level the redstone source will have after this
 	 * block change finishes.
-	 * 
+	 * <p/>
 	 * <p>Note: Because RedstoneChangeEvent occurs <i>before</i> the block
 	 * change event has finished, neighbor blocks may not yet report that they
-	 * are powered. To perform an event after a redstone change, use the scheduler.</p> 
+	 * are powered. To perform an event after a redstone change, use the scheduler.</p>
 	 * @return new power level
 	 */
 	public int getNewPower() {

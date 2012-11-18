@@ -33,11 +33,11 @@ import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.component.living.Passive;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.CraftingInventory;
+import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.protocol.entity.creature.VillagerEntityProtocol;
 
 /**
@@ -65,10 +65,10 @@ public class Villager extends LivingComponent implements Container, Passive {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	/**
 	 * The integer value associated with this villager type.
-	 * @return int 
+	 * @return int
 	 */
 	public int getVillagerTypeID() {
 		return 5; // Generic Villager ID.

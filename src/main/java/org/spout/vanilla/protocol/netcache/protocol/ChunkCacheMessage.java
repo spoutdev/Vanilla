@@ -29,7 +29,9 @@ package org.spout.vanilla.protocol.netcache.protocol;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public class ChunkCacheMessage extends VanillaMainChannelMessage {

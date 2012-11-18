@@ -34,8 +34,8 @@ import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Voronoi;
 
 import org.spout.api.math.MathHelper;
-import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorElement;
 
+import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorElement;
 import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorLayer;
 
 public class LandLayer implements BiomeSelectorLayer {
@@ -58,7 +58,7 @@ public class LandLayer implements BiomeSelectorLayer {
 		final float size = selectorElements.size() / 2f;
 		return selectorElements.get(MathHelper.floor(land.GetValue(x, 0, z) * size + size));
 	}
-	
+
 	public void addLandElements(BiomeSelectorElement... selectorElements) {
 		this.selectorElements.addAll(Arrays.asList(selectorElements));
 	}

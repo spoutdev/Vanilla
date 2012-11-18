@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.fence;
 
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.block.PressurePlate;
 import org.spout.vanilla.material.block.Solid;
@@ -49,7 +50,7 @@ public class Wall extends Solid {
 		this.setHardness(1.5F).setResistance(10.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
-	
+
 	@Override
 	public boolean canSupport(BlockMaterial material, BlockFace face) {
 		if (material instanceof SignBase) {

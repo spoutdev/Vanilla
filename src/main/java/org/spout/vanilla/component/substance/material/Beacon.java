@@ -30,9 +30,9 @@ import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 
 import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.inventory.window.block.BeaconWindow;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.BeaconInventory;
+import org.spout.vanilla.inventory.window.block.BeaconWindow;
 
 public class Beacon extends ViewedBlockComponent implements Container {
 	private final BeaconInventory inventory = new BeaconInventory();

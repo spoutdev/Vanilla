@@ -54,7 +54,7 @@ public class NormalBiomeSelector extends BiomeSelector {
 	static {
 		LAND.addLandElements(SWAMP, PLAINS, DESERT, FOREST, JUNGLE, TAIGA, TUNDRA);
 	}
-	
+
 	@Override
 	public Biome pickBiome(int x, int y, int z, long seed) {
 		BiomeSelectorElement current = PRIMARY;

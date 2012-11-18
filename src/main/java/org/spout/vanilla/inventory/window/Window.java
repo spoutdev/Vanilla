@@ -82,7 +82,6 @@ public abstract class Window implements InventoryViewer {
 	protected ItemStack cursorItem;
 	private static int windowId = 0;
 	protected int id = -1;
-
 	// Client only
 	public static final float WIDTH = 0.6875f;
 	public static final float HEIGHT = 0.6484375f;
@@ -135,7 +134,7 @@ public abstract class Window implements InventoryViewer {
 				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform().toString());
 		}
 	}
-	
+
 	public Window(Player owner, WindowType type, String title) {
 		this(owner, type, title, 0);
 	}
@@ -157,10 +156,9 @@ public abstract class Window implements InventoryViewer {
 				break;
 		}
 	}
-	
+
 	/**
 	 * Closes this window
-	 * 
 	 */
 	public void close() {
 		removeAllInventoryConverters();
@@ -204,7 +202,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Handles a click when the shift button is held down
-	 *
 	 * @param stack clicked
 	 * @param slot clicked
 	 * @param from inventory with item
@@ -252,7 +249,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Handles a click on the server or the client.
-	 *
 	 * @param args to handle
 	 * @return true if successful
 	 */
@@ -385,7 +381,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Handles a click on the creative message
-	 *
 	 * @param inventory clicked
 	 * @param clickedSlot slot clicked
 	 * @param item clicked
@@ -407,7 +402,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Called when the cursor clicks outside of the window.
-	 *
 	 * @return true if successful
 	 */
 	public boolean onOutsideClick() {
@@ -441,7 +435,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Gets the number of slots on the window.
-	 *
 	 * @return size of window
 	 */
 	public int getSize() {
@@ -454,7 +447,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Whether the window is currently being viewed.
-	 *
 	 * @return true if being viewed
 	 */
 	public boolean isOpened() {
@@ -464,7 +456,6 @@ public abstract class Window implements InventoryViewer {
 	/**
 	 * Gets the inventory at the specified native slot. Returns -1 if
 	 * non-existent.
-	 *
 	 * @param nativeSlot clicked
 	 * @return inventory entry at slot
 	 */
@@ -481,7 +472,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Arguments to handle
-	 *
 	 * @param nativeSlot
 	 * @param rightClick
 	 * @param shiftClick
@@ -497,7 +487,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Gets the owner of this window
-	 *
 	 * @return player
 	 */
 	public final Player getPlayer() {
@@ -506,7 +495,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Gets the human viewing the window
-	 *
 	 * @return human
 	 */
 	public final Human getHuman() {
@@ -515,7 +503,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Returns the player inventory.
-	 *
 	 * @return player inventory
 	 */
 	public final PlayerInventory getPlayerInventory() {
@@ -524,7 +511,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Gets the converter for the specified inventory.
-	 *
 	 * @param inventory
 	 * @return
 	 */
@@ -539,7 +525,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Returns all inventory converters
-	 *
 	 * @return
 	 */
 	public List<InventoryConverter> getInventoryConverters() {
@@ -548,7 +533,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Adds an inventory converter
-	 *
 	 * @param converter
 	 */
 	public void addInventoryConverter(InventoryConverter converter) {
@@ -558,7 +542,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Removes an inventory conveter
-	 *
 	 * @param converter
 	 */
 	public void removeInventoryConverter(InventoryConverter converter) {
@@ -580,7 +563,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Sets a property of the window
-	 *
 	 * @param id of the property
 	 * @param value value of property
 	 */
@@ -601,7 +583,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Sets a property of the window.
-	 *
 	 * @param prop property to set
 	 * @param value set
 	 */
@@ -611,7 +592,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Returns the value of the specified property.
-	 *
 	 * @param prop
 	 * @return value of property
 	 */
@@ -621,7 +601,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Returns the id of the window.
-	 *
 	 * @return id window
 	 */
 	public int getId() {
@@ -630,7 +609,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Returns the type of the window.
-	 *
 	 * @return window type
 	 */
 	public WindowType getType() {
@@ -639,7 +617,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Returns the title of the window.
-	 *
 	 * @return title
 	 */
 	public String getTitle() {
@@ -648,7 +625,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Whether or not there is an item on the cursor
-	 *
 	 * @return true if has item on cursor
 	 */
 	public boolean hasCursorItem() {
@@ -657,7 +633,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Gets the item on the cursor
-	 *
 	 * @return item on cursor
 	 */
 	public ItemStack getCursorItem() {
@@ -666,7 +641,6 @@ public abstract class Window implements InventoryViewer {
 
 	/**
 	 * Sets the item on the cursor.
-	 *
 	 * @param cursorItem
 	 */
 	public void setCursorItem(ItemStack cursorItem) {
@@ -730,7 +704,7 @@ public abstract class Window implements InventoryViewer {
 	public boolean canTick() {
 		return false;
 	}
-	
+
 	public void onTick(float dt) {
 	}
 }

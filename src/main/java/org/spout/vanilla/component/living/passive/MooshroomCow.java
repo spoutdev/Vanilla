@@ -29,8 +29,8 @@ package org.spout.vanilla.component.living.passive;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.LivingComponent;
 import org.spout.vanilla.component.living.Passive;
-import org.spout.vanilla.protocol.entity.creature.CreatureType;
 import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 /**
  * A component that identifies the entity as a MooshroomCow.

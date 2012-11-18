@@ -45,7 +45,7 @@ public class TripWire extends GroundAttachable implements InitializableMaterial 
 	public static final int MAX_DISTANCE_SQUARED = MAX_DISTANCE * MAX_DISTANCE;
 
 	public TripWire(String name, int id) {
-		super(name, id, (String)null);
+		super(name, id, (String) null);
 		this.setHardness(0.0f).setResistance(0.0f).setTransparent();
 	}
 

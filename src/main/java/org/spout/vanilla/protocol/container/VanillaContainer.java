@@ -26,10 +26,6 @@
  */
 package org.spout.vanilla.protocol.container;
 
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
-
-import org.spout.api.Spout;
 import org.spout.api.component.components.BlockComponent;
 import org.spout.api.geo.cuboid.BlockComponentContainer;
 import org.spout.api.geo.cuboid.BlockContainer;
@@ -40,11 +36,12 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFullState;
 import org.spout.api.util.hashing.NibblePairHashed;
 
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
+
 public class VanillaContainer implements BlockContainer, LightContainer, BlockComponentContainer {
-	
 	private static final int HALF_VOLUME = Chunk.BLOCKS.HALF_VOLUME;
 	private static final int VOLUME = Chunk.BLOCKS.VOLUME;
-	
 	private int index;
 	private boolean evenLight;
 	private final byte[] fullChunkData;
@@ -55,7 +52,7 @@ public class VanillaContainer implements BlockContainer, LightContainer, BlockCo
 	private int[] componentX;
 	private int[] componentY;
 	private int[] componentZ;
-	
+
 	public VanillaContainer() {
 		fullChunkData = new byte[HALF_VOLUME * 5];
 		index = 0;
@@ -82,7 +79,7 @@ public class VanillaContainer implements BlockContainer, LightContainer, BlockCo
 		}
 		index++;
 	}
-	
+
 	public void setLightMode(boolean blockLight) {
 		if (blockLight) {
 			index = HALF_VOLUME * 3;
@@ -102,7 +99,7 @@ public class VanillaContainer implements BlockContainer, LightContainer, BlockCo
 		}
 		evenLight = !evenLight;
 	}
-	
+
 	public byte[] getChunkFullData() {
 		return fullChunkData;
 	}
@@ -122,22 +119,22 @@ public class VanillaContainer implements BlockContainer, LightContainer, BlockCo
 		componentX = new int[count];
 		componentY = new int[count];
 		componentZ = new int[count];
-		
+
 		index = 0;
 	}
-	
+
 	public BlockComponent[] getBlockComponent() {
 		return components;
 	}
-	
+
 	public int[] getXArray() {
 		return componentX;
 	}
-	
+
 	public int[] getYArray() {
 		return componentY;
 	}
-	
+
 	public int[] getZArray() {
 		return componentZ;
 	}
@@ -146,5 +143,4 @@ public class VanillaContainer implements BlockContainer, LightContainer, BlockCo
 	public int getBlockComponentCount() {
 		return components.length;
 	}
-
 }

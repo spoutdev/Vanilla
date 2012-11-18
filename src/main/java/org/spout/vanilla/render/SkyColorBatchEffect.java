@@ -34,7 +34,6 @@ import java.util.List;
 
 import org.spout.api.Spout;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.MathHelper;
 import org.spout.api.model.mesh.OrientedMesh;
 import org.spout.api.model.mesh.OrientedMeshFace;
 import org.spout.api.model.mesh.Vertex;
@@ -43,40 +42,39 @@ import org.spout.api.render.SnapshotRender;
 import org.spout.api.render.Texture;
 
 public class SkyColorBatchEffect implements BatchEffect {
-
-	private static final Texture light = (Texture)Spout.getEngine().getFilesystem().getResource("texture://Vanilla/resources/light.png");
+	private static final Texture light = (Texture) Spout.getEngine().getFilesystem().getResource("texture://Vanilla/resources/light.png");
 	private static final float step = 255f / 16f;
-	
+
 	@Override
 	public void preBatch(SnapshotRender snapshotRender) {
-		if(snapshotRender.getSnapshotModel() != null && snapshotRender.getMesh() instanceof OrientedMesh){
-			OrientedMesh original = (OrientedMesh)snapshotRender.getMesh();
+		if (snapshotRender.getSnapshotModel() != null && snapshotRender.getMesh() instanceof OrientedMesh) {
+			OrientedMesh original = (OrientedMesh) snapshotRender.getMesh();
 			List<OrientedMeshFace> meshFace = new ArrayList<OrientedMeshFace>();
-			
+
 			int x = snapshotRender.getPosition().getFloorX();
 			int y = snapshotRender.getPosition().getFloorY();
 			int z = snapshotRender.getPosition().getFloorZ();
-			
+
 			byte blockLight = snapshotRender.getSnapshotModel().getCenter().getBlockLight(x, y, z);
 			byte skyLight = snapshotRender.getSnapshotModel().getCenter().getBlockSkyLight(x, y, z);
 			//int total = MathHelper.clamp(blockLight + skyLight, 0, 15);
 
 			Color color = new Color(light.getImage().getRGB(blockLight, skyLight));
 			//Color color = new Color(blockLight * step,total * step,skyLight * step);
-			
-			for(OrientedMeshFace face : original){
+
+			for (OrientedMeshFace face : original) {
 				Iterator<Vertex> it = face.iterator();
 				Vertex v1 = new Vertex(it.next());
 				Vertex v2 = new Vertex(it.next());
 				Vertex v3 = new Vertex(it.next());
-				
+
 				v1.color = color;
 				v2.color = color;
 				v3.color = color;
-				
+
 				meshFace.add(new OrientedMeshFace(v1, v2, v3, new HashSet<BlockFace>(face.getSeeFromFace())));
 			}
-			
+
 			snapshotRender.setMesh(new OrientedMesh(meshFace));
 		}
 	}
@@ -85,5 +83,4 @@ public class SkyColorBatchEffect implements BatchEffect {
 	public void postBatch(SnapshotRender snapshotRender) {
 
 	}
-
 }

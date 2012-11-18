@@ -27,9 +27,10 @@
 package org.spout.vanilla.inventory.window.block;
 
 import org.spout.api.entity.Player;
-import org.spout.vanilla.inventory.window.Window;
+
 import org.spout.vanilla.inventory.block.DispenserInventory;
 import org.spout.vanilla.inventory.util.GridInventoryConverter;
+import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class DispenserWindow extends Window {

@@ -26,14 +26,12 @@
  */
 package org.spout.vanilla.protocol;
 
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
-import gnu.trove.set.TIntSet;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
+import gnu.trove.set.TIntSet;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -58,6 +56,7 @@ import org.spout.api.util.hashing.IntPairHashed;
 import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
 import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Human;
@@ -129,6 +128,9 @@ import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
+
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
 	private static final int SOLID_BLOCK_ID = 1; // Initializer block ID
@@ -640,11 +642,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			container.setLightMode(false);
 			c.fillSkyLightContainer(container);
 			c.fillBlockComponentContainer(container);
-			
+
 			int[] componentX = container.getXArray();
 			int[] componentY = container.getYArray();
 			int[] componentZ = container.getZArray();
-			
+
 			for (int i = 0; i < container.getBlockComponentCount(); i++) {
 				BlockMaterial bm = c.getBlockMaterial(componentX[i], componentY[i], componentZ[i]);
 				if (bm instanceof VanillaComplexMaterial) {
@@ -654,7 +656,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 					}
 				}
 			}
-			
+
 			return container.getChunkFullData();
 		}
 

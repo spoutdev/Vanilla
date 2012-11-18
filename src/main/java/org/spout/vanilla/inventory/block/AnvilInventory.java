@@ -45,7 +45,6 @@ public class AnvilInventory extends Inventory {
 
 	/**
 	 * Whether the inventory contains an item to repair
-	 *
 	 * @return true if an item is present
 	 */
 	public boolean hasInput() {
@@ -54,7 +53,6 @@ public class AnvilInventory extends Inventory {
 
 	/**
 	 * Whether the inventory contains an ingredient to repair with
-	 *
 	 * @return true if an item is present
 	 */
 	public boolean hasIngredient() {
@@ -63,16 +61,14 @@ public class AnvilInventory extends Inventory {
 
 	/**
 	 * Whether the inventory contains an output item.
-	 *
 	 * @return true if an item is present
 	 */
 	public boolean hasOutput() {
 		return getOutput() != null;
 	}
-	
+
 	/**
 	 * Returns the {@link ItemStack} in the repair slot; can return null.
-	 *
 	 * @return item stack
 	 */
 	public ItemStack getInput() {
@@ -81,7 +77,6 @@ public class AnvilInventory extends Inventory {
 
 	/**
 	 * Returns the {@link ItemStack} in the ingredient slot; can return null.
-	 *
 	 * @return item stack
 	 */
 	public ItemStack getIngredient() {

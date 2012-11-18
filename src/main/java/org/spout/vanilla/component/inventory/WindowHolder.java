@@ -42,7 +42,7 @@ public class WindowHolder extends EntityComponent {
 	public Window getActiveWindow() {
 		return activeWindow;
 	}
-	
+
 	public DefaultWindow getDefaultWindow() {
 		return defaultWindow;
 	}
@@ -53,7 +53,7 @@ public class WindowHolder extends EntityComponent {
 		window.open();
 		this.activeWindow = window;
 	}
-	
+
 	public void close() {
 		if (activeWindow instanceof DefaultWindow) {
 			return;
@@ -92,6 +92,4 @@ public class WindowHolder extends EntityComponent {
 	public void onTick(float dt) {
 		activeWindow.onTick(dt);
 	}
-	
-	
 }

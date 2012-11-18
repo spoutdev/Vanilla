@@ -30,5 +30,4 @@ package org.spout.vanilla.component.living.hostile;
  * A component that identifies the entity as a WitherSkeleton.
  */
 public class WitherSkeleton extends Skeleton {
-
 }

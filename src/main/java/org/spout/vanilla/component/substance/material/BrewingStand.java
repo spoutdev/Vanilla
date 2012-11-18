@@ -29,9 +29,9 @@ package org.spout.vanilla.component.substance.material;
 import org.spout.api.entity.Player;
 
 import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.inventory.window.block.BrewingStandWindow;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
+import org.spout.vanilla.inventory.window.block.BrewingStandWindow;
 
 public class BrewingStand extends ViewedBlockComponent implements Container {
 	private final BrewingStandInventory inventory = new BrewingStandInventory();

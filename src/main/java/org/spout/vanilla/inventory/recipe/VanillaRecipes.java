@@ -32,7 +32,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.spout.api.Spout;
 import org.spout.api.inventory.recipe.Recipe;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.resources.RecipeYaml;
 
 public class VanillaRecipes {

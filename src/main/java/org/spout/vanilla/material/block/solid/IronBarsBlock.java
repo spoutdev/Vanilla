@@ -32,7 +32,7 @@ import org.spout.vanilla.material.block.Solid;
 
 public class IronBarsBlock extends Solid {
 	public IronBarsBlock(String name, int id) {
-		super(name, id, (String)null);
+		super(name, id, (String) null);
 		this.setHardness(5.0F).setResistance(10.0F).setTransparent();
 		getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE, ToolLevelFlags.WOOD_UP);
 	}

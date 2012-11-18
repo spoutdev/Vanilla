@@ -40,7 +40,7 @@ import org.spout.vanilla.data.RailsState;
 import org.spout.vanilla.material.block.rail.Rail;
 import org.spout.vanilla.material.block.rail.RailBase;
 
-public class MinecartTrackLogic{
+public class MinecartTrackLogic {
 	public Block block;
 	public RailBase rails;
 	public boolean isPowered;

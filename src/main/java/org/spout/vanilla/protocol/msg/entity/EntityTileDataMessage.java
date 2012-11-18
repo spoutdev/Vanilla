@@ -27,8 +27,11 @@
 package org.spout.vanilla.protocol.msg.entity;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.nbt.CompoundMap;
+
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public class EntityTileDataMessage extends VanillaMainChannelMessage {

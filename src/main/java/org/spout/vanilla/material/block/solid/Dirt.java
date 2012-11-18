@@ -32,7 +32,7 @@ import org.spout.vanilla.material.block.Solid;
 
 public class Dirt extends Solid {
 	public Dirt(String name, int id) {
-		super(name, id,"model://Vanilla/resources/materials/block/solid/dirt/dirt.spm");
+		super(name, id, "model://Vanilla/resources/materials/block/solid/dirt/dirt.spm");
 		this.setHardness(0.5F).setResistance(0.8F).setStepSound(SoundEffects.STEP_GRAVEL);
 		this.addMiningType(ToolType.SPADE);
 	}

@@ -33,7 +33,6 @@ import org.spout.vanilla.component.substance.material.NoteBlock;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.RedstoneUtil;
 
 public class NoteBlockBlock extends ComponentMaterial implements Fuel {

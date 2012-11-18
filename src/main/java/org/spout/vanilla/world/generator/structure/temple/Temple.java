@@ -27,7 +27,6 @@
 package org.spout.vanilla.world.generator.structure.temple;
 
 import org.spout.api.generator.biome.Biome;
-
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Quaternion;

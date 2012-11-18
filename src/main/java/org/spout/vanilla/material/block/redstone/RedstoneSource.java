@@ -35,7 +35,7 @@ import org.spout.vanilla.data.RedstonePowerMode;
  * Defines a material that can supply redstone power<br>
  * Redstone wire will automatically attach to this material
  */
-public interface RedstoneSource  {
+public interface RedstoneSource {
 	/**
 	 * Gets how much redstone power this redstone source block provides to the direction given.<br>
 	 * @param block of this redstone source
@@ -56,7 +56,6 @@ public interface RedstoneSource  {
 
 	/**
 	 * Gets the amount of redstone power this material generates for itself
-	 * 
 	 * @param data
 	 * @return power strength
 	 */

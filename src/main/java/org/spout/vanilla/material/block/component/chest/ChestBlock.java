@@ -42,7 +42,7 @@ public class ChestBlock extends AbstractChestBlock {
 	public final float BURN_TIME = 15;
 
 	public ChestBlock(String name, int id) {
-		super(name, id, Chest.class, (String)null );
+		super(name, id, Chest.class, (String) null);
 		this.setHardness(2.5F).setResistance(4.2F).setTransparent();
 	}
 

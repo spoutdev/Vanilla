@@ -37,7 +37,6 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -54,7 +53,7 @@ public class FlintAndSteel extends InteractTool {
 			BlockMaterial clickedmat = block.getMaterial();
 			Cause<Entity> cause;
 			if (entity instanceof Player) {
-				cause = new PlayerCause((Player)entity);
+				cause = new PlayerCause((Player) entity);
 			} else {
 				cause = new EntityCause(entity);
 			}
@@ -74,7 +73,7 @@ public class FlintAndSteel extends InteractTool {
 						inv.addData(inv.getCurrentSlot(), 1);
 					}
 				}
-				
+
 				// Handle the creation of portals
 				if (VanillaMaterials.PORTAL.createPortal(target.translate(BlockFace.BOTTOM))) {
 					return;

@@ -86,7 +86,6 @@ public enum WindowType {
 	 * {@link org.spout.vanilla.component.substance.material.Anvil}
 	 */
 	ANVIL(8, RenderMaterials.ANVIL_MATERIAL);
-
 	private final int id;
 	private final RenderMaterial material;
 	private static final TIntObjectMap<WindowType> idMap = new TIntObjectHashMap<WindowType>();
@@ -107,7 +106,6 @@ public enum WindowType {
 
 	/**
 	 * Returns the {@link RenderMaterial} for the GUI
-	 *
 	 * @return render material
 	 */
 	public RenderMaterial getRenderMaterial() {

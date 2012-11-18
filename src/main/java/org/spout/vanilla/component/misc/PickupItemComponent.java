@@ -32,7 +32,6 @@ import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.entity.EntityCollectItemEvent;

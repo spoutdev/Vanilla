@@ -27,6 +27,7 @@
 package org.spout.vanilla.inventory.window.block.chest;
 
 import org.spout.api.entity.Player;
+
 import org.spout.vanilla.component.substance.material.chest.EnderChest;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.util.GridInventoryConverter;

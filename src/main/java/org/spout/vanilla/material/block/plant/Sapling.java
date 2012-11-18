@@ -41,7 +41,6 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
@@ -63,13 +62,13 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 	private static final short dataMask = 0x3;
 
 	private Sapling(String name) {
-		super(dataMask, name, 6, (String)null);
+		super(dataMask, name, 6, (String) null);
 		this.setLiquidObstacle(false);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}
 
 	private Sapling(String name, int data, Sapling parent) {
-		super(name, 6, data, parent, (String)null);
+		super(name, 6, data, parent, (String) null);
 		this.setLiquidObstacle(false);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}

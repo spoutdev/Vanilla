@@ -107,16 +107,16 @@ public class VanillaListener implements Listener {
 		//2.) Redstone source material was removed, removing power
 		//3.) Redstone source material's data level changed, indicating change in power
 		short prevPower = -1;
-		short newPower =  -1;
+		short newPower = -1;
 		if (!(oldMat instanceof RedstoneSource) && newMat instanceof RedstoneSource) {
 			prevPower = 0;
-			newPower = ((RedstoneSource)newMat).getRedstonePowerStrength(newData);
+			newPower = ((RedstoneSource) newMat).getRedstonePowerStrength(newData);
 		} else if (!(newMat instanceof RedstoneSource) && oldMat instanceof RedstoneSource) {
-			prevPower = ((RedstoneSource)oldMat).getRedstonePowerStrength(prevData);
+			prevPower = ((RedstoneSource) oldMat).getRedstonePowerStrength(prevData);
 			newPower = 0;
 		} else if (newMat == oldMat && oldMat instanceof RedstoneSource) {
-			prevPower = ((RedstoneSource)oldMat).getRedstonePowerStrength(prevData);
-			newPower = ((RedstoneSource)newMat).getRedstonePowerStrength(newData);
+			prevPower = ((RedstoneSource) oldMat).getRedstonePowerStrength(prevData);
+			newPower = ((RedstoneSource) newMat).getRedstonePowerStrength(newData);
 		}
 		if (prevPower != -1) {
 			RedstoneChangeEvent redstoneEvent = new RedstoneChangeEvent(event.getBlock(), event.getCause(), prevPower, newPower);

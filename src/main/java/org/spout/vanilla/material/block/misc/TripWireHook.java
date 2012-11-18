@@ -47,7 +47,7 @@ public class TripWireHook extends AttachedRedstoneSource implements Toggleable, 
 	private static final long TICK_DELAY = 500;
 
 	public TripWireHook(String name, int id) {
-		super(name, id, (String)null);
+		super(name, id, (String) null);
 		this.setAttachable(BlockFaces.NESW);
 		this.setHardness(0.0f).setResistance(0.0f).setTransparent();
 	}

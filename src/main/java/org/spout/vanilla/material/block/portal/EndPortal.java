@@ -33,7 +33,7 @@ import org.spout.vanilla.material.block.Portal;
 
 public class EndPortal extends Portal {
 	public EndPortal(String name, int id) {
-		super(name, id, (String)null);
+		super(name, id, (String) null);
 		this.setHardness(-1.0F).setResistance(6000000.0F);
 	}
 

@@ -29,7 +29,7 @@ package org.spout.vanilla.source;
 /**
  * Represents the source of a health change.
  */
-public enum HealthChangeCause{
+public enum HealthChangeCause {
 	/**
 	 * Health changed due to the execution of a command.
 	 */

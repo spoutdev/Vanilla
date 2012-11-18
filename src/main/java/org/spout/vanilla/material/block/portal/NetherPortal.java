@@ -37,7 +37,7 @@ import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 
 public class NetherPortal extends Portal {
 	public NetherPortal(String name, int id) {
-		super(name, id, (String)null);
+		super(name, id, (String) null);
 		this.setHardness(-1.0F).setResistance(0.0F);
 	}
 

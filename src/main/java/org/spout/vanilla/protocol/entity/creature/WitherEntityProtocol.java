@@ -35,7 +35,7 @@ import org.spout.vanilla.component.misc.HealthComponent;
 
 public class WitherEntityProtocol extends CreatureProtocol {
 	public final static int HEALTH_INDEX = 16; // The MC metadata index to determine the Wither's health
-	
+
 	public WitherEntityProtocol() {
 		super(CreatureType.WITHER);
 	}

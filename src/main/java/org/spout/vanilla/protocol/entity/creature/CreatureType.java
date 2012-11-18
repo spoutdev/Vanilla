@@ -55,13 +55,12 @@ public enum CreatureType {
 	WITHER(64),
 	WOLF(95),
 	ZOMBIE(54);
-	
 	private int id;
-	
+
 	private CreatureType(int id) {
 		this.id = id;
 	}
-	
+
 	public int getId() {
 		return id;
 	}

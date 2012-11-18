@@ -31,7 +31,7 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class Web extends VanillaBlockMaterial {
 	public Web(String name, int id) {
-		super(name, id, (String)null);
+		super(name, id, (String) null);
 		this.setLiquidObstacle(false).setHardness(4.0F).setResistance(20.0F).setTransparent();
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.SWORD, ToolTypeFlags.SHEARS);
 	}

@@ -45,7 +45,7 @@ import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.world.generator.object.RandomObject;
 
-public class SnowObject extends RandomObject{
+public class SnowObject extends RandomObject {
 	private static final int MAX_ITERATIONS = 10; // Endless loop prevention
 	private static final EffectRange NEIGHBORS = new CuboidEffectRange(-1, 0, -1, 1, 0, 1);
 

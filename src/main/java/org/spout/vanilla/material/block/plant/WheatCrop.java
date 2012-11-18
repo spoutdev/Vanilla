@@ -40,7 +40,6 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.Human;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.BlockFlags;
@@ -55,7 +54,7 @@ import org.spout.vanilla.material.item.misc.Dye;
 
 public class WheatCrop extends GroundAttachable implements Growing, Crop, DynamicMaterial, InitializableMaterial {
 	public WheatCrop(String name, int id) {
-		super(name, id, (String)null);
+		super(name, id, (String) null);
 		this.setResistance(0.0F).setHardness(0.0F).setTransparent();
 	}
 

@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.render;
 
-import org.spout.api.render.BatchEffect;
-
 public class BatchEffects {
-	public final static BatchEffect SKYCOLOR = new SkyColorBatchEffect();
+	//public final static BatchEffect SKYCOLOR = new SkyColorBatchEffect(); // BackLater
 }

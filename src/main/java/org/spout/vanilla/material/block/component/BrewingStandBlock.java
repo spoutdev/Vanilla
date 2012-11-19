@@ -39,7 +39,7 @@ import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 
 public class BrewingStandBlock extends ComponentMaterial {
 	public BrewingStandBlock(String name, int id) {
-		super(name, id, BrewingStand.class, (String) null);
+		super(name, id, BrewingStand.class, (String) null, null);
 		this.setResistance(2.5F).setHardness(10.F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

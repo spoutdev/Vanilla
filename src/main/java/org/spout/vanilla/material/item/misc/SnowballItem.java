@@ -36,7 +36,7 @@ import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class SnowballItem extends VanillaItemMaterial {
 	public SnowballItem(String name, int id) {
-		super(name, id);
+		super(name, id, null);
 	}
 
 	@Override

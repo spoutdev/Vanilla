@@ -45,6 +45,7 @@ public final class RenderMaterials {
 	public static final RenderMaterial ENCHANT_MATERIAL;
 	public static final RenderMaterial ALCHEMY_MATERIAL;
 	public static final RenderMaterial ITEMS_MATERIAL;
+	public static final RenderMaterial BLOCKS_MATERIAL;
 	// TODO: Missing textures
 	public static final RenderMaterial VILLAGER_MATERIAL = null;
 	public static final RenderMaterial BEACON_MATERIAL = null;
@@ -63,6 +64,7 @@ public final class RenderMaterials {
 			ENCHANT_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/InventoryGUIMaterial.smt");
 			ALCHEMY_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/InventoryGUIMaterial.smt");
 			ITEMS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/ItemsGUIMaterial.smt");
+			BLOCKS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/terrain.png");
 		} else {
 			FONT = null;
 			HOTBAR_MATERIAL = null;
@@ -75,6 +77,7 @@ public final class RenderMaterials {
 			ENCHANT_MATERIAL = null;
 			ALCHEMY_MATERIAL = null;
 			ITEMS_MATERIAL = null;
+			BLOCKS_MATERIAL = null;
 		}
 	}
 

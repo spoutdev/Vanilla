@@ -27,6 +27,8 @@
 package org.spout.vanilla.material;
 
 import org.spout.api.material.source.MaterialSource;
+import org.spout.api.math.Rectangle;
+import org.spout.api.render.RenderMaterial;
 
 public interface VanillaMaterial extends MaterialSource {
 	/**
@@ -56,4 +58,8 @@ public interface VanillaMaterial extends MaterialSource {
 	 * @return minecraft data
 	 */
 	public short getMinecraftData(short data);
+
+	public RenderMaterial getRenderMaterial();
+
+	public Rectangle getSource();
 }

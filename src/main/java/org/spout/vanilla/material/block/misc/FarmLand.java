@@ -45,7 +45,7 @@ public class FarmLand extends VanillaBlockMaterial implements InitializableMater
 	private static final EffectRange CROP_CHECK_RANGE = new CuboidEffectRange(-1, 1, -1, 1, 1, 1);
 
 	public FarmLand(String name, int id) {
-		super(name, id, "model://Vanilla/resources/materials/block/solid/farmland/farmland.spm");
+		super(name, id, "model://Vanilla/resources/materials/block/solid/farmland/farmland.spm", null);
 		this.setHardness(0.6F).setResistance(1.0F).setOpaque();
 		this.addMiningType(ToolType.SPADE);
 	}

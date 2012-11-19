@@ -44,7 +44,7 @@ public abstract class AbstractChestBlock extends ComponentMaterial implements Di
 	public final float BURN_TIME = 15;
 
 	public AbstractChestBlock(String name, int id, Class<? extends AbstractChest> componentType, String model) {
-		super(name, id, componentType, model);
+		super(name, id, componentType, model, null);
 	}
 
 	@Override

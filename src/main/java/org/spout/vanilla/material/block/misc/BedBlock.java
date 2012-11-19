@@ -59,7 +59,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 	public static final ChatArguments OCCUPIED_MESSAGE = new ChatArguments(ChatStyle.RED, "This bed is occupied.");
 
 	public BedBlock(String name, int id) {
-		super(name, id, "model://Vanilla/resources/materials/block/solid/bedrock/bedrock.spm");
+		super(name, id, "model://Vanilla/resources/materials/block/solid/bedrock/bedrock.spm", null);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
 	}
 

@@ -40,7 +40,7 @@ public abstract class Armor extends VanillaItemMaterial implements Enchantable {
 	private short durability;
 
 	protected Armor(String name, int id, short durability) {
-		super(name, id);
+		super(name, id, null);
 		this.durability = durability;
 	}
 

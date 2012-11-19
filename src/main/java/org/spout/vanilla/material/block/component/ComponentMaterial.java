@@ -35,6 +35,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.ComplexMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.substance.material.VanillaBlockComponent;
@@ -43,8 +44,8 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 public class ComponentMaterial extends VanillaBlockMaterial implements ComplexMaterial {
 	private final Class<? extends BlockComponent> componentType;
 
-	public ComponentMaterial(String name, int id, Class<? extends BlockComponent> componentType, String model) {
-		super(name, id, model);
+	public ComponentMaterial(String name, int id, Class<? extends BlockComponent> componentType, String model, Rectangle source) {
+		super(name, id, model, source);
 		this.componentType = componentType;
 	}
 

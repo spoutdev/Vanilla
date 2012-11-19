@@ -35,7 +35,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 
 public class AnvilBlock extends ComponentMaterial {
 	public AnvilBlock(String name, int id) {
-		super(name, id, Anvil.class, null);
+		super(name, id, Anvil.class, null, null);
 		this.setHardness(5.0F).setResistance(6000.0F);
 	}
 

@@ -35,11 +35,11 @@ public class Coal extends VanillaItemMaterial implements Fuel {
 	public final float BURN_TIME = 80;
 
 	private Coal(String name) {
-		super((short) 1, name, 263);
+		super((short) 1, name, 263, null);
 	}
 
 	private Coal(String name, int data, Coal parent) {
-		super(name, 263, data, parent);
+		super(name, 263, data, parent, null);
 	}
 
 	@Override

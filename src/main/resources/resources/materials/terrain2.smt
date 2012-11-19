@@ -1,4 +1,4 @@
-Shader: shader://Spout/resources/resources/shaders/textShader.ssf
+Shader: shader://Vanilla/resources/resources/shaders/textShader.ssf
 
 MaterialParams:
     Diffuse: texture://Vanilla/resources/terrain.png

@@ -26,10 +26,20 @@
  */
 package org.spout.vanilla.render;
 
-import org.spout.api.render.effect.BatchEffect;
-import org.spout.api.render.effect.RenderEffect;
+import java.awt.Color;
 
-public class BatchEffects {
-	public final static BatchEffect SKYTIMEBATCH = new LightBatchEffect();
-	public final static RenderEffect SKYTIME = new LightRenderEffect();
+import org.spout.api.render.effect.RenderEffect;
+import org.spout.api.render.effect.SnapshotRender;
+
+public class LightRenderEffect implements RenderEffect{
+	
+	@Override
+	public void preRender(SnapshotRender snapshotRender) {
+		snapshotRender.getMaterial().getShader().setUniform("skyColor", new Color(0.80f,0.75f,0.75f,1f));
+	}
+
+	@Override
+	public void postRender(SnapshotRender snapshotRender) {
+	}
+
 }

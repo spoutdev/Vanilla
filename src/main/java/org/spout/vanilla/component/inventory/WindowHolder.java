@@ -47,17 +47,14 @@ public class WindowHolder extends EntityComponent {
 		return defaultWindow;
 	}
 
-	public void open(Window window) {
-		close();
+	public void openWindow(Window window) {
+		closeWindow();
 		debug("Opening " + window.getClass().getCanonicalName());
 		window.open();
 		this.activeWindow = window;
 	}
 
-	public void close() {
-		if (activeWindow instanceof DefaultWindow) {
-			return;
-		}
+	public void closeWindow() {
 		debug("Closing " + activeWindow.getClass().getCanonicalName());
 		activeWindow.close();
 		activeWindow = defaultWindow;

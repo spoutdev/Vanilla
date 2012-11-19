@@ -54,7 +54,7 @@ public class CraftingTableBlock extends Solid {
 			if (!(entity instanceof Player)) {
 				return;
 			}
-			((Player) entity).get(WindowHolder.class).open(new CraftingTableWindow((Player) entity));
+			((Player) entity).get(WindowHolder.class).openWindow(new CraftingTableWindow((Player) entity));
 		}
 	}
 

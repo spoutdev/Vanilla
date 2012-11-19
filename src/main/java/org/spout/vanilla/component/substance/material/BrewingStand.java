@@ -43,6 +43,6 @@ public class BrewingStand extends ViewedBlockComponent implements Container {
 
 	@Override
 	public void open(Player player) {
-		player.get(WindowHolder.class).open(new BrewingStandWindow(player, inventory));
+		player.get(WindowHolder.class).openWindow(new BrewingStandWindow(player, inventory));
 	}
 }

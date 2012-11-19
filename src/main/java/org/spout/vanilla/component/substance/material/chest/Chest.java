@@ -78,7 +78,7 @@ public class Chest extends AbstractChest implements Container {
 		setDouble(VanillaMaterials.CHEST.isDouble(block));
 
 		// Finally open the window
-		player.get(WindowHolder.class).open(new ChestWindow(player, this));
+		player.get(WindowHolder.class).openWindow(new ChestWindow(player, this));
 
 		super.open(player);
 	}

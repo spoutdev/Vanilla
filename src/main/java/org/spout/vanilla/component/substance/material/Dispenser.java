@@ -53,6 +53,6 @@ public class Dispenser extends ViewedBlockComponent implements Container {
 
 	@Override
 	public void open(Player player) {
-		player.get(WindowHolder.class).open(new DispenserWindow(player, inventory));
+		player.get(WindowHolder.class).openWindow(new DispenserWindow(player, inventory));
 	}
 }

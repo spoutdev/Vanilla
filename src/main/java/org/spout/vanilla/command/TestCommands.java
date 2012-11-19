@@ -160,25 +160,25 @@ public class TestCommands {
 		Player player = (Player) source;
 		switch (type) {
 			case CHEST:
-				player.get(WindowHolder.class).open(new ChestWindow(player, new Chest()));
+				player.get(WindowHolder.class).openWindow(new ChestWindow(player, new Chest()));
 				break;
 			case CRAFTING_TABLE:
-				player.get(WindowHolder.class).open(new CraftingTableWindow(player));
+				player.get(WindowHolder.class).openWindow(new CraftingTableWindow(player));
 				break;
 			case FURNACE:
-				player.get(WindowHolder.class).open(new FurnaceWindow(player, new FurnaceInventory()));
+				player.get(WindowHolder.class).openWindow(new FurnaceWindow(player, new FurnaceInventory()));
 				break;
 			case DISPENSER:
-				player.get(WindowHolder.class).open(new DispenserWindow(player, new DispenserInventory()));
+				player.get(WindowHolder.class).openWindow(new DispenserWindow(player, new DispenserInventory()));
 				break;
 			case ENCHANTMENT_TABLE:
-				player.get(WindowHolder.class).open(new EnchantmentTableWindow(player, new EnchantmentTableInventory()));
+				player.get(WindowHolder.class).openWindow(new EnchantmentTableWindow(player, new EnchantmentTableInventory()));
 				break;
 			case BREWING_STAND:
-				player.get(WindowHolder.class).open(new BrewingStandWindow(player, new BrewingStandInventory()));
+				player.get(WindowHolder.class).openWindow(new BrewingStandWindow(player, new BrewingStandInventory()));
 				break;
 			case VILLAGER:
-				player.get(WindowHolder.class).open(new VillagerWindow(player, new VillagerInventory()));
+				player.get(WindowHolder.class).openWindow(new VillagerWindow(player, new VillagerInventory()));
 				break;
 			default:
 				throw new CommandException("Window not supported.");

@@ -45,11 +45,12 @@ public class InputCommandExecutor implements CommandExecutor {
 
 		String name = command.getPreferredName();
 		if (name.equalsIgnoreCase("+toggle_inventory")) {
-			Window window = ((Player) source).get(WindowHolder.class).getActiveWindow();
+			WindowHolder holder = ((Player) source).get(WindowHolder.class);
+			Window window = holder.getActiveWindow();
 			if (window.isOpened()) {
-				((Player) source).get(WindowHolder.class).close();
+				holder.closeWindow();
 			} else {
-				window.open();
+				holder.openWindow(holder.getDefaultWindow());
 			}
 		}
 	}

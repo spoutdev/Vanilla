@@ -143,15 +143,14 @@ public abstract class Window implements InventoryViewer {
 	 * Opens the window from the server on the client.
 	 */
 	public void open() {
+		opened = true;
 		switch (Spout.getPlatform()) {
 			case PROXY:
 			case SERVER:
-				opened = true;
 				callProtocolEvent(new WindowOpenEvent(this));
 				reload();
 				break;
 			case CLIENT:
-				opened = true;
 				((Client) Spout.getEngine()).getScreenStack().openScreen(popup);
 				break;
 		}

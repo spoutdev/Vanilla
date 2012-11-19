@@ -186,6 +186,6 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	@Override
 	public void open(Player player) {
-		player.get(WindowHolder.class).open(new FurnaceWindow(player, getInventory()));
+		player.get(WindowHolder.class).openWindow(new FurnaceWindow(player, getInventory()));
 	}
 }

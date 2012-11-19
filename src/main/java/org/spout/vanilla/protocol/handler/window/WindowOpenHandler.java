@@ -58,25 +58,25 @@ public class WindowOpenHandler extends MessageHandler<WindowOpenMessage> {
 				break;
 			case CHEST:
 				ChestInventory inventory = new ChestInventory(message.getSlots());
-				player.get(WindowHolder.class).open(new ChestWindow(player, inventory, title));
+				player.get(WindowHolder.class).openWindow(new ChestWindow(player, inventory, title));
 				break;
 			case CRAFTING_TABLE:
-				player.get(WindowHolder.class).open(new CraftingTableWindow(player, title));
+				player.get(WindowHolder.class).openWindow(new CraftingTableWindow(player, title));
 				break;
 			case FURNACE:
-				player.get(WindowHolder.class).open(new FurnaceWindow(player, new FurnaceInventory(), title));
+				player.get(WindowHolder.class).openWindow(new FurnaceWindow(player, new FurnaceInventory(), title));
 				break;
 			case DISPENSER:
-				player.get(WindowHolder.class).open(new DispenserWindow(player, new DispenserInventory(), title));
+				player.get(WindowHolder.class).openWindow(new DispenserWindow(player, new DispenserInventory(), title));
 				break;
 			case ENCHANTMENT_TABLE:
-				player.get(WindowHolder.class).open(new EnchantmentTableWindow(player, new EnchantmentTableInventory(), title));
+				player.get(WindowHolder.class).openWindow(new EnchantmentTableWindow(player, new EnchantmentTableInventory(), title));
 				break;
 			case BREWING_STAND:
-				player.get(WindowHolder.class).open(new BrewingStandWindow(player, new BrewingStandInventory(), title));
+				player.get(WindowHolder.class).openWindow(new BrewingStandWindow(player, new BrewingStandInventory(), title));
 				break;
 			case VILLAGER:
-				player.get(WindowHolder.class).open(new VillagerWindow(player, new VillagerInventory(), title));
+				player.get(WindowHolder.class).openWindow(new VillagerWindow(player, new VillagerInventory(), title));
 				break;
 			default:
 				break;

@@ -82,8 +82,8 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	public VanillaBlockMaterial(String name, int id, String model) {
 		this((short) 0, name, id, model);
-		if(Spout.getEngine().getPlatform() == Platform.CLIENT)
-			addBatchEffect(BatchEffects.SKYCOLOR);
+		/*if(Spout.getEngine().getPlatform() == Platform.CLIENT)
+			addBatchEffect(BatchEffects.SKYCOLOR);*/
 	}
 
 	public VanillaBlockMaterial(short dataMask, String name, int id, String model) {
@@ -93,8 +93,8 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		this.setTransparent();
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
-		if(Spout.getEngine().getPlatform() == Platform.CLIENT)
-			addBatchEffect(BatchEffects.SKYCOLOR);
+		/*if(Spout.getEngine().getPlatform() == Platform.CLIENT)
+			addBatchEffect(BatchEffects.SKYCOLOR);*/
 	}
 
 	public VanillaBlockMaterial(String name, int id, int data, VanillaBlockMaterial parent, String model) {
@@ -104,8 +104,8 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		this.setTransparent();
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
-		if(Spout.getEngine().getPlatform() == Platform.CLIENT)
-			addBatchEffect(BatchEffects.SKYCOLOR);
+		/*if(Spout.getEngine().getPlatform() == Platform.CLIENT)
+			addBatchEffect(BatchEffects.SKYCOLOR);*/
 	}
 
 	@Override

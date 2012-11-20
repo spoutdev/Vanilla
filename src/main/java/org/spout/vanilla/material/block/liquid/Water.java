@@ -28,21 +28,29 @@ package org.spout.vanilla.material.block.liquid;
 
 import java.util.Random;
 
+import org.spout.api.Spout;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.range.EffectIterator;
 import org.spout.api.material.range.EffectRange;
+import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.render.BatchEffects;
 
 public class Water extends Liquid implements DynamicMaterial {
 	public Water(String name, int id, boolean flowing) {
 		super(name, id, flowing, "model://Vanilla/resources/materials/block/liquid/water/water.spm");
 		this.setFlowDelay(250);
+		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
+			if(!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.LIQUID)){
+				getModel().getRenderMaterial().addRenderEffect(BatchEffects.LIQUID);
+			}
+		}
 		//TODO: Allow this to get past the tests
 		//this.setFlowDelay(VanillaConfiguration.WATER_DELAY.getInt());
 	}

@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.inventory.window.gui;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.spout.api.component.components.WidgetComponent;
@@ -37,22 +39,35 @@ import org.spout.api.math.Vector2;
 
 public class InventorySlot extends WidgetComponent {
 	private RenderItemStack item;
+	private Vector2 pos = Vector2.ZERO;
 
 	public void setRenderItemStack(RenderItemStack item) {
 		this.item = item;
+		update();
 	}
 
 	public void setPosition(Vector2 pos) {
-		item.setPosition(pos);
+		this.pos = pos;
+		update();
 	}
 
 	public Vector2 getPosition() {
-		return item.getPosition();
+		return pos;
+	}
+
+	public void update() {
+		if (item != null) {
+			item.setPosition(pos);
+		}
 	}
 
 	@Override
 	public List<RenderPart> getRenderParts() {
-		return Arrays.<RenderPart>asList(item);
+		List<RenderPart> parts = new ArrayList<RenderPart>();
+		if (item != null && item.getRenderMaterial() != null) {
+			parts.add(item);
+		}
+		return parts;
 	}
 
 	@Override

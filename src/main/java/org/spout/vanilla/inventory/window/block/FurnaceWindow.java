@@ -40,6 +40,6 @@ public class FurnaceWindow extends Window {
 
 	public FurnaceWindow(Player owner, FurnaceInventory inventory, String title) {
 		super(owner, WindowType.FURNACE, title, 3);
-		addInventoryConverter(new InventoryConverter(inventory, "1, 0, 2"));
+		addInventoryConverter(new InventoryConverter(inventory, "1, 0, 2", null));
 	}
 }

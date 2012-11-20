@@ -27,31 +27,45 @@
 package org.spout.vanilla.inventory.util;
 
 import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.shape.Grid;
 import org.spout.api.inventory.util.GridIterator;
+import org.spout.api.math.Vector2;
+
+import org.spout.vanilla.inventory.window.gui.InventorySlot;
+import org.spout.vanilla.inventory.window.gui.RenderItemStack;
+import org.spout.vanilla.material.VanillaMaterials;
 
 /**
  * Represents an {@link InventoryConverter} that converts slots given the
  * length of a grid in an inventory.
  */
 public class GridInventoryConverter extends InventoryConverter {
+	public static final float SLOT_WIDTH = 0.1f;
+	public static final float SLOT_HEIGHT = SLOT_WIDTH;
 	private final Grid grid;
+	private final Vector2 pos;
 
-	public GridInventoryConverter(Inventory inventory, int length, int offset) {
-		super(inventory, new int[inventory.grid(length).getSize()], offset);
+	public GridInventoryConverter(Inventory inventory, int length, int offset, Vector2 pos) {
+		super(inventory, new int[inventory.size()], new Vector2[inventory.size()], offset);
 		grid = inventory.grid(length);
-		GridIterator i = grid.iterator();
-		while (i.hasNext()) {
-			slots[i.next()] = ((offset + grid.getSize()) - (length * i.getY())) - (length - i.getX());
+		this.pos = pos;
+		GridIterator iter = grid.iterator();
+		while (iter.hasNext()) {
+			int i = iter.next(), x = iter.getX(), y = iter.getY(), size = grid.getSize();
+			slots[i] = (offset + size) - (length * y) - (length - x);
+			InventorySlot slot = widgets[i].get(InventorySlot.class);
+			slot.setRenderItemStack(new RenderItemStack(new ItemStack(VanillaMaterials.LEATHER_CAP, 1)));
+			slot.setPosition(new Vector2(x * SLOT_WIDTH, y * SLOT_HEIGHT));
 		}
 	}
 
-	public GridInventoryConverter(Inventory inventory, int length) {
-		this(inventory, length, 0);
+	public GridInventoryConverter(Inventory inventory, int length, Vector2 pos) {
+		this(inventory, length, 0, pos);
 	}
 
 	public GridInventoryConverter translate(int offset) {
-		return new GridInventoryConverter(inventory, grid.getLength(), this.offset + offset);
+		return new GridInventoryConverter(inventory, grid.getLength(), this.offset + offset, pos);
 	}
 
 	/**

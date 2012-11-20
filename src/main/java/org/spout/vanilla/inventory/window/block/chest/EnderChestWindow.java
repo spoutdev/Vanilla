@@ -36,6 +36,6 @@ import org.spout.vanilla.inventory.window.WindowType;
 public class EnderChestWindow extends AbstractChestWindow {
 	public EnderChestWindow(Player owner, EnderChest chest, ChestInventory inventory) {
 		super(owner, chest, WindowType.CHEST, "Ender chest", inventory.size());
-		addInventoryConverter(new GridInventoryConverter(inventory, 9));
+		addInventoryConverter(new GridInventoryConverter(inventory, 9, null));
 	}
 }

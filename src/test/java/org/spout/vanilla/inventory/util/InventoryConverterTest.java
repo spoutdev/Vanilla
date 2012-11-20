@@ -40,7 +40,7 @@ public class InventoryConverterTest {
 
 	@Test
 	public void testGridInventoryConverter() {
-		GridInventoryConverter converter = new GridInventoryConverter(main, 9, 9);
+		GridInventoryConverter converter = new GridInventoryConverter(main, 9, 9, null);
 		for (int a = 0; a < 9; a++) {
 			assertEquals(a, converter.convert(a + 27));
 			assertEquals(a + 27, converter.revert(a));
@@ -49,7 +49,7 @@ public class InventoryConverterTest {
 
 	@Test
 	public void testInventoryConverter() {
-		InventoryConverter converter = new InventoryConverter(main, "27-35");
+		InventoryConverter converter = new InventoryConverter(main, "27-35", null);
 		for (int a = 0; a < 9; a++) {
 			assertEquals(a, converter.convert(a + 27));
 			assertEquals(a + 27, converter.revert(a));

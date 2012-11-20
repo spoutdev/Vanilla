@@ -40,6 +40,6 @@ public class CraftingTableWindow extends Window {
 
 	public CraftingTableWindow(Player owner, String title) {
 		super(owner, WindowType.CRAFTING_TABLE, title, 10);
-		addInventoryConverter(new InventoryConverter(new CraftingTableInventory(), "7-9, 4-6, 1-3, 0"));
+		addInventoryConverter(new InventoryConverter(new CraftingTableInventory(), "7-9, 4-6, 1-3, 0", null));
 	}
 }

@@ -26,8 +26,12 @@
  */
 package org.spout.vanilla.inventory.util;
 
+import org.spout.api.gui.Widget;
 import org.spout.api.inventory.Inventory;
+import org.spout.api.math.Vector2;
 import org.spout.api.util.StringUtil;
+
+import org.spout.vanilla.inventory.window.gui.InventorySlot;
 
 /**
  * Converts slots sent to the client into the proper Spout format.
@@ -35,24 +39,31 @@ import org.spout.api.util.StringUtil;
 public class InventoryConverter {
 	protected final Inventory inventory;
 	protected final int[] slots;
+	protected final Widget[] widgets;
 	protected final int offset;
 
-	public InventoryConverter(Inventory inventory, int[] slots, int offset) {
+	public InventoryConverter(Inventory inventory, int[] slots, Vector2[] positions, int offset) {
 		this.inventory = inventory;
 		this.slots = slots;
 		this.offset = offset;
+		widgets = new Widget[positions.length];
+		for (int i = 0; i < widgets.length; i++) {
+			Widget widget = widgets[i] = new Widget();
+			InventorySlot slot = widget.add(InventorySlot.class);
+			slot.setPosition(positions[i]);
+		}
 	}
 
-	public InventoryConverter(Inventory inventory, int[] slots) {
-		this(inventory, slots, 0);
+	public InventoryConverter(Inventory inventory, int[] slots, Vector2[] positions) {
+		this(inventory, slots, positions, 0);
 	}
 
-	public InventoryConverter(Inventory inventory, String elements, int offset) {
-		this(inventory, StringUtil.getIntArray(elements), offset);
+	public InventoryConverter(Inventory inventory, String elements, Vector2[] positions, int offset) {
+		this(inventory, StringUtil.getIntArray(elements), positions, offset);
 	}
 
-	public InventoryConverter(Inventory inventory, String elements) {
-		this(inventory, elements, 0);
+	public InventoryConverter(Inventory inventory, String elements, Vector2[] positions) {
+		this(inventory, elements, positions, 0);
 	}
 
 	public int getOffset() {
@@ -97,7 +108,11 @@ public class InventoryConverter {
 	 * array.
 	 * @return slot mapping array
 	 */
-	public int[] toArray() {
+	public int[] getSlots() {
 		return slots;
+	}
+
+	public Widget[] getWidgets() {
+		return widgets;
 	}
 }

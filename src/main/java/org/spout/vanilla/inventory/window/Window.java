@@ -98,9 +98,6 @@ public abstract class Window implements InventoryViewer {
 	public static final float FIRST_SLOT_X = -0.475f;
 	public static final float FIRST_SLOT_Y = -0.63f;
 	public static final Vector2 FIRST_SLOT_POSITION = new Vector2(FIRST_SLOT_X, FIRST_SLOT_Y);
-	public static final float SLOT_WIDTH = 0.1f;
-	public static final float SLOT_HEIGHT = SLOT_WIDTH;
-	public static final Vector2 SLOT_EXTENTS = new Vector2(SLOT_WIDTH, SLOT_HEIGHT);
 	private static final float SCALE = 0.75f;
 
 	public Window(Player owner, WindowType type, String title, int offset) {
@@ -111,9 +108,9 @@ public abstract class Window implements InventoryViewer {
 		this.offset = offset;
 
 		PlayerInventory inventory = getPlayerInventory();
-		GridInventoryConverter main = new GridInventoryConverter(inventory.getMain(), 9, offset);
+		GridInventoryConverter main = new GridInventoryConverter(inventory.getMain(), 9, offset, FIRST_SLOT_POSITION);
 		addInventoryConverter(main);
-		addInventoryConverter(new GridInventoryConverter(inventory.getQuickbar(), 9, offset + main.getGrid().getSize()));
+		addInventoryConverter(new GridInventoryConverter(inventory.getQuickbar(), 9, offset + main.getGrid().getSize(), FIRST_SLOT_POSITION));
 
 		switch (Spout.getPlatform()) {
 			case PROXY:
@@ -139,12 +136,12 @@ public abstract class Window implements InventoryViewer {
 				label.setGeometry(new Rectangle(0, 0.45f, 0, 0));
 				popup.attachWidget(plugin, label);
 
-				// TODO: Position slots in InventoryConverter
-				Widget slot = new Widget();
-				InventorySlot is = slot.add(InventorySlot.class);
-				is.setRenderItemStack(new RenderItemStack(new ItemStack(VanillaMaterials.LEATHER_CAP, 1)));
-				is.setPosition(FIRST_SLOT_POSITION);
-				popup.attachWidget(plugin, slot);
+				for (InventoryConverter converter : converters) {
+					for (Widget widget : converter.getWidgets()) {
+						popup.attachWidget(plugin, widget);
+					}
+				}
+
 				break;
 			default:
 				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform().toString());

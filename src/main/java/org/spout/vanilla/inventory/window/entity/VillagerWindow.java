@@ -36,7 +36,7 @@ import org.spout.vanilla.inventory.window.WindowType;
 public class VillagerWindow extends Window {
 	public VillagerWindow(Player owner, VillagerInventory inventory, String title) {
 		super(owner, WindowType.VILLAGER, title, 3);
-		addInventoryConverter(new InventoryConverter(inventory, "0-2"));
+		addInventoryConverter(new InventoryConverter(inventory, "0-2", null));
 	}
 
 	public VillagerWindow(Player owner, VillagerInventory inventory) {

@@ -36,6 +36,6 @@ import org.spout.vanilla.inventory.window.WindowType;
 public class BeaconWindow extends Window {
 	public BeaconWindow(Player owner, BeaconInventory inventory) {
 		super(owner, WindowType.BEACON, "Beacon", 1);
-		addInventoryConverter(new InventoryConverter(inventory, "0"));
+		addInventoryConverter(new InventoryConverter(inventory, "0", null));
 	}
 }

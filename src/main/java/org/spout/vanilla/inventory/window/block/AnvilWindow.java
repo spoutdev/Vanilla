@@ -36,6 +36,6 @@ import org.spout.vanilla.inventory.window.WindowType;
 public class AnvilWindow extends Window {
 	public AnvilWindow(Player owner, AnvilInventory inventory) {
 		super(owner, WindowType.ANVIL, "Anvil", 3);
-		addInventoryConverter(new InventoryConverter(inventory, "0-3"));
+		addInventoryConverter(new InventoryConverter(inventory, "0-3", null));
 	}
 }

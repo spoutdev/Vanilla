@@ -36,7 +36,7 @@ import org.spout.vanilla.inventory.window.WindowType;
 public class BrewingStandWindow extends Window {
 	public BrewingStandWindow(Player owner, BrewingStandInventory inventory, String title) {
 		super(owner, WindowType.BREWING_STAND, title, 4);
-		addInventoryConverter(new InventoryConverter(inventory, new int[]{0, 1, 2, 3}));
+		addInventoryConverter(new InventoryConverter(inventory, new int[]{0, 1, 2, 3}, null));
 	}
 
 	public BrewingStandWindow(Player owner, BrewingStandInventory inventory) {

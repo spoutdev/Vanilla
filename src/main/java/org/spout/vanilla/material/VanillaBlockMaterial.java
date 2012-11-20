@@ -47,8 +47,10 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
+import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.Platform;
+import org.spout.api.render.RenderMaterial;
 import org.spout.api.util.flag.Flag;
 import org.spout.api.util.flag.FlagBundle;
 
@@ -56,6 +58,7 @@ import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.RedstonePowerMode;
+import org.spout.vanilla.data.RenderMaterials;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.DropFlags;
 import org.spout.vanilla.data.drops.flag.PlayerFlags;
@@ -79,6 +82,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	private final BlockDrops drops = new BlockDrops();
 	private Set<ToolType> miningTypes = new HashSet<ToolType>();
 	private ToolLevel miningLevel = ToolLevel.NONE;
+	private final Rectangle source = null; // TODO: Block item rendering
 
 	public VanillaBlockMaterial(String name, int id, String model) {
 		this((short) 0, name, id, model);
@@ -127,10 +131,20 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		return (short) (data & 0xF);
 	}
 
+	@Override
+	public RenderMaterial getRenderMaterial() {
+		return null;
+	}
+
+	@Override
+	public Rectangle getSource() {
+		return source;
+	}
+
 	/**
 	 * Called when this block is destroyed because of an explosion
 	 * @param block that got ignition
-	 * @param the cause of the ignition
+	 * @param cause of the ignition
 	 */
 	public void onIgnite(Block block, Cause<?> cause) {
 		HashSet<Flag> dropFlags = new HashSet<Flag>();

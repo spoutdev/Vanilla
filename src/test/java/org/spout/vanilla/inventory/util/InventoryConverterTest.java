@@ -30,9 +30,6 @@ import org.junit.Test;
 
 import org.spout.api.inventory.Inventory;
 
-import org.spout.vanilla.inventory.util.GridInventoryConverter;
-import org.spout.vanilla.inventory.util.InventoryConverter;
-
 import static org.junit.Assert.assertEquals;
 
 public class InventoryConverterTest {

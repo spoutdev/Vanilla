@@ -30,7 +30,6 @@ import org.spout.api.render.effect.BatchEffect;
 import org.spout.api.render.effect.SnapshotBatch;
 
 public class LightBatchEffect implements BatchEffect {
-
 	@Override
 	public void preBatch(SnapshotBatch snapshotBatch) {
 
@@ -43,5 +42,4 @@ public class LightBatchEffect implements BatchEffect {
 		// TODO Auto-generated method stub
 
 	}
-
 }

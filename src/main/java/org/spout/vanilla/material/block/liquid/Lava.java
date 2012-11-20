@@ -44,7 +44,7 @@ public class Lava extends Liquid {
 		super(name, id, flowing, "model://Vanilla/resources/materials/block/liquid/lava/lava.spm");
 		this.setFlowDelay(1500);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
-			if(!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.LIQUID)){
+			if (!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.LIQUID)) {
 				getModel().getRenderMaterial().addRenderEffect(BatchEffects.LIQUID);
 			}
 		}

@@ -27,7 +27,6 @@
 package org.spout.vanilla.material;
 
 import org.spout.api.material.source.MaterialSource;
-import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
 import org.spout.api.render.RenderMaterial;
 

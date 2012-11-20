@@ -31,12 +31,11 @@ import org.spout.api.render.effect.RenderEffect;
 import org.spout.api.render.effect.SnapshotRender;
 
 public class LiquidRenderEffect implements RenderEffect {
-
 	private static final float size = 1.0f / 16.0f;
-	
+
 	@Override
 	public void preRender(SnapshotRender snapshotRender) {
-		float time = size * (System.currentTimeMillis() % 1000 / 1000.0f );
+		float time = size * (System.currentTimeMillis() % 1000 / 1000.0f);
 		snapshotRender.getMaterial().getShader().setUniform("animation", new Vector2(0, time));
 	}
 
@@ -44,5 +43,4 @@ public class LiquidRenderEffect implements RenderEffect {
 	public void postRender(SnapshotRender snapshotRender) {
 
 	}
-
 }

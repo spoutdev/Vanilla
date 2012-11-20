@@ -27,8 +27,6 @@
 package org.spout.vanilla.inventory.window.gui;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.spout.api.component.components.WidgetComponent;

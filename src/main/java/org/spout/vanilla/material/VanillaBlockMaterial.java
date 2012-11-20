@@ -47,7 +47,6 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
-import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.Platform;
@@ -88,7 +87,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	public VanillaBlockMaterial(String name, int id, String model) {
 		this((short) 0, name, id, model);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
-			if(!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.SKYTIME)){
+			if (!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.SKYTIME)) {
 				getModel().getRenderMaterial().addRenderEffect(BatchEffects.SKYTIME);
 			}
 		}
@@ -102,7 +101,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
-			if(!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.SKYTIME)){
+			if (!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.SKYTIME)) {
 				getModel().getRenderMaterial().addRenderEffect(BatchEffects.SKYTIME);
 			}
 		}
@@ -116,7 +115,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
-			if(!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.SKYTIME)){
+			if (!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.SKYTIME)) {
 				getModel().getRenderMaterial().addRenderEffect(BatchEffects.SKYTIME);
 			}
 		}

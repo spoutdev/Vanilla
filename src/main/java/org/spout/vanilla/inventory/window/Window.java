@@ -67,10 +67,7 @@ import org.spout.vanilla.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.util.InventoryConverter;
-import org.spout.vanilla.inventory.window.gui.InventorySlot;
-import org.spout.vanilla.inventory.window.gui.RenderItemStack;
 import org.spout.vanilla.inventory.window.prop.WindowProperty;
-import org.spout.vanilla.material.VanillaMaterials;
 
 /**
  * Represents a Window that players can view to display an inventory.

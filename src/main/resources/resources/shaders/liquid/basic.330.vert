@@ -13,12 +13,13 @@ out vec2 uvcoord;
 uniform mat4 Projection;
 uniform mat4 View;
 uniform mat4 Model;
+uniform vec2 animation;
 		
 void main()
 {
 	gl_Position = Projection * View * Model * vPosition;
 	
-	uvcoord = vTexCoord;
+	uvcoord = vTexCoord + animation;
 	color = vColor;
 
 } 

@@ -5,6 +5,7 @@ attribute vec4 vPosition;
 attribute vec4 vColor;
 attribute vec2 vTexCoord;
 attribute vec4 skyColor;
+attribute vec2 animation;
 
 varying vec4 color;
 varying vec2 uvcoord;
@@ -17,7 +18,7 @@ void main()
 {
 	gl_Position = Projection * View  * Model * vPosition;
 	
-	uvcoord = vTexCoord;
+	uvcoord = vTexCoord + animation;
 	color = vColor;
 
 } 

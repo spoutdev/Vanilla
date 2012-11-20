@@ -26,11 +26,23 @@
  */
 package org.spout.vanilla.render;
 
-import org.spout.api.render.effect.BatchEffect;
+import org.spout.api.math.Vector2;
 import org.spout.api.render.effect.RenderEffect;
+import org.spout.api.render.effect.SnapshotRender;
 
-public class BatchEffects {
-	public final static BatchEffect SKYTIMEBATCH = new LightBatchEffect();
-	public final static RenderEffect SKYTIME = new LightRenderEffect();
-	public final static RenderEffect LIQUID = new LiquidRenderEffect();
+public class LiquidRenderEffect implements RenderEffect {
+
+	private static final float size = 1.0f / 16.0f;
+	
+	@Override
+	public void preRender(SnapshotRender snapshotRender) {
+		float time = size * (System.currentTimeMillis() % 1000 / 1000.0f );
+		snapshotRender.getMaterial().getShader().setUniform("animation", new Vector2(0, time));
+	}
+
+	@Override
+	public void postRender(SnapshotRender snapshotRender) {
+
+	}
+
 }

@@ -32,6 +32,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 
 /**
@@ -41,18 +42,18 @@ import org.spout.api.math.Vector3;
 public class BlockItem extends VanillaItemMaterial implements Placeable {
 	private final BlockMaterial place;
 
-	public BlockItem(String name, int id, int data, Material parent, BlockMaterial place) {
-		super(name, id, data, parent);
+	public BlockItem(String name, int id, int data, Material parent, BlockMaterial place, Vector2 pos) {
+		super(name, id, data, parent, pos);
 		this.place = place;
 	}
 
-	public BlockItem(String name, int id, BlockMaterial place) {
-		super(name, id);
+	public BlockItem(String name, int id, BlockMaterial place, Vector2 pos) {
+		super(name, id, pos);
 		this.place = place;
 	}
 
-	public BlockItem(short dataMask, String name, int id, BlockMaterial place) {
-		super(dataMask, name, id);
+	public BlockItem(short dataMask, String name, int id, BlockMaterial place, Vector2 pos) {
+		super(dataMask, name, id, pos);
 		this.place = place;
 	}
 

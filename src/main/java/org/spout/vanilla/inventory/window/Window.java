@@ -48,6 +48,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Rectangle;
+import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.event.ProtocolEvent;
 
@@ -66,7 +67,10 @@ import org.spout.vanilla.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.util.InventoryConverter;
+import org.spout.vanilla.inventory.window.gui.InventorySlot;
+import org.spout.vanilla.inventory.window.gui.RenderItemStack;
 import org.spout.vanilla.inventory.window.prop.WindowProperty;
+import org.spout.vanilla.material.VanillaMaterials;
 
 /**
  * Represents a Window that players can view to display an inventory.
@@ -83,16 +87,21 @@ public abstract class Window implements InventoryViewer {
 	private static int windowId = 0;
 	protected int id = -1;
 	// Client only
-	public static final float WIDTH = 0.6875f;
-	public static final float HEIGHT = 0.6484375f;
-	public static final float FIRST_SLOT_X = -0.475f;
-	public static final float FIRST_SLOT_Y = -0.63f;
-	public static final float SLOT_WIDTH = 0.1f;
-	public static final float SLOT_HEIGHT = SLOT_WIDTH;
-	private static final float SCALE = 0.75f;
+	// Widgets
 	protected final Screen popup = new Screen();
 	protected final Widget background = new Widget();
 	protected final Widget label = new Widget();
+	// Measurements
+	public static final float WIDTH = 0.6875f;
+	public static final float HEIGHT = 0.6484375f;
+	public static final Vector2 BACKGROUND_EXTENTS = new Vector2(WIDTH, HEIGHT);
+	public static final float FIRST_SLOT_X = -0.475f;
+	public static final float FIRST_SLOT_Y = -0.63f;
+	public static final Vector2 FIRST_SLOT_POSITION = new Vector2(FIRST_SLOT_X, FIRST_SLOT_Y);
+	public static final float SLOT_WIDTH = 0.1f;
+	public static final float SLOT_HEIGHT = SLOT_WIDTH;
+	public static final Vector2 SLOT_EXTENTS = new Vector2(SLOT_WIDTH, SLOT_HEIGHT);
+	private static final float SCALE = 0.75f;
 
 	public Window(Player owner, WindowType type, String title, int offset) {
 
@@ -129,6 +138,13 @@ public abstract class Window implements InventoryViewer {
 				labelComponent.setText(new ChatArguments(ChatStyle.GRAY, title));
 				label.setGeometry(new Rectangle(0, 0.45f, 0, 0));
 				popup.attachWidget(plugin, label);
+
+				// TODO: Position slots in InventoryConverter
+				Widget slot = new Widget();
+				InventorySlot is = slot.add(InventorySlot.class);
+				is.setRenderItemStack(new RenderItemStack(new ItemStack(VanillaMaterials.LEATHER_CAP, 1)));
+				is.setPosition(FIRST_SLOT_POSITION);
+				popup.attachWidget(plugin, slot);
 				break;
 			default:
 				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform().toString());

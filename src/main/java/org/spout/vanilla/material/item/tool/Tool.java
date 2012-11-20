@@ -34,6 +34,7 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.math.Vector2;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.component.living.hostile.Silverfish;
@@ -54,8 +55,8 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 	private Map<BlockMaterial, Float> strengthModifiers = new HashMap<BlockMaterial, Float>();
 	private ToolType toolType;
 
-	public Tool(String name, int id, short durability, ToolType toolType) {
-		super(name, id);
+	public Tool(String name, int id, short durability, ToolType toolType, Vector2 pos) {
+		super(name, id, pos);
 		this.durability = durability;
 		this.toolType = toolType;
 	}

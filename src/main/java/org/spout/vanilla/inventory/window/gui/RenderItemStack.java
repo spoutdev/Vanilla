@@ -32,19 +32,24 @@ import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.data.RenderMaterials;
+import org.spout.vanilla.material.VanillaMaterial;
 
 public class RenderItemStack extends RenderPart {
 	private static final float SCALE = 0.75f;
 	public static final float WIDTH = 0.0625f;
 	public static final float HEIGHT = WIDTH;
+	public static final Vector2 SOURCE_EXTENTS = new Vector2(WIDTH, HEIGHT);
 	public static final Vector2 SPRITE_EXTENTS = new Vector2(HEIGHT * 2 * SCALE, HEIGHT * 2);
 	private final ItemStack item;
 	private Vector2 pos = Vector2.ZERO;
 
 	public RenderItemStack(ItemStack item) {
+		if (!(item.getMaterial() instanceof VanillaMaterial)) {
+			throw new IllegalArgumentException("ItemStack must have a VanillaMaterial for a Material.");
+		}
 		this.item = item;
 		setRenderMaterial(RenderMaterials.ITEMS_MATERIAL);
-		setSource(new Rectangle(0, 0, WIDTH, HEIGHT)); // TODO: get source from materials
+		setSource(new Rectangle(((VanillaMaterial) item.getMaterial()).getPosition(), SOURCE_EXTENTS));
 	}
 
 	public ItemStack getItem() {

@@ -30,6 +30,6 @@ import org.spout.vanilla.data.tool.ToolType;
 
 public class FishingRod extends Tool {
 	public FishingRod(String name, int id, short durability) {
-		super(name, id, durability, ToolType.FISHING_ROD);
+		super(name, id, durability, ToolType.FISHING_ROD, null);
 	}
 }

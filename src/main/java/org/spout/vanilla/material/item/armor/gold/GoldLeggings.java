@@ -30,7 +30,7 @@ import org.spout.vanilla.material.item.armor.Leggings;
 
 public class GoldLeggings extends GoldArmor implements Leggings {
 	public GoldLeggings(String name, int id, short durability) {
-		super(name, id, durability);
+		super(name, id, durability, null);
 		this.setBaseProtection(3);
 	}
 }

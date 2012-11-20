@@ -30,7 +30,7 @@ import org.spout.vanilla.material.item.armor.Boots;
 
 public class LeatherBoots extends LeatherArmor implements Boots {
 	public LeatherBoots(String name, int id, short durability) {
-		super(name, id, durability);
+		super(name, id, durability, null);
 		this.setBaseProtection(1);
 	}
 }

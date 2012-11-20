@@ -30,7 +30,7 @@ import org.spout.vanilla.material.item.armor.Helmet;
 
 public class IronHelmet extends IronArmor implements Helmet {
 	public IronHelmet(String name, int id, short durability) {
-		super(name, id, durability);
+		super(name, id, durability, null);
 		this.setBaseProtection(2);
 	}
 }

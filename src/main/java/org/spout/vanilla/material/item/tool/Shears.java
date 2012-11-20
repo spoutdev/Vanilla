@@ -46,7 +46,7 @@ public class Shears extends Tool {
 	private Random rand = new Random();
 
 	public Shears(String name, int id, short durability) {
-		super(name, id, durability, ToolType.SHEARS);
+		super(name, id, durability, ToolType.SHEARS, null);
 	}
 
 	@Override

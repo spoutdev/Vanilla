@@ -31,7 +31,7 @@ import org.spout.vanilla.material.item.BlockItem;
 
 public class Sign extends BlockItem {
 	public Sign(String name, int id) {
-		super(name, id, VanillaMaterials.WALL_SIGN);
+		super(name, id, VanillaMaterials.WALL_SIGN, null);
 		this.setMaxStackSize(16);
 	}
 }

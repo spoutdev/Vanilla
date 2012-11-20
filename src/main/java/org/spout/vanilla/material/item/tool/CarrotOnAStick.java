@@ -30,6 +30,6 @@ import org.spout.vanilla.data.tool.ToolType;
 
 public class CarrotOnAStick extends Tool {
 	public CarrotOnAStick(String name, int id, short durability) {
-		super(name, id, durability, ToolType.CARROT_ON_A_STICK);
+		super(name, id, durability, ToolType.CARROT_ON_A_STICK, null);
 	}
 }

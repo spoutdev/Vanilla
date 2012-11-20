@@ -36,7 +36,7 @@ import org.spout.vanilla.material.item.FoodEffect;
 
 public class RawPorkchop extends Food implements TimedCraftable {
 	public RawPorkchop(String name, int id, FoodEffect... type) {
-		super(name, id, type);
+		super(name, id, null, type);
 	}
 
 	@Override

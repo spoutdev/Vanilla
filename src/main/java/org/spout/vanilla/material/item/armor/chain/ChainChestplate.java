@@ -30,7 +30,7 @@ import org.spout.vanilla.material.item.armor.Chestplate;
 
 public class ChainChestplate extends ChainArmor implements Chestplate {
 	public ChainChestplate(String name, int id, short durability) {
-		super(name, id, durability);
+		super(name, id, durability, null);
 		this.setBaseProtection(5);
 	}
 }

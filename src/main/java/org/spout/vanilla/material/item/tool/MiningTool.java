@@ -42,7 +42,7 @@ public class MiningTool extends Tool {
 	private ToolLevel toolLevel;
 
 	public MiningTool(String name, int id, ToolLevel toolLevel, ToolType toolType) {
-		super(name, id, toolLevel.getMaxDurability(), toolType);
+		super(name, id, toolLevel.getMaxDurability(), toolType, null);
 		this.toolLevel = toolLevel;
 		this.diggingSpeed = toolLevel.getDiggingSpeed();
 	}

@@ -36,7 +36,7 @@ import org.spout.vanilla.material.item.FoodEffect;
 
 public class Potato extends Food implements TimedCraftable {
 	public Potato(String name, int id, FoodEffect... type) {
-		super(name, id, type);
+		super(name, id, null, type);
 	}
 
 	@Override

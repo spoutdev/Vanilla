@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.item.armor;
 
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.material.enchantment.Enchantment;
 import org.spout.vanilla.material.enchantment.Enchantments;
@@ -39,8 +40,8 @@ public abstract class Armor extends VanillaItemMaterial implements Enchantable {
 	private int enchantability;
 	private short durability;
 
-	protected Armor(String name, int id, short durability) {
-		super(name, id);
+	protected Armor(String name, int id, short durability, Vector2 pos) {
+		super(name, id, pos);
 		this.durability = durability;
 	}
 

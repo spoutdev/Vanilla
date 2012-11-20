@@ -30,7 +30,7 @@ import org.spout.vanilla.material.item.armor.Leggings;
 
 public class ChainLeggings extends ChainArmor implements Leggings {
 	public ChainLeggings(String name, int id, short durability) {
-		super(name, id, durability);
+		super(name, id, durability, null);
 		this.setBaseProtection(4);
 	}
 }

@@ -33,12 +33,21 @@ import org.spout.api.component.components.WidgetComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.input.KeyEvent;
 import org.spout.api.math.IntVector2;
+import org.spout.api.math.Vector2;
 
-public class InventorySlotComponent extends WidgetComponent {
+public class InventorySlot extends WidgetComponent {
 	private RenderItemStack item;
 
 	public void setRenderItemStack(RenderItemStack item) {
 		this.item = item;
+	}
+
+	public void setPosition(Vector2 pos) {
+		item.setPosition(pos);
+	}
+
+	public Vector2 getPosition() {
+		return item.getPosition();
 	}
 
 	@Override

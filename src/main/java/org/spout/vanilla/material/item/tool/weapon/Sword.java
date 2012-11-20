@@ -32,7 +32,7 @@ import org.spout.vanilla.material.item.tool.Tool;
 
 public class Sword extends Tool {
 	public Sword(String name, int id, ToolLevel toolLevel) {
-		super(name, id, toolLevel.getMaxDurability(), ToolType.SWORD);
+		super(name, id, toolLevel.getMaxDurability(), ToolType.SWORD, null);
 		this.setDamage(4 + toolLevel.getDamageBonus());
 	}
 }

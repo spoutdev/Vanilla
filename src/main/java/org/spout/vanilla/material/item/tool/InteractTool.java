@@ -30,6 +30,6 @@ import org.spout.vanilla.data.tool.ToolType;
 
 public abstract class InteractTool extends Tool {
 	public InteractTool(String name, int id, short durability, ToolType toolType) {
-		super(name, id, durability, toolType);
+		super(name, id, durability, toolType, null);
 	}
 }

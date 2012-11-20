@@ -33,7 +33,7 @@ public class Stick extends VanillaItemMaterial implements Fuel {
 	public final float BURN_TIME = 15;
 
 	public Stick(String name, int id) {
-		super(name, id);
+		super(name, id, null);
 	}
 
 	@Override

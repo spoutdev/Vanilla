@@ -33,7 +33,7 @@ public class BlazeRod extends VanillaItemMaterial implements Fuel {
 	public final float BURN_TIME = 120;
 
 	public BlazeRod(String name, int id) {
-		super(name, id);
+		super(name, id, null);
 	}
 
 	@Override

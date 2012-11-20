@@ -33,7 +33,7 @@ public class RangedWeapon extends Tool {
 	private int rangedDamage = 1;
 
 	public RangedWeapon(String name, int id, short durability, ToolType toolType) {
-		super(name, id, durability, toolType);
+		super(name, id, durability, toolType, null);
 	}
 
 	public int getRangedDamage() {

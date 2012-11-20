@@ -39,7 +39,7 @@ import org.spout.vanilla.material.item.BlockItem;
 
 public class FullBucket extends BlockItem {
 	public FullBucket(String name, int id, BlockMaterial place) {
-		super(name, id, place);
+		super(name, id, place, null);
 	}
 
 	@Override

@@ -30,7 +30,7 @@ import org.spout.vanilla.material.item.armor.Chestplate;
 
 public class LeatherTunic extends LeatherArmor implements Chestplate {
 	public LeatherTunic(String name, int id, short durability) {
-		super(name, id, durability);
+		super(name, id, durability, null);
 		this.setBaseProtection(3);
 	}
 }

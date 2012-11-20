@@ -48,6 +48,7 @@ import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Rectangle;
+import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.Platform;
 import org.spout.api.render.RenderMaterial;
@@ -82,7 +83,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	private final BlockDrops drops = new BlockDrops();
 	private Set<ToolType> miningTypes = new HashSet<ToolType>();
 	private ToolLevel miningLevel = ToolLevel.NONE;
-	private final Rectangle source = null; // TODO: Block item rendering
+	private final Vector2 pos = null; // TODO: Block item rendering
 
 	public VanillaBlockMaterial(String name, int id, String model) {
 		this((short) 0, name, id, model);
@@ -133,12 +134,12 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	@Override
 	public RenderMaterial getRenderMaterial() {
-		return null;
+		return RenderMaterials.BLOCKS_MATERIAL;
 	}
 
 	@Override
-	public Rectangle getSource() {
-		return source;
+	public Vector2 getPosition() {
+		return pos;
 	}
 
 	/**

@@ -31,6 +31,6 @@ import org.spout.vanilla.material.item.BlockItem;
 
 public class FlowerPot extends BlockItem {
 	public FlowerPot(String name, int id) {
-		super(name, id, VanillaMaterials.FLOWER_POT_BLOCK);
+		super(name, id, VanillaMaterials.FLOWER_POT_BLOCK, null);
 	}
 }

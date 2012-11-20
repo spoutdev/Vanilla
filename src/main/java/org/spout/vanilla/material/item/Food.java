@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.item;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
@@ -34,8 +35,8 @@ import org.spout.vanilla.data.VanillaData;
 public class Food extends VanillaItemMaterial {
 	private final FoodEffect[] effects;
 
-	public Food(String name, int id, FoodEffect... effects) {
-		super(name, id);
+	public Food(String name, int id, Vector2 pos, FoodEffect... effects) {
+		super(name, id, pos);
 		this.effects = effects;
 	}
 

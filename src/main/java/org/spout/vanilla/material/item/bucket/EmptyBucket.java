@@ -41,7 +41,7 @@ import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class EmptyBucket extends VanillaItemMaterial {
 	public EmptyBucket(String name, int id) {
-		super(name, id);
+		super(name, id, null);
 		setMaxStackSize(16);
 	}
 

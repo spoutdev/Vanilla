@@ -164,7 +164,7 @@ public class Potion extends VanillaItemMaterial {
 	//public static final Potion SPLASH_INVISIBILITY = new Potion("Splash Potion of Invisibility", );
 	//public static final Potion SPLASH_INVISIBILITY_EXTENDED = new Potion("Splash Potion of Invisibility (Extended)", );
 	private Potion(String name) {
-		super((short) 0x7FFF, name, 373);
+		super((short) 0x7FFF, name, 373, null);
 	}
 
 	private Potion(String name, int effect, short tier, short duration, short splash, Potion parent) {
@@ -172,7 +172,7 @@ public class Potion extends VanillaItemMaterial {
 	}
 
 	private Potion(String name, int data, Potion parent) {
-		super(name, 373, data, parent);
+		super(name, 373, data, parent, null);
 	}
 
 	/**

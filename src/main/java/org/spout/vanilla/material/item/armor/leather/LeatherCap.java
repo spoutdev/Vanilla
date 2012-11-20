@@ -26,11 +26,15 @@
  */
 package org.spout.vanilla.material.item.armor.leather;
 
+import org.spout.api.math.Vector2;
+
 import org.spout.vanilla.material.item.armor.Helmet;
 
 public class LeatherCap extends LeatherArmor implements Helmet {
+	public static final Vector2 POSITION = Vector2.ZERO;
+
 	public LeatherCap(String name, int id, short durability) {
-		super(name, id, durability);
+		super(name, id, durability, POSITION);
 		this.setBaseProtection(1);
 	}
 }

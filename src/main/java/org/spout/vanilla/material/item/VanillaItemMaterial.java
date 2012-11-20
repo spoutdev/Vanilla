@@ -28,6 +28,7 @@ package org.spout.vanilla.material.item;
 
 import org.spout.api.material.Material;
 import org.spout.api.math.Rectangle;
+import org.spout.api.math.Vector2;
 import org.spout.api.render.RenderMaterial;
 
 import org.spout.vanilla.data.RenderMaterials;
@@ -36,21 +37,24 @@ import org.spout.vanilla.material.VanillaMaterial;
 public class VanillaItemMaterial extends Material implements VanillaMaterial {
 	private final int minecraftId;
 	private int meleeDamage = 1;
-	private final Rectangle source = null;
+	private final Vector2 pos;
 
-	public VanillaItemMaterial(String name, int id) {
+	public VanillaItemMaterial(String name, int id, Vector2 pos) {
 		super(name);
 		this.minecraftId = id;
+		this.pos = pos;
 	}
 
-	public VanillaItemMaterial(short dataMask, String name, int id) {
+	public VanillaItemMaterial(short dataMask, String name, int id, Vector2 pos) {
 		super(dataMask, name);
 		this.minecraftId = id;
+		this.pos = pos;
 	}
 
-	public VanillaItemMaterial(String name, int id, int data, Material parent) {
+	public VanillaItemMaterial(String name, int id, int data, Material parent, Vector2 pos) {
 		super(name, data, parent);
 		this.minecraftId = id;
+		this.pos = pos;
 	}
 
 	@Override
@@ -69,8 +73,8 @@ public class VanillaItemMaterial extends Material implements VanillaMaterial {
 	}
 
 	@Override
-	public Rectangle getSource() {
-		return source;
+	public Vector2 getPosition() {
+		return pos;
 	}
 
 	public boolean hasNBTData() {

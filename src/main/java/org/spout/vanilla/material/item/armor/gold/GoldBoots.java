@@ -30,7 +30,7 @@ import org.spout.vanilla.material.item.armor.Boots;
 
 public class GoldBoots extends GoldArmor implements Boots {
 	public GoldBoots(String name, int id, short durability) {
-		super(name, id, durability);
+		super(name, id, durability, null);
 		this.setBaseProtection(1);
 	}
 }

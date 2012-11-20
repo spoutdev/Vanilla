@@ -222,7 +222,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	/**
-	 * Temporary function to handle entities entering this Block<br>
+	 * Temporary function to handle resources.entities entering this Block<br>
 	 * <b>This is a STUB! Needs to be moved to SpoutAPI!</b>
 	 * @param entity that entered or moved
 	 * @param block of this material that got entered

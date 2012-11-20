@@ -69,7 +69,7 @@ public abstract class ExplosionModel {
 			block.isSet = false;
 		}
 
-		//find all entities in the affected blocks and perform damage
+		//find all resources.entities in the affected blocks and perform damage
 		//TODO: Entity Damage
 
 		//TODO: Block Event?

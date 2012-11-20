@@ -37,7 +37,7 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.entity.EntityCollectItemEvent;
 
 /**
- * Component that adds a detector to entities to scan for and pickup items.
+ * Component that adds a detector to resources.entities to scan for and pickup items.
  */
 public class PickupItemComponent extends EntityComponent {
 	private final int DISTANCE = VanillaConfiguration.ITEM_PICKUP_RANGE.getInt();

@@ -71,8 +71,8 @@ public class PotionSplashEvent extends ProjectileHitEvent {
 	}
 
 	/**
-	 * Gets a list of all of the effected entities.
-	 * @return A list of the affected entities.
+	 * Gets a list of all of the effected resources.entities.
+	 * @return A list of the affected resources.entities.
 	 */
 	public Collection<Entity> getAffectedEntities() {
 		return new LinkedList<Entity>(entitiesAffected.keySet());

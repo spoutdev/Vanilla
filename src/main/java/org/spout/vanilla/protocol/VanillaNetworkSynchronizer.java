@@ -59,7 +59,7 @@ import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.passive.Human;
+import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.misc.HungerComponent;
 import org.spout.vanilla.component.substance.material.Sign;
 import org.spout.vanilla.configuration.VanillaConfiguration;

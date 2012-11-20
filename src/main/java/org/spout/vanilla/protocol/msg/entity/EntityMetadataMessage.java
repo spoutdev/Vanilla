@@ -42,7 +42,7 @@ public final class EntityMetadataMessage extends EntityMessage {
 		META_SPRINTING(0, (byte) 0x08),
 		META_RIGHTCLICKACTION(0, (byte) 0x10),
 		/**
-		 * Drowning counter for entities. This should be sent when an entity spawns and be decremented
+		 * Drowning counter for resources.entities. This should be sent when an entity spawns and be decremented
 		 * per tick. If the value hits -19, send a 0x26 and reset this to 0
 		 */
 		META_FULLDROWNINGCOUNTER(1, (short) 300),

@@ -54,7 +54,7 @@ import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.passive.Human;
+import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.data.RenderMaterials;
 import org.spout.vanilla.event.entity.EntityEquipmentEvent;

@@ -36,7 +36,7 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 
 /**
- * Component that controls the rotation of a head on Vanilla entities.
+ * Component that controls the rotation of a head on Vanilla resources.entities.
  */
 public class HeadComponent extends EntityComponent {
 	private Vector3 lookingAt = Vector3.ZERO;

@@ -75,7 +75,7 @@ public class SleepComponent extends EntityComponent {
 	@Override
 	public void onAttached() {
 		if (!(getOwner() instanceof Player)) {
-			throw new IllegalStateException("SleepComponent can only be attached to Player entities.");
+			throw new IllegalStateException("SleepComponent can only be attached to Player resources.entities.");
 		}
 		player = (Player) getOwner();
 	}

@@ -57,7 +57,7 @@ import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.living.hostile.Creeper;
 import org.spout.vanilla.component.living.hostile.Zombie;
-import org.spout.vanilla.component.living.passive.Human;
+import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.living.hostile.EnderDragon;
 import org.spout.vanilla.component.living.neutral.Enderman;
 import org.spout.vanilla.component.misc.HealthComponent;
@@ -291,7 +291,7 @@ public class TestCommands {
 		}
 	}
 
-	@Command(aliases = {"killall", "ka"}, desc = "Kill all non-player or world entities within a world", min = 0, max = 1)
+	@Command(aliases = {"killall", "ka"}, desc = "Kill all non-player or world resources.entities within a world", min = 0, max = 1)
 	@CommandPermissions("vanilla.command.debug")
 	public void killall(CommandContext args, CommandSource source) throws CommandException {
 		World world = null;
@@ -326,11 +326,11 @@ public class TestCommands {
 				if (count == 1) {
 					source.sendMessage("1 entity has been killed.");
 				} else {
-					source.sendMessage(count, " entities have been killed.");
+					source.sendMessage(count, " resources.entities have been killed.");
 				}
 			}
 		} else {
-			source.sendMessage("No valid entities found to kill");
+			source.sendMessage("No valid resources.entities found to kill");
 		}
 	}
 
@@ -386,7 +386,7 @@ public class TestCommands {
 		final Point pos = player.getTransform().getPosition();
 		final String name = args.getString(0);
 		Class<? extends Component> clazz;
-		// TODO: Make entity prefabs for all entities
+		// TODO: Make entity prefabs for all resources.entities
 		if (name.isEmpty()) {
 			throw new CommandException("It appears that you forgot to enter in the name of the Living.");
 		} else if (name.equalsIgnoreCase("enderman")) {

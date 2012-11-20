@@ -50,7 +50,7 @@ import org.spout.api.protocol.Session;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.passive.Human;
+import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.misc.DiggingComponent;
 import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.data.GameMode;

@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.component.living.passive;
+package org.spout.vanilla.component.living.neutral;
 
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;

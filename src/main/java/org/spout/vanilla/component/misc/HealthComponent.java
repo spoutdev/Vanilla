@@ -43,7 +43,7 @@ import org.spout.vanilla.source.DamageCause;
 import org.spout.vanilla.source.HealthChangeCause;
 
 /**
- * Component that adds a health-like attribute to entities.
+ * Component that adds a health-like attribute to resources.entities.
  */
 public class HealthComponent extends EntityComponent {
 	private static final int DEATH_TIME_TICKS = 30;
@@ -79,7 +79,7 @@ public class HealthComponent extends EntityComponent {
 	}
 
 	/**
-	 * Called when the entities' health hits zero and is considered "dead" by Vanilla game standards
+	 * Called when the resources.entities' health hits zero and is considered "dead" by Vanilla game standards
 	 */
 	public void onDeath() {
 

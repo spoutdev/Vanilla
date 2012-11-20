@@ -2,7 +2,7 @@ Name: "Human"
 Components:
     - org.spout.engine.entity.component.EntityRendererComponent
     - org.spout.engine.entity.component.ClientTextModelComponent
-    - org.spout.vanilla.component.living.Human
+    - org.spout.vanilla.component.living.neutral.Human
 Data:
     Health: 20
     Damages: 1

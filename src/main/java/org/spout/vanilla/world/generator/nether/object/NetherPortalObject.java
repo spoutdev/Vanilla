@@ -106,7 +106,7 @@ public class NetherPortalObject extends RotatableObject implements RandomizableO
 	 * @param x the x coordinate
 	 * @param z the z coordinate
 	 * @param random the random used to find an angle
-	 * @return a Transform for placing entities inside output portals, or null
+	 * @return a Transform for placing resources.entities inside output portals, or null
 	 *         if no portal could be placed
 	 */
 	public static Transform placePortal(World world, int x, int z, Random random) {

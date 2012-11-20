@@ -45,7 +45,7 @@ import org.spout.api.material.Material;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.passive.Human;
+import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.configuration.OpConfiguration;

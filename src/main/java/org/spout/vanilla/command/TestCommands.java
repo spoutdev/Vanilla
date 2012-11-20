@@ -420,11 +420,11 @@ public class TestCommands {
 			if (args.length() == 2) {
 				npcName = args.getString(1);
 			}
+			entity.add(Human.class).setName(npcName);
 			if (Spout.getPlatform() == Platform.CLIENT) {
 				EntityPrefab humanPrefab = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/resources/entities/human/human.sep");
 				entity = humanPrefab.createEntity(pos);
 			}
-			entity.get(Human.class).setName(npcName);
 		} else if (clazz.equals(Enderman.class)) {
 			if (Spout.getPlatform() == Platform.CLIENT) {
 				EntityPrefab endermanPrefab = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/resources/entities/enderman/enderman.sep");

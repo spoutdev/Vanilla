@@ -55,9 +55,11 @@ import org.spout.api.util.BlockIterator;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.component.living.Living;
+import org.spout.vanilla.component.living.hostile.Creeper;
+import org.spout.vanilla.component.living.hostile.Zombie;
+import org.spout.vanilla.component.living.passive.Human;
 import org.spout.vanilla.component.living.hostile.EnderDragon;
 import org.spout.vanilla.component.living.neutral.Enderman;
-import org.spout.vanilla.component.living.passive.Human;
 import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.component.substance.material.chest.Chest;
@@ -84,13 +86,9 @@ import org.spout.vanilla.world.generator.object.VanillaObjects;
 public class TestCommands {
 	@SuppressWarnings("unused")
 	private final VanillaPlugin plugin;
-	private EntityPrefab human;
 
 	public TestCommands(VanillaPlugin instance) {
 		plugin = instance;
-		if (Spout.getPlatform() == Platform.CLIENT) {
-			human = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/resources/mob/prefabs/human.sep");
-		}
 	}
 
 	@Command(aliases = "traceray", desc = "Set all blocks that cross your view to stone.")
@@ -399,6 +397,10 @@ public class TestCommands {
 			clazz = FallingBlock.class;
 		} else if (name.equalsIgnoreCase("npc")) {
 			clazz = Human.class;
+		} else if (name.equalsIgnoreCase("creeper")) {
+			clazz = Creeper.class;
+		} else if (name.equalsIgnoreCase("zombie")) {
+			clazz = Zombie.class;
 		} else {
 			throw new CommandException(name + " was not a valid name for a Living!");
 		}
@@ -418,8 +420,26 @@ public class TestCommands {
 			if (args.length() == 2) {
 				npcName = args.getString(1);
 			}
-			entity = human.createEntity(pos);
+			if (Spout.getPlatform() == Platform.CLIENT) {
+				EntityPrefab humanPrefab = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/resources/entities/human/human.sep");
+				entity = humanPrefab.createEntity(pos);
+			}
 			entity.get(Human.class).setName(npcName);
+		} else if (clazz.equals(Enderman.class)) {
+			if (Spout.getPlatform() == Platform.CLIENT) {
+				EntityPrefab endermanPrefab = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/resources/entities/enderman/enderman.sep");
+				entity = endermanPrefab.createEntity(pos);
+			}
+		} else if (clazz.equals(Creeper.class)) {
+			if (Spout.getPlatform() == Platform.CLIENT) {
+				EntityPrefab creeperPrefab = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/resources/entities/creeper/creeper.sep");
+				entity = creeperPrefab.createEntity(pos);
+			}
+		} else if (clazz.equals(Zombie.class)) {
+			if (Spout.getPlatform() == Platform.CLIENT) {
+				EntityPrefab zombiePrefab = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/resources/entities/zombie/zombie.sep");
+				entity = zombiePrefab.createEntity(pos);
+			}
 		}
 		entity.setSavable(false);
 		pos.getWorld().spawnEntity(entity);

@@ -1,5 +1,3 @@
-# Blender v2.57 (sub 1) OBJ File: 'zombie.blend'
-# www.blender.org
 o Cube.006_Cube.000
 v 0.275000 2.025000 -0.275000
 v 0.275000 1.475000 -0.275000
@@ -22,7 +20,7 @@ vt 0.750000 1.000000
 vt 0.500000 0.500000
 vt 0.500000 0.750000
 vt 0.625000 1.000000
-usemtl None_zombie.png
+usemtl None_human.png
 s off
 f 1/1 2/2 3/3
 f 1/1 3/3 4/4
@@ -58,7 +56,7 @@ vt 0.187500 0.500000
 vt 0.000000 0.000000
 vt 0.000000 0.375000
 vt 0.062500 0.500000
-usemtl None_zombie.png
+usemtl None_human.png
 s off
 f 9/14 10/15 11/16
 f 9/14 11/16 12/17
@@ -94,7 +92,7 @@ vt 0.000000 0.000000
 vt 0.187500 0.500000
 vt 0.125000 0.500000
 vt 0.062500 0.500000
-usemtl None_zombie.png
+usemtl None_human.png
 s off
 f 17/27 18/28 19/29
 f 17/27 19/29 20/30
@@ -130,7 +128,7 @@ vt 0.625000 0.000000
 vt 0.750000 0.500000
 vt 0.812500 0.500000
 vt 0.687500 0.500000
-usemtl None_zombie.png
+usemtl None_human.png
 s off
 f 25/40 26/41 27/42
 f 25/40 27/42 28/43
@@ -166,7 +164,7 @@ vt 0.750000 0.500000
 vt 0.625000 0.000000
 vt 0.625000 0.375000
 vt 0.687500 0.500000
-usemtl None_zombie.png
+usemtl None_human.png
 s off
 f 33/53 34/54 35/55
 f 33/53 35/55 36/56
@@ -203,7 +201,7 @@ vt 0.437500 0.500000
 vt 0.250000 0.000000
 vt 0.250000 0.375000
 vt 0.312500 0.500000
-usemtl None_zombie.png
+usemtl None_human.png
 s off
 f 41/66 42/67 43/68
 f 41/66 43/68 44/69
@@ -239,7 +237,7 @@ vt 0.250000 1.000000
 vt 0.000000 0.500000
 vt 0.000000 0.750000
 vt 0.125000 1.000000
-usemtl None_zombie.png
+usemtl None_human.png
 s off
 f 49/80 50/81 51/82
 f 49/80 51/82 52/83

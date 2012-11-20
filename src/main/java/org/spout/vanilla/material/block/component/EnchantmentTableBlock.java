@@ -37,7 +37,7 @@ import org.spout.vanilla.material.block.Directional;
 
 public class EnchantmentTableBlock extends ComponentMaterial implements Directional {
 	public EnchantmentTableBlock(String name, int id) {
-		super(name, id, EnchantmentTable.class, null, null);
+		super(name, id, EnchantmentTable.class, null);
 		this.setHardness(5.0F).setResistance(2000.0F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

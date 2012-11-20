@@ -44,7 +44,7 @@ public class FurnaceBlock extends ComponentMaterial implements Directional {
 	private final boolean burning;
 
 	public FurnaceBlock(String name, int id, boolean burning) {
-		super(name, id, Furnace.class, "model://Vanilla/resources/materials/block/solid/furnace/furnace.spm", null);
+		super(name, id, Furnace.class, "model://Vanilla/resources/materials/block/solid/furnace/furnace.spm");
 		this.burning = burning;
 		this.setHardness(3.5F).setResistance(5.8F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);

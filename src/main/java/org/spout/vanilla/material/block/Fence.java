@@ -36,7 +36,7 @@ import org.spout.vanilla.material.block.misc.Torch;
 
 public abstract class Fence extends VanillaBlockMaterial {
 	public Fence(String name, int id, String model) {
-		super(name, id, model, null);
+		super(name, id, model);
 		this.setCollision(CollisionStrategy.SOLID);
 	}
 

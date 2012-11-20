@@ -127,7 +127,7 @@ public abstract class Window implements InventoryViewer {
 				LabelComponent labelComponent = label.add(LabelComponent.class);
 				labelComponent.setFont(RenderMaterials.FONT);
 				labelComponent.setText(new ChatArguments(ChatStyle.GRAY, title));
-				label.setGeometry(new Rectangle(0, 0.45f, 0, 0));
+				label.setGeometry(new Rectangle(0.1f, 0.5f, 0, 0));
 				popup.attachWidget(plugin, label);
 				break;
 			default:

@@ -55,7 +55,7 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 	private ToolType toolType;
 
 	public Tool(String name, int id, short durability, ToolType toolType) {
-		super(name, id, null);
+		super(name, id);
 		this.durability = durability;
 		this.toolType = toolType;
 	}

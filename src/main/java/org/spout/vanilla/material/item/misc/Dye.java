@@ -94,12 +94,12 @@ public class Dye extends VanillaItemMaterial implements Placeable {
 	}
 
 	private Dye(String name) {
-		super((short) 0x0F, name, 351, null);
+		super((short) 0x0F, name, 351);
 		this.color = DyeColor.BLACK;
 	}
 
 	private Dye(String name, DyeColor color, Dye parent) {
-		super(name, 351, color.getData(), parent, null);
+		super(name, 351, color.getData(), parent);
 		this.color = color;
 	}
 

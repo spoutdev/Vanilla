@@ -35,7 +35,7 @@ public class Food extends VanillaItemMaterial {
 	private final FoodEffect[] effects;
 
 	public Food(String name, int id, FoodEffect... effects) {
-		super(name, id, null);
+		super(name, id);
 		this.effects = effects;
 	}
 

@@ -36,7 +36,7 @@ import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class MinecartItem extends VanillaItemMaterial {
 	public MinecartItem(String name, int id) {
-		super(name, id, null);
+		super(name, id);
 	}
 
 	@Override

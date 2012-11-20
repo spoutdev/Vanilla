@@ -43,7 +43,7 @@ public class PaintingItem extends VanillaItemMaterial {
 	private final Random random = new Random();
 
 	public PaintingItem(String name, int id) {
-		super(name, id, null);
+		super(name, id);
 	}
 
 	@Override

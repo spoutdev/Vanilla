@@ -47,10 +47,8 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
-import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.Platform;
-import org.spout.api.render.RenderMaterial;
 import org.spout.api.util.flag.Flag;
 import org.spout.api.util.flag.FlagBundle;
 
@@ -58,7 +56,6 @@ import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.RedstonePowerMode;
-import org.spout.vanilla.data.RenderMaterials;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.DropFlags;
 import org.spout.vanilla.data.drops.flag.PlayerFlags;
@@ -75,7 +72,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	public static short REDSTONE_POWER_MAX = 15;
 	public static short REDSTONE_POWER_MIN = 0;
 	private final int minecraftId;
-	private final Rectangle source;
 	private float resistance;
 	private int meleeDamage = 1;
 	private boolean liquidObstacle = true;
@@ -84,8 +80,8 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	private Set<ToolType> miningTypes = new HashSet<ToolType>();
 	private ToolLevel miningLevel = ToolLevel.NONE;
 
-	public VanillaBlockMaterial(String name, int id, String model, Rectangle source) {
-		this((short) 0, name, id, model, source);
+	public VanillaBlockMaterial(String name, int id, String model) {
+		this((short) 0, name, id, model);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
 			if(!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.SKYTIME)){
 				getModel().getRenderMaterial().addRenderEffect(BatchEffects.SKYTIME);
@@ -93,14 +89,13 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		}
 	}
 
-	public VanillaBlockMaterial(short dataMask, String name, int id, String model, Rectangle source) {
+	public VanillaBlockMaterial(short dataMask, String name, int id, String model) {
 		super(dataMask, name, model);
 		this.minecraftId = id;
 		this.setCollision(CollisionStrategy.NOCOLLIDE);
 		this.setTransparent();
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
-		this.source = source;
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
 			if(!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.SKYTIME)){
 				getModel().getRenderMaterial().addRenderEffect(BatchEffects.SKYTIME);
@@ -108,14 +103,13 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		}
 	}
 
-	public VanillaBlockMaterial(String name, int id, int data, VanillaBlockMaterial parent, String model, Rectangle source) {
+	public VanillaBlockMaterial(String name, int id, int data, VanillaBlockMaterial parent, String model) {
 		super(name, data, parent, model);
 		this.minecraftId = id;
 		this.setCollision(CollisionStrategy.NOCOLLIDE);
 		this.setTransparent();
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
-		this.source = source;
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
 			if(!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.SKYTIME)){
 				getModel().getRenderMaterial().addRenderEffect(BatchEffects.SKYTIME);
@@ -131,16 +125,6 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	@Override
 	public short getMinecraftData(short data) {
 		return (short) (data & 0xF);
-	}
-
-	@Override
-	public RenderMaterial getRenderMaterial() {
-		return RenderMaterials.BLOCKS_MATERIAL;
-	}
-
-	@Override
-	public Rectangle getSource() {
-		return source;
 	}
 
 	/**

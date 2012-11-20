@@ -30,7 +30,7 @@ import org.spout.vanilla.component.substance.material.Beacon;
 
 public class BeaconBlock extends ComponentMaterial {
 	public BeaconBlock(String name, int id) {
-		super(name, id, Beacon.class, null, null);
+		super(name, id, Beacon.class, null);
 		this.setResistance(3.0F).setHardness(15.0F);
 		//TODO: Block needs to do special stuff when it is the top of a pyramid.
 	}

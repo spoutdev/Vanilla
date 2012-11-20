@@ -59,11 +59,11 @@ public class SpawnEgg extends VanillaItemMaterial {
 	public static final SpawnEgg OCELOT = new SpawnEgg("Spawn Ocelot", 98, PARENT);
 
 	private SpawnEgg(String name) {
-		super((short) 0x007F, name, 383, null);
+		super((short) 0x007F, name, 383);
 	}
 
 	private SpawnEgg(String name, int data, Material parent) {
-		super(name, 383, data, parent, null);
+		super(name, 383, data, parent);
 	}
 
 	@Override

@@ -54,12 +54,12 @@ public class FlowerPotBlock extends VanillaBlockMaterial implements Initializabl
 	public static final FlowerPotBlock FERN = new FlowerPotBlock("Fern Flower Pot", 11);
 
 	private FlowerPotBlock(String name) {
-		super((short) 0xF, name, 140, null, null);
+		super((short) 0xF, name, 140, null);
 		setHardness(0.0f).setResistance(0.0f).setTransparent();
 	}
 
 	private FlowerPotBlock(String name, int data) {
-		super(name, 140, data, EMPTY, null, null);
+		super(name, 140, data, EMPTY, null);
 		setHardness(0.0f).setResistance(0.0f).setTransparent();
 	}
 

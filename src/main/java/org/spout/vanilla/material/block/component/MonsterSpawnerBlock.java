@@ -30,7 +30,7 @@ import org.spout.vanilla.component.substance.material.MonsterSpawner;
 
 public class MonsterSpawnerBlock extends ComponentMaterial {
 	public MonsterSpawnerBlock(String name, int id) {
-		super(name, id, MonsterSpawner.class, "model://Vanilla/resources/materials/block/solid/mobspawner/mobspawner.spm", null);
+		super(name, id, MonsterSpawner.class, "model://Vanilla/resources/materials/block/solid/mobspawner/mobspawner.spm");
 		this.setHardness(5.0F).setResistance(8.3F).setTransparent();
 	}
 }

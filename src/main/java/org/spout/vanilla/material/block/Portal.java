@@ -34,7 +34,7 @@ public abstract class Portal extends VanillaBlockMaterial {
 	private BlockMaterial frameMaterial;
 
 	public Portal(String name, int id, String model) {
-		super(name, id, model, null);
+		super(name, id, model);
 		this.setHardness(-1.0F).setResistance(0.0F).setTransparent();
 		getDrops().DEFAULT.clear();
 	}

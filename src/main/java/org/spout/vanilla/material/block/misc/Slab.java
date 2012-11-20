@@ -60,14 +60,14 @@ public class Slab extends VanillaBlockMaterial implements Burnable {
 	private final ByteBitSet occlusionBottom = new ByteBitSet(BlockFace.BOTTOM);
 
 	private Slab(short datamask, String name, int id, boolean wood, String model) {
-		super(datamask, name, id, model, null);
+		super(datamask, name, id, model);
 		this.wood = wood;
 		this.setHardness(2.0F).setResistance(10.0F).setOpacity(0);
 		this.addMiningType(wood ? ToolType.AXE : ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
 	private Slab(String name, int data, Slab parent, String model) {
-		super(name, parent.getMinecraftId(), data, parent, model, null);
+		super(name, parent.getMinecraftId(), data, parent, model);
 		this.wood = parent.wood;
 		this.setHardness(2.0F).setResistance(10.0F).setOpacity(0);
 		this.addMiningType(wood ? ToolType.AXE : ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);

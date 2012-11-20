@@ -35,7 +35,7 @@ import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class Clay extends VanillaItemMaterial implements TimedCraftable {
 	public Clay(String name, int id) {
-		super(name, id, null);
+		super(name, id);
 	}
 
 	@Override

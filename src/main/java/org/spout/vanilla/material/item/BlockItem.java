@@ -42,17 +42,17 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 	private final BlockMaterial place;
 
 	public BlockItem(String name, int id, int data, Material parent, BlockMaterial place) {
-		super(name, id, data, parent, null);
+		super(name, id, data, parent);
 		this.place = place;
 	}
 
 	public BlockItem(String name, int id, BlockMaterial place) {
-		super(name, id, null);
+		super(name, id);
 		this.place = place;
 	}
 
 	public BlockItem(short dataMask, String name, int id, BlockMaterial place) {
-		super(dataMask, name, id, null);
+		super(dataMask, name, id);
 		this.place = place;
 	}
 

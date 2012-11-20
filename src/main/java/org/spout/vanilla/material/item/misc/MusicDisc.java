@@ -33,7 +33,7 @@ public class MusicDisc extends VanillaItemMaterial {
 	private Music music;
 
 	public MusicDisc(String name, int id) {
-		super(name, id, null);
+		super(name, id);
 	}
 
 	public Music getMusic() {

@@ -48,13 +48,12 @@ import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructureComponent;
 
 public class DesertTemple extends StructureComponent {
-	private static final LootChestObject LOOT_CHEST = new LootChestObject();
 	private static final BlockMaterialLayout CENTER_CROSS;
 	private static final BlockMaterialLayout TOWER;
 	private static final BlockMaterialLayout DOOR;
+	private final LootChestObject lootChest = new LootChestObject();
 
 	static {
-		LOOT_CHEST.addMaterial(VanillaMaterials.IRON_BARS, 0.1, 1, 3); //TODO Investigate how the materials are distributed
 		CENTER_CROSS = new BlockMaterialLayout("...o...\n...o...\n..o.o..\noo.b.oo\n..o.o..\n...o...\n...o...");
 		CENTER_CROSS.setBlockMaterial('o', Wool.ORANGE_WOOL);
 		CENTER_CROSS.setBlockMaterial('b', Wool.BLUE_WOOL);
@@ -70,6 +69,8 @@ public class DesertTemple extends StructureComponent {
 
 	public DesertTemple(Structure parent) {
 		super(parent);
+		//TODO Investigate how the materials are distributed
+		lootChest.addMaterial(VanillaMaterials.IRON_BARS, 0.1, 1, 3);
 	}
 
 	@Override
@@ -280,10 +281,11 @@ public class DesertTemple extends StructureComponent {
 		setBlockMaterial(10, -11, 13, Sandstone.SMOOTH);
 		// Place the loot chests
 		// TODO: Fix loot chest, and fix loot items for temples and mineshafts
+		lootChest.setRandom(getRandom());
 		for (BlockFace face : BlockFaces.NSEW) {
 			final Vector3 chestPos = face.getOffset().multiply(2).add(10, -11, 10);
-			LOOT_CHEST.setRotation(face.getDirection());
-			placeObject(chestPos.getFloorX(), chestPos.getFloorY(), chestPos.getFloorZ(), LOOT_CHEST);
+			lootChest.setRotation(face.getDirection());
+			placeObject(chestPos.getFloorX(), chestPos.getFloorY(), chestPos.getFloorZ(), lootChest);
 		}
 	}
 

@@ -32,14 +32,19 @@ import java.util.List;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.normal.object.LootChestObject;
 import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructureComponent;
 
 public class JungleTemple extends StructureComponent {
+	private final LootChestObject lootChest = new LootChestObject();
+
 	public JungleTemple(Structure parent) {
 		super(parent);
+		//TODO Investigate how the materials are distributed
+		lootChest.addMaterial(VanillaMaterials.IRON_BARS, 0.1, 1, 3);
 	}
 
 	@Override
@@ -73,9 +78,9 @@ public class JungleTemple extends StructureComponent {
 		box.fill(false);
 		box.offsetMinMax(0, 3, 0, 0, 3, 0);
 		box.fill(false);
-		box.offsetMinMax(1, 1, 1, 1, -1, 1);
+		box.offsetMinMax(1, 1, 1, -1, 1, -1);
 		box.fill(false);
-		box.offsetMinMax(1, 1, 1, 1, -1, 1);
+		box.offsetMinMax(1, 1, 1, -1, 1, -1);
 		box.fill(false);
 		// Holes like windows and doorways
 		box.setPicker(air);
@@ -195,6 +200,87 @@ public class JungleTemple extends StructureComponent {
 			box.setMinMax(1, -1, i, 3, -1, i);
 			box.fill(false);
 		}
+		// Decoration for the back wall of the basement
+		box.setMinMax(2, -2, 1, 5, -2, 1);
+		box.fill(false);
+		box.offsetMinMax(5, 0, 0, 4, 0, 0);
+		box.fill(false);
+		box.offsetMinMax(-1, -1, 0, -3, -1, 0);
+		box.fill(false);
+		box.offsetMinMax(0, 2, 0, 0, 2, 0);
+		box.fill(false);
+		// Setup a tripwire and arrow dispenser trap
+		setBlockMaterial(1, -3, 8, VanillaMaterials.TRIPWIRE_HOOK, (short) 7);
+		setBlockMaterial(4, -3, 8, VanillaMaterials.TRIPWIRE_HOOK, (short) 5);
+		setBlockMaterial(2, -3, 8, VanillaMaterials.TRIPWIRE, (short) 4);
+		setBlockMaterial(3, -3, 8, VanillaMaterials.TRIPWIRE, (short) 4);
+		setBlockMaterial(5, -3, 7, VanillaMaterials.REDSTONE_WIRE);
+		setBlockMaterial(5, -3, 6, VanillaMaterials.REDSTONE_WIRE);
+		setBlockMaterial(5, -3, 5, VanillaMaterials.REDSTONE_WIRE);
+		setBlockMaterial(5, -3, 4, VanillaMaterials.REDSTONE_WIRE);
+		setBlockMaterial(5, -3, 3, VanillaMaterials.REDSTONE_WIRE);
+		setBlockMaterial(5, -3, 2, VanillaMaterials.REDSTONE_WIRE);
+		setBlockMaterial(5, -3, 1, VanillaMaterials.REDSTONE_WIRE);
+		setBlockMaterial(4, -3, 1, VanillaMaterials.REDSTONE_WIRE);
+		setBlockMaterial(3, -3, 1, VanillaMaterials.MOSS_STONE);
+		// TODO: fill the dispenser
+		setBlockMaterial(3, -2, 1, VanillaMaterials.DISPENSER, (short) 3);
+		setBlockMaterial(3, -2, 2, VanillaMaterials.VINES, (short) 15);
+		// Another tripwire and arrow dispenser trap
+		setBlockMaterial(7, -3, 1, VanillaMaterials.TRIPWIRE_HOOK, (short) 4);
+		setBlockMaterial(7, -3, 5, VanillaMaterials.TRIPWIRE_HOOK, (short) 6);
+		setBlockMaterial(7, -3, 2, VanillaMaterials.TRIPWIRE, (short) 4);
+		setBlockMaterial(7, -3, 3, VanillaMaterials.TRIPWIRE, (short) 4);
+		setBlockMaterial(7, -3, 4, VanillaMaterials.TRIPWIRE, (short) 4);
+		setBlockMaterial(8, -3, 6, VanillaMaterials.REDSTONE_WIRE);
+		setBlockMaterial(9, -3, 6, VanillaMaterials.REDSTONE_WIRE);
+		setBlockMaterial(9, -3, 5, VanillaMaterials.REDSTONE_WIRE);
+		setBlockMaterial(9, -3, 4, VanillaMaterials.MOSS_STONE);
+		setBlockMaterial(9, -2, 4, VanillaMaterials.REDSTONE_WIRE);
+		// TODO: fill the dispenser
+		setBlockMaterial(9, -2, 3, VanillaMaterials.DISPENSER, (short) 4);
+		setBlockMaterial(8, -1, 3, VanillaMaterials.VINES, (short) 15);
+		setBlockMaterial(8, -2, 3, VanillaMaterials.VINES, (short) 15);
+		// Place the loot chest
+		lootChest.setRandom(getRandom());
+		placeObject(8, -3, 3, lootChest);
+		// Setup the lever puzzle
+		setBlockMaterial(9, -3, 2, VanillaMaterials.MOSS_STONE);
+		setBlockMaterial(8, -3, 1, VanillaMaterials.MOSS_STONE);
+		setBlockMaterial(4, -3, 5, VanillaMaterials.MOSS_STONE);
+		setBlockMaterial(5, -2, 5, VanillaMaterials.MOSS_STONE);
+		setBlockMaterial(5, -1, 5, VanillaMaterials.MOSS_STONE);
+		setBlockMaterial(6, -3, 5, VanillaMaterials.MOSS_STONE);
+		setBlockMaterial(7, -2, 5, VanillaMaterials.MOSS_STONE);
+		setBlockMaterial(7, -1, 5, VanillaMaterials.MOSS_STONE);
+		setBlockMaterial(8, -3, 5, VanillaMaterials.MOSS_STONE);
+		box.setMinMax(9, -1, 1, 9, -1, 5);
+		box.fill(false);
+		box.setPicker(air);
+		box.setMinMax(8, -3, 8, 10, -1, 10);
+		box.fill(false);
+		setBlockMaterial(8, -2, 11, VanillaMaterials.STONE_BRICK, (short) 3);
+		setBlockMaterial(9, -2, 11, VanillaMaterials.STONE_BRICK, (short) 3);
+		setBlockMaterial(10, -2, 11, VanillaMaterials.STONE_BRICK, (short) 3);
+		setBlockMaterial(8, -2, 12, VanillaMaterials.LEVER, (short) 3);
+		setBlockMaterial(9, -2, 12, VanillaMaterials.LEVER, (short) 3);
+		setBlockMaterial(10, -2, 12, VanillaMaterials.LEVER, (short) 3);
+		box.setPicker(cobble);
+		box.setMinMax(8, -3, 8, 8, -3, 10);
+		box.fill(false);
+		box.offsetMinMax(2, 0, 0, 2, 0, 0);
+		box.fill(false);
+		setBlockMaterial(10, -2, 9, VanillaMaterials.MOSS_STONE);
+		setBlockMaterial(8, -2, 9, VanillaMaterials.REDSTONE_WIRE);
+		setBlockMaterial(8, -2, 10, VanillaMaterials.REDSTONE_WIRE);
+		setBlockMaterial(10, -1, 9, VanillaMaterials.REDSTONE_WIRE);
+		setBlockMaterial(9, -2, 8, VanillaMaterials.PISTON_STICKY_BASE, (short) 1);
+		setBlockMaterial(10, -2, 8, VanillaMaterials.PISTON_STICKY_BASE, (short) 4);
+		setBlockMaterial(10, -1, 8, VanillaMaterials.PISTON_STICKY_BASE, (short) 4);
+		setBlockMaterial(10, -2, 10, VanillaMaterials.REDSTONE_REPEATER_OFF, (short) 2);
+		// Place another loot chest
+		lootChest.setRandom(getRandom());
+		placeObject(9, -3, 10, lootChest);
 	}
 
 	@Override

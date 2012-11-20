@@ -50,7 +50,7 @@ public class Temple extends Structure {
 			if (desertTemple.canPlace()) {
 				desertTemple.place();
 			}
-		} else {
+		} else if (biome == VanillaBiomes.JUNGLE || biome == VanillaBiomes.JUNGLE_HILLS) {
 			final JungleTemple jungleTemple = new JungleTemple(this);
 			jungleTemple.setPosition(new Point(w, x, y, z));
 			jungleTemple.setRotation(new Quaternion(random.nextInt(4) * 90, 0, 1, 0));

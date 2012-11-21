@@ -27,13 +27,15 @@
 package org.spout.vanilla.material.item.bucket;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-
 import org.spout.vanilla.component.inventory.PlayerInventory;
+import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.BlockItem;
 
@@ -45,6 +47,18 @@ public class FullBucket extends BlockItem {
 	@Override
 	public void onInteract(Entity entity, Block block, Action type, BlockFace face) {
 		super.onInteract(entity, block, type, face);
+
+		if (entity instanceof Player) {
+			Player player = (Player) entity;
+			Human human = player.get(Human.class);
+			if (human != null) {
+				GameMode gameMode = player.get(Human.class).getGameMode();
+				if (gameMode == GameMode.CREATIVE) {
+					return;
+				}
+			}
+		}
+
 		if (type == Action.RIGHT_CLICK) {
 			entity.get(PlayerInventory.class).getQuickbar().setCurrentItem(new ItemStack(VanillaMaterials.BUCKET, 1));
 		}

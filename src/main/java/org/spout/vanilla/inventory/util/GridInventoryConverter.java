@@ -56,7 +56,7 @@ public class GridInventoryConverter extends InventoryConverter {
 			slots[i] = (offset + size) - (length * y) - (length - x);
 			InventorySlot slot = widgets[i].get(InventorySlot.class);
 			slot.setRenderItemStack(new RenderItemStack(new ItemStack(VanillaMaterials.LEATHER_CAP, 1)));
-			slot.setPosition(new Vector2(x * SLOT_WIDTH, y * SLOT_HEIGHT));
+			slot.setPosition(pos.add(x * SLOT_WIDTH, y * SLOT_HEIGHT));
 		}
 	}
 

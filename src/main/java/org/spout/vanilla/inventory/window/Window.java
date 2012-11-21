@@ -89,12 +89,18 @@ public abstract class Window implements InventoryViewer {
 	protected final Widget background = new Widget();
 	protected final Widget label = new Widget();
 	// Measurements
+	// Background
 	public static final float WIDTH = 0.6875f;
 	public static final float HEIGHT = 0.6484375f;
 	public static final Vector2 BACKGROUND_EXTENTS = new Vector2(WIDTH, HEIGHT);
-	public static final float FIRST_SLOT_X = -0.475f;
-	public static final float FIRST_SLOT_Y = -0.63f;
-	public static final Vector2 FIRST_SLOT_POSITION = new Vector2(FIRST_SLOT_X, FIRST_SLOT_Y);
+	// Quickbar
+	public static final float QUICKBAR_X = -0.475f;
+	public static final float QUICKBAR_Y = -0.63f;
+	public static final Vector2 QUICKBAR_POSITION = new Vector2(QUICKBAR_X, QUICKBAR_Y);
+	// Main
+	public static final float MAIN_X = QUICKBAR_X;
+	public static final float MAIN_Y = QUICKBAR_Y + 1.5f;
+	public static final Vector2 MAIN_POSITION = new Vector2(MAIN_X, MAIN_Y);
 	private static final float SCALE = 0.75f;
 
 	public Window(Player owner, WindowType type, String title, int offset) {
@@ -105,9 +111,9 @@ public abstract class Window implements InventoryViewer {
 		this.offset = offset;
 
 		PlayerInventory inventory = getPlayerInventory();
-		GridInventoryConverter main = new GridInventoryConverter(inventory.getMain(), 9, offset, FIRST_SLOT_POSITION);
+		GridInventoryConverter main = new GridInventoryConverter(inventory.getMain(), 9, offset, MAIN_POSITION);
 		addInventoryConverter(main);
-		addInventoryConverter(new GridInventoryConverter(inventory.getQuickbar(), 9, offset + main.getGrid().getSize(), FIRST_SLOT_POSITION));
+		addInventoryConverter(new GridInventoryConverter(inventory.getQuickbar(), 9, offset + main.getGrid().getSize(), QUICKBAR_POSITION));
 
 		switch (Spout.getPlatform()) {
 			case PROXY:

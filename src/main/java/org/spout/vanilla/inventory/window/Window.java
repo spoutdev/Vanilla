@@ -67,6 +67,8 @@ import org.spout.vanilla.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.util.InventoryConverter;
+import org.spout.vanilla.inventory.window.gui.InventorySlot;
+import org.spout.vanilla.inventory.window.gui.RenderItemStack;
 import org.spout.vanilla.inventory.window.prop.WindowProperty;
 
 /**
@@ -84,6 +86,7 @@ public abstract class Window implements InventoryViewer {
 	private static int windowId = 0;
 	protected int id = -1;
 	// Client only
+	protected boolean shiftDown;
 	// Widgets
 	protected final Screen popup = new Screen();
 	protected final Widget background = new Widget();
@@ -99,7 +102,7 @@ public abstract class Window implements InventoryViewer {
 	public static final Vector2 QUICKBAR_POSITION = new Vector2(QUICKBAR_X, QUICKBAR_Y);
 	// Main
 	public static final float MAIN_X = QUICKBAR_X;
-	public static final float MAIN_Y = QUICKBAR_Y + 1.5f;
+	public static final float MAIN_Y = QUICKBAR_Y + 0.17f;
 	public static final Vector2 MAIN_POSITION = new Vector2(MAIN_X, MAIN_Y);
 	private static final float SCALE = 0.75f;
 
@@ -268,130 +271,121 @@ public abstract class Window implements InventoryViewer {
 	 * @return true if successful
 	 */
 	public boolean onClick(ClickArguments args) {
-		switch (Spout.getPlatform()) {
-			case PROXY:
-			case SERVER:
-				Inventory inventory = args.getInventory();
-				int slot = args.getSlot();
-				debug("Spout slot: " + slot);
-				ItemStack clicked = inventory.get(slot);
-				if (args.isShiftClick()) {
-					debug("Shift clicked");
-					if (clicked != null) {
-						return onShiftClick(clicked, slot, inventory);
+		Inventory inventory = args.getInventory();
+		int slot = args.getSlot();
+		ItemStack clicked = inventory.get(slot);
+		debug("Spout slot: " + slot);
+		if (args.isShiftClick()) {
+			debug("Shift clicked");
+			if (clicked != null) {
+				return onShiftClick(clicked, slot, inventory);
+			}
+		} else if (args.isRightClick()) {
+			debug("Right click");
+			if (clicked == null) {
+				debug("Empty slot");
+				if (cursorItem != null) {
+					debug("Cursor: " + cursorItem.getMaterial().getName());
+					debug("Add one");
+					// slot is empty with a not empty cursor
+					// add one
+					clicked = cursorItem.clone();
+					clicked.setAmount(1);
+					inventory.set(slot, clicked);
+					// remove from cursor
+					cursorItem.setAmount(cursorItem.getAmount() - 1);
+					if (cursorItem.isEmpty()) {
+						cursorItem = null;
 					}
-				} else if (args.isRightClick()) {
-					debug("Right click");
-					if (clicked == null) {
-						debug("Empty slot");
-						if (cursorItem != null) {
-							debug("Cursor: " + cursorItem.getMaterial().getName());
-							debug("Add one");
-							// slot is empty with a not empty cursor
-							// add one
-							clicked = cursorItem.clone();
-							clicked.setAmount(1);
-							inventory.set(slot, clicked);
-							// remove from cursor
-							cursorItem.setAmount(cursorItem.getAmount() - 1);
-							if (cursorItem.isEmpty()) {
-								cursorItem = null;
-							}
-							return true;
-						}
-					} else if (cursorItem != null) {
-						debug("Slot: " + clicked.getMaterial().getName());
-						debug("Cursor: " + cursorItem.getMaterial().getName());
-						// slot is not empty with not empty cursor
-						if (cursorItem.equalsIgnoreSize(clicked)) {
-							// only stack materials that are the same
-							if (clicked.getMaxStackSize() > clicked.getAmount()) {
-								debug("Stacking");
-								// add one if can fit
-								clicked.setAmount(clicked.getAmount() + 1);
-								inventory.set(slot, clicked);
-								cursorItem.setAmount(cursorItem.getAmount() - 1);
-								if (cursorItem.isEmpty()) {
-									cursorItem = null;
-								}
-								return true;
-							}
-						} else {
-							debug("Materials don't match. Swapping stacks.");
-							// materials don't match
-							// swap stacks
-							ItemStack newCursor = clicked.clone();
-							inventory.set(slot, cursorItem);
-							cursorItem = newCursor;
-							return true;
-						}
-					} else {
-						debug("Slot: " + clicked.getMaterial().getName());
-						debug("Empty cursor");
-						// slot is not empty with an empty cursor
-						// split the stack
-						int x = clicked.getAmount();
-						int y = x / 2;
-						int z = x % 2;
-						clicked.setAmount(y);
+					return true;
+				}
+			} else if (cursorItem != null) {
+				debug("Slot: " + clicked.getMaterial().getName());
+				debug("Cursor: " + cursorItem.getMaterial().getName());
+				// slot is not empty with not empty cursor
+				if (cursorItem.equalsIgnoreSize(clicked)) {
+					// only stack materials that are the same
+					if (clicked.getMaxStackSize() > clicked.getAmount()) {
+						debug("Stacking");
+						// add one if can fit
+						clicked.setAmount(clicked.getAmount() + 1);
 						inventory.set(slot, clicked);
-						// cursor gets any remainder
-						cursorItem = clicked.clone();
-						cursorItem.setAmount(y + z);
+						cursorItem.setAmount(cursorItem.getAmount() - 1);
+						if (cursorItem.isEmpty()) {
+							cursorItem = null;
+						}
 						return true;
 					}
 				} else {
-					debug("Left click");
-					if (clicked == null) {
-						debug("Empty slot");
-						if (cursorItem != null) {
-							debug("Cursor: " + cursorItem.getMaterial().getName());
-							debug("Put whole stack in slot");
-							// slot is empty; cursor is not empty.
-							// put whole stack down
-							clicked = cursorItem.clone();
-							inventory.set(slot, clicked);
-							cursorItem = null;
-							return true;
-						}
-					} else if (cursorItem != null) {
-						debug("Clicked: " + clicked.getMaterial().getName());
-						debug("Cursor: " + cursorItem.getMaterial().getName());
-						// slot is not empty; cursor is not empty.
-						// stack
-						if (cursorItem.equalsIgnoreSize(clicked)) {
-							debug("Stacking");
-							clicked.stack(cursorItem);
-							inventory.set(slot, clicked);
-							if (cursorItem.isEmpty()) {
-								cursorItem = null;
-							}
-							return true;
-						} else {
-							debug("Materials don't match. Swapping stacks.");
-							// materials don't match
-							// swap stacks
-							ItemStack newCursor = clicked.clone();
-							inventory.set(slot, cursorItem);
-							cursorItem = newCursor;
-						}
-					} else {
-						debug("Clicked: " + clicked.getMaterial().getName());
-						debug("Empty cursor");
-						// slot is not empty; cursor is empty.
-						// pick up stack
-						cursorItem = clicked.clone();
-						inventory.set(slot, null);
-						return true;
-					}
+					debug("Materials don't match. Swapping stacks.");
+					// materials don't match
+					// swap stacks
+					ItemStack newCursor = clicked.clone();
+					inventory.set(slot, cursorItem);
+					cursorItem = newCursor;
+					return true;
 				}
-				return false;
-			case CLIENT:
-				// TODO: Send click packet
-				return false;
-			default:
-				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform().toString());
+			} else {
+				debug("Slot: " + clicked.getMaterial().getName());
+				debug("Empty cursor");
+				// slot is not empty with an empty cursor
+				// split the stack
+				int x = clicked.getAmount();
+				int y = x / 2;
+				int z = x % 2;
+				clicked.setAmount(y);
+				inventory.set(slot, clicked);
+				// cursor gets any remainder
+				cursorItem = clicked.clone();
+				cursorItem.setAmount(y + z);
+				return true;
+			}
+		} else {
+			debug("Left click");
+			if (clicked == null) {
+				debug("Empty slot");
+				if (cursorItem != null) {
+					debug("Cursor: " + cursorItem.getMaterial().getName());
+					debug("Put whole stack in slot");
+					// slot is empty; cursor is not empty.
+					// put whole stack down
+					clicked = cursorItem.clone();
+					inventory.set(slot, clicked);
+					cursorItem = null;
+					return true;
+				}
+			} else if (cursorItem != null) {
+				debug("Clicked: " + clicked.getMaterial().getName());
+				debug("Cursor: " + cursorItem.getMaterial().getName());
+				// slot is not empty; cursor is not empty.
+				// stack
+				if (cursorItem.equalsIgnoreSize(clicked)) {
+					debug("Stacking");
+					clicked.stack(cursorItem);
+					inventory.set(slot, clicked);
+					if (cursorItem.isEmpty()) {
+						cursorItem = null;
+					}
+					return true;
+				} else {
+					debug("Materials don't match. Swapping stacks.");
+					// materials don't match
+					// swap stacks
+					ItemStack newCursor = clicked.clone();
+					inventory.set(slot, cursorItem);
+					cursorItem = newCursor;
+				}
+			} else {
+				debug("Clicked: " + clicked.getMaterial().getName());
+				debug("Empty cursor");
+				// slot is not empty; cursor is empty.
+				// pick up stack
+				cursorItem = clicked.clone();
+				inventory.set(slot, null);
+				return true;
+			}
 		}
+		return false;
 	}
 
 	/**
@@ -665,6 +659,21 @@ public abstract class Window implements InventoryViewer {
 		}
 	}
 
+	public void setShiftDown(boolean shiftDown) {
+		this.shiftDown = shiftDown;
+	}
+
+	public boolean isShiftDown() {
+		return shiftDown;
+	}
+
+	public boolean canTick() {
+		return false;
+	}
+
+	public void onTick(float dt) {
+	}
+
 	protected void callProtocolEvent(ProtocolEvent event) {
 		// TODO: C->S events
 		if (getPlayer() == null) {
@@ -690,15 +699,15 @@ public abstract class Window implements InventoryViewer {
 
 	@Override
 	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
+
+		InventoryConverter slots = getInventoryConverter(inventory);
+		if (slots == null) {
+			return;
+		}
+
 		switch (Spout.getPlatform()) {
 			case PROXY:
 			case SERVER:
-				InventoryConverter slots = getInventoryConverter(inventory);
-				if (slots != null) {
-					int nativeSlot = slots.revert(slot);
-					callProtocolEvent(new WindowSlotEvent(this, inventory, nativeSlot, item));
-				}
-
 				// update held item
 				PlayerQuickbar quickbar = getPlayerInventory().getQuickbar();
 				debug("Slot: " + slot);
@@ -707,19 +716,13 @@ public abstract class Window implements InventoryViewer {
 					Player player = getPlayer();
 					player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, 0, item)); // TODO: Setting boots too for some reason...?
 				}
+				callProtocolEvent(new WindowSlotEvent(this, inventory, slots.revert(slot), item));
 				break;
 			case CLIENT:
-				// TODO: Slot setting
+				slots.getWidgets()[slot].get(InventorySlot.class).setRenderItemStack(new RenderItemStack(item));
 				break;
 			default:
 				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform());
 		}
-	}
-
-	public boolean canTick() {
-		return false;
-	}
-
-	public void onTick(float dt) {
 	}
 }

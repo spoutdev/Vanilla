@@ -40,6 +40,10 @@ public class InventoryEntry {
 		this.slot = slot;
 	}
 
+	public InventoryEntry(InventoryEntry entry) {
+		this(entry.getInventory(), entry.getSlot());
+	}
+
 	/**
 	 * Returns the inventory associated with this entry.
 	 * @return inventory

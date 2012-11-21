@@ -29,15 +29,36 @@ package org.spout.vanilla.inventory.window.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.spout.api.Client;
+import org.spout.api.Spout;
 import org.spout.api.component.components.WidgetComponent;
+import org.spout.api.entity.Player;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.input.KeyEvent;
+import org.spout.api.input.Keyboard;
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.IntVector2;
 import org.spout.api.math.Vector2;
 
+import org.spout.vanilla.component.inventory.WindowHolder;
+import org.spout.vanilla.inventory.window.ClickArguments;
+import org.spout.vanilla.inventory.window.InventoryEntry;
+import org.spout.vanilla.inventory.window.Window;
+
 public class InventorySlot extends WidgetComponent {
 	private RenderItemStack item;
+	private final RenderPart hitBox = new RenderPart();
 	private Vector2 pos = Vector2.ZERO;
+	private InventoryEntry entry;
+
+	public void setInventoryEntry(InventoryEntry entry) {
+		this.entry = entry;
+	}
+
+	public InventoryEntry getInventoryEntry() {
+		return entry;
+	}
 
 	public void setRenderItemStack(RenderItemStack item) {
 		this.item = item;
@@ -55,8 +76,16 @@ public class InventorySlot extends WidgetComponent {
 
 	public void update() {
 		if (item != null) {
+			item.setZIndex(0);
 			item.setPosition(pos);
 		}
+	}
+
+	public Window getWindow() {
+		if (!(Spout.getEngine() instanceof Client)) {
+			throw new IllegalStateException("Cannot handle GUIs on the server.");
+		}
+		return ((Client) Spout.getEngine()).getActivePlayer().get(WindowHolder.class).getActiveWindow();
 	}
 
 	@Override
@@ -70,10 +99,14 @@ public class InventorySlot extends WidgetComponent {
 
 	@Override
 	public void onClicked(IntVector2 position, boolean mouseDown) {
+		Window window = getWindow();
+		window.onClick(new ClickArguments(entry, false, window.isShiftDown()));
 	}
 
 	@Override
 	public void onKey(KeyEvent event) {
+		Keyboard key = event.getKey();
+		getWindow().setShiftDown((key == Keyboard.KEY_LSHIFT || key == Keyboard.KEY_RSHIFT) && event.isPressed());
 	}
 
 	@Override

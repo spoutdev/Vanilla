@@ -31,6 +31,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.math.Vector2;
 import org.spout.api.util.StringUtil;
 
+import org.spout.vanilla.inventory.window.InventoryEntry;
 import org.spout.vanilla.inventory.window.gui.InventorySlot;
 
 /**
@@ -50,6 +51,7 @@ public class InventoryConverter {
 		for (int i = 0; i < widgets.length; i++) {
 			Widget widget = widgets[i] = new Widget();
 			InventorySlot slot = widget.add(InventorySlot.class);
+			slot.setInventoryEntry(new InventoryEntry(inventory, i));
 			slot.setPosition(positions[i]);
 		}
 	}

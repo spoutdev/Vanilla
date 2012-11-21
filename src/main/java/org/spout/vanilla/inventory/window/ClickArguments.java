@@ -41,6 +41,12 @@ public class ClickArguments extends InventoryEntry {
 		this.shiftClick = shiftClick;
 	}
 
+	public ClickArguments(InventoryEntry entry, boolean rightClick, boolean shiftClick) {
+		super(entry);
+		this.rightClick = rightClick;
+		this.shiftClick = shiftClick;
+	}
+
 	/**
 	 * Returns true if the click was a right click
 	 * @return true if window was right clicked

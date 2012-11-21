@@ -42,7 +42,7 @@ import org.spout.vanilla.material.VanillaMaterials;
  */
 public class GridInventoryConverter extends InventoryConverter {
 	public static final float SLOT_WIDTH = 0.1f;
-	public static final float SLOT_HEIGHT = SLOT_WIDTH;
+	public static final float SLOT_HEIGHT = 0.14f;
 	private final Grid grid;
 	private final Vector2 pos;
 
@@ -55,7 +55,7 @@ public class GridInventoryConverter extends InventoryConverter {
 			int i = iter.next(), x = iter.getX(), y = iter.getY(), size = grid.getSize();
 			slots[i] = (offset + size) - (length * y) - (length - x);
 			InventorySlot slot = widgets[i].get(InventorySlot.class);
-			slot.setRenderItemStack(new RenderItemStack(new ItemStack(VanillaMaterials.LEATHER_CAP, 1)));
+			slot.setRenderItemStack(new RenderItemStack(new ItemStack(VanillaMaterials.LEATHER_CAP, 1))); // TODO: Handle this in onClick
 			slot.setPosition(pos.add(x * SLOT_WIDTH, y * SLOT_HEIGHT));
 		}
 	}

@@ -24,24 +24,25 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.creature;
+package org.spout.vanilla.component.test;
 
-import java.util.List;
+import org.spout.api.Spout;
+import org.spout.api.component.components.EntityComponent;
+import org.spout.api.entity.Player;
+import org.spout.api.plugin.Platform;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
-
-public class ZombieEntityProtocol extends CreatureProtocol {
-	public final static int TYPE_INDEX = 16; // The MC metadata index determining if this zombie was a villager or not
-
-	public ZombieEntityProtocol() {
-		super(CreatureType.ZOMBIE);
+public class TransformDebugComponent extends EntityComponent {
+	@Override
+	public void onAttached() {
+		if (Spout.getPlatform() != Platform.SERVER || !Spout.debugMode() || getOwner() instanceof Player) {
+			throw new IllegalArgumentException("This is a spammy component meant only for debugging entity translations!");
+		}
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, TYPE_INDEX, 1));
-		return parameters;
+	public void onTick(float dt) {
+		if (getOwner().getTransform().isPositionDirty()) {
+			Spout.log(getOwner().toString() + " is translating!");
+		}
 	}
 }

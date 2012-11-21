@@ -64,6 +64,7 @@ import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.component.substance.material.chest.Chest;
 import org.spout.vanilla.component.substance.object.FallingBlock;
+import org.spout.vanilla.component.test.TransformDebugComponent;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.inventory.block.DispenserInventory;
 import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
@@ -442,6 +443,9 @@ public class TestCommands {
 			}
 		}
 		entity.setSavable(false);
+		if (Spout.getPlatform() == Platform.SERVER && Spout.debugMode()) {
+			entity.add(TransformDebugComponent.class);
+		}
 		pos.getWorld().spawnEntity(entity);
 	}
 }

@@ -45,7 +45,10 @@ public class Item extends EntityComponent {
 	@Override
 	public void onAttached() {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
-		getOwner().add(PhysicsComponent.class).setCollisionShape(new BoxShape(0.125F, 0.125F, 0.125F));
+		PhysicsComponent physics = getOwner().add(PhysicsComponent.class);
+		physics.setMass(5f);
+		physics.setCollisionShape(new BoxShape(0.125F, 0.125F, 0.125F));
+		physics.setRestitution(0f);
 	}
 
 	@Override

@@ -31,6 +31,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.spout.api.Spout;
 import org.spout.api.component.components.PhysicsComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Transform;
@@ -66,9 +67,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 
 	@Override
 	public final List<Message> getUpdateMessages(Entity entity) {
-
 		// Movement
-
 		Transform prevTransform = entity.getTransform().getTransform();
 		Transform newTransform = entity.getTransform().getTransformLive();
 

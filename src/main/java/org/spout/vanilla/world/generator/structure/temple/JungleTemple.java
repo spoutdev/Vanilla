@@ -28,6 +28,7 @@ package org.spout.vanilla.world.generator.structure.temple;
 
 import java.util.Collections;
 import java.util.List;
+import org.spout.api.math.MathHelper;
 
 import org.spout.api.math.Vector3;
 
@@ -53,7 +54,7 @@ public class JungleTemple extends StructureComponent {
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
 		final SimpleBlockMaterialPicker air = new SimpleBlockMaterialPicker();
 		air.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
-		final MossyCobbleBlockMaterialPicker cobble = new MossyCobbleBlockMaterialPicker(getRandom());
+		final JungleTempleBlockMaterialPicker cobble = new JungleTempleBlockMaterialPicker(getRandom());
 		// Basic shape: a box with two floors on full box
 		box.setPicker(cobble);
 		box.setMinMax(0, -4, 0, 11, 0, 14);
@@ -299,6 +300,8 @@ public class JungleTemple extends StructureComponent {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		return new BoundingBox(new Vector3(0, 0, 0), new Vector3(11, 9, 14));
+		final Vector3 rotatedMin = transform(0, 0, 0);
+		final Vector3 rotatedMax = transform(11, 9, 14);
+		return new BoundingBox(MathHelper.min(rotatedMin, rotatedMax), MathHelper.max(rotatedMin, rotatedMax));
 	}
 }

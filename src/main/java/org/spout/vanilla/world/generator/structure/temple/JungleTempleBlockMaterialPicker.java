@@ -24,48 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.structure;
+package org.spout.vanilla.world.generator.structure.temple;
+
+import java.util.Random;
 
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.structure.BlockMaterialPicker;
 
-public class SimpleBlockMaterialPicker implements BlockMaterialPicker {
-	private BlockMaterial outerMaterial;
-	private BlockMaterial innerMaterial;
+public class JungleTempleBlockMaterialPicker implements BlockMaterialPicker {
+	private final Random random;
 
-	public SimpleBlockMaterialPicker() {
-		this(VanillaMaterials.AIR, VanillaMaterials.AIR);
-	}
-
-	public SimpleBlockMaterialPicker(BlockMaterial outerMaterial, BlockMaterial innerMaterial) {
-		this.outerMaterial = outerMaterial;
-		this.innerMaterial = innerMaterial;
-	}
-
-	public void setOuterMaterial(BlockMaterial outerMaterial) {
-		this.outerMaterial = outerMaterial;
-	}
-
-	public void setInnerMaterial(BlockMaterial innerMaterial) {
-		this.innerMaterial = innerMaterial;
-	}
-
-	public void setOuterInnerMaterials(BlockMaterial outer, BlockMaterial inner) {
-		setOuterMaterial(outer);
-		setInnerMaterial(inner);
+	public JungleTempleBlockMaterialPicker(Random random) {
+		this.random = random;
 	}
 
 	@Override
 	public BlockMaterial get(boolean outer) {
-		return outer ? outerMaterial : innerMaterial;
-	}
-
-	public BlockMaterial getInnerMaterial() {
-		return innerMaterial;
-	}
-
-	public BlockMaterial getOuterMaterial() {
-		return outerMaterial;
+		return random.nextFloat() < 0.4 ? VanillaMaterials.COBBLESTONE : VanillaMaterials.MOSS_STONE;
 	}
 }

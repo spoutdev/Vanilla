@@ -58,6 +58,7 @@ import org.spout.vanilla.world.generator.normal.object.tree.SpruceTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.SwampTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject.TreeType;
 import org.spout.vanilla.world.generator.structure.mineshaft.Mineshaft;
+import org.spout.vanilla.world.generator.structure.stronghold.Stronghold;
 import org.spout.vanilla.world.generator.structure.temple.Temple;
 import org.spout.vanilla.world.generator.theend.object.SpireObject;
 
@@ -99,6 +100,7 @@ public class VanillaObjects {
 	public static final GlowstonePatchObject GLOWSTONE_PATCH = new GlowstonePatchObject();
 	public static final Mineshaft MINESHAFT = new Mineshaft();
 	public static final Temple TEMPLE = new Temple();
+	public static final Stronghold STRONGHOLD = new Stronghold();
 	private static final Map<String, WorldGeneratorObject> BY_NAME = new HashMap<String, WorldGeneratorObject>();
 
 	static {

@@ -59,16 +59,22 @@ public abstract class RotatableObject extends RandomObject {
 	protected void setBlockMaterial(World world, int x, int y, int z, BlockMaterial material, short data) {
 		final Vector3 rotated = applyRotation(x, y, z);
 		world.setBlockMaterial(rotated.getFloorX(), rotated.getFloorY(), rotated.getFloorZ(), material, data, null);
-		if (material instanceof Attachable) {
-			final Attachable attachable = (Attachable) material;
-			final Block block = world.getBlock(rotated);
-			attachable.setAttachedFace(block,
-					BlockFace.fromYaw(attachable.getAttachedFace(block).getDirection().getYaw() + rotation.getYaw()), null);
-		} else if (material instanceof Directional) {
+		if (material instanceof Directional) {
 			final Directional directional = (Directional) material;
 			final Block block = world.getBlock(rotated);
-			directional.setFacing(block,
-					BlockFace.fromYaw(directional.getFacing(block).getDirection().getYaw() + rotation.getYaw()));
+			final BlockFace face = directional.getFacing(block);
+			if (face != BlockFace.BOTTOM && face != BlockFace.TOP) {
+				directional.setFacing(block, BlockFace.fromYaw(face.getDirection().getYaw()
+						+ rotation.getYaw()));
+			}
+		} else if (material instanceof Attachable) {
+			final Attachable attachable = (Attachable) material;
+			final Block block = world.getBlock(rotated);
+			final BlockFace face = attachable.getAttachedFace(block);
+			if (face != BlockFace.BOTTOM && face != BlockFace.TOP) {
+				attachable.setAttachedFace(block, BlockFace.fromYaw(face.getDirection().getYaw()
+						+ rotation.getYaw()), null);
+			}
 		}
 	}
 

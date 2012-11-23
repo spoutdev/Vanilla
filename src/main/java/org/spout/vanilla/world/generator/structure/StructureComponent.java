@@ -93,16 +93,16 @@ public abstract class StructureComponent {
 			final Block block = position.getWorld().getBlock(transformed);
 			final BlockFace face = directional.getFacing(block);
 			if (face != BlockFace.BOTTOM && face != BlockFace.TOP) {
-				directional.setFacing(block,
-						BlockFace.fromYaw(face.getDirection().getYaw() + rotation.getYaw()));
+				directional.setFacing(block, BlockFace.fromYaw(face.getDirection().getYaw()
+						+ rotation.getYaw()));
 			}
 		} else if (material instanceof Attachable) {
 			final Attachable attachable = (Attachable) material;
 			final Block block = position.getWorld().getBlock(transformed);
 			final BlockFace face = attachable.getAttachedFace(block);
 			if (face != BlockFace.BOTTOM && face != BlockFace.TOP) {
-				attachable.setAttachedFace(block,
-						BlockFace.fromYaw(face.getDirection().getYaw() + rotation.getYaw()), null);
+				attachable.setAttachedFace(block, BlockFace.fromYaw(face.getDirection().getYaw()
+						+ rotation.getYaw()), null);
 			}
 		}
 	}
@@ -188,8 +188,8 @@ public abstract class StructureComponent {
 	public abstract BoundingBox getBoundingBox();
 
 	public static class BoundingBox {
-		private Vector3 min;
-		private Vector3 max;
+		private final Vector3 min;
+		private final Vector3 max;
 
 		public BoundingBox(Vector3 min, Vector3 max) {
 			this.min = min;
@@ -200,26 +200,18 @@ public abstract class StructureComponent {
 			return max;
 		}
 
-		public void setMax(Vector3 max) {
-			this.max = max;
-		}
-
 		public Vector3 getMin() {
 			return min;
 		}
 
-		public void setMin(Vector3 min) {
-			this.min = min;
-		}
-
 		public boolean intersects(BoundingBox box) {
-			Vector3 rMax = box.getMax();
+			final Vector3 rMax = box.getMax();
 			if (rMax.getX() < min.getX()
 					|| rMax.getY() < min.getY()
 					|| rMax.getZ() < min.getZ()) {
 				return false;
 			}
-			Vector3 rMin = box.getMin();
+			final Vector3 rMin = box.getMin();
 			if (rMin.getX() > max.getX()
 					|| rMin.getY() > max.getY()
 					|| rMin.getZ() > max.getZ()) {

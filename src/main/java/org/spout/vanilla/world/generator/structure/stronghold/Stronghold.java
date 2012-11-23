@@ -24,48 +24,26 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.structure;
+package org.spout.vanilla.world.generator.structure.stronghold;
 
-import org.spout.api.material.BlockMaterial;
+import org.spout.api.geo.World;
+import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.structure.Structure;
 
-public class SimpleBlockMaterialPicker implements BlockMaterialPicker {
-	private BlockMaterial outerMaterial;
-	private BlockMaterial innerMaterial;
-
-	public SimpleBlockMaterialPicker() {
-		this(VanillaMaterials.AIR, VanillaMaterials.AIR);
-	}
-
-	public SimpleBlockMaterialPicker(BlockMaterial outerMaterial, BlockMaterial innerMaterial) {
-		this.outerMaterial = outerMaterial;
-		this.innerMaterial = innerMaterial;
-	}
-
-	public void setOuterMaterial(BlockMaterial outerMaterial) {
-		this.outerMaterial = outerMaterial;
-	}
-
-	public void setInnerMaterial(BlockMaterial innerMaterial) {
-		this.innerMaterial = innerMaterial;
-	}
-
-	public void setOuterInnerMaterials(BlockMaterial outer, BlockMaterial inner) {
-		setOuterMaterial(outer);
-		setInnerMaterial(inner);
+public class Stronghold extends Structure {
+	@Override
+	public boolean canPlaceObject(World w, int x, int y, int z) {
+		return true;
 	}
 
 	@Override
-	public BlockMaterial get(boolean outer) {
-		return outer ? outerMaterial : innerMaterial;
-	}
-
-	public BlockMaterial getInnerMaterial() {
-		return innerMaterial;
-	}
-
-	public BlockMaterial getOuterMaterial() {
-		return outerMaterial;
+	public void placeObject(World w, int x, int y, int z) {
+		final StrongholdChestCorridor test = new StrongholdChestCorridor(this);
+		test.setPosition(new Point(w, x, y, z));
+		test.randomize();
+		if (test.canPlace()) {
+			test.place();
+		}
 	}
 }

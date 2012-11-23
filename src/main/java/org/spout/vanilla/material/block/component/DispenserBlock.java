@@ -84,6 +84,7 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 
 	/**
 	 * Shoots an item from this Dispenser
+	 *
 	 * @param block of the Dispenser
 	 * @param item to shoot
 	 */
@@ -169,5 +170,14 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 	@Override
 	public boolean isReceivingPower(Block block) {
 		return RedstoneUtil.isReceivingPower(block);
+	}
+
+	@Override
+	public boolean canSupport(BlockMaterial material, BlockFace face) {
+		if (material == VanillaMaterials.VINES
+				&& face != BlockFace.TOP && face != BlockFace.BOTTOM) {
+			return true;
+		}
+		return super.canSupport(material, face);
 	}
 }

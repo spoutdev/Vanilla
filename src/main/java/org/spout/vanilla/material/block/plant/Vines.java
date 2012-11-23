@@ -149,7 +149,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 		return this.canAttachTo(block.getMaterial(), face);
 	}
 
-	public BlockFace getTracedFace(Block block, Cause<?> cause) {
+	private BlockFace getTracedFace(Block block, Cause<?> cause) {
 		if (block.getMaterial().equals(VanillaMaterials.VINES) && cause instanceof EntityCause) {
 			//get block by block tracing from the player view
 			Entity entity = ((EntityCause) cause).getSource();

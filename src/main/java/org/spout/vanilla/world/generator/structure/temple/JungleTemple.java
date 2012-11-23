@@ -277,7 +277,7 @@ public class JungleTemple extends StructureComponent {
 		setBlockMaterial(9, -2, 8, VanillaMaterials.PISTON_STICKY_BASE, (short) 1);
 		setBlockMaterial(10, -2, 8, VanillaMaterials.PISTON_STICKY_BASE, (short) 4);
 		setBlockMaterial(10, -1, 8, VanillaMaterials.PISTON_STICKY_BASE, (short) 4);
-		setBlockMaterial(10, -2, 10, VanillaMaterials.REDSTONE_REPEATER_OFF, (short) 2);
+		setBlockMaterial(10, -2, 10, VanillaMaterials.REDSTONE_REPEATER_OFF, (short) 0);
 		// Place another loot chest
 		lootChest.setRandom(getRandom());
 		placeObject(9, -3, 10, lootChest);

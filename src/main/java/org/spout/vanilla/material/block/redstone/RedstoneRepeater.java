@@ -51,20 +51,23 @@ import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.util.RedstoneUtil;
 
 public class RedstoneRepeater extends GroundAttachable implements Directional, RedstoneSource, RedstoneTarget, DynamicMaterial, InitializableMaterial {
-	private static final EffectRange[] physicsRanges;
+	private static final int DIRECTION_MASK = 0x3;
+	private static final int TICK_DELAY_MASK = 0xC;
+	private static final int[] TICK_DELAYS = {100, 200, 300, 400};
+	private static final EffectRange[] PHYSIC_RANGES;
 	private final boolean powered;
 
 	static {
-		physicsRanges = new EffectRange[4];
+		PHYSIC_RANGES = new EffectRange[4];
 		BlockFaces base = BlockFaces.NESWBT.append(BlockFace.THIS);
 		List<BlockFace> tmpFaces = new ArrayList<BlockFace>();
-		for (int i = 0; i < physicsRanges.length; i++) {
+		for (int i = 0; i < PHYSIC_RANGES.length; i++) {
 			for (BlockFace face : base) {
 				tmpFaces.add(face);
 			}
 			BlockFace current = BlockFaces.ESWN.get(i);
 			tmpFaces.remove(current.getOpposite());
-			physicsRanges[i] = new ListEffectRange(tmpFaces.toArray(new BlockFace[0])).translate(current);
+			PHYSIC_RANGES[i] = new ListEffectRange(tmpFaces.toArray(new BlockFace[0])).translate(current);
 			tmpFaces.clear();
 		}
 	}
@@ -117,34 +120,31 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
 		boolean receiving = this.isReceivingPower(block);
-		//System.out.println("RECEIVING: " + receiving);
 		if (this.isPowered() != receiving) {
 			block.dynamicUpdate(block.getWorld().getAge() + this.getTickDelay(block), receiving ? 1 : 0);
 		}
 	}
-
-	public static final int[] TICK_DELAYS = {100, 200, 300, 400};
 
 	public int getTickDelay(Block block) {
 		return TICK_DELAYS[this.getTickDelayIndex(block)];
 	}
 
 	public int getTickDelayIndex(Block block) {
-		return (block.getData() & 12) >> 2;
+		return block.getDataField(TICK_DELAY_MASK);
 	}
 
 	public void setTickDelayIndex(Block block, int tickDelayIndex) {
-		block.setData((tickDelayIndex << 2 & 12) | (block.getData() & 0x3));
+		block.setDataField(TICK_DELAY_MASK, tickDelayIndex);
 	}
 
 	@Override
 	public BlockFace getFacing(Block block) {
-		return BlockFaces.ESWN.get(block.getData() & 0x3);
+		return BlockFaces.ESWN.get(block.getDataField(DIRECTION_MASK));
 	}
 
 	@Override
 	public void setFacing(Block block, BlockFace facing) {
-		block.setData((block.getData() & ~0x3) + BlockFaces.ESWN.indexOf(facing, 0));
+		block.setDataField(DIRECTION_MASK, BlockFaces.ESWN.indexOf(facing, 0));
 	}
 
 	@Override
@@ -202,7 +202,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 
 	@Override
 	public EffectRange getPhysicsRange(short data) {
-		return physicsRanges[data & 0x3];
+		return PHYSIC_RANGES[data & 0x3];
 	}
 
 	@Override

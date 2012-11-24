@@ -258,6 +258,22 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			emptySkyChunkData[j] = (byte) 0xFF;
 		}
 	}
+	
+	@Override
+	protected boolean canSendChunk(Chunk c) {
+		if (!c.canSend()) {
+			c.populate(true, true);
+			return false;
+		}
+		Collection<Chunk> chunks = chunkInit.getChunks(c);
+		for (Chunk cc : chunks) {
+			if (!cc.canSend()) {
+				cc.populate(true, true);
+				return false;
+			}
+		}
+		return true;
+	}
 
 	@Override
 	public Collection<Chunk> sendChunk(Chunk c) {

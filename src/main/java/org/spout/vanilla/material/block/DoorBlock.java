@@ -41,7 +41,7 @@ import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.util.RedstoneUtil;
 
-public abstract class DoorBlock extends GroundAttachable implements Openable, RedstoneTarget {
+public abstract class DoorBlock extends GroundAttachable implements Directional, Openable, RedstoneTarget {
 	public DoorBlock(String name, int id, String model) {
 		super(name, id, model);
 		this.setCollision(CollisionStrategy.SOLID);
@@ -144,9 +144,16 @@ public abstract class DoorBlock extends GroundAttachable implements Openable, Re
 		doorHalf.setData(doorHalf.getData() ^ 0x4);
 	}
 
+	@Override
 	public BlockFace getFacing(Block doorHalf) {
 		short data = getCorrectHalf(doorHalf, false).getData();
 		return BlockFaces.NESW.get(data & ~0x4);
+	}
+
+	@Override
+	public void setFacing(Block block, BlockFace facing) {
+		final Block bottomHalf = getCorrectHalf(block, false);
+		bottomHalf.setDataField(0x3, BlockFaces.NESW.indexOf(facing, 0));
 	}
 
 	public void create(Block bottomHalf, Block topHalf, BlockFace facing, boolean hingeLeft, boolean opened) {

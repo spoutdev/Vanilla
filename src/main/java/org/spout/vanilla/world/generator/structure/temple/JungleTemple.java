@@ -28,8 +28,8 @@ package org.spout.vanilla.world.generator.structure.temple;
 
 import java.util.Collections;
 import java.util.List;
-import org.spout.api.math.MathHelper;
 
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;

@@ -47,11 +47,11 @@ public class StrongholdBlockMaterialPicker implements BlockMaterialPicker {
 			return VanillaMaterials.AIR;
 		}
 		final float draw = random.nextFloat();
-		if (draw < 0.2F) {
+		if (draw < 0.2) {
 			return StoneBrick.CRACKED_STONE;
-		} else if (draw < 0.5F) {
+		} else if (draw < 0.5) {
 			return StoneBrick.MOSSY_STONE;
-		} else if (draw < 0.55F) {
+		} else if (draw < 0.55) {
 			// TODO: should be stone bricks (metadata 2)
 			return VanillaMaterials.SILVERFISH_STONE;
 		} else {

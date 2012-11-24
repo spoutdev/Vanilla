@@ -30,6 +30,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.world.generator.structure.Structure;
+import org.spout.vanilla.world.generator.structure.StructureComponent;
 
 public class Stronghold extends Structure {
 	@Override
@@ -39,7 +40,7 @@ public class Stronghold extends Structure {
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
-		final StrongholdChestCorridor test = new StrongholdChestCorridor(this);
+		final StructureComponent test = new StrongholdIntersection(this);
 		test.setPosition(new Point(w, x, y, z));
 		test.randomize();
 		if (test.canPlace()) {

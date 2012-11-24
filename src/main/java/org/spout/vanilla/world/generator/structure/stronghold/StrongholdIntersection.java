@@ -27,55 +27,62 @@
 package org.spout.vanilla.world.generator.structure.stronghold;
 
 import java.util.List;
-
+import java.util.Random;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructureComponent;
 
-public class StrongholdCorridor extends StructureComponent {
-	private int length = 4;
+public class StrongholdIntersection extends StructureComponent {
+	private boolean nextComponentX = false;
+	private boolean nextComponentZ = false;
 
-	public StrongholdCorridor(Structure parent) {
+	public StrongholdIntersection(Structure parent) {
 		super(parent);
 	}
 
 	@Override
 	public boolean canPlace() {
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
-		box.setMinMax(-1, -1, -1, 5, 5, length + 1);
+		box.setMinMax(-1, -1, -1, 5, 5, 7);
 		return !box.intersectsLiquids();
 	}
 
 	@Override
 	public void place() {
-		// It's a simple tube
-		for (int i = 0; i < length; i++) {
-			setBlockMaterial(0, 0, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(1, 0, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(2, 0, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(3, 0, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(4, 0, i, VanillaMaterials.STONE_BRICK);
-			for (int ii = 1; ii <= 3; ii++) {
-				setBlockMaterial(0, ii, i, VanillaMaterials.STONE_BRICK);
-				setBlockMaterial(1, ii, i, VanillaMaterials.AIR);
-				setBlockMaterial(2, ii, i, VanillaMaterials.AIR);
-				setBlockMaterial(3, ii, i, VanillaMaterials.AIR);
-				setBlockMaterial(4, ii, i, VanillaMaterials.STONE_BRICK);
-			}
-			setBlockMaterial(0, 4, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(1, 4, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(2, 4, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(3, 4, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(4, 4, i, VanillaMaterials.STONE_BRICK);
+		// General shape
+		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		box.setPicker(new StrongholdBlockMaterialPicker(getRandom()));
+		box.setMinMax(0, 0, 0, 4, 4, 6);
+		box.fill(true);
+		// Place the doors
+		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 1, 0);
+		new StrongholdDoor.EmptyDoorway(this).place(1, 1, 6);
+		// Place random torches
+		randomSetBlockMaterial(0.1f, 1, 2, 1, VanillaMaterials.TORCH);
+		randomSetBlockMaterial(0.1f, 3, 2, 1, VanillaMaterials.TORCH);
+		randomSetBlockMaterial(0.1f, 1, 2, 5, VanillaMaterials.TORCH);
+		randomSetBlockMaterial(0.1f, 3, 2, 5, VanillaMaterials.TORCH);
+		// Access for the next components
+		box.setPicker(new SimpleBlockMaterialPicker());
+		if (nextComponentX) {
+			box.setMinMax(0, 1, 2, 0, 3, 4);
+			box.fill(false);
+		}
+		if (nextComponentZ) {
+			box.setMinMax(4, 1, 2, 4, 3, 4);
+			box.fill(false);
 		}
 	}
 
 	@Override
 	public void randomize() {
+		final Random random = getRandom();
+		nextComponentX = random.nextBoolean();
+		nextComponentZ = random.nextBoolean();
 	}
 
 	@Override
@@ -85,16 +92,24 @@ public class StrongholdCorridor extends StructureComponent {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(0, 0, 0);
-		final Vector3 rotatedMax = transform(5, 5, length);
+		final Vector3 rotatedMin = transform(-1, -1, 0);
+		final Vector3 rotatedMax = transform(5, 5, 7);
 		return new BoundingBox(MathHelper.min(rotatedMin, rotatedMax), MathHelper.max(rotatedMin, rotatedMax));
 	}
 
-	public int getLength() {
-		return length;
+	public boolean hasNextComponentX() {
+		return nextComponentX;
 	}
 
-	public void setLength(int length) {
-		this.length = length;
+	public void setNextComponentX(boolean nextComponentX) {
+		this.nextComponentX = nextComponentX;
+	}
+
+	public boolean hasNextComponentZ() {
+		return nextComponentZ;
+	}
+
+	public void setNextComponentZ(boolean nextComponentZ) {
+		this.nextComponentZ = nextComponentZ;
 	}
 }

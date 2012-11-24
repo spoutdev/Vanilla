@@ -51,12 +51,13 @@ public class StrongholdChestCorridor extends StructureComponent {
 	@Override
 	public boolean canPlace() {
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
-		box.setMinMax(-2, -2, -1, 6, 6, 8);
+		box.setMinMax(-1, -1, -1, 5, 5, 7);
 		return !box.intersectsLiquids();
 	}
 
 	@Override
 	public void place() {
+		// Building objects
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
 		// General shape
 		box.setPicker(new StrongholdBlockMaterialPicker(getRandom()));

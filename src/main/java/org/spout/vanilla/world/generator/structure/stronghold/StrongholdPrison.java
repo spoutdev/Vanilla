@@ -33,45 +33,62 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructureComponent;
 
-public class StrongholdCorridor extends StructureComponent {
-	private int length = 4;
-
-	public StrongholdCorridor(Structure parent) {
+public class StrongholdPrison extends StructureComponent {
+	public StrongholdPrison(Structure parent) {
 		super(parent);
 	}
 
 	@Override
 	public boolean canPlace() {
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
-		box.setMinMax(-1, -1, -1, 5, 5, length + 1);
+		box.setMinMax(-1, -1, -1, 9, 5, 11);
 		return !box.intersectsLiquids();
 	}
 
 	@Override
 	public void place() {
-		// It's a simple tube
-		for (int i = 0; i < length; i++) {
-			setBlockMaterial(0, 0, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(1, 0, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(2, 0, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(3, 0, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(4, 0, i, VanillaMaterials.STONE_BRICK);
-			for (int ii = 1; ii <= 3; ii++) {
-				setBlockMaterial(0, ii, i, VanillaMaterials.STONE_BRICK);
-				setBlockMaterial(1, ii, i, VanillaMaterials.AIR);
-				setBlockMaterial(2, ii, i, VanillaMaterials.AIR);
-				setBlockMaterial(3, ii, i, VanillaMaterials.AIR);
-				setBlockMaterial(4, ii, i, VanillaMaterials.STONE_BRICK);
-			}
-			setBlockMaterial(0, 4, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(1, 4, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(2, 4, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(3, 4, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(4, 4, i, VanillaMaterials.STONE_BRICK);
-		}
+		// Building objects
+		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
+		final StrongholdBlockMaterialPicker stone = new StrongholdBlockMaterialPicker(getRandom());
+		// General shape
+		box.setPicker(stone);
+		box.setMinMax(0, 0, 0, 8, 4, 10);
+		box.fill(true);
+		// Place the door
+		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 1, 0);
+		//
+		box.setPicker(picker);
+		box.setMinMax(1, 1, 10, 3, 3, 10);
+		box.fill(false);
+		//
+		box.setPicker(stone);
+		box.setMinMax(4, 1, 1, 4, 3, 1);
+		box.fill(false);
+		box.offsetMinMax(0, 0, 2, 0, 0, 2);
+		box.fill(false);
+		box.offsetMinMax(0, 0, 4, 0, 0, 4);
+		box.fill(false);
+		box.offsetMinMax(0, 0, 2, 0, 0, 2);
+		box.fill(false);
+		// Build the cells
+		box.setPicker(picker);
+		picker.setOuterInnerMaterials(VanillaMaterials.IRON_BARS, VanillaMaterials.IRON_BARS);
+		box.setMinMax(4, 1, 4, 4, 3, 6);
+		box.fill(false);
+		box.setMinMax(5, 1, 5, 7, 3, 5);
+		box.fill(false);
+		setBlockMaterial(4, 3, 2, VanillaMaterials.IRON_BARS);
+		setBlockMaterial(4, 3, 8, VanillaMaterials.IRON_BARS);
+		// Add the cell doors
+		setBlockMaterial(4, 1, 2, VanillaMaterials.IRON_DOOR_BLOCK, (short) 3);
+		setBlockMaterial(4, 2, 2, VanillaMaterials.IRON_DOOR_BLOCK, (short) 11);
+		setBlockMaterial(4, 1, 8, VanillaMaterials.IRON_DOOR_BLOCK, (short) 3);
+		setBlockMaterial(4, 2, 8, VanillaMaterials.IRON_DOOR_BLOCK, (short) 11);
 	}
 
 	@Override
@@ -85,16 +102,8 @@ public class StrongholdCorridor extends StructureComponent {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(0, 0, 0);
-		final Vector3 rotatedMax = transform(5, 5, length);
+		final Vector3 rotatedMin = transform(-1, -1, 0);
+		final Vector3 rotatedMax = transform(9, 5, 11);
 		return new BoundingBox(MathHelper.min(rotatedMin, rotatedMax), MathHelper.max(rotatedMin, rotatedMax));
-	}
-
-	public int getLength() {
-		return length;
-	}
-
-	public void setLength(int length) {
-		this.length = length;
 	}
 }

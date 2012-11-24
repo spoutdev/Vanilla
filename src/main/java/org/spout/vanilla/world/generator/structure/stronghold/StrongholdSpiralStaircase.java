@@ -35,43 +35,48 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructureComponent;
+import org.spout.vanilla.world.generator.structure.stronghold.StrongholdDoor.EmptyDoorway;
 
-public class StrongholdCorridor extends StructureComponent {
-	private int length = 4;
-
-	public StrongholdCorridor(Structure parent) {
+public class StrongholdSpiralStaircase extends StructureComponent {
+	public StrongholdSpiralStaircase(Structure parent) {
 		super(parent);
 	}
 
 	@Override
 	public boolean canPlace() {
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
-		box.setMinMax(-1, -1, -1, 5, 5, length + 1);
+		box.setMinMax(-1, -7, -1, 5, 11, 5);
 		return !box.intersectsLiquids();
 	}
 
 	@Override
 	public void place() {
-		// It's a simple tube
-		for (int i = 0; i < length; i++) {
-			setBlockMaterial(0, 0, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(1, 0, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(2, 0, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(3, 0, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(4, 0, i, VanillaMaterials.STONE_BRICK);
-			for (int ii = 1; ii <= 3; ii++) {
-				setBlockMaterial(0, ii, i, VanillaMaterials.STONE_BRICK);
-				setBlockMaterial(1, ii, i, VanillaMaterials.AIR);
-				setBlockMaterial(2, ii, i, VanillaMaterials.AIR);
-				setBlockMaterial(3, ii, i, VanillaMaterials.AIR);
-				setBlockMaterial(4, ii, i, VanillaMaterials.STONE_BRICK);
-			}
-			setBlockMaterial(0, 4, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(1, 4, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(2, 4, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(3, 4, i, VanillaMaterials.STONE_BRICK);
-			setBlockMaterial(4, 4, i, VanillaMaterials.STONE_BRICK);
-		}
+		// General shape
+		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		box.setPicker(new StrongholdBlockMaterialPicker(getRandom()));
+		box.setMinMax(0, 0, 0, 4, 10, 4);
+		box.fill(true);
+		// Place the doors
+		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 7, 0);
+		new EmptyDoorway(this).place(1, 1, 4);
+		// Place the steps
+		setBlockMaterial(2, 6, 1, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(1, 5, 1, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(1, 6, 1, VanillaMaterials.SLAB);
+		setBlockMaterial(1, 5, 2, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(1, 4, 3, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(1, 5, 3, VanillaMaterials.SLAB);
+		setBlockMaterial(2, 4, 3, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(3, 3, 3, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(3, 4, 3, VanillaMaterials.SLAB);
+		setBlockMaterial(3, 3, 2, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(3, 2, 1, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(3, 3, 1, VanillaMaterials.SLAB);
+		setBlockMaterial(2, 2, 1, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(1, 1, 1, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(1, 2, 1, VanillaMaterials.SLAB);
+		setBlockMaterial(1, 1, 2, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(1, 1, 3, VanillaMaterials.SLAB);
 	}
 
 	@Override
@@ -85,16 +90,8 @@ public class StrongholdCorridor extends StructureComponent {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(0, 0, 0);
-		final Vector3 rotatedMax = transform(5, 5, length);
+		final Vector3 rotatedMin = transform(-1, -7, 0);
+		final Vector3 rotatedMax = transform(5, 11, 5);
 		return new BoundingBox(MathHelper.min(rotatedMin, rotatedMax), MathHelper.max(rotatedMin, rotatedMax));
-	}
-
-	public int getLength() {
-		return length;
-	}
-
-	public void setLength(int length) {
-		this.length = length;
 	}
 }

@@ -33,5 +33,5 @@ RenderState:
 
 MaterialParams:
     Diffuse: texture://Vanilla/resources/gui/icons.png
-    Color: color(1,1,1,1)
+    BlendColor: color(1,1,1,1)
     

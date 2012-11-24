@@ -32,7 +32,6 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
-
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
@@ -42,12 +41,29 @@ import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
 public class Snow extends GroundAttachable implements DynamicMaterial, InitializableMaterial {
 	private static final byte MIN_MELT_LIGHT = 11;
+	
+	public static final Snow[] SNOW = new Snow[8];
+	
+	static {
+		SNOW[0] = new Snow("Snow", 78);
+		SNOW[1] = new Snow("Snow_1", 1, SNOW[0], "model://Vanilla/resources/materials/block/solid/snowblock/snowblock.spm");
+		SNOW[2] = new Snow("Snow_2", 2, SNOW[0], "model://Vanilla/resources/materials/block/solid/snowblock/snowblock.spm");
+		SNOW[3] = new Snow("Snow_3", 3, SNOW[0], "model://Vanilla/resources/materials/block/solid/snowblock/snowblock.spm");
+		SNOW[4] = new Snow("Snow_4", 4, SNOW[0], "model://Vanilla/resources/materials/block/solid/snowblock/snowblock.spm");
+		SNOW[5] = new Snow("Snow_5", 5, SNOW[0], "model://Vanilla/resources/materials/block/solid/snowblock/snowblock.spm");
+		SNOW[6] = new Snow("Snow_6", 6, SNOW[0], "model://Vanilla/resources/materials/block/solid/snowblock/snowblock.spm");
+		SNOW[7] = new Snow("Snow_7", 7, SNOW[0], "model://Vanilla/resources/materials/block/solid/snowblock/snowblock.spm");
+	}
 
 	public Snow(String name, int id) {
-		super(name, id, "model://Vanilla/resources/materials/block/solid/snowblock/snowblock.spm");
+		super((short) 0x07, name, id, "model://Vanilla/resources/materials/block/solid/snowblock/snowblock.spm");
 		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent();
 		this.setOcclusion((short) 0, BlockFace.BOTTOM);
 		this.addMiningType(ToolType.SPADE).setMiningLevel(ToolLevel.WOOD);
+	}
+	
+	private Snow(String name, int data, Snow parent, String model) {
+		super(name, SNOW[0].getId(), data, parent, model);
 	}
 
 	@Override

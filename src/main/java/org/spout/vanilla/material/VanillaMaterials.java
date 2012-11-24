@@ -328,7 +328,7 @@ public final class VanillaMaterials {
 	public static final RedstoneTorch REDSTONE_TORCH_OFF = new RedstoneTorch("Redstone Torch", 75, false);
 	public static final RedstoneTorch REDSTONE_TORCH_ON = new RedstoneTorch("Redstone Torch (On)", 76, true);
 	public static final StoneButton STONE_BUTTON = new StoneButton("Stone Button", 77);
-	public static final Snow SNOW = new Snow("Snow", 78);
+	public static final Snow SNOW = Snow.SNOW[0];
 	public static final Ice ICE = new Ice("Ice", 79);
 	public static final SnowBlock SNOW_BLOCK = new SnowBlock("Snow Block", 80);
 	public static final Cactus CACTUS = new Cactus("Cactus", 81);

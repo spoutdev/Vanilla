@@ -28,6 +28,7 @@ package org.spout.vanilla;
 
 import org.spout.api.Client;
 import org.spout.api.Spout;
+import org.spout.api.component.components.CameraComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
@@ -85,6 +86,9 @@ public class VanillaListener implements Listener {
 		player.add(HUDComponent.class).openHUD();
 		player.add(PlayerInventory.class);
 		player.add(WindowHolder.class);
+		
+		CameraComponent camera = player.get(CameraComponent.class);
+		camera.setSpeed(10f);
 	}
 
 	@EventHandler

@@ -62,10 +62,10 @@ public class StrongholdIntersection extends StructureComponent {
 		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 1, 0);
 		new StrongholdDoor.EmptyDoorway(this).place(1, 1, 6);
 		// Place random torches
-		randomSetBlockMaterial(0.1f, 1, 2, 1, VanillaMaterials.TORCH);
-		randomSetBlockMaterial(0.1f, 3, 2, 1, VanillaMaterials.TORCH);
-		randomSetBlockMaterial(0.1f, 1, 2, 5, VanillaMaterials.TORCH);
-		randomSetBlockMaterial(0.1f, 3, 2, 5, VanillaMaterials.TORCH);
+		attachMaterial(0.1f, 1, 2, 1, VanillaMaterials.TORCH);
+		attachMaterial(0.1f, 3, 2, 1, VanillaMaterials.TORCH);
+		attachMaterial(0.1f, 1, 2, 5, VanillaMaterials.TORCH);
+		attachMaterial(0.1f, 3, 2, 5, VanillaMaterials.TORCH);
 		// Access for the next components
 		box.setPicker(new SimpleBlockMaterialPicker());
 		if (nextComponentX) {

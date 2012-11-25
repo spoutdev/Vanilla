@@ -102,16 +102,16 @@ public class MineshaftCorridor extends StructureComponent {
 				box.fill(false);
 			}
 			// webs and torches
-			randomSetBlockMaterial(0.9f, 0, 2, sectionZ - 1, VanillaMaterials.WEB);
-			randomSetBlockMaterial(0.9f, 2, 2, sectionZ - 1, VanillaMaterials.WEB);
-			randomSetBlockMaterial(0.9f, 0, 2, sectionZ + 1, VanillaMaterials.WEB);
-			randomSetBlockMaterial(0.9f, 2, 2, sectionZ + 1, VanillaMaterials.WEB);
-			randomSetBlockMaterial(0.95f, 0, 2, sectionZ - 2, VanillaMaterials.WEB);
-			randomSetBlockMaterial(0.95f, 2, 2, sectionZ - 2, VanillaMaterials.WEB);
-			randomSetBlockMaterial(0.95f, 0, 2, sectionZ + 2, VanillaMaterials.WEB);
-			randomSetBlockMaterial(0.95f, 2, 2, sectionZ + 2, VanillaMaterials.WEB);
-			randomSetBlockMaterial(0.95f, 1, 2, sectionZ - 1, VanillaMaterials.TORCH);
-			randomSetBlockMaterial(0.95f, 1, 2, sectionZ + 1, VanillaMaterials.TORCH);
+			setBlockMaterial(0.9f, 0, 2, sectionZ - 1, VanillaMaterials.WEB);
+			setBlockMaterial(0.9f, 2, 2, sectionZ - 1, VanillaMaterials.WEB);
+			setBlockMaterial(0.9f, 0, 2, sectionZ + 1, VanillaMaterials.WEB);
+			setBlockMaterial(0.9f, 2, 2, sectionZ + 1, VanillaMaterials.WEB);
+			setBlockMaterial(0.95f, 0, 2, sectionZ - 2, VanillaMaterials.WEB);
+			setBlockMaterial(0.95f, 2, 2, sectionZ - 2, VanillaMaterials.WEB);
+			setBlockMaterial(0.95f, 0, 2, sectionZ + 2, VanillaMaterials.WEB);
+			setBlockMaterial(0.95f, 2, 2, sectionZ + 2, VanillaMaterials.WEB);
+			attachMaterial(0.95f, 1, 2, sectionZ - 1, VanillaMaterials.TORCH);
+			attachMaterial(0.95f, 1, 2, sectionZ + 1, VanillaMaterials.TORCH);
 			// loot
 			if (random.nextInt(100) == 0) {
 				final LootChestObject chest = new LootChestObject();
@@ -143,7 +143,7 @@ public class MineshaftCorridor extends StructureComponent {
 		if (hasRails) {
 			for (byte zz = 0; zz <= lenght; zz++) {
 				if (getBlockMaterial(1, -1, zz).isOpaque()) {
-					randomSetBlockMaterial(0.3f, 1, 0, zz, VanillaMaterials.RAIL);
+					setBlockMaterial(0.3f, 1, 0, zz, VanillaMaterials.RAIL);
 				}
 			}
 		}

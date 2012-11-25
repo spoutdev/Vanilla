@@ -120,7 +120,7 @@ public class StrongholdLargeIntersection extends StructureComponent {
 		box.offsetMinMax(-3, 0, 0, -1, 0, 0);
 		box.fill(false);
 		// Place a torch
-		setBlockMaterial(6, 5, 6, VanillaMaterials.TORCH);
+		attachMaterial(6, 5, 6, VanillaMaterials.TORCH);
 	}
 
 	@Override

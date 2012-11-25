@@ -77,16 +77,16 @@ public class StrongholdRoom extends StructureComponent {
 			return;
 		}
 		switch (type) {
-			case CENTRAL_PILLER:
+			case CENTRAL_PILLAR:
 				// The pillar
 				setBlockMaterial(5, 1, 5, VanillaMaterials.STONE_BRICK);
 				setBlockMaterial(5, 2, 5, VanillaMaterials.STONE_BRICK);
 				setBlockMaterial(5, 3, 5, VanillaMaterials.STONE_BRICK);
 				// Torches on the pillar
-				setBlockMaterial(4, 3, 5, VanillaMaterials.TORCH);
-				setBlockMaterial(6, 3, 5, VanillaMaterials.TORCH);
-				setBlockMaterial(5, 3, 4, VanillaMaterials.TORCH);
-				setBlockMaterial(5, 3, 6, VanillaMaterials.TORCH);
+				attachMaterial(4, 3, 5, VanillaMaterials.TORCH);
+				attachMaterial(6, 3, 5, VanillaMaterials.TORCH);
+				attachMaterial(5, 3, 4, VanillaMaterials.TORCH);
+				attachMaterial(5, 3, 6, VanillaMaterials.TORCH);
 				// Slabs all around
 				setBlockMaterial(4, 1, 4, VanillaMaterials.SLAB);
 				setBlockMaterial(4, 1, 5, VanillaMaterials.SLAB);
@@ -137,7 +137,7 @@ public class StrongholdRoom extends StructureComponent {
 					setBlockMaterial(6, i, 6, VanillaMaterials.COBBLESTONE);
 				}
 				// A torch in the middle
-				setBlockMaterial(5, 3, 5, VanillaMaterials.TORCH);
+				attachMaterial(5, 3, 5, VanillaMaterials.TORCH);
 				// A wood ring to complete the upper floor
 				for (int i = 2; i <= 8; ++i) {
 					setBlockMaterial(2, 3, i, VanillaMaterials.PLANK);
@@ -191,7 +191,7 @@ public class StrongholdRoom extends StructureComponent {
 	}
 
 	public static enum StrongholdRoomType {
-		CENTRAL_PILLER,
+		CENTRAL_PILLAR,
 		FOUNTAIN,
 		TWO_FLOORS;
 

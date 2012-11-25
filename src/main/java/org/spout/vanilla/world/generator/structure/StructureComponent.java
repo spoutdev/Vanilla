@@ -34,6 +34,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
@@ -107,13 +108,31 @@ public abstract class StructureComponent {
 		}
 	}
 
-	public void randomSetBlockMaterial(float odd, int xx, int yy, int zz, BlockMaterial material) {
-		randomSetBlockMaterial(odd, xx, yy, zz, material, material.getData());
+	public void setBlockMaterial(float odd, int xx, int yy, int zz, BlockMaterial material) {
+		setBlockMaterial(odd, xx, yy, zz, material, material.getData());
 	}
 
-	public void randomSetBlockMaterial(float odd, int xx, int yy, int zz, BlockMaterial material, short data) {
+	public void setBlockMaterial(float odd, int xx, int yy, int zz, BlockMaterial material, short data) {
 		if (getRandom().nextFloat() > odd) {
 			setBlockMaterial(xx, yy, zz, material, data);
+		}
+	}
+
+	public void attachMaterial(float odd, int xx, int yy, int zz, Attachable attachable) {
+		if (getRandom().nextFloat() > odd) {
+			attachMaterial(xx, yy, zz, attachable);
+		}
+	}
+
+	public void attachMaterial(int xx, int yy, int zz, Attachable attachable) {
+		for (BlockFace face : BlockFaces.BTNSWE) {
+			final Vector3 offset = face.getOffset();
+			final Block to = getBlock(xx + offset.getFloorX(), yy + offset.getFloorY(), zz + offset.getFloorZ());
+			if (attachable.canAttachTo(to, face.getOpposite())) {
+				final Block block = getBlock(xx, yy, zz);
+				block.setMaterial((BlockMaterial) attachable);
+				attachable.setAttachedFace(block, face, null);
+			}
 		}
 	}
 

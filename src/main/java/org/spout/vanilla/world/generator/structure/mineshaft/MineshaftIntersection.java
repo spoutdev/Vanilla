@@ -64,7 +64,7 @@ public class MineshaftIntersection extends StructureComponent {
 		box.setPicker(picker);
 		// hollow out some space
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
-		if (height > 2) {
+		if (hasTwoFloors()) {
 			// for the extra floor
 			box.setMinMax(0, 0, 0, 2, 2, 4);
 			box.fill(false);
@@ -105,7 +105,7 @@ public class MineshaftIntersection extends StructureComponent {
 
 	@Override
 	public final void randomize() {
-		height = (byte) (getRandom().nextInt(4) == 0 ? 6 : 2);
+		setTwoFloors(getRandom().nextInt(4) == 0);
 	}
 
 	@Override
@@ -151,12 +151,12 @@ public class MineshaftIntersection extends StructureComponent {
 		return components;
 	}
 
-	public byte getHeight() {
-		return height;
+	public boolean hasTwoFloors() {
+		return height > 2;
 	}
 
-	public void setDoubleHeight(boolean doubleHeight) {
-		height = (byte) (doubleHeight ? 6 : 2);
+	public void setTwoFloors(boolean twoFloors) {
+		height = (byte) (twoFloors ? 6 : 2);
 	}
 
 	@Override

@@ -55,9 +55,7 @@ public class LootChestObject extends RotatableObject {
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		center = new Vector3(x, y, z);
-		return getBlockMaterial(w, x, y, z).isMaterial(VanillaMaterials.AIR)
-				&& getBlockMaterial(w, x, y + 1, z).isMaterial(VanillaMaterials.AIR);
+		return true;
 	}
 
 	@Override
@@ -84,6 +82,7 @@ public class LootChestObject extends RotatableObject {
 
 	/**
 	 * Adds a new material to the loot
+	 *
 	 * @param mat the material to add
 	 * @param probability the probability that it is selected
 	 * @param minItems minimum items of that material per stack

@@ -26,12 +26,15 @@
  */
 package org.spout.vanilla.protocol;
 
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
+import gnu.trove.set.TIntSet;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
-
-import gnu.trove.set.TIntSet;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -56,7 +59,6 @@ import org.spout.api.util.hashing.IntPairHashed;
 import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
 import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.neutral.Human;
@@ -129,9 +131,6 @@ import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
 
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
-
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
 	private static final int SOLID_BLOCK_ID = 1; // Initializer block ID
 	private static final byte[] SOLID_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
@@ -167,7 +166,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	public VanillaNetworkSynchronizer(Session session) {
 		// The minimum block distance is a radius for sending chunks before login/respawn
 		// It needs to be > 0 for reliable login and preventing falling through the world
-		super(session, 3);
+		super(session, 2);
 		registerProtocolEvents(this);
 		chunkInit = ChunkInit.getChunkInit(VanillaConfiguration.CHUNK_INIT.getString("client"));
 	}
@@ -260,19 +259,25 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 	
 	@Override
-	protected boolean canSendChunk(Chunk c) {
+	protected boolean canSendChunk(Chunk c, Set<Chunk> unsendable) {
 		if (!c.canSend()) {
-			c.populate(true, true);
+			unsendable.add(c);
+			c.populate(true, true, true);
 			return false;
 		}
+		if (activeChunks.contains(c.getX(), c.getZ())) {
+			return true;
+		}
+		boolean canSend = true;
 		Collection<Chunk> chunks = chunkInit.getChunks(c);
 		for (Chunk cc : chunks) {
 			if (!cc.canSend()) {
-				cc.populate(true, true);
-				return false;
+				unsendable.add(cc);
+				canSend = false;
+				cc.populate(true, true, true);
 			}
 		}
-		return true;
+		return canSend;
 	}
 
 	@Override

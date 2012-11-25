@@ -88,10 +88,11 @@ public class SnowObject extends RandomObject {
 			int newSnowHeight = 0;
 			if (current.getMaterial() instanceof Snow) {
 				newSnowHeight = current.getData();
-				// In 1 out of 12 times, stack the existing pile.
-				if (random.nextInt(12) != 0 && newSnowHeight + 1 < 8) {
-					// Increase the height of snow
+				if (newSnowHeight < 7) {
 					newSnowHeight++;
+				}
+				// In 1 out of 6 times, stack the existing pile.
+				if (random.nextInt(12) != 0) {
 					// Collect neighbors
 					final ArrayList<IntVector3> slopes = new ArrayList<IntVector3>();
 					for (IntVector3 neighbor : NEIGHBORS) {

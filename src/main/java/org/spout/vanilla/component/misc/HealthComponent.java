@@ -26,12 +26,24 @@
  */
 package org.spout.vanilla.component.misc;
 
+import java.awt.Color;
+import java.util.List;
+import java.util.Random;
+
+import org.spout.api.Client;
 import org.spout.api.Spout;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
+import org.spout.api.gui.Widget;
+import org.spout.api.gui.component.RenderPartsHolderComponent;
+import org.spout.api.gui.render.RenderPart;
+import org.spout.api.math.Rectangle;
 
+import org.spout.vanilla.component.player.HUDComponent;
+import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.Animation;
+import org.spout.vanilla.data.RenderMaterials;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.event.entity.EntityDamageEvent;
@@ -47,9 +59,50 @@ import org.spout.vanilla.source.HealthChangeCause;
  */
 public class HealthComponent extends EntityComponent {
 	private static final int DEATH_TIME_TICKS = 30;
-	//damage
+	// Damage
 	private DamageCause lastDamageCause = DamageCause.UNKNOWN;
 	private Entity lastDamager;
+	// Client only
+	private final Widget hearts = new Widget();
+	private boolean animateHearts;
+	private int heartAnimationTicks;
+	private final Random random = new Random();
+	private static final float SCALE = 0.75f; // TODO: Apply directly from engine
+	private static final float START_X = -0.71f * SCALE;
+
+	@Override
+	public void onAttached() {
+		if (Spout.getEngine() instanceof Client && getOwner() instanceof Player) {
+			float x = START_X;
+			float dx = 0.06f * SCALE;
+
+			// Health bar
+			final RenderPartsHolderComponent heartsRect = hearts.add(RenderPartsHolderComponent.class);
+			float y = VanillaConfiguration.HARDCORE_MODE.getBoolean() ? 45f / 256f : 0;
+			for (int i = 0; i < 10; i++) {
+				final RenderPart heart = new RenderPart();
+				heart.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
+				heart.setColor(Color.WHITE);
+				heart.setSprite(new Rectangle(x + 0.005f, -0.77f, 0.065f * SCALE, 0.065f));
+				heart.setSource(new Rectangle(53f / 256f, y, 9f / 256f, 9f / 256f));
+				heartsRect.add(heart);
+				x += dx;
+			}
+
+			x = START_X;
+			for (int i = 0; i < 10; i++) {
+				final RenderPart heartBg = new RenderPart();
+				heartBg.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
+				heartBg.setColor(Color.WHITE);
+				heartBg.setSprite(new Rectangle(x, -0.77f, 0.065f * SCALE, 0.065f));
+				heartBg.setSource(new Rectangle(16f / 256f, y, 9f / 256f, 9f / 256f));
+				heartsRect.add(heartBg);
+				x += dx;
+			}
+
+			getOwner().add(HUDComponent.class).attachWidget(hearts);
+		}
+	}
 
 	@Override
 	public boolean canTick() {
@@ -58,23 +111,83 @@ public class HealthComponent extends EntityComponent {
 
 	@Override
 	public void onTick(float dt) {
-		if (isDying()) {
-			setDeathTicks(getDeathTicks() - 1);
-			if (getDeathTicks() <= 0) {
-				if (!(getOwner() instanceof Player)) {
-					getOwner().remove();
+		switch (Spout.getPlatform()) {
+			case PROXY:
+			case SERVER:
+				if (isDying()) {
+					setDeathTicks(getDeathTicks() - 1);
+					if (getDeathTicks() <= 0) {
+						if (!(getOwner() instanceof Player)) {
+							getOwner().remove();
+						}
+					}
+				} else if (isDead()) {
+					if (hasDeathAnimation()) {
+						setDeathTicks(DEATH_TIME_TICKS);
+						getOwner().getNetwork().callProtocolEvent(new EntityStatusEvent(getOwner(), EntityStatusMessage.ENTITY_DEAD));
+					} else {
+						if (!(getOwner() instanceof Player)) {
+							getOwner().remove();
+						}
+					}
+					onDeath();
 				}
-			}
-		} else if (isDead()) {
-			if (hasDeathAnimation()) {
-				setDeathTicks(DEATH_TIME_TICKS);
-				getOwner().getNetwork().callProtocolEvent(new EntityStatusEvent(getOwner(), EntityStatusMessage.ENTITY_DEAD));
-			} else {
-				if (!(getOwner() instanceof Player)) {
-					getOwner().remove();
+				break;
+			case CLIENT:
+				List<RenderPart> heartParts = hearts.get(RenderPartsHolderComponent.class).getRenderParts();
+				if (animateHearts) {
+					float x = 0;
+					if (heartAnimationTicks == 3) {
+						// Flash off
+						x = 16f;
+						heartAnimationTicks++;
+					} else if (heartAnimationTicks == 6) {
+						// Flash on
+						x = 25f;
+						heartAnimationTicks++;
+					} else if (heartAnimationTicks == 9) {
+						// Flash off final time
+						x = 16f;
+						heartAnimationTicks = 0;
+						animateHearts = false;
+					} else {
+						heartAnimationTicks++;
+					}
+
+					if (x != 0) {
+						float y = VanillaConfiguration.HARDCORE_MODE.getBoolean() ? 45f / 256f : 0;
+						for (int i = 10; i < 20; i++) {
+							heartParts.get(i).setSource(new Rectangle(x / 256f, y, 9f / 256f, 9f / 256f));
+						}
+
+						hearts.update();
+					}
 				}
-			}
-			onDeath();
+
+				float x = START_X;
+				float y = -0.77f;
+				float dx = 0.06f * SCALE;
+
+				if (getHealth() <= 4) {
+					List<RenderPart> parts = hearts.get(RenderPartsHolderComponent.class).getRenderParts();
+					for (int i = 0; i < 10; i++) {
+						RenderPart heart = parts.get(i);
+						RenderPart heartBg = parts.get(i + 10);
+
+						if (random.nextBoolean()) {
+							y = -0.765f; // Twitch up
+						} else {
+							y = -0.775f; // Twitch down
+						}
+						heart.setSprite(new Rectangle(x + 0.005f, y, 0.065f * SCALE, 0.065f));
+						heartBg.setSprite(new Rectangle(x, y, 0.065f * SCALE, 0.065f));
+
+						x += dx;
+					}
+
+					hearts.update();
+				}
+				break;
 		}
 	}
 
@@ -82,7 +195,6 @@ public class HealthComponent extends EntityComponent {
 	 * Called when the resources.entities' health hits zero and is considered "dead" by Vanilla game standards
 	 */
 	public void onDeath() {
-
 	}
 
 	/**
@@ -138,7 +250,7 @@ public class HealthComponent extends EntityComponent {
 	/**
 	 * Sets the current health value for this entity
 	 * @param health hitpoints value to set to
-	 * @param source of the change
+	 * @param cause of the change
 	 */
 	public void setHealth(int health, HealthChangeCause cause) {
 		EntityHealthChangeEvent event = new EntityHealthChangeEvent(getOwner(), cause, health - getHealth());
@@ -158,7 +270,7 @@ public class HealthComponent extends EntityComponent {
 
 	/**
 	 * Sets the health value to 0
-	 * @param source of the change
+	 * @param cause of the change
 	 */
 	public void kill(HealthChangeCause cause) {
 		setHealth(0, cause);

@@ -43,6 +43,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.component.misc.HungerComponent;
 import org.spout.vanilla.component.misc.PickupItemComponent;
 import org.spout.vanilla.component.misc.SleepComponent;
@@ -86,9 +87,9 @@ public class VanillaListener implements Listener {
 		player.add(HUDComponent.class).openHUD();
 		player.add(PlayerInventory.class);
 		player.add(WindowHolder.class);
-		
-		CameraComponent camera = player.get(CameraComponent.class);
-		camera.setSpeed(10f);
+		player.add(CameraComponent.class).setSpeed(10f);
+		player.add(HealthComponent.class);
+		player.add(HungerComponent.class);
 	}
 
 	@EventHandler

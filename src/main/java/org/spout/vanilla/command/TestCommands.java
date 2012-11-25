@@ -61,6 +61,7 @@ import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.living.hostile.EnderDragon;
 import org.spout.vanilla.component.living.neutral.Enderman;
 import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.component.misc.HungerComponent;
 import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.component.substance.material.chest.Chest;
 import org.spout.vanilla.component.substance.object.FallingBlock;
@@ -205,7 +206,9 @@ public class TestCommands {
 		if (Spout.getPlatform() != Platform.CLIENT) {
 			throw new CommandException("Only clients can modify the hunger bar.");
 		}
-		((Client) Spout.getEngine()).getActivePlayer().get(HUDComponent.class).setHunger(args.getInteger(0), Boolean.valueOf(args.getString(1)));
+		HungerComponent hunger = ((Client) Spout.getEngine()).getActivePlayer().get(HungerComponent.class);
+		hunger.setHunger(args.getInteger(0));
+		hunger.setPoisoned(Boolean.valueOf(args.getString(1)));
 	}
 
 	@Command(aliases = {"explode"}, usage = "<explode>", desc = "Create an explosion")

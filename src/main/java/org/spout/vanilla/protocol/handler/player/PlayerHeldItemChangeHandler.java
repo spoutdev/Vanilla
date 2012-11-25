@@ -64,6 +64,6 @@ public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeld
 	@Override
 	public void handleClient(Session session, PlayerHeldItemChangeMessage message) {
 		Player player = ((Client) Spout.getEngine()).getActivePlayer();
-		player.get(HUDComponent.class).setHotbarSlot(message.getSlot());
+		player.get(PlayerInventory.class).getQuickbar().setCurrentSlot(message.getSlot());
 	}
 }

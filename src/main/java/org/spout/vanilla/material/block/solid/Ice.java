@@ -39,6 +39,7 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.block.SpreadingSolid;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
@@ -107,5 +108,10 @@ public class Ice extends SpreadingSolid implements InitializableMaterial {
 	@Override
 	public long getSpreadingTime(Block b) {
 		return 120000L + new Random(b.getWorld().getAge()).nextInt(60000) * 5;
+	}
+	
+	@Override
+	public boolean isFaceRendered(BlockFace face, BlockMaterial neighbor) {
+		return neighbor != this && !neighbor.isOpaque();
 	}
 }

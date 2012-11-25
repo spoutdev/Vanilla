@@ -49,38 +49,38 @@ public abstract class Stairs extends VanillaBlockMaterial implements Directional
 	}
 
 	/**
-	 * Gets if this half slab is the top-half
+	 * Gets if this stair is upside down
 	 * @param block to get it of
-	 * @return True if it is the block half
+	 * @return True if it is upside down
 	 */
-	public boolean isTop(Block block) {
+	public boolean isUpsideDown(Block block) {
 		return block.isDataBitSet(0x4);
 	}
 
 	/**
-	 * Sets if this half slab is the top-half
+	 * Sets if this stair is upside down
 	 * @param block to set it for
-	 * @param top state
+	 * @param upsideDown state
 	 */
-	public void setTop(Block block, boolean top) {
-		block.setDataBits(0x4, top);
+	public void setUpsideDown(Block block, boolean upsideDown) {
+		block.setDataBits(0x4, upsideDown);
 	}
 
 	@Override
 	public BlockFace getFacing(Block block) {
-		return BlockFaces.NSEW.get(block.getData());
+		return BlockFaces.NSEW.get(block.getData() & 0x3);
 	}
 
 	@Override
 	public void setFacing(Block block, BlockFace facing) {
-		block.setData((short) (BlockFaces.NSEW.indexOf(facing, 0)));
+		block.setDataField(0x3, BlockFaces.NSEW.indexOf(facing, 0));
 	}
 
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedMaterial, Cause<?> cause) {
 		block.setMaterial(this, cause);
 		this.setFacing(block, PlayerUtil.getFacing(cause).getOpposite());
-		this.setTop(block, against == BlockFace.TOP || (BlockFaces.NESW.contains(against) && clickedPos.getY() > 0.5f));
+		this.setUpsideDown(block, against == BlockFace.TOP || (BlockFaces.NESW.contains(against) && clickedPos.getY() > 0.5f));
 		return true;
 	}
 

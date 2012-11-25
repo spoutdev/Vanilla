@@ -28,11 +28,13 @@ package org.spout.vanilla.material.block.misc;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.block.Directional;
 
-public class EndPortalFrame extends VanillaBlockMaterial {
+public class EndPortalFrame extends VanillaBlockMaterial implements Directional {
 	public EndPortalFrame(String name, int id) {
 		super(name, id, (String) null);
 		this.setHardness(-1.0F).setResistance(6000000.0F);
@@ -42,5 +44,23 @@ public class EndPortalFrame extends VanillaBlockMaterial {
 	@Override
 	public MoveReaction getMoveReaction(Block block) {
 		return MoveReaction.DENY;
+	}
+
+	public boolean hasEyeOfTheEnder(Block block) {
+		return block.isDataBitSet(0x4);
+	}
+
+	public void setEyeOfTheEnder(Block block, boolean eyeOfTheEnder) {
+		block.setDataBits(0x4, eyeOfTheEnder);
+	}
+
+	@Override
+	public BlockFace getFacing(Block block) {
+		return BlockFaces.NSEW.get(block.getData() & 0x3);
+	}
+
+	@Override
+	public void setFacing(Block block, BlockFace facing) {
+		block.setDataField(0x3, BlockFaces.NSEW.indexOf(facing, 0));
 	}
 }

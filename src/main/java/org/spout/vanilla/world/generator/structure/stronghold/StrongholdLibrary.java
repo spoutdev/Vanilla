@@ -118,11 +118,11 @@ public class StrongholdLibrary extends StructureComponent {
 			picker.setOuterInnerMaterials(VanillaMaterials.WOODEN_FENCE, VanillaMaterials.WOODEN_FENCE);
 			box.setMinMax(3, 6, 2, 3, 6, 12);
 			box.fill(false);
-			box.offsetMinMax(7, 0, 0, 7, 0, 0);
+			box.offsetMinMax(7, 0, 0, 7, 0, -2);
 			box.fill(false);
 			box.setMinMax(4, 6, 2, 9, 6, 2);
 			box.fill(false);
-			box.offsetMinMax(0, 0, 10, 0, 0, 10);
+			box.offsetMinMax(0, 0, 10, -1, 0, 10);
 			box.fill(false);
 			setBlockMaterial(9, 6, 11, VanillaMaterials.WOODEN_FENCE);
 			setBlockMaterial(8, 6, 11, VanillaMaterials.WOODEN_FENCE);

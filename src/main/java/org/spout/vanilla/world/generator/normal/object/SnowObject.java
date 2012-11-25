@@ -112,7 +112,8 @@ public class SnowObject extends RandomObject {
 
 			// Check if the material can support snow
 			if (underMat instanceof VanillaBlockMaterial) {
-				if (((VanillaBlockMaterial) underMat).canSupport(VanillaMaterials.SNOW, BlockFace.TOP)) {
+				if (newSnowHeight < 8
+						&& ((VanillaBlockMaterial) underMat).canSupport(VanillaMaterials.SNOW, BlockFace.TOP)) {
 					current.setMaterial(Snow.SNOW[newSnowHeight], newSnowHeight);
 					return true;
 				}

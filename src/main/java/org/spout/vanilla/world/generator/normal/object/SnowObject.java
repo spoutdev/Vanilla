@@ -42,6 +42,7 @@ import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.liquid.Water;
+import org.spout.vanilla.material.block.misc.Snow;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.world.generator.object.RandomObject;
 
@@ -66,6 +67,7 @@ public class SnowObject extends RandomObject {
 	/**
 	 * Processes one iteration of snowfall, this may or may not set a block at
 	 * the current position.
+	 *
 	 * @returns if snow has been placed.
 	 */
 	public boolean fall(World world, IntVector3 position) {
@@ -74,7 +76,8 @@ public class SnowObject extends RandomObject {
 		final BlockMaterial underMat = under.getMaterial();
 		if (underMat.equals(VanillaMaterials.ICE)) {
 			return true;
-		} else if (underMat.isMaterial(VanillaMaterials.AIR, VanillaMaterials.SNOW)) {
+		} else if (underMat.isMaterial(VanillaMaterials.AIR)
+				|| underMat instanceof Snow) {
 			position.setY(position.getY() - 1);
 			return false;
 		} else if (underMat instanceof Water) {
@@ -83,10 +86,12 @@ public class SnowObject extends RandomObject {
 			return true;
 		} else {
 			int newSnowHeight = 0;
-			if (current.isMaterial(VanillaMaterials.SNOW)) {
-				newSnowHeight = current.getData() + 1;
-				// In 1 out of 6 times, stack the existing pile.
-				if (random.nextInt(6) != 0 && newSnowHeight < 15) {
+			if (current.getMaterial() instanceof Snow) {
+				newSnowHeight = current.getData();
+				// In 1 out of 12 times, stack the existing pile.
+				if (random.nextInt(12) != 0 && newSnowHeight + 1 < 8) {
+					// Increase the height of snow
+					newSnowHeight++;
 					// Collect neighbors
 					final ArrayList<IntVector3> slopes = new ArrayList<IntVector3>();
 					for (IntVector3 neighbor : NEIGHBORS) {
@@ -107,7 +112,7 @@ public class SnowObject extends RandomObject {
 			// Check if the material can support snow
 			if (underMat instanceof VanillaBlockMaterial) {
 				if (((VanillaBlockMaterial) underMat).canSupport(VanillaMaterials.SNOW, BlockFace.TOP)) {
-					current.setMaterial(VanillaMaterials.SNOW, newSnowHeight);
+					current.setMaterial(Snow.SNOW[newSnowHeight], newSnowHeight);
 					return true;
 				}
 			}
@@ -124,6 +129,7 @@ public class SnowObject extends RandomObject {
 	/**
 	 * Processes one iteration of snowfall, this may or may not set a block at
 	 * the current position.
+	 *
 	 * @param world to place in
 	 * @param x coordinate
 	 * @param y coordinate, unused

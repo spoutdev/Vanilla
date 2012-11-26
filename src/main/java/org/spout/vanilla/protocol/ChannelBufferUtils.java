@@ -272,11 +272,7 @@ public final class ChannelBufferUtils {
 		if (id != -1) {
 			buffer.writeByte(item.getAmount());
 			buffer.writeShort(item.getData());
-			if (hasNbtData(id)) {
-				writeCompound(buffer, item.getNBTData());
-			} else {
-				buffer.writeShort(-1);
-			}
+			writeCompound(buffer, item.getNBTData());
 		}
 	}
 
@@ -333,15 +329,6 @@ public final class ChannelBufferUtils {
 
 	public static void writeColor(Color color, ChannelBuffer buf) {
 		buf.writeInt(color.getRGB());
-	}
-
-	public static boolean hasNbtData(int id) {
-		// VanillaMaterials.
-		Material mat = VanillaMaterials.getMaterial((short) id);
-		if (!(mat instanceof VanillaMaterial)) {
-			return false;
-		}
-		return ((VanillaMaterial) mat).hasNBTData();
 	}
 
 	public static int protocolifyPosition(float pos) {

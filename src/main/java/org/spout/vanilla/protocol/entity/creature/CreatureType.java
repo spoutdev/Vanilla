@@ -26,6 +26,11 @@
  */
 package org.spout.vanilla.protocol.entity.creature;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.spout.api.component.components.EntityComponent;
+
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.living.hostile.Blaze;
 import org.spout.vanilla.component.living.hostile.CaveSpider;
@@ -85,20 +90,61 @@ public enum CreatureType {
 	WITHER(64, Wither.class),
 	WOLF(95, Wolf.class),
 	ZOMBIE(54, Zombie.class);
-	
+
 	private int id;
 	private Class<? extends Living> component;
-	
+	private static final Map<Class<?>, CreatureType> types = new HashMap<Class<?>, CreatureType>();
+	private static final Map<String, CreatureType> names = new HashMap<String, CreatureType>();
+
 	private CreatureType(int id, Class<? extends Living> component) {
 		this.id = id;
 		this.component = component;
 	}
 
+	/**
+	 * Gets the minecraft protocol id for the creature type
+	 */
 	public int getId() {
 		return id;
 	}
-	
+
+	/**
+	 * Gets the entity component associated with the creature type
+	 * 
+	 * @return component
+	 */
 	public Class<? extends Living> getComponent() {
 		return component;
+	}
+
+	/**
+	 * Gets the creature type associated with its given name, case-insensitive
+	 * 
+	 * @return creature type, or null if no creature type matching the name could be found
+	 */
+	public static CreatureType byName(String name) {
+		if (name != null) {
+			return names.get(name.toLowerCase());
+		}
+		return null;
+	}
+
+	/**
+	 * Gets the creature type associated with its exact entity component class
+	 * 
+	 * @return creature type, or null if no creature type matching the component could be found
+	 */
+	public static CreatureType byClass(Class<? extends EntityComponent> clazz) {
+		if (clazz != null) {
+			return types.get(clazz);
+		}
+		return null;
+	}
+
+	static {
+		for (CreatureType ct : values()) {
+			names.put(ct.name().toLowerCase(), ct);
+			types.put(ct.getComponent(), ct);
+		}
 	}
 }

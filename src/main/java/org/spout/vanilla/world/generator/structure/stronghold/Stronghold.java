@@ -40,7 +40,7 @@ public class Stronghold extends Structure {
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
-		final StructureComponent test = new StrongholdPortalRoom(this);
+		final StructureComponent test = new StrongholdPrison(this);
 		test.setPosition(new Point(w, x, y, z));
 		test.randomize();
 		if (test.canPlace()) {

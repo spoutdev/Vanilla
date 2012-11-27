@@ -85,10 +85,10 @@ public class StrongholdPrison extends StructureComponent {
 		setBlockMaterial(4, 3, 2, VanillaMaterials.IRON_BARS);
 		setBlockMaterial(4, 3, 8, VanillaMaterials.IRON_BARS);
 		// Add the cell doors
-		setBlockMaterial(4, 1, 2, VanillaMaterials.IRON_DOOR_BLOCK, (short) 3);
-		setBlockMaterial(4, 2, 2, VanillaMaterials.IRON_DOOR_BLOCK, (short) 11);
-		setBlockMaterial(4, 1, 8, VanillaMaterials.IRON_DOOR_BLOCK, (short) 3);
-		setBlockMaterial(4, 2, 8, VanillaMaterials.IRON_DOOR_BLOCK, (short) 11);
+		setBlockMaterial(4, 1, 2, VanillaMaterials.IRON_DOOR_BLOCK, (short) 0);
+		setBlockMaterial(4, 2, 2, VanillaMaterials.IRON_DOOR_BLOCK, (short) 8);
+		setBlockMaterial(4, 1, 8, VanillaMaterials.IRON_DOOR_BLOCK, (short) 0);
+		setBlockMaterial(4, 2, 8, VanillaMaterials.IRON_DOOR_BLOCK, (short) 8);
 	}
 
 	@Override

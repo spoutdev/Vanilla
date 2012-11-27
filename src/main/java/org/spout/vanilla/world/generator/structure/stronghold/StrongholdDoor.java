@@ -108,7 +108,7 @@ public abstract class StrongholdDoor {
 			parent.setBlockMaterial(xx + 2, yy + 2, zz, VanillaMaterials.STONE_BRICK);
 			parent.setBlockMaterial(xx + 2, yy + 1, zz, VanillaMaterials.STONE_BRICK);
 			parent.setBlockMaterial(xx + 2, yy, zz, VanillaMaterials.STONE_BRICK);
-			parent.setBlockMaterial(xx + 1, yy, zz, VanillaMaterials.WOODEN_DOOR_BLOCK);
+			parent.setBlockMaterial(xx + 1, yy, zz, VanillaMaterials.WOODEN_DOOR_BLOCK, (short) 1);
 			parent.setBlockMaterial(xx + 1, yy + 1, zz, VanillaMaterials.WOODEN_DOOR_BLOCK, (short) 8);
 		}
 	}
@@ -127,7 +127,7 @@ public abstract class StrongholdDoor {
 			parent.setBlockMaterial(xx + 2, yy + 2, zz, VanillaMaterials.STONE_BRICK);
 			parent.setBlockMaterial(xx + 2, yy + 1, zz, VanillaMaterials.STONE_BRICK);
 			parent.setBlockMaterial(xx + 2, yy, zz, VanillaMaterials.STONE_BRICK);
-			parent.setBlockMaterial(xx + 1, yy, zz, VanillaMaterials.IRON_DOOR_BLOCK);
+			parent.setBlockMaterial(xx + 1, yy, zz, VanillaMaterials.IRON_DOOR_BLOCK, (short) 1);
 			parent.setBlockMaterial(xx + 1, yy + 1, zz, VanillaMaterials.IRON_DOOR_BLOCK, (short) 8);
 			parent.setBlockMaterial(xx + 2, yy + 1, zz + 1, VanillaMaterials.STONE_BUTTON, (short) 3);
 			parent.setBlockMaterial(xx + 2, yy + 1, zz - 1, VanillaMaterials.STONE_BUTTON, (short) 4);

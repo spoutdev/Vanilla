@@ -146,8 +146,8 @@ public abstract class DoorBlock extends GroundAttachable implements Directional,
 
 	@Override
 	public BlockFace getFacing(Block doorHalf) {
-		short data = getCorrectHalf(doorHalf, false).getData();
-		return BlockFaces.NESW.get(data & ~0x4);
+		final Block block = getCorrectHalf(doorHalf, false);
+		return BlockFaces.NESW.get(block.getDataField(0x3));
 	}
 
 	@Override

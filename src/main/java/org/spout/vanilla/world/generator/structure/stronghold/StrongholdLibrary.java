@@ -51,7 +51,7 @@ public class StrongholdLibrary extends StructureComponent {
 	@Override
 	public boolean canPlace() {
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
-		box.setMinMax(-4, -1, -1, 14, height, 15);
+		box.setMinMax(-1, -1, -1, 14, height, 15);
 		return !box.intersectsLiquids();
 	}
 
@@ -177,7 +177,7 @@ public class StrongholdLibrary extends StructureComponent {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(-4, -1, 0);
+		final Vector3 rotatedMin = transform(-1, -1, -1);
 		final Vector3 rotatedMax = transform(14, height, 15);
 		return new BoundingBox(MathHelper.min(rotatedMin, rotatedMax), MathHelper.max(rotatedMin, rotatedMax));
 	}

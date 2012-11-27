@@ -161,7 +161,11 @@ public abstract class StructureComponent {
 	}
 
 	protected Vector3 transform(int x, int y, int z) {
-		return MathHelper.round(MathHelper.transform(new Vector3(x, y, z).subtract(rotationPoint), rotation).add(rotationPoint).add(position));
+		return MathHelper.round(rotate(x, y, z).add(position));
+	}
+	
+	protected Vector3 rotate(int x, int y, int z) {
+		return MathHelper.transform(new Vector3(x, y, z).subtract(rotationPoint), rotation).add(rotationPoint);
 	}
 
 	public Point getPosition() {

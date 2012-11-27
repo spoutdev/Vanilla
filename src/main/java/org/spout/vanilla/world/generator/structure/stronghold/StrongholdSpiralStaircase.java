@@ -45,7 +45,7 @@ public class StrongholdSpiralStaircase extends StructureComponent {
 	@Override
 	public boolean canPlace() {
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
-		box.setMinMax(-1, -7, -1, 5, 11, 5);
+		box.setMinMax(-1, -1, -1, 5, 11, 5);
 		return !box.intersectsLiquids();
 	}
 
@@ -90,7 +90,7 @@ public class StrongholdSpiralStaircase extends StructureComponent {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(-1, -7, 0);
+		final Vector3 rotatedMin = transform(-1, -1, 0);
 		final Vector3 rotatedMax = transform(5, 11, 5);
 		return new BoundingBox(MathHelper.min(rotatedMin, rotatedMax), MathHelper.max(rotatedMin, rotatedMax));
 	}

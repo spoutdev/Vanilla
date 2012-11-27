@@ -26,9 +26,12 @@
  */
 package org.spout.vanilla.world.generator.structure.stronghold;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.spout.api.math.MathHelper;
+import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -37,7 +40,8 @@ import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructureComponent;
 
 public class StrongholdCorridor extends StructureComponent {
-	private int length = 4;
+	private boolean endOfStronghold = false;
+	private byte length = 4;
 
 	public StrongholdCorridor(Structure parent) {
 		super(parent);
@@ -76,17 +80,43 @@ public class StrongholdCorridor extends StructureComponent {
 
 	@Override
 	public void randomize() {
+		length = (byte) (getRandom().nextInt(5) + 4);
 	}
 
 	@Override
 	public List<StructureComponent> getNextComponents() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		final List<StructureComponent> components = new ArrayList<StructureComponent>();
+		if (endOfStronghold) {
+			final StructureComponent end = new StrongholdPortalRoom(parent);
+			end.setPosition(position.add(rotate(7, 0, -1)));
+			end.setRotation(new Quaternion(rotation.getYaw() + 180, 0, 1, 0));
+			components.add(end);
+		}
+		final StructureComponent component;
+		final float draw = getRandom().nextFloat();
+		if (draw > 0.8) {
+			component = new StrongholdLargeIntersection(parent);
+			component.setPosition(position.add(rotate(-3, -2, length)));
+		} else if (draw > 0.6) {
+			component = new StrongholdIntersection(parent);
+			component.setPosition(position.add(rotate(0, 0, length)));
+		} else if (draw > 0.4) {
+			component = new StrongholdRoom(parent);
+			component.setPosition(position.add(rotate(-3, 0, length)));
+		} else {
+			component = new StrongholdStaircase(parent);
+			component.setPosition(position.add(rotate(0, -6, length)));
+		}
+		component.setRotation(rotation);
+		component.randomize();
+		components.add(component);
+		return components;
 	}
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(0, 0, 0);
-		final Vector3 rotatedMax = transform(5, 5, length);
+		final Vector3 rotatedMin = transform(-1, -1, -1);
+		final Vector3 rotatedMax = transform(5, 5, length + 1);
 		return new BoundingBox(MathHelper.min(rotatedMin, rotatedMax), MathHelper.max(rotatedMin, rotatedMax));
 	}
 
@@ -94,7 +124,15 @@ public class StrongholdCorridor extends StructureComponent {
 		return length;
 	}
 
-	public void setLength(int length) {
+	public void setLength(byte length) {
 		this.length = length;
+	}
+
+	public boolean isEndOfStronghold() {
+		return endOfStronghold;
+	}
+
+	public void setEndOfStronghold(boolean endOfStronghold) {
+		this.endOfStronghold = endOfStronghold;
 	}
 }

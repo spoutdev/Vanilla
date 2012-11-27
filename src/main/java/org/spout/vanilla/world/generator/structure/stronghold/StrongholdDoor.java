@@ -46,18 +46,13 @@ public abstract class StrongholdDoor {
 		final byte draw = (byte) random.nextInt(5);
 		switch (draw) {
 			case 0:
+				return new WoodDoor(parent);
 			case 1:
+				return new IronFenceDoor(parent);
+			case 2:
+				return new IronDoor(parent);
 			default:
 				return new EmptyDoorway(parent);
-
-			case 2:
-				return new WoodDoor(parent);
-
-			case 3:
-				return new IronFenceDoor(parent);
-
-			case 4:
-				return new IronDoor(parent);
 		}
 	}
 

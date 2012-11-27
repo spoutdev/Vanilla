@@ -102,7 +102,7 @@ public class StrongholdPrison extends StructureComponent {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(-1, -1, 0);
+		final Vector3 rotatedMin = transform(-1, -1, -1);
 		final Vector3 rotatedMax = transform(9, 5, 11);
 		return new BoundingBox(MathHelper.min(rotatedMin, rotatedMax), MathHelper.max(rotatedMin, rotatedMax));
 	}

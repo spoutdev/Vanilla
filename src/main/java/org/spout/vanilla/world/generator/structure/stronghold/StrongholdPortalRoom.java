@@ -26,6 +26,9 @@
  */
 package org.spout.vanilla.world.generator.structure.stronghold;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -140,12 +143,12 @@ public class StrongholdPortalRoom extends StructureComponent {
 
 	@Override
 	public List<StructureComponent> getNextComponents() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		return Collections.emptyList();
 	}
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(-4, -1, 0);
+		final Vector3 rotatedMin = transform(-1, -1, -1);
 		final Vector3 rotatedMax = transform(11, 8, 16);
 		return new BoundingBox(MathHelper.min(rotatedMin, rotatedMax), MathHelper.max(rotatedMin, rotatedMax));
 	}

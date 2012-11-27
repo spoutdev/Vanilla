@@ -51,7 +51,7 @@ public class StrongholdLargeIntersection extends StructureComponent {
 	@Override
 	public boolean canPlace() {
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
-		box.setMinMax(-4, -3, -1, 10, 9, 11);
+		box.setMinMax(-1, -1, -1, 10, 9, 11);
 		return !box.intersectsLiquids();
 	}
 
@@ -139,7 +139,7 @@ public class StrongholdLargeIntersection extends StructureComponent {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(-4, -3, 0);
+		final Vector3 rotatedMin = transform(-1, -1, -1);
 		final Vector3 rotatedMax = transform(10, 9, 11);
 		return new BoundingBox(MathHelper.min(rotatedMin, rotatedMax), MathHelper.max(rotatedMin, rotatedMax));
 	}

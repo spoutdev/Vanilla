@@ -199,6 +199,7 @@ public class HealthComponent extends EntityComponent {
 		} else {
 			event = new VanillaEntityDeathEvent(owner);
 		}
+		//TODO: xp drops?
 		if (!Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
 			if (!(owner instanceof Player)) {
 				owner.remove();

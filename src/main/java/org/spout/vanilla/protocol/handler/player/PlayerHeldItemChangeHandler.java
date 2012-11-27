@@ -35,8 +35,8 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.event.entity.EntityEquipmentEvent;
+import org.spout.vanilla.event.player.PlayerHeldItemChangeEvent;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.protocol.msg.player.PlayerHeldItemChangeMessage;
 
@@ -54,11 +54,14 @@ public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeld
 		if (newSlot < 0 || newSlot > 8) {
 			return;
 		}
-		PlayerQuickbar quickbar = session.getPlayer().add(PlayerInventory.class).getQuickbar();
-		quickbar.setCurrentSlot(newSlot);
-		ItemStack item = quickbar.getCurrentItem();
 		Player player = session.getPlayer();
-		player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, 0, item));
+		PlayerQuickbar quickbar = session.getPlayer().add(PlayerInventory.class).getQuickbar();
+		PlayerHeldItemChangeEvent event = new PlayerHeldItemChangeEvent(player, quickbar.getCurrentSlot(), newSlot);
+		if (!Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
+			quickbar.setCurrentSlot(newSlot);
+			ItemStack item = quickbar.getCurrentItem();
+			player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, 0, item));
+		}
 	}
 
 	@Override

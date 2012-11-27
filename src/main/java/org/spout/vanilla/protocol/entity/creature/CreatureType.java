@@ -26,42 +26,79 @@
  */
 package org.spout.vanilla.protocol.entity.creature;
 
-public enum CreatureType {
-	BAT(65),
-	BLAZE(61),
-	CAVE_SPIDER(59),
-	CHICKEN(93),
-	COW(92),
-	CREEPER(50),
-	ENDER_DRAGON(63),
-	ENDERMAN(58),
-	GHAST(56),
-	GIANT(53),
-	IRON_GOLEM(99),
-	MAGMA_CUBE(62),
-	MUSHROOM_COW(96),
-	OCELOT(98),
-	PIG(90),
-	PIG_ZOMBIE(57),
-	SHEEP(91),
-	SILVERFISH(60),
-	SKELETON(51),
-	SLIME(55),
-	SNOW_GOLEM(97),
-	SPIDER(52),
-	SQUID(94),
-	VILLAGER(120),
-	WITCH(66),
-	WITHER(64),
-	WOLF(95),
-	ZOMBIE(54);
-	private int id;
+import org.spout.vanilla.component.living.Living;
+import org.spout.vanilla.component.living.hostile.Blaze;
+import org.spout.vanilla.component.living.hostile.CaveSpider;
+import org.spout.vanilla.component.living.hostile.Creeper;
+import org.spout.vanilla.component.living.hostile.EnderDragon;
+import org.spout.vanilla.component.living.hostile.Ghast;
+import org.spout.vanilla.component.living.hostile.Giant;
+import org.spout.vanilla.component.living.hostile.MagmaCube;
+import org.spout.vanilla.component.living.hostile.Silverfish;
+import org.spout.vanilla.component.living.hostile.Skeleton;
+import org.spout.vanilla.component.living.hostile.Slime;
+import org.spout.vanilla.component.living.hostile.Spider;
+import org.spout.vanilla.component.living.hostile.Witch;
+import org.spout.vanilla.component.living.hostile.Wither;
+import org.spout.vanilla.component.living.hostile.Zombie;
+import org.spout.vanilla.component.living.neutral.Bat;
+import org.spout.vanilla.component.living.neutral.Enderman;
+import org.spout.vanilla.component.living.neutral.PigZombie;
+import org.spout.vanilla.component.living.neutral.Wolf;
+import org.spout.vanilla.component.living.passive.Chicken;
+import org.spout.vanilla.component.living.passive.Cow;
+import org.spout.vanilla.component.living.passive.MooshroomCow;
+import org.spout.vanilla.component.living.passive.Ocelot;
+import org.spout.vanilla.component.living.passive.Pig;
+import org.spout.vanilla.component.living.passive.Sheep;
+import org.spout.vanilla.component.living.passive.Squid;
+import org.spout.vanilla.component.living.passive.Villager;
+import org.spout.vanilla.component.living.util.IronGolem;
+import org.spout.vanilla.component.living.util.SnowGolem;
 
-	private CreatureType(int id) {
+public enum CreatureType {
+	BAT(65, Bat.class),
+	BLAZE(61, Blaze.class),
+	CAVE_SPIDER(59, CaveSpider.class),
+	CHICKEN(93, Chicken.class),
+	COW(92, Cow.class),
+	CREEPER(50, Creeper.class),
+	ENDER_DRAGON(63, EnderDragon.class),
+	ENDERMAN(58, Enderman.class),
+	GHAST(56, Ghast.class),
+	GIANT(53, Giant.class),
+	IRON_GOLEM(99, IronGolem.class),
+	MAGMA_CUBE(62, MagmaCube.class),
+	MUSHROOM_COW(96, MooshroomCow.class),
+	OCELOT(98, Ocelot.class),
+	PIG(90, Pig.class),
+	PIG_ZOMBIE(57, PigZombie.class),
+	SHEEP(91, Sheep.class),
+	SILVERFISH(60, Silverfish.class),
+	SKELETON(51, Skeleton.class),
+	SLIME(55, Slime.class),
+	SNOW_GOLEM(97, SnowGolem.class),
+	SPIDER(52, Spider.class),
+	SQUID(94, Squid.class),
+	VILLAGER(120, Villager.class),
+	WITCH(66, Witch.class),
+	WITHER(64, Wither.class),
+	WOLF(95, Wolf.class),
+	ZOMBIE(54, Zombie.class);
+	
+	private int id;
+	private Class<? extends Living> component;
+	
+	private CreatureType(int id, Class<? extends Living> component) {
 		this.id = id;
+		this.component = component;
 	}
 
 	public int getId() {
 		return id;
+	}
+	
+	public Class<? extends Living> getComponent() {
+		return component;
 	}
 }

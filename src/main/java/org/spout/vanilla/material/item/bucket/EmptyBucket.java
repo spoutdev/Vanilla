@@ -49,7 +49,6 @@ public class EmptyBucket extends VanillaItemMaterial {
 	public void onInteract(Entity entity, Block block, Action action, BlockFace clickedFace) {
 		if (action == Action.RIGHT_CLICK) {
 			BlockMaterial mat = block.getMaterial();
-			boolean success = false;
 			PlayerQuickbar quickbar = entity.get(PlayerInventory.class).getQuickbar();
 			Material filled; // material to fill the bucket with
 			if (mat == VanillaMaterials.WATER) {

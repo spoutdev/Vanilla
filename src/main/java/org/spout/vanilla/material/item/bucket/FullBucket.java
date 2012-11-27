@@ -48,17 +48,10 @@ public class FullBucket extends BlockItem {
 	@Override
 	public void onInteract(Entity entity, Block block, Action type, BlockFace face) {
 		super.onInteract(entity, block, type, face);
-		
-		if (type == Action.RIGHT_CLICK) {
-			if (entity instanceof Player) {
-				Player player = (Player) entity;
-				Human human = player.get(Human.class);
-				if (human != null) {
-					GameMode gameMode = player.get(Human.class).getGameMode();
-					if (gameMode == GameMode.CREATIVE) {
-						return;
-					}
-				}
+		if (type == Action.RIGHT_CLICK && entity instanceof Player) {
+			Player player = (Player) entity;
+			if (player.get(Human.class).getGameMode() == GameMode.CREATIVE) {
+				return;
 			}
 			entity.get(PlayerInventory.class).getQuickbar().setCurrentItem(new ItemStack(VanillaMaterials.BUCKET, 1));
 		}

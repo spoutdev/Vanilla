@@ -48,6 +48,8 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.event.entity.EntityDamageEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
+import org.spout.vanilla.event.entity.VanillaEntityDeathEvent;
+import org.spout.vanilla.event.player.PlayerDeathEvent;
 import org.spout.vanilla.event.player.network.PlayerHealthEvent;
 import org.spout.vanilla.protocol.handler.player.EntityHealthChangeEvent;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
@@ -117,20 +119,15 @@ public class HealthComponent extends EntityComponent {
 				if (isDying()) {
 					setDeathTicks(getDeathTicks() - 1);
 					if (getDeathTicks() <= 0) {
-						if (!(getOwner() instanceof Player)) {
-							getOwner().remove();
-						}
+						onDeath();
 					}
 				} else if (isDead()) {
 					if (hasDeathAnimation()) {
 						setDeathTicks(DEATH_TIME_TICKS);
 						getOwner().getNetwork().callProtocolEvent(new EntityStatusEvent(getOwner(), EntityStatusMessage.ENTITY_DEAD));
 					} else {
-						if (!(getOwner() instanceof Player)) {
-							getOwner().remove();
-						}
+						onDeath();
 					}
-					onDeath();
 				}
 				break;
 			case CLIENT:
@@ -194,7 +191,19 @@ public class HealthComponent extends EntityComponent {
 	/**
 	 * Called when the resources.entities' health hits zero and is considered "dead" by Vanilla game standards
 	 */
-	public void onDeath() {
+	private void onDeath() {
+		VanillaEntityDeathEvent event;
+		Entity owner = getOwner();
+		if (owner instanceof Player) {
+			event = new PlayerDeathEvent((Player) owner);
+		} else {
+			event = new VanillaEntityDeathEvent(owner);
+		}
+		if (!Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
+			if (!(owner instanceof Player)) {
+				owner.remove();
+			}
+		}
 	}
 
 	/**

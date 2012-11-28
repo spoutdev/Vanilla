@@ -31,6 +31,7 @@ import java.util.Set;
 
 import org.spout.api.Client;
 import org.spout.api.Spout;
+import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
@@ -81,6 +82,7 @@ import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.inventory.window.entity.VillagerWindow;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.portal.NetherPortal;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
@@ -91,6 +93,21 @@ public class TestCommands {
 
 	public TestCommands(VanillaPlugin instance) {
 		plugin = instance;
+	}
+
+	@Command(aliases = "findframe", usage = "<radius>", desc = "Find a nether portal frame.", min = 1, max = 1)
+	@CommandPermissions("vanilla.command.debug")
+	public void findFrame(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to find a nether frame.");
+		}
+
+		Player player = (Player) source;
+		if (NetherPortal.findFrame(player.getTransform().getPosition(), args.getInteger(0)) != null) {
+			player.sendMessage(ChatStyle.BRIGHT_GREEN, "Found portal frame!");
+		} else {
+			player.sendMessage(ChatStyle.RED, "Portal frame not found.");
+		}
 	}
 
 	@Command(aliases = "traceray", desc = "Set all blocks that cross your view to stone.")

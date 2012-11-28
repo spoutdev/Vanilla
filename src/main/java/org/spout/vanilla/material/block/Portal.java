@@ -31,12 +31,13 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public abstract class Portal extends VanillaBlockMaterial {
-	private BlockMaterial frameMaterial;
+	private final BlockMaterial frameMaterial;
 
-	public Portal(String name, int id, String model) {
+	public Portal(String name, int id, String model, BlockMaterial frameMaterial) {
 		super(name, id, model);
 		this.setHardness(-1.0F).setResistance(0.0F).setTransparent();
 		getDrops().DEFAULT.clear();
+		this.frameMaterial = frameMaterial;
 	}
 
 	@Override
@@ -46,10 +47,5 @@ public abstract class Portal extends VanillaBlockMaterial {
 
 	public BlockMaterial getFrameMaterial() {
 		return this.frameMaterial;
-	}
-
-	public Portal setFrameMaterial(BlockMaterial material) {
-		this.frameMaterial = material;
-		return this;
 	}
 }

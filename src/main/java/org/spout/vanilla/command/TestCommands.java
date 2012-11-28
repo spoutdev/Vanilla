@@ -103,7 +103,7 @@ public class TestCommands {
 		}
 
 		Player player = (Player) source;
-		if (NetherPortal.findFrame(player.getTransform().getPosition(), args.getInteger(0)) != null) {
+		if (VanillaObjects.NETHER_PORTAL.find(player.getTransform().getPosition(), args.getInteger(0))) {
 			player.sendMessage(ChatStyle.BRIGHT_GREEN, "Found portal frame!");
 		} else {
 			player.sendMessage(ChatStyle.RED, "Portal frame not found.");

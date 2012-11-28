@@ -28,45 +28,181 @@ package org.spout.vanilla.world.generator.nether.object;
 
 import java.util.Random;
 
+import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.geo.discrete.Transform;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Liquid;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.world.generator.object.RandomizableObject;
-import org.spout.vanilla.world.generator.object.RotatableObject;
+import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 
-public class NetherPortalObject extends RotatableObject implements RandomizableObject {
-	private boolean floating = false;
+public class NetherPortalObject extends WorldGeneratorObject {
+	public BlockFace getDirection(Point pos) {
+		final Block bottomLeftCorner = pos.getWorld().getBlock(pos);
+		BlockFace direction = null;
+		// Get the direction of the frame on horizontal axis
+		for (BlockFace face : BlockFaces.NESW) {
+			if (bottomLeftCorner.translate(face).isMaterial(VanillaMaterials.OBSIDIAN)) {
+				if (direction != null) {
+					// Two many corners
+					return null;
+				}
+				direction = face;
+			}
+		}
 
-	public NetherPortalObject(Random random) {
-		super(random);
-		randomize();
+		return direction;
 	}
 
-	public NetherPortalObject() {
-		this(null);
+	public boolean find(Point center, int radius) {
+		return find(center, radius, radius, radius);
+	}
+
+	public boolean find(Point center, int xRadius, int yRadius, int zRadius) {
+		final World world = center.getWorld();
+		for (int y = center.getBlockY() - xRadius; y < center.getBlockY() + xRadius; y++) {
+			for (int x = center.getBlockX() - yRadius; x < center.getBlockX() + yRadius; x++) {
+				for (int z = center.getBlockZ() - zRadius; z < center.getBlockZ() + zRadius; z++) {
+					if (find(world.getBlock(x, y, z))) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean find(Block bottomBlock) {
+
+		final Block bottomLeftCorner = bottomBlock;
+
+		// Start with bottom left corner of frame
+		if (!bottomLeftCorner.isMaterial(VanillaMaterials.OBSIDIAN)) {
+			return false;
+		}
+
+		// Frame not there or misshapen frame
+		BlockFace direction = getDirection(bottomLeftCorner.getPosition());
+		if (direction == null) {
+			return false;
+		}
+
+		// Define other corners of the frame
+		final Block bottomRightCorner = bottomLeftCorner.translate(direction, 3);
+		final Block topLeftCorner = bottomLeftCorner.translate(BlockFace.TOP, 4);
+
+		// Verify the vertical columns
+		boolean success = true;
+		for (int dy = 0; dy < 3; dy++) {
+			if (!bottomLeftCorner.translate(0, dy, 0).isMaterial(VanillaMaterials.OBSIDIAN)
+					|| !bottomRightCorner.translate(0, dy, 0).isMaterial(VanillaMaterials.OBSIDIAN)) {
+				success = false;
+				break;
+			}
+		}
+
+		// Missing pieces from columns
+		if (!success) {
+			return false;
+		}
+
+		// Verify the horizontal columns
+		for (int d = 0; d < 2; d++) {
+			if (!bottomLeftCorner.translate(direction, d).isMaterial(VanillaMaterials.OBSIDIAN)
+					|| !topLeftCorner.translate(direction, d).isMaterial(VanillaMaterials.OBSIDIAN)) {
+				success = false;
+				break;
+			}
+		}
+
+		// Missing pieces from columns
+		if (!success) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private Block getOrigin(Block bottomBlock) {
+		Block origin = null;
+		for (int d = -2; d < 2; d++) {
+			Block x = bottomBlock.translate(d, 0, 0);
+			Block z = bottomBlock.translate(0, 0, d);
+			if (find(x)) {
+				origin = x;
+				break;
+			} else if (find(z)) {
+				origin = z;
+				break;
+			}
+		}
+		return origin;
+	}
+
+	public void setActive(World w, int x, int y, int z, boolean active) {
+		// No portal found
+		Block bottomBlock = getOrigin(w.getBlock(x, y, z));
+		if (!find(bottomBlock) || w.getGenerator() instanceof TheEndGenerator) {
+			return;
+		}
+
+		BlockMaterial material;
+		if (active) {
+			material = VanillaMaterials.PORTAL;
+		} else {
+			material = VanillaMaterials.AIR;
+		}
+
+		// Activate or deactivate the portal
+		BlockFace direction = getDirection(bottomBlock.getPosition());
+		Block corner1 = bottomBlock.translate(direction).translate(BlockFace.TOP);
+		Block corner2 = corner1.translate(direction);
+		for (int d = 0; d < 3; d++) {
+			corner1.translate(BlockFace.TOP, d).setMaterial(material);
+			corner2.translate(BlockFace.TOP, d).setMaterial(material);
+		}
+	}
+
+	public void placeObject(World w, int x, int y, int z, BlockFace direction, boolean active) {
+
+		final Block bottomLeftBlock = w.getBlock(x, y, z).setMaterial(VanillaMaterials.OBSIDIAN);
+		final Block bottomRightBlock = bottomLeftBlock.translate(direction, 3).setMaterial(VanillaMaterials.OBSIDIAN);
+		final Block topLeftBlock = bottomLeftBlock.translate(BlockFace.TOP, 4).setMaterial(VanillaMaterials.OBSIDIAN);
+		topLeftBlock.translate(direction, 3).setMaterial(VanillaMaterials.OBSIDIAN);
+
+		// Build vertical columns
+		for (int dy = 0; dy < 4; dy++) {
+			bottomLeftBlock.translate(BlockFace.TOP, dy).setMaterial(VanillaMaterials.OBSIDIAN);
+			bottomRightBlock.translate(BlockFace.TOP, dy).setMaterial(VanillaMaterials.OBSIDIAN);
+		}
+
+		// Build horizontal columns
+		for (int dw = 0; dw < 3; dw++) {
+			bottomLeftBlock.translate(direction, dw).setMaterial(VanillaMaterials.OBSIDIAN);
+			topLeftBlock.translate(direction, dw).setMaterial(VanillaMaterials.OBSIDIAN);
+		}
+
+		// Set the state of the portal
+		setActive(w, x, y, z, active);
+	}
+
+	public void placeObject(World w, int x, int y, int z, boolean active) {
+		placeObject(w, x, y, z, BlockFaces.NESW.random(new Random()), active);
+	}
+
+	public void placeObject(World w, int x, int y, int z, BlockFace direction) {
+		placeObject(w, x, y, z, direction, false);
 	}
 
 	@Override
-	public final void randomize() {
-		rotation = new Quaternion(90 * random.nextInt(4), 0, 1, 0);
-	}
-
-	@Override
-	public boolean canPlaceObject(World world, int x, int y, int z) {
-		center = new Vector3(x, y, z);
-		for (byte yy = -1; yy < 4; yy++) {
-			for (byte xx = -2; xx < 2; xx++) {
-				for (byte zz = -1; zz < 2; zz++) {
-					final BlockMaterial material = getBlockMaterial(world, x + xx, y + yy, z + zz);
-					if (!floating && yy <= -1 && !(material instanceof Solid)
-							|| yy >= 0 && (material instanceof Solid || material instanceof Liquid)) {
+	public boolean canPlaceObject(World w, final int x, final int y, final int z) {
+		for (int yy = y; yy < y + 4; yy++) {
+			for (int xx = x - 3; xx < x + 3; xx++) {
+				for (int zz = z - 3; zz < z + 3; zz++) {
+					if (!w.getBlock(x, y, z).isMaterial(VanillaMaterials.AIR)) {
 						return false;
 					}
 				}
@@ -76,74 +212,7 @@ public class NetherPortalObject extends RotatableObject implements RandomizableO
 	}
 
 	@Override
-	public void placeObject(World world, int x, int y, int z) {
-		center = new Vector3(x, y, z);
-		for (byte xx = -2; xx < 2; xx++) {
-			for (byte yy = -1; yy < 4; yy++) {
-				if (xx == -2 || xx == 1 || yy == -1 || yy == 3) {
-					setBlockMaterial(world, x + xx, y + yy, z, VanillaMaterials.OBSIDIAN, (short) 0);
-				} else {
-					setBlockMaterial(world, x + xx, y + yy, z, VanillaMaterials.PORTAL, (short) 0);
-				}
-			}
-		}
-		if (floating) {
-			for (byte xx = -1; xx < 1; xx++) {
-				for (byte zz = -1; zz < 2; zz++) {
-					setBlockMaterial(world, x + xx, y - 1, z + zz, VanillaMaterials.OBSIDIAN, (short) 0);
-				}
-			}
-		}
-	}
-
-	public void setFloating(boolean floating) {
-		this.floating = floating;
-	}
-
-	/**
-	 * Attempts to place a portal near the given coordinates.
-	 * @param world the world to place in
-	 * @param x the x coordinate
-	 * @param z the z coordinate
-	 * @param random the random used to find an angle
-	 * @return a Transform for placing resources.entities inside output portals, or null
-	 *         if no portal could be placed
-	 */
-	public static Transform placePortal(World world, int x, int z, Random random) {
-		final NetherPortalObject portal = new NetherPortalObject(random);
-		for (byte xx = -16; xx <= 16; xx++) {
-			for (byte zz = -16; zz <= 16; zz++) {
-				for (byte yy = 127; yy >= 0; yy--) {
-					final byte y = getHighestSolidY(world, x + xx, yy, z + zz);
-					if (y != -1 && portal.canPlaceObject(world, x + xx, y, z + zz)) {
-						portal.placeObject(world, x + xx, y, z + zz);
-						return new Transform(new Point(world, x + xx, y, z + zz), portal.rotation, Vector3.ONE);
-					}
-				}
-			}
-		}
-		portal.setFloating(true);
-		for (byte xx = -16; xx <= 16; xx++) {
-			for (byte zz = -16; zz <= 16; zz++) {
-				for (byte yy = 70; yy < 118; yy++) {
-					if (portal.canPlaceObject(world, x + xx, yy, z + zz)) {
-						portal.placeObject(world, x + xx, yy, z + zz);
-						return new Transform(new Point(world, x + xx, yy, z + zz), portal.rotation, Vector3.ONE);
-					}
-				}
-			}
-		}
-		return null;
-	}
-
-	private static byte getHighestSolidY(World world, int x, byte startY, int z) {
-		while (!(world.getBlockMaterial(x, startY, z) instanceof Solid)) {
-			startY--;
-			if (startY == 0) {
-				return -1;
-			}
-		}
-		startY++;
-		return startY;
+	public void placeObject(World w, int x, int y, int z) {
+		placeObject(w, x, y, z, false);
 	}
 }

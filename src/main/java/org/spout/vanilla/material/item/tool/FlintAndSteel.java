@@ -33,6 +33,7 @@ import org.spout.api.event.cause.EntityCause;
 import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
@@ -40,6 +41,7 @@ import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class FlintAndSteel extends InteractTool {
 	public FlintAndSteel(String name, int id, short durability) {
@@ -64,9 +66,7 @@ public class FlintAndSteel extends InteractTool {
 			} else {
 				// Default fire creation
 				Block target = block.translate(clickedface);
-
 				// Default fire placement
-				clickedface = clickedface.getOpposite();
 				if (VanillaMaterials.FIRE.canPlace(target, (short) 0)) {
 					if (VanillaMaterials.FIRE.onPlacement(target, (short) 0, cause)) {
 						PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
@@ -75,9 +75,8 @@ public class FlintAndSteel extends InteractTool {
 				}
 
 				// Handle the creation of portals
-				if (VanillaMaterials.PORTAL.createPortal(target.translate(BlockFace.BOTTOM))) {
-					return;
-				}
+				Point pos = target.translate(BlockFace.BOTTOM).getPosition();
+				VanillaObjects.NETHER_PORTAL.setActive(pos.getWorld(), pos.getBlockX(), pos.getBlockY(), pos.getBlockZ(), true);
 			}
 		}
 	}

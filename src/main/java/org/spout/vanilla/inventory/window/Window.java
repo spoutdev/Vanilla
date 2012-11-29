@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.inventory.window;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -76,7 +76,7 @@ import org.spout.vanilla.inventory.window.prop.WindowProperty;
  */
 public abstract class Window implements InventoryViewer {
 	private final Player owner;
-	private final List<InventoryConverter> converters = new ArrayList<InventoryConverter>();
+	private final List<InventoryConverter> converters = new LinkedList<InventoryConverter>();
 	protected final TObjectIntMap<Integer> properties = new TObjectIntHashMap<Integer>();
 	protected final int offset;
 	protected final WindowType type;
@@ -470,9 +470,11 @@ public abstract class Window implements InventoryViewer {
 	 */
 	public InventoryEntry getInventoryEntry(int nativeSlot) {
 		int slot;
+		debug("Getting InventoryEntry from: " + nativeSlot);
 		for (InventoryConverter converter : converters) {
 			slot = converter.convert(nativeSlot);
 			if (slot != -1) {
+				debug("Found: " + slot);
 				return new InventoryEntry(converter.getInventory(), slot);
 			}
 		}
@@ -712,10 +714,11 @@ public abstract class Window implements InventoryViewer {
 				PlayerQuickbar quickbar = getPlayerInventory().getQuickbar();
 				debug("Slot: " + slot);
 				debug("Current slot: " + quickbar.getCurrentSlot());
-				if (inventory instanceof PlayerQuickbar && slot == quickbar.getCurrentSlot()) {
-					Player player = getPlayer();
-					player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, 0, item)); // TODO: Setting boots too for some reason...?
-				}
+				// TODO: Setting boots too for some reason...?
+				//if (inventory instanceof PlayerQuickbar && slot == quickbar.getCurrentSlot()) {
+					//Player player = getPlayer();
+					//player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, 0, item));
+				//}
 				callProtocolEvent(new WindowSlotEvent(this, inventory, slots.revert(slot), item));
 				break;
 			case CLIENT:

@@ -27,6 +27,7 @@
 package org.spout.vanilla.inventory.window.block.chest;
 
 import org.spout.api.entity.Player;
+import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.component.substance.material.chest.Chest;
 import org.spout.vanilla.inventory.block.ChestInventory;
@@ -36,11 +37,11 @@ import org.spout.vanilla.inventory.window.WindowType;
 public class ChestWindow extends AbstractChestWindow {
 	public ChestWindow(Player owner, Chest chest) {
 		super(owner, chest, WindowType.CHEST, chest.getInventory().getTitle(), chest.getInventory().size());
-		addInventoryConverter(new GridInventoryConverter(chest.getInventory(), 9, null));
+		addInventoryConverter(new GridInventoryConverter(chest.getInventory(), 9, Vector2.ZERO));
 	}
 
 	public ChestWindow(Player owner, ChestInventory inv, String title) {
 		super(owner, WindowType.CHEST, title, inv.size());
-		addInventoryConverter(new GridInventoryConverter(inv, 9, null));
+		addInventoryConverter(new GridInventoryConverter(inv, 9, Vector2.ZERO));
 	}
 }

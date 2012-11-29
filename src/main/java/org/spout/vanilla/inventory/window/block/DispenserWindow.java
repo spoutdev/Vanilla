@@ -27,6 +27,7 @@
 package org.spout.vanilla.inventory.window.block;
 
 import org.spout.api.entity.Player;
+import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.inventory.block.DispenserInventory;
 import org.spout.vanilla.inventory.util.GridInventoryConverter;
@@ -40,6 +41,6 @@ public class DispenserWindow extends Window {
 
 	public DispenserWindow(Player owner, DispenserInventory inventory, String title) {
 		super(owner, WindowType.DISPENSER, title, 9);
-		addInventoryConverter(new GridInventoryConverter(inventory, 3, null));
+		addInventoryConverter(new GridInventoryConverter(inventory, 3, Vector2.ZERO));
 	}
 }

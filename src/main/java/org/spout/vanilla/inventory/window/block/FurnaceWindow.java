@@ -27,6 +27,7 @@
 package org.spout.vanilla.inventory.window.block;
 
 import org.spout.api.entity.Player;
+import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.inventory.block.FurnaceInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
@@ -40,6 +41,6 @@ public class FurnaceWindow extends Window {
 
 	public FurnaceWindow(Player owner, FurnaceInventory inventory, String title) {
 		super(owner, WindowType.FURNACE, title, 3);
-		addInventoryConverter(new InventoryConverter(inventory, "1, 0, 2", null));
+		addInventoryConverter(new InventoryConverter(inventory, "1, 0, 2", new Vector2[0]));
 	}
 }

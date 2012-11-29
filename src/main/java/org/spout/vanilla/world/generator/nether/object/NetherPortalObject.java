@@ -90,30 +90,22 @@ public class NetherPortalObject extends WorldGeneratorObject {
 		final Block topLeftCorner = bottomLeftCorner.translate(BlockFace.TOP, 4);
 
 		// Verify the vertical columns
-		boolean success = true;
 		for (int dy = 1; dy < 4; dy++) {
 			if (!bottomLeftCorner.translate(0, dy, 0).isMaterial(VanillaMaterials.OBSIDIAN)
 					|| !bottomRightCorner.translate(0, dy, 0).isMaterial(VanillaMaterials.OBSIDIAN)) {
-				success = false;
-				break;
+				return false;
 			}
-		}
-
-		// Missing pieces from columns
-		if (!success) {
-			return false;
 		}
 
 		// Verify the horizontal columns
 		for (int d = 1; d < 3; d++) {
 			if (!bottomLeftCorner.translate(direction, d).isMaterial(VanillaMaterials.OBSIDIAN)
 					|| !topLeftCorner.translate(direction, d).isMaterial(VanillaMaterials.OBSIDIAN)) {
-				success = false;
-				break;
+				return false;
 			}
 		}
 
-		return success;
+		return true;
 	}
 
 	private Block getOrigin(Block bottomBlock) {

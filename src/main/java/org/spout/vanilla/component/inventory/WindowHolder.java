@@ -28,6 +28,7 @@ package org.spout.vanilla.component.inventory;
 
 import java.util.logging.Level;
 
+import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.component.components.EntityComponent;
 import org.spout.api.entity.Player;
@@ -48,15 +49,19 @@ public class WindowHolder extends EntityComponent {
 	}
 
 	public void openWindow(Window window) {
-		closeWindow();
 		debug("Opening " + window.getClass().getCanonicalName());
+		if (!(activeWindow instanceof DefaultWindow && Spout.getEngine() instanceof Server)) {
+			activeWindow.close();
+		}
 		window.open();
 		this.activeWindow = window;
 	}
 
 	public void closeWindow() {
 		debug("Closing " + activeWindow.getClass().getCanonicalName());
-		activeWindow.close();
+		if (!(activeWindow instanceof DefaultWindow && Spout.getEngine() instanceof Server)) {
+			activeWindow.close();
+		}
 		activeWindow = defaultWindow;
 	}
 

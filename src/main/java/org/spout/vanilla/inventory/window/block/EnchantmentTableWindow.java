@@ -27,6 +27,7 @@
 package org.spout.vanilla.inventory.window.block;
 
 import org.spout.api.entity.Player;
+import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
@@ -36,7 +37,7 @@ import org.spout.vanilla.inventory.window.WindowType;
 public class EnchantmentTableWindow extends Window {
 	public EnchantmentTableWindow(Player owner, EnchantmentTableInventory inventory, String title) {
 		super(owner, WindowType.ENCHANTMENT_TABLE, title, 1);
-		addInventoryConverter(new InventoryConverter(inventory, "0", null));
+		addInventoryConverter(new InventoryConverter(inventory, "0", new Vector2[0]));
 	}
 
 	public EnchantmentTableWindow(Player owner, EnchantmentTableInventory inventory) {

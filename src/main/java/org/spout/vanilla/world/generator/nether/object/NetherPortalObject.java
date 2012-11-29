@@ -79,11 +79,6 @@ public class NetherPortalObject extends WorldGeneratorObject {
 
 		final Block bottomLeftCorner = bottomBlock;
 
-		// Start with bottom left corner of frame
-		if (!bottomLeftCorner.isMaterial(VanillaMaterials.OBSIDIAN)) {
-			return false;
-		}
-
 		// Frame not there or misshapen frame
 		BlockFace direction = getDirection(bottomLeftCorner.getPosition());
 		if (direction == null) {
@@ -96,7 +91,7 @@ public class NetherPortalObject extends WorldGeneratorObject {
 
 		// Verify the vertical columns
 		boolean success = true;
-		for (int dy = 0; dy < 3; dy++) {
+		for (int dy = 1; dy < 4; dy++) {
 			if (!bottomLeftCorner.translate(0, dy, 0).isMaterial(VanillaMaterials.OBSIDIAN)
 					|| !bottomRightCorner.translate(0, dy, 0).isMaterial(VanillaMaterials.OBSIDIAN)) {
 				success = false;
@@ -110,7 +105,7 @@ public class NetherPortalObject extends WorldGeneratorObject {
 		}
 
 		// Verify the horizontal columns
-		for (int d = 0; d < 2; d++) {
+		for (int d = 1; d < 3; d++) {
 			if (!bottomLeftCorner.translate(direction, d).isMaterial(VanillaMaterials.OBSIDIAN)
 					|| !topLeftCorner.translate(direction, d).isMaterial(VanillaMaterials.OBSIDIAN)) {
 				success = false;
@@ -118,12 +113,7 @@ public class NetherPortalObject extends WorldGeneratorObject {
 			}
 		}
 
-		// Missing pieces from columns
-		if (!success) {
-			return false;
-		}
-
-		return true;
+		return success;
 	}
 
 	private Block getOrigin(Block bottomBlock) {
@@ -145,7 +135,7 @@ public class NetherPortalObject extends WorldGeneratorObject {
 	public void setActive(World w, int x, int y, int z, boolean active) {
 		// No portal found
 		Block bottomBlock = getOrigin(w.getBlock(x, y, z));
-		if (!find(bottomBlock) || w.getGenerator() instanceof TheEndGenerator) {
+		if (bottomBlock == null || !find(bottomBlock) || w.getGenerator() instanceof TheEndGenerator) {
 			return;
 		}
 

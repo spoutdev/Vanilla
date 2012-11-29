@@ -177,8 +177,8 @@ public class StrongholdLibrary extends StructureComponent {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(-1, -1, -1);
-		final Vector3 rotatedMax = transform(14, height, 15);
+		final Vector3 rotatedMin = transform(0, 0, 0);
+		final Vector3 rotatedMax = transform(13, height - 1, 14);
 		return new BoundingBox(MathHelper.min(rotatedMin, rotatedMax), MathHelper.max(rotatedMin, rotatedMax));
 	}
 

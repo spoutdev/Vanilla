@@ -44,7 +44,7 @@ public class StrongholdStaircase extends StructureComponent {
 	@Override
 	public boolean canPlace() {
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
-		box.setMinMax(-1, -1, -1, 5, 11, 8);
+		box.setMinMax(-1, -7, -1, 5, 5, 8);
 		return !box.intersectsLiquids();
 	}
 
@@ -53,20 +53,20 @@ public class StrongholdStaircase extends StructureComponent {
 		// General shape
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
 		box.setPicker(new StrongholdBlockMaterialPicker(getRandom()));
-		box.setMinMax(0, 0, 0, 4, 10, 7);
+		box.setMinMax(0, -6, 0, 4, 4, 7);
 		box.fill(true);
 		// Place the doors
-		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 7, 0);
-		new StrongholdDoor.EmptyDoorway(this).place(1, 1, 7);
+		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 1, 0);
+		new StrongholdDoor.EmptyDoorway(this).place(1, -5, 7);
 		// Place the steps
 		for (int i = 0; i < 6; i++) {
-			setBlockMaterial(1, 6 - i, 1 + i, VanillaMaterials.STAIRS_STONE_BRICK, (short) 3);
-			setBlockMaterial(2, 6 - i, 1 + i, VanillaMaterials.STAIRS_STONE_BRICK, (short) 3);
-			setBlockMaterial(3, 6 - i, 1 + i, VanillaMaterials.STAIRS_STONE_BRICK, (short) 3);
+			setBlockMaterial(1, -i, 1 + i, VanillaMaterials.STAIRS_STONE_BRICK, (short) 3);
+			setBlockMaterial(2, -i, 1 + i, VanillaMaterials.STAIRS_STONE_BRICK, (short) 3);
+			setBlockMaterial(3, -i, 1 + i, VanillaMaterials.STAIRS_STONE_BRICK, (short) 3);
 			if (i < 5) {
-				setBlockMaterial(1, 5 - i, 1 + i, VanillaMaterials.STONE_BRICK);
-				setBlockMaterial(2, 5 - i, 1 + i, VanillaMaterials.STONE_BRICK);
-				setBlockMaterial(3, 5 - i, 1 + i, VanillaMaterials.STONE_BRICK);
+				setBlockMaterial(1, -1 - i, 1 + i, VanillaMaterials.STONE_BRICK);
+				setBlockMaterial(2, -1 - i, 1 + i, VanillaMaterials.STONE_BRICK);
+				setBlockMaterial(3, -1 - i, 1 + i, VanillaMaterials.STONE_BRICK);
 			}
 		}
 	}
@@ -82,8 +82,8 @@ public class StrongholdStaircase extends StructureComponent {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(-1, -1, -1);
-		final Vector3 rotatedMax = transform(5, 11, 8);
+		final Vector3 rotatedMin = transform(0, -6, 0);
+		final Vector3 rotatedMax = transform(4, 4, 7);
 		return new BoundingBox(MathHelper.min(rotatedMin, rotatedMax), MathHelper.max(rotatedMin, rotatedMax));
 	}
 }

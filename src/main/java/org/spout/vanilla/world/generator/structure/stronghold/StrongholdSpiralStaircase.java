@@ -45,7 +45,7 @@ public class StrongholdSpiralStaircase extends StructureComponent {
 	@Override
 	public boolean canPlace() {
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
-		box.setMinMax(-1, -1, -1, 5, 11, 5);
+		box.setMinMax(-1, -7, -1, 5, 5, 5);
 		return !box.intersectsLiquids();
 	}
 
@@ -54,29 +54,29 @@ public class StrongholdSpiralStaircase extends StructureComponent {
 		// General shape
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
 		box.setPicker(new StrongholdBlockMaterialPicker(getRandom()));
-		box.setMinMax(0, 0, 0, 4, 10, 4);
+		box.setMinMax(0, -6, 0, 4, 4, 4);
 		box.fill(true);
 		// Place the doors
-		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 7, 0);
-		new EmptyDoorway(this).place(1, 1, 4);
+		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 1, 0);
+		new EmptyDoorway(this).place(1, -5, 4);
 		// Place the steps
-		setBlockMaterial(2, 6, 1, VanillaMaterials.STONE_BRICK);
-		setBlockMaterial(1, 5, 1, VanillaMaterials.STONE_BRICK);
-		setBlockMaterial(1, 6, 1, VanillaMaterials.SLAB);
-		setBlockMaterial(1, 5, 2, VanillaMaterials.STONE_BRICK);
-		setBlockMaterial(1, 4, 3, VanillaMaterials.STONE_BRICK);
-		setBlockMaterial(1, 5, 3, VanillaMaterials.SLAB);
-		setBlockMaterial(2, 4, 3, VanillaMaterials.STONE_BRICK);
-		setBlockMaterial(3, 3, 3, VanillaMaterials.STONE_BRICK);
-		setBlockMaterial(3, 4, 3, VanillaMaterials.SLAB);
-		setBlockMaterial(3, 3, 2, VanillaMaterials.STONE_BRICK);
-		setBlockMaterial(3, 2, 1, VanillaMaterials.STONE_BRICK);
-		setBlockMaterial(3, 3, 1, VanillaMaterials.SLAB);
-		setBlockMaterial(2, 2, 1, VanillaMaterials.STONE_BRICK);
-		setBlockMaterial(1, 1, 1, VanillaMaterials.STONE_BRICK);
-		setBlockMaterial(1, 2, 1, VanillaMaterials.SLAB);
-		setBlockMaterial(1, 1, 2, VanillaMaterials.STONE_BRICK);
-		setBlockMaterial(1, 1, 3, VanillaMaterials.SLAB);
+		setBlockMaterial(2, 0, 1, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(1, -1, 1, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(1, 0, 1, VanillaMaterials.SLAB);
+		setBlockMaterial(1, -1, 2, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(1, -2, 3, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(1, -1, 3, VanillaMaterials.SLAB);
+		setBlockMaterial(2, -2, 3, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(3, -3, 3, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(3, -2, 3, VanillaMaterials.SLAB);
+		setBlockMaterial(3, -3, 2, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(3, -4, 1, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(3, -3, 1, VanillaMaterials.SLAB);
+		setBlockMaterial(2, -4, 1, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(1, -5, 1, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(1, -4, 1, VanillaMaterials.SLAB);
+		setBlockMaterial(1, -5, 2, VanillaMaterials.STONE_BRICK);
+		setBlockMaterial(1, -5, 3, VanillaMaterials.SLAB);
 	}
 
 	@Override
@@ -90,8 +90,8 @@ public class StrongholdSpiralStaircase extends StructureComponent {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(-1, -1, 0);
-		final Vector3 rotatedMax = transform(5, 11, 5);
+		final Vector3 rotatedMin = transform(0, -6, 0);
+		final Vector3 rotatedMax = transform(4, 4, 4);
 		return new BoundingBox(MathHelper.min(rotatedMin, rotatedMax), MathHelper.max(rotatedMin, rotatedMax));
 	}
 }

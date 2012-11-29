@@ -83,8 +83,8 @@ public class StrongholdTurn extends StructureComponent {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(-1, -1, -1);
-		final Vector3 rotatedMax = transform(5, 5, 5);
+		final Vector3 rotatedMin = transform(0, 0, 0);
+		final Vector3 rotatedMax = transform(4, 4, 4);
 		return new BoundingBox(MathHelper.min(rotatedMin, rotatedMax), MathHelper.max(rotatedMin, rotatedMax));
 	}
 

@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.world.generator.structure.stronghold;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -39,10 +40,10 @@ import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructureComponent;
 
 public class StrongholdLargeIntersection extends StructureComponent {
-	private boolean nextComponentPosX = false;
-	private boolean nextComponentNegX = false;
-	private boolean nextComponentPosZ = false;
-	private boolean nextComponentNegZ = false;
+	private boolean nextComponentRightLow = false;
+	private boolean nextComponentRightHigh = false;
+	private boolean nextComponentLeftLow = false;
+	private boolean nextComponentLeftHigh = false;
 
 	public StrongholdLargeIntersection(Structure parent) {
 		super(parent);
@@ -69,25 +70,26 @@ public class StrongholdLargeIntersection extends StructureComponent {
 		StrongholdDoor.getRandomDoor(this, getRandom()).place(4, 3, 0);
 		// Access to the next components of the intersection
 		box.setPicker(picker);
-		if (nextComponentPosX) {
+		if (nextComponentRightLow) {
 			box.setMinMax(0, 3, 1, 0, 5, 3);
 			box.fill(false);
 		}
-		if (nextComponentNegX) {
+		if (nextComponentRightHigh) {
 			box.setMinMax(0, 5, 7, 0, 7, 9);
 			box.fill(false);
 		}
-		if (nextComponentPosZ) {
+		if (nextComponentLeftLow) {
 			box.setMinMax(9, 3, 1, 9, 5, 3);
 			box.fill(false);
 		}
-		if (nextComponentNegZ) {
+		if (nextComponentLeftHigh) {
 			box.setMinMax(9, 5, 7, 9, 7, 9);
 			box.fill(false);
 		}
-		// Finish the interior
+		// The bottom access way
 		box.setMinMax(5, 1, 10, 7, 3, 10);
 		box.fill(false);
+		// Finish the interior
 		box.setPicker(stone);
 		box.setMinMax(1, 2, 1, 8, 2, 6);
 		box.fill(false);
@@ -126,53 +128,102 @@ public class StrongholdLargeIntersection extends StructureComponent {
 	@Override
 	public void randomize() {
 		final Random random = getRandom();
-		nextComponentPosX = random.nextBoolean();
-		nextComponentNegX = random.nextBoolean();
-		nextComponentPosZ = random.nextBoolean();
-		nextComponentNegZ = random.nextInt(3) > 0;
+		nextComponentRightLow = random.nextBoolean();
+		nextComponentRightHigh = random.nextBoolean();
+		nextComponentLeftLow = random.nextBoolean();
+		nextComponentLeftHigh = random.nextInt(3) > 0;
 	}
 
 	@Override
 	public List<StructureComponent> getNextComponents() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		final List<StructureComponent> components = new ArrayList<StructureComponent>();
+		final Random random = getRandom();
+		final StructureComponent component = pickComponent(random, true);
+		component.setPosition(position.add(rotate(4, 0, 11)));
+		component.setRotation(rotation);
+		component.randomize();
+		components.add(component);
+		if (nextComponentRightLow) {
+			final StructureComponent next = pickComponent(random, false);
+			next.setPosition(position.add(rotate(-1, 2, 0)));
+			next.setRotation(rotation.rotate(-90, 0, 1, 0));
+			next.randomize();
+			components.add(next);
+		}
+		if (nextComponentRightHigh) {
+			final StructureComponent next = pickComponent(random, true);
+			next.setPosition(position.add(rotate(-1, 4, 6)));
+			next.setRotation(rotation.rotate(-90, 0, 1, 0));
+			components.add(next);
+		}
+		if (nextComponentLeftLow) {
+			final StructureComponent next = pickComponent(random, false);
+			next.setPosition(position.add(rotate(10, 2, 4)));
+			next.setRotation(rotation.rotate(90, 0, 1, 0));
+			components.add(next);
+		}
+		if (nextComponentLeftHigh) {
+			final StructureComponent next = pickComponent(random, true);
+			next.setPosition(position.add(rotate(10, 4, 10)));
+			next.setRotation(rotation.rotate(90, 0, 1, 0));
+			components.add(next);
+		}
+		return components;
+	}
+
+	private StructureComponent pickComponent(Random random, boolean allowLarge) {
+		final float draw = random.nextFloat();
+		if (draw > 0.85) {
+			return new StrongholdStaircase(parent);
+		} else if (allowLarge && draw > 0.7) {
+			return new StrongholdPrison(parent);
+		} else if (draw > 0.55) {
+			return new StrongholdChestCorridor(parent);
+		} else if (draw > 0.4) {
+			return new StrongholdSpiralStaircase(parent);
+		} else if (allowLarge && draw > 0.2) {
+			return new StrongholdTurn(parent);
+		} else {
+			return new StrongholdCorridor(parent);
+		}
 	}
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(-1, -1, -1);
-		final Vector3 rotatedMax = transform(10, 9, 11);
+		final Vector3 rotatedMin = transform(0, 0, 0);
+		final Vector3 rotatedMax = transform(9, 8, 10);
 		return new BoundingBox(MathHelper.min(rotatedMin, rotatedMax), MathHelper.max(rotatedMin, rotatedMax));
 	}
 
-	public boolean hasNextCompPosX() {
-		return nextComponentPosX;
+	public boolean hasNextComponentRightLow() {
+		return nextComponentRightLow;
 	}
 
-	public void setNextComponentPosX(boolean nextComponentPosX) {
-		this.nextComponentPosX = nextComponentPosX;
+	public void setNextComponentRightLow(boolean nextComponentRightLow) {
+		this.nextComponentRightLow = nextComponentRightLow;
 	}
 
-	public boolean hasNextComponentNegX() {
-		return nextComponentNegX;
+	public boolean hasNextComponentRightHigh() {
+		return nextComponentRightHigh;
 	}
 
-	public void setNextComponentNegX(boolean nextComponentNegX) {
-		this.nextComponentNegX = nextComponentNegX;
+	public void setNextComponentRightHigh(boolean nextComponentRightHigh) {
+		this.nextComponentRightHigh = nextComponentRightHigh;
 	}
 
-	public boolean hasNextComponentPosZ() {
-		return nextComponentPosZ;
+	public boolean hasNextComponentLeftLow() {
+		return nextComponentLeftLow;
 	}
 
-	public void setNextComponentPosZ(boolean nextComponentPosZ) {
-		this.nextComponentPosZ = nextComponentPosZ;
+	public void setNextComponentLeftLow(boolean nextComponentLeftLow) {
+		this.nextComponentLeftLow = nextComponentLeftLow;
 	}
 
-	public boolean hasNextComponentNegZ() {
-		return nextComponentNegZ;
+	public boolean hasNextComponentLeftHigh() {
+		return nextComponentLeftHigh;
 	}
 
-	public void setNextComponentNegZ(boolean nextComponentNegZ) {
-		this.nextComponentNegZ = nextComponentNegZ;
+	public void setNextComponentLeftHigh(boolean nextComponentLeftHigh) {
+		this.nextComponentLeftHigh = nextComponentLeftHigh;
 	}
 }

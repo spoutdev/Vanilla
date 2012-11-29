@@ -27,11 +27,9 @@
 package org.spout.vanilla.world.generator.structure.stronghold;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.spout.api.math.MathHelper;
-import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -89,11 +87,12 @@ public class StrongholdCorridor extends StructureComponent {
 		if (endOfStronghold) {
 			final StructureComponent end = new StrongholdPortalRoom(parent);
 			end.setPosition(position.add(rotate(7, 0, -1)));
-			end.setRotation(new Quaternion(rotation.getYaw() + 180, 0, 1, 0));
+			end.setRotation(rotation.rotate(180, 0, 1, 0));
 			components.add(end);
 		}
 		final StructureComponent component;
-		final float draw = getRandom().nextFloat();
+		//final float draw = getRandom().nextFloat();
+		final float draw = 0.9f;
 		if (draw > 0.8) {
 			component = new StrongholdLargeIntersection(parent);
 			component.setPosition(position.add(rotate(-3, -2, length)));
@@ -115,8 +114,8 @@ public class StrongholdCorridor extends StructureComponent {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(-1, -1, -1);
-		final Vector3 rotatedMax = transform(5, 5, length + 1);
+		final Vector3 rotatedMin = transform(0, 0, 0);
+		final Vector3 rotatedMax = transform(4, 4, length - 1);
 		return new BoundingBox(MathHelper.min(rotatedMin, rotatedMax), MathHelper.max(rotatedMin, rotatedMax));
 	}
 

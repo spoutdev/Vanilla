@@ -73,6 +73,9 @@ public class Stronghold extends Structure {
 		byte size = (byte) (random.nextInt(MAX_SIZE_RAND) + MAX_SIZE_BASE);
 		byte count = 0;
 		while (!activeBranches.isEmpty()) {
+			if (Spout.debugMode()) {
+				System.out.println("Current actives branches for Stronghold: " + activeBranches);
+			}
 			final StructureComponent active = activeBranches.get(0);
 			final BoundingBox activeBox = active.getBoundingBox();
 			if (!collides(activeBox, active.getLastComponent(), placed) && active.canPlace()
@@ -92,7 +95,7 @@ public class Stronghold extends Structure {
 					}
 					activeBranches.addAll(next);
 				} catch (UnsupportedOperationException ex) {
-					return;
+					continue;
 				}
 			}
 			activeBranches.remove(active);

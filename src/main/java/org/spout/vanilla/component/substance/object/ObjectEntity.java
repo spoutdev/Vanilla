@@ -27,16 +27,17 @@
 package org.spout.vanilla.component.substance.object;
 
 import org.spout.api.component.components.EntityComponent;
-import org.spout.api.math.Vector3;
+import org.spout.api.component.components.PhysicsComponent;
 
 public abstract class ObjectEntity extends EntityComponent {
-	private Vector3 velocity = new Vector3(0, 0, 0);
+	private PhysicsComponent physics;
 
-	public Vector3 getVelocity() {
-		return velocity;
+	@Override
+	public void onAttached() {
+		physics = getOwner().add(PhysicsComponent.class);
 	}
 
-	public void setVelocity(Vector3 velocity) {
-		this.velocity = velocity;
+	public PhysicsComponent getPhysics() {
+		return physics;
 	}
 }

@@ -36,6 +36,8 @@ import org.spout.vanilla.protocol.entity.object.ObjectType;
 import org.spout.vanilla.util.explosion.ExplosionModel;
 import org.spout.vanilla.util.explosion.ExplosionModelSpherical;
 
+import com.bulletphysics.collision.shapes.BoxShape;
+
 public class Tnt extends ObjectEntity {
 	private Entity holder;
 
@@ -71,6 +73,8 @@ public class Tnt extends ObjectEntity {
 	public void onAttached() {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.PRIMED_TNT));
 		holder = getOwner();
+		super.onAttached();
+		getPhysics().setCollisionShape(new BoxShape(1, 1, 1));
 	}
 
 	@Override

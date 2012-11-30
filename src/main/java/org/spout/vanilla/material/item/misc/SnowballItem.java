@@ -45,7 +45,7 @@ public class SnowballItem extends VanillaItemMaterial {
 		if (type == Action.RIGHT_CLICK) {
 			World world = entity.getWorld();
 			Snowball snowball = world.createEntity(entity.getTransform().getPosition(), Snowball.class).add(Snowball.class);
-			snowball.setVelocity(new Vector3(20, 20, 20)); // TODO: Correct this
+			snowball.getPhysics().applyImpulse(new Vector3(20, 20, 20)); // TODO: Correct this
 			snowball.setShooter(entity);
 			world.spawnEntity(snowball.getOwner());
 		}

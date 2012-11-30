@@ -39,6 +39,7 @@ public class Snowball extends ObjectEntity implements Projectile {
 	@Override
 	public void onAttached() {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.SNOWBALL));
+		super.onAttached();
 	}
 
 	@Override

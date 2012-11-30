@@ -54,7 +54,7 @@ public final class EntityObjectMessage extends EntityMessage {
 
 		double v = 3.9d;
 		Vector3 factor = new Vector3(v, v, v);
-		Vector3 velocity = entity.get(ObjectEntity.class).getVelocity();
+		Vector3 velocity = entity.get(ObjectEntity.class).getPhysics().getLinearVelocity();
 		velocity = velocity.max(factor.multiply(-1)).min(factor);
 
 		double s = 8000d;

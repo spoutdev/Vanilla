@@ -34,5 +34,6 @@ public class EyeOfEnder extends ObjectEntity {
 	@Override
 	public void onAttached() {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.EYE_OF_ENDER));
+		super.onAttached();
 	}
 }

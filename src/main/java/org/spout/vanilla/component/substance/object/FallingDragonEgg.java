@@ -36,5 +36,6 @@ public class FallingDragonEgg extends ObjectEntity {
 	@Override
 	public void onAttached() {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.DRAGON_EGG));
+		super.onAttached();
 	}
 }

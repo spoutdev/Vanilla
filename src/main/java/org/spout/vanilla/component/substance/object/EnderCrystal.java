@@ -37,5 +37,6 @@ public class EnderCrystal extends ObjectEntity {
 	@Override
 	public void onAttached() {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.ENDER_CRYSTAL));
+		super.onAttached();
 	}
 }

@@ -37,6 +37,7 @@ public class FallingBlock extends ObjectEntity {
 	@Override
 	public void onAttached() {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.FALLING_OBJECT));
+		super.onAttached();
 	}
 
 	public void setMaterial(VanillaBlockMaterial material) {

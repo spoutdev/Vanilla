@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.world.generator.structure.stronghold;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.spout.api.math.MathHelper;
@@ -78,7 +79,28 @@ public class StrongholdTurn extends StructureComponent {
 
 	@Override
 	public List<StructureComponent> getNextComponents() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		final StructureComponent component;
+		final float draw = getRandom().nextFloat();
+		if (draw > 0.8) {
+			component = new StrongholdSpiralStaircase(parent);
+		} else if (draw > 0.6) {
+			component = new StrongholdPrison(parent);
+		} else if (draw > 0.4) {
+			component = new StrongholdIntersection(parent);
+		} else if (draw > 0.2) {
+			component = new StrongholdStaircase(parent);
+		} else {
+			component = new StrongholdChestCorridor(parent);
+		}
+		if (left) {
+			component.setPosition(position.add(rotate(5, 0, 4)));
+			component.setRotation(rotation.rotate(90, 0, 1, 0));
+		} else {
+			component.setPosition(position.add(rotate(-1, 0, 0)));
+			component.setRotation(rotation.rotate(-90, 0, 1, 0));
+		}
+		component.randomize();
+		return Arrays.asList(component);
 	}
 
 	@Override

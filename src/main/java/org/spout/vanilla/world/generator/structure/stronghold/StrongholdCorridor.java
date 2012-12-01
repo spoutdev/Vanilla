@@ -38,7 +38,7 @@ import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructureComponent;
 
 public class StrongholdCorridor extends StructureComponent {
-	private boolean endOfStronghold = false;
+	private boolean startOfStronghold = false;
 	private byte length = 4;
 
 	public StrongholdCorridor(Structure parent) {
@@ -84,23 +84,33 @@ public class StrongholdCorridor extends StructureComponent {
 	@Override
 	public List<StructureComponent> getNextComponents() {
 		final List<StructureComponent> components = new ArrayList<StructureComponent>();
-		if (endOfStronghold) {
-			final StructureComponent end = new StrongholdPortalRoom(parent);
-			end.setPosition(position.add(rotate(7, 0, -1)));
-			end.setRotation(rotation.rotate(180, 0, 1, 0));
-			components.add(end);
+		if (startOfStronghold) {
+			final StructureComponent component = new StrongholdLibrary(parent);
+			component.setPosition(position.add(rotate(7, 0, -1)));
+			component.setRotation(rotation.rotate(180, 0, 1, 0));
+			component.randomize();
+			components.add(component);
 		}
 		final StructureComponent component;
 		final float draw = getRandom().nextFloat();
-		if (draw > 0.8) {
+		if (draw > 0.9) {
 			component = new StrongholdLargeIntersection(parent);
 			component.setPosition(position.add(rotate(-3, -2, length)));
-		} else if (draw > 0.6) {
+		} else if (draw > 0.8) {
 			component = new StrongholdIntersection(parent);
 			component.setPosition(position.add(rotate(0, 0, length)));
-		} else if (draw > 0.4) {
+		} else if (draw > 0.7) {
 			component = new StrongholdRoom(parent);
 			component.setPosition(position.add(rotate(-3, 0, length)));
+		} else if (draw > 0.6) {
+			component = new StrongholdSpiralStaircase(parent);
+			component.setPosition(position.add(rotate(0, 0, length)));
+		} else if (draw > 0.4) {
+			component = new StrongholdPrison(parent);
+			component.setPosition(position.add(rotate(0, 0, length)));
+		} else if (draw > 0.2) {
+			component = new StrongholdTurn(parent);
+			component.setPosition(position.add(rotate(0, 0, length)));
 		} else {
 			component = new StrongholdStaircase(parent);
 			component.setPosition(position.add(rotate(0, 0, length)));
@@ -126,11 +136,11 @@ public class StrongholdCorridor extends StructureComponent {
 		this.length = length;
 	}
 
-	public boolean isEndOfStronghold() {
-		return endOfStronghold;
+	public boolean isStartOfStronghold() {
+		return startOfStronghold;
 	}
 
-	public void setEndOfStronghold(boolean endOfStronghold) {
-		this.endOfStronghold = endOfStronghold;
+	public void setStartOfStronghold(boolean startOfStronghold) {
+		this.startOfStronghold = startOfStronghold;
 	}
 }

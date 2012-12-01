@@ -32,7 +32,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import org.spout.api.Spout;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
@@ -45,8 +44,8 @@ import org.spout.vanilla.world.generator.structure.StructureComponent;
 import org.spout.vanilla.world.generator.structure.StructureComponent.BoundingBox;
 
 public class Stronghold extends Structure {
-	private static final byte MAX_SIZE_BASE = 50;
-	private static final byte MAX_SIZE_RAND = 50;
+	private static final byte MAX_SIZE_BASE = 101;
+	private static final byte MAX_SIZE_RAND = 100;
 
 	public Stronghold() {
 	}
@@ -65,7 +64,7 @@ public class Stronghold extends Structure {
 		final Set<BoundingBox> placed = new HashSet<BoundingBox>();
 		final List<StructureComponent> activeBranches = new ArrayList<StructureComponent>(4);
 		final StrongholdCorridor corridor = new StrongholdCorridor(this);
-		corridor.setEndOfStronghold(true);
+		corridor.setStartOfStronghold(true);
 		corridor.setPosition(new Point(w, x, y, z));
 		corridor.setRotation(new Quaternion(random.nextInt(4) * 90, 0, 1, 0));
 		corridor.randomize();
@@ -73,16 +72,10 @@ public class Stronghold extends Structure {
 		byte size = (byte) (random.nextInt(MAX_SIZE_RAND) + MAX_SIZE_BASE);
 		byte count = 0;
 		while (!activeBranches.isEmpty()) {
-			if (Spout.debugMode()) {
-				System.out.println("Current actives branches for Stronghold: " + activeBranches);
-			}
 			final StructureComponent active = activeBranches.get(0);
 			final BoundingBox activeBox = active.getBoundingBox();
 			if (!collides(activeBox, active.getLastComponent(), placed) && active.canPlace()
 					&& active.getPosition().getY() >= 10) {
-				if (Spout.debugMode()) {
-					fill(w, activeBox);
-				}
 				active.place();
 				if (++count > size) {
 					return;

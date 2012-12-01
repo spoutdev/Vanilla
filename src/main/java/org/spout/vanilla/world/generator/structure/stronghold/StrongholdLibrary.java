@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.world.generator.structure.stronghold;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.spout.api.material.BlockMaterial;
@@ -172,7 +173,7 @@ public class StrongholdLibrary extends StructureComponent {
 
 	@Override
 	public List<StructureComponent> getNextComponents() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		return Collections.emptyList();
 	}
 
 	@Override

@@ -90,7 +90,6 @@ public enum CreatureType {
 	WITHER(64, Wither.class),
 	WOLF(95, Wolf.class),
 	ZOMBIE(54, Zombie.class);
-
 	private int id;
 	private Class<? extends Living> component;
 	private static final Map<Class<?>, CreatureType> types = new HashMap<Class<?>, CreatureType>();
@@ -110,7 +109,6 @@ public enum CreatureType {
 
 	/**
 	 * Gets the entity component associated with the creature type
-	 * 
 	 * @return component
 	 */
 	public Class<? extends Living> getComponent() {
@@ -119,7 +117,6 @@ public enum CreatureType {
 
 	/**
 	 * Gets the creature type associated with its given name, case-insensitive
-	 * 
 	 * @return creature type, or null if no creature type matching the name could be found
 	 */
 	public static CreatureType byName(String name) {
@@ -131,7 +128,6 @@ public enum CreatureType {
 
 	/**
 	 * Gets the creature type associated with its exact entity component class
-	 * 
 	 * @return creature type, or null if no creature type matching the component could be found
 	 */
 	public static CreatureType byClass(Class<? extends EntityComponent> clazz) {

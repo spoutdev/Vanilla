@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import org.spout.api.Spout;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Quaternion;
@@ -114,7 +115,7 @@ public class Stronghold extends Structure {
 	 * A testing method, fills the bounding box with glass. Basically, it builds
 	 * "ground" so I can test this above ground. Also, i can visualize the BBs
 	 * with this.
-	 *
+	 * <p/>
 	 * TODO: remove when done.
 	 */
 	private void fill(World world, BoundingBox box) {

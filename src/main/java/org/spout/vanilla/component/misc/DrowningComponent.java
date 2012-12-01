@@ -38,7 +38,6 @@ import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.data.RenderMaterials;
 import org.spout.vanilla.data.VanillaData;

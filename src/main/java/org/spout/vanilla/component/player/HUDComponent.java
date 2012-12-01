@@ -27,8 +27,6 @@
 package org.spout.vanilla.component.player;
 
 import java.awt.Color;
-import java.util.List;
-import java.util.Random;
 
 import org.spout.api.Client;
 import org.spout.api.Spout;
@@ -47,7 +45,6 @@ import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.RenderMaterials;
-import org.spout.vanilla.data.VanillaData;
 
 /**
  * Component attached to clients-only that updates the Heads Up Display.

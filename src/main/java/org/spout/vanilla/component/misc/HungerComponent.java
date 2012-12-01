@@ -281,7 +281,6 @@ public class HungerComponent extends EntityComponent {
 			for (int i = 10; i < 20; i++) {
 				hungerRect.get(i).setSource(new Rectangle(bx / 256f, 27f / 256f, 9f / 256f, 9f / 256f)); // Background
 			}
-
 		} else {
 
 			for (int i = 9; i >= 0; i--) {

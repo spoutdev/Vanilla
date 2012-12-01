@@ -84,7 +84,6 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 
 	/**
 	 * Shoots an item from this Dispenser
-	 *
 	 * @param block of the Dispenser
 	 * @param item to shoot
 	 */

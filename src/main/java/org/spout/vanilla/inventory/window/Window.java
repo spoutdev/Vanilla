@@ -57,7 +57,6 @@ import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.data.RenderMaterials;
-import org.spout.vanilla.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowItemsEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
@@ -716,8 +715,8 @@ public abstract class Window implements InventoryViewer {
 				debug("Current slot: " + quickbar.getCurrentSlot());
 				// TODO: Setting boots too for some reason...?
 				//if (inventory instanceof PlayerQuickbar && slot == quickbar.getCurrentSlot()) {
-					//Player player = getPlayer();
-					//player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, 0, item));
+				//Player player = getPlayer();
+				//player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, 0, item));
 				//}
 				callProtocolEvent(new WindowSlotEvent(this, inventory, slots.revert(slot), item));
 				break;

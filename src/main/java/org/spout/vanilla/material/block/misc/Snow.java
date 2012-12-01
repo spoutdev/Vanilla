@@ -42,9 +42,8 @@ import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
 public class Snow extends GroundAttachable implements DynamicMaterial, InitializableMaterial {
 	private static final byte MIN_MELT_LIGHT = 11;
-	
 	public static final Snow[] SNOW = new Snow[8];
-	
+
 	static {
 		SNOW[0] = new Snow("Snow", 78, "model://Vanilla/resources/materials/block/nonsolid/snow/snow_1.spm");
 		SNOW[1] = new Snow("Snow_1", 1, SNOW[0], "model://Vanilla/resources/materials/block/nonsolid/snow/snow_2.spm");
@@ -62,7 +61,7 @@ public class Snow extends GroundAttachable implements DynamicMaterial, Initializ
 		this.setOcclusion((short) 0, BlockFace.BOTTOM);
 		this.addMiningType(ToolType.SPADE).setMiningLevel(ToolLevel.WOOD);
 	}
-	
+
 	private Snow(String name, int data, Snow parent, String model) {
 		super(name, SNOW[0].getId(), data, parent, model);
 		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent();

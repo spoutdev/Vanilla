@@ -97,7 +97,6 @@ public class StrongholdPortalRoom extends StructureComponent {
 			box.fill(false);
 			box.offsetMinMax(10, 0, 0, 10, 0, 0);
 			box.fill(false);
-
 		}
 		for (int i = 2; i < 9; i += 2) {
 			box.setMinMax(i, 3, 15, i, 4, 15);

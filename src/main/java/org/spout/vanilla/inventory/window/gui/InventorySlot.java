@@ -32,12 +32,9 @@ import java.util.List;
 import org.spout.api.Client;
 import org.spout.api.Spout;
 import org.spout.api.component.components.WidgetComponent;
-import org.spout.api.entity.Player;
+import org.spout.api.event.player.PlayerKeyEvent;
 import org.spout.api.gui.render.RenderPart;
-import org.spout.api.input.KeyEvent;
 import org.spout.api.input.Keyboard;
-import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.IntVector2;
 import org.spout.api.math.Vector2;
 
@@ -104,7 +101,7 @@ public class InventorySlot extends WidgetComponent {
 	}
 
 	@Override
-	public void onKey(KeyEvent event) {
+	public void onKey(PlayerKeyEvent event) {
 		Keyboard key = event.getKey();
 		getWindow().setShiftDown((key == Keyboard.KEY_LSHIFT || key == Keyboard.KEY_RSHIFT) && event.isPressed());
 	}

@@ -67,7 +67,6 @@ public class SnowObject extends RandomObject {
 	/**
 	 * Processes one iteration of snowfall, this may or may not set a block at
 	 * the current position.
-	 *
 	 * @returns if snow has been placed.
 	 */
 	public boolean fall(World world, IntVector3 position) {
@@ -131,7 +130,6 @@ public class SnowObject extends RandomObject {
 	/**
 	 * Processes one iteration of snowfall, this may or may not set a block at
 	 * the current position.
-	 *
 	 * @param world to place in
 	 * @param x coordinate
 	 * @param y coordinate, unused

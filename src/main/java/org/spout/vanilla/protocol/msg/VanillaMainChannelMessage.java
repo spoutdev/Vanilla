@@ -27,7 +27,6 @@
 package org.spout.vanilla.protocol.msg;
 
 public abstract class VanillaMainChannelMessage extends VanillaMessage {
-
 	protected VanillaMainChannelMessage() {
 		super(DEFAULT_CHANNEL);
 	}

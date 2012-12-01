@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.world.generator.structure.stronghold;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -172,7 +173,39 @@ public class StrongholdRoom extends StructureComponent {
 
 	@Override
 	public List<StructureComponent> getNextComponents() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		final List<StructureComponent> components = new ArrayList<StructureComponent>();
+		final Random random = getRandom();
+		final StructureComponent nextFront = pickComponent(random, true);
+		nextFront.setPosition(position.add(rotate(3, 0, 11)));
+		nextFront.setRotation(rotation);
+		nextFront.randomize();
+		components.add(nextFront);
+		final StructureComponent nextRight = pickComponent(random, false);
+		nextRight.setPosition(position.add(rotate(-1, 0, 3)));
+		nextRight.setRotation(rotation.rotate(-90, 0, 1, 0));
+		nextRight.randomize();
+		components.add(nextRight);
+		final StructureComponent nextLeft = pickComponent(random, false);
+		nextLeft.setPosition(position.add(rotate(11, 0, 7)));
+		nextLeft.setRotation(rotation.rotate(90, 0, 1, 0));
+		nextLeft.randomize();
+		components.add(nextLeft);
+		return components;
+	}
+
+	private StructureComponent pickComponent(Random random, boolean allowLarge) {
+		final float draw = random.nextFloat();
+		if (draw > 0.8) {
+			return new StrongholdStaircase(parent);
+		} else if (allowLarge && draw > 0.7) {
+			return new StrongholdPrison(parent);
+		} else if (draw > 0.6) {
+			return new StrongholdChestCorridor(parent);
+		} else if (draw > 0.3) {
+			return new StrongholdSpiralStaircase(parent);
+		} else {
+			return new StrongholdCorridor(parent);
+		}
 	}
 
 	@Override

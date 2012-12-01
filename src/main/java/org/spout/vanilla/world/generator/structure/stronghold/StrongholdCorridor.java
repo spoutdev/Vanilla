@@ -91,8 +91,7 @@ public class StrongholdCorridor extends StructureComponent {
 			components.add(end);
 		}
 		final StructureComponent component;
-		//final float draw = getRandom().nextFloat();
-		final float draw = 0.9f;
+		final float draw = getRandom().nextFloat();
 		if (draw > 0.8) {
 			component = new StrongholdLargeIntersection(parent);
 			component.setPosition(position.add(rotate(-3, -2, length)));
@@ -104,7 +103,7 @@ public class StrongholdCorridor extends StructureComponent {
 			component.setPosition(position.add(rotate(-3, 0, length)));
 		} else {
 			component = new StrongholdStaircase(parent);
-			component.setPosition(position.add(rotate(0, -6, length)));
+			component.setPosition(position.add(rotate(0, 0, length)));
 		}
 		component.setRotation(rotation);
 		component.randomize();

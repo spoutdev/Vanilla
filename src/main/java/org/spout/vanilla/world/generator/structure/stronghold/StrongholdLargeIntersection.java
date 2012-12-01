@@ -154,18 +154,21 @@ public class StrongholdLargeIntersection extends StructureComponent {
 			final StructureComponent next = pickComponent(random, true);
 			next.setPosition(position.add(rotate(-1, 4, 6)));
 			next.setRotation(rotation.rotate(-90, 0, 1, 0));
+			next.randomize();
 			components.add(next);
 		}
 		if (nextComponentLeftLow) {
 			final StructureComponent next = pickComponent(random, false);
 			next.setPosition(position.add(rotate(10, 2, 4)));
 			next.setRotation(rotation.rotate(90, 0, 1, 0));
+			next.randomize();
 			components.add(next);
 		}
 		if (nextComponentLeftHigh) {
 			final StructureComponent next = pickComponent(random, true);
 			next.setPosition(position.add(rotate(10, 4, 10)));
 			next.setRotation(rotation.rotate(90, 0, 1, 0));
+			next.randomize();
 			components.add(next);
 		}
 		return components;
@@ -173,16 +176,14 @@ public class StrongholdLargeIntersection extends StructureComponent {
 
 	private StructureComponent pickComponent(Random random, boolean allowLarge) {
 		final float draw = random.nextFloat();
-		if (draw > 0.85) {
+		if (draw > 0.8) {
 			return new StrongholdStaircase(parent);
 		} else if (allowLarge && draw > 0.7) {
 			return new StrongholdPrison(parent);
-		} else if (draw > 0.55) {
+		} else if (draw > 0.6) {
 			return new StrongholdChestCorridor(parent);
-		} else if (draw > 0.4) {
+		} else if (draw > 0.3) {
 			return new StrongholdSpiralStaircase(parent);
-		} else if (allowLarge && draw > 0.2) {
-			return new StrongholdTurn(parent);
 		} else {
 			return new StrongholdCorridor(parent);
 		}

@@ -26,10 +26,13 @@
  */
 package org.spout.vanilla.world.generator.structure.stronghold;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
@@ -37,8 +40,8 @@ import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructureComponent;
 
 public class StrongholdIntersection extends StructureComponent {
-	private boolean nextComponentX = false;
-	private boolean nextComponentZ = false;
+	private boolean nextComponentRight = false;
+	private boolean nextComponentLeft = false;
 
 	public StrongholdIntersection(Structure parent) {
 		super(parent);
@@ -68,11 +71,11 @@ public class StrongholdIntersection extends StructureComponent {
 		attachMaterial(0.1f, 3, 2, 5, VanillaMaterials.TORCH);
 		// Access for the next components
 		box.setPicker(new SimpleBlockMaterialPicker());
-		if (nextComponentX) {
+		if (nextComponentRight) {
 			box.setMinMax(0, 1, 2, 0, 3, 4);
 			box.fill(false);
 		}
-		if (nextComponentZ) {
+		if (nextComponentLeft) {
 			box.setMinMax(4, 1, 2, 4, 3, 4);
 			box.fill(false);
 		}
@@ -81,13 +84,49 @@ public class StrongholdIntersection extends StructureComponent {
 	@Override
 	public void randomize() {
 		final Random random = getRandom();
-		nextComponentX = random.nextBoolean();
-		nextComponentZ = random.nextBoolean();
+		nextComponentRight = random.nextBoolean();
+		nextComponentLeft = random.nextBoolean();
 	}
 
 	@Override
 	public List<StructureComponent> getNextComponents() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		final List<StructureComponent> components = new ArrayList<StructureComponent>();
+		final Random random = getRandom();
+		final StructureComponent component = pickComponent(random, true);
+		component.setPosition(position.add(rotate(0, 0, 7)));
+		component.setRotation(rotation);
+		component.randomize();
+		components.add(component);
+		if (nextComponentRight) {
+			final StructureComponent next = pickComponent(random, false);
+			next.setPosition(position.add(rotate(-1, 0, 1)));
+			next.setRotation(rotation.rotate(-90, 0, 1, 0));
+			next.randomize();
+			components.add(next);
+		}
+		if (nextComponentLeft) {
+			final StructureComponent next = pickComponent(random, false);
+			next.setPosition(position.add(rotate(5, 0, 5)));
+			next.setRotation(rotation.rotate(90, 0, 1, 0));
+			next.randomize();
+			components.add(next);
+		}
+		return components;
+	}
+
+	private StructureComponent pickComponent(Random random, boolean allowLarge) {
+		final float draw = random.nextFloat();
+		if (draw > 0.7) {
+			return new StrongholdStaircase(parent);
+		} else if (allowLarge && draw > 0.6) {
+			return new StrongholdPrison(parent);
+		} else if (draw > 0.4) {
+			return new StrongholdChestCorridor(parent);
+		} else if (draw > 0.3) {
+			return new StrongholdSpiralStaircase(parent);
+		} else {
+			return new StrongholdCorridor(parent);
+		}
 	}
 
 	@Override
@@ -97,19 +136,19 @@ public class StrongholdIntersection extends StructureComponent {
 		return new BoundingBox(MathHelper.min(rotatedMin, rotatedMax), MathHelper.max(rotatedMin, rotatedMax));
 	}
 
-	public boolean hasNextComponentX() {
-		return nextComponentX;
+	public boolean hasNextComponentRight() {
+		return nextComponentRight;
 	}
 
-	public void setNextComponentX(boolean nextComponentX) {
-		this.nextComponentX = nextComponentX;
+	public void setNextComponentRight(boolean nextComponentRight) {
+		this.nextComponentRight = nextComponentRight;
 	}
 
-	public boolean hasNextComponentZ() {
-		return nextComponentZ;
+	public boolean hasNextComponentLeft() {
+		return nextComponentLeft;
 	}
 
-	public void setNextComponentZ(boolean nextComponentZ) {
-		this.nextComponentZ = nextComponentZ;
+	public void setNextComponentLeft(boolean nextComponentLeft) {
+		this.nextComponentLeft = nextComponentLeft;
 	}
 }

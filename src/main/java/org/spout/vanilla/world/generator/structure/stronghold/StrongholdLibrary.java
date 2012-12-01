@@ -68,7 +68,7 @@ public class StrongholdLibrary extends StructureComponent {
 		final SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker(VanillaMaterials.WEB, VanillaMaterials.WEB);
 		box.setPicker(picker);
 		box.setMinMax(2, 1, 1, 11, 4, 13);
-		box.randomFill(0.07F, false);
+		box.randomFill(0.07f, false);
 		// Place bookshelves on the walls
 		for (int i = 1; i <= 13; i++) {
 			final boolean planks = (i - 1) % 4 == 0;

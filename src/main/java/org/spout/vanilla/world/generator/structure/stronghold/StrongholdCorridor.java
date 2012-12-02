@@ -85,7 +85,7 @@ public class StrongholdCorridor extends StructureComponent {
 	public List<StructureComponent> getNextComponents() {
 		final List<StructureComponent> components = new ArrayList<StructureComponent>();
 		if (startOfStronghold) {
-			final StructureComponent component = new StrongholdLibrary(parent);
+			final StructureComponent component = new StrongholdPortalRoom(parent);
 			component.setPosition(position.add(rotate(7, 0, -1)));
 			component.setRotation(rotation.rotate(180, 0, 1, 0));
 			component.randomize();

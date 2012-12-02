@@ -59,7 +59,7 @@ public class Mineshaft extends Structure {
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
 		final Set<BoundingBox> placed = new HashSet<BoundingBox>();
-		final List<StructureComponent> activeBranches = new ArrayList<StructureComponent>(4);
+		final List<StructureComponent> activeBranches = new ArrayList<StructureComponent>();
 		final MineshaftRoom room = new MineshaftRoom(this);
 		room.setPosition(new Point(w, x, y, z));
 		room.randomize();

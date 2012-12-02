@@ -28,17 +28,17 @@ package org.spout.vanilla.world.generator.normal.populator;
 
 import java.util.Random;
 
+import org.spout.api.Spout;
 import org.spout.api.generator.Populator;
 import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.math.BitSize;
 
-import org.spout.vanilla.world.generator.structure.mineshaft.Mineshaft;
+import org.spout.vanilla.world.generator.structure.stronghold.Stronghold;
 
-public class MineshaftPopulator extends Populator {
-	private static final BitSize SPACING = new BitSize(8);
-	private static final int ODD = 3;
+public class StrongholdPopulator extends Populator {
+	private static final BitSize SPACING = new BitSize(11);
 	private static final int BASE_Y = 35;
 	private static final int RAND_Y = 11;
 
@@ -47,20 +47,48 @@ public class MineshaftPopulator extends Populator {
 		if (chunk.getY() != 4) {
 			return;
 		}
-		if (chunk.getBlockX() % SPACING.SIZE != 0 || chunk.getBlockZ() % SPACING.SIZE != 0) {
+		final int blockX = chunk.getBlockX();
+		final int blockZ = chunk.getBlockZ();
+		if (Math.abs(blockX) != SPACING.SIZE || Math.abs(blockZ) != SPACING.SIZE) {
 			return;
 		}
 		final World world = chunk.getWorld();
+		final int excludedQuadrant = new Random(world.getSeed()).nextInt(4);
+		switch (excludedQuadrant) {
+			case 0:
+				if (blockX > 0 && blockZ > 0) {
+					return;
+				}
+				break;
+			case 1:
+				if (blockX > 0 && blockZ < 0) {
+					return;
+				}
+				break;
+			case 2:
+				if (blockX < 0 && blockZ < 0) {
+					return;
+				}
+				break;
+			case 3:
+				if (blockX < 0 && blockZ > 0) {
+					return;
+				}
+				break;
+		}
+		// This means only three strongholds per world, 1 per quadrant, except one excluded quadrant.
+		// All are near + or - 2048 on x and z (by + or - 256 on x and z).
 		random = WorldGeneratorUtils.getRandom(world, chunk.getBlockX() >> SPACING.BITS, 0,
-				chunk.getBlockZ() >> SPACING.BITS, 26471);
-		if (random.nextInt(ODD) == 0) {
-			final Mineshaft mineshaft = new Mineshaft();
-			mineshaft.setRandom(random);
-			final int x = chunk.getBlockX(random);
-			final int y = random.nextInt(RAND_Y) + BASE_Y;
-			final int z = chunk.getBlockZ(random);
-			if (mineshaft.canPlaceObject(world, x, y, z)) {
-				mineshaft.placeObject(world, x, y, z);
+				chunk.getBlockZ() >> SPACING.BITS, 57845);
+		final Stronghold stronghold = new Stronghold();
+		stronghold.setRandom(random);
+		final int x = blockX + random.nextInt(513) - 256;
+		final int y = random.nextInt(RAND_Y) + BASE_Y;
+		final int z = blockZ + random.nextInt(513) - 256;
+		if (stronghold.canPlaceObject(world, x, y, z)) {
+			stronghold.placeObject(world, x, y, z);
+			if (Spout.debugMode()) {
+				Spout.log("Placed stronghold at: (" + x + ", " + y + ", " + z + ")");
 			}
 		}
 	}

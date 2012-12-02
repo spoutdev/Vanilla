@@ -58,7 +58,7 @@ import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.RedstonePowerMode;
-import org.spout.vanilla.data.RenderMaterials;
+import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.DropFlags;
 import org.spout.vanilla.data.drops.flag.PlayerFlags;
@@ -133,7 +133,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	@Override
 	public RenderMaterial getRenderMaterial() {
-		return RenderMaterials.BLOCKS_MATERIAL;
+		return VanillaRenderMaterials.BLOCKS_MATERIAL;
 	}
 
 	@Override

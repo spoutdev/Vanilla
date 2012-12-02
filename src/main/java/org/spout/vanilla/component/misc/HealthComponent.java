@@ -43,7 +43,7 @@ import org.spout.api.math.Rectangle;
 import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.Animation;
-import org.spout.vanilla.data.RenderMaterials;
+import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.event.entity.EntityDamageEvent;
@@ -83,7 +83,7 @@ public class HealthComponent extends EntityComponent {
 			float y = VanillaConfiguration.HARDCORE_MODE.getBoolean() ? 45f / 256f : 0;
 			for (int i = 0; i < 10; i++) {
 				final RenderPart heart = new RenderPart();
-				heart.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
+				heart.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
 				heart.setColor(Color.WHITE);
 				heart.setSprite(new Rectangle(x + 0.005f, -0.77f, 0.065f * SCALE, 0.065f));
 				heart.setSource(new Rectangle(53f / 256f, y, 9f / 256f, 9f / 256f));
@@ -94,7 +94,7 @@ public class HealthComponent extends EntityComponent {
 			x = START_X;
 			for (int i = 0; i < 10; i++) {
 				final RenderPart heartBg = new RenderPart();
-				heartBg.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
+				heartBg.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
 				heartBg.setColor(Color.WHITE);
 				heartBg.setSprite(new Rectangle(x, -0.77f, 0.065f * SCALE, 0.065f));
 				heartBg.setSource(new Rectangle(16f / 256f, y, 9f / 256f, 9f / 256f));

@@ -31,7 +31,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.data.RenderMaterials;
+import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.material.VanillaMaterial;
 
 public class RenderItemStack extends RenderPart {
@@ -48,7 +48,7 @@ public class RenderItemStack extends RenderPart {
 			throw new IllegalArgumentException("ItemStack must have a VanillaMaterial for a Material.");
 		}
 		this.item = item;
-		setRenderMaterial(RenderMaterials.ITEMS_MATERIAL);
+		setRenderMaterial(VanillaRenderMaterials.ITEMS_MATERIAL);
 		setSource(new Rectangle(((VanillaMaterial) item.getMaterial()).getPosition(), SOURCE_EXTENTS));
 	}
 

@@ -30,7 +30,7 @@ import org.spout.api.material.Material;
 import org.spout.api.math.Vector2;
 import org.spout.api.render.RenderMaterial;
 
-import org.spout.vanilla.data.RenderMaterials;
+import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.material.VanillaMaterial;
 
 public class VanillaItemMaterial extends Material implements VanillaMaterial {
@@ -68,7 +68,7 @@ public class VanillaItemMaterial extends Material implements VanillaMaterial {
 
 	@Override
 	public RenderMaterial getRenderMaterial() {
-		return RenderMaterials.ITEMS_MATERIAL;
+		return VanillaRenderMaterials.ITEMS_MATERIAL;
 	}
 
 	@Override

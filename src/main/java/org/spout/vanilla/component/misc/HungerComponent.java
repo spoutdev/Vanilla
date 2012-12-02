@@ -44,7 +44,7 @@ import org.spout.api.math.Rectangle;
 
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.player.HUDComponent;
-import org.spout.vanilla.data.RenderMaterials;
+import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.player.network.PlayerHealthEvent;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -73,7 +73,7 @@ public class HungerComponent extends EntityComponent {
 			float dx = 0.06f * SCALE;
 			for (int i = 0; i < 10; i++) {
 				final RenderPart hunger = new RenderPart();
-				hunger.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
+				hunger.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
 				hunger.setColor(Color.WHITE);
 				hunger.setSprite(new Rectangle(x, -0.77f, 0.075f * SCALE, 0.07f));
 				hunger.setSource(new Rectangle(52f / 256f, 27f / 256f, 9f / 256f, 9f / 256f));
@@ -84,7 +84,7 @@ public class HungerComponent extends EntityComponent {
 			x = 0.09f * SCALE;
 			for (int i = 0; i < 10; i++) {
 				final RenderPart hungerBg = new RenderPart();
-				hungerBg.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
+				hungerBg.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
 				hungerBg.setColor(Color.WHITE);
 				hungerBg.setSprite(new Rectangle(x, -0.77f, 0.075f * SCALE, 0.07f));
 				hungerBg.setSource(new Rectangle(16f / 256f, 27f / 256f, 9f / 256f, 9f / 256f));

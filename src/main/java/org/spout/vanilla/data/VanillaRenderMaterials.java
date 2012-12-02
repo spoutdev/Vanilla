@@ -32,7 +32,7 @@ import org.spout.api.plugin.Platform;
 import org.spout.api.render.Font;
 import org.spout.api.render.RenderMaterial;
 
-public final class RenderMaterials {
+public final class VanillaRenderMaterials {
 	private static final FileSystem fileSystem = Spout.getFilesystem();
 	public static final Font FONT;
 	public static final RenderMaterial HOTBAR_MATERIAL;
@@ -46,7 +46,6 @@ public final class RenderMaterials {
 	public static final RenderMaterial ALCHEMY_MATERIAL;
 	public static final RenderMaterial ITEMS_MATERIAL;
 	public static final RenderMaterial BLOCKS_MATERIAL;
-	public static final RenderMaterial GUI_COLOR;
 	// TODO: Missing textures
 	public static final RenderMaterial VILLAGER_MATERIAL = null;
 	public static final RenderMaterial BEACON_MATERIAL = null;
@@ -66,7 +65,6 @@ public final class RenderMaterials {
 			ALCHEMY_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/InventoryGUIMaterial.smt");
 			ITEMS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/ItemsGUIMaterial.smt");
 			BLOCKS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/materials/terrain.smt");
-			GUI_COLOR = (RenderMaterial) fileSystem.getResource("material://Spout/resources/materials/GUIColorMaterial.smt");
 		} else {
 			FONT = null;
 			HOTBAR_MATERIAL = null;
@@ -80,10 +78,9 @@ public final class RenderMaterials {
 			ALCHEMY_MATERIAL = null;
 			ITEMS_MATERIAL = null;
 			BLOCKS_MATERIAL = null;
-			GUI_COLOR = null;
 		}
 	}
 
-	private RenderMaterials() {
+	private VanillaRenderMaterials() {
 	}
 }

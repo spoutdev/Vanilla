@@ -31,7 +31,7 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 
 import org.spout.api.render.RenderMaterial;
 
-import org.spout.vanilla.data.RenderMaterials;
+import org.spout.vanilla.data.VanillaRenderMaterials;
 
 /**
  * Represents a type of {@link Window}
@@ -40,52 +40,52 @@ public enum WindowType {
 	/**
 	 * The default window seen when the player opens his inventory.
 	 */
-	DEFAULT(-1, RenderMaterials.INVENTORY_MATERIAL),
+	DEFAULT(-1, VanillaRenderMaterials.INVENTORY_MATERIAL),
 	/**
 	 * The window seen when opening a
 	 * {@link org.spout.vanilla.component.substance.material.chest.Chest}
 	 */
-	CHEST(0, RenderMaterials.CONTAINER_MATERIAL),
+	CHEST(0, VanillaRenderMaterials.CONTAINER_MATERIAL),
 	/**
 	 * The window seen when using a
 	 * {@link org.spout.vanilla.component.substance.material.CraftingTable}
 	 */
-	CRAFTING_TABLE(1, RenderMaterials.CRAFTING_MATERIAL),
+	CRAFTING_TABLE(1, VanillaRenderMaterials.CRAFTING_MATERIAL),
 	/**
 	 * The window seen when opening a
 	 * {@link org.spout.vanilla.component.substance.material.Furnace}
 	 */
-	FURNACE(2, RenderMaterials.FURNACE_MATERIAL),
+	FURNACE(2, VanillaRenderMaterials.FURNACE_MATERIAL),
 	/**
 	 * The window seen when opening a
 	 * {@link org.spout.vanilla.component.substance.material.Dispenser}
 	 */
-	DISPENSER(3, RenderMaterials.TRAP_MATERIAL),
+	DISPENSER(3, VanillaRenderMaterials.TRAP_MATERIAL),
 	/**
 	 * The window seen when using an
 	 * {@link org.spout.vanilla.component.substance.material.EnchantmentTable}
 	 */
-	ENCHANTMENT_TABLE(4, RenderMaterials.ENCHANT_MATERIAL),
+	ENCHANTMENT_TABLE(4, VanillaRenderMaterials.ENCHANT_MATERIAL),
 	/**
 	 * The window seen when using a
 	 * {@link org.spout.vanilla.component.substance.material.BrewingStand}
 	 */
-	BREWING_STAND(5, RenderMaterials.ALCHEMY_MATERIAL),
+	BREWING_STAND(5, VanillaRenderMaterials.ALCHEMY_MATERIAL),
 	/**
 	 * The window seen when trading with a
 	 * {@link org.spout.vanilla.component.living.passive.Villager}
 	 */
-	VILLAGER(6, RenderMaterials.VILLAGER_MATERIAL),
+	VILLAGER(6, VanillaRenderMaterials.VILLAGER_MATERIAL),
 	/**
 	 * The window seen when using a
 	 * {@link org.spout.vanilla.component.substance.material.Beacon}
 	 */
-	BEACON(7, RenderMaterials.BEACON_MATERIAL),
+	BEACON(7, VanillaRenderMaterials.BEACON_MATERIAL),
 	/**
 	 * The window seen when using an
 	 * {@link org.spout.vanilla.component.substance.material.Anvil}
 	 */
-	ANVIL(8, RenderMaterials.ANVIL_MATERIAL);
+	ANVIL(8, VanillaRenderMaterials.ANVIL_MATERIAL);
 	private final int id;
 	private final RenderMaterial material;
 	private static final TIntObjectMap<WindowType> idMap = new TIntObjectHashMap<WindowType>();

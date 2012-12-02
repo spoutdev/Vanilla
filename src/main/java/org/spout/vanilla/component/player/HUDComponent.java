@@ -44,7 +44,7 @@ import org.spout.api.math.Rectangle;
 import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.data.RenderMaterials;
+import org.spout.vanilla.data.VanillaRenderMaterials;
 
 /**
  * Component attached to clients-only that updates the Heads Up Display.
@@ -145,7 +145,7 @@ public class HUDComponent extends EntityComponent {
 
 		// Setup crosshairs
 		final TexturedRectComponent crosshairRect = crosshair.add(TexturedRectComponent.class);
-		crosshairRect.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
+		crosshairRect.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
 		crosshairRect.setColor(Color.WHITE);
 		crosshairRect.setSprite(new Rectangle(-0.0625f * SCALE, -0.0625f, 0.125f * SCALE, 0.125f));
 		crosshairRect.setSource(new Rectangle(0f / 256f, 0f / 256f, 16f / 256f, 16f / 256f));
@@ -154,14 +154,14 @@ public class HUDComponent extends EntityComponent {
 		// Setup the hotbar
 		final RenderPartsHolderComponent hotbarRect = hotbar.add(RenderPartsHolderComponent.class);
 		final RenderPart hotbarBgRect = new RenderPart();
-		hotbarBgRect.setRenderMaterial(RenderMaterials.HOTBAR_MATERIAL);
+		hotbarBgRect.setRenderMaterial(VanillaRenderMaterials.HOTBAR_MATERIAL);
 		hotbarBgRect.setColor(Color.WHITE);
 		hotbarBgRect.setSprite(new Rectangle(x, -1f, 1.42f * SCALE, 0.17f));
 		hotbarBgRect.setSource(new Rectangle(0, 0, 0.71f, 0.085f));
 		hotbarRect.add(hotbarBgRect, 1);
 
 		final RenderPart hotbarSlotRect = new RenderPart();
-		hotbarSlotRect.setRenderMaterial(RenderMaterials.HOTBAR_MATERIAL);
+		hotbarSlotRect.setRenderMaterial(VanillaRenderMaterials.HOTBAR_MATERIAL);
 		hotbarSlotRect.setColor(Color.WHITE);
 		hotbarSlotRect.setSource(new Rectangle(0, 22f / 256f, 30f / 256f, 24f / 256f));
 		hotbarRect.add(hotbarSlotRect, 0);
@@ -170,23 +170,23 @@ public class HUDComponent extends EntityComponent {
 		// Experience level text
 		final LabelComponent lvlTxt = exp.add(LabelComponent.class);
 		exp.setGeometry(new Rectangle(-0.02f, -0.79f, 0, 0));
-		lvlTxt.setFont(RenderMaterials.FONT);
+		lvlTxt.setFont(VanillaRenderMaterials.FONT);
 		lvlTxt.setText(new ChatArguments(ChatStyle.BRIGHT_GREEN, "50"));
 
 		// Setup survival-specific hud components
-		boolean survival = true; // getOwner().get(Human.class).isSurvival()
+		boolean survival = true;
 		if (survival) {
 			// Experience bar
 			final RenderPartsHolderComponent expRect = exp.add(RenderPartsHolderComponent.class);
 			final RenderPart expBgRect = new RenderPart();
-			expBgRect.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
+			expBgRect.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
 			expBgRect.setColor(Color.WHITE);
 			expBgRect.setSprite(new Rectangle(x, -0.82f, 1.81f * SCALE, 0.04f));
 			expBgRect.setSource(new Rectangle(0, 64f / 256f, 0.91f, 0.019f));
 			expRect.add(expBgRect);
 
 			final RenderPart expBarRect = new RenderPart();
-			expBarRect.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
+			expBarRect.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
 			expBarRect.setColor(Color.WHITE);
 			expRect.add(expBarRect);
 			setExp(0);
@@ -198,7 +198,7 @@ public class HUDComponent extends EntityComponent {
 			x = START_X;
 			for (int i = 0; i < 10; i++) {
 				final RenderPart armorPart = new RenderPart();
-				armorPart.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
+				armorPart.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
 				armorPart.setColor(Color.WHITE);
 				armorPart.setSprite(new Rectangle(x, -0.7f, 0.06f * SCALE, 0.06f));
 				armorPart.setSource(new Rectangle(52f / 256f, 9f / 256f, 12f / 256f, 12f / 256f));

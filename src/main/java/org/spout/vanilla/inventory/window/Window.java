@@ -56,7 +56,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.substance.Item;
-import org.spout.vanilla.data.RenderMaterials;
+import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowItemsEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
@@ -136,7 +136,7 @@ public abstract class Window implements InventoryViewer {
 
 				// Draw title
 				LabelComponent labelComponent = label.add(LabelComponent.class);
-				labelComponent.setFont(RenderMaterials.FONT);
+				labelComponent.setFont(VanillaRenderMaterials.FONT);
 				labelComponent.setText(new ChatArguments(ChatStyle.GRAY, title));
 				label.setGeometry(new Rectangle(0, 0.45f, 0, 0));
 				popup.attachWidget(plugin, label);

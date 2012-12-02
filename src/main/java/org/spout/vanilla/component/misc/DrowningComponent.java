@@ -39,7 +39,7 @@ import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
 
 import org.spout.vanilla.component.player.HUDComponent;
-import org.spout.vanilla.data.RenderMaterials;
+import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.source.DamageCause;
@@ -69,7 +69,7 @@ public class DrowningComponent extends EntityComponent {
 			float dx = 0.06f * SCALE;
 			for (int i = 0; i < 10; i++) {
 				final RenderPart bubble = new RenderPart();
-				bubble.setRenderMaterial(RenderMaterials.ICONS_MATERIAL);
+				bubble.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
 				bubble.setColor(Color.WHITE);
 				bubble.setSprite(new Rectangle(x, -0.69f, 0.06f * SCALE, 0.06f));
 				bubble.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f));

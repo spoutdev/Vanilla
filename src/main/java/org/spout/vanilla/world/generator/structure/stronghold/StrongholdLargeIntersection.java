@@ -177,15 +177,15 @@ public class StrongholdLargeIntersection extends StructureComponent {
 	private StructureComponent pickComponent(Random random, boolean allowLarge) {
 		final float draw = random.nextFloat();
 		if (draw > 0.8) {
-			return new StrongholdStaircase(parent);
-		} else if (allowLarge && draw > 0.7) {
-			return new StrongholdPrison(parent);
-		} else if (draw > 0.6) {
 			return new StrongholdChestCorridor(parent);
-		} else if (draw > 0.3) {
+		} else if (allowLarge && draw > 0.6) {
+			return new StrongholdPrison(parent);
+		} else if (draw > 0.4) {
+			return new StrongholdCorridor(parent);
+		} else if (draw > 0.2) {
 			return new StrongholdSpiralStaircase(parent);
 		} else {
-			return new StrongholdCorridor(parent);
+			return new StrongholdStaircase(parent);
 		}
 	}
 

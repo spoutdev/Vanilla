@@ -197,15 +197,15 @@ public class StrongholdRoom extends StructureComponent {
 	private StructureComponent pickComponent(Random random, boolean allowLarge) {
 		final float draw = random.nextFloat();
 		if (draw > 0.8) {
-			return new StrongholdStaircase(parent);
+			return new StrongholdChestCorridor(parent);
 		} else if (allowLarge && draw > 0.6) {
 			return new StrongholdPrison(parent);
 		} else if (draw > 0.4) {
-			return new StrongholdChestCorridor(parent);
+			return new StrongholdCorridor(parent);
 		} else if (draw > 0.2) {
 			return new StrongholdSpiralStaircase(parent);
 		} else {
-			return new StrongholdCorridor(parent);
+			return new StrongholdStaircase(parent);
 		}
 	}
 

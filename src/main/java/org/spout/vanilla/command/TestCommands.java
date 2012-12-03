@@ -81,6 +81,7 @@ import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.inventory.window.entity.VillagerWindow;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
@@ -131,6 +132,16 @@ public class TestCommands {
 			}
 			block.setMaterial(VanillaMaterials.STONE);
 		}
+	}
+
+	@CommandPermissions("vanilla.command.debug")
+	@Command(aliases = "resetpos", desc = "Resets players position")
+	public void resetPosition(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player) && Spout.getPlatform() != Platform.SERVER) {
+			throw new CommandException("You must be a player reset position!");
+		}
+		Player player = (Player) source;
+		((VanillaNetworkSynchronizer)player.getNetworkSynchronizer()).sendPosition();
 	}
 
 	@Command(aliases = "torch", desc = "Place a torch.")

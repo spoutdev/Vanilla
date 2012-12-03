@@ -345,6 +345,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		return chunks;
 	}
 
+	public void sendPosition() {
+		sendPosition(player.getTransform().getPosition(), player.getTransform().getRotation());
+	}
+
 	@Override
 	protected void sendPosition(Point p, Quaternion rot) {
 		//TODO we have EntityProtocols in Vanilla....what does this actually do?

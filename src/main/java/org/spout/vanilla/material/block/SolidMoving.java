@@ -26,10 +26,14 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.substance.object.FallingBlock;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -56,7 +60,20 @@ public class SolidMoving extends Solid {
 		super.onUpdate(oldMaterial, block);
 		if (!block.translate(BlockFace.BOTTOM).getMaterial().isPlacementObstacle()) {
 			// turn this block into a mobile block
-			//block.getWorld().createAndSpawnEntity(block.getPosition(), block.getComponent().getClass(), LoadOption.NO_LOAD);
+			Entity e = block.getWorld().createAndSpawnEntity(block.getPosition(), FallingBlock.class, LoadOption.NO_LOAD);
+			e.add(FallingBlock.class).setMaterial(this);
+			block.getChunk().getRegion().getTaskManager().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), new DelayedBlockSet(block));
+		}
+	}
+	
+	private static class DelayedBlockSet implements Runnable {
+		final Block block;
+		public DelayedBlockSet(Block block) {
+			this.block = block;
+		}
+
+		@Override
+		public void run() {
 			block.setMaterial(VanillaMaterials.AIR);
 		}
 	}

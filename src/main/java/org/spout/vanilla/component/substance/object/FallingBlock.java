@@ -26,18 +26,22 @@
  */
 package org.spout.vanilla.component.substance.object;
 
+import org.spout.api.collision.CollisionStrategy;
+import org.spout.api.component.components.EntityComponent;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.FallingBlockProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 
-public class FallingBlock extends ObjectEntity {
+public class FallingBlock extends EntityComponent {
 	private VanillaBlockMaterial material;
+	private float fallSpeed = -0.15F;
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.FALLING_OBJECT));
-		super.onAttached();
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new FallingBlockProtocol(ObjectType.FALLING_OBJECT));
 	}
 
 	public void setMaterial(VanillaBlockMaterial material) {
@@ -46,5 +50,38 @@ public class FallingBlock extends ObjectEntity {
 
 	public VanillaBlockMaterial getMaterial() {
 		return material;
+	}
+
+	@Override
+	public void onTick(float dt) {
+		Point pos = this.getOwner().getTransform().getPosition();
+		BlockMaterial material = pos.getWorld().getBlockMaterial(pos.getBlockX(), pos.getBlockY() - 1, pos.getBlockZ());
+		if (isObstacle(material)) {
+			pos.getWorld().setBlockMaterial(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ(), getMaterial(), getMaterial().getData(), getMaterial().toCause(pos));
+			this.getOwner().remove();
+		} else {
+			this.getOwner().getTransform().setPosition(pos.add(0, fallSpeed, 0F));
+			fallSpeed = Math.max(-1F, fallSpeed - dt);
+		}
+	}
+
+	public float getFallingSpeed() {
+		return fallSpeed;
+	}
+
+	private boolean isObstacle(BlockMaterial material) {
+		if (material == BlockMaterial.AIR) {
+			return false;
+		}
+		if (material.getCollisionModel().getStrategy() != CollisionStrategy.SOLID) {
+			return false;
+		}
+		if (material instanceof VanillaBlockMaterial) {
+			VanillaBlockMaterial vbm = (VanillaBlockMaterial)material;
+			if (!vbm.isPlacementObstacle()) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

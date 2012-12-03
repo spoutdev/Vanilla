@@ -49,6 +49,7 @@ public class Item extends EntityComponent {
 		physics.setMass(5f);
 		physics.setCollisionShape(new BoxShape(0.125F, 0.125F, 0.125F));
 		physics.setRestitution(0f);
+		physics.setDamping(0.6F, 0.6F);
 	}
 
 	@Override

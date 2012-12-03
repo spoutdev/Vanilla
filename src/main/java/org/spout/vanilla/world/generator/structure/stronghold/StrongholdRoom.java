@@ -167,8 +167,9 @@ public class StrongholdRoom extends StructureComponent {
 		final Random random = getRandom();
 		if (random.nextInt(5) < 3) {
 			type = StrongholdRoomType.getRandomType(random);
+		} else {
+			type = null;
 		}
-		type = null;
 	}
 
 	@Override

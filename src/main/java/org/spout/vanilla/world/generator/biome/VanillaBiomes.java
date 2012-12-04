@@ -35,7 +35,9 @@ import java.util.Map.Entry;
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.util.config.Configuration;
 import org.spout.api.util.config.annotated.AnnotatedObjectConfiguration;
+import org.spout.api.util.config.serialization.Serialization;
 
+import org.spout.vanilla.util.ColorSerializer;
 import org.spout.vanilla.world.generator.nether.biome.NetherrackBiome;
 import org.spout.vanilla.world.generator.normal.biome.grassy.ForestBiome;
 import org.spout.vanilla.world.generator.normal.biome.grassy.ForestHillsBiome;
@@ -99,6 +101,7 @@ public class VanillaBiomes {
 				ex.printStackTrace();
 			}
 		}
+		Serialization.registerSerializer(new ColorSerializer());
 	}
 
 	public static void load(Configuration config) {

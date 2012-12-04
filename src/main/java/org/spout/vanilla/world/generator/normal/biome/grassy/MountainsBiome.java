@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.grassy;
 
+import java.awt.Color;
+
 import org.spout.vanilla.world.generator.normal.decorator.EmeraldOreDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
@@ -42,6 +44,8 @@ public class MountainsBiome extends GrassyBiome {
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator(),
 				new EmeraldOreDecorator());
 		setMinMax(32.5f, 128);
+		setGrassColorMultiplier(new Color(138, 182, 137));
+		setFoliageColorMultiplier(new Color(109, 163, 107));
 	}
 
 	@Override

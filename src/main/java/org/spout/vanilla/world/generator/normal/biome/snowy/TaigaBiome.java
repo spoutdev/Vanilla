@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.snowy;
 
+import java.awt.Color;
 import java.util.Random;
 
 import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
@@ -45,6 +46,8 @@ public class TaigaBiome extends SnowyBiome {
 				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory()), new MushroomDecorator(),
 				new SugarCaneDecorator(), new PumpkinDecorator());
 		setMinMax(51, 90);
+		setGrassColorMultiplier(new Color(130, 181, 147));
+		setFoliageColorMultiplier(new Color(99, 162, 119));
 	}
 
 	@Override

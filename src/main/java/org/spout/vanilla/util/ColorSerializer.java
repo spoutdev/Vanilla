@@ -24,20 +24,33 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome.grassy;
+package org.spout.vanilla.util;
 
 import java.awt.Color;
 
-public class SmallMountainsBiome extends MountainsBiome {
-	public SmallMountainsBiome(int biomeId) {
-		super(biomeId);
-		setMinMax(41, 110);
-		setGrassColorMultiplier(new Color(138, 182, 137));
-		setFoliageColorMultiplier(new Color(109, 163, 107));
+import org.spout.api.util.config.serialization.GenericType;
+import org.spout.api.util.config.serialization.Serializer;
+
+public class ColorSerializer extends Serializer {
+	@Override
+	protected Object handleSerialize(GenericType type, Object value) {
+		final Color color = (Color) value;
+		return "rgb=" + color.getRed() + "," + color.getGreen() + "," + color.getBlue();
 	}
 
 	@Override
-	public String getName() {
-		return "Small Mountains";
+	protected Object handleDeserialize(GenericType type, Object value) {
+		final String[] string = ((String) value).split(",");
+		return new Color(Integer.parseInt(string[0].substring(4)), Integer.parseInt(string[1]), Integer.parseInt(string[2]));
+	}
+
+	@Override
+	public boolean isApplicable(GenericType type) {
+		return Color.class.isAssignableFrom(type.getMainType());
+	}
+
+	@Override
+	protected int getParametersRequired() {
+		return 0;
 	}
 }

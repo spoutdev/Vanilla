@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.grassy;
 
+import java.awt.Color;
 import java.util.Random;
 
 import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
@@ -45,6 +46,8 @@ public class ForestBiome extends GrassyBiome {
 				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory(), (byte) 3),
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator());
 		setMinMax(51, 90);
+		setGrassColorMultiplier(new Color(121, 192, 90));
+		setFoliageColorMultiplier(new Color(89, 174, 48));
 	}
 
 	@Override

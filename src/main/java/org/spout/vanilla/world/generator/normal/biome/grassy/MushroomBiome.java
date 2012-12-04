@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.grassy;
 
+import java.awt.Color;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.decorator.HugeMushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
@@ -41,6 +43,8 @@ public class MushroomBiome extends GrassyBiome {
 				new GroundCoverPopulator.GroundCoverUniformLayer(VanillaMaterials.MYCELIUM, VanillaMaterials.DIRT, (byte) 1),
 				new GroundCoverPopulator.GroundCoverVariableLayer(VanillaMaterials.DIRT, VanillaMaterials.DIRT, (byte) 1, (byte) 4)
 		});
+		setGrassColorMultiplier(new Color(85, 201, 63));
+		setFoliageColorMultiplier(new Color(43, 187, 15));
 	}
 
 	@Override

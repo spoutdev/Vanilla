@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.grassy;
 
+import java.awt.Color;
 import java.util.Random;
 
 import org.spout.vanilla.material.block.plant.TallGrass;
@@ -50,6 +51,8 @@ public class JungleBiome extends GrassyBiome {
 				new FlowerDecorator((byte) 4), new TallGrassDecorator(new JungleTallGrassFactory(), (byte) 15),
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator(), new VineDecorator());
 		setMinMax(51, 90);
+		setGrassColorMultiplier(new Color(83, 202, 55));
+		setFoliageColorMultiplier(new Color(41, 188, 5));
 	}
 
 	@Override

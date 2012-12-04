@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.snowy;
 
+import java.awt.Color;
+
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
@@ -35,6 +37,8 @@ public class TundraBiome extends SnowyBiome {
 		super(id, new SandAndClayDecorator(), new TreeDecorator(new NormalTreeWGOFactory()),
 				new MushroomDecorator());
 		setMinMax(64, 75);
+		setGrassColorMultiplier(new Color(128, 180, 151));
+		setFoliageColorMultiplier(new Color(96, 161, 123));
 	}
 
 	@Override

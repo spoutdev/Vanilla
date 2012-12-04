@@ -26,15 +26,25 @@
  */
 package org.spout.vanilla.world.generator.biome;
 
+import java.awt.Color;
+
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.Decorator;
+import org.spout.api.util.config.annotated.Setting;
 
 import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorElement;
 
 public abstract class VanillaBiome extends Biome implements BiomeSelectorElement {
 	private final int biomeId;
+	@Setting
 	private Climate climate = Climate.MODERATE;
+	@Setting({"grass-color-multiplier"})
+	private Color grassColorMultiplier = new Color(255, 255, 255);
+	@Setting({"foliage-color-multiplier"})
+	private Color foliageColorMultiplier = new Color(255, 255, 255);
+	@Setting({"water-color-multiplier"})
+	private Color waterColorMultiplier = new Color(255, 255, 255);
 
 	protected VanillaBiome(int biomeId, Decorator... decorators) {
 		super(decorators);
@@ -47,6 +57,7 @@ public abstract class VanillaBiome extends Biome implements BiomeSelectorElement
 
 	/**
 	 * Gets the Climate of this Biome
+	 *
 	 * @return the climate
 	 */
 	public Climate getClimate() {
@@ -55,9 +66,34 @@ public abstract class VanillaBiome extends Biome implements BiomeSelectorElement
 
 	/**
 	 * Sets the Climate for this Biome
+	 *
 	 * @param climate to set to
 	 */
 	public void setClimate(Climate climate) {
 		this.climate = climate;
+	}
+
+	public Color getGrassColorMultiplier() {
+		return grassColorMultiplier;
+	}
+
+	public void setGrassColorMultiplier(Color grassColorMultiplier) {
+		this.grassColorMultiplier = grassColorMultiplier;
+	}
+
+	public Color getFoliageColorMultiplier() {
+		return foliageColorMultiplier;
+	}
+
+	public void setFoliageColorMultiplier(Color foliageColorMultiplier) {
+		this.foliageColorMultiplier = foliageColorMultiplier;
+	}
+
+	public Color getWaterColorMultiplier() {
+		return waterColorMultiplier;
+	}
+
+	public void setWaterColorMultiplier(Color waterColorMultiplier) {
+		this.waterColorMultiplier = waterColorMultiplier;
 	}
 }

@@ -26,12 +26,16 @@
  */
 package org.spout.vanilla.world.generator.theend.biome;
 
+import java.awt.Color;
+
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.world.generator.theend.decorator.SpireDecorator;
 
 public class EndStoneBiome extends VanillaBiome {
 	public EndStoneBiome(int biomeId) {
 		super(biomeId, new SpireDecorator());
+		setGrassColorMultiplier(new Color(142, 185, 113));
+		setFoliageColorMultiplier(new Color(113, 167, 77));
 	}
 
 	@Override

@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.sandy;
 
+import java.awt.Color;
+
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
@@ -34,6 +36,8 @@ public class BeachBiome extends SandyBiome {
 	public BeachBiome(int biomeId) {
 		super(biomeId, new SandAndClayDecorator(), new MushroomDecorator(), new SugarCaneDecorator());
 		setMinMax(60, 67);
+		setGrassColorMultiplier(new Color(145, 189, 89));
+		setFoliageColorMultiplier(new Color(119, 171, 47));
 	}
 
 	@Override

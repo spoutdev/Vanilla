@@ -78,10 +78,9 @@ public abstract class VanillaSky extends WorldComponent {
 			if (time >= maxTime) {
 				time = 0;
 				
+				moonPhase++;			
 				if (moonPhase >= 8) {
 					moonPhase = 0;
-				} else {
-					moonPhase++;
 				}
 			} else {
 				time += rate;

@@ -28,16 +28,20 @@ package org.spout.vanilla.component.substance.object;
 
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.component.components.EntityComponent;
+import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.math.MathHelper;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.protocol.entity.object.FallingBlockProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 
 public class FallingBlock extends EntityComponent {
+	private static float FALL_INCREMENT = -0.04F;
+	private static float FALL_MULTIPLIER = 0.98F;
 	private VanillaBlockMaterial material;
-	private float fallSpeed = -0.15F;
+	private float fallSpeed = 0F;
 
 	@Override
 	public void onAttached() {
@@ -55,13 +59,28 @@ public class FallingBlock extends EntityComponent {
 	@Override
 	public void onTick(float dt) {
 		Point pos = this.getOwner().getTransform().getPosition();
-		BlockMaterial material = pos.getWorld().getBlockMaterial(pos.getBlockX(), pos.getBlockY() - 1, pos.getBlockZ());
-		if (isObstacle(material)) {
-			pos.getWorld().setBlockMaterial(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ(), getMaterial(), getMaterial().getData(), getMaterial().toCause(pos));
-			this.getOwner().remove();
-		} else {
+		World world = pos.getWorld();
+		int x = pos.getBlockX();
+		int y = pos.getBlockY();
+		int z = pos.getBlockZ();
+		int fallAmt = Math.max(1, MathHelper.floor(Math.abs(fallSpeed)));
+		BlockMaterial material = world.getBlockMaterial(x, y - fallAmt, z);
+		while (isObstacle(material)) {
+			//Find a place for the block
+			BlockMaterial above = pos.getWorld().getBlockMaterial(x, y - fallAmt + 1, z);
+			if (!isObstacle(above)) {
+				pos.getWorld().setBlockMaterial(x, y - fallAmt + 1,z, getMaterial(), getMaterial().getData(), getMaterial().toCause(pos));
+				this.getOwner().remove();
+				break;
+			} else {
+				material = above;
+				fallAmt--;
+			}
+		}
+		if (!this.getOwner().isRemoved()) {
+			fallSpeed += (FALL_INCREMENT * dt * 20);
 			this.getOwner().getTransform().setPosition(pos.add(0, fallSpeed, 0F));
-			fallSpeed = Math.max(-1F, fallSpeed - dt);
+			fallSpeed *= FALL_MULTIPLIER;
 		}
 	}
 

@@ -53,6 +53,7 @@ import org.spout.api.input.Keyboard;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
+import org.spout.api.model.Model;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.plugin.Platform;
 import org.spout.api.plugin.Plugin;
@@ -153,8 +154,15 @@ public class VanillaPlugin extends CommonPlugin {
 		if (engine.debugMode() || engine.getPlatform() == Platform.SERVER) {
 			//Worlds
 			setupWorlds();
+			
 		}
-
+		if(Spout.getPlatform() == Platform.CLIENT) {
+			System.out.println("Loading Skydome");
+			
+			Model m = (Model)Spout.getFilesystem().getResource("model://Spout/resources/resources/models/defaultskydome.spm");
+			System.out.println("Loaded Skydome");
+			Spout.getEngine().getWorld("world").getDataMap().put("Skydome", m);
+		}
 		setupBonjour();
 
 		if (engine instanceof Server && VanillaConfiguration.LAN_DISCOVERY.getBoolean()) {
@@ -179,6 +187,8 @@ public class VanillaPlugin extends CommonPlugin {
 		RecipeYaml.DEFAULT = (RecipeYaml) Spout.getFilesystem().getResource("recipe://Vanilla/resources/recipes.yml");
 		VanillaRecipes.initialize();
 
+		
+		
 		getLogger().info("loaded");
 	}
 

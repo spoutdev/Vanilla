@@ -1,2 +1,2 @@
-Mesh: blockmesh://Spout/resources/resources/models/stone.obj
+Mesh: cubemesh://Vanilla/resources/materials/block/solid/stone/stone.uvs
 Material: material://Vanilla/resources/materials/terrain.smt

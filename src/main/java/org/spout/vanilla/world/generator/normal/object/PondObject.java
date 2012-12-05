@@ -35,6 +35,7 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.world.generator.normal.biome.grassy.GrassyBiome;
 import org.spout.vanilla.world.generator.normal.biome.sandy.SandyBiome;
 import org.spout.vanilla.world.generator.normal.biome.snowy.SnowyBiome;
@@ -77,11 +78,10 @@ public class PondObject extends RandomObject implements RandomizableObject {
 				for (byte py = 1; py < 5; py++) {
 					if (isWallBlock(px, py, pz, holeHeightMap)) {
 						final BlockMaterial material = world.getBlockMaterial(x + px, y - py, z + pz);
-						if (!material.isSolid() && material != liquid) {
+						if (!(material instanceof Solid) && material != liquid) {
 							return false;
 						}
-					}
-					if (isWallBlock(px, py, pz, topHeightMap)) {
+					} else if (isWallBlock(px, py, pz, topHeightMap)) {
 						if (world.getBlockMaterial(x + px, y + py, z + pz) instanceof Liquid) {
 							return false;
 						}
@@ -99,10 +99,10 @@ public class PondObject extends RandomObject implements RandomizableObject {
 		final boolean sandy = world.getBiome(x, y, z) instanceof SandyBiome;
 		for (byte px = 0; px < 16; px++) {
 			for (byte pz = 0; pz < 16; pz++) {
-				boolean columnHasWater = false;
+				boolean columnHasLiquid = false;
 				for (byte py = (byte) -holeHeightMap[16 * px + pz]; py < 0; py++) {
 					world.setBlockMaterial(px + x, py + y, pz + z, liquid, (short) 0, null);
-					columnHasWater = true;
+					columnHasLiquid = true;
 				}
 				if (stoneWalls) {
 					for (byte py = 1; py < 5; py++) {
@@ -124,7 +124,7 @@ public class PondObject extends RandomObject implements RandomizableObject {
 						}
 					}
 				}
-				if (sandy && columnHasWater) {
+				if (sandy && columnHasLiquid) {
 					int ty = topHeightMap[16 * px + pz] + y;
 					if (world.getBlockMaterial(x + px, ty, z + pz).equals(VanillaMaterials.SAND)) {
 						world.setBlockMaterial(x + px, ty, z + pz, VanillaMaterials.SANDSTONE, (short) 0, null);
@@ -169,12 +169,13 @@ public class PondObject extends RandomObject implements RandomizableObject {
 	public final void randomize() {
 		holeHeightMap = new byte[256];
 		topHeightMap = new byte[256];
+		pond.randomize(random);
 		for (byte px = 0; px < 16; px++) {
 			for (byte pz = 0; pz < 16; pz++) {
 				holeHeightMap[16 * px + pz] = pond.getDepth(px, pz);
 			}
 		}
-		pond.randomize();
+		pond.randomize(random);
 		for (byte px = 0; px < 16; px++) {
 			for (byte pz = 0; pz < 16; pz++) {
 				topHeightMap[16 * px + pz] = pond.getDepth(px, pz);
@@ -220,15 +221,11 @@ public class PondObject extends RandomObject implements RandomizableObject {
 	/*
 	 * Represents a hole in the shape of a pond
 	 */
-	private class PondHole {
-		private final SphericalNoise[] noise;
+	private static class PondHole {
+		private SphericalNoise[] noise;
 
-		private PondHole() {
+		private void randomize(Random random) {
 			noise = new SphericalNoise[random.nextInt(4) + 4];
-			randomize();
-		}
-
-		private void randomize() {
 			for (byte i = 0; i < noise.length; i++) {
 				noise[i] = new SphericalNoise(random.nextLong());
 			}
@@ -246,8 +243,7 @@ public class PondObject extends RandomObject implements RandomizableObject {
 		/*
 		 * Noise used to generate the pond hole
 		 */
-		private class SphericalNoise {
-			private final Random random = new Random();
+		private static class SphericalNoise {
 			private final float xOffset;
 			private final float yOffset;
 			private final float zOffset;
@@ -256,7 +252,7 @@ public class PondObject extends RandomObject implements RandomizableObject {
 			private final float zScale;
 
 			private SphericalNoise(long seed) {
-				random.setSeed(seed);
+				final Random random = new Random(seed);
 				xScale = random.nextFloat() * 6 + 3;
 				yScale = random.nextFloat() * 4 + 2;
 				zScale = random.nextFloat() * 6 + 3;
@@ -274,8 +270,8 @@ public class PondObject extends RandomObject implements RandomizableObject {
 	}
 
 	public static enum PondType {
-		WATER(VanillaMaterials.STATIONARY_WATER, false, false, true),
-		LAVA(VanillaMaterials.STATIONARY_LAVA, true, true, true);
+		WATER(VanillaMaterials.WATER, false, false, true),
+		LAVA(VanillaMaterials.LAVA, true, true, true);
 		//
 		private final BlockMaterial liquid;
 		private final boolean stoneWalls;

@@ -33,12 +33,12 @@ import org.spout.api.generator.Populator;
 import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.math.BitSize;
 
 import org.spout.vanilla.world.generator.structure.stronghold.Stronghold;
 
 public class StrongholdPopulator extends Populator {
-	private static final BitSize SPACING = new BitSize(11);
+	private static final int DISTANCE = 896;
+	private static final int VARIATION = 256;
 	private static final int BASE_Y = 35;
 	private static final int RAND_Y = 11;
 
@@ -49,7 +49,10 @@ public class StrongholdPopulator extends Populator {
 		}
 		final int blockX = chunk.getBlockX();
 		final int blockZ = chunk.getBlockZ();
-		if (Math.abs(blockX) != SPACING.SIZE || Math.abs(blockZ) != SPACING.SIZE) {
+		final int absBlockX = Math.abs(blockX);
+		final int absBlockZ = Math.abs(blockZ);
+		if (absBlockX <= DISTANCE || absBlockX > DISTANCE + Chunk.BLOCKS.SIZE
+				|| absBlockZ <= DISTANCE || absBlockZ > DISTANCE + Chunk.BLOCKS.SIZE) {
 			return;
 		}
 		final World world = chunk.getWorld();
@@ -77,14 +80,13 @@ public class StrongholdPopulator extends Populator {
 				break;
 		}
 		// This means only three strongholds per world, 1 per quadrant, except one excluded quadrant.
-		// All are near + or - 2048 on x and z (by + or - 256 on x and z).
-		random = WorldGeneratorUtils.getRandom(world, chunk.getBlockX() >> SPACING.BITS, 0,
-				chunk.getBlockZ() >> SPACING.BITS, 57845);
-		final Stronghold stronghold = new Stronghold();
-		stronghold.setRandom(random);
-		final int x = blockX + random.nextInt(513) - 256;
+		// All are near + or - 896 on x and z (by + or - 256 on x and z).
+		random = WorldGeneratorUtils.getRandom(world, blockX / absBlockX, 0,
+				blockZ / absBlockZ, 57845);
+		final Stronghold stronghold = new Stronghold(random);
+		final int x = blockX + random.nextInt(2 * VARIATION + 1) - VARIATION;
 		final int y = random.nextInt(RAND_Y) + BASE_Y;
-		final int z = blockZ + random.nextInt(513) - 256;
+		final int z = blockZ + random.nextInt(2 * VARIATION + 1) - VARIATION;
 		if (stronghold.canPlaceObject(world, x, y, z)) {
 			stronghold.placeObject(world, x, y, z);
 			if (Spout.debugMode()) {

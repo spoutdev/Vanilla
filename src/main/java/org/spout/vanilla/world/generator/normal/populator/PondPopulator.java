@@ -50,9 +50,7 @@ public class PondPopulator extends Populator {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = random.nextInt(128);
-			final PondObject pond = new PondObject(PondType.WATER);
-			pond.setRandom(random);
-			pond.randomize();
+			final PondObject pond = new PondObject(random, PondType.WATER);
 			if (pond.canPlaceObject(world, x, y, z)) {
 				pond.placeObject(world, x, y, z);
 			}
@@ -64,9 +62,7 @@ public class PondPopulator extends Populator {
 			if (y >= 63 && random.nextInt(LAVA_SURFACE_ODD) != 0) {
 				return;
 			}
-			final PondObject pond = new PondObject(PondType.LAVA);
-			pond.setRandom(random);
-			pond.randomize();
+			final PondObject pond = new PondObject(random, PondType.LAVA);
 			if (pond.canPlaceObject(world, x, y, z)) {
 				pond.placeObject(world, x, y, z);
 			}

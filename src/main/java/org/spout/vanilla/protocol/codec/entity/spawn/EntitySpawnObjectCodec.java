@@ -60,7 +60,6 @@ public final class EntitySpawnObjectCodec extends MessageCodec<EntityObjectMessa
 	@Override
 	public ChannelBuffer encode(EntityObjectMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.buffer(message.getThrowerId() > 0 ? 27 : 21);
-		System.out.println(message);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeByte(message.getType());
 		buffer.writeInt(message.getX());

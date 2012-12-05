@@ -28,16 +28,16 @@ package org.spout.vanilla.world.generator.normal.populator;
 
 import java.util.Random;
 
+import org.spout.api.Spout;
 import org.spout.api.generator.Populator;
-import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.math.BitSize;
 
 import org.spout.vanilla.world.generator.structure.mineshaft.Mineshaft;
 
 public class MineshaftPopulator extends Populator {
-	private static final BitSize SPACING = new BitSize(8);
+	private static final int DISTANCE = 256;
+	private static final int VARIATION = 16;
 	private static final int ODD = 3;
 	private static final int BASE_Y = 35;
 	private static final int RAND_Y = 11;
@@ -47,20 +47,23 @@ public class MineshaftPopulator extends Populator {
 		if (chunk.getY() != 4) {
 			return;
 		}
-		if (chunk.getBlockX() % SPACING.SIZE != 0 || chunk.getBlockZ() % SPACING.SIZE != 0) {
+		final int blockX = chunk.getBlockX();
+		final int blockZ = chunk.getBlockZ();
+		if (Math.abs(blockX % DISTANCE) >= Chunk.BLOCKS.SIZE
+				|| Math.abs(blockZ % DISTANCE) >= Chunk.BLOCKS.SIZE) {
 			return;
 		}
 		final World world = chunk.getWorld();
-		random = WorldGeneratorUtils.getRandom(world, chunk.getBlockX() >> SPACING.BITS, 0,
-				chunk.getBlockZ() >> SPACING.BITS, 26471);
 		if (random.nextInt(ODD) == 0) {
-			final Mineshaft mineshaft = new Mineshaft();
-			mineshaft.setRandom(random);
-			final int x = chunk.getBlockX(random);
+			final Mineshaft mineshaft = new Mineshaft(random);
+			final int x = blockX + random.nextInt(VARIATION * 2 + 1) - VARIATION;
 			final int y = random.nextInt(RAND_Y) + BASE_Y;
-			final int z = chunk.getBlockZ(random);
+			final int z = blockZ + random.nextInt(VARIATION * 2 + 1) - VARIATION;
 			if (mineshaft.canPlaceObject(world, x, y, z)) {
 				mineshaft.placeObject(world, x, y, z);
+				if (Spout.debugMode()) {
+					Spout.log("Placed mineshaft at: (" + x + ", " + y + ", " + z + ")");
+				}
 			}
 		}
 	}

@@ -44,6 +44,7 @@ import org.spout.api.math.Rectangle;
 
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.player.HUDComponent;
+import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.player.network.PlayerHealthEvent;
@@ -97,6 +98,11 @@ public class HungerComponent extends EntityComponent {
 	}
 
 	@Override
+	public boolean canTick() {
+		return !human.getGameMode().equals(GameMode.CREATIVE);
+	}
+
+	@Override
 	public void onTick(float dt) {
 
 		/*
@@ -138,7 +144,6 @@ public class HungerComponent extends EntityComponent {
 				final int hunger = getHunger();
 
 				// Regenerate health
-
 				if (health < 20 && hunger > 17) {
 					timer -= dt;
 					if (timer <= 0) {

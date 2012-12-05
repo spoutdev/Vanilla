@@ -46,7 +46,7 @@ public abstract class VanillaSky extends WorldComponent {
 	public static final byte MAX_SKY_LIGHT = 15;
 	public static final byte SKY_LIGHT_RANGE = MAX_SKY_LIGHT - MIN_SKY_LIGHT;
 	protected long maxTime, time = 0, countdown = 20, rate;
-	private int moonPhase;
+	private int moonPhase = 0;
 	private Long setTime;
 	private WeatherSimulator weather;
 	private static final HashMap<World, VanillaSky> skies = new HashMap<World, VanillaSky>();

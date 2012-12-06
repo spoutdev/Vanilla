@@ -47,6 +47,8 @@ public class Zombie extends Living implements Hostile {
 		PhysicsComponent physics = getOwner().add(PhysicsComponent.class);
 		physics.setMass(5f);
 		physics.setCollisionShape(new BoxShape(1F, 2F, 1F));
+		physics.setFriction(10f);
+		physics.setRestitution(0f);
 	}
 
 	/**

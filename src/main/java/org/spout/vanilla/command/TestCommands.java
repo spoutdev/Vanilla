@@ -29,6 +29,8 @@ package org.spout.vanilla.command;
 import java.util.List;
 import java.util.Set;
 
+import com.bulletphysics.collision.shapes.BoxShape;
+
 import org.spout.api.Client;
 import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
@@ -38,6 +40,7 @@ import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.CommandPermissions;
 import org.spout.api.component.Component;
 import org.spout.api.component.components.HitBlockComponent;
+import org.spout.api.component.components.PhysicsComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityPrefab;
 import org.spout.api.entity.Player;
@@ -58,6 +61,7 @@ import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.living.hostile.Creeper;
 import org.spout.vanilla.component.living.hostile.EnderDragon;
+import org.spout.vanilla.component.living.hostile.Skeleton;
 import org.spout.vanilla.component.living.hostile.Zombie;
 import org.spout.vanilla.component.living.neutral.Enderman;
 import org.spout.vanilla.component.living.neutral.Human;
@@ -431,6 +435,8 @@ public class TestCommands {
 			clazz = Creeper.class;
 		} else if (name.equalsIgnoreCase("zombie")) {
 			clazz = Zombie.class;
+		} else if (name.equalsIgnoreCase("skeleton")) {
+			clazz = Skeleton.class;
 		} else {
 			throw new CommandException(name + " was not a valid name for a Living!");
 		}
@@ -469,6 +475,11 @@ public class TestCommands {
 			if (Spout.getPlatform() == Platform.CLIENT) {
 				EntityPrefab zombiePrefab = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/resources/entities/zombie/zombie.sep");
 				entity = zombiePrefab.createEntity(pos);
+			}
+		} else if (clazz.equals(Skeleton.class)) {
+			if (Spout.getPlatform() == Platform.CLIENT) {
+				EntityPrefab skeletonPrefab = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/resources/entities/skeleton/skeleton.sep");
+				entity = skeletonPrefab.createEntity(pos);
 			}
 		}
 		entity.setSavable(false);

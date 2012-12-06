@@ -216,6 +216,9 @@ public class HungerComponent extends EntityComponent {
 				break;
 
 			case CLIENT:
+				if (!(getOwner() instanceof Player)) {
+					return;
+				}
 				float x;
 				float y;
 				float dx = 0.06f * SCALE;

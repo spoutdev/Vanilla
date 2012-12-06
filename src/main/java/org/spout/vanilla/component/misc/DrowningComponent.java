@@ -99,6 +99,9 @@ public class DrowningComponent extends EntityComponent {
 				}
 				break;
 			case CLIENT:
+				if (!(getOwner() instanceof Player)) {
+					return;
+				}
 				// Animate air meter
 				final float maxSecsBubbles = VanillaData.AIR_SECS.getDefaultValue();
 				final float secsBubbles = getData().get(VanillaData.AIR_SECS);

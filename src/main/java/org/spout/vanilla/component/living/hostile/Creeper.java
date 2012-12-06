@@ -26,6 +26,10 @@
  */
 package org.spout.vanilla.component.living.hostile;
 
+import com.bulletphysics.collision.shapes.BoxShape;
+
+import org.spout.api.component.components.PhysicsComponent;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;
 import org.spout.vanilla.component.living.Living;
@@ -42,6 +46,11 @@ public class Creeper extends Living implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreeperEntityProtocol());
+		PhysicsComponent physics = getOwner().add(PhysicsComponent.class);
+		physics.setMass(2f);
+		physics.setCollisionShape(new BoxShape(1F, 2F, 1F));
+		physics.setFriction(10f);
+		physics.setRestitution(0f);
 	}
 
 	public byte getFuse() {

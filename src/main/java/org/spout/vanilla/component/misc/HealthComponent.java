@@ -131,6 +131,9 @@ public class HealthComponent extends EntityComponent {
 				}
 				break;
 			case CLIENT:
+				if (!(getOwner() instanceof Player)) {
+					return;
+				}
 				List<RenderPart> heartParts = hearts.get(RenderPartsHolderComponent.class).getRenderParts();
 				if (animateHearts) {
 					float x = 0;

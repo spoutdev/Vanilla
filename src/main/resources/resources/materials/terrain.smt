@@ -1,4 +1,4 @@
-Shader: shader://Vanilla/resources/shaders/textShader.ssf
+Shader: shader://Vanilla/resources/shaders/terrain.ssf
 
 MaterialParams:
     Diffuse: texture://Vanilla/resources/terrain.png

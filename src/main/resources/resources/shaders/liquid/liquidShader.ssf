@@ -1,7 +1,0 @@
-GL30:
-    Vertex: file://Vanilla/resources/shaders/liquid/basic.330.vert
-    Fragment: file://Vanilla/resources/shaders/liquid/textShader.330.frag
-GL20:
-    Vertex: file://Vanilla/resources/shaders/liquid/basic.120.vert
-    Fragment: file://Vanilla/resources/shaders/liquid/textShader.120.frag
-    

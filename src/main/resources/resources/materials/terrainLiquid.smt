@@ -1,7 +1,7 @@
-Shader: shader://Vanilla/resources/shaders/liquid/liquidShader.ssf
+Shader: shader://Vanilla/resources/shaders/liquid.ssf
 
 MaterialParams:
     Diffuse: texture://Vanilla/resources/terrain.png
 
 RenderState:
-    Layer: 2
+    Layer: 3

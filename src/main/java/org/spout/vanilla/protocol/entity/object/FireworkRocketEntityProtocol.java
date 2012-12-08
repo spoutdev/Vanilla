@@ -26,33 +26,19 @@
  */
 package org.spout.vanilla.protocol.entity.object;
 
-public enum ObjectType {
-	BOAT(1),
-	MINECART(10),
-	STORAGE_MINECART(11),
-	POWERED_MINECART(12),
-	PRIMED_TNT(50),
-	ENDER_CRYSTAL(51),
-	ARROW(60),
-	SNOWBALL(61),
-	EGG(62),
-	ENDER_PEARL(65),
-	WITHER_SKULL(66),
-	FALLING_OBJECT(70),
-	ITEM_FRAME(71),
-	EYE_OF_ENDER(72),
-	POTION(73),
-	DRAGON_EGG(74),
-	EXP_BOTTLE(75),
-	FIREWORKS_ROCKET(76),
-	FISHING_BOB(90);
-	private final int id;
+import java.util.List;
 
-	private ObjectType(int id) {
-		this.id = id;
+import org.spout.api.entity.Entity;
+import org.spout.api.util.Parameter;
+
+public class FireworkRocketEntityProtocol extends ObjectEntityProtocol {
+	public FireworkRocketEntityProtocol() {
+		super(ObjectType.FIREWORKS_ROCKET);
 	}
 
-	public int getId() {
-		return id;
+	@Override
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		List<Parameter<?>> params = super.getSpawnParameters(entity);
+		return params;
 	}
 }

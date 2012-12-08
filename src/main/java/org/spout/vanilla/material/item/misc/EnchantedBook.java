@@ -24,35 +24,25 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.entity.object;
+package org.spout.vanilla.material.item.misc;
 
-public enum ObjectType {
-	BOAT(1),
-	MINECART(10),
-	STORAGE_MINECART(11),
-	POWERED_MINECART(12),
-	PRIMED_TNT(50),
-	ENDER_CRYSTAL(51),
-	ARROW(60),
-	SNOWBALL(61),
-	EGG(62),
-	ENDER_PEARL(65),
-	WITHER_SKULL(66),
-	FALLING_OBJECT(70),
-	ITEM_FRAME(71),
-	EYE_OF_ENDER(72),
-	POTION(73),
-	DRAGON_EGG(74),
-	EXP_BOTTLE(75),
-	FIREWORKS_ROCKET(76),
-	FISHING_BOB(90);
-	private final int id;
+import org.spout.vanilla.material.item.Enchantable;
+import org.spout.vanilla.material.item.VanillaItemMaterial;
 
-	private ObjectType(int id) {
-		this.id = id;
-	}
+public class EnchantedBook extends VanillaItemMaterial implements Enchantable {
+    private int enchantability;
 
-	public int getId() {
-		return id;
-	}
+    public EnchantedBook(String name, int id) {
+        super(name, id, null);
+    }
+
+    @Override
+    public int getEnchantability() {
+        return enchantability;
+    }
+
+    @Override
+    public void setEnchantability(int enchantability) {
+        this.enchantability = enchantability;
+    }
 }

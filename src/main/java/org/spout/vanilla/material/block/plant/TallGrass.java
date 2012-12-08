@@ -43,11 +43,11 @@ public class TallGrass extends DeadBush implements Burnable, InitializableMateri
 	public static final TallGrass FERN = new TallGrass("Fern", 2, DEAD_GRASS);
 
 	private TallGrass(String name) {
-		super((short) 0x0003, name, 31);
+		super(name, (short) 0x0003, "model://Vanilla/resources/materials/block/nonsolid/tallgrass/tallgrass.spm");
 	}
 
 	private TallGrass(String name, int data, TallGrass parent) {
-		super(name, 31, data, parent);
+		super(name, data, parent, "model://Vanilla/resources/materials/block/nonsolid/tallgrass/tallgrass.spm");
 	}
 
 	@Override

@@ -55,6 +55,13 @@ public class DeadBush extends GroundAttachable implements Plant {
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}
 
+	protected DeadBush(String name, short data, String model) {
+		super(data, name, 31, model);
+	}
+	protected DeadBush(String name, int data, TallGrass parent, String model) {
+		super(name, 31, data, parent, model);
+	}
+
 	@Override
 	public boolean canSupport(BlockMaterial mat, BlockFace face) {
 		return false;

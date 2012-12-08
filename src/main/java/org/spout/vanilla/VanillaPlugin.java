@@ -120,17 +120,6 @@ public class VanillaPlugin extends CommonPlugin {
 		//Config
 		config.load();
 
-		// Universal Plug and Play
-		if (getEngine() instanceof Server) {
-			for (PortBinding binding : ((Server) getEngine()).getBoundAddresses()) {
-				if (binding.getProtocol() instanceof VanillaProtocol
-						&& binding.getAddress() instanceof InetSocketAddress
-						&& VanillaConfiguration.UPNP.getBoolean()) {
-					((Server) getEngine()).mapUPnPPort(((InetSocketAddress) binding.getAddress()).getPort(), VanillaConfiguration.MOTD.getString());
-				}
-			}
-		}
-
 		//Commands
 		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
 		engine.getRootCommand().addSubCommands(this, AdministrationCommands.class, commandRegFactory);

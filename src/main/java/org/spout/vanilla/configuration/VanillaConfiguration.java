@@ -39,18 +39,20 @@ import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 
 public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	// General
-	public static final ConfigurationHolder MOTD = new ConfigurationHolder("A Spout Server", "general", "motd");
-	public static final ConfigurationHolder UPNP = new ConfigurationHolder(true, "general", "upnp");
 	public static final ConfigurationHolder BONJOUR = new ConfigurationHolder(true, "general", "bonjour");
 	public static final ConfigurationHolder LAN_DISCOVERY = new ConfigurationHolder(true, "general", "lan-discovery");
 	public static final ConfigurationHolder ONLINE_MODE = new ConfigurationHolder(true, "general", "online-mode");
-	public static final ConfigurationHolder ENABLE_END_CREDITS = new ConfigurationHolder(true, "general", "enable-ending-credits");
+	public static final ConfigurationHolder END_CREDITS = new ConfigurationHolder(true, "general", "end-credits");
 	public static final ConfigurationHolder SPAWN_RADIUS = new ConfigurationHolder(4, "general", "spawn-radius");
 	public static final ConfigurationHolder SPAWN_PROTECTION_RADIUS = new ConfigurationHolder(10, "general", "spawn-protection-radius");
 	public static final ConfigurationHolder CHUNK_INIT = new ConfigurationHolder("client", "general", "chunk-init");
 	public static final ConfigurationHolder HARDCORE_MODE = new ConfigurationHolder(false, "general", "hardcore-mode");
-	public static final ConfigurationHolder OUTDATED_SERVER_MESSAGE = new ConfigurationHolder("Outdated server!", "general", "outdated-server");
-	public static final ConfigurationHolder OUTDATED_CLIENT_MESSAGE = new ConfigurationHolder("Outdated client!", "general", "outdated-client");
+	
+	// Messages
+	public static final ConfigurationHolder MOTD = new ConfigurationHolder("A Spout Server", "message", "motd");
+	public static final ConfigurationHolder OUTDATED_SERVER_MESSAGE = new ConfigurationHolder("Outdated server!", "message", "outdated-server");
+	public static final ConfigurationHolder OUTDATED_CLIENT_MESSAGE = new ConfigurationHolder("Outdated client!", "message", "outdated-client");
+	
 	// Physics
 	public static final ConfigurationHolder GRAVEL_PHYSICS = new ConfigurationHolder(true, "physics", "gravel");
 	public static final ConfigurationHolder FIRE_PHYSICS = new ConfigurationHolder(true, "physics", "fire");

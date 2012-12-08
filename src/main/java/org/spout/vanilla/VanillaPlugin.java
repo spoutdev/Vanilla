@@ -26,10 +26,7 @@
  */
 package org.spout.vanilla;
 
-import javax.jmdns.JmDNS;
-import javax.jmdns.ServiceInfo;
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.logging.Level;
 
@@ -56,10 +53,8 @@ import org.spout.api.math.Vector3;
 import org.spout.api.model.Model;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.plugin.Platform;
-import org.spout.api.plugin.Plugin;
 import org.spout.api.plugin.ServiceManager;
 import org.spout.api.plugin.services.ProtectionService;
-import org.spout.api.protocol.PortBinding;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.util.OutwardIterator;
 
@@ -103,13 +98,11 @@ public class VanillaPlugin extends CommonPlugin {
 	private static VanillaPlugin instance;
 	private Engine engine;
 	private VanillaConfiguration config;
-	private JmDNS jmdns = null;
-	private final Object jmdnsSync = new Object();
+	
 	private RemoteConnectionCore rcon;
 
 	@Override
 	public void onDisable() {
-		closeBonjour();
 		instance = null;
 		getLogger().info("disabled");
 	}
@@ -152,7 +145,6 @@ public class VanillaPlugin extends CommonPlugin {
 			System.out.println("Loaded Skydome");
 			Spout.getEngine().getWorld("world").getDataMap().put("Skydome", m);
 		}
-		setupBonjour();
 
 		if (engine instanceof Server && VanillaConfiguration.LAN_DISCOVERY.getBoolean()) {
 			LANThread lanThread = new LANThread();
@@ -176,34 +168,7 @@ public class VanillaPlugin extends CommonPlugin {
 		RecipeYaml.DEFAULT = (RecipeYaml) Spout.getFilesystem().getResource("recipe://Vanilla/resources/recipes.yml");
 		VanillaRecipes.initialize();
 
-		
-		
 		getLogger().info("loaded");
-	}
-
-	private void setupBonjour() {
-		if (getEngine() instanceof Server && VanillaConfiguration.BONJOUR.getBoolean()) {
-			getEngine().getScheduler().scheduleAsyncTask(this, new Runnable() {
-				public void run() {
-					synchronized (jmdnsSync) {
-						try {
-							getEngine().getLogger().info("Starting Bonjour Service Discovery");
-							jmdns = JmDNS.create();
-							for (PortBinding binding : ((Server) getEngine()).getBoundAddresses()) {
-								if (binding.getAddress() instanceof InetSocketAddress && binding.getProtocol() instanceof VanillaProtocol) {
-									int port = ((InetSocketAddress) binding.getAddress()).getPort();
-									ServiceInfo info = ServiceInfo.create("pipework._tcp.local.", "Spout Server", port, "");
-									jmdns.registerService(info);
-									getEngine().getLogger().info("Started Bonjour Service Discovery on port: " + port);
-								}
-							}
-						} catch (IOException e) {
-							getEngine().getLogger().log(Level.WARNING, "Failed to start Bonjour Service Discovery Library", e);
-						}
-					}
-				}
-			});
-		}
 	}
 
 	private void setupRcon() {
@@ -222,25 +187,6 @@ public class VanillaPlugin extends CommonPlugin {
 			} catch (IOException e) {
 				getLogger().log(Level.SEVERE, "Error closing RCON channels: ", e);
 			}
-		}
-	}
-
-	private void closeBonjour() {
-		if (jmdns != null) {
-			final JmDNS jmdns = this.jmdns;
-			final Plugin thisPlugin = this;
-			getEngine().getScheduler().scheduleAsyncTask(thisPlugin, new Runnable() {
-				public void run() {
-					synchronized (jmdnsSync) {
-						getEngine().getLogger().info("Shutting down Bonjour Service Discovery");
-						try {
-							jmdns.close();
-						} catch (IOException e) {
-						}
-					}
-					getEngine().getLogger().info("Bonjour Service Discovery disabled");
-				}
-			});
 		}
 	}
 

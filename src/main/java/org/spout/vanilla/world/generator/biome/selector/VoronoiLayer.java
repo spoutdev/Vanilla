@@ -24,7 +24,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome.selector;
+package org.spout.vanilla.world.generator.biome.selector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,31 +35,48 @@ import net.royawesome.jlibnoise.module.source.Voronoi;
 
 import org.spout.api.math.MathHelper;
 
-import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorElement;
-import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorLayer;
-
-public class LandLayer implements BiomeSelectorLayer {
+public class VoronoiLayer implements BiomeSelectorLayer {
 	private final List<BiomeSelectorElement> selectorElements = new ArrayList<BiomeSelectorElement>();
-	private final Voronoi landBase = new Voronoi();
-	private final Turbulence land = new Turbulence();
+	private final Voronoi voronoi = new Voronoi();
+	private final Turbulence turbulence = new Turbulence();
+	private final int uniquenessValue;
 
-	public LandLayer(double scale) {
-		landBase.setFrequency(0.007 / scale);
-		landBase.setDisplacement(1);
-		land.SetSourceModule(0, landBase);
-		land.setFrequency(0.004);
-		land.setPower(70);
+	public VoronoiLayer(int uniquenessValue) {
+		this.uniquenessValue = uniquenessValue;
+		voronoi.setDisplacement(1);
+		turbulence.SetSourceModule(0, voronoi);
 	}
 
 	@Override
 	public BiomeSelectorElement pick(int x, int y, int z, long seed) {
-		landBase.setSeed((int) seed * 11);
-		land.setSeed((int) seed * 13);
+		voronoi.setSeed((int) seed * uniquenessValue);
+		turbulence.setSeed((int) seed * uniquenessValue * uniquenessValue);
 		final float size = selectorElements.size() / 2f;
-		return selectorElements.get(MathHelper.floor(land.GetValue(x, 0, z) * size + size));
+		return selectorElements.get(MathHelper.floor(turbulence.GetValue(x, y, z) * size + size));
 	}
 
-	public void addLandElements(BiomeSelectorElement... selectorElements) {
+	public VoronoiLayer addElements(BiomeSelectorElement... selectorElements) {
 		this.selectorElements.addAll(Arrays.asList(selectorElements));
+		return this;
+	}
+
+	public VoronoiLayer setVoronoiFrequency(double frequency) {
+		voronoi.setFrequency(frequency);
+		return this;
+	}
+
+	public VoronoiLayer setTurbulenceFrequency(double frequency) {
+		turbulence.setFrequency(frequency);
+		return this;
+	}
+
+	public VoronoiLayer setTurbulencePower(double power) {
+		turbulence.setPower(power);
+		return this;
+	}
+
+	public VoronoiLayer setTurbulenceRoughness(int roughness) {
+		turbulence.setRoughness(roughness);
+		return this;
 	}
 }

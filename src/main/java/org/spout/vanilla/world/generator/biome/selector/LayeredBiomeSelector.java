@@ -24,45 +24,36 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome.selector;
+package org.spout.vanilla.world.generator.biome.selector;
 
-import net.royawesome.jlibnoise.module.modifier.Turbulence;
-import net.royawesome.jlibnoise.module.source.Perlin;
+import java.util.logging.Level;
+
+import org.spout.api.Spout;
+import org.spout.api.generator.biome.Biome;
+import org.spout.api.generator.biome.BiomeSelector;
 
 import org.spout.vanilla.world.generator.biome.VanillaBiomes;
-import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorElement;
-import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorLayer;
 
-public class DesertLayer implements BiomeSelectorLayer {
-	private static final float HILLS_START = 0.5f;
-	private static final float HILLS_END = 1f;
-	private final Perlin hillsBase = new Perlin();
-	private final Turbulence hills = new Turbulence();
+public class LayeredBiomeSelector extends BiomeSelector {
+	private final BiomeSelectorLayer stack;
 
-	public DesertLayer(double scale) {
-		hillsBase.setFrequency(0.01 / scale);
-		hillsBase.setOctaveCount(1);
-		hills.SetSourceModule(0, hillsBase);
-		hills.setFrequency(0.03);
-		hills.setPower(20);
-		hills.setRoughness(1);
+	public LayeredBiomeSelector(BiomeSelectorLayer stack) {
+		this.stack = stack;
 	}
 
 	@Override
-	public BiomeSelectorElement pick(int x, int y, int z, long seed) {
-		hillsBase.setSeed((int) seed * 11);
-		hills.setSeed((int) seed * 13);
-		final BiomeSelectorElement element = NormalBiomeSelector.RIVER.pick(x, y, z, seed);
-		if (element == null) {
-			final float value = (float) hills.GetValue(x, 500, z);
-			if (value > HILLS_START
-					&& value <= HILLS_END) {
-				return VanillaBiomes.DESERT_HILLS;
-			} else {
-				return VanillaBiomes.DESERT;
+	public Biome pickBiome(int x, int y, int z, long seed) {
+		BiomeSelectorElement current = stack;
+		while (!(current instanceof Biome)) {
+			final BiomeSelectorElement next = ((BiomeSelectorLayer) current).pick(x, y, z, seed);
+			if (next == null) {
+				Spout.getLogger().log(Level.WARNING, "Got a null element in biome selector."
+						+ " Check your ranges in layer: " + current + "."
+						+ " Using oceans as a fallback biome for now.");
+				return VanillaBiomes.OCEAN;
 			}
-		} else {
-			return element;
+			current = next;
 		}
+		return (Biome) current;
 	}
 }

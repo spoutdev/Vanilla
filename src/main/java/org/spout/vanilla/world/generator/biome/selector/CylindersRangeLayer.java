@@ -24,20 +24,44 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome.selector;
+package org.spout.vanilla.world.generator.biome.selector;
 
-import org.spout.vanilla.world.generator.biome.VanillaBiomes;
-import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorElement;
-import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorLayer;
+import net.royawesome.jlibnoise.module.modifier.Turbulence;
+import net.royawesome.jlibnoise.module.source.Cylinders;
 
-public class PlainsLayer implements BiomeSelectorLayer {
+public class CylindersRangeLayer extends NoiseRangeLayer {
+	private final Cylinders cylinders = new Cylinders();
+	private final Turbulence turbulence = new Turbulence();
+	private final int uniquenessValue;
+
+	public CylindersRangeLayer(int uniquenessValue) {
+		this.uniquenessValue = uniquenessValue;
+		turbulence.SetSourceModule(0, cylinders);
+	}
+
 	@Override
-	public BiomeSelectorElement pick(int x, int y, int z, long seed) {
-		final BiomeSelectorElement element = NormalBiomeSelector.RIVER.pick(x, y, z, seed);
-		if (element == null) {
-			return VanillaBiomes.PLAINS;
-		} else {
-			return element;
-		}
+	protected float getNoiseValue(int x, int y, int z, int seed) {
+		turbulence.setSeed(seed * uniquenessValue);
+		return (float) turbulence.GetValue(x, y, z);
+	}
+
+	public CylindersRangeLayer setCylindersFrequency(double frequency) {
+		cylinders.setFrequency(frequency);
+		return this;
+	}
+
+	public CylindersRangeLayer setTurbulenceFrequency(double frequency) {
+		turbulence.setFrequency(frequency);
+		return this;
+	}
+
+	public CylindersRangeLayer setTurbulencePower(double power) {
+		turbulence.setPower(power);
+		return this;
+	}
+
+	public CylindersRangeLayer setTurbulenceRoughness(int roughness) {
+		turbulence.setRoughness(roughness);
+		return this;
 	}
 }

@@ -207,6 +207,8 @@ import org.spout.vanilla.material.item.misc.BlazeRod;
 import org.spout.vanilla.material.item.misc.Clay;
 import org.spout.vanilla.material.item.misc.Coal;
 import org.spout.vanilla.material.item.misc.Dye;
+import org.spout.vanilla.material.item.misc.EnchantedBook;
+import org.spout.vanilla.material.item.misc.Fireworks;
 import org.spout.vanilla.material.item.misc.FlowerPot;
 import org.spout.vanilla.material.item.misc.MusicDisc;
 import org.spout.vanilla.material.item.misc.PaintingItem;
@@ -557,6 +559,9 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial BOTTLE_O_ENCHANTING = new VanillaItemMaterial("Bottle o' Enchanting", 384, null);
 	public static final VanillaItemMaterial EXP_BOTTLE = new VanillaItemMaterial("Experience Bottle", 128, null);
 	public static final BlockItem FIRE_CHARGE = new BlockItem("Fire Charge", 385, VanillaMaterials.FIRE, null); // Basic Implementation
+	public static final Fireworks FIREWORKS = new Fireworks("Fireworks", 401);
+	//public static final BlockItem FIREWORKS_CHARGE = new BlockItem("Fireworks Charge", 402); //implementation is not certain.
+	public static final EnchantedBook ENCHANTED_BOOK = new EnchantedBook("Enchanted Book", 403);
 	public static final Potion POTION = Potion.WATER_BOTTLE;
 	private static boolean initialized = false;
 	private final static AtomicShortArray conversionTable = new AtomicShortArray(Short.MAX_VALUE);

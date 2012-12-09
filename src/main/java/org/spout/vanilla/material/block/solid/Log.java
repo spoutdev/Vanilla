@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
@@ -40,7 +42,9 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.Vector3;
+import org.spout.api.scheduler.TaskPriority;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.tool.ToolType;
@@ -109,7 +113,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 
 	@Override
 	public int getCombustChance() {
-		return 5;
+		return 25;
 	}
 
 	@Override
@@ -142,6 +146,13 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 			facing = facing.getOpposite();
 		}
 		block.setDataField(directionMask, DIRECTION_FACES.indexOf(facing, 0));
+	}
+
+	@Override
+	public void onDestroy(Block block, Cause<?> cause) {
+		super.onDestroy(block, cause);
+		LeafDecayTask decay = new LeafDecayTask(block);
+		decay.scheduleTask(block.getRegion());
 	}
 
 	@Override
@@ -205,5 +216,59 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	@Override
 	public EffectRange getDynamicRange() {
 		return dynamicRange;
+	}
+
+	private static class LeafDecayTask implements Runnable {
+		private final static int SCAN_RADIUS = 3;
+		private final static int LOG_SCAN_RADIUS = 2;
+		private final Set<Block> blocks = new HashSet<Block>(SCAN_RADIUS * SCAN_RADIUS * SCAN_RADIUS);
+		private final Region r;
+		public LeafDecayTask(Block b) {
+			this.r = b.getRegion();
+			for (int dx = -SCAN_RADIUS; dx < SCAN_RADIUS; dx++) {
+				for (int dy = -SCAN_RADIUS; dy < SCAN_RADIUS; dy++) {
+					for (int dz = -SCAN_RADIUS; dz < SCAN_RADIUS; dz++) {
+						blocks.add(b.translate(dx, dy, dz));
+					}
+				}
+			}
+		}
+
+		@Override
+		public void run() {
+			boolean found = false;
+			for (Block b : blocks) {
+				if (b.getChunk().isLoaded()) {
+					if (b.getMaterial().getId() == VanillaMaterials.LEAVES.getId()) {
+						if (!isLeafAttached(b)) {
+							b.setMaterial(VanillaMaterials.AIR);
+							found = true;
+							break;
+						}
+					}
+				}
+			}
+			if (found) {
+				scheduleTask(this.r);
+			}
+		}
+
+		public void scheduleTask(Region r) {
+			r.getTaskManager().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), this, (new Random()).nextInt(200) * 50, TaskPriority.LOW);
+		}
+
+		private boolean isLeafAttached(Block b) {
+			for (int dx = -LOG_SCAN_RADIUS; dx < LOG_SCAN_RADIUS; dx++) {
+				for (int dy = -LOG_SCAN_RADIUS; dy < LOG_SCAN_RADIUS; dy++) {
+					for (int dz = -LOG_SCAN_RADIUS; dz < LOG_SCAN_RADIUS; dz++) {
+						Block block = b.translate(dx, dy, dz);
+						if (block.getMaterial().getId() == VanillaMaterials.LOG.getId()) {
+							return true;
+						}
+					}
+				}
+			}
+			return false;
+		}
 	}
 }

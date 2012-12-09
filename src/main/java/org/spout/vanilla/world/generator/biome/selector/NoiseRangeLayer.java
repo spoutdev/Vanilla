@@ -27,14 +27,29 @@
 package org.spout.vanilla.world.generator.biome.selector;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 public abstract class NoiseRangeLayer implements BiomeSelectorLayer {
-	private final List<ElementRange> ranges = new ArrayList<ElementRange>();
+	protected final List<ElementRange> ranges = new ArrayList<ElementRange>();
 
 	public NoiseRangeLayer addElement(BiomeSelectorElement element, float min, float max) {
-		ranges.add(new ElementRange(element, min, max));
+		return addElement(new ElementRange(element, min, max));
+	}
+
+	public NoiseRangeLayer addElement(ElementRange element) {
+		ranges.add(element);
+		return this;
+	}
+
+	public NoiseRangeLayer addElements(ElementRange... elements) {
+		return addElements(Arrays.asList(elements));
+	}
+
+	public NoiseRangeLayer addElements(Collection<ElementRange> elements) {
+		ranges.addAll(elements);
 		return this;
 	}
 
@@ -56,7 +71,7 @@ public abstract class NoiseRangeLayer implements BiomeSelectorLayer {
 		return null;
 	}
 
-	private static class ElementRange implements Comparable<ElementRange> {
+	public static class ElementRange implements Comparable<ElementRange> {
 		private final BiomeSelectorElement element;
 		private final float min;
 		private final float max;
@@ -67,7 +82,7 @@ public abstract class NoiseRangeLayer implements BiomeSelectorLayer {
 			this.max = max;
 		}
 
-		public boolean isInRange(float value) {
+		protected boolean isInRange(float value) {
 			return value >= min && value <= max;
 		}
 

@@ -31,7 +31,7 @@ import net.royawesome.jlibnoise.module.modifier.Clamp;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
-public class PerlinRangeLayer extends NoiseRangeLayer {
+public class PerlinRangeLayer extends NoiseRangeLayer implements Cloneable {
 	private final Perlin perlin = new Perlin();
 	private final Turbulence turbulence = new Turbulence();
 	private final int uniquenessValue;
@@ -90,5 +90,19 @@ public class PerlinRangeLayer extends NoiseRangeLayer {
 	public PerlinRangeLayer setTurbulenceRoughness(int roughness) {
 		turbulence.setRoughness(roughness);
 		return this;
+	}
+
+	@Override
+	public PerlinRangeLayer clone() {
+		return (PerlinRangeLayer) new PerlinRangeLayer(uniquenessValue).
+				setPerlinFrequency(perlin.getFrequency()).
+				setPerlinLacunarity(perlin.getLacunarity()).
+				setPerlinNoiseQuality(perlin.getNoiseQuality()).
+				setPerlinOctaveCount(perlin.getOctaveCount()).
+				setPerlinPersistence(perlin.getPersistence()).
+				setTurbulenceFrequency(turbulence.getFrequency()).
+				setTurbulencePower(turbulence.getPower()).
+				setTurbulenceRoughness(turbulence.getRoughnessCount()).
+				addElements(ranges);
 	}
 }

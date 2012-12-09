@@ -29,7 +29,7 @@ package org.spout.vanilla.world.generator.biome.selector;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Cylinders;
 
-public class CylindersRangeLayer extends NoiseRangeLayer {
+public class CylindersRangeLayer extends NoiseRangeLayer implements Cloneable {
 	private final Cylinders cylinders = new Cylinders();
 	private final Turbulence turbulence = new Turbulence();
 	private final int uniquenessValue;
@@ -63,5 +63,15 @@ public class CylindersRangeLayer extends NoiseRangeLayer {
 	public CylindersRangeLayer setTurbulenceRoughness(int roughness) {
 		turbulence.setRoughness(roughness);
 		return this;
+	}
+
+	@Override
+	public CylindersRangeLayer clone() {
+		return (CylindersRangeLayer) new CylindersRangeLayer(uniquenessValue).
+				setCylindersFrequency(cylinders.getFrequency()).
+				setTurbulenceFrequency(turbulence.getFrequency()).
+				setTurbulencePower(turbulence.getPower()).
+				setTurbulenceRoughness(turbulence.getRoughnessCount()).
+				addElements(ranges);
 	}
 }

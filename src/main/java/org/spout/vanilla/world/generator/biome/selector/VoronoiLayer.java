@@ -28,6 +28,7 @@ package org.spout.vanilla.world.generator.biome.selector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
@@ -35,7 +36,7 @@ import net.royawesome.jlibnoise.module.source.Voronoi;
 
 import org.spout.api.math.MathHelper;
 
-public class VoronoiLayer implements BiomeSelectorLayer {
+public class VoronoiLayer implements BiomeSelectorLayer, Cloneable {
 	private final List<BiomeSelectorElement> selectorElements = new ArrayList<BiomeSelectorElement>();
 	private final Voronoi voronoi = new Voronoi();
 	private final Turbulence turbulence = new Turbulence();
@@ -56,7 +57,11 @@ public class VoronoiLayer implements BiomeSelectorLayer {
 	}
 
 	public VoronoiLayer addElements(BiomeSelectorElement... selectorElements) {
-		this.selectorElements.addAll(Arrays.asList(selectorElements));
+		return addElements(Arrays.asList(selectorElements));
+	}
+
+	public VoronoiLayer addElements(Collection<BiomeSelectorElement> selectorElements) {
+		this.selectorElements.addAll(selectorElements);
 		return this;
 	}
 
@@ -78,5 +83,15 @@ public class VoronoiLayer implements BiomeSelectorLayer {
 	public VoronoiLayer setTurbulenceRoughness(int roughness) {
 		turbulence.setRoughness(roughness);
 		return this;
+	}
+
+	@Override
+	public VoronoiLayer clone() {
+		return new VoronoiLayer(uniquenessValue).
+				setVoronoiFrequency(voronoi.getFrequency()).
+				setTurbulenceFrequency(turbulence.getFrequency()).
+				setTurbulencePower(turbulence.getPower()).
+				setTurbulenceRoughness(turbulence.getRoughnessCount()).
+				addElements(selectorElements);
 	}
 }

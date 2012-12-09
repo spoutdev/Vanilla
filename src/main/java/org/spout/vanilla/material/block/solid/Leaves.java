@@ -77,7 +77,7 @@ public class Leaves extends Solid implements Burnable, InitializableMaterial {
 
 	@Override
 	public int getCombustChance() {
-		return 60;
+		return 80;
 	}
 
 	@Override

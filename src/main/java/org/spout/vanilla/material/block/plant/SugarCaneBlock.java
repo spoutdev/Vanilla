@@ -43,7 +43,7 @@ public class SugarCaneBlock extends StackGrowingBase implements InitializableMat
 	private final Set<Material> allowedBases = new HashSet<Material>(4);
 
 	public SugarCaneBlock(String name, int id) {
-		super(name, id);
+		super(name, id, "model://Vanilla/resources/materials/block/nonsolid/sugarcane/sugarcane.spm");
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 		this.addAllowedBase(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.SAND);
 	}

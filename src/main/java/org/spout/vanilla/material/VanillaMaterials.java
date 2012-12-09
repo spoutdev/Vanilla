@@ -282,8 +282,8 @@ public final class VanillaMaterials {
 	public static final TallGrass TALL_GRASS = TallGrass.TALL_GRASS;
 	public static final DeadBush DEAD_BUSH = new DeadBush("Dead Shrubs", 32);
 	public static final Sapling SAPLING = Sapling.DEFAULT;
-	public static final Flower DANDELION = new Flower("Dandelion", 37);
-	public static final Flower ROSE = new Flower("Rose", 38);
+	public static final Flower DANDELION = new Flower("Dandelion", 37, "model://Vanilla/resources/materials/block/nonsolid/dandelion/dandelion.spm");
+	public static final Flower ROSE = new Flower("Rose", 38, "model://Vanilla/resources/materials/block/nonsolid/rose/rose.spm");
 	public static final Mushroom BROWN_MUSHROOM = new Mushroom("Brown Mushroom", 39);
 	public static final Mushroom RED_MUSHROOM = new Mushroom("Red Mushroom", 40);
 	// == Stairs ==

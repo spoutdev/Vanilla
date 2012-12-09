@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.render;
 
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector2;
 import org.spout.api.render.effect.RenderEffect;
 import org.spout.api.render.effect.SnapshotRender;
@@ -33,10 +34,18 @@ import org.spout.api.render.effect.SnapshotRender;
 public class LiquidRenderEffect implements RenderEffect {
 	private static final float size = 1.0f / 16.0f;
 
+	private static final float freqX = 0.05f;
+	private static final float amplX = 0.3f;
+	private static final float freqY = 0.31f;
+	private static final float amplY = 0.3f;
+	
 	@Override
 	public void preRender(SnapshotRender snapshotRender) {
-		float time = size * (System.currentTimeMillis() % 1000 / 1000.0f);
-		snapshotRender.getMaterial().getShader().setUniform("animation", new Vector2(0, time));
+		float x = (float) (MathHelper.mod(2.0 * MathHelper.PI * freqX / 1000.0 * System.currentTimeMillis(), 2.0f * MathHelper.PI) - MathHelper.PI);
+		x = amplX * (float) (MathHelper.sin(x) + 1.0f);
+		float y = (float) (MathHelper.mod(2.0 * MathHelper.PI * freqY / 1000.0 * System.currentTimeMillis(), 2.0f * MathHelper.PI) - MathHelper.PI);
+		y = amplY * (float) (MathHelper.sin(y) + 1.0f);
+		snapshotRender.getMaterial().getShader().setUniform("animation", new Vector2(x * size, y * size));
 	}
 
 	@Override

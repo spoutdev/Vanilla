@@ -1,2 +1,2 @@
 Mesh: cubemesh://Vanilla/resources/materials/block/solid/grass/grass.uvs
-Material: material://Vanilla/resources/materials/terrain.smt
+Material: material://Vanilla/resources/materials/terrainBiomeColor.smt

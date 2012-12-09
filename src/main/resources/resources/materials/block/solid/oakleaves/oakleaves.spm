@@ -1,2 +1,2 @@
 Mesh: cubemesh://Vanilla/resources/materials/block/solid/oakleaves/oakleaves.uvs
-Material: material://Vanilla/resources/materials/terrain.smt
+Material: material://Vanilla/resources/materials/terrainBiomeColor.smt

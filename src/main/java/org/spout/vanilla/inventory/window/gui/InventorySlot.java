@@ -33,6 +33,7 @@ import org.spout.api.Client;
 import org.spout.api.Spout;
 import org.spout.api.component.components.WidgetComponent;
 import org.spout.api.event.player.PlayerKeyEvent;
+import org.spout.api.gui.component.ControlComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.input.Keyboard;
 import org.spout.api.math.IntVector2;
@@ -43,7 +44,7 @@ import org.spout.vanilla.inventory.window.ClickArguments;
 import org.spout.vanilla.inventory.window.InventoryEntry;
 import org.spout.vanilla.inventory.window.Window;
 
-public class InventorySlot extends WidgetComponent {
+public class InventorySlot extends ControlComponent {
 	private RenderItemStack item;
 	private final RenderPart hitBox = new RenderPart();
 	private Vector2 pos = Vector2.ZERO;

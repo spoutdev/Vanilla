@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import org.spout.api.Spout;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.data.drops.SwitchDrops;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
@@ -36,6 +38,7 @@ import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.component.SignBase;
+import org.spout.vanilla.render.BatchEffects;
 
 public class Leaves extends Solid implements Burnable, InitializableMaterial {
 	public static final Leaves DEFAULT = new Leaves("Leaves", "model://Vanilla/resources/materials/block/solid/oakleaves/oakleaves.spm");
@@ -46,11 +49,21 @@ public class Leaves extends Solid implements Burnable, InitializableMaterial {
 	private Leaves(String name, String model) {
 		super((short) 0x0003, name, 18, model);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
+		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
+			if (!getModel().getRenderMaterial().getVertexEffects().contains(BatchEffects.BIOME_FOLIAGE_COLOR)) {
+				getModel().getRenderMaterial().addVertexEffect(BatchEffects.BIOME_FOLIAGE_COLOR);
+			}
+		}
 	}
 
 	private Leaves(String name, int data, Leaves parent, String model) {
 		super(name, 18, data, parent, model);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
+		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
+			if (!getModel().getRenderMaterial().getVertexEffects().contains(BatchEffects.BIOME_FOLIAGE_COLOR)) {
+				getModel().getRenderMaterial().addVertexEffect(BatchEffects.BIOME_FOLIAGE_COLOR);
+			}
+		}
 	}
 
 	@Override
@@ -89,6 +102,5 @@ public class Leaves extends Solid implements Burnable, InitializableMaterial {
 	public boolean isTransparent() {
 		return false;
 	}
-
 	// TODO: Decay
 }

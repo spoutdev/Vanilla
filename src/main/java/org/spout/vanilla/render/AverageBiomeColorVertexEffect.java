@@ -26,13 +26,38 @@
  */
 package org.spout.vanilla.render;
 
-import org.spout.api.render.effect.BatchEffect;
-import org.spout.api.render.effect.RenderEffect;
+import java.awt.Color;
 
-public class BatchEffects {
-	public static final BatchEffect SKYTIMEBATCH = new LightBatchEffect();
-	public static final RenderEffect SKYTIME = new LightRenderEffect();
-	public static final RenderEffect LIQUID = new LiquidRenderEffect();
-	public static final BiomeGrassColorVertexEffect BIOME_GRASS_COLOR = new BiomeGrassColorVertexEffect();
-	public static final BiomeFoliageColorVertexEffect BIOME_FOLIAGE_COLOR = new BiomeFoliageColorVertexEffect();
+import org.spout.api.geo.World;
+import org.spout.api.math.Vector3;
+import org.spout.api.render.effect.VertexEffect;
+
+import org.spout.vanilla.world.generator.biome.VanillaBiome;
+
+public abstract class AverageBiomeColorVertexEffect extends VertexEffect {
+	public AverageBiomeColorVertexEffect(int layout) {
+		super(layout);
+	}
+
+	@Override
+	public float[] getVertexData(World world, Vector3 pos) {
+		float[] rgb = new float[4];
+		for (byte x = -1; x <= 1; x++) {
+			for (byte z = -1; z <= 1; z++) {
+				final Vector3 p = pos.add(x, 0, z);
+				final float[] brgb = getBiomeColor((VanillaBiome) world.getBiome(p.getFloorX(), p.getFloorY(), p.getFloorZ())).
+						getRGBColorComponents(null);
+				rgb[0] += brgb[0];
+				rgb[1] += brgb[1];
+				rgb[2] += brgb[2];
+			}
+		}
+		rgb[0] /= 9;
+		rgb[1] /= 9;
+		rgb[2] /= 9;
+		rgb[3] = 1;
+		return rgb;
+	}
+
+	protected abstract Color getBiomeColor(VanillaBiome biome);
 }

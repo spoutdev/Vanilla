@@ -26,13 +26,22 @@
  */
 package org.spout.vanilla.render;
 
-import org.spout.api.render.effect.BatchEffect;
-import org.spout.api.render.effect.RenderEffect;
+import java.awt.Color;
 
-public class BatchEffects {
-	public static final BatchEffect SKYTIMEBATCH = new LightBatchEffect();
-	public static final RenderEffect SKYTIME = new LightRenderEffect();
-	public static final RenderEffect LIQUID = new LiquidRenderEffect();
-	public static final BiomeGrassColorVertexEffect BIOME_GRASS_COLOR = new BiomeGrassColorVertexEffect();
-	public static final BiomeFoliageColorVertexEffect BIOME_FOLIAGE_COLOR = new BiomeFoliageColorVertexEffect();
+import org.spout.vanilla.world.generator.biome.VanillaBiome;
+
+public class BiomeFoliageColorVertexEffect extends AverageBiomeColorVertexEffect {
+	public BiomeFoliageColorVertexEffect() {
+		super(4);
+	}
+
+	@Override
+	protected Color getBiomeColor(VanillaBiome biome) {
+		return biome.getFoliageColorMultiplier();
+	}
+
+	@Override
+	public String toString() {
+		return "BiomeFoliageColorVertexEffect{layout=" + getLayout() + '}';
+	}
 }

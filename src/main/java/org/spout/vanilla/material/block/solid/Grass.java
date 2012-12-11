@@ -28,21 +28,29 @@ package org.spout.vanilla.material.block.solid;
 
 import java.util.Random;
 
+import org.spout.api.Spout;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.SpreadingSolid;
+import org.spout.vanilla.render.BatchEffects;
 
 public class Grass extends SpreadingSolid implements DynamicMaterial, InitializableMaterial {
 	public Grass(String name, int id) {
 		super(name, id, "model://Vanilla/resources/materials/block/solid/grass/grass.spm");
 		this.setHardness(0.6F).setResistance(0.8F).setStepSound(SoundEffects.STEP_GRASS);
 		this.addMiningType(ToolType.SPADE);
+		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
+			if (!getModel().getRenderMaterial().getVertexEffects().contains(BatchEffects.BIOME_GRASS_COLOR)) {
+				getModel().getRenderMaterial().addVertexEffect(BatchEffects.BIOME_GRASS_COLOR);
+			}
+		}
 	}
 
 	@Override

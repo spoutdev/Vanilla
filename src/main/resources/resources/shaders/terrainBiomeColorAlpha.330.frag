@@ -10,6 +10,7 @@ layout(location=0) out vec4 outputColor;
 
 void main()
 {
-	vec4 fontsample = texture(Diffuse, uvcoord);
-    outputColor = fontsample * color * biomecolor;
+	vec4 texel = texture(Diffuse, uvcoord);
+	if (texel.a <= 0.0f) discard;
+    outputColor = texel * color * biomecolor;
 } 

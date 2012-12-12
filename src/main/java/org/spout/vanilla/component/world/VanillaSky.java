@@ -33,6 +33,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 
 import org.spout.vanilla.component.misc.SleepComponent;
+import org.spout.vanilla.data.MoonPhase;
 import org.spout.vanilla.data.Time;
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.world.WeatherSimulator;
@@ -45,6 +46,7 @@ public abstract class VanillaSky extends WorldComponent {
 	public static final byte MAX_SKY_LIGHT = 15;
 	public static final byte SKY_LIGHT_RANGE = MAX_SKY_LIGHT - MIN_SKY_LIGHT;
 	protected long maxTime, time = 0, countdown = 20, rate;
+	private int moonPhase = 0;
 	private Long setTime;
 	private WeatherSimulator weather;
 	private static final HashMap<World, VanillaSky> skies = new HashMap<World, VanillaSky>();
@@ -75,6 +77,11 @@ public abstract class VanillaSky extends WorldComponent {
 		if (countdown <= 0) {
 			if (time >= maxTime) {
 				time = 0;
+				
+				moonPhase++;			
+				if (moonPhase >= 8) {
+					moonPhase = 0;
+				}
 			} else {
 				time += rate;
 			}
@@ -134,7 +141,7 @@ public abstract class VanillaSky extends WorldComponent {
 	 * @return
 	 */
 	public long getMaxTime() {
-		return time;
+		return maxTime;
 	}
 
 	/**
@@ -225,7 +232,23 @@ public abstract class VanillaSky extends WorldComponent {
 	public World getWorld() {
 		return getOwner().getWorld();
 	}
-
+	
+	/**
+	 * Gets the moonphase of the sky.
+	 * @return moonphase
+	 */
+	public MoonPhase getMoonPhase() {
+		return MoonPhase.get(moonPhase);
+	}
+	
+	/**
+	 * Sets the moonphase of the sky.
+	 * @param phase
+	 */
+	public void setMoonPhase(MoonPhase phase) {
+		this.moonPhase = phase.getId();
+	}
+ 
 	public static void setSky(World world, VanillaSky sky) {
 		synchronized (skies) {
 			if (sky == null) {

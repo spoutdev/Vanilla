@@ -55,10 +55,16 @@ public final class EntityActionHandler extends MessageHandler<EntityActionMessag
 			case EntityActionMessage.ACTION_CROUCH:
 				parameters.add(EntityMetadataMessage.Parameters.META_CROUCHED.get());
 				session.send(false, new EntityMetadataMessage(player.getId(), parameters));
+				if (human != null) {
+					human.setSneaking(true);
+				}
 				break;
 			case EntityActionMessage.ACTION_UNCROUCH:
 				parameters.add(EntityMetadataMessage.Parameters.META_CROUCHED.get());
 				session.send(false, new EntityMetadataMessage(player.getId(), parameters));
+				if (human != null) {
+					human.setSneaking(false);
+				}
 				break;
 			case EntityActionMessage.ACTION_LEAVE_BED:
 				player.getNetwork().callProtocolEvent(new EntityAnimationEvent(player, Animation.LEAVE_BED));

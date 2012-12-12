@@ -233,42 +233,40 @@ public class VanillaPlugin extends CommonPlugin {
 		engine.getServiceManager().register(ProtectionService.class, new VanillaProtectionService(), this, ServiceManager.ServicePriority.Highest);
 
 		for (World world : worlds) {
-			// Initialize the first chunks
-			Point point = world.getSpawnPoint().getPosition();
-			int cx = point.getBlockX() >> Chunk.BLOCKS.BITS;
-			int cy = point.getBlockY() >> Chunk.BLOCKS.BITS;
-			int cz = point.getBlockZ() >> Chunk.BLOCKS.BITS;
-
-			((VanillaProtectionService) engine.getServiceManager().getRegistration(ProtectionService.class).getProvider()).addProtection(new SpawnProtection(world.getName() + " Spawn Protection", world, point, protectionRadius));
-
-			final String initChunkType = world.getAge() <= 0 ? "Generating" : "Loading";
-
-			for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
-				loaderThreads[i] = new SpawnLoaderThread(total, progressStep, initChunkType);
-			}
-
-			oi.reset(cx, cy, cz, radius);
-			while (oi.hasNext()) {
-				IntVector3 v = oi.next();
-				SpawnLoaderThread.addChunk(world, v.getX(), v.getY(), v.getZ());
-			}
-
-			for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
-				loaderThreads[i].start();
-			}
-
-			for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
-				try {
-					loaderThreads[i].join();
-				} catch (InterruptedException ie) {
-					getLogger().info("Interrupted when waiting for spawn area to load");
-				}
-			}
-
-			WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.get(world);
-
 			// Keep spawn loaded
+			WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.get(world);
 			if (worldConfig.LOADED_SPAWN.getBoolean()) {
+				// Initialize the first chunks
+				Point point = world.getSpawnPoint().getPosition();
+				int cx = point.getBlockX() >> Chunk.BLOCKS.BITS;
+				int cy = point.getBlockY() >> Chunk.BLOCKS.BITS;
+				int cz = point.getBlockZ() >> Chunk.BLOCKS.BITS;
+	
+				((VanillaProtectionService) engine.getServiceManager().getRegistration(ProtectionService.class).getProvider()).addProtection(new SpawnProtection(world.getName() + " Spawn Protection", world, point, protectionRadius));
+	
+				final String initChunkType = world.getAge() <= 0 ? "Generating" : "Loading";
+	
+				for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
+					loaderThreads[i] = new SpawnLoaderThread(total, progressStep, initChunkType);
+				}
+	
+				oi.reset(cx, cy, cz, radius);
+				while (oi.hasNext()) {
+					IntVector3 v = oi.next();
+					SpawnLoaderThread.addChunk(world, v.getX(), v.getY(), v.getZ());
+				}
+	
+				for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
+					loaderThreads[i].start();
+				}
+	
+				for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
+					try {
+						loaderThreads[i].join();
+					} catch (InterruptedException ie) {
+						getLogger().info("Interrupted when waiting for spawn area to load");
+					}
+				}
 				world.createAndSpawnEntity(point, ObserverComponent.class, LoadOption.LOAD_GEN);
 			}
 
@@ -279,7 +277,6 @@ public class VanillaPlugin extends CommonPlugin {
 			} else {
 				world.getComponentHolder().add(NormalSky.class);
 			}
-			VanillaSky sky = world.getComponentHolder().get(VanillaSky.class);
 		}
 	}
 

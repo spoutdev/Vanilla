@@ -1,6 +1,7 @@
 #version 120
 
 varying vec4 color;
+varying vec4 normal;
 varying vec2 uvcoord;
 
 uniform sampler2D Diffuse;

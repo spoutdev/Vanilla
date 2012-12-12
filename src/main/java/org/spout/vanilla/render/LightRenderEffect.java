@@ -26,17 +26,32 @@
  */
 package org.spout.vanilla.render;
 
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector4;
 import org.spout.api.render.effect.RenderEffect;
 import org.spout.api.render.effect.SnapshotRender;
 
 public class LightRenderEffect implements RenderEffect {
+	private static final float size = 256f;
+
+	private static final float freqX = 0.05f;
+	private static final float amplX = 0.3f;
+	private static final float freqY = 0.31f;
+	private static final float amplY = 0.3f;
 	
 	@Override
 	public void preRender(SnapshotRender snapshotRender) {
 		//TODO : Replace by the real color of the sky taking account of the time
 		float f = (System.currentTimeMillis() % 15000) / 15000f;
+		
 		snapshotRender.getMaterial().getShader().setUniform("skyColor", new Vector4(f, f, f, 1f));
+		
+		float x = (float) (MathHelper.mod(2.0 * MathHelper.PI * freqX / 1000.0 * System.currentTimeMillis(), 2.0f * MathHelper.PI) - MathHelper.PI);
+		x = amplX * (float) (MathHelper.sin(x) + 1.0f);
+		float y = (float) (MathHelper.mod(2.0 * MathHelper.PI * freqY / 1000.0 * System.currentTimeMillis(), 2.0f * MathHelper.PI) - MathHelper.PI);
+		y = amplY * (float) (MathHelper.sin(y) + 1.0f);
+		
+		snapshotRender.getMaterial().getShader().setUniform("sunDir", new Vector4(x * size, 256, y * size, 1f));
 	}
 
 	@Override

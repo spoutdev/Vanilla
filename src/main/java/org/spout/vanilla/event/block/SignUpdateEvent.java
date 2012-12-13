@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.event.block;
 
+import java.util.Arrays;
+
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.Cause;
 import org.spout.api.event.Event;
@@ -40,13 +42,17 @@ import org.spout.vanilla.component.substance.material.Sign;
 public class SignUpdateEvent extends Event implements ProtocolEvent, Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	private final Sign sign;
-	private final String[] newLines;
 	private final Cause<?> cause;
+	private String[] newLines;
 
 	public SignUpdateEvent(Sign sign, String[] newLines, Cause<?> cause) {
 		this.sign = sign;
-		this.newLines = newLines;
+		changeLines(newLines);
 		this.cause = cause;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 
 	/**
@@ -70,16 +76,53 @@ public class SignUpdateEvent extends Event implements ProtocolEvent, Cancellable
 	 * @return text which is placed on the sign 1 - 4 lines
 	 */
 	public String[] getLines() {
-		return newLines;
+		return Arrays.copyOf(newLines, newLines.length);
+	}
+
+	/**
+	 * Set the text which should be placed on the sign.
+	 * @param newLines text which is placed on the sign 1 - 4 lines
+	 */
+	public void setLines(String[] newLines) {
+		this.newLines = Arrays.copyOf(newLines, newLines.length);
+	}
+
+	/**
+	 * Sets a single line for the sign involved in this event. Index below 0 and above the ArraySize of the sign will throw an
+	 * {@link ArrayIndexOutOfBoundsException}
+	 * @param index index of the line to set
+	 * @param line text to set
+	 */
+	public void setLine(int index, String line) {
+		newLines[checkIndex(index)] = line;
+	}
+
+	/**
+	 * Gets a single line from the sign involved in this event. Index below 0 and above the ArraySize of the sign will throw an
+	 * {@link ArrayIndexOutOfBoundsException}
+	 * @param index index of the line to get
+	 * @return string of the line which is at the index
+	 */
+	public String getLine(int index) {
+		return newLines[checkIndex(index)];
+	}
+
+	private void changeLines(String[] overwriteLines) {
+		for (int i = 0; i < checkIndex(overwriteLines.length); i++) {
+			newLines[i] = overwriteLines[i];
+		}
+	}
+
+	private int checkIndex(int index) {
+		if (!(index >= 0 && index <= newLines.length)) {
+			throw new ArrayIndexOutOfBoundsException();
+		}
+		return index;
 	}
 
 	@Override
 	public void setCancelled(boolean cancelled) {
 		super.setCancelled(cancelled);
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
 	}
 
 	@Override

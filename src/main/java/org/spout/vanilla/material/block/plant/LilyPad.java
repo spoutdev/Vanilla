@@ -40,7 +40,7 @@ import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.event.cause.PlayerBreakCause;
+import org.spout.vanilla.event.cause.player.PlayerBreakCause;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.liquid.Water;

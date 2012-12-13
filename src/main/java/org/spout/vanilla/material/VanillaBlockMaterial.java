@@ -89,6 +89,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.SKYTIME)) {
 				getModel().getRenderMaterial().addRenderEffect(BatchEffects.SKYTIME);
+				getModel().getRenderMaterial().addBufferEffect(BatchEffects.LIGHTBUFFER);
 			}
 		}
 	}
@@ -103,6 +104,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.SKYTIME)) {
 				getModel().getRenderMaterial().addRenderEffect(BatchEffects.SKYTIME);
+				getModel().getRenderMaterial().addBufferEffect(BatchEffects.LIGHTBUFFER);
 			}
 		}
 	}
@@ -117,6 +119,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.SKYTIME)) {
 				getModel().getRenderMaterial().addRenderEffect(BatchEffects.SKYTIME);
+				getModel().getRenderMaterial().addBufferEffect(BatchEffects.LIGHTBUFFER);
 			}
 		}
 	}

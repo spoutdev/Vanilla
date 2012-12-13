@@ -26,11 +26,10 @@
  */
 package org.spout.vanilla.render;
 
-import org.spout.api.render.effect.BatchEffect;
 import org.spout.api.render.effect.RenderEffect;
 
 public class BatchEffects {
-	public final static BatchEffect SKYTIMEBATCH = new LightBatchEffect();
+	public final static LightBufferEffect LIGHTBUFFER = new LightBufferEffect();
 	public final static RenderEffect SKYTIME = new LightRenderEffect();
 	public final static RenderEffect LIQUID = new LiquidRenderEffect();
 }

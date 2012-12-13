@@ -5,9 +5,11 @@ layout(location=1) in float vlight;
 layout(location=2) in vec4 vNormal;
 layout(location=3) in vec2 vTexCoord;
 layout(location=4) in float vskylight;
+layout(location=5) in vec4 vBiomeColor;
 
 out vec4 normal;
 out vec4 color;
+out vec4 biomecolor;
 out vec2 uvcoord;
 
 uniform mat4 Projection;
@@ -41,5 +43,7 @@ void main()
 	color = vec4(vlight, vlight, vlight, 1) + Iamb + Idiff + Ispec;
 	
 	uvcoord = vTexCoord;
+	
+	biomecolor = vBiomeColor;
 
 }

@@ -26,12 +26,13 @@
  */
 package org.spout.vanilla.render;
 
-import org.spout.api.render.effect.RenderEffect;
+import java.awt.Color;
 
-public class BatchEffects {
-	public final static LightBufferEffect LIGHTBUFFER = new LightBufferEffect();
-	public final static BiomeGrassColorBufferEffect BIOME_GRASS_COLOR = new BiomeGrassColorBufferEffect();
-	public final static BiomeFoliageColorBufferEffect BIOME_FOLIAGE_COLOR = new BiomeFoliageColorBufferEffect();
-	public final static RenderEffect SKYTIME = new LightRenderEffect();
-	public final static RenderEffect LIQUID = new LiquidRenderEffect();
+import org.spout.vanilla.world.generator.biome.VanillaBiome;
+
+public class BiomeGrassColorBufferEffect extends BiomeColorBufferEffect {
+	@Override
+	protected Color getBiomeColor(VanillaBiome biome) {
+		return biome.getGrassColorMultiplier();
+	}
 }

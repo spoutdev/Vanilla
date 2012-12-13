@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.plant;
 
 import java.util.Random;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.event.cause.EntityCause;
@@ -41,6 +42,7 @@ import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Vector3;
+import org.spout.api.plugin.Platform;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.component.misc.HeadComponent;
@@ -50,6 +52,7 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.Spreading;
+import org.spout.vanilla.render.BatchEffects;
 
 public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Burnable, DynamicMaterial {
 	private static final EffectRange VINE_RANGE = new CuboidEffectRange(-4, -1, -4, 4, 1, 4);
@@ -60,6 +63,11 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 		this.setLiquidObstacle(false);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
 		this.getDrops().DEFAULT.clear().add(this).addFlags(ToolTypeFlags.SHEARS);
+		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
+			if (!getModel().getRenderMaterial().getBufferEffects().contains(BatchEffects.BIOME_FOLIAGE_COLOR)) {
+				getModel().getRenderMaterial().addBufferEffect(BatchEffects.BIOME_FOLIAGE_COLOR);
+			}
+		}
 	}
 
 	@Override

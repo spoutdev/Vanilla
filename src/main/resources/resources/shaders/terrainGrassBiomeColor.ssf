@@ -1,0 +1,6 @@
+GL30:
+    Vertex: file://Vanilla/resources/shaders/terrainBiomeColor.330.vert
+    Fragment: file://Vanilla/resources/shaders/terrainGrassBiomeColor.330.frag
+GL20:
+    Vertex: file://Vanilla/resources/shaders/terrainBiomeColor.120.vert
+    Fragment: file://Vanilla/resources/shaders/terrainGrassBiomeColor.120.frag

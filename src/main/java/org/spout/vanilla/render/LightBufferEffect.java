@@ -35,7 +35,6 @@ import org.spout.api.render.BufferContainer;
 import org.spout.api.render.effect.BufferEffect;
 
 public class LightBufferEffect implements BufferEffect {
-
 	@Override
 	public void post(ChunkSnapshotModel chunkModel, BufferContainer container) {
 		TFloatArrayList vertexBuffer = (TFloatArrayList) container.getBuffers().get(0);
@@ -55,17 +54,17 @@ public class LightBufferEffect implements BufferEffect {
 		TFloatArrayList lightBuffer = (TFloatArrayList) container.getBuffers().get(1);
 		TFloatArrayList skylightBuffer = (TFloatArrayList) container.getBuffers().get(4);
 
-		if(lightBuffer==null){
+		if (lightBuffer == null) {
 			lightBuffer = new TFloatArrayList(vertexBuffer.size() / 4);
 			container.setBuffers(1, lightBuffer);
 		}
 
-		if(skylightBuffer==null){
+		if (skylightBuffer == null) {
 			skylightBuffer = new TFloatArrayList(vertexBuffer.size() / 4);
 			container.setBuffers(4, skylightBuffer);
 		}
 
-		for(int i = 0; i < vertexBuffer.size();){
+		for (int i = 0; i < vertexBuffer.size();) {
 			float x = vertexBuffer.get(i++);
 			float y = vertexBuffer.get(i++);
 			float z = vertexBuffer.get(i++);
@@ -73,24 +72,24 @@ public class LightBufferEffect implements BufferEffect {
 
 			//TODO : Create a buffer for each light registred by plugin
 
-			generateLightOnVertices( chunkModel, x, y, z, lightBuffer, skylightBuffer);
+			generateLightOnVertices(chunkModel, x, y, z, lightBuffer, skylightBuffer);
 		}
 	}
 
 	/**
 	 * Compute the light for one vertex
+	 *
 	 * @param chunkModel
 	 * @param x
 	 * @param y
 	 * @param z
-	 * @param lightBuffer 
-	 * @return
+	 * @param lightBuffer
 	 */
 	private void generateLightOnVertices(ChunkSnapshotModel chunkModel, float x, float y, float z, TFloatArrayList lightBuffer, TFloatArrayList skylightBuffer) {
-		int xi = (int)x;
-		int yi = (int)y;
-		int zi = (int)z;
-		if(chunkModel != null){
+		int xi = (int) x;
+		int yi = (int) y;
+		int zi = (int) z;
+		if (chunkModel != null) {
 			float light = 0;
 			float skylight = 0;
 			int count = 0;
@@ -126,10 +125,9 @@ public class LightBufferEffect implements BufferEffect {
 
 			lightBuffer.add(light);
 			skylightBuffer.add(skylight);
-		}else{
+		} else {
 			lightBuffer.add(1f);
-			lightBuffer.add(1f);
+			skylightBuffer.add(1f);
 		}
 	}
-
 }

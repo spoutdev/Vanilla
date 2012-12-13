@@ -26,16 +26,19 @@
  */
 package org.spout.vanilla.material.block.plant;
 
+import org.spout.api.Spout;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
+import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.data.drops.SwitchDrops;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.render.BatchEffects;
 
 public class TallGrass extends DeadBush implements Burnable, InitializableMaterial {
 	public static final TallGrass DEAD_GRASS = new TallGrass("Dead Grass");
@@ -44,10 +47,20 @@ public class TallGrass extends DeadBush implements Burnable, InitializableMateri
 
 	private TallGrass(String name) {
 		super(name, (short) 0x0003, "model://Vanilla/resources/materials/block/nonsolid/tallgrass/tallgrass.spm");
+		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
+			if (!getModel().getRenderMaterial().getBufferEffects().contains(BatchEffects.BIOME_GRASS_COLOR)) {
+				getModel().getRenderMaterial().addBufferEffect(BatchEffects.BIOME_GRASS_COLOR);
+			}
+		}
 	}
 
 	private TallGrass(String name, int data, TallGrass parent) {
 		super(name, data, parent, "model://Vanilla/resources/materials/block/nonsolid/tallgrass/tallgrass.spm");
+		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
+			if (!getModel().getRenderMaterial().getBufferEffects().contains(BatchEffects.BIOME_GRASS_COLOR)) {
+				getModel().getRenderMaterial().addBufferEffect(BatchEffects.BIOME_GRASS_COLOR);
+			}
+		}
 	}
 
 	@Override

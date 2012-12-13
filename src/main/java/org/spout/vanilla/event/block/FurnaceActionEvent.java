@@ -24,36 +24,49 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.event.cause;
+package org.spout.vanilla.event.block;
 
-import org.spout.api.entity.Player;
-import org.spout.api.event.cause.PlayerCause;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.Material;
+import org.spout.api.event.Cancellable;
+import org.spout.api.event.Cause;
+import org.spout.api.event.Event;
+import org.spout.api.event.HandlerList;
+import org.spout.api.inventory.ItemStack;
 
-public class PlayerPlacementCause extends PlayerCause {
-	private final Block block;
-	private final Material toPlace;
+import org.spout.vanilla.component.substance.material.Furnace;
+import org.spout.vanilla.event.cause.FurnaceCause;
 
-	public PlayerPlacementCause(Player player, Material toPlace, Block block) {
-		super(player);
-		this.block = block;
-		this.toPlace = toPlace;
+/**
+ * Event which is called when an action in the furnace is happening.
+ * todo implement calling of this event
+ */
+public class FurnaceActionEvent extends Event implements Cancellable {
+	private static HandlerList handlers = new HandlerList();
+	private final Cause cause;
+
+	public FurnaceActionEvent(Cause<FurnaceCause> cause) {
+		super();
+		this.cause = cause;
 	}
 
 	/**
-	 * Gets where the material is going to be placed
-	 * @return placed
+	 * Returns the Cause which caused the FurnaceActionEvent
+	 * @return cause
 	 */
-	public Block getBlock() {
-		return block;
+	public Cause<?> getCause() {
+		return cause;
 	}
 
-	/**
-	 * Gets the block material that is going to be placed
-	 * @return to place
-	 */
-	public Material getPlacedMaterial() {
-		return toPlace;
+	@Override
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
 	}
 }

@@ -13,7 +13,7 @@ void main()
 {
 	vec4 texel = texture(Diffuse, uvcoord);
 	if (normal.y < 0) {
-		// Top face
+		// Bottom face
 		outputColor = texel * color;
 	} else if (normal.y == 0) {
 		// Side face
@@ -24,7 +24,7 @@ void main()
 			outputColor = texel * color;
 		}
 	} else {
-		// Bottom face
+		// Top face
 		outputColor = texel * color * biomecolor;
 	}
 }

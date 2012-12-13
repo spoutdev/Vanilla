@@ -24,56 +24,64 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.event.block;
+package org.spout.vanilla.event.cause;
 
-import org.spout.api.event.Cancellable;
-import org.spout.api.event.Event;
-import org.spout.api.event.HandlerList;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.component.substance.material.Furnace;
 
 /**
- * Event which is called when an fuel in the furnace is being burned.
+ * Caused when a furnace successfully burned fuel
  */
-public class FurnaceBurnEvent extends Event implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
-	private Furnace furnace;
+public class FurnaceBurnCause extends FurnaceCause {
 	private ItemStack fuel;
+	private int burnTime;
 
-	public FurnaceBurnEvent(Furnace furnace, ItemStack fuel) {
-		super();
-		this.furnace = furnace;
+	/**
+	 * Contains the ItemStack of the fuel which was burned
+	 * @param furnace the furnace which has burned fuel
+	 * @param fuel ItemStack of fuel
+	 * @param burnTime the time one unit of the fuel will burn
+	 */
+	public FurnaceBurnCause(Furnace furnace, ItemStack fuel, int burnTime) {
+		super(furnace);
+		this.fuel = fuel;
+		this.burnTime = burnTime;
+	}
+
+	/**
+	 * Gets the fuel ItemStack for this furnace
+	 * @return the fuel ItemStack
+	 */
+	public ItemStack getFuel() {
+		return fuel.clone();
+	}
+
+	/**
+	 * Gets the burn time of one unit of the ItemStack
+	 * @return the time one unit of the fuel will burn
+	 */
+	public int getBurnTime() {
+		return burnTime;
+	}
+
+	/**
+	 * Sets the fuel ItemStack for this furnace
+	 * @param fuel the fuel ItemStack
+	 */
+	public void setFuel(ItemStack fuel) {
 		this.fuel = fuel;
 	}
 
 	/**
-	 * Returns the Furnace which caused the FurnaceBurnEvent
-	 * @return furnace
+	 * Set the burn time of one unit of fuel for the ItemStack.
+	 * Will throw an {@link IllegalArgumentException} if burnTime is <= 0
+	 * @param burnTime the time one unit of the fuel will burn
 	 */
-	public Furnace getFurnace() {
-		return furnace;
-	}
-
-	/**
-	 * Returns the ItemStack which should be burned
-	 * @return fuel
-	 */
-	public ItemStack getFuel() {
-		return fuel;
-	}
-
-	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
-
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
+	public void setBurnTime(int burnTime) {
+		if (burnTime <= 0) {
+			throw new IllegalArgumentException();
+		}
+		this.burnTime = burnTime;
 	}
 }

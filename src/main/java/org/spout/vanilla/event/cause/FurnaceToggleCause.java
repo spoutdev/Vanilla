@@ -26,26 +26,37 @@
  */
 package org.spout.vanilla.event.cause;
 
-import org.spout.api.entity.Player;
-import org.spout.api.event.cause.PlayerCause;
-import org.spout.api.geo.cuboid.Block;
+import org.spout.vanilla.component.substance.material.Furnace;
 
 /**
- * Caused when a player breaks a block
+ * Caused when a furnace is toggled on or off
  */
-public class PlayerBreakCause extends PlayerCause {
-	private final Block block;
+public class FurnaceToggleCause extends FurnaceCause {
+	private boolean toggledOn;
 
-	public PlayerBreakCause(Player player, Block block) {
-		super(player);
-		this.block = block;
+	/**
+	 * Contains the new state of a furnace
+	 * @param furnace the furnace which was toggled
+	 * @param toggledOn true if the furnace was toggled on
+	 */
+	public FurnaceToggleCause(Furnace furnace, boolean toggledOn) {
+		super(furnace);
+		this.toggledOn = toggledOn;
 	}
 
 	/**
-	 * Gets the block being broken
-	 * @return broken
+	 * Gets the state of the furnace
+	 * @return true if the furnace is on
 	 */
-	public Block getBlock() {
-		return block;
+	public boolean getToggledOn() {
+		return toggledOn;
+	}
+
+	/**
+	 * Sets the state of the furnace
+	 * @param toggledOn true to toggleOn
+	 */
+	public void setToggledOn(boolean toggledOn) {
+		this.toggledOn = toggledOn;
 	}
 }

@@ -37,7 +37,8 @@ import org.spout.api.geo.cuboid.Block;
  */
 public class RedstoneChangeEvent extends BlockEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private final int prev, current;
+	private final int prev;
+	private int current;
 
 	public RedstoneChangeEvent(Block block, Cause<?> reason, int prev, int current) {
 		super(block, reason);
@@ -68,6 +69,19 @@ public class RedstoneChangeEvent extends BlockEvent implements Cancellable {
 	 */
 	public int getNewPower() {
 		return current;
+	}
+
+	/**
+	 * Sets the new power level the redstone source will have after this
+	 * block change finishes.
+	 * <p/>
+	 * <p>Note: Because RedstoneChangeEvent occurs <i>before</i> the block
+	 * change event has finished, neighbor blocks may not yet report that they
+	 * are powered. To perform an event after a redstone change, use the scheduler.</p>
+	 * @param newCurrent new power level
+	 */
+	public void setNewPower(int newCurrent) {
+		current = newCurrent;
 	}
 
 	/**

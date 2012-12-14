@@ -27,7 +27,7 @@
 package org.spout.vanilla.component.substance.object;
 
 import org.spout.api.collision.CollisionStrategy;
-import org.spout.api.component.components.EntityComponent;
+import org.spout.api.component.type.EntityComponent;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;

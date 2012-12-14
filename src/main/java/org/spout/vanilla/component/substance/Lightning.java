@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.component.substance;
 
-import org.spout.api.component.components.EntityComponent;
+import org.spout.api.component.type.EntityComponent;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.object.LightningEntityProtocol;

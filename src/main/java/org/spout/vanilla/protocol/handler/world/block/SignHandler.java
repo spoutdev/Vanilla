@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.protocol.handler.world.block;
 
-import org.spout.api.component.components.BlockComponent;
+import org.spout.api.component.type.BlockComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.protocol.MessageHandler;

@@ -27,7 +27,7 @@
 package org.spout.vanilla.component.substance.material;
 
 import org.spout.api.component.ChunkComponentOwner;
-import org.spout.api.component.components.BlockComponent;
+import org.spout.api.component.type.BlockComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;

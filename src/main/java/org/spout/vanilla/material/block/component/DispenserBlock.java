@@ -28,7 +28,7 @@ package org.spout.vanilla.material.block.component;
 
 import java.util.Random;
 
-import org.spout.api.component.components.EntityComponent;
+import org.spout.api.component.type.EntityComponent;
 import org.spout.api.event.Cause;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;

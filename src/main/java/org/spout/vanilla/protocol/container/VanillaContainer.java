@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.protocol.container;
 
-import org.spout.api.component.components.BlockComponent;
+import org.spout.api.component.type.BlockComponent;
 import org.spout.api.geo.cuboid.BlockComponentContainer;
 import org.spout.api.geo.cuboid.BlockContainer;
 import org.spout.api.geo.cuboid.Chunk;

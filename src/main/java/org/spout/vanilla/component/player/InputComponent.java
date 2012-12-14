@@ -27,9 +27,9 @@
 package org.spout.vanilla.component.player;
 
 import org.spout.api.Spout;
-import org.spout.api.component.components.CameraComponent;
-import org.spout.api.component.components.EntityComponent;
-import org.spout.api.component.components.TransformComponent;
+import org.spout.api.component.implementation.CameraComponent;
+import org.spout.api.component.type.EntityComponent;
+import org.spout.api.component.implementation.TransformComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.entity.state.PlayerInputState;
 import org.spout.api.geo.discrete.Transform;

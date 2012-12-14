@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.component.misc;
 
-import org.spout.api.component.components.EntityComponent;
+import org.spout.api.component.type.EntityComponent;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.data.VanillaData;

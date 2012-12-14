@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.component.misc;
 
-import org.spout.api.component.components.EntityComponent;
+import org.spout.api.component.type.EntityComponent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
 

@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.component.misc;
 
-import org.spout.api.component.components.EntityComponent;
+import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 

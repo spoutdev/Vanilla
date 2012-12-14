@@ -29,8 +29,6 @@ package org.spout.vanilla.command;
 import java.util.List;
 import java.util.Set;
 
-import com.bulletphysics.collision.shapes.BoxShape;
-
 import org.spout.api.Client;
 import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
@@ -39,8 +37,7 @@ import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.CommandPermissions;
 import org.spout.api.component.Component;
-import org.spout.api.component.components.HitBlockComponent;
-import org.spout.api.component.components.PhysicsComponent;
+import org.spout.api.component.implementation.HitBlockComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityPrefab;
 import org.spout.api.entity.Player;

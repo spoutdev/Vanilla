@@ -28,7 +28,7 @@ package org.spout.vanilla.component.living.neutral;
 
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
-import org.spout.api.component.components.TextModelComponent;
+import org.spout.api.component.implementation.TextModelComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;

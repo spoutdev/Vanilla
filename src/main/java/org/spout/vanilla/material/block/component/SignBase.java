@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.block.component;
 
-import org.spout.api.component.components.BlockComponent;
+import org.spout.api.component.type.BlockComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.event.cause.EntityCause;

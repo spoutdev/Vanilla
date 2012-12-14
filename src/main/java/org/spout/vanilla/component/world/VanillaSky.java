@@ -28,7 +28,7 @@ package org.spout.vanilla.component.world;
 
 import java.util.HashMap;
 
-import org.spout.api.component.components.WorldComponent;
+import org.spout.api.component.type.WorldComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 

@@ -27,7 +27,7 @@
 package org.spout.vanilla.component.test;
 
 import org.spout.api.Spout;
-import org.spout.api.component.components.EntityComponent;
+import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.plugin.Platform;
 

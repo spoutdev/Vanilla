@@ -28,7 +28,7 @@ package org.spout.vanilla.component.living.neutral;
 
 import com.bulletphysics.collision.shapes.BoxShape;
 
-import org.spout.api.component.components.PhysicsComponent;
+import org.spout.api.component.implementation.PhysicsComponent;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Living;

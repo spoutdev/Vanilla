@@ -30,7 +30,7 @@ import java.awt.Color;
 
 import org.spout.api.Client;
 import org.spout.api.Spout;
-import org.spout.api.component.components.EntityComponent;
+import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.gui.Widget;

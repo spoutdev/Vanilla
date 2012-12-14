@@ -28,7 +28,7 @@ package org.spout.vanilla;
 
 import org.spout.api.Client;
 import org.spout.api.Spout;
-import org.spout.api.component.components.CameraComponent;
+import org.spout.api.component.implementation.CameraComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;

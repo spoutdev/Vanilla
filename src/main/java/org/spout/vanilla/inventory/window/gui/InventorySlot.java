@@ -31,7 +31,6 @@ import java.util.List;
 
 import org.spout.api.Client;
 import org.spout.api.Spout;
-import org.spout.api.component.components.WidgetComponent;
 import org.spout.api.event.player.PlayerKeyEvent;
 import org.spout.api.gui.component.ControlComponent;
 import org.spout.api.gui.render.RenderPart;

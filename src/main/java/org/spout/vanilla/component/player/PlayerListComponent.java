@@ -32,7 +32,7 @@ import java.util.LinkedHashMap;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
-import org.spout.api.component.components.EntityComponent;
+import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 
 import org.spout.vanilla.event.player.network.PlayerListEvent;

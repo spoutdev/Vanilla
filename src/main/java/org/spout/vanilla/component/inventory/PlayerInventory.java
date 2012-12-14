@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.component.inventory;
 
-import org.spout.api.component.components.EntityComponent;
+import org.spout.api.component.type.EntityComponent;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.data.VanillaData;

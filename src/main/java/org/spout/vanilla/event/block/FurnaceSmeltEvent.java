@@ -24,37 +24,41 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.event.cause;
+package org.spout.vanilla.event.block;
 
+import org.spout.api.event.Cancellable;
+import org.spout.api.event.Cause;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.block.BlockEvent;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.component.substance.material.Furnace;
 
 /**
- * Caused when a furnace successfully smelted an ingredient
+ * Event which is called when an unit of an ItemStack is smelted.
+ * todo implement calling of this event
  */
-public class FurnaceSmeltCause extends FurnaceCause {
-	private final ItemStack resource;
+public class FurnaceSmeltEvent extends BlockEvent implements Cancellable {
+	private static HandlerList handlers = new HandlerList();
+	private final Furnace furnace;
+	private final Cause cause;
+	private final ItemStack source;
 	private ItemStack result;
 
-	/**
-	 * Contains the ItemStack of the ingredient which was smelted
-	 * @param furnace the furnace which smelted the ingredient
-	 * @param resource ItemStack which was smelted
-	 * @param result ItemStack which is the result
-	 */
-	public FurnaceSmeltCause(Furnace furnace, ItemStack resource, ItemStack result) {
-		super(furnace);
-		this.resource = resource;
+	public FurnaceSmeltEvent(Furnace furnace, Cause<?> reason, ItemStack source, ItemStack result) {
+		super(furnace.getBlock(), reason);
+		this.furnace = furnace;
+		this.cause = reason;
+		this.source = source;
 		this.result = result;
 	}
 
 	/**
-	 * Gets the ingredient for this furnace
-	 * @return the ingredient ItemStack
+	 * Gets the smelted ItemStack
+	 * @return ItemStack which was smelted
 	 */
-	public ItemStack getResource() {
-		return resource.clone();
+	public ItemStack getSource() {
+		return source;
 	}
 
 	/**
@@ -71,5 +75,35 @@ public class FurnaceSmeltCause extends FurnaceCause {
 	 */
 	public void setResult(ItemStack newResult) {
 		result = newResult;
+	}
+
+	/**
+	 * Returns the Furnace in which an item was smelted.
+	 * @return
+	 */
+	public Furnace getFurnace() {
+		return furnace;
+	}
+
+	/**
+	 * Returns the cause which caused the FurnaceSmeltEvent
+	 * @return cause
+	 */
+	public Cause<?> getCause() {
+		return cause;
+	}
+
+	@Override
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
 	}
 }

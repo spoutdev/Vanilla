@@ -55,7 +55,7 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.event.cause.player.PlayerPlacementCause;
+import org.spout.vanilla.event.cause.PlayerPlacementCause;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.tool.InteractTool;

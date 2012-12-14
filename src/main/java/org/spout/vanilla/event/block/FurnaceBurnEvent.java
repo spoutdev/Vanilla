@@ -24,29 +24,36 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.event.cause;
+package org.spout.vanilla.event.block;
 
+import org.spout.api.event.Cancellable;
+import org.spout.api.event.Cause;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.block.BlockEvent;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.component.substance.material.Furnace;
 
 /**
- * Caused when a furnace successfully burned fuel
+ * Event which is called when an unit of an ItemStack is burned as fuel.
+ * todo implement calling of this event
  */
-public class FurnaceBurnCause extends FurnaceCause {
-	private ItemStack fuel;
-	private int burnTime;
+public class FurnaceBurnEvent extends BlockEvent implements Cancellable {
+	private static HandlerList handlers = new HandlerList();
+	private final Furnace furnace;
+	private final Cause cause;
+	private final ItemStack fuel;
+	private float burnTime;
+	private boolean burning;
 
-	/**
-	 * Contains the ItemStack of the fuel which was burned
-	 * @param furnace the furnace which has burned fuel
-	 * @param fuel ItemStack of fuel
-	 * @param burnTime the time one unit of the fuel will burn
-	 */
-	public FurnaceBurnCause(Furnace furnace, ItemStack fuel, int burnTime) {
-		super(furnace);
+	public FurnaceBurnEvent(Furnace furnace, Cause<?> reason, ItemStack fuel, float burnTime) {
+		super(furnace.getBlock(), reason);
+		this.furnace = furnace;
+		this.cause = reason;
 		this.fuel = fuel;
 		this.burnTime = burnTime;
+		// TODO will need to check if that is really necessary here
+		this.burning = true;
 	}
 
 	/**
@@ -58,30 +65,69 @@ public class FurnaceBurnCause extends FurnaceCause {
 	}
 
 	/**
-	 * Gets the burn time of one unit of the ItemStack
-	 * @return the time one unit of the fuel will burn
+	 * Returns if the Furnace is burning at the moment
+	 * @return true if isBurning
 	 */
-	public int getBurnTime() {
-		return burnTime;
+	public boolean isBurning() {
+		return burning;
 	}
 
 	/**
-	 * Sets the fuel ItemStack for this furnace
-	 * @param fuel the fuel ItemStack
+	 * Sets the burning state of the furnace.
+	 * @param burning
 	 */
-	public void setFuel(ItemStack fuel) {
-		this.fuel = fuel;
+	public void setBurning(boolean burning) {
+		this.burning = burning;
+	}
+
+	/**
+	 * Gets the burn time of one unit of the ItemStack
+	 * @return the time one unit of the fuel will burn
+	 */
+	public float getBurnTime() {
+		return burnTime;
 	}
 
 	/**
 	 * Set the burn time of one unit of fuel for the ItemStack.
 	 * Will throw an {@link IllegalArgumentException} if burnTime is <= 0
 	 * @param burnTime the time one unit of the fuel will burn
+	 * @see Furnace for more information about the BurnTime
 	 */
-	public void setBurnTime(int burnTime) {
+	public void setBurnTime(float burnTime) {
 		if (burnTime <= 0) {
 			throw new IllegalArgumentException();
 		}
 		this.burnTime = burnTime;
+	}
+
+	/**
+	 * Returns the Furnace where fuel was burned
+	 * @return
+	 */
+	public Furnace getFurnace() {
+		return furnace;
+	}
+
+	/**
+	 * Returns the cause which caused the FurnaceBurnEvent
+	 * @return cause
+	 */
+	public Cause<?> getCause() {
+		return cause;
+	}
+
+	@Override
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
 	}
 }

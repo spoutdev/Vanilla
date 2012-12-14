@@ -24,20 +24,38 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.event.cause;
+package org.spout.vanilla.event.block;
 
+import org.spout.api.event.Cancellable;
+import org.spout.api.event.Cause;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.block.BlockChangeEvent;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockSnapshot;
 
 /**
- * Caused when a block grows
- * todo needs to be implemented
+ * Event which is called when a block grows in the world.
+ * For example: Wheat, Sugar, Cactus, etc.
+ * todo implement calling of this event
  */
-public class BlockGrowCause extends BlockChangeCause {
-	/**
-	 * Caused when a block grows.
-	 * @param block which was formed
-	 */
-	public BlockGrowCause(Block block) {
-		super(block);
+public class BlockGrowEvent extends BlockChangeEvent implements Cancellable {
+	private static HandlerList handlers = new HandlerList();
+
+	public BlockGrowEvent(Block block, BlockSnapshot newState, Cause<?> reason) {
+		super(block, newState, reason);
+	}
+
+	@Override
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
 	}
 }

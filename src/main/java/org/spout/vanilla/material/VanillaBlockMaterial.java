@@ -87,9 +87,9 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	public VanillaBlockMaterial(String name, int id, String model) {
 		this((short) 0, name, id, model);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
-			if (!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.SKYTIME)) {
-				getModel().getRenderMaterial().addRenderEffect(BatchEffects.SKYTIME);
-				getModel().getRenderMaterial().addBufferEffect(BatchEffects.LIGHTBUFFER);
+			if (!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.SKY_TIME)) {
+				getModel().getRenderMaterial().addRenderEffect(BatchEffects.SKY_TIME);
+				getModel().getRenderMaterial().addBufferEffect(BatchEffects.LIGHTING);
 			}
 		}
 	}
@@ -102,9 +102,9 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
-			if (!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.SKYTIME)) {
-				getModel().getRenderMaterial().addRenderEffect(BatchEffects.SKYTIME);
-				getModel().getRenderMaterial().addBufferEffect(BatchEffects.LIGHTBUFFER);
+			if (!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.SKY_TIME)) {
+				getModel().getRenderMaterial().addRenderEffect(BatchEffects.SKY_TIME);
+				getModel().getRenderMaterial().addBufferEffect(BatchEffects.LIGHTING);
 			}
 		}
 	}
@@ -117,9 +117,9 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
-			if (!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.SKYTIME)) {
-				getModel().getRenderMaterial().addRenderEffect(BatchEffects.SKYTIME);
-				getModel().getRenderMaterial().addBufferEffect(BatchEffects.LIGHTBUFFER);
+			if (!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.SKY_TIME)) {
+				getModel().getRenderMaterial().addRenderEffect(BatchEffects.SKY_TIME);
+				getModel().getRenderMaterial().addBufferEffect(BatchEffects.LIGHTING);
 			}
 		}
 	}

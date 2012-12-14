@@ -51,6 +51,9 @@ public class TallGrass extends DeadBush implements Burnable, InitializableMateri
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(BatchEffects.BIOME_GRASS_COLOR)) {
 				getModel().getRenderMaterial().addBufferEffect(BatchEffects.BIOME_GRASS_COLOR);
 			}
+			if (!getMeshEffects().contains(BatchEffects.TALL_GRASS_OFFSET)) {
+				addMeshEffect(BatchEffects.TALL_GRASS_OFFSET);
+			}
 		}
 	}
 
@@ -59,6 +62,9 @@ public class TallGrass extends DeadBush implements Burnable, InitializableMateri
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(BatchEffects.BIOME_GRASS_COLOR)) {
 				getModel().getRenderMaterial().addBufferEffect(BatchEffects.BIOME_GRASS_COLOR);
+			}
+			if (!getMeshEffects().contains(BatchEffects.TALL_GRASS_OFFSET)) {
+				addMeshEffect(BatchEffects.TALL_GRASS_OFFSET);
 			}
 		}
 	}

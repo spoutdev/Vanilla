@@ -1,7 +1,7 @@
 GL30:
     Vertex: file://Vanilla/resources/shaders/terrainBiomeColor.330.vert
-    Fragment: file://Vanilla/resources/shaders/terrainAlphaBiomeColor.330.frag
+    Fragment: file://Vanilla/resources/shaders/terrainFoliage.330.frag
 GL20:
     Vertex: file://Vanilla/resources/shaders/terrainBiomeColor.120.vert
-    Fragment: file://Vanilla/resources/shaders/terrainAlphaBiomeColor.120.frag
+    Fragment: file://Vanilla/resources/shaders/terrainFoliage.120.frag
     

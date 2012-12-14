@@ -26,13 +26,25 @@
  */
 package org.spout.vanilla.render;
 
-import org.spout.api.render.effect.RenderEffect;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.render.effect.MeshEffect;
+import org.spout.api.render.effect.SnapshotMesh;
 
-public class BatchEffects {
-	public static final LightBufferEffect LIGHTING = new LightBufferEffect();
-	public static final BiomeGrassColorBufferEffect BIOME_GRASS_COLOR = new BiomeGrassColorBufferEffect();
-	public static final BiomeFoliageColorBufferEffect BIOME_FOLIAGE_COLOR = new BiomeFoliageColorBufferEffect();
-	public static final TallGrassOffsetEffect TALL_GRASS_OFFSET = new TallGrassOffsetEffect();
-	public static final RenderEffect SKY_TIME = new LightRenderEffect();
-	public static final RenderEffect LIQUID = new LiquidRenderEffect();
+public class TallGrassOffsetEffect implements MeshEffect {
+	@Override
+	public void preMesh(SnapshotMesh mesh) {
+		final Point pos = mesh.getPosition();
+		long hash = pos.getFloorX() * 393443L
+				^ pos.getFloorY() * 96754111L
+				^ pos.getFloorZ() * 228329L;
+		hash *= hash * (hash + 89249651343L);
+		mesh.setPosition(pos.add(
+				((hash >> 16 & 0xF) / 15f - 0.5f) * 0.5f,
+				((hash >> 20 & 0xF) / 15f - 1) * 0.2f,
+				((hash >> 24 & 0xF) / 15f - 0.5f) * 0.5f));
+	}
+
+	@Override
+	public void postMesh(SnapshotMesh mesh) {
+	}
 }

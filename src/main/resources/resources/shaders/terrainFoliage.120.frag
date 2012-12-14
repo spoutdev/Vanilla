@@ -11,5 +11,5 @@ void main()
 {
 	vec4 texel = texture2D(Diffuse, uvcoord);
 	if (texel.a <= 0.0f) discard;
-    gl_FragColor = texel * color * biomecolor;
+	gl_FragColor = texel * color * biomecolor;
 }

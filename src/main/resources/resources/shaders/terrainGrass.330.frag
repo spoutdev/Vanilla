@@ -11,20 +11,19 @@ layout(location=0) out vec4 outputColor;
 
 void main()
 {
-	vec4 texel = texture(Diffuse, uvcoord);
 	if (normal.y < 0) {
 		// Bottom face
-		outputColor = texel * color;
+		outputColor = texture(Diffuse, uvcoord) * color;
 	} else if (normal.y == 0) {
 		// Side face
 		vec4 colorableTexel = texture(Diffuse, vec2(uvcoord.x + 0.1875f, uvcoord.y + 0.125f));
 		if (colorableTexel.a > 0.0f) {
 			outputColor = colorableTexel * color * biomecolor;
 		} else {
-			outputColor = texel * color;
+			outputColor = texture(Diffuse, uvcoord) * color;
 		}
 	} else {
 		// Top face
-		outputColor = texel * color * biomecolor;
+		outputColor = texture(Diffuse, uvcoord) * color * biomecolor;
 	}
 }

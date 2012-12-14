@@ -13,5 +13,5 @@ void main()
 {
 	vec4 texel = texture(Diffuse, uvcoord);
 	if (texel.a <= 0.0f) discard;
-    outputColor = texel * color * biomecolor;
+	outputColor = texel * color * biomecolor;
 } 

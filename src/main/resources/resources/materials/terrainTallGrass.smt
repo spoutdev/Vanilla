@@ -1,4 +1,4 @@
-Shader: shader://Vanilla/resources/shaders/terrainAlphaBiomeColor.ssf
+Shader: shader://Vanilla/resources/shaders/terrainFoliage.ssf
 
 MaterialParams:
     Diffuse: texture://Vanilla/resources/terrain.png

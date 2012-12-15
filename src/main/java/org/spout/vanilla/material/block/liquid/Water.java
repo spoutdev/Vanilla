@@ -47,6 +47,9 @@ public class Water extends Liquid implements DynamicMaterial {
 		super(name, id, flowing, "model://Vanilla/resources/materials/block/liquid/water/water.spm");
 		this.setFlowDelay(250);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
+			if (!getModel().getRenderMaterial().getBufferEffects().contains(BatchEffects.BIOME_WATER_COLOR)) {
+				getModel().getRenderMaterial().addBufferEffect(BatchEffects.BIOME_WATER_COLOR);
+			}
 			if (!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.LIQUID)) {
 				getModel().getRenderMaterial().addRenderEffect(BatchEffects.LIQUID);
 			}

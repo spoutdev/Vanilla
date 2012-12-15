@@ -1,2 +1,2 @@
 Mesh: cubemesh://Vanilla/resources/materials/block/liquid/water/water.uvs
-Material: material://Vanilla/resources/materials/terrainLiquid.smt
+Material: material://Vanilla/resources/materials/terrainWater.smt

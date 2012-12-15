@@ -54,7 +54,7 @@ public abstract class BiomeColorBufferEffect implements BufferEffect {
 			biomeColors = (TFloatList) buffers.get(5);
 		}
 		// This colors whole block faces at once. Doing it for each vertex is too expensive.
-		// 24 vetex coords per face (2 mesh face per block face, 3 vertices per mesh face, 4 coords per vertices)
+		// 24 vertex coords per face (2 mesh face per block face, 3 vertices per mesh face, 4 coords per vertices)
 		// This expects vertices to be grouped by block face.
 		final World world = chunkModel.getCenter().getWorld();
 		for (int i = 0; i < vertexCount; i += 24) {

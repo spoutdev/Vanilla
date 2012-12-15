@@ -42,7 +42,8 @@ public class LightRenderEffect implements RenderEffect {
 	@Override
 	public void preRender(SnapshotRender snapshotRender) {
 		//TODO : Replace by the real color of the sky taking account of the time
-		float f = (System.currentTimeMillis() % 15000) / 15000f;
+		//float f = (System.currentTimeMillis() % 15000) / 15000f;
+		float f = 1;
 		
 		snapshotRender.getMaterial().getShader().setUniform("skyColor", new Vector4(f, f, f, 1f));
 		

@@ -103,8 +103,8 @@ public class Human extends Living {
 		return getOwner().getData().get(VanillaData.IS_SNEAKING);
 	}
 
-	public void setSneaking(boolean isSprinting) {
-		getOwner().getData().put(VanillaData.IS_SNEAKING, isSprinting);
+	public void setSneaking(boolean isSneaking) {
+		getOwner().getData().put(VanillaData.IS_SNEAKING, isSneaking);
 	}
 
 	public boolean isFalling() {

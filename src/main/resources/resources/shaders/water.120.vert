@@ -34,8 +34,8 @@ void main()
 	vec4 Iamb = skyColor * ambient * vskylight;
 
 	//calculate Diffuse Term:
-	float dotProd = dot(vNormal.xyz,L);
-	vec4 Idiff = (1 - ambient) * ((sunColor * max(dotProd, 0.0)) + (moonColor * max(-dotProd, 0.0)));
+	float dotProd = (1 + dot(vNormal.xyz,L)) / 2;
+	vec4 Idiff = (1 - ambient) * ((sunColor * max(dotProd, 0.0)) + (moonColor * max(1 - dotProd, 0.0)));
 	Idiff = clamp(Idiff * vskylight, 0.0, 1.0);
 
 	// calculate Specular Term:

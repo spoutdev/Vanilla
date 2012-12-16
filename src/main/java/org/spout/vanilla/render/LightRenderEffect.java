@@ -27,6 +27,7 @@
 package org.spout.vanilla.render;
 
 import org.spout.api.math.MathHelper;
+import org.spout.api.math.Vector3;
 import org.spout.api.math.Vector4;
 import org.spout.api.render.effect.RenderEffect;
 import org.spout.api.render.effect.SnapshotRender;
@@ -34,25 +35,65 @@ import org.spout.api.render.effect.SnapshotRender;
 public class LightRenderEffect implements RenderEffect {
 	private static final float size = 256f;
 
-	private static final float freqX = 0.05f;
-	private static final float amplX = 0.3f;
-	private static final float freqY = 0.31f;
-	private static final float amplY = 0.3f;
+	private static final float lat = (float) ((25.0 / 180.0) * MathHelper.PI);
+	
+	private static final Vector4 moonBrightness = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
+	private static final Vector4 sunBrightness = new Vector4(1f, 1f, 1f, 1.0f);
+	
+	private static final float cY = (float) Math.cos(lat);
+	private static final float cZ = (float) Math.sin(lat);
+	
+	private static volatile boolean force = false;
+	private static volatile float xForce = 0;
+	private static volatile float yForce = 0;
+	private static volatile float zForce = 0;
+	
+	public static void setSun(Vector3 pos) {
+		if (pos == null) {
+			force = false;
+		} else {
+			xForce = pos.getX();
+			yForce = pos.getY();
+			zForce = pos.getZ();
+			force = true;
+		}
+	}
 	
 	@Override
 	public void preRender(SnapshotRender snapshotRender) {
 		//TODO : Replace by the real color of the sky taking account of the time
-		//float f = (System.currentTimeMillis() % 15000) / 15000f;
-		float f = 1;
+		float f = (float) ((System.currentTimeMillis() % 15000) / 15000.0);
 		
-		snapshotRender.getMaterial().getShader().setUniform("skyColor", new Vector4(f, f, f, 1f));
+		float rads = (float) (f * 2 * MathHelper.PI);
 		
-		float x = (float) (MathHelper.mod(2.0 * MathHelper.PI * freqX / 1000.0 * System.currentTimeMillis(), 2.0f * MathHelper.PI) - MathHelper.PI);
-		x = amplX * (float) (MathHelper.sin(x) + 1.0f);
-		float y = (float) (MathHelper.mod(2.0 * MathHelper.PI * freqY / 1000.0 * System.currentTimeMillis(), 2.0f * MathHelper.PI) - MathHelper.PI);
-		y = amplY * (float) (MathHelper.sin(y) + 1.0f);
+		float x = (float) Math.sin(rads);
 		
-		snapshotRender.getMaterial().getShader().setUniform("sunDir", new Vector4(x * size, 256, y * size, 1f));
+		float y1 = (float) Math.cos(rads); 
+		
+		float y = (float) (y1 * cY);
+		
+		float z = (float) (y1 * cZ);
+		
+		if (force) {
+			x = xForce;
+			y = yForce;
+			z = zForce;
+		}
+		
+		if (y < 0) {
+			x = -x;
+			y = -y;
+			z = -z;
+			snapshotRender.getMaterial().getShader().setUniform("skyColor", moonBrightness);
+		} else {
+			snapshotRender.getMaterial().getShader().setUniform("skyColor", sunBrightness);
+		}
+
+		Vector4 sunDir = new Vector4(x * size, y * size, z * size, 1.0f);
+		
+		//Spout.getLogger().info("f = " + f + " rads = " + rads + " vector " + sunDir);
+		
+		snapshotRender.getMaterial().getShader().setUniform("sunDir", sunDir);
 	}
 
 	@Override

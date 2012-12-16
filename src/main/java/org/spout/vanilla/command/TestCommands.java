@@ -49,10 +49,10 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
+import org.spout.api.math.Vector3;
 import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.util.BlockIterator;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.component.living.Living;
@@ -83,6 +83,7 @@ import org.spout.vanilla.inventory.window.entity.VillagerWindow;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
+import org.spout.vanilla.render.LightRenderEffect;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
@@ -93,6 +94,18 @@ public class TestCommands {
 
 	public TestCommands(VanillaPlugin instance) {
 		plugin = instance;
+	}
+	
+	@Command(aliases = "sun", usage = "<x> <y> <z>", desc = "Sets the sun direction.")
+	@CommandPermissions("vanilla.command.debug")
+	public void setSunDirection(CommandContext args, CommandSource source) throws CommandException {
+		if (args.length() == 0) {
+			LightRenderEffect.setSun(null);
+		} else if (args.length() == 3) {
+			LightRenderEffect.setSun(new Vector3(args.getDouble(0), args.getDouble(1), args.getDouble(2)));
+		} else {
+			throw new CommandException("You must provide 3 coords or none to clear");
+		}
 	}
 
 	@Command(aliases = "findframe", usage = "<radius>", desc = "Find a nether portal frame.", min = 1, max = 1)

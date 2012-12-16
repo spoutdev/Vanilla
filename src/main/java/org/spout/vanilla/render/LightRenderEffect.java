@@ -37,8 +37,12 @@ public class LightRenderEffect implements RenderEffect {
 
 	private static final float lat = (float) ((25.0 / 180.0) * MathHelper.PI);
 	
-	private static final Vector4 moonBrightness = new Vector4(0.5f, 0.5f, 0.5f, 1.0f);
-	private static final Vector4 sunBrightness = new Vector4(1f, 1f, 1f, 1.0f);
+	private static final float sunSize = 0.1f;
+	
+	private static final float ambient = 0.33f;
+	
+	private static final Vector4 moonColor = new Vector4(0.33f, 0.33f, 0.33f, 1.0f);
+	private static final Vector4 sunColor = new Vector4(1f, 1f, 1f, 1.0f);
 	
 	private static final float cY = (float) Math.cos(lat);
 	private static final float cZ = (float) Math.sin(lat);
@@ -80,13 +84,26 @@ public class LightRenderEffect implements RenderEffect {
 			z = zForce;
 		}
 		
+		float yAbs = Math.abs(y);
+		if (yAbs < sunSize) {
+			float a = 1 - (yAbs / sunSize * (1 - ambient));
+			snapshotRender.getMaterial().getShader().setUniform("sunAmbient", a);
+			float sunWeight = (y + sunSize) / sunSize / 2;
+			float ambWeight = ambient / a;
+			snapshotRender.getMaterial().getShader().setUniform("skyColor", sunColor.multiply(sunWeight).add(moonColor.multiply((1 - sunWeight))).multiply(ambWeight));
+		} else {
+			snapshotRender.getMaterial().getShader().setUniform("sunAmbient", ambient);
+			if (y < 0) {
+				snapshotRender.getMaterial().getShader().setUniform("skyColor", moonColor);
+			} else {
+				snapshotRender.getMaterial().getShader().setUniform("skyColor", sunColor);
+			}
+		}
+		
 		if (y < 0) {
 			x = -x;
 			y = -y;
 			z = -z;
-			snapshotRender.getMaterial().getShader().setUniform("skyColor", moonBrightness);
-		} else {
-			snapshotRender.getMaterial().getShader().setUniform("skyColor", sunBrightness);
 		}
 
 		Vector4 sunDir = new Vector4(x * size, y * size, z * size, 1.0f);

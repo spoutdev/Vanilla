@@ -26,44 +26,69 @@
  */
 package org.spout.vanilla.material.item.misc;
 
+import org.spout.api.component.Component;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
-
+import org.spout.vanilla.component.living.hostile.Blaze;
+import org.spout.vanilla.component.living.hostile.CaveSpider;
+import org.spout.vanilla.component.living.hostile.Creeper;
+import org.spout.vanilla.component.living.hostile.Ghast;
+import org.spout.vanilla.component.living.hostile.MagmaCube;
+import org.spout.vanilla.component.living.hostile.Silverfish;
+import org.spout.vanilla.component.living.hostile.Skeleton;
+import org.spout.vanilla.component.living.hostile.Slime;
+import org.spout.vanilla.component.living.hostile.Spider;
+import org.spout.vanilla.component.living.hostile.Zombie;
+import org.spout.vanilla.component.living.neutral.Enderman;
+import org.spout.vanilla.component.living.neutral.PigZombie;
+import org.spout.vanilla.component.living.neutral.Wolf;
+import org.spout.vanilla.component.living.passive.Chicken;
+import org.spout.vanilla.component.living.passive.Cow;
+import org.spout.vanilla.component.living.passive.MooshroomCow;
+import org.spout.vanilla.component.living.passive.Ocelot;
+import org.spout.vanilla.component.living.passive.Pig;
+import org.spout.vanilla.component.living.passive.Sheep;
+import org.spout.vanilla.component.living.passive.Squid;
+import org.spout.vanilla.component.living.passive.Villager;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class SpawnEgg extends VanillaItemMaterial {
 	private static final SpawnEgg PARENT = new SpawnEgg("Spawn Egg"); //There is no entity with the ID 0 so this egg is invalid
-	public static final SpawnEgg CREEPER = new SpawnEgg("Spawn Creeper", 50, PARENT);
-	public static final SpawnEgg SKELETON = new SpawnEgg("Spawn Skeleton", 51, PARENT);
-	public static final SpawnEgg SPIDER = new SpawnEgg("Spawn Spider", 52, PARENT);
-	public static final SpawnEgg ZOMBIE = new SpawnEgg("Spawn Zombie", 54, PARENT);
-	public static final SpawnEgg SLIME = new SpawnEgg("Spawn Slime", 55, PARENT);
-	public static final SpawnEgg GHAST = new SpawnEgg("Spawn Ghast", 56, PARENT);
-	public static final SpawnEgg PIGMAN = new SpawnEgg("Spawn Pigman", 57, PARENT);
-	public static final SpawnEgg ENDERMAN = new SpawnEgg("Spawn Enderman", 58, PARENT);
-	public static final SpawnEgg CAVESPIDER = new SpawnEgg("Spawn Cavespider", 59, PARENT);
-	public static final SpawnEgg SILVERFISH = new SpawnEgg("Spawn Silverfish", 60, PARENT);
-	public static final SpawnEgg BLAZE = new SpawnEgg("Spawn Blaze", 61, PARENT);
-	public static final SpawnEgg MAGMACUBE = new SpawnEgg("Spawn Magmacube", 62, PARENT);
-	public static final SpawnEgg PIG = new SpawnEgg("Spawn Pig", 90, PARENT);
-	public static final SpawnEgg SHEEP = new SpawnEgg("Spawn Sheep", 91, PARENT);
-	public static final SpawnEgg COW = new SpawnEgg("Spawn Cow", 92, PARENT);
-	public static final SpawnEgg CHICKEN = new SpawnEgg("Spawn Chicken", 93, PARENT);
-	public static final SpawnEgg SQUID = new SpawnEgg("Spawn Squid", 94, PARENT);
-	public static final SpawnEgg WOLF = new SpawnEgg("Spawn Wolf", 95, PARENT);
-	public static final SpawnEgg MOOSHROOM = new SpawnEgg("Spawn Mooshroom", 96, PARENT);
-	public static final SpawnEgg VILLAGER = new SpawnEgg("Spawn Villager", 120, PARENT);
-	public static final SpawnEgg OCELOT = new SpawnEgg("Spawn Ocelot", 98, PARENT);
+	public static final SpawnEgg CREEPER = new SpawnEgg("Spawn Creeper", 50, Creeper.class, PARENT);
+	public static final SpawnEgg SKELETON = new SpawnEgg("Spawn Skeleton", 51, Skeleton.class, PARENT);
+	public static final SpawnEgg SPIDER = new SpawnEgg("Spawn Spider", 52, Spider.class, PARENT);
+	public static final SpawnEgg ZOMBIE = new SpawnEgg("Spawn Zombie", 54, Zombie.class, PARENT);
+	public static final SpawnEgg SLIME = new SpawnEgg("Spawn Slime", 55, Slime.class, PARENT);
+	public static final SpawnEgg GHAST = new SpawnEgg("Spawn Ghast", 56, Ghast.class, PARENT);
+	public static final SpawnEgg PIGMAN = new SpawnEgg("Spawn Pigman", 57,PigZombie.class, PARENT);
+	public static final SpawnEgg ENDERMAN = new SpawnEgg("Spawn Enderman", 58, Enderman.class, PARENT);
+	public static final SpawnEgg CAVESPIDER = new SpawnEgg("Spawn Cavespider", 59, CaveSpider.class, PARENT);
+	public static final SpawnEgg SILVERFISH = new SpawnEgg("Spawn Silverfish", 60, Silverfish.class, PARENT);
+	public static final SpawnEgg BLAZE = new SpawnEgg("Spawn Blaze", 61, Blaze.class, PARENT);
+	public static final SpawnEgg MAGMACUBE = new SpawnEgg("Spawn Magmacube", 62,MagmaCube.class, PARENT);
+	public static final SpawnEgg PIG = new SpawnEgg("Spawn Pig", 90, Pig.class, PARENT);
+	public static final SpawnEgg SHEEP = new SpawnEgg("Spawn Sheep", 91, Sheep.class, PARENT);
+	public static final SpawnEgg COW = new SpawnEgg("Spawn Cow", 92, Cow.class, PARENT);
+	public static final SpawnEgg CHICKEN = new SpawnEgg("Spawn Chicken", 93, Chicken.class, PARENT);
+	public static final SpawnEgg SQUID = new SpawnEgg("Spawn Squid", 94,Squid.class, PARENT);
+	public static final SpawnEgg WOLF = new SpawnEgg("Spawn Wolf", 95,Wolf.class, PARENT);
+	public static final SpawnEgg MOOSHROOM = new SpawnEgg("Spawn Mooshroom", 96, MooshroomCow.class, PARENT);
+	public static final SpawnEgg VILLAGER = new SpawnEgg("Spawn Villager", 120, Villager.class, PARENT);
+	public static final SpawnEgg OCELOT = new SpawnEgg("Spawn Ocelot", 98, Ocelot.class, PARENT);
+
+	private Class<? extends Component> entityComponent;
 
 	private SpawnEgg(String name) {
 		super((short) 0x007F, name, 383, null);
 	}
 
-	private SpawnEgg(String name, int data, Material parent) {
+	private SpawnEgg(String name, int data, Class<? extends Component> entityComponent, Material parent) {
 		super(name, 383, data, parent, null);
+		this.entityComponent = entityComponent;
 	}
 
 	@Override
@@ -71,6 +96,6 @@ public class SpawnEgg extends VanillaItemMaterial {
 		if (type != Action.RIGHT_CLICK) {
 			return;
 		}
-		//TODO re-write spawn egg spawning handling.
+		block.getWorld().createAndSpawnEntity(block.translate(clickedface).getPosition(), entityComponent, LoadOption.NO_LOAD);
 	}
 }

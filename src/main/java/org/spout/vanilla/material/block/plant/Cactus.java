@@ -47,7 +47,7 @@ public class Cactus extends StackGrowingBase implements TimedCraftable {
 	private Set<BlockMaterial> deniedNeighbours = new HashSet<BlockMaterial>();
 
 	public Cactus(String name, int id) {
-		super(name, id, null);
+		super(name, id, "model://Vanilla/resources/materials/block/nonsolid/cactus/cactus.spm");
 		this.setHardness(0.4F).setResistance(0.7F).setTransparent();
 		this.addDeniedNeighbour(VanillaMaterials.WEB, VanillaMaterials.STONE_PRESSURE_PLATE, VanillaMaterials.WOODEN_PRESSURE_PLATE);
 	}

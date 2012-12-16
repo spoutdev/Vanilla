@@ -41,12 +41,12 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.render.BatchEffects;
 
 public class TallGrass extends DeadBush implements Burnable, InitializableMaterial {
-	public static final TallGrass DEAD_GRASS = new TallGrass("Dead Grass");
-	public static final TallGrass TALL_GRASS = new TallGrass("Tall Grass", 1, DEAD_GRASS);
-	public static final TallGrass FERN = new TallGrass("Fern", 2, DEAD_GRASS);
+	public static final TallGrass DEAD_GRASS = new TallGrass("Dead Grass", "model://Vanilla/resources/materials/block/nonsolid/deadgrass/deadgrass.spm");
+	public static final TallGrass TALL_GRASS = new TallGrass("Tall Grass", 1, DEAD_GRASS, "model://Vanilla/resources/materials/block/nonsolid/tallgrass/tallgrass.spm");
+	public static final TallGrass FERN = new TallGrass("Fern", 2, DEAD_GRASS, "model://Vanilla/resources/materials/block/nonsolid/fern/fern.spm");
 
-	private TallGrass(String name) {
-		super(name, (short) 0x0003, "model://Vanilla/resources/materials/block/nonsolid/tallgrass/tallgrass.spm");
+	private TallGrass(String name, String model) {
+		super(name, (short) 0x0003, model);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(BatchEffects.BIOME_GRASS_COLOR)) {
 				getModel().getRenderMaterial().addBufferEffect(BatchEffects.BIOME_GRASS_COLOR);
@@ -57,8 +57,8 @@ public class TallGrass extends DeadBush implements Burnable, InitializableMateri
 		}
 	}
 
-	private TallGrass(String name, int data, TallGrass parent) {
-		super(name, data, parent, "model://Vanilla/resources/materials/block/nonsolid/tallgrass/tallgrass.spm");
+	private TallGrass(String name, int data, TallGrass parent, String model) {
+		super(name, data, parent, model);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(BatchEffects.BIOME_GRASS_COLOR)) {
 				getModel().getRenderMaterial().addBufferEffect(BatchEffects.BIOME_GRASS_COLOR);

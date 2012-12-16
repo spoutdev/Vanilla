@@ -96,6 +96,17 @@ public class TestCommands {
 		plugin = instance;
 	}
 	
+	@Command(aliases = "respawn", usage = "", desc = "Forces the client to respawn")
+	@CommandPermissions("vanilla.command.debug")
+	public void respawn(CommandContext args, CommandSource source) throws CommandException {
+		if (args.length() != 0) {
+			throw new CommandException("This command does not require arguments");
+		} else if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to respawn.");
+		}
+		((Player) source).getNetworkSynchronizer().setRespawned();
+	}
+	
 	@Command(aliases = "sun", usage = "<x> <y> <z>", desc = "Sets the sun direction.")
 	@CommandPermissions("vanilla.command.debug")
 	public void setSunDirection(CommandContext args, CommandSource source) throws CommandException {

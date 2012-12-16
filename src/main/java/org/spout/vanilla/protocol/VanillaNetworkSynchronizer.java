@@ -387,12 +387,22 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				}
 			}
 		} else {
+			player.getSession().send(false, new PlayerRespawnMessage(0, difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
+			player.getSession().send(false, new PlayerRespawnMessage(1, difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
 			player.getSession().send(false, new PlayerRespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
 		}
 
 		Point pos = world.getSpawnPoint().getPosition();
 		PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ());
 		player.getSession().send(false, SPMsg);
+	}
+	
+	@Override
+	protected void resetChunks() {
+		super.resetChunks();
+		this.emptyColumns.clear();
+		this.activeChunks.clear();
+		this.initializedChunks.clear();
 	}
 
 	@Override

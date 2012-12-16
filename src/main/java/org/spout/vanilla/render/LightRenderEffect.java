@@ -43,6 +43,7 @@ public class LightRenderEffect implements RenderEffect {
 	
 	private static final Vector4 moonColor = new Vector4(0.33f, 0.33f, 0.50f, 1.0f);
 	private static final Vector4 sunColor = new Vector4(1f, 1f, 1f, 1.0f);
+	private static final Vector4 dawnColor = new Vector4(1f, 0.5f, 0.5f, 1.0f);
 	
 	private static final float cY = (float) Math.cos(lat);
 	private static final float cZ = (float) Math.sin(lat);
@@ -90,7 +91,14 @@ public class LightRenderEffect implements RenderEffect {
 		float yAbs = Math.abs(y);
 		if (yAbs < sunSize) {
 			sunWeight = (y + sunSize) / sunSize / 2.0f;
-			skyColor = sunColor.multiply(sunWeight).add(moonColor.multiply((1 - sunWeight)));
+			Vector4 weightedSun;
+			if (y < 0) {
+				weightedSun = dawnColor;
+			} else {
+				float dawnWeight = y / sunSize;
+				weightedSun = sunColor.multiply(dawnWeight).add(dawnColor.multiply(1 - dawnWeight));
+			}
+			skyColor = weightedSun.multiply(sunWeight).add(moonColor.multiply((1 - sunWeight)));
 		} else {
 			if (y < 0) {
 				sunWeight = 0;

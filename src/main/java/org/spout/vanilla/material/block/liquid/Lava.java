@@ -37,15 +37,15 @@ import org.spout.api.plugin.Platform;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
-import org.spout.vanilla.render.BatchEffects;
+import org.spout.vanilla.render.VanillaEffects;
 
 public class Lava extends Liquid {
 	public Lava(String name, int id, boolean flowing) {
 		super(name, id, flowing, "model://Vanilla/resources/materials/block/liquid/lava/lava.spm");
 		this.setFlowDelay(1500);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
-			if (!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.LIQUID)) {
-				getModel().getRenderMaterial().addRenderEffect(BatchEffects.LIQUID);
+			if (!getModel().getRenderMaterial().getRenderEffects().contains(VanillaEffects.LIQUID)) {
+				getModel().getRenderMaterial().addRenderEffect(VanillaEffects.LIQUID);
 			}
 		}
 		//TODO: Allow this to get past the tests

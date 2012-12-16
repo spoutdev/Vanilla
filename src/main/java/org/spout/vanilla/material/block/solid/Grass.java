@@ -39,7 +39,7 @@ import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.SpreadingSolid;
-import org.spout.vanilla.render.BatchEffects;
+import org.spout.vanilla.render.VanillaEffects;
 
 public class Grass extends SpreadingSolid implements DynamicMaterial, InitializableMaterial {
 	public Grass(String name, int id) {
@@ -47,8 +47,8 @@ public class Grass extends SpreadingSolid implements DynamicMaterial, Initializa
 		this.setHardness(0.6F).setResistance(0.8F).setStepSound(SoundEffects.STEP_GRASS);
 		this.addMiningType(ToolType.SPADE);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
-			if (!getModel().getRenderMaterial().getBufferEffects().contains(BatchEffects.BIOME_GRASS_COLOR)) {
-				getModel().getRenderMaterial().addBufferEffect(BatchEffects.BIOME_GRASS_COLOR);
+			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_GRASS_COLOR)) {
+				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.BIOME_GRASS_COLOR);
 			}
 		}
 	}

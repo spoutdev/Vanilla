@@ -38,7 +38,7 @@ import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.component.SignBase;
-import org.spout.vanilla.render.BatchEffects;
+import org.spout.vanilla.render.VanillaEffects;
 
 public class Leaves extends Solid implements Burnable, InitializableMaterial {
 	public static final Leaves DEFAULT = new Leaves("Leaves", "model://Vanilla/resources/materials/block/solid/oakleaves/oakleaves.spm");
@@ -50,8 +50,8 @@ public class Leaves extends Solid implements Burnable, InitializableMaterial {
 		super((short) 0x0003, name, 18, model);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
-			if (!getModel().getRenderMaterial().getBufferEffects().contains(BatchEffects.BIOME_FOLIAGE_COLOR)) {
-				getModel().getRenderMaterial().addBufferEffect(BatchEffects.BIOME_FOLIAGE_COLOR);
+			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_FOLIAGE_COLOR)) {
+				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.BIOME_FOLIAGE_COLOR);
 			}
 		}
 	}
@@ -60,8 +60,8 @@ public class Leaves extends Solid implements Burnable, InitializableMaterial {
 		super(name, 18, data, parent, model);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
-			if (!getModel().getRenderMaterial().getBufferEffects().contains(BatchEffects.BIOME_FOLIAGE_COLOR)) {
-				getModel().getRenderMaterial().addBufferEffect(BatchEffects.BIOME_FOLIAGE_COLOR);
+			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_FOLIAGE_COLOR)) {
+				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.BIOME_FOLIAGE_COLOR);
 			}
 		}
 	}

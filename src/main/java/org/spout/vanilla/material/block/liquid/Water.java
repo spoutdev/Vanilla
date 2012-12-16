@@ -40,18 +40,18 @@ import org.spout.api.plugin.Platform;
 import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
-import org.spout.vanilla.render.BatchEffects;
+import org.spout.vanilla.render.VanillaEffects;
 
 public class Water extends Liquid implements DynamicMaterial {
 	public Water(String name, int id, boolean flowing) {
 		super(name, id, flowing, "model://Vanilla/resources/materials/block/liquid/water/water.spm");
 		this.setFlowDelay(250);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
-			if (!getModel().getRenderMaterial().getBufferEffects().contains(BatchEffects.BIOME_WATER_COLOR)) {
-				getModel().getRenderMaterial().addBufferEffect(BatchEffects.BIOME_WATER_COLOR);
+			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_WATER_COLOR)) {
+				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.BIOME_WATER_COLOR);
 			}
-			if (!getModel().getRenderMaterial().getRenderEffects().contains(BatchEffects.LIQUID)) {
-				getModel().getRenderMaterial().addRenderEffect(BatchEffects.LIQUID);
+			if (!getModel().getRenderMaterial().getRenderEffects().contains(VanillaEffects.LIQUID)) {
+				getModel().getRenderMaterial().addRenderEffect(VanillaEffects.LIQUID);
 			}
 		}
 		//TODO: Allow this to get past the tests

@@ -28,7 +28,7 @@ package org.spout.vanilla.render;
 
 import org.spout.api.render.effect.RenderEffect;
 
-public class BatchEffects {
+public class VanillaEffects {
 	public static final LightBufferEffect LIGHTING = new LightBufferEffect();
 	public static final BiomeGrassColorBufferEffect BIOME_GRASS_COLOR = new BiomeGrassColorBufferEffect();
 	public static final BiomeFoliageColorBufferEffect BIOME_FOLIAGE_COLOR = new BiomeFoliageColorBufferEffect();

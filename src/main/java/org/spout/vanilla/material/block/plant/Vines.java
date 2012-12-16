@@ -52,7 +52,7 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.Spreading;
-import org.spout.vanilla.render.BatchEffects;
+import org.spout.vanilla.render.VanillaEffects;
 
 public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Burnable, DynamicMaterial {
 	private static final EffectRange VINE_RANGE = new CuboidEffectRange(-4, -1, -4, 4, 1, 4);
@@ -64,8 +64,8 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
 		this.getDrops().DEFAULT.clear().add(this).addFlags(ToolTypeFlags.SHEARS);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
-			if (!getModel().getRenderMaterial().getBufferEffects().contains(BatchEffects.BIOME_FOLIAGE_COLOR)) {
-				getModel().getRenderMaterial().addBufferEffect(BatchEffects.BIOME_FOLIAGE_COLOR);
+			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_FOLIAGE_COLOR)) {
+				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.BIOME_FOLIAGE_COLOR);
 			}
 		}
 	}

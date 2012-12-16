@@ -13,10 +13,12 @@ out vec2 uvcoord;
 uniform mat4 Projection;
 uniform mat4 View;
 uniform mat4 Model;
+uniform vec4 sunColor;
+uniform vec4 moonColor;
 uniform vec4 skyColor;
 uniform vec4 sunDir;
 uniform vec2 animation;
-uniform float sunAmbient;
+uniform float ambient;
 		
 void main()
 {
@@ -27,10 +29,11 @@ void main()
 	vec3 R = normalize(-reflect(L,vNormal.xyz));
 
 	//calculate Ambient Term:
-	vec4 Iamb = skyColor * sunAmbient * vskylight;
+	vec4 Iamb = skyColor * ambient * vskylight;
 
 	//calculate Diffuse Term:
-	vec4 Idiff = skyColor * (1 - sunAmbient) * max(dot(vNormal.xyz,L), 0.0);
+	float dotProd = dot(vNormal.xyz,L);
+	vec4 Idiff = (1 - ambient) * ((sunColor * max(dotProd, 0.0)) + (moonColor * max(-dotProd, 0.0)));
 	Idiff = clamp(Idiff * vskylight, 0.0, 1.0);
 
 	// calculate Specular Term:

@@ -37,11 +37,11 @@ public class LightRenderEffect implements RenderEffect {
 
 	private static final float lat = (float) ((25.0 / 180.0) * MathHelper.PI);
 	
-	private static final float sunSize = 0.1f;
+	private static final float sunSize = 0.2f;
 	
 	private static final float ambient = 0.33f;
 	
-	private static final Vector4 moonColor = new Vector4(0.33f, 0.33f, 0.33f, 1.0f);
+	private static final Vector4 moonColor = new Vector4(0.33f, 0.33f, 0.50f, 1.0f);
 	private static final Vector4 sunColor = new Vector4(1f, 1f, 1f, 1.0f);
 	
 	private static final float cY = (float) Math.cos(lat);
@@ -83,28 +83,28 @@ public class LightRenderEffect implements RenderEffect {
 			y = yForce;
 			z = zForce;
 		}
+
+		float sunWeight;
+		Vector4 skyColor;
 		
 		float yAbs = Math.abs(y);
 		if (yAbs < sunSize) {
-			float a = 1 - (yAbs / sunSize * (1 - ambient));
-			snapshotRender.getMaterial().getShader().setUniform("sunAmbient", a);
-			float sunWeight = (y + sunSize) / sunSize / 2;
-			float ambWeight = ambient / a;
-			snapshotRender.getMaterial().getShader().setUniform("skyColor", sunColor.multiply(sunWeight).add(moonColor.multiply((1 - sunWeight))).multiply(ambWeight));
+			sunWeight = (y + sunSize) / sunSize / 2.0f;
+			skyColor = sunColor.multiply(sunWeight).add(moonColor.multiply((1 - sunWeight)));
 		} else {
-			snapshotRender.getMaterial().getShader().setUniform("sunAmbient", ambient);
 			if (y < 0) {
-				snapshotRender.getMaterial().getShader().setUniform("skyColor", moonColor);
+				sunWeight = 0;
+				skyColor = moonColor;
 			} else {
-				snapshotRender.getMaterial().getShader().setUniform("skyColor", sunColor);
+				sunWeight = 1;
+				skyColor = sunColor;
 			}
 		}
-		
-		if (y < 0) {
-			x = -x;
-			y = -y;
-			z = -z;
-		}
+
+		snapshotRender.getMaterial().getShader().setUniform("ambient", ambient);
+		snapshotRender.getMaterial().getShader().setUniform("skyColor", skyColor);
+		snapshotRender.getMaterial().getShader().setUniform("sunColor", sunColor.multiply(sunWeight));
+		snapshotRender.getMaterial().getShader().setUniform("moonColor", moonColor.multiply(1 - sunWeight));		
 
 		Vector4 sunDir = new Vector4(x * size, y * size, z * size, 1.0f);
 		

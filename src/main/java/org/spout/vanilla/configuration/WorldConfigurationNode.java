@@ -44,6 +44,10 @@ public final class WorldConfigurationNode extends ConfigurationHolderConfigurati
 	public final ConfigurationHolder SPAWN_ANIMALS = new ConfigurationHolder(true, "spawn-animals");
 	public final ConfigurationHolder SPAWN_MONSTERS = new ConfigurationHolder(true, "spawn-monster");
 	public final ConfigurationHolder ALLOW_FLIGHT = new ConfigurationHolder(false, "allow-flight");
+	public final ConfigurationHolder MIN_Y = new ConfigurationHolder(32, "min-y");
+	public final ConfigurationHolder MAX_Y = new ConfigurationHolder(224, "max-y");
+	public final ConfigurationHolder STEP_Y = new ConfigurationHolder(160, "step-y");
+
 	private final String name;
 	private final WorldConfiguration parent;
 

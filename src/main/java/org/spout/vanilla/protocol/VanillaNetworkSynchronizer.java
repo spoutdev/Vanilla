@@ -26,13 +26,15 @@
  */
 package org.spout.vanilla.protocol;
 
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
+import gnu.trove.set.TIntSet;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
-
-import gnu.trove.set.TIntSet;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -43,6 +45,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Quaternion;
@@ -57,13 +60,13 @@ import org.spout.api.util.hashing.IntPairHashed;
 import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
 import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.misc.HungerComponent;
 import org.spout.vanilla.component.substance.material.Sign;
 import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.configuration.WorldConfigurationNode;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
@@ -130,9 +133,6 @@ import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
 
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
-
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
 	private static final int SOLID_BLOCK_ID = 1; // Initializer block ID
 	private static final byte[] SOLID_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
@@ -144,6 +144,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	private TSyncIntPairHashSet activeChunks = new TSyncIntPairHashSet();
 	private Object initChunkLock = new Object();
 	private final ChunkInit chunkInit;
+	private int minY = 0;
+	private int maxY = 256;
+	private int lowY = 32;
+	private int highY = 224;
+	private int stepY = 160;
+	private int offsetY = 0;
 
 	static {
 		int i = 0;
@@ -288,8 +294,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		int x = c.getX();
 		int y = c.getY();// + SEALEVEL_CHUNK;
 		int z = c.getZ();
+		
+		int cY = toChunkClientY(y);
 
-		if (y < 0 || y >= c.getWorld().getHeight() >> Chunk.BLOCKS.BITS) {
+		if (cY < 0 || cY >= c.getWorld().getHeight() >> Chunk.BLOCKS.BITS) {
 			return null;
 		}
 
@@ -307,7 +315,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			byte[][] packetChunkData = new byte[16][];
 
 			for (int cube = 0; cube < 16; cube++) {
-				Point pp = new Point(c.getWorld(), x << Chunk.BLOCKS.BITS, cube << Chunk.BLOCKS.BITS, z << Chunk.BLOCKS.BITS);
+				int serverCube = toChunkServerY(cube);
+				Point pp = new Point(c.getWorld(), x << Chunk.BLOCKS.BITS, serverCube << Chunk.BLOCKS.BITS, z << Chunk.BLOCKS.BITS);
 				packetChunkData[cube] = chunkInit.getChunkData(heights, materials, pp, events);
 			}
 
@@ -333,7 +342,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			byte[] fullChunkData = ChunkInit.getChunkFullData(c, events);
 
 			byte[][] packetChunkData = new byte[16][];
-			packetChunkData[y] = fullChunkData;
+			packetChunkData[cY] = fullChunkData;
 			ChunkDataMessage CCMsg = new ChunkDataMessage(x, z, false, new boolean[16], packetChunkData, null, player.getSession());
 			player.getSession().send(false, CCMsg);
 		}
@@ -351,20 +360,21 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	protected void sendPosition(Point p, Quaternion rot) {
-		//TODO we have EntityProtocols in Vanilla....what does this actually do?
-		Session session = player.getSession();
-		if (p.distanceSquared(player.getTransform().getPosition()) >= 16) {
-			EntityTeleportMessage ETMMsg = new EntityTeleportMessage(player.getId(), (int) p.getX(), (int) p.getY(), (int) p.getZ(), (int) rot.getYaw(), (int) rot.getPitch());
-			PlayerYawMessage PLMsg = new PlayerYawMessage(rot.getYaw(), rot.getPitch(), true);
-			session.sendAll(false, ETMMsg, PLMsg);
-		} else {
-			PlayerPositionYawMessage PPLMsg = new PlayerPositionYawMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), rot.getYaw(), rot.getPitch(), true, VanillaBlockDataChannelMessage.CHANNEL_ID);
-			session.send(false, PPLMsg);
-		}
+		p = toClient(p);
+		PlayerPositionYawMessage PPLMsg = new PlayerPositionYawMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), rot.getYaw(), rot.getPitch(), true, VanillaBlockDataChannelMessage.CHANNEL_ID);
+		session.send(false, PPLMsg);
 	}
 
 	@Override
 	protected void worldChanged(World world) {
+		WorldConfigurationNode node = VanillaConfiguration.WORLDS.get(world);
+		
+		maxY = node.MAX_Y.getInt() & (~Chunk.BLOCKS.MASK);
+		minY = node.MIN_Y.getInt() & (~Chunk.BLOCKS.MASK);
+		stepY = node.STEP_Y.getInt() & (~Chunk.BLOCKS.MASK);
+		lowY = maxY - stepY;
+		highY = minY + stepY;
+		
 		GameMode gamemode = world.getComponentHolder().getData().get(VanillaData.GAMEMODE);
 		Difficulty difficulty = world.getComponentHolder().getData().get(VanillaData.DIFFICULTY);
 		Dimension dimension = world.getComponentHolder().getData().get(VanillaData.DIMENSION);
@@ -387,6 +397,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				}
 			}
 		} else {
+			Spout.getLogger().info("Sending respawn packets");
 			player.getSession().send(false, new PlayerRespawnMessage(0, difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
 			player.getSession().send(false, new PlayerRespawnMessage(1, difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
 			player.getSession().send(false, new PlayerRespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
@@ -405,6 +416,112 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		this.initializedChunks.clear();
 	}
 
+	private int lastY = Integer.MIN_VALUE;
+	
+	@Override
+	public void finalizeTick() {
+		Point currentPosition = player.getTransform().getPosition();
+		
+		int y = currentPosition.getBlockY();
+		
+		if (y != lastY && !isTeleportPending()) {
+			lastY = y;
+			int cY = toClientY(y);
+			if (cY >= maxY) {
+				offsetY += lowY - (cY & (~Chunk.BLOCKS.MASK));
+				setRespawned();
+				Spout.getLogger().info("Offset updated to " + offsetY);
+			} else if (cY < minY) {
+				offsetY += highY - ((cY + Chunk.BLOCKS.MASK) & (~Chunk.BLOCKS.MASK));
+				setRespawned();
+				Spout.getLogger().info("Offset updated to " + offsetY);
+			}
+		}
+		
+		super.finalizeTick();
+	}
+	
+	/**
+	 * Returns the client-side Chunk y value for the given server-side Chunk y value
+	 * 
+	 * @param y the server-side chunk y value
+	 * @return
+	 */
+	public int toChunkClientY(int cY) {
+		return cY + (offsetY >>> Chunk.BLOCKS.BITS);
+	}
+	
+	/**
+	 * Returns the client-side y value for the given server-side y value
+	 * 
+	 * @param y the client-side y value
+	 * @return
+	 */
+	public int toClientY(int y) {
+		return y + offsetY;
+	}
+	
+	/**
+	 * Returns the client-side Transform for the given server-side Transform
+	 * 
+	 * @param t the client-side transform
+	 */
+	public Transform toClient(Transform t) {
+		Transform newTrans = new Transform(t.getPosition(), t.getRotation(), t.getScale());
+		newTrans.translate(0, offsetY, 0);
+		return newTrans;
+	}
+	
+	/**
+	 * Returns the client-side Point for the given server-side Point
+	 * 
+	 * @param t the client-side transform
+	 */
+	public Point toClient(Point p) {
+		return p.add(0, offsetY, 0);
+	}
+	
+	/**
+	 * Returns the server-side Chunk y value for the given client-side Chunk y value
+	 * 
+	 * @param y the client-side chunk y value
+	 * @return
+	 */
+	public int toChunkServerY(int cY) {
+		return cY - (offsetY >>> Chunk.BLOCKS.BITS);
+	}
+	
+	/**
+	 * Returns the server-side y value for the given client-side y value
+	 * 
+	 * @param y the client-side y value
+	 * @return
+	 */
+	public int toServerY(int y) {
+		return y - offsetY;
+	}
+	
+	
+	/**
+	 * Returns the server-side Transform for the given client-side transform
+	 * 
+	 * @param t the client-side transform
+	 */
+	public Transform toServer(Transform t) {
+		Transform newTrans = new Transform(t.getPosition(), t.getRotation(), t.getScale());
+		newTrans.translate(0, -offsetY, 0);
+		return newTrans;
+	}
+	
+	/**
+	 * Returns the server-side Point for the given client-side Point
+	 * 
+	 * @param t the client-side transform
+	 */
+	public Point toServer(Point p) {
+		return p.add(0, -offsetY, 0);
+	}
+	
 	@Override
 	public void preSnapshot() {
 		super.preSnapshot();

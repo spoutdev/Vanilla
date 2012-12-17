@@ -28,73 +28,51 @@ package org.spout.vanilla.protocol.msg.player.pos;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import org.spout.api.math.Vector3;
-import org.spout.api.protocol.reposition.RepositionManager;
+import org.spout.api.math.MathHelper;
+import org.spout.api.math.Quaternion;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public final class PlayerPositionYawMessage extends VanillaMainChannelMessage {
-	private final PlayerPositionMessage position;
-	private final PlayerYawMessage rotation;
+public final class PlayerLookMessage extends VanillaMainChannelMessage {
+	private final float yaw, pitch, roll;
+	private final boolean onGround;
 
-	public PlayerPositionYawMessage(double x, double y, double z, double stance, float yaw, float pitch, boolean onGround, RepositionManager rm) {
-		position = new PlayerPositionMessage(x, y, z, stance, onGround, rm);
-		rotation = new PlayerYawMessage(yaw, pitch, onGround);
+	public PlayerLookMessage(float yaw, float pitch, boolean onGround) {
+		this.yaw = yaw;
+		this.pitch = pitch;
+		this.roll = 0.0f; // No roll supported
+		this.onGround = onGround;
 	}
 
-	public PlayerPositionYawMessage(double x, double y, double z, double stance, float yaw, float pitch, boolean onGround, int channelId, RepositionManager rm) {
-		super(channelId);
-		position = new PlayerPositionMessage(x, y, z, stance, onGround, rm);
-		rotation = new PlayerYawMessage(yaw, pitch, onGround);
-	}
-
-	public PlayerPositionMessage getPlayerPositionMessage() {
-		return position;
-	}
-
-	public PlayerYawMessage getPlayerLookMessage() {
-		return rotation;
-	}
-
-	public double getX() {
-		return position.getX();
-	}
-
-	public double getY() {
-		return position.getY();
-	}
-
-	public double getStance() {
-		return position.getStance();
-	}
-
-	public double getZ() {
-		return position.getZ();
+	public Quaternion getRotation() {
+		return MathHelper.rotation(this.pitch, this.yaw, this.roll);
 	}
 
 	public float getYaw() {
-		return rotation.getYaw();
+		return yaw;
 	}
 
 	public float getPitch() {
-		return rotation.getPitch();
+		return pitch;
+	}
+
+	public float getRoll() {
+		return roll;
 	}
 
 	public boolean isOnGround() {
-		return position.isOnGround();
+		return onGround;
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("position", position)
-				.append("rotation", rotation)
+				.append("yaw", yaw)
+				.append("pitch", pitch)
+				.append("roll", roll)
+				.append("onGround", onGround)
 				.toString();
-	}
-
-	public Vector3 getLookingAtVector() {
-		return rotation.getLookingAtVector();
 	}
 
 	@Override
@@ -105,10 +83,12 @@ public final class PlayerPositionYawMessage extends VanillaMainChannelMessage {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final PlayerPositionYawMessage other = (PlayerPositionYawMessage) obj;
+		final PlayerLookMessage other = (PlayerLookMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.position, other.position)
-				.append(this.rotation, other.rotation)
+				.append(this.yaw, other.yaw)
+				.append(this.pitch, other.pitch)
+				.append(this.roll, other.roll)
+				.append(this.onGround, other.onGround)
 				.isEquals();
 	}
 }

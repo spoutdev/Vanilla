@@ -41,6 +41,7 @@ import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.misc.HeadComponent;
+import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityDestroyMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityHeadYawMessage;
@@ -111,7 +112,8 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 
 		HeadComponent head = entity.get(HeadComponent.class);
 		if (head != null && head.isDirty()) {
-			messages.add(new EntityHeadYawMessage(entity.getId(), head.getProtocolYaw()));
+			final int headYawProt = ChannelBufferUtils.protocolifyRotation(head.getRotation().getYaw());
+			messages.add(new EntityHeadYawMessage(entity.getId(), headYawProt));
 		}
 
 		// Physics

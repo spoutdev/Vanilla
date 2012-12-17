@@ -33,25 +33,25 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.msg.player.pos.PlayerYawMessage;
+import org.spout.vanilla.protocol.msg.player.pos.PlayerLookMessage;
 
-public final class PlayerYawCodec extends MessageCodec<PlayerYawMessage> {
-	public PlayerYawCodec() {
-		super(PlayerYawMessage.class, 0x0C);
+public final class PlayerLookCodec extends MessageCodec<PlayerLookMessage> {
+	public PlayerLookCodec() {
+		super(PlayerLookMessage.class, 0x0C);
 	}
 
 	@Override
-	public PlayerYawMessage decode(ChannelBuffer buffer) throws IOException {
-		float yaw = -buffer.readFloat();
+	public PlayerLookMessage decode(ChannelBuffer buffer) throws IOException {
+		float yaw = buffer.readFloat();
 		float pitch = buffer.readFloat();
 		boolean onGround = buffer.readByte() == 1;
-		return new PlayerYawMessage(yaw, pitch, onGround);
+		return new PlayerLookMessage(yaw, pitch, onGround);
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerYawMessage message) throws IOException {
+	public ChannelBuffer encode(PlayerLookMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.buffer(9);
-		buffer.writeFloat(-message.getYaw());
+		buffer.writeFloat(message.getYaw());
 		buffer.writeFloat(message.getPitch());
 		buffer.writeByte(message.isOnGround() ? 1 : 0);
 		return buffer;

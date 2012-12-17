@@ -29,18 +29,18 @@ package org.spout.vanilla.component.misc;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
+import org.spout.api.math.MathHelper;
+import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.ChannelBufferUtils;
 
 /**
  * Component that controls the rotation of a head on Vanilla resources.entities.
  */
 public class HeadComponent extends EntityComponent {
-	private Vector3 lookingAt = Vector3.ZERO;
-	private int lastHeadYaw = 0;
+	private Quaternion lastRotation = Quaternion.IDENTITY;
 
 	@Override
 	public void onAttached() {
@@ -54,58 +54,59 @@ public class HeadComponent extends EntityComponent {
 
 	@Override
 	public void onTick(float dt) {
-		lastHeadYaw = (int) getOwner().getTransform().getYaw();
-		setYaw((int) -getOwner().getTransform().getTransformLive().getRotation().getYaw());
+		lastRotation = getRotation();
+		//TODO: Proper adjustment of the rotation based on entity body rotation?
+		// Is this needed at all?
 	}
 
+	/**
+	 * Checks whether this head has changed rotation since last tick
+	 * 
+	 * @return True if the head rotation is dirty, False if not
+	 */
 	public boolean isDirty() {
-		return getYaw() != lastHeadYaw;
+		return !lastRotation.equals(getRotation());
 	}
 
 	/**
-	 * Sets the yaw of a entity's head for the next tick.
-	 * @param headYaw
-	 */
-	public void setYaw(int headYaw) {
-		while (headYaw < 0) {
-			headYaw += 360;
-		}
-		while (headYaw > 360) {
-			headYaw -= 360;
-		}
-		getData().put(VanillaData.HEAD_YAW, headYaw);
-	}
-
-	public int getYaw() {
-		return getData().get(VanillaData.HEAD_YAW);
-	}
-
-	/**
-	 * Converts the yaw of this component into the official protocol's specifications.
-	 * @return
-	 */
-	public int getProtocolYaw() {
-		return ChannelBufferUtils.protocolifyRotation((float) getYaw());
-	}
-
-	/**
-	 * Sets the position where the player should look.
+	 * Sets the rotation of the head to look into a certain direction
+	 * 
 	 * @param lookingAt {@link org.spout.api.math.Vector3} to look at
 	 */
 	public void setLooking(Vector3 lookingAt) {
-		this.lookingAt = lookingAt;
+		setRotation(MathHelper.rotationTo(Vector3.ZERO, lookingAt));
 	}
 
 	/**
-	 * Gets the {@link Vector3} the player is currently looking at.
-	 * @return position the player is looking at
+	 * Gets the {@link Vector3} the head is currently looking at.
+	 * 
+	 * @return Head direction vector
 	 */
 	public Vector3 getLookingAt() {
-		return lookingAt;
+		return MathHelper.getDirectionVector(getRotation());
+	}
+
+	/**
+	 * Sets the rotation of the head
+	 * 
+	 * @param rotation to set to
+	 */
+	public void setRotation(Quaternion rotation) {
+		getData().put(VanillaData.HEAD_ROTATION, rotation);
+	}
+
+	/**
+	 * Gets the rotation of the head
+	 * 
+	 * @return Head rotation
+	 */
+	public Quaternion getRotation() {
+		return getData().get(VanillaData.HEAD_ROTATION);
 	}
 
 	/**
 	 * Sets the current height of the head above the main position
+	 * 
 	 * @param height
 	 */
 	public void setHeight(int height) {
@@ -114,32 +115,51 @@ public class HeadComponent extends EntityComponent {
 
 	/**
 	 * Gets the current height of the head above the main position
-	 * @return the head height
+	 * 
+	 * @return Head height
 	 */
 	public int getHeight() {
 		return getData().get(VanillaData.HEAD_HEIGHT);
 	}
 
 	/**
-	 * Gets the position of the head of this living entity
-	 * @return the head position
+	 * Gets the position of the head in the world
+	 * 
+	 * @return Head position
 	 */
 	public Point getPosition() {
 		return getOwner().getTransform().getPosition().add(0.0f, this.getHeight(), 0.0f);
 	}
 
+	/**
+	 * Gets the transform of this head in the world
+	 * 
+	 * @return Head transform
+	 */
 	public Transform getHeadTransform() {
 		Transform trans = new Transform();
 		trans.setPosition(this.getPosition());
-		trans.setRotation(getOwner().getTransform().getRotation());
+		trans.setRotation(getRotation());
 		return trans;
 	}
 
+	/**
+	 * Gets a block iterator that iterates the blocks this head can see<br>
+	 * The view distance is limited to the reach of the Entity
+	 * 
+	 * @return Block iterator
+	 */
 	public BlockIterator getBlockView() {
 		return getBlockView(getOwner().get(InteractComponent.class).getReach());
 	}
 
+	/**
+	 * Gets a block iterator that iterates the blocks this head can see
+	 * 
+	 * @param maxDistance the blocks can be iterated
+	 * @return Block iterator
+	 */
 	public BlockIterator getBlockView(int maxDistance) {
-		return new BlockIterator(getOwner().getWorld(), getOwner().getTransform().getTransform(), maxDistance);
+		return new BlockIterator(getOwner().getWorld(), getHeadTransform(), maxDistance);
 	}
 }

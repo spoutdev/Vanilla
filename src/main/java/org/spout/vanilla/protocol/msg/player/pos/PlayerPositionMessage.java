@@ -54,16 +54,16 @@ public final class PlayerPositionMessage extends VanillaMainChannelMessage {
 		return y;
 	}
 
+	public double getZ() {
+		return z;
+	}
+
 	public Vector3 getPosition() {
 		return new Vector3(x, y, z);
 	}
 
 	public double getStance() {
 		return stance;
-	}
-
-	public double getZ() {
-		return z;
 	}
 
 	public boolean isOnGround() {

@@ -127,7 +127,7 @@ import org.spout.vanilla.protocol.msg.player.PlayerTimeMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerLoginRequestMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerPingMessage;
-import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionYawMessage;
+import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerRespawnMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
@@ -402,7 +402,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	protected void sendPosition(Point p, Quaternion rot) {
-		PlayerPositionYawMessage PPLMsg = new PlayerPositionYawMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), rot.getYaw(), rot.getPitch(), true, VanillaBlockDataChannelMessage.CHANNEL_ID, getRepositionManager());
+		PlayerPositionLookMessage PPLMsg = new PlayerPositionLookMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), rot.getYaw(), rot.getPitch(), true, VanillaBlockDataChannelMessage.CHANNEL_ID, getRepositionManager());
 		session.send(false, PPLMsg);
 	}
 

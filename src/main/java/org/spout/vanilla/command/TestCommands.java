@@ -50,6 +50,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
+import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.NetworkSynchronizer;
@@ -71,6 +72,8 @@ import org.spout.vanilla.component.misc.HungerComponent;
 import org.spout.vanilla.component.substance.material.chest.Chest;
 import org.spout.vanilla.component.substance.object.FallingBlock;
 import org.spout.vanilla.component.test.TransformDebugComponent;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.inventory.block.DispenserInventory;
 import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
@@ -435,7 +438,7 @@ public class TestCommands {
 		}
 	}
 
-	@Command(aliases = "debug", usage = "[type] (/resend /resendall)", desc = "Debug commands", max = 2)
+	@Command(aliases = "debug", usage = "[type] (/resend /resendall /look)", desc = "Debug commands", max = 2)
 	@CommandPermissions("vanilla.command.debug")
 	public void debug(CommandContext args, CommandSource source) throws CommandException {
 		Player player;
@@ -452,7 +455,17 @@ public class TestCommands {
 			}
 		}
 
-		if (args.getString(0, "").contains("resendall")) {
+		if (args.getString(0, "").contains("look")) {
+			Quaternion rotation = player.getData().get(VanillaData.HEAD_ROTATION);
+			Point startPosition = player.getTransform().getPosition();
+			Vector3 offset = rotation.getDirection().multiply(0.1);
+			for (int i = 0; i < 100; i++) {
+				startPosition = startPosition.add(offset);
+				GeneralEffects.NOTE_PARTICLE.playGlobal(startPosition);
+			}
+			player.sendMessage("Yaw = ", rotation.getYaw());
+			player.sendMessage("Pitch = ", rotation.getPitch());
+		} else if (args.getString(0, "").contains("resendall")) {
 			NetworkSynchronizer network = player.getNetworkSynchronizer();
 			Set<Chunk> chunks = network.getActiveChunks();
 			for (Chunk c : chunks) {

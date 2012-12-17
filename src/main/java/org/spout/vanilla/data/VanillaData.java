@@ -33,6 +33,7 @@ import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyArray;
 import org.spout.api.map.DefaultedKeyFactory;
 import org.spout.api.map.DefaultedKeyImpl;
+import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.inventory.block.ChestInventory;
@@ -111,7 +112,7 @@ public class VanillaData {
 	public static final DefaultedKey<Integer> UNCOLLECTABLE_TICKS = new DefaultedKeyImpl<Integer>("uncollectable_ticks", 10);
 	//Head-specific
 	public static final DefaultedKey<Integer> HEAD_HEIGHT = new DefaultedKeyImpl<Integer>("head_height", 1);
-	public static final DefaultedKey<Integer> HEAD_YAW = new DefaultedKeyImpl<Integer>("head_yaw", 0);
+	public static final DefaultedKey<Quaternion> HEAD_ROTATION = new DefaultedKeyImpl<Quaternion>("head_rotation", Quaternion.IDENTITY);
 	//XPOrb-specific
 	public static final DefaultedKey<Long> TIME_DISPERSED = new DefaultedKeyImpl<Long>("time_dispersed", Long.valueOf(0));
 	//Slime-specific

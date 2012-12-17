@@ -26,19 +26,25 @@
  */
 package org.spout.vanilla.protocol.handler.player;
 
+import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionYawMessage;
+import org.spout.vanilla.component.misc.HeadComponent;
+import org.spout.vanilla.protocol.msg.player.pos.PlayerLookMessage;
 
-public final class PlayerPositionYawHandler extends MessageHandler<PlayerPositionYawMessage> {
+public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 	@Override
-	public void handleServer(Session session, PlayerPositionYawMessage message) {
-		new PlayerPositionHandler().handleServer(session, message.getPlayerPositionMessage());
-		new PlayerYawHandler().handleServer(session, message.getPlayerLookMessage());
-	}
+	public void handleServer(Session session, PlayerLookMessage message) {
+		if (!session.hasPlayer()) {
+			return;
+		}
 
-	@Override
-	public void handleClient(Session session, PlayerPositionYawMessage message) {
+		Player holder = session.getPlayer();
+
+		holder.getTransform().setYaw(message.getYaw());
+		if (holder.has(HeadComponent.class)) {
+			holder.get(HeadComponent.class).setRotation(message.getRotation());
+		}
 	}
 }

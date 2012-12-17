@@ -34,15 +34,15 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 
-import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionYawMessage;
+import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionLookMessage;
 
-public final class PlayerPositionYawCodec extends MessageCodec<PlayerPositionYawMessage> {
-	public PlayerPositionYawCodec() {
-		super(PlayerPositionYawMessage.class, 0x0D);
+public final class PlayerPositionLookCodec extends MessageCodec<PlayerPositionLookMessage> {
+	public PlayerPositionLookCodec() {
+		super(PlayerPositionLookMessage.class, 0x0D);
 	}
 
 	@Override
-	public PlayerPositionYawMessage decode(ChannelBuffer buffer) throws IOException {
+	public PlayerPositionLookMessage decode(ChannelBuffer buffer) throws IOException {
 		double x = buffer.readDouble();
 		double y = buffer.readDouble();
 		double stance = buffer.readDouble();
@@ -50,11 +50,11 @@ public final class PlayerPositionYawCodec extends MessageCodec<PlayerPositionYaw
 		float yaw = buffer.readFloat();
 		float pitch = buffer.readFloat();
 		boolean onGround = buffer.readByte() == 1;
-		return new PlayerPositionYawMessage(x, y, z, stance, yaw, pitch, onGround, NullRepositionManager.getInstance());
+		return new PlayerPositionLookMessage(x, y, z, stance, yaw, pitch, onGround, NullRepositionManager.getInstance());
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerPositionYawMessage message) throws IOException {
+	public ChannelBuffer encode(PlayerPositionLookMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.buffer(41);
 		buffer.writeDouble(message.getX());
 		buffer.writeDouble(message.getY());

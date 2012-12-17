@@ -159,7 +159,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		block.setMaterial(this, cause);
-		this.setFacing(block, PlayerUtil.getBlockFacing(block, cause));
+		this.setFacing(block, against);
 		return true;
 	}
 

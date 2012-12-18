@@ -24,20 +24,24 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.event.cause;
+package org.spout.vanilla.event.block;
 
-import org.spout.api.entity.Entity;
+import org.spout.api.event.Cancellable;
+import org.spout.api.event.Cause;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.block.BlockChangeEvent;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockSnapshot;
 
 /**
- * Caused when a block is ignited
- * todo needs be implemented
+ * Event which is called when a block is ignited
+ * todo implement calling of this event
  */
-public class BlockIgniteCause extends BlockChangeCause {
+public class BlockIgniteEvent extends BlockChangeEvent implements Cancellable {
 	/**
 	 * The different causes why a Block was ignited.
 	 */
-	public enum IgniteCause {
+	public static enum IgniteCause {
 		/**
 		 * Block ignition caused by Lava
 		 */
@@ -60,46 +64,33 @@ public class BlockIgniteCause extends BlockChangeCause {
 		FIREBALL,
 	}
 
+	private static HandlerList handlers = new HandlerList();
 	private final IgniteCause igniteCause;
-	private final Entity entity;
 
-	/**
-	 * Contains the igniteCause and an entity of the block which was ignited.
-	 * @param block which was ignited
-	 * @param igniteCause which caused the block to ignite
-	 * @param entity which ignited the block
-	 */
-	public BlockIgniteCause(Block block, IgniteCause igniteCause, Entity entity) {
-		super(block);
+	public BlockIgniteEvent(Block block, BlockSnapshot newState, Cause<?> reason, IgniteCause igniteCause) {
+		super(block, newState, reason);
 		this.igniteCause = igniteCause;
-		this.entity = entity;
 	}
 
 	/**
-	 * Contains the igniteCause of the block which was ignited.
-	 * @param block which was ignited
-	 * @param igniteCause which caused the block to ignite
-	 */
-	public BlockIgniteCause(Block block, IgniteCause igniteCause) {
-		super(block);
-		this.igniteCause = igniteCause;
-		this.entity = null;
-	}
-
-	/**
-	 * Gets the {@link org.spout.vanilla.event.cause.BlockIgniteCause.IgniteCause} which ignited the block
-	 * @return the igniteCause
+	 * The reason why the block was ignited
+	 * @return IgniteCause
 	 */
 	public IgniteCause getIgniteCause() {
 		return igniteCause;
 	}
 
-	/**
-	 * Gets the entity which ignited the block if applicable.
-	 * NOTE: This can be NULL
-	 * @return the entity which ignited the block, can be NULL
-	 */
-	public Entity getEntity() {
-		return entity;
+	@Override
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
 	}
 }

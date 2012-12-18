@@ -24,73 +24,66 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.event.cause;
+package org.spout.vanilla.event.block;
 
+import org.spout.api.event.Cancellable;
+import org.spout.api.event.Cause;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.block.BlockChangeEvent;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockSnapshot;
 
 /**
- * Caused when a block is formed or spreads
- * todo needs to be implemented
+ * Event which is called when a block forms or spreads in the world.
+ * For example: Snow, Ice, etc
+ * todo implement calling of this event
  */
-public class BlockFormCause extends BlockChangeCause {
+public class BlockFormEvent extends BlockChangeEvent implements Cancellable {
 	/**
 	 * The different causes why a Block is formed in the world.
 	 */
-	public enum FormCause {
+	public static enum FormCause {
 		/**
 		 * Block spread randomly
 		 */
 		SPREAD_RANDOM,
 		/**
-		 * Block spread from other block
+		 * Block spread
 		 */
-		SPREAD_FROM,
+		SPREAD,
 		/**
 		 * Block formed due to world conditions (for example Snow)
 		 */
 		FORMING,
 	}
 
+	private static HandlerList handlers = new HandlerList();
 	private final FormCause formCause;
-	private final Block spreadFrom;
 
-	/**
-	 * Contains the formCause of the block which has formed in the world.
-	 * @param block which was formed
-	 * @param formCause which caused the block to be formed
-	 */
-	public BlockFormCause(Block block, FormCause formCause) {
-		super(block);
+	public BlockFormEvent(Block block, BlockSnapshot newState, Cause<?> reason, FormCause formCause) {
+		super(block, newState, reason);
 		this.formCause = formCause;
-		this.spreadFrom = null;
 	}
 
 	/**
-	 * Contains the formCause of the block which has formed the world.
-	 * @param block which was formed
-	 * @param formCause which caused the block to be formed
-	 * @param spreadFrom the block from where the cause spread
-	 */
-	public BlockFormCause(Block block, FormCause formCause, Block spreadFrom) {
-		super(block);
-		this.formCause = formCause;
-		this.spreadFrom = spreadFrom;
-	}
-
-	/**
-	 * Gets the {@link org.spout.vanilla.event.cause.BlockFormCause.FormCause} which removed the block
-	 * @return the removeCause
+	 * The reason why the block formed
+	 * @return FormCause
 	 */
 	public FormCause getFormCause() {
 		return formCause;
 	}
 
-	/**
-	 * Block from which the spread occurred, only valid for SPREAD_FROM.
-	 * Note: Can be NULL
-	 * @return Block from which the spread occurred, NULL when not SPREAD_FROM
-	 */
-	public Block getSpreadFrom() {
-		return spreadFrom;
+	@Override
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
 	}
 }

@@ -26,6 +26,9 @@
  */
 package org.spout.vanilla.protocol.entity;
 
+import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPosition;
+import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyRotation;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -37,8 +40,8 @@ import org.spout.api.geo.discrete.Transform;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
-
 import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.protocol.msg.entity.EntityDestroyMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
@@ -48,9 +51,6 @@ import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionYawMessag
 import org.spout.vanilla.protocol.msg.entity.pos.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityVelocityMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityYawMessage;
-
-import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPosition;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyRotation;
 
 public abstract class VanillaEntityProtocol implements EntityProtocol {
 	private List<Parameter<?>> lastMeta;
@@ -65,7 +65,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 	}
 
 	@Override
-	public final List<Message> getUpdateMessages(Entity entity) {
+	public final List<Message> getUpdateMessages(Entity entity, RepositionManager rm) {
 		// Movement
 		Transform prevTransform = entity.getTransform().getTransform();
 		Transform newTransform = entity.getTransform().getTransformLive();
@@ -94,7 +94,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		 * - The entity moves less than 4 blocks and maybe changes rotation.
 		 */
 		if (deltaX > 4 || deltaX < -4 || deltaY > 4 || deltaY < -4 || deltaZ > 4 || deltaZ < -4) {
-			messages.add(new EntityTeleportMessage(entity.getId(), newX, newY, newZ, newYaw, newPitch));
+			messages.add(new EntityTeleportMessage(entity.getId(), newX, newY, newZ, newYaw, newPitch, rm));
 			if (looked) {
 				messages.add(new EntityYawMessage(entity.getId(), newYaw, newPitch));
 			}

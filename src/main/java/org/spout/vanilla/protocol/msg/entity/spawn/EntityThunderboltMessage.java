@@ -27,24 +27,23 @@
 package org.spout.vanilla.protocol.msg.entity.spawn;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
-
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class EntityThunderboltMessage extends EntityMessage {
 	private final int mode, x, y, z;
 
-	public EntityThunderboltMessage(int id, int x, int y, int z) {
-		this(id, 1, x, y, z);
+	public EntityThunderboltMessage(int id, int x, int y, int z, RepositionManager rm) {
+		this(id, 1, x, y, z, rm);
 	}
 
-	public EntityThunderboltMessage(int id, int mode, int x, int y, int z) {
+	public EntityThunderboltMessage(int id, int mode, int x, int y, int z, RepositionManager rm) {
 		super(id);
 		this.mode = mode;
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.x = rm.convertX(x);
+		this.y = rm.convertY(y);
+		this.z = rm.convertZ(z);
 	}
 
 	public int getMode() {

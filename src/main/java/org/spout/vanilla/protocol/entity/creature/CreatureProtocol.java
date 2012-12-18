@@ -32,8 +32,8 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
-
 import org.spout.vanilla.protocol.entity.BasicEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityMobMessage;
 
@@ -43,13 +43,13 @@ public class CreatureProtocol extends BasicEntityProtocol {
 	}
 
 	@Override
-	public List<Message> getSpawnMessages(Entity entity) {
+	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
 		int entityId = entity.getId();
 		Vector3 position = entity.getTransform().getPosition().multiply(32).floor();
 		int yaw = (int) (entity.getTransform().getYaw() * 32);
 		int pitch = (int) (entity.getTransform().getPitch() * 32);
 		List<Parameter<?>> parameters = this.getSpawnParameters(entity);
 		//TODO Headyaw
-		return Arrays.<Message>asList(new EntityMobMessage(entityId, this.typeId, position, yaw, pitch, 0, (short) 0, (short) 0, (short) 0, parameters));
+		return Arrays.<Message>asList(new EntityMobMessage(entityId, this.typeId, position, yaw, pitch, 0, (short) 0, (short) 0, (short) 0, parameters, rm));
 	}
 }

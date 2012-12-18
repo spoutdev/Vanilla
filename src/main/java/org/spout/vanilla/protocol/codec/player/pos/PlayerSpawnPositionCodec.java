@@ -32,6 +32,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnPositionMessage;
 
@@ -45,7 +46,7 @@ public final class PlayerSpawnPositionCodec extends MessageCodec<PlayerSpawnPosi
 		int x = buffer.readInt();
 		int y = buffer.readInt();
 		int z = buffer.readInt();
-		return new PlayerSpawnPositionMessage(x, y, z);
+		return new PlayerSpawnPositionMessage(x, y, z, NullRepositionManager.getInstance());
 	}
 
 	@Override

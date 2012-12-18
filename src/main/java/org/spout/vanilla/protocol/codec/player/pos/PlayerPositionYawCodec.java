@@ -32,6 +32,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionYawMessage;
 
@@ -49,7 +50,7 @@ public final class PlayerPositionYawCodec extends MessageCodec<PlayerPositionYaw
 		float yaw = buffer.readFloat();
 		float pitch = buffer.readFloat();
 		boolean onGround = buffer.readByte() == 1;
-		return new PlayerPositionYawMessage(x, y, z, stance, yaw, pitch, onGround);
+		return new PlayerPositionYawMessage(x, y, z, stance, yaw, pitch, onGround, NullRepositionManager.getInstance());
 	}
 
 	@Override

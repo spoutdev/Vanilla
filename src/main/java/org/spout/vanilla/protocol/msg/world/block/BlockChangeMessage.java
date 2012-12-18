@@ -29,6 +29,7 @@ package org.spout.vanilla.protocol.msg.world.block;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -38,14 +39,14 @@ public final class BlockChangeMessage extends VanillaBlockDataChannelMessage {
 	private final int x, y, z, metadata;
 	private final short type;
 
-	public BlockChangeMessage(Block block) {
-		this(block.getX(), block.getY(), block.getZ(), VanillaMaterials.getMinecraftId(block.getMaterial()), block.getData());
+	public BlockChangeMessage(Block block, RepositionManager rm) {
+		this(block.getX(), block.getY(), block.getZ(), VanillaMaterials.getMinecraftId(block.getMaterial()), block.getData(), rm);
 	}
 
-	public BlockChangeMessage(int x, int y, int z, short type, int metadata) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+	public BlockChangeMessage(int x, int y, int z, short type, int metadata, RepositionManager rm) {
+		this.x = rm.convertX(x);
+		this.y = rm.convertY(y);
+		this.z = rm.convertZ(z);
 		this.type = type;
 		this.metadata = metadata;
 	}

@@ -27,10 +27,9 @@
 package org.spout.vanilla.protocol.msg.entity.spawn;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
-
 import org.spout.vanilla.component.substance.Painting;
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
@@ -38,21 +37,21 @@ public final class EntityPaintingMessage extends EntityMessage {
 	private final int x, y, z, direction;
 	private final String title;
 
-	public EntityPaintingMessage(int entityId, String title, int x, int y, int z, int direction) {
+	public EntityPaintingMessage(int entityId, String title, int x, int y, int z, int direction, RepositionManager rm) {
 		super(entityId);
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.x = rm.convertX(x);
+		this.y = rm.convertY(y);
+		this.z = rm.convertZ(z);
 		this.direction = direction;
 		this.title = title;
 	}
 
-	public EntityPaintingMessage(Painting painting) {
+	public EntityPaintingMessage(Painting painting, RepositionManager rm) {
 		super(painting.getOwner());
 		Point pos = painting.getOwner().getTransform().getPosition();
-		x = pos.getBlockX();
-		y = pos.getBlockY();
-		z = pos.getBlockZ();
+		x = rm.convertX(pos.getBlockX());
+		y = rm.convertY(pos.getBlockY());
+		z = rm.convertZ(pos.getBlockZ());
 		direction = painting.getNativeFace();
 		title = painting.getType().getName();
 		System.out.println(this);

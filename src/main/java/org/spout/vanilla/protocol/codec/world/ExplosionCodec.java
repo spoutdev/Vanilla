@@ -32,6 +32,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.msg.world.ExplosionMessage;
 
@@ -52,7 +53,7 @@ public final class ExplosionCodec extends MessageCodec<ExplosionMessage> {
 		buffer.readFloat(); // unknown (x?)
 		buffer.readFloat(); // unknown (y?)
 		buffer.readFloat(); // unknown (z?)
-		return new ExplosionMessage(x, y, z, radius, coordinates);
+		return new ExplosionMessage(x, y, z, radius, coordinates, NullRepositionManager.getInstance());
 	}
 
 	@Override

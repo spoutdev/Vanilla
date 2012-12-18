@@ -32,6 +32,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.msg.world.EffectMessage;
 
@@ -48,7 +49,7 @@ public final class EffectCodec extends MessageCodec<EffectMessage> {
 		int z = buffer.readInt();
 		int data = buffer.readInt();
 		boolean volumeDecrease = buffer.readByte() != 0;
-		return new EffectMessage(id, x, y, z, data, volumeDecrease);
+		return new EffectMessage(id, x, y, z, data, volumeDecrease, NullRepositionManager.getInstance());
 	}
 
 	@Override

@@ -29,11 +29,10 @@ package org.spout.vanilla.protocol.msg.entity.spawn;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import org.spout.api.math.Vector3;
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 import org.spout.api.util.SpoutToStringStyle;
-
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class EntityMobMessage extends EntityMessage {
@@ -41,16 +40,16 @@ public final class EntityMobMessage extends EntityMessage {
 	private final short velocityZ, velocityX, velocityY;
 	private final List<Parameter<?>> parameters;
 
-	public EntityMobMessage(int id, int type, Vector3 pos, int yaw, int pitch, int headYaw, short velocityZ, short velocityX, short velocityY, List<Parameter<?>> parameters) {
-		this(id, type, (int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), yaw, pitch, headYaw, velocityZ, velocityX, velocityY, parameters);
+	public EntityMobMessage(int id, int type, Vector3 pos, int yaw, int pitch, int headYaw, short velocityZ, short velocityX, short velocityY, List<Parameter<?>> parameters, RepositionManager rm) {
+		this(id, type, (int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), yaw, pitch, headYaw, velocityZ, velocityX, velocityY, parameters, rm);
 	}
 
-	public EntityMobMessage(int id, int type, int x, int y, int z, int yaw, int pitch, int headYaw, short velocityZ, short velocityX, short velocityY, List<Parameter<?>> parameters) {
+	public EntityMobMessage(int id, int type, int x, int y, int z, int yaw, int pitch, int headYaw, short velocityZ, short velocityX, short velocityY, List<Parameter<?>> parameters, RepositionManager rm) {
 		super(id);
 		this.type = type;
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.x = rm.convertX(x);
+		this.y = rm.convertY(y);
+		this.z = rm.convertZ(z);
 		this.yaw = yaw;
 		this.pitch = pitch;
 		this.headYaw = headYaw;

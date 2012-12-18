@@ -27,20 +27,19 @@
 package org.spout.vanilla.protocol.msg.entity.spawn;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
-
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public class EntityExperienceOrbMessage extends EntityMessage {
 	private final int x, y, z;
 	private final short count;
 
-	public EntityExperienceOrbMessage(int id, int x, int y, int z, short count) {
+	public EntityExperienceOrbMessage(int id, int x, int y, int z, short count, RepositionManager rm) {
 		super(id);
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.x = rm.convertX(x);
+		this.y = rm.convertY(y);
+		this.z = rm.convertZ(z);
 		this.count = count;
 	}
 

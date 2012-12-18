@@ -27,11 +27,9 @@
 package org.spout.vanilla.protocol.msg.entity;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
-
 import org.spout.nbt.CompoundMap;
-
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public class EntityTileDataMessage extends VanillaMainChannelMessage {
@@ -44,24 +42,24 @@ public class EntityTileDataMessage extends VanillaMainChannelMessage {
 	private int custom3;
 	private CompoundMap data;
 
-	public EntityTileDataMessage(int x, int y, int z, int action, int[] data) {
-		this(x, y, z, action, data.length >= 1 ? data[0] : -1, data.length >= 2 ? data[1] : -1, data.length >= 3 ? data[2] : -1);
+	public EntityTileDataMessage(int x, int y, int z, int action, int[] data, RepositionManager rm) {
+		this(x, y, z, action, data.length >= 1 ? data[0] : -1, data.length >= 2 ? data[1] : -1, data.length >= 3 ? data[2] : -1, rm);
 	}
 
-	public EntityTileDataMessage(int x, int y, int z, int action, int custom1, int custom2, int custom3) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+	public EntityTileDataMessage(int x, int y, int z, int action, int custom1, int custom2, int custom3, RepositionManager rm) {
+		this.x = rm.convertX(x);
+		this.y = rm.convertY(y);
+		this.z = rm.convertZ(z);
 		this.action = action;
 		this.custom1 = custom1;
 		this.custom2 = custom2;
 		this.custom3 = custom3;
 	}
 
-	public EntityTileDataMessage(int x, int y, int z, int action, CompoundMap data) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+	public EntityTileDataMessage(int x, int y, int z, int action, CompoundMap data, RepositionManager rm) {
+		this.x = rm.convertX(x);
+		this.y = rm.convertY(y);
+		this.z = rm.convertZ(z);
 		this.action = action;
 		this.data = data;
 	}

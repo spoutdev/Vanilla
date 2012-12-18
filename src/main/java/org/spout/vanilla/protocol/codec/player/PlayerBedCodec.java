@@ -32,6 +32,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.msg.player.PlayerBedMessage;
 
@@ -47,7 +48,7 @@ public final class PlayerBedCodec extends MessageCodec<PlayerBedMessage> {
 		int x = buffer.readInt();
 		int y = buffer.readUnsignedByte();
 		int z = buffer.readInt();
-		return new PlayerBedMessage(id, used, x, y, z);
+		return new PlayerBedMessage(id, used, x, y, z, NullRepositionManager.getInstance());
 	}
 
 	@Override

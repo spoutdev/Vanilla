@@ -44,10 +44,11 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.misc.HeadComponent;
@@ -63,10 +64,10 @@ import org.spout.vanilla.protocol.msg.player.PlayerBlockPlacementMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 
 public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBlockPlacementMessage> {
-	private void undoPlacement(Player player, Block clickedBlock, Block alterBlock) {
+	private void undoPlacement(Player player, Block clickedBlock, Block alterBlock, RepositionManager rm) {
 		//refresh the client just in case it assumed something
-		player.getSession().send(false, new BlockChangeMessage(clickedBlock));
-		player.getSession().send(false, new BlockChangeMessage(alterBlock));
+		player.getSession().send(false, new BlockChangeMessage(clickedBlock, rm));
+		player.getSession().send(false, new BlockChangeMessage(alterBlock, rm));
 		PlayerQuickbar inv = player.get(PlayerInventory.class).getQuickbar();
 		inv.setCurrentItem(inv.getCurrentItem());
 	}
@@ -77,6 +78,11 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 			return;
 		}
 		Player player = session.getPlayer();
+		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
+		RepositionManager rmInverse = rm.getInverse();
+		message = message.convert(rmInverse);
+		Spout.getLogger().info("Placement converted: " + message);
+		
 		EventManager eventManager = session.getEngine().getEventManager();
 		World world = player.getWorld();
 		PlayerQuickbar currentSlot = player.get(PlayerInventory.class).getQuickbar();
@@ -110,10 +116,14 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 			//This is an anti-hack requirement (else hackers can load far-away chunks and crash the server)
 
 			//Get clicked block and validated face against it was placed
+			
 			Block clickedBlock = world.getBlock(message.getX(), message.getY(), message.getZ());
-			if (clickedBlock.getY() >= world.getHeight() || clickedBlock.getY() < 0) {
+			
+			// TODO - maybe add actual limits
+			/*if (clickedBlock.getY() >= world.getHeight() || clickedBlock.getY() < 0) {
 				return;
-			}
+			}*/
+			
 			//Perform interaction event
 			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), currentSlot.getCurrentItem(), Action.RIGHT_CLICK, false, clickedFace));
 
@@ -130,7 +140,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 
 			//check if the interaction was cancelled by the event
 			if (interactEvent.isCancelled()) {
-				undoPlacement(player, clickedBlock, alterBlock);
+				undoPlacement(player, clickedBlock, alterBlock, rm);
 				return;
 			}
 			short durability = 0;
@@ -151,7 +161,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 
 			if (interactEvent.useItemInHand() != Result.ALLOW) {
 				if (clickedMaterial instanceof VanillaBlockMaterial && (((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed())) {
-					undoPlacement(player, clickedBlock, alterBlock);
+					undoPlacement(player, clickedBlock, alterBlock, rm);
 					return;
 				}
 			}
@@ -170,13 +180,15 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 					target = alterBlock;
 					targetFace = alterFace;
 				} else {
-					undoPlacement(player, clickedBlock, alterBlock);
+					undoPlacement(player, clickedBlock, alterBlock, rm);
 					return;
 				}
 
+				// TODO - maybe add actual limits
+				/*
 				if (target.getY() >= world.getHeight() || target.getY() < 0) {
 					return;
-				}
+				}*/
 
 				//is the player not solid-colliding with the block?
 				if (toPlace instanceof BlockMaterial) {
@@ -194,12 +206,12 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 						//For now: simple distance checking
 						Point tpos = target.getPosition();
 						if (player.getTransform().getPosition().distance(tpos) < 0.6) {
-							undoPlacement(player, clickedBlock, alterBlock);
+							undoPlacement(player, clickedBlock, alterBlock, rm);
 							return;
 						}
 						HeadComponent head = player.get(HeadComponent.class);
 						if (head != null && head.getPosition().distance(tpos) < 0.6) {
-							undoPlacement(player, clickedBlock, alterBlock);
+							undoPlacement(player, clickedBlock, alterBlock, rm);
 							return;
 						}
 					}
@@ -209,7 +221,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				Collection<Protection> protections = Spout.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(alterBlock.getPosition());
 				for (Protection p : protections) {
 					if (p.contains(alterBlock.getPosition()) && !VanillaConfiguration.OPS.isOp(player.getName())) {
-						undoPlacement(player, clickedBlock, alterBlock);
+						undoPlacement(player, clickedBlock, alterBlock, rm);
 						player.sendMessage(ChatStyle.DARK_RED, "This area is a protected spawn point!");
 						return;
 					}
@@ -234,7 +246,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 						currentSlot.addAmount(0, -1);
 					}
 				} else {
-					undoPlacement(player, clickedBlock, alterBlock);
+					undoPlacement(player, clickedBlock, alterBlock, rm);
 				}
 			}
 		}

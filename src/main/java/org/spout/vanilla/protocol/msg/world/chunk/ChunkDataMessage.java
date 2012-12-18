@@ -29,6 +29,7 @@ package org.spout.vanilla.protocol.msg.world.chunk;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.protocol.Session;
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.VanillaBlockDataChannelMessage;
@@ -42,16 +43,16 @@ public final class ChunkDataMessage extends VanillaBlockDataChannelMessage {
 	private final boolean unload;
 	private final Session session;
 
-	public ChunkDataMessage(int x, int z, boolean contiguous, boolean[] hasAdditionalData, byte[][] data, byte[] biomeData, Session session) {
-		this(x, z, contiguous, hasAdditionalData, data, biomeData, false, session);
+	public ChunkDataMessage(int x, int z, boolean contiguous, boolean[] hasAdditionalData, byte[][] data, byte[] biomeData, Session session, RepositionManager rm) {
+		this(x, z, contiguous, hasAdditionalData, data, biomeData, false, session, rm);
 	}
 
-	public ChunkDataMessage(int x, int z, boolean contiguous, boolean[] hasAdditionalData, byte[][] data, byte[] biomeData, boolean unload, Session session) {
+	public ChunkDataMessage(int x, int z, boolean contiguous, boolean[] hasAdditionalData, byte[][] data, byte[] biomeData, boolean unload, Session session, RepositionManager rm) {
 		if (!unload && (hasAdditionalData.length != data.length || data.length != 16)) {
 			throw new IllegalArgumentException("Data and hasAdditionalData must have a length of 16");
 		}
-		this.x = x;
-		this.z = z;
+		this.x = rm.convertChunkX(x);
+		this.z = rm.convertChunkZ(z);
 		this.contiguous = contiguous;
 		this.hasAdditionalData = hasAdditionalData;
 		this.data = data;

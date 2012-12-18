@@ -37,6 +37,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.Session;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
@@ -121,7 +122,7 @@ public final class ChunkDataCodec extends MessageCodec<ChunkDataMessage> {
 			size += biomeData.length;
 		}
 
-		return new ChunkDataMessage(x, z, contiguous, hasAdditionalData, data, biomeData, null);
+		return new ChunkDataMessage(x, z, contiguous, hasAdditionalData, data, biomeData, null, NullRepositionManager.getInstance());
 	}
 
 	@Override

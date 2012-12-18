@@ -32,6 +32,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityPaintingMessage;
@@ -49,7 +50,7 @@ public final class EntityPaintingCodec extends MessageCodec<EntityPaintingMessag
 		int y = buffer.readInt();
 		int z = buffer.readInt();
 		int direction = buffer.readInt();
-		return new EntityPaintingMessage(id, title, x, y, z, direction);
+		return new EntityPaintingMessage(id, title, x, y, z, direction, NullRepositionManager.getInstance());
 	}
 
 	@Override

@@ -29,6 +29,7 @@ package org.spout.vanilla.protocol.msg.player;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.math.Vector3;
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
@@ -37,14 +38,14 @@ public class PlayerSoundEffectMessage extends VanillaMainChannelMessage {
 	private final float x, y, z, volume, pitch;
 	private final String soundName;
 
-	public PlayerSoundEffectMessage(String soundName, Vector3 position, float volume, float pitch) {
-		this(soundName, position.getX(), position.getY(), position.getZ(), volume, pitch);
+	public PlayerSoundEffectMessage(String soundName, Vector3 position, float volume, float pitch, RepositionManager rm) {
+		this(soundName, position.getX(), position.getY(), position.getZ(), volume, pitch, rm);
 	}
 
-	public PlayerSoundEffectMessage(String soundName, float x, float y, float z, float volume, float pitch) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+	public PlayerSoundEffectMessage(String soundName, float x, float y, float z, float volume, float pitch, RepositionManager rm) {
+		this.x = rm.convertX(x);
+		this.y = rm.convertY(y);
+		this.z = rm.convertZ(z);
 		this.soundName = soundName;
 		this.volume = volume;
 		this.pitch = pitch;

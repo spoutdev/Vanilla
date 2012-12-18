@@ -34,6 +34,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.msg.player.PlayerDiggingMessage;
 
@@ -49,7 +50,7 @@ public final class PlayerDiggingCodec extends MessageCodec<PlayerDiggingMessage>
 		int y = buffer.readUnsignedByte();
 		int z = buffer.readInt();
 		BlockFace face = BlockFaces.BTEWNS.get(buffer.readUnsignedByte(), BlockFace.THIS);
-		return new PlayerDiggingMessage(state, x, y, z, face);
+		return new PlayerDiggingMessage(state, x, y, z, face, NullRepositionManager.getInstance());
 	}
 
 	@Override

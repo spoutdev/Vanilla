@@ -32,6 +32,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 
@@ -47,7 +48,7 @@ public final class BlockChangeCodec extends MessageCodec<BlockChangeMessage> {
 		int z = buffer.readInt();
 		short type = buffer.readShort();
 		int metadata = buffer.readUnsignedByte();
-		return new BlockChangeMessage(x, y, z, type, metadata);
+		return new BlockChangeMessage(x, y, z, type, metadata, NullRepositionManager.getInstance());
 	}
 
 	@Override

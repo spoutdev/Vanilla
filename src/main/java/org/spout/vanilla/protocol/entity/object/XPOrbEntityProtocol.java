@@ -31,19 +31,19 @@ import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
-
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.vanilla.component.substance.XPOrb;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityExperienceOrbMessage;
 
 public class XPOrbEntityProtocol extends VanillaEntityProtocol {
 	@Override
-	public List<Message> getSpawnMessages(Entity entity) {
+	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
 		XPOrb xp = entity.add(XPOrb.class);
 		int id = entity.getId();
 		int x = (int) (entity.getTransform().getPosition().getX() * 32);
 		int y = (int) (entity.getTransform().getPosition().getY() * 32);
 		int z = (int) (entity.getTransform().getPosition().getZ() * 32);
-		return Arrays.<Message>asList(new EntityExperienceOrbMessage(id, x, y, z, xp.getExperience()));
+		return Arrays.<Message>asList(new EntityExperienceOrbMessage(id, x, y, z, xp.getExperience(), rm));
 	}
 }

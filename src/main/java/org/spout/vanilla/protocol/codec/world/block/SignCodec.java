@@ -32,6 +32,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.world.block.SignMessage;
@@ -54,7 +55,7 @@ public final class SignCodec extends MessageCodec<SignMessage> {
 			}
 			message[i] = line;
 		}
-		return new SignMessage(x, y, z, message);
+		return new SignMessage(x, y, z, message, NullRepositionManager.getInstance());
 	}
 
 	@Override

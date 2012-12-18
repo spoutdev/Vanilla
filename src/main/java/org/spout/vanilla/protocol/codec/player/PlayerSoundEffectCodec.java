@@ -32,6 +32,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.player.PlayerSoundEffectMessage;
@@ -56,7 +57,7 @@ public final class PlayerSoundEffectCodec extends MessageCodec<PlayerSoundEffect
 		float z = (float) buffer.readInt() / 8.0f;
 		float volume = buffer.readFloat();
 		float pitch = 63f / (float) buffer.readUnsignedByte();
-		return new PlayerSoundEffectMessage(soundName, x, y, z, volume, pitch);
+		return new PlayerSoundEffectMessage(soundName, x, y, z, volume, pitch, NullRepositionManager.getInstance());
 	}
 
 	@Override

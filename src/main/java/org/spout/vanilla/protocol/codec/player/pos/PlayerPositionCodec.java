@@ -32,6 +32,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionMessage;
 
@@ -47,7 +48,7 @@ public final class PlayerPositionCodec extends MessageCodec<PlayerPositionMessag
 		double stance = buffer.readDouble();
 		double z = buffer.readDouble();
 		boolean flying = buffer.readByte() == 1;
-		return new PlayerPositionMessage(x, y, z, stance, flying);
+		return new PlayerPositionMessage(x, y, z, stance, flying, NullRepositionManager.getInstance());
 	}
 
 	@Override

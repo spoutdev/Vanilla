@@ -28,22 +28,23 @@ package org.spout.vanilla.protocol.msg.player;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.protocol.reposition.RepositionManager;
 
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class PlayerBedMessage extends EntityMessage {
 	private final int used, x, y, z;
 
-	public PlayerBedMessage(int id, int used, int x, int y, int z) {
+	public PlayerBedMessage(int id, int used, int x, int y, int z, RepositionManager rm) {
 		super(id);
 		this.used = used;
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.x = rm.convertX(x);
+		this.y = rm.convertY(y);
+		this.z = rm.convertZ(z);
 	}
 
-	public PlayerBedMessage(Entity entity, Block head) {
-		this(entity.getId(), 0, head.getX(), head.getY(), head.getZ());
+	public PlayerBedMessage(Entity entity, Block head, RepositionManager rm) {
+		this(entity.getId(), 0, head.getX(), head.getY(), head.getZ(), rm);
 	}
 
 	public int getUsed() {

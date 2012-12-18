@@ -32,6 +32,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.nbt.CompoundMap;
 
@@ -50,7 +51,7 @@ public class EntityTileDataCodec extends MessageCodec<EntityTileDataMessage> {
 		int z = buffer.readInt();
 		int action = buffer.readByte();
 		CompoundMap data = ChannelBufferUtils.readCompound(buffer);
-		return new EntityTileDataMessage(x, y, z, action, data);
+		return new EntityTileDataMessage(x, y, z, action, data, NullRepositionManager.getInstance());
 	}
 
 	@Override

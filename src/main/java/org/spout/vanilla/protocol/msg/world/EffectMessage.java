@@ -29,6 +29,7 @@ package org.spout.vanilla.protocol.msg.world;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
@@ -39,23 +40,23 @@ public final class EffectMessage extends VanillaMainChannelMessage {
 	private final int data;
 	private final boolean volumeDecrease;
 
-	public EffectMessage(int id, Block block, int data) {
-		this(id, block, data, true);
+	public EffectMessage(int id, Block block, int data, RepositionManager rm) {
+		this(id, block, data, true, rm);
 	}
 
-	public EffectMessage(int id, Block block, int data, boolean volumeDecrease) {
-		this(id, block.getX(), block.getY(), block.getZ(), data, volumeDecrease);
+	public EffectMessage(int id, Block block, int data, boolean volumeDecrease, RepositionManager rm) {
+		this(id, block.getX(), block.getY(), block.getZ(), data, volumeDecrease, rm);
 	}
 
-	public EffectMessage(int id, int x, int y, int z, int data) {
-		this(id, x, y, z, data, true);
+	public EffectMessage(int id, int x, int y, int z, int data, RepositionManager rm) {
+		this(id, x, y, z, data, true, rm);
 	}
 
-	public EffectMessage(int id, int x, int y, int z, int data, boolean volumeDecrease) {
+	public EffectMessage(int id, int x, int y, int z, int data, boolean volumeDecrease, RepositionManager rm) {
 		this.id = id;
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.x = rm.convertX(x);
+		this.y = rm.convertY(y);
+		this.z = rm.convertZ(z);
 		this.data = data;
 		this.volumeDecrease = volumeDecrease;
 	}

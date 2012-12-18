@@ -33,15 +33,15 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
-
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
 
 public class HumanEntityProtocol extends VanillaEntityProtocol {
 	@Override
-	public List<Message> getSpawnMessages(Entity entity) {
+	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
 		Human human = entity.add(Human.class);
 
 		int id = entity.getId();
@@ -58,6 +58,6 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		}
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 		parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 100));
-		return Arrays.<Message>asList(new PlayerSpawnMessage(id, human.getName(), x, y, z, r, p, item, parameters));
+		return Arrays.<Message>asList(new PlayerSpawnMessage(id, human.getName(), x, y, z, r, p, item, parameters, rm));
 	}
 }

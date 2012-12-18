@@ -33,6 +33,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
@@ -57,7 +58,7 @@ public final class EntityMobCodec extends MessageCodec<EntityMobMessage> {
 		short velocityX = buffer.readShort();
 		short velocityY = buffer.readShort();
 		List<Parameter<?>> parameters = ChannelBufferUtils.readParameters(buffer);
-		return new EntityMobMessage(id, type, x, y, z, yaw, pitch, headYaw, velocityZ, velocityX, velocityY, parameters);
+		return new EntityMobMessage(id, type, x, y, z, yaw, pitch, headYaw, velocityZ, velocityX, velocityY, parameters, NullRepositionManager.getInstance());
 	}
 
 	@Override

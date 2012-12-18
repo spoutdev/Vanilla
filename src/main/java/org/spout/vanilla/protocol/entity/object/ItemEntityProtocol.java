@@ -33,7 +33,7 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
-
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
@@ -41,7 +41,7 @@ import org.spout.vanilla.protocol.msg.entity.spawn.EntityItemMessage;
 
 public class ItemEntityProtocol extends VanillaEntityProtocol {
 	@Override
-	public List<Message> getSpawnMessages(Entity entity) {
+	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
 		Item item = entity.add(Item.class);
 		int id = entity.getId();
 		int x = (int) (entity.getTransform().getPosition().getX() * 32);
@@ -53,7 +53,7 @@ public class ItemEntityProtocol extends VanillaEntityProtocol {
 		if (stack.getMaterial() != null) {
 			int typeId = VanillaMaterials.getMinecraftId(stack.getMaterial());
 			if (typeId > 0) {
-				return Arrays.<Message>asList(new EntityItemMessage(id, typeId, stack.getAmount(), stack.getData(), x, y, z, r, p, (int) entity.getTransform().getRoll()));
+				return Arrays.<Message>asList(new EntityItemMessage(id, typeId, stack.getAmount(), stack.getData(), x, y, z, r, p, (int) entity.getTransform().getRoll(), rm));
 			}
 		}
 		return Collections.emptyList();

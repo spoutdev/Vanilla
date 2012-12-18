@@ -31,6 +31,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.api.protocol.reposition.RepositionManager;
 
 import org.spout.vanilla.component.substance.material.Sign;
 import org.spout.vanilla.protocol.msg.world.block.SignMessage;
@@ -43,8 +44,13 @@ public class SignHandler extends MessageHandler<SignMessage> {
 		}
 
 		Player player = session.getPlayer();
+		RepositionManager rmInverse = player.getNetworkSynchronizer().getRepositionManager();
+		
+		int x = rmInverse.convertX(message.getX());
+		int y = rmInverse.convertY(message.getY());
+		int z = rmInverse.convertZ(message.getZ());
 
-		BlockComponent component = player.getWorld().getBlockComponent(message.getX(), message.getY(), message.getZ());
+		BlockComponent component = player.getWorld().getBlockComponent(x, y, z);
 		if (component == null || !(component instanceof Sign)) {
 			return;
 		}

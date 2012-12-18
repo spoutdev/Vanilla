@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.msg.world.block;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.VanillaBlockDataChannelMessage;
@@ -46,13 +47,13 @@ public final class BlockBulkMessage extends VanillaBlockDataChannelMessage {
 	 * @param types An array of block types
 	 * @param metadata An array of block metadata. No more than a nibble per entry
 	 */
-	public BlockBulkMessage(int chunkX, int chunkZ, short[] coordinates, short[] types, byte[] metadata) {
+	public BlockBulkMessage(int chunkX, int chunkZ, short[] coordinates, short[] types, byte[] metadata, RepositionManager rm) {
 		if (coordinates.length != (types.length * 3) || types.length != metadata.length) {
 			throw new IllegalArgumentException();
 		}
-
-		this.chunkX = chunkX;
-		this.chunkZ = chunkZ;
+		// TODO - this message is broken anyway? - need to add reposition support + fix
+		this.chunkX = rm.convertChunkX(chunkX);
+		this.chunkZ = rm.convertChunkZ(chunkZ);
 		this.coordinates = coordinates;
 		this.types = types;
 		this.metadata = metadata;

@@ -31,15 +31,15 @@ import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
-
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.vanilla.component.substance.Lightning;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityThunderboltMessage;
 
 public class LightningEntityProtocol extends VanillaEntityProtocol {
 	@Override
-	public List<Message> getSpawnMessages(Entity entity) {
+	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
 		Lightning light = entity.add(Lightning.class);
-		return Arrays.<Message>asList(new EntityThunderboltMessage(entity.getId(), entity.getTransform().getPosition().getBlockX(), entity.getTransform().getPosition().getBlockY(), entity.getTransform().getPosition().getBlockZ()));
+		return Arrays.<Message>asList(new EntityThunderboltMessage(entity.getId(), entity.getTransform().getPosition().getBlockX(), entity.getTransform().getPosition().getBlockY(), entity.getTransform().getPosition().getBlockZ(), rm));
 	}
 }

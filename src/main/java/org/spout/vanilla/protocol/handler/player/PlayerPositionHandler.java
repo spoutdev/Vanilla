@@ -31,11 +31,11 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.player.PingComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.configuration.WorldConfigurationNode;
-import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionMessage;
 
 public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMessage> {
@@ -45,15 +45,20 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 			return;
 		}
 		Player holder = session.getPlayer();
+		RepositionManager rmInverse = holder.getNetworkSynchronizer().getRepositionManager().getInverse();
 
 		if (holder.has(PingComponent.class)) {
 			holder.get(PingComponent.class).refresh();
 		}
 
-		Point newPosition = new Point(message.getPosition(), holder.getWorld());
+		Point rawPosition = new Point(message.getPosition(), holder.getWorld());
+		Point newPosition = rmInverse.convert(rawPosition);
 		Point position = holder.getTransform().getPosition();
-		
-		newPosition = ((VanillaNetworkSynchronizer)session.getPlayer().getNetworkSynchronizer()).toServer(newPosition);
+
+		Spout.getLogger().info("Actual: " + position.toBlockString());
+		Spout.getLogger().info("Client: " + rawPosition.toBlockString());
+		Spout.getLogger().info("Server: " + newPosition.toBlockString());
+		Spout.getLogger().info("Pending: " + holder.getNetworkSynchronizer().isTeleportPending());
 		
 		if (holder.getNetworkSynchronizer().isTeleportPending()) {
 			if (position.getX() == newPosition.getX() && position.getZ() == newPosition.getZ() && Math.abs(position.getY() - newPosition.getY()) < 16) {

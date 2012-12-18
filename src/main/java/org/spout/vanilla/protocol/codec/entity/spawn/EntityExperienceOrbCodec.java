@@ -32,6 +32,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityExperienceOrbMessage;
 
@@ -47,7 +48,7 @@ public class EntityExperienceOrbCodec extends MessageCodec<EntityExperienceOrbMe
 		int y = buffer.readInt();
 		int z = buffer.readInt();
 		short count = buffer.readShort();
-		return new EntityExperienceOrbMessage(id, x, y, z, count);
+		return new EntityExperienceOrbMessage(id, x, y, z, count, NullRepositionManager.getInstance());
 	}
 
 	@Override

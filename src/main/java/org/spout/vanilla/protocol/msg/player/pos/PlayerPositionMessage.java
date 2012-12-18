@@ -29,6 +29,7 @@ package org.spout.vanilla.protocol.msg.player.pos;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.math.Vector3;
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
@@ -37,10 +38,10 @@ public final class PlayerPositionMessage extends VanillaMainChannelMessage {
 	private final double x, y, z, stance;
 	private final boolean onGround;
 
-	public PlayerPositionMessage(double x, double y, double z, double stance, boolean onGround) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+	public PlayerPositionMessage(double x, double y, double z, double stance, boolean onGround, RepositionManager rm) {
+		this.x = rm.convertX(x);
+		this.y = rm.convertY(y);
+		this.z = rm.convertZ(z);
 		this.stance = stance;
 		this.onGround = onGround;
 	}

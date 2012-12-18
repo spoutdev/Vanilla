@@ -32,6 +32,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
 
@@ -52,9 +53,9 @@ public final class EntitySpawnObjectCodec extends MessageCodec<EntityObjectMessa
 			short speedX = buffer.readShort();
 			short speedY = buffer.readShort();
 			short speedZ = buffer.readShort();
-			return new EntityObjectMessage(entityId, type, x, y, z, throwerId, speedX, speedY, speedZ);
+			return new EntityObjectMessage(entityId, type, x, y, z, throwerId, speedX, speedY, speedZ, NullRepositionManager.getInstance());
 		}
-		return new EntityObjectMessage(entityId, type, x, y, z, throwerId);
+		return new EntityObjectMessage(entityId, type, x, y, z, throwerId, NullRepositionManager.getInstance());
 	}
 
 	@Override

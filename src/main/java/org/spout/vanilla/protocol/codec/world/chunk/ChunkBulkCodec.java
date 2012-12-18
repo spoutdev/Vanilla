@@ -36,6 +36,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkBulkMessage;
 
@@ -117,7 +118,7 @@ public final class ChunkBulkCodec extends MessageCodec<ChunkBulkMessage> {
 			throw new IllegalStateException("Flat data length miscalculated");
 		}
 
-		return new ChunkBulkMessage(x, z, hasAdd, data, biomeData);
+		return new ChunkBulkMessage(x, z, hasAdd, data, biomeData, NullRepositionManager.getInstance());
 	}
 
 	@Override

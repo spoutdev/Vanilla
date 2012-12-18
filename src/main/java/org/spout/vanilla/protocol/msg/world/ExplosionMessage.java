@@ -29,6 +29,7 @@ package org.spout.vanilla.protocol.msg.world;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.math.Vector3;
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
@@ -38,18 +39,18 @@ public final class ExplosionMessage extends VanillaMainChannelMessage {
 	private final float radius;
 	private final byte[] coordinates;
 
-	public ExplosionMessage(Vector3 position, float radius, byte[] coordinates) {
-		this(position.getX(), position.getY(), position.getZ(), radius, coordinates);
+	public ExplosionMessage(Vector3 position, float radius, byte[] coordinates, RepositionManager rm) {
+		this(position.getX(), position.getY(), position.getZ(), radius, coordinates, rm);
 	}
 
-	public ExplosionMessage(double x, double y, double z, float radius, byte[] coordinates) {
+	public ExplosionMessage(double x, double y, double z, float radius, byte[] coordinates, RepositionManager rm) {
 		if (coordinates.length % 3 != 0) {
 			throw new IllegalArgumentException();
 		}
 
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.x = rm.convertX(x);
+		this.y = rm.convertY(y);
+		this.z = rm.convertZ(z);
 		this.radius = radius;
 		this.coordinates = coordinates;
 	}

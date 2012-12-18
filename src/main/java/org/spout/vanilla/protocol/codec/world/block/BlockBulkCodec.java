@@ -32,6 +32,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.msg.world.block.BlockBulkMessage;
 
@@ -65,7 +66,7 @@ public final class BlockBulkCodec extends MessageCodec<BlockBulkMessage> {
 			metadata[i] = (byte) ((record >> 0) & 0xF);
 		}
 
-		return new BlockBulkMessage(chunkX, chunkZ, coordinates, types, metadata);
+		return new BlockBulkMessage(chunkX, chunkZ, coordinates, types, metadata, NullRepositionManager.getInstance());
 	}
 
 	@Override

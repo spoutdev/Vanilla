@@ -32,6 +32,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.msg.world.block.BlockBreakAnimationMessage;
 
@@ -47,7 +48,7 @@ public class BlockBreakAnimationCodec extends MessageCodec<BlockBreakAnimationMe
 		int y = buffer.readInt();
 		int z = buffer.readInt();
 		byte stage = buffer.readByte();
-		return new BlockBreakAnimationMessage(entityId, x, y, z, stage);
+		return new BlockBreakAnimationMessage(entityId, x, y, z, stage, NullRepositionManager.getInstance());
 	}
 
 	@Override

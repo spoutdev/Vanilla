@@ -32,6 +32,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityThunderboltMessage;
 
@@ -47,7 +48,7 @@ public final class EntityThunderboltCodec extends MessageCodec<EntityThunderbolt
 		int x = buffer.readInt();
 		int y = buffer.readInt();
 		int z = buffer.readInt();
-		return new EntityThunderboltMessage(id, mode, x, y, z);
+		return new EntityThunderboltMessage(id, mode, x, y, z, NullRepositionManager.getInstance());
 	}
 
 	@Override

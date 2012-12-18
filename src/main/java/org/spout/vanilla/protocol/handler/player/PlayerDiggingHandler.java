@@ -47,8 +47,8 @@ import org.spout.api.math.Vector3;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.flag.Flag;
-
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.misc.DiggingComponent;
@@ -88,11 +88,16 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		}
 
 		Player player = session.getPlayer();
-
-		int x = message.getX();
-		int y = message.getY();
-		int z = message.getZ();
+		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
+		RepositionManager rmInverse = rm.getInverse();
+		
+		int x = rmInverse.convertX(message.getX());
+		int y = rmInverse.convertY(message.getY());
+		int z = rmInverse.convertZ(message.getZ());
 		int state = message.getState();
+		Spout.getLogger().info("Digging: " + x + ", " + y + ", " + z);
+		Spout.getLogger().info("rm(20): " + rm.convertY(20));
+		Spout.getLogger().info("rmI(20): " + rmInverse.convertY(20));
 
 		World w = player.getWorld();
 		Point point = new Point(w, x, y, z);
@@ -111,7 +116,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 			Collection<Protection> protections = Spout.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(point);
 			for (Protection p : protections) {
 				if (p.contains(point) && !human.isOp()) {
-					player.getSession().send(false, new BlockChangeMessage(x, y, z, minecraftID, block.getData() & 0xF));
+					player.getSession().send(false, new BlockChangeMessage(x, y, z, minecraftID, block.getData() & 0xF, rm));
 					player.sendMessage(ChatStyle.DARK_RED, "This area is a protected spawn point!");
 					return;
 				}

@@ -33,6 +33,7 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.Message;
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.vanilla.component.substance.object.FallingBlock;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
@@ -44,7 +45,7 @@ public class FallingBlockProtocol extends ObjectEntityProtocol{
 	}
 
 	@Override
-	public List<Message> getSpawnMessages(Entity entity) {
+	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
 		FallingBlock block = entity.get(FallingBlock.class);
 		if (block != null) {
 			VanillaBlockMaterial material = block.getMaterial();
@@ -57,7 +58,7 @@ public class FallingBlockProtocol extends ObjectEntityProtocol{
 			int y = (int) Math.floor(pos.getY() * p);
 			int z = (int) Math.floor(pos.getZ() * p);
 			short fallSpeed = (short) (block.getFallingSpeed() * 8000d);
-			messages.add(new EntityObjectMessage(entity.getId(), (byte) typeId, x, y, z, messageData, (short)0, fallSpeed, (short)0));
+			messages.add(new EntityObjectMessage(entity.getId(), (byte) typeId, x, y, z, messageData, (short)0, fallSpeed, (short)0, rm));
 			messages.add(new EntityMetadataMessage(entity.getId(), getSpawnParameters(entity)));
 			return messages;
 		} else {

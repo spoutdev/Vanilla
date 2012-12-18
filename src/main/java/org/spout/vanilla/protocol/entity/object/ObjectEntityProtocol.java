@@ -31,7 +31,7 @@ import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
-
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.vanilla.protocol.entity.BasicEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
@@ -42,9 +42,9 @@ public class ObjectEntityProtocol extends BasicEntityProtocol {
 	}
 
 	@Override
-	public List<Message> getSpawnMessages(Entity entity) {
+	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
 		List<Message> messages = new ArrayList<Message>();
-		messages.add(new EntityObjectMessage(entity, (byte) typeId));
+		messages.add(new EntityObjectMessage(entity, (byte) typeId, rm));
 		messages.add(new EntityMetadataMessage(entity.getId(), getSpawnParameters(entity)));
 		return messages;
 	}

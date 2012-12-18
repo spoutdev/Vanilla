@@ -30,6 +30,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.VanillaBlockDataChannelMessage;
@@ -39,15 +40,15 @@ public class BlockBreakAnimationMessage extends VanillaBlockDataChannelMessage {
 	private final int x, y, z;
 	private final byte stage;
 
-	public BlockBreakAnimationMessage(Entity entity, Block block, byte stage) {
-		this(entity.getId(), block.getX(), block.getY(), block.getZ(), stage);
+	public BlockBreakAnimationMessage(Entity entity, Block block, byte stage, RepositionManager rm) {
+		this(entity.getId(), block.getX(), block.getY(), block.getZ(), stage, rm);
 	}
 
-	public BlockBreakAnimationMessage(int entityId, int x, int y, int z, byte stage) {
+	public BlockBreakAnimationMessage(int entityId, int x, int y, int z, byte stage, RepositionManager rm) {
 		this.entityId = entityId;
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.x = rm.convertX(x);
+		this.y = rm.convertY(y);
+		this.z = rm.convertZ(z);
 		this.stage = stage;
 	}
 

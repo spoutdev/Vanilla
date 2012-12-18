@@ -31,14 +31,14 @@ import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
-
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.vanilla.component.substance.Painting;
 import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityPaintingMessage;
 
 public class PaintingEntityProtocol extends VanillaEntityProtocol {
 	@Override
-	public List<Message> getSpawnMessages(Entity entity) {
-		return Arrays.<Message>asList(new EntityPaintingMessage(entity.add(Painting.class)));
+	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
+		return Arrays.<Message>asList(new EntityPaintingMessage(entity.add(Painting.class), rm));
 	}
 }

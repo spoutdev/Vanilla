@@ -27,10 +27,9 @@
 package org.spout.vanilla.protocol.msg.entity.spawn;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import org.spout.api.math.Vector3;
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
-
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class EntityItemMessage extends EntityMessage {
@@ -38,15 +37,15 @@ public final class EntityItemMessage extends EntityMessage {
 	private final int itemId, count;
 	private final short damage;
 
-	public EntityItemMessage(int id, int itemId, int count, short damage, Vector3 pos, int rotation, int pitch, int roll) {
-		this(id, itemId, count, damage, (int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), rotation, pitch, roll);
+	public EntityItemMessage(int id, int itemId, int count, short damage, Vector3 pos, int rotation, int pitch, int roll, RepositionManager rm) {
+		this(id, itemId, count, damage, (int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), rotation, pitch, roll, rm);
 	}
 
-	public EntityItemMessage(int id, int itemId, int count, short damage, int x, int y, int z, int rotation, int pitch, int roll) {
+	public EntityItemMessage(int id, int itemId, int count, short damage, int x, int y, int z, int rotation, int pitch, int roll, RepositionManager rm) {
 		super(id);
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.x = rm.convertX(x);
+		this.y = rm.convertY(y);
+		this.z = rm.convertZ(z);
 		this.rotation = rotation;
 		this.pitch = pitch;
 		this.roll = roll;

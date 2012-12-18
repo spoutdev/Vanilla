@@ -29,6 +29,7 @@ package org.spout.vanilla.protocol.msg.world.block;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.VanillaBlockDataChannelMessage;
@@ -38,14 +39,14 @@ public final class BlockActionMessage extends VanillaBlockDataChannelMessage {
 	private final byte firstByte, secondByte;
 	private short blockId;
 
-	public BlockActionMessage(Block block, short blockId, byte firstByte, byte secondByte) {
-		this(block.getX(), block.getY(), block.getZ(), blockId, firstByte, secondByte);
+	public BlockActionMessage(Block block, short blockId, byte firstByte, byte secondByte, RepositionManager rm) {
+		this(block.getX(), block.getY(), block.getZ(), blockId, firstByte, secondByte, rm);
 	}
 
-	public BlockActionMessage(int x, int y, int z, short blockId, byte firstByte, byte secondByte) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+	public BlockActionMessage(int x, int y, int z, short blockId, byte firstByte, byte secondByte, RepositionManager rm) {
+		this.x = rm.convertX(x);
+		this.y = rm.convertY(y);
+		this.z = rm.convertZ(z);
 		this.firstByte = firstByte;
 		this.secondByte = secondByte;
 		this.blockId = blockId;

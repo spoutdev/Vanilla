@@ -32,6 +32,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.msg.world.block.BlockActionMessage;
 
@@ -48,7 +49,7 @@ public final class BlockActionCodec extends MessageCodec<BlockActionMessage> {
 		byte firstByte = buffer.readByte();
 		byte secondByte = buffer.readByte();
 		short blockId = buffer.readShort();
-		return new BlockActionMessage(x, y, z, blockId, firstByte, secondByte);
+		return new BlockActionMessage(x, y, z, blockId, firstByte, secondByte, NullRepositionManager.getInstance());
 	}
 
 	@Override

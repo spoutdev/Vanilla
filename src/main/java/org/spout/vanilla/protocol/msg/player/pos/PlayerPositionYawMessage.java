@@ -29,6 +29,7 @@ package org.spout.vanilla.protocol.msg.player.pos;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.math.Vector3;
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
@@ -37,14 +38,14 @@ public final class PlayerPositionYawMessage extends VanillaMainChannelMessage {
 	private final PlayerPositionMessage position;
 	private final PlayerYawMessage rotation;
 
-	public PlayerPositionYawMessage(double x, double y, double z, double stance, float yaw, float pitch, boolean onGround) {
-		position = new PlayerPositionMessage(x, y, z, stance, onGround);
+	public PlayerPositionYawMessage(double x, double y, double z, double stance, float yaw, float pitch, boolean onGround, RepositionManager rm) {
+		position = new PlayerPositionMessage(x, y, z, stance, onGround, rm);
 		rotation = new PlayerYawMessage(yaw, pitch, onGround);
 	}
 
-	public PlayerPositionYawMessage(double x, double y, double z, double stance, float yaw, float pitch, boolean onGround, int channelId) {
+	public PlayerPositionYawMessage(double x, double y, double z, double stance, float yaw, float pitch, boolean onGround, int channelId, RepositionManager rm) {
 		super(channelId);
-		position = new PlayerPositionMessage(x, y, z, stance, onGround);
+		position = new PlayerPositionMessage(x, y, z, stance, onGround, rm);
 		rotation = new PlayerYawMessage(yaw, pitch, onGround);
 	}
 

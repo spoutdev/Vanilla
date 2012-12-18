@@ -31,6 +31,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
+import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
@@ -41,14 +42,14 @@ public final class PlayerBlockPlacementMessage extends VanillaMainChannelMessage
 	private BlockFace direction;
 	private ItemStack heldItem;
 
-	public PlayerBlockPlacementMessage(int x, int y, int z, BlockFace direction, Vector3 face) {
-		this(x, y, z, direction, face, null);
+	public PlayerBlockPlacementMessage(int x, int y, int z, BlockFace direction, Vector3 face, RepositionManager rm) {
+		this(x, y, z, direction, face, null, rm);
 	}
 
-	public PlayerBlockPlacementMessage(int x, int y, int z, BlockFace direction, Vector3 face, ItemStack heldItem) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+	public PlayerBlockPlacementMessage(int x, int y, int z, BlockFace direction, Vector3 face, ItemStack heldItem, RepositionManager rm) {
+		this.x = rm.convertX(x);
+		this.y = rm.convertY(y);
+		this.z = rm.convertZ(z);
 		this.face = face;
 		this.direction = direction;
 		this.heldItem = heldItem;
@@ -76,6 +77,10 @@ public final class PlayerBlockPlacementMessage extends VanillaMainChannelMessage
 
 	public Vector3 getFace() {
 		return this.face;
+	}
+	
+	public PlayerBlockPlacementMessage convert(RepositionManager rm) {
+		return new PlayerBlockPlacementMessage(getX(), getY(), getZ(), getDirection(), getFace(), getHeldItem(), rm);
 	}
 
 	@Override

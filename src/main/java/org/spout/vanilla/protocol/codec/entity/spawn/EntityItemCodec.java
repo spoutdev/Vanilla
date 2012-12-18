@@ -32,6 +32,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityItemMessage;
@@ -64,7 +65,7 @@ public final class EntityItemCodec extends MessageCodec<EntityItemMessage> {
 		int rotation = buffer.readUnsignedByte();
 		int pitch = buffer.readUnsignedByte();
 		int roll = buffer.readUnsignedByte();
-		return new EntityItemMessage(id, itemId, count, (short) damage, x, y, z, rotation, pitch, roll);
+		return new EntityItemMessage(id, itemId, count, (short) damage, x, y, z, rotation, pitch, roll, NullRepositionManager.getInstance());
 	}
 
 	@Override

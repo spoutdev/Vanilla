@@ -1,28 +1,28 @@
 /*
  * This file is part of Vanilla.
  *
- * Copyright (c) 2011-2012, VanillaDev <http://www.spout.org/>
- * Vanilla is licensed under the SpoutDev License Version 1.
+ * Copyright (c) 2011-2012, Spout LLC <http://www.spout.org/>
+ * Vanilla is licensed under the Spout License Version 1.
  *
- * Vanilla is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Vanilla is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
  *
  * In addition, 180 days after any changes are published, you can use the
  * software, incorporating those changes, under the terms of the MIT license,
- * as described in the SpoutDev License Version 1.
+ * as described in the Spout License Version 1.
  *
- * Vanilla is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+ * more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev License Version 1 along with this program.
+ * the MIT license and the Spout License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
- * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
- * including the MIT license.
+ * License and see <http://spout.in/licensev1> for the full license, including
+ * the MIT license.
  */
 package org.spout.vanilla.data;
 
@@ -53,18 +53,18 @@ public final class VanillaRenderMaterials {
 
 	static {
 		if (Spout.getPlatform() == Platform.CLIENT) {
-			FONT = (Font) fileSystem.getResource("font://Spout/resources/resources/fonts/ubuntu/Ubuntu-M.ttf");
-			HOTBAR_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/HotbarGUIMaterial.smt");
-			ICONS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/IconsGUIMaterial.smt");
-			INVENTORY_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/InventoryGUIMaterial.smt");
-			CONTAINER_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/ContainerGUIMaterial.smt");
-			CRAFTING_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/CraftingGUIMaterial.smt");
-			FURNACE_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/FurnaceGUIMaterial.smt");
-			TRAP_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/TrapGUIMaterial.smt");
-			ENCHANT_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/InventoryGUIMaterial.smt");
-			ALCHEMY_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/InventoryGUIMaterial.smt");
-			ITEMS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/gui/smt/ItemsGUIMaterial.smt");
-			BLOCKS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/resources/materials/terrain.smt");
+			FONT = (Font) fileSystem.getResource("font://Spout/fonts/ubuntu/Ubuntu-M.ttf");
+			HOTBAR_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/HotbarGUIMaterial.smt");
+			ICONS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/IconsGUIMaterial.smt");
+			INVENTORY_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/InventoryGUIMaterial.smt");
+			CONTAINER_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/ContainerGUIMaterial.smt");
+			CRAFTING_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/CraftingGUIMaterial.smt");
+			FURNACE_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/FurnaceGUIMaterial.smt");
+			TRAP_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/TrapGUIMaterial.smt");
+			ENCHANT_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/InventoryGUIMaterial.smt");
+			ALCHEMY_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/InventoryGUIMaterial.smt");
+			ITEMS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/ItemsGUIMaterial.smt");
+			BLOCKS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/materials/terrain.smt");
 		} else {
 			FONT = null;
 			HOTBAR_MATERIAL = null;

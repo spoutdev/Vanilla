@@ -1,28 +1,28 @@
 /*
  * This file is part of Vanilla.
  *
- * Copyright (c) 2011-2012, VanillaDev <http://www.spout.org/>
- * Vanilla is licensed under the SpoutDev License Version 1.
+ * Copyright (c) 2011-2012, Spout LLC <http://www.spout.org/>
+ * Vanilla is licensed under the Spout License Version 1.
  *
- * Vanilla is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Vanilla is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
  *
  * In addition, 180 days after any changes are published, you can use the
  * software, incorporating those changes, under the terms of the MIT license,
- * as described in the SpoutDev License Version 1.
+ * as described in the Spout License Version 1.
  *
- * Vanilla is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+ * more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev License Version 1 along with this program.
+ * the MIT license and the Spout License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
- * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
- * including the MIT license.
+ * License and see <http://spout.in/licensev1> for the full license, including
+ * the MIT license.
  */
 package org.spout.vanilla.material;
 
@@ -282,10 +282,10 @@ public final class VanillaMaterials {
 	public static final TallGrass TALL_GRASS = TallGrass.TALL_GRASS;
 	public static final DeadBush DEAD_BUSH = new DeadBush("Dead Shrubs", 32);
 	public static final Sapling SAPLING = Sapling.DEFAULT;
-	public static final Flower DANDELION = new Flower("Dandelion", 37, "model://Vanilla/resources/materials/block/nonsolid/dandelion/dandelion.spm");
-	public static final Flower ROSE = new Flower("Rose", 38, "model://Vanilla/resources/materials/block/nonsolid/rose/rose.spm");
-	public static final Mushroom BROWN_MUSHROOM = new Mushroom("Brown Mushroom", 39, "model://Vanilla/resources/materials/block/nonsolid/brownmushroom/brownmushroom.spm");
-	public static final Mushroom RED_MUSHROOM = new Mushroom("Red Mushroom", 40, "model://Vanilla/resources/materials/block/nonsolid/redmushroom/redmushroom.spm");
+	public static final Flower DANDELION = new Flower("Dandelion", 37, "model://Vanilla/materials/block/nonsolid/dandelion/dandelion.spm");
+	public static final Flower ROSE = new Flower("Rose", 38, "model://Vanilla/materials/block/nonsolid/rose/rose.spm");
+	public static final Mushroom BROWN_MUSHROOM = new Mushroom("Brown Mushroom", 39, "model://Vanilla/materials/block/nonsolid/brownmushroom/brownmushroom.spm");
+	public static final Mushroom RED_MUSHROOM = new Mushroom("Red Mushroom", 40, "model://Vanilla/materials/block/nonsolid/redmushroom/redmushroom.spm");
 	// == Stairs ==
 	public static final NetherBrickStairs STAIRS_NETHER_BRICK = new NetherBrickStairs("Nether Brick Stairs", 114);
 	public static final BrickStairs STAIRS_BRICK = new BrickStairs("Brick Stairs", 108);
@@ -369,8 +369,8 @@ public final class VanillaMaterials {
 	public static final BrewingStandBlock BREWING_STAND_BLOCK = new BrewingStandBlock("Brewing Stand", 117);
 	public static final CauldronBlock CAULDRON_BLOCK = new CauldronBlock("Cauldron", 118);
 	public static final DragonEgg DRAGON_EGG = new DragonEgg("Dragon Egg", 122);
-	public static final RedstoneLamp REDSTONE_LAMP_OFF = new RedstoneLamp("Redstone Lamp", 123, false, "model://Vanilla/resources/materials/block/solid/redstonelampoff/redstonelampoff.spm");
-	public static final RedstoneLamp REDSTONE_LAMP_ON = new RedstoneLamp("Redstone Lamp (On)", 124, true, "model://Vanilla/resources/materials/block/solid/redstonelampon/redstonelampon.spm");
+	public static final RedstoneLamp REDSTONE_LAMP_OFF = new RedstoneLamp("Redstone Lamp", 123, false, "model://Vanilla/materials/block/solid/redstonelampoff/redstonelampoff.spm");
+	public static final RedstoneLamp REDSTONE_LAMP_ON = new RedstoneLamp("Redstone Lamp (On)", 124, true, "model://Vanilla/materials/block/solid/redstonelampon/redstonelampon.spm");
 	public static final TripWireHook TRIPWIRE_HOOK = new TripWireHook("Trip Wire Hook", 131);
 	public static final TripWire TRIPWIRE = new TripWire("Trip Wire", 132);
 	public static final CocoaPlant COCOA_PLANT = new CocoaPlant("Cocoa Plant", 127);

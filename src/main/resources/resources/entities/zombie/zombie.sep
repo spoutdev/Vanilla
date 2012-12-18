@@ -1,9 +1,0 @@
-Name: "Zombie"
-Components:
-    - org.spout.engine.entity.component.EntityRendererComponent
-    - org.spout.vanilla.component.living.hostile.Zombie
-Data:
-    Health: 20
-    Damages: 1
-    Size: 1
-    Model: model://Vanilla/resources/entities/zombie/zombie.spm

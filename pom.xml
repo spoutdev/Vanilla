@@ -23,7 +23,7 @@
 
 	<!-- Company information -->
 	<organization>
-		<name>VanillaDev</name>
+		<name>Spout LLC</name>
 		<url>http://www.spout.org</url>
 	</organization>
 
@@ -31,7 +31,7 @@
 	<licenses>
 		<license>
 			<name>Spout License Version 1</name>
-			<url>http://cdn.spout.org/license/spoutv1.txt</url>
+			<url>http://spout.in/licensev1</url>
 			<distribution>repo</distribution>
 			<comments>GNU Lesser General Public License Version 3, but with a provision that files are released under the MIT license 180 days after they are published.</comments>
 		</license>
@@ -75,6 +75,20 @@
 			<url>http://repo.spout.org</url>
 		</pluginRepository>
 	</pluginRepositories>
+
+	<!-- Distribution management -->
+	<distributionManagement>
+		<!-- Publish releases here -->
+		<repository>
+			<id>spout-releases</id>
+			<url>http://nexus.spout.org/content/repositories/releases</url>
+		</repository>
+		<!-- Publish snapshots here -->
+		<snapshotRepository>
+			<id>spout-snapshots</id>
+			<url>http://nexus.spout.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<!-- Project dependencies -->
 	<dependencies>

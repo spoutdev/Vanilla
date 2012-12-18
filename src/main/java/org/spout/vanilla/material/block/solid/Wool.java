@@ -1,28 +1,28 @@
 /*
  * This file is part of Vanilla.
  *
- * Copyright (c) 2011-2012, VanillaDev <http://www.spout.org/>
- * Vanilla is licensed under the SpoutDev License Version 1.
+ * Copyright (c) 2011-2012, Spout LLC <http://www.spout.org/>
+ * Vanilla is licensed under the Spout License Version 1.
  *
- * Vanilla is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Vanilla is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
  *
  * In addition, 180 days after any changes are published, you can use the
  * software, incorporating those changes, under the terms of the MIT license,
- * as described in the SpoutDev License Version 1.
+ * as described in the Spout License Version 1.
  *
- * Vanilla is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+ * more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev License Version 1 along with this program.
+ * the MIT license and the Spout License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
- * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
- * including the MIT license.
+ * License and see <http://spout.in/licensev1> for the full license, including
+ * the MIT license.
  */
 package org.spout.vanilla.material.block.solid;
 
@@ -39,22 +39,22 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 
 public class Wool extends Solid implements Burnable {
-	public static final Wool WHITE_WOOL = new Wool("White Wool", "model://Vanilla/resources/materials/block/solid/whitewool/whitewool.spm");
-	public static final Wool ORANGE_WOOL = new Wool("Orange Wool", WoolColor.ORANGE, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/orangewool/orangewool.spm");
-	public static final Wool MAGENTA_WOOL = new Wool("Magenta Wool", WoolColor.MAGENTA, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/magentawool/magentawool.spm");
-	public static final Wool LIGHTBLUE_WOOL = new Wool("Light Blue Wool", WoolColor.LIGHTBLUE, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/lightbluewool/lightbluewool.spm");
-	public static final Wool YELLOW_WOOL = new Wool("Yellow Wool", WoolColor.YELLOW, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/yellowwool/yellowwool.spm");
-	public static final Wool LIME_WOOL = new Wool("Lime Wool", WoolColor.LIME, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/whitewool/whitewool.spm"); // TODO : add the lime wool
-	public static final Wool PINK_WOOL = new Wool("Pink Wool", WoolColor.PINK, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/pinkwool/pinkwool.spm");
-	public static final Wool GRAY_WOOL = new Wool("Gray Wool", WoolColor.GRAY, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/graywool/graywool.spm");
-	public static final Wool SILVER_WOOL = new Wool("Light Gray Wool", WoolColor.SILVER, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/lightgraywool/lightgraywool.spm");
-	public static final Wool CYAN_WOOL = new Wool("Cyan Wool", WoolColor.CYAN, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/cyanwool/cyanwool.spm");
-	public static final Wool PURPLE_WOOL = new Wool("Purple Wool", WoolColor.PURPLE, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/purplewool/purplewool.spm");
-	public static final Wool BLUE_WOOL = new Wool("Blue Wool", WoolColor.BLUE, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/bluewool/bluewool.spm");
-	public static final Wool BROWN_WOOL = new Wool("Brown Wool", WoolColor.BROWN, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/brownwool/brownwool.spm");
-	public static final Wool GREEN_WOOL = new Wool("Green Wool", WoolColor.GREEN, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/greenwool/greenwool.spm");
-	public static final Wool RED_WOOL = new Wool("Red Wool", WoolColor.RED, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/redwool/redwool.spm");
-	public static final Wool BLACK_WOOL = new Wool("Black Wool", WoolColor.BLACK, WHITE_WOOL, "model://Vanilla/resources/materials/block/solid/blackwool/blackwool.spm");
+	public static final Wool WHITE_WOOL = new Wool("White Wool", "model://Vanilla/materials/block/solid/whitewool/whitewool.spm");
+	public static final Wool ORANGE_WOOL = new Wool("Orange Wool", WoolColor.ORANGE, WHITE_WOOL, "model://Vanilla/materials/block/solid/orangewool/orangewool.spm");
+	public static final Wool MAGENTA_WOOL = new Wool("Magenta Wool", WoolColor.MAGENTA, WHITE_WOOL, "model://Vanilla/materials/block/solid/magentawool/magentawool.spm");
+	public static final Wool LIGHTBLUE_WOOL = new Wool("Light Blue Wool", WoolColor.LIGHTBLUE, WHITE_WOOL, "model://Vanilla/materials/block/solid/lightbluewool/lightbluewool.spm");
+	public static final Wool YELLOW_WOOL = new Wool("Yellow Wool", WoolColor.YELLOW, WHITE_WOOL, "model://Vanilla/materials/block/solid/yellowwool/yellowwool.spm");
+	public static final Wool LIME_WOOL = new Wool("Lime Wool", WoolColor.LIME, WHITE_WOOL, "model://Vanilla/materials/block/solid/whitewool/whitewool.spm"); // TODO : add the lime wool
+	public static final Wool PINK_WOOL = new Wool("Pink Wool", WoolColor.PINK, WHITE_WOOL, "model://Vanilla/materials/block/solid/pinkwool/pinkwool.spm");
+	public static final Wool GRAY_WOOL = new Wool("Gray Wool", WoolColor.GRAY, WHITE_WOOL, "model://Vanilla/materials/block/solid/graywool/graywool.spm");
+	public static final Wool SILVER_WOOL = new Wool("Light Gray Wool", WoolColor.SILVER, WHITE_WOOL, "model://Vanilla/materials/block/solid/lightgraywool/lightgraywool.spm");
+	public static final Wool CYAN_WOOL = new Wool("Cyan Wool", WoolColor.CYAN, WHITE_WOOL, "model://Vanilla/materials/block/solid/cyanwool/cyanwool.spm");
+	public static final Wool PURPLE_WOOL = new Wool("Purple Wool", WoolColor.PURPLE, WHITE_WOOL, "model://Vanilla/materials/block/solid/purplewool/purplewool.spm");
+	public static final Wool BLUE_WOOL = new Wool("Blue Wool", WoolColor.BLUE, WHITE_WOOL, "model://Vanilla/materials/block/solid/bluewool/bluewool.spm");
+	public static final Wool BROWN_WOOL = new Wool("Brown Wool", WoolColor.BROWN, WHITE_WOOL, "model://Vanilla/materials/block/solid/brownwool/brownwool.spm");
+	public static final Wool GREEN_WOOL = new Wool("Green Wool", WoolColor.GREEN, WHITE_WOOL, "model://Vanilla/materials/block/solid/greenwool/greenwool.spm");
+	public static final Wool RED_WOOL = new Wool("Red Wool", WoolColor.RED, WHITE_WOOL, "model://Vanilla/materials/block/solid/redwool/redwool.spm");
+	public static final Wool BLACK_WOOL = new Wool("Black Wool", WoolColor.BLACK, WHITE_WOOL, "model://Vanilla/materials/block/solid/blackwool/blackwool.spm");
 	private final WoolColor color;
 
 	private Wool(String name, String model) {

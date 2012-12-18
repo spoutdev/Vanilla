@@ -1,9 +1,0 @@
-Name: "Skeleton"
-Components:
-    - org.spout.engine.entity.component.EntityRendererComponent
-    - org.spout.vanilla.component.living.hostile.Skeleton
-Data:
-    Health: 20
-    Damages: 1
-    Size: 3
-    Model: model://Vanilla/resources/entities/skeleton/skeleton.spm

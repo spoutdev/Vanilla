@@ -1,28 +1,28 @@
 /*
  * This file is part of Vanilla.
  *
- * Copyright (c) 2011-2012, VanillaDev <http://www.spout.org/>
- * Vanilla is licensed under the SpoutDev License Version 1.
+ * Copyright (c) 2011-2012, Spout LLC <http://www.spout.org/>
+ * Vanilla is licensed under the Spout License Version 1.
  *
- * Vanilla is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Vanilla is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
  *
  * In addition, 180 days after any changes are published, you can use the
  * software, incorporating those changes, under the terms of the MIT license,
- * as described in the SpoutDev License Version 1.
+ * as described in the Spout License Version 1.
  *
- * Vanilla is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ * Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+ * more details.
  *
  * You should have received a copy of the GNU Lesser General Public License,
- * the MIT license and the SpoutDev License Version 1 along with this program.
+ * the MIT license and the Spout License Version 1 along with this program.
  * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
- * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
- * including the MIT license.
+ * License and see <http://spout.in/licensev1> for the full license, including
+ * the MIT license.
  */
 package org.spout.vanilla.material.block.solid;
 
@@ -41,10 +41,10 @@ import org.spout.vanilla.material.block.component.SignBase;
 import org.spout.vanilla.render.VanillaEffects;
 
 public class Leaves extends Solid implements Burnable, InitializableMaterial {
-	public static final Leaves DEFAULT = new Leaves("Leaves", "model://Vanilla/resources/materials/block/solid/oakleaves/oakleaves.spm");
-	public static final Leaves SPRUCE = new Leaves("Spruce Leaves", 1, DEFAULT, "model://Vanilla/resources/materials/block/solid/spruceleaves/spruceleaves.spm");
-	public static final Leaves BIRCH = new Leaves("Birch Leaves", 2, DEFAULT, "model://Vanilla/resources/materials/block/solid/birchleaves/birchleaves.spm");
-	public static final Leaves JUNGLE = new Leaves("Jungle Leaves", 3, DEFAULT, "model://Vanilla/resources/materials/block/solid/jungleleaves/jungleleaves.spm");
+	public static final Leaves DEFAULT = new Leaves("Leaves", "model://Vanilla/materials/block/solid/oakleaves/oakleaves.spm");
+	public static final Leaves SPRUCE = new Leaves("Spruce Leaves", 1, DEFAULT, "model://Vanilla/materials/block/solid/spruceleaves/spruceleaves.spm");
+	public static final Leaves BIRCH = new Leaves("Birch Leaves", 2, DEFAULT, "model://Vanilla/materials/block/solid/birchleaves/birchleaves.spm");
+	public static final Leaves JUNGLE = new Leaves("Jungle Leaves", 3, DEFAULT, "model://Vanilla/materials/block/solid/jungleleaves/jungleleaves.spm");
 
 	private Leaves(String name, String model) {
 		super((short) 0x0003, name, 18, model);

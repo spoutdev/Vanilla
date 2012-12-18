@@ -111,6 +111,7 @@ import org.spout.vanilla.protocol.msg.player.PlayerBedMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerCollectItemMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerGameStateMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerHealthMessage;
+import org.spout.vanilla.protocol.msg.player.PlayerHeldItemChangeMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerSoundEffectMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerTimeMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerListMessage;
@@ -406,6 +407,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		Point pos = world.getSpawnPoint().getPosition();
 		PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ());
 		player.getSession().send(false, SPMsg);
+		session.send(false, new PlayerHeldItemChangeMessage(session.getPlayer().add(PlayerInventory.class).getQuickbar().getCurrentSlot()));
+		
 	}
 	
 	@Override

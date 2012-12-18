@@ -28,24 +28,42 @@ package org.spout.vanilla.event.block;
 
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.Cause;
-import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
-import org.spout.api.inventory.ItemStack;
+import org.spout.api.event.block.BlockEvent;
 
 import org.spout.vanilla.component.substance.material.Furnace;
-import org.spout.vanilla.event.cause.FurnaceCause;
 
 /**
- * Event which is called when an action in the furnace is happening.
+ * Event which is called when a furnace is toggled on or off.
  * todo implement calling of this event
  */
-public class FurnaceActionEvent extends Event implements Cancellable {
+public class FurnaceActionEvent extends BlockEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
+	private final Furnace furnace;
 	private final Cause cause;
+	private final boolean switchON;
 
-	public FurnaceActionEvent(Cause<FurnaceCause> cause) {
-		super();
-		this.cause = cause;
+	public FurnaceActionEvent(Furnace furnace, Cause<?> reason, boolean switchON) {
+		super(furnace.getBlock(), reason);
+		this.furnace = furnace;
+		this.cause = reason;
+		this.switchON = switchON;
+	}
+
+	/**
+	 * Returns the Furnace which caused the FurnaceActionEvent
+	 * @return the furnace
+	 */
+	public Furnace getFurnace() {
+		return furnace;
+	}
+
+	/**
+	 * Returns if the Furnace should be switched on
+	 * @return
+	 */
+	public boolean isSwitchON() {
+		return switchON;
 	}
 
 	/**

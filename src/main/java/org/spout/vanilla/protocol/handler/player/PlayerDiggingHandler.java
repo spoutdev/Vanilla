@@ -57,7 +57,7 @@ import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.PlayerFlags;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
-import org.spout.vanilla.event.cause.player.PlayerBreakCause;
+import org.spout.vanilla.event.cause.PlayerBreakCause;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;

@@ -26,17 +26,16 @@
  */
 package org.spout.vanilla.material;
 
+import gnu.trove.map.hash.TShortObjectHashMap;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-
-import gnu.trove.map.hash.TShortObjectHashMap;
 
 import org.spout.api.Spout;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
 import org.spout.api.util.map.concurrent.AtomicShortArray;
-
 import org.spout.vanilla.data.Music;
 import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
@@ -228,6 +227,7 @@ import org.spout.vanilla.material.item.tool.MiningTool;
 import org.spout.vanilla.material.item.tool.Shears;
 import org.spout.vanilla.material.item.tool.weapon.Bow;
 import org.spout.vanilla.material.item.tool.weapon.Sword;
+import org.spout.vanilla.material.map.Map;
 
 // TODO: Remove all casts and separate remaining "set" methods out into each material's init() method
 public final class VanillaMaterials {
@@ -496,7 +496,7 @@ public final class VanillaMaterials {
 	public static final BlockItem CAKE = new BlockItem("Cake", 354, VanillaMaterials.CAKE_BLOCK, null);
 	public static final BlockItem BED = new BlockItem("Bed", 355, VanillaMaterials.BED_BLOCK, null);
 	public static final BlockItem REDSTONE_REPEATER = new BlockItem("Redstone Repeater", 356, VanillaMaterials.REDSTONE_REPEATER_OFF, null);
-	public static final VanillaItemMaterial MAP = new VanillaItemMaterial("Map", 358, null);
+	public static final Map MAP = new Map("Map", 358, 128, 128, null);
 	public static final VanillaItemMaterial EMPTY_MAP = new VanillaItemMaterial("Empty Map", 395, null);
 	public static final Shears SHEARS = new Shears("Shears", 359, (short) 238);
 	public static final VanillaItemMaterial PUMPKIN_SEEDS = new VanillaItemMaterial("Pumpkin Seeds", 361, null);

@@ -31,6 +31,7 @@ import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 import gnu.trove.set.TIntSet;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -82,6 +83,7 @@ import org.spout.vanilla.event.entity.EntityCollectItemEvent;
 import org.spout.vanilla.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
+import org.spout.vanilla.event.item.MapItemUpdateEvent;
 import org.spout.vanilla.event.player.PlayerAbilityUpdateEvent;
 import org.spout.vanilla.event.player.network.PlayerBedEvent;
 import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
@@ -105,6 +107,7 @@ import org.spout.vanilla.protocol.container.VanillaContainer;
 import org.spout.vanilla.protocol.msg.VanillaBlockDataChannelMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
+import org.spout.vanilla.protocol.msg.entity.EntityItemDataMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityTileDataMessage;
@@ -509,6 +512,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			}
 		}
 	}
+	
+	@EventHandler
+	public Message onMapItemUpdate(MapItemUpdateEvent event) {
+		return new EntityItemDataMessage(VanillaMaterials.MAP, (short) event.getItemData(), event.getData());
+	}
+	
 	@EventHandler
 	public Message onPlayerAbilityUpdate(PlayerAbilityUpdateEvent event) {
 		return new PlayerAbilityMessage(event.getGodMode(), event.isFlying(), event.canFly(), event.isCreativeMode(), event.getFlyingSpeed(), event.getWalkingSpeed());

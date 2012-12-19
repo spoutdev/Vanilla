@@ -47,13 +47,16 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.NetworkSynchronizer;
+import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.util.BlockIterator;
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.living.hostile.Creeper;
@@ -82,6 +85,7 @@ import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.inventory.window.entity.VillagerWindow;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.map.Map;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.render.LightRenderEffect;
 import org.spout.vanilla.util.explosion.ExplosionModels;
@@ -94,6 +98,85 @@ public class TestCommands {
 
 	public TestCommands(VanillaPlugin instance) {
 		plugin = instance;
+	}
+	
+
+	// TODO - There needs to be a method that guarantees unique data values on a per-server basis
+	private int mapId = 1;
+	
+	@Command(aliases = "map", usage = "", desc = "Creates a map")
+	@CommandPermissions("vanilla.command.debug")
+	public void map(CommandContext args, CommandSource source) throws CommandException {
+		if (args.length() != 0) {
+			throw new CommandException("This command does not require arguments");
+		} else if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to get a map.");
+		}
+		Player p = (Player) source;
+		ItemStack i = new ItemStack(VanillaMaterials.MAP, ++mapId, 1);
+		p.get(PlayerInventory.class).add(i);
+	}
+	
+	@Command(aliases = "mapdraw", usage = "<bx> <by> <tx> <ty> <col>", desc = "Draws a rectangle on the current map.  The top nibble for col is the colour and the bottom nibble is the brightness")
+	@CommandPermissions("vanilla.command.debug")
+	public void mapDraw(CommandContext args, CommandSource source) throws CommandException {
+		if (args.length() != 5) {
+			throw new CommandException("This command requires 5 arguments");
+		} else if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to hold a map.");
+		}
+		Player p = (Player) source;
+		ItemStack i = p.get(PlayerInventory.class).getQuickbar().getCurrentItem();
+		if (i == null || !(i.getMaterial() instanceof Map)) {
+			throw new CommandException("Held item is not a map");
+		}
+		Map m = (Map) i.getMaterial();
+		int bx = args.getInteger(0);
+		int by = args.getInteger(1);
+		int tx = args.getInteger(2);
+		int ty = args.getInteger(3);
+		int col = args.getInteger(4);
+		if (bx < 0 || bx >= m.getWidth()) {
+			throw new CommandException("bx component is out of range");
+		}
+		if (by < 0 || by >= m.getHeight()) {
+			throw new CommandException("by component is out of range");
+		}
+		if (tx < 0 || tx >= m.getWidth()) {
+			throw new CommandException("tx component is out of range");
+		}
+		if (ty < 0 || ty >= m.getHeight()) {
+			throw new CommandException("ty component is out of range");
+		}
+		if (bx > tx) {
+			throw new CommandException("bx cannot be greater than tx");
+		}
+		if (by > ty) {
+			throw new CommandException("by cannot be greater than ty");
+		}
+		for (ProtocolEvent e : m.drawRectangle(i, bx, by, tx, ty, col)) {
+			p.getNetworkSynchronizer().callProtocolEvent(e);
+		}
+	}
+	
+	@Command(aliases = "mapflood", usage = "<bx> <by> <tx> <ty> <col>", desc = "Floods the current map with the given color")
+	@CommandPermissions("vanilla.command.debug")
+	public void mapFlood(CommandContext args, CommandSource source) throws CommandException {
+		if (args.length() != 1) {
+			throw new CommandException("This command requires 5 arguments");
+		} else if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to hold a map.");
+		}
+		Player p = (Player) source;
+		ItemStack i = p.get(PlayerInventory.class).getQuickbar().getCurrentItem();
+		if (i == null || !(i.getMaterial() instanceof Map)) {
+			throw new CommandException("Held item is not a map");
+		}
+		Map m = (Map) i.getMaterial();
+		int col = args.getInteger(0);
+		for (ProtocolEvent e : m.flood(i, col)) {
+			p.getNetworkSynchronizer().callProtocolEvent(e);
+		}
 	}
 	
 	@Command(aliases = "respawn", usage = "", desc = "Forces the client to respawn")

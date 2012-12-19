@@ -37,24 +37,24 @@ import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.util.PlayerUtil;
 
-public class Pumpkin extends Solid implements Directional {
-	public static final Pumpkin NO_DIRECTION;
-	public static final Pumpkin[] DIRECTIONS = new Pumpkin[4];
+public class JackOLantern extends Solid implements Directional {
+	public static final JackOLantern NO_DIRECTION;
+	public static final JackOLantern[] DIRECTIONS = new JackOLantern[4];
 
 	static {
-		DIRECTIONS[0] = new Pumpkin("Pumpkin_E", 86, "model://Vanilla/materials/block/solid/pumpkin/pumpkin_E.spm");
-		DIRECTIONS[1] = new Pumpkin("Pumpkin_W", 86, 1, DIRECTIONS[0], "model://Vanilla/materials/block/solid/pumpkin/pumpkin_W.spm");
-		DIRECTIONS[2] = new Pumpkin("Pumpkin_N", 86, 2, DIRECTIONS[0], "model://Vanilla/materials/block/solid/pumpkin/pumpkin_N.spm");
-		DIRECTIONS[3] = new Pumpkin("Pumpkin_S", 86, 3, DIRECTIONS[0], "model://Vanilla/materials/block/solid/pumpkin/pumpkin_S.spm");
-		NO_DIRECTION = new Pumpkin("Pumpkin", 86, 4, DIRECTIONS[0], "model://Vanilla/materials/block/solid/pumpkin/pumpkin.spm");
+		DIRECTIONS[0] = new JackOLantern("Jack 'o' Lantern_E", 91, "model://Vanilla/materials/block/solid/jackolantern/jackolantern_E.spm");
+		DIRECTIONS[1] = new JackOLantern("Jack 'o' Lantern_W", 91, 1, DIRECTIONS[0], "model://Vanilla/materials/block/solid/jackolantern/jackolantern_W.spm");
+		DIRECTIONS[2] = new JackOLantern("Jack 'o' Lantern_N", 91, 2, DIRECTIONS[0], "model://Vanilla/materials/block/solid/jackolantern/jackolantern_N.spm");
+		DIRECTIONS[3] = new JackOLantern("Jack 'o' Lantern_S", 91, 3, DIRECTIONS[0], "model://Vanilla/materials/block/solid/jackolantern/jackolantern_S.spm");
+		NO_DIRECTION = new JackOLantern("Jack 'o' Lantern", 91, 4, DIRECTIONS[0], "model://Vanilla/materials/block/solid/jackolantern/jackolantern.spm");
 	}
 
-	private Pumpkin(String name, int id, String model) {
+	private JackOLantern(String name, int id, String model) {
 		super((short) 0x7, name, id, model);
 		this.setHardness(1.0F).setResistance(1.7F).addMiningType(ToolType.AXE);
 	}
 
-	private Pumpkin(String name, int id, int data, Pumpkin parent, String model) {
+	private JackOLantern(String name, int id, int data, JackOLantern parent, String model) {
 		super(name, id, data, parent, model);
 		this.setHardness(1.0F).setResistance(1.7F).addMiningType(ToolType.AXE);
 	}
@@ -71,7 +71,7 @@ public class Pumpkin extends Solid implements Directional {
 
 	@Override
 	public byte getLightLevel(short data) {
-		return (byte) 0;
+		return (byte) 15;
 	}
 
 	@Override

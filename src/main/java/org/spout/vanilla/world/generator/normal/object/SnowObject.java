@@ -90,7 +90,7 @@ public class SnowObject extends RandomObject {
 				if (newSnowHeight < 7) {
 					newSnowHeight++;
 				}
-				// In 1 out of 6 times, stack the existing pile.
+				// In 1 out of 12 times, stack the existing pile.
 				if (random.nextInt(12) != 0) {
 					// Collect neighbors
 					final ArrayList<IntVector3> slopes = new ArrayList<IntVector3>();
@@ -118,8 +118,8 @@ public class SnowObject extends RandomObject {
 				}
 			}
 			//move flake randomly
-			position.setX(position.getX() + random.nextInt(2) == 0 ? -1 : 1);
-			position.setZ(position.getZ() + random.nextInt(2) == 0 ? -1 : 1);
+			position.setX(position.getX() + (random.nextBoolean() ? -1 : 1));
+			position.setZ(position.getZ() + (random.nextBoolean() ? -1 : 1));
 			if (!this.setHighestWorkableBlock(world, position)) {
 				return true;
 			}

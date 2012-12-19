@@ -41,8 +41,9 @@ import org.spout.api.math.Rectangle;
 import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.event.cause.DamageCause;
+import org.spout.vanilla.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.source.DamageCause;
 
 /**
  * The drowning component requires a health component and head component
@@ -93,7 +94,7 @@ public class DrowningComponent extends EntityComponent {
 				if (getAir() < 0) {
 					// out of air; damage one heart every second
 					if (damageTimer-- < 0) {
-						health.damage(2, DamageCause.DROWN);
+						health.damage(2, new DamageCause(owner.getWorld().getBlock(head.getPosition()), DamageType.DROWN));
 						damageTimer = 20;
 					}
 				}

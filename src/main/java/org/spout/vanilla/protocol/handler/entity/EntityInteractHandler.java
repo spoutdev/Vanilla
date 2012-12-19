@@ -33,17 +33,17 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.event.cause.DamageCause;
+import org.spout.vanilla.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.msg.entity.EntityInteractMessage;
-import org.spout.vanilla.source.DamageCause;
 
 public class EntityInteractHandler extends MessageHandler<EntityInteractMessage> {
 	@Override
@@ -92,7 +92,7 @@ public class EntityInteractHandler extends MessageHandler<EntityInteractMessage>
 						}
 					}
 					if (!clicked.getHealth().isDead()) {
-						clicked.getHealth().damage(damage, DamageCause.ATTACK, playerEnt, damage > 0);
+						clicked.getHealth().damage(damage, new DamageCause(playerEnt, DamageType.ATTACK), damage > 0);
 					}
 				}
 			}

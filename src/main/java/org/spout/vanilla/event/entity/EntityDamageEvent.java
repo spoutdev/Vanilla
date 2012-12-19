@@ -30,14 +30,14 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 
-import org.spout.vanilla.source.DamageCause;
+import org.spout.vanilla.event.cause.DamageCause;
+import org.spout.vanilla.event.cause.DamageCause.DamageType;
 
 public class EntityDamageEvent extends EntityEvent {
 	private static HandlerList handlers = new HandlerList();
 	private int damage;
-	private DamageCause damageCause = DamageCause.UNKNOWN;
 	private boolean hasSendHurtMessage = true;
-	private Entity damager = null;
+	private DamageCause cause = new DamageCause(null, DamageType.UNKNOWN);
 
 	public EntityDamageEvent(Entity e, int damage) {
 		super(e);
@@ -47,45 +47,45 @@ public class EntityDamageEvent extends EntityEvent {
 	public EntityDamageEvent(Entity e, int damage, DamageCause cause) {
 		super(e);
 		this.damage = damage;
-		this.damageCause = cause;
+		this.cause = cause;
 	}
 
 	public EntityDamageEvent(Entity e, int damage, DamageCause cause, boolean sendHurtMessage) {
 		super(e);
 		this.damage = damage;
-		this.damageCause = cause;
+		this.cause = cause;
 		this.hasSendHurtMessage = sendHurtMessage;
-	}
-
-	public EntityDamageEvent(Entity e, int damage, DamageCause cause, boolean sendHurtMessage, Entity damager) {
-		super(e);
-		this.damage = damage;
-		this.damageCause = cause;
-		this.hasSendHurtMessage = sendHurtMessage;
-		this.damager = damager;
 	}
 
 	/**
-	 * Returns the entity causing the damage.
+	 * Returns the object causing the damage, such as a block or entity.
 	 * Defaults to null.
-	 * @return The cause of the damage.
+	 * @return The source of the damage.
 	 */
-	public Entity getDamager() {
-		return damager;
+	public Object getDamager() {
+		return cause.getSource();
 	}
 
 	/**
-	 * Sets the entity causing the damage.
-	 * @param damager The entity causing the damage.
+	 * Gets the type of damage. Defaults to UNKNOWN.
+	 * @return type
 	 */
-	public void setDamager(Entity damager) {
-		this.damager = damager;
+	public DamageType getDamageType() {
+		return cause.getType();
+	}
+	
+	/**
+	 * Gets the {@link DamageCause} for this event.
+	 * @param cause
+	 */
+	public DamageCause getDamageCause() {
+		return cause;
 	}
 
 	/**
 	 * Returns whether or not a hurt message will be sent.
 	 * Defaults to true.
-	 * @return The cause of the damage.
+	 * @return boolean
 	 */
 	public boolean getSendMessage() {
 		return hasSendHurtMessage;
@@ -93,28 +93,12 @@ public class EntityDamageEvent extends EntityEvent {
 
 	/**
 	 * Sets whether or not to send a hurt message.
-	 * @param sendMessage Whether or not to send a hurt message.
+	 * @param boolean
 	 */
 	public void setSendHurtMessage(boolean sendMessage) {
 		this.hasSendHurtMessage = sendMessage;
 	}
-
-	/**
-	 * Gets the cause of the damage. Defaults to UNKNOWN.
-	 * @return The cause of the damage.
-	 */
-	public DamageCause getDamageCause() {
-		return damageCause;
-	}
-
-	/**
-	 * Sets the cause of the damage.
-	 * @param damageCause The cause of the damage dealt.
-	 */
-	public void setDamageCause(DamageCause damageCause) {
-		this.damageCause = damageCause;
-	}
-
+	
 	/**
 	 * Gets the damage dealt to the health component.
 	 * @return The damage to the health component.

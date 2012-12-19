@@ -49,6 +49,9 @@ public class CreatureProtocol extends BasicEntityProtocol {
 		int yaw = (int) (entity.getTransform().getYaw() * 32);
 		int pitch = (int) (entity.getTransform().getPitch() * 32);
 		List<Parameter<?>> parameters = this.getSpawnParameters(entity);
+		if (parameters.isEmpty()) {
+			parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 1)); //Official expects some metadata to spawn
+		}
 		//TODO Headyaw
 		return Arrays.<Message>asList(new EntityMobMessage(entityId, this.typeId, position, yaw, pitch, 0, (short) 0, (short) 0, (short) 0, parameters, rm));
 	}

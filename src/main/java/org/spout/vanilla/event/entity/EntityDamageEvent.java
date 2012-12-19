@@ -28,6 +28,7 @@ package org.spout.vanilla.event.entity;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
+
 import org.spout.vanilla.event.cause.DamageCause;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.event.cause.HealthChangeCause;
@@ -40,7 +41,7 @@ public class EntityDamageEvent extends EntityHealthChangeEvent {
 
 	public EntityDamageEvent(Entity e, int damage) {
 		super(e, HealthChangeCause.DAMAGE, -damage);
-		this.cause = new NullDamageCause(DamageType.UNKNOWN);
+		this.cause = new NullDamageCause(e.getTransform().getPosition(), DamageType.UNKNOWN);
 	}
 
 	public EntityDamageEvent(Entity e, int damage, DamageCause<?> cause) {
@@ -73,7 +74,6 @@ public class EntityDamageEvent extends EntityHealthChangeEvent {
 
 	/**
 	 * Gets the {@link DamageCause} for this event.
-	 * @param cause
 	 */
 	public DamageCause<? extends Object> getDamageCause() {
 		return cause;
@@ -90,12 +90,12 @@ public class EntityDamageEvent extends EntityHealthChangeEvent {
 
 	/**
 	 * Sets whether or not to send a hurt message.
-	 * @param boolean
+	 * @param sendMessage
 	 */
 	public void setSendHurtMessage(boolean sendMessage) {
 		this.hasSendHurtMessage = sendMessage;
 	}
-	
+
 	/**
 	 * Gets the damage dealt to the health component.
 	 * @return The damage to the health component.

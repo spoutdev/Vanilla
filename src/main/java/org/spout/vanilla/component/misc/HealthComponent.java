@@ -66,7 +66,7 @@ import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 public class HealthComponent extends EntityComponent {
 	private static final int DEATH_TIME_TICKS = 30;
 	// Damage
-	private DamageCause<?> lastDamageCause = new NullDamageCause(DamageType.UNKNOWN);
+	private DamageCause<?> lastDamageCause = new NullDamageCause(getOwner().getTransform().getPosition(), DamageType.UNKNOWN);
 	private Object lastDamager;
 	// Client only
 	private final Widget hearts = new Widget();
@@ -292,19 +292,19 @@ public class HealthComponent extends EntityComponent {
 	public void heal(int amount) {
 		heal(amount, HealCause.UNKNOWN);
 	}
-	
+
 	/**
-	 * Heals this entity with the given {@link HealCause} 
+	 * Heals this entity with the given {@link HealCause}
 	 * @param amount amount the entity will be healed by
 	 * @param cause cause of this entity being healed
 	 */
 	public void heal(int amount, HealCause cause) {
 		EntityHealEvent event = new EntityHealEvent(getOwner(), amount, cause);
 		Spout.getEngine().getEventManager().callEvent(event);
-		
+
 		setHealth(getHealth() - event.getHealAmount(), HealthChangeCause.HEAL);
 	}
-	
+
 	/**
 	 * Sets the health value to 0
 	 * @param cause of the change
@@ -350,7 +350,7 @@ public class HealthComponent extends EntityComponent {
 	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
 	 */
 	public void damage(int amount) {
-		damage(amount, new NullDamageCause(DamageType.UNKNOWN));
+		damage(amount, new NullDamageCause(getOwner().getTransform().getPosition(), DamageType.UNKNOWN));
 	}
 
 	/**

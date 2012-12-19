@@ -28,32 +28,28 @@ package org.spout.vanilla.event.entity;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
-
 import org.spout.vanilla.event.cause.DamageCause;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
+import org.spout.vanilla.event.cause.HealthChangeCause;
 import org.spout.vanilla.event.cause.NullDamageCause;
 
-public class EntityDamageEvent extends EntityEvent {
+public class EntityDamageEvent extends EntityHealthChangeEvent {
 	private static HandlerList handlers = new HandlerList();
-	private int damage;
 	private boolean hasSendHurtMessage = true;
-	private DamageCause<? extends Object> cause = new NullDamageCause(DamageType.UNKNOWN);
+	private final DamageCause<? extends Object> cause;
 
 	public EntityDamageEvent(Entity e, int damage) {
-		super(e);
-		this.damage = damage;
+		super(e, HealthChangeCause.DAMAGE, -damage);
+		this.cause = new NullDamageCause(DamageType.UNKNOWN);
 	}
 
 	public EntityDamageEvent(Entity e, int damage, DamageCause<?> cause) {
-		super(e);
-		this.damage = damage;
+		super(e, HealthChangeCause.DAMAGE, -damage);
 		this.cause = cause;
 	}
 
 	public EntityDamageEvent(Entity e, int damage, DamageCause<?> cause, boolean sendHurtMessage) {
-		super(e);
-		this.damage = damage;
+		super(e, HealthChangeCause.DAMAGE, -damage);
 		this.cause = cause;
 		this.hasSendHurtMessage = sendHurtMessage;
 	}
@@ -105,7 +101,7 @@ public class EntityDamageEvent extends EntityEvent {
 	 * @return The damage to the health component.
 	 */
 	public int getDamage() {
-		return damage;
+		return -getChange();
 	}
 
 	/**
@@ -113,7 +109,7 @@ public class EntityDamageEvent extends EntityEvent {
 	 * @param damage The amount of damage dealt.
 	 */
 	public void setDamage(int damage) {
-		this.damage = damage;
+		setChange(-damage);
 	}
 
 	@Override

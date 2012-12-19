@@ -58,7 +58,7 @@ public abstract class Armor extends VanillaItemMaterial implements Enchantable {
 		return protection;
 	}
 
-	public int getProtection(ItemStack item, DamageCause cause) {
+	public int getProtection(ItemStack item, DamageCause<?> cause) {
 		DamageType type = cause.getType();
 		int amount = 0;
 		int level = 0;

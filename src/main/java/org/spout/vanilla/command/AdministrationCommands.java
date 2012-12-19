@@ -53,8 +53,8 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.Time;
 import org.spout.vanilla.data.Weather;
+import org.spout.vanilla.event.cause.HealthChangeCause;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.source.HealthChangeCause;
 
 public class AdministrationCommands {
 	private final VanillaPlugin plugin;

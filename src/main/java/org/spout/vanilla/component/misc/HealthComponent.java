@@ -47,16 +47,18 @@ import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.cause.DamageCause;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
+import org.spout.vanilla.event.cause.HealCause;
+import org.spout.vanilla.event.cause.HealthChangeCause;
 import org.spout.vanilla.event.cause.NullDamageCause;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.event.entity.EntityDamageEvent;
+import org.spout.vanilla.event.entity.EntityHealEvent;
+import org.spout.vanilla.event.entity.EntityHealthChangeEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
 import org.spout.vanilla.event.entity.VanillaEntityDeathEvent;
 import org.spout.vanilla.event.player.PlayerDeathEvent;
 import org.spout.vanilla.event.player.network.PlayerHealthEvent;
-import org.spout.vanilla.protocol.handler.player.EntityHealthChangeEvent;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
-import org.spout.vanilla.source.HealthChangeCause;
 
 /**
  * Component that adds a health-like attribute to resources.entities.
@@ -284,6 +286,26 @@ public class HealthComponent extends EntityComponent {
 	}
 
 	/**
+	 * Heals this entity
+	 * @param amount amount the entity will be healed by
+	 */
+	public void heal(int amount) {
+		heal(amount, HealCause.UNKNOWN);
+	}
+	
+	/**
+	 * Heals this entity with the given {@link HealCause} 
+	 * @param amount amount the entity will be healed by
+	 * @param cause cause of this entity being healed
+	 */
+	public void heal(int amount, HealCause cause) {
+		EntityHealEvent event = new EntityHealEvent(getOwner(), amount, cause);
+		Spout.getEngine().getEventManager().callEvent(event);
+		
+		setHealth(getHealth() - event.getHealAmount(), HealthChangeCause.HEAL);
+	}
+	
+	/**
 	 * Sets the health value to 0
 	 * @param cause of the change
 	 */
@@ -324,7 +346,7 @@ public class HealthComponent extends EntityComponent {
 	}
 
 	/**
-	 * Damages this entity with the given {@link DamageCause}.
+	 * Damages this entity
 	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
 	 */
 	public void damage(int amount) {

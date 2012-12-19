@@ -35,28 +35,31 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.util.resources.ModelUtil;
 import org.spout.vanilla.util.PlayerUtil;
 
 public class Pumpkin extends Solid implements Directional {
-	public static final Pumpkin NO_DIRECTION;
-	public static final Pumpkin[] DIRECTIONS = new Pumpkin[4];
+	private final boolean lantern;
 
-	static {
-		DIRECTIONS[0] = new Pumpkin("Pumpkin_E", 86, "model://Vanilla/materials/block/solid/pumpkin/pumpkin_E.spm");
-		DIRECTIONS[1] = new Pumpkin("Pumpkin_W", 86, 1, DIRECTIONS[0], "model://Vanilla/materials/block/solid/pumpkin/pumpkin_W.spm");
-		DIRECTIONS[2] = new Pumpkin("Pumpkin_N", 86, 2, DIRECTIONS[0], "model://Vanilla/materials/block/solid/pumpkin/pumpkin_N.spm");
-		DIRECTIONS[3] = new Pumpkin("Pumpkin_S", 86, 3, DIRECTIONS[0], "model://Vanilla/materials/block/solid/pumpkin/pumpkin_S.spm");
-		NO_DIRECTION = new Pumpkin("Pumpkin", 86, 4, DIRECTIONS[0], "model://Vanilla/materials/block/solid/pumpkin/pumpkin.spm");
-	}
-
-	private Pumpkin(String name, int id, String model) {
-		super((short) 0x7, name, id, model);
+	public Pumpkin(short dataMask, String name, int id, String model, boolean lantern) {
+		super(dataMask, name + "_E", id, ModelUtil.getDirectionalModel(model, BlockFace.EAST));
 		this.setHardness(1.0F).setResistance(1.7F).addMiningType(ToolType.AXE);
+		this.lantern = lantern;
+		// Register the directional submaterials
+		if (model == null) {
+			return;
+		}
+		int i = 1;
+		for (BlockFace face : new BlockFaces(BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH)) {
+			new Pumpkin(name + "_" + face.name().charAt(0), id, i++, this, ModelUtil.getDirectionalModel(model, face), lantern);
+		}
+		new Pumpkin(name, id, i, this, model, lantern);
 	}
 
-	private Pumpkin(String name, int id, int data, Pumpkin parent, String model) {
+	private Pumpkin(String name, int id, int data, Pumpkin parent, String model, boolean lantern) {
 		super(name, id, data, parent, model);
 		this.setHardness(1.0F).setResistance(1.7F).addMiningType(ToolType.AXE);
+		this.lantern = lantern;
 	}
 
 	@Override
@@ -71,7 +74,7 @@ public class Pumpkin extends Solid implements Directional {
 
 	@Override
 	public byte getLightLevel(short data) {
-		return (byte) 0;
+		return lantern ? (byte) 15 : (byte) 0;
 	}
 
 	@Override
@@ -82,5 +85,17 @@ public class Pumpkin extends Solid implements Directional {
 		}
 
 		return false;
+	}
+
+	/**
+	 *
+	 * Whether this pumpkin block material is a jack o' lantern
+	 *
+	 * @return true if jack o' lantern
+	 *
+	 */
+	public boolean isLantern() {
+		return lantern;
+
 	}
 }

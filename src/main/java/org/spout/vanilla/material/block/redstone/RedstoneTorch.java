@@ -50,7 +50,7 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	private boolean powered;
 
 	public RedstoneTorch(String name, int id, boolean powered) {
-		super(name, id);
+		super((short) 0, name, id, null);
 		this.powered = powered;
 	}
 

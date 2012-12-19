@@ -33,10 +33,24 @@ import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.attachable.PointAttachable;
+import org.spout.vanilla.util.resources.ModelUtil;
 
 public class Torch extends AbstractAttachable implements PointAttachable {
-	public Torch(String name, int id) {
-		super(name, id, (String) null);
+	public Torch(short dataMask, String name, int id, String model) {
+		super(dataMask, name, id, model);
+		this.setAttachable(BlockFaces.NSEWB).setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();
+		// Register the directional submaterials
+		if (model == null) {
+			return;
+		}
+		int i = 1;
+		for (BlockFace face : BlockFaces.NSEWB) {
+			new Torch(name + "_" + face.name().charAt(0), id, i++, this, ModelUtil.getDirectionalModel(model, face));
+		}
+	}
+
+	private Torch(String name, int id, int data, Torch parent, String model) {
+		super(name, id, data, parent, model);
 		this.setAttachable(BlockFaces.NSEWB).setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}
 

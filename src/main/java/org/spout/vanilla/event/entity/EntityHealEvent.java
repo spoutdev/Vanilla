@@ -29,6 +29,7 @@ package org.spout.vanilla.event.entity;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
+
 import org.spout.vanilla.event.cause.HealCause;
 import org.spout.vanilla.event.cause.HealthChangeCause;
 
@@ -57,7 +58,7 @@ public class EntityHealEvent extends EntityHealthChangeEvent {
 	public HealCause getHealCause() {
 		return cause;
 	}
-	
+
 	/**
 	 * Gets the heal to be applied to the health component.
 	 * @return The damage to the health component.

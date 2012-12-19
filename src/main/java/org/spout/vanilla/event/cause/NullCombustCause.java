@@ -26,9 +26,48 @@
  */
 package org.spout.vanilla.event.cause;
 
+import org.spout.api.event.Cause;
+import org.spout.api.event.cause.BaseCause;
+import org.spout.api.exception.MaxCauseChainReached;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 
-public class NullCombustCause implements CombustCause<Object> {
+public class NullCombustCause extends BaseCause<Object> implements CombustCause<Object> {
+	private final Point point;
+
+	public NullCombustCause(Point point) {
+		this.point = point;
+	}
+
+	/**
+	 * Creates a cause with a parent. If the {@link #chainPosition} is larger than {@link org.spout.api.Engine#getCauseChainMaximum()}
+	 * a {@link org.spout.api.exception.MaxCauseChainReached} RuntimeException will be thrown and the {@link #parentCause},
+	 * {@link #mainCause} and {@link #chainPosition} reseted.
+	 * @param point the position where the cause happened
+	 * @param parent cause of this cause
+	 */
+	public NullCombustCause(Point point, Cause parent) {
+		super(parent);
+		this.point = point;
+	}
+
+	/**
+	 * Checks if the Class of the parent cause is the same class as the new cause
+	 * @return true if class of parent cause and new cause are the same
+	 */
+	@Override
+	protected boolean causeOfSameClass() {
+		return getParentCause() != null && getParentCause().getClass() == this.getClass();
+	}
+
+	/**
+	 * Throws the {@link org.spout.api.exception.MaxCauseChainReached} Exception with the point of the cause
+	 */
+	@Override
+	protected void throwException() {
+		throw new MaxCauseChainReached(point);
+	}
+
 	@Override
 	public Block getSource() {
 		return null;

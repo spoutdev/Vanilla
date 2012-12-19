@@ -32,5 +32,4 @@ import org.spout.api.event.Cause;
  * Represents the cause of combustion.
  */
 public interface CombustCause<T> extends Cause<T> {
-
 }

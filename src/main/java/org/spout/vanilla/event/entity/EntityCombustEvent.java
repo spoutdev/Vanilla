@@ -29,6 +29,7 @@ package org.spout.vanilla.event.entity;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
+
 import org.spout.vanilla.event.cause.CombustCause;
 import org.spout.vanilla.event.cause.NullCombustCause;
 
@@ -40,9 +41,9 @@ public class EntityCombustEvent extends EntityEvent {
 	public EntityCombustEvent(Entity e, int duration) {
 		super(e);
 		this.duration = duration;
-		this.cause = new NullCombustCause();
+		this.cause = new NullCombustCause(e.getTransform().getPosition());
 	}
-	
+
 	public EntityCombustEvent(Entity e, int duration, CombustCause<?> cause) {
 		super(e);
 		this.duration = duration;
@@ -64,7 +65,7 @@ public class EntityCombustEvent extends EntityEvent {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
-	
+
 	/**
 	 * Gets the {@link CombustCause} for this event.
 	 * @param cause

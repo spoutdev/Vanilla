@@ -41,6 +41,7 @@ import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
+
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.data.GameMode;
@@ -158,7 +159,7 @@ public class HungerComponent extends EntityComponent {
 				if (hunger <= 0) {
 					timer -= dt;
 					if (timer <= 0) {
-						healthComponent.damage(1, new NullDamageCause(DamageType.STARVATION));
+						healthComponent.damage(1, new NullDamageCause(human.getOwner().getTransform().getPosition(), DamageType.STARVATION));
 						timer = 4;
 					}
 				}

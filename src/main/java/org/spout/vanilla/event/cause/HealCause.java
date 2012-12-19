@@ -33,37 +33,37 @@ public enum HealCause {
 	/**
 	 * Health gained due to regeneration on peaceful mode.
 	 */
- 	REGENERATION,
- 	/**
+	REGENERATION,
+	/**
 	 * Health gained due to regeneration from being satiated.
 	 */
- 	SATIATED,
- 	/**
+	SATIATED,
+	/**
 	 * Health gained from consumables.
 	 */
- 	CONSUMABLE,
- 	/**
+	CONSUMABLE,
+	/**
 	 * Health gained by an Ender Dragon from an Ender Crystal.
 	 */
- 	ENDER_CRYSTAL,
- 	/**
+	ENDER_CRYSTAL,
+	/**
 	 * Health gained from a potion.
 	 */
- 	MAGIC,
- 	/**
+	MAGIC,
+	/**
 	 * Health gained from the HoT effect of a potion.
 	 */
- 	MAGIC_REGEN,
- 	/**
+	MAGIC_REGEN,
+	/**
 	 * Health gained by the Wither when it is spawning.
 	 */
- 	WITHER_SPAWN,
- 	/**
+	WITHER_SPAWN,
+	/**
 	 * Health gained due to an unknown source.
 	 */
- 	UNKNOWN;
- 	
- 	public boolean equals(HealCause... causes) {
+	UNKNOWN;
+
+	public boolean equals(HealCause... causes) {
 		for (HealCause cause : causes) {
 			if (equals(cause)) {
 				return true;

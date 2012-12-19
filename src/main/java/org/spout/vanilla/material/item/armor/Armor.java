@@ -29,11 +29,12 @@ package org.spout.vanilla.material.item.armor;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector2;
 
+import org.spout.vanilla.event.cause.DamageCause;
+import org.spout.vanilla.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.material.enchantment.Enchantment;
 import org.spout.vanilla.material.enchantment.Enchantments;
 import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
-import org.spout.vanilla.source.DamageCause;
 
 public abstract class Armor extends VanillaItemMaterial implements Enchantable {
 	private int protection;
@@ -58,22 +59,23 @@ public abstract class Armor extends VanillaItemMaterial implements Enchantable {
 	}
 
 	public int getProtection(ItemStack item, DamageCause cause) {
+		DamageType type = cause.getType();
 		int amount = 0;
 		int level = 0;
 		// Armor can only have one of these protection enchantments
-		if (Enchantment.hasEnchantment(item, Enchantments.PROTECTION) && !cause.equals(DamageCause.COMMAND, DamageCause.VOID)) {
+		if (Enchantment.hasEnchantment(item, Enchantments.PROTECTION) && !type.equals(DamageType.COMMAND, DamageType.VOID)) {
 			level = Enchantment.getEnchantmentLevel(item, Enchantments.PROTECTION);
-		} else if (Enchantment.hasEnchantment(item, Enchantments.BLAST_PROTECTION) && cause.equals(DamageCause.EXPLOSION)) {
+		} else if (Enchantment.hasEnchantment(item, Enchantments.BLAST_PROTECTION) && type.equals(DamageType.EXPLOSION)) {
 			level = Enchantment.getEnchantmentLevel(item, Enchantments.BLAST_PROTECTION);
-		} else if (Enchantment.hasEnchantment(item, Enchantments.FIRE_PROTECTION) && cause.equals(DamageCause.BURN, DamageCause.FIRE_SOURCE)) {
+		} else if (Enchantment.hasEnchantment(item, Enchantments.FIRE_PROTECTION) && type.equals(DamageType.BURN, DamageType.FIRE_SOURCE)) {
 			level = Enchantment.getEnchantmentLevel(item, Enchantments.FIRE_PROTECTION);
-		} else if (Enchantment.hasEnchantment(item, Enchantments.PROJECTILE_PROTECTION) && cause.equals(DamageCause.PROJECTILE, DamageCause.FIREBALL)) {
+		} else if (Enchantment.hasEnchantment(item, Enchantments.PROJECTILE_PROTECTION) && type.equals(DamageType.PROJECTILE, DamageType.FIREBALL)) {
 			level = Enchantment.getEnchantmentLevel(item, Enchantments.PROJECTILE_PROTECTION);
 		}
 		amount += level * 3;
 
 		// Feather Falling is compatible with all of the above enchantments
-		if (Enchantment.hasEnchantment(item, Enchantments.FEATHER_FALLING) && cause.equals(DamageCause.FALL)) {
+		if (Enchantment.hasEnchantment(item, Enchantments.FEATHER_FALLING) && type.equals(DamageType.FALL)) {
 			amount += Enchantment.getEnchantmentLevel(item, Enchantments.FEATHER_FALLING);
 		}
 

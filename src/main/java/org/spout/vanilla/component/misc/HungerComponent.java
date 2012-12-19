@@ -41,17 +41,16 @@ import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
-
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
+import org.spout.vanilla.event.cause.HealCause;
 import org.spout.vanilla.event.cause.NullDamageCause;
 import org.spout.vanilla.event.player.network.PlayerHealthEvent;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.source.HealthChangeCause;
 
 public class HungerComponent extends EntityComponent {
 	private Human human;
@@ -149,7 +148,7 @@ public class HungerComponent extends EntityComponent {
 				if (health < 20 && hunger > 17) {
 					timer -= dt;
 					if (timer <= 0) {
-						healthComponent.setHealth(health + 1, HealthChangeCause.REGENERATION);
+						healthComponent.heal(1, HealCause.REGENERATION);
 						timer = 4;
 					}
 				}

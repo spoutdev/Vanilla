@@ -24,7 +24,8 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.source;
+package org.spout.vanilla.event.cause;
+
 
 /**
  * Represents the source of a health change.
@@ -40,13 +41,10 @@ public enum HealthChangeCause {
 	 */
 	DAMAGE,
 	/**
-	 * Health changed due to regeneration cycle.
+	 * Health changed due to being healed.
+	 * @see {@link HealCause}
 	 */
-	REGENERATION,
-	/**
-	 * Health changed due to eating.
-	 */
-	EATING,
+	HEAL,
 	/**
 	 * Health changed due to the entity spawning.
 	 */

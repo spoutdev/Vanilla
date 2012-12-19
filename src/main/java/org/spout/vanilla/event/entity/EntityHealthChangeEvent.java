@@ -50,14 +50,13 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.handler.player;
+package org.spout.vanilla.event.entity;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
-
-import org.spout.vanilla.source.HealthChangeCause;
+import org.spout.vanilla.event.cause.HealthChangeCause;
 
 /**
  * Called when an entity has a health change.<br/>

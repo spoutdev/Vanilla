@@ -26,9 +26,17 @@
  */
 package org.spout.vanilla.component.living.passive;
 
+import java.util.Random;
+
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.Vector3;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.living.Passive;
+import org.spout.vanilla.component.substance.Item;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
@@ -36,9 +44,37 @@ import org.spout.vanilla.protocol.entity.creature.CreatureType;
  * A component that identifies the entity as a Chicken.
  */
 public class Chicken extends Living implements Passive {
+
+	// Chicken lay eggs every 5-10 minutes.
+	public static final int MINIMUM_EGG_BREEDING_TIME = 300;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		Float nextEgg = (float) (new Random().nextInt(MINIMUM_EGG_BREEDING_TIME) + MINIMUM_EGG_BREEDING_TIME);
+		getOwner().getData().put(VanillaData.TIME_TILL_EGG, nextEgg);
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.CHICKEN));
+	}
+
+	@Override
+	public void onTick(float dt) {
+		Float nextEggTime = getOwner().getData().get(VanillaData.TIME_TILL_EGG);
+		nextEggTime -= dt;
+		getOwner().getData().put(VanillaData.TIME_TILL_EGG, nextEggTime);
+		if (shouldLayEgg()) {
+			layEgg();
+		}
+	}
+
+	private void layEgg() {
+		Point position = getOwner().getTransform().getPosition();
+		Item.drop(position, new ItemStack(VanillaMaterials.EGG, 1), Vector3.ZERO);
+		Float nextEgg = (float) (new Random().nextInt(MINIMUM_EGG_BREEDING_TIME) + MINIMUM_EGG_BREEDING_TIME);
+		getOwner().getData().put(VanillaData.TIME_TILL_EGG, nextEgg);
+	}
+
+	private boolean shouldLayEgg() {
+		Float nextEggTime = getOwner().getData().get(VanillaData.TIME_TILL_EGG);
+		return nextEggTime <= 0;
 	}
 }

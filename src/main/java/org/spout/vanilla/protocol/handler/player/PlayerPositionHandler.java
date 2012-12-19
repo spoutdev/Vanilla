@@ -55,11 +55,6 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 		Point newPosition = rmInverse.convert(rawPosition);
 		Point position = holder.getTransform().getPosition();
 
-		Spout.getLogger().info("Actual: " + position.toBlockString());
-		Spout.getLogger().info("Client: " + rawPosition.toBlockString());
-		Spout.getLogger().info("Server: " + newPosition.toBlockString());
-		Spout.getLogger().info("Pending: " + holder.getNetworkSynchronizer().isTeleportPending());
-		
 		if (holder.getNetworkSynchronizer().isTeleportPending()) {
 			if (position.getX() == newPosition.getX() && position.getZ() == newPosition.getZ() && Math.abs(position.getY() - newPosition.getY()) < 16) {
 				holder.getNetworkSynchronizer().clearTeleportPending();

@@ -26,9 +26,16 @@
  */
 package org.spout.vanilla.component.living.passive;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.living.Passive;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
@@ -40,5 +47,16 @@ public class Cow extends Living implements Passive {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.COW));
+	}
+
+	@Override
+	public void onInteract(Action action, Entity source) {
+		if (Action.RIGHT_CLICK.equals(action) && (source instanceof Player)) {
+			PlayerQuickbar playerQuickbar = source.getData().get(VanillaData.QUICKBAR_INVENTORY);
+			if (playerQuickbar.getCurrentItem() != null && playerQuickbar.getCurrentItem().equalsIgnoreSize(new ItemStack(VanillaMaterials.BUCKET, 0))) {
+				playerQuickbar.addAmount(playerQuickbar.getCurrentSlot(), -1);
+				playerQuickbar.add(new ItemStack(VanillaMaterials.MILK_BUCKET, 1));
+			}
+		}
 	}
 }

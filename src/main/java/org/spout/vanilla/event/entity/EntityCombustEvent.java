@@ -29,14 +29,24 @@ package org.spout.vanilla.event.entity;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
+import org.spout.vanilla.event.cause.CombustCause;
+import org.spout.vanilla.event.cause.NullCombustCause;
 
 public class EntityCombustEvent extends EntityEvent {
 	private static HandlerList handlers = new HandlerList();
+	private final CombustCause<? extends Object> cause;
 	private int duration;
 
 	public EntityCombustEvent(Entity e, int duration) {
 		super(e);
 		this.duration = duration;
+		this.cause = new NullCombustCause();
+	}
+	
+	public EntityCombustEvent(Entity e, int duration, CombustCause<?> cause) {
+		super(e);
+		this.duration = duration;
+		this.cause = cause;
 	}
 
 	/**
@@ -53,6 +63,14 @@ public class EntityCombustEvent extends EntityEvent {
 	 */
 	public void setDuration(int duration) {
 		this.duration = duration;
+	}
+	
+	/**
+	 * Gets the {@link CombustCause} for this event.
+	 * @param cause
+	 */
+	public CombustCause<? extends Object> getCombustCause() {
+		return cause;
 	}
 
 	@Override

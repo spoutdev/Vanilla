@@ -127,4 +127,6 @@ public class VanillaData {
 	public static final DefaultedKey<String[]> SIGN_TEXT = new DefaultedKeyArray<String>("sign_text", 4, String.class);
 	//Zombie Specific
 	public static final DefaultedKey<Boolean> WAS_VILLAGER = new DefaultedKeyImpl<Boolean>("was_villager", false);
+	//Chicken Specific
+	public static final DefaultedKey<Float> TIME_TILL_EGG = new DefaultedKeyImpl<Float>("time_till_egg", 0f);
 }

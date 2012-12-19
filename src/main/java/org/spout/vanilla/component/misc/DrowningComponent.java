@@ -33,6 +33,7 @@ import org.spout.api.Spout;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
+import org.spout.api.geo.World;
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
@@ -86,7 +87,8 @@ public class DrowningComponent extends EntityComponent {
 		switch (Spout.getPlatform()) {
 			case PROXY:
 			case SERVER:
-				if (owner.getWorld().getBlock(head.getPosition()).getMaterial() != VanillaMaterials.WATER) {
+				World world = head.getPosition().getWorld();
+				if (world.getBlock(head.getPosition()).getMaterial() != VanillaMaterials.WATER) {
 					setAir(MAX_AIR);
 					return;
 				}
@@ -94,7 +96,7 @@ public class DrowningComponent extends EntityComponent {
 				if (getAir() < 0) {
 					// out of air; damage one heart every second
 					if (damageTimer-- < 0) {
-						health.damage(2, new DamageCause(owner.getWorld().getBlock(head.getPosition()), DamageType.DROWN));
+						health.damage(2, new DamageCause(world.getBlock(head.getPosition()), DamageType.DROWN));
 						damageTimer = 20;
 					}
 				}

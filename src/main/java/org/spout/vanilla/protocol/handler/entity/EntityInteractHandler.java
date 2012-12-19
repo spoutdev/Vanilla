@@ -38,8 +38,8 @@ import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.event.cause.DamageCause;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
+import org.spout.vanilla.event.cause.PlayerDamageCause;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Tool;
@@ -92,7 +92,7 @@ public class EntityInteractHandler extends MessageHandler<EntityInteractMessage>
 						}
 					}
 					if (!clicked.getHealth().isDead()) {
-						clicked.getHealth().damage(damage, new DamageCause(playerEnt, DamageType.ATTACK), damage > 0);
+						clicked.getHealth().damage(damage, new PlayerDamageCause(playerEnt, DamageType.ATTACK), damage > 0);
 					}
 				}
 			}

@@ -31,8 +31,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.EngineFaker;
-import org.spout.vanilla.event.cause.DamageCause;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
+import org.spout.vanilla.event.cause.NullDamageCause;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.enchantment.Enchantment;
 import org.spout.vanilla.material.enchantment.Enchantments;
@@ -50,6 +50,6 @@ public class DamageTest {
 		assertTrue(Enchantment.hasEnchantment(test, Enchantments.PROTECTION));
 
 		Armor armor = (Armor) test.getMaterial();
-		assertTrue((int) Math.ceil(.04 * (armor.getBaseProtection() + armor.getProtection(test, new DamageCause(null, DamageType.CACTUS)))) == 1);
+		assertTrue((int) Math.ceil(.04 * (armor.getBaseProtection() + armor.getProtection(test, new NullDamageCause(DamageType.CACTUS)))) == 1);
 	}
 }

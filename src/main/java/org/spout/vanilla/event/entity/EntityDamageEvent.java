@@ -32,25 +32,26 @@ import org.spout.api.event.entity.EntityEvent;
 
 import org.spout.vanilla.event.cause.DamageCause;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
+import org.spout.vanilla.event.cause.NullDamageCause;
 
 public class EntityDamageEvent extends EntityEvent {
 	private static HandlerList handlers = new HandlerList();
 	private int damage;
 	private boolean hasSendHurtMessage = true;
-	private DamageCause cause = new DamageCause(null, DamageType.UNKNOWN);
+	private DamageCause<? extends Object> cause = new NullDamageCause(DamageType.UNKNOWN);
 
 	public EntityDamageEvent(Entity e, int damage) {
 		super(e);
 		this.damage = damage;
 	}
 
-	public EntityDamageEvent(Entity e, int damage, DamageCause cause) {
+	public EntityDamageEvent(Entity e, int damage, DamageCause<?> cause) {
 		super(e);
 		this.damage = damage;
 		this.cause = cause;
 	}
 
-	public EntityDamageEvent(Entity e, int damage, DamageCause cause, boolean sendHurtMessage) {
+	public EntityDamageEvent(Entity e, int damage, DamageCause<?> cause, boolean sendHurtMessage) {
 		super(e);
 		this.damage = damage;
 		this.cause = cause;
@@ -73,12 +74,12 @@ public class EntityDamageEvent extends EntityEvent {
 	public DamageType getDamageType() {
 		return cause.getType();
 	}
-	
+
 	/**
 	 * Gets the {@link DamageCause} for this event.
 	 * @param cause
 	 */
-	public DamageCause getDamageCause() {
+	public DamageCause<? extends Object> getDamageCause() {
 		return cause;
 	}
 

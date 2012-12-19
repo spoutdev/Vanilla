@@ -42,7 +42,7 @@ import org.spout.api.math.Rectangle;
 import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.event.cause.DamageCause;
+import org.spout.vanilla.event.cause.BlockDamageCause;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -96,7 +96,7 @@ public class DrowningComponent extends EntityComponent {
 				if (getAir() < 0) {
 					// out of air; damage one heart every second
 					if (damageTimer-- < 0) {
-						health.damage(2, new DamageCause(world.getBlock(head.getPosition()), DamageType.DROWN));
+						health.damage(2, new BlockDamageCause(world.getBlock(head.getPosition()), DamageType.DROWN));
 						damageTimer = 20;
 					}
 				}

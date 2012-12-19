@@ -47,6 +47,7 @@ import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.cause.DamageCause;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
+import org.spout.vanilla.event.cause.NullDamageCause;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.event.entity.EntityDamageEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
@@ -63,7 +64,7 @@ import org.spout.vanilla.source.HealthChangeCause;
 public class HealthComponent extends EntityComponent {
 	private static final int DEATH_TIME_TICKS = 30;
 	// Damage
-	private DamageCause lastDamageCause = new DamageCause(null, DamageType.UNKNOWN);
+	private DamageCause<?> lastDamageCause = new NullDamageCause(DamageType.UNKNOWN);
 	private Object lastDamager;
 	// Client only
 	private final Widget hearts = new Widget();
@@ -215,7 +216,7 @@ public class HealthComponent extends EntityComponent {
 	 * Gets the last cause of the damage
 	 * @return the last damager
 	 */
-	public DamageCause getLastDamageCause() {
+	public DamageCause<?> getLastDamageCause() {
 		return lastDamageCause;
 	}
 
@@ -327,7 +328,7 @@ public class HealthComponent extends EntityComponent {
 	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
 	 */
 	public void damage(int amount) {
-		damage(amount, new DamageCause(null, DamageType.UNKNOWN));
+		damage(amount, new NullDamageCause(DamageType.UNKNOWN));
 	}
 
 	/**
@@ -335,7 +336,7 @@ public class HealthComponent extends EntityComponent {
 	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
 	 * @param cause cause of this entity being damaged
 	 */
-	public void damage(int amount, DamageCause cause) {
+	public void damage(int amount, DamageCause<?> cause) {
 		damage(amount, cause, true);
 	}
 
@@ -346,7 +347,7 @@ public class HealthComponent extends EntityComponent {
 	 * @param damager entity that damaged this entity
 	 * @param sendHurtMessage whether to send the hurt packet to all players online
 	 */
-	public void damage(int amount, DamageCause cause, boolean sendHurtMessage) {
+	public void damage(int amount, DamageCause<?> cause, boolean sendHurtMessage) {
 		// TODO take potion effects into account
 		EntityDamageEvent event = Spout.getEngine().getEventManager().callEvent(new EntityDamageEvent(getOwner(), amount, cause, sendHurtMessage));
 		if (event.isCancelled()) {

@@ -31,7 +31,7 @@ import org.spout.api.event.Cause;
 /**
  * Represents the cause of damage.
  */
-public class DamageCause implements Cause<Object> {
+public interface DamageCause<T> extends Cause<T>{
 	/**
 	 * Represents the different types of damage causes.
 	 */
@@ -107,34 +107,10 @@ public class DamageCause implements Cause<Object> {
 			return false;
 		}
 	}
-	
-	private Object source;
-	private DamageType type;
 
-	/**
-	 * Contains the source and type of damage. ie. DamageCause(cactusBlock, DamageType.CACTUS);
-	 * @param source The source of the damage.
-	 * @param type The cause of the damage.
-	 */
-	public DamageCause(Object source, DamageType type) {
-		this.source = source;
-		this.type = type;
-	}
-	
-	/**
-	 * Gets the source of this damage cause.
-	 * @return source
-	 */
-	@Override
-	public Object getSource() {
-		return source;
-	}
-	
 	/**
 	 * Gets the {@link DamageType} of the cause.
 	 * @return type
 	 */
-	public DamageType getType() {
-		return type;
-	}
+	public DamageType getType();
 }

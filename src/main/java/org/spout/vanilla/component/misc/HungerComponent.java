@@ -47,8 +47,8 @@ import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.event.cause.DamageCause;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
+import org.spout.vanilla.event.cause.NullDamageCause;
 import org.spout.vanilla.event.player.network.PlayerHealthEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.source.HealthChangeCause;
@@ -159,7 +159,7 @@ public class HungerComponent extends EntityComponent {
 				if (hunger <= 0) {
 					timer -= dt;
 					if (timer <= 0) {
-						healthComponent.damage(1, new DamageCause(null, DamageType.STARVATION));
+						healthComponent.damage(1, new NullDamageCause(DamageType.STARVATION));
 						timer = 4;
 					}
 				}

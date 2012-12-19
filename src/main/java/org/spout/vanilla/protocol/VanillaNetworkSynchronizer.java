@@ -385,23 +385,22 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			player.get(Human.class).setGamemode(gamemode, false);
 		}
 		//TODO Handle infinite height
+		int entityId = player.getId();
+
 		if (first) {
 			first = false;
-			int entityId = player.getId();
 			Server server = (Server) session.getEngine();
 			PlayerLoginRequestMessage idMsg = new PlayerLoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) server.getMaxPlayers());
 			player.getSession().send(false, true, idMsg);
 			player.getSession().setState(State.GAME);
-			if (player.has(PlayerInventory.class)) {
-				for (int slot = 0; slot < 4; slot++) {
-					ItemStack slotItem = player.get(PlayerInventory.class).getArmor().get(slot);
-					player.getSession().send(false, new EntityEquipmentMessage(entityId, slot, slotItem));
-				}
-			}
 		} else {
 			player.getSession().send(false, new PlayerRespawnMessage(0, difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
 			player.getSession().send(false, new PlayerRespawnMessage(1, difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
 			player.getSession().send(false, new PlayerRespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
+		}
+		
+		if (player.has(PlayerInventory.class)) {
+			player.get(PlayerInventory.class).updateAll();
 		}
 
 		Point pos = world.getSpawnPoint().getPosition();

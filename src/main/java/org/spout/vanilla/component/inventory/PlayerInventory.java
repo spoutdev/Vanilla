@@ -27,8 +27,8 @@
 package org.spout.vanilla.component.inventory;
 
 import org.spout.api.component.type.EntityComponent;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.player.PlayerArmorInventory;
@@ -74,6 +74,23 @@ public class PlayerInventory extends EntityComponent {
 
 	public ChestInventory getEnderChestInventory() {
 		return getData().get(VanillaData.ENDER_CHEST_INVENTORY);
+	}
+	
+	/**
+	 * Updates all sub-inventories associated with this inventory
+	 */
+	public void updateAll() {
+		updateAll(getQuickbar());
+		updateAll(getMain());
+		updateAll(getArmor());
+		updateAll(getCraftingGrid());
+		updateAll(getEnderChestInventory());
+	}
+	
+	private void updateAll(Inventory inv) {
+		if (inv != null) {
+			inv.updateAll();
+		}
 	}
 
 	/**

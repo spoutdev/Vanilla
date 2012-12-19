@@ -379,6 +379,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		stepY = node.STEP_Y.getInt() & (~Chunk.BLOCKS.MASK);
 		lowY = maxY - stepY;
 		highY = minY + stepY;
+		lastY = Integer.MAX_VALUE;
 		
 		GameMode gamemode = world.getComponentHolder().getData().get(VanillaData.GAMEMODE);
 		Difficulty difficulty = world.getComponentHolder().getData().get(VanillaData.DIFFICULTY);
@@ -429,18 +430,27 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@Override
 	public void finalizeTick() {
 		Point currentPosition = player.getTransform().getPosition();
-		
+
 		int y = currentPosition.getBlockY();
-		
+
 		if (y != lastY && !isTeleportPending()) {
+
 			lastY = y;
 			int cY = getRepositionManager().convertY(y);
-			if (cY >= maxY) {
-				offsetY += lowY - (cY & (~Chunk.BLOCKS.MASK));
+
+			if (cY >= maxY || cY < minY) {
+				int steps = (cY - ((maxY + minY) >> 1)) / stepY;
+
+				offsetY -= steps * stepY;
 				vpm.setOffset(offsetY);
-				setRespawned();
-			} else if (cY < minY) {
-				offsetY += highY - ((cY + Chunk.BLOCKS.MASK) & (~Chunk.BLOCKS.MASK));
+				cY = getRepositionManager().convertY(y);
+
+				if (cY >= maxY) {
+					offsetY -= stepY;
+				} else if (cY < minY) {
+					offsetY += stepY;
+				}
+
 				vpm.setOffset(offsetY);
 				setRespawned();
 			}

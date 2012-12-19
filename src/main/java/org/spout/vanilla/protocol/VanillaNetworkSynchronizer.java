@@ -64,6 +64,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.misc.HungerComponent;
+import org.spout.vanilla.component.player.PlayerAbilityComponent;
 import org.spout.vanilla.component.substance.material.Sign;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.configuration.WorldConfigurationNode;
@@ -81,6 +82,7 @@ import org.spout.vanilla.event.entity.EntityCollectItemEvent;
 import org.spout.vanilla.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
+import org.spout.vanilla.event.player.PlayerAbilityUpdateEvent;
 import org.spout.vanilla.event.player.network.PlayerBedEvent;
 import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
 import org.spout.vanilla.event.player.network.PlayerHealthEvent;
@@ -106,6 +108,7 @@ import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityTileDataMessage;
+import org.spout.vanilla.protocol.msg.player.PlayerAbilityMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerBedMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerCollectItemMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerGameStateMessage;
@@ -402,6 +405,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (player.has(PlayerInventory.class)) {
 			player.get(PlayerInventory.class).updateAll();
 		}
+		
+		// TODO - this should probably do a permission check of some kind
+		if (player.has(PlayerAbilityComponent.class)) {
+			player.get(PlayerAbilityComponent.class).update();
+		}
 
 		Point pos = world.getSpawnPoint().getPosition();
 		PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());
@@ -490,6 +498,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				this.session.send(false, message);
 			}
 		}
+	}
+	@EventHandler
+	public Message onPlayerAbilityUpdate(PlayerAbilityUpdateEvent event) {
+		return new PlayerAbilityMessage(event.getGodMode(), event.isFlying(), event.canFly(), event.isCreativeMode(), event.getFlyingSpeed(), event.getWalkingSpeed());
 	}
 
 	@EventHandler

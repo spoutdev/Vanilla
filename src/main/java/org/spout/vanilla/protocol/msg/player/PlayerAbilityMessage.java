@@ -27,9 +27,7 @@
 package org.spout.vanilla.protocol.msg.player;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-
 import org.spout.api.util.SpoutToStringStyle;
-
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public class PlayerAbilityMessage extends VanillaMainChannelMessage {
@@ -38,7 +36,8 @@ public class PlayerAbilityMessage extends VanillaMainChannelMessage {
 
 	public PlayerAbilityMessage(boolean godMode, boolean isFlying, boolean canFly, boolean creativeMode, byte flyingSpeed, byte walkingSpeed) {
 		this.godMode = godMode;
-		this.isFlying = isFlying;
+		// TODO - is this required?  If canFly == false and isFlying == true, then client can't disable flight
+		this.isFlying = isFlying && canFly;
 		this.canFly = canFly;
 		this.creativeMode = creativeMode;
 		this.flyingSpeed = flyingSpeed;

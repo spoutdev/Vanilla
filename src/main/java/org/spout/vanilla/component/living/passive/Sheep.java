@@ -76,7 +76,7 @@ public class Sheep extends Living implements Passive {
 	 * @return color of the sheep.
 	 */
 	public Wool.WoolColor getColor() {
-		return Wool.WoolColor.getById(getOwner().getData().get(VanillaData.WOOL_COLOR));
+		return Wool.WoolColor.getById(getOwner().getData().get(VanillaData.WOOL_COLOR).shortValue());
 	}
 
 	/**

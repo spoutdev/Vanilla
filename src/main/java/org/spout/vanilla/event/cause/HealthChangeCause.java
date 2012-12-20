@@ -50,6 +50,10 @@ public enum HealthChangeCause {
 	 */
 	SPAWN,
 	/**
+	 * Health changed due to a plugin other than a command.
+	 */
+	PLUGIN,
+	/**
 	 * Health changed due to some unknown reason.
 	 */
 	UNKNOWN;

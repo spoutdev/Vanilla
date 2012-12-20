@@ -27,7 +27,9 @@
 package org.spout.vanilla.event.cause;
 
 import org.spout.api.entity.Player;
+import org.spout.api.event.Cause;
 import org.spout.api.event.cause.PlayerCause;
+import org.spout.api.exception.MaxCauseChainReached;
 import org.spout.api.geo.cuboid.Block;
 
 /**
@@ -39,6 +41,36 @@ public class PlayerBreakCause extends PlayerCause {
 	public PlayerBreakCause(Player player, Block block) {
 		super(player);
 		this.block = block;
+	}
+
+	/**
+	 * Creates a cause with a parent. If the {@link #chainPosition} is larger than {@link org.spout.api.Engine#getCauseChainMaximum()}
+	 * a {@link org.spout.api.exception.MaxCauseChainReached} RuntimeException will be thrown and the {@link #parentCause},
+	 * {@link #mainCause} and {@link #chainPosition} reseted.
+	 * @param player who caused this cause
+	 * @param block who caused this cause
+	 * @param parent cause of this cause
+	 */
+	public PlayerBreakCause(Player player, Block block, Cause parent) {
+		super(player, parent);
+		this.block = block;
+	}
+
+	/**
+	 * Checks if the Class of the parent cause is the same class as the new cause
+	 * @return true if class of parent cause and new cause are the same
+	 */
+	@Override
+	protected boolean causeOfSameClass() {
+		return getParentCause() != null && getParentCause().getClass() == this.getClass();
+	}
+
+	/**
+	 * Throws the {@link org.spout.api.exception.MaxCauseChainReached} Exception with the point of the cause
+	 */
+	@Override
+	protected void throwException() {
+		throw new MaxCauseChainReached(block.getPosition());
 	}
 
 	/**

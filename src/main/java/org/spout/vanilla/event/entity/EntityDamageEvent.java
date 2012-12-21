@@ -27,12 +27,17 @@
 package org.spout.vanilla.event.entity;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.vanilla.event.cause.DamageCause;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.event.cause.HealthChangeCause;
 import org.spout.vanilla.event.cause.NullDamageCause;
 
+/**
+ * Called when an entity is damaged.<br/>
+ * Implements {@link Cancellable}. Canceling this prevents the Entity from taking damage.
+ */
 public class EntityDamageEvent extends EntityHealthChangeEvent {
 	private static HandlerList handlers = new HandlerList();
 	private boolean hasSendHurtMessage = true;

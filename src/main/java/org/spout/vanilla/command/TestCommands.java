@@ -545,6 +545,7 @@ public class TestCommands {
 			throw new CommandException(name + " was not a valid name for a Living!");
 		}
 		Entity entity = pos.getWorld().createEntity(pos, clazz);
+		entity.setSavable(true);
 		if (clazz.equals(FallingBlock.class)) {
 			if (args.length() == 2) {
 				final String materialName = args.getString(1);
@@ -555,6 +556,7 @@ public class TestCommands {
 			} else {
 				entity.add(FallingBlock.class).setMaterial(VanillaMaterials.SAND);
 			}
+			entity.setSavable(false);
 		} else if (clazz.equals(Human.class)) {
 			String npcName = "Steve";
 			if (args.length() == 2) {
@@ -586,7 +588,6 @@ public class TestCommands {
 				entity = skeletonPrefab.createEntity(pos);
 			}
 		}
-		entity.setSavable(false);
 		if (Spout.getPlatform() == Platform.SERVER && Spout.debugMode()) {
 			entity.add(TransformDebugComponent.class);
 		}

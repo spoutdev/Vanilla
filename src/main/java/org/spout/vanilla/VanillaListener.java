@@ -39,6 +39,7 @@ import org.spout.api.event.engine.EngineStartEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.plugin.Platform;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.component.living.neutral.Human;
@@ -85,6 +86,9 @@ public class VanillaListener implements Listener {
 
 	@EventHandler
 	public void onClientEnable(EngineStartEvent event) {
+		if (Spout.getPlatform() != Platform.CLIENT) {
+			return;
+		}
 		Player player = ((Client) Spout.getEngine()).getActivePlayer();
 		player.add(HUDComponent.class).openHUD();
 		player.add(PlayerInventory.class);
@@ -98,10 +102,6 @@ public class VanillaListener implements Listener {
 
 	@EventHandler
 	public void onBlockChange(BlockChangeEvent event) {
-		if (event.isCancelled()) {
-			return;
-		}
-
 		if (RedstoneChangeEvent.getHandlerList().getRegisteredListeners().length == 0) {
 			return;
 		}

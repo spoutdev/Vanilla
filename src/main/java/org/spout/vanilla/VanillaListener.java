@@ -90,6 +90,7 @@ public class VanillaListener implements Listener {
 			return;
 		}
 		Player player = ((Client) Spout.getEngine()).getActivePlayer();
+		player.add(Human.class);
 		player.add(HUDComponent.class).openHUD();
 		player.add(PlayerInventory.class);
 		player.add(WindowHolder.class);

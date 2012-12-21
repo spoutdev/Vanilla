@@ -254,7 +254,7 @@ public class HealthComponent extends EntityComponent {
 	public void setSpawnHealth(int maxHealth) {
 		this.setMaxHealth(maxHealth);
 		//Do not call setHealth yet, network has not been initialized if loading from file
-		getData().put(VanillaData.HEALTH, getMaxHealth());
+		getData().put(VanillaData.HEALTH, maxHealth);
 	}
 
 	/**

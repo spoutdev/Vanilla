@@ -35,8 +35,8 @@ import org.spout.api.event.Listener;
 import org.spout.api.event.Order;
 import org.spout.api.event.Result;
 import org.spout.api.event.block.BlockChangeEvent;
+import org.spout.api.event.engine.EngineStartEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
-import org.spout.api.event.server.ClientEnableEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.component.inventory.PlayerInventory;
@@ -84,7 +84,7 @@ public class VanillaListener implements Listener {
 	}
 
 	@EventHandler
-	public void onClientEnable(ClientEnableEvent event) {
+	public void onClientEnable(EngineStartEvent event) {
 		Player player = ((Client) Spout.getEngine()).getActivePlayer();
 		player.add(HUDComponent.class).openHUD();
 		player.add(PlayerInventory.class);

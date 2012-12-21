@@ -27,44 +27,56 @@
 package org.spout.vanilla.event.cause;
 
 /**
- * Represents the cause of an entity being healed.
+ * Represents the cause for a living entity spawning.
  */
-public enum HealCause {
+public enum LivingSpawnCause {
 	/**
-	 * Health gained due to regeneration on peaceful mode.
+	 * This spawn occurred as the result of breeding.
 	 */
- 	REGENERATION,
- 	/**
-	 * Health gained due to regeneration from being satiated.
+	BIRTH,
+	/**
+	 * This spawn occurred as the result of being built.
 	 */
- 	SATIATED,
- 	/**
-	 * Health gained from consumables.
+	BUILT,
+	/**
+	 * This spawn occurred due to chunk generation.
 	 */
- 	CONSUMABLE,
- 	/**
-	 * Health gained by an Ender Dragon from an Ender Crystal.
+	CHUNK_GENERATION,
+	/**
+	 * This spawn occurred due to a custom reason.
 	 */
- 	ENDER_CRYSTAL,
- 	/**
-	 * Health gained from a potion.
+	CUSTOM,
+	/**
+	 * This spawn occurred due to an entity using an egg.
 	 */
- 	MAGIC,
- 	/**
-	 * Health gained from the HoT effect of a potion.
+	EGG,
+	/**
+	 * This spawn occurred due to a lightning strike.
 	 */
- 	MAGIC_REGEN,
- 	/**
-	 * Health gained by the Wither when it is spawning.
+	LIGHTNING,
+	/**
+	 * This spawn occurred naturally.
 	 */
- 	WITHER_SPAWN,
- 	/**
-	 * Health gained due to an unknown source.
+	NATURAL,
+	/**
+	 * This spawn occurred due to a spawner.
 	 */
- 	UNKNOWN;
- 	
- 	public boolean equals(HealCause... causes) {
-		for (HealCause cause : causes) {
+	SPAWNER,
+	/**
+	 * This spawn occurred due to a split event.
+	 */
+	SPLIT,
+	/**
+	 * This spawn occurred as part of a village event.
+	 */
+	VILLAGE,
+	/**
+	 * This spawn occurred due to an unknown reason.
+	 */
+	UNKNOWN;
+	
+	public boolean equals(LivingSpawnCause... causes) {
+		for (LivingSpawnCause cause : causes) {
 			if (equals(cause)) {
 				return true;
 			}

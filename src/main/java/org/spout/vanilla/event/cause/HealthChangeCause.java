@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.event.cause;
 
-
 /**
  * Represents the source of a health change.
  */

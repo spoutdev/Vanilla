@@ -24,51 +24,50 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.cause;
+package org.spout.vanilla.event.entity;
+
+import org.spout.api.entity.Entity;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.entity.EntitySpawnEvent;
+import org.spout.api.geo.discrete.Point;
+import org.spout.vanilla.event.cause.LivingSpawnCause;
 
 /**
- * Represents the cause of an entity being healed.
+ * Called when a living entity is spawned.
  */
-public enum HealCause {
+public class LivingSpawnEvent extends EntitySpawnEvent {
+	private static HandlerList handlers = new HandlerList();
+	private final LivingSpawnCause cause;
+	
+	public LivingSpawnEvent(Entity e, Point point) {
+		super(e, point);
+		this.cause = LivingSpawnCause.UNKNOWN;
+	}
+	
+	public LivingSpawnEvent(Entity e, Point point, LivingSpawnCause cause) {
+		super(e, point);
+		this.cause = cause;
+	}
+	
 	/**
-	 * Health gained due to regeneration on peaceful mode.
+	 * Gets the {@link LivingSpawnCause} of this spawn.
+	 * @return cause
 	 */
- 	REGENERATION,
- 	/**
-	 * Health gained due to regeneration from being satiated.
-	 */
- 	SATIATED,
- 	/**
-	 * Health gained from consumables.
-	 */
- 	CONSUMABLE,
- 	/**
-	 * Health gained by an Ender Dragon from an Ender Crystal.
-	 */
- 	ENDER_CRYSTAL,
- 	/**
-	 * Health gained from a potion.
-	 */
- 	MAGIC,
- 	/**
-	 * Health gained from the HoT effect of a potion.
-	 */
- 	MAGIC_REGEN,
- 	/**
-	 * Health gained by the Wither when it is spawning.
-	 */
- 	WITHER_SPAWN,
- 	/**
-	 * Health gained due to an unknown source.
-	 */
- 	UNKNOWN;
- 	
- 	public boolean equals(HealCause... causes) {
-		for (HealCause cause : causes) {
-			if (equals(cause)) {
-				return true;
-			}
-		}
-		return false;
+	public LivingSpawnCause getSpawnCause() {
+		return cause;
+	}
+
+	@Override
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
+	}
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

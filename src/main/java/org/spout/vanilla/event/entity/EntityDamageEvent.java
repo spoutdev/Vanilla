@@ -28,6 +28,7 @@ package org.spout.vanilla.event.entity;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
+import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
 
 import org.spout.vanilla.event.cause.DamageCause;
@@ -42,19 +43,19 @@ import org.spout.vanilla.event.cause.NullDamageCause;
 public class EntityDamageEvent extends EntityHealthChangeEvent {
 	private static HandlerList handlers = new HandlerList();
 	private boolean hasSendHurtMessage = true;
-	private final DamageCause<? extends Object> cause;
+	private final Cause<?> cause;
 
 	public EntityDamageEvent(Entity e, int damage) {
 		super(e, HealthChangeCause.DAMAGE, -damage);
-		this.cause = new NullDamageCause(e.getTransform().getPosition(), DamageType.UNKNOWN);
+		this.cause = new NullDamageCause(DamageType.UNKNOWN);
 	}
 
-	public EntityDamageEvent(Entity e, int damage, DamageCause<?> cause) {
+	public EntityDamageEvent(Entity e, int damage, Cause<?> cause) {
 		super(e, HealthChangeCause.DAMAGE, -damage);
 		this.cause = cause;
 	}
 
-	public EntityDamageEvent(Entity e, int damage, DamageCause<?> cause, boolean sendHurtMessage) {
+	public EntityDamageEvent(Entity e, int damage, Cause<?> cause, boolean sendHurtMessage) {
 		super(e, HealthChangeCause.DAMAGE, -damage);
 		this.cause = cause;
 		this.hasSendHurtMessage = sendHurtMessage;
@@ -74,13 +75,16 @@ public class EntityDamageEvent extends EntityHealthChangeEvent {
 	 * @return type
 	 */
 	public DamageType getDamageType() {
-		return cause.getType();
+		if (cause instanceof DamageCause) {
+			return ((DamageCause<?>)cause).getType();
+		}
+		return DamageType.UNKNOWN;
 	}
 
 	/**
-	 * Gets the {@link DamageCause} for this event.
+	 * Gets the {@link Cause} for this event.
 	 */
-	public DamageCause<? extends Object> getDamageCause() {
+	public Cause<?> getDamageCause() {
 		return cause;
 	}
 

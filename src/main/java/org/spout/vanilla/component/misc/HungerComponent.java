@@ -159,7 +159,7 @@ public class HungerComponent extends EntityComponent {
 				if (hunger <= 0) {
 					timer -= dt;
 					if (timer <= 0) {
-						healthComponent.damage(1, new NullDamageCause(human.getOwner().getTransform().getPosition(), DamageType.STARVATION));
+						healthComponent.damage(1, new NullDamageCause(DamageType.STARVATION));
 						timer = 4;
 					}
 				}

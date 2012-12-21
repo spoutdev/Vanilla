@@ -35,6 +35,7 @@ import org.spout.api.Spout;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
+import org.spout.api.event.Cause;
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
@@ -66,7 +67,7 @@ import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 public class HealthComponent extends EntityComponent {
 	private static final int DEATH_TIME_TICKS = 30;
 	// Damage
-	private DamageCause<?> lastDamageCause = new NullDamageCause(getOwner().getTransform().getPosition(), DamageType.UNKNOWN);
+	private DamageCause<?> lastDamageCause = new NullDamageCause(DamageType.UNKNOWN);
 	private Object lastDamager;
 	// Client only
 	private final Widget hearts = new Widget();
@@ -350,7 +351,7 @@ public class HealthComponent extends EntityComponent {
 	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
 	 */
 	public void damage(int amount) {
-		damage(amount, new NullDamageCause(getOwner().getTransform().getPosition(), DamageType.UNKNOWN));
+		damage(amount, new NullDamageCause(DamageType.UNKNOWN));
 	}
 
 	/**
@@ -370,15 +371,21 @@ public class HealthComponent extends EntityComponent {
 	 * @param sendHurtMessage whether to send the hurt packet to all players online
 	 */
 	public void damage(int amount, DamageCause<?> cause, boolean sendHurtMessage) {
+		Cause<?> eventCause;
+		if (cause instanceof Cause<?>) {
+			eventCause = (Cause<?>)cause;
+		} else {
+			eventCause = new NullDamageCause(cause.getType());
+		}
 		// TODO take potion effects into account
-		EntityDamageEvent event = Spout.getEngine().getEventManager().callEvent(new EntityDamageEvent(getOwner(), amount, cause, sendHurtMessage));
+		EntityDamageEvent event = Spout.getEngine().getEventManager().callEvent(new EntityDamageEvent(getOwner(), amount, eventCause, sendHurtMessage));
 		if (event.isCancelled()) {
 			return;
 		}
 
 		setHealth(getHealth() - event.getDamage(), HealthChangeCause.DAMAGE);
 		lastDamager = event.getDamager();
-		lastDamageCause = event.getDamageCause();
+		lastDamageCause = cause;
 
 		// Add exhaustion to damaged
 		if (getOwner().has(HungerComponent.class)) {

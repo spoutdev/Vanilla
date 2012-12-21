@@ -26,12 +26,10 @@
  */
 package org.spout.vanilla.event.cause;
 
-import org.spout.api.event.Cause;
-
 /**
  * Represents the cause of damage.
  */
-public interface DamageCause<T> extends Cause<T>{
+public interface DamageCause<T>{
 	/**
 	 * Represents the different types of damage causes.
 	 */

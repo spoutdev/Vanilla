@@ -39,7 +39,6 @@ import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 
 public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	// General
-	public static final ConfigurationHolder BONJOUR = new ConfigurationHolder(true, "general", "bonjour");
 	public static final ConfigurationHolder LAN_DISCOVERY = new ConfigurationHolder(true, "general", "lan-discovery");
 	public static final ConfigurationHolder ONLINE_MODE = new ConfigurationHolder(true, "general", "online-mode");
 	public static final ConfigurationHolder END_CREDITS = new ConfigurationHolder(true, "general", "end-credits");

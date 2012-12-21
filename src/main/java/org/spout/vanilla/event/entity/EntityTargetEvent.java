@@ -36,43 +36,57 @@ import org.spout.api.event.entity.EntityEvent;
  */
 public class EntityTargetEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private TargetReason reason;
+	private TargetCause cause;
+	private Entity target = null;
 
-	public EntityTargetEvent(Entity e, TargetReason reason) {
+	public EntityTargetEvent(Entity e, TargetCause cause) {
 		super(e);
-		this.reason = reason;
+		this.cause = cause;
+	}
+	
+	public EntityTargetEvent(Entity e, TargetCause cause, Entity target) {
+		this(e, cause);
+		this.target = target;
 	}
 
 	/**
-	 * Gets the reason for the targeting.
-	 * @return The target reason.
+	 * Gets the cause for targeting.
+	 * @return the target cause
 	 */
-	public TargetReason getReason() {
-		return reason;
+	public TargetCause getCause() {
+		return cause;
 	}
 
 	/**
 	 * Sets the reason for the targeting.
-	 * @param reason The reason for the targeting.
+	 * @param reason The reason for the targeting
 	 */
-	public void setReason(TargetReason reason) {
-		this.reason = reason;
+	public void setCause(TargetCause cause) {
+		this.cause = cause;
+	}
+	
+	/**
+	 * Gets the new target.
+	 * @return target or null
+	 */
+	public Entity getTarget() {
+		return target;
 	}
 
 	/**
-	 * Returns true if the entity has targeted.
-	 * @return True it the entity has targeted, false if not.
+	 * Sets the new target.
+	 * @param target
 	 */
-	public boolean isTarget() {
-		return reason.isTarget();
+	public void setTarget(Entity target) {
+		this.target = target;
 	}
 
 	/**
-	 * Returns true if the entity has untargeted.
-	 * @return True is the entity has untargeted, false if not.
+	 * Whether this is a targeting or untargeting event.
+	 * @return true if the entity is targeting, false if it is untargeting
 	 */
-	public boolean isUntarget() {
-		return !reason.isTarget();
+	public boolean isTargeting() {
+		return cause.isTarget();
 	}
 
 	@Override
@@ -90,9 +104,9 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 	}
 
 	/**
-	 * Represents a target reason for an EntityTargetEvent.
+	 * Represents a target change cause for an EntityTargetEvent.
 	 */
-	public enum TargetReason {
+	public enum TargetCause {
 		TARGET_DIED(false),
 		CLOSEST_PLAYER(true),
 		TARGET_ATTACKED_ENTITY(true),
@@ -104,16 +118,17 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 		CUSTOM_UNTARGET(false);
 		private boolean target;
 
-		private TargetReason(boolean target) {
+		private TargetCause(boolean target) {
 			this.target = target;
 		}
 
 		/**
-		 * Whether or not it is target
-		 * @return true if target
+		 * Whether this is targeting or untargeting.
+		 * @return true if targeting, false if untargeting
 		 */
 		public boolean isTarget() {
 			return target;
 		}
 	}
 }
+

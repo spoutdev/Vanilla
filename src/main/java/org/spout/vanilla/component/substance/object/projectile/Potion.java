@@ -24,12 +24,11 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.substance;
+package org.spout.vanilla.component.substance.object.projectile;
 
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 
-import org.spout.vanilla.component.substance.object.projectile.Projectile;
 
 public class Potion extends EntityComponent implements Projectile {
 	private Entity shooter;

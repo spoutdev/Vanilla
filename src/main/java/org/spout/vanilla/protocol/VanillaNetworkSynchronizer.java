@@ -31,7 +31,6 @@ import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 import gnu.trove.set.TIntSet;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -65,7 +64,6 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.misc.HungerComponent;
-import org.spout.vanilla.component.player.PlayerAbilityComponent;
 import org.spout.vanilla.component.substance.material.Sign;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.configuration.WorldConfigurationNode;
@@ -84,7 +82,7 @@ import org.spout.vanilla.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
 import org.spout.vanilla.event.item.MapItemUpdateEvent;
-import org.spout.vanilla.event.player.PlayerAbilityUpdateEvent;
+import org.spout.vanilla.event.player.network.PlayerAbilityUpdateEvent;
 import org.spout.vanilla.event.player.network.PlayerBedEvent;
 import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
 import org.spout.vanilla.event.player.network.PlayerHealthEvent;
@@ -389,7 +387,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		Dimension dimension = world.getComponentHolder().getData().get(VanillaData.DIMENSION);
 		WorldType worldType = world.getComponentHolder().getData().get(VanillaData.WORLD_TYPE);
 		if (player.has(Human.class)) {
-			player.get(Human.class).setGamemode(gamemode, false);
+			player.get(Human.class).setGamemode(gamemode, false); // Must be here because gamemode may be different; false because client is updated in next call
+			player.get(Human.class).updateAbilities();// TODO - this should probably do a permission check of some kind
 		}
 		//TODO Handle infinite height
 		int entityId = player.getId();
@@ -408,11 +407,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		
 		if (player.has(PlayerInventory.class)) {
 			player.get(PlayerInventory.class).updateAll();
-		}
-		
-		// TODO - this should probably do a permission check of some kind
-		if (player.has(PlayerAbilityComponent.class)) {
-			player.get(PlayerAbilityComponent.class).update();
 		}
 
 		Point pos = world.getSpawnPoint().getPosition();

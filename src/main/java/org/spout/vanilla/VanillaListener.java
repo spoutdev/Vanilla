@@ -50,7 +50,6 @@ import org.spout.vanilla.component.misc.SleepComponent;
 import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.component.player.InputComponent;
 import org.spout.vanilla.component.player.PingComponent;
-import org.spout.vanilla.component.player.PlayerAbilityComponent;
 import org.spout.vanilla.component.player.PlayerListComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.block.RedstoneChangeEvent;
@@ -81,7 +80,6 @@ public class VanillaListener implements Listener {
 		player.add(PickupItemComponent.class);
 		player.add(SleepComponent.class);
 		player.add(HungerComponent.class);
-		player.add(PlayerAbilityComponent.class);
 	}
 
 	@EventHandler
@@ -98,7 +96,6 @@ public class VanillaListener implements Listener {
 		player.add(InputComponent.class);
 		player.add(HealthComponent.class);
 		player.add(HungerComponent.class);
-		player.add(PlayerAbilityComponent.class);
 	}
 
 	@EventHandler

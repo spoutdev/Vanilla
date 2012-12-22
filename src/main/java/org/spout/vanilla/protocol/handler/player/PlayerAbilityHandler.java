@@ -29,7 +29,7 @@ package org.spout.vanilla.protocol.handler.player;
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-import org.spout.vanilla.component.player.PlayerAbilityComponent;
+import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.protocol.msg.player.PlayerAbilityMessage;
 
 public final class PlayerAbilityHandler extends MessageHandler<PlayerAbilityMessage> {
@@ -39,12 +39,12 @@ public final class PlayerAbilityHandler extends MessageHandler<PlayerAbilityMess
 			return;
 		}
 		Player player = session.getPlayer();
-		if (player.has(PlayerAbilityComponent.class)) {
+		if (player.has(Human.class)) {
 			// TODO - this should do a permission check and revert if required
-			PlayerAbilityComponent pac = player.get(PlayerAbilityComponent.class);
+			Human pac = player.get(Human.class);
 			pac.setFlyingSpeed(message.getFlyingSpeed());
 			pac.setWalkingSpeed(message.getWalkingSpeed());
-			pac.setIsFlying(message.isFlying());
+			pac.setFlying(message.isFlying());
 			pac.setCanFly(message.canFly());
 			pac.setGodMode(message.isGodMode());
 			pac.setCreativeMode(message.isCreativeMode());

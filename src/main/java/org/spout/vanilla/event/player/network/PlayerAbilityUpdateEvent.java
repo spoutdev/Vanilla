@@ -24,89 +24,70 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.player;
+package org.spout.vanilla.event.player.network;
 
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
-import org.spout.vanilla.event.player.PlayerAbilityUpdateEvent;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.data.GameMode;
 
-public class PlayerAbilityComponent extends EntityComponent {
+public class PlayerAbilityUpdateEvent extends PlayerEvent implements ProtocolEvent {
 	
-	private Player player;
-	
-	private byte flyingSpeed = 12;
-	private byte walkingSpeed = 25;
-	private boolean godMode = false;
-	private boolean isFlying = false;
-	private boolean canFly = true;
-	private boolean creativeMode = false;
+	private static HandlerList handlers = new HandlerList();
 
-	@Override
-	public void onAttached() {
-		if (!(getOwner() instanceof Player)) {
-			throw new IllegalStateException("PlayerAbilityComponent may only be attached to a player.");
+	private final byte flyingSpeed;
+	private final byte walkingSpeed;
+	private final boolean godMode;
+	private final boolean isFlying;
+	private final boolean canFly;
+	private final boolean creativeMode;
+	
+	public PlayerAbilityUpdateEvent(Player player) {
+		super(player);
+		if (!player.has(Human.class)) {
+			throw new IllegalStateException("Cannot call PlayerAbilityChangeEvent for players which don't have the Human component");
 		}
-		player = (Player) getOwner();
-	}
-
-	@Override
-	public boolean canTick() {
-		return false;
-	}
-
-	@Override
-	public void onTick(float dt) {
-	}
-	
-	public void setFlyingSpeed(byte speed) {
-		this.flyingSpeed = speed;
+		Human human = player.get(Human.class);
+		flyingSpeed = human.getFlyingSpeed();
+		walkingSpeed = human.getWalkingSpeed();
+		godMode = human.getGodMode();
+		isFlying = human.isFlying();
+		canFly = human.canFly();
+		creativeMode = human.getGameMode() == GameMode.CREATIVE;
 	}
 	
 	public byte getFlyingSpeed() {
 		return flyingSpeed;
 	}
-	
-	public void setWalkingSpeed(byte speed) {
-		this.walkingSpeed = speed;
-	}
-	
+
 	public byte getWalkingSpeed() {
 		return walkingSpeed;
 	}
-	
-	public void setIsFlying(boolean isFlying) {
-		this.isFlying = isFlying;
-	}
-	
+
 	public boolean isFlying() {
 		return isFlying;
 	}
-	
-	public void setCanFly(boolean canFly) {
-		this.canFly = canFly;
-	}
-	
+
 	public boolean canFly() {
 		return canFly;
 	}
-	
-	public void setGodMode(boolean godMode) {
-		this.godMode = godMode;
-	}
-	
+
 	public boolean getGodMode() {
 		return godMode;
 	}
-	
-	public void setCreativeMode(boolean creativeMode) {
-		this.creativeMode = creativeMode;
-	}
-	
+
 	public boolean isCreativeMode() {
 		return creativeMode;
 	}
-	
-	public void update() {
-		player.getNetworkSynchronizer().callProtocolEvent(new PlayerAbilityUpdateEvent(player));
+
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

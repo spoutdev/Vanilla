@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.player;
+package org.spout.vanilla.event.entity;
 
-import org.spout.api.entity.Player;
+import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
-import org.spout.api.protocol.event.ProtocolEvent;
-import org.spout.vanilla.component.player.PlayerAbilityComponent;
+import org.spout.api.event.entity.EntityEvent;
+import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.data.GameMode;
 
-public class PlayerAbilityUpdateEvent extends PlayerEvent implements ProtocolEvent {
+public class HumanAbilityChangeEvent extends EntityEvent implements Cancellable {
 	
 	private static HandlerList handlers = new HandlerList();
 
@@ -43,19 +43,14 @@ public class PlayerAbilityUpdateEvent extends PlayerEvent implements ProtocolEve
 	private final boolean canFly;
 	private final boolean creativeMode;
 	
-	public PlayerAbilityUpdateEvent(Player player) {
-		super(player);
-		if (!player.has(PlayerAbilityComponent.class)) {
-			throw new IllegalStateException("Cannot call PlayerAbilityChangeEvent for players which don't have the PlayerAbilityComponent");
-		}
-		PlayerAbilityComponent pac = player.get(PlayerAbilityComponent.class);
-		flyingSpeed = pac.getFlyingSpeed();
-		walkingSpeed = pac.getWalkingSpeed();
-		godMode = pac.getGodMode();
-		isFlying = pac.isFlying();
-		canFly = pac.canFly();
-		creativeMode = pac.isCreativeMode();
-		
+	public HumanAbilityChangeEvent(Human human) {
+		super(human.getOwner());
+		flyingSpeed = human.getFlyingSpeed();
+		walkingSpeed = human.getWalkingSpeed();
+		godMode = human.getGodMode();
+		isFlying = human.isFlying();
+		canFly = human.canFly();
+		creativeMode = human.getGameMode() == GameMode.CREATIVE;
 	}
 	
 	public byte getFlyingSpeed() {
@@ -80,6 +75,11 @@ public class PlayerAbilityUpdateEvent extends PlayerEvent implements ProtocolEve
 
 	public boolean isCreativeMode() {
 		return creativeMode;
+	}
+
+	@Override
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
 	}
 	
 	@Override

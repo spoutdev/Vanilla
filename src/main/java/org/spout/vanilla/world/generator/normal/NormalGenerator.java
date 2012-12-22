@@ -92,21 +92,21 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 	static {
 		ELEVATION.setFrequency(0.2);
 		ELEVATION.setLacunarity(1);
-		ELEVATION.setNoiseQuality(NoiseQuality.STANDARD);
+		ELEVATION.setNoiseQuality(NoiseQuality.BEST);
 		ELEVATION.setPersistence(0.7);
-		ELEVATION.setOctaveCount(1);
+		ELEVATION.setOctaveCount(2);
 
-		ROUGHNESS.setFrequency(0.53);
+		ROUGHNESS.setFrequency(0.3);
 		ROUGHNESS.setLacunarity(1);
-		ROUGHNESS.setNoiseQuality(NoiseQuality.STANDARD);
+		ROUGHNESS.setNoiseQuality(NoiseQuality.BEST);
 		ROUGHNESS.setPersistence(0.9);
-		ROUGHNESS.setOctaveCount(1);
+		ROUGHNESS.setOctaveCount(3);
 
-		DETAIL.setFrequency(0.7);
+		DETAIL.setFrequency(0.5);
 		DETAIL.setLacunarity(1);
-		DETAIL.setNoiseQuality(NoiseQuality.STANDARD);
+		DETAIL.setNoiseQuality(NoiseQuality.BEST);
 		DETAIL.setPersistence(0.7);
-		DETAIL.setOctaveCount(1);
+		DETAIL.setOctaveCount(5);
 
 		final Multiply multiply = new Multiply();
 		multiply.SetSourceModule(0, ROUGHNESS);
@@ -223,7 +223,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 					}
 				}
 				final double minElevation = minSum / count;
-				final double smoothHeight = (maxSum / count - minElevation) / 2d;
+				final double smoothHeight = (maxSum / count - minElevation) / 2;
 				for (int yy = 0; yy < sizeY; yy++) {
 					double noiseValue = noise[xx][yy][zz] - 1 / smoothHeight * (y + yy - smoothHeight - minElevation);
 					if (noiseValue >= 0) {

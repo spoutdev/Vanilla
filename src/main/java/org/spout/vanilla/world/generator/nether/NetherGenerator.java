@@ -72,21 +72,21 @@ public class NetherGenerator extends VanillaSingleBiomeGenerator {
 	static {
 		ELEVATION.setFrequency(0.012);
 		ELEVATION.setLacunarity(1);
-		ELEVATION.setNoiseQuality(NoiseQuality.STANDARD);
+		ELEVATION.setNoiseQuality(NoiseQuality.BEST);
 		ELEVATION.setPersistence(0.7);
-		ELEVATION.setOctaveCount(1);
+		ELEVATION.setOctaveCount(2);
 
-		ROUGHNESS.setFrequency(0.0318);
+		ROUGHNESS.setFrequency(0.0218);
 		ROUGHNESS.setLacunarity(1);
-		ROUGHNESS.setNoiseQuality(NoiseQuality.STANDARD);
+		ROUGHNESS.setNoiseQuality(NoiseQuality.BEST);
 		ROUGHNESS.setPersistence(0.9);
-		ROUGHNESS.setOctaveCount(1);
+		ROUGHNESS.setOctaveCount(3);
 
-		DETAIL.setFrequency(0.042);
+		DETAIL.setFrequency(0.032);
 		DETAIL.setLacunarity(1);
-		DETAIL.setNoiseQuality(NoiseQuality.STANDARD);
+		DETAIL.setNoiseQuality(NoiseQuality.BEST);
 		DETAIL.setPersistence(0.7);
-		DETAIL.setOctaveCount(1);
+		DETAIL.setOctaveCount(5);
 
 		final Multiply multiply = new Multiply();
 		multiply.SetSourceModule(0, ROUGHNESS);
@@ -150,9 +150,9 @@ public class NetherGenerator extends VanillaSingleBiomeGenerator {
 					double value = noise[xx][yy][zz];
 					if (SMOOTH_HEIGHT > 0) {
 						if (yy + y < LOW_SMOOTH_START) {
-							value += (1 / (double) SMOOTH_HEIGHT) * (LOW_SMOOTH_START - yy - y);
-						} else if (yy + y >= HIGH_SMOOTH_START) {
-							value += (1 / (double) SMOOTH_HEIGHT) * (y + yy - HIGH_SMOOTH_START);
+							value += (1d / cubic(SMOOTH_HEIGHT)) * cubic(LOW_SMOOTH_START - yy - y);
+						} else if (yy + y > HIGH_SMOOTH_START) {
+							value += (1d / cubic(SMOOTH_HEIGHT)) * cubic(y + yy - HIGH_SMOOTH_START);
 						}
 					}
 					if (value >= 0) {
@@ -187,6 +187,10 @@ public class NetherGenerator extends VanillaSingleBiomeGenerator {
 				}
 			}
 		}
+	}
+
+	private static double cubic(double x) {
+		return x * x * x;
 	}
 
 	@Override

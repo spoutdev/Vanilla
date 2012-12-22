@@ -45,6 +45,8 @@ import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.event.entity.HumanAbilityChangeEvent;
+import org.spout.vanilla.event.player.network.PlayerAbilityUpdateEvent;
 import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
 import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
@@ -76,6 +78,18 @@ public class Human extends Living {
 			getOwner().get(TextModelComponent.class).setTranslation(new Vector3(0, 3f, 0));
 		}
 	}
+	
+	public boolean isAdventure() {
+		return getGameMode() == GameMode.ADVENTURE;
+	}
+
+	public boolean isCreative() {
+		return getGameMode() == GameMode.CREATIVE;
+	}
+
+	public boolean isSurvival() {
+		return getGameMode() == GameMode.SURVIVAL;
+	}
 
 	public boolean isOnGround() {
 		return getOwner().getData().get(VanillaData.IS_ON_GROUND);
@@ -83,14 +97,6 @@ public class Human extends Living {
 
 	public void setOnGround(boolean onGround) {
 		getOwner().getData().put(VanillaData.IS_ON_GROUND, onGround);
-	}
-
-	public boolean isFlying() {
-		return getOwner().getData().get(VanillaData.IS_FLYING);
-	}
-
-	public void setFlying(boolean isFlying) {
-		getOwner().getData().put(VanillaData.IS_FLYING, isFlying);
 	}
 
 	public boolean isSprinting() {
@@ -125,18 +131,6 @@ public class Human extends Living {
 		getOwner().getData().put(VanillaData.IS_JUMPING, isJumping);
 	}
 
-	public boolean isAdventure() {
-		return getGameMode() == GameMode.ADVENTURE;
-	}
-
-	public boolean isCreative() {
-		return getGameMode() == GameMode.CREATIVE;
-	}
-
-	public boolean isSurvival() {
-		return getGameMode() == GameMode.SURVIVAL;
-	}
-
 	public String getName() {
 		return getData().get(Data.NAME);
 	}
@@ -148,33 +142,8 @@ public class Human extends Living {
 		}
 	}
 
-	public GameMode getGameMode() {
-		return getData().get(VanillaData.GAMEMODE);
-	}
-
 	public boolean isOp() {
 		return getOwner() instanceof Player && VanillaConfiguration.OPS.isOp(getName());
-	}
-
-	public void setGamemode(GameMode mode, boolean updateClient) {
-		Entity holder = getOwner();
-		if (holder instanceof Player) {
-			if (PlayerGameModeChangedEvent.getHandlerList().getRegisteredListeners().length > 0) {
-				PlayerGameModeChangedEvent event = Spout.getEventManager().callEvent(new PlayerGameModeChangedEvent((Player) getOwner(), mode));
-				if (event.isCancelled()) {
-					return;
-				}
-				mode = event.getMode();
-			}
-		}
-		if (holder instanceof Player && updateClient) {
-			holder.getNetwork().callProtocolEvent(new PlayerGameStateEvent((Player) holder, PlayerGameStateMessage.CHANGE_GAME_MODE, mode), (Player) getOwner());
-		}
-		getData().put(VanillaData.GAMEMODE, mode);
-	}
-
-	public void setGamemode(GameMode mode) {
-		setGamemode(mode, true);
 	}
 
 	/**
@@ -204,5 +173,150 @@ public class Human extends Living {
 		ItemStack drop = current.clone().setAmount(1);
 		quickbar.addAmount(quickbar.getCurrentSlot(), -1);
 		dropItem(drop);
+	}
+
+	// Abilities
+	public void setFlying(boolean isFlying, boolean updateClient) {
+		Boolean previous = getOwner().getData().put(VanillaData.IS_FLYING, isFlying);
+		if (callAbilityChangeEvent().isCancelled()) {
+			getOwner().getData().put(VanillaData.IS_FLYING, previous);
+			return;
+		}
+		updateAbilities(updateClient);
+	}
+
+	public void setFlying(boolean isFlying) {
+		setFlying(isFlying, true);
+	}
+
+	public boolean isFlying() {
+		return getOwner().getData().get(VanillaData.IS_FLYING);
+	}
+
+	public void setFlyingSpeed(byte speed, boolean updateClient) {
+		Byte previous = getOwner().getData().put(VanillaData.FLYING_SPEED, speed);
+		if (callAbilityChangeEvent().isCancelled()) {
+			getOwner().getData().put(VanillaData.FLYING_SPEED, previous);
+			return;
+		}
+		updateAbilities(updateClient);
+	}
+
+	public void setFlyingSpeed(byte speed) {
+		setFlyingSpeed(speed, true);
+	}
+
+	public byte getFlyingSpeed() {
+		return getOwner().getData().get(VanillaData.FLYING_SPEED);
+	}
+
+	public void setWalkingSpeed(byte speed, boolean updateClient) {
+		Byte previous = getOwner().getData().put(VanillaData.WALKING_SPEED, speed);
+		if (callAbilityChangeEvent().isCancelled()) {
+			getOwner().getData().put(VanillaData.WALKING_SPEED, previous);
+			return;
+		}
+		updateAbilities(updateClient);
+	}
+
+	public void setWalkingSpeed(byte speed) {
+		setWalkingSpeed(speed, true);
+	}
+
+	public byte getWalkingSpeed() {
+		return getOwner().getData().get(VanillaData.WALKING_SPEED);
+	}
+
+	public void setCanFly(boolean canFly, boolean updateClient) {
+		Boolean previous = getOwner().getData().put(VanillaData.CAN_FLY, canFly);
+		if (callAbilityChangeEvent().isCancelled()) {
+			getOwner().getData().put(VanillaData.CAN_FLY, previous);
+			return;
+		}
+		updateAbilities(updateClient);
+	}
+
+	public void setCanFly(boolean canFly) {
+		setCanFly(canFly, true);
+	}
+
+	public boolean canFly() {
+		return getOwner().getData().get(VanillaData.CAN_FLY);
+	}
+
+	public void setGodMode(boolean godMode, boolean updateClient) {
+		Boolean previous = getOwner().getData().put(VanillaData.GOD_MODE, godMode);
+		if (callAbilityChangeEvent().isCancelled()) {
+			getOwner().getData().put(VanillaData.GOD_MODE, previous);
+			return;
+		}
+		updateAbilities(updateClient);
+	}
+
+	public void setGodMode(boolean godMode) {
+		setGodMode(godMode, true);
+	}
+
+	public boolean getGodMode() {
+		return getOwner().getData().get(VanillaData.GOD_MODE);
+	}
+
+	public void setCreativeMode(boolean creative, boolean updateClient) {
+		if (creative) {
+			setGamemode(GameMode.CREATIVE, updateClient);
+		} else {
+			setGamemode(GameMode.SURVIVAL, updateClient);
+		}
+	}
+
+	public void setCreativeMode(boolean creative) {
+		setCreativeMode(creative, true);
+	}
+
+	public void setGamemode(GameMode mode, boolean updateClient) {
+		boolean changeToFromCreative = getGameMode() == GameMode.CREATIVE;
+		Entity holder = getOwner();
+		if (holder instanceof Player) {
+			PlayerGameModeChangedEvent event = Spout.getEventManager().callEvent(new PlayerGameModeChangedEvent((Player) getOwner(), mode));
+			if (event.isCancelled()) {
+				return;
+			}
+			changeToFromCreative ^= event.getMode() == GameMode.CREATIVE;
+			GameMode old = getGameMode();
+			mode = event.getMode();
+			if (changeToFromCreative) {
+				if (callAbilityChangeEvent().isCancelled()) {
+					mode = old;
+				}
+			}
+			if (updateClient) {
+				holder.getNetwork().callProtocolEvent(new PlayerGameStateEvent((Player) holder, PlayerGameStateMessage.CHANGE_GAME_MODE, mode), (Player) getOwner());
+			}
+		}
+		getData().put(VanillaData.GAMEMODE, mode);
+	}
+
+	public void setGamemode(GameMode mode) {
+		setGamemode(mode, true);
+	}
+
+	public GameMode getGameMode() {
+		return getData().get(VanillaData.GAMEMODE);
+	}
+
+	public HumanAbilityChangeEvent callAbilityChangeEvent() {
+		return Spout.getEventManager().callEvent(new HumanAbilityChangeEvent(this));
+	}
+	
+	// This is here to eliminate repetitive code above
+	private void updateAbilities(boolean updateClient) {
+		if (!updateClient || !(getOwner() instanceof Player)) {
+			return;
+		}
+		((Player)getOwner()).getNetworkSynchronizer().callProtocolEvent(new PlayerAbilityUpdateEvent((Player) getOwner()));
+	}
+	
+	public void updateAbilities() {
+		updateAbilities(true);
 	}
 }

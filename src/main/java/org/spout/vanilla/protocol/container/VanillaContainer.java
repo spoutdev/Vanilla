@@ -68,10 +68,10 @@ public class VanillaContainer implements BlockContainer, LightContainer, BlockCo
 		short id = BlockFullState.getId(state);
 		short data = BlockFullState.getData(state);
 		if ((index & 1) == 0) {
-			material1 = BlockMaterial.get(id);
+			material1 = BlockMaterial.get(id, data);
 			nibbleStore = getMinecraftData(material1, data);
 		} else {
-			material2 = BlockMaterial.get(id);
+			material2 = BlockMaterial.get(id, data);
 			nibbleStore |= getMinecraftData(material2, data) << 4;
 			fullChunkData[index - 1] = (byte) (getMinecraftId(material1) & 0xFF);
 			fullChunkData[index] = (byte) (getMinecraftId(material2) & 0xFF);

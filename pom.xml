@@ -17,7 +17,7 @@
 		<currentYear>2012</currentYear>
 		<mainClass>org.spout.vanilla.VanillaPlugin</mainClass>
 		<spoutVersion>dev-SNAPSHOT</spoutVersion>
-		<protocolVersion>49</protocolVersion>
+		<protocolVersion>50</protocolVersion>
 		<buildNumber>0</buildNumber>
 	</properties>
 

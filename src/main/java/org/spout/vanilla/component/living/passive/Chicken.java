@@ -31,6 +31,7 @@ import java.util.Random;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.living.Passive;
@@ -44,7 +45,6 @@ import org.spout.vanilla.protocol.entity.creature.CreatureType;
  * A component that identifies the entity as a Chicken.
  */
 public class Chicken extends Living implements Passive {
-
 	// Chicken lay eggs every 5-10 minutes.
 	public static final int MINIMUM_EGG_BREEDING_TIME = 300;
 

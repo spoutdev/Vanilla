@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.material.item.misc;
 
+import com.bulletphysics.collision.shapes.SphereShape;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
@@ -33,8 +35,6 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.substance.object.projectile.Snowball;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
-
-import com.bulletphysics.collision.shapes.SphereShape;
 
 public class SnowballItem extends VanillaItemMaterial {
 	public SnowballItem(String name, int id) {

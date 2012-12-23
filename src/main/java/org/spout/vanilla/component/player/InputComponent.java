@@ -27,9 +27,9 @@
 package org.spout.vanilla.component.player;
 
 import org.spout.api.Spout;
-import org.spout.api.component.implementation.CameraComponent;
+import org.spout.api.component.impl.CameraComponent;
+import org.spout.api.component.impl.TransformComponent;
 import org.spout.api.component.type.EntityComponent;
-import org.spout.api.component.implementation.TransformComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.entity.state.PlayerInputState;
 import org.spout.api.geo.discrete.Transform;
@@ -38,26 +38,25 @@ import org.spout.api.math.Vector3;
 import org.spout.api.plugin.Platform;
 
 public class InputComponent extends EntityComponent {
-
 	private Player player;
 	private CameraComponent camera;
 
 	@Override
-	public void onAttached(){
-		if(Spout.getPlatform() != Platform.CLIENT){
+	public void onAttached() {
+		if (Spout.getPlatform() != Platform.CLIENT) {
 			throw new IllegalStateException("InputComponent is only for client");
 		}
 
-		if(!(getOwner() instanceof Player)){
+		if (!(getOwner() instanceof Player)) {
 			throw new IllegalStateException("InputComponent is only for player");
 		}
 
 		player = (Player) getOwner();
-		camera = (CameraComponent)player.get(CameraComponent.class);
+		camera = (CameraComponent) player.get(CameraComponent.class);
 	}
 
 	@Override
-	public void onTick(float dt){
+	public void onTick(float dt) {
 		PlayerInputState inputState = player.input();
 		TransformComponent tc = player.getTransform();
 		Transform ts = tc.getTransformLive();
@@ -83,5 +82,4 @@ public class InputComponent extends EntityComponent {
 		}
 		tc.translateAndSetRotation(offset, MathHelper.rotation(inputState.pitch(), inputState.yaw(), ts.getRotation().getRoll()));
 	}
-
 }

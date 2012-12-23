@@ -33,6 +33,7 @@ import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.component.living.hostile.Blaze;
 import org.spout.vanilla.component.living.hostile.CaveSpider;
 import org.spout.vanilla.component.living.hostile.Creeper;
@@ -64,22 +65,21 @@ public class SpawnEgg extends VanillaItemMaterial {
 	public static final SpawnEgg ZOMBIE = new SpawnEgg("Spawn Zombie", 54, Zombie.class, PARENT);
 	public static final SpawnEgg SLIME = new SpawnEgg("Spawn Slime", 55, Slime.class, PARENT);
 	public static final SpawnEgg GHAST = new SpawnEgg("Spawn Ghast", 56, Ghast.class, PARENT);
-	public static final SpawnEgg PIGMAN = new SpawnEgg("Spawn Pigman", 57,PigZombie.class, PARENT);
+	public static final SpawnEgg PIGMAN = new SpawnEgg("Spawn Pigman", 57, PigZombie.class, PARENT);
 	public static final SpawnEgg ENDERMAN = new SpawnEgg("Spawn Enderman", 58, Enderman.class, PARENT);
 	public static final SpawnEgg CAVESPIDER = new SpawnEgg("Spawn Cavespider", 59, CaveSpider.class, PARENT);
 	public static final SpawnEgg SILVERFISH = new SpawnEgg("Spawn Silverfish", 60, Silverfish.class, PARENT);
 	public static final SpawnEgg BLAZE = new SpawnEgg("Spawn Blaze", 61, Blaze.class, PARENT);
-	public static final SpawnEgg MAGMACUBE = new SpawnEgg("Spawn Magmacube", 62,MagmaCube.class, PARENT);
+	public static final SpawnEgg MAGMACUBE = new SpawnEgg("Spawn Magmacube", 62, MagmaCube.class, PARENT);
 	public static final SpawnEgg PIG = new SpawnEgg("Spawn Pig", 90, Pig.class, PARENT);
 	public static final SpawnEgg SHEEP = new SpawnEgg("Spawn Sheep", 91, Sheep.class, PARENT);
 	public static final SpawnEgg COW = new SpawnEgg("Spawn Cow", 92, Cow.class, PARENT);
 	public static final SpawnEgg CHICKEN = new SpawnEgg("Spawn Chicken", 93, Chicken.class, PARENT);
-	public static final SpawnEgg SQUID = new SpawnEgg("Spawn Squid", 94,Squid.class, PARENT);
-	public static final SpawnEgg WOLF = new SpawnEgg("Spawn Wolf", 95,Wolf.class, PARENT);
+	public static final SpawnEgg SQUID = new SpawnEgg("Spawn Squid", 94, Squid.class, PARENT);
+	public static final SpawnEgg WOLF = new SpawnEgg("Spawn Wolf", 95, Wolf.class, PARENT);
 	public static final SpawnEgg MOOSHROOM = new SpawnEgg("Spawn Mooshroom", 96, MooshroomCow.class, PARENT);
 	public static final SpawnEgg VILLAGER = new SpawnEgg("Spawn Villager", 120, Villager.class, PARENT);
 	public static final SpawnEgg OCELOT = new SpawnEgg("Spawn Ocelot", 98, Ocelot.class, PARENT);
-
 	private Class<? extends Component> entityComponent;
 
 	private SpawnEgg(String name) {

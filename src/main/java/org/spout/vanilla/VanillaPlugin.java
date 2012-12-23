@@ -38,8 +38,8 @@ import org.spout.api.command.CommandRegistrationsFactory;
 import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
 import org.spout.api.command.annotated.SimpleInjector;
-import org.spout.api.component.implementation.NetworkComponent;
-import org.spout.api.component.implementation.ObserverComponent;
+import org.spout.api.component.impl.NetworkComponent;
+import org.spout.api.component.impl.ObserverComponent;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
@@ -97,7 +97,6 @@ public class VanillaPlugin extends CommonPlugin {
 	private static VanillaPlugin instance;
 	private Engine engine;
 	private VanillaConfiguration config;
-	
 	private RemoteConnectionCore rcon;
 
 	@Override
@@ -135,12 +134,11 @@ public class VanillaPlugin extends CommonPlugin {
 		if (engine.debugMode() || engine.getPlatform() == Platform.SERVER) {
 			//Worlds
 			setupWorlds();
-			
 		}
-		if(Spout.getPlatform() == Platform.CLIENT) {
+		if (Spout.getPlatform() == Platform.CLIENT) {
 			System.out.println("Loading Skydome");
-			
-			Model m = (Model)Spout.getFilesystem().getResource("model://Spout/models/defaultskydome.spm");
+
+			Model m = (Model) Spout.getFilesystem().getResource("model://Spout/models/defaultskydome.spm");
 			System.out.println("Loaded Skydome");
 			Spout.getEngine().getWorld("world").getDataMap().put("Skydome", m);
 		}
@@ -240,25 +238,25 @@ public class VanillaPlugin extends CommonPlugin {
 				int cx = point.getBlockX() >> Chunk.BLOCKS.BITS;
 				int cy = point.getBlockY() >> Chunk.BLOCKS.BITS;
 				int cz = point.getBlockZ() >> Chunk.BLOCKS.BITS;
-	
+
 				((VanillaProtectionService) engine.getServiceManager().getRegistration(ProtectionService.class).getProvider()).addProtection(new SpawnProtection(world.getName() + " Spawn Protection", world, point, protectionRadius));
-	
+
 				final String initChunkType = world.getAge() <= 0 ? "Generating" : "Loading";
-	
+
 				for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
 					loaderThreads[i] = new SpawnLoaderThread(total, progressStep, initChunkType);
 				}
-	
+
 				oi.reset(cx, cy, cz, radius);
 				while (oi.hasNext()) {
 					IntVector3 v = oi.next();
 					SpawnLoaderThread.addChunk(world, v.getX(), v.getY(), v.getZ());
 				}
-	
+
 				for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
 					loaderThreads[i].start();
 				}
-	
+
 				for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
 					try {
 						loaderThreads[i].join();

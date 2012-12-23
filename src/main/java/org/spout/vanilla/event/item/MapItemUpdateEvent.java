@@ -31,23 +31,22 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 public class MapItemUpdateEvent extends Event implements ProtocolEvent {
-	
 	private final int x;
 	private final int y;
 	private final int itemData;
 	private final byte[] data;
-	
+
 	public MapItemUpdateEvent(int x, int y, int itemData, byte[] data) {
 		this.x = x;
 		this.y = y;
 		this.data = data;
 		this.itemData = itemData;
 	}
-	
+
 	public int getX() {
 		return x;
 	}
-	
+
 	public int getY() {
 		return y;
 	}
@@ -55,13 +54,13 @@ public class MapItemUpdateEvent extends Event implements ProtocolEvent {
 	public int getItemData() {
 		return itemData;
 	}
-	
+
 	public byte[] getData() {
 		return data;
 	}
-	
+
 	private static HandlerList handlers = new HandlerList();
-	
+
 	@Override
 	public HandlerList getHandlers() {
 		return handlers;
@@ -70,5 +69,4 @@ public class MapItemUpdateEvent extends Event implements ProtocolEvent {
 	public static HandlerList getHandlerList() {
 		return handlers;
 	}
-
 }

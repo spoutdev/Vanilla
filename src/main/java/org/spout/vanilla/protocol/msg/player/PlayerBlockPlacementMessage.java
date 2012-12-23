@@ -78,7 +78,7 @@ public final class PlayerBlockPlacementMessage extends VanillaMainChannelMessage
 	public Vector3 getFace() {
 		return this.face;
 	}
-	
+
 	public PlayerBlockPlacementMessage convert(RepositionManager rm) {
 		return new PlayerBlockPlacementMessage(getX(), getY(), getZ(), getDirection(), getFace(), getHeldItem(), rm);
 	}

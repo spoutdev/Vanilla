@@ -34,7 +34,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.inventory.player.PlayerArmorInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
 

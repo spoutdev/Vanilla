@@ -47,7 +47,6 @@ public final class WorldConfigurationNode extends ConfigurationHolderConfigurati
 	public final ConfigurationHolder MIN_Y = new ConfigurationHolder(32, "min-y");
 	public final ConfigurationHolder MAX_Y = new ConfigurationHolder(224, "max-y");
 	public final ConfigurationHolder STEP_Y = new ConfigurationHolder(160, "step-y");
-
 	private final String name;
 	private final WorldConfiguration parent;
 

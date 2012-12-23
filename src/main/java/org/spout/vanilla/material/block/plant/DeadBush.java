@@ -58,6 +58,7 @@ public class DeadBush extends GroundAttachable implements Plant {
 	protected DeadBush(String name, short data, String model) {
 		super(data, name, 31, model);
 	}
+
 	protected DeadBush(String name, int data, TallGrass parent, String model) {
 		super(name, 31, data, parent, model);
 	}

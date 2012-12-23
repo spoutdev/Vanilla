@@ -30,6 +30,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntitySpawnEvent;
 import org.spout.api.geo.discrete.Point;
+
 import org.spout.vanilla.event.cause.LivingSpawnCause;
 
 /**
@@ -38,17 +39,17 @@ import org.spout.vanilla.event.cause.LivingSpawnCause;
 public class LivingSpawnEvent extends EntitySpawnEvent {
 	private static HandlerList handlers = new HandlerList();
 	private final LivingSpawnCause cause;
-	
+
 	public LivingSpawnEvent(Entity e, Point point) {
 		super(e, point);
 		this.cause = LivingSpawnCause.UNKNOWN;
 	}
-	
+
 	public LivingSpawnEvent(Entity e, Point point, LivingSpawnCause cause) {
 		super(e, point);
 		this.cause = cause;
 	}
-	
+
 	/**
 	 * Gets the {@link LivingSpawnCause} of this spawn.
 	 * @return cause

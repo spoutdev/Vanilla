@@ -26,12 +26,12 @@
  */
 package org.spout.vanilla.protocol.handler.player;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
+
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.player.PingComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;

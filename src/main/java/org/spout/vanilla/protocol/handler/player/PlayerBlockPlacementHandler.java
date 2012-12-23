@@ -44,11 +44,11 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector3;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
+
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.misc.HeadComponent;
@@ -82,7 +82,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		RepositionManager rmInverse = rm.getInverse();
 		message = message.convert(rmInverse);
 		Spout.getLogger().info("Placement converted: " + message);
-		
+
 		EventManager eventManager = session.getEngine().getEventManager();
 		World world = player.getWorld();
 		PlayerQuickbar currentSlot = player.get(PlayerInventory.class).getQuickbar();
@@ -116,14 +116,14 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 			//This is an anti-hack requirement (else hackers can load far-away chunks and crash the server)
 
 			//Get clicked block and validated face against it was placed
-			
+
 			Block clickedBlock = world.getBlock(message.getX(), message.getY(), message.getZ());
-			
+
 			// TODO - maybe add actual limits
 			/*if (clickedBlock.getY() >= world.getHeight() || clickedBlock.getY() < 0) {
 				return;
 			}*/
-			
+
 			//Perform interaction event
 			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), currentSlot.getCurrentItem(), Action.RIGHT_CLICK, false, clickedFace));
 

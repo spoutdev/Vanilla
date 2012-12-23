@@ -33,12 +33,11 @@ import org.spout.api.render.effect.SnapshotRender;
 
 public class LiquidRenderEffect implements RenderEffect {
 	private static final float size = 1.0f / 16.0f;
-
 	private static final float freqX = 0.05f;
 	private static final float amplX = 0.3f;
 	private static final float freqY = 0.31f;
 	private static final float amplY = 0.3f;
-	
+
 	@Override
 	public void preRender(SnapshotRender snapshotRender) {
 		float x = (float) (MathHelper.mod(2.0 * MathHelper.PI * freqX / 1000.0 * System.currentTimeMillis(), 2.0f * MathHelper.PI) - MathHelper.PI);

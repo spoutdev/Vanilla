@@ -49,6 +49,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.flag.Flag;
+
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.misc.DiggingComponent;
@@ -90,7 +91,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		Player player = session.getPlayer();
 		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
 		RepositionManager rmInverse = rm.getInverse();
-		
+
 		int x = rmInverse.convertX(message.getX());
 		int y = rmInverse.convertY(message.getY());
 		int z = rmInverse.convertZ(message.getZ());

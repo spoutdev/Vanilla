@@ -50,7 +50,7 @@ public class Food extends VanillaItemMaterial {
 		if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 			HungerComponent hunger = entity.get(HungerComponent.class);
 			for (FoodEffect effect : getEffectType()) {
-				switch(effect.getEffect()) {
+				switch (effect.getEffect()) {
 					case HEALTH_REGENERATION:
 						//TODO: Need potions implemented to work.
 						break;

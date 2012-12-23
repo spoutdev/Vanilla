@@ -30,6 +30,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
 import org.spout.api.exception.InvalidControllerException;
+
 import org.spout.vanilla.component.substance.object.projectile.XPBottle;
 
 /**
@@ -49,11 +50,11 @@ public class XPBottleEvent extends ProjectileHitEvent {
 		this.experience = experience;
 		this.showEffect = showEffect;
 	}
-	
+
 	public XPBottleEvent(Entity e, Cause<?> cause, int experience) {
 		this(e, cause, experience, true);
 	}
-	
+
 	/**
 	 * Gets the amount of experience to be dropped by this
 	 * Bottle o' Enchanting breaking.
@@ -62,7 +63,7 @@ public class XPBottleEvent extends ProjectileHitEvent {
 	public int getExperience() {
 		return experience;
 	}
-	
+
 	/**
 	 * Sets the amount of experience to be dropped by this
 	 * Bottle o' Enchanting breaking.
@@ -71,7 +72,7 @@ public class XPBottleEvent extends ProjectileHitEvent {
 	public void setExperience(int experience) {
 		this.experience = experience;
 	}
-	
+
 	/**
 	 * Tells whether the particle effect will be shown when this
 	 * Bottle o' Enchanting breaks.
@@ -80,7 +81,7 @@ public class XPBottleEvent extends ProjectileHitEvent {
 	public boolean isEffectShown() {
 		return showEffect;
 	}
-	
+
 	/**
 	 * Sets whether the particle effect will be shown when this
 	 * Bottle o' Enchanting breaks.
@@ -89,7 +90,7 @@ public class XPBottleEvent extends ProjectileHitEvent {
 	public void setEffectShown(boolean showEffect) {
 		this.showEffect = showEffect;
 	}
-	
+
 	@Override
 	public void setCancelled(boolean cancelled) {
 		super.setCancelled(cancelled);

@@ -43,7 +43,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 		super(e);
 		this.cause = cause;
 	}
-	
+
 	public EntityTargetEvent(Entity e, TargetCause cause, Entity target) {
 		this(e, cause);
 		this.target = target;
@@ -64,7 +64,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 	public void setCause(TargetCause cause) {
 		this.cause = cause;
 	}
-	
+
 	/**
 	 * Gets the new target.
 	 * @return target or null

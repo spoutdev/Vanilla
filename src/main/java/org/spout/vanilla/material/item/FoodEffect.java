@@ -34,7 +34,7 @@ public class FoodEffect {
 		this.effect = effect;
 		this.change = change;
 	}
-	
+
 	public FoodEffects getEffect() {
 		return effect;
 	}

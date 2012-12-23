@@ -29,7 +29,6 @@ package org.spout.vanilla.component.substance.object.projectile;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 
-
 public class Potion extends EntityComponent implements Projectile {
 	private Entity shooter;
 

@@ -27,9 +27,11 @@
 package org.spout.vanilla.protocol.msg.entity.pos;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
+
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class EntityTeleportMessage extends EntityMessage {

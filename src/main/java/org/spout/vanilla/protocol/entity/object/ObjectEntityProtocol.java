@@ -32,6 +32,7 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
+
 import org.spout.vanilla.protocol.entity.BasicEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;

@@ -28,7 +28,7 @@ package org.spout.vanilla.component.living.neutral;
 
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
-import org.spout.api.component.implementation.TextModelComponent;
+import org.spout.api.component.impl.TextModelComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -46,8 +46,8 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.entity.HumanAbilityChangeEvent;
-import org.spout.vanilla.event.player.network.PlayerAbilityUpdateEvent;
 import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
+import org.spout.vanilla.event.player.network.PlayerAbilityUpdateEvent;
 import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.protocol.entity.HumanEntityProtocol;
@@ -67,9 +67,9 @@ public class Human extends Living {
 		holder.add(DiggingComponent.class);
 		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
 		//Add height offset if loading from disk
-//		if (holder instanceof Player) {
-//			((Player) holder).teleport(holder.getTransform().getPosition().add(0, 1.85F, 0));
-//		}
+		//		if (holder instanceof Player) {
+		//			((Player) holder).teleport(holder.getTransform().getPosition().add(0, 1.85F, 0));
+		//		}
 		if (getAttachedCount() < 1) {
 			holder.add(HealthComponent.class).setSpawnHealth(SPAWN_HEALTH);
 		}
@@ -78,7 +78,7 @@ public class Human extends Living {
 			getOwner().get(TextModelComponent.class).setTranslation(new Vector3(0, 3f, 0));
 		}
 	}
-	
+
 	public boolean isAdventure() {
 		return getGameMode() == GameMode.ADVENTURE;
 	}
@@ -106,7 +106,7 @@ public class Human extends Living {
 	public void setSprinting(boolean isSprinting) {
 		getOwner().getData().put(VanillaData.IS_SPRINTING, isSprinting);
 	}
-	
+
 	public boolean isSneaking() {
 		return getOwner().getData().get(VanillaData.IS_SNEAKING);
 	}
@@ -307,15 +307,15 @@ public class Human extends Living {
 	public HumanAbilityChangeEvent callAbilityChangeEvent() {
 		return Spout.getEventManager().callEvent(new HumanAbilityChangeEvent(this));
 	}
-	
+
 	// This is here to eliminate repetitive code above
 	private void updateAbilities(boolean updateClient) {
 		if (!updateClient || !(getOwner() instanceof Player)) {
 			return;
 		}
-		((Player)getOwner()).getNetworkSynchronizer().callProtocolEvent(new PlayerAbilityUpdateEvent((Player) getOwner()));
+		((Player) getOwner()).getNetworkSynchronizer().callProtocolEvent(new PlayerAbilityUpdateEvent((Player) getOwner()));
 	}
-	
+
 	public void updateAbilities() {
 		updateAbilities(true);
 	}

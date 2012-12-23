@@ -34,12 +34,13 @@ import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
+
 import org.spout.vanilla.component.substance.object.FallingBlock;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
 
-public class FallingBlockProtocol extends ObjectEntityProtocol{
+public class FallingBlockProtocol extends ObjectEntityProtocol {
 	public FallingBlockProtocol(ObjectType type) {
 		super(type);
 	}
@@ -51,14 +52,14 @@ public class FallingBlockProtocol extends ObjectEntityProtocol{
 			VanillaBlockMaterial material = block.getMaterial();
 			int messageData = material.getMinecraftId() | (material.getMinecraftData(material.getData()) >> 16);
 			List<Message> messages = new ArrayList<Message>();
-			
+
 			final double p = 32d;
 			Point pos = entity.getTransform().getPosition();
 			int x = (int) Math.floor(pos.getX() * p);
 			int y = (int) Math.floor(pos.getY() * p);
 			int z = (int) Math.floor(pos.getZ() * p);
 			short fallSpeed = (short) (block.getFallingSpeed() * 8000d);
-			messages.add(new EntityObjectMessage(entity.getId(), (byte) typeId, x, y, z, messageData, (short)0, fallSpeed, (short)0, rm));
+			messages.add(new EntityObjectMessage(entity.getId(), (byte) typeId, x, y, z, messageData, (short) 0, fallSpeed, (short) 0, rm));
 			messages.add(new EntityMetadataMessage(entity.getId(), getSpawnParameters(entity)));
 			return messages;
 		} else {

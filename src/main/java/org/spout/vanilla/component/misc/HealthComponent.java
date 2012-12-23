@@ -44,8 +44,8 @@ import org.spout.api.math.Rectangle;
 import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.Animation;
-import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.event.cause.DamageCause;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.event.cause.HealCause;
@@ -373,7 +373,7 @@ public class HealthComponent extends EntityComponent {
 	public void damage(int amount, DamageCause<?> cause, boolean sendHurtMessage) {
 		Cause<?> eventCause;
 		if (cause instanceof Cause<?>) {
-			eventCause = (Cause<?>)cause;
+			eventCause = (Cause<?>) cause;
 		} else {
 			eventCause = new NullDamageCause(cause.getType());
 		}

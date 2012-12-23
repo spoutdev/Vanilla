@@ -37,7 +37,7 @@ import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.CommandPermissions;
 import org.spout.api.component.Component;
-import org.spout.api.component.implementation.HitBlockComponent;
+import org.spout.api.component.impl.HitBlockComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityPrefab;
 import org.spout.api.entity.Player;
@@ -55,6 +55,7 @@ import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.util.BlockIterator;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.inventory.WindowHolder;
@@ -99,11 +100,10 @@ public class TestCommands {
 	public TestCommands(VanillaPlugin instance) {
 		plugin = instance;
 	}
-	
 
 	// TODO - There needs to be a method that guarantees unique data values on a per-server basis
 	private int mapId = 1;
-	
+
 	@Command(aliases = "map", usage = "", desc = "Creates a map")
 	@CommandPermissions("vanilla.command.debug")
 	public void map(CommandContext args, CommandSource source) throws CommandException {
@@ -116,7 +116,7 @@ public class TestCommands {
 		ItemStack i = new ItemStack(VanillaMaterials.MAP, ++mapId, 1);
 		p.get(PlayerInventory.class).add(i);
 	}
-	
+
 	@Command(aliases = "mapdraw", usage = "<bx> <by> <tx> <ty> <col>", desc = "Draws a rectangle on the current map.  The top nibble for col is the colour and the bottom nibble is the brightness")
 	@CommandPermissions("vanilla.command.debug")
 	public void mapDraw(CommandContext args, CommandSource source) throws CommandException {
@@ -158,7 +158,7 @@ public class TestCommands {
 			p.getNetworkSynchronizer().callProtocolEvent(e);
 		}
 	}
-	
+
 	@Command(aliases = "mapflood", usage = "<bx> <by> <tx> <ty> <col>", desc = "Floods the current map with the given color")
 	@CommandPermissions("vanilla.command.debug")
 	public void mapFlood(CommandContext args, CommandSource source) throws CommandException {
@@ -178,7 +178,7 @@ public class TestCommands {
 			p.getNetworkSynchronizer().callProtocolEvent(e);
 		}
 	}
-	
+
 	@Command(aliases = "respawn", usage = "", desc = "Forces the client to respawn")
 	@CommandPermissions("vanilla.command.debug")
 	public void respawn(CommandContext args, CommandSource source) throws CommandException {
@@ -189,7 +189,7 @@ public class TestCommands {
 		}
 		((Player) source).getNetworkSynchronizer().setRespawned();
 	}
-	
+
 	@Command(aliases = "sun", usage = "<x> <y> <z>", desc = "Sets the sun direction.")
 	@CommandPermissions("vanilla.command.debug")
 	public void setSunDirection(CommandContext args, CommandSource source) throws CommandException {
@@ -249,7 +249,7 @@ public class TestCommands {
 			throw new CommandException("You must be a player reset position!");
 		}
 		Player player = (Player) source;
-		((VanillaNetworkSynchronizer)player.getNetworkSynchronizer()).sendPosition();
+		((VanillaNetworkSynchronizer) player.getNetworkSynchronizer()).sendPosition();
 	}
 
 	@Command(aliases = "torch", desc = "Place a torch.")

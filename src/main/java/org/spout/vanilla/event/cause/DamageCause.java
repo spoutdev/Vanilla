@@ -29,7 +29,7 @@ package org.spout.vanilla.event.cause;
 /**
  * Represents the cause of damage.
  */
-public interface DamageCause<T>{
+public interface DamageCause<T> {
 	/**
 	 * Represents the different types of damage causes.
 	 */
@@ -95,7 +95,7 @@ public interface DamageCause<T>{
 		 * Damaged due to the wither effect.
 		 */
 		WITHERED;
-		
+
 		public boolean equals(DamageType... types) {
 			for (DamageType type : types) {
 				if (equals(type)) {

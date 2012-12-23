@@ -223,6 +223,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 		private final static int LOG_SCAN_RADIUS = 2;
 		private final Set<Block> blocks = new HashSet<Block>(SCAN_RADIUS * SCAN_RADIUS * SCAN_RADIUS);
 		private final Region r;
+
 		public LeafDecayTask(Block b) {
 			this.r = b.getRegion();
 			for (int dx = -SCAN_RADIUS; dx < SCAN_RADIUS; dx++) {

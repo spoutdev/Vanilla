@@ -40,8 +40,8 @@ import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
 
 import org.spout.vanilla.component.player.HUDComponent;
-import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.event.cause.BlockDamageCause;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.material.VanillaMaterials;

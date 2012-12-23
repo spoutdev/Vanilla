@@ -30,19 +30,19 @@ import org.spout.vanilla.material.item.Enchantable;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class EnchantedBook extends VanillaItemMaterial implements Enchantable {
-    private int enchantability;
+	private int enchantability;
 
-    public EnchantedBook(String name, int id) {
-        super(name, id, null);
-    }
+	public EnchantedBook(String name, int id) {
+		super(name, id, null);
+	}
 
-    @Override
-    public int getEnchantability() {
-        return enchantability;
-    }
+	@Override
+	public int getEnchantability() {
+		return enchantability;
+	}
 
-    @Override
-    public void setEnchantability(int enchantability) {
-        this.enchantability = enchantability;
-    }
+	@Override
+	public void setEnchantability(int enchantability) {
+		this.enchantability = enchantability;
+	}
 }

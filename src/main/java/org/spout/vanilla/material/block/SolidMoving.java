@@ -65,9 +65,10 @@ public class SolidMoving extends Solid {
 			block.getChunk().getRegion().getTaskManager().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), new DelayedBlockSet(block));
 		}
 	}
-	
+
 	private static class DelayedBlockSet implements Runnable {
 		final Block block;
+
 		public DelayedBlockSet(Block block) {
 			this.block = block;
 		}

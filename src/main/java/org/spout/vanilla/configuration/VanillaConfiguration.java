@@ -46,12 +46,10 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	public static final ConfigurationHolder SPAWN_PROTECTION_RADIUS = new ConfigurationHolder(10, "general", "spawn-protection-radius");
 	public static final ConfigurationHolder CHUNK_INIT = new ConfigurationHolder("client", "general", "chunk-init");
 	public static final ConfigurationHolder HARDCORE_MODE = new ConfigurationHolder(false, "general", "hardcore-mode");
-	
 	// Messages
 	public static final ConfigurationHolder MOTD = new ConfigurationHolder("A Spout Server", "message", "motd");
 	public static final ConfigurationHolder OUTDATED_SERVER_MESSAGE = new ConfigurationHolder("Outdated server!", "message", "outdated-server");
 	public static final ConfigurationHolder OUTDATED_CLIENT_MESSAGE = new ConfigurationHolder("Outdated client!", "message", "outdated-client");
-	
 	// Physics
 	public static final ConfigurationHolder GRAVEL_PHYSICS = new ConfigurationHolder(true, "physics", "gravel");
 	public static final ConfigurationHolder FIRE_PHYSICS = new ConfigurationHolder(true, "physics", "fire");

@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.component.living;
 
+import org.spout.api.component.impl.PhysicsComponent;
 import org.spout.api.component.type.EntityComponent;
-import org.spout.api.component.implementation.PhysicsComponent;
 import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.component.misc.DrowningComponent;

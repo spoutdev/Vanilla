@@ -76,7 +76,7 @@ public class EntityDamageEvent extends EntityHealthChangeEvent {
 	 */
 	public DamageType getDamageType() {
 		if (cause instanceof DamageCause) {
-			return ((DamageCause<?>)cause).getType();
+			return ((DamageCause<?>) cause).getType();
 		}
 		return DamageType.UNKNOWN;
 	}

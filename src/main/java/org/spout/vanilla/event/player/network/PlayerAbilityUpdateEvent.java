@@ -30,20 +30,19 @@ import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.protocol.event.ProtocolEvent;
+
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.data.GameMode;
 
 public class PlayerAbilityUpdateEvent extends PlayerEvent implements ProtocolEvent {
-	
 	private static HandlerList handlers = new HandlerList();
-
 	private final byte flyingSpeed;
 	private final byte walkingSpeed;
 	private final boolean godMode;
 	private final boolean isFlying;
 	private final boolean canFly;
 	private final boolean creativeMode;
-	
+
 	public PlayerAbilityUpdateEvent(Player player) {
 		super(player);
 		if (!player.has(Human.class)) {
@@ -57,7 +56,7 @@ public class PlayerAbilityUpdateEvent extends PlayerEvent implements ProtocolEve
 		canFly = human.canFly();
 		creativeMode = human.getGameMode() == GameMode.CREATIVE;
 	}
-	
+
 	public byte getFlyingSpeed() {
 		return flyingSpeed;
 	}

@@ -32,6 +32,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.MathHelper;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.protocol.entity.object.FallingBlockProtocol;
@@ -69,7 +70,7 @@ public class FallingBlock extends EntityComponent {
 			//Find a place for the block
 			BlockMaterial above = pos.getWorld().getBlockMaterial(x, y - fallAmt + 1, z);
 			if (!isObstacle(above)) {
-				pos.getWorld().setBlockMaterial(x, y - fallAmt + 1,z, getMaterial(), getMaterial().getData(), getMaterial().toCause(pos));
+				pos.getWorld().setBlockMaterial(x, y - fallAmt + 1, z, getMaterial(), getMaterial().getData(), getMaterial().toCause(pos));
 				this.getOwner().remove();
 				break;
 			} else {
@@ -96,7 +97,7 @@ public class FallingBlock extends EntityComponent {
 			return false;
 		}
 		if (material instanceof VanillaBlockMaterial) {
-			VanillaBlockMaterial vbm = (VanillaBlockMaterial)material;
+			VanillaBlockMaterial vbm = (VanillaBlockMaterial) material;
 			if (!vbm.isPlacementObstacle()) {
 				return false;
 			}

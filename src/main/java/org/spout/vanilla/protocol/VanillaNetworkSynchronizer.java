@@ -26,15 +26,13 @@
  */
 package org.spout.vanilla.protocol;
 
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
-import gnu.trove.set.TIntSet;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
+import gnu.trove.set.TIntSet;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -60,6 +58,7 @@ import org.spout.api.util.hashing.IntPairHashed;
 import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
 import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.neutral.Human;
@@ -136,6 +135,9 @@ import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 import org.spout.vanilla.protocol.reposition.VanillaRepositionManager;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
+
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
 	private static final int SOLID_BLOCK_ID = 1; // Initializer block ID
@@ -296,13 +298,13 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	public Collection<Chunk> sendChunk(Chunk c) {
-		
+
 		int x = c.getX();
 		int y = c.getY();// + SEALEVEL_CHUNK;
 		int z = c.getZ();
-		
+
 		RepositionManager rm = getRepositionManager();
-		
+
 		int cY = rm.convertChunkY(y);
 
 		if (cY < 0 || cY >= c.getWorld().getHeight() >> Chunk.BLOCKS.BITS) {
@@ -375,14 +377,14 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@Override
 	protected void worldChanged(World world) {
 		WorldConfigurationNode node = VanillaConfiguration.WORLDS.get(world);
-		
+
 		maxY = node.MAX_Y.getInt() & (~Chunk.BLOCKS.MASK);
 		minY = node.MIN_Y.getInt() & (~Chunk.BLOCKS.MASK);
 		stepY = node.STEP_Y.getInt() & (~Chunk.BLOCKS.MASK);
 		lowY = maxY - stepY;
 		highY = minY + stepY;
 		lastY = Integer.MAX_VALUE;
-		
+
 		GameMode gamemode = world.getComponentHolder().getData().get(VanillaData.GAMEMODE);
 		Difficulty difficulty = world.getComponentHolder().getData().get(VanillaData.DIFFICULTY);
 		Dimension dimension = world.getComponentHolder().getData().get(VanillaData.DIMENSION);
@@ -414,9 +416,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());
 		player.getSession().send(false, SPMsg);
 		session.send(false, new PlayerHeldItemChangeMessage(session.getPlayer().add(PlayerInventory.class).getQuickbar().getCurrentSlot()));
-		
 	}
-	
+
 	@Override
 	protected void resetChunks() {
 		super.resetChunks();
@@ -426,7 +427,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 
 	private int lastY = Integer.MIN_VALUE;
-	
+
 	@Override
 	public void finalizeTick() {
 		Point currentPosition = player.getTransform().getPosition();
@@ -455,10 +456,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				setRespawned();
 			}
 		}
-		
+
 		super.finalizeTick();
 	}
-	
+
 	@Override
 	public void preSnapshot() {
 		super.preSnapshot();
@@ -509,12 +510,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			}
 		}
 	}
-	
+
 	@EventHandler
 	public Message onMapItemUpdate(MapItemUpdateEvent event) {
 		return new EntityItemDataMessage(VanillaMaterials.MAP, (short) event.getItemData(), event.getData());
 	}
-	
+
 	@EventHandler
 	public Message onPlayerAbilityUpdate(PlayerAbilityUpdateEvent event) {
 		return new PlayerAbilityMessage(event.getGodMode(), event.isFlying(), event.canFly(), event.isCreativeMode(), event.getFlyingSpeed(), event.getWalkingSpeed());

@@ -28,7 +28,7 @@ package org.spout.vanilla;
 
 import org.spout.api.Client;
 import org.spout.api.Spout;
-import org.spout.api.component.implementation.CameraComponent;
+import org.spout.api.component.impl.CameraComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
@@ -40,6 +40,7 @@ import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.plugin.Platform;
+
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.component.living.neutral.Human;

@@ -29,7 +29,6 @@ package org.spout.vanilla.material.item.misc;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class Fireworks extends VanillaItemMaterial {
-
 	public Fireworks(String name, int id) {
 		super(name, id, null);
 	}

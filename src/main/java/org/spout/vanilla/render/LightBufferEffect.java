@@ -64,7 +64,7 @@ public class LightBufferEffect implements BufferEffect {
 			container.setBuffers(4, skylightBuffer);
 		}
 
-		for (int i = 0; i < vertexBuffer.size();) {
+		for (int i = 0; i < vertexBuffer.size(); ) {
 			float x = vertexBuffer.get(i++);
 			float y = vertexBuffer.get(i++);
 			float z = vertexBuffer.get(i++);
@@ -78,7 +78,6 @@ public class LightBufferEffect implements BufferEffect {
 
 	/**
 	 * Compute the light for one vertex
-	 *
 	 * @param chunkModel
 	 * @param x
 	 * @param y

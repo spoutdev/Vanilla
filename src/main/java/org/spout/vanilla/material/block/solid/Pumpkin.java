@@ -35,8 +35,8 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.util.resources.ModelUtil;
 import org.spout.vanilla.util.PlayerUtil;
+import org.spout.vanilla.util.resources.ModelUtil;
 
 public class Pumpkin extends Solid implements Directional {
 	private final boolean lantern;
@@ -88,14 +88,10 @@ public class Pumpkin extends Solid implements Directional {
 	}
 
 	/**
-	 *
 	 * Whether this pumpkin block material is a jack o' lantern
-	 *
 	 * @return true if jack o' lantern
-	 *
 	 */
 	public boolean isLantern() {
 		return lantern;
-
 	}
 }

@@ -74,7 +74,7 @@ public enum LivingSpawnCause {
 	 * This spawn occurred due to an unknown reason.
 	 */
 	UNKNOWN;
-	
+
 	public boolean equals(LivingSpawnCause... causes) {
 		for (LivingSpawnCause cause : causes) {
 			if (equals(cause)) {

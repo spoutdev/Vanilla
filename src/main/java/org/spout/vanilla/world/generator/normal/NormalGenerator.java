@@ -57,10 +57,10 @@ import org.spout.vanilla.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorLayer;
 import org.spout.vanilla.world.generator.biome.selector.CylindersRangeLayer;
-import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.biome.selector.LayeredBiomeSelector;
 import org.spout.vanilla.world.generator.biome.selector.PerlinRangeLayer;
 import org.spout.vanilla.world.generator.biome.selector.VoronoiLayer;
+import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.normal.populator.CavePopulator;
 import org.spout.vanilla.world.generator.normal.populator.DungeonPopulator;
 import org.spout.vanilla.world.generator.normal.populator.FallingLiquidPopulator;
@@ -299,16 +299,16 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		//
 		final CylindersRangeLayer rivers =
 				new CylindersRangeLayer(2).
-				setCylindersFrequency(0.0025).
-				setTurbulenceFrequency(0.0085).setTurbulencePower(80).setTurbulenceRoughness(3);
+						setCylindersFrequency(0.0025).
+						setTurbulenceFrequency(0.0085).setTurbulencePower(80).setTurbulenceRoughness(3);
 		final PerlinRangeLayer hills =
 				new PerlinRangeLayer(1).
-				setPerlinFrequency(0.01 / scale).setPerlinOctaveCount(1).
-				setTurbulenceFrequency(0.03).setTurbulencePower(20).setTurbulenceRoughness(1);
+						setPerlinFrequency(0.01 / scale).setPerlinOctaveCount(1).
+						setTurbulenceFrequency(0.03).setTurbulencePower(20).setTurbulenceRoughness(1);
 		final PerlinRangeLayer frozenOceans =
 				new PerlinRangeLayer(3).
-				setPerlinFrequency(0.01 / scale).setPerlinOctaveCount(1).
-				setTurbulenceFrequency(0.03).setTurbulencePower(20).setTurbulenceRoughness(1);
+						setPerlinFrequency(0.01 / scale).setPerlinOctaveCount(1).
+						setTurbulenceFrequency(0.03).setTurbulencePower(20).setTurbulenceRoughness(1);
 		//
 		// LAND LAYERS
 		//
@@ -352,16 +352,16 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		//
 		final BiomeSelectorLayer mushroom =
 				new PerlinRangeLayer(11).
-				setPerlinFrequency(0.01 / scale).setPerlinOctaveCount(1).
-				setTurbulenceFrequency(0.03).setTurbulencePower(20).setTurbulenceRoughness(1).
-				addElement(VanillaBiomes.OCEAN, -1, 0.78f).addElement(VanillaBiomes.MUSHROOM_SHORE, 0.78f, 0.85f).addElement(VanillaBiomes.MUSHROOM, 0.85f, 1);
+						setPerlinFrequency(0.01 / scale).setPerlinOctaveCount(1).
+						setTurbulenceFrequency(0.03).setTurbulencePower(20).setTurbulenceRoughness(1).
+						addElement(VanillaBiomes.OCEAN, -1, 0.78f).addElement(VanillaBiomes.MUSHROOM_SHORE, 0.78f, 0.85f).addElement(VanillaBiomes.MUSHROOM, 0.85f, 1);
 		final BiomeSelectorLayer beach = rivers.clone().
 				addElement(VanillaBiomes.BEACH, -1, 0.89f).addElement(VanillaBiomes.RIVER, 0.89f, 1);
 		final BiomeSelectorLayer land =
 				new VoronoiLayer(7).
-				setVoronoiFrequency(0.007 / scale).
-				setTurbulenceFrequency(0.004).setTurbulencePower(70).
-				addElements(desertLand, forestLand, jungleLand, plains, swamp, taigaLand, tundraLand);
+						setVoronoiFrequency(0.007 / scale).
+						setTurbulenceFrequency(0.004).setTurbulencePower(70).
+						addElements(desertLand, forestLand, jungleLand, plains, swamp, taigaLand, tundraLand);
 		final BiomeSelectorLayer smallMountains = rivers.clone().
 				addElement(VanillaBiomes.SMALL_MOUNTAINS, -1, 0.89f).addElement(VanillaBiomes.RIVER, 0.89f, 1);
 		final BiomeSelectorLayer mountains = rivers.clone().
@@ -371,9 +371,9 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		//
 		final BiomeSelectorLayer start =
 				new PerlinRangeLayer(5).
-				setPerlinFrequency(0.007 / scale).setPerlinOctaveCount(1).
-				setTurbulenceFrequency(0.02).setTurbulencePower(20).setTurbulenceRoughness(1).
-				addElement(mushroom, -1, -0.3f).addElement(VanillaBiomes.OCEAN, -0.3f, -0.05f).addElement(beach, -0.05f, 0).addElement(land, 0, 0.675f).addElement(smallMountains, 0.675f, 0.71f).addElement(mountains, 0.71f, 1);
+						setPerlinFrequency(0.007 / scale).setPerlinOctaveCount(1).
+						setTurbulenceFrequency(0.02).setTurbulencePower(20).setTurbulenceRoughness(1).
+						addElement(mushroom, -1, -0.3f).addElement(VanillaBiomes.OCEAN, -0.3f, -0.05f).addElement(beach, -0.05f, 0).addElement(land, 0, 0.675f).addElement(smallMountains, 0.675f, 0.71f).addElement(mountains, 0.71f, 1);
 
 		return start;
 	}

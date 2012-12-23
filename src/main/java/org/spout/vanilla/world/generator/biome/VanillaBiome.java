@@ -57,7 +57,6 @@ public abstract class VanillaBiome extends Biome implements BiomeSelectorElement
 
 	/**
 	 * Gets the Climate of this Biome
-	 *
 	 * @return the climate
 	 */
 	public Climate getClimate() {
@@ -66,7 +65,6 @@ public abstract class VanillaBiome extends Biome implements BiomeSelectorElement
 
 	/**
 	 * Sets the Climate for this Biome
-	 *
 	 * @param climate to set to
 	 */
 	public void setClimate(Climate climate) {

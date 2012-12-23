@@ -29,10 +29,10 @@ package org.spout.vanilla.material.map;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.spout.api.Spout;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector2;
 import org.spout.api.protocol.event.ProtocolEvent;
+
 import org.spout.vanilla.event.item.MapItemUpdateEvent;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
@@ -110,7 +110,7 @@ public class Map extends VanillaItemMaterial {
 	public MapColor getColor(int x, int y) {
 		return MapColor.getById(this.colors[x + y * this.width]);
 	}
-	
+
 	public List<ProtocolEvent> drawRectangle(ItemStack item, int bx, int by, int tx, int ty, int col) {
 		if (bx < 0 || tx >= getWidth() || by < 0 || ty >= getHeight() || bx > tx || by > ty) {
 			throw new IllegalArgumentException("Rectangle out of range");
@@ -129,7 +129,7 @@ public class Map extends VanillaItemMaterial {
 		}
 		return events;
 	}
-	
+
 	public List<ProtocolEvent> flood(ItemStack item, int col) {
 		return drawRectangle(item, 0, 0, getWidth() - 1, getHeight() - 1, col);
 	}

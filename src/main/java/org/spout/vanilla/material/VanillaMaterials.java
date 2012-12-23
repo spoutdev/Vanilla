@@ -26,16 +26,17 @@
  */
 package org.spout.vanilla.material;
 
-import gnu.trove.map.hash.TShortObjectHashMap;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+
+import gnu.trove.map.hash.TShortObjectHashMap;
 
 import org.spout.api.Spout;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
 import org.spout.api.util.map.concurrent.AtomicShortArray;
+
 import org.spout.vanilla.data.Music;
 import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
@@ -506,7 +507,7 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial ITEM_FRAME = new VanillaItemMaterial("Item Frame", 389, null);
 	public static final Skull SKELETON_SKULL = Skull.SKELETON_SKULL;
 	// == Food ==
-	public static final RawFish RAW_FISH = new RawFish("Raw Fish", 349, new FoodEffect(FoodEffects.HUNGER, 2), new FoodEffect(FoodEffects.SATURATION,1.2f));
+	public static final RawFish RAW_FISH = new RawFish("Raw Fish", 349, new FoodEffect(FoodEffects.HUNGER, 2), new FoodEffect(FoodEffects.SATURATION, 1.2f));
 	public static final Food COOKED_FISH = new Food("Cooked Fish", 350, null, new FoodEffect(FoodEffects.HUNGER, 5), new FoodEffect(FoodEffects.SATURATION, 6));
 	public static final Food RED_APPLE = new Food("Apple", 260, null, new FoodEffect(FoodEffects.HUNGER, 4), new FoodEffect(FoodEffects.SATURATION, 2.4f));
 	public static final Food MUSHROOM_SOUP = new Food("Mushroom Soup", 282, null, new FoodEffect(FoodEffects.HUNGER, 6), new FoodEffect(FoodEffects.SATURATION, 7.2f));

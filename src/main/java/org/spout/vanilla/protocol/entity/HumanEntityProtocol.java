@@ -35,6 +35,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
+
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;

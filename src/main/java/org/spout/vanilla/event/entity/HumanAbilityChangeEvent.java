@@ -29,20 +29,19 @@ package org.spout.vanilla.event.entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
+
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.data.GameMode;
 
 public class HumanAbilityChangeEvent extends EntityEvent implements Cancellable {
-	
 	private static HandlerList handlers = new HandlerList();
-
 	private final byte flyingSpeed;
 	private final byte walkingSpeed;
 	private final boolean godMode;
 	private final boolean isFlying;
 	private final boolean canFly;
 	private final boolean creativeMode;
-	
+
 	public HumanAbilityChangeEvent(Human human) {
 		super(human.getOwner());
 		flyingSpeed = human.getFlyingSpeed();
@@ -52,7 +51,7 @@ public class HumanAbilityChangeEvent extends EntityEvent implements Cancellable 
 		canFly = human.canFly();
 		creativeMode = human.getGameMode() == GameMode.CREATIVE;
 	}
-	
+
 	public byte getFlyingSpeed() {
 		return flyingSpeed;
 	}
@@ -81,7 +80,7 @@ public class HumanAbilityChangeEvent extends EntityEvent implements Cancellable 
 	public void setCancelled(boolean cancelled) {
 		super.setCancelled(cancelled);
 	}
-	
+
 	@Override
 	public HandlerList getHandlers() {
 		return handlers;

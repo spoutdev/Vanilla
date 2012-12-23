@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.component.substance.object;
 
+import com.bulletphysics.collision.shapes.BoxShape;
+
 import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.VanillaPlugin;
@@ -35,8 +37,6 @@ import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 import org.spout.vanilla.util.explosion.ExplosionModel;
 import org.spout.vanilla.util.explosion.ExplosionModelSpherical;
-
-import com.bulletphysics.collision.shapes.BoxShape;
 
 public class Tnt extends ObjectEntity {
 	private Entity holder;

@@ -30,6 +30,7 @@ import java.util.Random;
 
 import org.spout.api.event.cause.EntityCause;
 import org.spout.api.geo.discrete.Point;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.living.Passive;
@@ -44,21 +45,20 @@ import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
  * A component that identifies the entity as a Sheep.
  */
 public class Sheep extends Living implements Passive {
-	
 	private static final int TICKS_UNTIL_ADULT = 24000;
 	private static final int GRASS_GROWTH_TICK_BONUS = 1200;
 	private static final int GRASS_CHANCE_AS_ADULT = 1000;
 	private static final int GRASS_CHANCE_AS_BABY = 50;
-	
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SheepEntityProtocol());
 	}
-	
+
 	@Override
 	public void onTick(float dt) {
-		if(shouldEatGrass()) {
+		if (shouldEatGrass()) {
 			eatGrass();
 		}
 	}
@@ -86,11 +86,11 @@ public class Sheep extends Living implements Passive {
 	public void setColor(Wool.WoolColor color) {
 		getOwner().getData().put(VanillaData.WOOL_COLOR, color.getData());
 	}
-	
+
 	private boolean isBlockEatableTallGrass(int x, int y, int z) {
 		return getOwner().getWorld().getBlockMaterial(x, y, z) == VanillaMaterials.TALL_GRASS && getOwner().getWorld().getBlockData(x, y, z) == 1;
 	}
-	
+
 	/**
 	 * Is called when the sheep eats grass. Applies the bonuses to the sheep.
 	 */
@@ -103,7 +103,7 @@ public class Sheep extends Living implements Passive {
 		}
 		getOwner().getData().put(VanillaData.GROWTH_TICKS, newGrowthTicks);
 	}
-	
+
 	private void eatGrass() {
 		final Point position = getOwner().getTransform().getPosition();
 		final int x = position.getFloorX();
@@ -117,7 +117,7 @@ public class Sheep extends Living implements Passive {
 			onGrassEaten();
 		}
 	}
-	
+
 	public boolean shouldEatGrass() {
 		final Random random = new Random();
 		final Point position = getOwner().getTransform().getPosition();
@@ -138,5 +138,4 @@ public class Sheep extends Living implements Passive {
 		}
 		return getOwner().getWorld().getBlockMaterial(x, y, z) == VanillaMaterials.GRASS;
 	}
-	
 }

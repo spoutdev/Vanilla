@@ -272,7 +272,7 @@ public class HungerComponent extends EntityComponent {
 	}
 
 	public void setHunger(int hunger) {
-		getData().put(VanillaData.HUNGER, hunger);
+		getData().put(VanillaData.HUNGER, Math.min(hunger, 20));
 		reload();
 		if (Spout.getEngine() instanceof Client) {
 			render(52, 16);
@@ -318,7 +318,7 @@ public class HungerComponent extends EntityComponent {
 	}
 
 	public void setFoodSaturation(float foodSaturation) {
-		getData().put(VanillaData.FOOD_SATURATION, foodSaturation);
+		getData().put(VanillaData.FOOD_SATURATION, Math.min(foodSaturation, getHunger()));
 		reload();
 	}
 

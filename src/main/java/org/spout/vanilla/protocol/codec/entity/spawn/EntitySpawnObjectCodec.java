@@ -43,6 +43,7 @@ public final class EntitySpawnObjectCodec extends MessageCodec<EntityObjectMessa
 
 	@Override
 	public EntityObjectMessage decode(ChannelBuffer buffer) throws IOException {
+		//TODO: There's 2 new bytes. Currently unknown according to wiki.vg 17/12/2012
 		int entityId = buffer.readInt();
 		byte type = buffer.readByte();
 		int x = buffer.readInt();

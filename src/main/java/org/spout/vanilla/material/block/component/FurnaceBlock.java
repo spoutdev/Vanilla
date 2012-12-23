@@ -35,7 +35,6 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.component.substance.material.Furnace;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.util.PlayerUtil;
 
@@ -79,7 +78,7 @@ public class FurnaceBlock extends ComponentMaterial implements Directional {
 	 * @param burning state to set to
 	 */
 	public void setBurning(Block block, boolean burning) {
-		block.setMaterial(burning ? VanillaMaterials.FURNACE_BURNING : VanillaMaterials.FURNACE, block.getData());
+		block.setDataBits(BURNING_FLAG, burning);
 	}
 
 	@Override

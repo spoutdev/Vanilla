@@ -27,6 +27,7 @@
 package org.spout.vanilla.component.substance.material;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.spout.api.entity.Entity;
@@ -55,6 +56,19 @@ public abstract class ViewedBlockComponent extends VanillaBlockComponent {
 
 	public Set<Player> getViewers() {
 		return viewers;
+	}
+
+	@Override
+	public void onTick(float dt) {
+		if (viewers.size() > 0) {
+			Iterator<Player> i = viewers.iterator();
+			while(i.hasNext()) {
+				Player p = i.next();
+				if (!p.isOnline() || p.isRemoved()) {
+					i.remove();
+				}
+			}
+		}
 	}
 
 	@Override

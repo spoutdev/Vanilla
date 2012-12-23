@@ -65,7 +65,6 @@ import org.spout.vanilla.protocol.msg.entity.pos.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityVelocityMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityYawMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityExperienceOrbMessage;
-import org.spout.vanilla.protocol.msg.entity.spawn.EntityItemMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityMobMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityPaintingMessage;
@@ -151,7 +150,6 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new EntityAnimationMessage(1234, (byte) Animation.DAMAGE_ANIMATION.getId()),
 			new EntityActionMessage(5, 2),
 			new PlayerSpawnMessage(24, "risaccess1", 8000, 28, 900, 0, 0, 89, new ArrayList<Parameter<?>>(), NullRepositionManager.getInstance()),
-			new EntityItemMessage(1234, 89, 3, (short) 4, 1, 2, 3, 34, 56, 55, NullRepositionManager.getInstance()),
 			new PlayerCollectItemMessage(1234, 5678),
 			new EntityObjectMessage(1, (byte) 1, 200, 175, 132, 50, (short) 62, (short) 56, (short) 78, NullRepositionManager.getInstance()),
 			new EntityMobMessage(123, 255, 1, 2, 4, 34, 55, 33, (short) 0, (short) 0, (short) 0, TEST_PARAMS, NullRepositionManager.getInstance()),

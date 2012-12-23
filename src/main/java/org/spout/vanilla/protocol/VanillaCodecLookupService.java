@@ -50,7 +50,6 @@ import org.spout.vanilla.protocol.codec.entity.pos.EntityTeleportCodec;
 import org.spout.vanilla.protocol.codec.entity.pos.EntityVelocityCodec;
 import org.spout.vanilla.protocol.codec.entity.pos.EntityYawCodec;
 import org.spout.vanilla.protocol.codec.entity.spawn.EntityExperienceOrbCodec;
-import org.spout.vanilla.protocol.codec.entity.spawn.EntityItemCodec;
 import org.spout.vanilla.protocol.codec.entity.spawn.EntityMobCodec;
 import org.spout.vanilla.protocol.codec.entity.spawn.EntityPaintingCodec;
 import org.spout.vanilla.protocol.codec.entity.spawn.EntitySpawnObjectCodec;
@@ -150,7 +149,7 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			/* 0x14 */
 			bind(PlayerSpawnCodec.class);
 			/* 0x15 */
-			bind(EntityItemCodec.class);
+			//bind(EntityItemCodec.class); // Removed as of 1.4.6
 			/* 0x16 */
 			bind(PlayerCollectItemCodec.class);
 			/* 0x17 */

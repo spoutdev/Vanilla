@@ -39,6 +39,6 @@ public abstract class VanillaBlockComponent extends BlockComponent {
 
 	public Block getBlock() {
 		ChunkComponentOwner owner = getOwner();
-		return owner.getChunk().getWorld().getBlock(owner.getX(), owner.getY(), owner.getZ());
+		return owner.getChunk().getBlock(owner.getX(), owner.getY(), owner.getZ());
 	}
 }

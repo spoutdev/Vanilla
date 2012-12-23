@@ -28,8 +28,6 @@ package org.spout.vanilla.component.substance;
 
 import com.bulletphysics.collision.shapes.BoxShape;
 
-import org.spout.api.component.impl.PhysicsComponent;
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.LoadOption;
@@ -38,14 +36,17 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.substance.object.ObjectEntity;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.object.ItemEntityProtocol;
 
-public class Item extends EntityComponent {
+public class Item extends ObjectEntity {
+
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
-		PhysicsComponent physics = getOwner().add(PhysicsComponent.class);
+		PhysicsComponent physics = getPhysics();
 		physics.setMass(5f);
 		physics.setCollisionShape(new BoxShape(0.125F, 0.125F, 0.125F));
 		physics.setRestitution(0f);

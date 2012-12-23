@@ -42,12 +42,12 @@ public final class PlayerAbilityHandler extends MessageHandler<PlayerAbilityMess
 		if (player.has(Human.class)) {
 			// TODO - this should do a permission check and revert if required
 			Human pac = player.get(Human.class);
-			pac.setFlyingSpeed(message.getFlyingSpeed());
-			pac.setWalkingSpeed(message.getWalkingSpeed());
-			pac.setFlying(message.isFlying());
-			pac.setCanFly(message.canFly());
-			pac.setGodMode(message.isGodMode());
-			pac.setCreativeMode(message.isCreativeMode());
+			pac.setFlyingSpeed(message.getFlyingSpeed(), false);
+			pac.setWalkingSpeed(message.getWalkingSpeed(), false);
+			pac.setFlying(message.isFlying(), false);
+			pac.setCanFly(message.canFly(), false);
+			pac.setGodMode(message.isGodMode(), false);
+			pac.setCreativeMode(message.isCreativeMode(), false);
 		}
 	}
 }

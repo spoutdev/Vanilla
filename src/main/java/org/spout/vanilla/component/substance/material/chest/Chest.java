@@ -28,7 +28,6 @@ package org.spout.vanilla.component.substance.material.chest;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
-
 import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.Container;
@@ -66,7 +65,9 @@ public class Chest extends AbstractChest implements Container {
 
 	@Override
 	public ChestInventory getInventory() {
-		return getData().get(VanillaData.CHEST_INVENTORY);
+		ChestInventory inventory = getData().get(VanillaData.CHEST_INVENTORY);
+		inventory.setHolder(getBlock());
+		return inventory;
 	}
 
 	@Override

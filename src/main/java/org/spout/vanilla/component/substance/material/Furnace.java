@@ -194,7 +194,9 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	@Override
 	public FurnaceInventory getInventory() {
-		return getData().get(VanillaData.FURNACE_INVENTORY);
+		FurnaceInventory inventory = getData().get(VanillaData.FURNACE_INVENTORY);
+		inventory.setHolder(getBlock());
+		return inventory;
 	}
 
 	@Override

@@ -27,23 +27,23 @@
 package org.spout.vanilla.component.substance.material;
 
 import org.spout.api.entity.Player;
-import org.spout.api.inventory.Inventory;
-
 import org.spout.vanilla.component.inventory.WindowHolder;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.BeaconInventory;
 import org.spout.vanilla.inventory.window.block.BeaconWindow;
 
 public class Beacon extends ViewedBlockComponent implements Container {
-	private final BeaconInventory inventory = new BeaconInventory();
-
+	
 	@Override
-	public Inventory getInventory() {
+	public BeaconInventory getInventory() {
+		BeaconInventory inventory = getData().get(VanillaData.BEACON_INVENTORY);
+		inventory.setHolder(getBlock());
 		return inventory;
 	}
 
 	@Override
 	public void open(Player player) {
-		player.get(WindowHolder.class).openWindow(new BeaconWindow(player, inventory));
+		player.get(WindowHolder.class).openWindow(new BeaconWindow(player, getInventory()));
 	}
 }

@@ -26,5 +26,17 @@
  */
 package org.spout.vanilla.component.substance.material;
 
-public class Jukebox extends VanillaBlockComponent {
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.inventory.Container;
+import org.spout.vanilla.inventory.block.JukeboxInventory;
+
+public class Jukebox extends VanillaBlockComponent implements Container {
+	
+	@Override
+	public JukeboxInventory getInventory() {
+		JukeboxInventory inventory = getData().get(VanillaData.JUKEBOX_INVENTORY);
+		inventory.setHolder(getBlock());
+		return inventory;
+	}
+	
 }

@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 import org.spout.api.Spout;
-import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.HeldInventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.recipe.Recipe;
 import org.spout.api.inventory.recipe.RecipeManager;
@@ -42,7 +42,7 @@ import org.spout.api.material.Material;
 /**
  * Represents an inventory that contains a crafting matrix.
  */
-public class CraftingInventory extends Inventory {
+public class CraftingInventory<T> extends HeldInventory<T> {
 	private static final long serialVersionUID = 1L;
 	private final Grid grid;
 	private final int outputSlot, offset;

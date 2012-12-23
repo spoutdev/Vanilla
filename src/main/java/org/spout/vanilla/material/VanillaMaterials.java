@@ -317,8 +317,8 @@ public final class VanillaMaterials {
 	public static final CraftingTableBlock CRAFTING_TABLE = new CraftingTableBlock("Crafting Table", 58);
 	public static final WheatCrop WHEATCROP = new WheatCrop("Wheat Crop", 59);
 	public static final FarmLand FARMLAND = new FarmLand("Farmland", 60);
-	public static final FurnaceBlock FURNACE = new FurnaceBlock("Furnace", 61, false);
-	public static final FurnaceBlock FURNACE_BURNING = new FurnaceBlock("Burning Furnace", 62, true);
+	public static final FurnaceBlock FURNACE = FurnaceBlock.FURNACE;
+	public static final FurnaceBlock FURNACE_BURNING = FurnaceBlock.FURNACE_BURNING;
 	public static final SignPost SIGN_POST = new SignPost("Sign Post", 63);
 	public static final Ladder LADDER = new Ladder("Ladder", 65);
 	public static final SignBase WALL_SIGN = new WallSign("Wall Sign", 68);

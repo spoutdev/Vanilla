@@ -37,6 +37,7 @@ import org.spout.vanilla.inventory.window.block.FurnaceWindow;
 import org.spout.vanilla.inventory.window.prop.FurnaceProperty;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class Furnace extends ViewedBlockComponent implements Container {
 	public final float MAX_FUEL_INCREMENT = 12.5f;
@@ -59,7 +60,10 @@ public class Furnace extends ViewedBlockComponent implements Container {
 		float maxSmeltTime = getMaxSmeltTime();
 		float increment = (MAX_SMELT_TIME_INCREMENT * 20) - ((MAX_SMELT_TIME_INCREMENT / maxSmeltTime) * (smeltTime * 20));
 		for (Player player : viewers) {
-			player.get(WindowHolder.class).getActiveWindow().setProperty(FurnaceProperty.PROGRESS_ARROW, (int) increment);
+			WindowHolder window = player.get(WindowHolder.class);
+			if (window != null) {
+				window.getActiveWindow().setProperty(FurnaceProperty.PROGRESS_ARROW, (int) increment);
+			}
 		}
 	}
 
@@ -81,7 +85,10 @@ public class Furnace extends ViewedBlockComponent implements Container {
 		float maxFuel = getMaxFuel();
 		float increment = MAX_FUEL_INCREMENT / maxFuel * (fuel * 20);
 		for (Player player : viewers) {
-			player.get(WindowHolder.class).getActiveWindow().setProperty(FurnaceProperty.FIRE_ICON, (int) increment);
+			WindowHolder window = player.get(WindowHolder.class);
+			if (window != null) {
+				window.getActiveWindow().setProperty(FurnaceProperty.FIRE_ICON, (int) increment);
+			}
 		}
 	}
 
@@ -119,7 +126,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	@Override
 	public void onTick(float dt) {
-
+		super.onTick(dt);
 		final float fuel = getFuel();
 		final FurnaceInventory inventory = getInventory();
 
@@ -129,6 +136,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 			if (getSmeltTime() > 0) {
 				setSmeltTime(-1);
 				setMaxSmeltTime(-1);
+				setBurning(false);
 			}
 
 			// Try to light the furnace
@@ -137,20 +145,20 @@ public class Furnace extends ViewedBlockComponent implements Container {
 				setMaxFuel(newFuel);
 				setFuel(newFuel);
 				inventory.addAmount(FurnaceInventory.FUEL_SLOT, -1);
+				setBurning(true);
 				return;
 			}
 		}
 
 		// Burning
 		if (fuel > 0) {
-
 			pulseFuel(dt);
 			final float smeltTime = getSmeltTime();
-
 			if (smeltTime == -1) {
 				// Try to start smelting
 				if (inventory.hasIngredient()) {
 					if (!canSmelt()) {
+						setBurning(false);
 						return;
 					}
 					float newSmeltTime = ((TimedCraftable) inventory.getIngredient().getMaterial()).getCraftTime();
@@ -172,11 +180,16 @@ public class Furnace extends ViewedBlockComponent implements Container {
 				// Reset progress if ingredient is gone
 				if (!inventory.hasIngredient()) {
 					setSmeltTime(-1);
+					setBurning(false);
 					return;
 				}
 				pulseSmeltTime(dt);
 			}
 		}
+	}
+
+	private void setBurning(boolean burning) {
+		VanillaMaterials.FURNACE.setBurning(getBlock(), burning);
 	}
 
 	@Override

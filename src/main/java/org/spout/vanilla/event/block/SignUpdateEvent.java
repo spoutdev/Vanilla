@@ -46,8 +46,11 @@ public class SignUpdateEvent extends Event implements ProtocolEvent, Cancellable
 	private String[] newLines;
 
 	public SignUpdateEvent(Sign sign, String[] newLines, Cause<?> cause) {
+		if (newLines == null || newLines.length != 4) {
+			throw new IllegalArgumentException("Array size must be 4");
+		}
 		this.sign = sign;
-		changeLines(newLines);
+		this.newLines = Arrays.copyOf(newLines, newLines.length);
 		this.cause = cause;
 	}
 
@@ -84,6 +87,9 @@ public class SignUpdateEvent extends Event implements ProtocolEvent, Cancellable
 	 * @param newLines text which is placed on the sign 1 - 4 lines
 	 */
 	public void setLines(String[] newLines) {
+		if (newLines == null || newLines.length != this.newLines.length) {
+			throw new IllegalArgumentException("Array size must be 4");
+		}
 		this.newLines = Arrays.copyOf(newLines, newLines.length);
 	}
 
@@ -107,14 +113,8 @@ public class SignUpdateEvent extends Event implements ProtocolEvent, Cancellable
 		return newLines[checkIndex(index)];
 	}
 
-	private void changeLines(String[] overwriteLines) {
-		for (int i = 0; i < checkIndex(overwriteLines.length); i++) {
-			newLines[i] = overwriteLines[i];
-		}
-	}
-
 	private int checkIndex(int index) {
-		if (!(index >= 0 && index <= newLines.length)) {
+		if (index < 0 || index >= 4) {
 			throw new ArrayIndexOutOfBoundsException();
 		}
 		return index;

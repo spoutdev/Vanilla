@@ -26,37 +26,24 @@
  */
 package org.spout.vanilla.protocol.entity.object;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.protocol.Message;
-import org.spout.api.protocol.reposition.RepositionManager;
+import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.substance.Item;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.VanillaEntityProtocol;
-import org.spout.vanilla.protocol.msg.entity.spawn.EntityItemMessage;
 
-public class ItemEntityProtocol extends VanillaEntityProtocol {
+public class ItemEntityProtocol extends ObjectEntityProtocol {
+	public ItemEntityProtocol() {
+		super(ObjectType.ITEM);
+	}
+
 	@Override
-	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
-		Item item = entity.add(Item.class);
-		int id = entity.getId();
-		int x = (int) (entity.getTransform().getPosition().getX() * 32);
-		int y = (int) (entity.getTransform().getPosition().getY() * 32);
-		int z = (int) (entity.getTransform().getPosition().getZ() * 32);
-		int r = (int) (entity.getTransform().getYaw() * 32);
-		int p = (int) (entity.getTransform().getPitch() * 32);
-		ItemStack stack = item.getItemStack();
-		if (stack.getMaterial() != null) {
-			int typeId = VanillaMaterials.getMinecraftId(stack.getMaterial());
-			if (typeId > 0) {
-				return Arrays.<Message>asList(new EntityItemMessage(id, typeId, stack.getAmount(), stack.getData(), x, y, z, r, p, (int) entity.getTransform().getRoll(), rm));
-			}
-		}
-		return Collections.emptyList();
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		List<Parameter<?>> list =  new ArrayList<Parameter<?>>();
+		list.add(new Parameter<ItemStack>(Parameter.TYPE_ITEM, 10, entity.get(Item.class).getItemStack()));
+		return list;
 	}
 }

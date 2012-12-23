@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.entity.object;
 
 public enum ObjectType {
 	BOAT(1),
+	ITEM(2),
 	MINECART(10),
 	STORAGE_MINECART(11),
 	POWERED_MINECART(12),

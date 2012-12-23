@@ -26,13 +26,14 @@
  */
 package org.spout.vanilla.inventory.block;
 
+import org.spout.api.geo.cuboid.Block;
 import org.spout.vanilla.inventory.CraftingInventory;
 
 /**
  * Represents the inventory of a
  * {@link org.spout.vanilla.component.substance.material.CraftingTable}.
  */
-public class CraftingTableInventory extends CraftingInventory {
+public class CraftingTableInventory extends CraftingInventory<Block> {
 	public static final int LENGTH = 3, WIDTH = 3, OUTPUT_SLOT = 9;
 	private static final long serialVersionUID = 1L;
 

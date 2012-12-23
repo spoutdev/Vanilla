@@ -27,23 +27,23 @@
 package org.spout.vanilla.component.substance.material;
 
 import org.spout.api.entity.Player;
-import org.spout.api.inventory.Inventory;
-
 import org.spout.vanilla.component.inventory.WindowHolder;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.AnvilInventory;
 import org.spout.vanilla.inventory.window.block.AnvilWindow;
 
 public class Anvil extends ViewedBlockComponent implements Container {
-	private final AnvilInventory inventory = new AnvilInventory();
 
 	@Override
-	public Inventory getInventory() {
+	public AnvilInventory getInventory() {
+		AnvilInventory inventory = getData().get(VanillaData.ANVIL_INVENTORY);
+		inventory.setHolder(getBlock());
 		return inventory;
 	}
 
 	@Override
 	public void open(Player player) {
-		player.get(WindowHolder.class).openWindow(new AnvilWindow(player, inventory));
+		player.get(WindowHolder.class).openWindow(new AnvilWindow(player, getInventory()));
 	}
 }

@@ -26,13 +26,14 @@
  */
 package org.spout.vanilla.inventory.block;
 
-import org.spout.api.inventory.Inventory;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.HeldInventory;
 
 /**
  * Represents the inventory of a
  * {@link org.spout.vanilla.component.substance.material.chest.Chest}.
  */
-public class ChestInventory extends Inventory {
+public class ChestInventory extends HeldInventory<Block> {
 	private static final long serialVersionUID = 1L;
 	public static final int SINGLE_SIZE = 27;
 	public static final int DOUBLE_SIZE = SINGLE_SIZE * 2;

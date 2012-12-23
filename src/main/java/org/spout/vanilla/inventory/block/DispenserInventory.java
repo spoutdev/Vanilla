@@ -26,12 +26,13 @@
  */
 package org.spout.vanilla.inventory.block;
 
-import org.spout.api.inventory.Inventory;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.HeldInventory;
 
 /**
  * Represents a dispenser inventory belonging to a dispenser entity.
  */
-public class DispenserInventory extends Inventory {
+public class DispenserInventory extends HeldInventory<Block> {
 	private static final long serialVersionUID = 1L;
 	public static final int SIZE = 9;
 

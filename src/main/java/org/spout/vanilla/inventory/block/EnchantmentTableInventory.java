@@ -26,14 +26,15 @@
  */
 package org.spout.vanilla.inventory.block;
 
-import org.spout.api.inventory.Inventory;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.HeldInventory;
 import org.spout.api.inventory.ItemStack;
 
 /**
  * Represents a enchantment table inventory belonging to an enchantment table
  * entity.
  */
-public class EnchantmentTableInventory extends Inventory {
+public class EnchantmentTableInventory extends HeldInventory<Block> {
 	private static final long serialVersionUID = 1L;
 	public static final int SIZE = 1;
 	public static final int SLOT = 0;

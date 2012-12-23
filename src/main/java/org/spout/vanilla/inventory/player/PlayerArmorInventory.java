@@ -26,13 +26,14 @@
  */
 package org.spout.vanilla.inventory.player;
 
-import org.spout.api.inventory.Inventory;
+import org.spout.api.entity.Player;
+import org.spout.api.inventory.HeldInventory;
 import org.spout.api.inventory.ItemStack;
 
 /**
  * Represents the four armor slots on a {@link org.spout.vanilla.component.inventory.PlayerInventory}.
  */
-public class PlayerArmorInventory extends Inventory {
+public class PlayerArmorInventory extends HeldInventory<Player> {
 	private static final long serialVersionUID = 1L;
 	public static final int SIZE = 4;
 	public static final int BOOT_SLOT = 0, LEGGINGS_SLOT = 1, CHEST_PLATE_SLOT = 2, HELMET_SLOT = 3;

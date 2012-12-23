@@ -26,14 +26,14 @@
  */
 package org.spout.vanilla.inventory.player;
 
+import org.spout.api.entity.Player;
 import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.inventory.CraftingInventory;
 
 /**
  * Represents the crafting inventory in the player's inventory.
  */
-public class PlayerCraftingInventory extends CraftingInventory {
+public class PlayerCraftingInventory extends CraftingInventory<Player> {
 	private static final long serialVersionUID = 1L;
 	public static final int LENGTH = 2, WIDTH = 2, OUTPUT_SLOT = 4;
 	public static final int TOP_LEFT_SLOT = 0, TOP_RIGHT_SLOT = 1, BOTTOM_LEFT_SLOT = 2, BOTTOM_RIGHT_SLOT = 3, OUTPUT = 4;

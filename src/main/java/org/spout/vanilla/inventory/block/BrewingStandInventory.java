@@ -26,14 +26,15 @@
  */
 package org.spout.vanilla.inventory.block;
 
-import org.spout.api.inventory.Inventory;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.HeldInventory;
 import org.spout.api.inventory.ItemStack;
 
 /**
  * Represents the inventory of a
  * {@link org.spout.vanilla.component.substance.material.BrewingStand}
  */
-public class BrewingStandInventory extends Inventory {
+public class BrewingStandInventory extends HeldInventory<Block> {
 	private static final long serialVersionUID = 1L;
 	public static final int SIZE = 4;
 	public static final int[] OUTPUT_SLOTS = {0, 1, 2};

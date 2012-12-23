@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.inventory.player;
 
-import org.spout.api.inventory.Inventory;
+import org.spout.api.entity.Player;
+import org.spout.api.inventory.HeldInventory;
 import org.spout.api.inventory.ItemStack;
 
-public class PlayerQuickbar extends Inventory {
+public class PlayerQuickbar extends HeldInventory<Player> {
 	private static final long serialVersionUID = 1L;
 	public static final int SIZE = 9;
 	private int currentSlot = 0;

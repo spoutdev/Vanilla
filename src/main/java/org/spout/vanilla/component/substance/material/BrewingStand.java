@@ -27,22 +27,23 @@
 package org.spout.vanilla.component.substance.material;
 
 import org.spout.api.entity.Player;
-
 import org.spout.vanilla.component.inventory.WindowHolder;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.inventory.window.block.BrewingStandWindow;
 
 public class BrewingStand extends ViewedBlockComponent implements Container {
-	private final BrewingStandInventory inventory = new BrewingStandInventory();
-
+	
 	@Override
 	public BrewingStandInventory getInventory() {
+		BrewingStandInventory inventory = getData().get(VanillaData.BREWER_INVENTORY);
+		inventory.setHolder(getBlock());
 		return inventory;
 	}
 
 	@Override
 	public void open(Player player) {
-		player.get(WindowHolder.class).openWindow(new BrewingStandWindow(player, inventory));
+		player.get(WindowHolder.class).openWindow(new BrewingStandWindow(player, getInventory()));
 	}
 }

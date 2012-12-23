@@ -26,16 +26,16 @@
  */
 package org.spout.vanilla.inventory.block;
 
-import org.spout.api.inventory.Inventory;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.HeldInventory;
 import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
 
 /**
  * Represents a furnace inventory belonging to a furnace entity.
  */
-public class FurnaceInventory extends Inventory {
+public class FurnaceInventory extends HeldInventory<Block> {
 	private static final long serialVersionUID = 1L;
 	public static final int SIZE = 3;
 	public static final int OUTPUT_SLOT = 2, FUEL_SLOT = 0, INGREDIENT_SLOT = 1;

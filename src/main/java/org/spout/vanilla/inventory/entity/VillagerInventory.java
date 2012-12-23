@@ -26,13 +26,14 @@
  */
 package org.spout.vanilla.inventory.entity;
 
+import org.spout.api.entity.Entity;
 import org.spout.vanilla.inventory.CraftingInventory;
 
 /**
  * Represents the inventory of a
  * {@link org.spout.vanilla.component.living.passive.Villager}.
  */
-public class VillagerInventory extends CraftingInventory {
+public class VillagerInventory extends CraftingInventory<Entity> {
 	private static final long serialVersionUID = 1L;
 	public static final int LENGTH = 2, WIDTH = 1, OUTPUT_SLOT = 2;
 

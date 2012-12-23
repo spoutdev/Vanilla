@@ -27,6 +27,7 @@
 package org.spout.vanilla.component.inventory;
 
 import org.spout.api.component.type.EntityComponent;
+import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.data.VanillaData;
@@ -45,7 +46,9 @@ public class PlayerInventory extends EntityComponent {
 	 * @return the quickbar slots
 	 */
 	public PlayerQuickbar getQuickbar() {
-		return getData().get(VanillaData.QUICKBAR_INVENTORY);
+		PlayerQuickbar inventory =  getData().get(VanillaData.QUICKBAR_INVENTORY);
+		inventory.setHolder((Player) getOwner());
+		return inventory;
 	}
 
 	/**
@@ -53,7 +56,9 @@ public class PlayerInventory extends EntityComponent {
 	 * @return an Inventory with the items
 	 */
 	public PlayerMainInventory getMain() {
-		return getData().get(VanillaData.MAIN_INVENTORY);
+		PlayerMainInventory inventory = getData().get(VanillaData.MAIN_INVENTORY);
+		inventory.setHolder((Player) getOwner());
+		return inventory;
 	}
 
 	/**
@@ -61,7 +66,9 @@ public class PlayerInventory extends EntityComponent {
 	 * @return an Inventory with the armor items
 	 */
 	public PlayerArmorInventory getArmor() {
-		return getData().get(VanillaData.ARMOR_INVENTORY);
+		PlayerArmorInventory inventory = getData().get(VanillaData.ARMOR_INVENTORY);
+		inventory.setHolder((Player) getOwner());
+		return inventory;
 	}
 
 	/**
@@ -69,7 +76,9 @@ public class PlayerInventory extends EntityComponent {
 	 * @return an inventory with the crafting grid items
 	 */
 	public PlayerCraftingInventory getCraftingGrid() {
-		return getData().get(VanillaData.CRAFTING_INVENTORY);
+		PlayerCraftingInventory inventory = getData().get(VanillaData.CRAFTING_INVENTORY);
+		inventory.setHolder((Player) getOwner());
+		return inventory;
 	}
 
 	public ChestInventory getEnderChestInventory() {

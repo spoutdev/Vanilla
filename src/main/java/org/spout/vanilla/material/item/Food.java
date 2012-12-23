@@ -29,6 +29,8 @@ package org.spout.vanilla.material.item;
 import org.spout.api.entity.Entity;
 import org.spout.api.math.Vector2;
 
+import org.spout.vanilla.component.inventory.PlayerInventory;
+import org.spout.vanilla.component.misc.HungerComponent;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 
@@ -46,7 +48,24 @@ public class Food extends VanillaItemMaterial {
 
 	public void onEat(Entity entity, int slot) {
 		if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-			//TODO: Reimplement food less bad
+			HungerComponent hunger = entity.get(HungerComponent.class);
+			for (FoodEffect effect : getEffectType()) {
+				switch(effect.getEffect()) {
+					case HEALTH_REGENERATION:
+						//TODO: Need potions implemented to work.
+						break;
+					case HUNGER:
+						hunger.setHunger((int) (hunger.getHunger() + effect.getChange()));
+						break;
+					case POISON:
+						//TODO: Need potions to apply that.
+						break;
+					case SATURATION:
+						hunger.setFoodSaturation((float) (hunger.getFoodSaturation() + effect.getChange()));
+						break;
+				}
+			}
+			entity.get(PlayerInventory.class).getQuickbar().addAmount(slot, -1);
 		}
 	}
 }

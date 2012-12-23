@@ -26,28 +26,10 @@
  */
 package org.spout.vanilla.material.item;
 
-public class FoodEffect {
-	private FoodEffects effect;
-	private float change;
+public enum FoodEffects {
 
-	public FoodEffect(FoodEffects effect, float change) {
-		this.effect = effect;
-		this.change = change;
-	}
-	
-	public FoodEffects getEffect() {
-		return effect;
-	}
-
-	public void setEffect(FoodEffects effect) {
-		this.effect = effect;
-	}
-
-	public float getChange() {
-		return change;
-	}
-
-	public void setChange(float change) {
-		this.change = change;
-	}
+	POISON,
+	HUNGER,
+	SATURATION,
+	HEALTH_REGENERATION
 }

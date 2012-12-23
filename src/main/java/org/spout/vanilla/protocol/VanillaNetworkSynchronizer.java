@@ -386,10 +386,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		Difficulty difficulty = world.getComponentHolder().getData().get(VanillaData.DIFFICULTY);
 		Dimension dimension = world.getComponentHolder().getData().get(VanillaData.DIMENSION);
 		WorldType worldType = world.getComponentHolder().getData().get(VanillaData.WORLD_TYPE);
-		if (player.has(Human.class)) {
-			player.get(Human.class).setGamemode(gamemode, false); // Must be here because gamemode may be different; false because client is updated in next call
-			player.get(Human.class).updateAbilities();// TODO - this should probably do a permission check of some kind
-		}
+
 		//TODO Handle infinite height
 		int entityId = player.getId();
 
@@ -404,11 +401,14 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			player.getSession().send(false, new PlayerRespawnMessage(1, difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
 			player.getSession().send(false, new PlayerRespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
 		}
-		
+
 		if (player.has(PlayerInventory.class)) {
 			player.get(PlayerInventory.class).updateAll();
 		}
-
+		if (player.has(Human.class)) {
+			player.get(Human.class).setGamemode(gamemode, false); // Must be here because gamemode may be different; false because client is updated in next call
+			player.get(Human.class).updateAbilities();// TODO - this should probably do a permission check of some kind
+		}
 		Point pos = world.getSpawnPoint().getPosition();
 		PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());
 		player.getSession().send(false, SPMsg);

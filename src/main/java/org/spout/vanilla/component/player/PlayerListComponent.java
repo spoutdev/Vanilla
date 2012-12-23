@@ -42,8 +42,9 @@ public class PlayerListComponent extends EntityComponent {
 	private Server server;
 	private final LinkedHashMap<String, Long> players = new LinkedHashMap<String, Long>();
 	private final HashSet<String> temp = new HashSet<String>();
-	private float pollPeriod = 10;
+	private float pollPeriod = 10 * 50; // Every 10 seconds
 	private float timer = 0;
+	private boolean force; // If true will force the list on the next tick
 
 	@Override
 	public void onAttached() {
@@ -63,6 +64,9 @@ public class PlayerListComponent extends EntityComponent {
 		if (timer < 0.0F) {
 			pollList();
 			timer += pollPeriod;
+		} else if (force) {
+			pollList();
+			force = false;
 		}
 	}
 
@@ -70,7 +74,7 @@ public class PlayerListComponent extends EntityComponent {
 		Player[] online = server.getOnlinePlayers();
 		temp.clear();
 		for (int i = 0; i < online.length; i++) {
-			if (online[i].has(PingComponent.class)) {
+			if (online[i].has(PingComponent.class) && !player.isInvisible(online[i])) {
 				String name = online[i].getDisplayName();
 				long ping = (long) (1000.0F * online[i].get(PingComponent.class).getPing());
 				temp.add(name);
@@ -88,5 +92,9 @@ public class PlayerListComponent extends EntityComponent {
 				itr.remove();
 			}
 		}
+	}
+	
+	public void force() {
+		force = true;
 	}
 }

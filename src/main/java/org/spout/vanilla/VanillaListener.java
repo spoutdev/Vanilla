@@ -37,6 +37,8 @@ import org.spout.api.event.Order;
 import org.spout.api.event.Result;
 import org.spout.api.event.block.BlockChangeEvent;
 import org.spout.api.event.engine.EngineStartEvent;
+import org.spout.api.event.entity.EntityHiddenEvent;
+import org.spout.api.event.entity.EntityShownEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.material.BlockMaterial;
@@ -135,6 +137,21 @@ public class VanillaListener implements Listener {
 			if (redstoneEvent.isCancelled()) {
 				event.setCancelled(true);
 			}
+		}
+	}
+	
+	@EventHandler
+	public void onEntityHide(EntityHiddenEvent event) {
+		//TODO maps, sounds, etc.
+		if (event.getEntity() instanceof Player) {
+			event.getHiddenFrom().get(PlayerListComponent.class).force();
+		}
+	}
+	
+	@EventHandler
+	public void onEntityShow(EntityShownEvent event) {
+		if (event.getEntity() instanceof Player) {
+			event.getHiddenFrom().get(PlayerListComponent.class).force();
 		}
 	}
 }

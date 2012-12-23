@@ -92,7 +92,7 @@ import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 
 public class VanillaPlugin extends CommonPlugin {
 	private static final int LOADER_THREAD_COUNT = 16;
-	public static final int MINECRAFT_PROTOCOL_ID = 50;
+	public static final int MINECRAFT_PROTOCOL_ID = 51;
 	public static final int VANILLA_PROTOCOL_ID = NetworkComponent.getProtocolId("org.spout.vanilla.protocol");
 	private static VanillaPlugin instance;
 	private Engine engine;

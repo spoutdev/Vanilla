@@ -83,7 +83,7 @@ public class VanillaListener implements Listener {
 	}
 
 	@EventHandler
-	public void onClientEnable(EngineStartEvent event) {
+	public void onGameStart(EngineStartEvent event) {
 		if (Spout.getPlatform() != Platform.CLIENT) {
 			return;
 		}

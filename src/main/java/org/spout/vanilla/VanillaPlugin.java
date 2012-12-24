@@ -143,7 +143,8 @@ public class VanillaPlugin extends CommonPlugin {
 		}
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			System.out.println("Loading Skydome");
-
+			//Model m = (Model) Spout.getFilesystem().getResource("model://Spout/models/sphereical_skydome.spm");
+			
 			Model m = (Model) Spout.getFilesystem().getResource("model://Vanilla/materials/sky/skydome.spm");
 			m.getRenderMaterial().addRenderEffect(VanillaEffects.SKY);
 			System.out.println("Loaded Skydome");

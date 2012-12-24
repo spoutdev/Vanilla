@@ -33,5 +33,5 @@ RenderState:
 # Names match up to the name in the shader.
 
 MaterialParams:
-    Diffuse: texture://Spout/textures/testsky.png
+    Stars: texture://Vanilla/misc/particlefield.png
     BlendColor: color(1,1,1,1)

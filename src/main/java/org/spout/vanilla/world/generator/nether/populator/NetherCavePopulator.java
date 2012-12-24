@@ -28,17 +28,18 @@ package org.spout.vanilla.world.generator.nether.populator;
 
 import java.util.Random;
 
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.SinusHelper;
 import org.spout.api.math.Vector3;
-import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.populator.OverlapingPopulator;
 
 public class NetherCavePopulator extends OverlapingPopulator {
 	@Override
-	protected void generate(CuboidShortBuffer blockData, Vector3 chunk, Vector3 originChunk, Random random) {
+	protected void generate(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 originChunk, Random random) {
 		if (random.nextInt(5) != 0) {
 			return;
 		}
@@ -64,7 +65,7 @@ public class NetherCavePopulator extends OverlapingPopulator {
 		}
 	}
 
-	private void generateCaveBranch(CuboidShortBuffer blockData, Vector3 chunk, Vector3 target, double horizontalScale, double verticalScale,
+	private void generateCaveBranch(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 target, double horizontalScale, double verticalScale,
 									double horizontalAngle, double verticalAngle, int startingNode, int nodeAmount, Random random) {
 
 		final Vector3 middle = new Vector3(chunk.getX() + 8, 0, chunk.getZ() + 8);
@@ -151,12 +152,12 @@ public class NetherCavePopulator extends OverlapingPopulator {
 		}
 	}
 
-	private void generateLargeCaveNode(CuboidShortBuffer blockData, Vector3 chunk, Vector3 target, Random random) {
+	private void generateLargeCaveNode(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 target, Random random) {
 		generateCaveBranch(blockData, chunk, target, random.nextFloat() * 6 + 1, 0.5f, 0, 0, -1, -1, random);
 	}
 
 	private static class NetherCaveNode {
-		private final CuboidShortBuffer blockData;
+		private final CuboidBlockMaterialBuffer blockData;
 		private final Vector3 chunk;
 		private final Vector3 start;
 		private final Vector3 end;
@@ -164,9 +165,9 @@ public class NetherCavePopulator extends OverlapingPopulator {
 		private final double verticalSize;
 		private final double horizontalSize;
 
-		private NetherCaveNode(CuboidShortBuffer blockData, Vector3 chunk, Vector3 start, Vector3 end, Vector3 target,
+		private NetherCaveNode(CuboidBlockMaterialBuffer blockData2, Vector3 chunk, Vector3 start, Vector3 end, Vector3 target,
 							   double verticalSize, double horizontalSize) {
-			this.blockData = blockData;
+			this.blockData = blockData2;
 			this.chunk = chunk;
 			this.start = clamp(start);
 			this.end = clamp(end);
@@ -180,7 +181,7 @@ public class NetherCavePopulator extends OverlapingPopulator {
 				for (int z = start.getFloorZ(); z < end.getFloorZ(); z++) {
 					for (int y = end.getFloorY() + 1; y >= start.getFloorY() - 1; y--) {
 						if (blockData.get(chunk.getFloorX() + x, y, chunk.getFloorZ() + z)
-								== VanillaMaterials.LAVA.getId()) {
+								== VanillaMaterials.LAVA) {
 							return false;
 						}
 						if (y != start.getFloorY() - 1 && x != start.getFloorX() && x != end.getFloorX() - 1
@@ -206,9 +207,9 @@ public class NetherCavePopulator extends OverlapingPopulator {
 						if (yOffset > -0.7 && xOffset * xOffset + yOffset * yOffset + zOffset * zOffset < 1) {
 							final int xx = chunk.getFloorX() + x;
 							final int zz = chunk.getFloorZ() + z;
-							final short id = blockData.get(xx, y, zz);
-							if (id == VanillaMaterials.NETHERRACK.getId()) {
-								blockData.set(xx, y, zz, VanillaMaterials.AIR.getId());
+							final BlockMaterial id = blockData.get(xx, y, zz);
+							if (id == VanillaMaterials.NETHERRACK) {
+								blockData.set(xx, y, zz, VanillaMaterials.AIR);
 							}
 						}
 					}

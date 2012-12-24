@@ -38,7 +38,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.MaterialRegistry;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.config.ConfigurationNode;
-import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
@@ -46,7 +46,7 @@ import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
 public class GroundCoverPopulator implements GeneratorPopulator {
 	@Override
-	public void populate(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
+	public void populate(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
 		final Random random = WorldGeneratorUtils.getRandom(seed, x, y, z, 13823);
 		final Vector3 size = blockData.getSize();
 		final int sizeX = size.getFloorX();
@@ -74,8 +74,8 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 							if (yy < 0) {
 								break yIteration;
 							}
-							if (blockData.get(x + xx, y + yy, z + zz) == VanillaMaterials.STONE.getId()) {
-								blockData.set(x + xx, y + yy, z + zz, cover.getId());
+							if (blockData.get(x + xx, y + yy, z + zz) == VanillaMaterials.STONE) {
+								blockData.set(x + xx, y + yy, z + zz, cover);
 							}
 						}
 					}
@@ -86,15 +86,15 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 		}
 	}
 
-	private int getNextStone(CuboidShortBuffer blockData, int x, int y, int z, int yy) {
-		for (; yy >= 0 && blockData.get(x, y + yy, z) != VanillaMaterials.STONE.getId(); yy--) {
+	private int getNextStone(CuboidBlockMaterialBuffer blockData, int x, int y, int z, int yy) {
+		for (; yy >= 0 && blockData.get(x, y + yy, z) != VanillaMaterials.STONE; yy--) {
 			// iterate until we reach stone
 		}
 		return yy;
 	}
 
-	private int getNextAir(CuboidShortBuffer blockData, int x, int y, int z, int yy) {
-		for (; yy >= 0 && blockData.get(x, y + yy, z) == VanillaMaterials.STONE.getId(); yy--) {
+	private int getNextAir(CuboidBlockMaterialBuffer blockData, int x, int y, int z, int yy) {
+		for (; yy >= 0 && blockData.get(x, y + yy, z) == VanillaMaterials.STONE; yy--) {
 			// iterate until we exit the stone column
 		}
 		return yy;

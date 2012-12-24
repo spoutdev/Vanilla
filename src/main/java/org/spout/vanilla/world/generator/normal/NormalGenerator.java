@@ -46,7 +46,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
-import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 import org.spout.api.util.map.TIntPairObjectHashMap;
 
 import org.spout.vanilla.data.Climate;
@@ -182,7 +182,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 	}
 
 	@Override
-	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
+	protected void generateTerrain(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
 		if (y >= HEIGHT) {
 			return;
 		}
@@ -227,23 +227,23 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 				for (int yy = 0; yy < sizeY; yy++) {
 					double noiseValue = noise[xx][yy][zz] - 1 / smoothHeight * (y + yy - smoothHeight - minElevation);
 					if (noiseValue >= 0) {
-						blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.STONE.getId());
+						blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.STONE);
 					} else {
 						if (y + yy <= SEA_LEVEL) {
 							if (y + yy == SEA_LEVEL && ((NormalBiome) biomes.getBiome(xx, 0, zz)).getClimate() == Climate.COLD) {
-								blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.ICE.getId());
+								blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.ICE);
 							} else {
-								blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.WATER.getId());
+								blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.WATER);
 							}
 						} else {
-							blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.AIR.getId());
+							blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.AIR);
 						}
 					}
 				}
 				if (y == 0) {
 					final byte bedrockDepth = (byte) (random.nextInt(BEDROCK_DEPTH) + 1);
 					for (byte yy = 0; yy < bedrockDepth; yy++) {
-						blockData.set(x + xx, yy, z + zz, VanillaMaterials.BEDROCK.getId());
+						blockData.set(x + xx, yy, z + zz, VanillaMaterials.BEDROCK);
 					}
 				}
 			}

@@ -124,7 +124,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 		engine.getRootCommand().addSubCommand(this, "+toggle_inventory").setArgBounds(0, 0).setHelp("Opens or closes the player's inventory.")
 				.setExecutor(Platform.CLIENT, new InputCommandExecutor());
-		engine.getRootCommand().addSubCommand(this, "+break_block").setArgBounds(0, 0).setHelp("Opens or closes the player's inventory.")
+		engine.getRootCommand().addSubCommand(this, "+break_block").setArgBounds(0, 0).setHelp("Breaks a block!")
 				.setExecutor(Platform.CLIENT, new InputCommandExecutor());
 
 		if (Spout.getPlatform() == Platform.CLIENT) {

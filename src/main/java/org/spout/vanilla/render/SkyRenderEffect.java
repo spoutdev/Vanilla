@@ -29,6 +29,7 @@ package org.spout.vanilla.render;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.Vector4;
+import org.spout.api.render.Shader;
 import org.spout.api.render.effect.RenderEffect;
 import org.spout.api.render.effect.SnapshotRender;
 
@@ -38,9 +39,9 @@ public class SkyRenderEffect implements RenderEffect {
 	private static final float lat = (float) ((25.0 / 180.0) * MathHelper.PI);
 	private static final float sunSize = 0.2f;
 	private static final float ambient = 0.33f;
-	private static final Vector4 nightColor = new Vector4(0.0f, 0.0f, 0.0f, 1.0f);
+	private static final Vector4 nightColor = new Vector4(1.0f, 1.0f, 1.0f, 0f);
 	private static final Vector4 dayColor = new Vector4(135/255f, 206/255f, 235/255f, 1.0f);
-	private static final Vector4 dawnColor = new Vector4(1f, 0.5f, 0.5f, 1.0f);
+	private static final Vector4 dawnColor = new Vector4(1f, 0.5f, 0.5f, 0.7f);
 	private static final float cY = (float) Math.cos(lat);
 	private static final float cZ = (float) Math.sin(lat);
 	private static volatile boolean force = false;
@@ -61,10 +62,13 @@ public class SkyRenderEffect implements RenderEffect {
 
 	@Override
 	public void preRender(SnapshotRender snapshotRender) {
-		//TODO : Replace by the real color of the sky taking account of the time
-		float f = (float) ((System.currentTimeMillis() % 15000) / 15000.0);
+		
+		Shader s = snapshotRender.getMaterial().getShader();	
+		
+		
+		float time = (float) ((System.currentTimeMillis() % 15000) / 15000.0);
 
-		float rads = (float) (f * 2 * MathHelper.PI);
+		float rads = (float) (time * 2 * MathHelper.PI);
 
 		float x = (float) Math.sin(rads);
 
@@ -74,46 +78,20 @@ public class SkyRenderEffect implements RenderEffect {
 
 		float z = (float) (y1 * cZ);
 
+		
 		if (force) {
 			x = xForce;
 			y = yForce;
 			z = zForce;
 		}
 
-		float sunWeight;
-		Vector4 skyColor;
-
-		float yAbs = Math.abs(y);
-		if (yAbs < sunSize) {
-			sunWeight = (y + sunSize) / sunSize / 2.0f;
-			Vector4 weightedSun;
-			if (y < 0) {
-				weightedSun = dawnColor;
-			} else {
-				float dawnWeight = y / sunSize;
-				weightedSun = dayColor.multiply(dawnWeight).add(dawnColor.multiply(1 - dawnWeight));
-			}
-			skyColor = weightedSun.multiply(sunWeight).add(nightColor.multiply((1 - sunWeight)));
-		} else {
-			if (y < 0) {
-				sunWeight = 0;
-				skyColor = nightColor;
-			} else {
-				sunWeight = 1;
-				skyColor = dayColor;
-			}
-		}
-
-		snapshotRender.getMaterial().getShader().setUniform("ambient", ambient);
-		snapshotRender.getMaterial().getShader().setUniform("skyColor", skyColor);
-		snapshotRender.getMaterial().getShader().setUniform("sunColor", dayColor.multiply(sunWeight));
-		snapshotRender.getMaterial().getShader().setUniform("moonColor", nightColor.multiply(1 - sunWeight));
-
-		Vector4 sunDir = new Vector4(x * size, y * size, z * size, 1.0f);
-
-		//Spout.getLogger().info("f = " + f + " rads = " + rads + " vector " + sunDir);
-
-		snapshotRender.getMaterial().getShader().setUniform("sunDir", sunDir);
+		s.setUniform("suny", y);
+		s.setUniform("sunSize", sunSize);
+		s.setUniform("dawnColor", dawnColor);
+		s.setUniform("dayColor", dayColor);
+		s.setUniform("nightColor", nightColor);
+		
+	
 	}
 	@Override
 	public void postRender(SnapshotRender snapshotRender) {

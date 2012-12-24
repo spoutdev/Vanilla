@@ -33,7 +33,7 @@ import org.spout.api.generator.Populator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaGenerator;
@@ -46,7 +46,7 @@ public class FlatGenerator implements VanillaGenerator {
 	}
 
 	@Override
-	public void generate(CuboidShortBuffer blockData, int chunkX, int chunkY, int chunkZ, World world) {
+	public void generate(CuboidBlockMaterialBuffer blockData, int chunkX, int chunkY, int chunkZ, World world) {
 		int x = chunkX << 4, z = chunkZ << 4;
 		for (int dx = x; dx < x + 16; ++dx) {
 			for (int dz = z; dz < z + 16; ++dz) {
@@ -54,11 +54,11 @@ public class FlatGenerator implements VanillaGenerator {
 				final int endY = Math.min(Chunk.BLOCKS.SIZE + startY, height);
 				for (int y = startY; y < endY; y++) {
 					if (y <= 0) {
-						blockData.set(dx, y, dz, VanillaMaterials.BEDROCK.getId());
+						blockData.set(dx, y, dz, VanillaMaterials.BEDROCK);
 					} else if (y == height - 1) {
-						blockData.set(dx, y, dz, VanillaMaterials.GRASS.getId());
+						blockData.set(dx, y, dz, VanillaMaterials.GRASS);
 					} else {
-						blockData.set(dx, y, dz, VanillaMaterials.DIRT.getId());
+						blockData.set(dx, y, dz, VanillaMaterials.DIRT);
 					}
 				}
 			}

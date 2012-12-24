@@ -78,6 +78,8 @@ import org.spout.vanilla.protocol.LANThread;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.rcon.RemoteConnectionCore;
 import org.spout.vanilla.protocol.rcon.RemoteConnectionServer;
+import org.spout.vanilla.render.SkyRenderEffect;
+import org.spout.vanilla.render.VanillaEffects;
 import org.spout.vanilla.resources.MapPalette;
 import org.spout.vanilla.resources.RecipeYaml;
 import org.spout.vanilla.resources.loader.MapPaletteLoader;
@@ -138,7 +140,8 @@ public class VanillaPlugin extends CommonPlugin {
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			System.out.println("Loading Skydome");
 
-			Model m = (Model) Spout.getFilesystem().getResource("model://Spout/models/defaultskydome.spm");
+			Model m = (Model) Spout.getFilesystem().getResource("model://Vanilla/materials/sky/skydome.spm");
+			m.getRenderMaterial().addRenderEffect(VanillaEffects.SKY);
 			System.out.println("Loaded Skydome");
 			Spout.getEngine().getWorld("world").getDataMap().put("Skydome", m);
 		}

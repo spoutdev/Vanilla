@@ -36,4 +36,5 @@ public class VanillaEffects {
 	public static final TallGrassOffsetEffect TALL_GRASS_OFFSET = new TallGrassOffsetEffect();
 	public static final RenderEffect SKY_TIME = new LightRenderEffect();
 	public static final RenderEffect LIQUID = new LiquidRenderEffect();
+	public static final RenderEffect SKY = new SkyRenderEffect();
 }

@@ -28,16 +28,18 @@ package org.spout.vanilla.world.generator.normal.populator;
 
 import java.util.Random;
 
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.SinusHelper;
 import org.spout.api.math.Vector3;
+import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class RavinePopulator extends OverlapingPopulator {
 	@Override
-	protected void generate(CuboidShortBuffer blockData, Vector3 chunk, Vector3 originChunk, Random random) {
+	protected void generate(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 originChunk, Random random) {
 		if (random.nextInt(50) != 0) {
 			return;
 		}
@@ -50,7 +52,7 @@ public class RavinePopulator extends OverlapingPopulator {
 		generateRavineNodes(blockData, originChunk, target, horizontalScale, 3, randomHorizontalAngle, randomVerticalAngle, 0, 0, random);
 	}
 
-	private void generateRavineNodes(CuboidShortBuffer blockData, Vector3 chunk, Vector3 target, double horizontalScale, double verticalScale,
+	private void generateRavineNodes(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 target, double horizontalScale, double verticalScale,
 									 double horizontalAngle, double verticalAngle, int startingNode, int nodeAmount, Random random) {
 
 		final Vector3 middle = new Vector3(chunk.getX() + 8, 0, chunk.getZ() + 8);
@@ -131,7 +133,7 @@ public class RavinePopulator extends OverlapingPopulator {
 	}
 
 	private static class RavineNode {
-		private final CuboidShortBuffer blockData;
+		private final CuboidBlockMaterialBuffer blockData;
 		private final Vector3 chunk;
 		private final Vector3 start;
 		private final Vector3 end;
@@ -140,7 +142,7 @@ public class RavinePopulator extends OverlapingPopulator {
 		private final double horizontalSize;
 		private final double[] horizontalScales;
 
-		private RavineNode(CuboidShortBuffer blockData, Vector3 chunk, Vector3 start, Vector3 end, Vector3 target,
+		private RavineNode(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 start, Vector3 end, Vector3 target,
 						   double verticalSize, double horizontalSize, double[] horizontalScales) {
 			this.blockData = blockData;
 			this.chunk = chunk;
@@ -156,8 +158,7 @@ public class RavinePopulator extends OverlapingPopulator {
 			for (int x = start.getFloorX(); x < end.getFloorX(); x++) {
 				for (int z = start.getFloorZ(); z < end.getFloorZ(); z++) {
 					for (int y = end.getFloorY() + 1; y >= start.getFloorY() - 1; y--) {
-						if (blockData.get(chunk.getFloorX() + x, y, chunk.getFloorZ() + z)
-								== VanillaMaterials.WATER.getId()) {
+						if (blockData.get(chunk.getFloorX() + x, y, chunk.getFloorZ() + z).equals(VanillaMaterials.WATER)) {
 							return false;
 						}
 						if (y != start.getFloorY() - 1 && x != start.getFloorX() && x != end.getFloorX() - 1
@@ -183,17 +184,17 @@ public class RavinePopulator extends OverlapingPopulator {
 						if ((xOffset * xOffset + zOffset * zOffset) * horizontalScales[y] + (yOffset * yOffset) / 6 < 1) {
 							final int xx = chunk.getFloorX() + x;
 							final int zz = chunk.getFloorZ() + z;
-							final short id = blockData.get(xx, y, zz);
-							if (id == VanillaMaterials.STONE.getId() || id == VanillaMaterials.DIRT.getId()
-									|| id == VanillaMaterials.GRASS.getId()) {
+							final BlockMaterial material = blockData.get(xx, y, zz);
+							if (material.equals(VanillaMaterials.STONE) || material.equals(VanillaMaterials.DIRT)
+									|| material.equals(VanillaMaterials.GRASS)) {
 								if (y < 10) {
-									blockData.set(xx, y, zz, VanillaMaterials.LAVA.getId());
+									blockData.set(xx, y, zz, VanillaMaterials.LAVA);
 								} else {
-									if (id == VanillaMaterials.GRASS.getId()
-											&& blockData.get(xx, y - 1, zz) == VanillaMaterials.DIRT.getId()) {
-										blockData.set(xx, y - 1, zz, VanillaMaterials.GRASS.getId());
+									if (material.equals(VanillaMaterials.GRASS)
+											&& blockData.get(xx, y - 1, zz).equals(VanillaMaterials.DIRT)) {
+										blockData.set(xx, y - 1, zz, VanillaMaterials.GRASS);
 									}
-									blockData.set(xx, y, zz, VanillaMaterials.AIR.getId());
+									blockData.set(xx, y, zz, VanillaMaterials.AIR);
 								}
 							}
 						}

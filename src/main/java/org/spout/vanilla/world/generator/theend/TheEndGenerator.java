@@ -43,6 +43,7 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
+import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -124,7 +125,7 @@ public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 	}
 
 	@Override
-	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
+	protected void generateTerrain(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
 		if (x < -ISLAND_RADIUS || x > ISLAND_RADIUS
 				|| y < 0 || y > HEIGHT
 				|| z < -ISLAND_RADIUS || z > ISLAND_RADIUS) {
@@ -148,13 +149,13 @@ public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 					final int totalZ = z + zz;
 					final double distance = Math.sqrt(totalX * totalX + distanceY * distanceY + totalZ * totalZ);
 					if (distance == 0) {
-						blockData.set(totalX, totalY, totalZ, VanillaMaterials.END_STONE.getId());
+						blockData.set(totalX, totalY, totalZ, VanillaMaterials.END_STONE);
 						continue;
 					}
 					final double distanceDensity = (ISLAND_RADIUS / distance) / ISLAND_RADIUS;
 					final double density = distanceDensity * (densityNoise[xx][yy][zz] * 0.5 + 0.5);
 					if (density >= 1d / ISLAND_RADIUS) {
-						blockData.set(totalX, totalY, totalZ, VanillaMaterials.END_STONE.getId());
+						blockData.set(totalX, totalY, totalZ, VanillaMaterials.END_STONE);
 					}
 				}
 			}

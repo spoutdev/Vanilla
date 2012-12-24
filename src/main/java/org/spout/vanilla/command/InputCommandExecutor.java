@@ -60,13 +60,16 @@ public class InputCommandExecutor implements CommandExecutor {
 				holder.openWindow(holder.getDefaultWindow());
 			}
 		} else if (name.equalsIgnoreCase("+break_block")) {
-			HitBlockComponent hit = ((Entity) source).get(HitBlockComponent.class);
+			if (source == null || !(source instanceof Player)) {
+				return;
+			}
+			HitBlockComponent hit = ((Player) source).get(HitBlockComponent.class);
 			if (hit != null) {
 				Block hitting = hit.getTargetBlock();
 				if (hitting != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
 					hitting.setMaterial(VanillaMaterials.AIR, new NullDamageCause(DamageCause.DamageType.ATTACK)); //TODO Completely wrong, simply experimenting
+					Spout.log("Broke block: " + hitting.toString());
 				}
-				Spout.log("Broke block: " + hitting.toString());
 			}
 		}
 	}

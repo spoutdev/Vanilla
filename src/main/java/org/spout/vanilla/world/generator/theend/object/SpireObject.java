@@ -59,11 +59,9 @@ public class SpireObject extends LargePlantObject {
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		final byte diameter = getDiameter();
-		final short radiusSquare = getRadiusSquare();
-		for (byte xx = 0; xx < diameter; xx++) {
-			for (byte zz = 0; zz < diameter; zz++) {
-				if (xx * xx + zz * zz <= radiusSquare) {
+		for (byte xx = (byte) -totalRadius; xx <= totalRadius; xx++) {
+			for (byte zz = (byte) -totalRadius; zz <= totalRadius; zz++) {
+				if (xx * xx + zz * zz <= totalRadius * totalRadius + 1) {
 					if (w.getBlockMaterial(x + xx, y - 1, z + zz) == VanillaMaterials.AIR) {
 						return false;
 					}
@@ -75,13 +73,9 @@ public class SpireObject extends LargePlantObject {
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
-		x -= totalRadius;
-		z -= totalRadius;
-		final byte diameter = getDiameter();
-		final short radiusSquare = getRadiusSquare();
-		for (byte xx = (byte) -totalRadius; xx <= diameter; xx++) {
-			for (byte zz = (byte) -totalRadius; zz <= diameter; zz++) {
-				if (xx * xx + zz * zz <= radiusSquare) {
+		for (byte xx = (byte) -totalRadius; xx <= totalRadius; xx++) {
+			for (byte zz = (byte) -totalRadius; zz <= totalRadius; zz++) {
+				if (xx * xx + zz * zz <= totalRadius * totalRadius + 1) {
 					for (byte yy = 0; yy < totalHeight; yy++) {
 						w.setBlockMaterial(x + xx, y + yy, z + zz, main, (short) 0, null);
 					}
@@ -98,14 +92,6 @@ public class SpireObject extends LargePlantObject {
 	public final void randomize() {
 		totalHeight = (byte) (baseHeight + random.nextInt(randomHeight));
 		totalRadius = (byte) (baseRadius + random.nextInt(randRadius));
-	}
-
-	private byte getDiameter() {
-		return (byte) (totalRadius * 2);
-	}
-
-	private short getRadiusSquare() {
-		return (short) (totalRadius * totalRadius + 1);
 	}
 
 	public void setBaseRadius(byte baseRadius) {

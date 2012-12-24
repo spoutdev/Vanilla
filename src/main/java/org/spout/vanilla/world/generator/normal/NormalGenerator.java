@@ -47,7 +47,6 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
-import org.spout.api.util.cuboid.CuboidShortBuffer;
 import org.spout.api.util.map.TIntPairObjectHashMap;
 
 import org.spout.vanilla.data.Climate;

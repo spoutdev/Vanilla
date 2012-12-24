@@ -48,7 +48,6 @@ public class ModelUtil {
 		} else {
 			dirModel = new StringBuilder(baseModel).insert(index, "_" + face.name().charAt(0)).toString();
 		}
-		System.out.println(dirModel);
 		return dirModel;
 	}
 }

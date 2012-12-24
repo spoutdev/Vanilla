@@ -28,7 +28,6 @@ package org.spout.vanilla.component.player;
 
 import org.spout.api.Spout;
 import org.spout.api.component.impl.CameraComponent;
-import org.spout.api.component.impl.PhysicsComponent;
 import org.spout.api.component.impl.TransformComponent;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;

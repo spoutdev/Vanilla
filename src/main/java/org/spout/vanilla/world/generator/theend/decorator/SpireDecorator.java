@@ -37,7 +37,7 @@ import org.spout.vanilla.world.generator.theend.object.SpireObject;
 
 public class SpireDecorator extends Decorator {
 	// Generation odds, chunk per 'ODD' chunk
-	private static final byte ODD = 5;
+	private static final byte ODD = 3;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {

@@ -44,7 +44,6 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
-import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
@@ -70,19 +69,19 @@ public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 	static {
 		ELEVATION.setFrequency(0.012);
 		ELEVATION.setLacunarity(1);
-		ELEVATION.setNoiseQuality(NoiseQuality.STANDARD);
+		ELEVATION.setNoiseQuality(NoiseQuality.BEST);
 		ELEVATION.setPersistence(0.7);
 		ELEVATION.setOctaveCount(1);
 
 		ROUGHNESS.setFrequency(0.0318);
 		ROUGHNESS.setLacunarity(1);
-		ROUGHNESS.setNoiseQuality(NoiseQuality.STANDARD);
+		ROUGHNESS.setNoiseQuality(NoiseQuality.BEST);
 		ROUGHNESS.setPersistence(0.9);
 		ROUGHNESS.setOctaveCount(1);
 
 		DETAIL.setFrequency(0.042);
 		DETAIL.setLacunarity(1);
-		DETAIL.setNoiseQuality(NoiseQuality.STANDARD);
+		DETAIL.setNoiseQuality(NoiseQuality.BEST);
 		DETAIL.setPersistence(0.7);
 		DETAIL.setOctaveCount(1);
 
@@ -139,22 +138,21 @@ public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 		final int sizeX = size.getFloorX();
 		final int sizeY = MathHelper.clamp(size.getFloorY(), 0, HEIGHT);
 		final int sizeZ = size.getFloorZ();
-		final double[][][] densityNoise = WorldGeneratorUtils.fastNoise(FINAL, sizeX, sizeY, sizeZ, 4, x, y, z);
+		final double[][][] noise = WorldGeneratorUtils.fastNoise(FINAL, sizeX, sizeY, sizeZ, 4, x, y, z);
 		for (int xx = 0; xx < sizeX; xx++) {
 			for (int yy = 0; yy < sizeY; yy++) {
 				for (int zz = 0; zz < sizeZ; zz++) {
 					final int totalX = x + xx;
 					final int totalY = y + yy;
-					final double distanceY = (totalY - ISLAND_TOTAL_OFFSET) * ISLAND_HEIGHT_SCALE;
 					final int totalZ = z + zz;
+					final double distanceY = (totalY - ISLAND_TOTAL_OFFSET) * ISLAND_HEIGHT_SCALE;
 					final double distance = Math.sqrt(totalX * totalX + distanceY * distanceY + totalZ * totalZ);
 					if (distance == 0) {
 						blockData.set(totalX, totalY, totalZ, VanillaMaterials.END_STONE);
 						continue;
 					}
-					final double distanceDensity = (ISLAND_RADIUS / distance) / ISLAND_RADIUS;
-					final double density = distanceDensity * (densityNoise[xx][yy][zz] * 0.5 + 0.5);
-					if (density >= 1d / ISLAND_RADIUS) {
+					final double density = ISLAND_RADIUS / distance * (noise[xx][yy][zz] * 0.5 + 0.5);
+					if (density >= 1) {
 						blockData.set(totalX, totalY, totalZ, VanillaMaterials.END_STONE);
 					}
 				}

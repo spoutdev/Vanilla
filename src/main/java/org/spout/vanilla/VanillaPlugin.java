@@ -122,10 +122,11 @@ public class VanillaPlugin extends CommonPlugin {
 		}
 		getEngine().getEventManager().registerEvents(new VanillaListener(this), this);
 
+		InputCommandExecutor exe = new InputCommandExecutor();
 		engine.getRootCommand().addSubCommand(this, "+toggle_inventory").setArgBounds(0, 0).setHelp("Opens or closes the player's inventory.")
-				.setExecutor(Platform.CLIENT, new InputCommandExecutor());
+				.setExecutor(Platform.CLIENT, exe);
 		engine.getRootCommand().addSubCommand(this, "+break_block").setArgBounds(0, 0).setHelp("Breaks a block!")
-				.setExecutor(Platform.CLIENT, new InputCommandExecutor());
+				.setExecutor(Platform.CLIENT, exe);
 
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			InputManager input = ((Client) Spout.getEngine()).getInputManager();
@@ -143,8 +144,6 @@ public class VanillaPlugin extends CommonPlugin {
 		}
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			System.out.println("Loading Skydome");
-			//Model m = (Model) Spout.getFilesystem().getResource("model://Spout/models/sphereical_skydome.spm");
-			
 			Model m = (Model) Spout.getFilesystem().getResource("model://Vanilla/materials/sky/skydome.spm");
 			m.getRenderMaterial().addRenderEffect(VanillaEffects.SKY);
 			System.out.println("Loaded Skydome");

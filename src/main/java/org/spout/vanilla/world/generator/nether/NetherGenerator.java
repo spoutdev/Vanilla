@@ -43,6 +43,7 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
+import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -130,7 +131,7 @@ public class NetherGenerator extends VanillaSingleBiomeGenerator {
 	}
 
 	@Override
-	protected void generateTerrain(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomeManager, long seed) {
+	protected void generateTerrain(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager biomeManager, long seed) {
 		if (y >= HEIGHT) {
 			return;
 		}
@@ -156,12 +157,12 @@ public class NetherGenerator extends VanillaSingleBiomeGenerator {
 						}
 					}
 					if (value >= 0) {
-						blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.NETHERRACK.getId());
+						blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.NETHERRACK);
 					} else {
 						if (y + yy <= SEA_LEVEL) {
-							blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.LAVA.getId());
+							blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.LAVA);
 						} else {
-							blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.AIR.getId());
+							blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.AIR);
 						}
 					}
 				}
@@ -172,7 +173,7 @@ public class NetherGenerator extends VanillaSingleBiomeGenerator {
 				for (int zz = 0; zz < sizeZ; zz++) {
 					final byte bedrockDepth = (byte) (random.nextInt(BEDROCK_DEPTH) + 1);
 					for (int yy = 0; yy < bedrockDepth; yy++) {
-						blockData.set(x + xx, yy, z + zz, VanillaMaterials.BEDROCK.getId());
+						blockData.set(x + xx, yy, z + zz, VanillaMaterials.BEDROCK);
 					}
 				}
 			}
@@ -182,7 +183,7 @@ public class NetherGenerator extends VanillaSingleBiomeGenerator {
 				for (int zz = 0; zz < sizeZ; zz++) {
 					final byte bedrockDepth = (byte) (random.nextInt(BEDROCK_DEPTH) + 1);
 					for (int yy = HEIGHT - 1; yy >= HEIGHT - bedrockDepth; yy--) {
-						blockData.set(x + xx, yy, z + zz, VanillaMaterials.BEDROCK.getId());
+						blockData.set(x + xx, yy, z + zz, VanillaMaterials.BEDROCK);
 					}
 				}
 			}

@@ -38,6 +38,7 @@ import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
+import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -69,7 +70,7 @@ public class BlockPatchPopulator implements GeneratorPopulator {
 	}
 
 	@Override
-	public void populate(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
+	public void populate(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
 		seed = WorldGeneratorUtils.getSeed(seed, 7, 7, 7, material.getId());
 		final Random random = WorldGeneratorUtils.getRandom(seed, x, y, z, 89545);
 		elevation.setSeed((int) (seed * 101));
@@ -90,13 +91,13 @@ public class BlockPatchPopulator implements GeneratorPopulator {
 						continue;
 					}
 					int yy = getHighestWorkableBlock(blockData, x + xx, yDisplacement + y, z + zz);
-					if (yy == -1 || blockData.get(x + xx, yy + 1, z + zz) != VanillaMaterials.AIR.getId()) {
+					if (yy == -1 || blockData.get(x + xx, yy + 1, z + zz) != VanillaMaterials.AIR) {
 						continue;
 					}
 					final int depth = random.nextInt(3) + 3;
 					for (int yyy = 0; yyy < depth; yyy++) {
-						if (blockData.get(x + xx, yy - yyy, z + zz) == VanillaMaterials.NETHERRACK.getId()) {
-							blockData.set(x + xx, yy - yyy, z + zz, material.getId());
+						if (blockData.get(x + xx, yy - yyy, z + zz) == VanillaMaterials.NETHERRACK) {
+							blockData.set(x + xx, yy - yyy, z + zz, material);
 						} else {
 							break;
 						}
@@ -106,8 +107,8 @@ public class BlockPatchPopulator implements GeneratorPopulator {
 		}
 	}
 
-	private int getHighestWorkableBlock(CuboidShortBuffer blockData, int x, int y, int z) {
-		while (blockData.get(x, y, z) != VanillaMaterials.NETHERRACK.getId()) {
+	private int getHighestWorkableBlock(CuboidBlockMaterialBuffer blockData, int x, int y, int z) {
+		while (blockData.get(x, y, z) != VanillaMaterials.NETHERRACK) {
 			y--;
 			if (y <= 0) {
 				return -1;

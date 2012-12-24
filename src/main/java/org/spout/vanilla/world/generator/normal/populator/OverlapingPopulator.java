@@ -33,13 +33,14 @@ import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.math.Vector3;
+import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 public abstract class OverlapingPopulator implements GeneratorPopulator {
 	protected static final byte OVERLAP = 8;
 
 	@Override
-	public void populate(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
+	public void populate(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
 		if (y >= Region.BLOCKS.SIZE) {
 			return;
 		}
@@ -57,5 +58,5 @@ public abstract class OverlapingPopulator implements GeneratorPopulator {
 		}
 	}
 
-	protected abstract void generate(CuboidShortBuffer blockData, Vector3 chunk, Vector3 originChunk, Random random);
+	protected abstract void generate(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 originChunk, Random random);
 }

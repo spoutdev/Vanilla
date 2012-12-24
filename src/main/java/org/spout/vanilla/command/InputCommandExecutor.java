@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.command;
 
-import java.util.concurrent.BrokenBarrierException;
-
 import org.spout.api.Spout;
 import org.spout.api.command.Command;
 import org.spout.api.command.CommandContext;
@@ -38,7 +36,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.util.map.concurrent.BlockLinkable;
 
 import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.event.cause.DamageCause;

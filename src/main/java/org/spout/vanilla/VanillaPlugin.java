@@ -47,6 +47,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.input.InputManager;
 import org.spout.api.input.Keyboard;
+import org.spout.api.input.Mouse;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
@@ -123,10 +124,13 @@ public class VanillaPlugin extends CommonPlugin {
 
 		engine.getRootCommand().addSubCommand(this, "+toggle_inventory").setArgBounds(0, 0).setHelp("Opens or closes the player's inventory.")
 				.setExecutor(Platform.CLIENT, new InputCommandExecutor());
+		engine.getRootCommand().addSubCommand(this, "+break_block").setArgBounds(0, 0).setHelp("Opens or closes the player's inventory.")
+				.setExecutor(Platform.CLIENT, new InputCommandExecutor());
 
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			InputManager input = ((Client) Spout.getEngine()).getInputManager();
 			input.bind(Keyboard.get(InputConfiguration.TOGGLE_INVENTORY.getString()), "toggle_inventory");
+			input.bind(Mouse.MOUSE_BUTTON0, "break_block");
 		}
 
 		//Configuration

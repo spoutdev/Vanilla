@@ -29,6 +29,7 @@ package org.spout.vanilla;
 import org.spout.api.Client;
 import org.spout.api.Spout;
 import org.spout.api.component.impl.CameraComponent;
+import org.spout.api.component.impl.HitBlockComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
@@ -97,6 +98,7 @@ public class VanillaListener implements Listener {
 		player.add(InputComponent.class);
 		player.add(HealthComponent.class);
 		player.add(HungerComponent.class);
+		player.add(HitBlockComponent.class).setRange(5f);
 	}
 
 	@EventHandler

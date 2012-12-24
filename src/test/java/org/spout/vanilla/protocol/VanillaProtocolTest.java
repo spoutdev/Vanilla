@@ -151,7 +151,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new EntityActionMessage(5, 2),
 			new PlayerSpawnMessage(24, "risaccess1", 8000, 28, 900, 0, 0, 89, new ArrayList<Parameter<?>>(), NullRepositionManager.getInstance()),
 			new PlayerCollectItemMessage(1234, 5678),
-			new EntityObjectMessage(1, (byte) 1, 200, 175, 132, 50, (short) 62, (short) 56, (short) 78, NullRepositionManager.getInstance()),
+			new EntityObjectMessage(1, (byte) 1, 200, 175, 132, 50, (short) 62, (short) 56, (short) 78, (byte) 44, (byte) 42, NullRepositionManager.getInstance()),
 			new EntityMobMessage(123, 255, 1, 2, 4, 34, 55, 33, (short) 0, (short) 0, (short) 0, TEST_PARAMS, NullRepositionManager.getInstance()),
 			new EntityPaintingMessage(4, "KEBAB", 2, 3, 4, 56, NullRepositionManager.getInstance()),
 			new EntityExperienceOrbMessage(34, 1, 2, 3, (short) 34, NullRepositionManager.getInstance()),

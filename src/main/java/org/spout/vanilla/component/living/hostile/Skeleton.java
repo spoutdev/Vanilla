@@ -29,6 +29,9 @@ package org.spout.vanilla.component.living.hostile;
 import com.bulletphysics.collision.shapes.BoxShape;
 
 import org.spout.api.component.impl.PhysicsComponent;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;

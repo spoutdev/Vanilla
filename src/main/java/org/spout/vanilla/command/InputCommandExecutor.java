@@ -26,15 +26,25 @@
  */
 package org.spout.vanilla.command;
 
+import java.util.concurrent.BrokenBarrierException;
+
+import org.spout.api.Spout;
 import org.spout.api.command.Command;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandExecutor;
 import org.spout.api.command.CommandSource;
+import org.spout.api.component.impl.HitBlockComponent;
+import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.util.map.concurrent.BlockLinkable;
 
 import org.spout.vanilla.component.inventory.WindowHolder;
+import org.spout.vanilla.event.cause.DamageCause;
+import org.spout.vanilla.event.cause.NullDamageCause;
 import org.spout.vanilla.inventory.window.Window;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class InputCommandExecutor implements CommandExecutor {
 	@Override
@@ -51,6 +61,15 @@ public class InputCommandExecutor implements CommandExecutor {
 				holder.closeWindow();
 			} else {
 				holder.openWindow(holder.getDefaultWindow());
+			}
+		} else if (name.equalsIgnoreCase("+break_block")) {
+			HitBlockComponent hit = ((Entity) source).get(HitBlockComponent.class);
+			if (hit != null) {
+				Block hitting = hit.getTargetBlock();
+				if (hitting != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
+					hitting.setMaterial(VanillaMaterials.AIR, new NullDamageCause(DamageCause.DamageType.ATTACK)); //TODO Completely wrong, simply experimenting
+				}
+				Spout.log("Broke block: " + hitting.toString());
 			}
 		}
 	}

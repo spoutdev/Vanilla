@@ -89,6 +89,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.map.Map;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.render.LightRenderEffect;
+import org.spout.vanilla.render.SkyRenderEffect;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
@@ -195,8 +196,11 @@ public class TestCommands {
 	public void setSunDirection(CommandContext args, CommandSource source) throws CommandException {
 		if (args.length() == 0) {
 			LightRenderEffect.setSun(null);
+			SkyRenderEffect.setSun(null);
 		} else if (args.length() == 3) {
-			LightRenderEffect.setSun(new Vector3(args.getDouble(0), args.getDouble(1), args.getDouble(2)));
+			Vector3 dir = new Vector3(args.getDouble(0), args.getDouble(1), args.getDouble(2));
+			LightRenderEffect.setSun(dir);
+			SkyRenderEffect.setSun(dir);
 		} else {
 			throw new CommandException("You must provide 3 coords or none to clear");
 		}

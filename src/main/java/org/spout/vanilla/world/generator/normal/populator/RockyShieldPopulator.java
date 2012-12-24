@@ -33,8 +33,9 @@ import net.royawesome.jlibnoise.module.source.Perlin;
 import org.spout.api.generator.GeneratorPopulator;
 import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.generator.biome.BiomeManager;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Vector3;
-import org.spout.api.util.cuboid.CuboidShortBuffer;
+import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
@@ -55,7 +56,7 @@ public class RockyShieldPopulator implements GeneratorPopulator {
 	}
 
 	@Override
-	public void populate(CuboidShortBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
+	public void populate(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
 		final Vector3 size = blockData.getSize();
 		final int sizeX = size.getFloorX();
 		final int sizeY = size.getFloorY();
@@ -83,9 +84,9 @@ public class RockyShieldPopulator implements GeneratorPopulator {
 						}
 						if (yy == surfaceY) {
 							blockData.set(x + xx, y + yy, z + zz, y + yy <= NormalGenerator.SEA_LEVEL
-									? VanillaMaterials.STATIONARY_WATER.getId() : VanillaMaterials.AIR.getId());
+									? VanillaMaterials.STATIONARY_WATER : VanillaMaterials.AIR);
 						} else {
-							blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.STONE.getId());
+							blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.STONE);
 						}
 					}
 				}
@@ -93,9 +94,9 @@ public class RockyShieldPopulator implements GeneratorPopulator {
 		}
 	}
 
-	private boolean canReplace(short id) {
-		return (id == VanillaMaterials.GRASS.getId() || id == VanillaMaterials.MYCELIUM.getId()
-				|| id == VanillaMaterials.DIRT.getId() || id == VanillaMaterials.SAND.getId()
-				|| id == VanillaMaterials.SANDSTONE.getId());
+	private boolean canReplace(BlockMaterial blockMaterial) {
+		return (blockMaterial == VanillaMaterials.GRASS || blockMaterial == VanillaMaterials.MYCELIUM
+				|| blockMaterial == VanillaMaterials.DIRT || blockMaterial == VanillaMaterials.SAND
+				|| blockMaterial == VanillaMaterials.SANDSTONE);
 	}
 }

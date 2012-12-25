@@ -240,6 +240,9 @@
 					<author>false</author>
 					<version>false</version>
 					<linksource>true</linksource>
+					<links>
+						<link>http://jd.spout.org/server/latest</link>
+					</links>
 				</configuration>
 			</plugin>
 			<!-- Reporting plugin -->

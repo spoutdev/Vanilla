@@ -169,12 +169,12 @@ public class VanillaPlugin extends CommonPlugin {
 		instance = this;
 		engine = getEngine();
 		config = new VanillaConfiguration(getDataFolder());
-		Spout.getFilesystem().registerLoader(new MapPaletteLoader());
+		//Spout.getFilesystem().registerLoader(new MapPaletteLoader());
 		Spout.getFilesystem().registerLoader(new RecipeLoader());
 		Protocol.registerProtocol(new VanillaProtocol());
 
 		VanillaMaterials.initialize();
-		MapPalette.DEFAULT = (MapPalette) Spout.getFilesystem().getResource("mappalette://Vanilla/map/mapColorPalette.dat");
+		//MapPalette.DEFAULT = (MapPalette) Spout.getFilesystem().getResource("mappalette://Vanilla/map/mapColorPalette.dat");
 		RecipeYaml.DEFAULT = (RecipeYaml) Spout.getFilesystem().getResource("recipe://Vanilla/recipes.yml");
 		VanillaRecipes.initialize();
 

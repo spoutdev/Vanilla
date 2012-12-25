@@ -127,11 +127,17 @@ public class VanillaPlugin extends CommonPlugin {
 				.setExecutor(Platform.CLIENT, exe);
 		engine.getRootCommand().addSubCommand(this, "+break_block").setArgBounds(0, 0).setHelp("Breaks a block!")
 				.setExecutor(Platform.CLIENT, exe);
+		engine.getRootCommand().addSubCommand(this, "+select_block").setArgBounds(0, 0).setHelp("Selects a block!")
+				.setExecutor(Platform.CLIENT, exe);
+		engine.getRootCommand().addSubCommand(this, "+place_block").setArgBounds(0, 0).setHelp("Places a block!")
+				.setExecutor(Platform.CLIENT, exe);
 
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			InputManager input = ((Client) Spout.getEngine()).getInputManager();
 			input.bind(Keyboard.get(InputConfiguration.TOGGLE_INVENTORY.getString()), "toggle_inventory");
 			input.bind(Mouse.MOUSE_BUTTON0, "break_block");
+			input.bind(Mouse.MOUSE_BUTTON1, "place_block");
+			input.bind(Mouse.MOUSE_BUTTON2, "select_block");
 		}
 
 		//Configuration

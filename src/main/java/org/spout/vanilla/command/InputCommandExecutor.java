@@ -36,6 +36,8 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.event.cause.DamageCause;
@@ -44,6 +46,8 @@ import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class InputCommandExecutor implements CommandExecutor {
+	private BlockMaterial selection;
+
 	@Override
 	public void processCommand(CommandSource source, Command command, CommandContext args) throws CommandException {
 		if (!(source instanceof Player)) {
@@ -60,15 +64,35 @@ public class InputCommandExecutor implements CommandExecutor {
 				holder.openWindow(holder.getDefaultWindow());
 			}
 		} else if (name.equalsIgnoreCase("+break_block")) {
-			if (source == null || !(source instanceof Player)) {
-				return;
-			}
 			HitBlockComponent hit = ((Player) source).get(HitBlockComponent.class);
 			if (hit != null) {
 				Block hitting = hit.getTargetBlock();
 				if (hitting != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
-					hitting.setMaterial(VanillaMaterials.AIR, new NullDamageCause(DamageCause.DamageType.ATTACK)); //TODO Completely wrong, simply experimenting
+					hitting.setMaterial(VanillaMaterials.AIR);
 					Spout.log("Broke block: " + hitting.toString());
+				}
+			}
+		} else if (name.equalsIgnoreCase("+select_block")) {
+			HitBlockComponent hit = ((Player) source).get(HitBlockComponent.class);
+			if (hit != null) {
+				Block hitting = hit.getTargetBlock(true);
+				if (hitting != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
+					Spout.log(hitting.getMaterial().getName());
+					selection = hitting.getMaterial();
+				}
+			}
+		} else if (name.equalsIgnoreCase("+place_block")) {
+			HitBlockComponent hit = ((Player) source).get(HitBlockComponent.class);
+			if (hit != null) {
+				Block hitting = hit.getTargetBlock();
+				if (hitting != null && selection != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
+					BlockFace clicked = hit.getTargetFace();
+					System.out.println(clicked);
+					if (clicked == null) {
+						return;
+					}
+					Spout.log(clicked.name());
+					hitting.translate(clicked).setMaterial(selection);
 				}
 			}
 		}

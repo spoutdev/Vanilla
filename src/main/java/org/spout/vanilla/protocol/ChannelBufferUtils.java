@@ -87,9 +87,7 @@ public final class ChannelBufferUtils {
 					break;
 				case Parameter.TYPE_ITEM:
 					ItemStack item = ((Parameter<ItemStack>) parameter).getValue();
-					buf.writeShort(item.getMaterial().getId());
-					buf.writeByte(item.getAmount());
-					buf.writeShort(item.getData());
+					writeItemStack(buf, item);
 					break;
 			}
 		}
@@ -126,11 +124,7 @@ public final class ChannelBufferUtils {
 					parameters.add(new Parameter<String>(type, index, readString(buf)));
 					break;
 				case Parameter.TYPE_ITEM:
-					int id = buf.readShort();
-					int count = buf.readByte();
-					short data = buf.readShort();
-					ItemStack item = new ItemStack(Material.get((short) id), data, count);
-					parameters.add(new Parameter<ItemStack>(type, index, item));
+					parameters.add(new Parameter<ItemStack>(type, index, readItemStack(buf)));
 					break;
 			}
 		}

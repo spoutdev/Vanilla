@@ -14,7 +14,7 @@ recipes:
     ingredients: [SPRUCE_WOOD]
     includedata: true
 
-  BirtchPlank:
+  BirchPlank:
     type: Shapeless
     result: BIRCH_PLANK,4
     ingredients: [BIRCH_WOOD]

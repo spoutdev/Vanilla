@@ -63,7 +63,7 @@ public class Snow extends GroundAttachable implements DynamicMaterial, Initializ
 	}
 
 	private Snow(String name, int data, Snow parent, String model) {
-		super(name, SNOW[0].getId(), data, parent, model);
+		super(name, SNOW[0].getMinecraftId(), data, parent, model);
 		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent();
 		this.setOcclusion((short) 0, BlockFace.BOTTOM);
 		if (data == 7) {

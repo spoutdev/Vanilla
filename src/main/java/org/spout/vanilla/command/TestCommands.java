@@ -341,10 +341,16 @@ public class TestCommands {
 	@Command(aliases = "hunger", usage = "<amount> <hungry>", desc = "Modify your hunger", min = 2, max = 2)
 	@CommandPermissions("vanilla.command.debug")
 	public void hunger(CommandContext args, CommandSource source) throws CommandException {
-		if (Spout.getPlatform() != Platform.CLIENT) {
-			throw new CommandException("Only clients can modify the hunger bar.");
+		HungerComponent hunger = null;
+		if (Spout.getPlatform() == Platform.CLIENT) {
+			hunger = ((Client) Spout.getEngine()).getActivePlayer().get(HungerComponent.class);
+		} else {
+			if (!(source instanceof Player)) {
+				throw new CommandException("Only a player can use this command!");
+			}
+			hunger = ((Player)source).get(HungerComponent.class);
 		}
-		HungerComponent hunger = ((Client) Spout.getEngine()).getActivePlayer().get(HungerComponent.class);
+		
 		hunger.setHunger(args.getInteger(0));
 		hunger.setPoisoned(Boolean.valueOf(args.getString(1)));
 	}

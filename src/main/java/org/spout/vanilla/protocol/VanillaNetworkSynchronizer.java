@@ -192,8 +192,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		int x = (int) p.getX() >> Chunk.BLOCKS.BITS;
 		int y = (int) p.getY() >> Chunk.BLOCKS.BITS; // + SEALEVEL_CHUNK;
 		int z = (int) p.getZ() >> Chunk.BLOCKS.BITS;
+		
+		RepositionManager rm = getRepositionManager();
+		
+		int cY = rm.convertChunkY(y);
 
-		if (y < 0 || y >= p.getWorld().getHeight() >> Chunk.BLOCKS.BITS) {
+		if (cY < 0 || cY >= p.getWorld().getHeight() >> Chunk.BLOCKS.BITS) {
 			return;
 		}
 
@@ -202,22 +206,24 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			column.remove(y);
 			if (column.isEmpty()) {
 				emptyColumns.add(IntPairHashed.key(x, z));
-			} // TODO - is this required?
-			/*
-			else {
-				CCMsg = new ChunkDataMessage(x, z, false, null, null, null, true);
-			}*/
+			}
 		}
 	}
 
 	@Override
 	protected void initChunk(Point p) {
-
+	}
+	
+	private void initChunkRaw(Point p) {
 		int x = p.getChunkX();
 		int y = p.getChunkY();// + SEALEVEL_CHUNK;
 		int z = p.getChunkZ();
+		
+		RepositionManager rm = getRepositionManager();
 
-		if (y < 0 || y >= p.getWorld().getHeight() >> Chunk.BLOCKS.BITS) {
+		int cY = rm.convertChunkY(y);
+
+		if (cY < 0 || cY >= p.getWorld().getHeight() >> Chunk.BLOCKS.BITS) {
 			return;
 		}
 
@@ -311,7 +317,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			return null;
 		}
 
-		initChunk(c.getBase());
+		initChunkRaw(c.getBase());
 
 		Collection<Chunk> chunks = null;
 

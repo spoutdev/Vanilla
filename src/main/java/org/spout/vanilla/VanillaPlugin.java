@@ -144,7 +144,7 @@ public class VanillaPlugin extends CommonPlugin {
 		VanillaBlockMaterial.REDSTONE_POWER_MAX = (short) VanillaConfiguration.REDSTONE_MAX_RANGE.getInt();
 		VanillaBlockMaterial.REDSTONE_POWER_MIN = (short) VanillaConfiguration.REDSTONE_MIN_RANGE.getInt();
 
-		if (engine.debugMode() || engine.getPlatform() == Platform.SERVER) {
+		if ((engine.debugMode() && engine.getPlatform() != Platform.PROXY) || engine.getPlatform() == Platform.SERVER) {
 			//Worlds
 			setupWorlds();
 		}

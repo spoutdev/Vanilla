@@ -310,4 +310,8 @@ public class VanillaPlugin extends CommonPlugin {
 	public VanillaConfiguration getConfig() {
 		return config;
 	}
+
+	public ChatArguments getPrefix() {
+		return ((PluginLogger) getLogger()).getTag();
+	}
 }

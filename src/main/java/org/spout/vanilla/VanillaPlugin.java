@@ -171,7 +171,7 @@ public class VanillaPlugin extends CommonPlugin {
 	@Override
 	public void onLoad() {
 		instance = this;
-		((PluginLogger) getLogger()).setTag(new ChatArguments(ChatStyle.RESET, "[", ChatStyle.GOLD, "Vanilla", ChatStyle.RESET, "]"));
+		((PluginLogger) getLogger()).setTag(new ChatArguments(ChatStyle.RESET, "[", ChatStyle.GOLD, "Vanilla", ChatStyle.RESET, "] "));
 		engine = getEngine();
 		config = new VanillaConfiguration(getDataFolder());
 		//Spout.getFilesystem().registerLoader(new MapPaletteLoader());

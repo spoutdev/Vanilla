@@ -29,11 +29,14 @@ package org.spout.vanilla;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.spout.api.Client;
 import org.spout.api.Engine;
 import org.spout.api.Server;
 import org.spout.api.Spout;
+import org.spout.api.chat.ChatArguments;
+import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.command.CommandRegistrationsFactory;
 import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
@@ -54,6 +57,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.model.Model;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.plugin.Platform;
+import org.spout.api.plugin.PluginLogger;
 import org.spout.api.plugin.ServiceManager;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.Protocol;
@@ -167,6 +171,7 @@ public class VanillaPlugin extends CommonPlugin {
 	@Override
 	public void onLoad() {
 		instance = this;
+		((PluginLogger) getLogger()).setTag(new ChatArguments(ChatStyle.RESET, "[", ChatStyle.GOLD, "Vanilla", ChatStyle.RESET, "]"));
 		engine = getEngine();
 		config = new VanillaConfiguration(getDataFolder());
 		//Spout.getFilesystem().registerLoader(new MapPaletteLoader());

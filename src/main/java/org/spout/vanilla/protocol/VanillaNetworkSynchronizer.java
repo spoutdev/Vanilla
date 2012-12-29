@@ -26,13 +26,16 @@
  */
 package org.spout.vanilla.protocol;
 
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
+import gnu.trove.set.TIntSet;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
-
-import gnu.trove.set.TIntSet;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -45,6 +48,7 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
@@ -54,11 +58,11 @@ import org.spout.api.protocol.Session.State;
 import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.protocol.event.ProtocolEventListener;
 import org.spout.api.protocol.reposition.RepositionManager;
+import org.spout.api.util.FlatIterator;
 import org.spout.api.util.hashing.IntPairHashed;
 import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
 import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.neutral.Human;
@@ -135,9 +139,6 @@ import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 import org.spout.vanilla.protocol.reposition.VanillaRepositionManager;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
-
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
 	private static final int SOLID_BLOCK_ID = 1; // Initializer block ID
@@ -480,7 +481,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			int x = IntPairHashed.key1(key);
 			int z = IntPairHashed.key2(key);
 			TIntSet column = initializedChunks.get(x, z);
-			if (column.isEmpty()) {
+			if (column != null && column.isEmpty()) {
 				column = initializedChunks.remove(x, z);
 				activeChunks.remove(x, z);
 				session.send(false, new ChunkDataMessage(x, z, true, null, null, null, true, player.getSession(), getRepositionManager()));
@@ -521,6 +522,25 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			}
 		}
 	}
+	
+	@Override
+	public Iterator<IntVector3> getViewableVolume(int cx, int cy, int cz, int viewDistance) {
+		RepositionManager rmI = this.getRepositionManager().getInverse();
+		
+		int convertY = rmI.convertChunkY(0);
+		
+		return new FlatIterator(cx, convertY, cz, 16, viewDistance);
+	}
+	
+	@Override
+	public boolean isInViewVolume(Point playerChunkBase, Point testChunkBase, int viewDistance) {
+		if (playerChunkBase == null) {
+			return false;
+		}
+		int distance = Math.abs(playerChunkBase.getChunkX() - testChunkBase.getChunkX()) + Math.abs(playerChunkBase.getChunkZ() - testChunkBase.getChunkZ());
+		return distance <= viewDistance;
+	}
+	
 
 	@EventHandler
 	public Message onMapItemUpdate(MapItemUpdateEvent event) {
@@ -679,7 +699,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		return new EntityTileDataMessage(b.getX(), b.getY(), b.getZ(), event.getAction(), event.getData(), getRepositionManager());
 	}
 
-	public static enum ChunkInit {
+	public enum ChunkInit {
 		CLIENT_SEL, FULL_COLUMN, HEIGHTMAP, EMPTY_COLUMN;
 
 		public static ChunkInit getChunkInit(String init) {
@@ -740,7 +760,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 					return getChunkFullColumn(heights, materials, p, updateEvents);
 			}
 		}
-
+		
 		private static byte[] getChunkFullColumn(int[][] heights, BlockMaterial[][] materials, Point p, List<ProtocolEvent> updateEvents) {
 			Chunk c = p.getWorld().getChunkFromBlock(p);
 			return getChunkFullData(c, updateEvents);

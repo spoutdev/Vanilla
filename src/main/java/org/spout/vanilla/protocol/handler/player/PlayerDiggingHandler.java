@@ -33,6 +33,7 @@ import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Result;
+import org.spout.api.event.block.BlockChangeEvent;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.Protection;
@@ -43,6 +44,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.basic.BasicAir;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockSnapshot;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
@@ -68,7 +70,7 @@ import org.spout.vanilla.protocol.msg.player.PlayerDiggingMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 
 public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMessage> {
-	private void breakBlock(BlockMaterial blockMaterial, Block block, Human human) {
+	private void breakBlock(Session session, BlockMaterial blockMaterial, Block block, Human human) {
 		HashSet<Flag> flags = new HashSet<Flag>();
 		if (human.isSurvival()) {
 			flags.add(PlayerFlags.SURVIVAL);
@@ -79,7 +81,23 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		if (heldItem != null) {
 			heldItem.getMaterial().getItemFlags(heldItem, flags);
 		}
-		blockMaterial.destroy(block, flags, new PlayerBreakCause((Player) human.getOwner(), block));
+
+		PlayerBreakCause cause = new PlayerBreakCause(session.getPlayer(), block);
+		BlockChangeEvent changeEvent = new BlockChangeEvent(block, new BlockSnapshot(block, block.getMaterial(), block.getData()), cause);
+		session.getEngine().getEventManager().callEvent(changeEvent);
+
+		if (!changeEvent.isCancelled()) {
+			blockMaterial.destroy(block, flags, cause);
+		} else {
+			BlockSnapshot newSnapshot = changeEvent.getSnapshot();
+
+			// did the snapshot actually change ?
+			if (!newSnapshot.getMaterial().equals(block.getMaterial()) || newSnapshot.getData() != block.getData()) {
+				block.setMaterial(newSnapshot.getMaterial(), newSnapshot.getData());
+			}
+
+			session.send(false, new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
+		}
 	}
 
 	@Override
@@ -187,7 +205,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 					player.get(DiggingComponent.class).startDigging(new Point(w, x, y, z));
 				} else {
 					// insta-break
-					breakBlock(blockMaterial, block, human);
+					breakBlock(session, blockMaterial, block, human);
 					GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);
 				}
 			}
@@ -214,7 +232,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 
 				totalDamage = ((int) blockMaterial.getHardness() - damageDone);
 				if (totalDamage <= 40) { // Yes, this is a very high allowance - this is because this is only over a single block, and this will spike due to varying latency.
-					breakBlock(blockMaterial, block, human);
+					breakBlock(session, blockMaterial, block, human);
 				}
 				if (block.getMaterial() != VanillaMaterials.AIR) {
 					GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);

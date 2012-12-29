@@ -29,7 +29,6 @@ package org.spout.vanilla;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.spout.api.Client;
 import org.spout.api.Engine;
@@ -61,8 +60,8 @@ import org.spout.api.plugin.PluginLogger;
 import org.spout.api.plugin.ServiceManager;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.Protocol;
+import org.spout.api.util.FlatIterator;
 import org.spout.api.util.OutwardIterator;
-
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.InputCommandExecutor;
 import org.spout.vanilla.command.TestCommands;
@@ -83,11 +82,8 @@ import org.spout.vanilla.protocol.LANThread;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.rcon.RemoteConnectionCore;
 import org.spout.vanilla.protocol.rcon.RemoteConnectionServer;
-import org.spout.vanilla.render.SkyRenderEffect;
 import org.spout.vanilla.render.VanillaEffects;
-import org.spout.vanilla.resources.MapPalette;
 import org.spout.vanilla.resources.RecipeYaml;
-import org.spout.vanilla.resources.loader.MapPaletteLoader;
 import org.spout.vanilla.resources.loader.RecipeLoader;
 import org.spout.vanilla.service.VanillaProtectionService;
 import org.spout.vanilla.service.protection.SpawnProtection;
@@ -235,10 +231,10 @@ public class VanillaPlugin extends CommonPlugin {
 
 		final int radius = VanillaConfiguration.SPAWN_RADIUS.getInt();
 		final int protectionRadius = VanillaConfiguration.SPAWN_PROTECTION_RADIUS.getInt();
-		final int diameter = (radius << 1) + 1;
-		final int total = (diameter * diameter * diameter) / 6;
+		int r = radius;
+		final int total = (2 * (r*r + r) + 1) * 16;
 		final int progressStep = total / 10;
-		final OutwardIterator oi = new OutwardIterator();
+		final FlatIterator oi = new FlatIterator();
 		SpawnLoaderThread[] loaderThreads = new SpawnLoaderThread[LOADER_THREAD_COUNT];
 
 		if (worlds.isEmpty()) {
@@ -250,22 +246,22 @@ public class VanillaPlugin extends CommonPlugin {
 		for (World world : worlds) {
 			// Keep spawn loaded
 			WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.get(world);
-			if (worldConfig.LOADED_SPAWN.getBoolean()) {
+			boolean newWorld = world.getAge() <= 0;
+			if (worldConfig.LOADED_SPAWN.getBoolean() || newWorld) {
 				// Initialize the first chunks
 				Point point = world.getSpawnPoint().getPosition();
 				int cx = point.getBlockX() >> Chunk.BLOCKS.BITS;
-				int cy = point.getBlockY() >> Chunk.BLOCKS.BITS;
 				int cz = point.getBlockZ() >> Chunk.BLOCKS.BITS;
 
 				((VanillaProtectionService) engine.getServiceManager().getRegistration(ProtectionService.class).getProvider()).addProtection(new SpawnProtection(world.getName() + " Spawn Protection", world, point, protectionRadius));
 
-				final String initChunkType = world.getAge() <= 0 ? "Generating" : "Loading";
+				final String initChunkType = newWorld ? "Generating" : "Loading";
 
 				for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
 					loaderThreads[i] = new SpawnLoaderThread(total, progressStep, initChunkType);
 				}
 
-				oi.reset(cx, cy, cz, radius);
+				oi.reset(cx, 0, cz, 16, newWorld ? radius : (radius * 2));
 				while (oi.hasNext()) {
 					IntVector3 v = oi.next();
 					SpawnLoaderThread.addChunk(world, v.getX(), v.getY(), v.getZ());
@@ -282,7 +278,9 @@ public class VanillaPlugin extends CommonPlugin {
 						getLogger().info("Interrupted when waiting for spawn area to load");
 					}
 				}
-				world.createAndSpawnEntity(point, ObserverComponent.class, LoadOption.LOAD_GEN);
+				if (worldConfig.LOADED_SPAWN.getBoolean()) { // TODO - this doesn't really work for anything since it doesn't hold all chunks
+					world.createAndSpawnEntity(point, ObserverComponent.class, LoadOption.LOAD_GEN);
+				}
 			}
 
 			if (world.getGenerator() instanceof NetherGenerator) {

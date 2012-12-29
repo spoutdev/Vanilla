@@ -75,67 +75,12 @@ public class AdministrationCommands {
 		if (args.length() == 1) {
 			Player player = args.getPlayer(0, false);
 			player.get(PlayerInventory.class).clear();
-			player.sendMessage(ChatStyle.BRIGHT_GREEN, "Your inventory has been cleared.");
+			player.sendMessage(ChatStyle.RESET, plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Your inventory has been cleared.", ChatStyle.RESET);
+			if (source instanceof Player && source.equals(player)) {
+				return;
+			}
 		}
-		source.sendMessage(ChatStyle.BRIGHT_GREEN, "Inventory cleared.");
-	}
-
-	@Command(aliases = {"tp", "teleport"}, usage = "[player] [player|x] [y] [z] [-w <world>]", flags = "w:", desc = "Teleport to a location", min = 1, max = 4)
-	@CommandPermissions("vanilla.command.tp")
-	public void tp(CommandContext args, CommandSource source) throws CommandException {
-		int index = 0;
-		Player player;
-
-		if (args.length() % 2 == 0) {
-			if (Spout.getEngine() instanceof Client) {
-				throw new CommandException("You cannot search for players unless you are in server mode.");
-			}
-			player = Spout.getEngine().getPlayer(args.getString(index++), true);
-
-			if (player == null || !player.isOnline()) {
-				throw new CommandException(args.getString(0) + " is not online.");
-			}
-		} else {
-			if (!(source instanceof Player)) {
-				throw new CommandException("You must be a player to teleport yourself!");
-			}
-
-			player = (Player) source;
-		}
-
-		Point point;
-
-		if (args.length() > 2) {
-			World world = player.getWorld();
-
-			if (args.hasFlag('w')) {
-				if (!source.hasPermission("vanilla.command.tp.world-flag")) {
-					throw new CommandException("You are not allowed to use the world flag.");
-				}
-
-				world = Spout.getEngine().getWorld(args.getFlagString('w'));
-
-				if (world == null) {
-					throw new CommandException("Please supply an existing world.");
-				}
-			}
-
-			point = new Point(world, args.getInteger(index), args.getInteger(index + 1), args.getInteger(index + 2));
-		} else {
-			if (Spout.getEngine() instanceof Client) {
-				throw new CommandException("You cannot search for players unless you are in server mode.");
-			}
-			Player target = ((Server) Spout.getEngine()).getPlayer(args.getString(index), true);
-
-			if (target == null || !target.isOnline()) {
-				throw new CommandException(args.getString(0) + " is not online.");
-			}
-
-			point = target.getTransform().getPosition();
-		}
-
-		point.getWorld().getChunkFromBlock(point);
-		player.teleport(point);
+		source.sendMessage(ChatStyle.RESET, plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Inventory cleared.", ChatStyle.RESET);
 	}
 
 	@Command(aliases = {"give"}, usage = "[player] <block> [amount] ", desc = "Lets a player spawn items", min = 1, max = 3)

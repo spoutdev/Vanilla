@@ -284,7 +284,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@Override
 	protected boolean canSendChunk(Chunk c, Set<Chunk> unsendable) {
 		if (!c.canSend()) {
-			unsendable.add(c);
+			if (unsendable != null) {
+				unsendable.add(c);
+			}
 			c.populate(true, true, true);
 			return false;
 		}
@@ -295,8 +297,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		Collection<Chunk> chunks = chunkInit.getChunks(c);
 		for (Chunk cc : chunks) {
 			if (!cc.canSend()) {
-				unsendable.add(cc);
-				canSend = false;
+				if (unsendable != null) {
+					unsendable.add(c);
+				}				canSend = false;
 				cc.populate(true, true, true);
 			}
 		}
@@ -305,6 +308,19 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	public Collection<Chunk> sendChunk(Chunk c) {
+		if (canSendChunk(c, null)) {
+			return sendChunk(c, true);
+		} else {
+			return null;
+		}
+	}
+	
+	@Override
+	protected Collection<Chunk> sendChunk(Chunk c, boolean force) {
+		
+		if (!force) {
+			return sendChunk(c);
+		}
 
 		int x = c.getX();
 		int y = c.getY();// + SEALEVEL_CHUNK;

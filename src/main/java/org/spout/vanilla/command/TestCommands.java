@@ -362,47 +362,6 @@ public class TestCommands {
 		ExplosionModels.SPHERICAL.execute(position, 4.0f);
 	}
 
-	@Command(aliases = {"tpworld", "tpw"}, usage = "<world name>", desc = "Teleport to a world's spawn.", min = 1, max = 1)
-	@CommandPermissions("vanilla.command.debug")
-	public void tpWorld(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player)) {
-			throw new CommandException("You must be a player to teleport");
-		}
-		final Player player = (Player) source;
-		final World world = args.getWorld(0);
-		if (world != null) {
-			final Point loc = world.getSpawnPoint().getPosition();
-			world.getChunkFromBlock(loc);
-			player.teleport(loc);
-		} else {
-			throw new CommandException("Please enter a valid world");
-		}
-	}
-
-	@Command(aliases = {"tppos"}, usage = "<name> <world> <x> <y> <z>", desc = "Teleport to coordinates!", min = 5, max = 5)
-	@CommandPermissions("vanilla.command.debug")
-	public void tppos(CommandContext args, CommandSource source) throws CommandException {
-		Player player = Spout.getEngine().getPlayer(args.getString(0), true);
-		if (!(source instanceof Player) && player == null) {
-			throw new CommandException("Must specify a valid player to tppos from the console.");
-		}
-
-		World world = Spout.getEngine().getWorld(args.getString(1));
-		//If the source of the command is a player and they do not provide a valid player...teleport the source instead.
-		if (player == null) {
-			player = (Player) source;
-		}
-
-		if (world != null) {
-			Point loc = new Point(world, args.getInteger(2), args.getInteger(3), args.getInteger(4));
-			//Make sure the chunk the player is teleported to is loaded.
-			world.getChunkFromBlock(loc);
-			player.teleport(loc);
-		} else {
-			throw new CommandException("Please enter a valid world");
-		}
-	}
-
 	@Command(aliases = {"object", "obj"}, usage = "<name>", flags = "f", desc = "Spawn a WorldGeneratorObject at your location. Use -f to ignore canPlace check", min = 1, max = 2)
 	@CommandPermissions("vanilla.command.debug")
 	public void generateObject(CommandContext args, CommandSource source) throws CommandException {

@@ -31,21 +31,20 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.component.misc.HeadComponent;
-import org.spout.vanilla.protocol.msg.player.pos.PlayerYawMessage;
+import org.spout.vanilla.protocol.msg.player.pos.PlayerLookMessage;
 
-public final class PlayerYawHandler extends MessageHandler<PlayerYawMessage> {
+public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 	@Override
-	public void handleServer(Session session, PlayerYawMessage message) {
+	public void handleServer(Session session, PlayerLookMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
 
 		Player holder = session.getPlayer();
 
-		holder.getTransform().setPitch(message.getPitch());
 		holder.getTransform().setYaw(message.getYaw());
 		if (holder.has(HeadComponent.class)) {
-			holder.get(HeadComponent.class).setLooking(message.getLookingAtVector());
+			holder.get(HeadComponent.class).setRotation(message.getRotation());
 		}
 	}
 }

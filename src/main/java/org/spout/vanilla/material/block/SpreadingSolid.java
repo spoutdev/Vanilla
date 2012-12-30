@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block;
 
 import java.util.Random;
 
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.BlockMaterial;
@@ -108,9 +109,10 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 	/**
 	 * Attempts to decay this material at the block specified
 	 * @param block of this material
+	 * @param cause of the decay
 	 */
-	public void onDecay(Block block) {
-		block.setMaterial(this.replacedMaterial);
+	public boolean onDecay(Block block, Cause<?> cause) {
+		return block.setMaterial(this.replacedMaterial, cause);
 	}
 
 	/**
@@ -157,7 +159,7 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
 		// Attempt to decay or spread this material
 		if (this.canDecayAt(block)) {
-			this.onDecay(block);
+			this.onDecay(block, this.toCause(block));
 		} else if (this.canSpreadFrom(block)) {
 			this.onSpread(block);
 		}

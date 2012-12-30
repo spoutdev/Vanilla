@@ -55,7 +55,8 @@ import org.spout.vanilla.material.VanillaMaterials;
 
 public class HungerComponent extends EntityComponent {
 	private Human human;
-	private float timer = 4;
+	private static final float TIMER_START = 4000;
+	private float timer = TIMER_START;
 	private Point lastPos;
 	// Client
 	private final Widget widget = new Widget();
@@ -101,12 +102,11 @@ public class HungerComponent extends EntityComponent {
 
 	@Override
 	public boolean canTick() {
-		return !human.getGameMode().equals(GameMode.CREATIVE);
+		return !human.getGameMode().equals(GameMode.CREATIVE) && !human.getHealth().isDead();
 	}
 
 	@Override
 	public void onTick(float dt) {
-
 		/*
 		 * The Minecraft hunger system has a few different dynamics:
 		 *
@@ -150,7 +150,7 @@ public class HungerComponent extends EntityComponent {
 					timer -= dt;
 					if (timer <= 0) {
 						healthComponent.heal(1, HealCause.REGENERATION);
-						timer = 4;
+						timer = TIMER_START;
 					}
 				}
 
@@ -160,7 +160,7 @@ public class HungerComponent extends EntityComponent {
 					timer -= dt;
 					if (timer <= 0) {
 						healthComponent.damage(1, new NullDamageCause(DamageType.STARVATION));
-						timer = 4;
+						timer = TIMER_START;
 					}
 				}
 

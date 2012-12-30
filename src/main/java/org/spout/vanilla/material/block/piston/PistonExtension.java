@@ -43,13 +43,13 @@ public class PistonExtension extends Solid implements Directional {
 	}
 
 	@Override
-	public void onDestroy(Block block, Cause<?> cause) {
+	public boolean onDestroy(Block block, Cause<?> cause) {
 		block = block.translate(this.getFacing(block).getOpposite());
 		BlockMaterial mat = block.getMaterial();
 		if (mat instanceof PistonBlock) {
-			mat.onDestroy(block, cause);
+			return mat.onDestroy(block, cause);
 		} else {
-			super.onDestroy(block, cause);
+			return super.onDestroy(block, cause);
 		}
 	}
 

@@ -24,21 +24,44 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.handler.player;
+package org.spout.vanilla.protocol.entity.player;
 
-import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.entity.Entity;
+import org.spout.api.event.HandlerList;
+import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.entity.EntityEvent;
 
-import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionYawMessage;
+import org.spout.vanilla.data.VanillaData;
 
-public final class PlayerPositionYawHandler extends MessageHandler<PlayerPositionYawMessage> {
-	@Override
-	public void handleServer(Session session, PlayerPositionYawMessage message) {
-		new PlayerPositionHandler().handleServer(session, message.getPlayerPositionMessage());
-		new PlayerYawHandler().handleServer(session, message.getPlayerLookMessage());
+public class ExperienceChangeEvent extends EntityEvent implements ProtocolEvent {
+	private static HandlerList handlers = new HandlerList();
+	private final short oldExp;
+	private short newExp;
+
+	public ExperienceChangeEvent(Entity e, short oldExp, short newExp) {
+		super(e);
+		this.oldExp = oldExp;
+		this.newExp = newExp;
+	}
+
+	public short getPreviousExp() {
+		return oldExp;
+	}
+
+	public short getNewExp() {
+		return newExp;
+	}
+
+	public void setNewExp(short exp) {
+		this.newExp = exp;
 	}
 
 	@Override
-	public void handleClient(Session session, PlayerPositionYawMessage message) {
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

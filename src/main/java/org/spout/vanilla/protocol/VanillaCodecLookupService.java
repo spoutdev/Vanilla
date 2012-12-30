@@ -77,11 +77,11 @@ import org.spout.vanilla.protocol.codec.player.conn.PlayerListCodec;
 import org.spout.vanilla.protocol.codec.player.conn.PlayerLoginRequestCodec;
 import org.spout.vanilla.protocol.codec.player.conn.PlayerPingCodec;
 import org.spout.vanilla.protocol.codec.player.pos.PlayerPositionCodec;
-import org.spout.vanilla.protocol.codec.player.pos.PlayerPositionYawCodec;
+import org.spout.vanilla.protocol.codec.player.pos.PlayerPositionLookCodec;
 import org.spout.vanilla.protocol.codec.player.pos.PlayerRespawnCodec;
 import org.spout.vanilla.protocol.codec.player.pos.PlayerSpawnCodec;
 import org.spout.vanilla.protocol.codec.player.pos.PlayerSpawnPositionCodec;
-import org.spout.vanilla.protocol.codec.player.pos.PlayerYawCodec;
+import org.spout.vanilla.protocol.codec.player.pos.PlayerLookCodec;
 import org.spout.vanilla.protocol.codec.server.ServerListPingCodec;
 import org.spout.vanilla.protocol.codec.server.ServerPluginCodec;
 import org.spout.vanilla.protocol.codec.window.WindowClickCodec;
@@ -105,6 +105,7 @@ import org.spout.vanilla.protocol.codec.world.chunk.ChunkDataCodec;
 
 public class VanillaCodecLookupService extends CodecLookupService {
 	public VanillaCodecLookupService() {
+		super(512);
 		try {
 			/* 0x00 */
 			bind(PlayerPingCodec.class);
@@ -131,9 +132,9 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			/* 0x0B */
 			bind(PlayerPositionCodec.class);
 			/* 0x0C */
-			bind(PlayerYawCodec.class);
+			bind(PlayerLookCodec.class);
 			/* 0x0D */
-			bind(PlayerPositionYawCodec.class);
+			bind(PlayerPositionLookCodec.class);
 			/* 0x0E */
 			bind(PlayerDiggingCodec.class);
 			/* 0x0F */

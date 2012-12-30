@@ -64,11 +64,11 @@ public class Ice extends SpreadingSolid implements InitializableMaterial {
 	}
 
 	@Override
-	public void onDestroy(Block block, Cause<?> cause) {
+	public boolean onDestroy(Block block, Cause<?> cause) {
 		if (!(block.getWorld().getGenerator() instanceof NetherGenerator) || block.translate(BlockFace.BOTTOM).getMaterial() != VanillaMaterials.AIR) {
-			block.setMaterial(VanillaMaterials.WATER, cause);
+			return onDecay(block, cause);
 		}
-		super.onDecay(block);
+		return super.onDestroy(block, cause);
 	}
 
 	@Override

@@ -32,10 +32,13 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
+import com.google.common.base.Preconditions;
 import org.jboss.netty.channel.Channel;
 
+import org.spout.api.Engine;
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
+import org.spout.api.chat.channel.ChatChannel;
 import org.spout.api.chat.console.Console;
 import org.spout.api.command.Command;
 import org.spout.api.command.CommandSource;
@@ -55,6 +58,7 @@ public class RemoteConnectionSession implements Console, CommandSource {
 	private final AtomicInteger requestId = new AtomicInteger(-1);
 	private final AtomicReference<Channel> channel = new AtomicReference<Channel>();
 	private State state = State.AUTH;
+	private AtomicReference<ChatChannel> activeChannel = new AtomicReference<ChatChannel>(Engine.STANDARD_BROADCAST_CHANNEL);
 	private DateFormat format = new SimpleDateFormat("hh:mm:ss");
 
 	@Override
@@ -230,5 +234,17 @@ public class RemoteConnectionSession implements Console, CommandSource {
 
 	public boolean isGroup() {
 		return false;
+	}
+
+	@Override
+	public ChatChannel getActiveChannel() {
+		return activeChannel.get();
+	}
+
+	@Override
+	public void setActiveChannel(ChatChannel channel) {
+		Preconditions.checkNotNull(channel);
+		channel.onAttachTo(this);
+		activeChannel.getAndSet(channel).onDetachedFrom(this);
 	}
 }

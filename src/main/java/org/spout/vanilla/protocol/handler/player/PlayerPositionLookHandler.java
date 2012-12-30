@@ -24,26 +24,24 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.rcon;
+package org.spout.vanilla.protocol.handler.player;
 
-import org.spout.api.protocol.CodecLookupService;
+import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.protocol.rcon.codec.AuthCodec;
-import org.spout.vanilla.protocol.rcon.codec.CommandCodec;
-import org.spout.vanilla.protocol.rcon.codec.CommandResponseCodec;
+import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionLookMessage;
 
-/**
- * Codec lookup service for rcon
- */
-public class RconCodecLookupService extends CodecLookupService {
-	public RconCodecLookupService() {
-		super(3);
-		try {
-			bind(AuthCodec.class);
-			bind(CommandCodec.class);
-			bind(CommandResponseCodec.class);
-		} catch (Throwable t) {
-			throw new ExceptionInInitializerError(t);
-		}
+public final class PlayerPositionLookHandler extends MessageHandler<PlayerPositionLookMessage> {
+	private final PlayerPositionHandler position = new PlayerPositionHandler();
+	private final PlayerLookHandler rotation = new PlayerLookHandler();
+
+	@Override
+	public void handleServer(Session session, PlayerPositionLookMessage message) {
+		this.position.handleServer(session, message.getPlayerPositionMessage());
+		this.rotation.handleServer(session, message.getPlayerLookMessage());
+	}
+
+	@Override
+	public void handleClient(Session session, PlayerPositionLookMessage message) {
 	}
 }

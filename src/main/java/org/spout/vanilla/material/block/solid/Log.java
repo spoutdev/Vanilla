@@ -43,6 +43,7 @@ import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.Vector3;
 import org.spout.api.scheduler.TaskPriority;
+import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.Instrument;
@@ -149,8 +150,8 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	}
 
 	@Override
-	public void onDestroy(Block block, Cause<?> cause) {
-		super.onDestroy(block, cause);
+	public void onPostDestroy(Block block, Set<Flag> flags) {
+		super.onPostDestroy(block, flags);
 		LeafDecayTask decay = new LeafDecayTask(block);
 		decay.scheduleTask(block.getRegion());
 	}
@@ -158,7 +159,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	@Override
 	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		block.setMaterial(this, cause);
-		this.setFacing(block, PlayerUtil.getBlockFacing(block, cause));
+		this.setFacing(block, against);
 		return true;
 	}
 

@@ -92,11 +92,11 @@ import org.spout.vanilla.protocol.msg.player.conn.PlayerListMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerLoginRequestMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerPingMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionMessage;
-import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionYawMessage;
+import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionLookMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerRespawnMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnPositionMessage;
-import org.spout.vanilla.protocol.msg.player.pos.PlayerYawMessage;
+import org.spout.vanilla.protocol.msg.player.pos.PlayerLookMessage;
 import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 import org.spout.vanilla.protocol.msg.window.WindowCreativeActionMessage;
@@ -139,8 +139,8 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new PlayerRespawnMessage(89, (byte) 0, (byte) 1, 128, "VERYFANCY"),
 			new PlayerGroundMessage(true),
 			new PlayerPositionMessage(128, 256, 512, 3.4D, true, NullRepositionManager.getInstance()),
-			new PlayerYawMessage(1F, 2F, false),
-			new PlayerPositionYawMessage(1, 2, 5, 3.62, 4, 3, false, NullRepositionManager.getInstance()),
+			new PlayerLookMessage(1F, 2F, false),
+			new PlayerPositionLookMessage(1, 2, 5, 3.62, 4.1f, 3, false, NullRepositionManager.getInstance()),
 			new PlayerDiggingMessage(PlayerDiggingMessage.STATE_START_DIGGING, 1, 2, 3, BlockFace.NORTH, NullRepositionManager.getInstance()),
 			new PlayerBlockPlacementMessage(1, 2, 3, BlockFace.NORTH, new Vector3(0.1875F, 0.5F, 0.0F), NullRepositionManager.getInstance()),
 			new PlayerHeldItemChangeMessage(4),

@@ -37,8 +37,8 @@ import org.spout.vanilla.event.player.network.PlayerPingEvent;
 public class PingComponent extends EntityComponent {
 	private Player player;
 	private final Random random = new Random();
-	private final float timeout = 30;
-	private final float longTimeout = 120;
+	private final float timeout = 30000;
+	private final float longTimeout = 120000;
 	private final int repeatRate = 8;
 	private final long[] pingTime = new long[repeatRate];
 	private final int[] pingHash = new int[repeatRate];

@@ -83,7 +83,7 @@ public class PlayerUtil {
 	public static BlockFace getFacing(Entity entity) {
 		float yaw;
 		if (entity.has(HeadComponent.class)) {
-			yaw = entity.get(HeadComponent.class).getYaw();
+			yaw = entity.get(HeadComponent.class).getRotation().getYaw();
 		} else {
 			yaw = entity.getTransform().getYaw();
 		}

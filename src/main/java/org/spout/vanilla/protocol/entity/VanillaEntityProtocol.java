@@ -103,7 +103,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		} else {
 			if (looked) {
 				messages.add(new EntityRelativePositionYawMessage(entity.getId(), deltaX, deltaY, deltaZ, newYaw, newPitch));
-			} else {
+			} else if (!prevTransform.getPosition().equals(newTransform.getPosition())){
 				messages.add(new EntityRelativePositionMessage(entity.getId(), deltaX, deltaY, deltaZ));
 			}
 		}

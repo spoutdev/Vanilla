@@ -86,10 +86,6 @@ public class Item extends ObjectEntity {
 		return getUncollectableTicks() <= 0;
 	}
 
-	public PhysicsComponent getPhysics() {
-		return getOwner().get(PhysicsComponent.class);
-	}
-
 	/**
 	 * Drops an item at the position with the item stack specified with a natural random velocity
 	 * @param position to spawn the item

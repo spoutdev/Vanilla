@@ -70,17 +70,30 @@ public class AdministrationCommands {
 			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to clear your own inventory.");
 			}
-			((Player) source).get(PlayerInventory.class).clear();
+			PlayerInventory inv = ((Player) source).get(PlayerInventory.class);
+			if (inv == null) {
+				source.sendMessage(plugin.getPrefix(), ChatStyle.RED, "You have no inventory!");
+				return;
+			}
+			inv.clear();
 		}
 		if (args.length() == 1) {
 			Player player = args.getPlayer(0, false);
-			player.get(PlayerInventory.class).clear();
-			player.sendMessage(ChatStyle.RESET, plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Your inventory has been cleared.", ChatStyle.RESET);
+			if (player == null) {
+				source.sendMessage(plugin.getPrefix(), ChatStyle.RED, "Player is not online!");
+				return;
+			}
+			PlayerInventory inv = player.get(PlayerInventory.class);
+			if (inv == null) {
+				source.sendMessage(plugin.getPrefix(), ChatStyle.RED, "Player has no inventory!");
+				return;
+			}
+			player.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Your inventory has been cleared.");
 			if (source instanceof Player && source.equals(player)) {
 				return;
 			}
 		}
-		source.sendMessage(ChatStyle.RESET, plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Inventory cleared.", ChatStyle.RESET);
+		source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Inventory cleared.");
 	}
 
 	@Command(aliases = {"give"}, usage = "[player] <block> [amount] ", desc = "Lets a player spawn items", min = 1, max = 3)
@@ -132,7 +145,8 @@ public class AdministrationCommands {
 
 		int count = args.getInteger(++index, 1);
 		player.get(PlayerInventory.class).add(new ItemStack(material, count));
-		source.sendMessage("Gave ", player.getName(), " ", count, " ", material.getDisplayName());
+		source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Gave ", ChatStyle.WHITE, player.getName() + " ", count, ChatStyle.BRIGHT_GREEN, " of ", ChatStyle.WHITE,
+				material.getDisplayName());
 	}
 
 	@Command(aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)
@@ -145,10 +159,10 @@ public class AdministrationCommands {
 		String playerName = args.getString(0);
 		OpConfiguration ops = VanillaConfiguration.OPS;
 		ops.setOp(playerName, false);
-		source.sendMessage(ChatStyle.YELLOW, playerName, " had their operator status revoked!");
+		source.sendMessage(plugin.getPrefix(), playerName, ChatStyle.RED, " had their operator status revoked!");
 		Player player = Spout.getEngine().getPlayer(playerName, true);
 		if (player != null && !source.equals(player)) {
-			player.sendMessage(ChatStyle.YELLOW, "You had your operator status revoked!");
+			player.sendMessage(plugin.getPrefix(), ChatStyle.RED, "You had your operator status revoked!");
 		}
 	}
 
@@ -162,10 +176,10 @@ public class AdministrationCommands {
 		String playerName = args.getString(0);
 		OpConfiguration ops = VanillaConfiguration.OPS;
 		ops.setOp(playerName, true);
-		source.sendMessage(ChatStyle.YELLOW, playerName, " is now an operator!");
+		source.sendMessage(plugin.getPrefix(), ChatStyle.RED, playerName, " is now an operator!");
 		Player player = Spout.getEngine().getPlayer(playerName, true);
 		if (player != null && !source.equals(player)) {
-			player.sendMessage(ChatStyle.YELLOW, "You are now an operator!");
+			player.sendMessage(plugin.getPrefix(), ChatStyle.YELLOW, "You are now an operator!");
 		}
 	}
 
@@ -212,7 +226,12 @@ public class AdministrationCommands {
 		}
 
 		sky.setTime(relative ? (sky.getTime() + time) : time);
-		source.sendMessage("Set ", world.getName(), "'s time to: ", sky.getTime());
+		if (Spout.getEngine() instanceof Client) {
+			source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "You set ", ChatStyle.WHITE, world.getName(), ChatStyle.BRIGHT_GREEN, " to time: ", ChatStyle.WHITE,
+					sky.getTime());
+		} else {
+			((Server) Spout.getEngine()).broadcastMessage(plugin.getPrefix(), ChatStyle.WHITE, world.getName(), ChatStyle.BRIGHT_GREEN, " set to: ", ChatStyle.WHITE, sky.getTime());
+		}
 	}
 
 	@Command(aliases = {"gamemode", "gm"}, usage = "[player] <0|1|2|survival|creative|adventure> (0 = SURVIVAL, 1 = CREATIVE, 2 = ADVENTURE)", desc = "Change a player's game mode", min = 1, max = 2)
@@ -255,7 +274,7 @@ public class AdministrationCommands {
 		player.get(Human.class).setGamemode(mode);
 
 		if (!player.equals(source)) {
-			source.sendMessage(player.getName(), "'s game mode has been changed to ", mode.name(), ".");
+			source.sendMessage(plugin.getPrefix(), ChatStyle.WHITE, player.getName(), "'s ", ChatStyle.BRIGHT_GREEN, "gamemode has been changed to ", ChatStyle.WHITE, mode.name(), ChatStyle.BRIGHT_GREEN, ".");
 		}
 	}
 
@@ -268,7 +287,7 @@ public class AdministrationCommands {
 				@SuppressWarnings("unused")
 				Player sender = (Player) source;
 				int amount = args.getInteger(0);
-				source.sendMessage("You have been given ", amount, " xp.");
+				source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "You have been given ", ChatStyle.WHITE, amount, ChatStyle.BRIGHT_GREEN, " xp.");
 				// TODO: Give player 'amount' of xp.
 			} else {
 				throw new CommandException("You must be a player to give yourself xp.");
@@ -280,7 +299,7 @@ public class AdministrationCommands {
 			Player player = ((Server) Spout.getEngine()).getPlayer(args.getString(0), true);
 			if (player != null) {
 				int amount = args.getInteger(1);
-				player.sendMessage("You have been given ", amount, " xp.");
+				player.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "You have been given ", ChatStyle.WHITE, amount, ChatStyle.BRIGHT_GREEN, " xp.");
 				// TODO: Give player 'amount' of xp.
 			} else {
 				throw new CommandException(args.getString(0) + " is not online.");
@@ -324,10 +343,10 @@ public class AdministrationCommands {
 
 		switch (weather) {
 			case RAIN:
-				source.sendMessage("Weather set to RAIN/SNOW.");
+				source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Weather set to ", ChatStyle.WHITE, "Rain/Snow", ChatStyle.BRIGHT_GREEN, ".");
 				break;
 			default:
-				source.sendMessage("Weather set to ", weather.name(), ".");
+				source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Weather set to ", ChatStyle.WHITE, weather.name(), ChatStyle.BRIGHT_GREEN, ".");
 				break;
 		}
 	}
@@ -370,6 +389,6 @@ public class AdministrationCommands {
 		}
 		Point pos = player.getTransform().getPosition();
 		Biome biome = pos.getWorld().getBiome(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ());
-		source.sendMessage("Current biome: ", (biome != null ? biome.getName() : "none"));
+		source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Current biome: ", ChatStyle.WHITE, (biome != null ? biome.getName() : "none"));
 	}
 }

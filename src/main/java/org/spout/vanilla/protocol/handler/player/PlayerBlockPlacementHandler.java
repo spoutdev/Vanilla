@@ -81,7 +81,6 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
 		RepositionManager rmInverse = rm.getInverse();
 		message = message.convert(rmInverse);
-		Spout.getLogger().info("Placement converted: " + message);
 
 		EventManager eventManager = session.getEngine().getEventManager();
 		World world = player.getWorld();

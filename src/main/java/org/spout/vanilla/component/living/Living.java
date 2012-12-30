@@ -26,10 +26,12 @@
  */
 package org.spout.vanilla.component.living;
 
+import org.spout.api.component.impl.NavigationComponent;
 import org.spout.api.component.impl.PhysicsComponent;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 
+import org.spout.vanilla.ai.VanillaBlockExaminer;
 import org.spout.vanilla.component.misc.DrowningComponent;
 import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.component.misc.HealthComponent;
@@ -43,6 +45,8 @@ public abstract class Living extends EntityComponent {
 		holder.add(HealthComponent.class);
 		holder.add(PhysicsComponent.class);
 		holder.add(DrowningComponent.class);
+		holder.add(NavigationComponent.class).setDefaultExaminers(new VanillaBlockExaminer());
+		
 		holder.setSavable(true);
 
 		//Tracks the number of times this component has been attached (i.e how many times it's been saved, then loaded. 1 = fresh entity)
@@ -52,9 +56,11 @@ public abstract class Living extends EntityComponent {
 	/**
 	 * A counter of how many times this component has been attached to an entity
 	 * <p/>
-	 * Values > 1 indicate how many times this component has been saved to disk, and reloaded
+	 * Values > 1 indicate how many times this component has been saved to disk,
+	 * and reloaded
 	 * <p/>
 	 * Values == 1 indicate a new component that has never been saved and loaded.
+	 * 
 	 * @return attached count
 	 */
 	public final int getAttachedCount() {

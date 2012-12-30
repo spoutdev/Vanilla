@@ -255,7 +255,7 @@ public final class ChannelBufferUtils {
 		} else {
 			Material material = VanillaMaterials.getMaterial(id);
 			if (material == null) {
-				throw new IOException("Uknown material with id of " + id);
+				throw new IOException("Unknown material with id of " + id);
 			}
 			int count = buffer.readUnsignedByte();
 			int damage = buffer.readUnsignedShort();

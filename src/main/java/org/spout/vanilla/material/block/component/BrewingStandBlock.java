@@ -26,12 +26,14 @@
  */
 package org.spout.vanilla.material.block.component;
 
-import org.spout.api.event.Cause;
+import java.util.Set;
+
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.component.substance.material.BrewingStand;
@@ -45,7 +47,7 @@ public class BrewingStandBlock extends ComponentMaterial {
 	}
 
 	@Override
-	public void onDestroy(Block block, Cause<?> cause) {
+	public void onPostDestroy(Block block, Set<Flag> flags) {
 		BrewingStand brewingStand = (BrewingStand) block.getComponent();
 		//Drop items
 		Inventory inventory = brewingStand.getInventory();
@@ -56,7 +58,7 @@ public class BrewingStandBlock extends ComponentMaterial {
 			}
 			Item.dropNaturally(position, item);
 		}
-		super.onDestroy(block, cause);
+		super.onPostDestroy(block, flags);
 	}
 
 	@Override

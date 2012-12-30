@@ -77,11 +77,15 @@ public class SkullBlock extends AbstractAttachable {
 				rotation = rotation / 360f * 16f;
 				data = (short) rotation;
 			}
-			block.setMaterial(this, data).queueUpdate(EffectRange.THIS);
+			if (block.setMaterial(this, data)) {
+				block.queueUpdate(EffectRange.THIS);
+			}
 		} else {
 			// get the data for this face
 			short data = (short) (BlockFaces.NSWE.indexOf(attachedFace, 0) + 2);
-			block.setMaterial(this, data).queueUpdate(EffectRange.THIS);
+			if (block.setMaterial(this, data)) {
+				block.queueUpdate(EffectRange.THIS);
+			}
 		}
 	}
 

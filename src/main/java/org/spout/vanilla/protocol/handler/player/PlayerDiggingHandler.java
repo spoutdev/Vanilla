@@ -68,7 +68,7 @@ import org.spout.vanilla.protocol.msg.player.PlayerDiggingMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 
 public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMessage> {
-	private void breakBlock(BlockMaterial blockMaterial, Block block, Human human) {
+	private boolean breakBlock(BlockMaterial blockMaterial, Block block, Human human, Session session) {
 		HashSet<Flag> flags = new HashSet<Flag>();
 		if (human.isSurvival()) {
 			flags.add(PlayerFlags.SURVIVAL);
@@ -79,7 +79,11 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		if (heldItem != null) {
 			heldItem.getMaterial().getItemFlags(heldItem, flags);
 		}
-		blockMaterial.destroy(block, flags, new PlayerBreakCause((Player) human.getOwner(), block));
+		if (!blockMaterial.destroy(block, flags, new PlayerBreakCause((Player) human.getOwner(), block))) {
+			session.send(false, new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
+			return false;
+		}
+		return true;
 	}
 
 	@Override
@@ -181,14 +185,16 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				boolean fire = neigh.getMaterial().equals(VanillaMaterials.FIRE);
 				if (fire) {
 					// put out fire
-					VanillaMaterials.FIRE.onDestroy(neigh, new PlayerBreakCause(player, neigh));
-					GeneralEffects.RANDOM_FIZZ.playGlobal(block.getPosition());
+					if (VanillaMaterials.FIRE.onDestroy(neigh, new PlayerBreakCause(player, neigh))) {
+						GeneralEffects.RANDOM_FIZZ.playGlobal(block.getPosition());
+					}
 				} else if (human.isSurvival() && blockMaterial.getHardness() != 0.0f) {
 					player.get(DiggingComponent.class).startDigging(new Point(w, x, y, z));
 				} else {
 					// insta-break
-					breakBlock(blockMaterial, block, human);
-					GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);
+					if (breakBlock(blockMaterial, block, human, session)) {
+						GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);
+					}
 				}
 			}
 		} else if (state == PlayerDiggingMessage.STATE_DONE_DIGGING) {
@@ -214,10 +220,9 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 
 				totalDamage = ((int) blockMaterial.getHardness() - damageDone);
 				if (totalDamage <= 40) { // Yes, this is a very high allowance - this is because this is only over a single block, and this will spike due to varying latency.
-					breakBlock(blockMaterial, block, human);
-				}
-				if (block.getMaterial() != VanillaMaterials.AIR) {
-					GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);
+					if (breakBlock(blockMaterial, block, human, session)) {
+						GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);
+					}
 				}
 			}
 		} else if (state == PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {

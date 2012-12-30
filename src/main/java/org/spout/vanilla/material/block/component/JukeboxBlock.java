@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla.material.block.component;
 
-import org.spout.api.event.Cause;
+import java.util.Set;
+
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.component.substance.material.Jukebox;
 import org.spout.vanilla.data.Instrument;
@@ -43,10 +45,10 @@ public class JukeboxBlock extends ComponentMaterial implements Fuel {
 	}
 
 	@Override
-	public void onDestroy(Block block, Cause<?> cause) {
+	public void onPostDestroy(Block block, Set<Flag> flags) {
 		//TODO Write Jukebox
 		//stopMusic();
-		super.onDestroy(block, cause);
+		super.onPostDestroy(block, flags);
 	}
 
 	@Override

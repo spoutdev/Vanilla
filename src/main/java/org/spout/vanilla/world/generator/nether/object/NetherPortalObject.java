@@ -150,11 +150,15 @@ public class NetherPortalObject extends WorldGeneratorObject {
 
 	public void placeObject(World w, int x, int y, int z, BlockFace direction, boolean active) {
 
-		final Block bottomLeftBlock = w.getBlock(x, y, z).setMaterial(VanillaMaterials.OBSIDIAN);
-		final Block bottomRightBlock = bottomLeftBlock.translate(direction, 3).setMaterial(VanillaMaterials.OBSIDIAN);
-		final Block topLeftBlock = bottomLeftBlock.translate(BlockFace.TOP, 4).setMaterial(VanillaMaterials.OBSIDIAN);
+		final Block bottomLeftBlock = w.getBlock(x, y, z);
+		final Block bottomRightBlock = bottomLeftBlock.translate(direction, 3);
+		final Block topLeftBlock = bottomLeftBlock.translate(BlockFace.TOP, 4);
+				
+		bottomLeftBlock.setMaterial(VanillaMaterials.OBSIDIAN);
+		bottomRightBlock.setMaterial(VanillaMaterials.OBSIDIAN);
+		topLeftBlock.setMaterial(VanillaMaterials.OBSIDIAN);
 		topLeftBlock.translate(direction, 3).setMaterial(VanillaMaterials.OBSIDIAN);
-
+		
 		// Build vertical columns
 		for (int dy = 0; dy < 4; dy++) {
 			bottomLeftBlock.translate(BlockFace.TOP, dy).setMaterial(VanillaMaterials.OBSIDIAN);

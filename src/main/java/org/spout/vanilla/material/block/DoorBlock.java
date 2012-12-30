@@ -70,11 +70,10 @@ public abstract class DoorBlock extends GroundAttachable implements Directional,
 	}
 
 	@Override
-	public void onDestroy(Block block, Cause<?> cause) {
+	public boolean onDestroy(Block block, Cause<?> cause) {
 		Block top = getCorrectHalf(block, true);
 		Block bottom = getCorrectHalf(block, false);
-		top.setMaterial(VanillaMaterials.AIR, cause);
-		bottom.setMaterial(VanillaMaterials.AIR, cause);
+		return top.setMaterial(VanillaMaterials.AIR, cause) && bottom.setMaterial(VanillaMaterials.AIR, cause);
 	}
 
 	@Override

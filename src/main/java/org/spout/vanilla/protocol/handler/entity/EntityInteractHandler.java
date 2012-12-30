@@ -37,8 +37,10 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.component.misc.EffectsComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.effect.StatusEffect;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.event.cause.PlayerDamageCause;
 import org.spout.vanilla.material.VanillaMaterial;
@@ -86,7 +88,20 @@ public class EntityInteractHandler extends MessageHandler<EntityInteractMessage>
 						//						player.getInventory().getQuickbar().getCurrentSlotInventory().addData(1); TODO: Reimplement durability change
 					}
 				}
-				if (damage != 0) {
+				
+				//Potion modification
+				if (holdingMat.equals(VanillaMaterials.AIR)) {
+					EffectsComponent effect = playerEnt.add(EffectsComponent.class);
+					if (effect.containsEffect(StatusEffect.STRENGTH)) {
+						damage += 3;
+					}
+					if (effect.containsEffect(StatusEffect.WEAKNESS)) {
+						damage -= 2;
+					}
+				}
+				//END Potion modification
+				
+				if (damage > 0) {
 					if (clicked instanceof Human) {
 						if (((Human) clicked).getGameMode() != GameMode.SURVIVAL) {
 							return;

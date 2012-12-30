@@ -63,6 +63,7 @@ import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.Food;
+import org.spout.vanilla.material.item.misc.Potion;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.msg.player.PlayerDiggingMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
@@ -225,6 +226,8 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		} else if (state == PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
 			if (heldItem.getMaterial() instanceof Food) {
 				((Food) heldItem.getMaterial()).onEat(player, currentSlot.getCurrentSlot());
+			} else if (heldItem.getMaterial() instanceof Potion) {
+				((Potion) heldItem.getMaterial()).onDrink(player, currentSlot.getCurrentSlot());
 			}
 		}
 	}

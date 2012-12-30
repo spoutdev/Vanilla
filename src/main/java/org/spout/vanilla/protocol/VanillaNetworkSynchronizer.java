@@ -86,6 +86,8 @@ import org.spout.vanilla.event.entity.EntityCollectItemEvent;
 import org.spout.vanilla.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
+import org.spout.vanilla.event.entity.network.EntityEffectEvent;
+import org.spout.vanilla.event.entity.network.EntityRemoveEffectEvent;
 import org.spout.vanilla.event.item.MapItemUpdateEvent;
 import org.spout.vanilla.event.player.network.PlayerAbilityUpdateEvent;
 import org.spout.vanilla.event.player.network.PlayerBedEvent;
@@ -115,6 +117,8 @@ import org.spout.vanilla.protocol.msg.entity.EntityItemDataMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityTileDataMessage;
+import org.spout.vanilla.protocol.msg.entity.effect.EntityEffectMessage;
+import org.spout.vanilla.protocol.msg.entity.effect.EntityRemoveEffectMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerAbilityMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerBedMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerCollectItemMessage;
@@ -713,6 +717,16 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		return new PlayerTimeMessage(event.getWorld().getAge(), event.getNewTime());
 	}
 
+	@EventHandler
+	public Message onEntityRemoveEffect(EntityRemoveEffectEvent event) {
+		return new EntityRemoveEffectMessage(event.getEntity().getId(), event.getEffect().getStatusID());
+	}
+	
+	@EventHandler
+	public Message onEntityEffect(EntityEffectEvent event) {
+		return new EntityEffectMessage(event.getEntity().getId(), event.getEffect().getEffect().getStatusID(), (byte)0, (short) (event.getEffect().getTimer() * 20));
+	}
+	
 	@EventHandler
 	public Message onBlockControllerData(BlockControllerDataEvent event) {
 		Block b = event.getBlock();

@@ -55,7 +55,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 
 public class HungerComponent extends EntityComponent {
 	private Human human;
-	private static final float TIMER_START = 4000;
+	private static final float TIMER_START = 4;
 	private float timer = TIMER_START;
 	private Point lastPos;
 	// Client

@@ -67,6 +67,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.misc.HungerComponent;
+import org.spout.vanilla.component.misc.LevelComponent;
 import org.spout.vanilla.component.substance.material.Sign;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.configuration.WorldConfigurationNode;
@@ -76,6 +77,7 @@ import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.data.WorldType;
+import org.spout.api.entity.Player;
 import org.spout.vanilla.event.block.BlockActionEvent;
 import org.spout.vanilla.event.block.BlockControllerDataEvent;
 import org.spout.vanilla.event.block.SignUpdateEvent;
@@ -105,6 +107,7 @@ import org.spout.vanilla.inventory.window.DefaultWindow;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.component.VanillaComplexMaterial;
 import org.spout.vanilla.protocol.container.VanillaContainer;
+import org.spout.vanilla.protocol.entity.player.ExperienceChangeEvent;
 import org.spout.vanilla.protocol.msg.VanillaBlockDataChannelMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
@@ -115,6 +118,7 @@ import org.spout.vanilla.protocol.msg.entity.EntityTileDataMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerAbilityMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerBedMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerCollectItemMessage;
+import org.spout.vanilla.protocol.msg.player.PlayerExperienceMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerGameStateMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerHealthMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerHeldItemChangeMessage;
@@ -713,6 +717,22 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	public Message onBlockControllerData(BlockControllerDataEvent event) {
 		Block b = event.getBlock();
 		return new EntityTileDataMessage(b.getX(), b.getY(), b.getZ(), event.getAction(), event.getData(), getRepositionManager());
+	}
+
+	@EventHandler
+	public Message onExperienceChange(ExperienceChangeEvent event) {
+		Entity entity = event.getEntity();
+		LevelComponent level = entity.get(LevelComponent.class);
+
+		if (!(entity instanceof Player)) {
+			return null;
+		}
+
+		if (level == null) {
+			return null;
+		}
+
+		return new PlayerExperienceMessage(level.getProgress(), level.getLevel(), event.getNewExp());
 	}
 
 	public enum ChunkInit {

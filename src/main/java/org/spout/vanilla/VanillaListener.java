@@ -49,6 +49,7 @@ import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.component.misc.HungerComponent;
+import org.spout.vanilla.component.misc.LevelComponent;
 import org.spout.vanilla.component.misc.PickupItemComponent;
 import org.spout.vanilla.component.misc.SleepComponent;
 import org.spout.vanilla.component.player.HUDComponent;
@@ -84,6 +85,7 @@ public class VanillaListener implements Listener {
 		player.add(PickupItemComponent.class);
 		player.add(SleepComponent.class);
 		player.add(HungerComponent.class);
+		player.add(LevelComponent.class);
 	}
 
 	@EventHandler

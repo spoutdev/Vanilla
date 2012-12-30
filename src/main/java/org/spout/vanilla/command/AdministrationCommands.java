@@ -47,6 +47,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.component.misc.LevelComponent;
 import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.configuration.OpConfiguration;
 import org.spout.vanilla.configuration.VanillaConfiguration;
@@ -298,9 +299,15 @@ public class AdministrationCommands {
 			}
 			Player player = ((Server) Spout.getEngine()).getPlayer(args.getString(0), true);
 			if (player != null) {
-				int amount = args.getInteger(1);
-				player.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "You have been given ", ChatStyle.WHITE, amount, ChatStyle.BRIGHT_GREEN, " xp.");
-				// TODO: Give player 'amount' of xp.
+				short amount = (short) args.getInteger(1);
+				LevelComponent level = player.get(LevelComponent.class);
+
+				if (level == null) {
+					return;
+				}
+
+				level.setExperience(amount);
+				player.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Your experience has been set to ", ChatStyle.WHITE, amount, ChatStyle.BRIGHT_GREEN, ".");
 			} else {
 				throw new CommandException(args.getString(0) + " is not online.");
 			}

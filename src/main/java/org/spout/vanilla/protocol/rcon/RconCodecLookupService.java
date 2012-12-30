@@ -37,6 +37,7 @@ import org.spout.vanilla.protocol.rcon.codec.CommandResponseCodec;
  */
 public class RconCodecLookupService extends CodecLookupService {
 	public RconCodecLookupService() {
+		super(3);
 		try {
 			bind(AuthCodec.class);
 			bind(CommandCodec.class);

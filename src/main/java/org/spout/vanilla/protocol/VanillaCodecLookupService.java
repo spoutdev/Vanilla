@@ -105,6 +105,7 @@ import org.spout.vanilla.protocol.codec.world.chunk.ChunkDataCodec;
 
 public class VanillaCodecLookupService extends CodecLookupService {
 	public VanillaCodecLookupService() {
+		super(512);
 		try {
 			/* 0x00 */
 			bind(PlayerPingCodec.class);

@@ -75,14 +75,14 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 	}
 
 	@Override
-	public void onDestroy(Block block, Cause<?> cause) {
+	public boolean onDestroy(Block block, Cause<?> cause) {
 		if (this.isExtended(block)) {
 			Block extension = block.translate(this.getFacing(block));
 			if (extension.getMaterial() instanceof PistonExtension) {
 				extension.setMaterial(VanillaMaterials.AIR, cause);
 			}
 		}
-		super.onDestroy(block, cause);
+		return super.onDestroy(block, cause);
 	}
 
 	@Override
@@ -180,7 +180,7 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 		if (this.isSticky()) {
 			Block from = next.translate(facing);
 			if (this.getReaction(from) == MoveReaction.ALLOW) {
-				next.setMaterial(from);
+				next.setMaterial(from.getMaterial());
 				next = from;
 			}
 		}

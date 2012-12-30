@@ -37,6 +37,7 @@ import java.util.List;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.util.CharsetUtil;
 
+import org.spout.api.Spout;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.MathHelper;
@@ -59,7 +60,7 @@ public final class ChannelBufferUtils {
 	 * @param parameters The parameters.
 	 */
 	@SuppressWarnings("unchecked")
-	public static void writeParameters(ChannelBuffer buf, List<Parameter<?>> parameters) {
+	public static void writeParameters(ChannelBuffer buf, List<Parameter<?>> parameters) throws IOException {
 		for (Parameter<?> parameter : parameters) {
 			int type = parameter.getType();
 			int index = parameter.getIndex();
@@ -100,7 +101,7 @@ public final class ChannelBufferUtils {
 	 * @param buf The buffer.
 	 * @return The parameters.
 	 */
-	public static List<Parameter<?>> readParameters(ChannelBuffer buf) {
+	public static List<Parameter<?>> readParameters(ChannelBuffer buf) throws IOException {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 
 		for (int b = buf.readUnsignedByte(); b != 127; b = buf.readUnsignedByte()) {
@@ -247,11 +248,15 @@ public final class ChannelBufferUtils {
 		}
 	}
 
-	public static ItemStack readItemStack(ChannelBuffer buffer) {
-		Material material = VanillaMaterials.getMaterial(buffer.readShort());
-		if (material == null) {
+	public static ItemStack readItemStack(ChannelBuffer buffer) throws IOException {
+		short id = buffer.readShort();
+		if (id < 0) {
 			return null;
 		} else {
+			Material material = VanillaMaterials.getMaterial(id);
+			if (material == null) {
+				throw new IOException("Uknown material with id of " + id);
+			}
 			int count = buffer.readUnsignedByte();
 			int damage = buffer.readUnsignedShort();
 			CompoundMap nbtData = readCompound(buffer);
@@ -259,7 +264,7 @@ public final class ChannelBufferUtils {
 		}
 	}
 
-	public static void writeItemStack(ChannelBuffer buffer, ItemStack item) {
+	public static void writeItemStack(ChannelBuffer buffer, ItemStack item) throws IOException {
 		short id = item == null ? (short) -1 : VanillaMaterials.getMinecraftId(item.getMaterial());
 		buffer.writeShort(id);
 		if (id != -1) {

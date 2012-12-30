@@ -39,7 +39,9 @@ import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
 
+import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.player.HUDComponent;
+import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.event.cause.BlockDamageCause;
@@ -83,15 +85,26 @@ public class DrowningComponent extends EntityComponent {
 	}
 
 	@Override
+	public boolean canTick() {
+		return !health.isDead();
+	}
+	
+	@Override
 	public void onTick(float dt) {
 		switch (Spout.getPlatform()) {
 			case PROXY:
 			case SERVER:
+				dt = dt / 1000F;
 				World world = head.getPosition().getWorld();
 				if (world.getBlock(head.getPosition()).getMaterial() != VanillaMaterials.WATER) {
 					setAir(MAX_AIR);
 					return;
 				}
+				
+				if (getOwner() instanceof Player && !getOwner().get(Human.class).getGameMode().equals(GameMode.SURVIVAL)) {
+					return;
+				}
+				
 				setAir(getAir() - dt);
 				if (getAir() < 0) {
 					// out of air; damage one heart every second

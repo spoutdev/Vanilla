@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.material.block.component.chest;
 
+import org.spout.api.component.type.BlockComponent;
 import org.spout.api.event.Cause;
-
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
@@ -35,7 +35,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.component.substance.material.chest.Chest;
 
@@ -75,9 +74,15 @@ public class ChestBlock extends AbstractChestBlock {
 
 	@Override
 	public boolean onDestroy(Block block, Cause<?> cause) {
+		BlockComponent c = block.getComponent();
+		Inventory inventory;
+		if (c instanceof Chest) {
+			inventory = ((Chest) c).getInventory();
+		} else {
+			return false;
+		}
 		boolean shouldD = super.onDestroy(block, cause);
 		if (shouldD) {
-			Inventory inventory = ((Chest) block.getComponent()).getInventory();
 			Point position = block.getPosition();
 			for (ItemStack item : inventory) {
 				if (item == null) {

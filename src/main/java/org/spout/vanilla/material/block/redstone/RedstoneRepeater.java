@@ -121,7 +121,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 		super.onUpdate(oldMaterial, block);
 		boolean receiving = this.isReceivingPower(block);
 		if (this.isPowered() != receiving) {
-			block.dynamicUpdate(block.getWorld().getAge() + this.getTickDelay(block), receiving ? 1 : 0);
+			block.dynamicUpdate(block.getWorld().getAge() + this.getTickDelay(block), receiving ? 1 : 0, false);
 		}
 	}
 
@@ -175,7 +175,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
-		b.dynamicUpdate(this.getTickDelay(b) + currentTime);
+		b.dynamicUpdate(this.getTickDelay(b) + currentTime, false);
 	}
 
 	@Override
@@ -187,7 +187,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 				this.setPowered(block, true);
 			}
 			if (!receiving) {
-				block.dynamicUpdate(updateTime + this.getTickDelay(block));
+				block.dynamicUpdate(updateTime + this.getTickDelay(block), false);
 			}
 		} else if (receiving != this.isPowered()) {
 			// Was not receiving and should update state

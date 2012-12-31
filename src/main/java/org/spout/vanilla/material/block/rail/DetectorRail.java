@@ -50,7 +50,7 @@ public class DetectorRail extends RailBase implements RedstoneSource, DynamicMat
 
 	public void activate(Block block) {
 		this.setPowering(block, true);
-		block.dynamicUpdate(block.getWorld().getAge() + TICK_DELAY);
+		block.dynamicUpdate(block.getWorld().getAge() + TICK_DELAY, true);
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class DetectorRail extends RailBase implements RedstoneSource, DynamicMat
 	@Override
 	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
 		if (!this.isPowering(block)) {
-			block.dynamicUpdate(updateTime + TICK_DELAY);
+			block.dynamicUpdate(updateTime + TICK_DELAY, true);
 			return;
 		}
 

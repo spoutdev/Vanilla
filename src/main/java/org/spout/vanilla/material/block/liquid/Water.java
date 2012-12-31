@@ -116,7 +116,7 @@ public class Water extends Liquid implements DynamicMaterial {
 
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
-		b.dynamicUpdate(60000 + new Random(b.getWorld().getAge()).nextInt(60000) + currentTime);
+		b.dynamicUpdate(60000 + new Random(b.getWorld().getAge()).nextInt(60000) + currentTime, true);
 		super.onPlacement(b, r, currentTime);
 	}
 

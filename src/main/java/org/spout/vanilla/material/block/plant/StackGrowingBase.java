@@ -144,12 +144,12 @@ public abstract class StackGrowingBase extends GroundAttachable implements Plant
 
 	@Override
 	public void onPlacement(Block block, Region r, long currentTime) {
-		block.dynamicUpdate(currentTime + getGrowTime(block));
+		block.dynamicUpdate(currentTime + getGrowTime(block), true);
 	}
 
 	@Override
 	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
-		block.dynamicUpdate(r.getWorld().getAge() + getGrowTime(block));
+		block.dynamicUpdate(r.getWorld().getAge() + getGrowTime(block), true);
 		Block below = block.translate(BlockFace.BOTTOM);
 		// Only fire dynamic updates for the bottom block
 		if (!this.canAttachTo(below, BlockFace.TOP) || below.isMaterial(this)) {

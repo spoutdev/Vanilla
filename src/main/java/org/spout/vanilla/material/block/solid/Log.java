@@ -166,7 +166,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
 		if (b.isDataBitSet(aliveMask)) {
-			b.dynamicUpdate(currentTime + getGrowthTime(b));
+			b.dynamicUpdate(currentTime + getGrowthTime(b), true);
 		}
 	}
 
@@ -204,7 +204,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 				trunk.setData(data & dataMask);
 			}
 			b.setDataField(heightMask, expectHeight + 1);
-			b.dynamicUpdate(updateTime + getGrowthTime(b));
+			b.dynamicUpdate(updateTime + getGrowthTime(b), true);
 		} else {
 			b.setData(data & dataMask);
 		}

@@ -152,7 +152,7 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
 		//TODO : Delay before dynamic update
-		b.dynamicUpdate(currentTime + getSpreadingTime(b));
+		b.dynamicUpdate(currentTime + getSpreadingTime(b), true);
 	}
 
 	@Override

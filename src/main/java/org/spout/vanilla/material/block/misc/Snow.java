@@ -106,12 +106,11 @@ public class Snow extends GroundAttachable implements DynamicMaterial, Initializ
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
 		//TODO : Delay before next check ?
-		b.dynamicUpdate(60000 + currentTime);
+		b.dynamicUpdate(60000 + currentTime, true);
 	}
 
 	@Override
 	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
-		block.syncResetDynamic();
 		if (block.getBlockLight() > MIN_MELT_LIGHT) {
 			short dataBlock = block.getData();
 			if (dataBlock > 0) {
@@ -122,11 +121,11 @@ public class Snow extends GroundAttachable implements DynamicMaterial, Initializ
 		} else { // not warm enough to melt the snow and last poll was a long time ago, might as well skip repeated polls
 			long age = region.getWorld().getAge();
 			if (age - updateTime > POLL_TIME) {
-				block.dynamicUpdate(age + new Random().nextInt((int) POLL_TIME));
+				block.dynamicUpdate(age + new Random().nextInt((int) POLL_TIME), true);
 				return;
 			}
 		}
-		block.dynamicUpdate(updateTime + POLL_TIME);
+		block.dynamicUpdate(updateTime + POLL_TIME, true);
 		//TODO : Delay before next check ?
 	}
 }

@@ -66,7 +66,7 @@ public class StoneButton extends AttachedRedstoneSource implements PointAttachab
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
 		if (oldMaterial == this && this.isPressed(block)) {
-			block.dynamicUpdate(block.getWorld().getAge() + TICK_DELAY);
+			block.dynamicUpdate(block.getWorld().getAge() + TICK_DELAY, true);
 		}
 	}
 

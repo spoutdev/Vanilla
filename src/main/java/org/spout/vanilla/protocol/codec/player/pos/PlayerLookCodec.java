@@ -42,7 +42,7 @@ public final class PlayerLookCodec extends MessageCodec<PlayerLookMessage> {
 
 	@Override
 	public PlayerLookMessage decode(ChannelBuffer buffer) throws IOException {
-		float yaw = buffer.readFloat();
+		float yaw = -buffer.readFloat();
 		float pitch = buffer.readFloat();
 		boolean onGround = buffer.readByte() == 1;
 		return new PlayerLookMessage(yaw, pitch, onGround);
@@ -51,7 +51,7 @@ public final class PlayerLookCodec extends MessageCodec<PlayerLookMessage> {
 	@Override
 	public ChannelBuffer encode(PlayerLookMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.buffer(9);
-		buffer.writeFloat(message.getYaw());
+		buffer.writeFloat(-message.getYaw());
 		buffer.writeFloat(message.getPitch());
 		buffer.writeByte(message.isOnGround() ? 1 : 0);
 		return buffer;

@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block.component.chest;
 
 import java.util.Set;
+import org.spout.api.event.Cause;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
@@ -41,6 +42,7 @@ import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.component.substance.material.chest.Chest;
 
 public class ChestBlock extends AbstractChestBlock {
+
 	public final float BURN_TIME = 15;
 
 	public ChestBlock(String name, int id) {
@@ -50,6 +52,7 @@ public class ChestBlock extends AbstractChestBlock {
 
 	/**
 	 * Gets the other half of a double chest
+	 *
 	 * @param block of the Double chest
 	 * @return the other half, or null if there is none
 	 */
@@ -64,6 +67,7 @@ public class ChestBlock extends AbstractChestBlock {
 
 	/**
 	 * Gets whether a certain chest block is a double chest
+	 *
 	 * @param block of the Chest
 	 * @return True if it is a double chest, False if it is a single chest
 	 */
@@ -72,18 +76,19 @@ public class ChestBlock extends AbstractChestBlock {
 	}
 
 	@Override
-	public void onPostDestroy(Block block, Set<Flag> flags) {
-		Chest chest = (Chest) block.getComponent();
-		//Drop items
-		Inventory inventory = chest.getInventory();
-		Point position = block.getPosition();
-		for (ItemStack item : inventory) {
-			if (item == null) {
-				continue;
+	public boolean onDestroy(Block block, Cause<?> cause) {
+		boolean shouldD = super.onDestroy(block, cause);
+		if (shouldD) {
+			Inventory inventory = ((Chest) block.getComponent()).getInventory();
+			Point position = block.getPosition();
+			for (ItemStack item : inventory) {
+				if (item == null) {
+					continue;
+				}
+				Item.dropNaturally(position, item);
 			}
-			Item.dropNaturally(position, item);
 		}
-		super.onPostDestroy(block, flags);
+		return shouldD;
 	}
 
 	@Override

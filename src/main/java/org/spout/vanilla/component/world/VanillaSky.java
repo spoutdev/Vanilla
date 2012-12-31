@@ -44,7 +44,8 @@ public abstract class VanillaSky extends WorldComponent {
 	public static final byte MIN_SKY_LIGHT = 4;
 	public static final byte MAX_SKY_LIGHT = 15;
 	public static final byte SKY_LIGHT_RANGE = MAX_SKY_LIGHT - MIN_SKY_LIGHT;
-	protected long maxTime, time = 0, countdown = 20, rate;
+	private static long refreshRate = 400;
+	protected long maxTime, time = 0, countdown = refreshRate, rate;
 	private Long setTime;
 	private WeatherSimulator weather;
 	private static final HashMap<World, VanillaSky> skies = new HashMap<World, VanillaSky>();
@@ -79,7 +80,7 @@ public abstract class VanillaSky extends WorldComponent {
 				time += rate;
 			}
 
-			countdown = 20;
+			countdown = refreshRate;
 			updateTime(time);
 		}
 

@@ -77,11 +77,10 @@ public abstract class Stairs extends VanillaBlockMaterial implements Directional
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedMaterial, Cause<?> cause) {
-		block.setMaterial(this, cause);
+	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
 		this.setFacing(block, PlayerUtil.getFacing(cause).getOpposite());
 		this.setUpsideDown(block, against == BlockFace.TOP || (BlockFaces.NESW.contains(against) && clickedPos.getY() > 0.5f));
-		return true;
 	}
 
 	@Override

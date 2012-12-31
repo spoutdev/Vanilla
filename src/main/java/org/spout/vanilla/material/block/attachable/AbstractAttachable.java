@@ -39,6 +39,8 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Attachable;
 
 public abstract class AbstractAttachable extends VanillaBlockMaterial implements Attachable {
+	private ByteBitSet attachableFaces = new ByteBitSet(BlockFaces.NONE);
+
 	protected AbstractAttachable(short dataMask, String name, int id, String model) {
 		super(dataMask, name, id, model);
 	}
@@ -51,10 +53,9 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 		super(name, id, data, parent, model);
 	}
 
-	private ByteBitSet attachableFaces = new ByteBitSet(BlockFaces.NONE);
-
 	/**
 	 * Gets whether a certain face is attachable
+	 * 
 	 * @param face to get it of
 	 * @return attachable state
 	 */
@@ -134,7 +135,12 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 				return face;
 			}
 		}
-		return null;
+		for (BlockFace face : BlockFaces.BTNSWE) {
+			if (this.isAttachable(face)) {
+				return face;
+			}
+		}
+		throw new RuntimeException("Attachable '" + this.getName() + "' has no attachable faces set");
 	}
 
 	@Override
@@ -155,11 +161,10 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		if (!super.canPlace(block, data, against, clickedPos, isClickedBlock)) {
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		if (!super.canPlace(block, data, against, clickedPos, isClickedBlock, cause)) {
 			return false;
 		}
-
 		return this.isValidPosition(block, against, this.canSeekAttachedAlternative());
 	}
 
@@ -186,30 +191,11 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		if (!this.canAttachTo(block.translate(against), against.getOpposite())) {
-			if (this.canSeekAttachedAlternative()) {
-				against = this.findAttachedFace(block);
-				if (against == null) {
-					return false;
-				}
-			} else {
-				return false;
-			}
+			against = this.findAttachedFace(block);
 		}
-		this.handlePlacement(block, data, against, cause);
-		return true;
-	}
-
-	/**
-	 * Performs placement of this attachable
-	 * @param block to place at
-	 * @param data to use
-	 * @param attachedFace to use
-	 * @param cause of the placement
-	 */
-	public void handlePlacement(Block block, short data, BlockFace against, Cause<?> cause) {
-		block.setMaterial(this, data, cause);
+		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
 		this.setAttachedFace(block, against, cause);
 		block.queueUpdate(EffectRange.THIS);
 	}

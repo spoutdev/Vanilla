@@ -127,9 +127,9 @@ public class Slab extends VanillaBlockMaterial implements Burnable {
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		if (!block.getMaterial().equals(this)) {
-			return super.canPlace(block, data, against, clickedPos, isClickedBlock);
+			return super.canPlace(block, data, against, clickedPos, isClickedBlock, cause);
 		}
 
 		if (!isClickedBlock) {
@@ -144,14 +144,13 @@ public class Slab extends VanillaBlockMaterial implements Burnable {
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		if (block.getMaterial().equals(this)) {
 			block.setMaterial(this.doubletype, cause);
 		} else {
 			block.setMaterial(this, cause);
 			this.setTop(block, against == BlockFace.TOP || (BlockFaces.NESW.contains(against) && clickedPos.getY() > 0.5f));
 		}
-		return true;
 	}
 
 	@Override

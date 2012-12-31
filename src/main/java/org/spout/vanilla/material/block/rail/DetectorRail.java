@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.block.rail;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
@@ -112,11 +111,11 @@ public class DetectorRail extends RailBase implements RedstoneSource, DynamicMat
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime) {
+	public void onFirstUpdate(Block b, long currentTime) {
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
+	public void onDynamicUpdate(Block block, long updateTime, int data) {
 		if (!this.isPowering(block)) {
 			block.dynamicUpdate(updateTime + TICK_DELAY, true);
 			return;

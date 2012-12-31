@@ -116,10 +116,9 @@ public class FenceGate extends VanillaBlockMaterial implements Openable, Redston
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		block.setMaterial(this, cause);
 		this.setFacing(block, PlayerUtil.getFacing(cause));
-		return true;
 	}
 
 	@Override

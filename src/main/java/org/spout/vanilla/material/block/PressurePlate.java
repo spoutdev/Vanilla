@@ -28,7 +28,6 @@ package org.spout.vanilla.material.block;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CubicEffectRange;
@@ -113,12 +112,12 @@ public abstract class PressurePlate extends GroundAttachable implements Redstone
 	}
 
 	@Override
-	public void onPlacement(Block block, Region r, long currentTime) {
+	public void onFirstUpdate(Block block, long currentTime) {
 		block.dynamicUpdate(currentTime + TICK_DELAY, true);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
+	public void onDynamicUpdate(Block block, long updateTime, int data) {
 		if (!this.isPressed(block)) {
 			block.dynamicUpdate(updateTime + TICK_DELAY, true);
 			return;

@@ -246,11 +246,8 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
-		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause)) {
-			this.setFacing(block, PlayerUtil.getBlockFacing(block, cause));
-			return true;
-		}
-		return false;
+	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
+		this.setFacing(block, PlayerUtil.getBlockFacing(block, cause));
 	}
 }

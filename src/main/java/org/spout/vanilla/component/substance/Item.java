@@ -56,14 +56,7 @@ public class Item extends ObjectEntity {
 
 	@Override
 	public boolean canTick() {
-		return true;
-	}
-
-	@Override
-	public void onTick(float dt) {
-		if (getUncollectableTicks() > 0) {
-			setUncollectableTicks(getUncollectableTicks() - 1);
-		}
+		return false;
 	}
 
 	public ItemStack getItemStack() {
@@ -74,16 +67,16 @@ public class Item extends ObjectEntity {
 		getData().put(Data.HELD_ITEM, stack);
 	}
 
-	public int getUncollectableTicks() {
-		return getData().get(VanillaData.UNCOLLECTABLE_TICKS);
+	public long getUncollectableTicks() {
+		return getData().get(VanillaData.UNCOLLECTABLE_TICKS).longValue();
 	}
 
-	public void setUncollectableTicks(int uncollectableTicks) {
-		getData().put(VanillaData.UNCOLLECTABLE_TICKS, uncollectableTicks);
+	public void setUncollectableTicks(long uncollectableTicks) {
+		getData().put(VanillaData.UNCOLLECTABLE_TICKS, Long.valueOf(uncollectableTicks));
 	}
 
 	public boolean canBeCollected() {
-		return getUncollectableTicks() <= 0;
+		return getUncollectableTicks() < getOwner().getWorld().getAge();
 	}
 
 	/**
@@ -107,6 +100,7 @@ public class Item extends ObjectEntity {
 	public static Item drop(Point position, ItemStack itemStack, Vector3 velocity) {
 		Entity entity = position.getWorld().createEntity(position, Item.class);
 		Item item = entity.add(Item.class);
+		item.setUncollectableTicks(position.getWorld().getAge() + 20);
 		item.setItemStack(itemStack);
 		item.getPhysics().applyImpulse(velocity);
 		if (position.getChunk(LoadOption.NO_LOAD) != null) {

@@ -48,7 +48,6 @@ import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Vector2;
-import org.spout.api.math.Vector3;
 import org.spout.api.plugin.Platform;
 import org.spout.api.render.RenderMaterial;
 import org.spout.api.util.flag.Flag;
@@ -172,7 +171,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
+	public boolean canCreate(Block block, short data, Cause<?> cause) {
 		return !block.getMaterial().isPlacementObstacle();
 	}
 

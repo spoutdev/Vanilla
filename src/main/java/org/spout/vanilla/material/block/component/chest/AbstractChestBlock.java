@@ -73,28 +73,25 @@ public abstract class AbstractChestBlock extends ComponentMaterial implements Di
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
-		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause)) {
-			BlockFace facing = PlayerUtil.getFacing(cause).getOpposite();
-			//search for neighbor and align
-			Block neigh;
-			for (BlockFace face : BlockFaces.NESW) {
-				if ((neigh = block.translate(face)).getMaterial().equals(this)) {
-					if (face == facing || face == facing.getOpposite()) {
-						if (facing == BlockFace.NORTH || facing == BlockFace.SOUTH) {
-							facing = BlockFace.WEST;
-						} else {
-							facing = BlockFace.SOUTH;
-						}
+	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
+		BlockFace facing = PlayerUtil.getFacing(cause).getOpposite();
+		// search for neighbor and align
+		Block neigh;
+		for (BlockFace face : BlockFaces.NESW) {
+			if ((neigh = block.translate(face)).getMaterial().equals(this)) {
+				if (face == facing || face == facing.getOpposite()) {
+					if (facing == BlockFace.NORTH || facing == BlockFace.SOUTH) {
+						facing = BlockFace.WEST;
+					} else {
+						facing = BlockFace.SOUTH;
 					}
-					this.setFacing(neigh, facing);
-					break;
 				}
+				this.setFacing(neigh, facing);
+				break;
 			}
-			this.setFacing(block, facing);
-			return true;
 		}
-		return false;
+		this.setFacing(block, facing);
 	}
 
 	@Override

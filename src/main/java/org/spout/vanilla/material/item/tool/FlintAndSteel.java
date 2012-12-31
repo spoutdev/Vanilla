@@ -62,16 +62,14 @@ public class FlintAndSteel extends InteractTool {
 			if (clickedmat.equals(VanillaMaterials.TNT)) {
 				// Detonate TntBlock
 				VanillaMaterials.TNT.onIgnite(block, cause);
-				return;
 			} else {
 				// Default fire creation
 				Block target = block.translate(clickedface);
 				// Default fire placement
-				if (VanillaMaterials.FIRE.canPlace(target, (short) 0)) {
-					if (VanillaMaterials.FIRE.onPlacement(target, (short) 0, cause)) {
-						PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
-						inv.addData(inv.getCurrentSlot(), 1);
-					}
+				if (VanillaMaterials.FIRE.canCreate(target, (short) 0, cause)) {
+					VanillaMaterials.FIRE.onCreate(target, (short) 0, cause);
+					PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
+					inv.addData(inv.getCurrentSlot(), 1);
 				}
 
 				// Handle the creation of portals

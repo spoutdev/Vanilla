@@ -29,38 +29,39 @@ package org.spout.vanilla.material.block.plant;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
-public class DeadBush extends GroundAttachable implements Plant {
+public class DeadBush extends GroundAttachable implements Plant, InitializableMaterial {
+
+	protected DeadBush(String name, int id, short data, String model) {
+		super(data, name, id, model);
+	}
+
+	protected DeadBush(String name, int id, int data, DeadBush parent, String model) {
+		super(name, id, data, parent, model);
+	}
+
 	public DeadBush(String name, int id) {
 		super(name, id, "model://Vanilla/materials/block/nonsolid/deadgrass/deadgrass.spm");
-		this.setLiquidObstacle(false);
-		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}
 
 	public DeadBush(short dataMask, String name, int id) {
 		super(dataMask, name, id, "model://Vanilla/materials/block/nonsolid/deadgrass/deadgrass.spm");
-		this.setLiquidObstacle(false);
-		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}
 
 	public DeadBush(String name, int id, int data, VanillaBlockMaterial parent) {
 		super(name, id, data, parent, "model://Vanilla/materials/block/nonsolid/deadgrass/deadgrass.spm");
+	}
+
+	@Override
+	public void initialize() {
 		this.setLiquidObstacle(false);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
-	}
-
-	protected DeadBush(String name, short data, String model) {
-		super(data, name, 31, model);
-	}
-
-	protected DeadBush(String name, int data, TallGrass parent, String model) {
-		super(name, 31, data, parent, model);
 	}
 
 	@Override
@@ -79,10 +80,5 @@ public class DeadBush extends GroundAttachable implements Plant {
 			return block.isMaterial(VanillaMaterials.SAND, VanillaMaterials.FLOWER_POT_BLOCK);
 		}
 		return false;
-	}
-
-	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		return super.canPlace(block, data, against, clickedPos, isClickedBlock) && block.getMaterial() != VanillaMaterials.FLOWER_POT_BLOCK;
 	}
 }

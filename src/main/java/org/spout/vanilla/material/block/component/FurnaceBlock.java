@@ -92,13 +92,9 @@ public class FurnaceBlock extends ComponentMaterial implements Directional {
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
-		if (super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause)) {
-			this.setFacing(block, PlayerUtil.getFacing(cause).getOpposite());
-			return true;
-		}
-
-		return false;
+	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
+		this.setFacing(block, PlayerUtil.getFacing(cause).getOpposite());
 	}
 
 	@Override

@@ -30,7 +30,6 @@ import java.util.Random;
 
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -150,13 +149,13 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 	public abstract long getSpreadingTime(Block b);
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime) {
+	public void onFirstUpdate(Block b, long currentTime) {
 		//TODO : Delay before dynamic update
 		b.dynamicUpdate(currentTime + getSpreadingTime(b), true);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
+	public void onDynamicUpdate(Block block, long updateTime, int data) {
 		// Attempt to decay or spread this material
 		if (this.canDecayAt(block)) {
 			this.onDecay(block, this.toCause(block));

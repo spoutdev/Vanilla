@@ -45,6 +45,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 
 public abstract class SignBase extends AbstractAttachable implements InitializableMaterial, VanillaComplexMaterial {
+
 	public SignBase(String name, int id) {
 		super(name, id, (String) null);
 		this.setAttachable(BlockFaces.NESWB).setHardness(1.0F).setResistance(1.6F).setOpacity((byte) 1);
@@ -53,11 +54,6 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 	@Override
 	public void initialize() {
 		getDrops().add(VanillaMaterials.SIGN);
-	}
-
-	@Override
-	public void handlePlacement(Block block, short data, BlockFace attachedFace, Cause<?> cause) {
-		this.setAttachedFace(block, attachedFace, cause);
 	}
 
 	@Override

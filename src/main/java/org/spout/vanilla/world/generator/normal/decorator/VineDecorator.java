@@ -28,6 +28,7 @@ package org.spout.vanilla.world.generator.normal.decorator;
 
 import java.util.Random;
 
+import org.spout.api.event.Cause;
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
@@ -66,10 +67,10 @@ public class VineDecorator extends Decorator {
 						block.setMaterial(VanillaMaterials.VINES);
 						block.setData(block.translate(BlockFace.TOP));
 					} else {
+						Cause<?> cause = null; //TODO: What cause to use here?
 						for (final BlockFace face : BlockFaces.NESW) {
-							if (VanillaMaterials.VINES.canPlace(block, (short) 0, face, face.getOffset(), false)) {
-								block.setMaterial(VanillaMaterials.VINES);
-								VanillaMaterials.VINES.setFaceAttached(block, face, true);
+							if (VanillaMaterials.VINES.canPlace(block, (short) 0, face, face.getOffset(), false, cause)) {
+								VanillaMaterials.VINES.onPlacement(block, (short) 0, face, face.getOffset(), false, cause);
 								break;
 							}
 						}

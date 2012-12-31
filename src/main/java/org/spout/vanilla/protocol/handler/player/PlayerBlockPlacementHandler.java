@@ -31,6 +31,7 @@ import java.util.Collection;
 import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Player;
+import org.spout.api.event.Cause;
 import org.spout.api.event.EventManager;
 import org.spout.api.event.Result;
 import org.spout.api.event.player.PlayerInteractEvent;
@@ -56,6 +57,7 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.event.cause.PlayerClickBlockCause;
 import org.spout.vanilla.event.cause.PlayerPlacementCause;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaBlockMaterial;
@@ -165,6 +167,8 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				}
 			}
 
+			Cause<?> cause = new PlayerClickBlockCause(player, clickedBlock);
+
 			//if the material can be placed, place it
 			if (holdingMat != null && holdingMat instanceof Placeable) {
 				short placedData = holding.getData(); //TODO: shouldn't the sub-material deal with this?
@@ -172,10 +176,10 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 
 				Block target;
 				BlockFace targetFace;
-				if (toPlace.canPlace(clickedBlock, placedData, clickedFace, message.getFace(), true) || interactEvent.useItemInHand() == Result.ALLOW) {
+				if (toPlace.canPlace(clickedBlock, placedData, clickedFace, message.getFace(), true, cause) || interactEvent.useItemInHand() == Result.ALLOW) {
 					target = clickedBlock;
 					targetFace = clickedFace;
-				} else if (toPlace.canPlace(alterBlock, placedData, alterFace, message.getFace(), false)) {
+				} else if (toPlace.canPlace(alterBlock, placedData, alterFace, message.getFace(), false, cause)) {
 					target = alterBlock;
 					targetFace = alterFace;
 				} else {
@@ -225,27 +229,24 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 						return;
 					}
 				}
-
-				PlayerPlacementCause cause = new PlayerPlacementCause(player, holdingMat, target);
+				cause = new PlayerPlacementCause(player, (Material) toPlace, target);
 
 				// Perform actual placement
-				if (toPlace.onPlacement(target, placedData, targetFace, message.getFace(), target == clickedBlock, cause)) {
-					// Play sound
-					BlockMaterial material = target.getMaterial();
-					SoundEffect sound;
-					if (material instanceof VanillaBlockMaterial) {
-						sound = ((VanillaBlockMaterial) material).getStepSound();
-					} else {
-						sound = SoundEffects.STEP_STONE;
-					}
-					sound.playGlobal(target.getPosition(), 0.8f, 0.8f);
-					//GeneralEffects.BREAKBLOCK.playGlobal(target.getPosition(), target.getMaterial());
-					// Remove block from inventory if not in creative mode.
-					if (player.get(Human.class).getGameMode() != GameMode.CREATIVE) {
-						currentSlot.addAmount(0, -1);
-					}
+				toPlace.onPlacement(target, placedData, targetFace, message.getFace(), target == clickedBlock, cause);
+
+				// Play sound
+				BlockMaterial material = target.getMaterial();
+				SoundEffect sound;
+				if (material instanceof VanillaBlockMaterial) {
+					sound = ((VanillaBlockMaterial) material).getStepSound();
 				} else {
-					undoPlacement(player, clickedBlock, alterBlock, rm);
+					sound = SoundEffects.STEP_STONE;
+				}
+				sound.playGlobal(target.getPosition(), 0.8f, 0.8f);
+
+				// Remove block from inventory if not in creative mode.
+				if (player.get(Human.class).getGameMode() != GameMode.CREATIVE) {
+					currentSlot.addAmount(0, -1);
 				}
 			}
 		}

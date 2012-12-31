@@ -31,7 +31,6 @@ import java.util.Random;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
@@ -126,13 +125,13 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime) {
+	public void onFirstUpdate(Block b, long currentTime) {
 		//TODO : Delay before first grow
 		b.dynamicUpdate(10000 + currentTime, true);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
+	public void onDynamicUpdate(Block block, long updateTime, int data) {
 		if (block.translate(BlockFace.TOP).getLight() < this.getMinimumLightToGrow()) {
 			block.dynamicUpdate(updateTime + 10000, true);
 			return;

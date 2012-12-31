@@ -72,14 +72,14 @@ public class LilyPad extends GroundAttachable {
 				return;
 			}
 			Block block = iterator.next().translate(BlockFace.TOP);
-			if (this.canPlace(block, (short) 0)) {
-				Cause<Entity> cause;
-				if (entity instanceof Player) {
-					cause = new PlayerBreakCause((Player) entity, block);
-				} else {
-					cause = new EntityCause(entity);
-				}
-				this.onPlacement(block, (short) 0, cause);
+			Cause<Entity> cause;
+			if (entity instanceof Player) {
+				cause = new PlayerBreakCause((Player) entity, block);
+			} else {
+				cause = new EntityCause(entity);
+			}
+			if (this.canCreate(block, (short) 0, cause)) {
+				this.onCreate(block, (short) 0, cause);
 
 				//TODO Subtract from inventory component
 				// Subtract item

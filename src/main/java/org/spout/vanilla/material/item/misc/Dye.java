@@ -104,23 +104,15 @@ public class Dye extends VanillaItemMaterial implements Placeable {
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		return this == COCOA_BEANS && VanillaMaterials.COCOA_PLANT.canPlace(block, data, against, clickedPos, isClickedBlock);
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		return this == COCOA_BEANS && VanillaMaterials.COCOA_PLANT.canPlace(block, data, against, clickedPos, isClickedBlock, cause);
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data) {
-		return this == COCOA_BEANS && VanillaMaterials.COCOA_PLANT.canPlace(block, data);
-	}
-
-	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
-		return this == COCOA_BEANS && VanillaMaterials.COCOA_PLANT.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
-	}
-
-	@Override
-	public boolean onPlacement(Block block, short data, Cause<?> cause) {
-		return this == COCOA_BEANS && VanillaMaterials.COCOA_PLANT.onPlacement(block, data, cause);
+	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		if (this == COCOA_BEANS) {
+			VanillaMaterials.COCOA_PLANT.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
+		}
 	}
 
 	@Override

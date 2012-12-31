@@ -33,7 +33,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -97,10 +96,9 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
-		block.setMaterial(this, cause);
+	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
 		this.setFacing(block, PlayerUtil.getFacing(cause));
-		return true;
 	}
 
 	@Override
@@ -174,12 +172,12 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime) {
+	public void onFirstUpdate(Block b, long currentTime) {
 		b.dynamicUpdate(this.getTickDelay(b) + currentTime, false);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
+	public void onDynamicUpdate(Block block, long updateTime, int data) {
 		boolean receiving = this.isReceivingPower(block);
 		if ((data & 1) == 1) {
 			// Was receiving and should power up

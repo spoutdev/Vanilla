@@ -122,6 +122,7 @@ public class Snow extends GroundAttachable implements DynamicMaterial, Initializ
 			long age = region.getWorld().getAge();
 			if (age - updateTime > POLL_TIME) {
 				block.dynamicUpdate(age + new Random().nextInt((int) POLL_TIME));
+				return;
 			}
 		}
 		block.dynamicUpdate(updateTime + POLL_TIME);

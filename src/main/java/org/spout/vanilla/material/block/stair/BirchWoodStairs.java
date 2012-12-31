@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.material.block.stair;
 
-public class BirchWoodStairs extends WoodenStairs{
-	
+import org.spout.vanilla.material.block.WoodenStairs;
+
+public class BirchWoodStairs extends WoodenStairs {
+
 	public BirchWoodStairs(String name, int id) {
 		super(name, id);
 	}
-	
 }

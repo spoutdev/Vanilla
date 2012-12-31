@@ -32,11 +32,6 @@ import org.spout.api.material.block.BlockFace;
 
 public interface Attachable {
 	/**
-	 * Whether this material seeks an alternative attachment block upon placement
-	 */
-	public boolean canSeekAttachedAlternative();
-
-	/**
 	 * Checks if this material can be attached to certain face of a block material
 	 * @param block to attach to
 	 * @param face of the material to attach to
@@ -72,33 +67,4 @@ public interface Attachable {
 	 * @return the block
 	 */
 	public Block getBlockAttachedTo(Block block);
-
-	/**
-	 * Finds out what face this attachable can properly attach to<br>
-	 * The north-east-south-west-bottom-top search pattern is used.
-	 * @param block of the attachable
-	 * @return the attached face, or null if not found
-	 */
-	public BlockFace findAttachedFace(Block block);
-
-	/**
-	 * Performs placement of this attachable
-	 * @param block to place at
-	 * @param data to use
-	 * @param attachedFace to use
-	 * @param cause of the placement
-	 */
-	public void handlePlacement(Block block, short data, BlockFace attachedFace, Cause<?> cause);
-
-	/**
-	 * Checks if this attachable is at a position it can actually be<br>
-	 * This is called in the underlying physics function to check if the block has to be broken<br>
-	 * No checks on the block itself should be performed misc than the face it is attached to
-	 * @param block to place at
-	 * @param data to use
-	 * @param attachedFace to use
-	 * @param seekAlternative whether an alternative attached face should be sought
-	 * @return whether placement is possible
-	 */
-	public boolean isValidPosition(Block block, BlockFace attachedFace, boolean seekAlternative);
 }

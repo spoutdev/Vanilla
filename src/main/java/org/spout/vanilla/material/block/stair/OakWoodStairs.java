@@ -26,49 +26,11 @@
  */
 package org.spout.vanilla.material.block.stair;
 
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.material.block.WoodenStairs;
 
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.material.Burnable;
-import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Stairs;
+public class OakWoodStairs extends WoodenStairs {
 
-public class WoodenStairs extends Stairs implements Fuel, Burnable {
-	public final float BURN_TIME = 15;
-
-	public WoodenStairs(String name, int id) {
-		super(name, id, (String) null);
-		this.setHardness(2.0F).setResistance(10.0F);
-	}
-
-	@Override
-	public Instrument getInstrument() {
-		return Instrument.BASS_GUITAR;
-	}
-
-	@Override
-	public boolean canSupport(BlockMaterial mat, BlockFace face) {
-		if (mat.equals(VanillaMaterials.FIRE)) {
-			return true;
-		} else {
-			return super.canSupport(mat, face);
-		}
-	}
-
-	@Override
-	public float getFuelTime() {
-		return BURN_TIME;
-	}
-
-	@Override
-	public int getBurnPower() {
-		return 5;
-	}
-
-	@Override
-	public int getCombustChance() {
-		return 20;
+	public OakWoodStairs(String name, int id) {
+		super(name, id);
 	}
 }

@@ -75,19 +75,42 @@ public class PlayerUtil {
 	}
 
 	/**
+	 * Obtains the yaw from a cause, if possible, otherwise 0 is returned
+	 * 
+	 * @param cause to obtain the yaw of
+	 * @return yaw
+	 */
+	public static float getYaw(Cause<?> cause) {
+		if (cause instanceof EntityCause) {
+			return getYaw(((EntityCause) cause).getSource());
+		} else {
+			return 0.0f;
+		}
+	}
+
+	/**
+	 * Obtains the yaw of an entity, if the entity has a head, 
+	 * the head yaw is returned instead
+	 * 
+	 * @param entity to get the yaw of
+	 * @return yaw
+	 */
+	public static float getYaw(Entity entity) {
+		if (entity.has(HeadComponent.class)) {
+			return entity.get(HeadComponent.class).getRotation().getYaw();
+		} else {
+			return entity.getTransform().getYaw();
+		}
+	}
+
+	/**
 	 * Calculates the facing direction of the entity based on it's
 	 * head if it has one, or it's yaw if not.
 	 * @param entity
 	 * @return the face
 	 */
 	public static BlockFace getFacing(Entity entity) {
-		float yaw;
-		if (entity.has(HeadComponent.class)) {
-			yaw = entity.get(HeadComponent.class).getRotation().getYaw();
-		} else {
-			yaw = entity.getTransform().getYaw();
-		}
-		return BlockFace.fromYaw(yaw);
+		return BlockFace.fromYaw(getYaw(entity));
 	}
 
 	/**
@@ -97,9 +120,6 @@ public class PlayerUtil {
 	 * @return the face
 	 */
 	public static BlockFace getFacing(Cause<?> cause) {
-		if (cause instanceof EntityCause) {
-			return getFacing(((EntityCause) cause).getSource());
-		}
-		return BlockFace.NORTH;
+		return BlockFace.fromYaw(getYaw(cause));
 	}
 }

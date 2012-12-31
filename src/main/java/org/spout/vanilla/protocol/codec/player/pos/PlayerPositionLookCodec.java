@@ -47,7 +47,7 @@ public final class PlayerPositionLookCodec extends MessageCodec<PlayerPositionLo
 		double y = buffer.readDouble();
 		double stance = buffer.readDouble();
 		double z = buffer.readDouble();
-		float yaw = buffer.readFloat();
+		float yaw = -buffer.readFloat();
 		float pitch = buffer.readFloat();
 		boolean onGround = buffer.readByte() == 1;
 		return new PlayerPositionLookMessage(x, y, z, stance, yaw, pitch, onGround, NullRepositionManager.getInstance());
@@ -60,7 +60,7 @@ public final class PlayerPositionLookCodec extends MessageCodec<PlayerPositionLo
 		buffer.writeDouble(message.getY());
 		buffer.writeDouble(message.getStance());
 		buffer.writeDouble(message.getZ());
-		buffer.writeFloat(message.getYaw());
+		buffer.writeFloat(-message.getYaw());
 		buffer.writeFloat(message.getPitch());
 		buffer.writeByte(message.isOnGround() ? 1 : 0);
 		return buffer;

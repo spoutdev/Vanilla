@@ -337,12 +337,20 @@ public final class ChannelBufferUtils {
 		return pos / 32F;
 	}
 
-	public static int protocolifyRotation(float rot) {
-		return MathHelper.wrapByte(MathHelper.floor((rot / 360) * 256));
+	public static int protocolifyPitch(float pitch) {
+		return MathHelper.wrapByte(MathHelper.floor((pitch / 360) * 256));
 	}
 
-	public static float deProtocolifyRotation(int rot) {
-		return (rot / 256f) * 360;
+	public static float deProtocolifyPitch(int pitch) {
+		return 360f * (pitch / 256f);
+	}
+
+	public static int protocolifyYaw(float yaw) {
+		return protocolifyPitch(-yaw);
+	}
+
+	public static float deProtocolifyYaw(int yaw) {
+		return -deProtocolifyPitch(yaw);
 	}
 
 	/**

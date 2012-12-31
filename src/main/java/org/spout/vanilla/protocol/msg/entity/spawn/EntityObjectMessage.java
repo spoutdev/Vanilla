@@ -67,8 +67,8 @@ public final class EntityObjectMessage extends EntityMessage {
 		speedY = (short) (velocity.getY() * s);
 		speedZ = (short) (velocity.getZ() * s);
 		
-		pitch = (byte) ChannelBufferUtils.protocolifyRotation(transform.getRotation().getPitch());
-		yaw = (byte) ChannelBufferUtils.protocolifyRotation(transform.getRotation().getYaw());
+		pitch = (byte) ChannelBufferUtils.protocolifyPitch(transform.getRotation().getPitch());
+		yaw = (byte) ChannelBufferUtils.protocolifyYaw(transform.getRotation().getYaw());
 	}
 
 	public EntityObjectMessage(Entity entity, byte type, RepositionManager rm) {

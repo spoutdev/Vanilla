@@ -143,7 +143,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 
 	@Override
 	public void onPlacement(Block block, Region r, long currentTime) {
-		block.dynamicUpdate(block.getWorld().getAge() + 1000 + (new Random()).nextInt(2000));
+		block.dynamicUpdate(block.getWorld().getAge() + 1000 + (new Random()).nextInt(2000), true);
 	}
 
 	@Override
@@ -234,6 +234,6 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 		}
 
 		// Schedule for a next update
-		b.dynamicUpdate(b.getWorld().getAge() + 2000);
+		b.dynamicUpdate(b.getWorld().getAge() + 2000, true);
 	}
 }

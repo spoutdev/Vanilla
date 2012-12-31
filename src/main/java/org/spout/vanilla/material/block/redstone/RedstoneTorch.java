@@ -83,7 +83,7 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 		super.onUpdate(oldMaterial, block);
 		boolean receiving = this.isReceivingPower(block);
 		if (this.isPowered() == receiving) {
-			block.dynamicUpdate(block.getWorld().getAge() + TICK_DELAY);
+			block.dynamicUpdate(block.getWorld().getAge() + TICK_DELAY, false);
 		}
 	}
 
@@ -114,7 +114,7 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
-		b.dynamicUpdate(currentTime + TICK_DELAY);
+		b.dynamicUpdate(currentTime + TICK_DELAY, false);
 	}
 
 	@Override

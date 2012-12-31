@@ -280,7 +280,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
 		//TODO : Delay before first grow
-		b.dynamicUpdate(10000 + currentTime);
+		b.dynamicUpdate(10000 + currentTime, true);
 	}
 
 	@Override
@@ -398,6 +398,6 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 			}
 		}
 
-		block.dynamicUpdate(updateTime + 10000);
+		block.dynamicUpdate(updateTime + 10000, true);
 	}
 }

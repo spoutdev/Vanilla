@@ -102,7 +102,7 @@ public class FarmLand extends VanillaBlockMaterial implements InitializableMater
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
 		//TODO : Delay before return to dirt ?
-		b.dynamicUpdate(30000 + currentTime);
+		b.dynamicUpdate(30000 + currentTime, true);
 	}
 
 	@Override
@@ -110,12 +110,12 @@ public class FarmLand extends VanillaBlockMaterial implements InitializableMater
 		if (VanillaBlockMaterial.isRaining(block) || hasWaterNearby(block)) {
 			block.setData(7);
 			//TODO : Delay before return to dirt ?
-			block.dynamicUpdate(updateTime + 30000);
+			block.dynamicUpdate(updateTime + 30000, true);
 		} else if (this.isWet(block)) {
 			// gradually reduce wet state
 			block.setData(block.getData() - 1);
 			//TODO : Delay before return to dirt ?
-			block.dynamicUpdate(updateTime + 30000);
+			block.dynamicUpdate(updateTime + 30000, true);
 		} else if (!hasCropsNearby(block)) {
 			// not wet and has no crops connecting to this farm land, turn this block into dirt
 			block.setMaterial(VanillaMaterials.DIRT);

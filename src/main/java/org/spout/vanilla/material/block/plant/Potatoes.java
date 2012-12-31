@@ -128,7 +128,7 @@ public class Potatoes extends GroundAttachable implements Growing, Crop, Dynamic
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
 		//TODO : delay before update
-		b.dynamicUpdate(currentTime + 30000);
+		b.dynamicUpdate(currentTime + 30000, true);
 	}
 
 	@Override
@@ -143,7 +143,7 @@ public class Potatoes extends GroundAttachable implements Growing, Crop, Dynamic
 				}
 			}
 			//TODO : delay before update
-			block.dynamicUpdate(updateTime + 30000);
+			block.dynamicUpdate(updateTime + 30000, true);
 		}
 	}
 }

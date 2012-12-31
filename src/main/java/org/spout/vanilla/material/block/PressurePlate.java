@@ -114,13 +114,13 @@ public abstract class PressurePlate extends GroundAttachable implements Redstone
 
 	@Override
 	public void onPlacement(Block block, Region r, long currentTime) {
-		block.dynamicUpdate(currentTime + TICK_DELAY);
+		block.dynamicUpdate(currentTime + TICK_DELAY, true);
 	}
 
 	@Override
 	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
 		if (!this.isPressed(block)) {
-			block.dynamicUpdate(updateTime + TICK_DELAY);
+			block.dynamicUpdate(updateTime + TICK_DELAY, true);
 			return;
 		}
 

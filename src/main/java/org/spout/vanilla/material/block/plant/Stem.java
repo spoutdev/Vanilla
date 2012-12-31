@@ -128,13 +128,13 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
 		//TODO : Delay before first grow
-		b.dynamicUpdate(10000 + currentTime);
+		b.dynamicUpdate(10000 + currentTime, true);
 	}
 
 	@Override
 	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
 		if (block.translate(BlockFace.TOP).getLight() < this.getMinimumLightToGrow()) {
-			block.dynamicUpdate(updateTime + 10000);
+			block.dynamicUpdate(updateTime + 10000, true);
 			return;
 		}
 		int chance = VanillaBlockMaterial.getCropGrowthChance(block) + 1;
@@ -158,6 +158,6 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 			}
 		}
 
-		block.dynamicUpdate(updateTime + 10000);
+		block.dynamicUpdate(updateTime + 10000, true);
 	}
 }

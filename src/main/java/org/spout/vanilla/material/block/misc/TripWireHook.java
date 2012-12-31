@@ -106,7 +106,7 @@ public class TripWireHook extends AttachedRedstoneSource implements Toggleable, 
 
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
-		b.dynamicUpdate(currentTime + TICK_DELAY);
+		b.dynamicUpdate(currentTime + TICK_DELAY, true);
 	}
 
 	@Override

@@ -140,7 +140,7 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 
 	@Override
 	public void onPlacement(Block b, Region r, long currentTime) {
-		b.dynamicUpdate(currentTime + getGrowthTime(b));
+		b.dynamicUpdate(currentTime + getGrowthTime(b), true);
 	}
 
 	@Override

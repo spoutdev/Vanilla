@@ -30,7 +30,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -105,11 +104,11 @@ public class StoneButton extends AttachedRedstoneSource implements PointAttachab
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime) {
+	public void onFirstUpdate(Block b, long currentTime) {
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
+	public void onDynamicUpdate(Block block, long updateTime, int data) {
 		this.setPressed(block, false);
 	}
 

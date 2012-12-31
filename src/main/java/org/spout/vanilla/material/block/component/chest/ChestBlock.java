@@ -95,8 +95,8 @@ public class ChestBlock extends AbstractChestBlock {
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		if (super.canPlace(block, data, against, clickedPos, isClickedBlock)) {
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		if (super.canPlace(block, data, against, clickedPos, isClickedBlock, cause)) {
 			//no surrounding double-chest blocks?
 			int count = 0;
 			for (BlockFace face : BlockFaces.NESW) {

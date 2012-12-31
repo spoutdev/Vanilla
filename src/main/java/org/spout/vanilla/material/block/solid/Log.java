@@ -58,7 +58,6 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.component.FurnaceBlock;
 import org.spout.vanilla.material.block.plant.Sapling;
 import org.spout.vanilla.material.item.misc.Coal;
-import org.spout.vanilla.util.PlayerUtil;
 
 public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable, Burnable, Directional {
 	public static final Log DEFAULT = new Log("Wood", Sapling.DEFAULT, "model://Vanilla/materials/block/solid/oakwood/oakwood.spm");
@@ -157,21 +156,20 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
-		block.setMaterial(this, cause);
+	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
 		this.setFacing(block, against);
-		return true;
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime) {
+	public void onFirstUpdate(Block b, long currentTime) {
 		if (b.isDataBitSet(aliveMask)) {
 			b.dynamicUpdate(currentTime + getGrowthTime(b), true);
 		}
 	}
 
 	@Override
-	public void onDynamicUpdate(Block b, Region r, long updateTime, int updateData) {
+	public void onDynamicUpdate(Block b, long updateTime, int updateData) {
 		int data = b.getData() & 0xFFFF;
 		if ((data & aliveMask) == 0) {
 			return;

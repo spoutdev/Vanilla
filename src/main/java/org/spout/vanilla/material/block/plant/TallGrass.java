@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block.plant;
 
 import org.spout.api.Spout;
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -36,21 +37,20 @@ import org.spout.api.plugin.Platform;
 import org.spout.vanilla.data.drops.SwitchDrops;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.Burnable;
-import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.render.VanillaEffects;
 
-public class TallGrass extends DeadBush implements Burnable, InitializableMaterial {
-	public static final TallGrass DEAD_GRASS = new TallGrass("Dead Grass", "model://Vanilla/materials/block/nonsolid/deadgrass/deadgrass.spm");
+public class TallGrass extends DeadBush implements Burnable {
+	public static final TallGrass DEAD_GRASS = new TallGrass("Dead Grass", 31, "model://Vanilla/materials/block/nonsolid/deadgrass/deadgrass.spm");
 	public static final TallGrass TALL_GRASS = new TallGrass("Tall Grass", 1, DEAD_GRASS, "model://Vanilla/materials/block/nonsolid/tallgrass/tallgrass.spm");
 	public static final TallGrass FERN = new TallGrass("Fern", 2, DEAD_GRASS, "model://Vanilla/materials/block/nonsolid/fern/fern.spm");
 
-	private TallGrass(String name, String model) {
-		super(name, (short) 0x0003, model);
+	private TallGrass(String name, int id, String model) {
+		super(name, id, (short) 0x0003, model);
 	}
 
 	private TallGrass(String name, int data, TallGrass parent, String model) {
-		super(name, data, parent, model);
+		super(name, parent.getMinecraftId(), data, parent, model);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT && data == 1) {
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_GRASS_COLOR)) {
 				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.BIOME_GRASS_COLOR);
@@ -63,6 +63,7 @@ public class TallGrass extends DeadBush implements Burnable, InitializableMateri
 
 	@Override
 	public void initialize() {
+		super.initialize();
 		SwitchDrops drops = getDrops().DEFAULT.clear().addSwitch(ToolTypeFlags.SHEARS);
 		drops.TRUE.add(this);
 		drops.FALSE.add(VanillaMaterials.SEEDS).setChance(0.15);
@@ -97,7 +98,8 @@ public class TallGrass extends DeadBush implements Burnable, InitializableMateri
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		return super.canPlace(block, data, against, clickedPos, isClickedBlock) && block.getMaterial() != VanillaMaterials.FLOWER_POT_BLOCK;
+	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		block.setMaterial(this);
+		System.out.println("MAT = " + block.getMaterial());
 	}
 }

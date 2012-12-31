@@ -29,10 +29,10 @@ package org.spout.vanilla.material.block.plant;
 import java.util.Random;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
@@ -40,7 +40,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.data.GameMode;
@@ -114,13 +113,13 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime) {
+	public void onFirstUpdate(Block b, long currentTime) {
 		//TODO : delay before update
 		b.dynamicUpdate(currentTime + getGrowthTime(b), true);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
+	public void onDynamicUpdate(Block block, long updateTime, int data) {
 		Random rand = new Random(block.getWorld().getAge());
 		if (rand.nextInt(25) == 0) {
 			// can we spread?
@@ -130,27 +129,23 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 					return;
 				}
 			}
+			Cause<?> cause = toCause(block);
 			// spread from the source (4 times)
 			Block newShroom = null;
 			for (int i = 0; i < 4; i++) {
 				newShroom = block.translate(rand.nextInt(3) - 1, rand.nextInt(2) - rand.nextInt(2), rand.nextInt(3) - 1);
-				if (newShroom.isMaterial(VanillaMaterials.AIR) && this.canPlace(newShroom, (short) 0)) {
+				if (newShroom.isMaterial(VanillaMaterials.AIR) && this.canCreate(newShroom, (short) 0, cause)) {
 					block = newShroom;
 				}
 			}
 			// try to place at last
-			if (block.isMaterial(VanillaMaterials.AIR) && this.canPlace(block, (short) 0)) {
-				this.onPlacement(block, (short) 0, toCause(block));
+			if (block.isMaterial(VanillaMaterials.AIR) && this.canCreate(block, (short) 0, cause)) {
+				this.onCreate(block, (short) 0, cause);
 			}
 		}
 
 		//TODO : delay before update
 		block.dynamicUpdate(updateTime + getGrowthTime(block), true);
-	}
-
-	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		return super.canPlace(block, data, against, clickedPos, isClickedBlock) && block.getMaterial() != VanillaMaterials.FLOWER_POT_BLOCK;
 	}
 
 	private long getGrowthTime(Block block) {

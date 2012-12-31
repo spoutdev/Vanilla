@@ -28,7 +28,6 @@ package org.spout.vanilla.material.block;
 
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.Material;
@@ -277,11 +276,11 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime) {
+	public void onFirstUpdate(Block b, long currentTime) {
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
+	public void onDynamicUpdate(Block block, long updateTime, int data) {
 		// Update flowing down state
 		if (this.isMaterial(block.translate(BlockFace.TOP).getMaterial())) {
 			// Set non-source water blocks to flow down

@@ -24,13 +24,17 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.stair;
+package org.spout.vanilla.component.substance.material;
 
-import org.spout.vanilla.material.block.WoodenStairs;
+import org.spout.vanilla.data.VanillaData;
 
-public class JungleWoodStairs extends WoodenStairs {
+public class Skull extends VanillaBlockComponent {
 
-	public JungleWoodStairs(String name, int id) {
-		super(name, id);
+	public float getRotation() {
+		return getData().get(VanillaData.SKULL_ROTATION);
+	}
+
+	public void setRotation(float rotation) {
+		getData().put(VanillaData.SKULL_ROTATION, rotation);
 	}
 }

@@ -24,13 +24,50 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.stair;
+package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.block.WoodenStairs;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 
-public class JungleWoodStairs extends WoodenStairs {
+import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.material.Burnable;
+import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.VanillaMaterials;
 
-	public JungleWoodStairs(String name, int id) {
-		super(name, id);
+public class WoodenStairs extends Stairs implements Fuel, Burnable {
+	public final float BURN_TIME = 15;
+
+	public WoodenStairs(String name, int id) {
+		super(name, id, (String) null);
+		this.setHardness(2.0F).setResistance(10.0F);
+	}
+
+	@Override
+	public Instrument getInstrument() {
+		return Instrument.BASS_GUITAR;
+	}
+
+	@Override
+	public boolean canSupport(BlockMaterial mat, BlockFace face) {
+		if (mat.equals(VanillaMaterials.FIRE)) {
+			return true;
+		} else {
+			return super.canSupport(mat, face);
+		}
+	}
+
+	@Override
+	public float getFuelTime() {
+		return BURN_TIME;
+	}
+
+	@Override
+	public int getBurnPower() {
+		return 5;
+	}
+
+	@Override
+	public int getCombustChance() {
+		return 20;
 	}
 }

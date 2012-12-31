@@ -168,10 +168,10 @@ import org.spout.vanilla.material.block.stair.BrickStairs;
 import org.spout.vanilla.material.block.stair.CobblestoneStairs;
 import org.spout.vanilla.material.block.stair.JungleWoodStairs;
 import org.spout.vanilla.material.block.stair.NetherBrickStairs;
+import org.spout.vanilla.material.block.stair.OakWoodStairs;
 import org.spout.vanilla.material.block.stair.SandstoneStairs;
 import org.spout.vanilla.material.block.stair.SpruceWoodStairs;
 import org.spout.vanilla.material.block.stair.StoneBrickStairs;
-import org.spout.vanilla.material.block.stair.WoodenStairs;
 import org.spout.vanilla.material.item.BlockItem;
 import org.spout.vanilla.material.item.Food;
 import org.spout.vanilla.material.item.FoodEffect;
@@ -296,12 +296,12 @@ public final class VanillaMaterials {
 	public static final NetherBrickStairs STAIRS_NETHER_BRICK = new NetherBrickStairs("Nether Brick Stairs", 114);
 	public static final BrickStairs STAIRS_BRICK = new BrickStairs("Brick Stairs", 108);
 	public static final CobblestoneStairs STAIRS_COBBLESTONE = new CobblestoneStairs("Cobblestone Stairs", 67);
-	public static final WoodenStairs STAIRS_WOODEN = new WoodenStairs("Wooden Stairs", 53);
 	public static final StoneBrickStairs STAIRS_STONE_BRICK = new StoneBrickStairs("Stone Brick Stairs", 109);
 	public static final SandstoneStairs STAIRS_SANDSTONE = new SandstoneStairs("Sandstone Stairs", 128);
-	public static final SpruceWoodStairs SPRUCE_WOOD_STAIRS = new SpruceWoodStairs("Spruce Wood Stairs", 134);
-	public static final BirchWoodStairs BIRCH_WOOD_STAIRS = new BirchWoodStairs("Birch Wood Stairs", 135);
-	public static final JungleWoodStairs JUNGLE_WOOD_STAIRS = new JungleWoodStairs("Jungle Wood Stairs", 136);
+	public static final OakWoodStairs STAIRS_WOOD_OAK = new OakWoodStairs("Oak Wood Stairs", 53);
+	public static final SpruceWoodStairs STAIRS_WOOD_SPRUCE = new SpruceWoodStairs("Spruce Wood Stairs", 134);
+	public static final BirchWoodStairs STAIRS_WOOD_BIRCH = new BirchWoodStairs("Birch Wood Stairs", 135);
+	public static final JungleWoodStairs STAIRS_WOOD_JUNGLE = new JungleWoodStairs("Jungle Wood Stairs", 136);
 	// == Portals ==
 	public static final NetherPortal PORTAL = new NetherPortal("Portal", 90);
 	public static final EndPortal END_PORTAL = new EndPortal("End Portal", 119);

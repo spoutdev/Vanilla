@@ -24,36 +24,50 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.codec.player.pos;
+package org.spout.vanilla.material.block;
 
-import java.io.IOException;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.material.Burnable;
+import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.VanillaMaterials;
 
-import org.spout.api.protocol.MessageCodec;
+public class WoodenStairs extends Stairs implements Fuel, Burnable {
+	public final float BURN_TIME = 15;
 
-import org.spout.vanilla.protocol.msg.player.pos.PlayerLookMessage;
-
-public final class PlayerLookCodec extends MessageCodec<PlayerLookMessage> {
-	public PlayerLookCodec() {
-		super(PlayerLookMessage.class, 0x0C);
+	public WoodenStairs(String name, int id) {
+		super(name, id, (String) null);
+		this.setHardness(2.0F).setResistance(10.0F);
 	}
 
 	@Override
-	public PlayerLookMessage decode(ChannelBuffer buffer) throws IOException {
-		float yaw = -buffer.readFloat();
-		float pitch = buffer.readFloat();
-		boolean onGround = buffer.readByte() == 1;
-		return new PlayerLookMessage(yaw, pitch, onGround);
+	public Instrument getInstrument() {
+		return Instrument.BASS_GUITAR;
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerLookMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(9);
-		buffer.writeFloat(-message.getYaw());
-		buffer.writeFloat(message.getPitch());
-		buffer.writeByte(message.isOnGround() ? 1 : 0);
-		return buffer;
+	public boolean canSupport(BlockMaterial mat, BlockFace face) {
+		if (mat.equals(VanillaMaterials.FIRE)) {
+			return true;
+		} else {
+			return super.canSupport(mat, face);
+		}
+	}
+
+	@Override
+	public float getFuelTime() {
+		return BURN_TIME;
+	}
+
+	@Override
+	public int getBurnPower() {
+		return 5;
+	}
+
+	@Override
+	public int getCombustChance() {
+		return 20;
 	}
 }

@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.material.block.component.chest;
 
-import java.util.Set;
-
+import org.spout.api.component.type.BlockComponent;
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
@@ -35,12 +35,11 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
-import org.spout.api.util.flag.Flag;
-
 import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.component.substance.material.chest.Chest;
 
 public class ChestBlock extends AbstractChestBlock {
+
 	public final float BURN_TIME = 15;
 
 	public ChestBlock(String name, int id) {
@@ -50,6 +49,7 @@ public class ChestBlock extends AbstractChestBlock {
 
 	/**
 	 * Gets the other half of a double chest
+	 *
 	 * @param block of the Double chest
 	 * @return the other half, or null if there is none
 	 */
@@ -64,6 +64,7 @@ public class ChestBlock extends AbstractChestBlock {
 
 	/**
 	 * Gets whether a certain chest block is a double chest
+	 *
 	 * @param block of the Chest
 	 * @return True if it is a double chest, False if it is a single chest
 	 */
@@ -72,18 +73,25 @@ public class ChestBlock extends AbstractChestBlock {
 	}
 
 	@Override
-	public void onPostDestroy(Block block, Set<Flag> flags) {
-		Chest chest = (Chest) block.getComponent();
-		//Drop items
-		Inventory inventory = chest.getInventory();
-		Point position = block.getPosition();
-		for (ItemStack item : inventory) {
-			if (item == null) {
-				continue;
-			}
-			Item.dropNaturally(position, item);
+	public boolean onDestroy(Block block, Cause<?> cause) {
+		BlockComponent c = block.getComponent();
+		Inventory inventory;
+		if (c instanceof Chest) {
+			inventory = ((Chest) c).getInventory();
+		} else {
+			return false;
 		}
-		super.onPostDestroy(block, flags);
+		boolean shouldD = super.onDestroy(block, cause);
+		if (shouldD) {
+			Point position = block.getPosition();
+			for (ItemStack item : inventory) {
+				if (item == null) {
+					continue;
+				}
+				Item.dropNaturally(position, item);
+			}
+		}
+		return shouldD;
 	}
 
 	@Override

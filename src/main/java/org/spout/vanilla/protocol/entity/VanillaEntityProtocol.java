@@ -52,7 +52,8 @@ import org.spout.vanilla.protocol.msg.entity.pos.EntityVelocityMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityYawMessage;
 
 import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPosition;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyRotation;
+import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyYaw;
+import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPitch;
 
 public abstract class VanillaEntityProtocol implements EntityProtocol {
 	private List<Parameter<?>> lastMeta;
@@ -79,8 +80,8 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		int newX = protocolifyPosition(newTransform.getPosition().getX());
 		int newY = protocolifyPosition(newTransform.getPosition().getY());
 		int newZ = protocolifyPosition(newTransform.getPosition().getZ());
-		int newYaw = protocolifyRotation(newTransform.getRotation().getYaw());
-		int newPitch = protocolifyRotation(newTransform.getRotation().getPitch());
+		int newYaw = protocolifyYaw(newTransform.getRotation().getYaw());
+		int newPitch = protocolifyPitch(newTransform.getRotation().getPitch());
 
 		int deltaX = newX - lastX;
 		int deltaY = newY - lastY;
@@ -103,7 +104,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		} else {
 			if (looked) {
 				messages.add(new EntityRelativePositionYawMessage(entity.getId(), deltaX, deltaY, deltaZ, newYaw, newPitch));
-			} else {
+			} else if (!prevTransform.getPosition().equals(newTransform.getPosition())){
 				messages.add(new EntityRelativePositionMessage(entity.getId(), deltaX, deltaY, deltaZ));
 			}
 		}
@@ -112,7 +113,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 
 		HeadComponent head = entity.get(HeadComponent.class);
 		if (head != null && head.isDirty()) {
-			final int headYawProt = ChannelBufferUtils.protocolifyRotation(head.getRotation().getYaw());
+			final int headYawProt = ChannelBufferUtils.protocolifyYaw(head.getRotation().getYaw());
 			messages.add(new EntityHeadYawMessage(entity.getId(), headYawProt));
 		}
 

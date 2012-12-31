@@ -94,7 +94,6 @@ public class DrowningComponent extends EntityComponent {
 		switch (Spout.getPlatform()) {
 			case PROXY:
 			case SERVER:
-				dt = dt / 1000F;
 				World world = head.getPosition().getWorld();
 				if (world.getBlock(head.getPosition()).getMaterial() != VanillaMaterials.WATER) {
 					setAir(MAX_AIR);

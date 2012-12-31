@@ -100,9 +100,6 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		int y = rmInverse.convertY(message.getY());
 		int z = rmInverse.convertZ(message.getZ());
 		int state = message.getState();
-		Spout.getLogger().info("Digging: " + x + ", " + y + ", " + z);
-		Spout.getLogger().info("rm(20): " + rm.convertY(20));
-		Spout.getLogger().info("rmI(20): " + rmInverse.convertY(20));
 
 		World w = player.getWorld();
 		Point point = new Point(w, x, y, z);

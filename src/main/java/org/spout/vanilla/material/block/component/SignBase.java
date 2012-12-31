@@ -100,6 +100,9 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 	@Override
 	public ProtocolEvent getUpdate(World world, int x, int y, int z) {
 		Sign sign = (Sign) world.getBlockComponent(x, y, z);
+		if(sign == null) {
+			throw new UnsupportedOperationException("Can't get data for sign at "+x+" "+y+" "+z+"! Component missing...");
+		}
 		return new SignUpdateEvent(sign, sign.getText(), null);
 	}
 }

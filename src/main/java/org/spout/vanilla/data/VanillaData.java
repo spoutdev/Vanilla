@@ -79,6 +79,8 @@ public class VanillaData {
 	public static final DefaultedKey<Float> MAX_FURNACE_FUEL = new DefaultedKeyImpl<Float>("max_fuel", 0f);
 	public static final DefaultedKey<Float> SMELT_TIME = new DefaultedKeyImpl<Float>("smelt_time", -1f);
 	public static final DefaultedKey<Float> MAX_SMELT_TIME = new DefaultedKeyImpl<Float>("max_smelt_time", FurnaceBlock.SMELT_TIME);
+	// Skull block
+	public static final DefaultedKey<Float> SKULL_ROTATION = new DefaultedKeyImpl<Float>("skull_rot", 0.0f);
 	// TNT
 	public static final DefaultedKey<Float> FUSE = new DefaultedKeyImpl<Float>("fuse", (float) random.nextInt(5) + 1);
 	public static final DefaultedKey<Float> EXPLOSION_SIZE = new DefaultedKeyImpl<Float>("explosion_size", 4f);
@@ -109,7 +111,7 @@ public class VanillaData {
 	//Creature-specific
 	public static final DefaultedKey<Integer> LINE_OF_SIGHT = new DefaultedKeyImpl<Integer>("line_of_sight", 1);
 	//Item-specific
-	public static final DefaultedKey<Integer> UNCOLLECTABLE_TICKS = new DefaultedKeyImpl<Integer>("uncollectable_ticks", 10);
+	public static final DefaultedKey<Number> UNCOLLECTABLE_TICKS = new DefaultedKeyImpl<Number>("uncollectable_ticks", (long) 0);
 	//Head-specific
 	public static final DefaultedKey<Integer> HEAD_HEIGHT = new DefaultedKeyImpl<Integer>("head_height", 1);
 	public static final DefaultedKey<Quaternion> HEAD_ROTATION = new DefaultedKeyImpl<Quaternion>("head_rotation", Quaternion.IDENTITY);

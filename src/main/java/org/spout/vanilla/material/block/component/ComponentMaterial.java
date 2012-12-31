@@ -58,6 +58,11 @@ public class ComponentMaterial extends VanillaBlockMaterial implements ComplexMa
 		this.componentType = componentType;
 	}
 
+	public ComponentMaterial(String name, int id, int data, ComponentMaterial parent, String model) {
+		super(name, id, data, parent, model);
+		this.componentType = parent.componentType;
+	}
+
 	public BlockComponent spawn(Point pos) {
 		return pos.getWorld().createAndSpawnEntity(pos, componentType, LoadOption.NO_LOAD).add(componentType);
 	}

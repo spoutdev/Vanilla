@@ -107,7 +107,9 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 		return true;
 	}
 
-	@Override
+	/**
+	 * Whether this material seeks an alternative attachment block upon placement
+	 */
 	public boolean canSeekAttachedAlternative() {
 		return false;
 	}
@@ -120,7 +122,12 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 		}
 	}
 
-	@Override
+	/**
+	 * Finds out what face this attachable can properly attach to<br>
+	 * The north-east-south-west-bottom-top search pattern is used.
+	 * @param block of the attachable
+	 * @return the attached face, or null if not found
+	 */
 	public BlockFace findAttachedFace(Block block) {
 		for (BlockFace face : BlockFaces.NESWBT) {
 			if (this.canAttachTo(block.translate(face), face.getOpposite())) {
@@ -156,7 +163,16 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 		return this.isValidPosition(block, against, this.canSeekAttachedAlternative());
 	}
 
-	@Override
+	/**
+	 * Checks if this attachable is at a position it can actually be<br>
+	 * This is called in the underlying physics function to check if the block has to be broken<br>
+	 * No checks on the block itself should be performed other than the face it is attached to
+	 * @param block to place at
+	 * @param data to use
+	 * @param attachedFace to use
+	 * @param seekAlternative whether an alternative attached face should be sought
+	 * @return whether placement is possible
+	 */
 	public boolean isValidPosition(Block block, BlockFace attachedFace, boolean seekAlternative) {
 		if (this.canAttachTo(block.translate(attachedFace), attachedFace.getOpposite())) {
 			return true;
@@ -185,7 +201,13 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 		return true;
 	}
 
-	@Override
+	/**
+	 * Performs placement of this attachable
+	 * @param block to place at
+	 * @param data to use
+	 * @param attachedFace to use
+	 * @param cause of the placement
+	 */
 	public void handlePlacement(Block block, short data, BlockFace against, Cause<?> cause) {
 		block.setMaterial(this, data, cause);
 		this.setAttachedFace(block, against, cause);

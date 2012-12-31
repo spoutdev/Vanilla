@@ -45,6 +45,23 @@ public class Sign extends VanillaBlockComponent {
 		return copy;
 	}
 
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		
+		//Defaulted key not enough, the array needs to have empty lines in it, not null
+		if(getData().get(VanillaData.SIGN_TEXT)[0] != null) {
+			return;
+		}
+		
+		String[] lines = new String[4];
+		for(int i=0;i<lines.length;i++) {
+			lines[i] = "";
+		}
+		getData().put(VanillaData.SIGN_TEXT, lines);
+		
+	}
+
 	/**
 	 * Sets the text on this sign. The text must be 4 lines, no longer than 16 chars in length
 	 * @param text to set

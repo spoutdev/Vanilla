@@ -42,7 +42,7 @@ public class PlayerListComponent extends EntityComponent {
 	private Server server;
 	private final LinkedHashMap<String, Long> players = new LinkedHashMap<String, Long>();
 	private final HashSet<String> temp = new HashSet<String>();
-	private float pollPeriod = 5000F; // Every 5 seconds
+	private float pollPeriod = 5F; // Every 5 seconds
 	private float timer = 0;
 	private boolean force; // If true will force the list on the next tick
 

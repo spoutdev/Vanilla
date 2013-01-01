@@ -272,6 +272,12 @@ public class VanillaPlugin extends CommonPlugin {
 					Point spawn = ((VanillaGenerator) world.getGenerator()).getSafeSpawn(world);
 					world.setSpawnPoint(new Transform(spawn, Quaternion.IDENTITY, Vector3.ONE));
 				}
+
+				// Grab safe spawn if newly created world.
+				if (newWorld && world.getGenerator() instanceof VanillaGenerator) {
+					Point spawn = ((VanillaGenerator) world.getGenerator()).getSafeSpawn(world);
+					world.setSpawnPoint(new Transform(spawn, Quaternion.IDENTITY, Vector3.ONE));
+				}
 			}
 
 			if (world.getGenerator() instanceof NetherGenerator) {

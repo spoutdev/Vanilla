@@ -32,16 +32,16 @@ import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandExecutor;
 import org.spout.api.command.CommandSource;
 import org.spout.api.component.impl.HitBlockComponent;
-import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.event.cause.DamageCause;
-import org.spout.vanilla.event.cause.NullDamageCause;
+import org.spout.vanilla.component.player.HUDComponent;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -95,6 +95,27 @@ public class InputCommandExecutor implements CommandExecutor {
 					hitting.translate(clicked).setMaterial(selection);
 				}
 			}
+		} else if (name.startsWith("+hotbar_")) {
+			Player player = (Player) source;
+			PlayerQuickbar quickbar = player.get(PlayerInventory.class).getQuickbar();
+			HUDComponent hud = player.get(HUDComponent.class);
+			int newSlot = quickbar.getCurrentSlot();
+			if (name.endsWith("left")) {
+				newSlot--;
+				if (newSlot < 0) {
+					newSlot = 8;
+				}
+			} else if (name.endsWith("right")) {
+				newSlot++;
+				if (newSlot > 8) {
+					newSlot = 0;
+				}
+			} else {
+				newSlot = Integer.parseInt(name.substring(name.indexOf('_') + 1)) - 1;
+			}
+
+			hud.setHotbarSlot(newSlot);
+			quickbar.setCurrentSlot(newSlot);
 		}
 	}
 }

@@ -131,6 +131,14 @@ public class VanillaPlugin extends CommonPlugin {
 				.setExecutor(Platform.CLIENT, exe);
 		engine.getRootCommand().addSubCommand(this, "+place_block").setArgBounds(0, 0).setHelp("Places a block!")
 				.setExecutor(Platform.CLIENT, exe);
+		engine.getRootCommand().addSubCommand(this, "+hotbar_left").setArgBounds(0, 0).setHelp("Changes hotbar slot!")
+			.setExecutor(Platform.CLIENT, exe);
+		engine.getRootCommand().addSubCommand(this, "+hotbar_right").setArgBounds(0, 0).setHelp("Changes hotbar slot!")
+			.setExecutor(Platform.CLIENT, exe);
+		for (int i = 1; i < 10; i++) {
+			engine.getRootCommand().addSubCommand(this, "+hotbar_" + i).setArgBounds(0, 0).setHelp("Changes hotbar slot!")
+				.setExecutor(Platform.CLIENT, exe);
+		}
 
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			InputManager input = ((Client) Spout.getEngine()).getInputManager();
@@ -138,6 +146,11 @@ public class VanillaPlugin extends CommonPlugin {
 			input.bind(Mouse.MOUSE_BUTTON0, "break_block");
 			input.bind(Mouse.MOUSE_BUTTON1, "place_block");
 			input.bind(Mouse.MOUSE_BUTTON2, "select_block");
+			input.bind(Mouse.MOUSE_SCROLLUP, "hotbar_left");
+			input.bind(Mouse.MOUSE_SCROLLDOWN, "hotbar_right");
+			for (int i = 1; i < 10; i++) {
+				input.bind(Keyboard.valueOf("KEY_" + i), "hotbar_" + i);
+			}
 		}
 
 		//Configuration

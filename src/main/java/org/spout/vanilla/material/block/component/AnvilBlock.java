@@ -49,8 +49,13 @@ public class AnvilBlock extends ComponentMaterial {
 		super.onUpdate(oldMaterial, block);
 		if (!block.translate(BlockFace.BOTTOM).getMaterial().isPlacementObstacle()) {
 			// turn this block into a mobile block
-			//block.getWorld().createAndSpawnEntity(block.getPosition(), block.getComponent().getClass(), LoadOption.NO_LOAD);
+			// block.getWorld().createAndSpawnEntity(block.getPosition(), block.getComponent().getClass(), LoadOption.NO_LOAD);
 			block.setMaterial(VanillaMaterials.AIR);
 		}
+	}
+
+	@Override
+	public boolean isPlacementSuppressed() {
+		return true;
 	}
 }

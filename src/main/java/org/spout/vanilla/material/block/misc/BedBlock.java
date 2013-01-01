@@ -170,8 +170,8 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		if (against == BlockFace.BOTTOM && super.canPlace(block, data, against, clickedPos, isClickedBlock)) {
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		if (against == BlockFace.BOTTOM && super.canPlace(block, data, against, clickedPos, isClickedBlock, cause)) {
 			Block below = block.translate(BlockFace.BOTTOM);
 			BlockMaterial material = below.getMaterial();
 			if (material instanceof VanillaBlockMaterial) {
@@ -182,17 +182,8 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace face, Vector3 clickedPos, boolean isClicked, Cause<?> cause) {
-		if (face == BlockFace.BOTTOM) {
-			BlockFace facing = PlayerUtil.getFacing(cause);
-			Block head = block.translate(facing);
-			// Check if the head block can be placed
-			if (this.canPlace(head, data, face, clickedPos, false)) {
-				create(block, facing);
-				return true;
-			}
-		}
-		return false;
+	public void onPlacement(Block block, short data, BlockFace face, Vector3 clickedPos, boolean isClicked, Cause<?> cause) {
+		create(block, PlayerUtil.getFacing(cause));
 	}
 
 	/**

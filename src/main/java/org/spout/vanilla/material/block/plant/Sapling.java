@@ -32,13 +32,11 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.data.GameMode;
@@ -139,21 +137,16 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime) {
-		b.dynamicUpdate(currentTime + getGrowthTime(b));
+	public void onFirstUpdate(Block b, long currentTime) {
+		b.dynamicUpdate(currentTime + getGrowthTime(b), true);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block b, Region r, long updateTime, int data) {
+	public void onDynamicUpdate(Block b, long updateTime, int data) {
 		short oldData = b.getData();
 		b.setMaterial(Log.DEFAULT);
 		b.setData(oldData & dataMask);
 		b.setDataBits(Log.aliveMask);
-	}
-
-	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		return super.canPlace(block, data, against, clickedPos, isClickedBlock) && block.getMaterial() != VanillaMaterials.FLOWER_POT_BLOCK;
 	}
 
 	private long getGrowthTime(Block block) {

@@ -28,7 +28,6 @@ package org.spout.vanilla.material.block.misc;
 
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -105,12 +104,12 @@ public class TripWireHook extends AttachedRedstoneSource implements Toggleable, 
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime) {
-		b.dynamicUpdate(currentTime + TICK_DELAY);
+	public void onFirstUpdate(Block b, long currentTime) {
+		b.dynamicUpdate(currentTime + TICK_DELAY, true);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
+	public void onDynamicUpdate(Block block, long updateTime, int data) {
 		if (this.isToggled(block)) {
 			BlockFace direction = getAttachedFace(block).getOpposite();
 			this.setToggled(block, false);

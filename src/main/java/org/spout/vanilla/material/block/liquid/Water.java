@@ -30,7 +30,6 @@ import java.util.Random;
 
 import org.spout.api.Spout;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.range.EffectIterator;
@@ -115,14 +114,14 @@ public class Water extends Liquid implements DynamicMaterial {
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime) {
-		b.dynamicUpdate(60000 + new Random(b.getWorld().getAge()).nextInt(60000) + currentTime);
-		super.onPlacement(b, r, currentTime);
+	public void onFirstUpdate(Block b, long currentTime) {
+		b.dynamicUpdate(60000 + new Random(b.getWorld().getAge()).nextInt(60000) + currentTime, true);
+		super.onFirstUpdate(b, currentTime);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
-		super.onDynamicUpdate(block, region, updateTime, data);
+	public void onDynamicUpdate(Block block, long updateTime, int data) {
+		super.onDynamicUpdate(block, updateTime, data);
 
 		// Water freezing
 		if (!isSource(block)) {

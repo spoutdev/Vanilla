@@ -28,7 +28,6 @@ package org.spout.vanilla.material.block.redstone;
 
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -65,9 +64,8 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	}
 
 	@Override
-	public void handlePlacement(Block block, short data, BlockFace against, Cause<?> cause) {
+	public void onCreate(Block block, short data, Cause<?> cause) {
 		block.setMaterial(VanillaMaterials.REDSTONE_TORCH_ON, cause);
-		this.setAttachedFace(block, against, cause);
 	}
 
 	public boolean isPowered() {
@@ -83,7 +81,7 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 		super.onUpdate(oldMaterial, block);
 		boolean receiving = this.isReceivingPower(block);
 		if (this.isPowered() == receiving) {
-			block.dynamicUpdate(block.getWorld().getAge() + TICK_DELAY);
+			block.dynamicUpdate(block.getWorld().getAge() + TICK_DELAY, false);
 		}
 	}
 
@@ -113,12 +111,12 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime) {
-		b.dynamicUpdate(currentTime + TICK_DELAY);
+	public void onFirstUpdate(Block b, long currentTime) {
+		b.dynamicUpdate(currentTime + TICK_DELAY, false);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
+	public void onDynamicUpdate(Block block, long updateTime, int data) {
 		boolean receiving = this.isReceivingPower(block);
 		if (this.isPowered() == receiving) {
 			this.setPowered(block, !receiving);

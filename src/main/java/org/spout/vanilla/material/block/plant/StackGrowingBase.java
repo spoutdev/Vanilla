@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.block.plant;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CuboidEffectRange;
@@ -143,13 +142,13 @@ public abstract class StackGrowingBase extends GroundAttachable implements Plant
 	}
 
 	@Override
-	public void onPlacement(Block block, Region r, long currentTime) {
-		block.dynamicUpdate(currentTime + getGrowTime(block));
+	public void onFirstUpdate(Block block, long currentTime) {
+		block.dynamicUpdate(currentTime + getGrowTime(block), true);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region r, long updateTime, int data) {
-		block.dynamicUpdate(r.getWorld().getAge() + getGrowTime(block));
+	public void onDynamicUpdate(Block block, long updateTime, int data) {
+		block.dynamicUpdate(block.getWorld().getAge() + getGrowTime(block), true);
 		Block below = block.translate(BlockFace.BOTTOM);
 		// Only fire dynamic updates for the bottom block
 		if (!this.canAttachTo(below, BlockFace.TOP) || below.isMaterial(this)) {

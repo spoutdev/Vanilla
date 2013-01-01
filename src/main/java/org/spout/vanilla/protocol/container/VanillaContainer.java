@@ -108,8 +108,8 @@ public class VanillaContainer implements BlockContainer, LightContainer, BlockCo
 	public void setBlockComponent(int x, int y, int z, BlockComponent component) {
 		components[index] = component;
 		componentX[index] = x;
-		componentY[index] = x;
-		componentZ[index] = x;
+		componentY[index] = y;
+		componentZ[index] = z;
 		index++;
 	}
 

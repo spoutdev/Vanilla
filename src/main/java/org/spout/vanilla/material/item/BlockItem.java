@@ -58,23 +58,13 @@ public class BlockItem extends VanillaItemMaterial implements Placeable {
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock) {
-		return place.canPlace(block, place.getData(), against, clickedPos, isClickedBlock);
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		return place.canPlace(block, place.getData(), against, clickedPos, isClickedBlock, cause);
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
-		return place.onPlacement(block, place.getData(), against, clickedPos, isClickedBlock, cause);
-	}
-
-	@Override
-	public final boolean canPlace(Block block, short data) {
-		return canPlace(block, data, BlockFace.BOTTOM, Vector3.UNIT_Y, false);
-	}
-
-	@Override
-	public final boolean onPlacement(Block block, short data, Cause<?> cause) {
-		return onPlacement(block, data, BlockFace.BOTTOM, Vector3.UNIT_Y, false, cause);
+	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		place.onPlacement(block, place.getData(), against, clickedPos, isClickedBlock, cause);
 	}
 
 	/**

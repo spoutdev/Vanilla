@@ -54,7 +54,7 @@ public class PistonExtension extends Solid implements Directional {
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace facing, Vector3 clickedPos, boolean isClickedBlock) {
+	public boolean canPlace(Block block, short data, BlockFace facing, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		return false;
 	}
 

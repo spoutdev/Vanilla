@@ -33,7 +33,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.event.cause.EntityCause;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -190,10 +189,18 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace face, Vector3 clickedPos, boolean isClicked) {
+	public boolean canPlace(Block block, short data, BlockFace face, Vector3 clickedPos, boolean isClicked, Cause<?> cause) {
 		if (block.getMaterial().equals(VanillaMaterials.VINES)) {
-			return true;
-		} else if (face == BlockFace.BOTTOM) {
+			if (isClicked) {
+				face = getTracedFace(block, cause);
+				if (face == null) {
+					return false;
+				}
+			} else {
+				return false;
+			}
+		}
+		if (face == BlockFace.BOTTOM) {
 			return false; //TODO: possibly place on top of vines?
 		} else if (face == BlockFace.TOP) {
 			if (isClicked) {
@@ -214,57 +221,20 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 	}
 
 	@Override
-	public boolean onPlacement(Block block, short dat, BlockFace face, Vector3 clickedPos, boolean isClicked, Cause<?> cause) {
+	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
+		BlockFace attached = against;
 		if (block.getMaterial().equals(VanillaMaterials.VINES)) {
-			if (isClicked) {
-				face = getTracedFace(block, cause);
-				if (face == null) {
-					return false;
+			if (isClickedBlock) {
+				attached = getTracedFace(block, cause);
+				if (attached == null) {
+					return;
 				}
 			}
-
-			if (!this.canAttachTo(block.translate(face), face.getOpposite())) {
-				return false;
-			}
-
-			if (this.isAttachedTo(block, face)) {
-				return false;
-			}
-
-			this.setFaceAttached(block, face, true);
-			return true;
+		} else if (against == BlockFace.BOTTOM || against == BlockFace.TOP) {
+			return;
 		}
-
-		switch (face) {
-			case BOTTOM:
-				return false; //TODO: possibly place on top of vines?
-
-			case TOP:
-				if (isClicked) {
-					return false;
-				}
-
-				// check below block
-				if (!this.canAttachTo(block.translate(BlockFace.TOP), BlockFace.BOTTOM)) {
-					return false;
-				}
-
-				block.setMaterial(VanillaMaterials.VINES, cause);
-				return true;
-
-			default:
-				if (!this.canAttachTo(block.translate(face), face.getOpposite())) {
-					return false;
-				}
-
-				if (this.isAttachedTo(block, face)) {
-					return false;
-				}
-
-				block.setMaterial(VanillaMaterials.VINES, cause);
-				this.setFaceAttached(block, face, true);
-				return true;
-		}
+		this.setFaceAttached(block, attached, true);
 	}
 
 	@Override
@@ -278,13 +248,13 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime) {
+	public void onFirstUpdate(Block b, long currentTime) {
 		//TODO : Delay before first grow
-		b.dynamicUpdate(10000 + currentTime);
+		b.dynamicUpdate(10000 + currentTime, true);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
+	public void onDynamicUpdate(Block block, long updateTime, int data) {
 		Random rand = new Random(block.getWorld().getAge());
 		if (rand.nextInt(4) != 0) {
 			return;
@@ -398,6 +368,6 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 			}
 		}
 
-		block.dynamicUpdate(updateTime + 10000);
+		block.dynamicUpdate(updateTime + 10000, true);
 	}
 }

@@ -24,27 +24,26 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.plant;
+package org.spout.vanilla.event.cause;
 
+import org.spout.api.entity.Player;
+import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Plant;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
+public class PlayerClickBlockCause extends PlayerCause {
+	private final Block block;
 
-public class Flower extends GroundAttachable implements Plant {
-	public Flower(String name, int id, String model) {
-		super(name, id, model);
-		this.setLiquidObstacle(false);
-		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
+	public PlayerClickBlockCause(Player player, Block block) {
+		super(player);
+		this.block = block;
 	}
 
-	@Override
-	public boolean canAttachTo(Block block, BlockFace face) {
-		if (super.canAttachTo(block, face)) {
-			return block.isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FARMLAND, VanillaMaterials.FLOWER_POT_BLOCK);
-		}
-		return false;
+	/**
+	 * Gets the block that has been clicked
+	 * 
+	 * @return clicked block
+	 */
+	public Block getBlock() {
+		return block;
 	}
 }

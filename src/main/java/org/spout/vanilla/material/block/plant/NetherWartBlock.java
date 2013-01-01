@@ -30,7 +30,6 @@ import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
@@ -100,31 +99,31 @@ public class NetherWartBlock extends GroundAttachable implements Plant, Growing,
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime) {
+	public void onFirstUpdate(Block b, long currentTime) {
 		//TODO : Delay before first grow
-		b.dynamicUpdate(getGrowthTime(b) + currentTime);
+		b.dynamicUpdate(getGrowthTime(b) + currentTime, true);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
+	public void onDynamicUpdate(Block block, long updateTime, int data) {
 		if (this.isFullyGrown(block) || block.getBiomeType() != VanillaBiomes.NETHERRACK) {
 			return;
 		}
 		Random rand = new Random(block.getWorld().getAge());
 		if (rand.nextInt(10) != 0) {
 			//TODO : Delay before first grow
-			block.dynamicUpdate(updateTime + getGrowthTime(block));
+			block.dynamicUpdate(updateTime + getGrowthTime(block), true);
 			return;
 		}
 		int minLight = this.getMinimumLightToGrow();
 		if (minLight > 0 && block.translate(BlockFace.TOP).getLight() < minLight) {
 			//TODO : Delay before first grow
-			block.dynamicUpdate(updateTime + 10000);
+			block.dynamicUpdate(updateTime + 10000, true);
 			return;
 		}
 		this.setGrowthStage(block, this.getGrowthStage(block) + 1);
 		//TODO : Delay before first grow
-		block.dynamicUpdate(updateTime + getGrowthTime(block));
+		block.dynamicUpdate(updateTime + getGrowthTime(block), true);
 	}
 
 	private long getGrowthTime(Block block) {

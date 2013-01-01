@@ -33,7 +33,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -123,14 +122,14 @@ public class CocoaPlant extends AbstractAttachable implements Plant, Growing, Dy
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime) {
-		b.dynamicUpdate(getGrowthTime(b) + currentTime);
+	public void onFirstUpdate(Block b, long currentTime) {
+		b.dynamicUpdate(getGrowthTime(b) + currentTime, true);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
+	public void onDynamicUpdate(Block block, long updateTime, int data) {
 		if (new Random().nextInt(5) != 0) {
-			block.dynamicUpdate(updateTime + getGrowthTime(block));
+			block.dynamicUpdate(updateTime + getGrowthTime(block), true);
 			return;
 		}
 
@@ -141,7 +140,7 @@ public class CocoaPlant extends AbstractAttachable implements Plant, Growing, Dy
 		}
 
 		if (growthStage < getGrowthStageCount() - 1) {
-			block.dynamicUpdate(updateTime + getGrowthTime(block));
+			block.dynamicUpdate(updateTime + getGrowthTime(block), true);
 		}
 	}
 

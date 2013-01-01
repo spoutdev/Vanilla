@@ -28,8 +28,8 @@ package org.spout.vanilla.material.block.misc;
 
 import java.util.Random;
 
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -37,7 +37,6 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.VanillaData;
@@ -67,14 +66,15 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
-		if (!this.canPlace(block, block.getData())) {
-			this.onDestroy(block, toCause(block));
+		Cause<?> cause = toCause(block);
+		if (!this.canCreate(block, block.getData(), cause)) {
+			this.onDestroy(block, cause);
 		}
 	}
 
 	@Override
-	public boolean canPlace(Block block, short data, BlockFace attachedFace, Vector3 clickedPos, boolean isClickedBlock) {
-		if (super.canPlace(block, data, attachedFace, clickedPos, isClickedBlock)) {
+	public boolean canCreate(Block block, short data, Cause<?> cause) {
+		if (super.canCreate(block, data, cause)) {
 			BlockMaterial mat = block.getMaterial();
 			for (BlockFace face : BlockFaces.BTNSWE) {
 				mat = block.translate(face).getMaterial();
@@ -142,12 +142,12 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	}
 
 	@Override
-	public void onPlacement(Block block, Region r, long currentTime) {
-		block.dynamicUpdate(block.getWorld().getAge() + 1000 + (new Random()).nextInt(2000));
+	public void onFirstUpdate(Block block, long currentTime) {
+		block.dynamicUpdate(currentTime + 1000 + (new Random()).nextInt(2000), true);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block b, Region r, long updateTime, int data) {
+	public void onDynamicUpdate(Block b, long updateTime, int data) {
 		Random rand = new Random();
 
 		// Make fire strength increase over time
@@ -234,6 +234,6 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 		}
 
 		// Schedule for a next update
-		b.dynamicUpdate(b.getWorld().getAge() + 2000);
+		b.dynamicUpdate(b.getWorld().getAge() + 2000, true);
 	}
 }

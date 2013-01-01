@@ -286,6 +286,8 @@ public final class VanillaMaterials {
 	public static final LapisLazuliBlock LAPIS_LAZULI_BLOCK = new LapisLazuliBlock("Lapis Lazuli Block", 22);
 	// == Plants ==
 	public static final TallGrass TALL_GRASS = TallGrass.TALL_GRASS;
+	public static final TallGrass FERN = TallGrass.FERN;
+	public static final TallGrass DEAD_GRASS = TallGrass.DEAD_GRASS;
 	public static final DeadBush DEAD_BUSH = new DeadBush("Dead Shrubs", 32);
 	public static final Sapling SAPLING = Sapling.DEFAULT;
 	public static final Flower DANDELION = new Flower("Dandelion", 37, "model://Vanilla/materials/block/nonsolid/dandelion/dandelion.spm");

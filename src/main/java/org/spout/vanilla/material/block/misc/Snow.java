@@ -26,13 +26,14 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import java.util.Random;
+
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
-
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
@@ -41,6 +42,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
 public class Snow extends GroundAttachable implements DynamicMaterial, InitializableMaterial {
+	private static final long POLL_TIME = 60000;
 	private static final byte MIN_MELT_LIGHT = 11;
 	public static final Snow[] SNOW = new Snow[8];
 
@@ -100,13 +102,13 @@ public class Snow extends GroundAttachable implements DynamicMaterial, Initializ
 	}
 
 	@Override
-	public void onPlacement(Block b, Region r, long currentTime) {
+	public void onFirstUpdate(Block b, long currentTime) {
 		//TODO : Delay before next check ?
-		b.dynamicUpdate(60000 + currentTime);
+		b.dynamicUpdate(60000 + currentTime, true);
 	}
 
 	@Override
-	public void onDynamicUpdate(Block block, Region region, long updateTime, int data) {
+	public void onDynamicUpdate(Block block, long updateTime, int data) {
 		if (block.getBlockLight() > MIN_MELT_LIGHT) {
 			short dataBlock = block.getData();
 			if (dataBlock > 0) {
@@ -114,8 +116,14 @@ public class Snow extends GroundAttachable implements DynamicMaterial, Initializ
 			} else {
 				block.setMaterial(VanillaMaterials.AIR);
 			}
+		} else { // not warm enough to melt the snow and last poll was a long time ago, might as well skip repeated polls
+			long age = block.getWorld().getAge();
+			if (age - updateTime > POLL_TIME) {
+				block.dynamicUpdate(age + new Random().nextInt((int) POLL_TIME), true);
+				return;
+			}
 		}
+		block.dynamicUpdate(updateTime + POLL_TIME, true);
 		//TODO : Delay before next check ?
-		block.dynamicUpdate(updateTime + 60000);
 	}
 }

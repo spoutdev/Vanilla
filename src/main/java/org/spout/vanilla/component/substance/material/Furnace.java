@@ -57,13 +57,17 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	public void setSmeltTime(float smeltTime) {
 		getData().put(VanillaData.SMELT_TIME, smeltTime);
-		float maxSmeltTime = getMaxSmeltTime();
-		float increment = (MAX_SMELT_TIME_INCREMENT * 20) - ((MAX_SMELT_TIME_INCREMENT / maxSmeltTime) * (smeltTime * 20));
 		for (Player player : viewers) {
-			WindowHolder window = player.get(WindowHolder.class);
-			if (window != null) {
-				window.getActiveWindow().setProperty(FurnaceProperty.PROGRESS_ARROW, (int) increment);
-			}
+			updateProgressArrow(player);
+		}
+	}
+
+	private void updateProgressArrow(Player player) {
+		WindowHolder window = player.get(WindowHolder.class);
+		if (window != null) {
+			float maxSmeltTime = getMaxSmeltTime();
+			float increment = (MAX_SMELT_TIME_INCREMENT * 20) - ((MAX_SMELT_TIME_INCREMENT / maxSmeltTime) * (getSmeltTime() * 20));
+			window.getActiveWindow().setProperty(FurnaceProperty.PROGRESS_ARROW, (int) increment);
 		}
 	}
 
@@ -81,14 +85,18 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	public void setFuel(float fuel) {
 		getData().put(VanillaData.FURNACE_FUEL, fuel);
-		// (12.5 / maximum time from fuel source) * (fuel seconds left * 20) = increment to send to client
-		float maxFuel = getMaxFuel();
-		float increment = MAX_FUEL_INCREMENT / maxFuel * (fuel * 20);
 		for (Player player : viewers) {
-			WindowHolder window = player.get(WindowHolder.class);
-			if (window != null) {
-				window.getActiveWindow().setProperty(FurnaceProperty.FIRE_ICON, (int) increment);
-			}
+			updateFireIcon(player);
+		}
+	}
+
+	private void updateFireIcon(Player player) {
+		WindowHolder window = player.get(WindowHolder.class);
+		if (window != null) {
+			// (12.5 / maximum time from fuel source) * (fuel seconds left * 20) = increment to send to client
+			float maxFuel = getMaxFuel();
+			float increment = MAX_FUEL_INCREMENT / maxFuel * (getFuel() * 20);
+			window.getActiveWindow().setProperty(FurnaceProperty.FIRE_ICON, (int) increment);
 		}
 	}
 
@@ -126,7 +134,6 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	@Override
 	public void onTick(float dt) {
-		super.onTick(dt);
 		final float fuel = getFuel();
 		final FurnaceInventory inventory = getInventory();
 
@@ -199,6 +206,11 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	@Override
 	public void open(Player player) {
-		player.get(WindowHolder.class).openWindow(new FurnaceWindow(player, getInventory()));
+		WindowHolder window = player.get(WindowHolder.class);
+		if (window != null) {
+			window.openWindow(new FurnaceWindow(player, this, getInventory()));
+			updateProgressArrow(player);
+			updateFireIcon(player);
+		}
 	}
 }

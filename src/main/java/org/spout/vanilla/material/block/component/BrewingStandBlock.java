@@ -65,4 +65,9 @@ public class BrewingStandBlock extends ComponentMaterial {
 	public byte getLightLevel(short data) {
 		return 1;
 	}
+	
+	@Override
+	public boolean isPlacementSuppressed() {
+		return true;
+	}
 }

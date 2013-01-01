@@ -26,16 +26,24 @@
  */
 package org.spout.vanilla.material.block.portal;
 
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Portal;
 
 public class NetherPortal extends Portal {
+
 	public NetherPortal(String name, int id) {
-		super(name, id, null, VanillaMaterials.OBSIDIAN);
+		super(name, id, null);
 		this.setHardness(-1.0F).setResistance(0.0F);
+	}
+
+	@Override
+	public BlockMaterial getFrameMaterial() {
+		return VanillaMaterials.OBSIDIAN;
 	}
 
 	@Override
@@ -43,8 +51,15 @@ public class NetherPortal extends Portal {
 		return 11;
 	}
 
+	private boolean checkMirroredPosition(Block block, BlockFace mainFace) {
+		return block.translate(mainFace).isMaterial(this, this.getFrameMaterial()) &&
+				block.translate(mainFace.getOpposite()).isMaterial(this, this.getFrameMaterial());
+	}
+
 	@Override
-	public MoveReaction getMoveReaction(Block block) {
-		return MoveReaction.DENY;
+	public boolean canCreate(Block block, short data, Cause<?> cause) {
+		return this.checkMirroredPosition(block, BlockFace.TOP) && 
+				(this.checkMirroredPosition(block, BlockFace.NORTH) || 
+				this.checkMirroredPosition(block, BlockFace.EAST));
 	}
 }

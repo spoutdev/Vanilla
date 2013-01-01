@@ -24,45 +24,35 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.material.item.misc;
 
-import org.spout.api.event.Cause;
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.component.inventory.PlayerInventory;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.item.VanillaItemMaterial;
 
-import org.spout.vanilla.data.MoveReaction;
-import org.spout.vanilla.material.VanillaBlockMaterial;
+public class EyeOfEnderItem extends VanillaItemMaterial {
 
-public abstract class Portal extends VanillaBlockMaterial {
-	public Portal(String name, int id, String model) {
-		super(name, id, model);
-		this.setTransparent();
-		getDrops().DEFAULT.clear();
-	}
-
-	/**
-	 * Gets the frame block material used around this Portal
-	 * 
-	 * @return Portal frame material
-	 */
-	public abstract BlockMaterial getFrameMaterial();
-
-	@Override
-	public MoveReaction getMoveReaction(Block block) {
-		return MoveReaction.DENY;
+	public EyeOfEnderItem(String name, int id) {
+		super(name, id, null);
 	}
 
 	@Override
-	public void onUpdate(BlockMaterial oldMaterial, Block block) {
-		super.onUpdate(oldMaterial, block);
-		Cause<?> cause = toCause(block);
-		if (!this.canCreate(block, block.getData(), cause)) {
-			this.destroy(block, cause);
+	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
+		super.onInteract(entity, block, type, clickedface);
+		if (type == Action.RIGHT_CLICK) {
+			if (block.isMaterial(VanillaMaterials.END_PORTAL_FRAME)) {
+				// Default ender eye placement
+				if (!VanillaMaterials.END_PORTAL_FRAME.hasEyeOfTheEnder(block)) {
+					VanillaMaterials.END_PORTAL_FRAME.setEyeOfTheEnder(block, true);
+					PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
+					inv.addAmount(inv.getCurrentSlot(), -1);
+				}
+			}
 		}
-	}
-
-	@Override
-	public boolean hasPhysics() {
-		return true;
 	}
 }

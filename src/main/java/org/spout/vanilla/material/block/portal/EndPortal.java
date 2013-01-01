@@ -26,25 +26,46 @@
  */
 package org.spout.vanilla.material.block.portal;
 
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Portal;
 
 public class EndPortal extends Portal {
+
 	public EndPortal(String name, int id) {
-		super(name, id, null, VanillaMaterials.END_PORTAL_FRAME);
+		super(name, id, null);
 		this.setHardness(-1.0F).setResistance(6000000.0F);
 	}
 
 	@Override
-	public byte getLightLevel(short data) {
-		return 1;
+	public BlockMaterial getFrameMaterial() {
+		return VanillaMaterials.END_PORTAL_FRAME;
 	}
 
 	@Override
-	public MoveReaction getMoveReaction(Block block) {
-		return MoveReaction.DENY;
+	public byte getLightLevel(short data) {
+		return 15;
+	}
+
+	@Override
+	public boolean canCreate(Block block, short data, Cause<?> cause) {
+		for (BlockFace face : BlockFaces.NESW) {
+			Block rel = block.translate(face);
+			BlockMaterial mat = rel.getMaterial();
+			if (mat == this) {
+				continue;
+			} else if (mat == VanillaMaterials.END_PORTAL_FRAME && 
+					VanillaMaterials.END_PORTAL_FRAME.hasEyeOfTheEnder(rel) &&
+					VanillaMaterials.END_PORTAL_FRAME.getFacing(rel).getOpposite() == face) {
+				continue;
+			}
+			return false;
+		}
+		return true;
 	}
 }

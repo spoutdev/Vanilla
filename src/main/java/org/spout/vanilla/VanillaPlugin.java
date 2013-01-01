@@ -232,11 +232,6 @@ public class VanillaPlugin extends CommonPlugin {
 				world.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.get(worldNode.DIFFICULTY.getString()));
 				world.getDataMap().put(VanillaData.DIMENSION, Dimension.get(worldNode.SKY_TYPE.getString()));
 
-				// Grab safe spawn if newly created world.
-				if (world.getAge() <= 0) {
-					world.setSpawnPoint(new Transform(new Point(generator.getSafeSpawn(world)), Quaternion.IDENTITY, Vector3.ONE));
-				}
-
 				// Add to worlds
 				worlds.add(world);
 			}
@@ -293,6 +288,12 @@ public class VanillaPlugin extends CommonPlugin {
 				}
 				if (worldConfig.LOADED_SPAWN.getBoolean()) { // TODO - this doesn't really work for anything since it doesn't hold all chunks
 					world.createAndSpawnEntity(point, ObserverComponent.class, LoadOption.LOAD_GEN);
+				}
+
+				// Grab safe spawn if newly created world.
+				if (newWorld && world.getGenerator() instanceof VanillaGenerator) {
+					Point spawn = ((VanillaGenerator) world.getGenerator()).getSafeSpawn(world);
+					world.setSpawnPoint(new Transform(spawn, Quaternion.IDENTITY, Vector3.ONE));
 				}
 			}
 

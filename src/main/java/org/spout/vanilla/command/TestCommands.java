@@ -307,7 +307,7 @@ public class TestCommands {
 				player.get(WindowHolder.class).openWindow(new CraftingTableWindow(player));
 				break;
 			case FURNACE:
-				player.get(WindowHolder.class).openWindow(new FurnaceWindow(player, new FurnaceInventory()));
+				player.get(WindowHolder.class).openWindow(new FurnaceWindow(player, null, new FurnaceInventory()));
 				break;
 			case DISPENSER:
 				player.get(WindowHolder.class).openWindow(new DispenserWindow(player, new DispenserInventory()));

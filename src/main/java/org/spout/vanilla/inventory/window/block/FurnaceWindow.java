@@ -29,18 +29,33 @@ package org.spout.vanilla.inventory.window.block;
 import org.spout.api.entity.Player;
 import org.spout.api.math.Vector2;
 
+import org.spout.vanilla.component.substance.material.Furnace;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class FurnaceWindow extends Window {
-	public FurnaceWindow(Player owner, FurnaceInventory inventory) {
+	private Furnace furnace;
+	public FurnaceWindow(Player owner, Furnace furnace, FurnaceInventory inventory) {
 		this(owner, inventory, "Furnace");
+		this.furnace = furnace;
 	}
 
 	public FurnaceWindow(Player owner, FurnaceInventory inventory, String title) {
 		super(owner, WindowType.FURNACE, title, 3);
 		addInventoryConverter(new InventoryConverter(inventory, "1, 0, 2", new Vector2[0]));
+	}
+
+	@Override
+	public void close() {
+		if (furnace != null) {
+			furnace.close(getPlayer());
+		}
+		super.close();
+	}
+
+	public Furnace getFurnace() {
+		return furnace;
 	}
 }

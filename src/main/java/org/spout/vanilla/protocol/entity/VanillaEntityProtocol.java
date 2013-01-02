@@ -68,7 +68,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 	}
 
 	@Override
-	public final List<Message> getUpdateMessages(Entity entity, RepositionManager rm) {
+	public final List<Message> getUpdateMessages(Entity entity, RepositionManager rm, boolean force) {
 		// Movement
 		Transform prevTransform = entity.getTransform().getTransform();
 		Transform newTransform = entity.getTransform().getTransformLive();
@@ -76,7 +76,9 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		int lastX = protocolifyPosition(prevTransform.getPosition().getX());
 		int lastY = protocolifyPosition(prevTransform.getPosition().getY());
 		int lastZ = protocolifyPosition(prevTransform.getPosition().getZ());
-
+		int lastYaw = protocolifyYaw(prevTransform.getRotation().getYaw());
+		int lastPitch = protocolifyPitch(prevTransform.getRotation().getPitch());
+		
 		int newX = protocolifyPosition(newTransform.getPosition().getX());
 		int newY = protocolifyPosition(newTransform.getPosition().getY());
 		int newZ = protocolifyPosition(newTransform.getPosition().getZ());
@@ -86,22 +88,24 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		int deltaX = newX - lastX;
 		int deltaY = newY - lastY;
 		int deltaZ = newZ - lastZ;
+		int deltaYaw = newYaw - lastYaw;
+		int deltaPitch = newPitch - lastPitch;
 
 		List<Message> messages = new ArrayList<Message>();
 
-		boolean looked = !entity.getTransform().isRotationDirty();
+		boolean looked = entity.getTransform().isRotationDirty();
 
 		/*
 		 * Two scenarios:
 		 * - The entity moves more than 4 blocks and maybe changes rotation.
 		 * - The entity moves less than 4 blocks and maybe changes rotation.
 		 */
-		if (deltaX > 4 || deltaX < -4 || deltaY > 4 || deltaY < -4 || deltaZ > 4 || deltaZ < -4) {
+		if (force || deltaX > 4 || deltaX < -4 || deltaY > 4 || deltaY < -4 || deltaZ > 4 || deltaZ < -4) {
 			messages.add(new EntityTeleportMessage(entity.getId(), newX, newY, newZ, newYaw, newPitch, rm));
-			if (looked) {
+			if (force || looked) {
 				messages.add(new EntityYawMessage(entity.getId(), newYaw, newPitch));
 			}
-		} else {
+		} else if (deltaX != 0 || deltaY != 0 || deltaZ != 0 || deltaYaw != 0 || deltaPitch != 0){
 			if (looked) {
 				messages.add(new EntityRelativePositionYawMessage(entity.getId(), deltaX, deltaY, deltaZ, newYaw, newPitch));
 			} else if (!prevTransform.getPosition().equals(newTransform.getPosition())){

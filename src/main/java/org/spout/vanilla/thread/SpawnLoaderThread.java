@@ -41,10 +41,10 @@ public class SpawnLoaderThread extends Thread {
 	private final int total;
 	private final String initChunkType;
 
-	public SpawnLoaderThread(int total, int step, String initChunkType) {
+	public SpawnLoaderThread(String initChunkType) {
 		super("Spawn Loader Thread - " + idCounter.getAndIncrement());
-		this.step = step;
-		this.total = total;
+		this.total = size.get();
+		this.step = this.total / 10;
 		this.initChunkType = initChunkType;
 	}
 
@@ -53,16 +53,17 @@ public class SpawnLoaderThread extends Thread {
 		size.incrementAndGet();
 	}
 
+	@Override
 	public void run() {
 		boolean done = false;
-		int remaining = size.get();
+		int remaining;
 		while (!done) {
+			remaining = size.decrementAndGet();
 			IntPoint3 p = queue.poll();
 			if (p == null) {
 				done = true;
 				continue;
 			}
-			remaining = size.decrementAndGet();
 			if (remaining % step == 0) {
 				Spout.getLogger().info(initChunkType + " [" + p.getWorld().getName() + "], " + (((total - remaining) * 100) / total) + "% complete");
 			}

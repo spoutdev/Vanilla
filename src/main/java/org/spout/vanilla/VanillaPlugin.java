@@ -239,9 +239,6 @@ public class VanillaPlugin extends CommonPlugin {
 
 		final int radius = VanillaConfiguration.SPAWN_RADIUS.getInt();
 		final int protectionRadius = VanillaConfiguration.SPAWN_PROTECTION_RADIUS.getInt();
-		int r = radius;
-		final int total = (2 * (r*r + r) + 1) * 16;
-		final int progressStep = total / 10;
 		final FlatIterator oi = new FlatIterator();
 		SpawnLoaderThread[] loaderThreads = new SpawnLoaderThread[LOADER_THREAD_COUNT];
 
@@ -265,14 +262,14 @@ public class VanillaPlugin extends CommonPlugin {
 
 				final String initChunkType = newWorld ? "Generating" : "Loading";
 
-				for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
-					loaderThreads[i] = new SpawnLoaderThread(total, progressStep, initChunkType);
-				}
-
 				oi.reset(cx, 0, cz, 16, newWorld ? radius : (radius * 2));
 				while (oi.hasNext()) {
 					IntVector3 v = oi.next();
 					SpawnLoaderThread.addChunk(world, v.getX(), v.getY(), v.getZ());
+				}
+
+				for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
+					loaderThreads[i] = new SpawnLoaderThread(initChunkType);
 				}
 
 				for (int i = 0; i < LOADER_THREAD_COUNT; i++) {

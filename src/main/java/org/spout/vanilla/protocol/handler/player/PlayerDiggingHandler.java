@@ -144,6 +144,9 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		if (state == PlayerDiggingMessage.STATE_START_DIGGING) {
 			PlayerInteractEvent event = new PlayerInteractEvent(player, block.getPosition(), heldItem, Action.LEFT_CLICK, isInteractable, clickedFace);
 			if (Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
+				if (human.isCreative() || blockMaterial.getHardness() == 0.0f) {
+					session.send(false, new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
+				}
 				return;
 			}
 
@@ -195,12 +198,17 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				}
 			}
 		} else if (state == PlayerDiggingMessage.STATE_DONE_DIGGING) {
-			if (!player.get(DiggingComponent.class).stopDigging(new Point(w, x, y, z)) || !isInteractable) {
+			DiggingComponent diggingComponent = player.get(DiggingComponent.class);
+
+			if (!diggingComponent.stopDigging(new Point(w, x, y, z)) || !isInteractable) {
+				if (!diggingComponent.isDigging()) {
+					session.send(false, new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
+				}
 				return;
 			}
 
 			if (player.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-				long diggingTicks = player.get(DiggingComponent.class).getDiggingTicks();
+				long diggingTicks = diggingComponent.getDiggingTicks();
 				int damageDone;
 				int totalDamage;
 

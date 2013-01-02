@@ -109,7 +109,7 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 
 	@Override
 	public EffectRange getDynamicRange() {
-		return EffectRange.THIS_AND_NEIGHBORS;
+		return MUSHROOM_RANGE;
 	}
 
 	@Override

@@ -26,26 +26,43 @@
  */
 package org.spout.vanilla.material.block;
 
+import org.spout.api.event.Cause;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 
+import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public abstract class Portal extends VanillaBlockMaterial {
-	private final BlockMaterial frameMaterial;
-
-	public Portal(String name, int id, String model, BlockMaterial frameMaterial) {
+	public Portal(String name, int id, String model) {
 		super(name, id, model);
-		this.setHardness(-1.0F).setResistance(0.0F).setTransparent();
+		this.setTransparent();
 		getDrops().DEFAULT.clear();
-		this.frameMaterial = frameMaterial;
+	}
+
+	/**
+	 * Gets the frame block material used around this Portal
+	 * 
+	 * @return Portal frame material
+	 */
+	public abstract BlockMaterial getFrameMaterial();
+
+	@Override
+	public MoveReaction getMoveReaction(Block block) {
+		return MoveReaction.DENY;
 	}
 
 	@Override
-	public byte getLightLevel(short data) {
-		return 11;
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
+		Cause<?> cause = toCause(block);
+		if (!this.canCreate(block, block.getData(), cause)) {
+			this.destroy(block, cause);
+		}
 	}
 
-	public BlockMaterial getFrameMaterial() {
-		return this.frameMaterial;
+	@Override
+	public boolean hasPhysics() {
+		return true;
 	}
 }

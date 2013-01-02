@@ -60,6 +60,7 @@ import org.spout.vanilla.world.generator.normal.object.tree.TreeObject.TreeType;
 import org.spout.vanilla.world.generator.structure.mineshaft.Mineshaft;
 import org.spout.vanilla.world.generator.structure.stronghold.Stronghold;
 import org.spout.vanilla.world.generator.structure.temple.Temple;
+import org.spout.vanilla.world.generator.theend.object.EndPortalObject;
 import org.spout.vanilla.world.generator.theend.object.SpireObject;
 
 /**
@@ -92,6 +93,7 @@ public class VanillaObjects {
 	public static final SugarCaneStackObject SUGAR_CANE_STACK = new SugarCaneStackObject();
 	public static final WellObject DESERT_WELL = new WellObject();
 	public static final SpireObject THE_END_SPIRE = new SpireObject();
+	public static final EndPortalObject THE_END_PORTAL = new EndPortalObject();
 	public static final NetherPortalObject NETHER_PORTAL = new NetherPortalObject();
 	public static final BlockPatchObject SAND_PATCH = new BlockPatchObject(VanillaMaterials.SAND);
 	public static final BlockPatchObject CLAY_PATCH = new BlockPatchObject(VanillaMaterials.CLAY_BLOCK);

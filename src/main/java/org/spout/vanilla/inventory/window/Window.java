@@ -695,7 +695,7 @@ public abstract class Window implements InventoryViewer {
 	}
 
 	private void debug(String msg) {
-		debug(Level.INFO, msg);
+		//debug(Level.INFO, msg);
 	}
 
 	@Override

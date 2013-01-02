@@ -26,15 +26,21 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import org.spout.api.event.Cause;
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Directional;
+import org.spout.vanilla.util.PlayerUtil;
+import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class EndPortalFrame extends VanillaBlockMaterial implements Directional {
+
 	public EndPortalFrame(String name, int id) {
 		super(name, id, (String) null);
 		this.setHardness(-1.0F).setResistance(6000000.0F);
@@ -51,16 +57,32 @@ public class EndPortalFrame extends VanillaBlockMaterial implements Directional 
 	}
 
 	public void setEyeOfTheEnder(Block block, boolean eyeOfTheEnder) {
+		if (hasEyeOfTheEnder(block) == eyeOfTheEnder) {
+			return;
+		}
 		block.setDataBits(0x4, eyeOfTheEnder);
+		final World w = block.getWorld();
+		final int x = block.getX();
+		final int y = block.getY();
+		final int z = block.getZ();
+		if (eyeOfTheEnder && VanillaObjects.THE_END_PORTAL.isActive(w, x, y, z)) {
+			VanillaObjects.THE_END_PORTAL.setActive(w, x, y, z, true);
+		}
 	}
 
 	@Override
 	public BlockFace getFacing(Block block) {
-		return BlockFaces.NSEW.get(block.getData() & 0x3);
+		return BlockFaces.WNES.get(block.getData() & 0x3);
 	}
 
 	@Override
 	public void setFacing(Block block, BlockFace facing) {
-		block.setDataField(0x3, BlockFaces.NSEW.indexOf(facing, 0));
+		block.setDataField(0x3, BlockFaces.WNES.indexOf(facing, 0));
+	}
+
+	@Override
+	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
+		this.setFacing(block, PlayerUtil.getFacing(cause).getOpposite());
 	}
 }

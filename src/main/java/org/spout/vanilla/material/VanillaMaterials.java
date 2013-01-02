@@ -213,6 +213,7 @@ import org.spout.vanilla.material.item.misc.Clay;
 import org.spout.vanilla.material.item.misc.Coal;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.material.item.misc.EnchantedBook;
+import org.spout.vanilla.material.item.misc.EyeOfEnderItem;
 import org.spout.vanilla.material.item.misc.Fireworks;
 import org.spout.vanilla.material.item.misc.FlowerPot;
 import org.spout.vanilla.material.item.misc.MusicDisc;
@@ -564,7 +565,7 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial MAGMA_CREAM = new VanillaItemMaterial("Magma Cream", 378, null);
 	public static final BlockItem BREWING_STAND = new BlockItem("Brewing Stand", 379, VanillaMaterials.BREWING_STAND_BLOCK, null);
 	public static final BlockItem CAULDRON = new BlockItem("Cauldron", 380, VanillaMaterials.CAULDRON_BLOCK, null);
-	public static final VanillaItemMaterial EYE_OF_ENDER = new VanillaItemMaterial("Eye of Ender", 381, null);
+	public static final EyeOfEnderItem EYE_OF_ENDER = new EyeOfEnderItem("Eye of Ender", 381);
 	public static final VanillaItemMaterial GLISTERING_MELON = new VanillaItemMaterial("Glistering MelonBlock", 382, null);
 	public static final SpawnEgg SPAWN_EGG = SpawnEgg.PIG;
 	public static final VanillaItemMaterial BOTTLE_O_ENCHANTING = new VanillaItemMaterial("Bottle o' Enchanting", 384, null);

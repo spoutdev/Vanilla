@@ -149,6 +149,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	private static final byte[] SOLID_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
 	private static final byte[] AIR_CHUNK_DATA = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
 	private static final double STANCE = 1.62001D;
+	private static final int FORCE_MASK = 0xFF; // force an update to be sent every 5 seconds
+	private static final int HASH_SEED = 0xB346D76A;
 	private boolean first = true;
 	private final TSyncIntPairObjectHashMap<TSyncIntHashSet> initializedChunks = new TSyncIntPairObjectHashMap<TSyncIntHashSet>();
 	private final ConcurrentLinkedQueue<Long> emptyColumns = new ConcurrentLinkedQueue<Long>();
@@ -535,12 +537,20 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				messages.addAll(ep.getSpawnMessages(e, getRepositionManager()));
 			}
 			if (update) {
-				messages.addAll(ep.getUpdateMessages(e, getRepositionManager()));
+				boolean force = shouldForce(e.getId());
+				messages.addAll(ep.getUpdateMessages(e, getRepositionManager(), force));
 			}
 			for (Message message : messages) {
 				this.session.send(false, message);
 			}
 		}
+	}
+	
+	private boolean shouldForce(int entityId) {
+		int hash = HASH_SEED;
+		hash += (hash << 5) + entityId;
+		hash += (hash << 5) + tickCounter;
+		return (hash & FORCE_MASK) == 0;
 	}
 	
 	@Override

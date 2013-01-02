@@ -232,11 +232,6 @@ public class VanillaPlugin extends CommonPlugin {
 				world.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.get(worldNode.DIFFICULTY.getString()));
 				world.getDataMap().put(VanillaData.DIMENSION, Dimension.get(worldNode.SKY_TYPE.getString()));
 
-				// Grab safe spawn if newly created world.
-				if (world.getAge() <= 0) {
-					world.setSpawnPoint(new Transform(new Point(generator.getSafeSpawn(world)), Quaternion.IDENTITY, Vector3.ONE));
-				}
-
 				// Add to worlds
 				worlds.add(world);
 			}
@@ -244,9 +239,6 @@ public class VanillaPlugin extends CommonPlugin {
 
 		final int radius = VanillaConfiguration.SPAWN_RADIUS.getInt();
 		final int protectionRadius = VanillaConfiguration.SPAWN_PROTECTION_RADIUS.getInt();
-		int r = radius;
-		final int total = (2 * (r*r + r) + 1) * 16;
-		final int progressStep = total / 10;
 		final FlatIterator oi = new FlatIterator();
 		SpawnLoaderThread[] loaderThreads = new SpawnLoaderThread[LOADER_THREAD_COUNT];
 
@@ -270,14 +262,14 @@ public class VanillaPlugin extends CommonPlugin {
 
 				final String initChunkType = newWorld ? "Generating" : "Loading";
 
-				for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
-					loaderThreads[i] = new SpawnLoaderThread(total, progressStep, initChunkType);
-				}
-
 				oi.reset(cx, 0, cz, 16, newWorld ? radius : (radius * 2));
 				while (oi.hasNext()) {
 					IntVector3 v = oi.next();
 					SpawnLoaderThread.addChunk(world, v.getX(), v.getY(), v.getZ());
+				}
+
+				for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
+					loaderThreads[i] = new SpawnLoaderThread(initChunkType);
 				}
 
 				for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
@@ -293,6 +285,12 @@ public class VanillaPlugin extends CommonPlugin {
 				}
 				if (worldConfig.LOADED_SPAWN.getBoolean()) { // TODO - this doesn't really work for anything since it doesn't hold all chunks
 					world.createAndSpawnEntity(point, ObserverComponent.class, LoadOption.LOAD_GEN);
+				}
+
+				// Grab safe spawn if newly created world.
+				if (newWorld && world.getGenerator() instanceof VanillaGenerator) {
+					Point spawn = ((VanillaGenerator) world.getGenerator()).getSafeSpawn(world);
+					world.setSpawnPoint(new Transform(spawn, Quaternion.IDENTITY, Vector3.ONE));
 				}
 			}
 

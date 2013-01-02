@@ -24,48 +24,35 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.substance.material;
+package org.spout.vanilla.material.item.misc;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
-import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.component.inventory.PlayerInventory;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.item.VanillaItemMaterial;
 
-public abstract class ViewedBlockComponent extends VanillaBlockComponent {
-	protected final Set<Player> viewers = new HashSet<Player>();
+public class EyeOfEnderItem extends VanillaItemMaterial {
 
-	/**
-	 * Opens a window for the given player.
-	 * @param player
-	 */
-	public abstract void open(Player player);
-
-	public void close(Player player) {
-		viewers.remove(player);
-	}
-
-	public void closeAll() {
-		for (Player player : viewers) {
-			close(player);
-		}
-	}
-
-	public Set<Player> getViewers() {
-		return viewers;
+	public EyeOfEnderItem(String name, int id) {
+		super(name, id, null);
 	}
 
 	@Override
-	public void onInteractBy(Entity entity, Action action, BlockFace face) {
-		super.onInteractBy(entity, action, face);
-		if (action == Action.RIGHT_CLICK && entity instanceof Player) {
-			Player player = (Player) entity;
-			viewers.add(player);
-			open(player);
+	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
+		super.onInteract(entity, block, type, clickedface);
+		if (type == Action.RIGHT_CLICK) {
+			if (block.isMaterial(VanillaMaterials.END_PORTAL_FRAME)) {
+				// Default ender eye placement
+				if (!VanillaMaterials.END_PORTAL_FRAME.hasEyeOfTheEnder(block)) {
+					VanillaMaterials.END_PORTAL_FRAME.setEyeOfTheEnder(block, true);
+					PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
+					inv.addAmount(inv.getCurrentSlot(), -1);
+				}
+			}
 		}
 	}
 }

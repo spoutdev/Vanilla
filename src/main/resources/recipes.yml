@@ -162,11 +162,32 @@ recipes:
       A: STONE_BRICK
     rows: ['AAA']
 
-  Wooden Stairs:
+  Oak Wood Stairs:
     type: Shaped
-    result: WOODEN_STAIRS,4
+    result: OAK_WOOD_STAIRS,4
     ingredients:
       A: OAK_PLANK
+    rows: ['  A', ' AA', 'AAA']
+
+  Spruce Wood Stairs:
+    type: Shaped
+    result: SPRUCE_WOOD_STAIRS,4
+    ingredients:
+      A: PINE_PLANK
+    rows: ['  A', ' AA', 'AAA']
+
+  Birch Wood Stairs:
+    type: Shaped
+    result: BIRCH_WOOD_STAIRS,4
+    ingredients:
+      A: BIRCH_PLANK
+    rows: ['  A', ' AA', 'AAA']
+
+  Jungle Wood Stairs:
+    type: Shaped
+    result: JUNGLE_WOOD_STAIRS,4
+    ingredients:
+      A: JUNGLE_PLANK
     rows: ['  A', ' AA', 'AAA']
 
   Cobblestone Stairs:

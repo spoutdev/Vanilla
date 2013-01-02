@@ -143,7 +143,7 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 
 	@Override
 	public EffectRange getDynamicRange() {
-		return EffectRange.NEIGHBORS;
+		return DEFAULT_SPREAD_RANGE;
 	}
 
 	public abstract long getSpreadingTime(Block b);

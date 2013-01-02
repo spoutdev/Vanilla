@@ -28,10 +28,12 @@ package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
+import org.spout.api.chat.ChatArguments;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.chat.VanillaStyleHandler;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.game.ServerListPingEvent;
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
@@ -43,7 +45,8 @@ public class ServerListPingHandler extends MessageHandler<ServerListPingMessage>
 		Server server = (Server) Spout.getEngine();
 		String protocol = VanillaPlugin.getInstance().getDescription().getData("protocol");
 		String mcV = VanillaPlugin.getInstance().getDescription().getVersion().trim().split(" ")[0];
-		ServerListPingEvent event = Spout.getEventManager().callEvent(new ServerListPingEvent(session.getAddress().getAddress(), VanillaConfiguration.MOTD.getString(), server.getOnlinePlayers().length, server.getMaxPlayers()));
+		ChatArguments chatArgs = VanillaStyleHandler.INSTANCE.extractArguments(VanillaConfiguration.MOTD.getString());
+		ServerListPingEvent event = Spout.getEventManager().callEvent(new ServerListPingEvent(session.getAddress().getAddress(), chatArgs.asString(VanillaStyleHandler.ID), server.getOnlinePlayers().length, server.getMaxPlayers()));
 		session.send(false, true, new PlayerKickMessage('\u00A7' + "1" + '\u0000' + protocol + '\u0000' + mcV + '\u0000' + event.getMessage()));
 	}
 }

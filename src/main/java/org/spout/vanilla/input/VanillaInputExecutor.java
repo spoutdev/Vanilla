@@ -24,39 +24,29 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.player;
+package org.spout.vanilla.input;
 
-import org.spout.api.Spout;
 import org.spout.api.component.impl.CameraComponent;
 import org.spout.api.component.impl.TransformComponent;
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.entity.state.PlayerInputState;
 import org.spout.api.geo.discrete.Transform;
+import org.spout.api.input.InputExecutor;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
-import org.spout.api.plugin.Platform;
 
-public class InputComponent extends EntityComponent {
+public class VanillaInputExecutor implements InputExecutor {
+
 	private Player player;
 	private CameraComponent camera;
 
-	@Override
-	public void onAttached() {
-		if (Spout.getPlatform() != Platform.CLIENT) {
-			throw new IllegalStateException("InputComponent is only for client");
-		}
-
-		if (!(getOwner() instanceof Player)) {
-			throw new IllegalStateException("InputComponent is only for player");
-		}
-
-		player = (Player) getOwner();
+	public VanillaInputExecutor(Player player) {
+		this.player = player;
 		camera = player.get(CameraComponent.class);
 	}
 
 	@Override
-	public void onTick(float dt) {
+	public void execute(float dt) {
 		PlayerInputState inputState = player.input();
 		TransformComponent tc = player.getTransform();
 		Transform ts = tc.getTransformLive();
@@ -82,4 +72,5 @@ public class InputComponent extends EntityComponent {
 		}
 		tc.translateAndSetRotation(offset, MathHelper.rotation(inputState.pitch(), inputState.yaw(), ts.getRotation().getRoll()));
 	}
+
 }

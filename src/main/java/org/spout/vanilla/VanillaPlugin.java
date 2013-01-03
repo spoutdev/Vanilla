@@ -42,6 +42,7 @@ import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
 import org.spout.api.command.annotated.SimpleInjector;
 import org.spout.api.component.impl.NetworkComponent;
 import org.spout.api.component.impl.ObserverComponent;
+import org.spout.api.entity.Entity;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
@@ -59,6 +60,7 @@ import org.spout.api.plugin.PluginLogger;
 import org.spout.api.plugin.ServiceManager;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.Protocol;
+import org.spout.api.util.FlatIterator;
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.InputCommandExecutor;
 import org.spout.vanilla.command.TestCommands;
@@ -257,11 +259,14 @@ public class VanillaPlugin extends CommonPlugin {
 				((VanillaProtectionService) engine.getServiceManager().getRegistration(ProtectionService.class).getProvider()).addProtection(new SpawnProtection(world.getName() + " Spawn Protection", world, point, protectionRadius));
 
 				// Load or generate spawn area
-				loader.load(world, cx, cz, newWorld ? radius : (radius * 2), newWorld);
+				int effectiveRadius = newWorld ? (2 * radius) : radius;
+				loader.load(world, cx, cz, effectiveRadius, newWorld);
 
-				if (worldConfig.LOADED_SPAWN.getBoolean()) { // TODO - this doesn't really work for anything since it doesn't hold all chunks
-					world.createAndSpawnEntity(point, ObserverComponent.class, LoadOption.LOAD_GEN);
-				}
+				//if (worldConfig.LOADED_SPAWN.getBoolean()) { // TODO - this doesn't really work for anything since it doesn't hold all chunks
+					Entity e = world.createAndSpawnEntity(point, ObserverComponent.class, LoadOption.LOAD_GEN);
+					Spout.getLogger().info("About to set custom observer");
+					e.setObserver(new FlatIterator(cx, 0, cz, 16, effectiveRadius));
+				//}
 
 				// Grab safe spawn if newly created world.
 				if (newWorld && world.getGenerator() instanceof VanillaGenerator) {

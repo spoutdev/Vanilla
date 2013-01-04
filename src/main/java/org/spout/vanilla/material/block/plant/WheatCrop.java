@@ -122,6 +122,12 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 		}
 	}
 
+	@Override
+	public void onCreate(Block block, short data, Cause<?> cause) {
+		super.onCreate(block, data, cause);
+		block.dynamicUpdate(block.getWorld().getAge() + getGrowthTime(block), true);
+	}
+
 	// TODO: Trampling
 
 	@Override

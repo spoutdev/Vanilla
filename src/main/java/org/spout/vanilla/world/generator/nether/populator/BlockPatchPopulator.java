@@ -83,8 +83,8 @@ public class BlockPatchPopulator implements GeneratorPopulator {
 		final int scale = sizeY / 2;
 		final double[][] displacement = WorldGeneratorUtils.fastNoise(elevation, sizeX, sizeZ, 4, x, 0, z);
 		final double[][] values = WorldGeneratorUtils.fastNoise(shape, sizeX, sizeZ, 4, x, 0, z);
-		for (byte xx = 0; xx < sizeX; xx++) {
-			for (byte zz = 0; zz < sizeZ; zz++) {
+		for (int xx = 0; xx < sizeX; xx++) {
+			for (int zz = 0; zz < sizeZ; zz++) {
 				if (values[xx][zz] > 0.65) {
 					final int yDisplacement = (int) Math.ceil(displacement[xx][zz] * scale + scale);
 					if (yDisplacement < 0 || yDisplacement >= sizeY) {

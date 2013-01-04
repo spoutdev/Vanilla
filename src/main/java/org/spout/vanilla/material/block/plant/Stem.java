@@ -29,7 +29,6 @@ package org.spout.vanilla.material.block.plant;
 import java.util.Random;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
@@ -118,12 +117,6 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 				this.setGrowthStage(block, 0x7);
 			}
 		}
-	}
-
-	@Override
-	public void onCreate(Block block, short data, Cause<?> cause) {
-		super.onCreate(block, data, cause);
-		block.dynamicUpdate(block.getWorld().getAge() + getGrowthTime(block), true);
 	}
 
 	@Override

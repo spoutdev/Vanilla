@@ -264,7 +264,6 @@ public class VanillaPlugin extends CommonPlugin {
 
 				//if (worldConfig.LOADED_SPAWN.getBoolean()) { // TODO - this doesn't really work for anything since it doesn't hold all chunks
 					Entity e = world.createAndSpawnEntity(point, ObserverComponent.class, LoadOption.LOAD_GEN);
-					Spout.getLogger().info("About to set custom observer");
 					e.setObserver(new FlatIterator(cx, 0, cz, 16, effectiveRadius));
 				//}
 

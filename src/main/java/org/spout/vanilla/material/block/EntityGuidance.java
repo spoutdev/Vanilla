@@ -24,47 +24,21 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.rail;
+package org.spout.vanilla.material.block;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.data.RailsState;
-import org.spout.vanilla.material.block.redstone.RedstoneSource;
-import org.spout.vanilla.material.block.redstone.RedstoneTarget;
-import org.spout.vanilla.util.RedstoneUtil;
+/**
+ * A block material that guides an entity along
+ */
+public interface EntityGuidance {
 
-public class Rail extends RailBase implements RedstoneTarget {
-
-	public Rail(String name, int id) {
-		super(name, id);
-	}
-
-	@Override
-	public void onUpdate(BlockMaterial oldMaterial, Block block) {
-		super.onUpdate(oldMaterial, block);
-		if (oldMaterial instanceof RedstoneSource && block.getMaterial().equals(this)) {
-			this.doTrackLogic(block);
-		}
-	}
-
-	@Override
-	public boolean canCurve() {
-		return true;
-	}
-
-	@Override
-	public void setState(Block block, RailsState state) {
-		block.setData(state.getData());
-	}
-
-	@Override
-	public RailsState getState(Block block) {
-		return RailsState.get(block.getData());
-	}
-
-	@Override
-	public boolean isReceivingPower(Block block) {
-		return RedstoneUtil.isReceivingPower(block);
-	}
+	/**
+	 * Guides the entity velocity and position to follow this material
+	 * 
+	 * @param block of this material
+	 * @param entity to guide
+	 */
+	public void guide(Block block, Entity entity);
 }

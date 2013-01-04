@@ -59,6 +59,7 @@ import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.block.RedstoneChangeEvent;
 import org.spout.vanilla.input.VanillaInputExecutor;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
+import org.spout.vanilla.protocol.PastieExceptionHandler;
 
 public class VanillaListener implements Listener {
 	private final VanillaPlugin plugin;
@@ -86,6 +87,7 @@ public class VanillaListener implements Listener {
 		player.add(SleepComponent.class);
 		player.add(HungerComponent.class);
 		player.add(LevelComponent.class);
+		player.getSession().setUncaughtExceptionHandler(new PastieExceptionHandler(player.getSession()));
 	}
 
 	@EventHandler

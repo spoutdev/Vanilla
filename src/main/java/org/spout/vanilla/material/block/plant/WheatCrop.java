@@ -30,6 +30,7 @@ import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
@@ -121,6 +122,12 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 		}
 	}
 
+	@Override
+	public void onCreate(Block block, short data, Cause<?> cause) {
+		super.onCreate(block, data, cause);
+		block.dynamicUpdate(block.getWorld().getAge() + getGrowthTime(block), true);
+	}
+
 	// TODO: Trampling
 
 	@Override
@@ -130,7 +137,6 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 
 	@Override
 	public void onFirstUpdate(Block b, long currentTime) {
-		//TODO : delay before update
 		b.dynamicUpdate(currentTime + getGrowthTime(b), true);
 	}
 
@@ -145,7 +151,6 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 					this.setGrowthStage(block, this.getGrowthStage(block));
 				}
 			}
-			//TODO : delay before update
 			block.dynamicUpdate(updateTime + getGrowthTime(block), true);
 		}
 	}

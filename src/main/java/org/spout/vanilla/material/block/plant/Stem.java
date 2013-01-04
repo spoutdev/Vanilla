@@ -29,6 +29,7 @@ package org.spout.vanilla.material.block.plant;
 import java.util.Random;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
@@ -120,14 +121,19 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 	}
 
 	@Override
+	public void onCreate(Block block, short data, Cause<?> cause) {
+		super.onCreate(block, data, cause);
+		block.dynamicUpdate(block.getWorld().getAge() + getGrowthTime(block), true);
+	}
+
+	@Override
 	public EffectRange getDynamicRange() {
 		return EffectRange.THIS_AND_NEIGHBORS;
 	}
 
 	@Override
 	public void onFirstUpdate(Block b, long currentTime) {
-		//TODO : Delay before first grow
-		b.dynamicUpdate(10000 + currentTime, true);
+		b.dynamicUpdate(getGrowthTime(b) + currentTime, true);
 	}
 
 	@Override
@@ -157,6 +163,10 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 			}
 		}
 
-		block.dynamicUpdate(updateTime + 10000, true);
+		block.dynamicUpdate(updateTime + getGrowthTime(block), true);
+	}
+
+	protected long getGrowthTime(Block block) {
+		return 10000L + new Random(block.getWorld().getAge()).nextInt(60000);
 	}
 }

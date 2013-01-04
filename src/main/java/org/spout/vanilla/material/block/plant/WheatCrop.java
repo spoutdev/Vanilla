@@ -142,7 +142,7 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 				Random rand = new Random(block.getWorld().getAge());
 				int chance = VanillaBlockMaterial.getCropGrowthChance(block);
 				if (rand.nextInt(chance + 1) == 0) {
-					this.setGrowthStage(block, this.getGrowthStage(block));
+					this.setGrowthStage(block, this.getGrowthStage(block) + 1);
 				}
 			}
 			block.dynamicUpdate(updateTime + getGrowthTime(block), true);

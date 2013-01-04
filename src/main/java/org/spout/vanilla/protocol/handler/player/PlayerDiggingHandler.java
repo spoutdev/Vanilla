@@ -54,6 +54,7 @@ import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.misc.DiggingComponent;
 import org.spout.vanilla.component.substance.Item;
+import org.spout.vanilla.component.substance.material.Sign;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.PlayerFlags;
@@ -66,6 +67,7 @@ import org.spout.vanilla.material.item.Food;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.protocol.msg.player.PlayerDiggingMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
+import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 
 public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMessage> {
 	private boolean breakBlock(BlockMaterial blockMaterial, Block block, Human human, Session session) {
@@ -80,7 +82,12 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 			heldItem.getMaterial().getItemFlags(heldItem, flags);
 		}
 		if (!blockMaterial.destroy(block, flags, new PlayerBreakCause((Player) human.getOwner(), block))) {
-			session.send(false, new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
+			RepositionManager rm = session.getPlayer().getNetworkSynchronizer().getRepositionManager();
+			session.send(false, new BlockChangeMessage(block, rm));
+			if (block.getComponent() instanceof Sign) {
+				Sign sign = (Sign) block.getComponent();
+				session.send(false, new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), rm));
+			}
 			return false;
 		}
 		return true;
@@ -146,6 +153,10 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 			if (Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
 				if (human.isCreative() || blockMaterial.getHardness() == 0.0f) {
 					session.send(false, new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
+					if (block.getComponent() instanceof Sign) {
+						Sign sign = (Sign) block.getComponent();
+						session.send(false, new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), player.getNetworkSynchronizer().getRepositionManager()));
+					}
 				}
 				return;
 			}
@@ -203,6 +214,10 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 			if (!diggingComponent.stopDigging(new Point(w, x, y, z)) || !isInteractable) {
 				if (!diggingComponent.isDigging()) {
 					session.send(false, new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
+					if (block.getComponent() instanceof Sign) {
+						Sign sign = (Sign) block.getComponent();
+						session.send(false, new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), player.getNetworkSynchronizer().getRepositionManager()));
+					}
 				}
 				return;
 			}

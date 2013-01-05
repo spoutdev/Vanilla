@@ -163,6 +163,7 @@ import org.spout.vanilla.material.block.solid.Sponge;
 import org.spout.vanilla.material.block.solid.Stone;
 import org.spout.vanilla.material.block.solid.StoneBrick;
 import org.spout.vanilla.material.block.solid.Wool;
+import org.spout.vanilla.material.block.solid.special.VanillaIceCreamBlock;
 import org.spout.vanilla.material.block.stair.BirchWoodStairs;
 import org.spout.vanilla.material.block.stair.BrickStairs;
 import org.spout.vanilla.material.block.stair.CobblestoneStairs;
@@ -578,6 +579,8 @@ public final class VanillaMaterials {
 	private static boolean initialized = false;
 	private final static AtomicShortArray conversionTable = new AtomicShortArray(Short.MAX_VALUE);
 	private final static TShortObjectHashMap<Material> reverseTable = new TShortObjectHashMap<Material>(500);
+	//Special
+	private static final VanillaIceCreamBlock VANILLA_ICE_CREAM_BLOCK = new VanillaIceCreamBlock("Vanilla Ice Cream", 1); //Stone ID so people don't kill Official clients spawning this.
 
 	static {
 		for (Field field : VanillaMaterials.class.getFields()) {

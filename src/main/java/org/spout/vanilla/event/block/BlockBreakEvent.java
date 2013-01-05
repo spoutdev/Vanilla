@@ -29,44 +29,27 @@ package org.spout.vanilla.event.block;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.block.BlockChangeEvent;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockSnapshot;
 
 /**
- * Event which is called when a block forms or spreads in the world.
- * For example: Snow, Ice, etc
+ * Event which is called when a block is broken.
+ * <p />
+ *     If the block should drop experience you need to set a value of higher than 0. By default broken blocks drop
+ *     experience if the following is true:
+ * <ul>
+ * <li /> Player is not in creative or adventure mode
+ * <li /> Player is using the correct item to break the block
+ * <li /> Player doesn't has silk touch
+ * <li /> The block drops experience in minecraft
+ * </ul>
  * todo implement calling of this event
  */
-public class BlockFormEvent extends BlockChangeEvent implements Cancellable {
-	/**
-	 * The different causes why a Block is formed in the world.
-	 */
-	public static enum FormCause {
-		/**
-		 * Block spread, like mushrooms
-		 */
-		SPREAD,
-		/**
-		 * Block formed due to world conditions (for example Snow)
-		 */
-		FORMING,
-	}
+public class BlockBreakEvent extends BlockExperienceEvent implements Cancellable {
 
 	private static HandlerList handlers = new HandlerList();
-	private final FormCause formCause;
 
-	public BlockFormEvent(Block block, BlockSnapshot newState, Cause<?> reason, FormCause formCause) {
-		super(block, newState, reason);
-		this.formCause = formCause;
-	}
-
-	/**
-	 * The reason why the block formed
-	 * @return FormCause
-	 */
-	public FormCause getFormCause() {
-		return formCause;
+	public BlockBreakEvent(Block block, int experience, Cause<?> cause) {
+		super(block, experience, cause);
 	}
 
 	@Override

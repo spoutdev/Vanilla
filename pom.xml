@@ -14,7 +14,7 @@
 	<!-- Build properties -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<currentYear>2012</currentYear>
+		<currentYear>2013</currentYear>
 		<mainClass>org.spout.vanilla.VanillaPlugin</mainClass>
 		<spoutVersion>dev-SNAPSHOT</spoutVersion>
 		<protocolVersion>51</protocolVersion>

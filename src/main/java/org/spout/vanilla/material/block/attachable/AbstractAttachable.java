@@ -197,7 +197,6 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 		}
 		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
 		this.setAttachedFace(block, against, cause);
-		block.queueUpdate(EffectRange.THIS);
 	}
 
 	@Override

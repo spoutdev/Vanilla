@@ -53,12 +53,13 @@ import org.spout.vanilla.component.misc.LevelComponent;
 import org.spout.vanilla.component.misc.PickupItemComponent;
 import org.spout.vanilla.component.misc.SleepComponent;
 import org.spout.vanilla.component.player.HUDComponent;
-import org.spout.vanilla.component.player.InputComponent;
 import org.spout.vanilla.component.player.PingComponent;
 import org.spout.vanilla.component.player.PlayerListComponent;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.block.RedstoneChangeEvent;
+import org.spout.vanilla.input.VanillaInputExecutor;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
+import org.spout.vanilla.protocol.PastieExceptionHandler;
 
 public class VanillaListener implements Listener {
 	private final VanillaPlugin plugin;
@@ -86,6 +87,7 @@ public class VanillaListener implements Listener {
 		player.add(SleepComponent.class);
 		player.add(HungerComponent.class);
 		player.add(LevelComponent.class);
+		player.getSession().setUncaughtExceptionHandler(new PastieExceptionHandler(player.getSession()));
 	}
 
 	@EventHandler
@@ -99,10 +101,11 @@ public class VanillaListener implements Listener {
 		player.add(PlayerInventory.class);
 		player.add(WindowHolder.class);
 		player.add(CameraComponent.class).setSpeed(10f);
-		player.add(InputComponent.class);
 		player.add(HealthComponent.class);
 		player.add(HungerComponent.class);
 		player.add(HitBlockComponent.class).setRange(5f);
+		
+		((Client)Spout.getEngine()).getInputManager().addInputExecutors(new VanillaInputExecutor(player));
 	}
 
 	@EventHandler

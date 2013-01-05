@@ -24,47 +24,70 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.rail;
+package org.spout.vanilla.data.effect;
 
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.data.RailsState;
-import org.spout.vanilla.material.block.redstone.RedstoneSource;
-import org.spout.vanilla.material.block.redstone.RedstoneTarget;
-import org.spout.vanilla.util.RedstoneUtil;
+public class StatusEffectContainer {
 
-public class Rail extends RailBase implements RedstoneTarget {
-
-	public Rail(String name, int id) {
-		super(name, id);
+	private final StatusEffect effect;
+	private final int tier;
+	private float timer;
+	private float tick = 0;
+	
+	public StatusEffectContainer(StatusEffect effect, float timer, int tier) {
+		this.effect = effect;
+		this.timer = timer;
+		this.tier = tier;
+	}
+	
+	public StatusEffectContainer(StatusEffect effect, float timer) {
+		this.effect = effect;
+		this.timer = timer;
+		this.tier = 1;
 	}
 
+	public float getTimer() {
+		return timer;
+	}
+
+	public void setTimer(float timer) {
+		this.timer = timer;
+	}
+
+	public StatusEffect getEffect() {
+		return effect;
+	}
+	
+	/**
+	 * The tier of this effect. Used to know how much effective the effect is.
+	 * @return The tier of the effect
+	 */
+	public int getTier() {
+		return tier;
+	}
+	
+	public float getTick() {
+		return tick;
+	}
+	
+	public void addTick(float tick) {
+		this.tick += tick;
+	}
+	
+	public void resetTick() {
+		this.tick = 0;
+	}
+	
 	@Override
-	public void onUpdate(BlockMaterial oldMaterial, Block block) {
-		super.onUpdate(oldMaterial, block);
-		if (oldMaterial instanceof RedstoneSource && block.getMaterial().equals(this)) {
-			this.doTrackLogic(block);
+	public boolean equals(Object e) {
+		boolean result = false;
+		if (e != null) {
+			if (e instanceof StatusEffectContainer) {
+				result = ((StatusEffectContainer)e).getEffect().equals(this.effect);
+			} else if (e instanceof StatusEffect) {
+				result = this.effect.equals(e);
+			}
 		}
-	}
-
-	@Override
-	public boolean canCurve() {
-		return true;
-	}
-
-	@Override
-	public void setState(Block block, RailsState state) {
-		block.setData(state.getData());
-	}
-
-	@Override
-	public RailsState getState(Block block) {
-		return RailsState.get(block.getData());
-	}
-
-	@Override
-	public boolean isReceivingPower(Block block) {
-		return RedstoneUtil.isReceivingPower(block);
+		return result;
 	}
 }

@@ -24,25 +24,21 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.material.block;
 
-import org.spout.api.material.range.CubicEffectRange;
-import org.spout.api.material.range.EffectRange;
-import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.data.tool.ToolType;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.cuboid.Block;
 
-public class Dirt extends Solid {
-	private static final EffectRange SPREADING_RANGE = new CubicEffectRange(2);
+/**
+ * A block material that guides an entity along
+ */
+public interface EntityGuidance {
 
-	public Dirt(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/dirt/dirt.spm");
-		this.setHardness(0.5F).setResistance(0.8F).setStepSound(SoundEffects.STEP_GRAVEL);
-		this.addMiningType(ToolType.SPADE);
-	}
-
-	@Override
-	public EffectRange getPhysicsRange(short data) {
-		return SPREADING_RANGE;
-	}
+	/**
+	 * Guides the entity velocity and position to follow this material
+	 * 
+	 * @param block of this material
+	 * @param entity to guide
+	 */
+	public void guide(Block block, Entity entity);
 }

@@ -24,25 +24,46 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.data.effect;
 
-import org.spout.api.material.range.CubicEffectRange;
-import org.spout.api.material.range.EffectRange;
-import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.data.tool.ToolType;
-import org.spout.vanilla.material.block.Solid;
+public enum StatusEffect {
 
-public class Dirt extends Solid {
-	private static final EffectRange SPREADING_RANGE = new CubicEffectRange(2);
+	SPEED(1,2), 
+	SLOWNESS(2,10),
+	HASTE(3,0),
+	MINING_FATIGUE(4,0),
+	STRENGTH(5,9),
+	INSTANT_HEALTH(6,5),
+	INSTANT_DAMAGE(7,12),
+	JUMP_BOOST(8,0),
+	NAUSEA(9,0),
+	REGENERATION(10,1),
+	RESISTANCE(11,0),
+	FIRE_RESISTANCE(12,3),
+	WATER_BREATHING(13,0),
+	INVISIBILITY(14,14),
+	BLINDNESS(15,0),
+	NIGHT_VISION(16,6),
+	HUNGER(17,0),
+	WEAKNESS(18,8),
+	POISON(19,4),
+	WITHER(20,0),
+	NONE(0,0);
+	
+	private byte statusID;
+	private int potionID;
 
-	public Dirt(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/dirt/dirt.spm");
-		this.setHardness(0.5F).setResistance(0.8F).setStepSound(SoundEffects.STEP_GRAVEL);
-		this.addMiningType(ToolType.SPADE);
+	private StatusEffect(int statusID, int potionID) {
+		this.statusID = (byte) statusID;
+		this.potionID = potionID;
 	}
 
-	@Override
-	public EffectRange getPhysicsRange(short data) {
-		return SPREADING_RANGE;
+	public byte getStatusID() {
+		return statusID;
 	}
+
+	public int getPotionID() {
+		return potionID;
+	}
+
 }

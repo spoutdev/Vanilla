@@ -42,6 +42,7 @@ import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
 import org.spout.api.command.annotated.SimpleInjector;
 import org.spout.api.component.impl.NetworkComponent;
 import org.spout.api.component.impl.ObserverComponent;
+import org.spout.api.entity.Entity;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
@@ -50,7 +51,6 @@ import org.spout.api.geo.discrete.Transform;
 import org.spout.api.input.InputManager;
 import org.spout.api.input.Keyboard;
 import org.spout.api.input.Mouse;
-import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.model.Model;
@@ -61,7 +61,6 @@ import org.spout.api.plugin.ServiceManager;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.util.FlatIterator;
-import org.spout.api.util.OutwardIterator;
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.InputCommandExecutor;
 import org.spout.vanilla.command.TestCommands;
@@ -87,7 +86,7 @@ import org.spout.vanilla.resources.RecipeYaml;
 import org.spout.vanilla.resources.loader.RecipeLoader;
 import org.spout.vanilla.service.VanillaProtectionService;
 import org.spout.vanilla.service.protection.SpawnProtection;
-import org.spout.vanilla.thread.SpawnLoaderThread;
+import org.spout.vanilla.thread.SpawnLoader;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.generator.VanillaGenerators;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
@@ -239,8 +238,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 		final int radius = VanillaConfiguration.SPAWN_RADIUS.getInt();
 		final int protectionRadius = VanillaConfiguration.SPAWN_PROTECTION_RADIUS.getInt();
-		final FlatIterator oi = new FlatIterator();
-		SpawnLoaderThread[] loaderThreads = new SpawnLoaderThread[LOADER_THREAD_COUNT];
+		SpawnLoader loader = new SpawnLoader(LOADER_THREAD_COUNT);
 
 		if (worlds.isEmpty()) {
 			return;
@@ -260,31 +258,19 @@ public class VanillaPlugin extends CommonPlugin {
 
 				((VanillaProtectionService) engine.getServiceManager().getRegistration(ProtectionService.class).getProvider()).addProtection(new SpawnProtection(world.getName() + " Spawn Protection", world, point, protectionRadius));
 
-				final String initChunkType = newWorld ? "Generating" : "Loading";
+				// Load or generate spawn area
+				int effectiveRadius = newWorld ? (2 * radius) : radius;
+				loader.load(world, cx, cz, effectiveRadius, newWorld);
 
-				oi.reset(cx, 0, cz, 16, newWorld ? radius : (radius * 2));
-				while (oi.hasNext()) {
-					IntVector3 v = oi.next();
-					SpawnLoaderThread.addChunk(world, v.getX(), v.getY(), v.getZ());
-				}
+				//if (worldConfig.LOADED_SPAWN.getBoolean()) { // TODO - this doesn't really work for anything since it doesn't hold all chunks
+					Entity e = world.createAndSpawnEntity(point, ObserverComponent.class, LoadOption.LOAD_GEN);
+					e.setObserver(new FlatIterator(cx, 0, cz, 16, effectiveRadius));
+				//}
 
-				for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
-					loaderThreads[i] = new SpawnLoaderThread(initChunkType);
-				}
-
-				for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
-					loaderThreads[i].start();
-				}
-
-				for (int i = 0; i < LOADER_THREAD_COUNT; i++) {
-					try {
-						loaderThreads[i].join();
-					} catch (InterruptedException ie) {
-						getLogger().info("Interrupted when waiting for spawn area to load");
-					}
-				}
-				if (worldConfig.LOADED_SPAWN.getBoolean()) { // TODO - this doesn't really work for anything since it doesn't hold all chunks
-					world.createAndSpawnEntity(point, ObserverComponent.class, LoadOption.LOAD_GEN);
+				// Grab safe spawn if newly created world.
+				if (newWorld && world.getGenerator() instanceof VanillaGenerator) {
+					Point spawn = ((VanillaGenerator) world.getGenerator()).getSafeSpawn(world);
+					world.setSpawnPoint(new Transform(spawn, Quaternion.IDENTITY, Vector3.ONE));
 				}
 
 				// Grab safe spawn if newly created world.

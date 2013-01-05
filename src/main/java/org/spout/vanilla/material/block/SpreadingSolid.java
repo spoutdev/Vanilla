@@ -36,6 +36,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
+import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
@@ -56,6 +57,20 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 
 	public SpreadingSolid(String name, int id, String model) {
 		super(name, id, model);
+	}
+
+	@Override
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
+		if (this.getReplacedMaterial().equals(oldMaterial)) {
+			// Schedule a new dynamic update
+			block.resetDynamic();
+		}
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return true;
 	}
 
 	/**
@@ -116,21 +131,24 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 
 	/**
 	 * Attempts to spread this material at the block specified
+	 * 
 	 * @param block of this material
+	 * @return True if spreading was possible (but was maybe not performed), False if not
 	 */
-	public void onSpread(Block block) {
+	public boolean onSpread(Block block) {
 		Block around;
-		final Random rand = new Random(block.getWorld().getAge());
+		final Random rand = MathHelper.getRandom();
+		boolean couldSpread = false;
 		for (IntVector3 next : this.getSpreadRange()) {
-			if (rand.nextInt(4) == 0) {
-				around = block.translate(next);
-				if (around.isMaterial(this.replacedMaterial)) {
-					if (canSpreadTo(block, around)) {
-						around.setMaterial(this);
-					}
+			around = block.translate(next);
+			if (around.isMaterial(this.replacedMaterial)) {
+				couldSpread = true;
+				if (rand.nextInt(4) == 0 && canSpreadTo(block, around)) {
+					around.setMaterial(this);
 				}
 			}
 		}
+		return couldSpread;
 	}
 
 	/**
@@ -143,25 +161,26 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 
 	@Override
 	public EffectRange getDynamicRange() {
-		return DEFAULT_SPREAD_RANGE;
+		return getSpreadRange();
 	}
 
 	public abstract long getSpreadingTime(Block b);
 
 	@Override
 	public void onFirstUpdate(Block b, long currentTime) {
-		//TODO : Delay before dynamic update
 		b.dynamicUpdate(currentTime + getSpreadingTime(b), true);
 	}
 
 	@Override
 	public void onDynamicUpdate(Block block, long updateTime, int data) {
-		block.dynamicUpdate(block.getWorld().getAge() + getSpreadingTime(block), true);
+		long nextUpdate = block.getWorld().getAge() + getSpreadingTime(block);
 		// Attempt to decay or spread this material
 		if (this.canDecayAt(block)) {
 			this.onDecay(block, this.toCause(block));
-		} else if (this.canSpreadFrom(block)) {
-			this.onSpread(block);
+		} else if (this.canSpreadFrom(block) && this.onSpread(block)) {
+			// Update for a next spreading operation
+			block.dynamicUpdate(nextUpdate, true);
+			return;
 		}
 	}
 }

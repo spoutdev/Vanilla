@@ -255,11 +255,11 @@ public class MinecartTrackLogic {
 			//sort neighbours: middle at index 1
 			BlockFace middle = this.neighbours.get(1).direction.getOpposite();
 			if (middle == this.neighbours.get(2).direction) {
-				//dirs[1] need to be swapped with dirs[2]
-				Collections.swap(this.neighbours, 1, 2);
-			} else if (middle == this.neighbours.get(0).direction) {
 				//dirs[1] need to be swapped with dirs[0]
 				Collections.swap(this.neighbours, 1, 0);
+			} else if (middle == this.neighbours.get(0).direction) {
+				//dirs[1] need to be swapped with dirs[2]
+				Collections.swap(this.neighbours, 1, 2);
 			}
 
 			//this will ALWAYS be a curve leading to [1]

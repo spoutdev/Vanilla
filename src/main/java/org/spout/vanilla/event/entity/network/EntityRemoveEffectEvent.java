@@ -24,25 +24,41 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.event.entity.network;
 
-import org.spout.api.material.range.CubicEffectRange;
-import org.spout.api.material.range.EffectRange;
-import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.data.tool.ToolType;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.api.entity.Entity;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.entity.EntityEvent;
+import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.vanilla.data.effect.StatusEffect;
 
-public class Dirt extends Solid {
-	private static final EffectRange SPREADING_RANGE = new CubicEffectRange(2);
+public class EntityRemoveEffectEvent extends EntityEvent implements ProtocolEvent{
 
-	public Dirt(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/dirt/dirt.spm");
-		this.setHardness(0.5F).setResistance(0.8F).setStepSound(SoundEffects.STEP_GRAVEL);
-		this.addMiningType(ToolType.SPADE);
+	private static HandlerList handlers = new HandlerList();
+	private final StatusEffect effect;
+	
+	public EntityRemoveEffectEvent(Entity e, StatusEffect effect) {
+		super(e);
+		this.effect = effect;
 	}
 
 	@Override
-	public EffectRange getPhysicsRange(short data) {
-		return SPREADING_RANGE;
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
 	}
+	
+	public StatusEffect getEffect() {
+		return effect;
+	}
+	
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+	
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
+
+
 }

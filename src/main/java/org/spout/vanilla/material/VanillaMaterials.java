@@ -510,8 +510,8 @@ public final class VanillaMaterials {
 	public static final Map MAP = new Map("Map", 358, 128, 128, null);
 	public static final VanillaItemMaterial EMPTY_MAP = new VanillaItemMaterial("Empty Map", 395, null);
 	public static final Shears SHEARS = new Shears("Shears", 359, (short) 238);
-	public static final VanillaItemMaterial PUMPKIN_SEEDS = new VanillaItemMaterial("Pumpkin Seeds", 361, null);
-	public static final VanillaItemMaterial MELON_SEEDS = new VanillaItemMaterial("MelonBlock Seeds", 362, null);
+	public static final BlockItem PUMPKIN_SEEDS = new BlockItem("Pumpkin Seeds", 361, PUMPKIN_STEM, null);
+	public static final BlockItem MELON_SEEDS = new BlockItem("MelonBlock Seeds", 362, MELON_STEM, null);
 	public static final FlowerPot FLOWER_POT = new FlowerPot("Flower Pot", 390);
 	public static final VanillaItemMaterial ITEM_FRAME = new VanillaItemMaterial("Item Frame", 389, null);
 	public static final Skull SKELETON_SKULL = Skull.SKELETON_SKULL;

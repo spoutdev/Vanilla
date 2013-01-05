@@ -126,30 +126,30 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 
 	@Override
 	public void onFirstUpdate(Block b, long currentTime) {
-		//TODO : Delay before first grow
-		b.dynamicUpdate(10000 + currentTime, true);
+		b.dynamicUpdate(getGrowthTime(b) + currentTime, true);
 	}
 
 	@Override
 	public void onDynamicUpdate(Block block, long updateTime, int data) {
 		if (block.translate(BlockFace.TOP).getLight() < this.getMinimumLightToGrow()) {
-			block.dynamicUpdate(updateTime + 10000, true);
+			block.dynamicUpdate(updateTime +  getGrowthTime(block), true);
 			return;
 		}
 		int chance = VanillaBlockMaterial.getCropGrowthChance(block) + 1;
 		Random rand = new Random(block.getWorld().getAge());
 		if (rand.nextInt(chance) == 0) {
 			if (isFullyGrown(block)) {
-				for (BlockFace face : BlockFaces.NESW) {
-					if (block.translate(face).isMaterial(this.getLastStageMaterial())) {
-						return;
-					}
-				}
-				Block spread = block.translate(BlockFaces.NESW.get(rand.nextInt(4)));
-				if (spread.isMaterial(VanillaMaterials.AIR)) {
-					BlockMaterial belowSpread = spread.translate(BlockFace.BOTTOM).getMaterial();
-					if (belowSpread.isMaterial(VanillaMaterials.FARMLAND, VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
-						spread.setMaterial(this.getLastStageMaterial());
+				for (int i = 0; i < BlockFaces.NESW.size(); i++) {
+					Block spread = block.translate(BlockFaces.NESW.get(i));
+					BlockMaterial material = spread.getMaterial();
+					if (material == VanillaMaterials.AIR) {
+						BlockMaterial belowSpread = spread.translate(BlockFace.BOTTOM).getMaterial();
+						if (belowSpread.isMaterial(VanillaMaterials.FARMLAND, VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
+							spread.setMaterial(this.getLastStageMaterial());
+							break;
+						}
+					} else if (material == getLastStageMaterial()) {
+						break;
 					}
 				}
 			} else {
@@ -157,6 +157,10 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 			}
 		}
 
-		block.dynamicUpdate(updateTime + 10000, true);
+		block.dynamicUpdate(updateTime + getGrowthTime(block), true);
+	}
+
+	protected long getGrowthTime(Block block) {
+		return 10000L + new Random(block.getWorld().getAge()).nextInt(60000);
 	}
 }

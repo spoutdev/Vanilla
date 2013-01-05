@@ -44,7 +44,6 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.Vector3;
 import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.util.flag.Flag;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.effect.store.SoundEffects;
@@ -60,10 +59,6 @@ import org.spout.vanilla.material.block.plant.Sapling;
 import org.spout.vanilla.material.item.misc.Coal;
 
 public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable, Burnable, Directional {
-	public static final Log DEFAULT = new Log("Wood", Sapling.DEFAULT, "model://Vanilla/materials/block/solid/oakwood/oakwood.spm");
-	public static final Log SPRUCE = new Log("Spruce Wood", 1, DEFAULT, Sapling.SPRUCE, "model://Vanilla/materials/block/solid/sprucewood/sprucewood.spm");
-	public static final Log BIRCH = new Log("Birch Wood", 2, DEFAULT, Sapling.BIRCH, "model://Vanilla/materials/block/solid/birchwood/birchwood.spm");
-	public static final Log JUNGLE = new Log("Jungle Wood", 3, DEFAULT, Sapling.JUNGLE, "model://Vanilla/materials/block/solid/junglewood/junglewood.spm");
 	private static final BlockFaces DIRECTION_OPPOS = new BlockFaces(BlockFace.BOTTOM, BlockFace.NORTH, BlockFace.EAST);
 	private static final BlockFaces DIRECTION_FACES = new BlockFaces(BlockFace.TOP, BlockFace.SOUTH, BlockFace.WEST, BlockFace.THIS);
 	private static final short dataMask = 0x0003;
@@ -71,6 +66,12 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	public static final short aliveMask = 0x0100;
 	public static final short heightMask = 0x0600;
 	private static final EffectRange dynamicRange = new CuboidEffectRange(-4, 0, -4, 4, 8, 4);
+	
+	public static final Log DEFAULT = new Log("Wood", Sapling.DEFAULT, "model://Vanilla/materials/block/solid/oakwood/oakwood.spm");
+	public static final Log SPRUCE = new Log("Spruce Wood", 1, DEFAULT, Sapling.SPRUCE, "model://Vanilla/materials/block/solid/sprucewood/sprucewood.spm");
+	public static final Log BIRCH = new Log("Birch Wood", 2, DEFAULT, Sapling.BIRCH, "model://Vanilla/materials/block/solid/birchwood/birchwood.spm");
+	public static final Log JUNGLE = new Log("Jungle Wood", 3, DEFAULT, Sapling.JUNGLE, "model://Vanilla/materials/block/solid/junglewood/junglewood.spm");
+	
 	public final float BURN_TIME = 15;
 	private final Sapling sapling;
 

@@ -32,6 +32,7 @@ import org.spout.api.Spout;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.MathHelper;
 import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
@@ -74,6 +75,6 @@ public class Grass extends SpreadingSolid implements DynamicMaterial, Initializa
 
 	@Override
 	public long getSpreadingTime(Block b) {
-		return 120000L + new Random(b.getWorld().getAge()).nextInt(60000) * 5;
+		return 120000L + MathHelper.getRandom().nextInt(60000) * 5;
 	}
 }

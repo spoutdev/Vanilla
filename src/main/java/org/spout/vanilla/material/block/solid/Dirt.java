@@ -26,14 +26,23 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import org.spout.api.material.range.CubicEffectRange;
+import org.spout.api.material.range.EffectRange;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.block.Solid;
 
 public class Dirt extends Solid {
+	private static final EffectRange SPREADING_RANGE = new CubicEffectRange(2);
+
 	public Dirt(String name, int id) {
 		super(name, id, "model://Vanilla/materials/block/solid/dirt/dirt.spm");
 		this.setHardness(0.5F).setResistance(0.8F).setStepSound(SoundEffects.STEP_GRAVEL);
 		this.addMiningType(ToolType.SPADE);
+	}
+
+	@Override
+	public EffectRange getPhysicsRange(short data) {
+		return SPREADING_RANGE;
 	}
 }

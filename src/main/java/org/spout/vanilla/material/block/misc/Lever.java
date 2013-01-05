@@ -45,7 +45,7 @@ import org.spout.vanilla.material.block.AttachedRedstoneSource;
 public class Lever extends AttachedRedstoneSource implements Toggleable {
 	public Lever(String name, int id) {
 		super(name, id, (String) null);
-		this.setAttachable(BlockFaces.NESWB).setLiquidObstacle(false).setHardness(0.5F).setResistance(1.7F).setTransparent();
+		this.setAttachable(BlockFaces.NESWBT).setLiquidObstacle(false).setHardness(0.5F).setResistance(1.7F).setTransparent();
 	}
 
 	@Override
@@ -90,27 +90,42 @@ public class Lever extends AttachedRedstoneSource implements Toggleable {
 	@Override
 	public void setAttachedFace(Block block, BlockFace attachedFace, Cause<?> cause) {
 		short data;
-		if (attachedFace == BlockFace.BOTTOM) {
-			data = (short) (5 + Math.random());
+		final boolean bottom = attachedFace == BlockFace.BOTTOM;
+		if (bottom || attachedFace == BlockFace.TOP) {
+			if (bottom) {
+				data = 5;
+			} else {
+				data = 7;
+			}
+			// Add +1 to change direction
 			if (cause instanceof EntityCause) {
 				// set data using direction
 				Vector3 direction = block.getPosition().subtract((((EntityCause) cause).getSource()).getTransform().getPosition());
 				direction = direction.abs();
 				if (direction.getX() > direction.getZ()) {
-					data = 6;
-				} else {
-					data = 5;
+					data++;
 				}
+			} else {
+				data += (int) Math.round(Math.random());
 			}
+			// Wrap 0x8 around as 0x0
+			data &= 0x7;
 		} else {
 			data = (short) (BlockFaces.NSEW.indexOf(attachedFace, 0) + 1);
 		}
-		block.setData(data);
+		block.setDataField(0x7, data);
 	}
 
 	@Override
 	public BlockFace getAttachedFace(short data) {
-		return BlockFaces.NSEWB.get((data & 0x7) - 1);
+		final int bits = data & 0x7;
+		if (bits == 0 || bits == 7) {
+			return BlockFace.TOP;
+		} else if (bits == 5 || bits == 6) {
+			return BlockFace.BOTTOM;
+		} else {
+			return BlockFaces.NSEW.get(bits - 1);
+		}
 	}
 
 	@Override

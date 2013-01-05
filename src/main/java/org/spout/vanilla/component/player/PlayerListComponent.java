@@ -93,7 +93,7 @@ public class PlayerListComponent extends EntityComponent {
 			}
 		}
 	}
-	
+
 	public void force() {
 		force = true;
 	}

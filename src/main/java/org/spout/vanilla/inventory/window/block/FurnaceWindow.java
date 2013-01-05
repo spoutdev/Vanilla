@@ -37,6 +37,7 @@ import org.spout.vanilla.inventory.window.WindowType;
 
 public class FurnaceWindow extends Window {
 	private Furnace furnace;
+
 	public FurnaceWindow(Player owner, Furnace furnace, FurnaceInventory inventory) {
 		this(owner, inventory, "Furnace");
 		this.furnace = furnace;

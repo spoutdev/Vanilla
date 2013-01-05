@@ -29,7 +29,6 @@ package org.spout.vanilla.material.block.stair;
 import org.spout.vanilla.material.block.WoodenStairs;
 
 public class OakWoodStairs extends WoodenStairs {
-
 	public OakWoodStairs(String name, int id) {
 		super(name, id);
 	}

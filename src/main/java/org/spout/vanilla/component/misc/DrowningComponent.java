@@ -88,7 +88,7 @@ public class DrowningComponent extends EntityComponent {
 	public boolean canTick() {
 		return !health.isDead();
 	}
-	
+
 	@Override
 	public void onTick(float dt) {
 		switch (Spout.getPlatform()) {
@@ -99,11 +99,11 @@ public class DrowningComponent extends EntityComponent {
 					setAir(MAX_AIR);
 					return;
 				}
-				
+
 				if (getOwner() instanceof Player && !getOwner().get(Human.class).getGameMode().equals(GameMode.SURVIVAL)) {
 					return;
 				}
-				
+
 				setAir(getAir() - dt);
 				if (getAir() < 0) {
 					// out of air; damage one heart every second

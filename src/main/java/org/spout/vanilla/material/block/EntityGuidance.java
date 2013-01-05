@@ -33,10 +33,8 @@ import org.spout.api.geo.cuboid.Block;
  * A block material that guides an entity along
  */
 public interface EntityGuidance {
-
 	/**
 	 * Guides the entity velocity and position to follow this material
-	 * 
 	 * @param block of this material
 	 * @param entity to guide
 	 */

@@ -29,7 +29,6 @@ package org.spout.vanilla.component.substance.material;
 import org.spout.vanilla.data.VanillaData;
 
 public class Skull extends VanillaBlockComponent {
-
 	public float getRotation() {
 		return getData().get(VanillaData.SKULL_ROTATION);
 	}

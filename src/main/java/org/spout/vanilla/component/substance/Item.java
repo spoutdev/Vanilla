@@ -42,7 +42,6 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.object.ItemEntityProtocol;
 
 public class Item extends ObjectEntity {
-
 	@Override
 	public void onAttached() {
 		super.onAttached();

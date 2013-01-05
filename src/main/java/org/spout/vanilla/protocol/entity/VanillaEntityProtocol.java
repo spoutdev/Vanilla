@@ -51,9 +51,9 @@ import org.spout.vanilla.protocol.msg.entity.pos.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityVelocityMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityYawMessage;
 
+import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPitch;
 import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPosition;
 import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyYaw;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPitch;
 
 public abstract class VanillaEntityProtocol implements EntityProtocol {
 	private List<Parameter<?>> lastMeta;
@@ -78,7 +78,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		int lastZ = protocolifyPosition(prevTransform.getPosition().getZ());
 		int lastYaw = protocolifyYaw(prevTransform.getRotation().getYaw());
 		int lastPitch = protocolifyPitch(prevTransform.getRotation().getPitch());
-		
+
 		int newX = protocolifyPosition(newTransform.getPosition().getX());
 		int newY = protocolifyPosition(newTransform.getPosition().getY());
 		int newZ = protocolifyPosition(newTransform.getPosition().getZ());
@@ -105,10 +105,10 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 			if (force || looked) {
 				messages.add(new EntityYawMessage(entity.getId(), newYaw, newPitch));
 			}
-		} else if (deltaX != 0 || deltaY != 0 || deltaZ != 0 || deltaYaw != 0 || deltaPitch != 0){
+		} else if (deltaX != 0 || deltaY != 0 || deltaZ != 0 || deltaYaw != 0 || deltaPitch != 0) {
 			if (looked) {
 				messages.add(new EntityRelativePositionYawMessage(entity.getId(), deltaX, deltaY, deltaZ, newYaw, newPitch));
-			} else if (!prevTransform.getPosition().equals(newTransform.getPosition())){
+			} else if (!prevTransform.getPosition().equals(newTransform.getPosition())) {
 				messages.add(new EntityRelativePositionMessage(entity.getId(), deltaX, deltaY, deltaZ));
 			}
 		}

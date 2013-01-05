@@ -36,7 +36,6 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 
 public class VanillaInputExecutor implements InputExecutor {
-
 	private Player player;
 	private CameraComponent camera;
 
@@ -72,5 +71,4 @@ public class VanillaInputExecutor implements InputExecutor {
 		}
 		tc.translateAndSetRotation(offset, MathHelper.rotation(inputState.pitch(), inputState.yaw(), ts.getRotation().getRoll()));
 	}
-
 }

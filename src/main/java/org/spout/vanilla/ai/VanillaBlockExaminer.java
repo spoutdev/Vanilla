@@ -28,16 +28,17 @@ package org.spout.vanilla.ai;
 
 import java.util.Set;
 
+import com.google.common.collect.Sets;
+
 import org.spout.api.ai.pathfinder.BlockExaminer;
 import org.spout.api.ai.pathfinder.BlockSource;
 import org.spout.api.ai.pathfinder.PathPoint;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.plant.TallGrass;
-
-import com.google.common.collect.Sets;
 
 public class VanillaBlockExaminer implements BlockExaminer {
 	private boolean canStandIn(Material mat) {
@@ -50,9 +51,11 @@ public class VanillaBlockExaminer implements BlockExaminer {
 
 	private boolean contains(Material[] search, Material... find) {
 		for (Material haystack : search) {
-			for (Material needle : find)
-				if (haystack.equals(needle))
+			for (Material needle : find) {
+				if (haystack.equals(needle)) {
 					return true;
+				}
+			}
 		}
 		return false;
 	}
@@ -63,12 +66,15 @@ public class VanillaBlockExaminer implements BlockExaminer {
 		Material above = source.getMaterialAt(pos.add(UP));
 		Material below = source.getMaterialAt(pos.add(DOWN));
 		Material in = source.getMaterialAt(pos);
-		if (above == VanillaMaterials.WEB || in == VanillaMaterials.WEB)
+		if (above == VanillaMaterials.WEB || in == VanillaMaterials.WEB) {
 			return 1F;
-		if (below == VanillaMaterials.SOUL_SAND || below == VanillaMaterials.ICE)
+		}
+		if (below == VanillaMaterials.SOUL_SAND || below == VanillaMaterials.ICE) {
 			return 1F;
-		if (isLiquid(above, below, in))
+		}
+		if (isLiquid(above, below, in)) {
 			return 0.5F;
+		}
 		return 0.5F; // TODO: add light level-specific costs
 	}
 

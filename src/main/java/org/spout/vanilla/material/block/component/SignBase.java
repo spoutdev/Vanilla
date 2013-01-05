@@ -45,7 +45,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 
 public abstract class SignBase extends AbstractAttachable implements InitializableMaterial, VanillaComplexMaterial {
-
 	public SignBase(String name, int id) {
 		super(name, id, (String) null);
 		this.setAttachable(BlockFaces.NESWB).setHardness(1.0F).setResistance(1.6F).setOpacity((byte) 1);
@@ -96,8 +95,8 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 	@Override
 	public ProtocolEvent getUpdate(World world, int x, int y, int z) {
 		Sign sign = (Sign) world.getBlockComponent(x, y, z);
-		if(sign == null) {
-			throw new UnsupportedOperationException("Can't get data for sign at "+x+" "+y+" "+z+"! Component missing...");
+		if (sign == null) {
+			throw new UnsupportedOperationException("Can't get data for sign at " + x + " " + y + " " + z + "! Component missing...");
 		}
 		return new SignUpdateEvent(sign, sign.getText(), null);
 	}

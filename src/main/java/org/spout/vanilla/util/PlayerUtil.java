@@ -76,7 +76,6 @@ public class PlayerUtil {
 
 	/**
 	 * Obtains the yaw from a cause, if possible, otherwise 0 is returned
-	 * 
 	 * @param cause to obtain the yaw of
 	 * @return yaw
 	 */
@@ -89,9 +88,8 @@ public class PlayerUtil {
 	}
 
 	/**
-	 * Obtains the yaw of an entity, if the entity has a head, 
+	 * Obtains the yaw of an entity, if the entity has a head,
 	 * the head yaw is returned instead
-	 * 
 	 * @param entity to get the yaw of
 	 * @return yaw
 	 */

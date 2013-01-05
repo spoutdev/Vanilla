@@ -42,7 +42,6 @@ public abstract class Portal extends VanillaBlockMaterial {
 
 	/**
 	 * Gets the frame block material used around this Portal
-	 * 
 	 * @return Portal frame material
 	 */
 	public abstract BlockMaterial getFrameMaterial();

@@ -28,6 +28,7 @@ package org.spout.vanilla.material.item.misc;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.misc.EffectsComponent;
 import org.spout.vanilla.data.effect.StatusEffect;
@@ -61,7 +62,6 @@ public class Potion extends VanillaItemMaterial {
 	private static final short ACTION_NONE = 0;
 	private static final short ACTION_USE = 8192;
 	private static final short ACTION_SPLASH = 16384;
-
 	public static final Potion WATER_BOTTLE = new Potion("Water Bottle");
 	public static final Potion AWKWARD = new Potion("Awkward Potion", StatusEffect.NONE, TIER1, DURATION_NORMAL, ACTION_NONE, WATER_BOTTLE);
 	public static final Potion SPLASH_AWKWARD = new Potion("Splash Awkward Potion", StatusEffect.NONE, TIER0, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
@@ -159,7 +159,6 @@ public class Potion extends VanillaItemMaterial {
 	public static final Potion NIGHT_VISION_EXTENDED = new Potion("Potion of Night Vision (Extended)", StatusEffect.NIGHT_VISION, TIER0, DURATION_EXTENDED, ACTION_USE, 480, WATER_BOTTLE);
 	public static final Potion INVISIBILITY = new Potion("Potion of Invisibility", StatusEffect.INVISIBILITY, TIER0, DURATION_NORMAL, ACTION_USE, 180, WATER_BOTTLE);
 	public static final Potion INVISIBILITY_EXTENDED = new Potion("Potion of Invisibility (Extended)", StatusEffect.INVISIBILITY, TIER0, DURATION_EXTENDED, ACTION_USE, 480, WATER_BOTTLE);
-
 	/**
 	 * Contains the amount of time this potion have.
 	 */
@@ -196,7 +195,6 @@ public class Potion extends VanillaItemMaterial {
 
 	/**
 	 * Gets whether this type of Potion is a Splash potion
-	 * 
 	 * @return True if it is a Splash potion, False if not
 	 */
 	public boolean isSplash() {

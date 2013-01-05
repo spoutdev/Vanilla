@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.solid;
 
 import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
+
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.block.Solid;

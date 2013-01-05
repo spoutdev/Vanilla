@@ -30,13 +30,13 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 import org.spout.api.protocol.event.ProtocolEvent;
+
 import org.spout.vanilla.data.effect.StatusEffectContainer;
 
-public class EntityEffectEvent extends EntityEvent implements ProtocolEvent{
-
+public class EntityEffectEvent extends EntityEvent implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();
 	private final StatusEffectContainer effect;
-	
+
 	public EntityEffectEvent(Entity e, StatusEffectContainer effect) {
 		super(e);
 		this.effect = effect;
@@ -46,19 +46,17 @@ public class EntityEffectEvent extends EntityEvent implements ProtocolEvent{
 	public void setCancelled(boolean cancelled) {
 		super.setCancelled(cancelled);
 	}
-	
+
 	public StatusEffectContainer getEffect() {
 		return effect;
 	}
-	
+
 	@Override
 	public HandlerList getHandlers() {
 		return handlers;
 	}
-	
+
 	public static HandlerList getHandlerList() {
 		return handlers;
 	}
-
-
 }

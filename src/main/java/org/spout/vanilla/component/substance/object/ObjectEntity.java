@@ -45,16 +45,16 @@ public abstract class ObjectEntity extends EntityComponent {
 	public PhysicsComponent getPhysics() {
 		return physics;
 	}
-
-	@Override
-	public void onCollided(Point colliderPoint, Point collidedPoint, Block block) {
-		if (getPhysics() == null) {
-			return;
-		}
-		if (block.getMaterial() instanceof Solid) {
-			getPhysics().setDamping(1f, 1f);
-		} else if (block.getMaterial() instanceof Liquid) {
-			getPhysics().setDamping(0.8f, 0.8f);
-		}
-	}
+//
+//	@Override
+//	public void onCollided(Point colliderPoint, Point collidedPoint, Block block) {
+//		if (getPhysics() == null) {
+//			return;
+//		}
+//		if (block.getMaterial() instanceof Solid) {
+//			getPhysics().setDamping(1f, 1f);
+//		} else if (block.getMaterial() instanceof Liquid) {
+//			getPhysics().setDamping(0.8f, 0.8f);
+//		}
+//	}
 }

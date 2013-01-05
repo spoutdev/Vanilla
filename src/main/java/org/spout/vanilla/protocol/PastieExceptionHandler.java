@@ -35,6 +35,7 @@ import java.net.URLEncoder;
 import java.util.logging.Level;
 
 import org.apache.commons.io.IOUtils;
+
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.Message;
@@ -42,11 +43,13 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.Session.UncaughtExceptionHandler;
 import org.spout.api.scheduler.TaskPriority;
+
 import org.spout.vanilla.VanillaPlugin;
 
 public class PastieExceptionHandler implements UncaughtExceptionHandler {
 	private static final String PASTEBIN_URL = "http://pastebin.com";
 	private final Session session;
+
 	public PastieExceptionHandler(Session session) {
 		this.session = session;
 	}
@@ -67,7 +70,7 @@ public class PastieExceptionHandler implements UncaughtExceptionHandler {
 			Runnable task = new PastieRunnable(session, builder.toString(), "Message handler exception for " + message.getClass().getSimpleName());
 			Spout.getEngine().getScheduler().scheduleAsyncDelayedTask(VanillaPlugin.getInstance(), task, 0, TaskPriority.CRITICAL);
 		} else {
-			session.disconnect(false, new Object[] {"Message handler exception for ", message.getClass().getSimpleName()});
+			session.disconnect(false, new Object[]{"Message handler exception for ", message.getClass().getSimpleName()});
 		}
 	}
 
@@ -93,6 +96,7 @@ public class PastieExceptionHandler implements UncaughtExceptionHandler {
 		private final Session session;
 		private final String message;
 		private final String backupMessage;
+
 		PastieRunnable(Session session, String message, String backupMessage) {
 			this.session = session;
 			this.message = message;
@@ -109,9 +113,9 @@ public class PastieExceptionHandler implements UncaughtExceptionHandler {
 				e.printStackTrace();
 			}
 			if (response.startsWith(PASTEBIN_URL)) {
-				session.disconnect(true, new Object[] {"Unhandled exception: " + response });
+				session.disconnect(true, new Object[]{"Unhandled exception: " + response});
 			} else {
-				session.disconnect(false, new Object[] {backupMessage});
+				session.disconnect(false, new Object[]{backupMessage});
 			}
 		}
 	}
@@ -126,8 +130,9 @@ public class PastieExceptionHandler implements UncaughtExceptionHandler {
 		}
 
 		public String checkResponse(String response) {
-			if (response.substring(0, 15) == "Bad API request")
-					return response.substring(17);
+			if (response.substring(0, 15) == "Bad API request") {
+				return response.substring(17);
+			}
 			return "";
 		}
 
@@ -135,13 +140,14 @@ public class PastieExceptionHandler implements UncaughtExceptionHandler {
 			String content = URLEncoder.encode(message, "UTF-8");
 			String title = URLEncoder.encode(name, "UTF-8");
 			String data = "api_option=paste&api_user_key=" + this.token
-							+ "&api_paste_private=0&api_paste_name=" + title
-							+ "&api_paste_expire_date=N&api_paste_format=" + format
-							+ "&api_dev_key=" + this.devkey + "&api_paste_code=" + content;
+					+ "&api_paste_private=0&api_paste_name=" + title
+					+ "&api_paste_expire_date=N&api_paste_format=" + format
+					+ "&api_dev_key=" + this.devkey + "&api_paste_code=" + content;
 			String response = this.page(pasteURL, data);
 			String check = this.checkResponse(response);
-			if (!check.equals(""))
-					return check;
+			if (!check.equals("")) {
+				return check;
+			}
 			return response;
 		}
 

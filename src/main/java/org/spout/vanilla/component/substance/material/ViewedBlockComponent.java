@@ -27,10 +27,8 @@
 package org.spout.vanilla.component.substance.material;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;

@@ -32,12 +32,12 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class EndPortalObject extends WorldGeneratorObject {
-
 	private static boolean isEndFrame(Block block, BlockFace facing, boolean withEnderEye) {
-		return (block.isMaterial(VanillaMaterials.END_PORTAL_FRAME) && 
+		return (block.isMaterial(VanillaMaterials.END_PORTAL_FRAME) &&
 				VanillaMaterials.END_PORTAL_FRAME.getFacing(block) == facing) &&
 				(!withEnderEye || VanillaMaterials.END_PORTAL_FRAME.hasEyeOfTheEnder(block));
 	}
@@ -49,7 +49,6 @@ public class EndPortalObject extends WorldGeneratorObject {
 
 	/**
 	 * Finds the center of the end portal object
-	 * 
 	 * @param frameBlock to start looking from
 	 * @return Center origin block
 	 */

@@ -29,10 +29,15 @@ package org.spout.vanilla.component.living.hostile;
 import com.bulletphysics.collision.shapes.BoxShape;
 
 import org.spout.api.component.impl.PhysicsComponent;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;
 import org.spout.vanilla.component.living.Living;
+import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.protocol.entity.creature.SkeletonEntityProtocol;
 
 /**
@@ -46,7 +51,19 @@ public class Skeleton extends Living implements Hostile {
 		PhysicsComponent physics = getOwner().add(PhysicsComponent.class);
 		physics.setMass(5f);
 		physics.setCollisionShape(new BoxShape(1F, 2F, 1F));
-		physics.setFriction(10f);
+		physics.setFriction(1f);
 		physics.setRestitution(0f);
+	}
+
+	@Override
+	public void onCollided(Point colliderPoint, Point collidedPoint, Block block) {
+		if (getPhysics() == null) {
+			return;
+		}
+		if (block.getMaterial() instanceof Solid) {
+			getPhysics().setDamping(1f, 1f);
+		} else if (block.getMaterial() instanceof Liquid) {
+			getPhysics().setDamping(0.8f, 0.8f);
+		}
 	}
 }

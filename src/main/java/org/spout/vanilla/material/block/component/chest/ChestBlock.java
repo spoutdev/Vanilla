@@ -35,11 +35,11 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.component.substance.material.chest.Chest;
 
 public class ChestBlock extends AbstractChestBlock {
-
 	public final float BURN_TIME = 15;
 
 	public ChestBlock(String name, int id) {
@@ -49,7 +49,6 @@ public class ChestBlock extends AbstractChestBlock {
 
 	/**
 	 * Gets the other half of a double chest
-	 *
 	 * @param block of the Double chest
 	 * @return the other half, or null if there is none
 	 */
@@ -64,7 +63,6 @@ public class ChestBlock extends AbstractChestBlock {
 
 	/**
 	 * Gets whether a certain chest block is a double chest
-	 *
 	 * @param block of the Chest
 	 * @return True if it is a double chest, False if it is a single chest
 	 */

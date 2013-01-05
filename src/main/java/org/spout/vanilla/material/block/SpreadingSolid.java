@@ -131,7 +131,6 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 
 	/**
 	 * Attempts to spread this material at the block specified
-	 * 
 	 * @param block of this material
 	 * @return True if spreading was possible (but was maybe not performed), False if not
 	 */

@@ -29,7 +29,6 @@ package org.spout.vanilla.world.generator;
 import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.geo.World;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
-import org.spout.api.util.cuboid.CuboidShortBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 

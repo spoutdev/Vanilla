@@ -26,20 +26,18 @@
  */
 package org.spout.vanilla.data.effect;
 
-
 public class StatusEffectContainer {
-
 	private final StatusEffect effect;
 	private final int tier;
 	private float timer;
 	private float tick = 0;
-	
+
 	public StatusEffectContainer(StatusEffect effect, float timer, int tier) {
 		this.effect = effect;
 		this.timer = timer;
 		this.tier = tier;
 	}
-	
+
 	public StatusEffectContainer(StatusEffect effect, float timer) {
 		this.effect = effect;
 		this.timer = timer;
@@ -57,7 +55,7 @@ public class StatusEffectContainer {
 	public StatusEffect getEffect() {
 		return effect;
 	}
-	
+
 	/**
 	 * The tier of this effect. Used to know how much effective the effect is.
 	 * @return The tier of the effect
@@ -65,25 +63,25 @@ public class StatusEffectContainer {
 	public int getTier() {
 		return tier;
 	}
-	
+
 	public float getTick() {
 		return tick;
 	}
-	
+
 	public void addTick(float tick) {
 		this.tick += tick;
 	}
-	
+
 	public void resetTick() {
 		this.tick = 0;
 	}
-	
+
 	@Override
 	public boolean equals(Object e) {
 		boolean result = false;
 		if (e != null) {
 			if (e instanceof StatusEffectContainer) {
-				result = ((StatusEffectContainer)e).getEffect().equals(this.effect);
+				result = ((StatusEffectContainer) e).getEffect().equals(this.effect);
 			} else if (e instanceof StatusEffect) {
 				result = this.effect.equals(e);
 			}

@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
+
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.data.effect.StatusEffect;
 import org.spout.vanilla.data.effect.StatusEffectContainer;
@@ -40,20 +41,19 @@ import org.spout.vanilla.event.entity.network.EntityRemoveEffectEvent;
 import org.spout.vanilla.material.item.misc.Potion;
 
 public class EffectsComponent extends EntityComponent {
-	
 	private List<StatusEffectContainer> list = new ArrayList<StatusEffectContainer>();
 	private HealthComponent health;
-	
+
 	@Override
 	public void onAttached() {
 		this.health = getOwner().add(HealthComponent.class);
 	}
-	
+
 	@Override
 	public boolean canTick() {
 		return list.size() > 0;
 	}
-	
+
 	@Override
 	public void onTick(float dt) {
 		Iterator<StatusEffectContainer> iterator = list.iterator();
@@ -100,13 +100,11 @@ public class EffectsComponent extends EntityComponent {
 						break;
 					default:
 						break;
-					
 				}
 			}
-			
 		}
 	}
-	
+
 	public void addEffect(StatusEffectContainer effect) {
 		if (containsEffect(effect.getEffect())) {
 			removeEffect(effect.getEffect());
@@ -117,7 +115,7 @@ public class EffectsComponent extends EntityComponent {
 			} else if (effect.getTier() == Potion.TIER2) {
 				health.damage(12);
 			}
-		} else if (effect.getEffect().equals(StatusEffect.INSTANT_HEALTH))  {
+		} else if (effect.getEffect().equals(StatusEffect.INSTANT_HEALTH)) {
 			if (effect.getTier() == Potion.TIER0) {
 				health.heal(6);
 			} else if (effect.getTier() == Potion.TIER2) {
@@ -127,19 +125,18 @@ public class EffectsComponent extends EntityComponent {
 			getOwner().getNetwork().callProtocolEvent(new EntityEffectEvent(getOwner(), effect));
 			list.add(effect);
 		}
-		
 	}
-	
+
 	public void removeEffect(StatusEffect effect) {
 		if (containsEffect(effect)) {
 			getOwner().getNetwork().callProtocolEvent(new EntityRemoveEffectEvent(getOwner(), effect));
 			list.remove(effect);
 		}
 	}
-	
+
 	public boolean containsEffect(StatusEffect effect) {
 		boolean result = false;
-		for (StatusEffectContainer effectContainer: list) {
+		for (StatusEffectContainer effectContainer : list) {
 			result = effectContainer.equals(effect);
 			if (result) {
 				break;

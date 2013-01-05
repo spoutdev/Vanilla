@@ -104,8 +104,8 @@ public class VanillaListener implements Listener {
 		player.add(HealthComponent.class);
 		player.add(HungerComponent.class);
 		player.add(HitBlockComponent.class).setRange(5f);
-		
-		((Client)Spout.getEngine()).getInputManager().addInputExecutors(new VanillaInputExecutor(player));
+
+		((Client) Spout.getEngine()).getInputManager().addInputExecutors(new VanillaInputExecutor(player));
 	}
 
 	@EventHandler
@@ -144,7 +144,7 @@ public class VanillaListener implements Listener {
 			}
 		}
 	}
-	
+
 	@EventHandler
 	public void onEntityHide(EntityHiddenEvent event) {
 		//TODO maps, sounds, etc.
@@ -152,7 +152,7 @@ public class VanillaListener implements Listener {
 			event.getHiddenFrom().get(PlayerListComponent.class).force();
 		}
 	}
-	
+
 	@EventHandler
 	public void onEntityShow(EntityShownEvent event) {
 		if (event.getEntity() instanceof Player) {

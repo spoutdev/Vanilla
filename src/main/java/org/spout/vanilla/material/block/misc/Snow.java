@@ -29,11 +29,11 @@ package org.spout.vanilla.material.block.misc;
 import java.util.Random;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
+
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;

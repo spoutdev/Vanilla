@@ -50,7 +50,7 @@ public class PlayerToggleSneakingEvent extends PlayerEvent implements Cancellabl
 
 	/**
 	 * Returns the new state of sneaking
-	 * @return 
+	 * @return
 	 */
 	public boolean isSneaking() {
 		return isSneaking;

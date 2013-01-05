@@ -87,7 +87,7 @@ public class ComponentMaterial extends VanillaBlockMaterial implements ComplexMa
 		super.onCreate(block, data, cause);
 		spawn(block.getPosition());
 	}
-	
+
 	@Override
 	public BlockComponent createBlockComponent() {
 		try {

@@ -132,7 +132,7 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 	@Override
 	public void onDynamicUpdate(Block block, long updateTime, int data) {
 		if (block.translate(BlockFace.TOP).getLight() < this.getMinimumLightToGrow()) {
-			block.dynamicUpdate(updateTime +  getGrowthTime(block), true);
+			block.dynamicUpdate(updateTime + getGrowthTime(block), true);
 			return;
 		}
 		int chance = VanillaBlockMaterial.getCropGrowthChance(block) + 1;

@@ -48,18 +48,17 @@ public class Sign extends VanillaBlockComponent {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		
+
 		//Defaulted key not enough, the array needs to have empty lines in it, not null
-		if(getData().get(VanillaData.SIGN_TEXT)[0] != null) {
+		if (getData().get(VanillaData.SIGN_TEXT)[0] != null) {
 			return;
 		}
-		
+
 		String[] lines = new String[4];
-		for(int i=0;i<lines.length;i++) {
+		for (int i = 0; i < lines.length; i++) {
 			lines[i] = "";
 		}
 		getData().put(VanillaData.SIGN_TEXT, lines);
-		
 	}
 
 	/**

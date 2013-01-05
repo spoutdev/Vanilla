@@ -88,7 +88,7 @@ public class EntityInteractHandler extends MessageHandler<EntityInteractMessage>
 						//						player.getInventory().getQuickbar().getCurrentSlotInventory().addData(1); TODO: Reimplement durability change
 					}
 				}
-				
+
 				//Potion modification
 				if (holdingMat.equals(VanillaMaterials.AIR)) {
 					EffectsComponent effect = playerEnt.add(EffectsComponent.class);
@@ -100,7 +100,7 @@ public class EntityInteractHandler extends MessageHandler<EntityInteractMessage>
 					}
 				}
 				//END Potion modification
-				
+
 				if (damage > 0) {
 					if (clicked instanceof Human) {
 						if (((Human) clicked).getGameMode() != GameMode.SURVIVAL) {

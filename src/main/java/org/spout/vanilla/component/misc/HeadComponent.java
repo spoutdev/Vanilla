@@ -61,7 +61,6 @@ public class HeadComponent extends EntityComponent {
 
 	/**
 	 * Checks whether this head has changed rotation since last tick
-	 * 
 	 * @return True if the head rotation is dirty, False if not
 	 */
 	public boolean isDirty() {
@@ -70,7 +69,6 @@ public class HeadComponent extends EntityComponent {
 
 	/**
 	 * Sets the rotation of the head to look into a certain direction
-	 * 
 	 * @param lookingAt {@link org.spout.api.math.Vector3} to look at
 	 */
 	public void setLooking(Vector3 lookingAt) {
@@ -79,7 +77,6 @@ public class HeadComponent extends EntityComponent {
 
 	/**
 	 * Gets the {@link Vector3} the head is currently looking at.
-	 * 
 	 * @return Head direction vector
 	 */
 	public Vector3 getLookingAt() {
@@ -88,7 +85,6 @@ public class HeadComponent extends EntityComponent {
 
 	/**
 	 * Sets the rotation of the head
-	 * 
 	 * @param rotation to set to
 	 */
 	public void setRotation(Quaternion rotation) {
@@ -97,7 +93,6 @@ public class HeadComponent extends EntityComponent {
 
 	/**
 	 * Gets the rotation of the head
-	 * 
 	 * @return Head rotation
 	 */
 	public Quaternion getRotation() {
@@ -106,7 +101,6 @@ public class HeadComponent extends EntityComponent {
 
 	/**
 	 * Sets the current height of the head above the main position
-	 * 
 	 * @param height
 	 */
 	public void setHeight(int height) {
@@ -115,7 +109,6 @@ public class HeadComponent extends EntityComponent {
 
 	/**
 	 * Gets the current height of the head above the main position
-	 * 
 	 * @return Head height
 	 */
 	public int getHeight() {
@@ -124,7 +117,6 @@ public class HeadComponent extends EntityComponent {
 
 	/**
 	 * Gets the position of the head in the world
-	 * 
 	 * @return Head position
 	 */
 	public Point getPosition() {
@@ -133,7 +125,6 @@ public class HeadComponent extends EntityComponent {
 
 	/**
 	 * Gets the transform of this head in the world
-	 * 
 	 * @return Head transform
 	 */
 	public Transform getHeadTransform() {
@@ -146,7 +137,6 @@ public class HeadComponent extends EntityComponent {
 	/**
 	 * Gets a block iterator that iterates the blocks this head can see<br>
 	 * The view distance is limited to the reach of the Entity
-	 * 
 	 * @return Block iterator
 	 */
 	public BlockIterator getBlockView() {
@@ -155,7 +145,6 @@ public class HeadComponent extends EntityComponent {
 
 	/**
 	 * Gets a block iterator that iterates the blocks this head can see
-	 * 
 	 * @param maxDistance the blocks can be iterated
 	 * @return Block iterator
 	 */

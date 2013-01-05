@@ -50,8 +50,7 @@ public class PlayerToggleSprintingEvent extends PlayerEvent implements Cancellab
 
 	/**
 	 * Returns the new state of sprinting
-	 * 
-	 * @return 
+	 * @return
 	 */
 	public boolean isSprinting() {
 		return isSprinting;

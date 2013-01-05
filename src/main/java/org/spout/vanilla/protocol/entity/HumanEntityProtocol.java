@@ -27,7 +27,6 @@
 package org.spout.vanilla.protocol.entity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
@@ -35,6 +34,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
+
 import org.spout.vanilla.component.inventory.PlayerInventory;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
@@ -44,9 +44,9 @@ import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
 public class HumanEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
-		
+
 		List<Message> messages = new ArrayList<Message>(2);
-		
+
 		Human human = entity.add(Human.class);
 
 		int id = entity.getId();
@@ -63,9 +63,9 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		}
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 		parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 100));
-		
+
 		messages.add(new PlayerSpawnMessage(id, human.getName(), x, y, z, r, p, item, parameters, rm));
-		
+
 		PlayerInventory inv = entity.get(PlayerInventory.class);
 		if (inv != null) {
 			PlayerQuickbar quickBar = inv.getQuickbar();
@@ -75,7 +75,7 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 				messages.add(new EntityEquipmentMessage(entity.getId(), 0, null));
 			}
 		}
-		
+
 		return messages;
 	}
 }

@@ -35,7 +35,6 @@ import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.RedstoneUtil;
 
 public class Rail extends RailBase implements RedstoneTarget {
-
 	public Rail(String name, int id) {
 		super(name, id);
 	}

@@ -36,7 +36,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 
 public class FlatGenerator extends LayeredWorldGenerator implements VanillaGenerator {
-
 	public FlatGenerator(int height) {
 		this.setFloorLayer(VanillaMaterials.BEDROCK);
 		this.addLayer(0, height - 1, VanillaMaterials.DIRT);

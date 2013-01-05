@@ -37,7 +37,6 @@ import org.spout.vanilla.material.block.Plant;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
 public class DeadBush extends GroundAttachable implements Plant, InitializableMaterial {
-
 	protected DeadBush(String name, int id, short data, String model) {
 		super(data, name, id, model);
 	}

@@ -35,7 +35,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Portal;
 
 public class NetherPortal extends Portal {
-
 	public NetherPortal(String name, int id) {
 		super(name, id, null);
 		this.setHardness(-1.0F).setResistance(0.0F);
@@ -58,8 +57,8 @@ public class NetherPortal extends Portal {
 
 	@Override
 	public boolean canCreate(Block block, short data, Cause<?> cause) {
-		return this.checkMirroredPosition(block, BlockFace.TOP) && 
-				(this.checkMirroredPosition(block, BlockFace.NORTH) || 
-				this.checkMirroredPosition(block, BlockFace.EAST));
+		return this.checkMirroredPosition(block, BlockFace.TOP) &&
+				(this.checkMirroredPosition(block, BlockFace.NORTH) ||
+						this.checkMirroredPosition(block, BlockFace.EAST));
 	}
 }

@@ -34,13 +34,12 @@ import org.spout.api.render.effect.RenderEffect;
 import org.spout.api.render.effect.SnapshotRender;
 
 public class SkyRenderEffect implements RenderEffect {
-
 	private static final float size = 256f;
 	private static final float lat = (float) ((25.0 / 180.0) * MathHelper.PI);
 	private static final float sunSize = 0.2f;
 	private static final float ambient = 0.33f;
 	private static final Vector4 nightColor = new Vector4(1.0f, 1.0f, 1.0f, 0f);
-	private static final Vector4 dayColor = new Vector4(135/255f, 206/255f, 235/255f, 1.0f);
+	private static final Vector4 dayColor = new Vector4(135 / 255f, 206 / 255f, 235 / 255f, 1.0f);
 	private static final Vector4 dawnColor = new Vector4(1f, 0.5f, 0.5f, 0.7f);
 	private static final float cY = (float) Math.cos(lat);
 	private static final float cZ = (float) Math.sin(lat);
@@ -62,10 +61,9 @@ public class SkyRenderEffect implements RenderEffect {
 
 	@Override
 	public void preRender(SnapshotRender snapshotRender) {
-		
-		Shader s = snapshotRender.getMaterial().getShader();	
-		
-		
+
+		Shader s = snapshotRender.getMaterial().getShader();
+
 		float time = (float) ((System.currentTimeMillis() % 15000) / 15000.0);
 
 		float rads = (float) (time * 2 * MathHelper.PI);
@@ -78,7 +76,6 @@ public class SkyRenderEffect implements RenderEffect {
 
 		float z = (float) (y1 * cZ);
 
-		
 		if (force) {
 			x = xForce;
 			y = yForce;
@@ -90,13 +87,11 @@ public class SkyRenderEffect implements RenderEffect {
 		s.setUniform("dawnColor", dawnColor);
 		s.setUniform("dayColor", dayColor);
 		s.setUniform("nightColor", nightColor);
-		
-	
 	}
+
 	@Override
 	public void postRender(SnapshotRender snapshotRender) {
 		// TODO Auto-generated method stub
 
 	}
-
 }

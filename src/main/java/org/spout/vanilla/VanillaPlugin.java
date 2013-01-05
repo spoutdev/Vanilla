@@ -61,6 +61,7 @@ import org.spout.api.plugin.ServiceManager;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.util.FlatIterator;
+
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.InputCommandExecutor;
 import org.spout.vanilla.command.TestCommands;
@@ -131,12 +132,12 @@ public class VanillaPlugin extends CommonPlugin {
 		engine.getRootCommand().addSubCommand(this, "+place_block").setArgBounds(0, 0).setHelp("Places a block!")
 				.setExecutor(Platform.CLIENT, exe);
 		engine.getRootCommand().addSubCommand(this, "+hotbar_left").setArgBounds(0, 0).setHelp("Changes hotbar slot!")
-			.setExecutor(Platform.CLIENT, exe);
+				.setExecutor(Platform.CLIENT, exe);
 		engine.getRootCommand().addSubCommand(this, "+hotbar_right").setArgBounds(0, 0).setHelp("Changes hotbar slot!")
-			.setExecutor(Platform.CLIENT, exe);
+				.setExecutor(Platform.CLIENT, exe);
 		for (int i = 1; i < 10; i++) {
 			engine.getRootCommand().addSubCommand(this, "+hotbar_" + i).setArgBounds(0, 0).setHelp("Changes hotbar slot!")
-				.setExecutor(Platform.CLIENT, exe);
+					.setExecutor(Platform.CLIENT, exe);
 		}
 
 		if (Spout.getPlatform() == Platform.CLIENT) {
@@ -263,8 +264,8 @@ public class VanillaPlugin extends CommonPlugin {
 				loader.load(world, cx, cz, effectiveRadius, newWorld);
 
 				//if (worldConfig.LOADED_SPAWN.getBoolean()) { // TODO - this doesn't really work for anything since it doesn't hold all chunks
-					Entity e = world.createAndSpawnEntity(point, ObserverComponent.class, LoadOption.LOAD_GEN);
-					e.setObserver(new FlatIterator(cx, 0, cz, 16, effectiveRadius));
+				Entity e = world.createAndSpawnEntity(point, ObserverComponent.class, LoadOption.LOAD_GEN);
+				e.setObserver(new FlatIterator(cx, 0, cz, 16, effectiveRadius));
 				//}
 
 				// Grab safe spawn if newly created world.

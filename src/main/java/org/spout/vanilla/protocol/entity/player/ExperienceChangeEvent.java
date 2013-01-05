@@ -28,10 +28,8 @@ package org.spout.vanilla.protocol.entity.player;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
-import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.event.entity.EntityEvent;
-
-import org.spout.vanilla.data.VanillaData;
+import org.spout.api.protocol.event.ProtocolEvent;
 
 public class ExperienceChangeEvent extends EntityEvent implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();

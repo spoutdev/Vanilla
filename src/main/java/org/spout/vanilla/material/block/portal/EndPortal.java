@@ -36,7 +36,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Portal;
 
 public class EndPortal extends Portal {
-
 	public EndPortal(String name, int id) {
 		super(name, id, null);
 		this.setHardness(-1.0F).setResistance(6000000.0F);
@@ -59,7 +58,7 @@ public class EndPortal extends Portal {
 			BlockMaterial mat = rel.getMaterial();
 			if (mat == this) {
 				continue;
-			} else if (mat == VanillaMaterials.END_PORTAL_FRAME && 
+			} else if (mat == VanillaMaterials.END_PORTAL_FRAME &&
 					VanillaMaterials.END_PORTAL_FRAME.hasEyeOfTheEnder(rel) &&
 					VanillaMaterials.END_PORTAL_FRAME.getFacing(rel).getOpposite() == face) {
 				continue;

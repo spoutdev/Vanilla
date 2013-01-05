@@ -44,6 +44,7 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.Vector3;
 import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.util.flag.Flag;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.effect.store.SoundEffects;
@@ -66,12 +67,10 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	public static final short aliveMask = 0x0100;
 	public static final short heightMask = 0x0600;
 	private static final EffectRange dynamicRange = new CuboidEffectRange(-4, 0, -4, 4, 8, 4);
-	
 	public static final Log DEFAULT = new Log("Wood", Sapling.DEFAULT, "model://Vanilla/materials/block/solid/oakwood/oakwood.spm");
 	public static final Log SPRUCE = new Log("Spruce Wood", 1, DEFAULT, Sapling.SPRUCE, "model://Vanilla/materials/block/solid/sprucewood/sprucewood.spm");
 	public static final Log BIRCH = new Log("Birch Wood", 2, DEFAULT, Sapling.BIRCH, "model://Vanilla/materials/block/solid/birchwood/birchwood.spm");
 	public static final Log JUNGLE = new Log("Jungle Wood", 3, DEFAULT, Sapling.JUNGLE, "model://Vanilla/materials/block/solid/junglewood/junglewood.spm");
-	
 	public final float BURN_TIME = 15;
 	private final Sapling sapling;
 

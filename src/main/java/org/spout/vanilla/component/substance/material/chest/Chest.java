@@ -31,12 +31,15 @@ import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.effect.store.GeneralEffects;
+import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.inventory.Container;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Chest extends AbstractChest implements Container {
+	
 	/**
 	 * Whether the chest has a double inventory.
 	 * @return true if has a double inventory.
@@ -79,7 +82,9 @@ public class Chest extends AbstractChest implements Container {
 
 		// Finally open the window
 		player.get(WindowHolder.class).openWindow(new ChestWindow(player, this));
-
+		
+		SoundEffects.RANDOM_CHESTOPEN.playGlobal(player.getTransform().getPosition());
+		
 		super.open(player);
 	}
 }

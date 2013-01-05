@@ -32,6 +32,8 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.component.inventory.WindowHolder;
+import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 
 public final class WindowCloseHandler extends MessageHandler<WindowCloseMessage> {
@@ -39,6 +41,9 @@ public final class WindowCloseHandler extends MessageHandler<WindowCloseMessage>
 	public void handleServer(Session session, WindowCloseMessage message) {
 		if (!session.hasPlayer()) {
 			return;
+		}
+		if (session.getPlayer().get(WindowHolder.class).getActiveWindow() instanceof ChestWindow) {
+			SoundEffects.RANDOM_CHESTCLOSED.playGlobal(session.getPlayer().getTransform().getPosition());
 		}
 		session.getPlayer().get(WindowHolder.class).closeWindow();
 	}

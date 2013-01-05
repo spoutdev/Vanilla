@@ -30,12 +30,17 @@ import org.spout.api.component.impl.NavigationComponent;
 import org.spout.api.component.impl.PhysicsComponent;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.ai.VanillaBlockExaminer;
 import org.spout.vanilla.component.misc.DrowningComponent;
 import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.material.block.Solid;
 
 public abstract class Living extends EntityComponent {
 	@Override
@@ -77,5 +82,17 @@ public abstract class Living extends EntityComponent {
 
 	public PhysicsComponent getPhysics() {
 		return getOwner().get(PhysicsComponent.class);
+	}
+
+	@Override
+	public void onCollided(Point colliderPoint, Point collidedPoint, Block block) {
+		if (getPhysics() == null) {
+			return;
+		}
+		if (block.getMaterial() instanceof Solid) {
+			getPhysics().setDamping(1f, 1f);
+		} else if (block.getMaterial() instanceof Liquid) {
+			getPhysics().setDamping(0.8f, 0.8f);
+		}
 	}
 }

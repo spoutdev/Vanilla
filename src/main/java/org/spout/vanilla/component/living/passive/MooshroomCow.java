@@ -26,9 +26,14 @@
  */
 package org.spout.vanilla.component.living.passive;
 
+import java.util.Random;
+
+import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.living.Passive;
+import org.spout.vanilla.component.misc.DropComponent;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
@@ -40,5 +45,9 @@ public class MooshroomCow extends Living implements Passive {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.MUSHROOM_COW));
+		DropComponent dropComponent = getOwner().add(DropComponent.class);
+		Random random = new Random();
+		dropComponent.addDrop(new ItemStack(VanillaMaterials.RAW_BEEF, random.nextInt(2) + 1));
+		dropComponent.addDrop(new ItemStack(VanillaMaterials.LEATHER, random.nextInt(2)));
 	}
 }

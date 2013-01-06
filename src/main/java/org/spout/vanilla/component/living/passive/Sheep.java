@@ -30,10 +30,12 @@ import java.util.Random;
 
 import org.spout.api.event.cause.EntityCause;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.living.Passive;
+import org.spout.vanilla.component.misc.DropComponent;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -54,6 +56,8 @@ public class Sheep extends Living implements Passive {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SheepEntityProtocol());
+		DropComponent dropComponent = getOwner().add(DropComponent.class);
+		dropComponent.addDrop(new ItemStack(VanillaMaterials.WOOL, 1));
 	}
 
 	@Override

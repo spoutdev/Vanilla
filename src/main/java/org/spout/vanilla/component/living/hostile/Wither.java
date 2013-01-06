@@ -26,9 +26,12 @@
  */
 package org.spout.vanilla.component.living.hostile;
 
+import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;
 import org.spout.vanilla.component.living.Living;
+import org.spout.vanilla.component.misc.DropComponent;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.creature.WitherEntityProtocol;
 
 /**
@@ -39,5 +42,7 @@ public class Wither extends Living implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new WitherEntityProtocol());
+		DropComponent dropComponent = getOwner().add(DropComponent.class);
+		dropComponent.addDrop(new ItemStack(VanillaMaterials.NETHER_STAR, 1));
 	}
 }

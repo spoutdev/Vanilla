@@ -26,9 +26,14 @@
  */
 package org.spout.vanilla.component.living.hostile;
 
+import java.util.Random;
+
+import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;
 import org.spout.vanilla.component.living.Living;
+import org.spout.vanilla.component.misc.DropComponent;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.creature.GhastEntityProtocol;
 
 /**
@@ -41,6 +46,10 @@ public class Ghast extends Living implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new GhastEntityProtocol());
+		DropComponent dropComponent = getOwner().add(DropComponent.class);
+		Random random = new Random();
+		dropComponent.addDrop(new ItemStack(VanillaMaterials.GUNPOWDER, random.nextInt(2)));
+		dropComponent.addDrop(new ItemStack(VanillaMaterials.GHAST_TEAR, random.nextInt(1)));
 	}
 
 	public boolean haveRedEyes() {

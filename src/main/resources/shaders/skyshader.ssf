@@ -1,6 +1,0 @@
-GL30:
-    Vertex: file://Spout/shaders/skyShader.330.vert
-    Fragment: file://Vanilla/shaders/skyshader.330.frag
-GL20:
-    Vertex: file://Spout/shaders/skyShader.120.vert
-    Fragment: file://Vanilla/shaders/skyshader.120.frag

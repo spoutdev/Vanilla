@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.block.plant;
 
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.geo.cuboid.Block;
@@ -35,6 +34,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -55,7 +55,7 @@ public class SugarCaneBlock extends StackGrowingBase implements InitializableMat
 
 	@Override
 	public long getGrowTime(Block block) {
-		return 180000L + new Random(block.getWorld().getAge()).nextInt(180000);
+		return 180000L + MathHelper.getRandom().nextInt(180000);
 	}
 
 	@Override

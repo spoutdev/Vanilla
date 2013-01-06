@@ -39,6 +39,7 @@ import org.spout.api.render.BufferContainer;
 import org.spout.api.render.effect.BufferEffect;
 
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
+import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 
 public abstract class BiomeColorBufferEffect implements BufferEffect {
 	@Override
@@ -66,7 +67,12 @@ public abstract class BiomeColorBufferEffect implements BufferEffect {
 			final int z = MathHelper.floor(vertices.get(i + 2));
 			for (byte xx = -1; xx <= 1; xx++) {
 				for (byte zz = -1; zz <= 1; zz++) {
-					final Color color = getBiomeColor((VanillaBiome) world.getBiome(x + xx, y, z + zz));
+					VanillaBiome biome = (VanillaBiome) world.getBiome(x + xx, y, z + zz);
+					// Default to forest if no biome is set
+					if (biome == null) {
+						biome = VanillaBiomes.FOREST;
+					}
+					final Color color = getBiomeColor(biome);
 					r += color.getRed();
 					g += color.getGreen();
 					b += color.getBlue();

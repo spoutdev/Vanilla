@@ -91,7 +91,9 @@ import org.spout.vanilla.service.protection.SpawnProtection;
 import org.spout.vanilla.thread.SpawnLoader;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.generator.VanillaGenerators;
+import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
+import org.spout.vanilla.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 
 public class VanillaPlugin extends CommonPlugin {
@@ -167,7 +169,17 @@ public class VanillaPlugin extends CommonPlugin {
 			Model m = (Model) Spout.getFilesystem().getResource("model://Vanilla/materials/sky/skydome.spm");
 			m.getRenderMaterial().addRenderEffect(VanillaEffects.SKY);
 			System.out.println("Loaded Skydome");
-			Spout.getEngine().getWorld("world").getDataMap().put("Skydome", m);
+			//TODO: Better world sky selection, possibly store sky type in world data map
+			for (World world : Spout.getEngine().getWorlds()) {
+				//TODO: Remove this debug code when no longer needed
+				if (world == null) {
+					Spout.getLogger().log(Level.SEVERE, "A World instance in Engine.getWorlds() is null!");
+					continue;
+				}
+				if (world.getGenerator() instanceof NormalGenerator || world.getGenerator() instanceof FlatGenerator) {
+					world.getDataMap().put("Skydome", m);
+				}
+			}
 		}
 
 		if (engine instanceof Server && VanillaConfiguration.LAN_DISCOVERY.getBoolean()) {

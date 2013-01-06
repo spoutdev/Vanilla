@@ -26,7 +26,10 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -218,10 +221,11 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	}
 
 	private static class LeafDecayTask implements Runnable {
-		private final static int SCAN_RADIUS = 3;
-		private final static int LOG_SCAN_RADIUS = 2;
-		private final Set<Block> blocks = new HashSet<Block>(SCAN_RADIUS * SCAN_RADIUS * SCAN_RADIUS);
+		private final static int SCAN_RADIUS = 5;
+		private final static int LOG_SCAN_RANGE = 4;
+		private final List<Block> blocks = new ArrayList<Block>(SCAN_RADIUS * SCAN_RADIUS * SCAN_RADIUS);
 		private final Region r;
+		private final Random rand = new Random();
 
 		public LeafDecayTask(Block b) {
 			this.r = b.getRegion();
@@ -237,12 +241,18 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 		@Override
 		public void run() {
 			boolean found = false;
-			for (Block b : blocks) {
-				if (b.getChunk().isLoaded()) {
-					if (b.getMaterial().getId() == VanillaMaterials.LEAVES.getId()) {
-						if (!isLeafAttached(b)) {
+			int start = rand.nextInt(blocks.size());
+			for (int i = start; i < start + blocks.size(); i++) {
+				int index = i < blocks.size() ? i : i - blocks.size();
+				Block b = blocks.get(index);
+				if (b != null && b.getChunk().isLoaded()) {
+					BlockMaterial mat = b.getMaterial();
+					short data = b.getData();
+					if (mat.getId() == VanillaMaterials.LEAVES.getId() && !Leaves.isPlayerPlaced(data)) {
+						if (!isLeafAttached(b, LOG_SCAN_RANGE)) {
 							b.setMaterial(VanillaMaterials.AIR);
 							found = true;
+							blocks.set(index, null);
 							break;
 						}
 					}
@@ -257,15 +267,18 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 			r.getTaskManager().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), this, (new Random()).nextInt(200) * 50, TaskPriority.LOW);
 		}
 
-		private boolean isLeafAttached(Block b) {
-			for (int dx = -LOG_SCAN_RADIUS; dx < LOG_SCAN_RADIUS; dx++) {
-				for (int dy = -LOG_SCAN_RADIUS; dy < LOG_SCAN_RADIUS; dy++) {
-					for (int dz = -LOG_SCAN_RADIUS; dz < LOG_SCAN_RADIUS; dz++) {
-						Block block = b.translate(dx, dy, dz);
-						if (block.getMaterial().getId() == VanillaMaterials.LOG.getId()) {
-							return true;
-						}
-					}
+		private boolean isLeafAttached(Block b, int range) {
+			if (range <= 0) {
+				return false;
+			}
+			for (int i = 0; i < BlockFaces.NESW.size(); i++) {
+				Block block = b.translate(BlockFaces.NESW.get(i));
+				BlockMaterial mat = block.getMaterial();
+				if (mat.getId() == VanillaMaterials.LOG.getId()) {
+					return true;
+				}
+				if (mat.getId() == VanillaMaterials.LEAVES.getId()) {
+					return isLeafAttached(block, range - 1);
 				}
 			}
 			return false;

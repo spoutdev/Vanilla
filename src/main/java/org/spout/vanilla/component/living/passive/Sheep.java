@@ -122,7 +122,7 @@ public class Sheep extends Living implements Passive {
 	}
 
 	public boolean shouldEatGrass() {
-		final Random random = new Random();
+		final Random random = getRandom();
 		final Point position = getOwner().getTransform().getPosition();
 		final int x = position.getFloorX();
 		final int y = position.getFloorY() - 1;

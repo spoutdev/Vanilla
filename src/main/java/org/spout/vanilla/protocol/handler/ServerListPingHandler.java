@@ -40,13 +40,20 @@ import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerKickMessage;
 
 public class ServerListPingHandler extends MessageHandler<ServerListPingMessage> {
+	private static String PROTOCOL = null;
+	private static String MC_VERSION = null;
+	private static ChatArguments MOTD = null;
+
 	@Override
 	public void handleServer(Session session, ServerListPingMessage message) {
 		Server server = (Server) Spout.getEngine();
-		String protocol = VanillaPlugin.getInstance().getDescription().getData("protocol");
-		String mcV = VanillaPlugin.getInstance().getDescription().getVersion().trim().split(" ")[0];
-		ChatArguments chatArgs = VanillaStyleHandler.INSTANCE.extractArguments(VanillaConfiguration.MOTD.getString());
-		ServerListPingEvent event = Spout.getEventManager().callEvent(new ServerListPingEvent(session.getAddress().getAddress(), chatArgs.asString(VanillaStyleHandler.ID), server.getOnlinePlayers().length, server.getMaxPlayers()));
-		session.send(false, true, new PlayerKickMessage('\u00A7' + "1" + '\u0000' + protocol + '\u0000' + mcV + '\u0000' + event.getMessage()));
+		//Cache values for speed
+		if (PROTOCOL == null) {
+			PROTOCOL = VanillaPlugin.getInstance().getDescription().getData("protocol");
+			MC_VERSION = VanillaPlugin.getInstance().getDescription().getVersion().trim().split(" ")[0];
+			MOTD = VanillaStyleHandler.INSTANCE.extractArguments(VanillaConfiguration.MOTD.getString());
+		}
+		ServerListPingEvent event = Spout.getEventManager().callEvent(new ServerListPingEvent(session.getAddress().getAddress(), MOTD.asString(VanillaStyleHandler.ID), server.getOnlinePlayers().length, server.getMaxPlayers()));
+		session.send(false, true, new PlayerKickMessage('\u00A7' + "1" + '\u0000' + PROTOCOL + '\u0000' + MC_VERSION + '\u0000' + event.getMessage()));
 	}
 }

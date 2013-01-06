@@ -177,7 +177,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 			int chance = BlockFaces.TB.contains(face) ? 250 : 300;
 			sBlock = b.translate(face);
 			BlockMaterial mat = sBlock.getMaterial();
-			if (mat instanceof Burnable && rand.nextInt(((Burnable) mat).getCombustChance()) < chance) {
+			if (mat instanceof Burnable && rand.nextInt(chance) < ((Burnable) mat).getCombustChance()) {
 				// Destroy the old block
 				if (mat instanceof TntBlock) {
 					((TntBlock) mat).onIgnite(sBlock, toCause(b)); // Ignite TntBlock

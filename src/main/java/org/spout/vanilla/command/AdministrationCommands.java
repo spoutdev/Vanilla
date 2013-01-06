@@ -26,6 +26,9 @@
  */
 package org.spout.vanilla.command;
 
+import gnu.trove.iterator.TLongIterator;
+import gnu.trove.list.linked.TLongLinkedList;
+
 import org.spout.api.Client;
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -42,6 +45,8 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
+import org.spout.api.scheduler.TaskPriority;
+import org.spout.api.util.concurrent.AtomicFloat;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventory;
@@ -59,9 +64,12 @@ import org.spout.vanilla.material.VanillaMaterials;
 
 public class AdministrationCommands {
 	private final VanillaPlugin plugin;
+	private final TicksPerSecondMonitor tpsMonitor;
 
 	public AdministrationCommands(VanillaPlugin plugin) {
 		this.plugin = plugin;
+		tpsMonitor = new TicksPerSecondMonitor();
+		plugin.getEngine().getScheduler().scheduleSyncRepeatingTask(plugin, tpsMonitor, 0, 50, TaskPriority.CRITICAL);
 	}
 
 	@Command(aliases = "clear", usage = "[player]", desc = "Clears your inventory", min = 0, max = 1)
@@ -397,5 +405,55 @@ public class AdministrationCommands {
 		Point pos = player.getTransform().getPosition();
 		Biome biome = pos.getWorld().getBiome(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ());
 		source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Current biome: ", ChatStyle.WHITE, (biome != null ? biome.getName() : "none"));
+	}
+
+	@Command(aliases = {"tps"}, usage = "", desc = "Print out the current engine ticks per second", min = 0, max = 0)
+	@CommandPermissions("vanilla.command.tps")
+	public void getTPS(CommandContext args, CommandSource source) throws CommandException {
+		source.sendMessage("TPS: " + tpsMonitor.getTPS());
+		source.sendMessage("Average TPS: " + tpsMonitor.getAvgTPS());
+	}
+
+	private static class TicksPerSecondMonitor implements Runnable {
+		private static final int MAX_MEASUREMENTS = 20 * 60;
+		private TLongLinkedList timings = new TLongLinkedList();
+		private long lastTime = System.currentTimeMillis();
+		private final AtomicFloat ticksPerSecond = new AtomicFloat(20);
+		private final AtomicFloat avgTicksPerSecond = new AtomicFloat(20);
+
+		@Override
+		public void run() {
+			long time = System.currentTimeMillis();
+			timings.add(time - lastTime);
+			lastTime = time;
+			if (timings.size() > MAX_MEASUREMENTS) {
+				timings.removeAt(0);
+			}
+			final int size = timings.size();
+			if (size > 20) {
+				TLongIterator i = timings.iterator();
+				int count = 0;
+				long last20 = 0;
+				long total = 0;
+				while(i.hasNext()) {
+					long next = i.next();
+					if (count > size - 20) {
+						last20 += next;
+					}
+					total += next;
+					count++;
+				}
+				ticksPerSecond.set(1000F / (last20 / 20F));
+				avgTicksPerSecond.set(1000F / (total / ((float)size)));
+			}
+		}
+
+		public float getTPS() {
+			return ticksPerSecond.get();
+		}
+
+		public float getAvgTPS() {
+			return avgTicksPerSecond.get();
+		}
 	}
 }

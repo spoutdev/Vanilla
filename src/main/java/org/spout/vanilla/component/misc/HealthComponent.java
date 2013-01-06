@@ -36,12 +36,16 @@ import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Rectangle;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.player.HUDComponent;
+import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.VanillaData;
@@ -211,6 +215,15 @@ public class HealthComponent extends EntityComponent {
 		if (!Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
 			if (!(owner instanceof Player)) {
 				owner.remove();
+			}
+			if (owner.has(DropComponent.class)) {
+				List<ItemStack> drops = owner.get(DropComponent.class).getDrops();
+				Point entityPosition = owner.getTransform().getPosition();
+				for (ItemStack stack : drops) {
+					if (stack != null) {
+						Item.drop(entityPosition, stack, Vector3.ZERO);
+					}
+				}
 			}
 		}
 	}

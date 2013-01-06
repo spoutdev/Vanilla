@@ -24,36 +24,24 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.living.passive;
+package org.spout.vanilla.component.misc;
 
-import java.util.Random;
+import java.util.List;
 
+import org.spout.api.component.type.EntityComponent;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.Living;
-import org.spout.vanilla.component.living.Passive;
-import org.spout.vanilla.component.misc.DropComponent;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.creature.PigEntityProtocol;
 
-/**
- * A component that identifies the entity as a Pig.
- */
-public class Pig extends Living implements Passive {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PigEntityProtocol());
-		DropComponent dropComponent = getOwner().add(DropComponent.class);
-		dropComponent.addDrop(new ItemStack(VanillaMaterials.RAW_PORKCHOP, new Random().nextInt(2) + 1));
+public class DropComponent extends EntityComponent {
+
+	public void addDrop(ItemStack itemstack) {
+		Inventory dropInventory = getOwner().getData().get(VanillaData.DROP_INVENTORY);
+		dropInventory.add(itemstack);
 	}
 
-	public boolean isSaddled() {
-		return getOwner().getData().get(VanillaData.SADDLED);
+	public List<ItemStack> getDrops() {
+		return getOwner().getData().get(VanillaData.DROP_INVENTORY);
 	}
 
-	public void setSaddled(boolean saddled) {
-		getOwner().getData().put(VanillaData.SADDLED, saddled);
-	}
 }

@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.component.living.passive;
 
-import java.util.Random;
-
 import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Living;
@@ -45,8 +43,7 @@ public class Pig extends Living implements Passive {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PigEntityProtocol());
-		DropComponent dropComponent = getOwner().add(DropComponent.class);
-		dropComponent.addDrop(new ItemStack(VanillaMaterials.RAW_PORKCHOP, new Random().nextInt(2) + 1));
+		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.RAW_PORKCHOP, getRandom().nextInt(2) + 1));
 	}
 
 	public boolean isSaddled() {

@@ -45,7 +45,7 @@ public class Spider extends Living implements Hostile {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SpiderEntityProtocol());
 		DropComponent dropComponent = getOwner().add(DropComponent.class);
-		Random random = new Random();
+		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.STRING, random.nextInt(2)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.SPIDER_EYE, random.nextInt(1)));
 	}

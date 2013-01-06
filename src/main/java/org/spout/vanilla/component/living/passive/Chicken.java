@@ -56,7 +56,7 @@ public class Chicken extends Living implements Passive {
 		getOwner().getData().put(VanillaData.TIME_TILL_EGG, nextEgg);
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.CHICKEN));
 		DropComponent dropComponent = getOwner().add(DropComponent.class);
-		dropComponent.addDrop(new ItemStack(VanillaMaterials.FEATHER, new Random().nextInt(2)));
+		dropComponent.addDrop(new ItemStack(VanillaMaterials.FEATHER, getRandom().nextInt(2)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.RAW_CHICKEN, 1));
 	}
 

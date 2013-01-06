@@ -50,7 +50,7 @@ public class Skeleton extends Living implements Hostile {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SkeletonEntityProtocol());
 		PhysicsComponent physics = getOwner().add(PhysicsComponent.class);
 		DropComponent dropComponent = getOwner().add(DropComponent.class);
-		Random random = new Random();
+		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.ARROW, random.nextInt(2)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.BONE, random.nextInt(2)));
 		physics.setMass(5f);

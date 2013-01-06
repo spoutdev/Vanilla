@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.component.living.hostile;
 
-import java.util.Random;
-
 import com.bulletphysics.collision.shapes.BoxShape;
 
 import org.spout.api.component.impl.PhysicsComponent;
@@ -52,9 +50,7 @@ public class Creeper extends Living implements Hostile {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreeperEntityProtocol());
 		PhysicsComponent physics = getOwner().add(PhysicsComponent.class);
-		DropComponent dropComponent = getOwner().add(DropComponent.class);
-		Random random = new Random();
-		dropComponent.addDrop(new ItemStack(VanillaMaterials.GUNPOWDER, random.nextInt(2)));
+		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.GUNPOWDER, getRandom().nextInt(2)));
 		physics.setMass(2f);
 		physics.setCollisionShape(new BoxShape(1F, 2F, 1F));
 		physics.setFriction(10f);

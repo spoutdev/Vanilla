@@ -216,8 +216,9 @@ public class HealthComponent extends EntityComponent {
 			if (!(owner instanceof Player)) {
 				owner.remove();
 			}
-			if (owner.has(DropComponent.class)) {
-				List<ItemStack> drops = owner.get(DropComponent.class).getDrops();
+			DropComponent dropComponent = owner.get(DropComponent.class);
+			if (dropComponent != null) {
+				List<ItemStack> drops = dropComponent.getDrops();
 				Point entityPosition = owner.getTransform().getPosition();
 				for (ItemStack stack : drops) {
 					if (stack != null) {

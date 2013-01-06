@@ -131,7 +131,7 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 	 * @param block of this material
 	 * @return True if spreading was possible (but was maybe not performed), False if not
 	 */
-	public boolean onSpread(Block block, boolean spread) {
+	private boolean onSpread(Block block, boolean spread) {
 		Block around;
 		final Random rand = MathHelper.getRandom();
 		boolean couldSpread = false;

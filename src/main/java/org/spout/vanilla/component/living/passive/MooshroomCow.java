@@ -46,7 +46,7 @@ public class MooshroomCow extends Living implements Passive {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.MUSHROOM_COW));
 		DropComponent dropComponent = getOwner().add(DropComponent.class);
-		Random random = new Random();
+		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.RAW_BEEF, random.nextInt(2) + 1));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.LEATHER, random.nextInt(2)));
 	}

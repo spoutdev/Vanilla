@@ -71,6 +71,7 @@ import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.component.misc.HungerComponent;
 import org.spout.vanilla.component.substance.material.chest.Chest;
 import org.spout.vanilla.component.substance.object.FallingBlock;
+import org.spout.vanilla.component.test.FollowComponent;
 import org.spout.vanilla.component.test.TransformDebugComponent;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
@@ -564,6 +565,9 @@ public class TestCommands {
 				entity = skeletonPrefab.createEntity(pos);
 			}
 		}
+		//For testing
+		FollowComponent follow = entity.add(FollowComponent.class);
+		follow.findAndFollow(true, 5);
 		if (Spout.getPlatform() == Platform.SERVER && Spout.debugMode()) {
 			entity.add(TransformDebugComponent.class);
 		}

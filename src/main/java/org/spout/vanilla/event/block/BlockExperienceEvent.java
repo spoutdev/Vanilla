@@ -29,44 +29,41 @@ package org.spout.vanilla.event.block;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.block.BlockChangeEvent;
+import org.spout.api.event.block.BlockEvent;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockSnapshot;
 
 /**
- * Event which is called when a block forms or spreads in the world.
- * For example: Snow, Ice, etc
+ * Event which is called when a modification to a block changes the experience level of the player, for example:
+ * <ul>
+ * <li>    Breaking a block
+ * <li>    Removing a smelted item from a furnace
+ * </ul>
  * todo implement calling of this event
  */
-public class BlockFormEvent extends BlockChangeEvent implements Cancellable {
-	/**
-	 * The different causes why a Block is formed in the world.
-	 */
-	public static enum FormCause {
-		/**
-		 * Block spread, like mushrooms
-		 */
-		SPREAD,
-		/**
-		 * Block formed due to world conditions (for example Snow)
-		 */
-		FORMING,
-	}
+public class BlockExperienceEvent extends BlockEvent implements Cancellable {
 
 	private static HandlerList handlers = new HandlerList();
-	private final FormCause formCause;
+	private int experience;
 
-	public BlockFormEvent(Block block, BlockSnapshot newState, Cause<?> reason, FormCause formCause) {
-		super(block, newState, reason);
-		this.formCause = formCause;
+	public BlockExperienceEvent(Block block, int experience, Cause<?> cause) {
+		super(block, cause);
+		this.experience = experience;
 	}
 
 	/**
-	 * The reason why the block formed
-	 * @return FormCause
+	 * Get the experience which is dropped by the block after the event
+	 * @return the experience to drop
 	 */
-	public FormCause getFormCause() {
-		return formCause;
+	public int getExperienceToDrop() {
+		return experience;
+	}
+
+	/**
+	 * Set the new experience to drop by the block after the event
+	 * @param experience exp higher 0 will drop experience
+	 */
+	public void setNewExperienceToDrop(int experience) {
+		this.experience = experience;
 	}
 
 	@Override

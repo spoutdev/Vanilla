@@ -24,62 +24,52 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.block;
+package org.spout.vanilla.event.cause;
 
-import org.spout.api.event.Cancellable;
 import org.spout.api.event.Cause;
-import org.spout.api.event.HandlerList;
-import org.spout.api.event.block.BlockChangeEvent;
+import org.spout.api.event.cause.BlockCause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockSnapshot;
 
-/**
- * Event which is called when a block forms or spreads in the world.
- * For example: Snow, Ice, etc
- * todo implement calling of this event
- */
-public class BlockFormEvent extends BlockChangeEvent implements Cancellable {
-	/**
-	 * The different causes why a Block is formed in the world.
-	 */
-	public static enum FormCause {
-		/**
-		 * Block spread, like mushrooms
-		 */
-		SPREAD,
-		/**
-		 * Block formed due to world conditions (for example Snow)
-		 */
-		FORMING,
+public class BlockGrowCause extends BlockCause  {
+
+
+
+	public static enum BlockGrowType {
+		NATURAL, BONEMEAL
 	}
 
-	private static HandlerList handlers = new HandlerList();
-	private final FormCause formCause;
+	private BlockSnapshot newState;
 
-	public BlockFormEvent(Block block, BlockSnapshot newState, Cause<?> reason, FormCause formCause) {
-		super(block, newState, reason);
-		this.formCause = formCause;
-	}
+	private BlockGrowType blockGrowType;
 
 	/**
-	 * The reason why the block formed
-	 * @return FormCause
+	 * Contains the source, newState and the Type of the BlockGrowCause.
+	 * @param block The block which is growing
+	 * @param newState of the block
+	 * @param blockGrowType of the new block
+	 * @param parent which caused the grow
 	 */
-	public FormCause getFormCause() {
-		return formCause;
+	public BlockGrowCause(Block block, BlockSnapshot newState, BlockGrowType blockGrowType, Cause<?> parent) {
+		super(parent, block);
+		this.newState = newState;
+		this.blockGrowType = blockGrowType;
 	}
 
-	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
+	public BlockGrowCause(Block block, BlockSnapshot newState, BlockGrowType blockGrowType) {
+		this(block,newState, blockGrowType,null);
 	}
 
-	public static HandlerList getHandlerList() {
-		return handlers;
+	public BlockGrowType getBlockGrowType() {
+		return blockGrowType;
 	}
 
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
+	public BlockSnapshot getNewState() {
+		return newState;
 	}
+
+	public void setNewState(BlockSnapshot newState) {
+		this.newState = newState;
+	}
+
 }

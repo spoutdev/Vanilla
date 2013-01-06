@@ -174,12 +174,13 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 	public void onDynamicUpdate(Block block, long updateTime, int data) {
 		long nextUpdate = block.getWorld().getAge() + getSpreadingTime(block);
 		// Attempt to decay or spread this material
-		if (this.canDecayAt(block)) {
-			this.onDecay(block, this.toCause(block));
-		} else if (this.canSpreadFrom(block) && this.onSpread(block)) {
-			// Update for a next spreading operation
-			block.dynamicUpdate(nextUpdate, true);
+		if (canDecayAt(block)) {
+			onDecay(block, this.toCause(block));
 			return;
 		}
+		if (canSpreadFrom(block)) {
+			onSpread(block);
+		}
+		block.dynamicUpdate(nextUpdate, true);
 	}
 }

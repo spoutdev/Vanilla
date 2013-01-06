@@ -55,14 +55,15 @@ public class PickupItemComponent extends EntityComponent {
 	@Override
 	public void onTick(float dt) {
 		for (Entity entity : nearbyEntities) {
-			if (!entity.has(Item.class) || !entity.get(Item.class).canBeCollected()) {
-				continue;
+			Item item = entity.get(Item.class);
+			if (item != null && item.canBeCollected()) {
+				getOwner().getNetwork().callProtocolEvent(new EntityCollectItemEvent(getOwner(), entity));
+				PlayerInventory inv = getOwner().get(PlayerInventory.class);
+				if (inv != null) {
+					inv.add(item.getItemStack());
+				}
+				entity.remove();
 			}
-			getOwner().getNetwork().callProtocolEvent(new EntityCollectItemEvent(getOwner(), entity));
-			if (getOwner().has(PlayerInventory.class)) {
-				getOwner().get(PlayerInventory.class).add(entity.get(Item.class).getItemStack());
-			}
-			entity.remove();
 		}
 	}
 }

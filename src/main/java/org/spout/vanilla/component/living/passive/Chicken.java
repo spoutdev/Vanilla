@@ -35,6 +35,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.living.Passive;
+import org.spout.vanilla.component.misc.DropComponent;
 import org.spout.vanilla.component.substance.Item;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -54,6 +55,9 @@ public class Chicken extends Living implements Passive {
 		Float nextEgg = (float) (new Random().nextInt(MINIMUM_EGG_BREEDING_TIME) + MINIMUM_EGG_BREEDING_TIME);
 		getOwner().getData().put(VanillaData.TIME_TILL_EGG, nextEgg);
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.CHICKEN));
+		DropComponent dropComponent = getOwner().add(DropComponent.class);
+		dropComponent.addDrop(new ItemStack(VanillaMaterials.FEATHER, new Random().nextInt(2)));
+		dropComponent.addDrop(new ItemStack(VanillaMaterials.RAW_CHICKEN, 1));
 	}
 
 	@Override

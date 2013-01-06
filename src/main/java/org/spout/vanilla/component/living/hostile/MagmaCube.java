@@ -26,10 +26,15 @@
  */
 package org.spout.vanilla.component.living.hostile;
 
+import java.util.Random;
+
+import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;
 import org.spout.vanilla.component.living.Living;
+import org.spout.vanilla.component.misc.DropComponent;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.creature.MagmaCubeEntityProtocol;
 
 /**
@@ -40,6 +45,9 @@ public class MagmaCube extends Living implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MagmaCubeEntityProtocol());
+		DropComponent dropComponent = getOwner().add(DropComponent.class);
+		Random random = new Random();
+		dropComponent.addDrop(new ItemStack(VanillaMaterials.MAGMA_CREAM, random.nextInt(1)));
 	}
 
 	public byte getSize() {

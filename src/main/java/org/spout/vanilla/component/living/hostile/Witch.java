@@ -26,9 +26,14 @@
  */
 package org.spout.vanilla.component.living.hostile;
 
+import java.util.Random;
+
+import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.living.Hostile;
 import org.spout.vanilla.component.living.Living;
+import org.spout.vanilla.component.misc.DropComponent;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
@@ -40,5 +45,14 @@ public class Witch extends Living implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.WITCH));
+		DropComponent dropComponent = getOwner().add(DropComponent.class);
+		Random random = new Random();
+		dropComponent.addDrop(new ItemStack(VanillaMaterials.GLASS_BOTTLE, random.nextInt(6)));
+		dropComponent.addDrop(new ItemStack(VanillaMaterials.GLOWSTONE_DUST, random.nextInt(6)));
+		dropComponent.addDrop(new ItemStack(VanillaMaterials.GUNPOWDER, random.nextInt(6)));
+		dropComponent.addDrop(new ItemStack(VanillaMaterials.REDSTONE_DUST, random.nextInt(6)));
+		dropComponent.addDrop(new ItemStack(VanillaMaterials.SPIDER_EYE, random.nextInt(6)));
+		dropComponent.addDrop(new ItemStack(VanillaMaterials.STICK, random.nextInt(6)));
+		dropComponent.addDrop(new ItemStack(VanillaMaterials.SUGAR, random.nextInt(6)));
 	}
 }

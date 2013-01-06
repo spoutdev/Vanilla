@@ -62,10 +62,7 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
-		if (this.getReplacedMaterial().equals(oldMaterial)) {
-			// Schedule a new dynamic update
-			block.resetDynamic();
-		}
+		block.resetDynamic();
 	}
 
 	@Override
@@ -134,7 +131,7 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 	 * @param block of this material
 	 * @return True if spreading was possible (but was maybe not performed), False if not
 	 */
-	public boolean onSpread(Block block) {
+	public boolean onSpread(Block block, boolean spread) {
 		Block around;
 		final Random rand = MathHelper.getRandom();
 		boolean couldSpread = false;
@@ -142,7 +139,7 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 			around = block.translate(next);
 			if (around.isMaterial(this.replacedMaterial)) {
 				couldSpread = true;
-				if (rand.nextInt(4) == 0 && canSpreadTo(block, around)) {
+				if (spread && rand.nextInt(4) == 0 && canSpreadTo(block, around)) {
 					around.setMaterial(this);
 				}
 			}
@@ -178,9 +175,8 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 			onDecay(block, this.toCause(block));
 			return;
 		}
-		if (canSpreadFrom(block)) {
-			onSpread(block);
+		if (onSpread(block, canSpreadFrom(block))) {
+			block.dynamicUpdate(nextUpdate, true);
 		}
-		block.dynamicUpdate(nextUpdate, true);
 	}
 }

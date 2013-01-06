@@ -223,7 +223,10 @@ public class Potion extends VanillaItemMaterial {
 	}
 
 	public void onDrink(Entity entity, int slot) {
-		entity.add(EffectsComponent.class).addEffect(new StatusEffectContainer(effect, this.getTime(), this.getTier()));
+		if (this.effect != null) {
+			entity.add(EffectsComponent.class).addEffect(new StatusEffectContainer(effect, this.getTime(), this.getTier()));
+		}
+		
 		entity.get(PlayerInventory.class).getQuickbar().addAmount(slot, -1);
 		entity.get(PlayerInventory.class).getMain().add(new ItemStack(VanillaMaterials.GLASS_BOTTLE, 1));
 	}

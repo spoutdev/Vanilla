@@ -36,4 +36,9 @@ public class ServerListPingMessage extends VanillaMainChannelMessage {
 	public boolean equals(Object obj) {
 		return obj != null && getClass().equals(obj.getClass());
 	}
+
+	@Override
+	public boolean isAsync() {
+		return true;
+	}
 }

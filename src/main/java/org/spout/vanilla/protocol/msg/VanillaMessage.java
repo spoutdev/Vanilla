@@ -39,4 +39,9 @@ public abstract class VanillaMessage implements Message {
 	public int getChannelId() {
 		return channelId;
 	}
+
+	@Override
+	public boolean isAsync() {
+		return false;
+	}
 }

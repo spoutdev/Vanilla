@@ -27,6 +27,8 @@
 package org.spout.vanilla.material.block.solid;
 
 import org.spout.api.Spout;
+import org.spout.api.event.Cause;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.plugin.Platform;
@@ -81,6 +83,15 @@ public class Leaves extends Solid implements Burnable, InitializableMaterial {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public void onCreate(Block block, short data, Cause<?> cause) {
+		super.onCreate(block, (short) (data | 0x4), cause); //0x4 is player placement flag
+	}
+
+	public static boolean isPlayerPlaced(short data) {
+		return (data & 0x4) != 0;
 	}
 
 	@Override

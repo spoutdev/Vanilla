@@ -28,13 +28,17 @@ package org.spout.vanilla.component.world;
 
 import java.util.HashMap;
 
+import org.spout.api.Spout;
 import org.spout.api.component.type.WorldComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
+import org.spout.api.model.Model;
+import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.component.misc.SleepComponent;
 import org.spout.vanilla.data.Time;
 import org.spout.vanilla.data.Weather;
+import org.spout.vanilla.render.VanillaEffects;
 import org.spout.vanilla.world.WeatherSimulator;
 
 /**
@@ -48,6 +52,7 @@ public abstract class VanillaSky extends WorldComponent {
 	protected long maxTime, time = 0, countdown = refreshRate, rate;
 	private Long setTime;
 	private WeatherSimulator weather;
+	private String model;
 	private static final HashMap<World, VanillaSky> skies = new HashMap<World, VanillaSky>();
 
 	public VanillaSky() {
@@ -58,11 +63,38 @@ public abstract class VanillaSky extends WorldComponent {
 	@Override
 	public void onAttached() {
 		setSky(getWorld(), this);
+		if (this.model != null && Spout.getPlatform() == Platform.CLIENT) {
+			// Load the model
+			System.out.println("Loading Skydome for " + getClass().getSimpleName());
+			Model m = (Model) Spout.getFilesystem().getResource(this.model);
+			m.getRenderMaterial().addRenderEffect(VanillaEffects.SKY);
+			System.out.println("Loaded Skydome");
+			// Apply model
+			getWorld().getDataMap().put("Skydome", m);
+		}
 	}
 
 	@Override
 	public void onDetached() {
 		setSky(getWorld(), null);
+	}
+
+	/**
+	 * Sets the model of this sky
+	 * 
+	 * @param model to set to
+	 */
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	/**
+	 * Gets the model of this sky
+	 * 
+	 * @return model
+	 */
+	public String getModel() {
+		return this.model;
 	}
 
 	@Override

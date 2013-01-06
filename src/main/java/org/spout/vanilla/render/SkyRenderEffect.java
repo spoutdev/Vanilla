@@ -35,7 +35,7 @@ import org.spout.api.render.effect.SnapshotRender;
 
 public class SkyRenderEffect implements RenderEffect {
 	private static final float size = 256f;
-	private static final float lat = (float) ((25.0 / 180.0) * MathHelper.PI);
+	private static final float lat = (float) (25.0 * MathHelper.DEGTORAD);
 	private static final float sunSize = 0.2f;
 	private static final float ambient = 0.33f;
 	private static final Vector4 nightColor = new Vector4(1.0f, 1.0f, 1.0f, 0f);

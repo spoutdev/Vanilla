@@ -38,9 +38,11 @@ import org.spout.vanilla.util.MathHelper;
 import org.spout.vanilla.world.WeatherSimulator;
 
 public class NormalSky extends VanillaSky {
+
 	public NormalSky() {
 		super();
 		setHasWeather(true);
+		setModel("model://Vanilla/materials/sky/skydome.spm");
 	}
 
 	@Override

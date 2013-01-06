@@ -53,7 +53,6 @@ import org.spout.api.input.Keyboard;
 import org.spout.api.input.Mouse;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
-import org.spout.api.model.Model;
 import org.spout.api.plugin.CommonPlugin;
 import org.spout.api.plugin.Platform;
 import org.spout.api.plugin.PluginLogger;
@@ -83,7 +82,6 @@ import org.spout.vanilla.protocol.LANThread;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.rcon.RemoteConnectionCore;
 import org.spout.vanilla.protocol.rcon.RemoteConnectionServer;
-import org.spout.vanilla.render.VanillaEffects;
 import org.spout.vanilla.resources.RecipeYaml;
 import org.spout.vanilla.resources.loader.RecipeLoader;
 import org.spout.vanilla.service.VanillaProtectionService;
@@ -91,9 +89,7 @@ import org.spout.vanilla.service.protection.SpawnProtection;
 import org.spout.vanilla.thread.SpawnLoader;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.generator.VanillaGenerators;
-import org.spout.vanilla.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
-import org.spout.vanilla.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 
 public class VanillaPlugin extends CommonPlugin {
@@ -164,21 +160,11 @@ public class VanillaPlugin extends CommonPlugin {
 			//Worlds
 			setupWorlds();
 		}
-		if (Spout.getPlatform() == Platform.CLIENT) {
-			System.out.println("Loading Skydome");
-			Model m = (Model) Spout.getFilesystem().getResource("model://Vanilla/materials/sky/skydome.spm");
-			m.getRenderMaterial().addRenderEffect(VanillaEffects.SKY);
-			System.out.println("Loaded Skydome");
-			//TODO: Better world sky selection, possibly store sky type in world data map
-			for (World world : Spout.getEngine().getWorlds()) {
-				//TODO: Remove this debug code when no longer needed
-				if (world == null) {
-					Spout.getLogger().log(Level.SEVERE, "A World instance in Engine.getWorlds() is null!");
-					continue;
-				}
-				if (world.getGenerator() instanceof NormalGenerator || world.getGenerator() instanceof FlatGenerator) {
-					world.getDataMap().put("Skydome", m);
-				}
+
+		//TODO: Remove this check when the null world bug is fixed
+		for (World world : Spout.getEngine().getWorlds()) {
+			if (world == null) {
+				Spout.getLogger().log(Level.SEVERE, "A World element in Engine.getWorlds() is null!");
 			}
 		}
 

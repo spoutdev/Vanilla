@@ -38,6 +38,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.component.inventory.PlayerInventory;
+import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -68,8 +69,11 @@ public class FlintAndSteel extends InteractTool {
 				// Default fire placement
 				if (VanillaMaterials.FIRE.canCreate(target, (short) 0, cause)) {
 					VanillaMaterials.FIRE.onCreate(target, (short) 0, cause);
-					PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
-					inv.addData(inv.getCurrentSlot(), 1);
+					if (entity instanceof Player && !entity.get(Human.class).isCreative()) {
+						PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
+						inv.addData(inv.getCurrentSlot(), 1);
+					}
+					
 				}
 
 				// Handle the creation of portals

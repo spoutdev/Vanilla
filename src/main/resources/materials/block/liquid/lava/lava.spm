@@ -1,0 +1,2 @@
+Mesh: cubemesh://Vanilla/materials/block/liquid/lava/lava.uvs
+Material: material://Vanilla/materials/terrainLiquid.smt

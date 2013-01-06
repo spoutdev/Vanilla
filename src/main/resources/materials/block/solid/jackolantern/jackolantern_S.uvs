@@ -1,0 +1,11 @@
+# Spout uvs file
+# See TextureMeshLoader
+scale 16 16
+size 1 1
+rect 6 6
+rect 6 6
+rect 6 7
+rect 6 7
+rect 6 7
+rect 8 7
+rotate 90 0

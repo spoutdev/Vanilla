@@ -76,6 +76,7 @@ import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.recipe.VanillaRecipes;
+import org.spout.vanilla.lighting.VanillaLighting;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.LANThread;
@@ -188,6 +189,7 @@ public class VanillaPlugin extends CommonPlugin {
 		Protocol.registerProtocol(new VanillaProtocol());
 
 		VanillaMaterials.initialize();
+		VanillaLighting.initialize();
 		//MapPalette.DEFAULT = (MapPalette) Spout.getFilesystem().getResource("mappalette://Vanilla/map/mapColorPalette.dat");
 		RecipeYaml.DEFAULT = (RecipeYaml) Spout.getFilesystem().getResource("recipe://Vanilla/recipes.yml");
 		VanillaRecipes.initialize();

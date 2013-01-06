@@ -124,8 +124,8 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		// Physics
 
 		PhysicsComponent physics = entity.get(PhysicsComponent.class);
-		if (physics != null && physics.isVelocityDirty()) {
-			messages.add(new EntityVelocityMessage(entity.getId(), getProtocolVelocity(physics.getLinearVelocity())));
+		if (physics != null && physics.isLinearVelocityDirty()) {
+			messages.add(new EntityVelocityMessage(entity.getId(), new Vector3(0, 0, 0)));
 		}
 
 		// Extra metadata

@@ -159,7 +159,7 @@ public abstract class StackGrowingBase extends GroundAttachable implements Plant
 		}
 		// Check the top block for availability and light level
 		Block top = getTop(block).translate(BlockFace.TOP);
-		if (!block.isMaterial(VanillaMaterials.AIR)) {
+		if (!top.isMaterial(VanillaMaterials.AIR)) {
 			return;
 		}
 		int minLight = this.getMinimumLightToGrow();

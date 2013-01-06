@@ -109,13 +109,13 @@ public class EffectsComponent extends EntityComponent {
 		if (containsEffect(effect.getEffect())) {
 			removeEffect(effect.getEffect());
 		}
-		if (effect.getEffect().equals(StatusEffect.INSTANT_DAMAGE)) {
+		if (StatusEffect.INSTANT_DAMAGE.equals(effect.getEffect())) {
 			if (effect.getTier() == Potion.TIER0) {
 				health.damage(6);
 			} else if (effect.getTier() == Potion.TIER2) {
 				health.damage(12);
 			}
-		} else if (effect.getEffect().equals(StatusEffect.INSTANT_HEALTH)) {
+		} else if (StatusEffect.INSTANT_HEALTH.equals(effect.getEffect())) {
 			if (effect.getTier() == Potion.TIER0) {
 				health.heal(6);
 			} else if (effect.getTier() == Potion.TIER2) {

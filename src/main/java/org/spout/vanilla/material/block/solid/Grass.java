@@ -73,6 +73,6 @@ public class Grass extends SpreadingSolid implements DynamicMaterial, Initializa
 
 	@Override
 	public long getSpreadingTime(Block b) {
-		return 1000L;//60000L + MathHelper.getRandom().nextInt(60000) * 3;
+		return 60000L + MathHelper.getRandom().nextInt(60000) * 3;
 	}
 }

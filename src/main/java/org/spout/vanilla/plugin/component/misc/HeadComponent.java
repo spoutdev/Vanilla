@@ -140,7 +140,7 @@ public class HeadComponent extends EntityComponent {
 	 * @return Block iterator
 	 */
 	public BlockIterator getBlockView() {
-		return getBlockView(getOwner().get(InteractComponent.class).getReach());
+		return getBlockView(getData().get(VanillaData.INTERACT_REACH));
 	}
 
 	/**

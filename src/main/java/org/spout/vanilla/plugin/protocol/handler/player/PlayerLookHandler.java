@@ -43,6 +43,7 @@ public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 		Player holder = session.getPlayer();
 
 		holder.getTransform().setYaw(message.getYaw());
+		holder.getTransform().setPitch(message.getPitch());
 		if (holder.has(HeadComponent.class)) {
 			holder.get(HeadComponent.class).setRotation(message.getRotation());
 		}

@@ -67,6 +67,7 @@ import org.spout.vanilla.plugin.component.living.hostile.Skeleton;
 import org.spout.vanilla.plugin.component.living.hostile.Zombie;
 import org.spout.vanilla.plugin.component.living.neutral.Enderman;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.component.substance.material.chest.Chest;
@@ -228,7 +229,7 @@ public class TestCommands {
 	@Command(aliases = "traceray", desc = "Set all blocks that cross your view to stone.")
 	@CommandPermissions("vanilla.command.debug")
 	public void traceray(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player) && Spout.getPlatform() != Platform.CLIENT) {
+		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to trace a ray!");
 		}
 		Player player;
@@ -238,7 +239,12 @@ public class TestCommands {
 			player = ((Client) Spout.getEngine()).getActivePlayer();
 		}
 
-		BlockIterator blockIt = player.get(HitBlockComponent.class).getAlignedBlocks();
+		BlockIterator blockIt;
+		if (Spout.getPlatform() != Platform.CLIENT) {
+			blockIt = player.get(HeadComponent.class).getBlockView();
+		} else {
+			blockIt = player.get(HitBlockComponent.class).getAlignedBlocks();
+		}
 
 		Block block = null;
 		while (blockIt.hasNext()) {

@@ -4,7 +4,7 @@ What is Vanilla?
 ----------------
 Vanilla is a plugin for the Spout platform that provides vanilla Minecraft functionality and gameplay.
 
-Copyright (c) 2011-2012, VanillaDev <<http://www.spout.org/>>
+Copyright (c) 2011-2013, VanillaDev <<http://www.spout.org/>>
 
 Who is VanillaDev?
 ------------------------
@@ -40,7 +40,7 @@ For those using [Maven](http://maven.apache.org/download.html) to manage project
     <dependency>
         <groupId>org.spout</groupId>
         <artifactId>vanilla</artifactId>
-        <version>1.2.5-SNAPSHOT</version>
+        <version>1.4.7-SNAPSHOT</version>
     </dependency>
 
 If you do not already have repo.spout.org in your repository list, you will need to add this also:

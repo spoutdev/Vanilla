@@ -30,7 +30,6 @@ import org.spout.api.lighting.LightingManager;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 
 public abstract class VanillaLightingManager extends LightingManager<VanillaCuboidLightBuffer> {
-
 	public VanillaLightingManager(String name) {
 		super(name);
 	}
@@ -48,5 +47,4 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	@Override
 	public void resolve(VanillaCuboidLightBuffer light, ImmutableCuboidBlockMaterialBuffer material, int[] hx, int[] hz, int[] oldHy, int[] newHy, int changedColumns) {
 	}
-	
 }

@@ -29,13 +29,11 @@ package org.spout.vanilla.plugin.component.test;
 import java.util.List;
 import java.util.Random;
 
-import org.spout.api.Spout;
 import org.spout.api.component.impl.NavigationComponent;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
-import org.spout.api.math.Vector3;
 
 public class FollowComponent extends EntityComponent {
 	private Entity toFollow;

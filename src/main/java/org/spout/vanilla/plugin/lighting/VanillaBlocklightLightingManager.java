@@ -26,12 +26,9 @@
  */
 package org.spout.vanilla.plugin.lighting;
 
-import org.spout.api.Spout;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 
-
 public class VanillaBlocklightLightingManager extends VanillaLightingManager {
-
 	public VanillaBlocklightLightingManager(String name) {
 		super(name);
 	}
@@ -45,5 +42,4 @@ public class VanillaBlocklightLightingManager extends VanillaLightingManager {
 	public void resolve(VanillaCuboidLightBuffer light, ImmutableCuboidBlockMaterialBuffer material, int[] bx, int[] by, int[] bz, int[] tx, int[] ty, int[] tz, int changedCuboids) {
 		//Spout.getLogger().info(getClass().getSimpleName() + ":" + changedCuboids + " cuboids changed");
 	}
-
 }

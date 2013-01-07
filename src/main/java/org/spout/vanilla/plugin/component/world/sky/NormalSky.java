@@ -38,7 +38,6 @@ import org.spout.vanilla.plugin.util.MathHelper;
 import org.spout.vanilla.plugin.world.WeatherSimulator;
 
 public class NormalSky extends VanillaSky {
-
 	public NormalSky() {
 		super();
 		setHasWeather(true);

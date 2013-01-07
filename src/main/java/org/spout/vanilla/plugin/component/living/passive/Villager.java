@@ -32,13 +32,14 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 
-import org.spout.vanilla.api.component.Passive;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.inventory.Container;
 import org.spout.vanilla.plugin.inventory.CraftingInventory;
 import org.spout.vanilla.plugin.inventory.window.Window;
 import org.spout.vanilla.plugin.protocol.entity.creature.VillagerEntityProtocol;
+
+import org.spout.vanilla.api.component.Passive;
 
 /**
  * A component that identifies the entity as a Villager.

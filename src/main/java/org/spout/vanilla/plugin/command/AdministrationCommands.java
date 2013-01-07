@@ -435,7 +435,7 @@ public class AdministrationCommands {
 				int count = 0;
 				long last20 = 0;
 				long total = 0;
-				while(i.hasNext()) {
+				while (i.hasNext()) {
 					long next = i.next();
 					if (count > size - 20) {
 						last20 += next;
@@ -444,7 +444,7 @@ public class AdministrationCommands {
 					count++;
 				}
 				ticksPerSecond.set(1000F / (last20 / 20F));
-				avgTicksPerSecond.set(1000F / (total / ((float)size)));
+				avgTicksPerSecond.set(1000F / (total / ((float) size)));
 			}
 		}
 

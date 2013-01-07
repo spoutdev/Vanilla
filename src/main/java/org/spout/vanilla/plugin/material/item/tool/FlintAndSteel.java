@@ -73,7 +73,6 @@ public class FlintAndSteel extends InteractTool {
 						PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
 						inv.addData(inv.getCurrentSlot(), 1);
 					}
-					
 				}
 
 				// Handle the creation of portals

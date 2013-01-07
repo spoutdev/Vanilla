@@ -30,10 +30,11 @@ import com.bulletphysics.collision.shapes.BoxShape;
 
 import org.spout.api.component.impl.PhysicsComponent;
 
-import org.spout.vanilla.api.component.Neutral;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.protocol.entity.creature.EndermanEntityProtocol;
+
+import org.spout.vanilla.api.component.Neutral;
 
 /**
  * A component that identifies the entity as an Enderman.

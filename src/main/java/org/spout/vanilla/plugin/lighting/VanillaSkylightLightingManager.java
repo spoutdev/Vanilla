@@ -26,11 +26,9 @@
  */
 package org.spout.vanilla.plugin.lighting;
 
-import org.spout.api.Spout;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 
 public class VanillaSkylightLightingManager extends VanillaBlocklightLightingManager {
-
 	public VanillaSkylightLightingManager(String name) {
 		super(name);
 	}
@@ -39,5 +37,4 @@ public class VanillaSkylightLightingManager extends VanillaBlocklightLightingMan
 	public void resolve(VanillaCuboidLightBuffer light, ImmutableCuboidBlockMaterialBuffer material, int[] hx, int[] hz, int[] oldHy, int[] newHy, int changedColumns) {
 		//Spout.getLogger().info(getClass().getSimpleName() + ":" + changedColumns + " columns changed");
 	}
-
 }

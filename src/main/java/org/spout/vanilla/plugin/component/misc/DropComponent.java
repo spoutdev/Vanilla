@@ -31,10 +31,10 @@ import java.util.List;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.plugin.data.VanillaData;
 
 public class DropComponent extends EntityComponent {
-
 	public void addDrop(ItemStack itemstack) {
 		Inventory dropInventory = getOwner().getData().get(VanillaData.DROP_INVENTORY);
 		dropInventory.add(itemstack);
@@ -43,5 +43,4 @@ public class DropComponent extends EntityComponent {
 	public List<ItemStack> getDrops() {
 		return getOwner().getData().get(VanillaData.DROP_INVENTORY);
 	}
-
 }

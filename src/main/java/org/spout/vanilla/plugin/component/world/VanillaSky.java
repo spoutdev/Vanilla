@@ -81,7 +81,6 @@ public abstract class VanillaSky extends WorldComponent {
 
 	/**
 	 * Sets the model of this sky
-	 * 
 	 * @param model to set to
 	 */
 	public void setModel(String model) {
@@ -90,7 +89,6 @@ public abstract class VanillaSky extends WorldComponent {
 
 	/**
 	 * Gets the model of this sky
-	 * 
 	 * @return model
 	 */
 	public String getModel() {

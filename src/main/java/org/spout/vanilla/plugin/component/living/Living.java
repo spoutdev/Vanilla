@@ -32,17 +32,12 @@ import org.spout.api.component.impl.NavigationComponent;
 import org.spout.api.component.impl.PhysicsComponent;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.plugin.ai.VanillaBlockExaminer;
 import org.spout.vanilla.plugin.component.misc.DrowningComponent;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.material.block.Liquid;
-import org.spout.vanilla.plugin.material.block.Solid;
 
 public abstract class Living extends EntityComponent {
 	private static final Random random = new Random();

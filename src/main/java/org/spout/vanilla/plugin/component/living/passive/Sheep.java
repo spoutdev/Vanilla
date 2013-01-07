@@ -32,7 +32,6 @@ import org.spout.api.event.cause.EntityCause;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.api.component.Passive;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
@@ -42,6 +41,8 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.solid.Wool;
 import org.spout.vanilla.plugin.protocol.entity.creature.SheepEntityProtocol;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityStatusMessage;
+
+import org.spout.vanilla.api.component.Passive;
 
 /**
  * A component that identifies the entity as a Sheep.

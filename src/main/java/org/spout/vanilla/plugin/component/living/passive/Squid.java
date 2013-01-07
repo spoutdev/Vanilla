@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.plugin.component.living.passive;
 
-import org.spout.vanilla.api.component.Passive;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
+
+import org.spout.vanilla.api.component.Passive;
 
 /**
  * A component that identifies the entity as a Squid.

@@ -231,7 +231,7 @@ public class VanillaPlugin extends CommonPlugin {
 				world.getDataMap().put(VanillaData.GAMEMODE, GameMode.get(worldNode.GAMEMODE.getString()));
 				world.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.get(worldNode.DIFFICULTY.getString()));
 				world.getDataMap().put(VanillaData.DIMENSION, Dimension.get(worldNode.SKY_TYPE.getString()));
-				
+
 				world.addLightingManager(VanillaLighting.BLOCK_LIGHT);
 				world.addLightingManager(VanillaLighting.BLOCK_LIGHT);
 

@@ -31,12 +31,13 @@ import com.bulletphysics.collision.shapes.BoxShape;
 import org.spout.api.component.impl.PhysicsComponent;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.api.component.Hostile;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreeperEntityProtocol;
+
+import org.spout.vanilla.api.component.Hostile;
 
 /**
  * A component that identifies the entity as a Creeper.

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.plugin.material.block;
 
 import java.util.EnumMap;
 
@@ -34,10 +34,10 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
 
-import org.spout.vanilla.data.RedstonePowerMode;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.block.attachable.AbstractAttachable;
-import org.spout.vanilla.material.block.redstone.RedstoneSource;
+import org.spout.vanilla.plugin.data.RedstonePowerMode;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
+import org.spout.vanilla.plugin.material.block.redstone.RedstoneSource;
 
 public abstract class AttachedRedstoneSource extends AbstractAttachable implements RedstoneSource {
 	private static EnumMap<BlockFace, EffectRange> physicsRanges = new EnumMap<BlockFace, EffectRange>(BlockFace.class);

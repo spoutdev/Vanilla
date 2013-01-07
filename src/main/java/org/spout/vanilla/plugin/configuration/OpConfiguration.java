@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.configuration;
+package org.spout.vanilla.plugin.configuration;
 
 import java.io.File;
 import java.util.List;

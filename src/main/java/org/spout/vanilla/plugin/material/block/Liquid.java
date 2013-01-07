@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.plugin.material.block;
 
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
@@ -35,9 +35,9 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.block.solid.Ice;
-import org.spout.vanilla.util.flowing.LiquidModel;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.block.solid.Ice;
+import org.spout.vanilla.plugin.util.flowing.LiquidModel;
 
 public abstract class Liquid extends VanillaBlockMaterial implements DynamicMaterial {
 	private final boolean flowing;

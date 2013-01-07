@@ -24,9 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.stair;
+package org.spout.vanilla.plugin.material.block.stair;
 
-import org.spout.vanilla.material.block.WoodenStairs;
+import org.spout.vanilla.plugin.material.block.WoodenStairs;
 
 public class OakWoodStairs extends WoodenStairs {
 	public OakWoodStairs(String name, int id) {

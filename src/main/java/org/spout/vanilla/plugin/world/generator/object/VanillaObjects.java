@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.object;
+package org.spout.vanilla.plugin.world.generator.object;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
@@ -33,35 +33,35 @@ import java.util.Map;
 
 import org.spout.api.generator.WorldGeneratorObject;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.nether.object.GlowstonePatchObject;
-import org.spout.vanilla.world.generator.nether.object.NetherPortalObject;
-import org.spout.vanilla.world.generator.normal.object.BlockPatchObject;
-import org.spout.vanilla.world.generator.normal.object.DungeonObject;
-import org.spout.vanilla.world.generator.normal.object.LootChestObject;
-import org.spout.vanilla.world.generator.normal.object.OreObject;
-import org.spout.vanilla.world.generator.normal.object.OreObject.OreType;
-import org.spout.vanilla.world.generator.normal.object.PondObject;
-import org.spout.vanilla.world.generator.normal.object.PondObject.PondType;
-import org.spout.vanilla.world.generator.normal.object.SnowObject;
-import org.spout.vanilla.world.generator.normal.object.WellObject;
-import org.spout.vanilla.world.generator.normal.object.largeplant.CactusStackObject;
-import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject;
-import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
-import org.spout.vanilla.world.generator.normal.object.largeplant.SugarCaneStackObject;
-import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.HugeTreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.PineTreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.ShrubObject;
-import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.SpruceTreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.SwampTreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.TreeObject.TreeType;
-import org.spout.vanilla.world.generator.structure.mineshaft.Mineshaft;
-import org.spout.vanilla.world.generator.structure.stronghold.Stronghold;
-import org.spout.vanilla.world.generator.structure.temple.Temple;
-import org.spout.vanilla.world.generator.theend.object.EndPortalObject;
-import org.spout.vanilla.world.generator.theend.object.SpireObject;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.nether.object.GlowstonePatchObject;
+import org.spout.vanilla.plugin.world.generator.nether.object.NetherPortalObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.BlockPatchObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.DungeonObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.LootChestObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.OreObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.OreObject.OreType;
+import org.spout.vanilla.plugin.world.generator.normal.object.PondObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.PondObject.PondType;
+import org.spout.vanilla.plugin.world.generator.normal.object.SnowObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.WellObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.CactusStackObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.HugeMushroomObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
+import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.SugarCaneStackObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.BigTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.HugeTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.PineTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.ShrubObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.SmallTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.SpruceTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.SwampTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.TreeObject.TreeType;
+import org.spout.vanilla.plugin.world.generator.structure.mineshaft.Mineshaft;
+import org.spout.vanilla.plugin.world.generator.structure.stronghold.Stronghold;
+import org.spout.vanilla.plugin.world.generator.structure.temple.Temple;
+import org.spout.vanilla.plugin.world.generator.theend.object.EndPortalObject;
+import org.spout.vanilla.plugin.world.generator.theend.object.SpireObject;
 
 /**
  * Reference objects. NOT THREAD SAFE.

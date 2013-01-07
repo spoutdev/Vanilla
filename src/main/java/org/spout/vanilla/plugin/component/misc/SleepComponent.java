@@ -24,17 +24,17 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.misc;
+package org.spout.vanilla.plugin.component.misc;
 
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 
-import org.spout.vanilla.data.Animation;
-import org.spout.vanilla.event.entity.EntityAnimationEvent;
-import org.spout.vanilla.event.player.network.PlayerBedEvent;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.misc.BedBlock;
+import org.spout.vanilla.plugin.data.Animation;
+import org.spout.vanilla.plugin.event.entity.EntityAnimationEvent;
+import org.spout.vanilla.plugin.event.player.network.PlayerBedEvent;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.misc.BedBlock;
 
 public class SleepComponent extends EntityComponent {
 	private final float sleepSeconds = 5;

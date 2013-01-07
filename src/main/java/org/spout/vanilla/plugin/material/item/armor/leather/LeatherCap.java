@@ -24,11 +24,11 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.armor.leather;
+package org.spout.vanilla.plugin.material.item.armor.leather;
 
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.material.item.armor.Helmet;
+import org.spout.vanilla.plugin.material.item.armor.Helmet;
 
 public class LeatherCap extends LeatherArmor implements Helmet {
 	public static final Vector2 POSITION = Vector2.ZERO;

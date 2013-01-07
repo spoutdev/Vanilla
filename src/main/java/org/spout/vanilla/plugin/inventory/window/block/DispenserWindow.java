@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.window.block;
+package org.spout.vanilla.plugin.inventory.window.block;
 
 import org.spout.api.entity.Player;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.inventory.block.DispenserInventory;
-import org.spout.vanilla.inventory.util.GridInventoryConverter;
-import org.spout.vanilla.inventory.window.Window;
-import org.spout.vanilla.inventory.window.WindowType;
+import org.spout.vanilla.plugin.inventory.block.DispenserInventory;
+import org.spout.vanilla.plugin.inventory.util.GridInventoryConverter;
+import org.spout.vanilla.plugin.inventory.window.Window;
+import org.spout.vanilla.plugin.inventory.window.WindowType;
 
 public class DispenserWindow extends Window {
 	public DispenserWindow(Player owner, DispenserInventory inventory) {

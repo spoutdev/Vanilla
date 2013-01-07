@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.data.effect.type;
+package org.spout.vanilla.plugin.data.effect.type;
 
 import java.util.List;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.data.effect.Effect;
-import org.spout.vanilla.data.effect.store.GeneralEffects;
+import org.spout.vanilla.plugin.data.effect.Effect;
+import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 
 public class LavaFizzEffect extends Effect {
 	private static final int RANGE = 32;

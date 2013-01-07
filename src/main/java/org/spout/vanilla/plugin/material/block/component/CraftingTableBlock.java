@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.component;
+package org.spout.vanilla.plugin.material.block.component;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -32,10 +32,10 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.inventory.window.block.CraftingTableWindow;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.plugin.component.inventory.WindowHolder;
+import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.plugin.inventory.window.block.CraftingTableWindow;
+import org.spout.vanilla.plugin.material.block.Solid;
 
 public class CraftingTableBlock extends Solid {
 	public CraftingTableBlock(String name, int id) {

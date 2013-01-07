@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.component;
+package org.spout.vanilla.plugin.material.block.component;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.substance.material.Anvil;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.plugin.component.substance.material.Anvil;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class AnvilBlock extends ComponentMaterial {
 	public AnvilBlock(String name, int id) {

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.decorator;
+package org.spout.vanilla.plugin.world.generator.normal.decorator;
 
 import java.util.Random;
 
@@ -35,7 +35,7 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class FlowerDecorator extends Decorator {
 	private static final byte ODD = 10;

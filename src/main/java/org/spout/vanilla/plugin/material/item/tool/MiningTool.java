@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.tool;
+package org.spout.vanilla.plugin.material.item.tool;
 
 import java.util.Set;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.data.tool.ToolLevel;
-import org.spout.vanilla.data.tool.ToolType;
+import org.spout.vanilla.plugin.data.tool.ToolLevel;
+import org.spout.vanilla.plugin.data.tool.ToolType;
 
 /**
  * A type of tool that allows you to mine certain blocks faster

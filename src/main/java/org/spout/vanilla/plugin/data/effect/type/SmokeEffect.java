@@ -24,13 +24,13 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.data.effect.type;
+package org.spout.vanilla.plugin.data.effect.type;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.data.effect.GeneralEffect;
+import org.spout.vanilla.plugin.data.effect.GeneralEffect;
 
 public class SmokeEffect extends GeneralEffect {
 	private static final int SMOKE_NORTH_EAST = 0;

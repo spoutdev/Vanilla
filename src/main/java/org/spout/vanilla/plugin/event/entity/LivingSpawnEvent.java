@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.entity;
+package org.spout.vanilla.plugin.event.entity;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntitySpawnEvent;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.event.cause.LivingSpawnCause;
+import org.spout.vanilla.plugin.event.cause.LivingSpawnCause;
 
 /**
  * Called when a living entity is spawned.

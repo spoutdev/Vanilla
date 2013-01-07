@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.theend.object;
+package org.spout.vanilla.plugin.world.generator.theend.object;
 
 import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
@@ -33,7 +33,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class EndPortalObject extends WorldGeneratorObject {
 	private static boolean isEndFrame(Block block, BlockFace facing, boolean withEnderEye) {

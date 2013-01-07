@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.handler;
+package org.spout.vanilla.plugin.protocol.handler;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -43,11 +43,11 @@ import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.security.EncryptionChannelProcessor;
 import org.spout.api.security.SecurityHandler;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.protocol.LoginAuth;
-import org.spout.vanilla.protocol.VanillaProtocol;
-import org.spout.vanilla.protocol.msg.auth.EncryptionKeyResponseMessage;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
+import org.spout.vanilla.plugin.protocol.LoginAuth;
+import org.spout.vanilla.plugin.protocol.VanillaProtocol;
+import org.spout.vanilla.plugin.protocol.msg.auth.EncryptionKeyResponseMessage;
 
 public class EncryptionKeyResponseHandler extends MessageHandler<EncryptionKeyResponseMessage> {
 	@Override

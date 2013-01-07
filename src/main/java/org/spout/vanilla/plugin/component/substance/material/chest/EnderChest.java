@@ -24,13 +24,13 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.substance.material.chest;
+package org.spout.vanilla.plugin.component.substance.material.chest;
 
 import org.spout.api.entity.Player;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.inventory.window.block.chest.EnderChestWindow;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.inventory.WindowHolder;
+import org.spout.vanilla.plugin.inventory.window.block.chest.EnderChestWindow;
 
 public class EnderChest extends AbstractChest {
 	@Override

@@ -24,9 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.rcon.codec;
+package org.spout.vanilla.plugin.protocol.rcon.codec;
 
-import org.spout.vanilla.protocol.rcon.msg.AuthMessage;
+import org.spout.vanilla.plugin.protocol.rcon.msg.AuthMessage;
 
 public class AuthCodec extends RconCodec<AuthMessage> {
 	public AuthCodec() {

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.codec.world.chunk;
+package org.spout.vanilla.plugin.protocol.codec.world.chunk;
 
 import java.io.IOException;
 import java.util.zip.DataFormatException;
@@ -38,7 +38,7 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 
-import org.spout.vanilla.protocol.msg.world.chunk.ChunkBulkMessage;
+import org.spout.vanilla.plugin.protocol.msg.world.chunk.ChunkBulkMessage;
 
 public final class ChunkBulkCodec extends MessageCodec<ChunkBulkMessage> {
 	private static final int COMPRESSION_LEVEL = Deflater.BEST_SPEED;

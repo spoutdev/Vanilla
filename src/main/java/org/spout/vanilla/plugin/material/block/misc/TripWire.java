@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.plugin.material.block.misc;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,9 +37,9 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 
 public class TripWire extends GroundAttachable implements InitializableMaterial {
 	public static final int MAX_DISTANCE = 42;

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.plugin.material.block;
 
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.event.Cause;
@@ -34,12 +34,12 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.data.effect.store.GeneralEffects;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.material.block.redstone.RedstoneTarget;
-import org.spout.vanilla.util.PlayerUtil;
-import org.spout.vanilla.util.RedstoneUtil;
+import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.plugin.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.plugin.util.PlayerUtil;
+import org.spout.vanilla.plugin.util.RedstoneUtil;
 
 public abstract class DoorBlock extends GroundAttachable implements Directional, Openable, RedstoneTarget {
 	public DoorBlock(String name, int id, String model) {

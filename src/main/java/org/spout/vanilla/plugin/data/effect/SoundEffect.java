@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.data.effect;
+package org.spout.vanilla.plugin.data.effect;
 
 import java.util.List;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.event.world.PlaySoundEffectEvent;
+import org.spout.vanilla.plugin.event.world.PlaySoundEffectEvent;
 
 public class SoundEffect extends Effect {
 	private static final int SOUND_RANGE = 16;

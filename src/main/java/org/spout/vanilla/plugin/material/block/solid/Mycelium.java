@@ -24,16 +24,16 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.plugin.material.block.solid;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
 
-import org.spout.vanilla.data.tool.ToolType;
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.SpreadingSolid;
+import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.SpreadingSolid;
 
 public class Mycelium extends SpreadingSolid implements InitializableMaterial {
 	public Mycelium(String name, int id) {

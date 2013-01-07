@@ -24,9 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.armor.iron;
+package org.spout.vanilla.plugin.material.item.armor.iron;
 
-import org.spout.vanilla.material.item.armor.Helmet;
+import org.spout.vanilla.plugin.material.item.armor.Helmet;
 
 public class IronHelmet extends IronArmor implements Helmet {
 	public IronHelmet(String name, int id, short durability) {

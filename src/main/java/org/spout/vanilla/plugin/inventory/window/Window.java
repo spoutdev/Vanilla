@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.window;
+package org.spout.vanilla.plugin.inventory.window;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -52,23 +52,23 @@ import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.substance.Item;
-import org.spout.vanilla.data.VanillaRenderMaterials;
-import org.spout.vanilla.event.window.WindowCloseEvent;
-import org.spout.vanilla.event.window.WindowItemsEvent;
-import org.spout.vanilla.event.window.WindowOpenEvent;
-import org.spout.vanilla.event.window.WindowPropertyEvent;
-import org.spout.vanilla.event.window.WindowSlotEvent;
-import org.spout.vanilla.inventory.player.PlayerMainInventory;
-import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.inventory.util.GridInventoryConverter;
-import org.spout.vanilla.inventory.util.InventoryConverter;
-import org.spout.vanilla.inventory.window.gui.InventorySlot;
-import org.spout.vanilla.inventory.window.gui.RenderItemStack;
-import org.spout.vanilla.inventory.window.prop.WindowProperty;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
+import org.spout.vanilla.plugin.event.window.WindowCloseEvent;
+import org.spout.vanilla.plugin.event.window.WindowItemsEvent;
+import org.spout.vanilla.plugin.event.window.WindowOpenEvent;
+import org.spout.vanilla.plugin.event.window.WindowPropertyEvent;
+import org.spout.vanilla.plugin.event.window.WindowSlotEvent;
+import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
+import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.inventory.util.GridInventoryConverter;
+import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
+import org.spout.vanilla.plugin.inventory.window.gui.InventorySlot;
+import org.spout.vanilla.plugin.inventory.window.gui.RenderItemStack;
+import org.spout.vanilla.plugin.inventory.window.prop.WindowProperty;
 
 /**
  * Represents a Window that players can view to display an inventory.

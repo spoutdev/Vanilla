@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.data.drops.type;
+package org.spout.vanilla.plugin.data.drops.type;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,8 +35,8 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.data.drops.Drop;
-import org.spout.vanilla.data.drops.flag.DropFlags;
+import org.spout.vanilla.plugin.data.drops.Drop;
+import org.spout.vanilla.plugin.data.drops.flag.DropFlags;
 
 public class ContentsDrop extends Drop {
 	@Override

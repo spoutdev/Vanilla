@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.window.prop;
+package org.spout.vanilla.plugin.inventory.window.prop;
 
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
 /**
  * Represents a property of
- * {@link org.spout.vanilla.inventory.window.WindowType#ENCHANTMENT_TABLE}
+ * {@link org.spout.vanilla.plugin.inventory.window.WindowType#ENCHANTMENT_TABLE}
  */
 public enum EnchantmentTableProperty implements WindowProperty {
 	/**

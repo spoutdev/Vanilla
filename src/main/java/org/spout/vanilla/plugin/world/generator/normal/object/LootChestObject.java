@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.object;
+package org.spout.vanilla.plugin.world.generator.normal.object;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +35,10 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.substance.material.chest.Chest;
-import org.spout.vanilla.inventory.block.ChestInventory;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.object.RotatableObject;
+import org.spout.vanilla.plugin.component.substance.material.chest.Chest;
+import org.spout.vanilla.plugin.inventory.block.ChestInventory;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.object.RotatableObject;
 
 public class LootChestObject extends RotatableObject {
 	private int maxNumberOfStacks = 8;

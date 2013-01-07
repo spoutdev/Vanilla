@@ -24,11 +24,11 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.tool.weapon;
+package org.spout.vanilla.plugin.material.item.tool.weapon;
 
-import org.spout.vanilla.data.tool.ToolLevel;
-import org.spout.vanilla.data.tool.ToolType;
-import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.plugin.data.tool.ToolLevel;
+import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.plugin.material.item.tool.Tool;
 
 public class Sword extends Tool {
 	public Sword(String name, int id, ToolLevel toolLevel) {

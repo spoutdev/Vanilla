@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.populator;
+package org.spout.vanilla.plugin.world.generator.normal.populator;
 
 import java.util.Random;
 
@@ -32,8 +32,8 @@ import org.spout.api.generator.Populator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
-import org.spout.vanilla.world.generator.normal.object.PondObject;
-import org.spout.vanilla.world.generator.normal.object.PondObject.PondType;
+import org.spout.vanilla.plugin.world.generator.normal.object.PondObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.PondObject.PondType;
 
 public class PondPopulator extends Populator {
 	private static final byte WATER_ODD = 4;

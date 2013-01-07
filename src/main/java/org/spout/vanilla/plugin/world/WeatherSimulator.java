@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world;
+package org.spout.vanilla.plugin.world;
 
 import java.util.Random;
 
 import org.spout.api.geo.World;
 import org.spout.api.tickable.BasicTickable;
 
-import org.spout.vanilla.component.world.VanillaSky;
-import org.spout.vanilla.data.Weather;
+import org.spout.vanilla.plugin.component.world.VanillaSky;
+import org.spout.vanilla.plugin.data.Weather;
 
 public class WeatherSimulator extends BasicTickable {
 	private final VanillaSky sky;

@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.entity;
+package org.spout.vanilla.plugin.event.entity;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.data.Animation;
+import org.spout.vanilla.plugin.data.Animation;
 
 public class EntityAnimationEvent extends EntityEvent implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();

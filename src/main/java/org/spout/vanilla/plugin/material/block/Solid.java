@@ -24,16 +24,16 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.plugin.material.block;
 
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.data.MoveReaction;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.plugin.data.MoveReaction;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class Solid extends VanillaBlockMaterial {
 	public Solid(String name, int id, String model) {

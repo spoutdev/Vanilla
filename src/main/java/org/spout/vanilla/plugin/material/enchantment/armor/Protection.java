@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.enchantment.armor;
+package org.spout.vanilla.plugin.material.enchantment.armor;
 
-import org.spout.vanilla.material.VanillaMaterial;
-import org.spout.vanilla.material.enchantment.ArmorEnchantment;
-import org.spout.vanilla.material.enchantment.Enchantment;
-import org.spout.vanilla.material.enchantment.Enchantments;
-import org.spout.vanilla.material.item.armor.Boots;
-import org.spout.vanilla.material.item.armor.Helmet;
+import org.spout.vanilla.plugin.material.VanillaMaterial;
+import org.spout.vanilla.plugin.material.enchantment.ArmorEnchantment;
+import org.spout.vanilla.plugin.material.enchantment.Enchantment;
+import org.spout.vanilla.plugin.material.enchantment.Enchantments;
+import org.spout.vanilla.plugin.material.item.armor.Boots;
+import org.spout.vanilla.plugin.material.item.armor.Helmet;
 
 public class Protection extends ArmorEnchantment {
 	public Protection(String name, int id) {

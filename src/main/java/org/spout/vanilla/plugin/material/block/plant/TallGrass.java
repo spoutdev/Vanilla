@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.plant;
+package org.spout.vanilla.plugin.material.block.plant;
 
 import org.spout.api.Spout;
 import org.spout.api.event.Cause;
@@ -34,11 +34,11 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.Platform;
 
-import org.spout.vanilla.data.drops.SwitchDrops;
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.Burnable;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.render.VanillaEffects;
+import org.spout.vanilla.plugin.data.drops.SwitchDrops;
+import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.plugin.material.Burnable;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.render.VanillaEffects;
 
 public class TallGrass extends DeadBush implements Burnable {
 	public static final TallGrass DEAD_GRASS = new TallGrass("Dead Grass", 31, "model://Vanilla/materials/block/nonsolid/deadgrass/deadgrass.spm");

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.door;
+package org.spout.vanilla.plugin.material.block.door;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -32,12 +32,12 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.data.effect.store.GeneralEffects;
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.DoorBlock;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
+import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.DoorBlock;
 
 public class WoodenDoorBlock extends DoorBlock implements InitializableMaterial {
 	public WoodenDoorBlock(String name, int id) {

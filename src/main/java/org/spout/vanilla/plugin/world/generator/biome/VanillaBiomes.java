@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.biome;
+package org.spout.vanilla.plugin.world.generator.biome;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
@@ -37,30 +37,30 @@ import org.spout.api.util.config.Configuration;
 import org.spout.api.util.config.annotated.AnnotatedObjectConfiguration;
 import org.spout.api.util.config.serialization.Serialization;
 
-import org.spout.vanilla.util.ColorSerializer;
-import org.spout.vanilla.world.generator.nether.biome.NetherrackBiome;
-import org.spout.vanilla.world.generator.normal.biome.grassy.ForestBiome;
-import org.spout.vanilla.world.generator.normal.biome.grassy.ForestHillsBiome;
-import org.spout.vanilla.world.generator.normal.biome.grassy.JungleBiome;
-import org.spout.vanilla.world.generator.normal.biome.grassy.JungleHillsBiome;
-import org.spout.vanilla.world.generator.normal.biome.grassy.MountainsBiome;
-import org.spout.vanilla.world.generator.normal.biome.grassy.MushroomBiome;
-import org.spout.vanilla.world.generator.normal.biome.grassy.MushroomShoreBiome;
-import org.spout.vanilla.world.generator.normal.biome.grassy.OceanBiome;
-import org.spout.vanilla.world.generator.normal.biome.grassy.PlainBiome;
-import org.spout.vanilla.world.generator.normal.biome.grassy.RiverBiome;
-import org.spout.vanilla.world.generator.normal.biome.grassy.SmallMountainsBiome;
-import org.spout.vanilla.world.generator.normal.biome.grassy.SwampBiome;
-import org.spout.vanilla.world.generator.normal.biome.sandy.BeachBiome;
-import org.spout.vanilla.world.generator.normal.biome.sandy.DesertBiome;
-import org.spout.vanilla.world.generator.normal.biome.sandy.DesertHillsBiome;
-import org.spout.vanilla.world.generator.normal.biome.snowy.FrozenOceanBiome;
-import org.spout.vanilla.world.generator.normal.biome.snowy.FrozenRiverBiome;
-import org.spout.vanilla.world.generator.normal.biome.snowy.TaigaBiome;
-import org.spout.vanilla.world.generator.normal.biome.snowy.TaigaHillsBiome;
-import org.spout.vanilla.world.generator.normal.biome.snowy.TundraBiome;
-import org.spout.vanilla.world.generator.normal.biome.snowy.TundraHillsBiome;
-import org.spout.vanilla.world.generator.theend.biome.EndStoneBiome;
+import org.spout.vanilla.plugin.util.ColorSerializer;
+import org.spout.vanilla.plugin.world.generator.nether.biome.NetherrackBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.grassy.ForestBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.grassy.ForestHillsBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.grassy.JungleBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.grassy.JungleHillsBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.grassy.MountainsBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.grassy.MushroomBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.grassy.MushroomShoreBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.grassy.OceanBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.grassy.PlainBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.grassy.RiverBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.grassy.SmallMountainsBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.grassy.SwampBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.sandy.BeachBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.sandy.DesertBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.sandy.DesertHillsBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.snowy.FrozenOceanBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.snowy.FrozenRiverBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.snowy.TaigaBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.snowy.TaigaHillsBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.snowy.TundraBiome;
+import org.spout.vanilla.plugin.world.generator.normal.biome.snowy.TundraHillsBiome;
+import org.spout.vanilla.plugin.world.generator.theend.biome.EndStoneBiome;
 
 public class VanillaBiomes {
 	public static final VanillaBiome OCEAN = new OceanBiome(0);

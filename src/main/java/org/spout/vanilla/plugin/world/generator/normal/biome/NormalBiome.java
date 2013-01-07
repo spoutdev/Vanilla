@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome;
+package org.spout.vanilla.plugin.world.generator.normal.biome;
 
 import java.util.Random;
 
@@ -34,14 +34,14 @@ import org.spout.api.util.config.annotated.Load;
 import org.spout.api.util.config.annotated.Save;
 import org.spout.api.util.config.annotated.Setting;
 
-import org.spout.vanilla.material.block.plant.TallGrass;
-import org.spout.vanilla.world.generator.biome.VanillaBiome;
-import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator.TallGrassFactory;
-import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator.TreeWGOFactory;
-import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
-import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator.GroundCoverLayer;
+import org.spout.vanilla.plugin.material.block.plant.TallGrass;
+import org.spout.vanilla.plugin.world.generator.biome.VanillaBiome;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.TallGrassDecorator.TallGrassFactory;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.TreeDecorator.TreeWGOFactory;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.BigTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.SmallTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.TreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.populator.GroundCoverPopulator.GroundCoverLayer;
 
 public abstract class NormalBiome extends VanillaBiome {
 	// elevation values

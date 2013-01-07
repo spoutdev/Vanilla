@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.structure.stronghold;
+package org.spout.vanilla.plugin.world.generator.structure.stronghold;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -37,9 +37,9 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Quaternion;
 
-import org.spout.vanilla.world.generator.structure.Structure;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
-import org.spout.vanilla.world.generator.structure.StructureComponent.BoundingBox;
+import org.spout.vanilla.plugin.world.generator.structure.Structure;
+import org.spout.vanilla.plugin.world.generator.structure.StructureComponent;
+import org.spout.vanilla.plugin.world.generator.structure.StructureComponent.BoundingBox;
 
 public class Stronghold extends Structure {
 	private static final byte MAX_SIZE_BASE = 101;

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.object;
+package org.spout.vanilla.plugin.world.generator.normal.object;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -38,13 +38,13 @@ import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
 
-import org.spout.vanilla.data.Climate;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.liquid.Water;
-import org.spout.vanilla.material.block.misc.Snow;
-import org.spout.vanilla.world.generator.biome.VanillaBiome;
-import org.spout.vanilla.world.generator.object.RandomObject;
+import org.spout.vanilla.plugin.data.Climate;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.liquid.Water;
+import org.spout.vanilla.plugin.material.block.misc.Snow;
+import org.spout.vanilla.plugin.world.generator.biome.VanillaBiome;
+import org.spout.vanilla.plugin.world.generator.object.RandomObject;
 
 public class SnowObject extends RandomObject {
 	private static final int MAX_ITERATIONS = 10; // Endless loop prevention

@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.window.block.chest;
+package org.spout.vanilla.plugin.inventory.window.block.chest;
 
 import org.spout.api.entity.Player;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.component.substance.material.chest.Chest;
-import org.spout.vanilla.inventory.block.ChestInventory;
-import org.spout.vanilla.inventory.util.GridInventoryConverter;
-import org.spout.vanilla.inventory.window.WindowType;
+import org.spout.vanilla.plugin.component.substance.material.chest.Chest;
+import org.spout.vanilla.plugin.inventory.block.ChestInventory;
+import org.spout.vanilla.plugin.inventory.util.GridInventoryConverter;
+import org.spout.vanilla.plugin.inventory.window.WindowType;
 
 public class ChestWindow extends AbstractChestWindow {
 	public ChestWindow(Player owner, Chest chest) {

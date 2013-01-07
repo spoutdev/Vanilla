@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.player.network;
+package org.spout.vanilla.plugin.event.player.network;
 
 import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.data.GameMode;
 
 public class PlayerAbilityUpdateEvent extends PlayerEvent implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();

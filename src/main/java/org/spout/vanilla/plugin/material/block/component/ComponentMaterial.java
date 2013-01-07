@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.component;
+package org.spout.vanilla.plugin.material.block.component;
 
 import org.spout.api.component.type.BlockComponent;
 import org.spout.api.entity.Entity;
@@ -36,8 +36,8 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.ComplexMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.substance.material.VanillaBlockComponent;
-import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.component.substance.material.VanillaBlockComponent;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 
 public class ComponentMaterial extends VanillaBlockMaterial implements ComplexMaterial {
 	private final Class<? extends BlockComponent> componentType;

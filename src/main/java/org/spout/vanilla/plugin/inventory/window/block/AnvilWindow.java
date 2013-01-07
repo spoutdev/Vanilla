@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.window.block;
+package org.spout.vanilla.plugin.inventory.window.block;
 
 import org.spout.api.entity.Player;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.inventory.block.AnvilInventory;
-import org.spout.vanilla.inventory.util.InventoryConverter;
-import org.spout.vanilla.inventory.window.Window;
-import org.spout.vanilla.inventory.window.WindowType;
+import org.spout.vanilla.plugin.inventory.block.AnvilInventory;
+import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
+import org.spout.vanilla.plugin.inventory.window.Window;
+import org.spout.vanilla.plugin.inventory.window.WindowType;
 
 public class AnvilWindow extends Window {
 	public AnvilWindow(Player owner, AnvilInventory inventory) {

@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.misc;
+package org.spout.vanilla.plugin.component.misc;
 
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
 
-import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.data.Animation;
-import org.spout.vanilla.event.entity.EntityAnimationEvent;
+import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
+import org.spout.vanilla.plugin.data.Animation;
+import org.spout.vanilla.plugin.event.entity.EntityAnimationEvent;
 
 public class DiggingComponent extends EntityComponent {
 	private boolean isDigging;

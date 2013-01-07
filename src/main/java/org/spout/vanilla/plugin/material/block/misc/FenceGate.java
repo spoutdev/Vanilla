@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.plugin.material.block.misc;
 
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
@@ -37,15 +37,15 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.data.effect.store.GeneralEffects;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.block.Openable;
-import org.spout.vanilla.material.block.redstone.RedstoneTarget;
-import org.spout.vanilla.util.PlayerUtil;
-import org.spout.vanilla.util.RedstoneUtil;
+import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.block.Openable;
+import org.spout.vanilla.plugin.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.plugin.util.PlayerUtil;
+import org.spout.vanilla.plugin.util.RedstoneUtil;
 
 public class FenceGate extends VanillaBlockMaterial implements Openable, RedstoneTarget {
 	public FenceGate(String name, int id) {

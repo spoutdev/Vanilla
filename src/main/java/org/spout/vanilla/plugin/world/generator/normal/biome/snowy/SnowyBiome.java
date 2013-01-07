@@ -24,12 +24,12 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome.snowy;
+package org.spout.vanilla.plugin.world.generator.normal.biome.snowy;
 
 import org.spout.api.generator.biome.Decorator;
 
-import org.spout.vanilla.data.Climate;
-import org.spout.vanilla.world.generator.normal.biome.grassy.GrassyBiome;
+import org.spout.vanilla.plugin.data.Climate;
+import org.spout.vanilla.plugin.world.generator.normal.biome.grassy.GrassyBiome;
 
 public abstract class SnowyBiome extends GrassyBiome {
 	public SnowyBiome(int biomeId, Decorator... decorators) {

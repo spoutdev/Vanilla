@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.player;
+package org.spout.vanilla.plugin.event.player;
 
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 
-import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.plugin.data.GameMode;
 
 /**
  * Event which is called when a player changes the gamemode

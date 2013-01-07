@@ -24,9 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.substance.material;
+package org.spout.vanilla.plugin.component.substance.material;
 
-import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.plugin.data.VanillaData;
 
 public class NoteBlock extends VanillaBlockComponent {
 	public boolean isPowered() {

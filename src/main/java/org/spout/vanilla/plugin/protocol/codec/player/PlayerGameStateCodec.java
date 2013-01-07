@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.codec.player;
+package org.spout.vanilla.plugin.protocol.codec.player;
 
 import java.io.IOException;
 
@@ -33,8 +33,8 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.protocol.msg.player.PlayerGameStateMessage;
+import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.protocol.msg.player.PlayerGameStateMessage;
 
 public final class PlayerGameStateCodec extends MessageCodec<PlayerGameStateMessage> {
 	public PlayerGameStateCodec() {

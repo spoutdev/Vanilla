@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.nether.object;
+package org.spout.vanilla.plugin.world.generator.nether.object;
 
 import java.util.Random;
 
@@ -36,8 +36,8 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.theend.TheEndGenerator;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.theend.TheEndGenerator;
 
 public class NetherPortalObject extends WorldGeneratorObject {
 	public BlockFace getDirection(Point pos) {

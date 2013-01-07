@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.component;
+package org.spout.vanilla.plugin.material.block.component;
 
 import java.util.Random;
 
@@ -40,19 +40,19 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.substance.Item;
-import org.spout.vanilla.component.substance.material.Dispenser;
-import org.spout.vanilla.component.substance.object.projectile.Arrow;
-import org.spout.vanilla.data.MoveReaction;
-import org.spout.vanilla.data.effect.Effect;
-import org.spout.vanilla.data.effect.store.GeneralEffects;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.block.redstone.RedstoneTarget;
-import org.spout.vanilla.material.item.misc.Potion;
-import org.spout.vanilla.material.item.misc.SpawnEgg;
-import org.spout.vanilla.util.PlayerUtil;
-import org.spout.vanilla.util.RedstoneUtil;
+import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.component.substance.material.Dispenser;
+import org.spout.vanilla.plugin.component.substance.object.projectile.Arrow;
+import org.spout.vanilla.plugin.data.MoveReaction;
+import org.spout.vanilla.plugin.data.effect.Effect;
+import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Directional;
+import org.spout.vanilla.plugin.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.plugin.material.item.misc.Potion;
+import org.spout.vanilla.plugin.material.item.misc.SpawnEgg;
+import org.spout.vanilla.plugin.util.PlayerUtil;
+import org.spout.vanilla.plugin.util.RedstoneUtil;
 
 public class DispenserBlock extends ComponentMaterial implements Directional, RedstoneTarget {
 	public DispenserBlock(String name, int id) {

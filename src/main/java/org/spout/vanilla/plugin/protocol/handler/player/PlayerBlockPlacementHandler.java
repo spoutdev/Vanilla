@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.handler.player;
+package org.spout.vanilla.plugin.protocol.handler.player;
 
 import java.util.Collection;
 
@@ -50,20 +50,20 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.misc.HeadComponent;
-import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.effect.SoundEffect;
-import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.event.cause.PlayerClickBlockCause;
-import org.spout.vanilla.event.cause.PlayerPlacementCause;
-import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.item.tool.InteractTool;
-import org.spout.vanilla.protocol.msg.player.PlayerBlockPlacementMessage;
-import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.component.misc.HeadComponent;
+import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
+import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.data.effect.SoundEffect;
+import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
+import org.spout.vanilla.plugin.event.cause.PlayerClickBlockCause;
+import org.spout.vanilla.plugin.event.cause.PlayerPlacementCause;
+import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.item.tool.InteractTool;
+import org.spout.vanilla.plugin.protocol.msg.player.PlayerBlockPlacementMessage;
+import org.spout.vanilla.plugin.protocol.msg.world.block.BlockChangeMessage;
 
 public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBlockPlacementMessage> {
 	private void undoPlacement(Player player, Block clickedBlock, Block alterBlock, RepositionManager rm) {

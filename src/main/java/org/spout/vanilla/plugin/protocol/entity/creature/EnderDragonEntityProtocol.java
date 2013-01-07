@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.entity.creature;
+package org.spout.vanilla.plugin.protocol.entity.creature;
 
 import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 
 public class EnderDragonEntityProtocol extends CreatureProtocol {
 	public final static int HEALTH_INDEX = 16; // The MC metadata index to determine the Dragon's health

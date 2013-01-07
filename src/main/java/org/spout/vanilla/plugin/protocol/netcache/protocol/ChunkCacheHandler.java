@@ -24,13 +24,13 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.netcache.protocol;
+package org.spout.vanilla.plugin.protocol.netcache.protocol;
 
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.component.player.PingComponent;
-import org.spout.vanilla.protocol.VanillaProtocol;
+import org.spout.vanilla.plugin.component.player.PingComponent;
+import org.spout.vanilla.plugin.protocol.VanillaProtocol;
 
 public class ChunkCacheHandler extends MessageHandler<ChunkCacheMessage> {
 	@Override

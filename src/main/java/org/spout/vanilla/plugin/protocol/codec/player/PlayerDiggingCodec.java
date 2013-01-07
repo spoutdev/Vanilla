@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.codec.player;
+package org.spout.vanilla.plugin.protocol.codec.player;
 
 import java.io.IOException;
 
@@ -36,7 +36,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 
-import org.spout.vanilla.protocol.msg.player.PlayerDiggingMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.PlayerDiggingMessage;
 
 public final class PlayerDiggingCodec extends MessageCodec<PlayerDiggingMessage> {
 	public PlayerDiggingCodec() {

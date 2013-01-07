@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.substance.material;
+package org.spout.vanilla.plugin.component.substance.material;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
 
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.event.block.SignUpdateEvent;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.event.block.SignUpdateEvent;
 
 public class Sign extends VanillaBlockComponent {
 	/**

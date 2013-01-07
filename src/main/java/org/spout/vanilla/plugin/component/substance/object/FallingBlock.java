@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.substance.object;
+package org.spout.vanilla.plugin.component.substance.object;
 
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.component.type.EntityComponent;
@@ -33,10 +33,10 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.MathHelper;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.protocol.entity.object.FallingBlockProtocol;
-import org.spout.vanilla.protocol.entity.object.ObjectType;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.protocol.entity.object.FallingBlockProtocol;
+import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
 
 public class FallingBlock extends EntityComponent {
 	private static float FALL_INCREMENT = -0.04F;

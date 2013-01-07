@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.plant;
+package org.spout.vanilla.plugin.material.block.plant;
 
 import java.util.Random;
 
@@ -41,18 +41,18 @@ import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Plant;
-import org.spout.vanilla.material.block.Spreading;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.material.item.misc.Dye;
-import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject;
-import org.spout.vanilla.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
-import org.spout.vanilla.world.generator.object.LargePlantObject;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Plant;
+import org.spout.vanilla.plugin.material.block.Spreading;
+import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.plugin.material.item.misc.Dye;
+import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.HugeMushroomObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
+import org.spout.vanilla.plugin.world.generator.object.LargePlantObject;
 
 public class Mushroom extends GroundAttachable implements Spreading, Plant, DynamicMaterial {
 	private static final EffectRange MUSHROOM_RANGE = new CuboidEffectRange(-4, -1, -4, 4, 1, 4);

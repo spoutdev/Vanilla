@@ -24,9 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.component;
+package org.spout.vanilla.plugin.material.block.component;
 
-import org.spout.vanilla.component.substance.material.MonsterSpawner;
+import org.spout.vanilla.plugin.component.substance.material.MonsterSpawner;
 
 public class MonsterSpawnerBlock extends ComponentMaterial {
 	public MonsterSpawnerBlock(String name, int id) {

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.msg.entity.spawn;
+package org.spout.vanilla.plugin.protocol.msg.entity.spawn;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -35,9 +35,9 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.component.substance.object.ObjectEntity;
-import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.entity.EntityMessage;
+import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
+import org.spout.vanilla.plugin.protocol.ChannelBufferUtils;
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityMessage;
 
 public final class EntityObjectMessage extends EntityMessage {
 	private final byte type;

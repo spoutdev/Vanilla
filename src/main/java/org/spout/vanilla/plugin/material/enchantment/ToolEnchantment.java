@@ -24,10 +24,10 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.enchantment;
+package org.spout.vanilla.plugin.material.enchantment;
 
-import org.spout.vanilla.material.VanillaMaterial;
-import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.plugin.material.VanillaMaterial;
+import org.spout.vanilla.plugin.material.item.tool.Tool;
 
 public abstract class ToolEnchantment extends Enchantment {
 	protected ToolEnchantment(String name, int id) {

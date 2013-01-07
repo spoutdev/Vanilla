@@ -24,18 +24,18 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.substance.material.chest;
+package org.spout.vanilla.plugin.component.substance.material.chest;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 
-import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.inventory.Container;
-import org.spout.vanilla.inventory.block.ChestInventory;
-import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.plugin.component.inventory.WindowHolder;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
+import org.spout.vanilla.plugin.inventory.Container;
+import org.spout.vanilla.plugin.inventory.block.ChestInventory;
+import org.spout.vanilla.plugin.inventory.window.block.chest.ChestWindow;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class Chest extends AbstractChest implements Container {
 	/**

@@ -24,17 +24,17 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.plant;
+package org.spout.vanilla.plugin.material.block.plant;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Plant;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Plant;
+import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 
 public class DeadBush extends GroundAttachable implements Plant, InitializableMaterial {
 	protected DeadBush(String name, int id, short data, String model) {

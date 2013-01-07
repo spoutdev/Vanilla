@@ -24,9 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.attachable;
+package org.spout.vanilla.plugin.material.block.attachable;
 
-import org.spout.vanilla.material.block.Attachable;
+import org.spout.vanilla.plugin.material.block.Attachable;
 
 /**
  * Represents a block material that is attached to a single point

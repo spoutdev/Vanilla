@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.cause;
+package org.spout.vanilla.plugin.event.cause;
 
 /**
  * Represents the cause of damage.
@@ -72,7 +72,7 @@ public interface DamageCause<T> {
 		FIREBALL,
 		/**
 		 * Damage due to getting hit by an
-		 * {@link org.spout.vanilla.component.substance.Projectile}.
+		 * {@link org.spout.vanilla.plugin.component.substance.Projectile}.
 		 */
 		PROJECTILE,
 		/**

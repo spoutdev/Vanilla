@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.recipe;
+package org.spout.vanilla.plugin.inventory.recipe;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -32,7 +32,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.spout.api.Spout;
 import org.spout.api.inventory.recipe.Recipe;
 
-import org.spout.vanilla.resources.RecipeYaml;
+import org.spout.vanilla.plugin.resources.RecipeYaml;
 
 public class VanillaRecipes {
 	private static final Map<String, Recipe> yamlRecipes = new ConcurrentHashMap<String, Recipe>();

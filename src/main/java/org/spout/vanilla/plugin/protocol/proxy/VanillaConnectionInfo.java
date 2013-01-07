@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.proxy;
+package org.spout.vanilla.plugin.protocol.proxy;
 
 import org.spout.api.protocol.proxy.ConnectionInfo;
 

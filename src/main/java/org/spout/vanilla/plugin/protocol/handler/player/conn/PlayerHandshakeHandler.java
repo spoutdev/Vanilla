@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.handler.player.conn;
+package org.spout.vanilla.plugin.protocol.handler.player.conn;
 
 import java.security.SecureRandom;
 
@@ -34,12 +34,12 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.security.SecurityHandler;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.protocol.VanillaProtocol;
-import org.spout.vanilla.protocol.msg.auth.EncryptionKeyRequestMessage;
-import org.spout.vanilla.protocol.msg.player.conn.PlayerHandshakeMessage;
-import org.spout.vanilla.protocol.netcache.ChunkNetCache;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
+import org.spout.vanilla.plugin.protocol.VanillaProtocol;
+import org.spout.vanilla.plugin.protocol.msg.auth.EncryptionKeyRequestMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerHandshakeMessage;
+import org.spout.vanilla.plugin.protocol.netcache.ChunkNetCache;
 
 public class PlayerHandshakeHandler extends MessageHandler<PlayerHandshakeMessage> {
 	@Override

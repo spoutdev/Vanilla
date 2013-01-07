@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.living.passive;
+package org.spout.vanilla.plugin.component.living.passive;
 
 import java.util.Random;
 
@@ -32,15 +32,15 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.Living;
-import org.spout.vanilla.component.living.Passive;
-import org.spout.vanilla.component.misc.DropComponent;
-import org.spout.vanilla.component.substance.Item;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
-import org.spout.vanilla.protocol.entity.creature.CreatureType;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.living.Passive;
+import org.spout.vanilla.plugin.component.misc.DropComponent;
+import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
+import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
 
 /**
  * A component that identifies the entity as a Chicken.

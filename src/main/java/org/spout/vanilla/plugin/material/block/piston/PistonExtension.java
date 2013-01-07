@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.piston;
+package org.spout.vanilla.plugin.material.block.piston;
 
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
@@ -32,9 +32,9 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.data.MoveReaction;
-import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.plugin.data.MoveReaction;
+import org.spout.vanilla.plugin.material.block.Directional;
+import org.spout.vanilla.plugin.material.block.Solid;
 
 public class PistonExtension extends Solid implements Directional {
 	public PistonExtension(String name, int id) {

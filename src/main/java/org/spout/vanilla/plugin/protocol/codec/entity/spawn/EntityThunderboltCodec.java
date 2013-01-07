@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.codec.entity.spawn;
+package org.spout.vanilla.plugin.protocol.codec.entity.spawn;
 
 import java.io.IOException;
 
@@ -34,7 +34,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 
-import org.spout.vanilla.protocol.msg.entity.spawn.EntityThunderboltMessage;
+import org.spout.vanilla.plugin.protocol.msg.entity.spawn.EntityThunderboltMessage;
 
 public final class EntityThunderboltCodec extends MessageCodec<EntityThunderboltMessage> {
 	public EntityThunderboltCodec() {

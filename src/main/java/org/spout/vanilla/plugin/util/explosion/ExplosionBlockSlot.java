@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.util.explosion;
+package org.spout.vanilla.plugin.util.explosion;
 
 import java.util.Random;
 
@@ -32,8 +32,8 @@ import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 /**
  * This is a permanent block slot whose information is loaded from a world dynamically

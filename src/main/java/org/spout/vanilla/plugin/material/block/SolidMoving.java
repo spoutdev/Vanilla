@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.plugin.material.block;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.LoadOption;
@@ -32,10 +32,10 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.substance.object.FallingBlock;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.substance.object.FallingBlock;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class SolidMoving extends Solid {
 	public SolidMoving(String name, int id, int data, VanillaBlockMaterial parent) {

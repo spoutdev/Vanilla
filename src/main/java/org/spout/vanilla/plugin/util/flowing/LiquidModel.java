@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.util.flowing;
+package org.spout.vanilla.plugin.util.flowing;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,8 +43,8 @@ import org.spout.api.material.range.DiamondEffectRange;
 import org.spout.api.math.IntVector3;
 import org.spout.api.util.hashing.ShortPairHashed;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Liquid;
 
 /**
  * A model used to find the faces to which a liquid can flow<br>

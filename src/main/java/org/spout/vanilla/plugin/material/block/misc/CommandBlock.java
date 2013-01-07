@@ -24,9 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.plugin.material.block.misc;
 
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.plugin.material.block.Solid;
 
 public class CommandBlock extends Solid {
 	public CommandBlock(String name, int id) {

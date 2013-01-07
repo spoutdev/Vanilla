@@ -50,7 +50,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.codec.server;
+package org.spout.vanilla.plugin.protocol.codec.server;
 
 import java.io.IOException;
 
@@ -59,8 +59,8 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.ServerPluginMessage;
+import org.spout.vanilla.plugin.protocol.ChannelBufferUtils;
+import org.spout.vanilla.plugin.protocol.msg.ServerPluginMessage;
 
 public class ServerPluginCodec extends MessageCodec<ServerPluginMessage> {
 	public ServerPluginCodec() {

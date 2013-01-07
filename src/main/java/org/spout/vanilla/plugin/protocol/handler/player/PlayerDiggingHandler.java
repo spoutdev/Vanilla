@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.handler.player;
+package org.spout.vanilla.plugin.protocol.handler.player;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -50,25 +50,25 @@ import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.misc.DiggingComponent;
-import org.spout.vanilla.component.substance.Item;
-import org.spout.vanilla.component.substance.material.Sign;
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.data.drops.flag.PlayerFlags;
-import org.spout.vanilla.data.effect.store.GeneralEffects;
-import org.spout.vanilla.event.cause.PlayerBreakCause;
-import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.material.VanillaMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.Food;
-import org.spout.vanilla.material.item.misc.Potion;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.protocol.msg.player.PlayerDiggingMessage;
-import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
-import org.spout.vanilla.protocol.msg.world.block.SignMessage;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.component.misc.DiggingComponent;
+import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.component.substance.material.Sign;
+import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.data.drops.flag.PlayerFlags;
+import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
+import org.spout.vanilla.plugin.event.cause.PlayerBreakCause;
+import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.material.VanillaMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.item.Food;
+import org.spout.vanilla.plugin.material.item.misc.Potion;
+import org.spout.vanilla.plugin.material.item.tool.Tool;
+import org.spout.vanilla.plugin.protocol.msg.player.PlayerDiggingMessage;
+import org.spout.vanilla.plugin.protocol.msg.world.block.BlockChangeMessage;
+import org.spout.vanilla.plugin.protocol.msg.world.block.SignMessage;
 
 public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMessage> {
 	private boolean breakBlock(BlockMaterial blockMaterial, Block block, Human human, Session session) {

@@ -24,9 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.enchantment.bow;
+package org.spout.vanilla.plugin.material.enchantment.bow;
 
-import org.spout.vanilla.material.enchantment.BowEnchantment;
+import org.spout.vanilla.plugin.material.enchantment.BowEnchantment;
 
 public class Power extends BowEnchantment {
 	public Power(String name, int id) {

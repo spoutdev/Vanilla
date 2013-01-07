@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.flat;
+package org.spout.vanilla.plugin.world.generator.flat;
 
 import java.util.Random;
 
@@ -32,8 +32,8 @@ import org.spout.api.generator.LayeredWorldGenerator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.VanillaGenerator;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.VanillaGenerator;
 
 public class FlatGenerator extends LayeredWorldGenerator implements VanillaGenerator {
 	public FlatGenerator(int height) {

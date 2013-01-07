@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.window;
+package org.spout.vanilla.plugin.inventory.window;
 
 import org.spout.api.Client;
 import org.spout.api.Spout;
@@ -33,9 +33,9 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.inventory.player.PlayerArmorInventory;
-import org.spout.vanilla.inventory.util.InventoryConverter;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.inventory.player.PlayerArmorInventory;
+import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 
 public class DefaultWindow extends Window {
 	public DefaultWindow(Player owner) {

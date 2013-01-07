@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.tool.weapon;
+package org.spout.vanilla.plugin.material.item.tool.weapon;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -32,9 +32,9 @@ import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.substance.object.projectile.Arrow;
-import org.spout.vanilla.data.tool.ToolType;
-import org.spout.vanilla.material.item.RangedWeapon;
+import org.spout.vanilla.plugin.component.substance.object.projectile.Arrow;
+import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.plugin.material.item.RangedWeapon;
 
 public class Bow extends RangedWeapon {
 	public Bow(String name, int id, short durability) {

@@ -24,16 +24,16 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome.sandy;
+package org.spout.vanilla.plugin.world.generator.normal.biome.sandy;
 
 import java.awt.Color;
 
-import org.spout.vanilla.world.generator.normal.decorator.CactusDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.DeadBushDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.WellDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.CactusDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.DeadBushDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.MushroomDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.SandAndClayDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.SugarCaneDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.WellDecorator;
 
 public class DesertBiome extends SandyBiome {
 	public DesertBiome(int biomeId) {

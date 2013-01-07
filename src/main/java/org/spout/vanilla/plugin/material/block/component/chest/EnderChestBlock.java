@@ -24,9 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.component.chest;
+package org.spout.vanilla.plugin.material.block.component.chest;
 
-import org.spout.vanilla.component.substance.material.chest.EnderChest;
+import org.spout.vanilla.plugin.component.substance.material.chest.EnderChest;
 
 public class EnderChestBlock extends AbstractChestBlock {
 	public EnderChestBlock(String name, int id) {

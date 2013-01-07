@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.data.drops;
+package org.spout.vanilla.plugin.data.drops;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,9 +36,9 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.data.drops.type.FixedDrop;
-import org.spout.vanilla.data.drops.type.RandomDrop;
-import org.spout.vanilla.data.drops.type.RandomRangeDrop;
+import org.spout.vanilla.plugin.data.drops.type.FixedDrop;
+import org.spout.vanilla.plugin.data.drops.type.RandomDrop;
+import org.spout.vanilla.plugin.data.drops.type.RandomRangeDrop;
 
 /**
  * Contains multiple drops

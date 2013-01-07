@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.rcon.msg;
+package org.spout.vanilla.plugin.protocol.rcon.msg;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -32,7 +32,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
+import org.spout.vanilla.plugin.protocol.msg.VanillaMainChannelMessage;
 
 /**
  * Base class for messages passed through the rcon protocol

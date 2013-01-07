@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.util;
+package org.spout.vanilla.plugin.inventory.util;
 
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
@@ -32,9 +32,9 @@ import org.spout.api.inventory.shape.Grid;
 import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.inventory.window.gui.InventorySlot;
-import org.spout.vanilla.inventory.window.gui.RenderItemStack;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.plugin.inventory.window.gui.InventorySlot;
+import org.spout.vanilla.plugin.inventory.window.gui.RenderItemStack;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 /**
  * Represents an {@link InventoryConverter} that converts slots given the

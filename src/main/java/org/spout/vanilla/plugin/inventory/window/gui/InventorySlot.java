@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.window.gui;
+package org.spout.vanilla.plugin.inventory.window.gui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +38,10 @@ import org.spout.api.input.Keyboard;
 import org.spout.api.math.IntVector2;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.inventory.window.ClickArguments;
-import org.spout.vanilla.inventory.window.InventoryEntry;
-import org.spout.vanilla.inventory.window.Window;
+import org.spout.vanilla.plugin.component.inventory.WindowHolder;
+import org.spout.vanilla.plugin.inventory.window.ClickArguments;
+import org.spout.vanilla.plugin.inventory.window.InventoryEntry;
+import org.spout.vanilla.plugin.inventory.window.Window;
 
 public class InventorySlot extends ControlComponent {
 	private RenderItemStack item;

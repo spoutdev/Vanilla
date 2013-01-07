@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.theend.object;
+package org.spout.vanilla.plugin.world.generator.theend.object;
 
 import java.util.Random;
 
@@ -33,9 +33,9 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.component.substance.object.EnderCrystal;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.object.LargePlantObject;
+import org.spout.vanilla.plugin.component.substance.object.EnderCrystal;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.object.LargePlantObject;
 
 public class SpireObject extends LargePlantObject {
 	// These control the radius of the spires

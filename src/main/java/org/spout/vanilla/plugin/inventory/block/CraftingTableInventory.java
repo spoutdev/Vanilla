@@ -24,13 +24,13 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.block;
+package org.spout.vanilla.plugin.inventory.block;
 
-import org.spout.vanilla.inventory.CraftingInventory;
+import org.spout.vanilla.plugin.inventory.CraftingInventory;
 
 /**
  * Represents the inventory of a
- * {@link org.spout.vanilla.component.substance.material.CraftingTable}.
+ * {@link org.spout.vanilla.plugin.component.substance.material.CraftingTable}.
  */
 public class CraftingTableInventory extends CraftingInventory {
 	public static final int LENGTH = 3, WIDTH = 3, OUTPUT_SLOT = 9;

@@ -24,12 +24,12 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.substance;
+package org.spout.vanilla.plugin.component.substance;
 
 import org.spout.api.component.type.EntityComponent;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.entity.object.LightningEntityProtocol;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.protocol.entity.object.LightningEntityProtocol;
 
 public class Lightning extends EntityComponent {
 	@Override

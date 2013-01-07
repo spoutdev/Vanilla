@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.misc;
+package org.spout.vanilla.plugin.component.misc;
 
 import java.util.List;
 
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.plugin.data.VanillaData;
 
 public class DropComponent extends EntityComponent {
 

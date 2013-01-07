@@ -24,16 +24,16 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.component;
+package org.spout.vanilla.plugin.material.block.component;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.component.substance.material.NoteBlock;
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.data.MoveReaction;
-import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.util.RedstoneUtil;
+import org.spout.vanilla.plugin.component.substance.material.NoteBlock;
+import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.plugin.data.MoveReaction;
+import org.spout.vanilla.plugin.material.Fuel;
+import org.spout.vanilla.plugin.util.RedstoneUtil;
 
 public class NoteBlockBlock extends ComponentMaterial implements Fuel {
 	public final float BURN_TIME = 15;

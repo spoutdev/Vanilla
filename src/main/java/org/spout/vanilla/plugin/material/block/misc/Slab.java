@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.plugin.material.block.misc;
 
 import java.util.Set;
 
@@ -36,12 +36,12 @@ import org.spout.api.math.Vector3;
 import org.spout.api.util.bytebit.ByteBitSet;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.data.tool.ToolLevel;
-import org.spout.vanilla.data.tool.ToolType;
-import org.spout.vanilla.material.Burnable;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.block.solid.DoubleSlab;
+import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.plugin.data.tool.ToolLevel;
+import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.plugin.material.Burnable;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.block.solid.DoubleSlab;
 
 public class Slab extends VanillaBlockMaterial implements Burnable {
 	public static final Slab STONE = new Slab((short) 0x7, "Stone Slab", 44, false, (String) null);

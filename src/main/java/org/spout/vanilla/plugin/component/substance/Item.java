@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.substance;
+package org.spout.vanilla.plugin.component.substance;
 
 import com.bulletphysics.collision.shapes.BoxShape;
 
@@ -36,10 +36,10 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.substance.object.ObjectEntity;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.object.ItemEntityProtocol;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.protocol.entity.object.ItemEntityProtocol;
 
 public class Item extends ObjectEntity {
 	@Override

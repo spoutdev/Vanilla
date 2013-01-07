@@ -24,13 +24,13 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.block;
+package org.spout.vanilla.plugin.inventory.block;
 
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.TimedCraftable;
+import org.spout.vanilla.plugin.material.Fuel;
+import org.spout.vanilla.plugin.material.TimedCraftable;
 
 /**
  * Represents a furnace inventory belonging to a furnace entity.

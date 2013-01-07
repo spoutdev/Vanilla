@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.living.passive;
+package org.spout.vanilla.plugin.component.living.passive;
 
 import java.util.HashMap;
 
@@ -32,13 +32,13 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.Living;
-import org.spout.vanilla.component.living.Passive;
-import org.spout.vanilla.inventory.Container;
-import org.spout.vanilla.inventory.CraftingInventory;
-import org.spout.vanilla.inventory.window.Window;
-import org.spout.vanilla.protocol.entity.creature.VillagerEntityProtocol;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.living.Passive;
+import org.spout.vanilla.plugin.inventory.Container;
+import org.spout.vanilla.plugin.inventory.CraftingInventory;
+import org.spout.vanilla.plugin.inventory.window.Window;
+import org.spout.vanilla.plugin.protocol.entity.creature.VillagerEntityProtocol;
 
 /**
  * A component that identifies the entity as a Villager.

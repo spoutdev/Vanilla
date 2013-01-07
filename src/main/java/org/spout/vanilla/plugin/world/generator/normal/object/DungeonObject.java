@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.object;
+package org.spout.vanilla.plugin.world.generator.normal.object;
 
 import java.util.Random;
 
@@ -34,10 +34,10 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.misc.Dye;
-import org.spout.vanilla.world.generator.object.RandomObject;
-import org.spout.vanilla.world.generator.object.RandomizableObject;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.item.misc.Dye;
+import org.spout.vanilla.plugin.world.generator.object.RandomObject;
+import org.spout.vanilla.plugin.world.generator.object.RandomizableObject;
 
 public class DungeonObject extends RandomObject implements RandomizableObject {
 	// base dimensions

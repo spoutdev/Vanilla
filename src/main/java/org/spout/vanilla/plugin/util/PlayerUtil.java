@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.util;
+package org.spout.vanilla.plugin.util;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
@@ -34,7 +34,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.misc.HeadComponent;
+import org.spout.vanilla.plugin.component.misc.HeadComponent;
 
 public class PlayerUtil {
 	/**

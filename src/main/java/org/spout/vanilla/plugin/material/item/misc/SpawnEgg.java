@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.misc;
+package org.spout.vanilla.plugin.material.item.misc;
 
 import org.spout.api.component.Component;
 import org.spout.api.entity.Entity;
@@ -34,28 +34,28 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.living.hostile.Blaze;
-import org.spout.vanilla.component.living.hostile.CaveSpider;
-import org.spout.vanilla.component.living.hostile.Creeper;
-import org.spout.vanilla.component.living.hostile.Ghast;
-import org.spout.vanilla.component.living.hostile.MagmaCube;
-import org.spout.vanilla.component.living.hostile.Silverfish;
-import org.spout.vanilla.component.living.hostile.Skeleton;
-import org.spout.vanilla.component.living.hostile.Slime;
-import org.spout.vanilla.component.living.hostile.Spider;
-import org.spout.vanilla.component.living.hostile.Zombie;
-import org.spout.vanilla.component.living.neutral.Enderman;
-import org.spout.vanilla.component.living.neutral.PigZombie;
-import org.spout.vanilla.component.living.neutral.Wolf;
-import org.spout.vanilla.component.living.passive.Chicken;
-import org.spout.vanilla.component.living.passive.Cow;
-import org.spout.vanilla.component.living.passive.MooshroomCow;
-import org.spout.vanilla.component.living.passive.Ocelot;
-import org.spout.vanilla.component.living.passive.Pig;
-import org.spout.vanilla.component.living.passive.Sheep;
-import org.spout.vanilla.component.living.passive.Squid;
-import org.spout.vanilla.component.living.passive.Villager;
-import org.spout.vanilla.material.item.VanillaItemMaterial;
+import org.spout.vanilla.plugin.component.living.hostile.Blaze;
+import org.spout.vanilla.plugin.component.living.hostile.CaveSpider;
+import org.spout.vanilla.plugin.component.living.hostile.Creeper;
+import org.spout.vanilla.plugin.component.living.hostile.Ghast;
+import org.spout.vanilla.plugin.component.living.hostile.MagmaCube;
+import org.spout.vanilla.plugin.component.living.hostile.Silverfish;
+import org.spout.vanilla.plugin.component.living.hostile.Skeleton;
+import org.spout.vanilla.plugin.component.living.hostile.Slime;
+import org.spout.vanilla.plugin.component.living.hostile.Spider;
+import org.spout.vanilla.plugin.component.living.hostile.Zombie;
+import org.spout.vanilla.plugin.component.living.neutral.Enderman;
+import org.spout.vanilla.plugin.component.living.neutral.PigZombie;
+import org.spout.vanilla.plugin.component.living.neutral.Wolf;
+import org.spout.vanilla.plugin.component.living.passive.Chicken;
+import org.spout.vanilla.plugin.component.living.passive.Cow;
+import org.spout.vanilla.plugin.component.living.passive.MooshroomCow;
+import org.spout.vanilla.plugin.component.living.passive.Ocelot;
+import org.spout.vanilla.plugin.component.living.passive.Pig;
+import org.spout.vanilla.plugin.component.living.passive.Sheep;
+import org.spout.vanilla.plugin.component.living.passive.Squid;
+import org.spout.vanilla.plugin.component.living.passive.Villager;
+import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public class SpawnEgg extends VanillaItemMaterial {
 	private static final SpawnEgg PARENT = new SpawnEgg("Spawn Egg"); //There is no entity with the ID 0 so this egg is invalid

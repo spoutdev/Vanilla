@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.chat;
+package org.spout.vanilla.plugin.chat;
 
 import org.spout.api.chat.style.StyleFormatter;
 

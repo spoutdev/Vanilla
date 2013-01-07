@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.block;
+package org.spout.vanilla.plugin.event.block;
 
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.Cause;
@@ -32,7 +32,7 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.block.BlockEvent;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.component.substance.material.Furnace;
+import org.spout.vanilla.plugin.component.substance.material.Furnace;
 
 /**
  * Event which is called when an unit of an ItemStack is burned as fuel.

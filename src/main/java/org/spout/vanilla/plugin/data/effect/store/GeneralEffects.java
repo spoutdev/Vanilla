@@ -24,21 +24,21 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.data.effect.store;
+package org.spout.vanilla.plugin.data.effect.store;
 
-import org.spout.vanilla.data.effect.BatchEffect;
-import org.spout.vanilla.data.effect.Effect;
-import org.spout.vanilla.data.effect.GeneralEffect;
-import org.spout.vanilla.data.effect.SoundEffect;
-import org.spout.vanilla.data.effect.type.BatchExplosionEffect;
-import org.spout.vanilla.data.effect.type.BreakBlockEffect;
-import org.spout.vanilla.data.effect.type.ExplosionEffect;
-import org.spout.vanilla.data.effect.type.LavaFizzEffect;
-import org.spout.vanilla.data.effect.type.MusicDiscEffect;
-import org.spout.vanilla.data.effect.type.NoteParticleEffect;
-import org.spout.vanilla.data.effect.type.PressBlockEffect;
-import org.spout.vanilla.data.effect.type.SmokeEffect;
-import org.spout.vanilla.data.effect.type.ToggleSoundEffect;
+import org.spout.vanilla.plugin.data.effect.BatchEffect;
+import org.spout.vanilla.plugin.data.effect.Effect;
+import org.spout.vanilla.plugin.data.effect.GeneralEffect;
+import org.spout.vanilla.plugin.data.effect.SoundEffect;
+import org.spout.vanilla.plugin.data.effect.type.BatchExplosionEffect;
+import org.spout.vanilla.plugin.data.effect.type.BreakBlockEffect;
+import org.spout.vanilla.plugin.data.effect.type.ExplosionEffect;
+import org.spout.vanilla.plugin.data.effect.type.LavaFizzEffect;
+import org.spout.vanilla.plugin.data.effect.type.MusicDiscEffect;
+import org.spout.vanilla.plugin.data.effect.type.NoteParticleEffect;
+import org.spout.vanilla.plugin.data.effect.type.PressBlockEffect;
+import org.spout.vanilla.plugin.data.effect.type.SmokeEffect;
+import org.spout.vanilla.plugin.data.effect.type.ToggleSoundEffect;
 
 public class GeneralEffects {
 	public static final ExplosionEffect EXPLOSION_PARTICLES = new ExplosionEffect();

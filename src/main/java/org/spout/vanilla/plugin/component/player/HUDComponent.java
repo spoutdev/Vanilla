@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.player;
+package org.spout.vanilla.plugin.component.player;
 
 import java.awt.Color;
 
@@ -43,8 +43,8 @@ import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
 import org.spout.api.plugin.Platform;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.data.VanillaRenderMaterials;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 
 /**
  * Component attached to clients-only that updates the Heads Up Display.

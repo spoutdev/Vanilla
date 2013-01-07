@@ -24,10 +24,10 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.misc;
+package org.spout.vanilla.plugin.material.item.misc;
 
-import org.spout.vanilla.material.block.component.SkullBlock;
-import org.spout.vanilla.material.item.BlockItem;
+import org.spout.vanilla.plugin.material.block.component.SkullBlock;
+import org.spout.vanilla.plugin.material.item.BlockItem;
 
 public class Skull extends BlockItem {
 	public static final Skull SKELETON_SKULL = new Skull("Skeleton Skull");

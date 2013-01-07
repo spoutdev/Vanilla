@@ -24,21 +24,21 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome.snowy;
+package org.spout.vanilla.plugin.world.generator.normal.biome.snowy;
 
 import java.awt.Color;
 import java.util.Random;
 
-import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
-import org.spout.vanilla.world.generator.normal.object.tree.PineTreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.SpruceTreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.FlowerDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.MushroomDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.PumpkinDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.SandAndClayDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.SugarCaneDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.TallGrassDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.TreeDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.PineTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.SpruceTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.TreeObject;
 
 public class TaigaBiome extends SnowyBiome {
 	public TaigaBiome(int biomeId) {

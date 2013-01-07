@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item;
+package org.spout.vanilla.plugin.material.item;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.misc.HungerComponent;
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.misc.HungerComponent;
+import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.data.VanillaData;
 
 public class Food extends VanillaItemMaterial {
 	private final FoodEffect[] effects;

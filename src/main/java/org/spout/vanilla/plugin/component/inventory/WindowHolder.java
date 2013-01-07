@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.inventory;
+package org.spout.vanilla.plugin.component.inventory;
 
 import java.util.logging.Level;
 
@@ -33,8 +33,8 @@ import org.spout.api.Spout;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 
-import org.spout.vanilla.inventory.window.DefaultWindow;
-import org.spout.vanilla.inventory.window.Window;
+import org.spout.vanilla.plugin.inventory.window.DefaultWindow;
+import org.spout.vanilla.plugin.inventory.window.Window;
 
 public class WindowHolder extends EntityComponent {
 	private DefaultWindow defaultWindow;

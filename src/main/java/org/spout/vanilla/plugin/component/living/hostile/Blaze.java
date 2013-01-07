@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.living.hostile;
+package org.spout.vanilla.plugin.component.living.hostile;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.Hostile;
-import org.spout.vanilla.component.living.Living;
-import org.spout.vanilla.component.misc.DropComponent;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.creature.BlazeEntityProtocol;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.living.Hostile;
+import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.misc.DropComponent;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.protocol.entity.creature.BlazeEntityProtocol;
 
 /**
  * A component that identifies the entity as a Blaze.

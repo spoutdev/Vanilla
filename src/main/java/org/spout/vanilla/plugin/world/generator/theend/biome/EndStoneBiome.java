@@ -24,12 +24,12 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.theend.biome;
+package org.spout.vanilla.plugin.world.generator.theend.biome;
 
 import java.awt.Color;
 
-import org.spout.vanilla.world.generator.biome.VanillaBiome;
-import org.spout.vanilla.world.generator.theend.decorator.SpireDecorator;
+import org.spout.vanilla.plugin.world.generator.biome.VanillaBiome;
+import org.spout.vanilla.plugin.world.generator.theend.decorator.SpireDecorator;
 
 public class EndStoneBiome extends VanillaBiome {
 	public EndStoneBiome(int biomeId) {

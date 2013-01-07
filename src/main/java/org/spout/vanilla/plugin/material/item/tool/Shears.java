@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.tool;
+package org.spout.vanilla.plugin.material.item.tool;
 
 import java.util.Random;
 
@@ -33,14 +33,14 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.passive.Sheep;
-import org.spout.vanilla.component.substance.Item;
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.data.tool.ToolType;
-import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.living.passive.Sheep;
+import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class Shears extends Tool {
 	private Random rand = new Random();

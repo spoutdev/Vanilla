@@ -24,9 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.enchantment.tool;
+package org.spout.vanilla.plugin.material.enchantment.tool;
 
-import org.spout.vanilla.material.enchantment.ToolEnchantment;
+import org.spout.vanilla.plugin.material.enchantment.ToolEnchantment;
 
 public class Efficiency extends ToolEnchantment {
 	public Efficiency(String name, int id) {

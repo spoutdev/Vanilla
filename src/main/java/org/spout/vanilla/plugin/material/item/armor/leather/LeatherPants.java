@@ -24,9 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.armor.leather;
+package org.spout.vanilla.plugin.material.item.armor.leather;
 
-import org.spout.vanilla.material.item.armor.Leggings;
+import org.spout.vanilla.plugin.material.item.armor.Leggings;
 
 public class LeatherPants extends LeatherArmor implements Leggings {
 	public LeatherPants(String name, int id, short durability) {

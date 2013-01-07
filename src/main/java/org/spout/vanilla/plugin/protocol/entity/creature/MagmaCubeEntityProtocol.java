@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.entity.creature;
+package org.spout.vanilla.plugin.protocol.entity.creature;
 
 import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.living.hostile.MagmaCube;
+import org.spout.vanilla.plugin.component.living.hostile.MagmaCube;
 
 public class MagmaCubeEntityProtocol extends CreatureProtocol {
 	public final static int SIZE_INDEX = 16; // The MC metadata index determinig the size of the magma cube

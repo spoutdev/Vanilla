@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.netcache;
+package org.spout.vanilla.plugin.protocol.netcache;
 
 public class PartitionChunk {
 	static public void copyToChunkData(byte[] chunkData, int blockNum, byte[] partition, int dataLength) {

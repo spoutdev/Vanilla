@@ -24,17 +24,17 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.misc;
+package org.spout.vanilla.plugin.component.misc;
 
 import java.util.List;
 
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.substance.Item;
-import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.event.entity.EntityCollectItemEvent;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
+import org.spout.vanilla.plugin.event.entity.EntityCollectItemEvent;
 
 /**
  * Component that adds a detector to resources.entities to scan for and pickup items.

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.cause;
+package org.spout.vanilla.plugin.event.cause;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;

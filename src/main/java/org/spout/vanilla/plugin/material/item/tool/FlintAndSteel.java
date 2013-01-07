@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.tool;
+package org.spout.vanilla.plugin.material.item.tool;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -37,12 +37,12 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.data.tool.ToolType;
-import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.object.VanillaObjects;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.object.VanillaObjects;
 
 public class FlintAndSteel extends InteractTool {
 	public FlintAndSteel(String name, int id, short durability) {

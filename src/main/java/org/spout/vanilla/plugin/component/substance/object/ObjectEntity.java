@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.substance.object;
+package org.spout.vanilla.plugin.component.substance.object;
 
 import org.spout.api.component.impl.PhysicsComponent;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.material.block.Liquid;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.plugin.material.block.Liquid;
+import org.spout.vanilla.plugin.material.block.Solid;
 
 public abstract class ObjectEntity extends EntityComponent {
 	private PhysicsComponent physics;

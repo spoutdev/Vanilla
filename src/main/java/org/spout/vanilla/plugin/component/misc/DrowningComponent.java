@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.misc;
+package org.spout.vanilla.plugin.component.misc;
 
 import java.awt.Color;
 
@@ -39,14 +39,14 @@ import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
 
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.player.HUDComponent;
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.data.VanillaRenderMaterials;
-import org.spout.vanilla.event.cause.BlockDamageCause;
-import org.spout.vanilla.event.cause.DamageCause.DamageType;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.component.player.HUDComponent;
+import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
+import org.spout.vanilla.plugin.event.cause.BlockDamageCause;
+import org.spout.vanilla.plugin.event.cause.DamageCause.DamageType;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 /**
  * The drowning component requires a health component and head component

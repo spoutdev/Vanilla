@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.handler.entity;
+package org.spout.vanilla.plugin.protocol.handler.entity;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -34,19 +34,19 @@ import org.spout.api.material.Material;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.Living;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.misc.EffectsComponent;
-import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.effect.StatusEffect;
-import org.spout.vanilla.event.cause.DamageCause.DamageType;
-import org.spout.vanilla.event.cause.PlayerDamageCause;
-import org.spout.vanilla.material.VanillaMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.tool.Tool;
-import org.spout.vanilla.protocol.msg.entity.EntityInteractMessage;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.component.misc.EffectsComponent;
+import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
+import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.data.effect.StatusEffect;
+import org.spout.vanilla.plugin.event.cause.DamageCause.DamageType;
+import org.spout.vanilla.plugin.event.cause.PlayerDamageCause;
+import org.spout.vanilla.plugin.material.VanillaMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.item.tool.Tool;
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityInteractMessage;
 
 public class EntityInteractHandler extends MessageHandler<EntityInteractMessage> {
 	@Override

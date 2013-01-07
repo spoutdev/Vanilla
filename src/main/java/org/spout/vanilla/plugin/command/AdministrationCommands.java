@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.command;
+package org.spout.vanilla.plugin.command;
 
 import gnu.trove.iterator.TLongIterator;
 import gnu.trove.list.linked.TLongLinkedList;
@@ -48,19 +48,19 @@ import org.spout.api.material.Material;
 import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.util.concurrent.AtomicFloat;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.misc.HealthComponent;
-import org.spout.vanilla.component.misc.LevelComponent;
-import org.spout.vanilla.component.world.VanillaSky;
-import org.spout.vanilla.configuration.OpConfiguration;
-import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.Time;
-import org.spout.vanilla.data.Weather;
-import org.spout.vanilla.event.cause.HealthChangeCause;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.component.misc.LevelComponent;
+import org.spout.vanilla.plugin.component.world.VanillaSky;
+import org.spout.vanilla.plugin.configuration.OpConfiguration;
+import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
+import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.data.Time;
+import org.spout.vanilla.plugin.data.Weather;
+import org.spout.vanilla.plugin.event.cause.HealthChangeCause;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class AdministrationCommands {
 	private final VanillaPlugin plugin;

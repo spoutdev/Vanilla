@@ -24,9 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.armor.gold;
+package org.spout.vanilla.plugin.material.item.armor.gold;
 
-import org.spout.vanilla.material.item.armor.Boots;
+import org.spout.vanilla.plugin.material.item.armor.Boots;
 
 public class GoldBoots extends GoldArmor implements Boots {
 	public GoldBoots(String name, int id, short durability) {

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.plugin.material.block.solid;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
@@ -33,11 +33,11 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
 
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.block.redstone.RedstoneTarget;
-import org.spout.vanilla.util.RedstoneUtil;
+import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.plugin.util.RedstoneUtil;
 
 public class RedstoneLamp extends Solid implements InitializableMaterial, RedstoneTarget {
 	private final boolean on;

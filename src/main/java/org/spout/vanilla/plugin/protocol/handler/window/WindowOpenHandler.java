@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.handler.window;
+package org.spout.vanilla.plugin.protocol.handler.window;
 
 import org.spout.api.Client;
 import org.spout.api.Spout;
@@ -32,21 +32,21 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.inventory.block.BrewingStandInventory;
-import org.spout.vanilla.inventory.block.ChestInventory;
-import org.spout.vanilla.inventory.block.DispenserInventory;
-import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
-import org.spout.vanilla.inventory.block.FurnaceInventory;
-import org.spout.vanilla.inventory.entity.VillagerInventory;
-import org.spout.vanilla.inventory.window.block.BrewingStandWindow;
-import org.spout.vanilla.inventory.window.block.CraftingTableWindow;
-import org.spout.vanilla.inventory.window.block.DispenserWindow;
-import org.spout.vanilla.inventory.window.block.EnchantmentTableWindow;
-import org.spout.vanilla.inventory.window.block.FurnaceWindow;
-import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
-import org.spout.vanilla.inventory.window.entity.VillagerWindow;
-import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
+import org.spout.vanilla.plugin.component.inventory.WindowHolder;
+import org.spout.vanilla.plugin.inventory.block.BrewingStandInventory;
+import org.spout.vanilla.plugin.inventory.block.ChestInventory;
+import org.spout.vanilla.plugin.inventory.block.DispenserInventory;
+import org.spout.vanilla.plugin.inventory.block.EnchantmentTableInventory;
+import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
+import org.spout.vanilla.plugin.inventory.entity.VillagerInventory;
+import org.spout.vanilla.plugin.inventory.window.block.BrewingStandWindow;
+import org.spout.vanilla.plugin.inventory.window.block.CraftingTableWindow;
+import org.spout.vanilla.plugin.inventory.window.block.DispenserWindow;
+import org.spout.vanilla.plugin.inventory.window.block.EnchantmentTableWindow;
+import org.spout.vanilla.plugin.inventory.window.block.FurnaceWindow;
+import org.spout.vanilla.plugin.inventory.window.block.chest.ChestWindow;
+import org.spout.vanilla.plugin.inventory.window.entity.VillagerWindow;
+import org.spout.vanilla.plugin.protocol.msg.window.WindowOpenMessage;
 
 public class WindowOpenHandler extends MessageHandler<WindowOpenMessage> {
 	@Override

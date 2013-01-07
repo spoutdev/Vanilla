@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.plant;
+package org.spout.vanilla.plugin.material.block.plant;
 
 import java.util.Random;
 import java.util.Set;
@@ -40,17 +40,17 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.data.drops.flag.BlockFlags;
-import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.block.Growing;
-import org.spout.vanilla.material.block.Plant;
-import org.spout.vanilla.material.block.attachable.AbstractAttachable;
-import org.spout.vanilla.material.block.solid.Log;
-import org.spout.vanilla.material.item.misc.Dye;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.data.drops.flag.BlockFlags;
+import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.plugin.material.block.Growing;
+import org.spout.vanilla.plugin.material.block.Plant;
+import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
+import org.spout.vanilla.plugin.material.block.solid.Log;
+import org.spout.vanilla.plugin.material.item.misc.Dye;
 
 public class CocoaPlant extends AbstractAttachable implements Plant, Growing, DynamicMaterial, InitializableMaterial {
 	private static final int DIRECTION_MASK = 0x3;

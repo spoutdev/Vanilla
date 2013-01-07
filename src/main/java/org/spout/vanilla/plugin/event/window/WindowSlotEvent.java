@@ -24,13 +24,13 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.window;
+package org.spout.vanilla.plugin.event.window;
 
 import org.spout.api.event.HandlerList;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.inventory.window.Window;
+import org.spout.vanilla.plugin.inventory.window.Window;
 
 public class WindowSlotEvent extends WindowEvent {
 	private static HandlerList handlers = new HandlerList();

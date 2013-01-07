@@ -24,17 +24,17 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.handler.window;
+package org.spout.vanilla.plugin.protocol.handler.window;
 
 import org.spout.api.Client;
 import org.spout.api.Spout;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
-import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
+import org.spout.vanilla.plugin.component.inventory.WindowHolder;
+import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
+import org.spout.vanilla.plugin.inventory.window.block.chest.ChestWindow;
+import org.spout.vanilla.plugin.protocol.msg.window.WindowCloseMessage;
 
 public final class WindowCloseHandler extends MessageHandler<WindowCloseMessage> {
 	@Override

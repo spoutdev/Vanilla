@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.player;
+package org.spout.vanilla.plugin.event.player;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -33,7 +33,7 @@ import org.spout.api.event.entity.EntitySpawnEvent;
 import org.spout.api.exception.InvalidControllerException;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
 
 /**
  * Event which is called when a player respawns

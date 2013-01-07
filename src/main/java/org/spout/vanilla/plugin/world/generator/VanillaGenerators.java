@@ -24,17 +24,17 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator;
+package org.spout.vanilla.plugin.world.generator;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.spout.vanilla.world.generator.flat.FlatGenerator;
-import org.spout.vanilla.world.generator.nether.NetherGenerator;
-import org.spout.vanilla.world.generator.normal.NormalGenerator;
-import org.spout.vanilla.world.generator.theend.TheEndGenerator;
+import org.spout.vanilla.plugin.world.generator.flat.FlatGenerator;
+import org.spout.vanilla.plugin.world.generator.nether.NetherGenerator;
+import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
+import org.spout.vanilla.plugin.world.generator.theend.TheEndGenerator;
 
 public class VanillaGenerators {
 	public static final NormalGenerator NORMAL = new NormalGenerator();

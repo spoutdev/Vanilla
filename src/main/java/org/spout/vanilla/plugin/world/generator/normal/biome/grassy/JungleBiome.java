@@ -24,26 +24,26 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome.grassy;
+package org.spout.vanilla.plugin.world.generator.normal.biome.grassy;
 
 import java.awt.Color;
 import java.util.Random;
 
-import org.spout.vanilla.material.block.plant.TallGrass;
-import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator.TallGrassFactory;
-import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
-import org.spout.vanilla.world.generator.normal.decorator.VineDecorator;
-import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.HugeTreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.ShrubObject;
-import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
+import org.spout.vanilla.plugin.material.block.plant.TallGrass;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.FlowerDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.MushroomDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.PumpkinDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.SandAndClayDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.SugarCaneDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.TallGrassDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.TallGrassDecorator.TallGrassFactory;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.TreeDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.VineDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.BigTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.HugeTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.ShrubObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.SmallTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.TreeObject;
 
 public class JungleBiome extends GrassyBiome {
 	public JungleBiome(int biomeId) {

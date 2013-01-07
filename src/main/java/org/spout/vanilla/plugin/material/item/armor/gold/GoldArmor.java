@@ -24,11 +24,11 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.armor.gold;
+package org.spout.vanilla.plugin.material.item.armor.gold;
 
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.material.item.armor.Armor;
+import org.spout.vanilla.plugin.material.item.armor.Armor;
 
 public abstract class GoldArmor extends Armor {
 	protected GoldArmor(String name, int id, short durability, Vector2 pos) {

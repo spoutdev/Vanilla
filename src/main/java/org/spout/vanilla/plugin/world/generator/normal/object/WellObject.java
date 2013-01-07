@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.object;
+package org.spout.vanilla.plugin.world.generator.normal.object;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -35,8 +35,8 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.misc.Slab;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.misc.Slab;
 
 public class WellObject extends WorldGeneratorObject {
 	// main materials

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.biome.selector;
+package org.spout.vanilla.plugin.world.generator.biome.selector;
 
 public interface BiomeSelectorLayer extends BiomeSelectorElement {
 	public BiomeSelectorElement pick(int x, int y, int z, long seed);

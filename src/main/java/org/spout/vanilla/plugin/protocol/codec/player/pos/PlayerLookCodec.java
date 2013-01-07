@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.codec.player.pos;
+package org.spout.vanilla.plugin.protocol.codec.player.pos;
 
 import java.io.IOException;
 
@@ -33,7 +33,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.msg.player.pos.PlayerLookMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerLookMessage;
 
 public final class PlayerLookCodec extends MessageCodec<PlayerLookMessage> {
 	public PlayerLookCodec() {

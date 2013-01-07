@@ -24,9 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.plugin.material.block.solid;
 
-import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 
 public class LockedChest extends VanillaBlockMaterial {
 	public LockedChest(String name, int id) {

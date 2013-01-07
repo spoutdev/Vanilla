@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.world;
+package org.spout.vanilla.plugin.event.world;
 
 import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.data.effect.GeneralEffect;
+import org.spout.vanilla.plugin.data.effect.GeneralEffect;
 
 public class PlayParticleEffectEvent extends Event implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();

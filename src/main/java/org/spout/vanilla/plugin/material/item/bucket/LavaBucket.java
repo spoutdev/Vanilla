@@ -24,10 +24,10 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.bucket;
+package org.spout.vanilla.plugin.material.item.bucket;
 
-import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.Fuel;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class LavaBucket extends FullBucket implements Fuel {
 	public final float BURN_TIME = 1000;

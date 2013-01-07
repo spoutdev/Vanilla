@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.handler.entity;
+package org.spout.vanilla.plugin.protocol.handler.entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,13 +35,13 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.data.Animation;
-import org.spout.vanilla.event.entity.EntityAnimationEvent;
-import org.spout.vanilla.event.player.PlayerToggleSneakingEvent;
-import org.spout.vanilla.event.player.PlayerToggleSprintingEvent;
-import org.spout.vanilla.protocol.msg.entity.EntityActionMessage;
-import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.data.Animation;
+import org.spout.vanilla.plugin.event.entity.EntityAnimationEvent;
+import org.spout.vanilla.plugin.event.player.PlayerToggleSneakingEvent;
+import org.spout.vanilla.plugin.event.player.PlayerToggleSprintingEvent;
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityActionMessage;
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityMetadataMessage;
 
 public final class EntityActionHandler extends MessageHandler<EntityActionMessage> {
 	@Override

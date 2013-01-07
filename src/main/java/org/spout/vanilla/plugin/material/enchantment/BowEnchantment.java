@@ -24,10 +24,10 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.enchantment;
+package org.spout.vanilla.plugin.material.enchantment;
 
-import org.spout.vanilla.material.VanillaMaterial;
-import org.spout.vanilla.material.item.tool.weapon.Bow;
+import org.spout.vanilla.plugin.material.VanillaMaterial;
+import org.spout.vanilla.plugin.material.item.tool.weapon.Bow;
 
 public abstract class BowEnchantment extends Enchantment {
 	protected BowEnchantment(String name, int id) {

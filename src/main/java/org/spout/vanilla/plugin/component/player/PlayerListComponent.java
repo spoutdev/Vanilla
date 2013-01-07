@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.player;
+package org.spout.vanilla.plugin.component.player;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -35,7 +35,7 @@ import org.spout.api.Spout;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 
-import org.spout.vanilla.event.player.network.PlayerListEvent;
+import org.spout.vanilla.plugin.event.player.network.PlayerListEvent;
 
 public class PlayerListComponent extends EntityComponent {
 	private Player player;

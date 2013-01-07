@@ -24,17 +24,17 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.component;
+package org.spout.vanilla.plugin.material.block.component;
 
 import java.util.Set;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.component.substance.material.Jukebox;
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.data.MoveReaction;
-import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.plugin.component.substance.material.Jukebox;
+import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.plugin.data.MoveReaction;
+import org.spout.vanilla.plugin.material.Fuel;
 
 public class JukeboxBlock extends ComponentMaterial implements Fuel {
 	public final float BURN_TIME = 15;

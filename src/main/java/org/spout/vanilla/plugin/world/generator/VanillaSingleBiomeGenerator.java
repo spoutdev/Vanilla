@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator;
+package org.spout.vanilla.plugin.world.generator;
 
 import java.util.Arrays;
 
@@ -34,7 +34,7 @@ import org.spout.api.generator.biome.selector.PerBlockBiomeSelector;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
-import org.spout.vanilla.world.generator.biome.VanillaBiome;
+import org.spout.vanilla.plugin.world.generator.biome.VanillaBiome;
 
 public abstract class VanillaSingleBiomeGenerator extends VanillaBiomeGenerator {
 	private final VanillaBiome biome;

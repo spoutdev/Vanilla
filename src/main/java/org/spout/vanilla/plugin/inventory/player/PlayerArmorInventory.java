@@ -24,13 +24,13 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.player;
+package org.spout.vanilla.plugin.inventory.player;
 
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 /**
- * Represents the four armor slots on a {@link org.spout.vanilla.component.inventory.PlayerInventory}.
+ * Represents the four armor slots on a {@link org.spout.vanilla.plugin.component.inventory.PlayerInventory}.
  */
 public class PlayerArmorInventory extends Inventory {
 	private static final long serialVersionUID = 1L;

@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.nether.biome;
+package org.spout.vanilla.plugin.world.generator.nether.biome;
 
 import java.awt.Color;
 
-import org.spout.vanilla.world.generator.biome.VanillaBiome;
-import org.spout.vanilla.world.generator.nether.decorator.FireDecorator;
-import org.spout.vanilla.world.generator.nether.decorator.GlowstoneDecorator;
-import org.spout.vanilla.world.generator.nether.decorator.LavaFallDecorator;
-import org.spout.vanilla.world.generator.nether.decorator.NetherMushroomDecorator;
+import org.spout.vanilla.plugin.world.generator.biome.VanillaBiome;
+import org.spout.vanilla.plugin.world.generator.nether.decorator.FireDecorator;
+import org.spout.vanilla.plugin.world.generator.nether.decorator.GlowstoneDecorator;
+import org.spout.vanilla.plugin.world.generator.nether.decorator.LavaFallDecorator;
+import org.spout.vanilla.plugin.world.generator.nether.decorator.NetherMushroomDecorator;
 
 public class NetherrackBiome extends VanillaBiome {
 	public NetherrackBiome(int id) {

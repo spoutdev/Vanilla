@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.nether.decorator;
+package org.spout.vanilla.plugin.world.generator.nether.decorator;
 
 import java.util.Random;
 
@@ -33,9 +33,9 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.plant.Mushroom;
-import org.spout.vanilla.world.generator.nether.NetherGenerator;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.plant.Mushroom;
+import org.spout.vanilla.plugin.world.generator.nether.NetherGenerator;
 
 public class NetherMushroomDecorator extends Decorator {
 	private final byte odd = 1;

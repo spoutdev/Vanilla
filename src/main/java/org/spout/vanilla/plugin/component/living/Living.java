@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.living;
+package org.spout.vanilla.plugin.component.living;
 
 import java.util.Random;
 
@@ -36,13 +36,13 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.ai.VanillaBlockExaminer;
-import org.spout.vanilla.component.misc.DrowningComponent;
-import org.spout.vanilla.component.misc.HeadComponent;
-import org.spout.vanilla.component.misc.HealthComponent;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.material.block.Liquid;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.plugin.ai.VanillaBlockExaminer;
+import org.spout.vanilla.plugin.component.misc.DrowningComponent;
+import org.spout.vanilla.plugin.component.misc.HeadComponent;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.material.block.Liquid;
+import org.spout.vanilla.plugin.material.block.Solid;
 
 public abstract class Living extends EntityComponent {
 	private static final Random random = new Random();

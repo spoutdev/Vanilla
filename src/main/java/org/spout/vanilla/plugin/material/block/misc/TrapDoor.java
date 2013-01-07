@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.plugin.material.block.misc;
 
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
@@ -36,12 +36,12 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.data.effect.store.GeneralEffects;
-import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.block.Openable;
-import org.spout.vanilla.material.block.attachable.AbstractAttachable;
-import org.spout.vanilla.material.block.redstone.RedstoneTarget;
-import org.spout.vanilla.util.RedstoneUtil;
+import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
+import org.spout.vanilla.plugin.material.Fuel;
+import org.spout.vanilla.plugin.material.block.Openable;
+import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
+import org.spout.vanilla.plugin.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.plugin.util.RedstoneUtil;
 
 public class TrapDoor extends AbstractAttachable implements Fuel, Openable, RedstoneTarget {
 	public final float BURN_TIME = 15;

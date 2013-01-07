@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.structure.temple;
+package org.spout.vanilla.plugin.world.generator.structure.temple;
 
 import java.util.Random;
 
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.structure.BlockMaterialPicker;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.structure.BlockMaterialPicker;
 
 public class JungleTempleBlockMaterialPicker implements BlockMaterialPicker {
 	private final Random random;

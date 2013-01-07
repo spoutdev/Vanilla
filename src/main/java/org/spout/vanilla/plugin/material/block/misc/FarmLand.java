@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.plugin.material.block.misc;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
@@ -32,12 +32,12 @@ import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
 
-import org.spout.vanilla.data.tool.ToolType;
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Crop;
-import org.spout.vanilla.material.block.liquid.Water;
+import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Crop;
+import org.spout.vanilla.plugin.material.block.liquid.Water;
 
 public class FarmLand extends VanillaBlockMaterial implements InitializableMaterial, DynamicMaterial {
 	private static final EffectRange WATER_CHECK_RANGE = new CuboidEffectRange(-4, 0, -4, 4, 1, 4);

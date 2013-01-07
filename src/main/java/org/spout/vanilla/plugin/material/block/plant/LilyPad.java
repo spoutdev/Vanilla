@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.plant;
+package org.spout.vanilla.plugin.material.block.plant;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -36,14 +36,14 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.misc.HeadComponent;
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.event.cause.PlayerBreakCause;
-import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.material.block.liquid.Water;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.misc.HeadComponent;
+import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.event.cause.PlayerBreakCause;
+import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.plugin.material.block.liquid.Water;
 
 public class LilyPad extends GroundAttachable {
 	public LilyPad(String name, int id) {

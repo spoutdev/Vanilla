@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.substance;
+package org.spout.vanilla.plugin.component.substance;
 
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.data.PaintingType;
-import org.spout.vanilla.protocol.entity.object.PaintingEntityProtocol;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.data.PaintingType;
+import org.spout.vanilla.plugin.protocol.entity.object.PaintingEntityProtocol;
 
 public class Painting extends EntityComponent {
 	private PaintingType type;

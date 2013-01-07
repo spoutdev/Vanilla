@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.data.effect.type;
+package org.spout.vanilla.plugin.data.effect.type;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.data.effect.GeneralEffect;
-import org.spout.vanilla.event.block.BlockActionEvent;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.plugin.data.effect.GeneralEffect;
+import org.spout.vanilla.plugin.event.block.BlockActionEvent;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class NoteParticleEffect extends GeneralEffect {
 	private static final int NOTE_RANGE = 16;

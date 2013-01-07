@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.plugin.material.block.misc;
 
 import java.util.Random;
 
@@ -38,11 +38,11 @@ import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
 
-import org.spout.vanilla.data.Dimension;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.material.Burnable;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.plugin.data.Dimension;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.material.Burnable;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	private static final EffectRange SPREAD_RANGE = new CuboidEffectRange(-1, -1, -1, 1, 4, 1);
@@ -100,7 +100,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 
 	/**
 	 * Checks if the given fire block has a burn source at a certain face<br>
-	 * It checks if the fire has a {@link org.spout.vanilla.material.Burnable} block at the face
+	 * It checks if the fire has a {@link org.spout.vanilla.plugin.material.Burnable} block at the face
 	 * @param block of the fire
 	 * @param to the face the source is
 	 * @return True if it has a source there, False if not
@@ -112,7 +112,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 
 	/**
 	 * Checks if the given fire block has a burn source<br>
-	 * It checks if the fire has a {@link org.spout.vanilla.material.Burnable} block nearby
+	 * It checks if the fire has a {@link org.spout.vanilla.plugin.material.Burnable} block nearby
 	 * @param block of the fire
 	 * @return True if it has a source, False if not
 	 */

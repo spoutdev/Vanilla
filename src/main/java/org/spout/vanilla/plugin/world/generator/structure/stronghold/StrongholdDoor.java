@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.structure.stronghold;
+package org.spout.vanilla.plugin.world.generator.structure.stronghold;
 
 import java.util.Random;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
-import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.plugin.world.generator.structure.SimpleBlockMaterialPicker;
+import org.spout.vanilla.plugin.world.generator.structure.StructureComponent;
 
 public abstract class StrongholdDoor {
 	protected StructureComponent parent;

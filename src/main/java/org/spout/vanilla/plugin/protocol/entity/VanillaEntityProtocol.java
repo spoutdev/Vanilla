@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.entity;
+package org.spout.vanilla.plugin.protocol.entity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,20 +40,20 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.misc.HeadComponent;
-import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.entity.EntityDestroyMessage;
-import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
-import org.spout.vanilla.protocol.msg.entity.pos.EntityHeadYawMessage;
-import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionMessage;
-import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionYawMessage;
-import org.spout.vanilla.protocol.msg.entity.pos.EntityTeleportMessage;
-import org.spout.vanilla.protocol.msg.entity.pos.EntityVelocityMessage;
-import org.spout.vanilla.protocol.msg.entity.pos.EntityYawMessage;
+import org.spout.vanilla.plugin.component.misc.HeadComponent;
+import org.spout.vanilla.plugin.protocol.ChannelBufferUtils;
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityDestroyMessage;
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityMetadataMessage;
+import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityHeadYawMessage;
+import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityRelativePositionMessage;
+import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityRelativePositionYawMessage;
+import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityTeleportMessage;
+import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityVelocityMessage;
+import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityYawMessage;
 
-import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPitch;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPosition;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyYaw;
+import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.protocolifyPitch;
+import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.protocolifyPosition;
+import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.protocolifyYaw;
 
 public abstract class VanillaEntityProtocol implements EntityProtocol {
 	private List<Parameter<?>> lastMeta;

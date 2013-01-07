@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.util;
+package org.spout.vanilla.plugin.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,9 +36,9 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.data.RailsState;
-import org.spout.vanilla.material.block.rail.Rail;
-import org.spout.vanilla.material.block.rail.RailBase;
+import org.spout.vanilla.plugin.data.RailsState;
+import org.spout.vanilla.plugin.material.block.rail.Rail;
+import org.spout.vanilla.plugin.material.block.rail.RailBase;
 
 public class MinecartTrackLogic {
 	public Block block;

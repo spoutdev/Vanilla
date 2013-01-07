@@ -24,18 +24,18 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.world.sky;
+package org.spout.vanilla.plugin.component.world.sky;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 
-import org.spout.vanilla.component.world.VanillaSky;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.data.Weather;
-import org.spout.vanilla.event.world.TimeUpdateEvent;
-import org.spout.vanilla.event.world.WeatherChangeEvent;
-import org.spout.vanilla.util.MathHelper;
-import org.spout.vanilla.world.WeatherSimulator;
+import org.spout.vanilla.plugin.component.world.VanillaSky;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.data.Weather;
+import org.spout.vanilla.plugin.event.world.TimeUpdateEvent;
+import org.spout.vanilla.plugin.event.world.WeatherChangeEvent;
+import org.spout.vanilla.plugin.util.MathHelper;
+import org.spout.vanilla.plugin.world.WeatherSimulator;
 
 public class NormalSky extends VanillaSky {
 

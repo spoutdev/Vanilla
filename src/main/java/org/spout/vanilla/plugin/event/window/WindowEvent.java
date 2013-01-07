@@ -24,12 +24,12 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.window;
+package org.spout.vanilla.plugin.event.window;
 
 import org.spout.api.event.Event;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.inventory.window.Window;
+import org.spout.vanilla.plugin.inventory.window.Window;
 
 public abstract class WindowEvent extends Event implements ProtocolEvent {
 	private Window window;

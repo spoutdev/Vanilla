@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.block;
+package org.spout.vanilla.plugin.event.block;
 
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.Cause;

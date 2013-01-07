@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.populator;
+package org.spout.vanilla.plugin.world.generator.normal.populator;
 
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
@@ -37,8 +37,8 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.normal.NormalGenerator;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 
 public class RockyShieldPopulator implements GeneratorPopulator {
 	private static final Perlin SHIELD_BASE = new Perlin();

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.plugin.material.block.misc;
 
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;
@@ -39,18 +39,18 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.living.Hostile;
-import org.spout.vanilla.component.living.Living;
-import org.spout.vanilla.component.misc.SleepComponent;
-import org.spout.vanilla.component.world.VanillaSky;
-import org.spout.vanilla.data.Time;
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.util.PlayerUtil;
-import org.spout.vanilla.util.explosion.ExplosionModel;
-import org.spout.vanilla.util.explosion.ExplosionModelSpherical;
-import org.spout.vanilla.world.generator.nether.NetherGenerator;
+import org.spout.vanilla.plugin.component.living.Hostile;
+import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.misc.SleepComponent;
+import org.spout.vanilla.plugin.component.world.VanillaSky;
+import org.spout.vanilla.plugin.data.Time;
+import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.util.PlayerUtil;
+import org.spout.vanilla.plugin.util.explosion.ExplosionModel;
+import org.spout.vanilla.plugin.util.explosion.ExplosionModelSpherical;
+import org.spout.vanilla.plugin.world.generator.nether.NetherGenerator;
 
 public class BedBlock extends VanillaBlockMaterial implements InitializableMaterial {
 	public static final int NEARBY_MONSTER_RANGE = 8, NETHER_EXPLOSION_SIZE = 4;

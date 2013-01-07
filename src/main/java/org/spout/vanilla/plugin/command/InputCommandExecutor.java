@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.command;
+package org.spout.vanilla.plugin.command;
 
 import org.spout.api.Spout;
 import org.spout.api.command.Command;
@@ -38,12 +38,12 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.component.player.HUDComponent;
-import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.inventory.window.Window;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.inventory.WindowHolder;
+import org.spout.vanilla.plugin.component.player.HUDComponent;
+import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.inventory.window.Window;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class InputCommandExecutor implements CommandExecutor {
 	private BlockMaterial selection;

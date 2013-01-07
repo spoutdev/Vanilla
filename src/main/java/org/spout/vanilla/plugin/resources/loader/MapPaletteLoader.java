@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.resources.loader;
+package org.spout.vanilla.plugin.resources.loader;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,7 +32,7 @@ import java.util.zip.GZIPInputStream;
 
 import org.spout.api.resource.BasicResourceLoader;
 
-import org.spout.vanilla.resources.MapPalette;
+import org.spout.vanilla.plugin.resources.MapPalette;
 
 public class MapPaletteLoader extends BasicResourceLoader<MapPalette> {
 	@Override

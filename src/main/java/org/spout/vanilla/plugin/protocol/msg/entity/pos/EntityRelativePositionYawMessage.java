@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.msg.entity.pos;
+package org.spout.vanilla.plugin.protocol.msg.entity.pos;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.math.Vector3;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.msg.entity.EntityMessage;
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityMessage;
 
 public final class EntityRelativePositionYawMessage extends EntityMessage {
 	private final int deltaX, deltaY, deltaZ, rotation, pitch;

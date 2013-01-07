@@ -24,11 +24,11 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.data.drops.type.block;
+package org.spout.vanilla.plugin.data.drops.type.block;
 
-import org.spout.vanilla.data.drops.Drops;
-import org.spout.vanilla.data.drops.flag.PlayerFlags;
-import org.spout.vanilla.data.drops.flag.ToolEnchantFlags;
+import org.spout.vanilla.plugin.data.drops.Drops;
+import org.spout.vanilla.plugin.data.drops.flag.PlayerFlags;
+import org.spout.vanilla.plugin.data.drops.flag.ToolEnchantFlags;
 
 public class BlockDrops extends Drops {
 	/**

@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.entity.object.vehicle;
+package org.spout.vanilla.plugin.protocol.entity.object.vehicle;
 
 import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
-import org.spout.vanilla.protocol.entity.object.ObjectType;
+import org.spout.vanilla.plugin.protocol.entity.object.ObjectEntityProtocol;
+import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
 
 public class BoatObjectEntityProtocol extends ObjectEntityProtocol {
 	public BoatObjectEntityProtocol() {

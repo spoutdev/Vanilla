@@ -24,11 +24,11 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.data.effect.store;
+package org.spout.vanilla.plugin.data.effect.store;
 
-import org.spout.vanilla.data.effect.SoundEffect;
-import org.spout.vanilla.data.effect.type.NoSoundEffect;
-import org.spout.vanilla.data.effect.type.NoteSoundEffect;
+import org.spout.vanilla.plugin.data.effect.SoundEffect;
+import org.spout.vanilla.plugin.data.effect.type.NoSoundEffect;
+import org.spout.vanilla.plugin.data.effect.type.NoteSoundEffect;
 
 public class SoundEffects {
 	public static final SoundEffect NONE = new NoSoundEffect();

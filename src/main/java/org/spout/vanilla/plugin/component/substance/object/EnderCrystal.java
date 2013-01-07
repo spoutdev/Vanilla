@@ -24,11 +24,11 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.substance.object;
+package org.spout.vanilla.plugin.component.substance.object;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
-import org.spout.vanilla.protocol.entity.object.ObjectType;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.protocol.entity.object.ObjectEntityProtocol;
+import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
 
 /**
  * A component that identifies the entity as an EnderCrystal.

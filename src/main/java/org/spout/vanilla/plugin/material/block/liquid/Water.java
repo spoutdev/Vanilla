@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.liquid;
+package org.spout.vanilla.plugin.material.block.liquid;
 
 import java.util.Random;
 
@@ -36,10 +36,10 @@ import org.spout.api.material.range.EffectIterator;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.plugin.Platform;
 
-import org.spout.vanilla.data.Climate;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Liquid;
-import org.spout.vanilla.render.VanillaEffects;
+import org.spout.vanilla.plugin.data.Climate;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Liquid;
+import org.spout.vanilla.plugin.render.VanillaEffects;
 
 public class Water extends Liquid implements DynamicMaterial {
 	public Water(String name, int id, boolean flowing) {

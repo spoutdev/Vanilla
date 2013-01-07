@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.rcon.handler;
+package org.spout.vanilla.plugin.protocol.rcon.handler;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.spout.vanilla.protocol.rcon.msg.AuthMessage;
-import org.spout.vanilla.protocol.rcon.msg.CommandMessage;
-import org.spout.vanilla.protocol.rcon.msg.CommandResponseMessage;
-import org.spout.vanilla.protocol.rcon.msg.RconMessage;
+import org.spout.vanilla.plugin.protocol.rcon.msg.AuthMessage;
+import org.spout.vanilla.plugin.protocol.rcon.msg.CommandMessage;
+import org.spout.vanilla.plugin.protocol.rcon.msg.CommandResponseMessage;
+import org.spout.vanilla.plugin.protocol.rcon.msg.RconMessage;
 
 /**
  * Handler lookup for the rcon protocol

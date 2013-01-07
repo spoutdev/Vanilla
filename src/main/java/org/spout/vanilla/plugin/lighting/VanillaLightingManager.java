@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.lighting;
+package org.spout.vanilla.plugin.lighting;
 
 import org.spout.api.lighting.LightingManager;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;

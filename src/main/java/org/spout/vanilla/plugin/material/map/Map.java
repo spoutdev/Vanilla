@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.map;
+package org.spout.vanilla.plugin.material.map;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +33,8 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector2;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.event.item.MapItemUpdateEvent;
-import org.spout.vanilla.material.item.VanillaItemMaterial;
+import org.spout.vanilla.plugin.event.item.MapItemUpdateEvent;
+import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public class Map extends VanillaItemMaterial {
 	private final short width, height;

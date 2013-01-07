@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.msg.player;
+package org.spout.vanilla.plugin.protocol.msg.player;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -32,7 +32,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
+import org.spout.vanilla.plugin.protocol.msg.VanillaMainChannelMessage;
 
 public class PlayerSoundEffectMessage extends VanillaMainChannelMessage {
 	private final float x, y, z, volume, pitch;

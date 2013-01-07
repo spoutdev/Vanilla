@@ -24,17 +24,17 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.plugin.material.block.solid;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.data.tool.ToolType;
-import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.SolidMoving;
-import org.spout.vanilla.material.block.component.FurnaceBlock;
+import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
+import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.plugin.material.TimedCraftable;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.SolidMoving;
+import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
 
 public class Sand extends SolidMoving implements TimedCraftable {
 	public Sand(String name, int id) {

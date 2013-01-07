@@ -24,12 +24,12 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.structure;
+package org.spout.vanilla.plugin.world.generator.structure;
 
 import org.spout.api.math.IntVector3;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Liquid;
 
 public class ComponentCuboidPart extends ComponentPart {
 	protected IntVector3 min = new IntVector3(0, 0, 0);

@@ -24,10 +24,10 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.data;
+package org.spout.vanilla.plugin.data;
 
-import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.data.effect.type.NoteSoundEffect;
+import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
+import org.spout.vanilla.plugin.data.effect.type.NoteSoundEffect;
 
 public enum Instrument {
 	PIANO(SoundEffects.NOTE_HARP, 0),

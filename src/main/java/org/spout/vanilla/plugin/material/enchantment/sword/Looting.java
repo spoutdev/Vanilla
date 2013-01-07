@@ -24,9 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.enchantment.sword;
+package org.spout.vanilla.plugin.material.enchantment.sword;
 
-import org.spout.vanilla.material.enchantment.SwordEnchantment;
+import org.spout.vanilla.plugin.material.enchantment.SwordEnchantment;
 
 public class Looting extends SwordEnchantment {
 	public Looting(String name, int id) {

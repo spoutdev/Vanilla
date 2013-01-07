@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.msg.player.conn;
+package org.spout.vanilla.plugin.protocol.msg.player.conn;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.protocol.proxy.RedirectMessage;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
+import org.spout.vanilla.plugin.protocol.msg.VanillaMainChannelMessage;
 
 public final class PlayerKickMessage extends VanillaMainChannelMessage implements RedirectMessage {
 	private final String reason;

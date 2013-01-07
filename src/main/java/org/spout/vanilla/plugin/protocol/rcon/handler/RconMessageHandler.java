@@ -24,11 +24,11 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.rcon.handler;
+package org.spout.vanilla.plugin.protocol.rcon.handler;
 
-import org.spout.vanilla.protocol.rcon.RemoteConnectionServer;
-import org.spout.vanilla.protocol.rcon.RemoteConnectionSession;
-import org.spout.vanilla.protocol.rcon.msg.RconMessage;
+import org.spout.vanilla.plugin.protocol.rcon.RemoteConnectionServer;
+import org.spout.vanilla.plugin.protocol.rcon.RemoteConnectionSession;
+import org.spout.vanilla.plugin.protocol.rcon.msg.RconMessage;
 
 /**
  * Parent class for handlers for {@link RconMessage RconMessages}

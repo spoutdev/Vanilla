@@ -24,12 +24,12 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.data.effect.type;
+package org.spout.vanilla.plugin.data.effect.type;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.data.effect.SoundEffect;
+import org.spout.vanilla.plugin.data.effect.SoundEffect;
 
 public class NoSoundEffect extends SoundEffect {
 	public NoSoundEffect() {

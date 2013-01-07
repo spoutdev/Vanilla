@@ -24,9 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.armor.diamond;
+package org.spout.vanilla.plugin.material.item.armor.diamond;
 
-import org.spout.vanilla.material.item.armor.Boots;
+import org.spout.vanilla.plugin.material.item.armor.Boots;
 
 public class DiamondBoots extends DiamondArmor implements Boots {
 	public DiamondBoots(String name, int id, short durability) {

@@ -24,13 +24,13 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.msg.window;
+package org.spout.vanilla.plugin.protocol.msg.window;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.inventory.window.Window;
+import org.spout.vanilla.plugin.inventory.window.Window;
 
 public final class WindowTransactionMessage extends WindowMessage {
 	private final int transaction;

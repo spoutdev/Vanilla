@@ -24,12 +24,12 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.plugin;
+package org.spout.vanilla.plugin.protocol.plugin;
 
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.protocol.VanillaProtocol;
+import org.spout.vanilla.plugin.protocol.VanillaProtocol;
 
 public class RegisterPluginChannelMessageHandler extends MessageHandler<RegisterPluginChannelMessage> {
 	@Override

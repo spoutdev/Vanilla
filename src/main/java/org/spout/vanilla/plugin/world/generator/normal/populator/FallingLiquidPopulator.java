@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.populator;
+package org.spout.vanilla.plugin.world.generator.normal.populator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +39,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.set.TInt21TripleHashSet;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Liquid;
 
 public class FallingLiquidPopulator extends Populator {
 	private static final byte WATER_ATTEMPTS = 50;

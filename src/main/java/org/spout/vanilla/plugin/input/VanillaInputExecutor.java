@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.input;
+package org.spout.vanilla.plugin.input;
 
 import org.spout.api.component.impl.CameraComponent;
 import org.spout.api.component.impl.TransformComponent;

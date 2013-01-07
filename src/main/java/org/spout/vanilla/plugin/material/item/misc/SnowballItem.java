@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.misc;
+package org.spout.vanilla.plugin.material.item.misc;
 
 import com.bulletphysics.collision.shapes.SphereShape;
 
@@ -33,8 +33,8 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.substance.object.projectile.Snowball;
-import org.spout.vanilla.material.item.VanillaItemMaterial;
+import org.spout.vanilla.plugin.component.substance.object.projectile.Snowball;
+import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public class SnowballItem extends VanillaItemMaterial {
 	public SnowballItem(String name, int id) {

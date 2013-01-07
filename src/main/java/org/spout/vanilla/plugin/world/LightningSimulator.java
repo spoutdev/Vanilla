@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world;
+package org.spout.vanilla.plugin.world;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,8 +38,8 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
 
-import org.spout.vanilla.component.substance.Lightning;
-import org.spout.vanilla.data.Weather;
+import org.spout.vanilla.plugin.component.substance.Lightning;
+import org.spout.vanilla.plugin.data.Weather;
 
 public class LightningSimulator extends Component {
 	private static final int MAX_LIGHTNING_BRANCHES = 5;

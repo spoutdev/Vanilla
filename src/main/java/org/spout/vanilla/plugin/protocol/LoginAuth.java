@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol;
+package org.spout.vanilla.plugin.protocol;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -40,7 +40,7 @@ import org.spout.api.Spout;
 import org.spout.api.protocol.Session;
 import org.spout.api.scheduler.TaskPriority;
 
-import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.plugin.VanillaPlugin;
 
 public class LoginAuth implements Runnable {
 	private final static String URLBase = "http://session.minecraft.net/game/checkserver.jsp?";

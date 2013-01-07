@@ -24,13 +24,13 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.block;
+package org.spout.vanilla.plugin.inventory.block;
 
 import org.spout.api.inventory.Inventory;
 
 /**
  * Represents the inventory of a
- * {@link org.spout.vanilla.component.substance.material.chest.Chest}.
+ * {@link org.spout.vanilla.plugin.component.substance.material.chest.Chest}.
  */
 public class ChestInventory extends Inventory {
 	private static final long serialVersionUID = 1L;

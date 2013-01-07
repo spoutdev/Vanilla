@@ -24,13 +24,13 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.attachable;
+package org.spout.vanilla.plugin.material.block.attachable;
 
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 
 public class GroundAttachable extends AbstractAttachable {
 	public GroundAttachable(short dataMask, String name, int id, String model) {

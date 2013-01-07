@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.configuration;
+package org.spout.vanilla.plugin.configuration;
 
 import java.io.File;
 
@@ -32,7 +32,7 @@ import org.spout.api.util.config.ConfigurationHolder;
 import org.spout.api.util.config.ConfigurationHolderConfiguration;
 import org.spout.api.util.config.yaml.YamlConfiguration;
 
-import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.plugin.VanillaPlugin;
 
 public class InputConfiguration extends ConfigurationHolderConfiguration {
 	public static final ConfigurationHolder TOGGLE_INVENTORY = new ConfigurationHolder("KEY_E", "toggle-inventory");

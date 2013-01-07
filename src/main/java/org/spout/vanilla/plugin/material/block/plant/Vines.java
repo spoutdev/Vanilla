@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.plant;
+package org.spout.vanilla.plugin.material.block.plant;
 
 import java.util.Random;
 
@@ -44,14 +44,14 @@ import org.spout.api.math.Vector3;
 import org.spout.api.plugin.Platform;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.component.misc.HeadComponent;
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.Burnable;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Plant;
-import org.spout.vanilla.material.block.Spreading;
-import org.spout.vanilla.render.VanillaEffects;
+import org.spout.vanilla.plugin.component.misc.HeadComponent;
+import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.plugin.material.Burnable;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Plant;
+import org.spout.vanilla.plugin.material.block.Spreading;
+import org.spout.vanilla.plugin.render.VanillaEffects;
 
 public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Burnable, DynamicMaterial {
 	private static final EffectRange VINE_RANGE = new CuboidEffectRange(-4, -1, -4, 4, 1, 4);

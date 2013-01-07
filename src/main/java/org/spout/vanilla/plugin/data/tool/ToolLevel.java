@@ -24,11 +24,11 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.data.tool;
+package org.spout.vanilla.plugin.data.tool;
 
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.data.drops.flag.ToolLevelFlags;
+import org.spout.vanilla.plugin.data.drops.flag.ToolLevelFlags;
 
 public class ToolLevel {
 	public static final ToolLevel NONE = new ToolLevel(ToolLevelFlags.NONE, ToolLevelFlags.NONE_UP, 1.0f, 0, 0);

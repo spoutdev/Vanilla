@@ -24,16 +24,16 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.ore;
+package org.spout.vanilla.plugin.material.block.ore;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.data.tool.ToolLevel;
-import org.spout.vanilla.data.tool.ToolType;
-import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Ore;
-import org.spout.vanilla.material.block.component.FurnaceBlock;
+import org.spout.vanilla.plugin.data.tool.ToolLevel;
+import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.plugin.material.TimedCraftable;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Ore;
+import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
 
 public class GoldOre extends Ore implements TimedCraftable {
 	public GoldOre(String name, int id) {

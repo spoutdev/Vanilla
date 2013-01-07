@@ -24,12 +24,12 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.substance.material.chest;
+package org.spout.vanilla.plugin.component.substance.material.chest;
 
 import org.spout.api.entity.Player;
 
-import org.spout.vanilla.component.substance.material.ViewedBlockComponent;
-import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.component.substance.material.ViewedBlockComponent;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 
 public abstract class AbstractChest extends ViewedBlockComponent {
 	private boolean opened = false;

@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.world;
+package org.spout.vanilla.plugin.event.world;
 
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.world.WorldEvent;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.component.world.VanillaSky;
-import org.spout.vanilla.data.Weather;
+import org.spout.vanilla.plugin.component.world.VanillaSky;
+import org.spout.vanilla.plugin.data.Weather;
 
 public class WeatherChangeEvent extends WorldEvent implements Cancellable, ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();

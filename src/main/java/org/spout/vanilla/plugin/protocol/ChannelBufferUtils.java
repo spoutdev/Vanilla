@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol;
+package org.spout.vanilla.plugin.protocol;
 
 import java.awt.Color;
 import java.io.ByteArrayInputStream;
@@ -50,7 +50,7 @@ import org.spout.nbt.Tag;
 import org.spout.nbt.stream.NBTInputStream;
 import org.spout.nbt.stream.NBTOutputStream;
 
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public final class ChannelBufferUtils {
 	/**

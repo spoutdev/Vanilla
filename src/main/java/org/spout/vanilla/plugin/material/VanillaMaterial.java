@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material;
+package org.spout.vanilla.plugin.material;
 
 import org.spout.api.material.source.MaterialSource;
 import org.spout.api.math.Vector2;

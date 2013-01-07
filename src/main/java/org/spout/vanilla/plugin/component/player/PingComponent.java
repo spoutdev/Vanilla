@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.player;
+package org.spout.vanilla.plugin.component.player;
 
 import java.util.Random;
 
@@ -32,7 +32,7 @@ import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 
-import org.spout.vanilla.event.player.network.PlayerPingEvent;
+import org.spout.vanilla.plugin.event.player.network.PlayerPingEvent;
 
 public class PingComponent extends EntityComponent {
 	private Player player;

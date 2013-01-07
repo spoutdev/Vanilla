@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.living.neutral;
+package org.spout.vanilla.plugin.component.living.neutral;
 
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
@@ -35,23 +35,23 @@ import org.spout.api.entity.Player;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.Living;
-import org.spout.vanilla.component.misc.DiggingComponent;
-import org.spout.vanilla.component.misc.HealthComponent;
-import org.spout.vanilla.component.misc.PickupItemComponent;
-import org.spout.vanilla.component.substance.Item;
-import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.event.entity.HumanAbilityChangeEvent;
-import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
-import org.spout.vanilla.event.player.network.PlayerAbilityUpdateEvent;
-import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
-import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.protocol.entity.HumanEntityProtocol;
-import org.spout.vanilla.protocol.msg.player.PlayerGameStateMessage;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.misc.DiggingComponent;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.component.misc.PickupItemComponent;
+import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
+import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.event.entity.HumanAbilityChangeEvent;
+import org.spout.vanilla.plugin.event.player.PlayerGameModeChangedEvent;
+import org.spout.vanilla.plugin.event.player.network.PlayerAbilityUpdateEvent;
+import org.spout.vanilla.plugin.event.player.network.PlayerGameStateEvent;
+import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.protocol.entity.HumanEntityProtocol;
+import org.spout.vanilla.plugin.protocol.msg.player.PlayerGameStateMessage;
 
 /**
  * A component that identifies the entity as a Vanilla player.

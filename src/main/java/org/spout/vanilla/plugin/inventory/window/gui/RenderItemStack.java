@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.window.gui;
+package org.spout.vanilla.plugin.inventory.window.gui;
 
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.data.VanillaRenderMaterials;
-import org.spout.vanilla.material.VanillaMaterial;
+import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
+import org.spout.vanilla.plugin.material.VanillaMaterial;
 
 public class RenderItemStack extends RenderPart {
 	private static final float SCALE = 0.75f;

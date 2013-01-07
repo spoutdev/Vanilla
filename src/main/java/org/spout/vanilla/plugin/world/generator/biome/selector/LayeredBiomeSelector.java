@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.biome.selector;
+package org.spout.vanilla.plugin.world.generator.biome.selector;
 
 import java.util.logging.Level;
 
@@ -32,7 +32,7 @@ import org.spout.api.Spout;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeSelector;
 
-import org.spout.vanilla.world.generator.biome.VanillaBiomes;
+import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
 
 public class LayeredBiomeSelector extends BiomeSelector {
 	private final BiomeSelectorLayer stack;

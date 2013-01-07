@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.block;
+package org.spout.vanilla.plugin.event.block;
 
 import java.util.Arrays;
 
@@ -34,7 +34,7 @@ import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.component.substance.material.Sign;
+import org.spout.vanilla.plugin.component.substance.material.Sign;
 
 /**
  * Event which is called when the text on a sign changes

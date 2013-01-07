@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.attachable;
+package org.spout.vanilla.plugin.material.block.attachable;
 
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
@@ -34,8 +34,8 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.bytebit.ByteBitSet;
 
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.block.Attachable;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.block.Attachable;
 
 public abstract class AbstractAttachable extends VanillaBlockMaterial implements Attachable {
 	private ByteBitSet attachableFaces = new ByteBitSet(BlockFaces.NONE);

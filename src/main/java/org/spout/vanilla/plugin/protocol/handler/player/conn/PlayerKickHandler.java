@@ -24,12 +24,12 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.handler.player.conn;
+package org.spout.vanilla.plugin.protocol.handler.player.conn;
 
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.protocol.msg.player.conn.PlayerKickMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerKickMessage;
 
 public final class PlayerKickHandler extends MessageHandler<PlayerKickMessage> {
 	@Override

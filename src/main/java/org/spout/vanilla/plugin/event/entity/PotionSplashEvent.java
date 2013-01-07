@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.entity;
+package org.spout.vanilla.plugin.event.entity;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -35,7 +35,7 @@ import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
 import org.spout.api.exception.InvalidControllerException;
 
-import org.spout.vanilla.component.substance.object.projectile.Potion;
+import org.spout.vanilla.plugin.component.substance.object.projectile.Potion;
 
 /**
  * Event which is called when a potion splashes

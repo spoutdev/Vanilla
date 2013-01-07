@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.pressureplate;
+package org.spout.vanilla.plugin.material.block.pressureplate;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 
-import org.spout.vanilla.component.substance.Item;
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.block.PressurePlate;
+import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.plugin.material.block.PressurePlate;
 
 public class StonePressurePlate extends PressurePlate {
 	public StonePressurePlate(String name, int id) {

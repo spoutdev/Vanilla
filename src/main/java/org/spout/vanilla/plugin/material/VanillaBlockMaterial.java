@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material;
+package org.spout.vanilla.plugin.material;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -53,22 +53,22 @@ import org.spout.api.render.RenderMaterial;
 import org.spout.api.util.flag.Flag;
 import org.spout.api.util.flag.FlagBundle;
 
-import org.spout.vanilla.component.substance.Item;
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.data.MoveReaction;
-import org.spout.vanilla.data.RedstonePowerMode;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.data.VanillaRenderMaterials;
-import org.spout.vanilla.data.drops.flag.DropFlags;
-import org.spout.vanilla.data.drops.flag.PlayerFlags;
-import org.spout.vanilla.data.drops.type.block.BlockDrops;
-import org.spout.vanilla.data.effect.SoundEffect;
-import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.data.tool.ToolLevel;
-import org.spout.vanilla.data.tool.ToolType;
-import org.spout.vanilla.event.block.BlockActionEvent;
-import org.spout.vanilla.material.block.redstone.RedstoneSource;
-import org.spout.vanilla.render.VanillaEffects;
+import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.plugin.data.MoveReaction;
+import org.spout.vanilla.plugin.data.RedstonePowerMode;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
+import org.spout.vanilla.plugin.data.drops.flag.DropFlags;
+import org.spout.vanilla.plugin.data.drops.flag.PlayerFlags;
+import org.spout.vanilla.plugin.data.drops.type.block.BlockDrops;
+import org.spout.vanilla.plugin.data.effect.SoundEffect;
+import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
+import org.spout.vanilla.plugin.data.tool.ToolLevel;
+import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.plugin.event.block.BlockActionEvent;
+import org.spout.vanilla.plugin.material.block.redstone.RedstoneSource;
+import org.spout.vanilla.plugin.render.VanillaEffects;
 
 public abstract class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial {
 	public static short REDSTONE_POWER_MAX = 15;

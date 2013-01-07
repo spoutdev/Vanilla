@@ -24,12 +24,12 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.player;
+package org.spout.vanilla.plugin.event.player;
 
 import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
 
-import org.spout.vanilla.event.entity.VanillaEntityDeathEvent;
+import org.spout.vanilla.plugin.event.entity.VanillaEntityDeathEvent;
 
 /**
  * Event which is called when a player dies

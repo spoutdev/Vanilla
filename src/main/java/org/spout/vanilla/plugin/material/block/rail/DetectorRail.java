@@ -24,16 +24,16 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.rail;
+package org.spout.vanilla.plugin.material.block.rail;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
 
-import org.spout.vanilla.data.RailsState;
-import org.spout.vanilla.data.RedstonePowerMode;
-import org.spout.vanilla.material.block.redstone.RedstoneSource;
+import org.spout.vanilla.plugin.data.RailsState;
+import org.spout.vanilla.plugin.data.RedstonePowerMode;
+import org.spout.vanilla.plugin.material.block.redstone.RedstoneSource;
 
 public class DetectorRail extends RailBase implements RedstoneSource, DynamicMaterial {
 	public static final int TICK_DELAY = 1000;

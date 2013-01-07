@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.codec.window;
+package org.spout.vanilla.plugin.protocol.codec.window;
 
 import java.io.IOException;
 
@@ -33,7 +33,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
+import org.spout.vanilla.plugin.protocol.msg.window.WindowTransactionMessage;
 
 public final class WindowTransactionCodec extends MessageCodec<WindowTransactionMessage> {
 	public WindowTransactionCodec() {

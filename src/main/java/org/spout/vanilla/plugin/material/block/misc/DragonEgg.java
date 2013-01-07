@@ -24,9 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.plugin.material.block.misc;
 
-import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 
 public class DragonEgg extends VanillaBlockMaterial {
 	public DragonEgg(String name, int id) {

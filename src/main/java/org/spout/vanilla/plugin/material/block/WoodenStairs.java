@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block;
+package org.spout.vanilla.plugin.material.block;
 
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.material.Burnable;
-import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.plugin.material.Burnable;
+import org.spout.vanilla.plugin.material.Fuel;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class WoodenStairs extends Stairs implements Fuel, Burnable {
 	public final float BURN_TIME = 15;

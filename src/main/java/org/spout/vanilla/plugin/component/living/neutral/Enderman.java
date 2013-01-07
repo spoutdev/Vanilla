@@ -24,16 +24,16 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.living.neutral;
+package org.spout.vanilla.plugin.component.living.neutral;
 
 import com.bulletphysics.collision.shapes.BoxShape;
 
 import org.spout.api.component.impl.PhysicsComponent;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.Living;
-import org.spout.vanilla.component.living.Neutral;
-import org.spout.vanilla.protocol.entity.creature.EndermanEntityProtocol;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.living.Neutral;
+import org.spout.vanilla.plugin.protocol.entity.creature.EndermanEntityProtocol;
 
 /**
  * A component that identifies the entity as an Enderman.

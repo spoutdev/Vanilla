@@ -24,12 +24,12 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.door;
+package org.spout.vanilla.plugin.material.block.door;
 
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.DoorBlock;
+import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.DoorBlock;
 
 public class IronDoorBlock extends DoorBlock implements InitializableMaterial {
 	public IronDoorBlock(String name, int id) {

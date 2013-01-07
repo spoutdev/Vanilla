@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.command;
+package org.spout.vanilla.plugin.command;
 
 import java.util.List;
 import java.util.Set;
@@ -57,46 +57,46 @@ import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.component.living.Living;
-import org.spout.vanilla.component.living.hostile.Creeper;
-import org.spout.vanilla.component.living.hostile.EnderDragon;
-import org.spout.vanilla.component.living.hostile.Skeleton;
-import org.spout.vanilla.component.living.hostile.Zombie;
-import org.spout.vanilla.component.living.neutral.Enderman;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.misc.HealthComponent;
-import org.spout.vanilla.component.misc.HungerComponent;
-import org.spout.vanilla.component.substance.material.chest.Chest;
-import org.spout.vanilla.component.substance.object.FallingBlock;
-import org.spout.vanilla.component.test.FollowComponent;
-import org.spout.vanilla.component.test.TransformDebugComponent;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.data.effect.store.GeneralEffects;
-import org.spout.vanilla.inventory.block.BrewingStandInventory;
-import org.spout.vanilla.inventory.block.DispenserInventory;
-import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
-import org.spout.vanilla.inventory.block.FurnaceInventory;
-import org.spout.vanilla.inventory.entity.VillagerInventory;
-import org.spout.vanilla.inventory.window.WindowType;
-import org.spout.vanilla.inventory.window.block.BrewingStandWindow;
-import org.spout.vanilla.inventory.window.block.CraftingTableWindow;
-import org.spout.vanilla.inventory.window.block.DispenserWindow;
-import org.spout.vanilla.inventory.window.block.EnchantmentTableWindow;
-import org.spout.vanilla.inventory.window.block.FurnaceWindow;
-import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
-import org.spout.vanilla.inventory.window.entity.VillagerWindow;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.map.Map;
-import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
-import org.spout.vanilla.render.LightRenderEffect;
-import org.spout.vanilla.render.SkyRenderEffect;
-import org.spout.vanilla.util.explosion.ExplosionModels;
-import org.spout.vanilla.world.generator.object.RandomizableObject;
-import org.spout.vanilla.world.generator.object.VanillaObjects;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.inventory.WindowHolder;
+import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.living.hostile.Creeper;
+import org.spout.vanilla.plugin.component.living.hostile.EnderDragon;
+import org.spout.vanilla.plugin.component.living.hostile.Skeleton;
+import org.spout.vanilla.plugin.component.living.hostile.Zombie;
+import org.spout.vanilla.plugin.component.living.neutral.Enderman;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.component.misc.HungerComponent;
+import org.spout.vanilla.plugin.component.substance.material.chest.Chest;
+import org.spout.vanilla.plugin.component.substance.object.FallingBlock;
+import org.spout.vanilla.plugin.component.test.FollowComponent;
+import org.spout.vanilla.plugin.component.test.TransformDebugComponent;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
+import org.spout.vanilla.plugin.inventory.block.BrewingStandInventory;
+import org.spout.vanilla.plugin.inventory.block.DispenserInventory;
+import org.spout.vanilla.plugin.inventory.block.EnchantmentTableInventory;
+import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
+import org.spout.vanilla.plugin.inventory.entity.VillagerInventory;
+import org.spout.vanilla.plugin.inventory.window.WindowType;
+import org.spout.vanilla.plugin.inventory.window.block.BrewingStandWindow;
+import org.spout.vanilla.plugin.inventory.window.block.CraftingTableWindow;
+import org.spout.vanilla.plugin.inventory.window.block.DispenserWindow;
+import org.spout.vanilla.plugin.inventory.window.block.EnchantmentTableWindow;
+import org.spout.vanilla.plugin.inventory.window.block.FurnaceWindow;
+import org.spout.vanilla.plugin.inventory.window.block.chest.ChestWindow;
+import org.spout.vanilla.plugin.inventory.window.entity.VillagerWindow;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.map.Map;
+import org.spout.vanilla.plugin.protocol.VanillaNetworkSynchronizer;
+import org.spout.vanilla.plugin.render.LightRenderEffect;
+import org.spout.vanilla.plugin.render.SkyRenderEffect;
+import org.spout.vanilla.plugin.util.explosion.ExplosionModels;
+import org.spout.vanilla.plugin.world.generator.object.RandomizableObject;
+import org.spout.vanilla.plugin.world.generator.object.VanillaObjects;
 
 public class TestCommands {
 	@SuppressWarnings("unused")

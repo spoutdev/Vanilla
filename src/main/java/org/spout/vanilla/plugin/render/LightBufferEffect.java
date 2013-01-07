@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.render;
+package org.spout.vanilla.plugin.render;
 
 import gnu.trove.list.array.TFloatArrayList;
 

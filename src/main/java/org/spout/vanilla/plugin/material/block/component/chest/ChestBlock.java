@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.component.chest;
+package org.spout.vanilla.plugin.material.block.component.chest;
 
 import org.spout.api.component.type.BlockComponent;
 import org.spout.api.event.Cause;
@@ -36,8 +36,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.substance.Item;
-import org.spout.vanilla.component.substance.material.chest.Chest;
+import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.component.substance.material.chest.Chest;
 
 public class ChestBlock extends AbstractChestBlock {
 	public final float BURN_TIME = 15;

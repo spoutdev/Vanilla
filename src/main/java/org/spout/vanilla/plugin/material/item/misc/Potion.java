@@ -24,17 +24,17 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.misc;
+package org.spout.vanilla.plugin.material.item.misc;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.misc.EffectsComponent;
-import org.spout.vanilla.data.effect.StatusEffect;
-import org.spout.vanilla.data.effect.StatusEffectContainer;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.VanillaItemMaterial;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.misc.EffectsComponent;
+import org.spout.vanilla.plugin.data.effect.StatusEffect;
+import org.spout.vanilla.plugin.data.effect.StatusEffectContainer;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public class Potion extends VanillaItemMaterial {
 	/*

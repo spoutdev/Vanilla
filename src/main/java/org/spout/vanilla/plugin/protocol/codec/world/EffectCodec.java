@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.codec.world;
+package org.spout.vanilla.plugin.protocol.codec.world;
 
 import java.io.IOException;
 
@@ -34,7 +34,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 
-import org.spout.vanilla.protocol.msg.world.EffectMessage;
+import org.spout.vanilla.plugin.protocol.msg.world.EffectMessage;
 
 public final class EffectCodec extends MessageCodec<EffectMessage> {
 	public EffectCodec() {

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.object.tree;
+package org.spout.vanilla.plugin.world.generator.normal.object.tree;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +39,9 @@ import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.plant.Sapling;
-import org.spout.vanilla.util.MathHelper;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.plant.Sapling;
+import org.spout.vanilla.plugin.util.MathHelper;
 
 public class BigTreeObject extends TreeObject {
 	private float trunkHeightMultiplier = 0.618f;

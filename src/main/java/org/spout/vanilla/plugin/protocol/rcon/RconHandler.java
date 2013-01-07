@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.rcon;
+package org.spout.vanilla.plugin.protocol.rcon;
 
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
 
-import org.spout.vanilla.protocol.rcon.handler.RconMessageHandler;
-import org.spout.vanilla.protocol.rcon.msg.RconMessage;
+import org.spout.vanilla.plugin.protocol.rcon.handler.RconMessageHandler;
+import org.spout.vanilla.plugin.protocol.rcon.msg.RconMessage;
 
 /**
  * Handler for rcon connections

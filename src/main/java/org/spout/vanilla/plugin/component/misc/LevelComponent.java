@@ -24,13 +24,13 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.misc;
+package org.spout.vanilla.plugin.component.misc;
 
 import org.spout.api.Spout;
 import org.spout.api.component.type.EntityComponent;
 
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.player.ExperienceChangeEvent;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.protocol.entity.player.ExperienceChangeEvent;
 
 public class LevelComponent extends EntityComponent {
 	/**

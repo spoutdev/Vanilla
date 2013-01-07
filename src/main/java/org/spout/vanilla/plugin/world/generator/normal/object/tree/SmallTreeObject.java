@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.object.tree;
+package org.spout.vanilla.plugin.world.generator.normal.object.tree;
 
 import java.util.Random;
 
@@ -35,10 +35,10 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Liquid;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.block.plant.Sapling;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Liquid;
+import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.material.block.plant.Sapling;
 
 public class SmallTreeObject extends TreeObject {
 	//size control

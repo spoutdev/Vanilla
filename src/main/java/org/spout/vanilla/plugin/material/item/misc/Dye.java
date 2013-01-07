@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.misc;
+package org.spout.vanilla.plugin.material.item.misc;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
@@ -36,14 +36,14 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.passive.Sheep;
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.solid.Wool.WoolColor;
-import org.spout.vanilla.material.item.VanillaItemMaterial;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.living.passive.Sheep;
+import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.solid.Wool.WoolColor;
+import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public class Dye extends VanillaItemMaterial implements Placeable {
 	public static final Dye INK_SAC = new Dye("Ink Sac");

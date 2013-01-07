@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.redstone;
+package org.spout.vanilla.plugin.material.block.redstone;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,13 +41,13 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.data.RedstonePowerMode;
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.util.PlayerUtil;
-import org.spout.vanilla.util.RedstoneUtil;
+import org.spout.vanilla.plugin.data.RedstonePowerMode;
+import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Directional;
+import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.plugin.util.PlayerUtil;
+import org.spout.vanilla.plugin.util.RedstoneUtil;
 
 public class RedstoneRepeater extends GroundAttachable implements Directional, RedstoneSource, RedstoneTarget, DynamicMaterial, InitializableMaterial {
 	private static final int DIRECTION_MASK = 0x3;

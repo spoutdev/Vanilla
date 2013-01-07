@@ -24,12 +24,12 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.data;
+package org.spout.vanilla.plugin.data;
 
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.cuboid.Block;
 
-import org.spout.vanilla.world.generator.biome.VanillaBiome;
+import org.spout.vanilla.plugin.world.generator.biome.VanillaBiome;
 
 /**
  * Enum of Biome climates

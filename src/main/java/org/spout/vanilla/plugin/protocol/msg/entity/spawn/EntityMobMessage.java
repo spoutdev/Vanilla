@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.msg.entity.spawn;
+package org.spout.vanilla.plugin.protocol.msg.entity.spawn;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.msg.entity.EntityMessage;
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityMessage;
 
 public final class EntityMobMessage extends EntityMessage {
 	private final int type, x, y, z, yaw, pitch, headYaw;

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal;
+package org.spout.vanilla.plugin.world.generator.normal;
 
 import java.util.Random;
 
@@ -49,30 +49,30 @@ import org.spout.api.util.LogicUtil;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 import org.spout.api.util.map.TIntPairObjectHashMap;
 
-import org.spout.vanilla.data.Climate;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Liquid;
-import org.spout.vanilla.world.generator.VanillaBiomeGenerator;
-import org.spout.vanilla.world.generator.biome.VanillaBiome;
-import org.spout.vanilla.world.generator.biome.VanillaBiomes;
-import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorLayer;
-import org.spout.vanilla.world.generator.biome.selector.CylindersRangeLayer;
-import org.spout.vanilla.world.generator.biome.selector.LayeredBiomeSelector;
-import org.spout.vanilla.world.generator.biome.selector.PerlinRangeLayer;
-import org.spout.vanilla.world.generator.biome.selector.VoronoiLayer;
-import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
-import org.spout.vanilla.world.generator.normal.populator.CavePopulator;
-import org.spout.vanilla.world.generator.normal.populator.DungeonPopulator;
-import org.spout.vanilla.world.generator.normal.populator.FallingLiquidPopulator;
-import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator;
-import org.spout.vanilla.world.generator.normal.populator.MineshaftPopulator;
-import org.spout.vanilla.world.generator.normal.populator.OrePopulator;
-import org.spout.vanilla.world.generator.normal.populator.PondPopulator;
-import org.spout.vanilla.world.generator.normal.populator.RavinePopulator;
-import org.spout.vanilla.world.generator.normal.populator.RockyShieldPopulator;
-import org.spout.vanilla.world.generator.normal.populator.SnowPopulator;
-import org.spout.vanilla.world.generator.normal.populator.StrongholdPopulator;
-import org.spout.vanilla.world.generator.normal.populator.TemplePopulator;
+import org.spout.vanilla.plugin.data.Climate;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Liquid;
+import org.spout.vanilla.plugin.world.generator.VanillaBiomeGenerator;
+import org.spout.vanilla.plugin.world.generator.biome.VanillaBiome;
+import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
+import org.spout.vanilla.plugin.world.generator.biome.selector.BiomeSelectorLayer;
+import org.spout.vanilla.plugin.world.generator.biome.selector.CylindersRangeLayer;
+import org.spout.vanilla.plugin.world.generator.biome.selector.LayeredBiomeSelector;
+import org.spout.vanilla.plugin.world.generator.biome.selector.PerlinRangeLayer;
+import org.spout.vanilla.plugin.world.generator.biome.selector.VoronoiLayer;
+import org.spout.vanilla.plugin.world.generator.normal.biome.NormalBiome;
+import org.spout.vanilla.plugin.world.generator.normal.populator.CavePopulator;
+import org.spout.vanilla.plugin.world.generator.normal.populator.DungeonPopulator;
+import org.spout.vanilla.plugin.world.generator.normal.populator.FallingLiquidPopulator;
+import org.spout.vanilla.plugin.world.generator.normal.populator.GroundCoverPopulator;
+import org.spout.vanilla.plugin.world.generator.normal.populator.MineshaftPopulator;
+import org.spout.vanilla.plugin.world.generator.normal.populator.OrePopulator;
+import org.spout.vanilla.plugin.world.generator.normal.populator.PondPopulator;
+import org.spout.vanilla.plugin.world.generator.normal.populator.RavinePopulator;
+import org.spout.vanilla.plugin.world.generator.normal.populator.RockyShieldPopulator;
+import org.spout.vanilla.plugin.world.generator.normal.populator.SnowPopulator;
+import org.spout.vanilla.plugin.world.generator.normal.populator.StrongholdPopulator;
+import org.spout.vanilla.plugin.world.generator.normal.populator.TemplePopulator;
 
 public class NormalGenerator extends VanillaBiomeGenerator {
 	// numeric constants

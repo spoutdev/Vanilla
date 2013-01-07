@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.plant;
+package org.spout.vanilla.plugin.material.block.plant;
 
 import java.util.Random;
 
@@ -38,16 +38,16 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Crop;
-import org.spout.vanilla.material.block.Growing;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.material.item.misc.Dye;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Crop;
+import org.spout.vanilla.plugin.material.block.Growing;
+import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.plugin.material.item.misc.Dye;
 
 public abstract class Stem extends GroundAttachable implements Growing, Crop, DynamicMaterial {
 	private BlockMaterial lastMaterial;

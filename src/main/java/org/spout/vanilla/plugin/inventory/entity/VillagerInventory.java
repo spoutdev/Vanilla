@@ -24,13 +24,13 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.entity;
+package org.spout.vanilla.plugin.inventory.entity;
 
-import org.spout.vanilla.inventory.CraftingInventory;
+import org.spout.vanilla.plugin.inventory.CraftingInventory;
 
 /**
  * Represents the inventory of a
- * {@link org.spout.vanilla.component.living.passive.Villager}.
+ * {@link org.spout.vanilla.plugin.component.living.passive.Villager}.
  */
 public class VillagerInventory extends CraftingInventory {
 	private static final long serialVersionUID = 1L;

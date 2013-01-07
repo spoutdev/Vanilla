@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.biome.grassy;
+package org.spout.vanilla.plugin.world.generator.normal.biome.grassy;
 
 import org.spout.api.generator.biome.Decorator;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
-import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator.GroundCoverLayer;
-import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator.GroundCoverUniformLayer;
-import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator.GroundCoverVariableLayer;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.normal.biome.NormalBiome;
+import org.spout.vanilla.plugin.world.generator.normal.populator.GroundCoverPopulator.GroundCoverLayer;
+import org.spout.vanilla.plugin.world.generator.normal.populator.GroundCoverPopulator.GroundCoverUniformLayer;
+import org.spout.vanilla.plugin.world.generator.normal.populator.GroundCoverPopulator.GroundCoverVariableLayer;
 
 public abstract class GrassyBiome extends NormalBiome {
 	public GrassyBiome(int biomeId, Decorator... decorators) {

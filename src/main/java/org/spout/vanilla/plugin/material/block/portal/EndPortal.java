@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.portal;
+package org.spout.vanilla.plugin.material.block.portal;
 
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
@@ -32,8 +32,8 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Portal;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Portal;
 
 public class EndPortal extends Portal {
 	public EndPortal(String name, int id) {

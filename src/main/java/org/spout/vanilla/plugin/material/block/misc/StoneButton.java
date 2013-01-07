@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.plugin.material.block.misc;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
@@ -36,12 +36,12 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.RedstonePowerMode;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.data.effect.store.GeneralEffects;
-import org.spout.vanilla.material.block.AttachedRedstoneSource;
-import org.spout.vanilla.material.block.attachable.PointAttachable;
+import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.data.RedstonePowerMode;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
+import org.spout.vanilla.plugin.material.block.AttachedRedstoneSource;
+import org.spout.vanilla.plugin.material.block.attachable.PointAttachable;
 
 public class StoneButton extends AttachedRedstoneSource implements PointAttachable, DynamicMaterial {
 	public static final int TICK_DELAY = 1000;

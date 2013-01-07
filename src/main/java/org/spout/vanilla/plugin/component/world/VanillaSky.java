@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.world;
+package org.spout.vanilla.plugin.component.world;
 
 import java.util.HashMap;
 
@@ -35,11 +35,11 @@ import org.spout.api.geo.World;
 import org.spout.api.model.Model;
 import org.spout.api.plugin.Platform;
 
-import org.spout.vanilla.component.misc.SleepComponent;
-import org.spout.vanilla.data.Time;
-import org.spout.vanilla.data.Weather;
-import org.spout.vanilla.render.VanillaEffects;
-import org.spout.vanilla.world.WeatherSimulator;
+import org.spout.vanilla.plugin.component.misc.SleepComponent;
+import org.spout.vanilla.plugin.data.Time;
+import org.spout.vanilla.plugin.data.Weather;
+import org.spout.vanilla.plugin.render.VanillaEffects;
+import org.spout.vanilla.plugin.world.WeatherSimulator;
 
 /**
  * Represents a sky in Vanilla

@@ -44,22 +44,22 @@ import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.plugin.Platform;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.misc.HealthComponent;
-import org.spout.vanilla.component.misc.HungerComponent;
-import org.spout.vanilla.component.misc.LevelComponent;
-import org.spout.vanilla.component.misc.PickupItemComponent;
-import org.spout.vanilla.component.misc.SleepComponent;
-import org.spout.vanilla.component.player.HUDComponent;
-import org.spout.vanilla.component.player.PingComponent;
-import org.spout.vanilla.component.player.PlayerListComponent;
-import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.event.block.RedstoneChangeEvent;
-import org.spout.vanilla.input.VanillaInputExecutor;
-import org.spout.vanilla.material.block.redstone.RedstoneSource;
-import org.spout.vanilla.protocol.PastieExceptionHandler;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.inventory.WindowHolder;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.component.misc.HungerComponent;
+import org.spout.vanilla.plugin.component.misc.LevelComponent;
+import org.spout.vanilla.plugin.component.misc.PickupItemComponent;
+import org.spout.vanilla.plugin.component.misc.SleepComponent;
+import org.spout.vanilla.plugin.component.player.HUDComponent;
+import org.spout.vanilla.plugin.component.player.PingComponent;
+import org.spout.vanilla.plugin.component.player.PlayerListComponent;
+import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
+import org.spout.vanilla.plugin.event.block.RedstoneChangeEvent;
+import org.spout.vanilla.plugin.input.VanillaInputExecutor;
+import org.spout.vanilla.plugin.material.block.redstone.RedstoneSource;
+import org.spout.vanilla.plugin.protocol.PastieExceptionHandler;
 
 public class VanillaListener implements Listener {
 	private final VanillaPlugin plugin;

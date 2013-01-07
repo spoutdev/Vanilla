@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.entity.object;
+package org.spout.vanilla.plugin.protocol.entity.object;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +33,9 @@ import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 
-import org.spout.vanilla.protocol.entity.BasicEntityProtocol;
-import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
-import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
+import org.spout.vanilla.plugin.protocol.entity.BasicEntityProtocol;
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityMetadataMessage;
+import org.spout.vanilla.plugin.protocol.msg.entity.spawn.EntityObjectMessage;
 
 public class ObjectEntityProtocol extends BasicEntityProtocol {
 	public ObjectEntityProtocol(ObjectType type) {

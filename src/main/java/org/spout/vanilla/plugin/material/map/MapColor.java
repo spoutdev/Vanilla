@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.map;
+package org.spout.vanilla.plugin.material.map;
 
 public class MapColor {
 	private static final MapColor[] colors;

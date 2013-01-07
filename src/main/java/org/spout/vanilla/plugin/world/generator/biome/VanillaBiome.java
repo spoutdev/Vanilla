@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.biome;
+package org.spout.vanilla.plugin.world.generator.biome;
 
 import java.awt.Color;
 
@@ -32,8 +32,8 @@ import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.util.config.annotated.Setting;
 
-import org.spout.vanilla.data.Climate;
-import org.spout.vanilla.world.generator.biome.selector.BiomeSelectorElement;
+import org.spout.vanilla.plugin.data.Climate;
+import org.spout.vanilla.plugin.world.generator.biome.selector.BiomeSelectorElement;
 
 public abstract class VanillaBiome extends Biome implements BiomeSelectorElement {
 	private final int biomeId;

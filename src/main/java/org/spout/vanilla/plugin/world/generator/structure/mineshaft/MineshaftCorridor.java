@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.structure.mineshaft;
+package org.spout.vanilla.plugin.world.generator.structure.mineshaft;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,12 +34,12 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.normal.object.LootChestObject;
-import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
-import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
-import org.spout.vanilla.world.generator.structure.Structure;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.normal.object.LootChestObject;
+import org.spout.vanilla.plugin.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.plugin.world.generator.structure.SimpleBlockMaterialPicker;
+import org.spout.vanilla.plugin.world.generator.structure.Structure;
+import org.spout.vanilla.plugin.world.generator.structure.StructureComponent;
 
 public class MineshaftCorridor extends StructureComponent {
 	private byte sections = 5;

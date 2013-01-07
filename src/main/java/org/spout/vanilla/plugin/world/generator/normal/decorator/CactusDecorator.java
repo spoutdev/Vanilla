@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.decorator;
+package org.spout.vanilla.plugin.world.generator.normal.decorator;
 
 import java.util.Random;
 
@@ -32,8 +32,8 @@ import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.normal.object.largeplant.CactusStackObject;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.CactusStackObject;
 
 public class CactusDecorator extends Decorator {
 	private static final byte AMOUNT = 2;

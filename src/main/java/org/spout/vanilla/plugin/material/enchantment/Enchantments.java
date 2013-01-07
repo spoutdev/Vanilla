@@ -24,32 +24,32 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.enchantment;
+package org.spout.vanilla.plugin.material.enchantment;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.spout.vanilla.material.enchantment.armor.AquaAffinity;
-import org.spout.vanilla.material.enchantment.armor.BlastProtection;
-import org.spout.vanilla.material.enchantment.armor.FeatherFalling;
-import org.spout.vanilla.material.enchantment.armor.FireProtection;
-import org.spout.vanilla.material.enchantment.armor.ProjectileProtection;
-import org.spout.vanilla.material.enchantment.armor.Protection;
-import org.spout.vanilla.material.enchantment.armor.Respiration;
-import org.spout.vanilla.material.enchantment.bow.Flame;
-import org.spout.vanilla.material.enchantment.bow.Infinity;
-import org.spout.vanilla.material.enchantment.bow.Power;
-import org.spout.vanilla.material.enchantment.bow.Punch;
-import org.spout.vanilla.material.enchantment.sword.BaneOfArthropods;
-import org.spout.vanilla.material.enchantment.sword.FireAspect;
-import org.spout.vanilla.material.enchantment.sword.Knockback;
-import org.spout.vanilla.material.enchantment.sword.Looting;
-import org.spout.vanilla.material.enchantment.sword.Sharpness;
-import org.spout.vanilla.material.enchantment.sword.Smite;
-import org.spout.vanilla.material.enchantment.tool.Efficiency;
-import org.spout.vanilla.material.enchantment.tool.Fortune;
-import org.spout.vanilla.material.enchantment.tool.SilkTouch;
-import org.spout.vanilla.material.enchantment.tool.Unbreaking;
+import org.spout.vanilla.plugin.material.enchantment.armor.AquaAffinity;
+import org.spout.vanilla.plugin.material.enchantment.armor.BlastProtection;
+import org.spout.vanilla.plugin.material.enchantment.armor.FeatherFalling;
+import org.spout.vanilla.plugin.material.enchantment.armor.FireProtection;
+import org.spout.vanilla.plugin.material.enchantment.armor.ProjectileProtection;
+import org.spout.vanilla.plugin.material.enchantment.armor.Protection;
+import org.spout.vanilla.plugin.material.enchantment.armor.Respiration;
+import org.spout.vanilla.plugin.material.enchantment.bow.Flame;
+import org.spout.vanilla.plugin.material.enchantment.bow.Infinity;
+import org.spout.vanilla.plugin.material.enchantment.bow.Power;
+import org.spout.vanilla.plugin.material.enchantment.bow.Punch;
+import org.spout.vanilla.plugin.material.enchantment.sword.BaneOfArthropods;
+import org.spout.vanilla.plugin.material.enchantment.sword.FireAspect;
+import org.spout.vanilla.plugin.material.enchantment.sword.Knockback;
+import org.spout.vanilla.plugin.material.enchantment.sword.Looting;
+import org.spout.vanilla.plugin.material.enchantment.sword.Sharpness;
+import org.spout.vanilla.plugin.material.enchantment.sword.Smite;
+import org.spout.vanilla.plugin.material.enchantment.tool.Efficiency;
+import org.spout.vanilla.plugin.material.enchantment.tool.Fortune;
+import org.spout.vanilla.plugin.material.enchantment.tool.SilkTouch;
+import org.spout.vanilla.plugin.material.enchantment.tool.Unbreaking;
 
 public class Enchantments {
 	private static final Map<Integer, Enchantment> idLookup = new HashMap<Integer, Enchantment>();

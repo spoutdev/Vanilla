@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.plugin.material.block.solid;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -48,19 +48,19 @@ import org.spout.api.math.Vector3;
 import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.data.tool.ToolType;
-import org.spout.vanilla.material.Burnable;
-import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.block.component.FurnaceBlock;
-import org.spout.vanilla.material.block.plant.Sapling;
-import org.spout.vanilla.material.item.misc.Coal;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
+import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.plugin.material.Burnable;
+import org.spout.vanilla.plugin.material.Fuel;
+import org.spout.vanilla.plugin.material.TimedCraftable;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Directional;
+import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
+import org.spout.vanilla.plugin.material.block.plant.Sapling;
+import org.spout.vanilla.plugin.material.item.misc.Coal;
 
 public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable, Burnable, Directional {
 	private static final BlockFaces DIRECTION_OPPOS = new BlockFaces(BlockFace.BOTTOM, BlockFace.NORTH, BlockFace.EAST);

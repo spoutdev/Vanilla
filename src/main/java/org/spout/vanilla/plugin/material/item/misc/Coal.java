@@ -24,10 +24,10 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.misc;
+package org.spout.vanilla.plugin.material.item.misc;
 
-import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.item.VanillaItemMaterial;
+import org.spout.vanilla.plugin.material.Fuel;
+import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public class Coal extends VanillaItemMaterial implements Fuel {
 	public static final Coal COAL = new Coal("Coal");

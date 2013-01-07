@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.plugin;
+package org.spout.vanilla.plugin.protocol.plugin;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,8 +38,8 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.VanillaProtocol;
-import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
+import org.spout.vanilla.plugin.protocol.VanillaProtocol;
+import org.spout.vanilla.plugin.protocol.msg.VanillaMainChannelMessage;
 
 public class RegisterPluginChannelMessage extends VanillaMainChannelMessage {
 	private final List<String> types;

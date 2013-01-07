@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.item;
+package org.spout.vanilla.plugin.event.item;
 
 import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;

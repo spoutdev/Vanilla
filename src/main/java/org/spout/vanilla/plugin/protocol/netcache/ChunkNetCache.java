@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.netcache;
+package org.spout.vanilla.plugin.protocol.netcache;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import com.google.common.collect.Sets;
 
-import org.spout.vanilla.configuration.VanillaConfiguration;
+import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 
 public class ChunkNetCache implements Serializable {
 	private static final long serialVersionUID = 1L;

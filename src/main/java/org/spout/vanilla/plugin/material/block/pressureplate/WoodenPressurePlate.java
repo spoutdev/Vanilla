@@ -24,10 +24,10 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.pressureplate;
+package org.spout.vanilla.plugin.material.block.pressureplate;
 
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.material.block.PressurePlate;
+import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.plugin.material.block.PressurePlate;
 
 public class WoodenPressurePlate extends PressurePlate {
 	public WoodenPressurePlate(String name, int id) {

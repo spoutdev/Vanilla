@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.msg.auth;
+package org.spout.vanilla.plugin.protocol.msg.auth;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -33,7 +33,7 @@ import org.spout.api.protocol.ProcessorHandler;
 import org.spout.api.protocol.ProcessorSetupMessage;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
+import org.spout.vanilla.plugin.protocol.msg.VanillaMainChannelMessage;
 
 public class EncryptionKeyResponseMessage extends VanillaMainChannelMessage implements ProcessorSetupMessage {
 	private final byte[] secret, verifyToken;

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.component;
+package org.spout.vanilla.plugin.material.block.component;
 
 import org.spout.api.component.type.BlockComponent;
 import org.spout.api.entity.Entity;
@@ -37,12 +37,12 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.component.substance.material.Sign;
-import org.spout.vanilla.data.MoveReaction;
-import org.spout.vanilla.event.block.SignUpdateEvent;
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.attachable.AbstractAttachable;
+import org.spout.vanilla.plugin.component.substance.material.Sign;
+import org.spout.vanilla.plugin.data.MoveReaction;
+import org.spout.vanilla.plugin.event.block.SignUpdateEvent;
+import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
 
 public abstract class SignBase extends AbstractAttachable implements InitializableMaterial, VanillaComplexMaterial {
 	public SignBase(String name, int id) {

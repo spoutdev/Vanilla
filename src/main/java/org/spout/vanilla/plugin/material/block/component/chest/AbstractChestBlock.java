@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.component.chest;
+package org.spout.vanilla.plugin.material.block.component.chest;
 
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
@@ -32,13 +32,13 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.substance.material.chest.AbstractChest;
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.data.MoveReaction;
-import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.block.component.ComponentMaterial;
-import org.spout.vanilla.util.PlayerUtil;
+import org.spout.vanilla.plugin.component.substance.material.chest.AbstractChest;
+import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.plugin.data.MoveReaction;
+import org.spout.vanilla.plugin.material.Fuel;
+import org.spout.vanilla.plugin.material.block.Directional;
+import org.spout.vanilla.plugin.material.block.component.ComponentMaterial;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public abstract class AbstractChestBlock extends ComponentMaterial implements Directional, Fuel {
 	public final float BURN_TIME = 15;

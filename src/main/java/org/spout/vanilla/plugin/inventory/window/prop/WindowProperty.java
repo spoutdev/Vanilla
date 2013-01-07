@@ -24,11 +24,11 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.window.prop;
+package org.spout.vanilla.plugin.inventory.window.prop;
 
 /**
  * Represents a property of a
- * {@link org.spout.vanilla.inventory.window.Window}.
+ * {@link org.spout.vanilla.plugin.inventory.window.Window}.
  */
 public interface WindowProperty {
 	/**

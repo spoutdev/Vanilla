@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material;
+package org.spout.vanilla.plugin.material;
 
 /**
  * A material that can be burned or strengthen nearby fires

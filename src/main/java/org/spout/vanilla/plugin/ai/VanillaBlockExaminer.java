@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.ai;
+package org.spout.vanilla.plugin.plugin.ai;
 
 import java.util.Set;
 
@@ -37,8 +37,8 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.plant.TallGrass;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.plant.TallGrass;
 
 public class VanillaBlockExaminer implements BlockExaminer {
 	private boolean canStandIn(Material mat) {

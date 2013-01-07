@@ -24,11 +24,11 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.plugin.material.block.solid;
 
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.plugin.material.block.Solid;
 
 public class Brick extends Solid {
 	public Brick(String name, int id) {

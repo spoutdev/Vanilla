@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.codec.window;
+package org.spout.vanilla.plugin.protocol.codec.window;
 
 import java.io.IOException;
 
@@ -33,9 +33,9 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.inventory.window.WindowType;
-import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
+import org.spout.vanilla.plugin.inventory.window.WindowType;
+import org.spout.vanilla.plugin.protocol.ChannelBufferUtils;
+import org.spout.vanilla.plugin.protocol.msg.window.WindowOpenMessage;
 
 public final class WindowOpenCodec extends MessageCodec<WindowOpenMessage> {
 	public WindowOpenCodec() {

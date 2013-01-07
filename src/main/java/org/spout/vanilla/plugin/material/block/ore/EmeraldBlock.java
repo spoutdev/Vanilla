@@ -24,11 +24,11 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.ore;
+package org.spout.vanilla.plugin.material.block.ore;
 
-import org.spout.vanilla.data.tool.ToolLevel;
-import org.spout.vanilla.data.tool.ToolType;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.plugin.data.tool.ToolLevel;
+import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.plugin.material.block.Solid;
 
 public class EmeraldBlock extends Solid {
 	public EmeraldBlock(String name, int id) {

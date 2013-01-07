@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.nether.decorator;
+package org.spout.vanilla.plugin.world.generator.nether.decorator;
 
 import java.util.Random;
 
@@ -32,8 +32,8 @@ import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
-import org.spout.vanilla.world.generator.nether.NetherGenerator;
-import org.spout.vanilla.world.generator.nether.object.GlowstonePatchObject;
+import org.spout.vanilla.plugin.world.generator.nether.NetherGenerator;
+import org.spout.vanilla.plugin.world.generator.nether.object.GlowstonePatchObject;
 
 public class GlowstoneDecorator extends Decorator {
 	private static final byte BASE_AMOUNT = 10;

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.plugin.material.block.misc;
 
 import org.spout.api.event.Cause;
 import org.spout.api.geo.World;
@@ -33,11 +33,11 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.data.MoveReaction;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.util.PlayerUtil;
-import org.spout.vanilla.world.generator.object.VanillaObjects;
+import org.spout.vanilla.plugin.data.MoveReaction;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.block.Directional;
+import org.spout.vanilla.plugin.util.PlayerUtil;
+import org.spout.vanilla.plugin.world.generator.object.VanillaObjects;
 
 public class EndPortalFrame extends VanillaBlockMaterial implements Directional {
 	public EndPortalFrame(String name, int id) {

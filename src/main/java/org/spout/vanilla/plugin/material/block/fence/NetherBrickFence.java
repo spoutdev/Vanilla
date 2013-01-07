@@ -24,11 +24,11 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.fence;
+package org.spout.vanilla.plugin.material.block.fence;
 
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.block.Fence;
+import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.plugin.material.block.Fence;
 
 public class NetherBrickFence extends Fence {
 	public NetherBrickFence(String name, int id) {

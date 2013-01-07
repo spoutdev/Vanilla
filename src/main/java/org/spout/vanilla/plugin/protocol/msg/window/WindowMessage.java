@@ -24,10 +24,10 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.msg.window;
+package org.spout.vanilla.plugin.protocol.msg.window;
 
-import org.spout.vanilla.inventory.window.Window;
-import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
+import org.spout.vanilla.plugin.inventory.window.Window;
+import org.spout.vanilla.plugin.protocol.msg.VanillaMainChannelMessage;
 
 /**
  * An abstraction of messages meant for Windows

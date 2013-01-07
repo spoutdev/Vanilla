@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.msg.entity;
+package org.spout.vanilla.plugin.protocol.msg.entity;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -32,7 +32,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.proxy.ConnectionInfo;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
+import org.spout.vanilla.plugin.protocol.proxy.VanillaConnectionInfo;
 
 public final class EntityAttachEntityMessage extends EntityMessage {
 	private int vehicle;

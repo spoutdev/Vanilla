@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.plant;
+package org.spout.vanilla.plugin.material.block.plant;
 
 import java.util.Random;
 
@@ -38,18 +38,18 @@ import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Plant;
-import org.spout.vanilla.material.block.Spreading;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.material.block.solid.Log;
-import org.spout.vanilla.material.item.misc.Dye;
-import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.material.Fuel;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Plant;
+import org.spout.vanilla.plugin.material.block.Spreading;
+import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.plugin.material.block.solid.Log;
+import org.spout.vanilla.plugin.material.item.misc.Dye;
+import org.spout.vanilla.plugin.world.generator.normal.object.tree.TreeObject;
 
 public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel, DynamicMaterial {
 	public static final Sapling DEFAULT = new Sapling("Sapling");

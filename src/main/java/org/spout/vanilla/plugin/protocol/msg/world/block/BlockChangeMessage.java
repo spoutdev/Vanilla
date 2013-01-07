@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.msg.world.block;
+package org.spout.vanilla.plugin.protocol.msg.world.block;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -32,8 +32,8 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.msg.VanillaBlockDataChannelMessage;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.protocol.msg.VanillaBlockDataChannelMessage;
 
 public final class BlockChangeMessage extends VanillaBlockDataChannelMessage {
 	private final int x, y, z, metadata;

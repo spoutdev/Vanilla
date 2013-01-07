@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.codec.player.pos;
+package org.spout.vanilla.plugin.protocol.codec.player.pos;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,8 +36,8 @@ import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
+import org.spout.vanilla.plugin.protocol.ChannelBufferUtils;
+import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerSpawnMessage;
 
 public final class PlayerSpawnCodec extends MessageCodec<PlayerSpawnMessage> {
 	public PlayerSpawnCodec() {

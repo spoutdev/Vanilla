@@ -24,16 +24,16 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.substance.material;
+package org.spout.vanilla.plugin.component.substance.material;
 
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 
-import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.inventory.Container;
-import org.spout.vanilla.inventory.block.DispenserInventory;
-import org.spout.vanilla.inventory.window.block.DispenserWindow;
+import org.spout.vanilla.plugin.component.inventory.WindowHolder;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.inventory.Container;
+import org.spout.vanilla.plugin.inventory.block.DispenserInventory;
+import org.spout.vanilla.plugin.inventory.window.block.DispenserWindow;
 
 public class Dispenser extends ViewedBlockComponent implements Container {
 	private final DispenserInventory inventory = new DispenserInventory();

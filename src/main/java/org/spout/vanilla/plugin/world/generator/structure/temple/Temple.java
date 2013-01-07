@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.structure.temple;
+package org.spout.vanilla.plugin.world.generator.structure.temple;
 
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Quaternion;
 
-import org.spout.vanilla.world.generator.biome.VanillaBiomes;
-import org.spout.vanilla.world.generator.structure.Structure;
+import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
+import org.spout.vanilla.plugin.world.generator.structure.Structure;
 
 public class Temple extends Structure {
 	@Override

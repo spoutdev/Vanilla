@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.living.passive;
+package org.spout.vanilla.plugin.component.living.passive;
 
 import java.util.Random;
 
@@ -32,16 +32,16 @@ import org.spout.api.event.cause.EntityCause;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.Living;
-import org.spout.vanilla.component.living.Passive;
-import org.spout.vanilla.component.misc.DropComponent;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.event.entity.EntityStatusEvent;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.solid.Wool;
-import org.spout.vanilla.protocol.entity.creature.SheepEntityProtocol;
-import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.living.Passive;
+import org.spout.vanilla.plugin.component.misc.DropComponent;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.event.entity.EntityStatusEvent;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.solid.Wool;
+import org.spout.vanilla.plugin.protocol.entity.creature.SheepEntityProtocol;
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityStatusMessage;
 
 /**
  * A component that identifies the entity as a Sheep.

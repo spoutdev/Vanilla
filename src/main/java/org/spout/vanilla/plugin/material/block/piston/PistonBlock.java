@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.piston;
+package org.spout.vanilla.plugin.material.block.piston;
 
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
@@ -35,14 +35,14 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.PlusEffectRange;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.data.MoveReaction;
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.block.redstone.RedstoneTarget;
-import org.spout.vanilla.util.PlayerUtil;
-import org.spout.vanilla.util.RedstoneUtil;
+import org.spout.vanilla.plugin.data.MoveReaction;
+import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Directional;
+import org.spout.vanilla.plugin.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.plugin.util.PlayerUtil;
+import org.spout.vanilla.plugin.util.RedstoneUtil;
 
 public class PistonBlock extends VanillaBlockMaterial implements Directional, RedstoneTarget, InitializableMaterial {
 	public static final BlockFaces BTEWNS = new BlockFaces(BlockFace.BOTTOM, BlockFace.TOP, BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH);

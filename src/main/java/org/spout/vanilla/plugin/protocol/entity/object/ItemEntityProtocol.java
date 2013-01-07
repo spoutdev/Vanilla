@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.entity.object;
+package org.spout.vanilla.plugin.protocol.entity.object;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.substance.Item;
+import org.spout.vanilla.plugin.component.substance.Item;
 
 public class ItemEntityProtocol extends ObjectEntityProtocol {
 	public ItemEntityProtocol() {

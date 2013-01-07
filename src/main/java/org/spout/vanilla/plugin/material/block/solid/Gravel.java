@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.plugin.material.block.solid;
 
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.data.drops.SwitchDrops;
-import org.spout.vanilla.data.effect.store.SoundEffects;
-import org.spout.vanilla.data.tool.ToolType;
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.SolidMoving;
+import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.plugin.data.drops.SwitchDrops;
+import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
+import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.SolidMoving;
 
 public class Gravel extends SolidMoving implements InitializableMaterial {
 	public Gravel(String name, int id) {

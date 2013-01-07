@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.misc;
+package org.spout.vanilla.plugin.component.misc;
 
 import java.awt.Color;
 import java.util.List;
@@ -44,26 +44,26 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.player.HUDComponent;
-import org.spout.vanilla.component.substance.Item;
-import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.data.Animation;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.data.VanillaRenderMaterials;
-import org.spout.vanilla.event.cause.DamageCause;
-import org.spout.vanilla.event.cause.DamageCause.DamageType;
-import org.spout.vanilla.event.cause.HealCause;
-import org.spout.vanilla.event.cause.HealthChangeCause;
-import org.spout.vanilla.event.cause.NullDamageCause;
-import org.spout.vanilla.event.entity.EntityAnimationEvent;
-import org.spout.vanilla.event.entity.EntityDamageEvent;
-import org.spout.vanilla.event.entity.EntityHealEvent;
-import org.spout.vanilla.event.entity.EntityHealthChangeEvent;
-import org.spout.vanilla.event.entity.EntityStatusEvent;
-import org.spout.vanilla.event.entity.VanillaEntityDeathEvent;
-import org.spout.vanilla.event.player.PlayerDeathEvent;
-import org.spout.vanilla.event.player.network.PlayerHealthEvent;
-import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
+import org.spout.vanilla.plugin.component.player.HUDComponent;
+import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
+import org.spout.vanilla.plugin.data.Animation;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
+import org.spout.vanilla.plugin.event.cause.DamageCause;
+import org.spout.vanilla.plugin.event.cause.DamageCause.DamageType;
+import org.spout.vanilla.plugin.event.cause.HealCause;
+import org.spout.vanilla.plugin.event.cause.HealthChangeCause;
+import org.spout.vanilla.plugin.event.cause.NullDamageCause;
+import org.spout.vanilla.plugin.event.entity.EntityAnimationEvent;
+import org.spout.vanilla.plugin.event.entity.EntityDamageEvent;
+import org.spout.vanilla.plugin.event.entity.EntityHealEvent;
+import org.spout.vanilla.plugin.event.entity.EntityHealthChangeEvent;
+import org.spout.vanilla.plugin.event.entity.EntityStatusEvent;
+import org.spout.vanilla.plugin.event.entity.VanillaEntityDeathEvent;
+import org.spout.vanilla.plugin.event.player.PlayerDeathEvent;
+import org.spout.vanilla.plugin.event.player.network.PlayerHealthEvent;
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityStatusMessage;
 
 /**
  * Component that adds a health-like attribute to resources.entities.

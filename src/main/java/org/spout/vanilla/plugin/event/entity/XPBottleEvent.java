@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.entity;
+package org.spout.vanilla.plugin.event.entity;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
 import org.spout.api.exception.InvalidControllerException;
 
-import org.spout.vanilla.component.substance.object.projectile.XPBottle;
+import org.spout.vanilla.plugin.component.substance.object.projectile.XPBottle;
 
 /**
  * Event which is called when a Bottle o' Enchanting is broken and

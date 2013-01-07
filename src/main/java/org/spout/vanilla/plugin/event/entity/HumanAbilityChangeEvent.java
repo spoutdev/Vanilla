@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.entity;
+package org.spout.vanilla.plugin.event.entity;
 
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.data.GameMode;
 
 public class HumanAbilityChangeEvent extends EntityEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();

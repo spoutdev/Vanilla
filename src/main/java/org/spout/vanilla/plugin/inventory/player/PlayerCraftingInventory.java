@@ -24,11 +24,11 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.player;
+package org.spout.vanilla.plugin.inventory.player;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.inventory.CraftingInventory;
+import org.spout.vanilla.plugin.inventory.CraftingInventory;
 
 /**
  * Represents the crafting inventory in the player's inventory.

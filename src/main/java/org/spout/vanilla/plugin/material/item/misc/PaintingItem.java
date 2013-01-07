@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.misc;
+package org.spout.vanilla.plugin.material.item.misc;
 
 import java.util.Random;
 
@@ -35,9 +35,9 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.substance.Painting;
-import org.spout.vanilla.data.PaintingType;
-import org.spout.vanilla.material.item.VanillaItemMaterial;
+import org.spout.vanilla.plugin.component.substance.Painting;
+import org.spout.vanilla.plugin.data.PaintingType;
+import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public class PaintingItem extends VanillaItemMaterial {
 	private final Random random = new Random();

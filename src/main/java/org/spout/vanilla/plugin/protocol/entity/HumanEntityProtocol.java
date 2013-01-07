@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.entity;
+package org.spout.vanilla.plugin.protocol.entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +35,11 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
-import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerSpawnMessage;
 
 public class HumanEntityProtocol extends VanillaEntityProtocol {
 	@Override

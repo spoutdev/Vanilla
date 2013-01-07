@@ -24,17 +24,17 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.armor;
+package org.spout.vanilla.plugin.material.item.armor;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.event.cause.DamageCause;
-import org.spout.vanilla.event.cause.DamageCause.DamageType;
-import org.spout.vanilla.material.enchantment.Enchantment;
-import org.spout.vanilla.material.enchantment.Enchantments;
-import org.spout.vanilla.material.item.Enchantable;
-import org.spout.vanilla.material.item.VanillaItemMaterial;
+import org.spout.vanilla.plugin.event.cause.DamageCause;
+import org.spout.vanilla.plugin.event.cause.DamageCause.DamageType;
+import org.spout.vanilla.plugin.material.enchantment.Enchantment;
+import org.spout.vanilla.plugin.material.enchantment.Enchantments;
+import org.spout.vanilla.plugin.material.item.Enchantable;
+import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public abstract class Armor extends VanillaItemMaterial implements Enchantable {
 	private int protection;

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.misc;
+package org.spout.vanilla.plugin.component.misc;
 
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.geo.discrete.Point;
@@ -34,7 +34,7 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.plugin.data.VanillaData;
 
 /**
  * Component that controls the rotation of a head on Vanilla resources.entities.

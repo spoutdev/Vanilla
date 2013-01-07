@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.nether;
+package org.spout.vanilla.plugin.world.generator.nether;
 
 import java.util.Random;
 
@@ -45,12 +45,12 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Liquid;
-import org.spout.vanilla.world.generator.VanillaSingleBiomeGenerator;
-import org.spout.vanilla.world.generator.biome.VanillaBiomes;
-import org.spout.vanilla.world.generator.nether.populator.BlockPatchPopulator;
-import org.spout.vanilla.world.generator.nether.populator.NetherCavePopulator;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Liquid;
+import org.spout.vanilla.plugin.world.generator.VanillaSingleBiomeGenerator;
+import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
+import org.spout.vanilla.plugin.world.generator.nether.populator.BlockPatchPopulator;
+import org.spout.vanilla.plugin.world.generator.nether.populator.NetherCavePopulator;
 
 public class NetherGenerator extends VanillaSingleBiomeGenerator {
 	// numeric constants

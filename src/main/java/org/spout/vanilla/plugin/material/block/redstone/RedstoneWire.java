@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.redstone;
+package org.spout.vanilla.plugin.material.block.redstone;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
@@ -35,13 +35,13 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
 import org.spout.api.material.range.PlusEffectRange;
 
-import org.spout.vanilla.configuration.VanillaConfiguration;
-import org.spout.vanilla.data.RedstonePowerMode;
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.util.RedstoneUtil;
+import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
+import org.spout.vanilla.plugin.data.RedstonePowerMode;
+import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.plugin.util.RedstoneUtil;
 
 public class RedstoneWire extends GroundAttachable implements RedstoneSource, RedstoneTarget, InitializableMaterial {
 	private static final EffectRange physicsRange = new ListEffectRange(

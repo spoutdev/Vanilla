@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.window;
+package org.spout.vanilla.plugin.inventory.window;
 
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
 import org.spout.api.render.RenderMaterial;
 
-import org.spout.vanilla.data.VanillaRenderMaterials;
+import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 
 /**
  * Represents a type of {@link Window}
@@ -43,47 +43,47 @@ public enum WindowType {
 	DEFAULT(-1, VanillaRenderMaterials.INVENTORY_MATERIAL),
 	/**
 	 * The window seen when opening a
-	 * {@link org.spout.vanilla.component.substance.material.chest.Chest}
+	 * {@link org.spout.vanilla.plugin.component.substance.material.chest.Chest}
 	 */
 	CHEST(0, VanillaRenderMaterials.CONTAINER_MATERIAL),
 	/**
 	 * The window seen when using a
-	 * {@link org.spout.vanilla.component.substance.material.CraftingTable}
+	 * {@link org.spout.vanilla.plugin.component.substance.material.CraftingTable}
 	 */
 	CRAFTING_TABLE(1, VanillaRenderMaterials.CRAFTING_MATERIAL),
 	/**
 	 * The window seen when opening a
-	 * {@link org.spout.vanilla.component.substance.material.Furnace}
+	 * {@link org.spout.vanilla.plugin.component.substance.material.Furnace}
 	 */
 	FURNACE(2, VanillaRenderMaterials.FURNACE_MATERIAL),
 	/**
 	 * The window seen when opening a
-	 * {@link org.spout.vanilla.component.substance.material.Dispenser}
+	 * {@link org.spout.vanilla.plugin.component.substance.material.Dispenser}
 	 */
 	DISPENSER(3, VanillaRenderMaterials.TRAP_MATERIAL),
 	/**
 	 * The window seen when using an
-	 * {@link org.spout.vanilla.component.substance.material.EnchantmentTable}
+	 * {@link org.spout.vanilla.plugin.component.substance.material.EnchantmentTable}
 	 */
 	ENCHANTMENT_TABLE(4, VanillaRenderMaterials.ENCHANT_MATERIAL),
 	/**
 	 * The window seen when using a
-	 * {@link org.spout.vanilla.component.substance.material.BrewingStand}
+	 * {@link org.spout.vanilla.plugin.component.substance.material.BrewingStand}
 	 */
 	BREWING_STAND(5, VanillaRenderMaterials.ALCHEMY_MATERIAL),
 	/**
 	 * The window seen when trading with a
-	 * {@link org.spout.vanilla.component.living.passive.Villager}
+	 * {@link org.spout.vanilla.plugin.component.living.passive.Villager}
 	 */
 	VILLAGER(6, VanillaRenderMaterials.VILLAGER_MATERIAL),
 	/**
 	 * The window seen when using a
-	 * {@link org.spout.vanilla.component.substance.material.Beacon}
+	 * {@link org.spout.vanilla.plugin.component.substance.material.Beacon}
 	 */
 	BEACON(7, VanillaRenderMaterials.BEACON_MATERIAL),
 	/**
 	 * The window seen when using an
-	 * {@link org.spout.vanilla.component.substance.material.Anvil}
+	 * {@link org.spout.vanilla.plugin.component.substance.material.Anvil}
 	 */
 	ANVIL(8, VanillaRenderMaterials.ANVIL_MATERIAL);
 	private final int id;
@@ -97,7 +97,7 @@ public enum WindowType {
 
 	/**
 	 * Returns the id sent to the client in the
-	 * {@link org.spout.vanilla.protocol.msg.window.WindowOpenMessage}
+	 * {@link org.spout.vanilla.plugin.protocol.msg.window.WindowOpenMessage}
 	 * @return id of type
 	 */
 	public int getId() {

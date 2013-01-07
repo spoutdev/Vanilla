@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.resources;
+package org.spout.vanilla.plugin.resources;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -38,8 +38,8 @@ import org.apache.commons.io.IOUtils;
 import org.spout.api.math.MathHelper;
 import org.spout.api.resource.Resource;
 
-import org.spout.vanilla.material.map.MapColor;
-import org.spout.vanilla.material.map.MapMaterialColor;
+import org.spout.vanilla.plugin.material.map.MapColor;
+import org.spout.vanilla.plugin.material.map.MapMaterialColor;
 
 public class MapPalette extends Resource {
 	public static MapPalette DEFAULT;

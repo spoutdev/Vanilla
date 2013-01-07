@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.data;
+package org.spout.vanilla.plugin.data;
 
 import java.util.Random;
 
@@ -36,14 +36,14 @@ import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.inventory.block.ChestInventory;
-import org.spout.vanilla.inventory.block.FurnaceInventory;
-import org.spout.vanilla.inventory.player.DropInventory;
-import org.spout.vanilla.inventory.player.PlayerArmorInventory;
-import org.spout.vanilla.inventory.player.PlayerCraftingInventory;
-import org.spout.vanilla.inventory.player.PlayerMainInventory;
-import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.material.block.component.FurnaceBlock;
+import org.spout.vanilla.plugin.inventory.block.ChestInventory;
+import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
+import org.spout.vanilla.plugin.inventory.player.DropInventory;
+import org.spout.vanilla.plugin.inventory.player.PlayerArmorInventory;
+import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
+import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
+import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
 
 /**
  * * Common Vanilla-like data mappings that are found in Vanilla.

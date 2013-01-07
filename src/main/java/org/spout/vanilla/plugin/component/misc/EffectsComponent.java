@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.misc;
+package org.spout.vanilla.plugin.component.misc;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,12 +33,12 @@ import java.util.List;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.data.effect.StatusEffect;
-import org.spout.vanilla.data.effect.StatusEffectContainer;
-import org.spout.vanilla.event.entity.network.EntityEffectEvent;
-import org.spout.vanilla.event.entity.network.EntityRemoveEffectEvent;
-import org.spout.vanilla.material.item.misc.Potion;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.data.effect.StatusEffect;
+import org.spout.vanilla.plugin.data.effect.StatusEffectContainer;
+import org.spout.vanilla.plugin.event.entity.network.EntityEffectEvent;
+import org.spout.vanilla.plugin.event.entity.network.EntityRemoveEffectEvent;
+import org.spout.vanilla.plugin.material.item.misc.Potion;
 
 public class EffectsComponent extends EntityComponent {
 	private List<StatusEffectContainer> list = new ArrayList<StatusEffectContainer>();

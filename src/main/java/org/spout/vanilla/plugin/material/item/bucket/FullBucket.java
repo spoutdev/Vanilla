@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.bucket;
+package org.spout.vanilla.plugin.material.item.bucket;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -34,11 +34,11 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.inventory.PlayerInventory;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.BlockItem;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.item.BlockItem;
 
 public class FullBucket extends BlockItem {
 	public FullBucket(String name, int id, BlockMaterial place) {

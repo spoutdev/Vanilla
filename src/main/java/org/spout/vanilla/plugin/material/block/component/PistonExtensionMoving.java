@@ -24,10 +24,10 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.component;
+package org.spout.vanilla.plugin.material.block.component;
 
-import org.spout.vanilla.component.substance.material.Piston;
-import org.spout.vanilla.material.block.piston.PistonExtension;
+import org.spout.vanilla.plugin.component.substance.material.Piston;
+import org.spout.vanilla.plugin.material.block.piston.PistonExtension;
 
 /**
  * A temporary block type with entity which animates the extension of the piston

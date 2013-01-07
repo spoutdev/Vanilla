@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.component;
+package org.spout.vanilla.plugin.material.block.component;
 
 import java.util.Set;
 
@@ -35,9 +35,9 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.component.substance.Item;
-import org.spout.vanilla.component.substance.material.BrewingStand;
-import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.component.substance.material.BrewingStand;
+import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
 
 public class BrewingStandBlock extends ComponentMaterial {
 	public BrewingStandBlock(String name, int id) {

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.handler.world.block;
+package org.spout.vanilla.plugin.protocol.handler.world.block;
 
 import org.spout.api.component.type.BlockComponent;
 import org.spout.api.entity.Player;
@@ -33,8 +33,8 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 
-import org.spout.vanilla.component.substance.material.Sign;
-import org.spout.vanilla.protocol.msg.world.block.SignMessage;
+import org.spout.vanilla.plugin.component.substance.material.Sign;
+import org.spout.vanilla.plugin.protocol.msg.world.block.SignMessage;
 
 public class SignHandler extends MessageHandler<SignMessage> {
 	@Override

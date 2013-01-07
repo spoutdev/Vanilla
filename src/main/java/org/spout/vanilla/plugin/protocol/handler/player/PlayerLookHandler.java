@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.handler.player;
+package org.spout.vanilla.plugin.protocol.handler.player;
 
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.component.misc.HeadComponent;
-import org.spout.vanilla.protocol.msg.player.pos.PlayerLookMessage;
+import org.spout.vanilla.plugin.component.misc.HeadComponent;
+import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerLookMessage;
 
 public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 	@Override

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.enchantment;
+package org.spout.vanilla.plugin.material.enchantment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +39,7 @@ import org.spout.nbt.ListTag;
 import org.spout.nbt.ShortTag;
 import org.spout.nbt.Tag;
 
-import org.spout.vanilla.material.VanillaMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterial;
 
 /**
  * Represents an enchantment

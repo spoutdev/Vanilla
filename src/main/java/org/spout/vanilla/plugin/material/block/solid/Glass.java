@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.plugin.material.block.solid;
 
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.material.block.attachable.PointAttachable;
+import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.material.block.attachable.PointAttachable;
 
 public class Glass extends Solid {
 	public Glass(String name, int id) {

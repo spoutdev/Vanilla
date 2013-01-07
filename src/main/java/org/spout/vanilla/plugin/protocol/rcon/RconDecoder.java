@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.rcon;
+package org.spout.vanilla.plugin.protocol.rcon;
 
 import java.io.IOException;
 

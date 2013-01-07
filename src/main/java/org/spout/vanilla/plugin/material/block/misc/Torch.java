@@ -24,16 +24,16 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.misc;
+package org.spout.vanilla.plugin.material.block.misc;
 
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.material.block.attachable.AbstractAttachable;
-import org.spout.vanilla.material.block.attachable.PointAttachable;
-import org.spout.vanilla.util.resources.ModelUtil;
+import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
+import org.spout.vanilla.plugin.material.block.attachable.PointAttachable;
+import org.spout.vanilla.plugin.util.resources.ModelUtil;
 
 public class Torch extends AbstractAttachable implements PointAttachable {
 	public Torch(short dataMask, String name, int id, String model) {

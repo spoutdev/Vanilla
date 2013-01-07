@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.handler.player;
+package org.spout.vanilla.plugin.protocol.handler.player;
 
 import java.util.Set;
 
@@ -35,11 +35,11 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.event.cause.HealthChangeCause;
-import org.spout.vanilla.event.player.PlayerRespawnEvent;
-import org.spout.vanilla.protocol.VanillaProtocol;
-import org.spout.vanilla.protocol.msg.player.PlayerStatusMessage;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.event.cause.HealthChangeCause;
+import org.spout.vanilla.plugin.event.player.PlayerRespawnEvent;
+import org.spout.vanilla.plugin.protocol.VanillaProtocol;
+import org.spout.vanilla.plugin.protocol.msg.player.PlayerStatusMessage;
 
 public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 	@Override

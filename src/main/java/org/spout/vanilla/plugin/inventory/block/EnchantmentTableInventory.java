@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.block;
+package org.spout.vanilla.plugin.inventory.block;
 
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;

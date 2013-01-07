@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.food;
+package org.spout.vanilla.plugin.material.item.food;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.component.FurnaceBlock;
-import org.spout.vanilla.material.item.Food;
-import org.spout.vanilla.material.item.FoodEffect;
+import org.spout.vanilla.plugin.material.TimedCraftable;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
+import org.spout.vanilla.plugin.material.item.Food;
+import org.spout.vanilla.plugin.material.item.FoodEffect;
 
 public class RawFish extends Food implements TimedCraftable {
 	public RawFish(String name, int id, FoodEffect... type) {

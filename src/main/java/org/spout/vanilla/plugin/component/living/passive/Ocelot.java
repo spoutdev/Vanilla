@@ -24,13 +24,13 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.living.passive;
+package org.spout.vanilla.plugin.component.living.passive;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.Living;
-import org.spout.vanilla.component.living.Passive;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.creature.OcelotEntityProtocol;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.living.Passive;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.protocol.entity.creature.OcelotEntityProtocol;
 
 /**
  * A component that identifies the entity as a Ocelot.

@@ -24,9 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.armor.iron;
+package org.spout.vanilla.plugin.material.item.armor.iron;
 
-import org.spout.vanilla.material.item.armor.Chestplate;
+import org.spout.vanilla.plugin.material.item.armor.Chestplate;
 
 public class IronChestplate extends IronArmor implements Chestplate {
 	public IronChestplate(String name, int id, short durability) {

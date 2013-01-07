@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.inventory.util;
+package org.spout.vanilla.plugin.inventory.util;
 
 import org.spout.api.gui.Widget;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.math.Vector2;
 import org.spout.api.util.StringUtil;
 
-import org.spout.vanilla.inventory.window.InventoryEntry;
-import org.spout.vanilla.inventory.window.gui.InventorySlot;
+import org.spout.vanilla.plugin.inventory.window.InventoryEntry;
+import org.spout.vanilla.plugin.inventory.window.gui.InventorySlot;
 
 /**
  * Converts slots sent to the client into the proper Spout format.

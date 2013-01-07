@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.plant;
+package org.spout.vanilla.plugin.material.block.plant;
 
 import java.util.Random;
 import java.util.Set;
@@ -35,12 +35,12 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.data.drops.flag.BlockFlags;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Growing;
-import org.spout.vanilla.material.block.Plant;
-import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.world.generator.biome.VanillaBiomes;
+import org.spout.vanilla.plugin.data.drops.flag.BlockFlags;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Growing;
+import org.spout.vanilla.plugin.material.block.Plant;
+import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
 
 public class NetherWartBlock extends GroundAttachable implements Plant, Growing, DynamicMaterial {
 	public NetherWartBlock(String name, int id) {

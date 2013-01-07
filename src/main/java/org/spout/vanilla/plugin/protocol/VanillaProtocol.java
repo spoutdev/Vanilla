@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol;
+package org.spout.vanilla.plugin.protocol;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -47,20 +47,20 @@ import org.spout.api.protocol.Protocol;
 import org.spout.api.protocol.Session;
 import org.spout.api.util.Named;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.chat.VanillaStyleHandler;
-import org.spout.vanilla.protocol.msg.ServerPluginMessage;
-import org.spout.vanilla.protocol.msg.player.PlayerChatMessage;
-import org.spout.vanilla.protocol.msg.player.conn.PlayerHandshakeMessage;
-import org.spout.vanilla.protocol.msg.player.conn.PlayerKickMessage;
-import org.spout.vanilla.protocol.netcache.ChunkNetCache;
-import org.spout.vanilla.protocol.netcache.protocol.ChunkCacheCodec;
-import org.spout.vanilla.protocol.netcache.protocol.ChunkCacheHandler;
-import org.spout.vanilla.protocol.plugin.RegisterPluginChannelCodec;
-import org.spout.vanilla.protocol.plugin.RegisterPluginChannelMessage;
-import org.spout.vanilla.protocol.plugin.RegisterPluginChannelMessageHandler;
-import org.spout.vanilla.protocol.plugin.UnregisterPluginChannelCodec;
-import org.spout.vanilla.protocol.plugin.UnregisterPluginChannelMessageHandler;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.chat.VanillaStyleHandler;
+import org.spout.vanilla.plugin.protocol.msg.ServerPluginMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.PlayerChatMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerHandshakeMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerKickMessage;
+import org.spout.vanilla.plugin.protocol.netcache.ChunkNetCache;
+import org.spout.vanilla.plugin.protocol.netcache.protocol.ChunkCacheCodec;
+import org.spout.vanilla.plugin.protocol.netcache.protocol.ChunkCacheHandler;
+import org.spout.vanilla.plugin.protocol.plugin.RegisterPluginChannelCodec;
+import org.spout.vanilla.plugin.protocol.plugin.RegisterPluginChannelMessage;
+import org.spout.vanilla.plugin.protocol.plugin.RegisterPluginChannelMessageHandler;
+import org.spout.vanilla.plugin.protocol.plugin.UnregisterPluginChannelCodec;
+import org.spout.vanilla.plugin.protocol.plugin.UnregisterPluginChannelMessageHandler;
 
 public class VanillaProtocol extends Protocol {
 	public final static DefaultedKey<String> SESSION_ID = new DefaultedKeyImpl<String>("sessionid", "0000000000000000");

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.container;
+package org.spout.vanilla.plugin.protocol.container;
 
 import org.spout.api.component.type.BlockComponent;
 import org.spout.api.geo.cuboid.BlockComponentContainer;
@@ -36,8 +36,8 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFullState;
 import org.spout.api.util.hashing.NibblePairHashed;
 
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
+import static org.spout.vanilla.plugin.material.VanillaMaterials.getMinecraftData;
+import static org.spout.vanilla.plugin.material.VanillaMaterials.getMinecraftId;
 
 public class VanillaContainer implements BlockContainer, LightContainer, BlockComponentContainer {
 	private static final int HALF_VOLUME = Chunk.BLOCKS.HALF_VOLUME;

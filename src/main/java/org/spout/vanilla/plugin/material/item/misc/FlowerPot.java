@@ -24,10 +24,10 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.misc;
+package org.spout.vanilla.plugin.material.item.misc;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.BlockItem;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.item.BlockItem;
 
 public class FlowerPot extends BlockItem {
 	public FlowerPot(String name, int id) {

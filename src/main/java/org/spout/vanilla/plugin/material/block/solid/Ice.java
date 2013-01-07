@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.plugin.material.block.solid;
 
 import java.util.Random;
 
@@ -36,11 +36,11 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
 
-import org.spout.vanilla.data.Climate;
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.SpreadingSolid;
-import org.spout.vanilla.world.generator.nether.NetherGenerator;
+import org.spout.vanilla.plugin.data.Climate;
+import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.SpreadingSolid;
+import org.spout.vanilla.plugin.world.generator.nether.NetherGenerator;
 
 public class Ice extends SpreadingSolid implements InitializableMaterial {
 	private static final byte MIN_MELT_LIGHT = 11;

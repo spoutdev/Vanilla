@@ -24,15 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.minecart;
+package org.spout.vanilla.plugin.material.item.minecart;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.material.block.rail.RailBase;
-import org.spout.vanilla.material.item.VanillaItemMaterial;
+import org.spout.vanilla.plugin.material.block.rail.RailBase;
+import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public class MinecartItem extends VanillaItemMaterial {
 	public MinecartItem(String name, int id) {

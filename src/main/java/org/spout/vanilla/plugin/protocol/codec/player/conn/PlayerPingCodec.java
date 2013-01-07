@@ -24,14 +24,14 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.codec.player.conn;
+package org.spout.vanilla.plugin.protocol.codec.player.conn;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.msg.player.conn.PlayerPingMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerPingMessage;
 
 public final class PlayerPingCodec extends MessageCodec<PlayerPingMessage> {
 	public PlayerPingCodec() {

@@ -50,7 +50,7 @@
  * License and see <http://www.spout.org/SpoutDevLicenseV1.txt> for the full license,
  * including the MIT license.
  */
-package org.spout.vanilla.protocol.msg;
+package org.spout.vanilla.plugin.protocol.msg;
 
 import java.io.IOException;
 
@@ -64,7 +64,7 @@ import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.VanillaProtocol;
+import org.spout.vanilla.plugin.protocol.VanillaProtocol;
 
 public class ServerPluginMessage extends VanillaMainChannelMessage {
 	private final byte[] data;

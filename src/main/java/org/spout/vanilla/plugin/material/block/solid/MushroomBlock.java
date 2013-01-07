@@ -24,13 +24,13 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.block.solid;
+package org.spout.vanilla.plugin.material.block.solid;
 
-import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.plugin.material.Fuel;
+import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Solid;
 
 public class MushroomBlock extends Solid implements Fuel, InitializableMaterial {
 	public final float BURN_TIME = 15;

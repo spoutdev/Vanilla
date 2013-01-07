@@ -29,7 +29,7 @@ package org.spout.vanilla.plugin.world.generator.normal.biome.snowy;
 public class TaigaHillsBiome extends TaigaBiome {
 	public TaigaHillsBiome(int biomeId) {
 		super(biomeId);
-		setMinMax(46, 100);
+		setMinMax(75, 97);
 	}
 
 	@Override

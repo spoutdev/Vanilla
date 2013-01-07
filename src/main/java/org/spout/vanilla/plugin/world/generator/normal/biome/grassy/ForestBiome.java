@@ -45,7 +45,7 @@ public class ForestBiome extends GrassyBiome {
 		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new ForestTreeWGOFactory()),
 				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory(), (byte) 3),
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator());
-		setMinMax(51, 90);
+		setMinMax(66, 75);
 		setGrassColorMultiplier(new Color(121, 192, 90));
 		setFoliageColorMultiplier(new Color(89, 174, 48));
 	}

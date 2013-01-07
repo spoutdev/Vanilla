@@ -45,7 +45,7 @@ public class TaigaBiome extends SnowyBiome {
 		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new TaigaTreeWGOFactory()),
 				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory()), new MushroomDecorator(),
 				new SugarCaneDecorator(), new PumpkinDecorator());
-		setMinMax(51, 90);
+		setMinMax(66, 79);
 		setGrassColorMultiplier(new Color(130, 181, 147));
 		setFoliageColorMultiplier(new Color(99, 162, 119));
 	}

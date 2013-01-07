@@ -29,11 +29,7 @@ package org.spout.vanilla.plugin.world.generator.theend;
 import java.util.Random;
 
 import net.royawesome.jlibnoise.NoiseQuality;
-import net.royawesome.jlibnoise.module.combiner.Add;
-import net.royawesome.jlibnoise.module.combiner.Multiply;
-import net.royawesome.jlibnoise.module.modifier.Clamp;
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
-import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.generator.WorldGeneratorUtils;
@@ -51,7 +47,7 @@ import org.spout.vanilla.plugin.world.generator.VanillaSingleBiomeGenerator;
 import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
 
 public class TheEndGenerator extends VanillaSingleBiomeGenerator {
-	private static final int SEA_LEVEL = 63;
+	private static final int SEA_LEVEL = 62;
 	private static final int ISLAND_HEIGHT = 56;
 	private static final int ISLAND_OFFSET = 8;
 	private static final int ISLAND_RADIUS = 144;
@@ -59,53 +55,20 @@ public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 	private static final double ISLAND_HEIGHT_SCALE = ((double) ISLAND_RADIUS / (double) ISLAND_HEIGHT) * 2d;
 	public static final int HEIGHT = ((ISLAND_HEIGHT + ISLAND_OFFSET + 1) / 4) * 4 + 4;
 	// noise for generation
-	private static final Perlin ELEVATION = new Perlin();
-	private static final Perlin ROUGHNESS = new Perlin();
-	private static final Perlin DETAIL = new Perlin();
-	private static final Turbulence TURBULENCE = new Turbulence();
-	private static final ScalePoint SCALE = new ScalePoint();
-	private static final Clamp FINAL = new Clamp();
+	private static final Perlin PERLIN = new Perlin();
+	private static final ScalePoint NOISE = new ScalePoint();
 
 	static {
-		ELEVATION.setFrequency(0.012);
-		ELEVATION.setLacunarity(1);
-		ELEVATION.setNoiseQuality(NoiseQuality.BEST);
-		ELEVATION.setPersistence(0.7);
-		ELEVATION.setOctaveCount(1);
+		PERLIN.setFrequency(0.01);
+		PERLIN.setLacunarity(2);
+		PERLIN.setNoiseQuality(NoiseQuality.BEST);
+		PERLIN.setPersistence(0.5);
+		PERLIN.setOctaveCount(16);
 
-		ROUGHNESS.setFrequency(0.0318);
-		ROUGHNESS.setLacunarity(1);
-		ROUGHNESS.setNoiseQuality(NoiseQuality.BEST);
-		ROUGHNESS.setPersistence(0.9);
-		ROUGHNESS.setOctaveCount(1);
-
-		DETAIL.setFrequency(0.042);
-		DETAIL.setLacunarity(1);
-		DETAIL.setNoiseQuality(NoiseQuality.BEST);
-		DETAIL.setPersistence(0.7);
-		DETAIL.setOctaveCount(1);
-
-		final Multiply multiply = new Multiply();
-		multiply.SetSourceModule(0, ROUGHNESS);
-		multiply.SetSourceModule(1, DETAIL);
-
-		final Add add = new Add();
-		add.SetSourceModule(0, multiply);
-		add.SetSourceModule(1, ELEVATION);
-
-		TURBULENCE.SetSourceModule(0, add);
-		TURBULENCE.setFrequency(0.01);
-		TURBULENCE.setPower(8);
-		TURBULENCE.setRoughness(1);
-
-		SCALE.SetSourceModule(0, TURBULENCE);
-		SCALE.setxScale(0.7);
-		SCALE.setyScale(1);
-		SCALE.setzScale(0.7);
-
-		FINAL.SetSourceModule(0, SCALE);
-		FINAL.setLowerBound(-1);
-		FINAL.setUpperBound(1);
+		NOISE.SetSourceModule(0, PERLIN);
+		NOISE.setxScale(0.7);
+		NOISE.setyScale(1);
+		NOISE.setzScale(0.7);
 	}
 
 	public TheEndGenerator() {
@@ -125,20 +88,12 @@ public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 
 	@Override
 	protected void generateTerrain(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
-		if (x < -ISLAND_RADIUS || x > ISLAND_RADIUS
-				|| y < 0 || y > HEIGHT
-				|| z < -ISLAND_RADIUS || z > ISLAND_RADIUS) {
-			return;
-		}
-		ELEVATION.setSeed((int) seed * 23);
-		ROUGHNESS.setSeed((int) seed * 29);
-		DETAIL.setSeed((int) seed * 17);
-		TURBULENCE.setSeed((int) seed * 53);
+		PERLIN.setSeed((int) seed * 23);
 		final Vector3 size = blockData.getSize();
 		final int sizeX = size.getFloorX();
 		final int sizeY = MathHelper.clamp(size.getFloorY(), 0, HEIGHT);
 		final int sizeZ = size.getFloorZ();
-		final double[][][] noise = WorldGeneratorUtils.fastNoise(FINAL, sizeX, sizeY, sizeZ, 4, x, y, z);
+		final double[][][] noise = WorldGeneratorUtils.fastNoise(NOISE, sizeX, sizeY, sizeZ, 4, x, y, z);
 		for (int xx = 0; xx < sizeX; xx++) {
 			for (int yy = 0; yy < sizeY; yy++) {
 				for (int zz = 0; zz < sizeZ; zz++) {

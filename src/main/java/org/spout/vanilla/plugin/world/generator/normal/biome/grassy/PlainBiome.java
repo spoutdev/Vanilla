@@ -40,7 +40,7 @@ public class PlainBiome extends GrassyBiome {
 		super(id, new SandAndClayDecorator(), new FlowerDecorator((byte) 4),
 				new TallGrassDecorator(new NormalTallGrassFactory(), (byte) 5),
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator());
-		setMinMax(64, 75);
+		setMinMax(66, 75);
 		setGrassColorMultiplier(new Color(145, 189, 89));
 		setFoliageColorMultiplier(new Color(119, 171, 47));
 	}

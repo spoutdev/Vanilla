@@ -35,7 +35,7 @@ import org.spout.vanilla.plugin.world.generator.normal.decorator.SugarCaneDecora
 public class BeachBiome extends SandyBiome {
 	public BeachBiome(int biomeId) {
 		super(biomeId, new SandAndClayDecorator(), new MushroomDecorator(), new SugarCaneDecorator());
-		setMinMax(60, 67);
+		setMinMax(62, 66);
 		setGrassColorMultiplier(new Color(145, 189, 89));
 		setFoliageColorMultiplier(new Color(119, 171, 47));
 	}

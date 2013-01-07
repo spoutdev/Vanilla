@@ -29,11 +29,7 @@ package org.spout.vanilla.plugin.world.generator.normal;
 import java.util.Random;
 
 import net.royawesome.jlibnoise.NoiseQuality;
-import net.royawesome.jlibnoise.module.combiner.Add;
-import net.royawesome.jlibnoise.module.combiner.Multiply;
-import net.royawesome.jlibnoise.module.modifier.Clamp;
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
-import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.generator.WorldGeneratorUtils;
@@ -75,60 +71,27 @@ import org.spout.vanilla.plugin.world.generator.normal.populator.StrongholdPopul
 import org.spout.vanilla.plugin.world.generator.normal.populator.TemplePopulator;
 
 public class NormalGenerator extends VanillaBiomeGenerator {
-	// numeric constants
+	// world constants
 	public static final int HEIGHT;
-	public static final int SEA_LEVEL = 63;
+	public static final int SEA_LEVEL = 62;
 	private static final byte BEDROCK_DEPTH = 5;
 	// noise for generation
-	private static final Perlin ELEVATION = new Perlin();
-	private static final Perlin ROUGHNESS = new Perlin();
-	private static final Perlin DETAIL = new Perlin();
-	private static final Turbulence TURBULENCE = new Turbulence();
-	private static final ScalePoint SCALE = new ScalePoint();
-	private static final Clamp FINAL = new Clamp();
+	private static final Perlin PERLIN = new Perlin();
+	private static final ScalePoint NOISE = new ScalePoint();
 	// smoothing stuff
 	private static final int SMOOTH_SIZE = 4;
 
 	static {
-		ELEVATION.setFrequency(0.2);
-		ELEVATION.setLacunarity(1);
-		ELEVATION.setNoiseQuality(NoiseQuality.BEST);
-		ELEVATION.setPersistence(0.7);
-		ELEVATION.setOctaveCount(2);
+		PERLIN.setFrequency(0.01);
+		PERLIN.setLacunarity(2);
+		PERLIN.setNoiseQuality(NoiseQuality.BEST);
+		PERLIN.setPersistence(0.5);
+		PERLIN.setOctaveCount(16);
 
-		ROUGHNESS.setFrequency(0.3);
-		ROUGHNESS.setLacunarity(1);
-		ROUGHNESS.setNoiseQuality(NoiseQuality.BEST);
-		ROUGHNESS.setPersistence(0.9);
-		ROUGHNESS.setOctaveCount(3);
-
-		DETAIL.setFrequency(0.5);
-		DETAIL.setLacunarity(1);
-		DETAIL.setNoiseQuality(NoiseQuality.BEST);
-		DETAIL.setPersistence(0.7);
-		DETAIL.setOctaveCount(5);
-
-		final Multiply multiply = new Multiply();
-		multiply.SetSourceModule(0, ROUGHNESS);
-		multiply.SetSourceModule(1, DETAIL);
-
-		final Add add = new Add();
-		add.SetSourceModule(0, multiply);
-		add.SetSourceModule(1, ELEVATION);
-
-		SCALE.SetSourceModule(0, add);
-		SCALE.setxScale(0.06);
-		SCALE.setyScale(0.06);
-		SCALE.setzScale(0.06);
-
-		TURBULENCE.SetSourceModule(0, SCALE);
-		TURBULENCE.setFrequency(0.01);
-		TURBULENCE.setPower(8);
-		TURBULENCE.setRoughness(1);
-
-		FINAL.SetSourceModule(0, SCALE);
-		FINAL.setLowerBound(-1);
-		FINAL.setUpperBound(1);
+		NOISE.SetSourceModule(0, PERLIN);
+		NOISE.setxScale(1);
+		NOISE.setyScale(1);
+		NOISE.setzScale(1);
 
 		int height = 0;
 		for (VanillaBiome biome : VanillaBiomes.getBiomes()) {
@@ -190,12 +153,9 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		final int sizeX = size.getFloorX();
 		final int sizeY = MathHelper.clamp(size.getFloorY(), 0, HEIGHT);
 		final int sizeZ = size.getFloorZ();
-		ELEVATION.setSeed((int) seed * 23);
-		ROUGHNESS.setSeed((int) seed * 29);
-		DETAIL.setSeed((int) seed * 17);
-		TURBULENCE.setSeed((int) seed * 53);
+		PERLIN.setSeed((int) seed);
 		final Random random = WorldGeneratorUtils.getRandom(seed, x, y, z, 6516);
-		final double[][][] noise = WorldGeneratorUtils.fastNoise(FINAL, sizeX, sizeY, sizeZ, 4, x, y, z);
+		final double[][][] noise = WorldGeneratorUtils.fastNoise(NOISE, sizeX, sizeY, sizeZ, 4, x, y, z);
 		final BiomeSelector selector = getSelector();
 		final TIntPairObjectHashMap<NormalBiome> biomeCache = new TIntPairObjectHashMap<NormalBiome>();
 		for (int xx = 0; xx < sizeX; xx++) {
@@ -299,16 +259,16 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		//
 		final CylindersRangeLayer rivers =
 				new CylindersRangeLayer(2).
-						setCylindersFrequency(0.0025).
-						setTurbulenceFrequency(0.0085).setTurbulencePower(80).setTurbulenceRoughness(3);
+				setCylindersFrequency(0.0025).
+				setTurbulenceFrequency(0.0085).setTurbulencePower(80).setTurbulenceRoughness(3);
 		final PerlinRangeLayer hills =
 				new PerlinRangeLayer(1).
-						setPerlinFrequency(0.01 / scale).setPerlinOctaveCount(1).
-						setTurbulenceFrequency(0.03).setTurbulencePower(20).setTurbulenceRoughness(1);
+				setPerlinFrequency(0.01 / scale).setPerlinOctaveCount(1).
+				setTurbulenceFrequency(0.03).setTurbulencePower(20).setTurbulenceRoughness(1);
 		final PerlinRangeLayer frozenOceans =
 				new PerlinRangeLayer(3).
-						setPerlinFrequency(0.01 / scale).setPerlinOctaveCount(1).
-						setTurbulenceFrequency(0.03).setTurbulencePower(20).setTurbulenceRoughness(1);
+				setPerlinFrequency(0.01 / scale).setPerlinOctaveCount(1).
+				setTurbulenceFrequency(0.03).setTurbulencePower(20).setTurbulenceRoughness(1);
 		//
 		// LAND LAYERS
 		//
@@ -352,16 +312,16 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		//
 		final BiomeSelectorLayer mushroom =
 				new PerlinRangeLayer(11).
-						setPerlinFrequency(0.01 / scale).setPerlinOctaveCount(1).
-						setTurbulenceFrequency(0.03).setTurbulencePower(20).setTurbulenceRoughness(1).
-						addElement(VanillaBiomes.OCEAN, -1, 0.78f).addElement(VanillaBiomes.MUSHROOM_SHORE, 0.78f, 0.85f).addElement(VanillaBiomes.MUSHROOM, 0.85f, 1);
+				setPerlinFrequency(0.01 / scale).setPerlinOctaveCount(1).
+				setTurbulenceFrequency(0.03).setTurbulencePower(20).setTurbulenceRoughness(1).
+				addElement(VanillaBiomes.OCEAN, -1, 0.78f).addElement(VanillaBiomes.MUSHROOM_SHORE, 0.78f, 0.85f).addElement(VanillaBiomes.MUSHROOM, 0.85f, 1);
 		final BiomeSelectorLayer beach = rivers.clone().
 				addElement(VanillaBiomes.BEACH, -1, 0.89f).addElement(VanillaBiomes.RIVER, 0.89f, 1);
 		final BiomeSelectorLayer land =
 				new VoronoiLayer(7).
-						setVoronoiFrequency(0.007 / scale).
-						setTurbulenceFrequency(0.004).setTurbulencePower(70).
-						addElements(desertLand, forestLand, jungleLand, plains, swamp, taigaLand, tundraLand);
+				setVoronoiFrequency(0.007 / scale).
+				setTurbulenceFrequency(0.004).setTurbulencePower(70).
+				addElements(desertLand, forestLand, jungleLand, plains, swamp, taigaLand, tundraLand);
 		final BiomeSelectorLayer smallMountains = rivers.clone().
 				addElement(VanillaBiomes.SMALL_MOUNTAINS, -1, 0.89f).addElement(VanillaBiomes.RIVER, 0.89f, 1);
 		final BiomeSelectorLayer mountains = rivers.clone().
@@ -371,9 +331,9 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		//
 		final BiomeSelectorLayer start =
 				new PerlinRangeLayer(5).
-						setPerlinFrequency(0.007 / scale).setPerlinOctaveCount(1).
-						setTurbulenceFrequency(0.02).setTurbulencePower(20).setTurbulenceRoughness(1).
-						addElement(mushroom, -1, -0.3f).addElement(VanillaBiomes.OCEAN, -0.3f, -0.05f).addElement(beach, -0.05f, 0).addElement(land, 0, 0.675f).addElement(smallMountains, 0.675f, 0.71f).addElement(mountains, 0.71f, 1);
+				setPerlinFrequency(0.007 / scale).setPerlinOctaveCount(1).
+				setTurbulenceFrequency(0.02).setTurbulencePower(20).setTurbulenceRoughness(1).
+				addElement(mushroom, -1, -0.3f).addElement(VanillaBiomes.OCEAN, -0.3f, -0.05f).addElement(beach, -0.05f, 0).addElement(land, 0, 0.675f).addElement(smallMountains, 0.675f, 0.71f).addElement(mountains, 0.71f, 1);
 
 		return start;
 	}

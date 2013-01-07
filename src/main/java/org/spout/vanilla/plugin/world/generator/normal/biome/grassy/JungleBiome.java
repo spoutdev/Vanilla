@@ -50,7 +50,7 @@ public class JungleBiome extends GrassyBiome {
 		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new JungleTreeWGOFactory()),
 				new FlowerDecorator((byte) 4), new TallGrassDecorator(new JungleTallGrassFactory(), (byte) 15),
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator(), new VineDecorator());
-		setMinMax(51, 90);
+		setMinMax(71, 79);
 		setGrassColorMultiplier(new Color(83, 202, 55));
 		setFoliageColorMultiplier(new Color(41, 188, 5));
 	}

@@ -29,7 +29,7 @@ package org.spout.vanilla.plugin.world.generator.normal.biome.snowy;
 public class TundraHillsBiome extends TundraBiome {
 	public TundraHillsBiome(int biomeId) {
 		super(biomeId);
-		setMinMax(51, 90);
+		setMinMax(75, 93);
 	}
 
 	@Override

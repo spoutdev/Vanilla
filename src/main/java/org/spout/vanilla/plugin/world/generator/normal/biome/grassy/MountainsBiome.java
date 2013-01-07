@@ -43,7 +43,7 @@ public class MountainsBiome extends GrassyBiome {
 				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory()),
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator(),
 				new EmeraldOreDecorator());
-		setMinMax(32.5f, 128);
+		setMinMax(75, 127);
 		setGrassColorMultiplier(new Color(138, 182, 137));
 		setFoliageColorMultiplier(new Color(109, 163, 107));
 	}

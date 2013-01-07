@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-/*package org.spout.vanilla.inventory.util;
+/*package org.spout.vanilla.plugin.inventory.util;
 
 import org.junit.Test;
 

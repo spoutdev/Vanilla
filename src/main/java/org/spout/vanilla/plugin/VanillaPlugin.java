@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla;
+package org.spout.vanilla.plugin;
 
 import java.io.IOException;
 import java.util.ArrayList;

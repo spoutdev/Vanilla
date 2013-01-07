@@ -45,26 +45,26 @@ import org.spout.nbt.CompoundMap;
 import org.spout.nbt.IntTag;
 import org.spout.nbt.StringTag;
 
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 import static org.junit.Assert.assertEquals;
 
-import static org.spout.vanilla.protocol.ChannelBufferUtils.getExpandedHeight;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.getShifts;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.readColor;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.readCompound;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.readParameters;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.readString;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.readUtf8String;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.readVector2;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.readVector3;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.writeColor;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.writeCompound;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.writeParameters;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.writeString;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.writeUtf8String;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.writeVector2;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.writeVector3;
+import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.getExpandedHeight;
+import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.getShifts;
+import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.readColor;
+import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.readCompound;
+import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.readParameters;
+import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.readString;
+import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.readUtf8String;
+import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.readVector2;
+import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.readVector3;
+import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.writeColor;
+import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.writeCompound;
+import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.writeParameters;
+import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.writeString;
+import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.writeUtf8String;
+import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.writeVector2;
+import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.writeVector3;
 
 public class ChannelBufferUtilsTest {
 	public static final List<Parameter<?>> TEST_PARAMS = new ArrayList<Parameter<?>>();

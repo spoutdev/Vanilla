@@ -39,6 +39,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.api.component.Hostile;
+
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.SleepComponent;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
@@ -50,8 +52,6 @@ import org.spout.vanilla.plugin.util.PlayerUtil;
 import org.spout.vanilla.plugin.util.explosion.ExplosionModel;
 import org.spout.vanilla.plugin.util.explosion.ExplosionModelSpherical;
 import org.spout.vanilla.plugin.world.generator.nether.NetherGenerator;
-
-import org.spout.vanilla.api.component.Hostile;
 
 public class BedBlock extends VanillaBlockMaterial implements InitializableMaterial {
 	public static final int NEARBY_MONSTER_RANGE = 8, NETHER_EXPLOSION_SIZE = 4;

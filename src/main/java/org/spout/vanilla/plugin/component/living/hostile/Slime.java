@@ -26,12 +26,12 @@
  */
 package org.spout.vanilla.plugin.component.living.hostile;
 
+import org.spout.vanilla.api.component.Hostile;
+
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.protocol.entity.creature.SlimeEntityProtocol;
-
-import org.spout.vanilla.api.component.Hostile;
 
 /**
  * A component that identifies the entity as a Slime.

@@ -26,12 +26,12 @@
  */
 package org.spout.vanilla.plugin.component.living.util;
 
+import org.spout.vanilla.api.component.Utility;
+
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
-
-import org.spout.vanilla.api.component.Utility;
 
 /**
  * A component that identifies the entity as a IronGolem.

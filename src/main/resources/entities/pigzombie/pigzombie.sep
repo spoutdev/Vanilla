@@ -1,0 +1,9 @@
+Name: "Pig Zombie"
+Components:
+    - org.spout.engine.entity.component.EntityRendererComponent
+    - org.spout.vanilla.plugin.component.living.neutral.PigZombie
+Data:
+    Health: 20
+    Damages: 1
+    Size: 1
+    Model: model://Vanilla/entities/pigzombie/pigzombie.spm

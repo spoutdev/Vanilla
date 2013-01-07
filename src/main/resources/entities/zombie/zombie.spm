@@ -1,2 +1,2 @@
-Mesh: mesh://Vanilla/resources/entities/zombie/zombie.obj
-Material: material://Vanilla/resources/entities/zombie/zombie.smt
+Mesh: mesh://Vanilla/entities/zombie/zombie.obj
+Material: material://Vanilla/entities/zombie/zombie.smt

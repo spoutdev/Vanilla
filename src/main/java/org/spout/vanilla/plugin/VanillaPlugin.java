@@ -37,6 +37,7 @@ import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.command.CommandRegistrationsFactory;
+import org.spout.api.command.RootCommand;
 import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
 import org.spout.api.command.annotated.SimpleInjector;
@@ -109,68 +110,72 @@ public class VanillaPlugin extends CommonPlugin {
 
 	@Override
 	public void onEnable() {
-
 		//Config
 		config.load();
 
 		//Commands
-		CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
-		engine.getRootCommand().addSubCommands(this, AdministrationCommands.class, commandRegFactory);
+		final CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
+		final RootCommand root = engine.getRootCommand();
+		root.addSubCommands(this, AdministrationCommands.class, commandRegFactory);
+
 		if (engine.debugMode()) {
 			engine.getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
 		}
-		getEngine().getEventManager().registerEvents(new VanillaListener(this), this);
+		engine.getEventManager().registerEvents(new VanillaListener(this), this);
 
-		InputCommandExecutor exe = new InputCommandExecutor();
-		engine.getRootCommand().addSubCommand(this, "+toggle_inventory").setArgBounds(0, 0).setHelp("Opens or closes the player's inventory.")
-				.setExecutor(Platform.CLIENT, exe);
-		engine.getRootCommand().addSubCommand(this, "+break_block").setArgBounds(0, 0).setHelp("Breaks a block!")
-				.setExecutor(Platform.CLIENT, exe);
-		engine.getRootCommand().addSubCommand(this, "+select_block").setArgBounds(0, 0).setHelp("Selects a block!")
-				.setExecutor(Platform.CLIENT, exe);
-		engine.getRootCommand().addSubCommand(this, "+place_block").setArgBounds(0, 0).setHelp("Places a block!")
-				.setExecutor(Platform.CLIENT, exe);
-		engine.getRootCommand().addSubCommand(this, "+hotbar_left").setArgBounds(0, 0).setHelp("Changes hotbar slot!")
-				.setExecutor(Platform.CLIENT, exe);
-		engine.getRootCommand().addSubCommand(this, "+hotbar_right").setArgBounds(0, 0).setHelp("Changes hotbar slot!")
-				.setExecutor(Platform.CLIENT, exe);
-		for (int i = 1; i < 10; i++) {
-			engine.getRootCommand().addSubCommand(this, "+hotbar_" + i).setArgBounds(0, 0).setHelp("Changes hotbar slot!")
-					.setExecutor(Platform.CLIENT, exe);
-		}
+		switch (Spout.getPlatform()) {
+			case CLIENT:
+				final Client client = (Client) engine;
+				//Setup client input
+				final InputManager input = client.getInputManager();
+				input.bind(Keyboard.get(InputConfiguration.TOGGLE_INVENTORY.getString()), "toggle_inventory");
+				input.bind(Mouse.MOUSE_BUTTON0, "break_block");
+				input.bind(Mouse.MOUSE_BUTTON1, "place_block");
+				input.bind(Mouse.MOUSE_BUTTON2, "select_block");
+				input.bind(Mouse.MOUSE_SCROLLUP, "hotbar_left");
+				input.bind(Mouse.MOUSE_SCROLLDOWN, "hotbar_right");
+				for (int i = 1; i < 10; i++) {
+					input.bind(Keyboard.valueOf("KEY_" + i), "hotbar_" + i);
+				}
 
-		if (Spout.getPlatform() == Platform.CLIENT) {
-			InputManager input = ((Client) Spout.getEngine()).getInputManager();
-			input.bind(Keyboard.get(InputConfiguration.TOGGLE_INVENTORY.getString()), "toggle_inventory");
-			input.bind(Mouse.MOUSE_BUTTON0, "break_block");
-			input.bind(Mouse.MOUSE_BUTTON1, "place_block");
-			input.bind(Mouse.MOUSE_BUTTON2, "select_block");
-			input.bind(Mouse.MOUSE_SCROLLUP, "hotbar_left");
-			input.bind(Mouse.MOUSE_SCROLLDOWN, "hotbar_right");
-			for (int i = 1; i < 10; i++) {
-				input.bind(Keyboard.valueOf("KEY_" + i), "hotbar_" + i);
-			}
+				final InputCommandExecutor exe = new InputCommandExecutor();
+				root.addSubCommand(this, "+toggle_inventory").setArgBounds(0, 0).setHelp("Opens or closes the player's inventory.")
+						.setExecutor(Platform.CLIENT, exe);
+				root.addSubCommand(this, "+break_block").setArgBounds(0, 0).setHelp("Breaks a block!")
+						.setExecutor(Platform.CLIENT, exe);
+				root.addSubCommand(this, "+select_block").setArgBounds(0, 0).setHelp("Selects a block!")
+						.setExecutor(Platform.CLIENT, exe);
+				root.addSubCommand(this, "+place_block").setArgBounds(0, 0).setHelp("Places a block!")
+						.setExecutor(Platform.CLIENT, exe);
+				root.addSubCommand(this, "+hotbar_left").setArgBounds(0, 0).setHelp("Changes hotbar slot!")
+						.setExecutor(Platform.CLIENT, exe);
+				root.addSubCommand(this, "+hotbar_right").setArgBounds(0, 0).setHelp("Changes hotbar slot!")
+						.setExecutor(Platform.CLIENT, exe);
+				for (int i = 1; i < 10; i++) {
+					root.addSubCommand(this, "+hotbar_" + i).setArgBounds(0, 0).setHelp("Changes hotbar slot!")
+							.setExecutor(Platform.CLIENT, exe);
+				}
+
+				if (Spout.debugMode()) {
+					setupWorlds();
+				}
+			case SERVER:
+				setupWorlds();
+				if (VanillaConfiguration.LAN_DISCOVERY.getBoolean()) {
+					final LANThread lanThread = new LANThread();
+					lanThread.start();
+				}
 		}
 
 		//Configuration
 		VanillaBlockMaterial.REDSTONE_POWER_MAX = (short) VanillaConfiguration.REDSTONE_MAX_RANGE.getInt();
 		VanillaBlockMaterial.REDSTONE_POWER_MIN = (short) VanillaConfiguration.REDSTONE_MIN_RANGE.getInt();
 
-		if ((engine.debugMode() && engine.getPlatform() != Platform.PROXY) || engine.getPlatform() == Platform.SERVER) {
-			//Worlds
-			setupWorlds();
-		}
-
 		//TODO: Remove this check when the null world bug is fixed
 		for (World world : Spout.getEngine().getWorlds()) {
 			if (world == null) {
 				Spout.getLogger().log(Level.SEVERE, "A World element in Engine.getWorlds() is null!");
 			}
-		}
-
-		if (engine instanceof Server && VanillaConfiguration.LAN_DISCOVERY.getBoolean()) {
-			LANThread lanThread = new LANThread();
-			lanThread.start();
 		}
 
 		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol"));

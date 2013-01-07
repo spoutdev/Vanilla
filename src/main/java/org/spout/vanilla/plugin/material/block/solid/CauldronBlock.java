@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.block.solid;
 
-import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.api.material.block.Solid;
 
 public class CauldronBlock extends Solid {
 	public CauldronBlock(String name, int id) {

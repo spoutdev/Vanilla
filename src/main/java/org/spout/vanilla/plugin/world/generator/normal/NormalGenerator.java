@@ -51,7 +51,7 @@ import org.spout.api.util.map.TIntPairObjectHashMap;
 
 import org.spout.vanilla.plugin.data.Climate;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Liquid;
+import org.spout.vanilla.api.material.block.Liquid;
 import org.spout.vanilla.plugin.world.generator.VanillaBiomeGenerator;
 import org.spout.vanilla.plugin.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;

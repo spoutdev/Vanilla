@@ -58,7 +58,7 @@ import org.spout.vanilla.plugin.component.player.PlayerListComponent;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.event.block.RedstoneChangeEvent;
 import org.spout.vanilla.plugin.input.VanillaInputExecutor;
-import org.spout.vanilla.plugin.material.block.redstone.RedstoneSource;
+import org.spout.vanilla.api.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.plugin.protocol.PastieExceptionHandler;
 
 public class VanillaListener implements Listener {

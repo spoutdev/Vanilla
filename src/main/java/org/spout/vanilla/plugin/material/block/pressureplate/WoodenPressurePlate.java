@@ -27,7 +27,7 @@
 package org.spout.vanilla.plugin.material.block.pressureplate;
 
 import org.spout.vanilla.plugin.data.Instrument;
-import org.spout.vanilla.plugin.material.block.PressurePlate;
+import org.spout.vanilla.api.material.block.PressurePlate;
 
 public class WoodenPressurePlate extends PressurePlate {
 	public WoodenPressurePlate(String name, int id) {

@@ -33,8 +33,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.plugin.data.MoveReaction;
-import org.spout.vanilla.plugin.material.block.Directional;
-import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.api.material.block.Directional;
+import org.spout.vanilla.api.material.block.Solid;
 
 public class PistonExtension extends Solid implements Directional {
 	public PistonExtension(String name, int id) {

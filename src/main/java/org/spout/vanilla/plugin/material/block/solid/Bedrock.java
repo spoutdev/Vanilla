@@ -30,7 +30,7 @@ import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.MoveReaction;
-import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.api.material.block.Solid;
 
 public class Bedrock extends Solid {
 	public Bedrock(String name, int id) {

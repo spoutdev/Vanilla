@@ -33,7 +33,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Portal;
+import org.spout.vanilla.api.material.block.Portal;
 
 public class EndPortal extends Portal {
 	public EndPortal(String name, int id) {

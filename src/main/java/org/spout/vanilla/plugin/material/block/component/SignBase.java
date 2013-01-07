@@ -40,9 +40,9 @@ import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.vanilla.plugin.component.substance.material.Sign;
 import org.spout.vanilla.plugin.data.MoveReaction;
 import org.spout.vanilla.plugin.event.block.SignUpdateEvent;
-import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.api.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
+import org.spout.vanilla.api.material.block.attachable.AbstractAttachable;
 
 public abstract class SignBase extends AbstractAttachable implements InitializableMaterial, VanillaComplexMaterial {
 	public SignBase(String name, int id) {

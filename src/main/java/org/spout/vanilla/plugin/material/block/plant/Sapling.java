@@ -42,12 +42,12 @@ import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.data.GameMode;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.plugin.material.Fuel;
+import org.spout.vanilla.api.material.Fuel;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Plant;
-import org.spout.vanilla.plugin.material.block.Spreading;
-import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.plugin.material.block.solid.Log;
+import org.spout.vanilla.api.material.block.Plant;
+import org.spout.vanilla.api.material.block.Spreading;
+import org.spout.vanilla.api.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.api.material.block.solid.Log;
 import org.spout.vanilla.plugin.material.item.misc.Dye;
 import org.spout.vanilla.plugin.world.generator.normal.object.tree.TreeObject;
 

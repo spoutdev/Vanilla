@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.enchantment.sword;
 
-import org.spout.vanilla.plugin.material.enchantment.SwordEnchantment;
+import org.spout.vanilla.api.material.enchantment.SwordEnchantment;
 
 public class Knockback extends SwordEnchantment {
 	public Knockback(String name, int id) {

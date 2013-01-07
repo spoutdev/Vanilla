@@ -46,11 +46,11 @@ import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.plugin.material.Burnable;
-import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.api.material.Burnable;
+import org.spout.vanilla.api.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Plant;
-import org.spout.vanilla.plugin.material.block.Spreading;
+import org.spout.vanilla.api.material.block.Plant;
+import org.spout.vanilla.api.material.block.Spreading;
 import org.spout.vanilla.plugin.render.VanillaEffects;
 
 public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Burnable, DynamicMaterial {

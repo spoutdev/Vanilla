@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.block.solid.special;
 
-import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.api.material.block.Solid;
 
 /**
  * Nothing like a bowl of delicious Vanilla Ice Cream...or a block of it right?

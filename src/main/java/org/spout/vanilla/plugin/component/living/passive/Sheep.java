@@ -40,7 +40,7 @@ import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.event.entity.EntityStatusEvent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.solid.Wool;
+import org.spout.vanilla.api.material.block.solid.Wool;
 import org.spout.vanilla.plugin.protocol.entity.creature.SheepEntityProtocol;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityStatusMessage;
 

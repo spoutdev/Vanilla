@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.plugin.material.enchantment.tool;
 
-import org.spout.vanilla.plugin.material.VanillaMaterial;
-import org.spout.vanilla.plugin.material.enchantment.Enchantment;
+import org.spout.vanilla.api.material.VanillaMaterial;
+import org.spout.vanilla.api.material.enchantment.Enchantment;
 import org.spout.vanilla.plugin.material.enchantment.Enchantments;
-import org.spout.vanilla.plugin.material.enchantment.ToolEnchantment;
+import org.spout.vanilla.api.material.enchantment.ToolEnchantment;
 
 public class Fortune extends ToolEnchantment {
 	public Fortune(String name, int id) {

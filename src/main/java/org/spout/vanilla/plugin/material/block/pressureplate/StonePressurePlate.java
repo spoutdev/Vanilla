@@ -31,7 +31,7 @@ import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.plugin.component.substance.Item;
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.plugin.material.block.PressurePlate;
+import org.spout.vanilla.api.material.block.PressurePlate;
 
 public class StonePressurePlate extends PressurePlate {
 	public StonePressurePlate(String name, int id) {

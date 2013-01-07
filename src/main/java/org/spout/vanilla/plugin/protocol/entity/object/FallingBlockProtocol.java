@@ -36,7 +36,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 
 import org.spout.vanilla.plugin.component.substance.object.FallingBlock;
-import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.api.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.protocol.ChannelBufferUtils;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.spawn.EntityObjectMessage;

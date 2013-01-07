@@ -37,8 +37,8 @@ import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Liquid;
-import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.api.material.block.Liquid;
+import org.spout.vanilla.api.material.block.Solid;
 import org.spout.vanilla.plugin.material.block.plant.Sapling;
 import org.spout.vanilla.plugin.util.MathHelper;
 

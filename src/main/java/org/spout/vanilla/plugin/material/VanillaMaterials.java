@@ -26,6 +26,9 @@
  */
 package org.spout.vanilla.plugin.material;
 
+import org.spout.vanilla.api.material.VanillaBlockMaterial;
+import org.spout.vanilla.api.material.InitializableMaterial;
+import org.spout.vanilla.api.material.VanillaMaterial;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
@@ -142,16 +145,16 @@ import org.spout.vanilla.plugin.material.block.solid.Grass;
 import org.spout.vanilla.plugin.material.block.solid.Gravel;
 import org.spout.vanilla.plugin.material.block.solid.Ice;
 import org.spout.vanilla.plugin.material.block.solid.IronBarsBlock;
-import org.spout.vanilla.plugin.material.block.solid.Leaves;
+import org.spout.vanilla.api.material.block.solid.Leaves;
 import org.spout.vanilla.plugin.material.block.solid.LockedChest;
-import org.spout.vanilla.plugin.material.block.solid.Log;
-import org.spout.vanilla.plugin.material.block.solid.MossStone;
+import org.spout.vanilla.api.material.block.solid.Log;
+import org.spout.vanilla.api.material.block.solid.MossStone;
 import org.spout.vanilla.plugin.material.block.solid.MushroomBlock;
 import org.spout.vanilla.plugin.material.block.solid.Mycelium;
 import org.spout.vanilla.plugin.material.block.solid.NetherBrick;
 import org.spout.vanilla.plugin.material.block.solid.NetherRack;
 import org.spout.vanilla.plugin.material.block.solid.Obsidian;
-import org.spout.vanilla.plugin.material.block.solid.Plank;
+import org.spout.vanilla.api.material.block.solid.Plank;
 import org.spout.vanilla.plugin.material.block.solid.Pumpkin;
 import org.spout.vanilla.plugin.material.block.solid.RedstoneLamp;
 import org.spout.vanilla.plugin.material.block.solid.Sand;
@@ -162,7 +165,7 @@ import org.spout.vanilla.plugin.material.block.solid.SoulSand;
 import org.spout.vanilla.plugin.material.block.solid.Sponge;
 import org.spout.vanilla.plugin.material.block.solid.Stone;
 import org.spout.vanilla.plugin.material.block.solid.StoneBrick;
-import org.spout.vanilla.plugin.material.block.solid.Wool;
+import org.spout.vanilla.api.material.block.solid.Wool;
 import org.spout.vanilla.plugin.material.block.solid.special.VanillaIceCreamBlock;
 import org.spout.vanilla.plugin.material.block.stair.BirchWoodStairs;
 import org.spout.vanilla.plugin.material.block.stair.BrickStairs;
@@ -230,10 +233,10 @@ import org.spout.vanilla.plugin.material.item.tool.CarrotOnAStick;
 import org.spout.vanilla.plugin.material.item.tool.FishingRod;
 import org.spout.vanilla.plugin.material.item.tool.FlintAndSteel;
 import org.spout.vanilla.plugin.material.item.tool.Hoe;
-import org.spout.vanilla.plugin.material.item.tool.MiningTool;
+import org.spout.vanilla.api.material.item.tool.MiningTool;
 import org.spout.vanilla.plugin.material.item.tool.Shears;
 import org.spout.vanilla.plugin.material.item.tool.weapon.Bow;
-import org.spout.vanilla.plugin.material.item.tool.weapon.Sword;
+import org.spout.vanilla.api.material.item.tool.weapon.Sword;
 import org.spout.vanilla.plugin.material.map.Map;
 
 // TODO: Remove all casts and separate remaining "set" methods out into each material's init() method

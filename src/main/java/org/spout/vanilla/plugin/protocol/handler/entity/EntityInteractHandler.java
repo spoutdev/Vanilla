@@ -43,9 +43,9 @@ import org.spout.vanilla.plugin.data.GameMode;
 import org.spout.vanilla.plugin.data.effect.StatusEffect;
 import org.spout.vanilla.plugin.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.plugin.event.cause.PlayerDamageCause;
-import org.spout.vanilla.plugin.material.VanillaMaterial;
+import org.spout.vanilla.api.material.VanillaMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.item.tool.Tool;
+import org.spout.vanilla.api.material.item.tool.Tool;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityInteractMessage;
 
 public class EntityInteractHandler extends MessageHandler<EntityInteractMessage> {

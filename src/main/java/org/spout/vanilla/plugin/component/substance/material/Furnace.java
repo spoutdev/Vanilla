@@ -35,8 +35,8 @@ import org.spout.vanilla.plugin.inventory.Container;
 import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
 import org.spout.vanilla.plugin.inventory.window.block.FurnaceWindow;
 import org.spout.vanilla.plugin.inventory.window.prop.FurnaceProperty;
-import org.spout.vanilla.plugin.material.Fuel;
-import org.spout.vanilla.plugin.material.TimedCraftable;
+import org.spout.vanilla.api.material.Fuel;
+import org.spout.vanilla.api.material.TimedCraftable;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class Furnace extends ViewedBlockComponent implements Container {

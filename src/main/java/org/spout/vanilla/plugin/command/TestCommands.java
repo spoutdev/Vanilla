@@ -88,7 +88,7 @@ import org.spout.vanilla.plugin.inventory.window.block.EnchantmentTableWindow;
 import org.spout.vanilla.plugin.inventory.window.block.FurnaceWindow;
 import org.spout.vanilla.plugin.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.plugin.inventory.window.entity.VillagerWindow;
-import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.api.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.map.Map;
 import org.spout.vanilla.plugin.protocol.VanillaNetworkSynchronizer;

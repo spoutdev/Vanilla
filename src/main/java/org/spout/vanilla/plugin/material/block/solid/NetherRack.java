@@ -27,7 +27,7 @@
 package org.spout.vanilla.plugin.material.block.solid;
 
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.api.material.block.Solid;
 
 public class NetherRack extends Solid {
 	public NetherRack(String name, int id) {

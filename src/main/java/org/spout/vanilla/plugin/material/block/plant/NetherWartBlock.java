@@ -37,9 +37,9 @@ import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.plugin.data.drops.flag.BlockFlags;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Growing;
-import org.spout.vanilla.plugin.material.block.Plant;
-import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.api.material.block.Growing;
+import org.spout.vanilla.api.material.block.Plant;
+import org.spout.vanilla.api.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
 
 public class NetherWartBlock extends GroundAttachable implements Plant, Growing, DynamicMaterial {

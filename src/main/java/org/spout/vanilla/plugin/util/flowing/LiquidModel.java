@@ -44,7 +44,7 @@ import org.spout.api.math.IntVector3;
 import org.spout.api.util.hashing.ShortPairHashed;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Liquid;
+import org.spout.vanilla.api.material.block.Liquid;
 
 /**
  * A model used to find the faces to which a liquid can flow<br>

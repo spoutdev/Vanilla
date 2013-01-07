@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.block.misc;
 
-import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.api.material.block.Solid;
 
 public class CommandBlock extends Solid {
 	public CommandBlock(String name, int id) {

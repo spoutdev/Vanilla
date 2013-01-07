@@ -37,7 +37,7 @@ import org.spout.api.material.ComplexMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.plugin.component.substance.material.VanillaBlockComponent;
-import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.api.material.VanillaBlockMaterial;
 
 public class ComponentMaterial extends VanillaBlockMaterial implements ComplexMaterial {
 	private final Class<? extends BlockComponent> componentType;

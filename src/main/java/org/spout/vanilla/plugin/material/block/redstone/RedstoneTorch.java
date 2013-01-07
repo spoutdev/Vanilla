@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.plugin.material.block.redstone;
 
+import org.spout.vanilla.api.material.block.redstone.RedstoneSource;
+import org.spout.vanilla.api.material.block.redstone.RedstoneTarget;
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
@@ -36,7 +38,7 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
 
 import org.spout.vanilla.plugin.data.RedstonePowerMode;
-import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.api.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.misc.Torch;
 import org.spout.vanilla.plugin.util.RedstoneUtil;

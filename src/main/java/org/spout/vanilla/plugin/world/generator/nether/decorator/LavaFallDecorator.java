@@ -40,7 +40,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.util.set.TInt21TripleHashSet;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Liquid;
+import org.spout.vanilla.api.material.block.Liquid;
 import org.spout.vanilla.plugin.world.generator.nether.NetherGenerator;
 
 public class LavaFallDecorator extends Decorator {

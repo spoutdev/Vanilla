@@ -40,8 +40,8 @@ import org.spout.vanilla.plugin.data.GameMode;
 import org.spout.vanilla.plugin.data.RedstonePowerMode;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
-import org.spout.vanilla.plugin.material.block.AttachedRedstoneSource;
-import org.spout.vanilla.plugin.material.block.attachable.PointAttachable;
+import org.spout.vanilla.api.material.block.AttachedRedstoneSource;
+import org.spout.vanilla.api.material.block.attachable.PointAttachable;
 
 public class WoodButton extends AttachedRedstoneSource implements PointAttachable, DynamicMaterial {
 	public static final int TICK_DELAY = 1000;

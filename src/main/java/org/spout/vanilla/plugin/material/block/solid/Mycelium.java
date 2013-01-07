@@ -31,9 +31,9 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.plugin.data.tool.ToolType;
-import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.api.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.SpreadingSolid;
+import org.spout.vanilla.api.material.block.SpreadingSolid;
 
 public class Mycelium extends SpreadingSolid implements InitializableMaterial {
 	public Mycelium(String name, int id) {

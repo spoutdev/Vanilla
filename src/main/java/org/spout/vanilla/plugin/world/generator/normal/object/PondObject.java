@@ -34,8 +34,8 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Liquid;
-import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.api.material.block.Liquid;
+import org.spout.vanilla.api.material.block.Solid;
 import org.spout.vanilla.plugin.world.generator.normal.biome.grassy.GrassyBiome;
 import org.spout.vanilla.plugin.world.generator.normal.biome.sandy.SandyBiome;
 import org.spout.vanilla.plugin.world.generator.normal.biome.snowy.SnowyBiome;

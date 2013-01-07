@@ -37,10 +37,10 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
-import org.spout.vanilla.plugin.material.Fuel;
-import org.spout.vanilla.plugin.material.block.Openable;
-import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
-import org.spout.vanilla.plugin.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.api.material.Fuel;
+import org.spout.vanilla.api.material.block.Openable;
+import org.spout.vanilla.api.material.block.attachable.AbstractAttachable;
+import org.spout.vanilla.api.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.plugin.util.RedstoneUtil;
 
 public class TrapDoor extends AbstractAttachable implements Fuel, Openable, RedstoneTarget {

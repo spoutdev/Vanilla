@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.block.stair;
 
-import org.spout.vanilla.plugin.material.block.WoodenStairs;
+import org.spout.vanilla.api.material.block.WoodenStairs;
 
 public class BirchWoodStairs extends WoodenStairs {
 	public BirchWoodStairs(String name, int id) {

@@ -35,7 +35,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.inventory.window.block.CraftingTableWindow;
-import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.api.material.block.Solid;
 
 public class CraftingTableBlock extends Solid {
 	public CraftingTableBlock(String name, int id) {

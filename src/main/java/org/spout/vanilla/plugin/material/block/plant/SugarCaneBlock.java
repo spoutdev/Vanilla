@@ -36,7 +36,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.MathHelper;
 
-import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.api.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class SugarCaneBlock extends StackGrowingBase implements InitializableMaterial {

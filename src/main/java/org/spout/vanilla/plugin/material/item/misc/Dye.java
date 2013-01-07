@@ -42,7 +42,7 @@ import org.spout.vanilla.plugin.data.GameMode;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.solid.Wool.WoolColor;
+import org.spout.vanilla.api.material.block.solid.Wool.WoolColor;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public class Dye extends VanillaItemMaterial implements Placeable {

@@ -34,9 +34,9 @@ import org.spout.vanilla.EngineFaker;
 import org.spout.vanilla.plugin.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.plugin.event.cause.NullDamageCause;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.enchantment.Enchantment;
+import org.spout.vanilla.api.material.enchantment.Enchantment;
 import org.spout.vanilla.plugin.material.enchantment.Enchantments;
-import org.spout.vanilla.plugin.material.item.armor.Armor;
+import org.spout.vanilla.api.material.item.armor.Armor;
 
 public class DamageTest {
 	static {

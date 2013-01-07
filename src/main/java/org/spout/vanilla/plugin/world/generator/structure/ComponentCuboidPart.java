@@ -29,7 +29,7 @@ package org.spout.vanilla.plugin.world.generator.structure;
 import org.spout.api.math.IntVector3;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Liquid;
+import org.spout.vanilla.api.material.block.Liquid;
 
 public class ComponentCuboidPart extends ComponentPart {
 	protected IntVector3 min = new IntVector3(0, 0, 0);

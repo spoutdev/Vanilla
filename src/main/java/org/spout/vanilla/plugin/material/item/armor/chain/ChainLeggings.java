@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.chain;
 
-import org.spout.vanilla.plugin.material.item.armor.Leggings;
+import org.spout.vanilla.api.material.item.armor.Leggings;
 
 public class ChainLeggings extends ChainArmor implements Leggings {
 	public ChainLeggings(String name, int id, short durability) {

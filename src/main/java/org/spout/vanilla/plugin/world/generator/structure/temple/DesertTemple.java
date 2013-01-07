@@ -38,7 +38,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.misc.Slab;
 import org.spout.vanilla.plugin.material.block.solid.Sandstone;
-import org.spout.vanilla.plugin.material.block.solid.Wool;
+import org.spout.vanilla.api.material.block.solid.Wool;
 import org.spout.vanilla.plugin.world.generator.normal.object.LootChestObject;
 import org.spout.vanilla.plugin.world.generator.structure.BlockMaterialLayout;
 import org.spout.vanilla.plugin.world.generator.structure.ComponentCuboidPart;

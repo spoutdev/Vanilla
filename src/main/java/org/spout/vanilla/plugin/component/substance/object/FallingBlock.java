@@ -34,7 +34,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.api.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.protocol.entity.object.FallingBlockProtocol;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
 

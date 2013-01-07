@@ -27,7 +27,7 @@
 package org.spout.vanilla.plugin.material.block.stair;
 
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.plugin.material.block.Stairs;
+import org.spout.vanilla.api.material.block.Stairs;
 
 public class CobblestoneStairs extends Stairs {
 	public CobblestoneStairs(String name, int id) {

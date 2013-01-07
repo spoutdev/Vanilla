@@ -28,7 +28,7 @@ package org.spout.vanilla.plugin.material.item.armor.gold;
 
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.plugin.material.item.armor.Armor;
+import org.spout.vanilla.api.material.item.armor.Armor;
 
 public abstract class GoldArmor extends Armor {
 	protected GoldArmor(String name, int id, short durability, Vector2 pos) {

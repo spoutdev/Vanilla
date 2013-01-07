@@ -37,9 +37,9 @@ import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
 
 import org.spout.vanilla.plugin.data.Climate;
-import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.api.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.SpreadingSolid;
+import org.spout.vanilla.api.material.block.SpreadingSolid;
 import org.spout.vanilla.plugin.world.generator.nether.NetherGenerator;
 
 public class Ice extends SpreadingSolid implements InitializableMaterial {

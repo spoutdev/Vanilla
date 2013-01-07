@@ -29,7 +29,7 @@ package org.spout.vanilla.plugin.component.substance.material.chest;
 import org.spout.api.entity.Player;
 
 import org.spout.vanilla.plugin.component.substance.material.ViewedBlockComponent;
-import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.api.material.VanillaBlockMaterial;
 
 public abstract class AbstractChest extends ViewedBlockComponent {
 	private boolean opened = false;

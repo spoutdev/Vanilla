@@ -24,11 +24,11 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.component.living;
+package org.spout.vanilla.api.component;
 
 /**
- * Represents a neutral entity. A neutral entity will not attack unless
- * provoked by another player.
+ * Represents a passive entity. A passive entity will never attack another
+ * player even if the player provokes said entity.
  */
-public interface Neutral {
+public interface Passive {
 }

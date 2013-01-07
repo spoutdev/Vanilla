@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.plugin.component.living.passive;
 
+import org.spout.vanilla.api.component.Passive;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.living.Passive;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.protocol.entity.creature.OcelotEntityProtocol;
 

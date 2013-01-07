@@ -27,8 +27,8 @@
 package org.spout.vanilla.plugin.component.living.hostile;
 
 import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.api.component.Hostile;
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.living.Hostile;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.data.VanillaData;

@@ -39,7 +39,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.plugin.component.living.Hostile;
+import org.spout.vanilla.api.component.Hostile;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.SleepComponent;
 import org.spout.vanilla.plugin.component.world.VanillaSky;

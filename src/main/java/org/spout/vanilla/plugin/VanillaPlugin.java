@@ -159,12 +159,14 @@ public class VanillaPlugin extends CommonPlugin {
 				if (Spout.debugMode()) {
 					setupWorlds();
 				}
+				break;
 			case SERVER:
 				setupWorlds();
 				if (VanillaConfiguration.LAN_DISCOVERY.getBoolean()) {
 					final LANThread lanThread = new LANThread();
 					lanThread.start();
 				}
+				break;
 		}
 
 		//Configuration

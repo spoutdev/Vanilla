@@ -36,7 +36,7 @@ import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Liquid;
+import org.spout.vanilla.api.material.block.Liquid;
 import org.spout.vanilla.plugin.render.VanillaEffects;
 
 public class Lava extends Liquid {

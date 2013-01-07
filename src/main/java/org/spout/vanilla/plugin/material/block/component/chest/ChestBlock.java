@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.block.component.chest;
 
+import org.spout.vanilla.api.material.block.component.chest.AbstractChestBlock;
 import org.spout.api.component.type.BlockComponent;
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;

@@ -32,11 +32,11 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;
-import org.spout.vanilla.plugin.material.Burnable;
-import org.spout.vanilla.plugin.material.Fuel;
-import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.api.material.Burnable;
+import org.spout.vanilla.api.material.Fuel;
+import org.spout.vanilla.api.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.api.material.block.Solid;
 
 public class BookShelf extends Solid implements Fuel, InitializableMaterial, Burnable {
 	public final float BURN_TIME = 15;

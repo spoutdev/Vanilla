@@ -76,7 +76,7 @@ import org.spout.vanilla.plugin.data.GameMode;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.inventory.recipe.VanillaRecipes;
 import org.spout.vanilla.plugin.lighting.VanillaLighting;
-import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.api.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.LANThread;
 import org.spout.vanilla.plugin.protocol.VanillaProtocol;

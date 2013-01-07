@@ -36,8 +36,8 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Liquid;
-import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.api.material.block.Liquid;
+import org.spout.vanilla.api.material.block.Solid;
 import org.spout.vanilla.plugin.material.block.plant.Sapling;
 
 public class SmallTreeObject extends TreeObject {

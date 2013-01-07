@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.enchantment;
 
+import org.spout.vanilla.api.material.enchantment.Enchantment;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -31,9 +31,9 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;
-import org.spout.vanilla.plugin.material.TimedCraftable;
+import org.spout.vanilla.api.material.TimedCraftable;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.api.material.block.Solid;
 import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
 
 public class Cobblestone extends Solid implements TimedCraftable {

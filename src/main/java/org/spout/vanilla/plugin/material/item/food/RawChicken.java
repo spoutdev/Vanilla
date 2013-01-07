@@ -28,7 +28,7 @@ package org.spout.vanilla.plugin.material.item.food;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.plugin.material.TimedCraftable;
+import org.spout.vanilla.api.material.TimedCraftable;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
 import org.spout.vanilla.plugin.material.item.Food;

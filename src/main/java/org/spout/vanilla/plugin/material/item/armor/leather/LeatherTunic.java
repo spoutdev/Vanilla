@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.leather;
 
-import org.spout.vanilla.plugin.material.item.armor.Chestplate;
+import org.spout.vanilla.api.material.item.armor.Chestplate;
 
 public class LeatherTunic extends LeatherArmor implements Chestplate {
 	public LeatherTunic(String name, int id, short durability) {

@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.gold;
 
-import org.spout.vanilla.plugin.material.item.armor.Helmet;
+import org.spout.vanilla.api.material.item.armor.Helmet;
 
 public class GoldHelmet extends GoldArmor implements Helmet {
 	public GoldHelmet(String name, int id, short durability) {

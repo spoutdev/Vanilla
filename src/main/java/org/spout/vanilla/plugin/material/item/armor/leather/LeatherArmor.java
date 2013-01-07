@@ -28,7 +28,7 @@ package org.spout.vanilla.plugin.material.item.armor.leather;
 
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.plugin.material.item.armor.Armor;
+import org.spout.vanilla.api.material.item.armor.Armor;
 
 public abstract class LeatherArmor extends Armor {
 	protected LeatherArmor(String name, int id, short durability, Vector2 pos) {

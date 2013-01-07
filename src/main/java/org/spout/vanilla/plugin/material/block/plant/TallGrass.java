@@ -36,7 +36,7 @@ import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.plugin.data.drops.SwitchDrops;
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.plugin.material.Burnable;
+import org.spout.vanilla.api.material.Burnable;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.render.VanillaEffects;
 

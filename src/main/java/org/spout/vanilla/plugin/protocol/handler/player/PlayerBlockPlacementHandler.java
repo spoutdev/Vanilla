@@ -60,8 +60,8 @@ import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.event.cause.PlayerClickBlockCause;
 import org.spout.vanilla.plugin.event.cause.PlayerPlacementCause;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
-import org.spout.vanilla.plugin.material.item.tool.InteractTool;
+import org.spout.vanilla.api.material.VanillaBlockMaterial;
+import org.spout.vanilla.api.material.item.tool.InteractTool;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerBlockPlacementMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.block.BlockChangeMessage;
 

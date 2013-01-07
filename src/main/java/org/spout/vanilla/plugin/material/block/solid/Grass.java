@@ -35,9 +35,9 @@ import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.data.tool.ToolType;
-import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.api.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.SpreadingSolid;
+import org.spout.vanilla.api.material.block.SpreadingSolid;
 import org.spout.vanilla.plugin.render.VanillaEffects;
 
 public class Grass extends SpreadingSolid implements DynamicMaterial, InitializableMaterial {

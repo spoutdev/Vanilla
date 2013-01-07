@@ -31,8 +31,8 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
-import org.spout.vanilla.plugin.material.block.attachable.PointAttachable;
+import org.spout.vanilla.api.material.block.attachable.AbstractAttachable;
+import org.spout.vanilla.api.material.block.attachable.PointAttachable;
 import org.spout.vanilla.plugin.util.resources.ModelUtil;
 
 public class Torch extends AbstractAttachable implements PointAttachable {

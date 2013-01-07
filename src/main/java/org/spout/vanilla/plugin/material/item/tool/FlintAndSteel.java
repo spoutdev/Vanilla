@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.item.tool;
 
+import org.spout.vanilla.api.material.item.tool.InteractTool;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;

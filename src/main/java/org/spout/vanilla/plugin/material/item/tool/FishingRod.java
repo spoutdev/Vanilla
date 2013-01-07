@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.item.tool;
 
+import org.spout.vanilla.api.material.item.tool.Tool;
 import org.spout.vanilla.plugin.data.tool.ToolType;
 
 public class FishingRod extends Tool {

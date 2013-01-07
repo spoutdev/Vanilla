@@ -35,9 +35,9 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
-import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.api.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.DoorBlock;
+import org.spout.vanilla.api.material.block.DoorBlock;
 
 public class WoodenDoorBlock extends DoorBlock implements InitializableMaterial {
 	public WoodenDoorBlock(String name, int id) {

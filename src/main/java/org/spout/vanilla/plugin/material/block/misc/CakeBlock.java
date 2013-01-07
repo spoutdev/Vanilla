@@ -33,7 +33,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.api.material.block.Solid;
 
 public class CakeBlock extends Solid {
 	public CakeBlock(String name, int id) {

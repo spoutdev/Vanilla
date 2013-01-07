@@ -45,11 +45,11 @@ import org.spout.vanilla.plugin.data.GameMode;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.drops.flag.BlockFlags;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.plugin.material.InitializableMaterial;
-import org.spout.vanilla.plugin.material.block.Growing;
-import org.spout.vanilla.plugin.material.block.Plant;
-import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
-import org.spout.vanilla.plugin.material.block.solid.Log;
+import org.spout.vanilla.api.material.InitializableMaterial;
+import org.spout.vanilla.api.material.block.Growing;
+import org.spout.vanilla.api.material.block.Plant;
+import org.spout.vanilla.api.material.block.attachable.AbstractAttachable;
+import org.spout.vanilla.api.material.block.solid.Log;
 import org.spout.vanilla.plugin.material.item.misc.Dye;
 
 public class CocoaPlant extends AbstractAttachable implements Plant, Growing, DynamicMaterial, InitializableMaterial {

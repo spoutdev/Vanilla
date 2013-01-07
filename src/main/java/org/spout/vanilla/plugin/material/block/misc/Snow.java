@@ -37,9 +37,9 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;
-import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.api.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.api.material.block.attachable.GroundAttachable;
 
 public class Snow extends GroundAttachable implements DynamicMaterial, InitializableMaterial {
 	private static final long POLL_TIME = 60000;

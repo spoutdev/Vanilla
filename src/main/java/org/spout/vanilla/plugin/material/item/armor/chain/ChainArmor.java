@@ -28,7 +28,7 @@ package org.spout.vanilla.plugin.material.item.armor.chain;
 
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.plugin.material.item.armor.Armor;
+import org.spout.vanilla.api.material.item.armor.Armor;
 
 public abstract class ChainArmor extends Armor {
 	protected ChainArmor(String name, int id, short durability, Vector2 pos) {

@@ -37,9 +37,9 @@ import org.spout.api.material.range.PlusEffectRange;
 
 import org.spout.vanilla.plugin.data.RedstonePowerMode;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
-import org.spout.vanilla.plugin.material.Toggleable;
+import org.spout.vanilla.api.material.Toggleable;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.AttachedRedstoneSource;
+import org.spout.vanilla.api.material.block.AttachedRedstoneSource;
 
 public class TripWireHook extends AttachedRedstoneSource implements Toggleable, DynamicMaterial {
 	private static final EffectRange dynamicRange = new PlusEffectRange(TripWire.MAX_DISTANCE, false);

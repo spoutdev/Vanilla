@@ -29,7 +29,7 @@ package org.spout.vanilla.plugin.material.block.solid;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.drops.flag.ToolLevelFlags;
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.api.material.block.Solid;
 
 public class Endstone extends Solid {
 	public Endstone(String name, int id) {

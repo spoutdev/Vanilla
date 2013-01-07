@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.enchantment.tool;
 
-import org.spout.vanilla.plugin.material.enchantment.ToolEnchantment;
+import org.spout.vanilla.api.material.enchantment.ToolEnchantment;
 
 public class Unbreaking extends ToolEnchantment {
 	public Unbreaking(String name, int id) {

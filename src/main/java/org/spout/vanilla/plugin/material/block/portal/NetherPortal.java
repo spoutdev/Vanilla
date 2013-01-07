@@ -32,7 +32,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Portal;
+import org.spout.vanilla.api.material.block.Portal;
 
 public class NetherPortal extends Portal {
 	public NetherPortal(String name, int id) {

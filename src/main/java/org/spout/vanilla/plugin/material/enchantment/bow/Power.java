@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.enchantment.bow;
 
-import org.spout.vanilla.plugin.material.enchantment.BowEnchantment;
+import org.spout.vanilla.api.material.enchantment.BowEnchantment;
 
 public class Power extends BowEnchantment {
 	public Power(String name, int id) {

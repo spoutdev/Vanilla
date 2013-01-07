@@ -42,11 +42,11 @@ import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.data.GameMode;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.api.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Crop;
-import org.spout.vanilla.plugin.material.block.Growing;
-import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.api.material.block.Crop;
+import org.spout.vanilla.api.material.block.Growing;
+import org.spout.vanilla.api.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.material.item.misc.Dye;
 
 public abstract class Stem extends GroundAttachable implements Growing, Crop, DynamicMaterial {

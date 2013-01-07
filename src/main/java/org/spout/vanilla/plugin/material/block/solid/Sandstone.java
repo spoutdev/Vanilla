@@ -30,7 +30,7 @@ import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;
-import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.api.material.block.Solid;
 
 public class Sandstone extends Solid {
 	public static final Sandstone SANDSTONE = new Sandstone("Sandstone", "model://Vanilla/materials/block/solid/sandstone/sandstone.spm");

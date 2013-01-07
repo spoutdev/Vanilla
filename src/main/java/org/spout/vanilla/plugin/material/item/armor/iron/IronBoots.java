@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.iron;
 
-import org.spout.vanilla.plugin.material.item.armor.Boots;
+import org.spout.vanilla.api.material.item.armor.Boots;
 
 public class IronBoots extends IronArmor implements Boots {
 	public IronBoots(String name, int id, short durability) {

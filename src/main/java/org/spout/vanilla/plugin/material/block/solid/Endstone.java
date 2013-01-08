@@ -30,10 +30,11 @@ import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.drops.flag.ToolLevelFlags;
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Endstone extends Solid {
 	public Endstone(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/endstone/endstone.spm");
+		super(name, id, VanillaMaterialModels.ENDSTONE);
 		this.setHardness(3.0F).setResistance(15.0F);
 		getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE, ToolLevelFlags.WOOD_UP);
 	}

@@ -32,24 +32,27 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
+import org.spout.api.model.Model;
 import org.spout.api.plugin.Platform;
+import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.data.drops.SwitchDrops;
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.plugin.material.Burnable;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.render.VanillaEffects;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class TallGrass extends DeadBush implements Burnable {
-	public static final TallGrass DEAD_GRASS = new TallGrass("Dead Grass", 31, "model://Vanilla/materials/block/nonsolid/deadgrass/deadgrass.spm");
-	public static final TallGrass TALL_GRASS = new TallGrass("Tall Grass", 1, DEAD_GRASS, "model://Vanilla/materials/block/nonsolid/tallgrass/tallgrass.spm");
-	public static final TallGrass FERN = new TallGrass("Fern", 2, DEAD_GRASS, "model://Vanilla/materials/block/nonsolid/fern/fern.spm");
+	public static final TallGrass DEAD_GRASS = new TallGrass("Dead Grass", 31, VanillaMaterialModels.DEADGRASS);
+	public static final TallGrass TALL_GRASS = new TallGrass("Tall Grass", 1, DEAD_GRASS, VanillaMaterialModels.TALLGRASS);
+	public static final TallGrass FERN = new TallGrass("Fern", 2, DEAD_GRASS, VanillaMaterialModels.FERN);
 
-	private TallGrass(String name, int id, String model) {
+	private TallGrass(String name, int id, ResourcePointer<Model> model) {
 		super(name, id, (short) 0x0003, model);
 	}
 
-	private TallGrass(String name, int data, TallGrass parent, String model) {
+	private TallGrass(String name, int data, TallGrass parent, ResourcePointer<Model> model) {
 		super(name, parent.getMinecraftId(), data, parent, model);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT && data == 1) {
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_GRASS_COLOR)) {

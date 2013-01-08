@@ -29,10 +29,11 @@ package org.spout.vanilla.plugin.material.block.ore;
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class IronBlock extends Solid {
 	public IronBlock(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/ironblock/ironblock.spm");
+		super(name, id, VanillaMaterialModels.IRON_BLOCK);
 		this.setHardness(5.0F).setResistance(10.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.STONE);
 	}
 }

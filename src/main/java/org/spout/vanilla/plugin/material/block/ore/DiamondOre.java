@@ -35,10 +35,11 @@ import org.spout.vanilla.plugin.material.TimedCraftable;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Ore;
 import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class DiamondOre extends Ore implements InitializableMaterial, TimedCraftable {
 	public DiamondOre(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/diamondore/diamondore.spm");
+		super(name, id, VanillaMaterialModels.DIAMOND_ORE);
 		this.setHardness(3.0F).setResistance(5.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.IRON);
 	}
 

@@ -28,10 +28,11 @@ package org.spout.vanilla.plugin.material.block.misc;
 
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class GlassPane extends VanillaBlockMaterial {
 	public GlassPane(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.GLASS_PANE);
 		this.setHardness(0.3F).setResistance(0.3F).setTransparent();
 		this.getDrops().clear();
 	}

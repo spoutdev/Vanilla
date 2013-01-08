@@ -34,12 +34,13 @@ import org.spout.vanilla.plugin.material.Burnable;
 import org.spout.vanilla.plugin.material.Fuel;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Fence;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class WoodenFence extends Fence implements Fuel, Burnable {
 	public final float BURN_TIME = 15;
 
 	public WoodenFence(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.WOODEN_FENCE);
 		this.setResistance(5.0F);
 	}
 

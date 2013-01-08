@@ -43,10 +43,11 @@ import org.spout.vanilla.plugin.event.block.SignUpdateEvent;
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public abstract class SignBase extends AbstractAttachable implements InitializableMaterial, VanillaComplexMaterial {
 	public SignBase(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.SIGN);
 		this.setAttachable(BlockFaces.NESWB).setHardness(1.0F).setResistance(1.6F).setOpacity((byte) 1);
 	}
 

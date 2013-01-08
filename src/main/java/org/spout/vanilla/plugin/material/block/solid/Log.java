@@ -43,6 +43,8 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.Vector3;
+import org.spout.api.model.Model;
+import org.spout.api.resource.ResourcePointer;
 import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.util.flag.Flag;
 
@@ -59,6 +61,7 @@ import org.spout.vanilla.plugin.material.block.Solid;
 import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
 import org.spout.vanilla.plugin.material.block.plant.Sapling;
 import org.spout.vanilla.plugin.material.item.misc.Coal;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable, Burnable, Directional {
 	private static final BlockFaces DIRECTION_OPPOS = new BlockFaces(BlockFace.BOTTOM, BlockFace.NORTH, BlockFace.EAST);
@@ -68,21 +71,21 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	public static final short aliveMask = 0x0100;
 	public static final short heightMask = 0x0600;
 	private static final EffectRange dynamicRange = new CuboidEffectRange(-4, 0, -4, 4, 8, 4);
-	public static final Log DEFAULT = new Log("Wood", Sapling.DEFAULT, "model://Vanilla/materials/block/solid/oakwood/oakwood.spm");
-	public static final Log SPRUCE = new Log("Spruce Wood", 1, DEFAULT, Sapling.SPRUCE, "model://Vanilla/materials/block/solid/sprucewood/sprucewood.spm");
-	public static final Log BIRCH = new Log("Birch Wood", 2, DEFAULT, Sapling.BIRCH, "model://Vanilla/materials/block/solid/birchwood/birchwood.spm");
-	public static final Log JUNGLE = new Log("Jungle Wood", 3, DEFAULT, Sapling.JUNGLE, "model://Vanilla/materials/block/solid/junglewood/junglewood.spm");
+	public static final Log DEFAULT = new Log("Wood", Sapling.DEFAULT, VanillaMaterialModels.LOG_OAK);
+	public static final Log SPRUCE = new Log("Spruce Wood", 1, DEFAULT, Sapling.SPRUCE, VanillaMaterialModels.LOG_SPRUCE);
+	public static final Log BIRCH = new Log("Birch Wood", 2, DEFAULT, Sapling.BIRCH, VanillaMaterialModels.LOG_BIRCH);
+	public static final Log JUNGLE = new Log("Jungle Wood", 3, DEFAULT, Sapling.JUNGLE, VanillaMaterialModels.LOG_JUNGLE);
 	public final float BURN_TIME = 15;
 	private final Sapling sapling;
 
-	private Log(String name, Sapling sapling, String model) {
+	private Log(String name, Sapling sapling, ResourcePointer<Model> model) {
 		super(dataMask, name, 17, model);
 		this.setHardness(2.0F).setResistance(10.F).setStepSound(SoundEffects.STEP_WOOD);
 		this.addMiningType(ToolType.AXE);
 		this.sapling = sapling;
 	}
 
-	private Log(String name, int data, Log parent, Sapling sapling, String model) {
+	private Log(String name, int data, Log parent, Sapling sapling, ResourcePointer<Model> model) {
 		super(name, 17, data, parent, model);
 		this.setHardness(2.0F).setResistance(10.F).setStepSound(SoundEffects.STEP_WOOD);
 		this.addMiningType(ToolType.AXE);

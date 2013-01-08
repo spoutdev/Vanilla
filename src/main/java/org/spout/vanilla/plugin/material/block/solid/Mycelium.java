@@ -34,10 +34,11 @@ import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.SpreadingSolid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Mycelium extends SpreadingSolid implements InitializableMaterial {
 	public Mycelium(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/mycelium/mycelium.spm");
+		super(name, id, VanillaMaterialModels.MYCELIUM);
 		this.setHardness(0.6F).setResistance(0.8F).addMiningType(ToolType.SPADE);
 	}
 

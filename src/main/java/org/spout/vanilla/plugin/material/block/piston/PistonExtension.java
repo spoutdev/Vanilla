@@ -38,7 +38,7 @@ import org.spout.vanilla.plugin.material.block.Solid;
 
 public class PistonExtension extends Solid implements Directional {
 	public PistonExtension(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, null);
 		this.setHardness(0.5F).setResistance(0.8F).setTransparent();
 	}
 

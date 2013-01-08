@@ -27,24 +27,27 @@
 package org.spout.vanilla.plugin.material.block.solid;
 
 import org.spout.api.material.source.DataSource;
+import org.spout.api.model.Model;
+import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Sandstone extends Solid {
-	public static final Sandstone SANDSTONE = new Sandstone("Sandstone", "model://Vanilla/materials/block/solid/sandstone/sandstone.spm");
-	public static final Sandstone DECORATIVE = new Sandstone("Decorative Sandstone", SandstoneType.DECORATIVE, SANDSTONE, "model://Vanilla/materials/block/solid/cheseledsandstone/cheseledsandstone.spm");
-	public static final Sandstone SMOOTH = new Sandstone("Smooth Sandstone", SandstoneType.SMOOTH, SANDSTONE, "model://Vanilla/materials/block/solid/smoothsandstone/smoothsandstone.spm");
+	public static final Sandstone SANDSTONE = new Sandstone("Sandstone", VanillaMaterialModels.SANDSTONE);
+	public static final Sandstone DECORATIVE = new Sandstone("Decorative Sandstone", SandstoneType.DECORATIVE, SANDSTONE, VanillaMaterialModels.SANDSTONE_DECORATIVE);
+	public static final Sandstone SMOOTH = new Sandstone("Smooth Sandstone", SandstoneType.SMOOTH, SANDSTONE, VanillaMaterialModels.SANDSTONE_SMOOTH);
 	private final SandstoneType type;
 
-	private Sandstone(String name, String model) {
+	private Sandstone(String name, ResourcePointer<Model> model) {
 		super((short) 0x0003, name, 24, model);
 		this.type = SandstoneType.SANDSTONE;
 		this.setHardness(0.8F).setResistance(1.3F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
-	private Sandstone(String name, SandstoneType type, Sandstone parent, String model) {
+	private Sandstone(String name, SandstoneType type, Sandstone parent, ResourcePointer<Model> model) {
 		super(name, 24, type.getData(), parent, model);
 		this.type = type;
 		this.setHardness(0.8F).setResistance(1.3F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);

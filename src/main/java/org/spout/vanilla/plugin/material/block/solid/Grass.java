@@ -39,10 +39,11 @@ import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.SpreadingSolid;
 import org.spout.vanilla.plugin.render.VanillaEffects;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Grass extends SpreadingSolid implements DynamicMaterial, InitializableMaterial {
 	public Grass(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/grass/grass.spm");
+		super(name, id, VanillaMaterialModels.GRASS);
 		this.setHardness(0.6F).setResistance(0.8F).setStepSound(SoundEffects.STEP_GRASS);
 		this.addMiningType(ToolType.SPADE);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {

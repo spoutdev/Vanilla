@@ -30,10 +30,11 @@ import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class SoulSand extends Solid {
 	public SoulSand(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/soulsand/soulsand.spm");
+		super(name, id, VanillaMaterialModels.SOUL_SAND);
 		this.setHardness(0.5F).setResistance(0.8F).setStepSound(SoundEffects.STEP_SAND);
 		this.addMiningType(ToolType.SPADE);
 	}

@@ -29,10 +29,11 @@ package org.spout.vanilla.plugin.material.block.ore;
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class LapisLazuliBlock extends Solid {
 	public LapisLazuliBlock(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/lapislazuliblock/lapislazuliblock.spm");
+		super(name, id, VanillaMaterialModels.LAPIS_LAZULI_BLOCK);
 		this.setHardness(3.0F).setResistance(5.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.STONE);
 	}
 }

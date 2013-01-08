@@ -38,10 +38,11 @@ import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Liquid;
 import org.spout.vanilla.plugin.render.VanillaEffects;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Lava extends Liquid {
 	public Lava(String name, int id, boolean flowing) {
-		super(name, id, flowing, "model://Vanilla/materials/block/liquid/lava/lava.spm");
+		super(name, id, flowing, VanillaMaterialModels.LAVA);
 		this.setFlowDelay(1500);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getRenderEffects().contains(VanillaEffects.LIQUID)) {

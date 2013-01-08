@@ -235,6 +235,7 @@ import org.spout.vanilla.plugin.material.item.tool.Shears;
 import org.spout.vanilla.plugin.material.item.tool.weapon.Bow;
 import org.spout.vanilla.plugin.material.item.tool.weapon.Sword;
 import org.spout.vanilla.plugin.material.map.Map;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 // TODO: Remove all casts and separate remaining "set" methods out into each material's init() method
 public final class VanillaMaterials {
@@ -292,10 +293,10 @@ public final class VanillaMaterials {
 	public static final TallGrass DEAD_GRASS = TallGrass.DEAD_GRASS;
 	public static final DeadBush DEAD_BUSH = new DeadBush("Dead Shrubs", 32);
 	public static final Sapling SAPLING = Sapling.DEFAULT;
-	public static final Flower DANDELION = new Flower("Dandelion", 37, "model://Vanilla/materials/block/nonsolid/dandelion/dandelion.spm");
-	public static final Flower ROSE = new Flower("Rose", 38, "model://Vanilla/materials/block/nonsolid/rose/rose.spm");
-	public static final Mushroom BROWN_MUSHROOM = new Mushroom("Brown Mushroom", 39, "model://Vanilla/materials/block/nonsolid/brownmushroom/brownmushroom.spm");
-	public static final Mushroom RED_MUSHROOM = new Mushroom("Red Mushroom", 40, "model://Vanilla/materials/block/nonsolid/redmushroom/redmushroom.spm");
+	public static final Flower DANDELION = new Flower("Dandelion", 37, VanillaMaterialModels.DANDELION);
+	public static final Flower ROSE = new Flower("Rose", 38, VanillaMaterialModels.ROSE);
+	public static final Mushroom BROWN_MUSHROOM = new Mushroom("Brown Mushroom", 39, VanillaMaterialModels.BROWN_MUSHROOM);
+	public static final Mushroom RED_MUSHROOM = new Mushroom("Red Mushroom", 40, VanillaMaterialModels.RED_MUSHROOM);
 	// == Stairs ==
 	public static final NetherBrickStairs STAIRS_NETHER_BRICK = new NetherBrickStairs("Nether Brick Stairs", 114);
 	public static final BrickStairs STAIRS_BRICK = new BrickStairs("Brick Stairs", 108);
@@ -321,7 +322,7 @@ public final class VanillaMaterials {
 	public static final BookShelf BOOKSHELF = new BookShelf("Bookshelf", 47);
 	public static final MossStone MOSS_STONE = new MossStone("Moss Stone", 48);
 	public static final Obsidian OBSIDIAN = new Obsidian("Obsidian", 49);
-	public static final Torch TORCH = new Torch((short) 0x7, "Torch", 50, "model://Vanilla/materials/block/nonsolid/torch/torch.spm");
+	public static final Torch TORCH = new Torch((short) 0x7, "Torch", 50, VanillaMaterialModels.TORCH);
 	public static final Fire FIRE = new Fire("Fire", 51);
 	public static final MonsterSpawnerBlock MONSTER_SPAWNER = new MonsterSpawnerBlock("Monster Spawner", 52);
 	public static final ChestBlock CHEST = new ChestBlock("Chest", 54);
@@ -351,11 +352,11 @@ public final class VanillaMaterials {
 	public static final SugarCaneBlock SUGAR_CANE_BLOCK = new SugarCaneBlock("Sugar Cane", 83);
 	public static final JukeboxBlock JUKEBOX = new JukeboxBlock("Jukebox", 84);
 	public static final WoodenFence WOODEN_FENCE = new WoodenFence("Wooden Fence", 85);
-	public static final Pumpkin PUMPKIN_BLOCK = new Pumpkin((short) 0x7, "Pumpkin", 86, "model://Vanilla/materials/block/solid/pumpkin/pumpkin.spm", false);
+	public static final Pumpkin PUMPKIN_BLOCK = new Pumpkin((short) 0x7, "Pumpkin", 86, VanillaMaterialModels.PUMPKIN, false);
 	public static final NetherRack NETHERRACK = new NetherRack("Netherrack", 87);
 	public static final SoulSand SOUL_SAND = new SoulSand("Soul Sand", 88);
 	public static final Glowstone GLOWSTONE_BLOCK = new Glowstone("Glowstone Block", 89);
-	public static final Pumpkin JACK_O_LANTERN = new Pumpkin((short) 0x7, "Jack 'o' Lantern", 91, "model://Vanilla/materials/block/solid/jackolantern/jackolantern.spm", true);
+	public static final Pumpkin JACK_O_LANTERN = new Pumpkin((short) 0x7, "Jack 'o' Lantern", 91, VanillaMaterialModels.JACK_O_LANTERN, true);
 	public static final Endstone END_STONE = new Endstone("End Stone", 121);
 	public static final CakeBlock CAKE_BLOCK = new CakeBlock("Cake Block", 92);
 	public static final RedstoneRepeater REDSTONE_REPEATER_OFF = new RedstoneRepeater("Redstone Repeater", 93, false);
@@ -382,8 +383,8 @@ public final class VanillaMaterials {
 	public static final BrewingStandBlock BREWING_STAND_BLOCK = new BrewingStandBlock("Brewing Stand", 117);
 	public static final CauldronBlock CAULDRON_BLOCK = new CauldronBlock("Cauldron", 118);
 	public static final DragonEgg DRAGON_EGG = new DragonEgg("Dragon Egg", 122);
-	public static final RedstoneLamp REDSTONE_LAMP_OFF = new RedstoneLamp("Redstone Lamp", 123, false, "model://Vanilla/materials/block/solid/redstonelampoff/redstonelampoff.spm");
-	public static final RedstoneLamp REDSTONE_LAMP_ON = new RedstoneLamp("Redstone Lamp (On)", 124, true, "model://Vanilla/materials/block/solid/redstonelampon/redstonelampon.spm");
+	public static final RedstoneLamp REDSTONE_LAMP_OFF = new RedstoneLamp("Redstone Lamp", 123, false, VanillaMaterialModels.REDSTONE_LAMP_OFF);
+	public static final RedstoneLamp REDSTONE_LAMP_ON = new RedstoneLamp("Redstone Lamp (On)", 124, true, VanillaMaterialModels.REDSTONE_LAMP_ON);
 	public static final TripWireHook TRIPWIRE_HOOK = new TripWireHook("Trip Wire Hook", 131);
 	public static final TripWire TRIPWIRE = new TripWire("Trip Wire", 132);
 	public static final CocoaPlant COCOA_PLANT = new CocoaPlant("Cocoa Plant", 127);

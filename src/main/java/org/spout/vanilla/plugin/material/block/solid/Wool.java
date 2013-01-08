@@ -32,38 +32,41 @@ import java.util.Map;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
+import org.spout.api.model.Model;
+import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.material.Burnable;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Wool extends Solid implements Burnable {
-	public static final Wool WHITE_WOOL = new Wool("White Wool", "model://Vanilla/materials/block/solid/whitewool/whitewool.spm");
-	public static final Wool ORANGE_WOOL = new Wool("Orange Wool", WoolColor.ORANGE, WHITE_WOOL, "model://Vanilla/materials/block/solid/orangewool/orangewool.spm");
-	public static final Wool MAGENTA_WOOL = new Wool("Magenta Wool", WoolColor.MAGENTA, WHITE_WOOL, "model://Vanilla/materials/block/solid/magentawool/magentawool.spm");
-	public static final Wool LIGHTBLUE_WOOL = new Wool("Light Blue Wool", WoolColor.LIGHTBLUE, WHITE_WOOL, "model://Vanilla/materials/block/solid/lightbluewool/lightbluewool.spm");
-	public static final Wool YELLOW_WOOL = new Wool("Yellow Wool", WoolColor.YELLOW, WHITE_WOOL, "model://Vanilla/materials/block/solid/yellowwool/yellowwool.spm");
-	public static final Wool LIME_WOOL = new Wool("Lime Wool", WoolColor.LIME, WHITE_WOOL, "model://Vanilla/materials/block/solid/whitewool/whitewool.spm"); // TODO : add the lime wool
-	public static final Wool PINK_WOOL = new Wool("Pink Wool", WoolColor.PINK, WHITE_WOOL, "model://Vanilla/materials/block/solid/pinkwool/pinkwool.spm");
-	public static final Wool GRAY_WOOL = new Wool("Gray Wool", WoolColor.GRAY, WHITE_WOOL, "model://Vanilla/materials/block/solid/graywool/graywool.spm");
-	public static final Wool SILVER_WOOL = new Wool("Light Gray Wool", WoolColor.SILVER, WHITE_WOOL, "model://Vanilla/materials/block/solid/lightgraywool/lightgraywool.spm");
-	public static final Wool CYAN_WOOL = new Wool("Cyan Wool", WoolColor.CYAN, WHITE_WOOL, "model://Vanilla/materials/block/solid/cyanwool/cyanwool.spm");
-	public static final Wool PURPLE_WOOL = new Wool("Purple Wool", WoolColor.PURPLE, WHITE_WOOL, "model://Vanilla/materials/block/solid/purplewool/purplewool.spm");
-	public static final Wool BLUE_WOOL = new Wool("Blue Wool", WoolColor.BLUE, WHITE_WOOL, "model://Vanilla/materials/block/solid/bluewool/bluewool.spm");
-	public static final Wool BROWN_WOOL = new Wool("Brown Wool", WoolColor.BROWN, WHITE_WOOL, "model://Vanilla/materials/block/solid/brownwool/brownwool.spm");
-	public static final Wool GREEN_WOOL = new Wool("Green Wool", WoolColor.GREEN, WHITE_WOOL, "model://Vanilla/materials/block/solid/greenwool/greenwool.spm");
-	public static final Wool RED_WOOL = new Wool("Red Wool", WoolColor.RED, WHITE_WOOL, "model://Vanilla/materials/block/solid/redwool/redwool.spm");
-	public static final Wool BLACK_WOOL = new Wool("Black Wool", WoolColor.BLACK, WHITE_WOOL, "model://Vanilla/materials/block/solid/blackwool/blackwool.spm");
+	public static final Wool WHITE_WOOL = new Wool("White Wool", VanillaMaterialModels.WOOL_WHITE);
+	public static final Wool ORANGE_WOOL = new Wool("Orange Wool", WoolColor.ORANGE, WHITE_WOOL, VanillaMaterialModels.WOOL_ORANGE);
+	public static final Wool MAGENTA_WOOL = new Wool("Magenta Wool", WoolColor.MAGENTA, WHITE_WOOL, VanillaMaterialModels.WOOL_MAGENTA);
+	public static final Wool LIGHTBLUE_WOOL = new Wool("Light Blue Wool", WoolColor.LIGHTBLUE, WHITE_WOOL, VanillaMaterialModels.WOOL_LIGHTBLUE);
+	public static final Wool YELLOW_WOOL = new Wool("Yellow Wool", WoolColor.YELLOW, WHITE_WOOL, VanillaMaterialModels.WOOL_YELLOW);
+	public static final Wool LIME_WOOL = new Wool("Lime Wool", WoolColor.LIME, WHITE_WOOL, VanillaMaterialModels.WOOL_LIME);
+	public static final Wool PINK_WOOL = new Wool("Pink Wool", WoolColor.PINK, WHITE_WOOL, VanillaMaterialModels.WOOL_PINK);
+	public static final Wool GRAY_WOOL = new Wool("Gray Wool", WoolColor.GRAY, WHITE_WOOL, VanillaMaterialModels.WOOL_GRAY);
+	public static final Wool SILVER_WOOL = new Wool("Light Gray Wool", WoolColor.SILVER, WHITE_WOOL, VanillaMaterialModels.WOOL_SILVER);
+	public static final Wool CYAN_WOOL = new Wool("Cyan Wool", WoolColor.CYAN, WHITE_WOOL, VanillaMaterialModels.WOOL_CYAN);
+	public static final Wool PURPLE_WOOL = new Wool("Purple Wool", WoolColor.PURPLE, WHITE_WOOL, VanillaMaterialModels.WOOL_PURPLE);
+	public static final Wool BLUE_WOOL = new Wool("Blue Wool", WoolColor.BLUE, WHITE_WOOL, VanillaMaterialModels.WOOL_BLUE);
+	public static final Wool BROWN_WOOL = new Wool("Brown Wool", WoolColor.BROWN, WHITE_WOOL, VanillaMaterialModels.WOOL_BROWN);
+	public static final Wool GREEN_WOOL = new Wool("Green Wool", WoolColor.GREEN, WHITE_WOOL, VanillaMaterialModels.WOOL_GREEN);
+	public static final Wool RED_WOOL = new Wool("Red Wool", WoolColor.RED, WHITE_WOOL, VanillaMaterialModels.WOOL_RED);
+	public static final Wool BLACK_WOOL = new Wool("Black Wool", WoolColor.BLACK, WHITE_WOOL, VanillaMaterialModels.WOOL_BLACK);
 	private final WoolColor color;
 
-	private Wool(String name, String model) {
+	private Wool(String name, ResourcePointer<Model> model) {
 		super((short) 0x000F, name, 35, model);
 		this.color = WoolColor.WHITE;
 		this.setHardness(0.8F).setResistance(1.3F).setStepSound(SoundEffects.STEP_CLOTH);
 	}
 
-	private Wool(String name, WoolColor color, Wool parent, String model) {
+	private Wool(String name, WoolColor color, Wool parent, ResourcePointer<Model> model) {
 		super(name, 35, color.getData(), parent, model);
 		this.color = color;
 		this.setHardness(0.8F).setResistance(1.3F).setStepSound(SoundEffects.STEP_CLOTH);

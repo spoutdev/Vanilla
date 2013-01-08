@@ -27,9 +27,10 @@
 package org.spout.vanilla.plugin.material.block.solid;
 
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Sponge extends Solid {
 	public Sponge(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/sponge/sponge.spm");
+		super(name, id, VanillaMaterialModels.SPONGE);
 	}
 }

@@ -41,13 +41,14 @@ import org.spout.vanilla.plugin.material.Fuel;
 import org.spout.vanilla.plugin.material.block.Openable;
 import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.plugin.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 import org.spout.vanilla.plugin.util.RedstoneUtil;
 
 public class TrapDoor extends AbstractAttachable implements Fuel, Openable, RedstoneTarget {
 	public final float BURN_TIME = 15;
 
 	public TrapDoor(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.TRAP_DOOR);
 		this.setAttachable(BlockFaces.NESW).setHardness(3.0F).setResistance(5.0F).setTransparent();
 		this.setCollision(CollisionStrategy.SOLID);
 	}

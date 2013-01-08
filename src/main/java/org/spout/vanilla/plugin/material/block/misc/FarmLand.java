@@ -38,13 +38,14 @@ import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Crop;
 import org.spout.vanilla.plugin.material.block.liquid.Water;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class FarmLand extends VanillaBlockMaterial implements InitializableMaterial, DynamicMaterial {
 	private static final EffectRange WATER_CHECK_RANGE = new CuboidEffectRange(-4, 0, -4, 4, 1, 4);
 	private static final EffectRange CROP_CHECK_RANGE = new CuboidEffectRange(-1, 1, -1, 1, 1, 1);
 
 	public FarmLand(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/farmland/farmland.spm");
+		super(name, id, VanillaMaterialModels.FARM_LAND);
 		this.setHardness(0.6F).setResistance(1.0F).setOpaque();
 		this.addMiningType(ToolType.SPADE);
 	}

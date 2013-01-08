@@ -40,13 +40,14 @@ import org.spout.api.util.flag.Flag;
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class TripWire extends GroundAttachable implements InitializableMaterial {
 	public static final int MAX_DISTANCE = 42;
 	public static final int MAX_DISTANCE_SQUARED = MAX_DISTANCE * MAX_DISTANCE;
 
 	public TripWire(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.TRIP_WIRE);
 		this.setHardness(0.0f).setResistance(0.0f).setTransparent();
 	}
 

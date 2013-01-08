@@ -33,6 +33,8 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
+import org.spout.api.model.Model;
+import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
@@ -40,6 +42,7 @@ import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Snow extends GroundAttachable implements DynamicMaterial, InitializableMaterial {
 	private static final long POLL_TIME = 60000;
@@ -47,24 +50,24 @@ public class Snow extends GroundAttachable implements DynamicMaterial, Initializ
 	public static final Snow[] SNOW = new Snow[8];
 
 	static {
-		SNOW[0] = new Snow("Snow", 78, "model://Vanilla/materials/block/nonsolid/snow/snow_1.spm");
-		SNOW[1] = new Snow("Snow_1", 1, SNOW[0], "model://Vanilla/materials/block/nonsolid/snow/snow_2.spm");
-		SNOW[2] = new Snow("Snow_2", 2, SNOW[0], "model://Vanilla/materials/block/nonsolid/snow/snow_3.spm");
-		SNOW[3] = new Snow("Snow_3", 3, SNOW[0], "model://Vanilla/materials/block/nonsolid/snow/snow_4.spm");
-		SNOW[4] = new Snow("Snow_4", 4, SNOW[0], "model://Vanilla/materials/block/nonsolid/snow/snow_5.spm");
-		SNOW[5] = new Snow("Snow_5", 5, SNOW[0], "model://Vanilla/materials/block/nonsolid/snow/snow_6.spm");
-		SNOW[6] = new Snow("Snow_6", 6, SNOW[0], "model://Vanilla/materials/block/nonsolid/snow/snow_7.spm");
-		SNOW[7] = new Snow("Snow_7", 7, SNOW[0], "model://Vanilla/materials/block/solid/snowblock/snowblock.spm");
+		SNOW[0] = new Snow("Snow", 78, VanillaMaterialModels.SNOW_1);
+		SNOW[1] = new Snow("Snow_1", 1, SNOW[0], VanillaMaterialModels.SNOW_2);
+		SNOW[2] = new Snow("Snow_2", 2, SNOW[0], VanillaMaterialModels.SNOW_3);
+		SNOW[3] = new Snow("Snow_3", 3, SNOW[0], VanillaMaterialModels.SNOW_4);
+		SNOW[4] = new Snow("Snow_4", 4, SNOW[0], VanillaMaterialModels.SNOW_5);
+		SNOW[5] = new Snow("Snow_5", 5, SNOW[0], VanillaMaterialModels.SNOW_6);
+		SNOW[6] = new Snow("Snow_6", 6, SNOW[0], VanillaMaterialModels.SNOW_7);
+		SNOW[7] = new Snow("Snow_7", 7, SNOW[0], VanillaMaterialModels.SNOW_BLOCK);
 	}
 
-	public Snow(String name, int id, String model) {
+	public Snow(String name, int id, ResourcePointer<Model> model) {
 		super((short) 0x07, name, id, model);
 		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent();
 		this.setOcclusion((short) 0, BlockFace.BOTTOM);
 		this.addMiningType(ToolType.SPADE).setMiningLevel(ToolLevel.WOOD);
 	}
 
-	private Snow(String name, int data, Snow parent, String model) {
+	private Snow(String name, int data, Snow parent, ResourcePointer<Model> model) {
 		super(name, SNOW[0].getMinecraftId(), data, parent, model);
 		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent();
 		this.setOcclusion((short) 0, BlockFace.BOTTOM);

@@ -32,10 +32,11 @@ import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Stone extends Solid implements InitializableMaterial {
 	public Stone(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/stone/stone.spm");
+		super(name, id, VanillaMaterialModels.STONE);
 		this.setHardness(1.5F).setResistance(10.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 

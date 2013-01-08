@@ -42,12 +42,13 @@ import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.block.AttachedRedstoneSource;
 import org.spout.vanilla.plugin.material.block.attachable.PointAttachable;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class StoneButton extends AttachedRedstoneSource implements PointAttachable, DynamicMaterial {
 	public static final int TICK_DELAY = 1000;
 
 	public StoneButton(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.STONE_BUTTON);
 		this.setAttachable(BlockFaces.NESW).setLiquidObstacle(false).setHardness(0.5F).setResistance(0.8F).setTransparent();
 	}
 

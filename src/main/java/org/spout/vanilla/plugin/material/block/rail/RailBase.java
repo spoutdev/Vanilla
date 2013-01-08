@@ -41,7 +41,7 @@ import org.spout.vanilla.plugin.util.MinecartTrackLogic;
 
 public abstract class RailBase extends GroundAttachable {
 	public RailBase(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, null);
 		this.setLiquidObstacle(false).setHardness(0.7F).setResistance(1.2F).setTransparent().setCollision(CollisionStrategy.NOCOLLIDE);
 		//TODO: Fix this up so we can set this area ourselves in the volume!
 		BoundingBox bb = (BoundingBox) this.getBoundingArea();

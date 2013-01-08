@@ -36,10 +36,11 @@ import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.inventory.window.block.CraftingTableWindow;
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class CraftingTableBlock extends Solid {
 	public CraftingTableBlock(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/craftingtable/craftingtable.spm");
+		super(name, id, VanillaMaterialModels.CRAFTING_TABLE);
 		this.setHardness(4.2F);
 	}
 

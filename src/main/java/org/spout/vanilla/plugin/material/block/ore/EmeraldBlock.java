@@ -29,10 +29,11 @@ package org.spout.vanilla.plugin.material.block.ore;
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class EmeraldBlock extends Solid {
 	public EmeraldBlock(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.EMERALD_BLOCK);
 		this.setHardness(5.0F).setResistance(10.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.IRON);
 	}
 }

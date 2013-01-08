@@ -29,10 +29,11 @@ package org.spout.vanilla.plugin.material.block.solid;
 import org.spout.vanilla.plugin.data.drops.flag.ToolLevelFlags;
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class IronBarsBlock extends Solid {
 	public IronBarsBlock(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.IRON_BARS_BLOCK);
 		this.setHardness(5.0F).setResistance(10.0F).setTransparent();
 		getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE, ToolLevelFlags.WOOD_UP);
 	}

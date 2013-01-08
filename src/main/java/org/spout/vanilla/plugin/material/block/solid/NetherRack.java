@@ -28,10 +28,11 @@ package org.spout.vanilla.plugin.material.block.solid;
 
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class NetherRack extends Solid {
 	public NetherRack(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/netherrack/netherrack.spm");
+		super(name, id, VanillaMaterialModels.NETHER_RACK);
 		this.setHardness(0.6F).setResistance(0.6F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

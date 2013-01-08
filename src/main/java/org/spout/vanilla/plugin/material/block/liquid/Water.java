@@ -40,10 +40,11 @@ import org.spout.vanilla.plugin.data.Climate;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Liquid;
 import org.spout.vanilla.plugin.render.VanillaEffects;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Water extends Liquid implements DynamicMaterial {
 	public Water(String name, int id, boolean flowing) {
-		super(name, id, flowing, "model://Vanilla/materials/block/liquid/water/water.spm");
+		super(name, id, flowing, VanillaMaterialModels.WATER);
 		this.setFlowDelay(250);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_WATER_COLOR)) {

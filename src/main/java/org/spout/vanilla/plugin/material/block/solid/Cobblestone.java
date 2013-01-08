@@ -35,10 +35,11 @@ import org.spout.vanilla.plugin.material.TimedCraftable;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Solid;
 import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Cobblestone extends Solid implements TimedCraftable {
 	public Cobblestone(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/cobblestone/cobblestone.spm");
+		super(name, id, VanillaMaterialModels.COBBLESTONE);
 		this.setHardness(2.0F).setResistance(10.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 

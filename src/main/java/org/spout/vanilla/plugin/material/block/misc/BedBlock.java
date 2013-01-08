@@ -48,6 +48,7 @@ import org.spout.vanilla.plugin.data.Time;
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 import org.spout.vanilla.plugin.util.explosion.ExplosionModel;
 import org.spout.vanilla.plugin.util.explosion.ExplosionModelSpherical;
@@ -60,7 +61,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 	public static final ChatArguments OCCUPIED_MESSAGE = new ChatArguments(ChatStyle.RED, "This bed is occupied.");
 
 	public BedBlock(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/bedrock/bedrock.spm");
+		super(name, id, VanillaMaterialModels.BED_BLOCK);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
 	}
 

@@ -31,7 +31,7 @@ import org.spout.vanilla.plugin.material.block.Stairs;
 
 public class NetherBrickStairs extends Stairs {
 	public NetherBrickStairs(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, null);
 		this.setHardness(2.0F).setResistance(10.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

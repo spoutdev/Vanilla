@@ -29,6 +29,8 @@ package org.spout.vanilla.plugin.material.block.solid;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
+import org.spout.api.model.Model;
+import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
@@ -37,23 +39,24 @@ import org.spout.vanilla.plugin.material.Burnable;
 import org.spout.vanilla.plugin.material.Fuel;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Plank extends Solid implements Fuel, Burnable {
-	public static final Plank PLANK = new Plank("Oak Plank", "model://Vanilla/materials/block/solid/oakplanks/oakplanks.spm");
-	public static final Plank PINE = new Plank("Pine Plank", WoodType.PINE, PLANK, "model://Vanilla/materials/block/solid/spruceplanks/spruceplanks.spm");
-	public static final Plank BIRCH = new Plank("Birch Plank", WoodType.BIRCH, PLANK, "model://Vanilla/materials/block/solid/birchplanks/birchplanks.spm");
-	public static final Plank JUNGLE = new Plank("Jungle Plank", WoodType.JUNGLE, PLANK, "model://Vanilla/materials/block/solid/jungleplanks/jungleplanks.spm");
+	public static final Plank PLANK = new Plank("Oak Plank", VanillaMaterialModels.PLANK_OAK);
+	public static final Plank PINE = new Plank("Pine Plank", WoodType.PINE, PLANK, VanillaMaterialModels.PLANK_PINE);
+	public static final Plank BIRCH = new Plank("Birch Plank", WoodType.BIRCH, PLANK, VanillaMaterialModels.PLANK_BIRCH);
+	public static final Plank JUNGLE = new Plank("Jungle Plank", WoodType.JUNGLE, PLANK, VanillaMaterialModels.PLANK_JUNGLE);
 	private final WoodType type;
 	public final float BURN_TIME = 15;
 
-	public Plank(String name, String model) {
+	public Plank(String name, ResourcePointer<Model> model) {
 		super((short) 0x0003, name, 5, model);
 		this.type = WoodType.OAK;
 		this.setHardness(0.8F).setResistance(1.3F).setStepSound(SoundEffects.STEP_WOOD);
 		this.addMiningType(ToolType.AXE);
 	}
 
-	public Plank(String name, WoodType type, Plank parent, String model) {
+	public Plank(String name, WoodType type, Plank parent, ResourcePointer<Model> model) {
 		super(name, 5, type.getData(), parent, model);
 		this.type = type;
 		this.setHardness(0.8F).setResistance(1.3F).setStepSound(SoundEffects.STEP_WOOD);

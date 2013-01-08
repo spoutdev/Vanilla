@@ -38,12 +38,12 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.plugin.data.drops.flag.BlockFlags;
-import org.spout.vanilla.plugin.inventory.Slot;
-import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.api.inventory.Slot;
+import org.spout.vanilla.api.material.InitializableMaterial;
+import org.spout.vanilla.api.material.block.Crop;
+import org.spout.vanilla.api.material.block.Growing;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Crop;
-import org.spout.vanilla.plugin.material.block.Growing;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.material.item.misc.Dye;
 import org.spout.vanilla.plugin.util.PlayerUtil;

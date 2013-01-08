@@ -29,9 +29,9 @@ package org.spout.vanilla.plugin.material.block.fence;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.api.material.Burnable;
+import org.spout.vanilla.api.material.Fuel;
 import org.spout.vanilla.plugin.data.Instrument;
-import org.spout.vanilla.plugin.material.Burnable;
-import org.spout.vanilla.plugin.material.Fuel;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Fence;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;

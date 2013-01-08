@@ -30,7 +30,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.plugin.data.Animation;
+import org.spout.vanilla.api.data.Animation;
 
 public final class EntityAnimationMessage extends EntityMessage {
 	private final byte animation;

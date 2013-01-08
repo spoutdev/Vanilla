@@ -34,15 +34,15 @@ import org.spout.api.material.Material;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.api.data.effect.StatusEffect;
+import org.spout.vanilla.api.inventory.Slot;
+import org.spout.vanilla.api.material.VanillaMaterial;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.EffectsComponent;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
-import org.spout.vanilla.plugin.data.effect.StatusEffect;
 import org.spout.vanilla.plugin.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.plugin.event.cause.PlayerDamageCause;
-import org.spout.vanilla.plugin.inventory.Slot;
-import org.spout.vanilla.plugin.material.VanillaMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.item.tool.Tool;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityInteractMessage;

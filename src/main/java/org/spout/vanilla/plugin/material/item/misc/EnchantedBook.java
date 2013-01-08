@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.item.misc;
 
-import org.spout.vanilla.plugin.material.item.Enchantable;
+import org.spout.vanilla.api.material.item.Enchantable;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public class EnchantedBook extends VanillaItemMaterial implements Enchantable {

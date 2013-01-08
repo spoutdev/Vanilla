@@ -33,7 +33,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerGameStateMessage;
 
 public final class PlayerGameStateCodec extends MessageCodec<PlayerGameStateMessage> {

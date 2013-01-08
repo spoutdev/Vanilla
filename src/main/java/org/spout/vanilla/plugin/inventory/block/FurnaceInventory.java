@@ -29,8 +29,8 @@ package org.spout.vanilla.plugin.inventory.block;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.plugin.material.Fuel;
-import org.spout.vanilla.plugin.material.TimedCraftable;
+import org.spout.vanilla.api.material.Fuel;
+import org.spout.vanilla.api.material.TimedCraftable;
 
 /**
  * Represents a furnace inventory belonging to a furnace entity.

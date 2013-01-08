@@ -39,8 +39,8 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.api.material.block.Attachable;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Attachable;
 import org.spout.vanilla.plugin.material.block.Directional;
 import org.spout.vanilla.plugin.material.block.Liquid;
 import org.spout.vanilla.plugin.world.generator.object.RotatableObject;

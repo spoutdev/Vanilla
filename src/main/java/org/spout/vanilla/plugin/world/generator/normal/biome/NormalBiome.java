@@ -34,8 +34,8 @@ import org.spout.api.util.config.annotated.Load;
 import org.spout.api.util.config.annotated.Save;
 import org.spout.api.util.config.annotated.Setting;
 
+import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.plugin.material.block.plant.TallGrass;
-import org.spout.vanilla.plugin.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.plugin.world.generator.normal.decorator.TallGrassDecorator.TallGrassFactory;
 import org.spout.vanilla.plugin.world.generator.normal.decorator.TreeDecorator.TreeWGOFactory;
 import org.spout.vanilla.plugin.world.generator.normal.object.tree.BigTreeObject;

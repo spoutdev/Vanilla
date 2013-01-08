@@ -38,9 +38,9 @@ import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
 
-import org.spout.vanilla.plugin.data.Dimension;
+import org.spout.vanilla.api.data.Dimension;
+import org.spout.vanilla.api.material.Burnable;
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.material.Burnable;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
@@ -101,7 +101,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 
 	/**
 	 * Checks if the given fire block has a burn source at a certain face<br>
-	 * It checks if the fire has a {@link org.spout.vanilla.plugin.material.Burnable} block at the face
+	 * It checks if the fire has a {@link org.spout.vanilla.api.material.Burnable} block at the face
 	 * @param block of the fire
 	 * @param to the face the source is
 	 * @return True if it has a source there, False if not
@@ -113,7 +113,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 
 	/**
 	 * Checks if the given fire block has a burn source<br>
-	 * It checks if the fire has a {@link org.spout.vanilla.plugin.material.Burnable} block nearby
+	 * It checks if the fire has a {@link org.spout.vanilla.api.material.Burnable} block nearby
 	 * @param block of the fire
 	 * @return True if it has a source, False if not
 	 */

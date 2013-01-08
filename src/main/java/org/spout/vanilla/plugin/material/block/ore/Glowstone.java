@@ -29,7 +29,7 @@ package org.spout.vanilla.plugin.material.block.ore;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.plugin.material.InitializableMaterial;
+import org.spout.vanilla.api.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Ore;
 import org.spout.vanilla.plugin.material.block.component.SignBase;

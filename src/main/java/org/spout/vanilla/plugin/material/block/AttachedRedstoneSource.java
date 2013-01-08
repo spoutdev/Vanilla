@@ -34,7 +34,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
 
-import org.spout.vanilla.plugin.data.RedstonePowerMode;
+import org.spout.vanilla.api.data.RedstonePowerMode;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.plugin.material.block.redstone.RedstoneSource;

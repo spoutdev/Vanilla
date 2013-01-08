@@ -33,7 +33,7 @@ import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.nbt.CompoundMap;
 
-import org.spout.vanilla.plugin.protocol.msg.VanillaMainChannelMessage;
+import org.spout.vanilla.api.protocol.msg.VanillaMainChannelMessage;
 
 public class EntityTileDataMessage extends VanillaMainChannelMessage {
 	private final int x;

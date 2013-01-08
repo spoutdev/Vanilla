@@ -50,11 +50,11 @@ import org.spout.api.util.LogicUtil;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 import org.spout.api.util.map.TIntPairObjectHashMap;
 
-import org.spout.vanilla.plugin.data.Climate;
+import org.spout.vanilla.api.data.Climate;
+import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Liquid;
 import org.spout.vanilla.plugin.world.generator.VanillaBiomeGenerator;
-import org.spout.vanilla.plugin.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.plugin.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.plugin.world.generator.normal.populator.CavePopulator;

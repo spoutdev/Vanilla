@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.item.misc;
 
-import org.spout.vanilla.plugin.material.Fuel;
+import org.spout.vanilla.api.material.Fuel;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public class BlazeRod extends VanillaItemMaterial implements Fuel {

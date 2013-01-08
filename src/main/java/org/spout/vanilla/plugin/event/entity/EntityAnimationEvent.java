@@ -31,7 +31,7 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.plugin.data.Animation;
+import org.spout.vanilla.api.data.Animation;
 
 public class EntityAnimationEvent extends EntityEvent implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();

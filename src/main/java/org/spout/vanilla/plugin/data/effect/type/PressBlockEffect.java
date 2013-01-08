@@ -31,7 +31,7 @@ import java.util.List;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.plugin.data.effect.Effect;
+import org.spout.vanilla.api.data.effect.Effect;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 
 public class PressBlockEffect extends Effect {

@@ -34,8 +34,8 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.api.material.Burnable;
 import org.spout.vanilla.plugin.component.substance.object.Tnt;
-import org.spout.vanilla.plugin.material.Burnable;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Solid;
 import org.spout.vanilla.plugin.material.block.redstone.RedstoneTarget;

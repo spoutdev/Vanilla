@@ -53,10 +53,11 @@ import org.spout.api.render.RenderMaterial;
 import org.spout.api.util.flag.Flag;
 import org.spout.api.util.flag.FlagBundle;
 
+import org.spout.vanilla.api.data.MoveReaction;
+import org.spout.vanilla.api.data.RedstonePowerMode;
+import org.spout.vanilla.api.material.VanillaMaterial;
 import org.spout.vanilla.plugin.component.substance.Item;
 import org.spout.vanilla.plugin.data.Instrument;
-import org.spout.vanilla.plugin.data.MoveReaction;
-import org.spout.vanilla.plugin.data.RedstonePowerMode;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 import org.spout.vanilla.plugin.data.drops.flag.DropFlags;

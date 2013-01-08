@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.plugin.data.effect;
 
+import org.spout.vanilla.api.data.effect.StatusEffect;
+
 public class StatusEffectContainer {
 	private final StatusEffect effect;
 	private final int tier;

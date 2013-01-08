@@ -40,11 +40,6 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	}
 
 	@Override
-	public byte[] serialize(VanillaCuboidLightBuffer buffer) {
-		return buffer.serialize();
-	}
-
-	@Override
 	public void resolve(VanillaCuboidLightBuffer light, ImmutableCuboidBlockMaterialBuffer material, int[] hx, int[] hz, int[] oldHy, int[] newHy, int changedColumns) {
 	}
 }

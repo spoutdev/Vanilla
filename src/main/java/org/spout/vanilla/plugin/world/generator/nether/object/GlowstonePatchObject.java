@@ -71,17 +71,17 @@ public class GlowstonePatchObject extends RandomObject implements RandomizableOb
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
 		final Vector3 seed = new Vector3(x, y, z);
-		final List<BlockComponent> blocks = new ArrayList<BlockComponent>();
-		blocks.add(new BlockComponent(w.getBlock(seed)));
+		final List<Growth> growths = new ArrayList<Growth>();
+		growths.add(new Growth(w.getBlock(seed)));
 		byte count = 0;
-		while (!blocks.isEmpty() && count < totalSize) {
-			final BlockComponent current = blocks.get(0);
-			if (count == 0 || (isInBounds(seed, current.getPosition()) && current.canPlace())) {
-				current.place();
+		while (!growths.isEmpty() && count < totalSize) {
+			final Growth current = growths.get(0);
+			if (count == 0 || (isInBounds(seed, current.getPosition()) && current.canGrow())) {
+				current.grow();
 				count++;
-				blocks.addAll(current.getNextComponents(current));
+				growths.addAll(current.getNextGrowths(current));
 			}
-			blocks.remove(current);
+			growths.remove(current);
 		}
 	}
 
@@ -96,14 +96,14 @@ public class GlowstonePatchObject extends RandomObject implements RandomizableOb
 		totalSize = (byte) (random.nextInt(randSize) + baseSize);
 	}
 
-	private class BlockComponent {
+	private class Growth {
 		private final Block block;
 
-		public BlockComponent(Block block) {
+		public Growth(Block block) {
 			this.block = block;
 		}
 
-		public boolean canPlace() {
+		public boolean canGrow() {
 			if (!block.isMaterial(VanillaMaterials.AIR)) {
 				return false;
 			}
@@ -118,19 +118,19 @@ public class GlowstonePatchObject extends RandomObject implements RandomizableOb
 			return true;
 		}
 
-		public void place() {
+		public void grow() {
 			block.setMaterial(main);
 		}
 
-		public List<BlockComponent> getNextComponents(BlockComponent last) {
-			final List<BlockComponent> nextComponents = new ArrayList<BlockComponent>();
+		public List<Growth> getNextGrowths(Growth last) {
+			final List<Growth> nextGrowths = new ArrayList<Growth>();
 			for (BlockFace face : BlockFaces.ALL) {
 				final Block next = block.translate(face);
 				if (!next.equals(last) && random.nextBoolean()) {
-					nextComponents.add(new BlockComponent(next));
+					nextGrowths.add(new Growth(next));
 				}
 			}
-			return nextComponents;
+			return nextGrowths;
 		}
 
 		public Point getPosition() {

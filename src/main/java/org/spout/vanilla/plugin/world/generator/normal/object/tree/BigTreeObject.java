@@ -34,6 +34,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.SinusHelper;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
@@ -41,7 +42,6 @@ import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.plant.Sapling;
-import org.spout.vanilla.plugin.util.MathHelper;
 
 public class BigTreeObject extends TreeObject {
 	private float trunkHeightMultiplier = 0.618f;
@@ -187,14 +187,15 @@ public class BigTreeObject extends TreeObject {
 			final int baseY = group.getBase();
 			if (baseY - y >= totalHeight * 0.2) {
 				final Point base = new Point(world, x, baseY, z);
-				final BlockIterator branch = new BlockIterator(base, group);
-				final Vector3 diff = group.subtract(base);
+				final Vector3 angles = MathHelper.rotationTo(Vector3.FORWARD, group.subtract(base)).getAxisAngles();
+				System.out.println(angles);
 				final BlockFace facing;
-				if (MathHelper.getLookAtPitch(diff) < 135) {
-					facing = BlockFace.fromYaw(MathHelper.getLookAtYaw(diff));
+				if (angles.getX() < 135) {
+					facing = BlockFace.fromYaw(angles.getY());
 				} else {
 					facing = BlockFace.TOP;
 				}
+				final BlockIterator branch = new BlockIterator(base, group);
 				while (branch.hasNext()) {
 					final Block block = branch.next();
 					block.setMaterial(VanillaMaterials.LOG, logMetadata);

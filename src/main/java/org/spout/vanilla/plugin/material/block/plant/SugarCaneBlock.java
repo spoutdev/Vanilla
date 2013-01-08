@@ -38,12 +38,13 @@ import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class SugarCaneBlock extends StackGrowingBase implements InitializableMaterial {
 	private final Set<Material> allowedBases = new HashSet<Material>(4);
 
 	public SugarCaneBlock(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/nonsolid/sugarcane/sugarcane.spm");
+		super(name, id, VanillaMaterialModels.SUGARCANE);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 		this.addAllowedBase(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.SAND);
 	}

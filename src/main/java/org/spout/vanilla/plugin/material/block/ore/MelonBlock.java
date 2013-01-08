@@ -29,10 +29,11 @@ package org.spout.vanilla.plugin.material.block.ore;
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Ore;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class MelonBlock extends Ore implements InitializableMaterial {
 	public MelonBlock(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/melon/melon.spm");
+		super(name, id, VanillaMaterialModels.MELON_BLOCK);
 		this.setHardness(1.0F).setResistance(1.7F);
 	}
 

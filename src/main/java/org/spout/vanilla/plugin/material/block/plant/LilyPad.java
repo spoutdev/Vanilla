@@ -47,7 +47,7 @@ import org.spout.vanilla.plugin.material.block.liquid.Water;
 
 public class LilyPad extends GroundAttachable {
 	public LilyPad(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, null);
 		this.setHardness(0.0F).setResistance(0.3F).setTransparent();
 	}
 

@@ -32,6 +32,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
+import org.spout.api.model.Model;
+import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
@@ -45,7 +47,7 @@ public class RedstoneLamp extends Solid implements InitializableMaterial, Redsto
 	private static final int HAS_REDSTONE_POWER = 1;
 	private static final int HAS_NO_REDSTONE_POWER = 0;
 
-	public RedstoneLamp(String name, int id, boolean on, String model) {
+	public RedstoneLamp(String name, int id, boolean on, ResourcePointer<Model> model) {
 		super(name, id, model);
 		this.on = on;
 		// TODO: The resistance is not correct (?)

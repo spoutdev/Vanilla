@@ -36,12 +36,13 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.plugin.data.MoveReaction;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.block.Directional;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 import org.spout.vanilla.plugin.world.generator.object.VanillaObjects;
 
 public class EndPortalFrame extends VanillaBlockMaterial implements Directional {
 	public EndPortalFrame(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.END_PORTAL_FRAME);
 		this.setHardness(-1.0F).setResistance(6000000.0F);
 		this.setOcclusion((short) 0, BlockFace.BOTTOM);
 	}

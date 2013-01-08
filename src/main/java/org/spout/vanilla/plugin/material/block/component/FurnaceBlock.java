@@ -31,28 +31,31 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
+import org.spout.api.model.Model;
+import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.component.substance.material.Furnace;
 import org.spout.vanilla.plugin.data.MoveReaction;
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.plugin.material.block.Directional;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class FurnaceBlock extends ComponentMaterial implements Directional {
 	private static final short BURNING_FLAG = (short) 0x0010;
-	public static final FurnaceBlock FURNACE = new FurnaceBlock(BURNING_FLAG, "Furnace", 61, false, "model://Vanilla/materials/block/solid/furnace/furnace.spm");
-	public static final FurnaceBlock FURNACE_BURNING = new FurnaceBlock("Burning Furnace", 62, FURNACE, true, "model://Vanilla/materials/block/solid/furnace/furnace.spm");
+	public static final FurnaceBlock FURNACE = new FurnaceBlock(BURNING_FLAG, "Furnace", 61, false, VanillaMaterialModels.FURNACE);
+	public static final FurnaceBlock FURNACE_BURNING = new FurnaceBlock("Burning Furnace", 62, FURNACE, true, VanillaMaterialModels.FURNACE);
 	public static final float SMELT_TIME = 10.f;
 	private final boolean burning;
 
-	public FurnaceBlock(String name, int id, FurnaceBlock parent, boolean burning, String model) {
+	public FurnaceBlock(String name, int id, FurnaceBlock parent, boolean burning, ResourcePointer<Model> model) {
 		super(name, id, BURNING_FLAG, parent, Furnace.class, model);
 		this.burning = burning;
 		this.setHardness(3.5F).setResistance(5.8F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
-	public FurnaceBlock(short dataMask, String name, int id, boolean burning, String model) {
+	public FurnaceBlock(short dataMask, String name, int id, boolean burning, ResourcePointer<Model> model) {
 		super(dataMask, name, id, Furnace.class, model);
 		this.burning = burning;
 		this.setHardness(3.5F).setResistance(5.8F);

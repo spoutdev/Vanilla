@@ -38,10 +38,11 @@ import org.spout.api.util.flag.Flag;
 import org.spout.vanilla.plugin.component.substance.Item;
 import org.spout.vanilla.plugin.component.substance.material.BrewingStand;
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class BrewingStandBlock extends ComponentMaterial {
 	public BrewingStandBlock(String name, int id) {
-		super(name, id, BrewingStand.class, (String) null);
+		super(name, id, BrewingStand.class, VanillaMaterialModels.BREWING_STAND);
 		this.setResistance(2.5F).setHardness(10.F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

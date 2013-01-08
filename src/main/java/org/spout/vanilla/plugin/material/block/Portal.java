@@ -29,12 +29,14 @@ package org.spout.vanilla.plugin.material.block;
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.model.Model;
+import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.data.MoveReaction;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 
 public abstract class Portal extends VanillaBlockMaterial {
-	public Portal(String name, int id, String model) {
+	public Portal(String name, int id, ResourcePointer<Model> model) {
 		super(name, id, model);
 		this.setTransparent();
 		getDrops().DEFAULT.clear();

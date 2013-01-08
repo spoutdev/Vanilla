@@ -27,9 +27,10 @@
 package org.spout.vanilla.plugin.material.block.component.chest;
 
 import org.spout.vanilla.plugin.component.substance.material.chest.EnderChest;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class EnderChestBlock extends AbstractChestBlock {
 	public EnderChestBlock(String name, int id) {
-		super(name, id, EnderChest.class, (String) null);
+		super(name, id, EnderChest.class, VanillaMaterialModels.ENDER_CHEST);
 	}
 }

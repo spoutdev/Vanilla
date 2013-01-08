@@ -41,12 +41,13 @@ import org.spout.vanilla.plugin.material.TimedCraftable;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
 import org.spout.vanilla.plugin.material.item.misc.Dye;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Cactus extends StackGrowingBase implements TimedCraftable {
 	private Set<BlockMaterial> deniedNeighbours = new HashSet<BlockMaterial>();
 
 	public Cactus(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/nonsolid/cactus/cactus.spm");
+		super(name, id, VanillaMaterialModels.CACTUS);
 		this.setHardness(0.4F).setResistance(0.7F).setTransparent();
 		this.addDeniedNeighbour(VanillaMaterials.WEB, VanillaMaterials.STONE_PRESSURE_PLATE, VanillaMaterials.WOODEN_PRESSURE_PLATE);
 	}

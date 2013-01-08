@@ -52,13 +52,14 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Plant;
 import org.spout.vanilla.plugin.material.block.Spreading;
 import org.spout.vanilla.plugin.render.VanillaEffects;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Burnable, DynamicMaterial {
 	private static final EffectRange VINE_RANGE = new CuboidEffectRange(-4, -1, -4, 4, 1, 4);
 	private static final int MAX_PER_GROUP = 5;
 
 	public Vines(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/nonsolid/vines/vines.spm");
+		super(name, id, VanillaMaterialModels.VINES);
 		this.setLiquidObstacle(false);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
 		this.getDrops().DEFAULT.clear().add(this).addFlags(ToolTypeFlags.SHEARS);

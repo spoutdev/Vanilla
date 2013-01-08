@@ -27,10 +27,11 @@
 package org.spout.vanilla.plugin.material.block.solid;
 
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class CauldronBlock extends Solid {
 	public CauldronBlock(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.CAULDRON_BLOCK);
 		this.setHardness(2.0F).setResistance(3.3F);
 	}
 }

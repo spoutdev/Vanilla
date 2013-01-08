@@ -29,10 +29,11 @@ package org.spout.vanilla.plugin.material.block.fence;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.plugin.material.block.Fence;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class NetherBrickFence extends Fence {
 	public NetherBrickFence(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.NETHER_BRICK_FENCE);
 		this.setResistance(30.F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

@@ -33,10 +33,11 @@ import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class SnowBlock extends Solid implements InitializableMaterial {
 	public SnowBlock(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/snowblock/snowblock.spm");
+		super(name, id, VanillaMaterialModels.SNOW_BLOCK);
 		this.setHardness(0.2F).setResistance(0.3F).setStepSound(SoundEffects.STEP_CLOTH);
 		this.addMiningType(ToolType.SPADE).setMiningLevel(ToolLevel.WOOD);
 	}

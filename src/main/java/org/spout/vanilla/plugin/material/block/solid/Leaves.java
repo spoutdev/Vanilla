@@ -31,7 +31,9 @@ import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.model.Model;
 import org.spout.api.plugin.Platform;
+import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.data.drops.SwitchDrops;
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
@@ -41,14 +43,15 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Solid;
 import org.spout.vanilla.plugin.material.block.component.SignBase;
 import org.spout.vanilla.plugin.render.VanillaEffects;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Leaves extends Solid implements Burnable, InitializableMaterial {
-	public static final Leaves DEFAULT = new Leaves("Leaves", "model://Vanilla/materials/block/solid/oakleaves/oakleaves.spm");
-	public static final Leaves SPRUCE = new Leaves("Spruce Leaves", 1, DEFAULT, "model://Vanilla/materials/block/solid/spruceleaves/spruceleaves.spm");
-	public static final Leaves BIRCH = new Leaves("Birch Leaves", 2, DEFAULT, "model://Vanilla/materials/block/solid/birchleaves/birchleaves.spm");
-	public static final Leaves JUNGLE = new Leaves("Jungle Leaves", 3, DEFAULT, "model://Vanilla/materials/block/solid/jungleleaves/jungleleaves.spm");
+	public static final Leaves DEFAULT = new Leaves("Leaves", VanillaMaterialModels.LEAVES_OAK);
+	public static final Leaves SPRUCE = new Leaves("Spruce Leaves", 1, DEFAULT, VanillaMaterialModels.LEAVES_SPRUCE);
+	public static final Leaves BIRCH = new Leaves("Birch Leaves", 2, DEFAULT, VanillaMaterialModels.LEAVES_BIRCH);
+	public static final Leaves JUNGLE = new Leaves("Jungle Leaves", 3, DEFAULT, VanillaMaterialModels.LEAVES_JUNGLE);
 
-	private Leaves(String name, String model) {
+	private Leaves(String name, ResourcePointer<Model> model) {
 		super((short) 0x0003, name, 18, model);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
@@ -58,7 +61,7 @@ public class Leaves extends Solid implements Burnable, InitializableMaterial {
 		}
 	}
 
-	private Leaves(String name, int data, Leaves parent, String model) {
+	private Leaves(String name, int data, Leaves parent, ResourcePointer<Model> model) {
 		super(name, 18, data, parent, model);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {

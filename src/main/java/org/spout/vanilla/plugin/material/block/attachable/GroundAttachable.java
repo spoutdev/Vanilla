@@ -29,21 +29,23 @@ package org.spout.vanilla.plugin.material.block.attachable;
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.model.Model;
+import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 
 public class GroundAttachable extends AbstractAttachable {
-	public GroundAttachable(short dataMask, String name, int id, String model) {
+	public GroundAttachable(short dataMask, String name, int id, ResourcePointer<Model> model) {
 		super(dataMask, name, id, model);
 		this.setAttachable(BlockFace.BOTTOM);
 	}
 
-	public GroundAttachable(String name, int id, String model) {
+	public GroundAttachable(String name, int id, ResourcePointer<Model> model) {
 		super(name, id, model);
 		this.setAttachable(BlockFace.BOTTOM);
 	}
 
-	public GroundAttachable(String name, int id, int data, VanillaBlockMaterial parent, String model) {
+	public GroundAttachable(String name, int id, int data, VanillaBlockMaterial parent, ResourcePointer<Model> model) {
 		super(name, id, data, parent, model);
 		this.setAttachable(BlockFace.BOTTOM);
 	}

@@ -27,10 +27,11 @@
 package org.spout.vanilla.plugin.material.block.misc;
 
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class DragonEgg extends VanillaBlockMaterial {
 	public DragonEgg(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.DRAGON_EGG);
 		this.setHardness(3.0F).setResistance(15.0F);
 	}
 

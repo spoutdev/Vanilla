@@ -32,12 +32,13 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Dirt extends Solid {
 	private static final EffectRange SPREADING_RANGE = new CubicEffectRange(2);
 
 	public Dirt(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/dirt/dirt.spm");
+		super(name, id, VanillaMaterialModels.DIRT);
 		this.setHardness(0.5F).setResistance(0.8F).setStepSound(SoundEffects.STEP_GRAVEL);
 		this.addMiningType(ToolType.SPADE);
 	}

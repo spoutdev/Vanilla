@@ -28,26 +28,29 @@ package org.spout.vanilla.plugin.util.resources;
 
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.model.Model;
+import org.spout.api.resource.ResourcePointer;
 
 public class ModelUtil {
-	public static String[] getDirectionalModels(String baseModel, BlockFaces faces) {
-		final String[] dirModels = new String[faces.size()];
+	@SuppressWarnings("unchecked")
+	public static ResourcePointer<Model>[] getDirectionalModels(ResourcePointer<Model> baseModel, BlockFaces faces) {
+		final ResourcePointer<?>[] dirModels = new ResourcePointer<?>[faces.size()];
 		int i = 0;
 		for (BlockFace face : faces) {
-			final String dirModel = getDirectionalModel(baseModel, face);
-			dirModels[i++] = dirModel;
+			dirModels[i++] = getDirectionalModel(baseModel, face);
 		}
-		return dirModels;
+		return (ResourcePointer<Model>[]) dirModels;
 	}
 
-	public static String getDirectionalModel(String baseModel, BlockFace face) {
+	public static ResourcePointer<Model> getDirectionalModel(ResourcePointer<Model> baseModel, BlockFace face) {
 		final String dirModel;
-		final int index = baseModel.lastIndexOf('.');
+		String path = baseModel.toString();
+		final int index = path.lastIndexOf('.');
 		if (index == -1) {
-			dirModel = baseModel + "_" + face.name().charAt(0);
+			dirModel = path + "_" + face.name().charAt(0);
 		} else {
-			dirModel = new StringBuilder(baseModel).insert(index, "_" + face.name().charAt(0)).toString();
+			dirModel = new StringBuilder(path).insert(index, "_" + face.name().charAt(0)).toString();
 		}
-		return dirModel;
+		return new ResourcePointer<Model>(dirModel);
 	}
 }

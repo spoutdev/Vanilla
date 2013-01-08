@@ -51,12 +51,13 @@ import org.spout.vanilla.plugin.material.block.Directional;
 import org.spout.vanilla.plugin.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.plugin.material.item.misc.Potion;
 import org.spout.vanilla.plugin.material.item.misc.SpawnEgg;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 import org.spout.vanilla.plugin.util.RedstoneUtil;
 
 public class DispenserBlock extends ComponentMaterial implements Directional, RedstoneTarget {
 	public DispenserBlock(String name, int id) {
-		super(name, id, Dispenser.class, "model://Vanilla/materials/block/solid/dispenser/dispenser.spm");
+		super(name, id, Dispenser.class, VanillaMaterialModels.DISPENSER);
 		this.setHardness(3.5F).setResistance(5.8F);
 	}
 

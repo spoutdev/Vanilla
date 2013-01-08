@@ -356,4 +356,14 @@ public class HungerComponent extends EntityComponent {
 			getPlayer().getNetworkSynchronizer().callProtocolEvent(new PlayerHealthEvent(getPlayer()));
 		}
 	}
+	
+	/**
+	 * Reset all the variables of the Hunger component to the default ones.
+	 */
+	public void reset() {
+		setHunger(VanillaData.HUNGER.getDefaultValue());
+		setFoodSaturation(VanillaData.FOOD_SATURATION.getDefaultValue());
+		setExhaustion(VanillaData.EXHAUSTION.getDefaultValue());
+		setPoisoned(VanillaData.POISONED.getDefaultValue());
+	}
 }

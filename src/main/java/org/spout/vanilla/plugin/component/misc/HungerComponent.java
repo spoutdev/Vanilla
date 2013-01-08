@@ -171,21 +171,15 @@ public class HungerComponent extends EntityComponent {
 					lastPos = pos;
 					return;
 				}
-				final float distance = (float) pos.distance(lastPos);
-				lastPos = pos; // Set the last position for next run
-
+				
 				float exhaustion = getExhaustion();
 				final World world = pos.getWorld();
-				final boolean sprinting = human.isSprinting();
-				final boolean jumping = human.isJumping();
-				final boolean digging = getOwner().add(DiggingComponent.class).isDigging();
 
-				if (digging) {
-					// digging
-					exhaustion += 0.025f;
-				}
-
-				if (distance > 0) {
+				// Did not move 1 block pos
+				if (lastPos.getBlockX() != pos.getBlockX() || lastPos.getBlockY() != pos.getBlockY() || lastPos.getBlockZ() != pos.getBlockZ()) {
+					final float distance = (float) pos.distance(lastPos);
+					final boolean sprinting = human.isSprinting();
+					final boolean jumping = human.isJumping();
 					if (world.getBlock(pos) == VanillaMaterials.WATER && world.getBlock(lastPos) == VanillaMaterials.WATER) {
 						// swimming
 						exhaustion += 0.015f * distance;
@@ -202,6 +196,14 @@ public class HungerComponent extends EntityComponent {
 						// walking
 						exhaustion += 0.01f * distance;
 					}
+					lastPos = pos; // Set the last position for next run
+				}
+	
+				final boolean digging = getOwner().add(DiggingComponent.class).isDigging();
+
+				if (digging) {
+					// digging
+					exhaustion += 0.025f;
 				}
 
 				final float foodSaturation = getFoodSaturation();

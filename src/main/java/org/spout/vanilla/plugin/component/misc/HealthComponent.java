@@ -226,6 +226,10 @@ public class HealthComponent extends EntityComponent {
 					}
 				}
 			}
+			HungerComponent hungerComponent = owner.get(HungerComponent.class);
+			if (hungerComponent != null) {
+				hungerComponent.reset();
+			}
 		}
 	}
 

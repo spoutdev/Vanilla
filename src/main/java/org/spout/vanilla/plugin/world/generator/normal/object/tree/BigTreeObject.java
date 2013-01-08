@@ -188,7 +188,6 @@ public class BigTreeObject extends TreeObject {
 			if (baseY - y >= totalHeight * 0.2) {
 				final Point base = new Point(world, x, baseY, z);
 				final Vector3 angles = MathHelper.rotationTo(Vector3.FORWARD, group.subtract(base)).getAxisAngles();
-				System.out.println(angles);
 				final BlockFace facing;
 				if (angles.getX() < 135) {
 					facing = BlockFace.fromYaw(angles.getY());

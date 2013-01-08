@@ -40,13 +40,14 @@ import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.Toggleable;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.AttachedRedstoneSource;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class TripWireHook extends AttachedRedstoneSource implements Toggleable, DynamicMaterial {
 	private static final EffectRange dynamicRange = new PlusEffectRange(TripWire.MAX_DISTANCE, false);
 	private static final long TICK_DELAY = 500;
 
 	public TripWireHook(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.TRIP_WIRE_HOOK);
 		this.setAttachable(BlockFaces.NESW);
 		this.setHardness(0.0f).setResistance(0.0f).setTransparent();
 	}

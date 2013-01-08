@@ -38,10 +38,11 @@ import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.DoorBlock;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class WoodenDoorBlock extends DoorBlock implements InitializableMaterial {
 	public WoodenDoorBlock(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.WOODEN_DOOR);
 		this.setHardness(3.0F).setResistance(5.0F).setOpacity((byte) 1);
 	}
 

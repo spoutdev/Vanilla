@@ -37,12 +37,13 @@ import org.spout.vanilla.plugin.material.Fuel;
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class BookShelf extends Solid implements Fuel, InitializableMaterial, Burnable {
 	public final float BURN_TIME = 15;
 
 	public BookShelf(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/bookshelf/bookshelf.spm");
+		super(name, id, VanillaMaterialModels.BOOK_SHELF);
 		this.setHardness(1.5F).setResistance(2.5F).addMiningType(ToolType.AXE).setMiningLevel(ToolLevel.WOOD);
 	}
 

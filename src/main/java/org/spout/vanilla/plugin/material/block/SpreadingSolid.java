@@ -37,6 +37,8 @@ import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.MathHelper;
+import org.spout.api.model.Model;
+import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 
@@ -47,15 +49,15 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 	private BlockMaterial replacedMaterial;
 	private static final EffectRange DEFAULT_SPREAD_RANGE = new CubicEffectRange(2);
 
-	public SpreadingSolid(short dataMask, String name, int id, String model) {
+	public SpreadingSolid(short dataMask, String name, int id, ResourcePointer<Model> model) {
 		super(dataMask, name, id, model);
 	}
 
-	public SpreadingSolid(String name, int id, int data, VanillaBlockMaterial parent, String model) {
+	public SpreadingSolid(String name, int id, int data, VanillaBlockMaterial parent, ResourcePointer<Model> model) {
 		super(name, id, data, parent, model);
 	}
 
-	public SpreadingSolid(String name, int id, String model) {
+	public SpreadingSolid(String name, int id, ResourcePointer<Model> model) {
 		super(name, id, model);
 	}
 

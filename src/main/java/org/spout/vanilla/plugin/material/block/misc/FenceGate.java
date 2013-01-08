@@ -44,12 +44,13 @@ import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.block.Openable;
 import org.spout.vanilla.plugin.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 import org.spout.vanilla.plugin.util.RedstoneUtil;
 
 public class FenceGate extends VanillaBlockMaterial implements Openable, RedstoneTarget {
 	public FenceGate(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.FENCE_GATE);
 		this.setHardness(2.0F).setResistance(3.0F).setTransparent();
 		this.setCollision(CollisionStrategy.SOLID);
 	}

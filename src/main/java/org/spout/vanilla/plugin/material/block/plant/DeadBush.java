@@ -29,32 +29,35 @@ package org.spout.vanilla.plugin.material.block.plant;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.model.Model;
+import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Plant;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class DeadBush extends GroundAttachable implements Plant, InitializableMaterial {
-	protected DeadBush(String name, int id, short data, String model) {
+	protected DeadBush(String name, int id, short data, ResourcePointer<Model> model) {
 		super(data, name, id, model);
 	}
 
-	protected DeadBush(String name, int id, int data, DeadBush parent, String model) {
+	protected DeadBush(String name, int id, int data, DeadBush parent, ResourcePointer<Model> model) {
 		super(name, id, data, parent, model);
 	}
 
 	public DeadBush(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/nonsolid/deadgrass/deadgrass.spm");
+		super(name, id, VanillaMaterialModels.DEADGRASS);
 	}
 
 	public DeadBush(short dataMask, String name, int id) {
-		super(dataMask, name, id, "model://Vanilla/materials/block/nonsolid/deadgrass/deadgrass.spm");
+		super(dataMask, name, id, VanillaMaterialModels.DEADGRASS);
 	}
 
 	public DeadBush(String name, int id, int data, VanillaBlockMaterial parent) {
-		super(name, id, data, parent, "model://Vanilla/materials/block/nonsolid/deadgrass/deadgrass.spm");
+		super(name, id, data, parent, VanillaMaterialModels.DEADGRASS);
 	}
 
 	@Override

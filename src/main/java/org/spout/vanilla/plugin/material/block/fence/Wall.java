@@ -28,25 +28,28 @@ package org.spout.vanilla.plugin.material.block.fence;
 
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.model.Model;
+import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.plugin.material.block.PressurePlate;
 import org.spout.vanilla.plugin.material.block.Solid;
 import org.spout.vanilla.plugin.material.block.component.SignBase;
 import org.spout.vanilla.plugin.material.block.misc.Torch;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Wall extends Solid {
-	public static final Wall COBBLESTONE_WALL = new Wall("Cobblestone Wall");
-	public static final Wall MOSSY_COBBLESTONE_WALL = new Wall("Mossy Cobblestone Wall", (short) 1, COBBLESTONE_WALL);
+	public static final Wall COBBLESTONE_WALL = new Wall("Cobblestone Wall", VanillaMaterialModels.MOSSY_COBBLESTONE_WALL);
+	public static final Wall MOSSY_COBBLESTONE_WALL = new Wall("Mossy Cobblestone Wall", (short) 1, COBBLESTONE_WALL, VanillaMaterialModels.COBBLESTONE_WALL);
 
-	private Wall(String name) {
-		super((short) 0x1, name, 139, null);
+	private Wall(String name, ResourcePointer<Model> model) {
+		super((short) 0x1, name, 139, model);
 		this.setHardness(1.5F).setResistance(10.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
-	private Wall(String name, int data, Wall parent) {
-		super(name, parent.getId(), data, parent, null);
+	private Wall(String name, int data, Wall parent, ResourcePointer<Model> model) {
+		super(name, parent.getId(), data, parent, model);
 		this.setHardness(1.5F).setResistance(10.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

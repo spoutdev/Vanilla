@@ -34,10 +34,11 @@ import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.MoveReaction;
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.plugin.material.block.Directional;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class EnchantmentTableBlock extends ComponentMaterial implements Directional {
 	public EnchantmentTableBlock(String name, int id) {
-		super(name, id, EnchantmentTable.class, null);
+		super(name, id, EnchantmentTable.class, VanillaMaterialModels.ENCHANTMENT_TABLE);
 		this.setHardness(5.0F).setResistance(2000.0F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

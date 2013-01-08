@@ -27,13 +27,14 @@
 package org.spout.vanilla.plugin.material.block.solid.special;
 
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 /**
  * Nothing like a bowl of delicious Vanilla Ice Cream...or a block of it right?
  */
 public class VanillaIceCreamBlock extends Solid {
 	public VanillaIceCreamBlock(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/vanilla/vanilla.spm");
+		super(name, id, VanillaMaterialModels.VANILLA_BLOCK);
 		this.setHardness(0.5F).setResistance(0.8F);
 	}
 }

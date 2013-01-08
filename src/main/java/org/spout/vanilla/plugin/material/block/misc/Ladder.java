@@ -32,10 +32,11 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Ladder extends AbstractAttachable {
 	public Ladder(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.LADDER);
 		this.setAttachable(BlockFaces.WESN).setHardness(0.4F).setResistance(0.7F).setTransparent();
 	}
 

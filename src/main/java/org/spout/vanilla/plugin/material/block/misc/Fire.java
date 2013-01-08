@@ -43,12 +43,13 @@ import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.material.Burnable;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	private static final EffectRange SPREAD_RANGE = new CuboidEffectRange(-1, -1, -1, 1, 4, 1);
 
 	public Fire(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.FIRE);
 		this.setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();
 		this.getDrops().clear();
 	}

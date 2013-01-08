@@ -27,9 +27,10 @@
 package org.spout.vanilla.plugin.material.block.solid;
 
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class LockedChest extends VanillaBlockMaterial {
 	public LockedChest(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.LOCKED_CHEST);
 	}
 }

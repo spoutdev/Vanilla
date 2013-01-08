@@ -33,6 +33,8 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
+import org.spout.api.model.Model;
+import org.spout.api.resource.ResourcePointer;
 import org.spout.api.util.bytebit.ByteBitSet;
 import org.spout.api.util.flag.Flag;
 
@@ -42,31 +44,32 @@ import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.Burnable;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.block.solid.DoubleSlab;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Slab extends VanillaBlockMaterial implements Burnable {
-	public static final Slab STONE = new Slab((short) 0x7, "Stone Slab", 44, false, (String) null);
-	public static final Slab SANDSTONE = new Slab("Sandstone Slab", 1, STONE, (String) null);
-	public static final Slab STONE_WOOD = new Slab("Wooden Slab", 2, STONE, (String) null);
-	public static final Slab COBBLESTONE = new Slab("Cobblestone Slab", 3, STONE, (String) null);
-	public static final Slab BRICK = new Slab("Brick Slab", 4, STONE, (String) null);
-	public static final Slab STONE_BRICK = new Slab("Stone Brick Slab", 5, STONE, (String) null);
-	public static final Slab OAK_WOOD = new Slab((short) 0x3, "Oak Wooden Slab", 126, true, (String) null);
-	public static final Slab SPRUCE_WOOD = new Slab("Spruce Wooden Slab", 0x1, OAK_WOOD, (String) null);
-	public static final Slab BIRCH_WOOD = new Slab("Birch Wooden Slab", 0x2, OAK_WOOD, (String) null);
-	public static final Slab JUNGLE_WOOD = new Slab("Jungle Wooden Slab", 0x3, OAK_WOOD, (String) null);
+	public static final Slab STONE = new Slab((short) 0x7, "Stone Slab", 44, false, VanillaMaterialModels.SLAB_STONE);
+	public static final Slab SANDSTONE = new Slab("Sandstone Slab", 1, STONE, VanillaMaterialModels.SLAB_SANDSTONE);
+	public static final Slab STONE_WOOD = new Slab("Wooden Slab", 2, STONE, VanillaMaterialModels.SLAB_STONE_WOOD);
+	public static final Slab COBBLESTONE = new Slab("Cobblestone Slab", 3, STONE, VanillaMaterialModels.SLAB_COBBLESTONE);
+	public static final Slab BRICK = new Slab("Brick Slab", 4, STONE, VanillaMaterialModels.SLAB_BRICK);
+	public static final Slab STONE_BRICK = new Slab("Stone Brick Slab", 5, STONE, VanillaMaterialModels.SLAB_STONE_BRICK);
+	public static final Slab OAK_WOOD = new Slab((short) 0x3, "Oak Wooden Slab", 126, true, VanillaMaterialModels.SLAB_OAK_WOOD);
+	public static final Slab SPRUCE_WOOD = new Slab("Spruce Wooden Slab", 0x1, OAK_WOOD, VanillaMaterialModels.SLAB_SPRUCE_WOOD);
+	public static final Slab BIRCH_WOOD = new Slab("Birch Wooden Slab", 0x2, OAK_WOOD, VanillaMaterialModels.SLAB_BIRCH_WOOD);
+	public static final Slab JUNGLE_WOOD = new Slab("Jungle Wooden Slab", 0x3, OAK_WOOD, VanillaMaterialModels.SLAB_JUNGLE_WOOD);
 	private DoubleSlab doubletype;
 	private final boolean wood;
 	private final ByteBitSet occlusionTop = new ByteBitSet(BlockFace.TOP);
 	private final ByteBitSet occlusionBottom = new ByteBitSet(BlockFace.BOTTOM);
 
-	private Slab(short datamask, String name, int id, boolean wood, String model) {
+	private Slab(short datamask, String name, int id, boolean wood, ResourcePointer<Model> model) {
 		super(datamask, name, id, model);
 		this.wood = wood;
 		this.setHardness(2.0F).setResistance(10.0F).setOpacity(0);
 		this.addMiningType(wood ? ToolType.AXE : ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
-	private Slab(String name, int data, Slab parent, String model) {
+	private Slab(String name, int data, Slab parent, ResourcePointer<Model> model) {
 		super(name, parent.getMinecraftId(), data, parent, model);
 		this.wood = parent.wood;
 		this.setHardness(2.0F).setResistance(10.0F).setOpacity(0);

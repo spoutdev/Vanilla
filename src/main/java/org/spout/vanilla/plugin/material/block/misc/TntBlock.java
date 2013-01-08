@@ -39,11 +39,12 @@ import org.spout.vanilla.plugin.material.Burnable;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Solid;
 import org.spout.vanilla.plugin.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 import org.spout.vanilla.plugin.util.RedstoneUtil;
 
 public class TntBlock extends Solid implements RedstoneTarget, Burnable {
 	public TntBlock(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/tnt/tnt.spm");
+		super(name, id, VanillaMaterialModels.TNT_BLOCK);
 		this.setHardness(0.0F).setResistance(0.0F).setOpacity((byte) 1);
 	}
 

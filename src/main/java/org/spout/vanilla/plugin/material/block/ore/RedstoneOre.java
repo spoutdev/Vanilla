@@ -35,12 +35,13 @@ import org.spout.vanilla.plugin.material.TimedCraftable;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Ore;
 import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class RedstoneOre extends Ore implements TimedCraftable, InitializableMaterial {
 	private final boolean glowing;
 
 	public RedstoneOre(String name, int id, boolean glowing) {
-		super(name, id, "model://Vanilla/materials/block/solid/redstoneore/redstoneore.spm");
+		super(name, id, VanillaMaterialModels.REDSTONE_ORE);
 		this.glowing = glowing;
 		this.setHardness(3.0F).setResistance(5.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.STONE);
 	}

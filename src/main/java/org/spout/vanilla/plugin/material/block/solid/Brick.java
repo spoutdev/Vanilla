@@ -29,10 +29,11 @@ package org.spout.vanilla.plugin.material.block.solid;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Brick extends Solid {
 	public Brick(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/bricks/bricks.spm");
+		super(name, id, VanillaMaterialModels.BRICK);
 		this.setHardness(2.0F).setResistance(10.0F);
 		getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

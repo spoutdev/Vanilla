@@ -28,10 +28,11 @@ package org.spout.vanilla.plugin.material.block.solid;
 
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class NetherBrick extends Solid {
 	public NetherBrick(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/netherbrick/netherbrick.spm");
+		super(name, id, VanillaMaterialModels.NETHER_BRICK);
 		this.setHardness(2.0F).setResistance(10.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

@@ -41,10 +41,11 @@ import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.Toggleable;
 import org.spout.vanilla.plugin.material.block.AttachedRedstoneSource;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Lever extends AttachedRedstoneSource implements Toggleable {
 	public Lever(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.LEVER);
 		this.setAttachable(BlockFaces.NESWBT).setLiquidObstacle(false).setHardness(0.5F).setResistance(1.7F).setTransparent();
 	}
 

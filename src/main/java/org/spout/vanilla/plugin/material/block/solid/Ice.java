@@ -40,6 +40,7 @@ import org.spout.vanilla.plugin.data.Climate;
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.SpreadingSolid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 import org.spout.vanilla.plugin.world.generator.nether.NetherGenerator;
 
 public class Ice extends SpreadingSolid implements InitializableMaterial {
@@ -47,7 +48,7 @@ public class Ice extends SpreadingSolid implements InitializableMaterial {
 	private static final EffectRange ICE_SPREAD_RANGE = new CubicEffectRange(1);
 
 	public Ice(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/iceblock/iceblock.spm");
+		super(name, id, VanillaMaterialModels.ICE);
 		this.setHardness(0.5F).setResistance(0.8F).setOcclusion((short) 0, BlockFaces.NONE).setOpacity((byte) 2);
 		this.getDrops().clear();
 	}

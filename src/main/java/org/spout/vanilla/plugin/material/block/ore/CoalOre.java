@@ -35,10 +35,11 @@ import org.spout.vanilla.plugin.material.TimedCraftable;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Ore;
 import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class CoalOre extends Ore implements TimedCraftable, InitializableMaterial {
 	public CoalOre(String name, int id) {
-		super(name, id, "model://Vanilla/materials/block/solid/coalore/coalore.spm");
+		super(name, id, VanillaMaterialModels.COAL_ORE);
 		this.setHardness(3.0F).setResistance(5.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 

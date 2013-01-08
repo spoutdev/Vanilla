@@ -30,10 +30,11 @@ import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.DoorBlock;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class IronDoorBlock extends DoorBlock implements InitializableMaterial {
 	public IronDoorBlock(String name, int id) {
-		super(name, id, (String) null);
+		super(name, id, VanillaMaterialModels.IRON_DOOR);
 		this.setHardness(5.0F).setResistance(8.3F).setOpacity((byte) 1);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

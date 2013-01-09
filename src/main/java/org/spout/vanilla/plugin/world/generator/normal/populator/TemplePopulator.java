@@ -50,19 +50,8 @@ public class TemplePopulator extends Populator {
 		final World world = chunk.getWorld();
 		final int x = chunk.getBlockX(random);
 		final int z = chunk.getBlockZ(random);
-		final int y = getAverageHeight(world, x, z, 21, 21);
-		if (temple.canPlaceObject(world, x, y, z)) {
-			temple.placeObject(world, x, y, z);
+		if (temple.canPlaceObject(world, x, 0, z)) {
+			temple.placeObject(world, x, 0, z);
 		}
-	}
-
-	private int getAverageHeight(World world, int x, int z, int sizeX, int sizeZ) {
-		int sum = 0;
-		for (int xx = 0; xx < sizeX; xx++) {
-			for (int zz = 0; zz < sizeZ; zz++) {
-				sum += world.getSurfaceHeight(x + xx, z + zz);
-			}
-		}
-		return sum / (sizeX * sizeZ);
 	}
 }

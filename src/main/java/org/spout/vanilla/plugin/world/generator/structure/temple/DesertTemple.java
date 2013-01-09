@@ -31,6 +31,7 @@ import java.util.List;
 
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.IntVector2;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
@@ -55,14 +56,29 @@ public class DesertTemple extends StructureComponent {
 	private final LootChestObject lootChest = new LootChestObject();
 
 	static {
-		CENTER_CROSS = new BlockMaterialLayout("...o...\n...o...\n..o.o..\noo.b.oo\n..o.o..\n...o...\n...o...");
+		CENTER_CROSS = new BlockMaterialLayout(""
+				+ "...o...\n"
+				+ "...o...\n"
+				+ "..o.o..\n"
+				+ "oo.b.oo\n"
+				+ "..o.o..\n"
+				+ "...o...\n"
+				+ "...o...");
 		CENTER_CROSS.setBlockMaterial('o', Wool.ORANGE_WOOL);
 		CENTER_CROSS.setBlockMaterial('b', Wool.BLUE_WOOL);
-		TOWER = new BlockMaterialLayout("-oo-o--\n-o=o=oo\n-oo-o--");
+		TOWER = new BlockMaterialLayout(""
+				+ "-oo-o--\n"
+				+ "-o=o=oo\n"
+				+ "-oo-o--");
 		TOWER.setBlockMaterial('-', Sandstone.SMOOTH);
 		TOWER.setBlockMaterial('o', Wool.ORANGE_WOOL);
 		TOWER.setBlockMaterial('=', Sandstone.DECORATIVE);
-		DOOR = new BlockMaterialLayout(".--\n-o-\n-=-\n-o-\n.--");
+		DOOR = new BlockMaterialLayout(""
+				+ ".--\n"
+				+ "-o-\n"
+				+ "-=-\n"
+				+ "-o-\n"
+				+ ".--");
 		DOOR.setBlockMaterial('-', Sandstone.SMOOTH);
 		DOOR.setBlockMaterial('o', Wool.ORANGE_WOOL);
 		DOOR.setBlockMaterial('=', Sandstone.DECORATIVE);

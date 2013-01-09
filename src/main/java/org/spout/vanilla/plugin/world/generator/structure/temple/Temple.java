@@ -31,32 +31,66 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Quaternion;
 
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
+import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.plugin.world.generator.structure.Structure;
+import org.spout.vanilla.plugin.world.generator.structure.StructureComponent;
+import org.spout.vanilla.plugin.world.generator.structure.StructureComponent.BoundingBox;
 
 public class Temple extends Structure {
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		return y >= 64;
+		return true;
 	}
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
-		final Biome biome = w.getBiome(x, y, z);
+		final StructureComponent temple = getTemple(w.getBiome(x, y, z));
+		if (temple == null) {
+			return;
+		}
+		final BoundingBox boundingBox = temple.getBoundingBox();
+		y = getAverageHeight(w, x, z, (int) boundingBox.getXSize(), (int) boundingBox.getZSize());
+		temple.setPosition(new Point(w, x, y, z));
+		temple.setRotation(new Quaternion(random.nextInt(4) * 90, 0, 1, 0));
+		if (temple.canPlace()) {
+			temple.place();
+		}
+	}
+
+	private StructureComponent getTemple(Biome biome) {
+		final StructureComponent temple;
 		if (biome == VanillaBiomes.DESERT || biome == VanillaBiomes.DESERT_HILLS) {
-			final DesertTemple desertTemple = new DesertTemple(this);
-			desertTemple.setPosition(new Point(w, x, y, z));
-			desertTemple.setRotation(new Quaternion(random.nextInt(4) * 90, 0, 1, 0));
-			if (desertTemple.canPlace()) {
-				desertTemple.place();
-			}
+			temple = new DesertTemple(this);
 		} else if (biome == VanillaBiomes.JUNGLE || biome == VanillaBiomes.JUNGLE_HILLS) {
-			final JungleTemple jungleTemple = new JungleTemple(this);
-			jungleTemple.setPosition(new Point(w, x, y, z));
-			jungleTemple.setRotation(new Quaternion(random.nextInt(4) * 90, 0, 1, 0));
-			if (jungleTemple.canPlace()) {
-				jungleTemple.place();
+			temple = new JungleTemple(this);
+		} else {
+			temple = null;
+		}
+		return temple;
+	}
+
+	private int getAverageHeight(World world, int x, int z, int sizeX, int sizeZ) {
+		int heightSum = 0;
+		for (int xx = 0; xx < sizeX; xx++) {
+			for (int zz = 0; zz < sizeZ; zz++) {
+				heightSum += getSurfaceHeight(world, x + xx, z + zz);
 			}
 		}
+		return heightSum / (sizeX * sizeZ);
+	}
+
+	private int getSurfaceHeight(World w, int x, int z) {
+		int y = NormalGenerator.HEIGHT;
+		while (!w.getBlockMaterial(x, y, z).isMaterial(
+				VanillaMaterials.STONE, VanillaMaterials.GRAVEL,
+				VanillaMaterials.DIRT, VanillaMaterials.GRASS,
+				VanillaMaterials.SAND, VanillaMaterials.SANDSTONE)) {
+			if (--y == 0) {
+				return 0;
+			}
+		}
+		return ++y;
 	}
 }

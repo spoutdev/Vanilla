@@ -54,7 +54,8 @@ public class ShrubObject extends TreeObject {
 		if (!super.canPlaceObject(w, x, y, z)) {
 			return false;
 		}
-		return !(w.getBlockMaterial(x, y, z) instanceof Liquid);
+		return !(w.getBlockMaterial(x, y, z) instanceof Liquid
+				|| w.getBlockMaterial(x, y + 1, z) instanceof Liquid);
 	}
 
 	@Override

@@ -36,6 +36,7 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.plant.Sapling;
+import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.plugin.world.generator.object.LargePlantObject;
 
 public abstract class TreeObject extends LargePlantObject {
@@ -80,7 +81,7 @@ public abstract class TreeObject extends LargePlantObject {
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
 		// Can only place trees within height range of the world
-		if (y < 1 || y + totalHeight + 2 > w.getHeight()) {
+		if (y < 1 || y + totalHeight + 2 > NormalGenerator.HEIGHT) {
 			return false;
 		}
 		// Can only place trees on dirt and grass surfaces

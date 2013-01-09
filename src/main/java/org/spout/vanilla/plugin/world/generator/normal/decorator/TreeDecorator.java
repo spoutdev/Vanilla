@@ -34,6 +34,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.plugin.world.generator.normal.object.tree.TreeObject;
 
 public class TreeDecorator extends Decorator {
@@ -57,9 +58,11 @@ public class TreeDecorator extends Decorator {
 			tree.randomize();
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
+			if (decorating != world.getBiome(x, 64, z)) {
+				continue;
+			}
 			final int y = getHighestWorkableBlock(world, x, z);
-			final Biome target = world.getBiome(x, 64, z);
-			if (y == -1 || decorating != target) {
+			if (y == -1) {
 				continue;
 			}
 			if (tree.canPlaceObject(world, x, y, z)) {
@@ -69,15 +72,13 @@ public class TreeDecorator extends Decorator {
 	}
 
 	private int getHighestWorkableBlock(World w, int x, int z) {
-		int y = w.getHeight();
+		int y = NormalGenerator.HEIGHT;
 		while (!w.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
-			y--;
-			if (y == 0) {
+			if (--y == 0) {
 				return -1;
 			}
 		}
-		y++;
-		return y;
+		return ++y;
 	}
 
 	public static interface TreeWGOFactory {

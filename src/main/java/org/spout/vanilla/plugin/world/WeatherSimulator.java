@@ -28,6 +28,7 @@ package org.spout.vanilla.plugin.world;
 
 import java.util.Random;
 
+import org.spout.api.Spout;
 import org.spout.api.geo.World;
 import org.spout.api.tickable.BasicTickable;
 
@@ -38,7 +39,7 @@ public class WeatherSimulator extends BasicTickable {
 	private final VanillaSky sky;
 	protected final Random random = new Random();
 	protected Weather weather = Weather.CLEAR, forecast = Weather.CLEAR;
-	protected float secondsUntilWeatherChange = 120F + random.nextFloat() * 5 * 60;
+	protected float secondsUntilWeatherChange = 120000F + random.nextFloat() * 5 * 60 * 1000;
 	protected boolean forceWeatherUpdate = false;
 	protected LightningSimulator lightning;
 	protected float previousRainStrength, currentRainStrength;
@@ -122,10 +123,11 @@ public class WeatherSimulator extends BasicTickable {
 	public void onTick(float dt) {
 		secondsUntilWeatherChange -= dt;
 		if (forceWeatherUpdate || secondsUntilWeatherChange <= 0) {
+			
 			this.sky.updateWeather(weather, forecast);
 			weather = forecast;
 			forecast = Weather.get(random.nextInt(3));
-			secondsUntilWeatherChange = 120F + random.nextFloat() * 5 * 60;
+			secondsUntilWeatherChange = 120000F + random.nextFloat() * 5 * 60 * 1000;
 			forceWeatherUpdate = false;
 		}
 		this.previousRainStrength = this.currentRainStrength;

@@ -113,7 +113,7 @@ public abstract class VanillaSky extends WorldComponent {
 			countdown = refreshRate;
 			updateTime(time);
 		}
-
+		
 		// Sleeping players
 		boolean skipNight = false;
 		for (Player player : getWorld().getPlayers()) {
@@ -133,10 +133,9 @@ public abstract class VanillaSky extends WorldComponent {
 			}
 		}
 
-		//		// Weather TODO this thing is possessed and needs to be fixed.
-		//		if (this.hasWeather()) {
-		//			this.weather.onTick(dt);
-		//		}
+		if (this.hasWeather()) {
+			this.weather.onTick(dt);
+		}
 	}
 
 	/**

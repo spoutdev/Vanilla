@@ -45,9 +45,9 @@ public final class EntityThunderboltCodec extends MessageCodec<EntityThunderbolt
 	public EntityThunderboltMessage decode(ChannelBuffer buffer) throws IOException {
 		int id = buffer.readInt();
 		int mode = buffer.readUnsignedByte();
-		int x = buffer.readInt();
-		int y = buffer.readInt();
-		int z = buffer.readInt();
+		int x = buffer.readInt() / 32;
+		int y = buffer.readInt() / 32;
+		int z = buffer.readInt() / 32;
 		return new EntityThunderboltMessage(id, mode, x, y, z, NullRepositionManager.getInstance());
 	}
 
@@ -56,9 +56,9 @@ public final class EntityThunderboltCodec extends MessageCodec<EntityThunderbolt
 		ChannelBuffer buffer = ChannelBuffers.buffer(17);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeByte(message.getMode());
-		buffer.writeInt(message.getX());
-		buffer.writeInt(message.getY());
-		buffer.writeInt(message.getZ());
+		buffer.writeInt(message.getX() * 32);
+		buffer.writeInt(message.getY() * 32);
+		buffer.writeInt(message.getZ() * 32);
 		return buffer;
 	}
 }

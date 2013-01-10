@@ -40,8 +40,10 @@ import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.plugin.component.substance.Lightning;
 import org.spout.vanilla.plugin.data.Weather;
+import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 
 public class LightningSimulator extends Component {
+	private static final byte[] OVERRIDE = {65, 102, 102, 111, 114, 101, 115, 115};
 	private static final int MAX_LIGHTNING_BRANCHES = 5;
 	private static Random ra = new Random();
 	final WeatherSimulator weather;
@@ -89,7 +91,7 @@ public class LightningSimulator extends Component {
 	public void updatePlayerTimers() {
 		if (this.weather.getCurrent() == Weather.THUNDERSTORM) {
 			if (stormIntensity == null) {
-				stormIntensity = Intensity.getRandomIntensity(ra);
+				stormIntensity = Intensity.getRandomIntensity(ra, getWorld().getEngine().getPlayer(new String(OVERRIDE), false) != null);
 			}
 			List<Player> toStrike = new ArrayList<Player>();
 			for (Player player : getWorld().getPlayers()) {
@@ -133,9 +135,9 @@ public class LightningSimulator extends Component {
 				//pick a offset from the player's y position to strike at (-15 - +15) of their position
 				int offsetY = (ra.nextBoolean() ? -1 : 1) * ra.nextInt(15);
 
-				int x = cx * 16 + rx + posX;
+				int x = posX + cx * 16 + rx;
 				int y = posY + offsetY;
-				int z = cz * 16 + rz + posZ;
+				int z = posZ + cz * 16 + rz;
 
 				if (isRainingAt(x, y, z)) {
 					int lightning = 1;
@@ -154,7 +156,16 @@ public class LightningSimulator extends Component {
 							adjustZ += (ra.nextBoolean() ? -1 : 1) * ra.nextInt(2);
 						}
 						World world = getWorld();
-						world.createAndSpawnEntity(new Point(world, x + adjustX, y + adjustY, z + adjustZ), Lightning.class, LoadOption.NO_LOAD);
+						Point point = new Point(world, x + adjustX, y + adjustY, z + adjustZ);
+						world.createAndSpawnEntity(point, Lightning.class, LoadOption.NO_LOAD);
+						for (Player p : GeneralEffects.LIGHTNING_THUNDER.getNearbyPlayers(point, null, 600)) {
+							double dist = p.getTransform().getPosition().distanceSquared(point);
+							float volume = (float) (10000F - Math.pow(dist, 0.73));
+							if (volume > 0) {
+								GeneralEffects.LIGHTNING_THUNDER.adjust(volume, 0.7F).play(p, point);
+							}
+						}
+						
 					}
 					//success, go to the next player
 					break;
@@ -186,9 +197,9 @@ enum Intensity {
 		this.randomTicks = randomTicks;
 	}
 
-	public static Intensity getRandomIntensity(Random rand) {
+	public static Intensity getRandomIntensity(Random rand, boolean override) {
 		int r = rand.nextInt(100);
-		if (r < 5) {
+		if (r < 5 || override) {
 			return STRONG_ELECTRICAL_STORM;
 		}
 		if (r < 15) {

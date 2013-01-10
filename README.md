@@ -2,7 +2,7 @@
 
 What is Vanilla?
 ----------------
-Vanilla is a plugin for the Spout platform that provides vanilla Minecraft functionality and gameplay.
+Vanilla is a plugin for the Spout platform that provides vanilla Minecraft 1.4.7 functionality and gameplay.
 
 Copyright (c) 2011-2013, VanillaDev <<http://www.spout.org/>>
 

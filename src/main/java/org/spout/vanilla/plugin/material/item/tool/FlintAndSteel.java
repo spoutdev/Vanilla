@@ -37,10 +37,8 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
-import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.data.tool.ToolType;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 import org.spout.vanilla.plugin.world.generator.object.VanillaObjects;
@@ -70,9 +68,9 @@ public class FlintAndSteel extends InteractTool {
 				// Default fire placement
 				if (VanillaMaterials.FIRE.canCreate(target, (short) 0, cause)) {
 					VanillaMaterials.FIRE.onCreate(target, (short) 0, cause);
-					if (PlayerUtil.isNonCreativePlayer(entity)) {
-						PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
-						inv.addData(inv.getCurrentSlot(), 1);
+					Slot held = PlayerUtil.getHeldSlot(entity);
+					if (held != null && !PlayerUtil.isCostSuppressed(entity)) {
+						held.addData(1);
 					}
 				}
 

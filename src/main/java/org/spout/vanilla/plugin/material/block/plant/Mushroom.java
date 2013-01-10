@@ -33,7 +33,6 @@ import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -43,15 +42,13 @@ import org.spout.api.math.IntVector3;
 import org.spout.api.model.Model;
 import org.spout.api.resource.ResourcePointer;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
-import org.spout.vanilla.plugin.data.GameMode;
-import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Plant;
 import org.spout.vanilla.plugin.material.block.Spreading;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.material.item.misc.Dye;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.HugeMushroomObject;
 import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
 import org.spout.vanilla.plugin.world.generator.object.LargePlantObject;
@@ -72,11 +69,10 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 		if (type != PlayerInteractEvent.Action.RIGHT_CLICK) {
 			return;
 		}
-		PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
-		ItemStack current = inv.getCurrentItem();
-		if (current != null && current.isMaterial(Dye.BONE_MEAL)) {
-			if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-				inv.addAmount(0, -1);
+		Slot inv = PlayerUtil.getHeldSlot(entity);
+		if (inv != null && inv.get() != null && inv.get().isMaterial(Dye.BONE_MEAL)) {
+			if (!PlayerUtil.isCostSuppressed(entity)) {
+				inv.addAmount(-1);
 			}
 			final BlockMaterial mushroomType = block.getMaterial();
 			final LargePlantObject mushroom;

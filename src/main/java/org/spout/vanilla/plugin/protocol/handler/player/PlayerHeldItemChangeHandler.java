@@ -33,12 +33,12 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.plugin.event.player.PlayerHeldItemChangeEvent;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerHeldItemChangeMessage;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeldItemChangeMessage> {
 	@Override
@@ -55,11 +55,14 @@ public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeld
 			return;
 		}
 		Player player = session.getPlayer();
-		PlayerQuickbar quickbar = session.getPlayer().add(PlayerInventory.class).getQuickbar();
-		PlayerHeldItemChangeEvent event = new PlayerHeldItemChangeEvent(player, quickbar.getCurrentSlot(), newSlot);
+		PlayerQuickbar quickbar = PlayerUtil.getQuickbar(session.getPlayer());
+		if (quickbar == null) {
+			return;
+		}
+		PlayerHeldItemChangeEvent event = new PlayerHeldItemChangeEvent(player, quickbar.getSelectedSlot().getIndex(), newSlot);
 		if (!Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
-			quickbar.setCurrentSlot(newSlot);
-			ItemStack item = quickbar.getCurrentItem();
+			quickbar.setSelectedSlot(newSlot);
+			ItemStack item = quickbar.getSelectedSlot().get();
 			player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, 0, item));
 		}
 	}
@@ -67,6 +70,10 @@ public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeld
 	@Override
 	public void handleClient(Session session, PlayerHeldItemChangeMessage message) {
 		Player player = ((Client) Spout.getEngine()).getActivePlayer();
-		player.get(PlayerInventory.class).getQuickbar().setCurrentSlot(message.getSlot());
+		PlayerQuickbar quickbar = PlayerUtil.getQuickbar(session.getPlayer());
+		if (quickbar == null) {
+			return;
+		}
+		quickbar.setSelectedSlot(message.getSlot());
 	}
 }

@@ -29,7 +29,6 @@ package org.spout.vanilla.plugin.component.living.passive;
 import java.util.Random;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
 
@@ -38,11 +37,12 @@ import org.spout.vanilla.api.component.Passive;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 /**
  * A component that identifies the entity as a Cow.
@@ -60,10 +60,14 @@ public class Cow extends Living implements Passive {
 
 	@Override
 	public void onInteract(Action action, Entity source) {
-		if (Action.RIGHT_CLICK.equals(action) && (source instanceof Player)) {
-			PlayerQuickbar playerQuickbar = source.getData().get(VanillaData.QUICKBAR_INVENTORY);
-			if (playerQuickbar.getCurrentItem() != null && playerQuickbar.getCurrentItem().equalsIgnoreSize(new ItemStack(VanillaMaterials.BUCKET, 0))) {
-				playerQuickbar.addAmount(playerQuickbar.getCurrentSlot(), -1);
+		if (Action.RIGHT_CLICK.equals(action)) {
+			PlayerQuickbar playerQuickbar = PlayerUtil.getQuickbar(source);
+			if (playerQuickbar == null) {
+				return;
+			}
+			Slot selected = playerQuickbar.getSelectedSlot();
+			if (selected.get() != null && selected.get().equalsIgnoreSize(new ItemStack(VanillaMaterials.BUCKET, 0))) {
+				selected.addAmount(-1);
 				playerQuickbar.add(new ItemStack(VanillaMaterials.MILK_BUCKET, 1));
 			}
 		}

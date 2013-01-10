@@ -32,12 +32,12 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.plant.Sapling;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class FlowerPotBlock extends VanillaBlockMaterial implements InitializableMaterial {
 	public static final FlowerPotBlock EMPTY = new FlowerPotBlock("Empty Flower Pot");
@@ -65,11 +65,14 @@ public class FlowerPotBlock extends VanillaBlockMaterial implements Initializabl
 
 	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteract(entity, block, type, clickedFace);
-		if (type != Action.RIGHT_CLICK || !entity.has(PlayerInventory.class)) {
+		if (type != Action.RIGHT_CLICK) {
 			return;
 		}
-		PlayerQuickbar quickbar = entity.get(PlayerInventory.class).getQuickbar();
-		Material held = quickbar.getCurrentItem().getMaterial();
+		Slot selected = PlayerUtil.getHeldSlot(entity);
+		if (selected == null || selected.get() == null) {
+			return;
+		}
+		Material held = selected.get().getMaterial();
 		int data;
 		if (held == VanillaMaterials.ROSE) {
 			data = 1;
@@ -97,7 +100,7 @@ public class FlowerPotBlock extends VanillaBlockMaterial implements Initializabl
 			return;
 		}
 		block.setData(data);
-		quickbar.addAmount(quickbar.getCurrentSlot(), -1);
+		selected.addAmount(-1);
 	}
 
 	@Override

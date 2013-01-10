@@ -27,30 +27,22 @@
 package org.spout.vanilla.plugin.inventory.player;
 
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.plugin.inventory.Slot;
 
 public class PlayerQuickbar extends Inventory {
 	private static final long serialVersionUID = 1L;
 	public static final int SIZE = 9;
-	private int currentSlot = 0;
+	private int selected = 0;
 
 	public PlayerQuickbar() {
 		super(SIZE);
 	}
 
-	public int getCurrentSlot() {
-		return currentSlot;
+	public Slot getSelectedSlot() {
+		return new Slot(this, this.selected);
 	}
 
-	public void setCurrentSlot(int currentSlot) {
-		this.currentSlot = currentSlot;
-	}
-
-	public ItemStack getCurrentItem() {
-		return get(currentSlot);
-	}
-
-	public void setCurrentItem(ItemStack item) {
-		set(currentSlot, item);
+	public void setSelectedSlot(int currentSlot) {
+		this.selected = currentSlot;
 	}
 }

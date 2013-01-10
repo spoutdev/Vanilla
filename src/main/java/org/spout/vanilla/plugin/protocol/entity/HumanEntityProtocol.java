@@ -30,16 +30,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerSpawnMessage;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class HumanEntityProtocol extends VanillaEntityProtocol {
 	@Override
@@ -57,25 +56,20 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		int p = (int) (entity.getTransform().getPitch() * 32);
 
 		int item = 0;
-		ItemStack hand = entity.add(PlayerInventory.class).getQuickbar().getCurrentItem();
-		if (hand != null) {
-			item = hand.getMaterial().getId();
+		Slot hand = PlayerUtil.getHeldSlot(entity);
+		if (hand != null && hand.get() != null) {
+			item = hand.get().getMaterial().getId();
 		}
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 		parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 100));
 
 		messages.add(new PlayerSpawnMessage(id, human.getName(), x, y, z, r, p, item, parameters, rm));
 
-		PlayerInventory inv = entity.get(PlayerInventory.class);
-		if (inv != null) {
-			PlayerQuickbar quickBar = inv.getQuickbar();
-			if (quickBar != null) {
-				messages.add(new EntityEquipmentMessage(entity.getId(), 0, quickBar.getCurrentItem()));
-			} else {
-				messages.add(new EntityEquipmentMessage(entity.getId(), 0, null));
-			}
+		if (hand != null) {
+			messages.add(new EntityEquipmentMessage(entity.getId(), 0, hand.get()));
+		} else {
+			messages.add(new EntityEquipmentMessage(entity.getId(), 0, null));
 		}
-
 		return messages;
 	}
 }

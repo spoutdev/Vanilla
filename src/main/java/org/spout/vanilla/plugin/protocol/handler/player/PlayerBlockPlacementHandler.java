@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.protocol.handler.player;
 
 import java.util.Collection;
+import java.util.logging.Level;
 
 import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
@@ -50,14 +51,13 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.data.effect.SoundEffect;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.event.cause.PlayerClickBlockCause;
 import org.spout.vanilla.plugin.event.cause.PlayerPlacementCause;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.item.tool.InteractTool;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerBlockPlacementMessage;
@@ -69,8 +69,10 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		//refresh the client just in case it assumed something
 		player.getSession().send(false, new BlockChangeMessage(clickedBlock, rm));
 		player.getSession().send(false, new BlockChangeMessage(alterBlock, rm));
-		PlayerQuickbar inv = player.get(PlayerInventory.class).getQuickbar();
-		inv.setCurrentItem(inv.getCurrentItem());
+		Slot held = PlayerUtil.getHeldSlot(player);
+		if (held != null) {
+			held.set(held.get());
+		}
 	}
 
 	@Override
@@ -85,8 +87,12 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 
 		EventManager eventManager = session.getEngine().getEventManager();
 		World world = player.getWorld();
-		PlayerQuickbar currentSlot = player.get(PlayerInventory.class).getQuickbar();
-		ItemStack holding = currentSlot.getCurrentItem();
+		Slot currentSlot = PlayerUtil.getHeldSlot(player);
+		if (currentSlot == null) {
+			Spout.getLogger().log(Level.WARNING, "Block placement failed for " + player.getName() + ": Missing player inventory");
+			return;
+		}
+		ItemStack holding = currentSlot.get();
 		Material holdingMat = holding == null ? null : holding.getMaterial();
 
 		/*
@@ -105,7 +111,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 			PlayerInteractEvent event = eventManager.callEvent(new PlayerInteractEvent(player, null, holding, Action.RIGHT_CLICK, true, clickedFace));
 
 			//May have been changed by the event
-			holding = currentSlot.getCurrentItem();
+			holding = currentSlot.get();
 			holdingMat = holding == null ? null : holding.getMaterial();
 
 			if (event.useItemInHand() != Result.DENY && holdingMat != null) {
@@ -125,10 +131,10 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 			}*/
 
 			//Perform interaction event
-			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), currentSlot.getCurrentItem(), Action.RIGHT_CLICK, false, clickedFace));
+			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), currentSlot.get(), Action.RIGHT_CLICK, false, clickedFace));
 
 			//May have been changed by the event
-			holding = currentSlot.getCurrentItem();
+			holding = currentSlot.get();
 			holdingMat = holding == null ? null : holding.getMaterial();
 
 			//Get the target block and validate 
@@ -243,9 +249,9 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				}
 				sound.playGlobal(target.getPosition(), 0.8f, 0.8f);
 
-				// Remove block from inventory if not in creative mode.
-				if (PlayerUtil.isNonCreativePlayer(player)) {
-					currentSlot.addAmount(0, -1);
+				// Remove block from inventory
+				if (!PlayerUtil.isCostSuppressed(player)) {
+					currentSlot.addAmount(-1);
 				}
 				
 				refreshClient(player, clickedBlock, alterBlock, rm);

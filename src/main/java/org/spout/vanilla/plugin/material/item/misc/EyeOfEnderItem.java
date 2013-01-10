@@ -31,8 +31,7 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 import org.spout.vanilla.plugin.util.PlayerUtil;
@@ -50,9 +49,9 @@ public class EyeOfEnderItem extends VanillaItemMaterial {
 				// Default ender eye placement
 				if (!VanillaMaterials.END_PORTAL_FRAME.hasEyeOfTheEnder(block)) {
 					VanillaMaterials.END_PORTAL_FRAME.setEyeOfTheEnder(block, true);
-					if (PlayerUtil.isNonCreativePlayer(entity)) {
-						PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
-						inv.addAmount(inv.getCurrentSlot(), -1);
+					Slot held = PlayerUtil.getHeldSlot(entity);
+					if (held != null && !PlayerUtil.isCostSuppressed(entity)) {
+						held.addAmount(-1);
 					}
 				}
 			}

@@ -31,23 +31,20 @@ import java.util.Random;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
-import org.spout.vanilla.plugin.data.GameMode;
-import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Crop;
 import org.spout.vanilla.plugin.material.block.Growing;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.material.item.misc.Dye;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public abstract class Stem extends GroundAttachable implements Growing, Crop, DynamicMaterial {
 	private BlockMaterial lastMaterial;
@@ -107,12 +104,11 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 	@Override
 	public void onInteractBy(Entity entity, Block block, PlayerInteractEvent.Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
-		PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
-		ItemStack current = inv.getCurrentItem();
-		if (current != null && current.isMaterial(Dye.BONE_MEAL)) {
+		Slot inv = PlayerUtil.getHeldSlot(entity);
+		if (inv != null && inv.get() != null && inv.get().isMaterial(Dye.BONE_MEAL)) {
 			if (this.getGrowthStage(block) != 0x7) {
-				if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-					inv.addAmount(0, -1);
+				if (!PlayerUtil.isCostSuppressed(entity)) {
+					inv.addAmount(-1);
 				}
 				this.setGrowthStage(block, 0x7);
 			}

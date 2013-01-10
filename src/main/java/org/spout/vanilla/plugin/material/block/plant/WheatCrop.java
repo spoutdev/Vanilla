@@ -32,17 +32,13 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
-import org.spout.vanilla.plugin.data.GameMode;
-import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.drops.flag.BlockFlags;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
@@ -50,6 +46,7 @@ import org.spout.vanilla.plugin.material.block.Crop;
 import org.spout.vanilla.plugin.material.block.Growing;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.material.item.misc.Dye;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class WheatCrop extends GroundAttachable implements Growing, Crop, DynamicMaterial, InitializableMaterial {
 	public WheatCrop(String name, int id) {
@@ -109,12 +106,11 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
-		PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
-		ItemStack current = inv.getCurrentItem();
-		if (current != null && current.isMaterial(Dye.BONE_MEAL)) {
+		Slot inv = PlayerUtil.getHeldSlot(entity);
+		if (inv != null && inv.get() != null && inv.get().isMaterial(Dye.BONE_MEAL)) {
 			if (this.getGrowthStage(block) != 0x7) {
-				if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-					inv.addAmount(0, -1);
+				if (!PlayerUtil.isCostSuppressed(entity)) {
+					inv.addAmount(-1);
 				}
 				this.setGrowthStage(block, 0x7);
 			}

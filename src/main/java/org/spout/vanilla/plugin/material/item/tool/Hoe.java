@@ -32,7 +32,9 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class Hoe extends InteractTool {
 	public Hoe(String name, int id, short durability) {
@@ -45,7 +47,11 @@ public class Hoe extends InteractTool {
 		if (type == Action.RIGHT_CLICK) {
 			if (block.isMaterial(VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
 				block.setMaterial(VanillaMaterials.FARMLAND);
-				setMaxDurability((short) (getMaxDurability() - 1)); // TODO right place?
+
+				Slot held = PlayerUtil.getHeldSlot(entity);
+				if (held != null && !PlayerUtil.isCostSuppressed(entity)) {
+					held.addData(1);
+				}
 			}
 		}
 	}

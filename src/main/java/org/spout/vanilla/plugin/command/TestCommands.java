@@ -132,7 +132,7 @@ public class TestCommands {
 			throw new CommandException("You must be a player to hold a map.");
 		}
 		Player p = (Player) source;
-		ItemStack i = p.get(PlayerInventory.class).getQuickbar().getCurrentItem();
+		ItemStack i = p.get(PlayerInventory.class).getQuickbar().getSelectedSlot().get();
 		if (i == null || !(i.getMaterial() instanceof Map)) {
 			throw new CommandException("Held item is not a map");
 		}
@@ -174,7 +174,7 @@ public class TestCommands {
 			throw new CommandException("You must be a player to hold a map.");
 		}
 		Player p = (Player) source;
-		ItemStack i = p.get(PlayerInventory.class).getQuickbar().getCurrentItem();
+		ItemStack i = p.get(PlayerInventory.class).getQuickbar().getSelectedSlot().get();
 		if (i == null || !(i.getMaterial() instanceof Map)) {
 			throw new CommandException("Held item is not a map");
 		}

@@ -72,7 +72,7 @@ public class Shears extends Tool {
 
 			if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 				PlayerQuickbar quickbar = entity.get(PlayerInventory.class).getQuickbar();
-				quickbar.addData(quickbar.getCurrentSlot(), 1);
+				quickbar.getSelectedSlot().addData(1);
 			}
 		}
 	}

@@ -29,10 +29,10 @@ package org.spout.vanilla.plugin.material.item;
 import org.spout.api.entity.Entity;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.data.GameMode;
 import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.inventory.Slot;
 
 public class Food extends VanillaItemMaterial {
 	private final FoodEffect[] effects;
@@ -46,7 +46,7 @@ public class Food extends VanillaItemMaterial {
 		return effects;
 	}
 
-	public void onEat(Entity entity, int slot) {
+	public void onEat(Entity entity, Slot slot) {
 		if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 			HungerComponent hunger = entity.get(HungerComponent.class);
 			for (FoodEffect effect : getEffectType()) {
@@ -65,7 +65,7 @@ public class Food extends VanillaItemMaterial {
 						break;
 				}
 			}
-			entity.get(PlayerInventory.class).getQuickbar().addAmount(slot, -1);
+			slot.addAmount(-1);
 		}
 	}
 }

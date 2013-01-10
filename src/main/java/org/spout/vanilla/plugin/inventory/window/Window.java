@@ -712,7 +712,7 @@ public abstract class Window implements InventoryViewer {
 				// update held item
 				PlayerQuickbar quickbar = getPlayerInventory().getQuickbar();
 				debug("Slot: " + slot);
-				debug("Current slot: " + quickbar.getCurrentSlot());
+				debug("Current slot: " + quickbar.getSelectedSlot().getIndex());
 				// TODO: Setting boots too for some reason...?
 				//if (inventory instanceof PlayerQuickbar && slot == quickbar.getCurrentSlot()) {
 				//Player player = getPlayer();

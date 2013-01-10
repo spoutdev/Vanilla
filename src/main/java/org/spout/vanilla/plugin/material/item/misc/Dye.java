@@ -30,20 +30,17 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.passive.Sheep;
-import org.spout.vanilla.plugin.data.GameMode;
-import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.solid.Wool.WoolColor;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class Dye extends VanillaItemMaterial implements Placeable {
 	public static final Dye INK_SAC = new Dye("Ink Sac");
@@ -122,16 +119,12 @@ public class Dye extends VanillaItemMaterial implements Placeable {
 				return;
 			}
 
-			PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
-			if (inv != null) {
-				ItemStack holding = inv.getCurrentItem();
-				if (holding != null) {
-					//get color from holding item
-					other.get(Sheep.class).setColor(WoolColor.getById((short) (0xF - holding.getData())));
-
-					if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-						inv.addAmount(0, -1);
-					}
+			Slot inv = PlayerUtil.getHeldSlot(entity);
+			if (inv != null && inv.get() != null) {
+				// get color from holding item
+				other.get(Sheep.class).setColor(WoolColor.getById((short) (0xF - inv.get().getData())));
+				if (!PlayerUtil.isCostSuppressed(entity)) {
+					inv.addAmount(-1);
 				}
 			}
 		}

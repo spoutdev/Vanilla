@@ -36,14 +36,12 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
-import org.spout.vanilla.plugin.data.GameMode;
-import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.event.cause.PlayerBreakCause;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.material.block.liquid.Water;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class LilyPad extends GroundAttachable {
 	public LilyPad(String name, int id) {
@@ -83,12 +81,9 @@ public class LilyPad extends GroundAttachable {
 
 				//TODO Subtract from inventory component
 				// Subtract item
-				if (!entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-					return;
-				}
-				PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
-				if (inv != null) {
-					inv.addAmount(inv.getCurrentSlot(), -1);
+				Slot inv = PlayerUtil.getHeldSlot(entity);
+				if (inv != null && !PlayerUtil.isCostSuppressed(entity)) {
+					inv.addAmount(-1);
 				}
 			}
 		}

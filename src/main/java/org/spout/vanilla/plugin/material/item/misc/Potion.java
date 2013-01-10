@@ -33,6 +33,7 @@ import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.misc.EffectsComponent;
 import org.spout.vanilla.plugin.data.effect.StatusEffect;
 import org.spout.vanilla.plugin.data.effect.StatusEffectContainer;
+import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
@@ -222,12 +223,12 @@ public class Potion extends VanillaItemMaterial {
 		return time;
 	}
 
-	public void onDrink(Entity entity, int slot) {
+	public void onDrink(Entity entity, Slot slot) {
 		if (this.effect != null) {
 			entity.add(EffectsComponent.class).addEffect(new StatusEffectContainer(effect, this.getTime(), this.getTier()));
 		}
 
-		entity.get(PlayerInventory.class).getQuickbar().addAmount(slot, -1);
+		slot.addAmount(-1);
 		entity.get(PlayerInventory.class).getMain().add(new ItemStack(VanillaMaterials.GLASS_BOTTLE, 1));
 	}
 }

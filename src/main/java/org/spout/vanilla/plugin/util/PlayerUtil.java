@@ -35,19 +35,60 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
+import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.inventory.Slot;
+import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 
 public class PlayerUtil {
 
 	/**
-	 * Checks whether an entity is a Vanilla Player that is not in creative mode
+	 * Checks whether the inventory of an entity, if available, suppresses item removal costs
 	 * 
 	 * @param entity to check it for
-	 * @return True if it is a Vanilla Player not in creative mode, False if not
+	 * @return True if the costs are suppressed, False if not
 	 */
-	public static boolean isNonCreativePlayer(Entity entity) {
-		return entity instanceof Player && entity.has(Human.class) && !entity.get(Human.class).isCreative(); 
+	public static boolean isCostSuppressed(Entity entity) {
+		return isCreativePlayer(entity);
+	}
+
+	/**
+	 * Checks whether an Entity is in creative mode
+	 * 
+	 * @param entity to check
+	 * @return True if the game mode is creative, False if not
+	 */
+	public static boolean isCreativePlayer(Entity entity) {
+		return entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.CREATIVE);
+	}
+
+	/**
+	 * Gets the quickbar of a player entity<br>
+	 * If the entity is not a quickbar-containing entity, null is returned
+	 * 
+	 * @param entity to get the quickbar of
+	 * @return The quickbar, or null
+	 */
+	public static PlayerQuickbar getQuickbar(Entity entity) {
+		if (entity instanceof Player && entity.has(PlayerInventory.class)) {
+			return entity.get(PlayerInventory.class).getQuickbar();
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Gets the currently selected Quickbar Slot of a player entity<br>
+	 * Needs to be a valid player entity, otherwise null is returned
+	 * 
+	 * @param entity to get the current slot of
+	 * @return Current slot
+	 */
+	public static Slot getHeldSlot(Entity entity) {
+		PlayerQuickbar bar = getQuickbar(entity);
+		return bar == null ? null : bar.getSelectedSlot();
 	}
 
 	/**

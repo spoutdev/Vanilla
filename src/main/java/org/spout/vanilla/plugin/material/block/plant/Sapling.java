@@ -32,16 +32,12 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
-import org.spout.vanilla.plugin.data.GameMode;
-import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.Fuel;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Plant;
@@ -49,6 +45,7 @@ import org.spout.vanilla.plugin.material.block.Spreading;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.material.block.solid.Log;
 import org.spout.vanilla.plugin.material.item.misc.Dye;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 import org.spout.vanilla.plugin.world.generator.normal.object.tree.TreeObject;
 
 public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel, DynamicMaterial {
@@ -96,11 +93,10 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 		if (type != Action.RIGHT_CLICK) {
 			return;
 		}
-		PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
-		ItemStack current = inv.getCurrentItem();
-		if (current != null && current.isMaterial(Dye.BONE_MEAL)) {
-			if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-				inv.addAmount(0, -1);
+		Slot inv = PlayerUtil.getHeldSlot(entity);
+		if (inv != null && inv.get() != null && inv.get().isMaterial(Dye.BONE_MEAL)) {
+			if (!PlayerUtil.isCostSuppressed(entity)) {
+				inv.addAmount(-1);
 			}
 			this.growTree(block);
 		}

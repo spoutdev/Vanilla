@@ -99,7 +99,7 @@ public class InputCommandExecutor implements CommandExecutor {
 			Player player = (Player) source;
 			PlayerQuickbar quickbar = player.get(PlayerInventory.class).getQuickbar();
 			HUDComponent hud = player.get(HUDComponent.class);
-			int newSlot = quickbar.getCurrentSlot();
+			int newSlot = quickbar.getSelectedSlot().getIndex();
 			if (name.endsWith("left")) {
 				newSlot--;
 				if (newSlot < 0) {
@@ -115,7 +115,7 @@ public class InputCommandExecutor implements CommandExecutor {
 			}
 
 			hud.setHotbarSlot(newSlot);
-			quickbar.setCurrentSlot(newSlot);
+			quickbar.setSelectedSlot(newSlot);
 		}
 	}
 }

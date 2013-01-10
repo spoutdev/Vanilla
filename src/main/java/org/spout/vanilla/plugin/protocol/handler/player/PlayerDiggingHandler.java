@@ -50,7 +50,6 @@ import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.DiggingComponent;
 import org.spout.vanilla.plugin.component.substance.Item;
@@ -60,7 +59,7 @@ import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.drops.flag.PlayerFlags;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.event.cause.PlayerBreakCause;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.VanillaMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.item.Food;
@@ -69,6 +68,7 @@ import org.spout.vanilla.plugin.material.item.tool.Tool;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerDiggingMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.block.SignMessage;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMessage> {
 	private boolean breakBlock(BlockMaterial blockMaterial, Block block, Human human, Session session) {
@@ -78,7 +78,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		} else {
 			flags.add(PlayerFlags.CREATIVE);
 		}
-		ItemStack heldItem = human.getOwner().add(PlayerInventory.class).getQuickbar().getCurrentItem();
+		ItemStack heldItem = PlayerUtil.getHeldSlot(session.getPlayer()).get();
 		if (heldItem != null) {
 			heldItem.getMaterial().getItemFlags(heldItem, flags);
 		}
@@ -120,6 +120,11 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		if (human == null) {
 			return;
 		}
+		Slot currentSlot = PlayerUtil.getHeldSlot(player);
+		if (currentSlot == null) {
+			return;
+		}
+		ItemStack heldItem = currentSlot.get();
 
 		// Don't block protections if dropping an item, silly Notch...
 		if (state != PlayerDiggingMessage.STATE_DROP_ITEM && state != PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
@@ -136,7 +141,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		if (state == PlayerDiggingMessage.STATE_DROP_ITEM && x == 0 && y == 0 && z == 0) {
 			float yaw = player.getTransform().getYaw();
 			Vector3 impulse = new Vector3(Math.cos(yaw), 0.4F, Math.sin(yaw));
-			Item.drop(player.getTransform().getPosition(), human.getOwner().get(PlayerInventory.class).getQuickbar().getCurrentItem(), impulse);
+			Item.drop(player.getTransform().getPosition(), heldItem, impulse);
 			return;
 		}
 
@@ -145,9 +150,6 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		if (blockMaterial == VanillaMaterials.AIR || blockMaterial == BasicAir.AIR || blockMaterial == VanillaMaterials.WATER || blockMaterial == VanillaMaterials.LAVA) {
 			isInteractable = false;
 		}
-
-		PlayerQuickbar currentSlot = player.get(PlayerInventory.class).getQuickbar();
-		ItemStack heldItem = currentSlot.getCurrentItem();
 
 		if (state == PlayerDiggingMessage.STATE_START_DIGGING) {
 			PlayerInteractEvent event = new PlayerInteractEvent(player, block.getPosition(), heldItem, Action.LEFT_CLICK, isInteractable, clickedFace);
@@ -229,7 +231,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				int totalDamage;
 
 				if (heldItem != null && heldItem.getMaterial() instanceof Tool) {
-					currentSlot.addData(currentSlot.getCurrentSlot(), ((Tool) heldItem.getMaterial()).getDurabilityPenalty(heldItem));
+					currentSlot.addData(((Tool) heldItem.getMaterial()).getDurabilityPenalty(heldItem));
 				}
 				if (heldItem == null) {
 					damageDone = ((int) diggingTicks * 1);
@@ -248,9 +250,9 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 			}
 		} else if (state == PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
 			if (heldItem.getMaterial() instanceof Food) {
-				((Food) heldItem.getMaterial()).onEat(player, currentSlot.getCurrentSlot());
+				((Food) heldItem.getMaterial()).onEat(player, currentSlot);
 			} else if (heldItem.getMaterial() instanceof Potion) {
-				((Potion) heldItem.getMaterial()).onDrink(player, currentSlot.getCurrentSlot());
+				((Potion) heldItem.getMaterial()).onDrink(player, currentSlot);
 			}
 		}
 	}

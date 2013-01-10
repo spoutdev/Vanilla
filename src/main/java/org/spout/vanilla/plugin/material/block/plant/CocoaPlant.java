@@ -33,24 +33,23 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.data.GameMode;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.drops.flag.BlockFlags;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.block.Growing;
 import org.spout.vanilla.plugin.material.block.Plant;
 import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.plugin.material.block.solid.Log;
 import org.spout.vanilla.plugin.material.item.misc.Dye;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class CocoaPlant extends AbstractAttachable implements Plant, Growing, DynamicMaterial, InitializableMaterial {
 	private static final int DIRECTION_MASK = 0x3;
@@ -150,12 +149,11 @@ public class CocoaPlant extends AbstractAttachable implements Plant, Growing, Dy
 
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
-		final PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
-		final ItemStack current = inv.getCurrentItem();
-		if (current != null && current.isMaterial(Dye.BONE_MEAL) && type == Action.RIGHT_CLICK) {
+		Slot inv = PlayerUtil.getHeldSlot(entity);
+		if (inv != null && inv.get() != null && inv.get().isMaterial(Dye.BONE_MEAL) && type == Action.RIGHT_CLICK) {
 			if (!isFullyGrown(block)) {
 				if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-					inv.addAmount(0, -1);
+					inv.addAmount(-1);
 				}
 				setGrowthStage(block, 2);
 			}

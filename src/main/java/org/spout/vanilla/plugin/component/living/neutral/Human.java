@@ -49,6 +49,7 @@ import org.spout.vanilla.plugin.event.entity.HumanAbilityChangeEvent;
 import org.spout.vanilla.plugin.event.player.PlayerGameModeChangedEvent;
 import org.spout.vanilla.plugin.event.player.network.PlayerAbilityUpdateEvent;
 import org.spout.vanilla.plugin.event.player.network.PlayerGameStateEvent;
+import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.protocol.entity.HumanEntityProtocol;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerGameStateMessage;
@@ -165,13 +166,14 @@ public class Human extends Living {
 		}
 
 		PlayerQuickbar quickbar = getOwner().get(PlayerInventory.class).getQuickbar();
-		ItemStack current = quickbar.getCurrentItem();
-		if (current == null) {
+		Slot selected = quickbar.getSelectedSlot();
+		ItemStack drop = selected.get();
+		if (drop == null) {
 			return;
+		} else {
+			drop = drop.clone().setAmount(1);
 		}
-
-		ItemStack drop = current.clone().setAmount(1);
-		quickbar.addAmount(quickbar.getCurrentSlot(), -1);
+		selected.addAmount(-1);
 		dropItem(drop);
 	}
 

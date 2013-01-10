@@ -34,19 +34,19 @@ import org.spout.api.material.Material;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.EffectsComponent;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
-import org.spout.vanilla.plugin.data.GameMode;
 import org.spout.vanilla.plugin.data.effect.StatusEffect;
 import org.spout.vanilla.plugin.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.plugin.event.cause.PlayerDamageCause;
+import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.VanillaMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.item.tool.Tool;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityInteractMessage;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class EntityInteractHandler extends MessageHandler<EntityInteractMessage> {
 	@Override
@@ -58,11 +58,14 @@ public class EntityInteractHandler extends MessageHandler<EntityInteractMessage>
 		Player playerEnt = session.getPlayer();
 		Human player = playerEnt.get(Human.class);
 		Entity clickedEntity = playerEnt.getWorld().getEntity(message.getTarget());
-		if (clickedEntity == null || player == null || !playerEnt.has(PlayerInventory.class)) {
+		if (clickedEntity == null || player == null) {
 			return;
 		}
-
-		ItemStack holding = playerEnt.get(PlayerInventory.class).getQuickbar().getCurrentItem();
+		Slot held = PlayerUtil.getHeldSlot(playerEnt);
+		if (held == null) {
+			return;
+		}
+		ItemStack holding = held.get();
 		Material holdingMat = holding == null ? VanillaMaterials.AIR : holding.getMaterial();
 		if (holdingMat == null) {
 			holdingMat = VanillaMaterials.AIR;
@@ -101,15 +104,9 @@ public class EntityInteractHandler extends MessageHandler<EntityInteractMessage>
 				}
 				//END Potion modification
 
-				if (damage > 0) {
-					if (clicked instanceof Human) {
-						if (((Human) clicked).getGameMode() != GameMode.SURVIVAL) {
-							return;
-						}
-					}
-					if (!clicked.getHealth().isDead()) {
-						clicked.getHealth().damage(damage, new PlayerDamageCause(playerEnt, DamageType.ATTACK), damage > 0);
-					}
+				// Damage the clicked entity
+				if (damage > 0 && !PlayerUtil.isCreativePlayer(clickedEntity) && !clicked.getHealth().isDead()) {
+					clicked.getHealth().damage(damage, new PlayerDamageCause(playerEnt, DamageType.ATTACK), damage > 0);
 				}
 			}
 		} else {

@@ -27,18 +27,16 @@
 package org.spout.vanilla.plugin.material.item.bucket;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
-import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.item.BlockItem;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class FullBucket extends BlockItem {
 	public FullBucket(String name, int id, BlockMaterial place) {
@@ -48,12 +46,11 @@ public class FullBucket extends BlockItem {
 	@Override
 	public void onInteract(Entity entity, Block block, Action type, BlockFace face) {
 		super.onInteract(entity, block, type, face);
-		if (type == Action.RIGHT_CLICK && entity instanceof Player) {
-			Player player = (Player) entity;
-			if (player.get(Human.class).getGameMode() == GameMode.CREATIVE) {
-				return;
+		if (type == Action.RIGHT_CLICK) {
+			Slot inv = PlayerUtil.getHeldSlot(entity);
+			if (inv != null && !PlayerUtil.isCostSuppressed(entity)) {
+				inv.set(new ItemStack(VanillaMaterials.BUCKET, 1));
 			}
-			entity.get(PlayerInventory.class).getQuickbar().setCurrentItem(new ItemStack(VanillaMaterials.BUCKET, 1));
 		}
 	}
 }

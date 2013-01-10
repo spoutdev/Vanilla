@@ -58,7 +58,7 @@ public class EmptyBucket extends VanillaItemMaterial {
 			} else {
 				return;
 			}
-			quickbar.addAmount(quickbar.getCurrentSlot(), -1);
+			quickbar.getSelectedSlot().addAmount(-1);
 			quickbar.add(new ItemStack(filled, 1));
 		}
 	}

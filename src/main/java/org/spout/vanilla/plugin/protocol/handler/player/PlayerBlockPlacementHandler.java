@@ -65,7 +65,7 @@ import org.spout.vanilla.plugin.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBlockPlacementMessage> {
-	private void undoPlacement(Player player, Block clickedBlock, Block alterBlock, RepositionManager rm) {
+	private void refreshClient(Player player, Block clickedBlock, Block alterBlock, RepositionManager rm) {
 		//refresh the client just in case it assumed something
 		player.getSession().send(false, new BlockChangeMessage(clickedBlock, rm));
 		player.getSession().send(false, new BlockChangeMessage(alterBlock, rm));
@@ -140,7 +140,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 
 			//check if the interaction was cancelled by the event
 			if (interactEvent.isCancelled()) {
-				undoPlacement(player, clickedBlock, alterBlock, rm);
+				refreshClient(player, clickedBlock, alterBlock, rm);
 				return;
 			}
 			short durability = 0;
@@ -161,7 +161,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 
 			if (interactEvent.useItemInHand() != Result.ALLOW) {
 				if (clickedMaterial instanceof VanillaBlockMaterial && (((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed())) {
-					undoPlacement(player, clickedBlock, alterBlock, rm);
+					refreshClient(player, clickedBlock, alterBlock, rm);
 					return;
 				}
 			}
@@ -182,7 +182,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 					target = alterBlock;
 					targetFace = alterFace;
 				} else {
-					undoPlacement(player, clickedBlock, alterBlock, rm);
+					refreshClient(player, clickedBlock, alterBlock, rm);
 					return;
 				}
 
@@ -208,12 +208,12 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 						//For now: simple distance checking
 						Point tpos = target.getPosition();
 						if (player.getTransform().getPosition().distance(tpos) < 0.6) {
-							undoPlacement(player, clickedBlock, alterBlock, rm);
+							refreshClient(player, clickedBlock, alterBlock, rm);
 							return;
 						}
 						HeadComponent head = player.get(HeadComponent.class);
 						if (head != null && head.getPosition().distance(tpos) < 0.6) {
-							undoPlacement(player, clickedBlock, alterBlock, rm);
+							refreshClient(player, clickedBlock, alterBlock, rm);
 							return;
 						}
 					}
@@ -223,7 +223,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				Collection<Protection> protections = Spout.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(alterBlock.getPosition());
 				for (Protection p : protections) {
 					if (p.contains(alterBlock.getPosition()) && !VanillaConfiguration.OPS.isOp(player.getName())) {
-						undoPlacement(player, clickedBlock, alterBlock, rm);
+						refreshClient(player, clickedBlock, alterBlock, rm);
 						player.sendMessage(ChatStyle.DARK_RED, "This area is a protected spawn point!");
 						return;
 					}
@@ -247,6 +247,8 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				if (PlayerUtil.isNonCreativePlayer(player)) {
 					currentSlot.addAmount(0, -1);
 				}
+				
+				refreshClient(player, clickedBlock, alterBlock, rm);
 			}
 		}
 	}

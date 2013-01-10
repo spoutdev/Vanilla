@@ -29,11 +29,14 @@ package org.spout.vanilla.plugin.component.substance.object;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.substance.Item;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.protocol.entity.object.FallingBlockProtocol;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
@@ -65,17 +68,20 @@ public class FallingBlock extends EntityComponent {
 		int y = pos.getBlockY();
 		int z = pos.getBlockZ();
 		int fallAmt = Math.max(1, MathHelper.floor(Math.abs(fallSpeed)));
-		BlockMaterial material = world.getBlockMaterial(x, y - fallAmt, z);
-		while (isObstacle(material)) {
-			//Find a place for the block
-			BlockMaterial above = pos.getWorld().getBlockMaterial(x, y - fallAmt + 1, z);
-			if (!isObstacle(above)) {
-				pos.getWorld().setBlockMaterial(x, y - fallAmt + 1, z, getMaterial(), getMaterial().getData(), getMaterial().toCause(pos));
+		for (int dy = 0; dy < fallAmt; dy++) {
+			BlockMaterial below = world.getBlockMaterial(x, y - dy - 1, z);
+			if (isFallingObstacle(below)) {
+				// Place block on top of this obstacle, if possible
+				Block current = world.getBlock(x, y - dy, z);
+				BlockMaterial currentMat = current.getMaterial();
+				if (currentMat instanceof VanillaBlockMaterial && !((VanillaBlockMaterial) currentMat).isPlacementObstacle()) {
+					// Place in the world
+					current.setMaterial(getMaterial(), getMaterial().toCause(pos));
+				} else {
+					// Spawn drops
+					Item.dropNaturally(pos, new ItemStack(getMaterial(), 1));
+				}
 				this.getOwner().remove();
-				break;
-			} else {
-				material = above;
-				fallAmt--;
 			}
 		}
 		if (!this.getOwner().isRemoved()) {
@@ -89,7 +95,13 @@ public class FallingBlock extends EntityComponent {
 		return fallSpeed;
 	}
 
-	private boolean isObstacle(BlockMaterial material) {
+	/**
+	 * Whether the material can stop a falling block from falling, acting as the new ground block
+	 * 
+	 * @param material
+	 * @return True if it obstructs further falling, False if not
+	 */
+	private boolean isFallingObstacle(BlockMaterial material) {
 		if (material == BlockMaterial.AIR) {
 			return false;
 		}

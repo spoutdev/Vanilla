@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.util;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
 import org.spout.api.event.cause.EntityCause;
 import org.spout.api.geo.cuboid.Block;
@@ -34,9 +35,21 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
 
 public class PlayerUtil {
+
+	/**
+	 * Checks whether an entity is a Vanilla Player that is not in creative mode
+	 * 
+	 * @param entity to check it for
+	 * @return True if it is a Vanilla Player not in creative mode, False if not
+	 */
+	public static boolean isNonCreativePlayer(Entity entity) {
+		return entity instanceof Player && entity.has(Human.class) && !entity.get(Human.class).isCreative(); 
+	}
+
 	/**
 	 * Gets the required facing for a Block to look at a possible Entity in the cause
 	 * @param block to get the facing for

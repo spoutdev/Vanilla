@@ -42,6 +42,7 @@ import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 import org.spout.vanilla.plugin.world.generator.object.VanillaObjects;
 
 public class FlintAndSteel extends InteractTool {
@@ -69,7 +70,7 @@ public class FlintAndSteel extends InteractTool {
 				// Default fire placement
 				if (VanillaMaterials.FIRE.canCreate(target, (short) 0, cause)) {
 					VanillaMaterials.FIRE.onCreate(target, (short) 0, cause);
-					if (entity instanceof Player && !entity.get(Human.class).isCreative()) {
+					if (PlayerUtil.isNonCreativePlayer(entity)) {
 						PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
 						inv.addData(inv.getCurrentSlot(), 1);
 					}

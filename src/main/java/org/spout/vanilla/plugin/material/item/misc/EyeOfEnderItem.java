@@ -35,6 +35,7 @@ import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class EyeOfEnderItem extends VanillaItemMaterial {
 	public EyeOfEnderItem(String name, int id) {
@@ -49,8 +50,10 @@ public class EyeOfEnderItem extends VanillaItemMaterial {
 				// Default ender eye placement
 				if (!VanillaMaterials.END_PORTAL_FRAME.hasEyeOfTheEnder(block)) {
 					VanillaMaterials.END_PORTAL_FRAME.setEyeOfTheEnder(block, true);
-					PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
-					inv.addAmount(inv.getCurrentSlot(), -1);
+					if (PlayerUtil.isNonCreativePlayer(entity)) {
+						PlayerQuickbar inv = entity.get(PlayerInventory.class).getQuickbar();
+						inv.addAmount(inv.getCurrentSlot(), -1);
+					}
 				}
 			}
 		}

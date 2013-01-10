@@ -66,12 +66,12 @@ public class Pumpkin extends Solid implements Directional {
 
 	@Override
 	public BlockFace getFacing(Block block) {
-		return BlockFaces.EWNS.get(block.getData());
+		return BlockFaces.WNES.get(block.getData());
 	}
 
 	@Override
 	public void setFacing(Block block, BlockFace facing) {
-		block.setData((short) BlockFaces.EWNS.indexOf(facing, 0));
+		block.setData((short) BlockFaces.WNES.indexOf(facing, 0));
 	}
 
 	@Override

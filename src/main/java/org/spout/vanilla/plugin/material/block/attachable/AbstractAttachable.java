@@ -135,12 +135,7 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 				return face;
 			}
 		}
-		for (BlockFace face : BlockFaces.BTNSWE) {
-			if (this.isAttachable(face)) {
-				return face;
-			}
-		}
-		throw new RuntimeException("Attachable '" + this.getName() + "' has no attachable faces set");
+		return null;
 	}
 
 	@Override

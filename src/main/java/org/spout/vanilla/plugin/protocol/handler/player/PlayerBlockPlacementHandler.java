@@ -51,10 +51,8 @@ import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
-import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
-import org.spout.vanilla.plugin.data.GameMode;
 import org.spout.vanilla.plugin.data.effect.SoundEffect;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.event.cause.PlayerClickBlockCause;
@@ -64,6 +62,7 @@ import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.item.tool.InteractTool;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerBlockPlacementMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.block.BlockChangeMessage;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBlockPlacementMessage> {
 	private void undoPlacement(Player player, Block clickedBlock, Block alterBlock, RepositionManager rm) {
@@ -245,7 +244,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				sound.playGlobal(target.getPosition(), 0.8f, 0.8f);
 
 				// Remove block from inventory if not in creative mode.
-				if (player.get(Human.class).getGameMode() != GameMode.CREATIVE) {
+				if (PlayerUtil.isNonCreativePlayer(player)) {
 					currentSlot.addAmount(0, -1);
 				}
 			}

@@ -78,11 +78,6 @@ public class RedstoneLamp extends Solid implements InitializableMaterial, Redsto
 	}
 
 	@Override
-	public boolean isRedstoneConductor() {
-		return false;
-	}
-
-	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
 		boolean power = isReceivingPower(block);

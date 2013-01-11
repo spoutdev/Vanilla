@@ -39,9 +39,15 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
 import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.object.ItemEntityProtocol;
 
 public class Item extends ObjectEntity {
+	/**
+	 * The default delay in ms before the item can be picked up for a dropped item
+	 */
+	public static final long DROP_PICKUP_DELAY = 2000;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -97,9 +103,12 @@ public class Item extends ObjectEntity {
 	 * @return the Item entity
 	 */
 	public static Item drop(Point position, ItemStack itemStack, Vector3 velocity) {
+		if (itemStack == null || itemStack.getMaterial() == VanillaMaterials.AIR) {
+			throw new IllegalArgumentException("The dropped item can not be null or air!");
+		}
 		Entity entity = position.getWorld().createEntity(position, Item.class);
 		Item item = entity.add(Item.class);
-		item.setUncollectableTicks(position.getWorld().getAge() + 20);
+		item.setUncollectableTicks(position.getWorld().getAge() + DROP_PICKUP_DELAY);
 		item.setItemStack(itemStack);
 		item.getPhysics().applyImpulse(velocity);
 		if (position.getChunk(LoadOption.NO_LOAD) != null) {

@@ -139,9 +139,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		}
 
 		if (state == PlayerDiggingMessage.STATE_DROP_ITEM && x == 0 && y == 0 && z == 0) {
-			float yaw = player.getTransform().getYaw();
-			Vector3 impulse = new Vector3(Math.cos(yaw), 0.4F, Math.sin(yaw));
-			Item.drop(player.getTransform().getPosition(), heldItem, impulse);
+			human.dropItem();
 			return;
 		}
 

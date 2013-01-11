@@ -132,7 +132,7 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 		}
 
 		BlockMaterial mat = block.translate(direction).getMaterial();
-		if (mat instanceof RedstoneSource || mat instanceof RedstoneTarget || !isDistractedFrom(block, direction)) {
+		if (mat instanceof RedstoneSource || !isDistractedFrom(block, direction)) {
 			return power;
 		}
 

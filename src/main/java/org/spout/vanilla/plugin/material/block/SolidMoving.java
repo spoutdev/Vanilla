@@ -34,7 +34,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.model.Model;
 import org.spout.api.resource.ResourcePointer;
 
-import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.substance.object.FallingBlock;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
@@ -64,19 +63,6 @@ public class SolidMoving extends Solid {
 			// turn this block into a mobile block
 			Entity e = block.getWorld().createAndSpawnEntity(block.getPosition(), FallingBlock.class, LoadOption.NO_LOAD);
 			e.add(FallingBlock.class).setMaterial(this);
-			block.getChunk().getRegion().getTaskManager().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), new DelayedBlockSet(block));
-		}
-	}
-
-	private static class DelayedBlockSet implements Runnable {
-		final Block block;
-
-		public DelayedBlockSet(Block block) {
-			this.block = block;
-		}
-
-		@Override
-		public void run() {
 			block.setMaterial(VanillaMaterials.AIR);
 		}
 	}

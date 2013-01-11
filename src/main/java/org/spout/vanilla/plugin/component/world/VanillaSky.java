@@ -49,7 +49,8 @@ public abstract class VanillaSky extends WorldComponent {
 	public static final byte MAX_SKY_LIGHT = 15;
 	public static final byte SKY_LIGHT_RANGE = MAX_SKY_LIGHT - MIN_SKY_LIGHT;
 	private static long refreshRate = 400;
-	protected long maxTime, time = 0, countdown = refreshRate, rate;
+	protected long maxTime, rate, countdown = refreshRate;
+	private float time = 0F;
 	private Long setTime;
 	private WeatherSimulator weather;
 	private String model;
@@ -57,7 +58,7 @@ public abstract class VanillaSky extends WorldComponent {
 
 	public VanillaSky() {
 		maxTime = 24000;
-		rate = 20;
+		rate = 1;
 	}
 
 	@Override
@@ -102,16 +103,13 @@ public abstract class VanillaSky extends WorldComponent {
 			this.time = setTime;
 			setTime = null;
 		}
-		countdown--;
-		if (countdown <= 0) {
-			if (time >= maxTime) {
-				time = 0;
-			} else {
-				time += rate;
-			}
-
+		time += rate * (dt / 50F);
+		while (time >= maxTime) {
+			time -= maxTime;
+		}
+		if (countdown-- <= 0) {
 			countdown = refreshRate;
-			updateTime(time);
+			updateTime((long)time);
 		}
 		
 		// Sleeping players
@@ -154,7 +152,7 @@ public abstract class VanillaSky extends WorldComponent {
 		if (setTime != null) {
 			return setTime;
 		} else {
-			return time;
+			return (long)time;
 		}
 	}
 
@@ -164,7 +162,7 @@ public abstract class VanillaSky extends WorldComponent {
 	 * @return
 	 */
 	public long getMaxTime() {
-		return time;
+		return maxTime;
 	}
 
 	/**

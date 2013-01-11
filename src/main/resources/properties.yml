@@ -1,9 +1,9 @@
 name: ${project.name}
 version: ${releaseVersion} b${buildNumber}
 description: ${project.description}
+website: ${project.url}
 
 author: ${project.organization.name}
-website: ${project.organization.url}
 
 main: ${mainClass}
 load: startup

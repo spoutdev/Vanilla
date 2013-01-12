@@ -65,8 +65,11 @@ public class Furnace extends ViewedBlockComponent implements Container {
 	private void updateProgressArrow(Player player) {
 		WindowHolder window = player.get(WindowHolder.class);
 		if (window != null) {
-			float maxSmeltTime = getMaxSmeltTime();
-			float increment = (MAX_SMELT_TIME_INCREMENT * 20) - ((MAX_SMELT_TIME_INCREMENT / maxSmeltTime) * (getSmeltTime() * 20));
+			float increment = 0.0f;
+			if (canSmelt()) {
+				float maxSmeltTime = getMaxSmeltTime();
+				increment = (MAX_SMELT_TIME_INCREMENT * 20) - ((MAX_SMELT_TIME_INCREMENT / maxSmeltTime) * (getSmeltTime() * 20));
+			}
 			window.getActiveWindow().setProperty(FurnaceProperty.PROGRESS_ARROW, (int) increment);
 		}
 	}

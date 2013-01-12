@@ -42,7 +42,7 @@ public class TheEndSky extends VanillaSky {
 	}
 
 	@Override
-	protected void updateTime(long time) {
+	public void updateTime(long time) {
 	}
 
 	@Override

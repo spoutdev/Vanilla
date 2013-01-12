@@ -270,7 +270,7 @@ public abstract class VanillaSky extends WorldComponent {
 		}
 	}
 
-	protected abstract void updateTime(long time);
+	public abstract void updateTime(long time);
 
 	public abstract void updateWeather(Weather oldWeather, Weather newWeather);
 }

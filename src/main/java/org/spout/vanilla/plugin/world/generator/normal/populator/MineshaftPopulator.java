@@ -61,9 +61,6 @@ public class MineshaftPopulator extends Populator {
 			final int z = blockZ + random.nextInt(VARIATION * 2 + 1) - VARIATION;
 			if (mineshaft.canPlaceObject(world, x, y, z)) {
 				mineshaft.placeObject(world, x, y, z);
-				if (Spout.debugMode()) {
-					Spout.log("Placed mineshaft at: (" + x + ", " + y + ", " + z + ")");
-				}
 			}
 		}
 	}

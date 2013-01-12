@@ -27,22 +27,21 @@
 package org.spout.vanilla.plugin.world;
 
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.spout.api.Spout;
 import org.spout.api.geo.World;
+import org.spout.api.math.MathHelper;
 import org.spout.api.tickable.BasicTickable;
 
 import org.spout.vanilla.plugin.component.world.VanillaSky;
+import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.Weather;
 
 public class WeatherSimulator extends BasicTickable {
 	private final VanillaSky sky;
-	protected final Random random = new Random();
-	protected Weather weather = Weather.CLEAR, forecast = Weather.CLEAR;
-	protected float secondsUntilWeatherChange = 120000F + random.nextFloat() * 5 * 60 * 1000;
-	protected boolean forceWeatherUpdate = false;
-	protected LightningSimulator lightning;
-	protected float previousRainStrength, currentRainStrength;
+	private final Random random = MathHelper.getRandom();
+	private final AtomicBoolean forceWeatherUpdate = new AtomicBoolean(false);
+	private LightningSimulator lightning;
 
 	public WeatherSimulator(VanillaSky sky) {
 		this.sky = sky;
@@ -58,19 +57,19 @@ public class WeatherSimulator extends BasicTickable {
 	}
 
 	public Weather getCurrent() {
-		return this.weather;
+		return sky.getData().get(VanillaData.WORLD_WEATHER);
 	}
 
 	public Weather getForecast() {
-		return this.forecast;
+		return sky.getData().get(VanillaData.WORLD_FORECAST);
 	}
 
 	public void setForecast(Weather weather) {
-		this.forecast = weather;
+		sky.getData().put(VanillaData.WORLD_FORECAST, weather);
 	}
 
 	public void forceUpdate() {
-		this.forceWeatherUpdate = true;
+		this.forceWeatherUpdate.lazySet(true);
 	}
 
 	/**
@@ -107,7 +106,8 @@ public class WeatherSimulator extends BasicTickable {
 	 * @return the strength
 	 */
 	public float getRainStrength(float factor) {
-		return (this.previousRainStrength + factor * (this.currentRainStrength - this.previousRainStrength));
+		final float prevRainStr = sky.getData().get(VanillaData.PREVIOUS_RAIN_STRENGTH);
+		return (prevRainStr + factor * (sky.getData().get(VanillaData.CURRENT_RAIN_STRENGTH) - prevRainStr));
 	}
 
 	/**
@@ -121,25 +121,32 @@ public class WeatherSimulator extends BasicTickable {
 
 	@Override
 	public void onTick(float dt) {
+		float secondsUntilWeatherChange = sky.getData().get(VanillaData.WEATHER_CHANGE_TIME);
 		secondsUntilWeatherChange -= dt;
-		if (forceWeatherUpdate || secondsUntilWeatherChange <= 0) {
-			
-			this.sky.updateWeather(weather, forecast);
-			weather = forecast;
-			forecast = Weather.get(random.nextInt(3));
+		if (forceWeatherUpdate.compareAndSet(true, false) || secondsUntilWeatherChange <= 0) {
+			this.sky.updateWeather(getCurrent(), getForecast());
+			sky.getData().put(VanillaData.WORLD_WEATHER, getForecast());
+			final Weather current = getCurrent();
+			Weather forecast = current;
+			while(forecast == current) {
+				//Loop until we pick a weather different from current
+				forecast = Weather.get(random.nextInt(3));
+			}
+			setForecast(forecast);
 			secondsUntilWeatherChange = 120000F + random.nextFloat() * 5 * 60 * 1000;
-			forceWeatherUpdate = false;
 		}
-		this.previousRainStrength = this.currentRainStrength;
+		float currentRainStrength = sky.getData().get(VanillaData.CURRENT_RAIN_STRENGTH);
+		sky.getData().put(VanillaData.PREVIOUS_RAIN_STRENGTH, currentRainStrength);
 		if (this.isRaining()) {
-			this.currentRainStrength = Math.min(1.0f, this.currentRainStrength + 0.01f);
+			currentRainStrength = Math.min(1.0f, currentRainStrength + 0.01f);
 		} else {
-			this.currentRainStrength = Math.max(0.0f, this.currentRainStrength - 0.01f);
+			currentRainStrength = Math.max(0.0f, currentRainStrength - 0.01f);
 		}
-
+		sky.getData().put(VanillaData.CURRENT_RAIN_STRENGTH, currentRainStrength);
 		if (this.hasLightning()) {
 			this.lightning.onTick(dt);
 		}
+		sky.getData().put(VanillaData.WEATHER_CHANGE_TIME, secondsUntilWeatherChange);
 	}
 
 	@Override

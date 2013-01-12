@@ -37,6 +37,7 @@ import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.plugin.component.misc.SleepComponent;
 import org.spout.vanilla.plugin.data.Time;
+import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.Weather;
 import org.spout.vanilla.plugin.render.VanillaEffects;
 import org.spout.vanilla.plugin.world.WeatherSimulator;
@@ -48,18 +49,11 @@ public abstract class VanillaSky extends WorldComponent {
 	public static final byte MIN_SKY_LIGHT = 4;
 	public static final byte MAX_SKY_LIGHT = 15;
 	public static final byte SKY_LIGHT_RANGE = MAX_SKY_LIGHT - MIN_SKY_LIGHT;
-	private static long refreshRate = 400;
-	protected long maxTime, rate, countdown = refreshRate;
-	private float time = 0F;
-	private Long setTime;
+	private static final long REFRESH_RATE = 400;
+	private long countdown = REFRESH_RATE;
 	private WeatherSimulator weather;
 	private String model;
 	private static final HashMap<World, VanillaSky> skies = new HashMap<World, VanillaSky>();
-
-	public VanillaSky() {
-		maxTime = 24000;
-		rate = 1;
-	}
 
 	@Override
 	public void onAttached() {
@@ -98,17 +92,14 @@ public abstract class VanillaSky extends WorldComponent {
 
 	@Override
 	public void onTick(float dt) {
-		// Keep time
-		if (setTime != null) {
-			this.time = setTime;
-			setTime = null;
-		}
-		time += rate * (dt / 50F);
+		final long maxTime = getMaxTime();
+		float time = getData().get(VanillaData.WORLD_TIME).floatValue();
+		time += getRate() * (dt / 50F);
 		while (time >= maxTime) {
 			time -= maxTime;
 		}
 		if (countdown-- <= 0) {
-			countdown = refreshRate;
+			countdown = REFRESH_RATE;
 			updateTime((long)time);
 		}
 		
@@ -125,14 +116,20 @@ public abstract class VanillaSky extends WorldComponent {
 		}
 
 		if (skipNight) {
-			setTime = Time.DAWN.getTime();
+			time = Time.DAWN.getTime();
 			for (Player player : getWorld().getPlayers()) {
-				player.add(SleepComponent.class).wake();
+				SleepComponent c = player.get(SleepComponent.class);
+				if (c != null && player.isOnline()) {
+					c.wake();
+				}
 			}
 		}
+		getData().put(VanillaData.WORLD_TIME, time);
 
-		if (this.hasWeather()) {
-			this.weather.onTick(dt);
+		synchronized(this) {
+			if (this.weather != null) {
+				this.weather.onTick(dt);
+			}
 		}
 	}
 
@@ -141,7 +138,7 @@ public abstract class VanillaSky extends WorldComponent {
 	 * @param time
 	 */
 	public void setTime(long time) {
-		this.setTime = time;
+		getData().put(VanillaData.WORLD_TIME, time);
 	}
 
 	/**
@@ -149,11 +146,7 @@ public abstract class VanillaSky extends WorldComponent {
 	 * @return time
 	 */
 	public long getTime() {
-		if (setTime != null) {
-			return setTime;
-		} else {
-			return (long)time;
-		}
+		return getData().get(VanillaData.WORLD_TIME).longValue();
 	}
 
 	/**
@@ -162,7 +155,7 @@ public abstract class VanillaSky extends WorldComponent {
 	 * @return
 	 */
 	public long getMaxTime() {
-		return maxTime;
+		return getData().get(VanillaData.MAX_TIME);
 	}
 
 	/**
@@ -171,7 +164,7 @@ public abstract class VanillaSky extends WorldComponent {
 	 * @param maxTime
 	 */
 	public void setMaxTime(long maxTime) {
-		this.maxTime = maxTime;
+		getData().put(VanillaData.MAX_TIME, maxTime);
 	}
 
 	/**
@@ -179,7 +172,7 @@ public abstract class VanillaSky extends WorldComponent {
 	 * @return
 	 */
 	public long getRate() {
-		return rate;
+		return getData().get(VanillaData.TIME_RATE);
 	}
 
 	/**
@@ -188,14 +181,14 @@ public abstract class VanillaSky extends WorldComponent {
 	 * @param rate
 	 */
 	public void setRate(long rate) {
-		this.rate = rate;
+		getData().put(VanillaData.TIME_RATE, rate);
 	}
 
 	/**
 	 * Gets the Weather Simulator
 	 * @return the weather simulator, or null if no weather is enabled
 	 */
-	public WeatherSimulator getWeatherSimulator() {
+	public synchronized WeatherSimulator getWeatherSimulator() {
 		return this.weather;
 	}
 
@@ -203,7 +196,7 @@ public abstract class VanillaSky extends WorldComponent {
 	 * Whether or not the sky can produce weather
 	 * @return true if sky has weather.
 	 */
-	public boolean hasWeather() {
+	public synchronized boolean hasWeather() {
 		return this.weather != null;
 	}
 
@@ -211,7 +204,7 @@ public abstract class VanillaSky extends WorldComponent {
 	 * Sets whether or not the sky can produce weather.
 	 * @param hasWeather
 	 */
-	public void setHasWeather(boolean hasWeather) {
+	public synchronized void setHasWeather(boolean hasWeather) {
 		if (hasWeather && this.weather == null) {
 			this.weather = new WeatherSimulator(this);
 		} else {
@@ -223,7 +216,7 @@ public abstract class VanillaSky extends WorldComponent {
 	 * Gets the weather of the sky.
 	 * @return weather
 	 */
-	public Weather getWeather() {
+	public synchronized Weather getWeather() {
 		return this.weather == null ? Weather.CLEAR : this.weather.getCurrent();
 	}
 
@@ -231,7 +224,7 @@ public abstract class VanillaSky extends WorldComponent {
 	 * Sets the forecast for the next weather change.
 	 * @param forecast
 	 */
-	public void setWeather(Weather forecast) {
+	public synchronized void setWeather(Weather forecast) {
 		if (this.weather != null) {
 			this.weather.setForecast(forecast);
 			this.weather.forceUpdate();
@@ -242,7 +235,7 @@ public abstract class VanillaSky extends WorldComponent {
 	 * Gets the forecast for the next weather change.
 	 * @return forecast
 	 */
-	public Weather getForecast() {
+	public synchronized Weather getForecast() {
 		return this.weather == null ? Weather.CLEAR : this.weather.getForecast();
 	}
 

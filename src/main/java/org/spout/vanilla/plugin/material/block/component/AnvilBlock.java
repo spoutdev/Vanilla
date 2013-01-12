@@ -26,15 +26,20 @@
  */
 package org.spout.vanilla.plugin.material.block.component;
 
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.plugin.component.substance.material.Anvil;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Directional;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
-public class AnvilBlock extends ComponentMaterial {
+public class AnvilBlock extends ComponentMaterial implements Directional {
 	public AnvilBlock(String name, int id) {
 		super(name, id, Anvil.class, VanillaMaterialModels.ANVIL);
 		this.setHardness(5.0F).setResistance(6000.0F);
@@ -58,5 +63,41 @@ public class AnvilBlock extends ComponentMaterial {
 	@Override
 	public boolean isPlacementSuppressed() {
 		return true;
+	}
+
+	@Override
+	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
+		this.setFacing(block, PlayerUtil.getFacing(cause));
+	}
+
+	/**
+	 * Gets the damage state of an Anvil, a value from 0 to 3
+	 * 
+	 * @param block to get the damage of
+	 * @return Damage value
+	 */
+	public int getDamage(Block block) {
+		return block.getDataField(0xc);
+	}
+
+	/**
+	 * Sets the damage state of an Anvil
+	 * 
+	 * @param block to set the damage for
+	 * @param damage state to set to, a value from 0 to 3
+	 */
+	public void setDamage(Block block, int damage) {
+		block.setDataField(0xc, damage);
+	}
+
+	@Override
+	public BlockFace getFacing(Block block) {
+		return BlockFaces.NESW.get(block.getDataField(0x3));
+	}
+
+	@Override
+	public void setFacing(Block block, BlockFace facing) {
+		block.setDataField(0x3, BlockFaces.NESW.indexOf(facing, 0));
 	}
 }

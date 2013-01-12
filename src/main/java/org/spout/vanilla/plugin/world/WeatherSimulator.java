@@ -29,6 +29,7 @@ package org.spout.vanilla.plugin.world;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.spout.api.Spout;
 import org.spout.api.geo.World;
 import org.spout.api.math.MathHelper;
 import org.spout.api.tickable.BasicTickable;
@@ -134,6 +135,7 @@ public class WeatherSimulator extends BasicTickable {
 			}
 			setForecast(forecast);
 			secondsUntilWeatherChange = 120000F + random.nextFloat() * 5 * 60 * 1000;
+			Spout.getLogger().info("Weather changed to: " + current + ", next change in " + secondsUntilWeatherChange + " ms");
 		}
 		float currentRainStrength = sky.getData().get(VanillaData.CURRENT_RAIN_STRENGTH);
 		sky.getData().put(VanillaData.PREVIOUS_RAIN_STRENGTH, currentRainStrength);

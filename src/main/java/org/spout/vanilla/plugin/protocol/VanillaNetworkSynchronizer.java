@@ -613,9 +613,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onWindowSetSlot(WindowSlotEvent event) {
-		if (event.getWindow().getPlayer().getName().equals("Afforess")) {
-			if (event.getItem() != null)
-				event.getWindow().getPlayer().sendMessage("Slot set: " + event.getItem().getMaterial().getName());
+		//TODO: investigate why this happens (12-1-2013)
+		if (event.getItem() != null && event.getItem().getMaterial() == BlockMaterial.AIR) {
 			return null;
 		}
 		return new WindowSlotMessage(event.getWindow(), event.getSlot(), event.getItem());
@@ -623,16 +622,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onWindowItems(WindowItemsEvent event) {
-		for (ItemStack item : event.getItems()) {
-			if (event.getWindow().getPlayer().getName().equals("Afforess")) {
-				if (item != null)
-					event.getWindow().getPlayer().sendMessage("Window items: " + item.getMaterial().getName());
-			}
-		}
-		if (!event.getWindow().getPlayer().getName().equals("Afforess")) {
-			return new WindowItemsMessage(event.getWindow(), event.getItems());
-		}
-		return null;
+		return new WindowItemsMessage(event.getWindow(), event.getItems());
 	}
 
 	@EventHandler

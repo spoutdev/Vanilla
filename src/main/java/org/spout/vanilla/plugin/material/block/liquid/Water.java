@@ -30,8 +30,10 @@ import java.util.Random;
 
 import org.spout.api.Spout;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.Material;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectIterator;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.plugin.Platform;
@@ -144,6 +146,11 @@ public class Water extends Liquid implements DynamicMaterial {
 			EffectIterator iterator = EffectRange.NEIGHBORS.iterator();
 			while (iterator.hasNext()) {
 				if (!(block.translate(iterator.next()).getMaterial() instanceof Water)) {
+					//Make sure you don't eliminate water below
+					Block below = block.translate(BlockFace.BOTTOM);
+					if (below.getMaterial() == VanillaMaterials.WATER) {
+						below.setMaterial(getStationaryMaterial());
+					}
 					block.setMaterial(VanillaMaterials.ICE);
 					return;
 				}

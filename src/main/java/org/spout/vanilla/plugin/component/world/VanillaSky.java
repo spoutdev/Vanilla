@@ -27,6 +27,9 @@
 package org.spout.vanilla.plugin.component.world;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.spout.api.Spout;
 import org.spout.api.component.type.WorldComponent;
@@ -50,9 +53,10 @@ public abstract class VanillaSky extends WorldComponent {
 	public static final byte MAX_SKY_LIGHT = 15;
 	public static final byte SKY_LIGHT_RANGE = MAX_SKY_LIGHT - MIN_SKY_LIGHT;
 	private static final long REFRESH_RATE = 400;
-	private long countdown = REFRESH_RATE;
+	private AtomicLong countdown = new AtomicLong(REFRESH_RATE);
 	private WeatherSimulator weather;
 	private String model;
+	private HashSet<Player> tracked = new HashSet<Player>();
 	private static final HashMap<World, VanillaSky> skies = new HashMap<World, VanillaSky>();
 
 	@Override
@@ -98,14 +102,23 @@ public abstract class VanillaSky extends WorldComponent {
 		while (time >= maxTime) {
 			time -= maxTime;
 		}
-		if (countdown-- <= 0) {
-			countdown = REFRESH_RATE;
+		if (countdown.getAndDecrement() <= 0) {
+			countdown.set(0);
 			updateTime((long)time);
 		}
 		
+		final List<Player> playerList = getWorld().getPlayers();
+		HashSet<Player> players = new HashSet<Player>(playerList);
+		players.removeAll(tracked);
+		for (Player player : players) {
+			updatePlayer(player);
+		}
+		tracked.clear();
+		tracked.addAll(playerList);
+		
 		// Sleeping players
 		boolean skipNight = false;
-		for (Player player : getWorld().getPlayers()) {
+		for (Player player : playerList) {
 			SleepComponent c = player.get(SleepComponent.class);
 			if (c == null || c.canSkipNight()) {
 				skipNight = true;
@@ -117,7 +130,7 @@ public abstract class VanillaSky extends WorldComponent {
 
 		if (skipNight) {
 			time = Time.DAWN.getTime();
-			for (Player player : getWorld().getPlayers()) {
+			for (Player player : playerList) {
 				SleepComponent c = player.get(SleepComponent.class);
 				if (c != null && player.isOnline()) {
 					c.wake();
@@ -139,6 +152,7 @@ public abstract class VanillaSky extends WorldComponent {
 	 */
 	public void setTime(long time) {
 		getData().put(VanillaData.WORLD_TIME, time);
+		countdown.set(0);
 	}
 
 	/**
@@ -165,6 +179,7 @@ public abstract class VanillaSky extends WorldComponent {
 	 */
 	public void setMaxTime(long maxTime) {
 		getData().put(VanillaData.MAX_TIME, maxTime);
+		countdown.set(0);
 	}
 
 	/**
@@ -182,6 +197,7 @@ public abstract class VanillaSky extends WorldComponent {
 	 */
 	public void setRate(long rate) {
 		getData().put(VanillaData.TIME_RATE, rate);
+		countdown.set(0);
 	}
 
 	/**
@@ -264,6 +280,8 @@ public abstract class VanillaSky extends WorldComponent {
 	}
 
 	public abstract void updateTime(long time);
+	
+	public abstract void updatePlayer(Player player);
 
 	public abstract void updateWeather(Weather oldWeather, Weather newWeather);
 }

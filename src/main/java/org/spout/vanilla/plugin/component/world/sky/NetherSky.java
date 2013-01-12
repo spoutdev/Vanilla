@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.component.world.sky;
 
+import org.spout.api.entity.Player;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.data.Weather;
 
@@ -47,5 +48,9 @@ public class NetherSky extends VanillaSky {
 
 	@Override
 	public void updateWeather(Weather oldWeather, Weather newWeather) {
+	}
+
+	@Override
+	public void updatePlayer(Player player) {
 	}
 }

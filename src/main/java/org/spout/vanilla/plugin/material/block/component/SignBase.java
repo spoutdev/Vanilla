@@ -39,7 +39,6 @@ import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.plugin.component.substance.material.Sign;
 import org.spout.vanilla.plugin.data.MoveReaction;
-import org.spout.vanilla.plugin.data.drops.flag.PlayerFlags;
 import org.spout.vanilla.plugin.event.block.SignUpdateEvent;
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
@@ -54,8 +53,8 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 
 	@Override
 	public void initialize() {
-		getDrops().clear();
-		getDrops().add(VanillaMaterials.SIGN).addFlags(PlayerFlags.SURVIVAL);
+		getDrops().DEFAULT.clear();
+		getDrops().DEFAULT.add(VanillaMaterials.SIGN);
 	}
 
 	@Override

@@ -189,14 +189,11 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				if (toPlace.canPlace(clickedBlock, placedData, clickedFace, message.getFace(), true, cause) || interactEvent.useItemInHand() == Result.ALLOW) {
 					target = clickedBlock;
 					targetFace = clickedFace;
-					Spout.getLogger().info("Can place 1");
 				} else if (toPlace.canPlace(alterBlock, placedData, alterFace, message.getFace(), false, cause)) {
 					target = alterBlock;
 					targetFace = alterFace;
-					Spout.getLogger().info("Can place 2");
 				} else {
 					refreshClient(player, clickedBlock, alterBlock, rm);
-					Spout.getLogger().info("Can place 3");
 					return;
 				}
 

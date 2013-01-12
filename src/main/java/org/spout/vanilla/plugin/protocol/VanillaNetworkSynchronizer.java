@@ -613,16 +613,26 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onWindowSetSlot(WindowSlotEvent event) {
+		if (event.getWindow().getPlayer().getName().equals("Afforess")) {
+			if (event.getItem() != null)
+				event.getWindow().getPlayer().sendMessage("Slot set: " + event.getItem().getMaterial().getName());
+			return null;
+		}
 		return new WindowSlotMessage(event.getWindow(), event.getSlot(), event.getItem());
 	}
 
 	@EventHandler
 	public Message onWindowItems(WindowItemsEvent event) {
-		System.out.println("Sending items...");
 		for (ItemStack item : event.getItems()) {
-			System.out.println(item == null ? "null" : item.getMaterial().getName());
+			if (event.getWindow().getPlayer().getName().equals("Afforess")) {
+				if (item != null)
+					event.getWindow().getPlayer().sendMessage("Window items: " + item.getMaterial().getName());
+			}
 		}
-		return new WindowItemsMessage(event.getWindow(), event.getItems());
+		if (!event.getWindow().getPlayer().getName().equals("Afforess")) {
+			return new WindowItemsMessage(event.getWindow(), event.getItems());
+		}
+		return null;
 	}
 
 	@EventHandler

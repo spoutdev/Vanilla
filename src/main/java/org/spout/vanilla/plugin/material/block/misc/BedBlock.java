@@ -102,7 +102,8 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 
 	@Override
 	public void initialize() {
-		this.getDrops().add(VanillaMaterials.BED);
+		this.getDrops().clear();
+		this.getDrops().NOT_CREATIVE.add(VanillaMaterials.BED);
 	}
 
 	@Override
@@ -114,18 +115,20 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 
 	/**
 	 * Sets whether or not a bed is occupied by a player
+	 * 
 	 * @param bedBlock to get it of
 	 * @return True if occupied
 	 */
 	public void setOccupied(Block bedBlock, Entity sleeper, boolean occupied) {
 		bedBlock = getCorrectHalf(bedBlock, false);
 		bedBlock.setDataBits(0x4, occupied);
-		//set to the same data for the head, but set the head flag
+		// set to the same data for the head, but set the head flag
 		getCorrectHalf(bedBlock, true).setData(bedBlock.getData() | 0x8);
 	}
 
 	/**
 	 * Gets whether or not a bed block is occupied by a player
+	 * 
 	 * @param bedBlock to get it of
 	 * @return True if occupied
 	 */
@@ -135,6 +138,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 
 	/**
 	 * Gets the facing state of a single bed block
+	 * 
 	 * @param bedBlock to get it of
 	 * @return the face
 	 */
@@ -145,6 +149,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 	/**
 	 * Sets the facing state of a single bed block<br>
 	 * Note that this does not affect the misc half
+	 * 
 	 * @param bedBlock to set it of
 	 * @param facing to set to
 	 * @return the face
@@ -155,6 +160,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 
 	/**
 	 * Creates a bed using the parameters specified
+	 * 
 	 * @param footBlock of the bed
 	 * @param facing of the bed
 	 */
@@ -169,6 +175,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 			setFacing(footBlock, facing);
 			setFacing(headBlock, facing);
 		}
+
 	}
 
 	@Override
@@ -176,6 +183,10 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 		if (against == BlockFace.BOTTOM && super.canPlace(block, data, against, clickedPos, isClickedBlock, cause)) {
 			Block below = block.translate(BlockFace.BOTTOM);
 			BlockMaterial material = below.getMaterial();
+			Block headBlock = block.translate(PlayerUtil.getFacing(cause));
+			if (!VanillaMaterials.AIR.equals(headBlock)) {
+				return false;
+			}
 			if (material instanceof VanillaBlockMaterial) {
 				return ((VanillaBlockMaterial) material).canSupport(this, BlockFace.TOP);
 			}
@@ -190,6 +201,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 
 	/**
 	 * Gets the top or face door block when either of the blocks is given
+	 * 
 	 * @param bedBlock the top or bottom bed block
 	 * @param head whether to get the top block, if false, gets the bottom block
 	 * @return the requested bed half block
@@ -206,9 +218,9 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 			}
 		}
 		if (!bedBlock.getMaterial().equals(this)) {
-			//create default bed block to 'fix' things up
+			// create default bed block to 'fix' things up
 			bedBlock.setMaterial(this, head ? 0x8 : 0x0);
-			//find out what facing makes most sense
+			// find out what facing makes most sense
 			for (BlockFace face : BlockFaces.NESW) {
 				if (bedBlock.translate(face).getMaterial().equals(this)) {
 					if (head) {

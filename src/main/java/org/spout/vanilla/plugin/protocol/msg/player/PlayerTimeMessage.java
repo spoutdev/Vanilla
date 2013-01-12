@@ -39,7 +39,6 @@ public final class PlayerTimeMessage extends VanillaMainChannelMessage {
 	public PlayerTimeMessage(long age, long time) {
 		this.age = age;
 		this.time = time;
-		System.out.println("Sending world age: " + age + " time: " + time);
 	}
 
 	public long getAge() {

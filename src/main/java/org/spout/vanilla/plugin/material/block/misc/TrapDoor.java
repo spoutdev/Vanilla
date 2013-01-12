@@ -35,6 +35,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.Fuel;
@@ -89,6 +90,32 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 		} else {
 			GeneralEffects.DOOR.playGlobal(block.getPosition(), this.isOpen(block));
 		}
+	}
+
+	@Override
+	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
+		this.setTopAligned(block, clickedPos.getY() > 0.5f);
+	}
+
+	/**
+	 * Gets whether the trapdoor is aligned to the top-side of the block it is attached to
+	 * 
+	 * @param block of the trapdoor
+	 * @return True if it is top-aligned, False if not
+	 */
+	public boolean isTopAligned(Block block) {
+		return block.isDataBitSet(0x8);
+	}
+
+	/**
+	 * Sets whether the trapdoor is aligned to the top-side of the block it is attached to
+	 * 
+	 * @param block of the trapdoor
+	 * @param topAligned state to set to
+	 */
+	public void setTopAligned(Block block, boolean topAligned) {
+		block.setDataBits(0x8, topAligned);
 	}
 
 	@Override

@@ -75,8 +75,10 @@ public class Leaves extends Solid implements Burnable, InitializableMaterial {
 	public void initialize() {
 		SwitchDrops drops = getDrops().DEFAULT.clear().addSwitch(ToolTypeFlags.SHEARS);
 		drops.TRUE.add(this);
-		drops.FALSE.add(VanillaMaterials.SAPLING).setChance(0.05);
-		drops.FALSE.add(VanillaMaterials.RED_APPLE).setChance(0.005);
+		drops.FALSE.add(VanillaMaterials.SAPLING.getSubMaterial(getData())).setChance(0.05);
+		if (getData() == 0) {
+			drops.FALSE.add(VanillaMaterials.RED_APPLE).setChance(0.005);
+		}
 	}
 
 	@Override

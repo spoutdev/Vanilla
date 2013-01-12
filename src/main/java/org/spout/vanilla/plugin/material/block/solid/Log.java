@@ -29,9 +29,8 @@ package org.spout.vanilla.plugin.material.block.solid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
-
 import org.spout.api.event.Cause;
+import org.spout.api.event.cause.MaterialCause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Region;
 import org.spout.api.inventory.ItemStack;
@@ -46,8 +45,6 @@ import org.spout.api.math.Vector3;
 import org.spout.api.model.Model;
 import org.spout.api.resource.ResourcePointer;
 import org.spout.api.scheduler.TaskPriority;
-import org.spout.api.util.flag.Flag;
-
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
@@ -153,10 +150,13 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	}
 
 	@Override
-	public void onPostDestroy(Block block, Set<Flag> flags) {
-		super.onPostDestroy(block, flags);
-		LeafDecayTask decay = new LeafDecayTask(block);
-		decay.scheduleTask(block.getRegion());
+	public boolean onDestroy(Block block, Cause<?> cause) {
+		if (super.onDestroy(block, cause)) {
+			LeafDecayTask decay = new LeafDecayTask(block, cause);
+			decay.scheduleTask(block.getRegion());
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -227,8 +227,10 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 		private final List<Block> blocks = new ArrayList<Block>(SCAN_RADIUS * SCAN_RADIUS * SCAN_RADIUS);
 		private final Region r;
 		private final Random rand = new Random();
+		private final Cause<?> cause;
+		private final Block center;
 
-		public LeafDecayTask(Block b) {
+		public LeafDecayTask(Block b, Cause<?> cause) {
 			this.r = b.getRegion();
 			for (int dx = -SCAN_RADIUS; dx < SCAN_RADIUS; dx++) {
 				for (int dy = -SCAN_RADIUS; dy < SCAN_RADIUS; dy++) {
@@ -237,6 +239,8 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 					}
 				}
 			}
+			this.cause = cause;
+			this.center = b;
 		}
 
 		@Override
@@ -251,7 +255,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 					short data = b.getData();
 					if (mat.getId() == VanillaMaterials.LEAVES.getId() && !Leaves.isPlayerPlaced(data)) {
 						if (!isLeafAttached(b, LOG_SCAN_RANGE)) {
-							b.setMaterial(VanillaMaterials.AIR);
+							mat.destroy(b, new MaterialCause<Log>(this.cause, VanillaMaterials.LOG, this.center));
 							found = true;
 							blocks.set(index, null);
 							break;

@@ -39,8 +39,8 @@ import org.spout.vanilla.plugin.material.block.misc.Torch;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Wall extends Solid {
-	public static final Wall COBBLESTONE_WALL = new Wall("Cobblestone Wall", VanillaMaterialModels.MOSSY_COBBLESTONE_WALL);
-	public static final Wall MOSSY_COBBLESTONE_WALL = new Wall("Mossy Cobblestone Wall", (short) 1, COBBLESTONE_WALL, VanillaMaterialModels.COBBLESTONE_WALL);
+	public static final Wall COBBLESTONE_WALL = new Wall("Cobblestone Wall", VanillaMaterialModels.COBBLESTONE_WALL);
+	public static final Wall MOSSY_COBBLESTONE_WALL = new Wall("Mossy Cobblestone Wall", (short) 1, COBBLESTONE_WALL, VanillaMaterialModels.MOSSY_COBBLESTONE_WALL);
 
 	private Wall(String name, ResourcePointer<Model> model) {
 		super((short) 0x1, name, 139, model);
@@ -49,7 +49,7 @@ public class Wall extends Solid {
 	}
 
 	private Wall(String name, int data, Wall parent, ResourcePointer<Model> model) {
-		super(name, parent.getId(), data, parent, model);
+		super(name, parent.getMinecraftId(), data, parent, model);
 		this.setHardness(1.5F).setResistance(10.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

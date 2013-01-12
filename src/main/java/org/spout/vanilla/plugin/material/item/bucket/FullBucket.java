@@ -27,16 +27,19 @@
 package org.spout.vanilla.plugin.material.item.bucket;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.item.BlockItem;
 import org.spout.vanilla.plugin.util.PlayerUtil;
+import org.spout.vanilla.plugin.world.generator.VanillaGenerators;
 
 public class FullBucket extends BlockItem {
 	public FullBucket(String name, int id, BlockMaterial place) {
@@ -52,5 +55,16 @@ public class FullBucket extends BlockItem {
 				inv.set(new ItemStack(VanillaMaterials.BUCKET, 1));
 			}
 		}
+	}
+	
+	@Override
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		boolean result = super.canPlace(block, data, against, clickedPos, isClickedBlock, cause);
+		if (result) {
+			if (VanillaGenerators.NETHER.equals(block.getWorld().getGenerator()) && VanillaMaterials.WATER.equals(this.getPlacedMaterial())) {
+				return false;
+			}
+		}
+		return result;
 	}
 }

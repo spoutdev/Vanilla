@@ -28,37 +28,37 @@ package org.spout.vanilla.plugin.material.block.redstone;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
-
 import org.spout.api.material.block.BlockSnapshot;
 import org.spout.vanilla.plugin.data.RedstonePowerMode;
+import org.spout.vanilla.plugin.data.tool.ToolLevel;
+import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
-/**
- * Defines a material that can supply redstone power<br>
- * Redstone wire will automatically attach to this material
- */
-public interface RedstoneSource {
-	/**
-	 * Gets how much redstone power this redstone source block provides to the direction given.<br>
-	 * @param block of this redstone source
-	 * @param direction it provides power to
-	 * @param powerMode to use to get the power
-	 * @return how much power this block provides to the given direction
-	 */
-	short getRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode);
+public class RedstoneBlock extends Solid implements RedstoneSource {
 
-	/**
-	 * Gets if this redstone source block provides power to the direction given.<br>
-	 * @param block of this redstone source
-	 * @param direction it provides power to
-	 * @param powerMode to use to get the power
-	 * @return True if this redstone source block provides power
-	 */
-	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode);
+	public RedstoneBlock(String name, int id) {
+		super(name, id, VanillaMaterialModels.REDSTONE_BLOCK);
+		this.setHardness(3.0F).setResistance(5.0F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
+	}
 
-	/**
-	 * Gets the amount of redstone power this material generates for itself
-	 * @param state of the block
-	 * @return power strength
-	 */
-	public short getRedstonePowerStrength(BlockSnapshot state);
+	@Override
+	public boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
+		return false;
+	}
+
+	@Override
+	public short getRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return 0;
+	}
+
+	@Override
+	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return false;
+	}
+
+	@Override
+	public short getRedstonePowerStrength(BlockSnapshot block) {
+		return REDSTONE_POWER_MAX;
+	}
 }

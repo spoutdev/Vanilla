@@ -27,8 +27,10 @@
 package org.spout.vanilla.plugin.component.misc;
 
 import java.awt.Color;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.spout.api.Client;
 import org.spout.api.Spout;
@@ -43,7 +45,7 @@ import org.spout.api.gui.render.RenderPart;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector3;
-
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.component.substance.Item;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
@@ -63,6 +65,10 @@ import org.spout.vanilla.plugin.event.entity.EntityStatusEvent;
 import org.spout.vanilla.plugin.event.entity.VanillaEntityDeathEvent;
 import org.spout.vanilla.plugin.event.player.PlayerDeathEvent;
 import org.spout.vanilla.plugin.event.player.network.PlayerHealthEvent;
+import org.spout.vanilla.plugin.inventory.player.PlayerArmorInventory;
+import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
+import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
+import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityStatusMessage;
 
 /**
@@ -215,6 +221,8 @@ public class HealthComponent extends EntityComponent {
 		if (!Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
 			if (!(owner instanceof Player)) {
 				owner.remove();
+			} else {
+				dropPlayerItems((Player) owner);
 			}
 			DropComponent dropComponent = owner.get(DropComponent.class);
 			if (dropComponent != null) {
@@ -230,6 +238,33 @@ public class HealthComponent extends EntityComponent {
 			if (hungerComponent != null) {
 				hungerComponent.reset();
 			}
+		}
+	}
+
+	/**
+	 * Drops all items from all Inventories of a Player.
+	 * @param owner the player.
+	 */
+	private void dropPlayerItems(Player owner) {
+		PlayerInventory playerInventory = owner.get(PlayerInventory.class);
+		if (playerInventory != null) {
+			Set<ItemStack> toDrop = new HashSet<ItemStack>();
+			PlayerArmorInventory armorInventory = playerInventory.getArmor();
+			PlayerCraftingInventory craftingGrid = playerInventory.getCraftingGrid();
+			PlayerMainInventory mainInventory = playerInventory.getMain();
+			PlayerQuickbar quickbar = playerInventory.getQuickbar();
+			toDrop.addAll(armorInventory);
+			toDrop.addAll(craftingGrid);
+			toDrop.addAll(mainInventory);
+			toDrop.addAll(quickbar);
+			Point position = owner.getTransform().getPosition();
+			for (ItemStack stack : toDrop) {
+				if (stack != null) {
+					Item.dropNaturally(position, stack);
+				}
+			}
+			playerInventory.clear();
+			playerInventory.updateAll();
 		}
 	}
 

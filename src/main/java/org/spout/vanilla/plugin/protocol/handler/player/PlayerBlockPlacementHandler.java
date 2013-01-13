@@ -177,9 +177,9 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				final BlockFace placedAgainst;
 				final boolean placedIsClicked;
 				// For snow, tall grass, and the like, place at the clicked block
-				if (toPlace.canPlace(clickedBlock, placedData, clickedFace, message.getFace(), true, cause) || interactEvent.useItemInHand() == Result.ALLOW) {
+				if (toPlace.canPlace(clickedBlock, placedData, BlockFace.BOTTOM, message.getFace(), true, cause) || interactEvent.useItemInHand() == Result.ALLOW) {
 					placedBlock = clickedBlock;
-					placedAgainst = clickedFace;
+					placedAgainst = BlockFace.BOTTOM;
 					placedIsClicked = true;
 				} else {
 					placedBlock = clickedBlock.translate(clickedFace);

@@ -52,7 +52,7 @@ public abstract class VanillaSky extends WorldComponent {
 	public static final byte MIN_SKY_LIGHT = 4;
 	public static final byte MAX_SKY_LIGHT = 15;
 	public static final byte SKY_LIGHT_RANGE = MAX_SKY_LIGHT - MIN_SKY_LIGHT;
-	private static final long REFRESH_RATE = 400;
+	private static final long REFRESH_RATE = 12000;
 	private AtomicLong countdown = new AtomicLong(REFRESH_RATE);
 	private WeatherSimulator weather;
 	private String model;

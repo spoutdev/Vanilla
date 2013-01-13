@@ -33,9 +33,8 @@ import org.spout.api.generator.biome.Decorator;
 import org.spout.api.util.config.annotated.Setting;
 
 import org.spout.vanilla.plugin.data.Climate;
-import org.spout.vanilla.plugin.world.generator.biome.selector.BiomeSelectorElement;
 
-public abstract class VanillaBiome extends Biome implements BiomeSelectorElement {
+public abstract class VanillaBiome extends Biome {
 	private final int biomeId;
 	@Setting
 	private Climate climate = Climate.MODERATE;
@@ -57,6 +56,7 @@ public abstract class VanillaBiome extends Biome implements BiomeSelectorElement
 
 	/**
 	 * Gets the Climate of this Biome
+	 *
 	 * @return the climate
 	 */
 	public Climate getClimate() {
@@ -65,6 +65,7 @@ public abstract class VanillaBiome extends Biome implements BiomeSelectorElement
 
 	/**
 	 * Sets the Climate for this Biome
+	 *
 	 * @param climate to set to
 	 */
 	public void setClimate(Climate climate) {

@@ -43,19 +43,31 @@ public abstract class OverlapingPopulator implements GeneratorPopulator {
 		if (y >= Region.BLOCKS.SIZE) {
 			return;
 		}
-		final int chunkX = x >> Chunk.BLOCKS.BITS;
-		final int chunkZ = z >> Chunk.BLOCKS.BITS;
+		final int cx = x >> Chunk.BLOCKS.BITS;
+		final int cz = z >> Chunk.BLOCKS.BITS;
+		final Vector3 size = blockData.getSize();
+		final int sizeX = size.getFloorX() >> Chunk.BLOCKS.BITS;
+		final int sizeZ = size.getFloorZ() >> Chunk.BLOCKS.BITS;
 		final Random worldRandom = new Random(seed);
 		final long firstSeed = worldRandom.nextLong();
 		final long secondSeed = worldRandom.nextLong();
-		for (int cx = chunkX - OVERLAP; cx <= chunkX + OVERLAP; cx++) {
-			for (int cz = chunkZ - OVERLAP; cz <= chunkZ + OVERLAP; cz++) {
-				final Random chunkRandom = new Random((cx * firstSeed) ^ (cz * secondSeed) ^ seed);
-				generate(blockData, new Vector3(cx << Chunk.BLOCKS.BITS, 0, cz << Chunk.BLOCKS.BITS),
-						new Vector3(chunkX << Chunk.BLOCKS.BITS, 0, chunkZ << Chunk.BLOCKS.BITS), chunkRandom);
+		for (int cxx = 0; cxx < sizeX; cxx++) {
+			for (int czz = 0; czz < sizeZ; czz++) {
+				int dcx = cx + cxx;
+				int dcz = cz + czz;
+				for (int cxxx = -OVERLAP; cxxx <= OVERLAP; cxxx++) {
+					for (int czzz = -OVERLAP; czzz <= OVERLAP; czzz++) {
+						int dcxx = dcx + cxxx;
+						int dczz = dcz + czzz;
+						populate(blockData,
+								new Vector3(dcxx << Chunk.BLOCKS.BITS, 0, dczz << Chunk.BLOCKS.BITS),
+								new Vector3(dcx << Chunk.BLOCKS.BITS, 0, dcz << Chunk.BLOCKS.BITS),
+								new Random((dcxx * firstSeed) ^ (dczz * secondSeed) ^ seed));
+					}
+				}
 			}
 		}
 	}
 
-	protected abstract void generate(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 originChunk, Random random);
+	protected abstract void populate(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 originChunk, Random random);
 }

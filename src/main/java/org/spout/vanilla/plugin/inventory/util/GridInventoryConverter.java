@@ -48,7 +48,7 @@ public class GridInventoryConverter extends InventoryConverter {
 
 	public GridInventoryConverter(Inventory inventory, int length, int offset, Vector2 pos) {
 		super(inventory, new int[inventory.size()], new Vector2[inventory.size()], offset);
-		grid = inventory.grid(length);
+		this.grid = inventory.grid(length);
 		this.pos = pos;
 		GridIterator iter = grid.iterator();
 		while (iter.hasNext()) {

@@ -62,7 +62,6 @@ import org.spout.vanilla.plugin.event.window.WindowItemsEvent;
 import org.spout.vanilla.plugin.event.window.WindowOpenEvent;
 import org.spout.vanilla.plugin.event.window.WindowPropertyEvent;
 import org.spout.vanilla.plugin.event.window.WindowSlotEvent;
-import org.spout.vanilla.plugin.inventory.player.PlayerArmorInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.inventory.util.GridInventoryConverter;
@@ -231,19 +230,6 @@ public abstract class Window implements InventoryViewer {
 			throw new IllegalStateException("Shift click handling is handled server side.");
 		}
 		final PlayerInventory inventory = getPlayerInventory();
-
-		// Transferring to the armor slots
-		if (!(from instanceof PlayerArmorInventory)) {
-			// Transferring to the armor slots
-			final PlayerArmorInventory armor = inventory.getArmor();
-			for (int i = 0; i < armor.size(); i++) {
-				if (armor.get(i) == null && armor.canSet(i, stack)) {
-					armor.set(i, ItemStack.cloneSpecial(stack));
-					from.set(slot, stack.setAmount(0));
-					return true;
-				}
-			}
-		}
 
 		// Transferring to the main inventory, top to bottom
 		if (!(from instanceof PlayerMainInventory)) {

@@ -38,7 +38,7 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class RavinePopulator extends OverlapingPopulator {
 	@Override
-	protected void generate(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 originChunk, Random random) {
+	protected void populate(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 originChunk, Random random) {
 		if (random.nextInt(50) != 0) {
 			return;
 		}

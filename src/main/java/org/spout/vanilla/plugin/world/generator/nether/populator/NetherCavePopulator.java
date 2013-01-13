@@ -39,7 +39,7 @@ import org.spout.vanilla.plugin.world.generator.normal.populator.OverlapingPopul
 
 public class NetherCavePopulator extends OverlapingPopulator {
 	@Override
-	protected void generate(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 originChunk, Random random) {
+	protected void populate(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 originChunk, Random random) {
 		if (random.nextInt(5) != 0) {
 			return;
 		}
@@ -52,7 +52,7 @@ public class NetherCavePopulator extends OverlapingPopulator {
 			int numberOfSmallCaves = 1;
 
 			if (random.nextInt(4) == 0) {
-				generateLargeCaveNode(blockData, originChunk, target, new Random(random.nextLong()));
+				generateLargeCaveBranch(blockData, originChunk, target, new Random(random.nextLong()));
 				numberOfSmallCaves += random.nextInt(4);
 			}
 
@@ -152,7 +152,7 @@ public class NetherCavePopulator extends OverlapingPopulator {
 		}
 	}
 
-	private void generateLargeCaveNode(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 target, Random random) {
+	private void generateLargeCaveBranch(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 target, Random random) {
 		generateCaveBranch(blockData, chunk, target, random.nextFloat() * 6 + 1, 0.5f, 0, 0, -1, -1, random);
 	}
 

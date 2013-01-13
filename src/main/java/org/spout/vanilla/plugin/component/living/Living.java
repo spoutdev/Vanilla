@@ -39,6 +39,7 @@ import org.spout.vanilla.plugin.ai.VanillaBlockExaminer;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.DrowningComponent;
 import org.spout.vanilla.plugin.component.misc.EffectsComponent;
+import org.spout.vanilla.plugin.component.misc.FireComponent;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
@@ -60,6 +61,7 @@ public abstract class Living extends EntityComponent {
 		physics = holder.add(PhysicsComponent.class);
 		drowning = holder.add(DrowningComponent.class);
 		navigation = holder.add(NavigationComponent.class);
+		holder.add(FireComponent.class);
 		navigation.setDefaultExaminers(new VanillaBlockExaminer());
 
 		holder.setSavable(true);
@@ -110,15 +112,6 @@ public abstract class Living extends EntityComponent {
 		return navigation;
 	}
 
-	public boolean isOnFire() {
-		return getOwner().getData().get(VanillaData.IS_ON_FIRE);
-	}
-
-	public void setOnFire(boolean onFire) {
-		getOwner().getData().put(VanillaData.IS_ON_FIRE, onFire);
-		sendMetaData();
-	}
-
 	public boolean isRiding() {
 		return getOwner().getData().get(VanillaData.IS_RIDING);
 	}
@@ -155,7 +148,10 @@ public abstract class Living extends EntityComponent {
 	
 	private byte getCommonMetadata() {
 		byte value = 0;
-		value = (byte) (value | (( isOnFire() ? 1 : 0 ) << 0));
+		if (getOwner().has(FireComponent.class)) {
+			value = (byte) (value | (( getOwner().get(FireComponent.class).isOnFire() ? 1 : 0 ) << 0));
+		}
+		
 		value = (byte) (value | (( isSneaking() ? 1 : 0 ) << 1));
 		value = (byte) (value | (( isRiding() ? 1 : 0 ) << 2));
 		

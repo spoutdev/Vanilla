@@ -99,7 +99,8 @@ public class VanillaData {
 	public static final DefaultedKey<DropInventory> DROP_INVENTORY = new DefaultedKeyFactory<DropInventory>("DropInventory", DropInventory.class);
 	public static final DefaultedKey<Boolean> IS_EATING_BLOCKING = new DefaultedKeyImpl<Boolean>("is_eating_blocking", false);
 	public static final DefaultedKey<Boolean> IS_RIDING = new DefaultedKeyImpl<Boolean>("is_riding", false);
-	public static final DefaultedKey<Boolean> IS_ON_FIRE = new DefaultedKeyImpl<Boolean>("is_on_fire", false);
+	public static final DefaultedKey<Float> FIRE_TICK = new DefaultedKeyImpl<Float>("is_on_fire", 0.0f);
+	public static final DefaultedKey<Boolean> FIRE_HURT = new DefaultedKeyImpl<Boolean>("fire_hurt", false);
 	//Human-specific
 	public static final DefaultedKey<Boolean> IS_SPRINTING = new DefaultedKeyImpl<Boolean>("is_sprinting", false);
 	public static final DefaultedKey<Boolean> IS_SNEAKING = new DefaultedKeyImpl<Boolean>("is_sneaking", false);

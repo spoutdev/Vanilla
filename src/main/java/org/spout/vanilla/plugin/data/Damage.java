@@ -2,11 +2,6 @@ package org.spout.vanilla.plugin.data;
 
 import org.spout.vanilla.plugin.data.effect.StatusEffectContainer;
 
-/**
- * Represents a damage value for 
- * @author greatman
- *
- */
 public class Damage {
 
 	private int amount;

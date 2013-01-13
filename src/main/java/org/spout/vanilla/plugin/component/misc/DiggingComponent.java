@@ -32,6 +32,7 @@ import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.data.Animation;
+import org.spout.vanilla.plugin.event.block.network.BlockBreakAnimationEvent;
 import org.spout.vanilla.plugin.event.entity.EntityAnimationEvent;
 
 public class DiggingComponent extends EntityComponent {
@@ -42,7 +43,20 @@ public class DiggingComponent extends EntityComponent {
 	protected long previousDiggingTime = 0;
 	protected int miningDamageAllowance = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_ALLOWANCE.getInt(), miningDamagePeriod = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_PERIOD.getInt();
 	protected int[] miningDamage;
-
+	private byte amount = 0;
+	private final byte maxAmount = 9;
+	private float timer = 0f;
+	
+	public boolean canTick() {
+		return isDigging;
+	}
+	public void onTick(float dt) {
+		if (timer >= 0.2f) {
+			getOwner().getNetwork().callProtocolEvent(new BlockBreakAnimationEvent(getOwner(), diggingPosition, (byte) ++amount));
+			timer = 0;
+		}
+		timer += dt;
+	}
 	/**
 	 * Returns the digging state of the entity
 	 * @return true if player is digging
@@ -59,6 +73,8 @@ public class DiggingComponent extends EntityComponent {
 		if (getOwner().getTransform().getPosition().getDistance(position) > 6) { // TODO: Actually get block reach from somewhere instead of just using 6
 			return false;
 		}
+		amount = 0;
+		timer = 0;
 		isDigging = true;
 		diggingPosition = position;
 		diggingStartTime = System.currentTimeMillis();
@@ -75,6 +91,8 @@ public class DiggingComponent extends EntityComponent {
 		}
 		previousDiggingTime = getDiggingTime();
 		isDigging = false;
+		getOwner().getNetwork().callProtocolEvent(new BlockBreakAnimationEvent(getOwner(), diggingPosition, (byte) -1));
+		
 		getOwner().getNetwork().callProtocolEvent(new EntityAnimationEvent(getOwner(), Animation.NONE));
 		if (!position.equals(diggingPosition)) {
 			return false;

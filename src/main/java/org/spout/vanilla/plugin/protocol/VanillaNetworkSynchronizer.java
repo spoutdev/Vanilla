@@ -80,6 +80,7 @@ import org.spout.vanilla.plugin.data.WorldType;
 import org.spout.vanilla.plugin.event.block.BlockActionEvent;
 import org.spout.vanilla.plugin.event.block.BlockControllerDataEvent;
 import org.spout.vanilla.plugin.event.block.SignUpdateEvent;
+import org.spout.vanilla.plugin.event.block.network.BlockBreakAnimationEvent;
 import org.spout.vanilla.plugin.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.plugin.event.entity.EntityCollectItemEvent;
 import org.spout.vanilla.plugin.event.entity.EntityEquipmentEvent;
@@ -141,6 +142,7 @@ import org.spout.vanilla.plugin.protocol.msg.window.WindowSlotMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.EffectMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.ExplosionMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.block.BlockActionMessage;
+import org.spout.vanilla.plugin.protocol.msg.world.block.BlockBreakAnimationMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.block.SignMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.chunk.ChunkDataMessage;
@@ -735,6 +737,10 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		return new EntityRemoveEffectMessage(event.getEntity().getId(), event.getEffect().getStatusID());
 	}
 
+	@EventHandler
+	public Message onBlockBreakAnimation(BlockBreakAnimationEvent event) {
+		return new BlockBreakAnimationMessage(event.getEntity().getId(), (int) event.getPoint().getX(), (int) event.getPoint().getY(), (int) event.getPoint().getZ(), event.getLevel(), getRepositionManager());
+	}
 	@EventHandler
 	public Message onEntityEffect(EntityEffectEvent event) {
 		return new EntityEffectMessage(event.getEntity().getId(), event.getEffect().getEffect().getStatusID(), (byte) 0, (short) (event.getEffect().getTimer() * 20));

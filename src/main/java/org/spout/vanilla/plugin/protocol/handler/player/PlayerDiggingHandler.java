@@ -207,6 +207,8 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 					}
 				}
 			}
+		} else if (state == PlayerDiggingMessage.STATE_CANCEL_DIGGING) {
+			player.get(DiggingComponent.class).stopDigging(new Point(w, x, y, z));
 		} else if (state == PlayerDiggingMessage.STATE_DONE_DIGGING) {
 			DiggingComponent diggingComponent = player.get(DiggingComponent.class);
 

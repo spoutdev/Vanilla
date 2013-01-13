@@ -32,6 +32,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.material.block.BlockSnapshot;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.PlusEffectRange;
 
@@ -122,7 +123,7 @@ public class TripWireHook extends AttachedRedstoneSource implements Toggleable, 
 	}
 
 	@Override
-	public short getRedstonePowerStrength(short data) {
-		return ((data & 0x8) == 1) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	public short getRedstonePowerStrength(BlockSnapshot state) {
+		return ((state.getData() & 0x8) == 1) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
 	}
 }

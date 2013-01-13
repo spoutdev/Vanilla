@@ -30,6 +30,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.material.block.BlockSnapshot;
 import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
@@ -258,7 +259,7 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 	}
 
 	@Override
-	public short getRedstonePowerStrength(short data) {
-		return (short) (data & 0xF);
+	public short getRedstonePowerStrength(BlockSnapshot state) {
+		return (short) (state.getData() & 0xF);
 	}
 }

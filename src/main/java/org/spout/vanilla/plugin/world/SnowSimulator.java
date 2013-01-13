@@ -37,6 +37,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
+import org.spout.api.math.Vector3;
 import org.spout.api.scheduler.TaskPriority;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
@@ -61,23 +62,67 @@ public class SnowSimulator extends Component {
 
 	@Override
 	public void onTick(float dt) {
-		if (count++ % 4 == 0) {
-			for (Player player : getWorld().getPlayers()) {
-				if (!player.isOnline()) {
-					continue;
-				}
-				Region r = player.getRegion();
-				r.getTaskManager().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), new SnowfallTask(player, r), TaskPriority.LOWEST);
+		count++;
+		if (count >= JUMP_TABLE.length) {
+			count = 0;
+		}
+		for (Player player : getWorld().getPlayers()) {
+			if (!player.isOnline()) {
+				continue;
 			}
+			Region r = player.getRegion();
+			r.getTaskManager().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), new SnowfallTask(player, r, JUMP_TABLE[count]), TaskPriority.LOWEST);
+		}
+	}
+
+	private static final Vector3[] JUMP_TABLE = new Vector3[27];
+	static {
+		for (int i = 0; i < JUMP_TABLE.length; i++) {
+			JUMP_TABLE[i] = countToOffset(i);
+		}
+	}
+
+	private static Vector3 countToOffset(int count) {
+		switch(count) {
+			case 0: return Vector3.ZERO;
+			case 1: return new Vector3(0, 0, 16);
+			case 2: return new Vector3(0, 0, -16);
+			case 3: return new Vector3(16, 0, 0);
+			case 4: return new Vector3(-16, 0, 0);
+			case 5: return new Vector3(16, 0, 16);
+			case 6: return new Vector3(16, 0, -16);
+			case 7: return new Vector3(-16, 0, -16);
+			case 8: return new Vector3(-16, 0, -16);
+			case 9: return new Vector3(0, 16, 0);
+			case 10: return new Vector3(0, 16, 16);
+			case 11: return new Vector3(0, 16, -16);
+			case 12: return new Vector3(16, 16, 0);
+			case 13: return new Vector3(-16, 16, 0);
+			case 14: return new Vector3(16, 16, 16);
+			case 15: return new Vector3(16, 16, -16);
+			case 16: return new Vector3(-16, 16, -16);
+			case 17: return new Vector3(-16, 16, -16);
+			case 18: return new Vector3(0, -16, 0);
+			case 19: return new Vector3(0, -16, 16);
+			case 20: return new Vector3(0, -16, -16);
+			case 21: return new Vector3(16, -16, 0);
+			case 22: return new Vector3(-16, -16, 0);
+			case 23: return new Vector3(16, -16, 16);
+			case 24: return new Vector3(16, -16, -16);
+			case 25: return new Vector3(-16, -16, -16);
+			case 26: return new Vector3(-16, -16, -16);
+			default: return Vector3.ZERO;
 		}
 	}
 
 	private class SnowfallTask implements Runnable {
 		private final Player player;
 		private final Region region;
-		private SnowfallTask(Player player, Region region) {
+		private final Vector3 offset;
+		private SnowfallTask(Player player, Region region, Vector3 offset) {
 			this.player = player;
 			this.region = region;
+			this.offset = offset;
 		}
 		@Override
 		public void run() {
@@ -101,9 +146,9 @@ public class SnowSimulator extends Component {
 				//pick a offset from the player's y position (-15 - +15) of their position
 				int offsetY = (rand.nextBoolean() ? -1 : 1) * rand.nextInt(15);
 
-				int x = posX + cx * 16 + rx;
-				int y = posY + offsetY;
-				int z = posZ + cz * 16 + rz;
+				int x = posX + cx * 16 + rx + offset.getFloorX();
+				int y = posY + offsetY + offset.getFloorY();
+				int z = posZ + cz * 16 + rz + offset.getFloorZ();
 				if (region.containsBlock(x, y, z)) {
 					if (weather.isSnowingAt(x, y, z)) {
 						//Try to find the surface

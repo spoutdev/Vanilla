@@ -69,6 +69,7 @@ import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.component.misc.LevelComponent;
 import org.spout.vanilla.plugin.component.substance.material.Sign;
+import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.configuration.WorldConfigurationNode;
 import org.spout.vanilla.plugin.data.Difficulty;
@@ -430,6 +431,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		Difficulty difficulty = world.getComponentHolder().getData().get(VanillaData.DIFFICULTY);
 		Dimension dimension = world.getComponentHolder().getData().get(VanillaData.DIMENSION);
 		WorldType worldType = world.getComponentHolder().getData().get(VanillaData.WORLD_TYPE);
+		
 
 		//TODO Handle infinite height
 		int entityId = player.getId();
@@ -457,6 +459,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());
 		player.getSession().send(false, SPMsg);
 		session.send(false, new PlayerHeldItemChangeMessage(session.getPlayer().add(PlayerInventory.class).getQuickbar().getSelectedSlot().getIndex()));
+	
+		VanillaSky.getSky(world).updatePlayer(player);
 	}
 
 	@Override

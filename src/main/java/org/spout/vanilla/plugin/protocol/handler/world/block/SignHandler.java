@@ -44,7 +44,7 @@ public class SignHandler extends MessageHandler<SignMessage> {
 		}
 
 		Player player = session.getPlayer();
-		RepositionManager rmInverse = player.getNetworkSynchronizer().getRepositionManager();
+		RepositionManager rmInverse = player.getNetworkSynchronizer().getRepositionManager().getInverse();
 
 		int x = rmInverse.convertX(message.getX());
 		int y = rmInverse.convertY(message.getY());

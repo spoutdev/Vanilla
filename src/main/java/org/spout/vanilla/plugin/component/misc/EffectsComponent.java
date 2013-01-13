@@ -105,6 +105,18 @@ public class EffectsComponent extends EntityComponent {
 							effect.resetTick();
 						}
 						break;
+					case WITHER:
+						if (getOwner() instanceof Player && !getOwner().get(Human.class).isSurvival()) {
+							break;
+						}
+						if (effect.getTier() == Potion.TIER0 && effect.getTick() >= 1.25f) {
+							health.damage(1);
+							effect.resetTick();
+						} else if (effect.getTier() == Potion.TIER2 && effect.getTick() >= 0.55f) {
+							health.damage(1);
+							effect.resetTick();
+						}
+						break;
 					default:
 						break;
 				}

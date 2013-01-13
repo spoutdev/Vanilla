@@ -30,7 +30,9 @@ import org.spout.vanilla.api.component.Neutral;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.misc.DamageComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.data.Difficulty;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
 
@@ -46,5 +48,11 @@ public class PigZombie extends Living implements Neutral {
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(20);
 		}
+		
+		DamageComponent damage = getOwner().add(DamageComponent.class);
+		damage.getDamageLevel(Difficulty.EASY).setAmount(5);
+		damage.getDamageLevel(Difficulty.NORMAL).setAmount(9);
+		damage.getDamageLevel(Difficulty.HARD).setAmount(13);
+		damage.getDamageLevel(Difficulty.HARDCORE).setAmount(damage.getDamageLevel(Difficulty.HARD).getAmount());
 	}
 }

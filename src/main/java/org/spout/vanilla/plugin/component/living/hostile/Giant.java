@@ -30,7 +30,9 @@ import org.spout.vanilla.api.component.Hostile;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.misc.DamageComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.data.Difficulty;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
 
@@ -45,5 +47,11 @@ public class Giant extends Living implements Hostile {
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(100);
 		}
+		
+		DamageComponent damage = getOwner().add(DamageComponent.class);
+		damage.getDamageLevel(Difficulty.EASY).setAmount(50);
+		damage.getDamageLevel(Difficulty.NORMAL).setAmount(damage.getDamageLevel(Difficulty.EASY).getAmount());
+		damage.getDamageLevel(Difficulty.HARD).setAmount(damage.getDamageLevel(Difficulty.NORMAL).getAmount());
+		damage.getDamageLevel(Difficulty.HARDCORE).setAmount(damage.getDamageLevel(Difficulty.HARD).getAmount());
 	}
 }

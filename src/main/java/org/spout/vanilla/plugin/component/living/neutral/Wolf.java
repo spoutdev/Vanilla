@@ -30,7 +30,9 @@ import org.spout.vanilla.api.component.Neutral;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.misc.DamageComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.data.Difficulty;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.protocol.entity.creature.WolfEntityProtocol;
 
@@ -47,7 +49,12 @@ public class Wolf extends Living implements Neutral {
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(8);
 		}
-	
+		
+		DamageComponent damage = getOwner().add(DamageComponent.class);
+		damage.getDamageLevel(Difficulty.EASY).setAmount(2);
+		damage.getDamageLevel(Difficulty.NORMAL).setAmount(damage.getDamageLevel(Difficulty.EASY).getAmount());
+		damage.getDamageLevel(Difficulty.HARD).setAmount(damage.getDamageLevel(Difficulty.NORMAL).getAmount());
+		damage.getDamageLevel(Difficulty.HARDCORE).setAmount(damage.getDamageLevel(Difficulty.HARD).getAmount());
 	}
 
 	public boolean isTamed() {

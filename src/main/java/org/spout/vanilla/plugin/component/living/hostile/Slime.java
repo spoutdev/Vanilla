@@ -52,6 +52,8 @@ public class Slime extends Living implements Hostile {
 			getOwner().add(HealthComponent.class).setSpawnHealth(spawnHealth);
 			
 		}
+		
+		//TODO: Damage depends of the size. Not the difficulty.
 	}
 
 	public byte getSize() {

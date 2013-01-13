@@ -62,5 +62,7 @@ public class Skeleton extends Living implements Hostile {
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(20);
 		}
+		
+		//TODO: There's 2 kind of damage for Skele's : Sword & Bow
 	}
 }

@@ -32,8 +32,12 @@ import org.spout.vanilla.api.component.Hostile;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.misc.DamageComponent;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.data.Difficulty;
+import org.spout.vanilla.plugin.data.effect.StatusEffect;
+import org.spout.vanilla.plugin.data.effect.StatusEffectContainer;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.WitherEntityProtocol;
 
@@ -49,5 +53,12 @@ public class Wither extends Living implements Hostile {
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(300);
 		}
+		
+		DamageComponent damage = getOwner().add(DamageComponent.class);
+		damage.getDamageLevel(Difficulty.EASY).setAmount(3);
+		//TODO: Check the values
+		damage.getDamageLevel(Difficulty.NORMAL).setEffect(new StatusEffectContainer(StatusEffect.WITHER, 5));
+		damage.getDamageLevel(Difficulty.HARD).setEffect(new StatusEffectContainer(StatusEffect.WITHER, 7));
+		damage.getDamageLevel(Difficulty.HARDCORE).setEffect(damage.getDamageLevel(Difficulty.HARD).getEffect());
 	}
 }

@@ -30,7 +30,9 @@ import org.spout.vanilla.api.component.Hostile;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.misc.DamageComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.data.Difficulty;
 import org.spout.vanilla.plugin.protocol.entity.creature.EnderDragonEntityProtocol;
 
 /**
@@ -44,5 +46,10 @@ public class EnderDragon extends Living implements Hostile {
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(200);
 		}
+		DamageComponent damage = getOwner().add(DamageComponent.class);
+		damage.getDamageLevel(Difficulty.EASY).setAmount(3);
+		damage.getDamageLevel(Difficulty.NORMAL).setAmount(5);
+		damage.getDamageLevel(Difficulty.HARD).setAmount(7);
+		damage.getDamageLevel(Difficulty.HARDCORE).setAmount(damage.getDamageLevel(Difficulty.HARD).getAmount());
 	}
 }

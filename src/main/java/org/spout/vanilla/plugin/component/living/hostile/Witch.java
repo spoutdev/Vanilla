@@ -60,5 +60,15 @@ public class Witch extends Living implements Hostile {
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(26);
 		}
+		
+		/*
+		 * TODO:
+		 * 
+		 * The witch mob uses splash potions of poison, weakness, damage, and slowness to fight the player. 
+		 * The current order of potions thrown is; slowness, poison, they will then proceed to throw potions of 
+		 * harming until the player is no longer poisoned which they will rectify by throwing another splash 
+		 * potion of poison and will continue to do this. The splash potion of harming will occasionally be 
+		 * substituted by potions of slowness. These potions will affect other mobs - not just the player. 
+		 */
 	}
 }

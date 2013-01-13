@@ -29,14 +29,18 @@ package org.spout.vanilla.plugin.component.living.hostile;
 import com.bulletphysics.collision.shapes.BoxShape;
 
 import org.spout.api.component.impl.PhysicsComponent;
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.api.component.Hostile;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.misc.DamageComponent;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.data.Difficulty;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.ZombieEntityProtocol;
@@ -59,6 +63,12 @@ public class Zombie extends Living implements Hostile {
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(20);
 		}
+		
+		DamageComponent damage = getOwner().add(DamageComponent.class);
+		damage.getDamageLevel(Difficulty.EASY).setAmount(3);
+		damage.getDamageLevel(Difficulty.NORMAL).setAmount(4);
+		damage.getDamageLevel(Difficulty.HARD).setAmount(6);
+		damage.getDamageLevel(Difficulty.HARDCORE).setAmount(damage.getDamageLevel(Difficulty.HARD).getAmount());
 	}
 
 	/**
@@ -75,5 +85,11 @@ public class Zombie extends Living implements Hostile {
 	 */
 	public void setWasVillager(boolean value) {
 		getOwner().getData().put(VanillaData.WAS_VILLAGER, value);
+	}
+	
+	@Override
+	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
+		System.out.println("COLLIDED WITH A " + entity);
+		entity.get(HealthComponent.class).damage(getOwner().get(DamageComponent.class).getDamageLevel(colliderPoint.getWorld().getDataMap().get(VanillaData.DIFFICULTY)).getAmount());
 	}
 }

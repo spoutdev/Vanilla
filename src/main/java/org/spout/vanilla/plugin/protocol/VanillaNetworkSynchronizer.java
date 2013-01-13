@@ -528,10 +528,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		x += chunk.getBlockX();
 		y += chunk.getBlockY();
 		z += chunk.getBlockZ();
-		if (y >= 0 && y < chunk.getWorld().getHeight()) {
-			BlockChangeMessage BCM = new BlockChangeMessage(x, y, z, id, getMinecraftData(material, data), getRepositionManager());
-			session.send(false, BCM);
-		}
+		BlockChangeMessage BCM = new BlockChangeMessage(x, y, z, id, getMinecraftData(material, data), getRepositionManager());
+		session.send(false, BCM);
 	}
 
 	@Override

@@ -69,11 +69,11 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 	@Override
 	public final List<Message> getUpdateMessages(Entity entity, RepositionManager rm, boolean force) {
 		// Movement
-		final Transform prevTransform = entity.getTransform().getTransform();
-		final Transform newTransform = entity.getTransform().getTransformLive();
+		final Transform prevTransform = rm.convert(entity.getTransform().getTransform());
+		final Transform newTransform = rm.convert(entity.getTransform().getTransformLive());
 		
 		final boolean looked = entity.getTransform().isRotationDirty();
-
+		
 		final int lastX = protocolifyPosition(prevTransform.getPosition().getX());
 		final int lastY = protocolifyPosition(prevTransform.getPosition().getY());
 		final int lastZ = protocolifyPosition(prevTransform.getPosition().getZ());
@@ -100,7 +100,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		 * - The entity moves less than 4 blocks and maybe changes rotation.
 		 */
 		if (force || deltaX > 128 || deltaX < -128 || deltaY > 128 || deltaY < -128 || deltaZ > 128 || deltaZ < -128) {
-			messages.add(new EntityTeleportMessage(entity.getId(), newX, newY, newZ, newYaw, newPitch, rm));
+			messages.add(new EntityTeleportMessage(entity.getId(), newX, newY, newZ, newYaw, newPitch));
 			if (force || looked) {
 				messages.add(new EntityYawMessage(entity.getId(), newYaw, newPitch));
 			}

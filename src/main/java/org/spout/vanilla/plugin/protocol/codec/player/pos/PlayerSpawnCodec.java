@@ -33,7 +33,6 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
-import org.spout.api.protocol.reposition.NullRepositionManager;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.plugin.protocol.ChannelBufferUtils;
@@ -55,7 +54,7 @@ public final class PlayerSpawnCodec extends MessageCodec<PlayerSpawnMessage> {
 		int pitch = buffer.readUnsignedByte();
 		int item = buffer.readUnsignedShort();
 		List<Parameter<?>> parameters = ChannelBufferUtils.readParameters(buffer);
-		return new PlayerSpawnMessage(id, name, x, y, z, rotation, pitch, item, parameters, NullRepositionManager.getInstance());
+		return new PlayerSpawnMessage(id, name, x, y, z, rotation, pitch, item, parameters);
 	}
 
 	@Override

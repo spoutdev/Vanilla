@@ -50,9 +50,9 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		Human human = entity.add(Human.class);
 
 		int id = entity.getId();
-		int x = ChannelBufferUtils.protocolifyPosition(entity.getTransform().getPosition().getX());
-		int y = ChannelBufferUtils.protocolifyPosition(entity.getTransform().getPosition().getY());
-		int z = ChannelBufferUtils.protocolifyPosition(entity.getTransform().getPosition().getZ());
+		int x = ChannelBufferUtils.protocolifyPosition(rm.convertX(entity.getTransform().getPosition().getX()));
+		int y = ChannelBufferUtils.protocolifyPosition(rm.convertY(entity.getTransform().getPosition().getY()));
+		int z = ChannelBufferUtils.protocolifyPosition(rm.convertZ(entity.getTransform().getPosition().getZ()));
 		int r = ChannelBufferUtils.protocolifyYaw(entity.getTransform().getYaw());
 		int p = ChannelBufferUtils.protocolifyPitch(entity.getTransform().getPitch());
 
@@ -64,7 +64,7 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 		parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 100));
 
-		messages.add(new PlayerSpawnMessage(id, human.getName(), x, y, z, r, p, item, parameters, rm));
+		messages.add(new PlayerSpawnMessage(id, human.getName(), x, y, z, r, p, item, parameters));
 
 		if (hand != null) {
 			messages.add(new EntityEquipmentMessage(entity.getId(), 0, hand.get()));

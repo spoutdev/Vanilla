@@ -39,11 +39,13 @@ import org.spout.api.resource.ResourcePointer;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.plugin.material.block.misc.Snow;
 import org.spout.vanilla.plugin.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 import org.spout.vanilla.plugin.util.RedstoneUtil;
 
 public abstract class DoorBlock extends GroundAttachable implements Directional, Openable, RedstoneTarget {
+
 	public DoorBlock(String name, int id, ResourcePointer<Model> model) {
 		super(name, id, model);
 		this.setCollision(CollisionStrategy.SOLID);
@@ -170,6 +172,19 @@ public abstract class DoorBlock extends GroundAttachable implements Directional,
 
 	private boolean isHingeBlock(Block bottomBlock) {
 		return RedstoneUtil.isConductor(bottomBlock) || RedstoneUtil.isConductor(bottomBlock.translate(BlockFace.TOP));
+	}
+
+	@Override
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		System.out.println("CLICKA: " + isClickedBlock +"  MAT " + block.getMaterial());
+		if (!super.canPlace(block, data, against, clickedPos, isClickedBlock, cause)) {
+			return false;
+		}
+		System.out.println("CLICKB: " + isClickedBlock +"  MAT " + block.getMaterial());
+		if (isClickedBlock && block.getMaterial() instanceof Snow) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override

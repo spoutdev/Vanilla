@@ -41,10 +41,8 @@ import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
-
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
-import org.spout.vanilla.plugin.data.GameMode;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 import org.spout.vanilla.plugin.event.cause.DamageCause.DamageType;
@@ -102,40 +100,25 @@ public class HungerComponent extends EntityComponent {
 
 	@Override
 	public boolean canTick() {
-		return !human.getGameMode().equals(GameMode.CREATIVE) && !human.getHealth().isDead();
+		return !human.isCreative() && !human.getHealth().isDead();
 	}
 
 	@Override
 	public void onTick(float dt) {
 		/*
 		 * The Minecraft hunger system has a few different dynamics:
-		 *
-		 *      1) hunger - the amount of 'shanks' shown on the client.
-		 *         1 points = 1/2 shank
-		 *
-		 *      2) food saturation - an invisible 'safety net' that is a default
-		 *         5 points.
-		 *
-		 *      3) the timer - decreases by the delta of a tick every tick if
-		 *         'hunger' > 17 or if 'food level' <= 0 and heals or deals
-		 *         one point of damage respectively
-		 *
-		 *      4) exhaustion - anywhere in between 0 and 4 and increases with
-		 *         certain actions. When the exhaustion reaches 4, it is reset
-		 *         and subtracts one point from 'food saturation' if
-		 *         'food saturation' > 0 or one point from 'hunger' if
-		 *         'food saturation' <= 0 and 'hunger' > 0.
-		 *
-		 *     Exhaustion actions:
-		 *         Walking and sneaking (per block) - 0.01
-		 *         Sprinting (per block)            - 0.1
-		 *         Swimming (per block)             - 0.015
-		 *         Jumping (per block)              - 0.2
-		 *         Sprint jump (per block)          - 0.8
-		 *         Digging                          - 0.025
-		 *         Attacking or being attacked      - 0.3
-		 *         Food poisoning                   - 15 total over entire
-		 *                                            duration
+		 * 
+		 * 1) hunger - the amount of 'shanks' shown on the client. 1 points = 1/2 shank
+		 * 
+		 * 2) food saturation - an invisible 'safety net' that is a default 5 points.
+		 * 
+		 * 3) the timer - decreases by the delta of a tick every tick if 'hunger' > 17 or if 'food level' <= 0 and heals or deals one point of damage respectively
+		 * 
+		 * 4) exhaustion - anywhere in between 0 and 4 and increases with certain actions. When the exhaustion reaches 4, it is reset and subtracts one point from 'food saturation' if 'food
+		 * saturation' > 0 or one point from 'hunger' if 'food saturation' <= 0 and 'hunger' > 0.
+		 * 
+		 * Exhaustion actions: Walking and sneaking (per block) - 0.01 Sprinting (per block) - 0.1 Swimming (per block) - 0.015 Jumping (per block) - 0.2 Sprint jump (per block) - 0.8 Digging - 0.025
+		 * Attacking or being attacked - 0.3 Food poisoning - 15 total over entire duration
 		 */
 
 		switch (Spout.getPlatform()) {
@@ -171,7 +154,7 @@ public class HungerComponent extends EntityComponent {
 					lastPos = pos;
 					return;
 				}
-				
+
 				float exhaustion = getExhaustion();
 				final World world = pos.getWorld();
 
@@ -198,7 +181,7 @@ public class HungerComponent extends EntityComponent {
 					}
 					lastPos = pos; // Set the last position for next run
 				}
-	
+
 				final boolean digging = getOwner().add(DiggingComponent.class).isDigging();
 
 				if (digging) {
@@ -356,7 +339,7 @@ public class HungerComponent extends EntityComponent {
 			getPlayer().getNetworkSynchronizer().callProtocolEvent(new PlayerHealthEvent(getPlayer()));
 		}
 	}
-	
+
 	/**
 	 * Reset all the variables of the Hunger component to the default ones.
 	 */

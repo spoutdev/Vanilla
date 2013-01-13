@@ -27,8 +27,6 @@
 package org.spout.vanilla.plugin.material.block.solid;
 
 import org.spout.api.Spout;
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;

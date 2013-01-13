@@ -51,6 +51,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 
+import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.data.effect.SoundEffect;
@@ -59,13 +60,15 @@ import org.spout.vanilla.plugin.event.cause.PlayerClickBlockCause;
 import org.spout.vanilla.plugin.event.cause.PlayerPlacementCause;
 import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.item.Food;
+import org.spout.vanilla.plugin.material.item.tool.weapon.Sword;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerBlockPlacementMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBlockPlacementMessage> {
 	private void refreshClient(Player player, Block clickedBlock, BlockFace clickedFace, RepositionManager rm) {
-		//refresh the client just in case it assumed something
+		// refresh the client just in case it assumed something
 		player.getSession().send(false, new BlockChangeMessage(clickedBlock, rm));
 		player.getSession().send(false, new BlockChangeMessage(clickedBlock.translate(clickedFace), rm));
 		Slot held = PlayerUtil.getHeldSlot(player);
@@ -95,21 +98,21 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		Material holdingMat = holding == null ? null : holding.getMaterial();
 
 		/*
-		 * The notch client's packet sending is weird. Here's how it works: If
-		 * the client is clicking a block not in range, sends a packet with
-		 * x=-1,y=255,z=-1 If the client is clicking a block in range with an
-		 * item in hand (id > 255) Sends both the normal block placement packet
-		 * and a (-1,255,-1) one If the client is placing a block in range with
-		 * a block in hand, only one normal packet is sent That is how it
-		 * usually happens. Sometimes it doesn't happen like that. Therefore, a
-		 * hacky workaround.
+		 * The notch client's packet sending is weird. Here's how it works: If the client is clicking a block not in range, sends a packet with x=-1,y=255,z=-1 If the client is clicking a block in
+		 * range with an item in hand (id > 255) Sends both the normal block placement packet and a (-1,255,-1) one If the client is placing a block in range with a block in hand, only one normal
+		 * packet is sent That is how it usually happens. Sometimes it doesn't happen like that. Therefore, a hacky workaround.
 		 */
 		final BlockFace clickedFace = message.getDirection();
+
+		if (holdingMat instanceof Food || holdingMat instanceof Sword) {
+			player.get(Living.class).setEatingBlocking(true);
+			return;
+		}
 		if (clickedFace == BlockFace.THIS) {
 			// Right clicked air with an item.
 			PlayerInteractEvent event = eventManager.callEvent(new PlayerInteractEvent(player, null, holding, Action.RIGHT_CLICK, true, clickedFace));
 
-			//May have been changed by the event
+			// May have been changed by the event
 			holding = currentSlot.get();
 			holdingMat = holding == null ? null : holding.getMaterial();
 
@@ -117,37 +120,37 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				holdingMat.onInteract(player, Action.RIGHT_CLICK);
 			}
 		} else {
-			//TODO: Validate the x/y/z coordinates of the message to check if it is in range of the player
-			//This is an anti-hack requirement (else hackers can load far-away chunks and crash the server)
+			// TODO: Validate the x/y/z coordinates of the message to check if it is in range of the player
+			// This is an anti-hack requirement (else hackers can load far-away chunks and crash the server)
 
-			//Get clicked block and validated face against it was placed
+			// Get clicked block and validated face against it was placed
 			final Block clickedBlock = world.getBlock(message.getX(), message.getY(), message.getZ());
 			final BlockMaterial clickedMaterial = clickedBlock.getMaterial();
 
-			//Perform interaction event
+			// Perform interaction event
 			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), currentSlot.get(), Action.RIGHT_CLICK, false, clickedFace));
 
-			//May have been changed by the event
+			// May have been changed by the event
 			holding = currentSlot.get();
 			holdingMat = holding == null ? null : holding.getMaterial();
-			
-			//check if the interaction was cancelled by the event
+
+			// check if the interaction was cancelled by the event
 			if (interactEvent.isCancelled()) {
 				refreshClient(player, clickedBlock, clickedFace, rm);
 				return;
 			}
 
-			//perform interaction on the server
+			// perform interaction on the server
 			if (interactEvent.interactWithBlock() != Result.DENY) {
 				if (holdingMat != null && interactEvent.useItemInHand() != Result.DENY) {
 					holdingMat.onInteract(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
 				}
 				clickedMaterial.onInteractBy(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
 
-				//TODO: Put block component interaction handling back in
-				//			if (clickedMaterial.hasController()) {
-				//				clickedMaterial.getController(clickedBlock).onInteract(player, Action.RIGHT_CLICK);
-				//			}
+				// TODO: Put block component interaction handling back in
+				// if (clickedMaterial.hasController()) {
+				// clickedMaterial.getController(clickedBlock).onInteract(player, Action.RIGHT_CLICK);
+				// }
 			}
 
 			// Checks before placement
@@ -165,13 +168,13 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 			// If the holding material can be placed, place it
 			if (holdingMat instanceof Placeable) {
 				Cause<?> cause = new PlayerClickBlockCause(player, clickedBlock);
-				short placedData = holding.getData(); //TODO: shouldn't the sub-material deal with this?
+				short placedData = holding.getData(); // TODO: shouldn't the sub-material deal with this?
 				Placeable toPlace = (Placeable) holdingMat;
 
 				final Block placedBlock;
 				final BlockFace placedAgainst;
 				final boolean placedIsClicked;
-				//For snow, tall grass, and the like, place at the clicked block
+				// For snow, tall grass, and the like, place at the clicked block
 				if (toPlace.canPlace(clickedBlock, placedData, clickedFace, message.getFace(), true, cause) || interactEvent.useItemInHand() == Result.ALLOW) {
 					placedBlock = clickedBlock;
 					placedAgainst = clickedFace;
@@ -186,20 +189,20 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 					}
 				}
 
-				//is the player not solid-colliding with the block?
+				// is the player not solid-colliding with the block?
 				if (toPlace instanceof BlockMaterial) {
 					BlockMaterial mat = (BlockMaterial) toPlace;
 					if (mat.isSolid()) {
-						//TODO: Implement collision models to make this work
-						//CollisionModel playerModel = player.getEntity().getCollision();
-						//Vector3 offset = playerModel.resolve(mat.getCollisionModel());
-						//Vector3 dist = player.getEntity().getPosition().subtract(target.getPosition());
-						//if (dist.getX() < offset.getX() || dist.getY() < offset.getY() || dist.getZ() < offset.getZ()) {
-						//	undoPlacement(player, clickedBlock, alterBlock);
-						//	return;
-						//}
+						// TODO: Implement collision models to make this work
+						// CollisionModel playerModel = player.getEntity().getCollision();
+						// Vector3 offset = playerModel.resolve(mat.getCollisionModel());
+						// Vector3 dist = player.getEntity().getPosition().subtract(target.getPosition());
+						// if (dist.getX() < offset.getX() || dist.getY() < offset.getY() || dist.getZ() < offset.getZ()) {
+						// undoPlacement(player, clickedBlock, alterBlock);
+						// return;
+						// }
 
-						//For now: simple distance checking
+						// For now: simple distance checking
 						Point tpos = placedBlock.getPosition();
 						if (player.getTransform().getPosition().distance(tpos) < 0.6) {
 							refreshClient(player, clickedBlock, clickedFace, rm);
@@ -213,7 +216,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 					}
 				}
 
-				//Check if the player can place the block.
+				// Check if the player can place the block.
 				Collection<Protection> protections = Spout.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(placedBlock.getPosition());
 				for (Protection p : protections) {
 					if (p.contains(placedBlock.getPosition()) && !VanillaConfiguration.OPS.isOp(player.getName())) {
@@ -242,6 +245,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 					currentSlot.addAmount(-1);
 				}
 			}
+
 			refreshClient(player, clickedBlock, clickedFace, rm);
 		}
 	}

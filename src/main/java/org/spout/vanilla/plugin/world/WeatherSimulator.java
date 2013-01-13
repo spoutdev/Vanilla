@@ -163,8 +163,8 @@ public class WeatherSimulator extends BasicTickable {
 				forecast = Weather.get(random.nextInt(3));
 			}
 			setForecast(forecast);
-			secondsUntilWeatherChange = 120000F + random.nextFloat() * 5 * 60 * 1000;
-			Spout.getLogger().info("Weather changed to: " + current + ", next change in " + secondsUntilWeatherChange + " ms");
+			secondsUntilWeatherChange = current.getBaseWeatherTime() + random.nextInt(current.getRandomWeatherTime());
+			Spout.getLogger().info("Weather changed to: " + current + ", next change in " + secondsUntilWeatherChange / 1000F + " s");
 		}
 		float currentRainStrength = sky.getData().get(VanillaData.CURRENT_RAIN_STRENGTH);
 		sky.getData().put(VanillaData.PREVIOUS_RAIN_STRENGTH, currentRainStrength);

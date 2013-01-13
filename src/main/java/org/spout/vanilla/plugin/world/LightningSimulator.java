@@ -33,18 +33,15 @@ import java.util.Random;
 
 import org.spout.api.component.Component;
 import org.spout.api.entity.Player;
-import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.plugin.component.substance.Lightning;
-import org.spout.vanilla.plugin.data.Climate;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.Weather;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
-import org.spout.vanilla.plugin.world.generator.biome.VanillaBiome;
 
 public class LightningSimulator extends Component {
 	private static final int MAX_LIGHTNING_BRANCHES = 5;
@@ -101,7 +98,7 @@ public class LightningSimulator extends Component {
 			List<Player> toStrike = new ArrayList<Player>();
 			for (Player player : getWorld().getPlayers()) {
 				if (!player.isOnline()) {
-					return;
+					continue;
 				}
 				Integer ticksLeft = playerCountdown.get(player);
 				if (ticksLeft == null) {
@@ -144,7 +141,7 @@ public class LightningSimulator extends Component {
 				int y = posY + offsetY;
 				int z = posZ + cz * 16 + rz;
 
-				if (isRainingAt(x, y, z, false)) {
+				if (weather.isRainingAt(x, y, z, false)) {
 					int lightning = 1;
 					//30% chance of extra lightning at the spot
 					if (ra.nextInt(10) < 3) {
@@ -189,19 +186,6 @@ public class LightningSimulator extends Component {
 
 	public int getTicksBeforeNextLightning(Random rand) {
 		return getIntensity().baseTicks + rand.nextInt(getIntensity().randomTicks);
-	}
-
-	public boolean isRainingAt(int x, int y, int z, boolean includeSnow) {
-		if (!includeSnow) {
-			Biome biome = getWorld().getBiome(x, y, z);
-			if (biome instanceof VanillaBiome) {
-				VanillaBiome vb = (VanillaBiome)biome;
-				if (vb.getClimate() == Climate.COLD) {
-					return false;
-				}
-			}
-		}
-		return weather.getCurrent().isRaining() && y > getWorld().getSurfaceHeight(x, z);
 	}
 
 	public static enum Intensity {

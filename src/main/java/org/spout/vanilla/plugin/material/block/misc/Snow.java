@@ -99,6 +99,10 @@ public class Snow extends GroundAttachable implements DynamicMaterial, Initializ
 		}
 	}
 
+	public final boolean willMeltAt(Block block) {
+		return block.getBlockLight() > MIN_MELT_LIGHT;
+	}
+
 	@Override
 	public EffectRange getDynamicRange() {
 		return EffectRange.THIS;
@@ -112,7 +116,7 @@ public class Snow extends GroundAttachable implements DynamicMaterial, Initializ
 
 	@Override
 	public void onDynamicUpdate(Block block, long updateTime, int data) {
-		if (block.getBlockLight() > MIN_MELT_LIGHT) {
+		if (willMeltAt(block)) {
 			short dataBlock = block.getData();
 			if (dataBlock > 0) {
 				block.setData(dataBlock - 1);

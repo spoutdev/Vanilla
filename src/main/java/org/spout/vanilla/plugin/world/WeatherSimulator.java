@@ -30,23 +30,28 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.spout.api.Spout;
+import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
 import org.spout.api.math.MathHelper;
 import org.spout.api.tickable.BasicTickable;
 
 import org.spout.vanilla.plugin.component.world.VanillaSky;
+import org.spout.vanilla.plugin.data.Climate;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.Weather;
+import org.spout.vanilla.plugin.world.generator.biome.VanillaBiome;
 
 public class WeatherSimulator extends BasicTickable {
 	private final VanillaSky sky;
 	private final Random random = MathHelper.getRandom();
 	private final AtomicBoolean forceWeatherUpdate = new AtomicBoolean(false);
 	private LightningSimulator lightning;
+	private final SnowSimulator snowfall;
 
 	public WeatherSimulator(VanillaSky sky) {
 		this.sky = sky;
 		this.lightning = new LightningSimulator(this);
+		this.snowfall = new SnowSimulator(this);
 	}
 
 	public VanillaSky getSky() {
@@ -101,6 +106,30 @@ public class WeatherSimulator extends BasicTickable {
 		return this.getCurrent().isRaining();
 	}
 
+	public boolean isSnowingAt(int x, int y, int z) {
+		Biome biome = getWorld().getBiome(x, y, z);
+		if (biome instanceof VanillaBiome) {
+			VanillaBiome vb = (VanillaBiome)biome;
+			if (vb.getClimate() != Climate.COLD) {
+				return false;
+			}
+		}
+		return getCurrent().isRaining() && y > getWorld().getSurfaceHeight(x, z);
+	}
+
+	public boolean isRainingAt(int x, int y, int z, boolean includeSnow) {
+		if (!includeSnow) {
+			Biome biome = getWorld().getBiome(x, y, z);
+			if (biome instanceof VanillaBiome) {
+				VanillaBiome vb = (VanillaBiome)biome;
+				if (vb.getClimate() == Climate.COLD) {
+					return false;
+				}
+			}
+		}
+		return getCurrent().isRaining() && y > getWorld().getSurfaceHeight(x, z);
+	}
+
 	/**
 	 * Gets the strength of the rain, which is affected by the duration
 	 * @param factor to apply to the changing states
@@ -145,8 +174,11 @@ public class WeatherSimulator extends BasicTickable {
 			currentRainStrength = Math.max(0.0f, currentRainStrength - 0.01f);
 		}
 		sky.getData().put(VanillaData.CURRENT_RAIN_STRENGTH, currentRainStrength);
-		if (this.hasLightning()) {
-			this.lightning.onTick(dt);
+		if (hasLightning()) {
+			lightning.onTick(dt);
+		}
+		if (getCurrent().isRaining()) {
+			snowfall.onTick(dt);
 		}
 		sky.getData().put(VanillaData.WEATHER_CHANGE_TIME, secondsUntilWeatherChange);
 	}

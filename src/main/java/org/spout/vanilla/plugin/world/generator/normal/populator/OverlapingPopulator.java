@@ -31,7 +31,6 @@ import java.util.Random;
 import org.spout.api.generator.GeneratorPopulator;
 import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.api.geo.cuboid.Region;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
@@ -40,9 +39,6 @@ public abstract class OverlapingPopulator implements GeneratorPopulator {
 
 	@Override
 	public void populate(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
-		if (y >= Region.BLOCKS.SIZE) {
-			return;
-		}
 		final int cx = x >> Chunk.BLOCKS.BITS;
 		final int cz = z >> Chunk.BLOCKS.BITS;
 		final Vector3 size = blockData.getSize();
@@ -60,8 +56,8 @@ public abstract class OverlapingPopulator implements GeneratorPopulator {
 						int dcxx = dcx + cxxx;
 						int dczz = dcz + czzz;
 						populate(blockData,
-								new Vector3(dcxx << Chunk.BLOCKS.BITS, 0, dczz << Chunk.BLOCKS.BITS),
-								new Vector3(dcx << Chunk.BLOCKS.BITS, 0, dcz << Chunk.BLOCKS.BITS),
+								new Vector3(dcxx << Chunk.BLOCKS.BITS, y, dczz << Chunk.BLOCKS.BITS),
+								new Vector3(dcx << Chunk.BLOCKS.BITS, y, dcz << Chunk.BLOCKS.BITS),
 								new Random((dcxx * firstSeed) ^ (dczz * secondSeed) ^ seed));
 					}
 				}

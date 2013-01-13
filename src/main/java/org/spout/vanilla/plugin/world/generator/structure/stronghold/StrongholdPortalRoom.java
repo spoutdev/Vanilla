@@ -77,7 +77,7 @@ public class StrongholdPortalRoom extends StructureComponent {
 		box.fill(false);
 		// Fill the side lava pools
 		box.setPicker(picker);
-		picker.setOuterInnerMaterials(VanillaMaterials.LAVA, VanillaMaterials.LAVA);
+		picker.setOuterInnerMaterials(VanillaMaterials.STATIONARY_LAVA, VanillaMaterials.STATIONARY_LAVA);
 		box.setMinMax(1, 1, 1, 1, 1, 3);
 		box.fill(false);
 		box.offsetMinMax(8, 0, 0, 8, 0, 0);

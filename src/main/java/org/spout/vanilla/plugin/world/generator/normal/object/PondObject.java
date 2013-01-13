@@ -270,8 +270,8 @@ public class PondObject extends RandomObject implements RandomizableObject {
 	}
 
 	public static enum PondType {
-		WATER(VanillaMaterials.WATER, false, false, true),
-		LAVA(VanillaMaterials.LAVA, true, true, true);
+		WATER(VanillaMaterials.STATIONARY_WATER, false, false, true),
+		LAVA(VanillaMaterials.STATIONARY_LAVA, true, true, true);
 		//
 		private final BlockMaterial liquid;
 		private final boolean stoneWalls;

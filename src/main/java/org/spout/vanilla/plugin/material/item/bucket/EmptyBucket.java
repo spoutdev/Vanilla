@@ -37,6 +37,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.liquid.Lava;
+import org.spout.vanilla.plugin.material.block.liquid.Water;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public class EmptyBucket extends VanillaItemMaterial {
@@ -51,14 +53,14 @@ public class EmptyBucket extends VanillaItemMaterial {
 			BlockMaterial mat = block.getMaterial();
 			PlayerQuickbar quickbar = entity.get(PlayerInventory.class).getQuickbar();
 			Material filled; // material to fill the bucket with
-			if (mat == VanillaMaterials.WATER) {
+			if (mat instanceof Water && VanillaMaterials.WATER.isSource(block)) {
 				filled = VanillaMaterials.WATER_BUCKET;
-			} else if (mat == VanillaMaterials.LAVA) {
+			} else if (mat instanceof Lava && VanillaMaterials.LAVA.isSource(block)) {
 				filled = VanillaMaterials.LAVA_BUCKET;
 			} else {
 				return;
 			}
-			quickbar.getSelectedSlot().addAmount(-1);
+			quickbar.remove(quickbar.getSelectedSlot().getIndex());
 			quickbar.add(new ItemStack(filled, 1));
 		}
 	}

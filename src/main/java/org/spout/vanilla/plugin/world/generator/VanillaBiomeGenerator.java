@@ -33,12 +33,22 @@ import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public abstract class VanillaBiomeGenerator extends BiomeGenerator implements VanillaGenerator {
+	private boolean voidBellowZero = false;
+
 	@Override
 	public void generate(CuboidBlockMaterialBuffer blockData, int chunkX, int chunkY, int chunkZ, World world) {
 		if (chunkY < 0) {
-			blockData.flood(VanillaMaterials.BEDROCK);
+			if (voidBellowZero) {
+				blockData.flood(VanillaMaterials.AIR);
+			} else {
+				blockData.flood(VanillaMaterials.BEDROCK);
+			}
 		} else {
 			super.generate(blockData, chunkX, chunkY, chunkZ, world);
 		}
+	}
+
+	protected void hasVoidBellowZero(boolean voidBellowZero) {
+		this.voidBellowZero = voidBellowZero;
 	}
 }

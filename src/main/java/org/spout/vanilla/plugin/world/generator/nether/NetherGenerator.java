@@ -119,7 +119,7 @@ public class NetherGenerator extends VanillaSingleBiomeGenerator {
 						blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.NETHERRACK);
 					} else {
 						if (y + yy <= SEA_LEVEL) {
-							blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.LAVA);
+							blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.STATIONARY_LAVA);
 						} else {
 							blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.AIR);
 						}

@@ -35,6 +35,7 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.plugin.world.generator.normal.object.BlockPatchObject;
 
 public class SandAndClayDecorator extends Decorator {
@@ -85,7 +86,7 @@ public class SandAndClayDecorator extends Decorator {
 	}
 
 	private int getHighestWorkableBlock(World world, int x, int z) {
-		int y = world.getHeight();
+		int y = NormalGenerator.HEIGHT;
 		BlockMaterial material;
 		while ((material = world.getBlockMaterial(x, y, z)) == VanillaMaterials.ICE
 				|| !(material instanceof Solid)) {

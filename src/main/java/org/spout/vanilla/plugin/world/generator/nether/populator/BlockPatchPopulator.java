@@ -70,8 +70,10 @@ public class BlockPatchPopulator implements GeneratorPopulator {
 
 	@Override
 	public void populate(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
-		seed = WorldGeneratorUtils.getSeed(seed, 7, 7, 7, material.getId());
-		final Random random = WorldGeneratorUtils.getRandom(seed, x, y, z, 89545);
+		if (y < 0 || y >= NetherGenerator.HEIGHT) {
+			return;
+		}
+		final Random random = WorldGeneratorUtils.getRandom(seed, x, y, z, material.getId());
 		elevation.setSeed((int) (seed * 101));
 		shapeBase.setSeed((int) (seed * 313));
 		shape.setSeed((int) (seed * 661));
@@ -80,16 +82,13 @@ public class BlockPatchPopulator implements GeneratorPopulator {
 		final int sizeY = MathHelper.clamp(size.getFloorY(), 0, NetherGenerator.HEIGHT);
 		final int sizeZ = size.getFloorZ();
 		final int scale = sizeY / 2;
-		final double[][] displacement = WorldGeneratorUtils.fastNoise(elevation, sizeX, sizeZ, 4, x, 0, z);
+		final double[][] displacements = WorldGeneratorUtils.fastNoise(elevation, sizeX, sizeZ, 4, x, 0, z);
 		final double[][] values = WorldGeneratorUtils.fastNoise(shape, sizeX, sizeZ, 4, x, 0, z);
 		for (int xx = 0; xx < sizeX; xx++) {
 			for (int zz = 0; zz < sizeZ; zz++) {
 				if (values[xx][zz] > 0.65) {
-					final int yDisplacement = (int) Math.ceil(displacement[xx][zz] * scale + scale);
-					if (yDisplacement < 0 || yDisplacement >= sizeY) {
-						continue;
-					}
-					int yy = getHighestWorkableBlock(blockData, x + xx, yDisplacement + y, z + zz);
+					final int displacement = MathHelper.clamp((int) Math.ceil(displacements[xx][zz] * scale + scale), 0, sizeY - 1);
+					int yy = getHighestWorkableBlock(blockData, x + xx, y + displacement, z + zz);
 					if (yy == -1 || blockData.get(x + xx, yy + 1, z + zz) != VanillaMaterials.AIR) {
 						continue;
 					}
@@ -109,7 +108,7 @@ public class BlockPatchPopulator implements GeneratorPopulator {
 	private int getHighestWorkableBlock(CuboidBlockMaterialBuffer blockData, int x, int y, int z) {
 		while (blockData.get(x, y, z) != VanillaMaterials.NETHERRACK) {
 			y--;
-			if (y <= 0) {
+			if (y <= blockData.getBase().getFloorY()) {
 				return -1;
 			}
 		}

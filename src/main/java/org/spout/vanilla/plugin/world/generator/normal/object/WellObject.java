@@ -42,7 +42,7 @@ public class WellObject extends WorldGeneratorObject {
 	// main materials
 	private BlockMaterial main = VanillaMaterials.SANDSTONE;
 	private BlockMaterial slab = Slab.SANDSTONE;
-	private BlockMaterial liquid = VanillaMaterials.WATER;
+	private BlockMaterial liquid = VanillaMaterials.STATIONARY_WATER;
 	// material we can place it on
 	private BlockMaterial placeableOn = VanillaMaterials.SAND;
 	// materials we can override

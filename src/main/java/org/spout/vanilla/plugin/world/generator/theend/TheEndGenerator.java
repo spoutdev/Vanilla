@@ -73,6 +73,7 @@ public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 
 	public TheEndGenerator() {
 		super(VanillaBiomes.ENDSTONE);
+		hasVoidBellowZero(true);
 	}
 
 	@Override

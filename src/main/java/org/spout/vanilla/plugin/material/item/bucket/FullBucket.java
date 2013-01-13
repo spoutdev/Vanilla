@@ -37,6 +37,7 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.liquid.Water;
 import org.spout.vanilla.plugin.material.item.BlockItem;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 import org.spout.vanilla.plugin.world.generator.VanillaGenerators;
@@ -56,15 +57,15 @@ public class FullBucket extends BlockItem {
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
-		boolean result = super.canPlace(block, data, against, clickedPos, isClickedBlock, cause);
-		if (result) {
-			if (VanillaGenerators.NETHER.equals(block.getWorld().getGenerator()) && VanillaMaterials.WATER.equals(this.getPlacedMaterial())) {
+		boolean success = super.canPlace(block, data, against, clickedPos, isClickedBlock, cause);
+		if (success) {
+			if (VanillaGenerators.NETHER.equals(block.getWorld().getGenerator()) && getPlacedMaterial() instanceof Water) {
 				return false;
 			}
 		}
-		return result;
+		return success;
 	}
 }

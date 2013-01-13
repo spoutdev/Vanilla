@@ -36,6 +36,7 @@ import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.MaterialRegistry;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.config.ConfigurationNode;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
@@ -47,10 +48,13 @@ import org.spout.vanilla.plugin.world.generator.normal.biome.NormalBiome;
 public class GroundCoverPopulator implements GeneratorPopulator {
 	@Override
 	public void populate(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
+		if (y < 0 || y >= NormalGenerator.HEIGHT) {
+			return;
+		}
 		final Random random = WorldGeneratorUtils.getRandom(seed, x, y, z, 13823);
 		final Vector3 size = blockData.getSize();
 		final int sizeX = size.getFloorX();
-		final int sizeY = size.getFloorY();
+		final int sizeY = MathHelper.clamp(size.getFloorY(), 0, NormalGenerator.HEIGHT);
 		final int sizeZ = size.getFloorZ();
 		for (int xx = 0; xx < sizeX; xx++) {
 			for (int zz = 0; zz < sizeZ; zz++) {
@@ -74,7 +78,7 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 							if (yy < 0) {
 								break yIteration;
 							}
-							if (blockData.get(x + xx, y + yy, z + zz) == VanillaMaterials.STONE) {
+							if (blockData.get(x + xx, y + yy, z + zz).equals(VanillaMaterials.STONE)) {
 								blockData.set(x + xx, y + yy, z + zz, cover);
 							}
 						}
@@ -165,7 +169,7 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 		}
 
 		public GroundCoverVariableLayer(BlockMaterial aboveSea, BlockMaterial bellowSea,
-										byte minDepth, byte maxDepth) {
+				byte minDepth, byte maxDepth) {
 			super(aboveSea, bellowSea);
 			this.minDepth = minDepth;
 			this.maxDepth = maxDepth;
@@ -217,7 +221,7 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 		}
 
 		public GroundCoverUniformLayer(BlockMaterial aboveSea, BlockMaterial bellowSea,
-									   byte depth) {
+				byte depth) {
 			super(aboveSea, bellowSea);
 			this.depth = depth;
 		}

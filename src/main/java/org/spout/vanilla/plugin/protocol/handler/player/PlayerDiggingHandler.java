@@ -41,7 +41,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.basic.BasicAir;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
@@ -60,6 +59,7 @@ import org.spout.vanilla.plugin.event.cause.PlayerBreakCause;
 import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.VanillaMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Liquid;
 import org.spout.vanilla.plugin.material.item.Food;
 import org.spout.vanilla.plugin.material.item.misc.Potion;
 import org.spout.vanilla.plugin.material.item.tool.Tool;
@@ -144,7 +144,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 
 		boolean isInteractable = true;
 		// FIXME: How so not interactable? I am pretty sure I can interact with water to place a boat, no?
-		if (blockMaterial == VanillaMaterials.AIR || blockMaterial == BasicAir.AIR || blockMaterial == VanillaMaterials.WATER || blockMaterial == VanillaMaterials.LAVA) {
+		if (blockMaterial == VanillaMaterials.AIR || blockMaterial instanceof Liquid) {
 			isInteractable = false;
 		}
 		if (state == PlayerDiggingMessage.STATE_START_DIGGING) {

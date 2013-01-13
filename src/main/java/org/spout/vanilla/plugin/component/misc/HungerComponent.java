@@ -41,6 +41,7 @@ import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
+
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
@@ -49,7 +50,7 @@ import org.spout.vanilla.plugin.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.plugin.event.cause.HealCause;
 import org.spout.vanilla.plugin.event.cause.NullDamageCause;
 import org.spout.vanilla.plugin.event.player.network.PlayerHealthEvent;
-import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.liquid.Water;
 
 public class HungerComponent extends EntityComponent {
 	private Human human;
@@ -163,7 +164,8 @@ public class HungerComponent extends EntityComponent {
 					final float distance = (float) pos.distance(lastPos);
 					final boolean sprinting = human.isSprinting();
 					final boolean jumping = human.isJumping();
-					if (world.getBlock(pos) == VanillaMaterials.WATER && world.getBlock(lastPos) == VanillaMaterials.WATER) {
+					if (world.getBlock(pos).getMaterial() instanceof Water
+							&& world.getBlock(lastPos).getMaterial() instanceof Water) {
 						// swimming
 						exhaustion += 0.015f * distance;
 					} else if (sprinting && jumping) {

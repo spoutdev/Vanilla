@@ -34,6 +34,7 @@ import org.spout.api.generator.GeneratorPopulator;
 import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
@@ -57,9 +58,12 @@ public class RockyShieldPopulator implements GeneratorPopulator {
 
 	@Override
 	public void populate(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
+		if (y < 0 || y >= NormalGenerator.HEIGHT) {
+			return;
+		}
 		final Vector3 size = blockData.getSize();
 		final int sizeX = size.getFloorX();
-		final int sizeY = size.getFloorY();
+		final int sizeY = MathHelper.clamp(size.getFloorY(), 0, NormalGenerator.HEIGHT);
 		final int sizeZ = size.getFloorZ();
 		SHIELD_BASE.setSeed((int) seed * 73);
 		SHIELD.setSeed((int) seed * 79);

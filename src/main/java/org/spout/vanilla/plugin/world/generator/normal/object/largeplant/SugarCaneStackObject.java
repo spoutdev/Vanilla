@@ -32,6 +32,7 @@ import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.liquid.Water;
 import org.spout.vanilla.plugin.world.generator.object.LargePlantObject;
 
 public class SugarCaneStackObject extends LargePlantObject {
@@ -47,12 +48,12 @@ public class SugarCaneStackObject extends LargePlantObject {
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
 		final BlockMaterial below = w.getBlockMaterial(x, y - 1, z);
-		return below.isMaterial(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.SAND)
-				&& w.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.AIR)
-				&& (w.getBlockMaterial(x - 1, y - 1, z).isMaterial(VanillaMaterials.WATER)
-				|| w.getBlockMaterial(x + 1, y - 1, z).isMaterial(VanillaMaterials.WATER)
-				|| w.getBlockMaterial(x, y - 1, z - 1).isMaterial(VanillaMaterials.WATER)
-				|| w.getBlockMaterial(x, y - 1, z + 1).isMaterial(VanillaMaterials.WATER));
+		return w.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.AIR)
+				&& below.isMaterial(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.SAND)
+				&& (w.getBlockMaterial(x - 1, y - 1, z) instanceof Water
+				|| w.getBlockMaterial(x + 1, y - 1, z) instanceof Water
+				|| w.getBlockMaterial(x, y - 1, z - 1) instanceof Water
+				|| w.getBlockMaterial(x, y - 1, z + 1) instanceof Water);
 	}
 
 	@Override

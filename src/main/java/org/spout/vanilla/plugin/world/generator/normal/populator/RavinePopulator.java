@@ -35,10 +35,15 @@ import org.spout.api.math.Vector3;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.liquid.Water;
 
 public class RavinePopulator extends OverlapingPopulator {
 	@Override
 	protected void populate(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 originChunk, Random random) {
+		if (chunk.getFloorY() < 0 || chunk.getFloorY() >= 120) {
+			return;
+		}
+
 		if (random.nextInt(50) != 0) {
 			return;
 		}
@@ -52,7 +57,7 @@ public class RavinePopulator extends OverlapingPopulator {
 	}
 
 	private void generateRavineNodes(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 target, double horizontalScale, double verticalScale,
-									 double horizontalAngle, double verticalAngle, int startingNode, int nodeAmount, Random random) {
+			double horizontalAngle, double verticalAngle, int startingNode, int nodeAmount, Random random) {
 
 		final Vector3 middle = new Vector3(chunk.getX() + 8, 0, chunk.getZ() + 8);
 		double horizontalOffset = 0;
@@ -142,7 +147,7 @@ public class RavinePopulator extends OverlapingPopulator {
 		private final double[] horizontalScales;
 
 		private RavineNode(CuboidBlockMaterialBuffer blockData, Vector3 chunk, Vector3 start, Vector3 end, Vector3 target,
-						   double verticalSize, double horizontalSize, double[] horizontalScales) {
+				double verticalSize, double horizontalSize, double[] horizontalScales) {
 			this.blockData = blockData;
 			this.chunk = chunk;
 			this.start = clamp(start);
@@ -157,7 +162,7 @@ public class RavinePopulator extends OverlapingPopulator {
 			for (int x = start.getFloorX(); x < end.getFloorX(); x++) {
 				for (int z = start.getFloorZ(); z < end.getFloorZ(); z++) {
 					for (int y = end.getFloorY() + 1; y >= start.getFloorY() - 1; y--) {
-						if (blockData.get(chunk.getFloorX() + x, y, chunk.getFloorZ() + z).equals(VanillaMaterials.WATER)) {
+						if (blockData.get(chunk.getFloorX() + x, y, chunk.getFloorZ() + z) instanceof Water) {
 							return false;
 						}
 						if (y != start.getFloorY() - 1 && x != start.getFloorX() && x != end.getFloorX() - 1
@@ -187,7 +192,7 @@ public class RavinePopulator extends OverlapingPopulator {
 							if (material.equals(VanillaMaterials.STONE) || material.equals(VanillaMaterials.DIRT)
 									|| material.equals(VanillaMaterials.GRASS)) {
 								if (y < 10) {
-									blockData.set(xx, y, zz, VanillaMaterials.LAVA);
+									blockData.set(xx, y, zz, VanillaMaterials.STATIONARY_LAVA);
 								} else {
 									if (material.equals(VanillaMaterials.GRASS)
 											&& blockData.get(xx, y - 1, zz).equals(VanillaMaterials.DIRT)) {

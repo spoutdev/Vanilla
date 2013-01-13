@@ -193,7 +193,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 							if (y + yy == SEA_LEVEL && ((NormalBiome) biomes.getBiome(xx, 0, zz)).getClimate() == Climate.COLD) {
 								blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.ICE);
 							} else {
-								blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.WATER);
+								blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.STATIONARY_WATER);
 							}
 						} else {
 							blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.AIR);

@@ -46,7 +46,7 @@ import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 import org.spout.vanilla.plugin.event.cause.BlockDamageCause;
 import org.spout.vanilla.plugin.event.cause.DamageCause.DamageType;
-import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.liquid.Water;
 
 /**
  * The drowning component requires a health component and head component
@@ -95,7 +95,7 @@ public class DrowningComponent extends EntityComponent {
 			case PROXY:
 			case SERVER:
 				World world = head.getPosition().getWorld();
-				if (world.getBlock(head.getPosition()).getMaterial() != VanillaMaterials.WATER) {
+				if (!(world.getBlock(head.getPosition()).getMaterial() instanceof Water)) {
 					setAir(MAX_AIR);
 					return;
 				}

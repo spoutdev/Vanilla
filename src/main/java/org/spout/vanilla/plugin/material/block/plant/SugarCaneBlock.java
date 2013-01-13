@@ -38,6 +38,7 @@ import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.liquid.Water;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class SugarCaneBlock extends StackGrowingBase implements InitializableMaterial {
@@ -72,7 +73,7 @@ public class SugarCaneBlock extends StackGrowingBase implements InitializableMat
 		// Only attach to bases with water around it
 		if (this.allowedBases.contains(material)) {
 			for (BlockFace around : BlockFaces.NESW) {
-				if (block.translate(around).isMaterial(VanillaMaterials.STATIONARY_WATER, VanillaMaterials.WATER)) {
+				if (block.translate(around).getMaterial() instanceof Water) {
 					return true;
 				}
 			}

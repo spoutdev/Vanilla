@@ -45,7 +45,7 @@ public class BlockPatchObject extends RandomObject implements RandomizableObject
 	private byte heightRadius = 2;
 	// material to place
 	private BlockMaterial material;
-	private BlockMaterial placeIn = VanillaMaterials.WATER;
+	private BlockMaterial placeIn = VanillaMaterials.STATIONARY_WATER;
 	// materials to be replaced
 	private final Set<BlockMaterial> overridable = new HashSet<BlockMaterial>();
 
@@ -54,6 +54,7 @@ public class BlockPatchObject extends RandomObject implements RandomizableObject
 		this.material = material;
 		overridable.add(VanillaMaterials.DIRT);
 		overridable.add(VanillaMaterials.GRASS);
+		overridable.add(VanillaMaterials.MYCELIUM);
 		randomize();
 	}
 
@@ -72,13 +73,23 @@ public class BlockPatchObject extends RandomObject implements RandomizableObject
 			for (byte zz = (byte) -totalRadius; zz <= totalRadius; zz++) {
 				if (xx * xx + zz * zz <= totalRadius * totalRadius) {
 					for (byte yy = (byte) -heightRadius; yy <= heightRadius; yy++) {
-						if (overridable.contains(world.getBlockMaterial(x + xx, y + yy, z + zz))) {
+						if (overridable.contains(world.getBlockMaterial(x + xx, y + yy, z + zz))
+								&& canPlaceBlock(world, x + xx, y + yy, z + zz)) {
 							world.setBlockMaterial(x + xx, y + yy, z + zz, material, (short) 0, null);
 						}
 					}
 				}
 			}
 		}
+	}
+
+	private boolean canPlaceBlock(World world, int x, int y, int z) {
+		return !world.getBlockMaterial(x, y + 1, z).isMaterial(
+				VanillaMaterials.LOG,
+				VanillaMaterials.TALL_GRASS,
+				VanillaMaterials.FERN,
+				VanillaMaterials.DANDELION,
+				VanillaMaterials.ROSE);
 	}
 
 	@Override

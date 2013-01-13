@@ -62,6 +62,7 @@ import org.spout.vanilla.plugin.event.window.WindowItemsEvent;
 import org.spout.vanilla.plugin.event.window.WindowOpenEvent;
 import org.spout.vanilla.plugin.event.window.WindowPropertyEvent;
 import org.spout.vanilla.plugin.event.window.WindowSlotEvent;
+import org.spout.vanilla.plugin.inventory.player.PlayerArmorInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.inventory.util.GridInventoryConverter;
@@ -229,38 +230,45 @@ public abstract class Window implements InventoryViewer {
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			throw new IllegalStateException("Shift click handling is handled server side.");
 		}
+		final PlayerInventory inventory = getPlayerInventory();
 
-		PlayerInventory inventory = getPlayerInventory();
-		if (from instanceof PlayerQuickbar) {
+		// Transferring to the armor slots
+		if (!(from instanceof PlayerArmorInventory)) {
+			// Transferring to the armor slots
+			final PlayerArmorInventory armor = inventory.getArmor();
+			for (int i = 0; i < armor.size(); i++) {
+				if (armor.get(i) == null && armor.canSet(i, stack)) {
+					armor.set(i, ItemStack.cloneSpecial(stack));
+					from.set(slot, stack.setAmount(0));
+					return true;
+				}
+			}
+		}
 
-			// Custom adding for shift clicking
-
+		// Transferring to the main inventory, top to bottom
+		if (!(from instanceof PlayerMainInventory)) {
 			final PlayerMainInventory main = inventory.getMain();
 			final int height = 3;
 			final int length = 9;
-
 			for (int y = height - 1; y >= 0; y--) {
-				for (int x = 0; x < length; x++) {
-					int x1 = length * y;
-					int x2 = x1 + length - 1;
-					main.add(x1, x2, stack);
-					from.set(slot, stack.isEmpty() ? null : stack);
-					if (stack.isEmpty()) {
-						break;
-					}
+				int x1 = length * y;
+				int x2 = x1 + length - 1;
+				main.add(x1, x2, stack);
+				from.set(slot, stack);
+				if (stack.isEmpty()) {
+					return true;
 				}
-				break;
 			}
-
-			return true;
 		}
 
-		if (from instanceof PlayerMainInventory) {
+		// Transferring to the quickbar inventory
+		if (!(from instanceof PlayerQuickbar)) {
 			inventory.getQuickbar().add(stack);
-			from.set(slot, stack.isEmpty() ? null : stack);
-			return true;
+			from.set(slot, stack);
+			if (stack.isEmpty()) {
+				return true;
+			}
 		}
-
 		return false;
 	}
 

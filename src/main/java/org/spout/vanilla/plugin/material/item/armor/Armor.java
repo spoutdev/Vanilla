@@ -44,6 +44,7 @@ public abstract class Armor extends VanillaItemMaterial implements Enchantable {
 	protected Armor(String name, int id, short durability, Vector2 pos) {
 		super(name, id, pos);
 		this.durability = durability;
+		this.setMaxStackSize(1);
 	}
 
 	public short getMaxDurability() {

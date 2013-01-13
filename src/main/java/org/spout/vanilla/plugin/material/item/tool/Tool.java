@@ -59,6 +59,7 @@ public abstract class Tool extends VanillaItemMaterial implements Enchantable {
 		super(name, id, pos);
 		this.durability = durability;
 		this.toolType = toolType;
+		this.setMaxStackSize(1);
 	}
 
 	public short getDurabilityPenalty(ItemStack item) {

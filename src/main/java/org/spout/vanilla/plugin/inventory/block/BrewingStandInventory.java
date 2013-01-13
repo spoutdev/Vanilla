@@ -64,4 +64,17 @@ public class BrewingStandInventory extends Inventory {
 	public ItemStack getInput() {
 		return get(INPUT_SLOT);
 	}
+
+	@Override
+	public boolean canSet(int i, ItemStack item) {
+		if (!super.canSet(i, item)) {
+			return false;
+		}
+		for (int outputSlot : OUTPUT_SLOTS) {
+			if (outputSlot == i) {
+				return false;
+			}
+		}
+		return true;
+	}
 }

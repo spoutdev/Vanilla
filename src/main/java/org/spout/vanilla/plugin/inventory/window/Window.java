@@ -290,13 +290,16 @@ public abstract class Window implements InventoryViewer {
 					// add one
 					clicked = cursorItem.clone();
 					clicked.setAmount(1);
-					inventory.set(slot, clicked);
-					// remove from cursor
-					cursorItem.setAmount(cursorItem.getAmount() - 1);
-					if (cursorItem.isEmpty()) {
-						cursorItem = null;
+					// Can it be set?
+					if (inventory.canSet(slot, clicked)) {
+						inventory.set(slot, clicked);
+						// remove from cursor
+						cursorItem.setAmount(cursorItem.getAmount() - 1);
+						if (cursorItem.isEmpty()) {
+							cursorItem = null;
+						}
+						return true;
 					}
-					return true;
 				}
 			} else if (cursorItem != null) {
 				debug("Slot: " + clicked.getMaterial().getName());
@@ -349,9 +352,12 @@ public abstract class Window implements InventoryViewer {
 					// slot is empty; cursor is not empty.
 					// put whole stack down
 					clicked = cursorItem.clone();
-					inventory.set(slot, clicked);
-					cursorItem = null;
-					return true;
+					// Can it be set?
+					if (inventory.canSet(slot, clicked)) {
+						inventory.set(slot, clicked);
+						cursorItem = null;
+						return true;
+					}
 				}
 			} else if (cursorItem != null) {
 				debug("Clicked: " + clicked.getMaterial().getName());

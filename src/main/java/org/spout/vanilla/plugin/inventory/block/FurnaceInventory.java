@@ -83,4 +83,9 @@ public class FurnaceInventory extends Inventory {
 	public boolean hasIngredient() {
 		return getIngredient() != null && getIngredient().getMaterial() instanceof TimedCraftable;
 	}
+
+	@Override
+	public boolean canSet(int i, ItemStack item) {
+		return super.canSet(i, item) && i != OUTPUT_SLOT;
+	}
 }

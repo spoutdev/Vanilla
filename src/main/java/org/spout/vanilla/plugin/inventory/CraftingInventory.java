@@ -157,4 +157,9 @@ public class CraftingInventory extends Inventory {
 		}
 		set(getOutputSlot(), null);
 	}
+
+	@Override
+	public boolean canSet(int i, ItemStack item) {
+		return super.canSet(i, item) && i != outputSlot;
+	}
 }

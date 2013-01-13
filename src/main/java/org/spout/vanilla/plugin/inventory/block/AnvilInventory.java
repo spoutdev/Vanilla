@@ -90,4 +90,9 @@ public class AnvilInventory extends Inventory {
 	public ItemStack getOutput() {
 		return get(OUTPUT_SLOT);
 	}
+
+	@Override
+	public boolean canSet(int i, ItemStack item) {
+		return super.canSet(i, item) && i != OUTPUT_SLOT;
+	}
 }

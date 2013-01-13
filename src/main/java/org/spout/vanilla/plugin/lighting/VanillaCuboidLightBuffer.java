@@ -29,15 +29,14 @@ package org.spout.vanilla.plugin.lighting;
 import org.spout.api.util.cuboid.CuboidNibbleLightBuffer;
 
 public class VanillaCuboidLightBuffer extends CuboidNibbleLightBuffer {
-	
 	protected VanillaCuboidLightBuffer(VanillaCuboidLightBuffer buffer) {
 		super(buffer);
 	}
-	
+
 	protected VanillaCuboidLightBuffer(int id, int baseX, int baseY, int baseZ, int sizeX, int sizeY, int sizeZ) {
 		super(id, baseX, baseY, baseZ, sizeX, sizeY, sizeZ);
 	}
-	
+
 	protected VanillaCuboidLightBuffer(int id, int baseX, int baseY, int baseZ, int sizeX, int sizeY, int sizeZ, byte[] data) {
 		super(id, baseX, baseY, baseZ, sizeX, sizeY, sizeZ, data);
 	}

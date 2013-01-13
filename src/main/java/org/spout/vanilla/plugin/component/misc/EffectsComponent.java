@@ -64,7 +64,7 @@ public class EffectsComponent extends EntityComponent {
 			StatusEffectContainer effect = iterator.next();
 			effect.setTimer(effect.getTimer() - dt);
 			effect.addTick(dt);
-			
+
 			//TODO: Probably spammy. Need to find a better way.
 			if (StatusEffect.INVISIBILITY.equals(effect.getEffect())) {
 				getOwner().get(Living.class).sendMetaData();
@@ -74,7 +74,7 @@ public class EffectsComponent extends EntityComponent {
 				getOwner().getNetwork().callProtocolEvent(new EntityRemoveEffectEvent(getOwner(), effect.getEffect()));
 				removed = true;
 			}
-			
+
 			if (!removed) {
 				switch (effect.getEffect()) {
 					case REGENERATION:

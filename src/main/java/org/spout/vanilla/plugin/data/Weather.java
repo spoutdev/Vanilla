@@ -36,6 +36,7 @@ public enum Weather {
 	final boolean raining;
 	final int baseWeatherTime;
 	final int randomWeatherTime;
+
 	private Weather(boolean rain, int baseWeatherTime, int randomWeatherTime) {
 		this.raining = rain;
 		this.baseWeatherTime = baseWeatherTime;

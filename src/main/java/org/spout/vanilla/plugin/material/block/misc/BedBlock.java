@@ -115,7 +115,6 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 
 	/**
 	 * Sets whether or not a bed is occupied by a player
-	 * 
 	 * @param bedBlock to get it of
 	 * @return True if occupied
 	 */
@@ -128,7 +127,6 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 
 	/**
 	 * Gets whether or not a bed block is occupied by a player
-	 * 
 	 * @param bedBlock to get it of
 	 * @return True if occupied
 	 */
@@ -138,7 +136,6 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 
 	/**
 	 * Gets the facing state of a single bed block
-	 * 
 	 * @param bedBlock to get it of
 	 * @return the face
 	 */
@@ -149,7 +146,6 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 	/**
 	 * Sets the facing state of a single bed block<br>
 	 * Note that this does not affect the misc half
-	 * 
 	 * @param bedBlock to set it of
 	 * @param facing to set to
 	 * @return the face
@@ -160,7 +156,6 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 
 	/**
 	 * Creates a bed using the parameters specified
-	 * 
 	 * @param footBlock of the bed
 	 * @param facing of the bed
 	 */
@@ -175,7 +170,6 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 			setFacing(footBlock, facing);
 			setFacing(headBlock, facing);
 		}
-
 	}
 
 	@Override
@@ -201,7 +195,6 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 
 	/**
 	 * Gets the top or face door block when either of the blocks is given
-	 * 
 	 * @param bedBlock the top or bottom bed block
 	 * @param head whether to get the top block, if false, gets the bottom block
 	 * @return the requested bed half block

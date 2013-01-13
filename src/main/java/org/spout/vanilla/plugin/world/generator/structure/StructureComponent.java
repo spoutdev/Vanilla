@@ -226,11 +226,11 @@ public abstract class StructureComponent {
 		public Vector3 getMin() {
 			return min;
 		}
-		
+
 		public float getXSize() {
 			return max.getX() - min.getX();
 		}
-		
+
 		public float getZSize() {
 			return max.getZ() - min.getZ();
 		}

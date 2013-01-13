@@ -169,7 +169,7 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 		}
 
 		public GroundCoverVariableLayer(BlockMaterial aboveSea, BlockMaterial bellowSea,
-				byte minDepth, byte maxDepth) {
+										byte minDepth, byte maxDepth) {
 			super(aboveSea, bellowSea);
 			this.minDepth = minDepth;
 			this.maxDepth = maxDepth;
@@ -221,7 +221,7 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 		}
 
 		public GroundCoverUniformLayer(BlockMaterial aboveSea, BlockMaterial bellowSea,
-				byte depth) {
+									   byte depth) {
 			super(aboveSea, bellowSea);
 			this.depth = depth;
 		}

@@ -55,9 +55,8 @@ public class MagmaCube extends Living implements Hostile {
 				spawnHealth = 16;
 			}
 			getOwner().add(HealthComponent.class).setSpawnHealth(spawnHealth);
-			
 		}
-		
+
 		//TODO: Damage varies on the size.
 	}
 

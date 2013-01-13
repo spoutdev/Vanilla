@@ -37,8 +37,6 @@ import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerArmorInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 
 public class DefaultWindow extends Window {

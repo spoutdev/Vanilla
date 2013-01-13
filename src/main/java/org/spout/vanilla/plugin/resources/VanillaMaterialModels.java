@@ -71,7 +71,7 @@ public class VanillaMaterialModels {
 	public static final ResourcePointer<Model> TRIP_WIRE_HOOK = new ResourcePointer<Model>();
 	public static final ResourcePointer<Model> WEB = new ResourcePointer<Model>();
 	public static final ResourcePointer<Model> DEADGRASS = new ResourcePointer<Model>("model://Vanilla/materials/block/nonsolid/deadgrass/deadgrass.spm");
-	public static final ResourcePointer<Model> TALLGRASS = new ResourcePointer<Model>( "model://Vanilla/materials/block/nonsolid/tallgrass/tallgrass.spm");
+	public static final ResourcePointer<Model> TALLGRASS = new ResourcePointer<Model>("model://Vanilla/materials/block/nonsolid/tallgrass/tallgrass.spm");
 	public static final ResourcePointer<Model> FERN = new ResourcePointer<Model>("model://Vanilla/materials/block/nonsolid/fern/fern.spm");
 	public static final ResourcePointer<Model> VINES = new ResourcePointer<Model>("model://Vanilla/materials/block/nonsolid/vines/vines.spm");
 	public static final ResourcePointer<Model> SUGARCANE = new ResourcePointer<Model>("model://Vanilla/materials/block/nonsolid/sugarcane/sugarcane.spm");
@@ -109,7 +109,6 @@ public class VanillaMaterialModels {
 	public static final ResourcePointer<Model> SOUL_SAND = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/soulsand/soulsand.spm");
 	public static final ResourcePointer<Model> SPONGE = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/sponge/sponge.spm");
 	public static final ResourcePointer<Model> STONE = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/stone/stone.spm");
-
 	// Wool
 	public static final ResourcePointer<Model> WOOL_WHITE = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/whitewool/whitewool.spm");
 	public static final ResourcePointer<Model> WOOL_ORANGE = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/orangewool/orangewool.spm");
@@ -127,35 +126,29 @@ public class VanillaMaterialModels {
 	public static final ResourcePointer<Model> WOOL_GREEN = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/greenwool/greenwool.spm");
 	public static final ResourcePointer<Model> WOOL_RED = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/redwool/redwool.spm");
 	public static final ResourcePointer<Model> WOOL_BLACK = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/blackwool/blackwool.spm");
-
 	// Stone Brick
 	public static final ResourcePointer<Model> STONE_BRICK = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/stonebrick/stonebrick.spm");
 	public static final ResourcePointer<Model> STONE_BRICK_MOSSY = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/mossystonebrick/mossystonebrick.spm");
 	public static final ResourcePointer<Model> STONE_BRICK_CRACKED = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/crackedstonebrick/crackedstonebrick.spm");
-
 	// Sandstone
 	public static final ResourcePointer<Model> SANDSTONE = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/sandstone/sandstone.spm");
 	public static final ResourcePointer<Model> SANDSTONE_DECORATIVE = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/cheseledsandstone/cheseledsandstone.spm");
 	public static final ResourcePointer<Model> SANDSTONE_SMOOTH = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/smoothsandstone/smoothsandstone.spm");
-
 	// Planks
 	public static final ResourcePointer<Model> PLANK_OAK = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/oakplanks/oakplanks.spm");
 	public static final ResourcePointer<Model> PLANK_PINE = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/spruceplanks/spruceplanks.spm");
 	public static final ResourcePointer<Model> PLANK_BIRCH = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/birchplanks/birchplanks.spm");
 	public static final ResourcePointer<Model> PLANK_JUNGLE = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/jungleplanks/jungleplanks.spm");
-
 	// Leaves
 	public static final ResourcePointer<Model> LEAVES_OAK = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/oakleaves/oakleaves.spm");
 	public static final ResourcePointer<Model> LEAVES_SPRUCE = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/spruceleaves/spruceleaves.spm");
 	public static final ResourcePointer<Model> LEAVES_BIRCH = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/birchleaves/birchleaves.spm");
 	public static final ResourcePointer<Model> LEAVES_JUNGLE = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/jungleleaves/jungleleaves.spm");
-
 	// Logs
 	public static final ResourcePointer<Model> LOG_OAK = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/oakwood/oakwood.spm");
 	public static final ResourcePointer<Model> LOG_SPRUCE = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/sprucewood/sprucewood.spm");
 	public static final ResourcePointer<Model> LOG_BIRCH = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/birchwood/birchwood.spm");
 	public static final ResourcePointer<Model> LOG_JUNGLE = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/junglewood/junglewood.spm");
-
 	// Ores
 	public static final ResourcePointer<Model> COAL_ORE = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/coalore/coalore.spm");
 	public static final ResourcePointer<Model> DIAMOND_BLOCK = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/diamondblock/diamondblock.spm");
@@ -171,10 +164,8 @@ public class VanillaMaterialModels {
 	public static final ResourcePointer<Model> REDSTONE_ORE = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/redstoneore/redstoneore.spm");
 	public static final ResourcePointer<Model> MELON_BLOCK = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/melon/melon.spm");
 	public static final ResourcePointer<Model> GLOWSTONE = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/glowstone/glowstone.spm");
-
 	// Double Slabs //TODO: Separate models per material
 	public static final ResourcePointer<Model> DOUBLE_SLAB = new ResourcePointer<Model>("model://Vanilla/materials/block/solid/doubleslabs/doubleslabs.spm");
-
 	// Slabs
 	public static final ResourcePointer<Model> SLAB_STONE = new ResourcePointer<Model>();
 	public static final ResourcePointer<Model> SLAB_SANDSTONE = new ResourcePointer<Model>();

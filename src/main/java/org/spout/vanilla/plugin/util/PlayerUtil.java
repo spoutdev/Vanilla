@@ -43,10 +43,8 @@ import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 
 public class PlayerUtil {
-
 	/**
 	 * Checks whether the inventory of an entity, if available, suppresses item removal costs
-	 * 
 	 * @param entity to check it for
 	 * @return True if the costs are suppressed, False if not
 	 */
@@ -56,7 +54,6 @@ public class PlayerUtil {
 
 	/**
 	 * Checks whether an Entity is in creative mode
-	 * 
 	 * @param entity to check
 	 * @return True if the game mode is creative, False if not
 	 */
@@ -67,7 +64,6 @@ public class PlayerUtil {
 	/**
 	 * Gets the quickbar of a player entity<br>
 	 * If the entity is not a quickbar-containing entity, null is returned
-	 * 
 	 * @param entity to get the quickbar of
 	 * @return The quickbar, or null
 	 */
@@ -82,7 +78,6 @@ public class PlayerUtil {
 	/**
 	 * Gets the currently selected Quickbar Slot of a player entity<br>
 	 * Needs to be a valid player entity, otherwise null is returned
-	 * 
 	 * @param entity to get the current slot of
 	 * @return Current slot
 	 */

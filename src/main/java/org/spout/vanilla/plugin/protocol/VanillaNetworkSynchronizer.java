@@ -432,7 +432,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		Difficulty difficulty = world.getComponentHolder().getData().get(VanillaData.DIFFICULTY);
 		Dimension dimension = world.getComponentHolder().getData().get(VanillaData.DIMENSION);
 		WorldType worldType = world.getComponentHolder().getData().get(VanillaData.WORLD_TYPE);
-		
 
 		//TODO Handle infinite height
 		int entityId = player.getId();
@@ -460,7 +459,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());
 		player.getSession().send(false, SPMsg);
 		session.send(false, new PlayerHeldItemChangeMessage(session.getPlayer().add(PlayerInventory.class).getQuickbar().getSelectedSlot().getIndex()));
-	
+
 		VanillaSky.getSky(world).updatePlayer(player);
 	}
 
@@ -741,6 +740,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	public Message onBlockBreakAnimation(BlockBreakAnimationEvent event) {
 		return new BlockBreakAnimationMessage(event.getEntity().getId(), (int) event.getPoint().getX(), (int) event.getPoint().getY(), (int) event.getPoint().getZ(), event.getLevel(), getRepositionManager());
 	}
+
 	@EventHandler
 	public Message onEntityEffect(EntityEffectEvent event) {
 		return new EntityEffectMessage(event.getEntity().getId(), event.getEffect().getEffect().getStatusID(), (byte) 0, (short) (event.getEffect().getTimer() * 20));

@@ -33,6 +33,7 @@ import org.spout.vanilla.plugin.protocol.entity.object.LightningEntityProtocol;
 
 public class Lightning extends EntityComponent {
 	private int timeLeft = 20;
+
 	@Override
 	public void onAttached() {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new LightningEntityProtocol());

@@ -44,7 +44,6 @@ public class Slot {
 
 	/**
 	 * Gets the Inventory this Slot is in
-	 * 
 	 * @return Slot Inventory
 	 */
 	public Inventory getInventory() {
@@ -53,7 +52,6 @@ public class Slot {
 
 	/**
 	 * Gets the index of this Slot in the Inventory
-	 * 
 	 * @return Slot index
 	 */
 	public int getIndex() {
@@ -62,7 +60,6 @@ public class Slot {
 
 	/**
 	 * Returns the ItemStack contained in this Slot
-	 * 
 	 * @return Slot ItemStack
 	 */
 	public ItemStack get() {
@@ -71,7 +68,6 @@ public class Slot {
 
 	/**
 	 * Replaces the ItemStack at this slot in this inventory with the specified ItemStack
-	 * 
 	 * @param item to set this slot
 	 * @return the item previously contained
 	 */
@@ -81,7 +77,6 @@ public class Slot {
 
 	/**
 	 * Adds a value to the amount of an item in this Slot
-	 * 
 	 * @param amount to add
 	 * @return True if the amount was added, False if not
 	 */
@@ -91,7 +86,6 @@ public class Slot {
 
 	/**
 	 * Adds a value to the data of an item in this Slot
-	 * 
 	 * @param amount to add
 	 * @return True of the data was added, False if not
 	 */

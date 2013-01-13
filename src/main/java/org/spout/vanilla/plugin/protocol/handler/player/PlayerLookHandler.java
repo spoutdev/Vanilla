@@ -44,7 +44,7 @@ public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 		//First look packet is to login/receive terrain, is not a valid rotation
 		if (session.getDataMap().get("first_login", 0) == 0) {
 			session.getDataMap().put("first_login", 1);
-			((VanillaNetworkSynchronizer)session.getPlayer().getNetworkSynchronizer()).sendPosition();
+			((VanillaNetworkSynchronizer) session.getPlayer().getNetworkSynchronizer()).sendPosition();
 			return;
 		}
 

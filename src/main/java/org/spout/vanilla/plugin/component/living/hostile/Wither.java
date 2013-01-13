@@ -53,7 +53,7 @@ public class Wither extends Living implements Hostile {
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(300);
 		}
-		
+
 		DamageComponent damage = getOwner().add(DamageComponent.class);
 		damage.getDamageLevel(Difficulty.EASY).setAmount(3);
 		//TODO: Check the values

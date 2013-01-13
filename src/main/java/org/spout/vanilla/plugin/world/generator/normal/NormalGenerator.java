@@ -259,13 +259,13 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		//
 		final RidgedMultiRangeLayer rivers =
 				new RidgedMultiRangeLayer(2).
-				setOctaveCount(1).setFrequency(0.005);
+						setOctaveCount(1).setFrequency(0.005);
 		final PerlinRangeLayer hills =
 				new PerlinRangeLayer(1).
-				setOctaveCount(4).setFrequency(0.01 / scale);
+						setOctaveCount(4).setFrequency(0.01 / scale);
 		final PerlinRangeLayer frozenOceans =
 				new PerlinRangeLayer(3).
-				setOctaveCount(4).setFrequency(0.01 / scale);
+						setOctaveCount(4).setFrequency(0.01 / scale);
 		//
 		// LAND LAYERS
 		//
@@ -309,15 +309,15 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		//
 		final BiomeSelectorLayer mushroom =
 				new PerlinRangeLayer(11).
-				setOctaveCount(4).setFrequency(0.01 / scale).
-				addElement(VanillaBiomes.OCEAN, -1, 0.78f).addElement(VanillaBiomes.MUSHROOM_SHORE, 0.78f, 0.85f).addElement(VanillaBiomes.MUSHROOM, 0.85f, 1);
+						setOctaveCount(4).setFrequency(0.01 / scale).
+						addElement(VanillaBiomes.OCEAN, -1, 0.78f).addElement(VanillaBiomes.MUSHROOM_SHORE, 0.78f, 0.85f).addElement(VanillaBiomes.MUSHROOM, 0.85f, 1);
 		final BiomeSelectorLayer beach = rivers.clone().
 				addElement(VanillaBiomes.BEACH, -1, 0.16f).addElement(VanillaBiomes.RIVER, 0.16f, 1);
 		final BiomeSelectorLayer land =
 				new VoronoiLayer(7).
-				setVoronoiFrequency(0.007 / scale).
-				setTurbulenceFrequency(0.004).setTurbulencePower(70).
-				addElements(desertLand, forestLand, jungleLand, plains, swamp, taigaLand, tundraLand);
+						setVoronoiFrequency(0.007 / scale).
+						setTurbulenceFrequency(0.004).setTurbulencePower(70).
+						addElements(desertLand, forestLand, jungleLand, plains, swamp, taigaLand, tundraLand);
 		final BiomeSelectorLayer smallMountains = rivers.clone().
 				addElement(VanillaBiomes.SMALL_MOUNTAINS, -1, 0.16f).addElement(VanillaBiomes.RIVER, 0.16f, 1);
 		final BiomeSelectorLayer mountains = rivers.clone().
@@ -327,8 +327,8 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		//
 		final BiomeSelectorLayer start =
 				new PerlinRangeLayer(5).
-				setOctaveCount(4).setFrequency(0.007 / scale).
-				addElement(mushroom, -1, -0.3f).addElement(VanillaBiomes.OCEAN, -0.3f, -0.05f).addElement(beach, -0.05f, 0).addElement(land, 0, 0.675f).addElement(smallMountains, 0.675f, 0.71f).addElement(mountains, 0.71f, 1);
+						setOctaveCount(4).setFrequency(0.007 / scale).
+						addElement(mushroom, -1, -0.3f).addElement(VanillaBiomes.OCEAN, -0.3f, -0.05f).addElement(beach, -0.05f, 0).addElement(land, 0, 0.675f).addElement(smallMountains, 0.675f, 0.71f).addElement(mountains, 0.71f, 1);
 
 		return start;
 	}

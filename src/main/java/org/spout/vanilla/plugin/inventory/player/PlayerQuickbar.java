@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.inventory.player;
 
 import org.spout.api.inventory.Inventory;
+
 import org.spout.vanilla.plugin.inventory.Slot;
 
 public class PlayerQuickbar extends Inventory {

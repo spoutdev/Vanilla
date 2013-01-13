@@ -100,7 +100,6 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 
 	/**
 	 * Gets whether the trapdoor is aligned to the top-side of the block it is attached to
-	 * 
 	 * @param block of the trapdoor
 	 * @return True if it is top-aligned, False if not
 	 */
@@ -110,7 +109,6 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 
 	/**
 	 * Sets whether the trapdoor is aligned to the top-side of the block it is attached to
-	 * 
 	 * @param block of the trapdoor
 	 * @param topAligned state to set to
 	 */

@@ -39,6 +39,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 import org.spout.api.scheduler.TaskPriority;
+
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
@@ -76,6 +77,7 @@ public class SnowSimulator extends Component {
 	}
 
 	private static final Vector3[] JUMP_TABLE = new Vector3[27];
+
 	static {
 		for (int i = 0; i < JUMP_TABLE.length; i++) {
 			JUMP_TABLE[i] = countToOffset(i);
@@ -83,35 +85,63 @@ public class SnowSimulator extends Component {
 	}
 
 	private static Vector3 countToOffset(int count) {
-		switch(count) {
-			case 0: return Vector3.ZERO;
-			case 1: return new Vector3(0, 0, 16);
-			case 2: return new Vector3(0, 0, -16);
-			case 3: return new Vector3(16, 0, 0);
-			case 4: return new Vector3(-16, 0, 0);
-			case 5: return new Vector3(16, 0, 16);
-			case 6: return new Vector3(16, 0, -16);
-			case 7: return new Vector3(-16, 0, -16);
-			case 8: return new Vector3(-16, 0, -16);
-			case 9: return new Vector3(0, 16, 0);
-			case 10: return new Vector3(0, 16, 16);
-			case 11: return new Vector3(0, 16, -16);
-			case 12: return new Vector3(16, 16, 0);
-			case 13: return new Vector3(-16, 16, 0);
-			case 14: return new Vector3(16, 16, 16);
-			case 15: return new Vector3(16, 16, -16);
-			case 16: return new Vector3(-16, 16, -16);
-			case 17: return new Vector3(-16, 16, -16);
-			case 18: return new Vector3(0, -16, 0);
-			case 19: return new Vector3(0, -16, 16);
-			case 20: return new Vector3(0, -16, -16);
-			case 21: return new Vector3(16, -16, 0);
-			case 22: return new Vector3(-16, -16, 0);
-			case 23: return new Vector3(16, -16, 16);
-			case 24: return new Vector3(16, -16, -16);
-			case 25: return new Vector3(-16, -16, -16);
-			case 26: return new Vector3(-16, -16, -16);
-			default: return Vector3.ZERO;
+		switch (count) {
+			case 0:
+				return Vector3.ZERO;
+			case 1:
+				return new Vector3(0, 0, 16);
+			case 2:
+				return new Vector3(0, 0, -16);
+			case 3:
+				return new Vector3(16, 0, 0);
+			case 4:
+				return new Vector3(-16, 0, 0);
+			case 5:
+				return new Vector3(16, 0, 16);
+			case 6:
+				return new Vector3(16, 0, -16);
+			case 7:
+				return new Vector3(-16, 0, -16);
+			case 8:
+				return new Vector3(-16, 0, -16);
+			case 9:
+				return new Vector3(0, 16, 0);
+			case 10:
+				return new Vector3(0, 16, 16);
+			case 11:
+				return new Vector3(0, 16, -16);
+			case 12:
+				return new Vector3(16, 16, 0);
+			case 13:
+				return new Vector3(-16, 16, 0);
+			case 14:
+				return new Vector3(16, 16, 16);
+			case 15:
+				return new Vector3(16, 16, -16);
+			case 16:
+				return new Vector3(-16, 16, -16);
+			case 17:
+				return new Vector3(-16, 16, -16);
+			case 18:
+				return new Vector3(0, -16, 0);
+			case 19:
+				return new Vector3(0, -16, 16);
+			case 20:
+				return new Vector3(0, -16, -16);
+			case 21:
+				return new Vector3(16, -16, 0);
+			case 22:
+				return new Vector3(-16, -16, 0);
+			case 23:
+				return new Vector3(16, -16, 16);
+			case 24:
+				return new Vector3(16, -16, -16);
+			case 25:
+				return new Vector3(-16, -16, -16);
+			case 26:
+				return new Vector3(-16, -16, -16);
+			default:
+				return Vector3.ZERO;
 		}
 	}
 
@@ -119,11 +149,13 @@ public class SnowSimulator extends Component {
 		private final Player player;
 		private final Region region;
 		private final Vector3 offset;
+
 		private SnowfallTask(Player player, Region region, Vector3 offset) {
 			this.player = player;
 			this.region = region;
 			this.offset = offset;
 		}
+
 		@Override
 		public void run() {
 			if (!player.isOnline() || !weather.isRaining()) {
@@ -156,7 +188,7 @@ public class SnowSimulator extends Component {
 							if (region.containsBlock(x, y - dy, z)) {
 								BlockMaterial mat = region.getBlockMaterial(x, y - dy, z);
 								if (mat instanceof VanillaBlockMaterial) {
-									VanillaBlockMaterial vbm = (VanillaBlockMaterial)mat;
+									VanillaBlockMaterial vbm = (VanillaBlockMaterial) mat;
 									if (vbm.canSupport(VanillaMaterials.SNOW, BlockFace.TOP)) {
 										Block block = region.getBlock(x, y - dy + 1, z);
 										if (!VanillaMaterials.SNOW.willMeltAt(block)) {

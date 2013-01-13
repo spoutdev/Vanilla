@@ -29,6 +29,7 @@ package org.spout.vanilla.plugin.inventory.player;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
+
 import org.spout.vanilla.plugin.material.item.armor.Boots;
 import org.spout.vanilla.plugin.material.item.armor.Chestplate;
 import org.spout.vanilla.plugin.material.item.armor.Helmet;
@@ -54,15 +55,15 @@ public class PlayerArmorInventory extends Inventory {
 		if (item != null) {
 			Material material = item.getMaterial();
 			switch (i) {
-				case BOOT_SLOT :
+				case BOOT_SLOT:
 					return material instanceof Boots;
-				case LEGGINGS_SLOT : 
+				case LEGGINGS_SLOT:
 					return material instanceof Leggings;
-				case CHEST_PLATE_SLOT :
+				case CHEST_PLATE_SLOT:
 					return material instanceof Chestplate;
-				case HELMET_SLOT :
+				case HELMET_SLOT:
 					return material instanceof Helmet;
-				default :
+				default:
 					return false;
 			}
 		}

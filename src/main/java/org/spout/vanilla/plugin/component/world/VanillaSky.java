@@ -104,9 +104,9 @@ public abstract class VanillaSky extends WorldComponent {
 		}
 		if (countdown.getAndDecrement() <= 0) {
 			countdown.set(0);
-			updateTime((long)time);
+			updateTime((long) time);
 		}
-		
+
 		final List<Player> playerList = getWorld().getPlayers();
 		HashSet<Player> players = new HashSet<Player>(playerList);
 		players.removeAll(tracked);
@@ -115,7 +115,7 @@ public abstract class VanillaSky extends WorldComponent {
 		}
 		tracked.clear();
 		tracked.addAll(playerList);
-		
+
 		// Sleeping players
 		boolean skipNight = false;
 		for (Player player : playerList) {
@@ -139,7 +139,7 @@ public abstract class VanillaSky extends WorldComponent {
 		}
 		getData().put(VanillaData.WORLD_TIME, time);
 
-		synchronized(this) {
+		synchronized (this) {
 			if (this.weather != null) {
 				this.weather.onTick(dt);
 			}
@@ -280,7 +280,7 @@ public abstract class VanillaSky extends WorldComponent {
 	}
 
 	public abstract void updateTime(long time);
-	
+
 	public abstract void updatePlayer(Player player);
 
 	public abstract void updateWeather(Weather oldWeather, Weather newWeather);

@@ -45,6 +45,7 @@ import org.spout.api.gui.render.RenderPart;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.component.substance.Item;

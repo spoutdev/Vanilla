@@ -32,6 +32,7 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
+
 import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityTeleportMessage;
 
 public final class EntityTeleportCodec extends MessageCodec<EntityTeleportMessage> {

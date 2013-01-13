@@ -97,7 +97,6 @@ public class FallingBlock extends EntityComponent {
 
 	/**
 	 * Whether the material can stop a falling block from falling, acting as the new ground block
-	 * 
 	 * @param material
 	 * @return True if it obstructs further falling, False if not
 	 */

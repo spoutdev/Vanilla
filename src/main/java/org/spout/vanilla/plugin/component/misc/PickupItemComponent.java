@@ -30,6 +30,7 @@ import java.util.List;
 
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
+
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.substance.Item;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;

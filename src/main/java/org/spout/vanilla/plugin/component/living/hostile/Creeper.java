@@ -60,7 +60,7 @@ public class Creeper extends Living implements Hostile {
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(20);
 		}
-		
+
 		//TODO: Does damage according to range.
 	}
 

@@ -70,7 +70,6 @@ public abstract class Living extends EntityComponent {
 		holder.getData().put(VanillaData.ATTACHED_COUNT, getAttachedCount() + 1);
 	}
 
-	
 	public boolean isOnGround() {
 		return getOwner().getData().get(VanillaData.IS_ON_GROUND);
 	}
@@ -123,14 +122,13 @@ public abstract class Living extends EntityComponent {
 
 	public boolean isEatingBlocking() {
 		return getOwner().getData().get(VanillaData.IS_EATING_BLOCKING);
-		
 	}
 
 	public void setEatingBlocking(boolean isEatingBlocking) {
 		getOwner().getData().put(VanillaData.IS_EATING_BLOCKING, isEatingBlocking);
 		sendMetaData();
 	}
-	
+
 	public boolean isSneaking() {
 		return getOwner().getData().get(VanillaData.IS_SNEAKING);
 	}
@@ -139,32 +137,32 @@ public abstract class Living extends EntityComponent {
 		getOwner().getData().put(VanillaData.IS_SNEAKING, isSneaking);
 		sendMetaData();
 	}
-	
+
 	public void sendMetaData() {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 0, getCommonMetadata()));
 		getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), parameters));
 	}
-	
+
 	private byte getCommonMetadata() {
 		byte value = 0;
 		if (getOwner().has(FireComponent.class)) {
-			value = (byte) (value | (( getOwner().get(FireComponent.class).isOnFire() ? 1 : 0 ) << 0));
+			value = (byte) (value | ((getOwner().get(FireComponent.class).isOnFire() ? 1 : 0) << 0));
 		}
-		
-		value = (byte) (value | (( isSneaking() ? 1 : 0 ) << 1));
-		value = (byte) (value | (( isRiding() ? 1 : 0 ) << 2));
-		
+
+		value = (byte) (value | ((isSneaking() ? 1 : 0) << 1));
+		value = (byte) (value | ((isRiding() ? 1 : 0) << 2));
+
 		if (getOwner().has(Human.class)) {
-			value = (byte) (value | (( getOwner().get(Human.class).isSprinting() ? 1 : 0 ) << 3));
+			value = (byte) (value | ((getOwner().get(Human.class).isSprinting() ? 1 : 0) << 3));
 		}
-		
-		value = (byte) (value | (( isEatingBlocking() ? 1 : 0 ) << 4));
-		
+
+		value = (byte) (value | ((isEatingBlocking() ? 1 : 0) << 4));
+
 		if (getOwner().has(EffectsComponent.class)) {
-			value = (byte) (value | (( getOwner().get(EffectsComponent.class).containsEffect(StatusEffect.INVISIBILITY) ? 1 : 0 ) << 5));
+			value = (byte) (value | ((getOwner().get(EffectsComponent.class).containsEffect(StatusEffect.INVISIBILITY) ? 1 : 0) << 5));
 		}
-		
+
 		return value;
 	}
 }

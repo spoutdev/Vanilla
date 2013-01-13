@@ -52,11 +52,11 @@ public class Enderman extends Living implements Neutral {
 		physics.setCollisionShape(new BoxShape(1F, 3F, 1F));
 		physics.setFriction(10f);
 		physics.setRestitution(0f);
-		
+
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(40);
 		}
-		
+
 		DamageComponent damage = getOwner().add(DamageComponent.class);
 		damage.getDamageLevel(Difficulty.EASY).setAmount(4);
 		damage.getDamageLevel(Difficulty.NORMAL).setAmount(7);

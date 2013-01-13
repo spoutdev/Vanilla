@@ -29,6 +29,7 @@ package org.spout.vanilla.plugin.component.living.util;
 import java.util.Random;
 
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.api.component.Utility;
 
 import org.spout.vanilla.plugin.VanillaPlugin;

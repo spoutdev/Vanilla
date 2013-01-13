@@ -157,5 +157,4 @@ public class VanillaData {
 	public static final DefaultedKey<Intensity> STORM_INTENSITY = new DefaultedKeyImpl<Intensity>("storm_intensity", null);
 	public static final DefaultedKey<Float> CURRENT_LIGHTNING_STRENGTH = new DefaultedKeyImpl<Float>("current_lightning_strength", 0F);
 	public static final DefaultedKey<Float> PREVIOUS_LIGHTNING_STRENGTH = new DefaultedKeyImpl<Float>("previous_lightning_strength", 0F);
-
 }

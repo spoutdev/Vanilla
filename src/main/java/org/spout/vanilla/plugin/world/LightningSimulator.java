@@ -167,7 +167,6 @@ public class LightningSimulator extends Component {
 								GeneralEffects.LIGHTNING_THUNDER.adjust(volume, 0.7F).play(p, point);
 							}
 						}
-						
 					}
 					//success, go to the next player
 					break;

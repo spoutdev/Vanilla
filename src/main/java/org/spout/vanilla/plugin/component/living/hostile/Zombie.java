@@ -59,11 +59,11 @@ public class Zombie extends Living implements Hostile {
 		physics.setCollisionShape(new BoxShape(1F, 2F, 1F));
 		physics.setFriction(10f);
 		physics.setRestitution(0f);
-		
+
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(20);
 		}
-		
+
 		DamageComponent damage = getOwner().add(DamageComponent.class);
 		damage.getDamageLevel(Difficulty.EASY).setAmount(3);
 		damage.getDamageLevel(Difficulty.NORMAL).setAmount(4);
@@ -86,7 +86,7 @@ public class Zombie extends Living implements Hostile {
 	public void setWasVillager(boolean value) {
 		getOwner().getData().put(VanillaData.WAS_VILLAGER, value);
 	}
-	
+
 	@Override
 	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
 		System.out.println("COLLIDED WITH A " + entity);

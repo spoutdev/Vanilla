@@ -29,20 +29,19 @@ package org.spout.vanilla.plugin.data;
 import org.spout.vanilla.plugin.data.effect.StatusEffectContainer;
 
 public class Damage {
-
 	private int amount;
 	private StatusEffectContainer effect;
-	
+
 	public Damage() {
 		setAmount(0);
 		setEffect(null);
 	}
-	
+
 	public Damage(int amount) {
 		this.setAmount(amount);
 		this.setEffect(null);
 	}
-	
+
 	public Damage(int amount, StatusEffectContainer effect) {
 		this.setAmount(amount);
 		this.setEffect(effect);

@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.component.living.util;
 
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.api.component.Utility;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
@@ -49,6 +50,5 @@ public class SnowGolem extends Living implements Utility {
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(100);
 		}
-		
 	}
 }

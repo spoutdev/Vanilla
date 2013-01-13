@@ -29,6 +29,7 @@ package org.spout.vanilla.plugin.material.block.solid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 import org.spout.api.event.Cause;
 import org.spout.api.event.cause.MaterialCause;
 import org.spout.api.geo.cuboid.Block;
@@ -45,6 +46,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.model.Model;
 import org.spout.api.resource.ResourcePointer;
 import org.spout.api.scheduler.TaskPriority;
+
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;

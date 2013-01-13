@@ -109,7 +109,7 @@ public class WeatherSimulator extends BasicTickable {
 	public boolean isSnowingAt(int x, int y, int z) {
 		Biome biome = getWorld().getBiome(x, y, z);
 		if (biome instanceof VanillaBiome) {
-			VanillaBiome vb = (VanillaBiome)biome;
+			VanillaBiome vb = (VanillaBiome) biome;
 			if (vb.getClimate() != Climate.COLD) {
 				return false;
 			}
@@ -121,7 +121,7 @@ public class WeatherSimulator extends BasicTickable {
 		if (!includeSnow) {
 			Biome biome = getWorld().getBiome(x, y, z);
 			if (biome instanceof VanillaBiome) {
-				VanillaBiome vb = (VanillaBiome)biome;
+				VanillaBiome vb = (VanillaBiome) biome;
 				if (vb.getClimate() == Climate.COLD) {
 					return false;
 				}
@@ -158,7 +158,7 @@ public class WeatherSimulator extends BasicTickable {
 			sky.getData().put(VanillaData.WORLD_WEATHER, getForecast());
 			final Weather current = getCurrent();
 			Weather forecast = current;
-			while(forecast == current) {
+			while (forecast == current) {
 				//Loop until we pick a weather different from current
 				forecast = Weather.get(random.nextInt(3));
 			}

@@ -352,16 +352,16 @@ public class TestCommands {
 	@Command(aliases = "hunger", usage = "<amount> <hungry>", desc = "Modify your hunger", min = 2, max = 2)
 	@CommandPermissions("vanilla.command.debug")
 	public void hunger(CommandContext args, CommandSource source) throws CommandException {
-		HungerComponent hunger  = null;
+		HungerComponent hunger = null;
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			hunger = ((Client) Spout.getEngine()).getActivePlayer().get(HungerComponent.class);
 		} else {
 			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to change your hunger!");
 			}
-			hunger = ((Player)source).get(HungerComponent.class);
+			hunger = ((Player) source).get(HungerComponent.class);
 		}
-		 
+
 		hunger.setHunger(args.getInteger(0));
 		hunger.setPoisoned(Boolean.valueOf(args.getString(1)));
 	}
@@ -586,7 +586,7 @@ public class TestCommands {
 		}
 		pos.getWorld().spawnEntity(entity);
 	}
-	
+
 	@Command(aliases = "fire", usage = "<time> <hurt>", desc = "Set you on fire", min = 2, max = 2)
 	@CommandPermissions("vanilla.command.debug")
 	public void fire(CommandContext args, CommandSource source) throws CommandException {
@@ -597,9 +597,9 @@ public class TestCommands {
 			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to change your hunger!");
 			}
-			fire = ((Player)source).add(FireComponent.class);
+			fire = ((Player) source).add(FireComponent.class);
 		}
-		 
+
 		fire.setOnFire(args.getFloat(0), Boolean.parseBoolean(args.getString(1)));
 	}
 }

@@ -50,6 +50,7 @@ import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityRelativePositionYa
 import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityTeleportMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityVelocityMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityYawMessage;
+
 import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.protocolifyPitch;
 import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.protocolifyPosition;
 import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.protocolifyYaw;
@@ -71,9 +72,9 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		// Movement
 		final Transform prevTransform = rm.convert(entity.getTransform().getTransform());
 		final Transform newTransform = rm.convert(entity.getTransform().getTransformLive());
-		
+
 		final boolean looked = entity.getTransform().isRotationDirty();
-		
+
 		final int lastX = protocolifyPosition(prevTransform.getPosition().getX());
 		final int lastY = protocolifyPosition(prevTransform.getPosition().getY());
 		final int lastZ = protocolifyPosition(prevTransform.getPosition().getZ());

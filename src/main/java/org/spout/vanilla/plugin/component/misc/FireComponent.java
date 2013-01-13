@@ -27,29 +27,28 @@
 package org.spout.vanilla.plugin.component.misc;
 
 import org.spout.api.component.type.EntityComponent;
+
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.event.cause.NullDamageCause;
 import org.spout.vanilla.plugin.event.cause.DamageCause.DamageType;
-
+import org.spout.vanilla.plugin.event.cause.NullDamageCause;
 
 public class FireComponent extends EntityComponent {
-
 	private float internalTimer = 0.0f;
 	private HealthComponent health;
 	private Living living;
-	
+
 	@Override
 	public void onAttached() {
 		health = getOwner().add(HealthComponent.class);
 		living = getOwner().get(Living.class);
 	}
-	
+
 	@Override
 	public boolean canTick() {
 		return getFireTick() >= 0 && !health.isDead();
 	}
-	
+
 	@Override
 	public void onTick(float dt) {
 		living.sendMetaData();
@@ -65,19 +64,19 @@ public class FireComponent extends EntityComponent {
 		}
 		internalTimer += dt;
 	}
-	
+
 	private void setFireTick(float fireTick) {
 		getOwner().getData().put(VanillaData.FIRE_TICK, fireTick);
 	}
-	
+
 	public float getFireTick() {
 		return getOwner().getData().get(VanillaData.FIRE_TICK);
 	}
-	
+
 	public boolean isOnFire() {
 		return getFireTick() > 0;
 	}
-	
+
 	private boolean isFireHurting() {
 		return getOwner().getData().get(VanillaData.FIRE_HURT);
 	}

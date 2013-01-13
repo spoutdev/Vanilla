@@ -54,7 +54,7 @@ public final class EntityActionHandler extends MessageHandler<EntityActionMessag
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 		switch (message.getAction()) {
 			case EntityActionMessage.ACTION_CROUCH:
-				
+
 				if (human != null) {
 					if (!Spout.getEventManager().callEvent(new PlayerToggleSneakingEvent(player, true)).isCancelled()) {
 						human.setSneaking(true);

@@ -29,6 +29,7 @@ package org.spout.vanilla.plugin.component.substance.material.chest;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
@@ -46,7 +47,7 @@ public class Chest extends AbstractChest implements Container {
 	public boolean isDouble() {
 		return getInventory().size() == ChestInventory.DOUBLE_SIZE;
 	}
-	
+
 	@Override
 	public void setOpened(Player player, boolean opened) {
 		if (isDouble()) {
@@ -54,8 +55,7 @@ public class Chest extends AbstractChest implements Container {
 			//MC will only play the chest open/close animation if you play it on the NE-most chest block in double chests
 			if (block.translate(BlockFace.EAST).getMaterial() == VanillaMaterials.CHEST) {
 				VanillaBlockMaterial.playBlockAction(block.translate(BlockFace.EAST), (byte) 1, opened ? (byte) 1 : (byte) 0);
-			}
-			else if (block.translate(BlockFace.NORTH).getMaterial() == VanillaMaterials.CHEST) {
+			} else if (block.translate(BlockFace.NORTH).getMaterial() == VanillaMaterials.CHEST) {
 				VanillaBlockMaterial.playBlockAction(block.translate(BlockFace.NORTH), (byte) 1, opened ? (byte) 1 : (byte) 0);
 			}
 		}

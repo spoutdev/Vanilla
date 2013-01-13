@@ -90,11 +90,9 @@ public class LilyPad extends GroundAttachable {
 					if (inv != null && !PlayerUtil.isCostSuppressed(entity)) {
 						inv.addAmount(-1);
 					}
-					
 				}
 				break;
 			}
-			
 		}
 	}
 }

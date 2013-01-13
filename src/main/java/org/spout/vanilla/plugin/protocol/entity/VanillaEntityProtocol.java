@@ -50,7 +50,6 @@ import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityRelativePositionYa
 import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityTeleportMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityVelocityMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityYawMessage;
-
 import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.protocolifyPitch;
 import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.protocolifyPosition;
 import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.protocolifyYaw;
@@ -70,37 +69,37 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 	@Override
 	public final List<Message> getUpdateMessages(Entity entity, RepositionManager rm, boolean force) {
 		// Movement
-		Transform prevTransform = entity.getTransform().getTransform();
-		Transform newTransform = entity.getTransform().getTransformLive();
+		final Transform prevTransform = entity.getTransform().getTransform();
+		final Transform newTransform = entity.getTransform().getTransformLive();
+		
+		final boolean looked = entity.getTransform().isRotationDirty();
 
-		int lastX = protocolifyPosition(prevTransform.getPosition().getX());
-		int lastY = protocolifyPosition(prevTransform.getPosition().getY());
-		int lastZ = protocolifyPosition(prevTransform.getPosition().getZ());
-		int lastYaw = protocolifyYaw(prevTransform.getRotation().getYaw());
-		int lastPitch = protocolifyPitch(prevTransform.getRotation().getPitch());
+		final int lastX = protocolifyPosition(prevTransform.getPosition().getX());
+		final int lastY = protocolifyPosition(prevTransform.getPosition().getY());
+		final int lastZ = protocolifyPosition(prevTransform.getPosition().getZ());
+		final int lastYaw = protocolifyYaw(prevTransform.getRotation().getYaw());
+		final int lastPitch = protocolifyPitch(prevTransform.getRotation().getPitch());
 
-		int newX = protocolifyPosition(newTransform.getPosition().getX());
-		int newY = protocolifyPosition(newTransform.getPosition().getY());
-		int newZ = protocolifyPosition(newTransform.getPosition().getZ());
-		int newYaw = protocolifyYaw(newTransform.getRotation().getYaw());
-		int newPitch = protocolifyPitch(newTransform.getRotation().getPitch());
+		final int newX = protocolifyPosition(newTransform.getPosition().getX());
+		final int newY = protocolifyPosition(newTransform.getPosition().getY());
+		final int newZ = protocolifyPosition(newTransform.getPosition().getZ());
+		final int newYaw = protocolifyYaw(newTransform.getRotation().getYaw());
+		final int newPitch = protocolifyPitch(newTransform.getRotation().getPitch());
 
-		int deltaX = newX - lastX;
-		int deltaY = newY - lastY;
-		int deltaZ = newZ - lastZ;
-		int deltaYaw = newYaw - lastYaw;
-		int deltaPitch = newPitch - lastPitch;
+		final int deltaX = newX - lastX;
+		final int deltaY = newY - lastY;
+		final int deltaZ = newZ - lastZ;
+		final int deltaYaw = newYaw - lastYaw;
+		final int deltaPitch = newPitch - lastPitch;
 
-		List<Message> messages = new ArrayList<Message>();
-
-		boolean looked = entity.getTransform().isRotationDirty();
+		final List<Message> messages = new ArrayList<Message>();
 
 		/*
 		 * Two scenarios:
 		 * - The entity moves more than 4 blocks and maybe changes rotation.
 		 * - The entity moves less than 4 blocks and maybe changes rotation.
 		 */
-		if (force || deltaX > 4 || deltaX < -4 || deltaY > 4 || deltaY < -4 || deltaZ > 4 || deltaZ < -4) {
+		if (force || deltaX > 128 || deltaX < -128 || deltaY > 128 || deltaY < -128 || deltaZ > 128 || deltaZ < -128) {
 			messages.add(new EntityTeleportMessage(entity.getId(), newX, newY, newZ, newYaw, newPitch, rm));
 			if (force || looked) {
 				messages.add(new EntityYawMessage(entity.getId(), newYaw, newPitch));
@@ -114,22 +113,19 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		}
 
 		// Head movement
-
 		HeadComponent head = entity.get(HeadComponent.class);
 		if (head != null && head.isDirty()) {
-			final int headYawProt = ChannelBufferUtils.protocolifyYaw(-head.getRotation().getYaw());
+			final int headYawProt = ChannelBufferUtils.protocolifyYaw(head.getRotation().getYaw());
 			messages.add(new EntityHeadYawMessage(entity.getId(), headYawProt));
 		}
 
 		// Physics
-
 		PhysicsComponent physics = entity.get(PhysicsComponent.class);
 		if (physics != null && physics.isLinearVelocityDirty()) {
 			messages.add(new EntityVelocityMessage(entity.getId(), new Vector3(0, 0, 0)));
 		}
 
 		// Extra metadata
-
 		List<Parameter<?>> params = getUpdateParameters(entity);
 		if (lastMeta == null || !lastMeta.equals(params)) {
 			messages.add(new EntityMetadataMessage(entity.getId(), params));

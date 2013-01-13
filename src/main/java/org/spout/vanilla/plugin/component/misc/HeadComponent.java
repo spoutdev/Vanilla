@@ -47,18 +47,6 @@ public class HeadComponent extends EntityComponent {
 
 	}
 
-	@Override
-	public boolean canTick() {
-		return true;
-	}
-
-	@Override
-	public void onTick(float dt) {
-		lastRotation = getRotation();
-		//TODO: Proper adjustment of the rotation based on entity body rotation?
-		// Is this needed at all?
-	}
-
 	/**
 	 * Checks whether this head has changed rotation since last tick
 	 * @return True if the head rotation is dirty, False if not
@@ -88,6 +76,7 @@ public class HeadComponent extends EntityComponent {
 	 * @param rotation to set to
 	 */
 	public void setRotation(Quaternion rotation) {
+		lastRotation = getRotation();
 		getData().put(VanillaData.HEAD_ROTATION, rotation);
 	}
 

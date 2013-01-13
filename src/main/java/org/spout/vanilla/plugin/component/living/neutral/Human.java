@@ -98,14 +98,6 @@ public class Human extends Living {
 		return getGameMode() == GameMode.SURVIVAL;
 	}
 
-	public boolean isOnGround() {
-		return getOwner().getData().get(VanillaData.IS_ON_GROUND);
-	}
-
-	public void setOnGround(boolean onGround) {
-		getOwner().getData().put(VanillaData.IS_ON_GROUND, onGround);
-	}
-
 	public boolean isSprinting() {
 		return getOwner().getData().get(VanillaData.IS_SPRINTING);
 	}

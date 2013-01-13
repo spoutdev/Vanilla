@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.plugin.component.living;
 
-import java.util.Random;
-
 import org.spout.api.component.impl.NavigationComponent;
 import org.spout.api.component.impl.PhysicsComponent;
 import org.spout.api.component.type.EntityComponent;
@@ -40,21 +38,34 @@ import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
 
 public abstract class Living extends EntityComponent {
-	private static final Random random = new Random();
+	private HeadComponent head;
+	private HealthComponent health;
+	private PhysicsComponent physics;
+	private DrowningComponent drowning;
+	private NavigationComponent navigation;
 
 	@Override
 	public void onAttached() {
 		Entity holder = getOwner();
-		holder.add(HeadComponent.class);
-		holder.add(HealthComponent.class);
-		holder.add(PhysicsComponent.class);
-		holder.add(DrowningComponent.class);
-		holder.add(NavigationComponent.class).setDefaultExaminers(new VanillaBlockExaminer());
+		head = holder.add(HeadComponent.class);
+		health = holder.add(HealthComponent.class);
+		physics = holder.add(PhysicsComponent.class);
+		drowning = holder.add(DrowningComponent.class);
+		navigation = holder.add(NavigationComponent.class);
+		navigation.setDefaultExaminers(new VanillaBlockExaminer());
 
 		holder.setSavable(true);
 
 		//Tracks the number of times this component has been attached (i.e how many times it's been saved, then loaded. 1 = fresh entity)
 		holder.getData().put(VanillaData.ATTACHED_COUNT, getAttachedCount() + 1);
+	}
+
+	public boolean isOnGround() {
+		return getOwner().getData().get(VanillaData.IS_ON_GROUND);
+	}
+
+	public void setOnGround(boolean onGround) {
+		getOwner().getData().put(VanillaData.IS_ON_GROUND, onGround);
 	}
 
 	/**
@@ -71,14 +82,22 @@ public abstract class Living extends EntityComponent {
 	}
 
 	public HeadComponent getHead() {
-		return getOwner().get(HeadComponent.class);
+		return head;
 	}
 
 	public HealthComponent getHealth() {
-		return getOwner().get(HealthComponent.class);
+		return health;
 	}
 
 	public PhysicsComponent getPhysics() {
-		return getOwner().get(PhysicsComponent.class);
+		return physics;
+	}
+
+	public DrowningComponent getDrowning() {
+		return drowning;
+	}
+
+	public NavigationComponent getNavigation() {
+		return navigation;
 	}
 }

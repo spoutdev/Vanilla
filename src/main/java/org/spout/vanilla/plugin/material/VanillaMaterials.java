@@ -99,6 +99,7 @@ import org.spout.vanilla.plugin.material.block.ore.IronOre;
 import org.spout.vanilla.plugin.material.block.ore.LapisLazuliBlock;
 import org.spout.vanilla.plugin.material.block.ore.LapisLazuliOre;
 import org.spout.vanilla.plugin.material.block.ore.MelonBlock;
+import org.spout.vanilla.plugin.material.block.ore.NetherQuartzOre;
 import org.spout.vanilla.plugin.material.block.ore.RedstoneOre;
 import org.spout.vanilla.plugin.material.block.piston.PistonBlock;
 import org.spout.vanilla.plugin.material.block.piston.PistonExtension;
@@ -153,6 +154,7 @@ import org.spout.vanilla.plugin.material.block.solid.NetherRack;
 import org.spout.vanilla.plugin.material.block.solid.Obsidian;
 import org.spout.vanilla.plugin.material.block.solid.Plank;
 import org.spout.vanilla.plugin.material.block.solid.Pumpkin;
+import org.spout.vanilla.plugin.material.block.ore.QuartzBlock;
 import org.spout.vanilla.plugin.material.block.solid.RedstoneLamp;
 import org.spout.vanilla.plugin.material.block.solid.Sand;
 import org.spout.vanilla.plugin.material.block.solid.Sandstone;
@@ -169,6 +171,7 @@ import org.spout.vanilla.plugin.material.block.stair.BrickStairs;
 import org.spout.vanilla.plugin.material.block.stair.CobblestoneStairs;
 import org.spout.vanilla.plugin.material.block.stair.JungleWoodStairs;
 import org.spout.vanilla.plugin.material.block.stair.NetherBrickStairs;
+import org.spout.vanilla.plugin.material.block.stair.QuartzStairs;
 import org.spout.vanilla.plugin.material.block.stair.OakWoodStairs;
 import org.spout.vanilla.plugin.material.block.stair.SandstoneStairs;
 import org.spout.vanilla.plugin.material.block.stair.SpruceWoodStairs;
@@ -281,12 +284,14 @@ public final class VanillaMaterials {
 	public static final LapisLazuliOre LAPIS_LAZULI_ORE = new LapisLazuliOre("Lapis Lazuli Ore", 21);
 	public static final RedstoneOre REDSTONE_ORE = new RedstoneOre("Redstone Ore", 73, false);
 	public static final RedstoneOre GLOWING_REDSTONE_ORE = new RedstoneOre("Glowing Redstone Ore", 74, true);
+	public static final NetherQuartzOre NETHER_QUARTZ_ORE = new NetherQuartzOre("Nether Quartz Ore", 153);
 	// == Solid blocks ==
 	public static final GoldBlock GOLD_BLOCK = new GoldBlock("Gold Block", 41);
 	public static final IronBlock IRON_BLOCK = new IronBlock("Iron Block", 42);
 	public static final DiamondBlock DIAMOND_BLOCK = new DiamondBlock("Diamond Block", 57);
 	public static final EmeraldBlock EMERALD_BLOCK = new EmeraldBlock("Emerald Block", 133);
 	public static final LapisLazuliBlock LAPIS_LAZULI_BLOCK = new LapisLazuliBlock("Lapis Lazuli Block", 22);
+	public static final QuartzBlock QUARTZ_BLOCK = QuartzBlock.QUARTZ_BLOCK;
 	// == Plants ==
 	public static final TallGrass TALL_GRASS = TallGrass.TALL_GRASS;
 	public static final TallGrass FERN = TallGrass.FERN;
@@ -298,6 +303,7 @@ public final class VanillaMaterials {
 	public static final Mushroom BROWN_MUSHROOM = new Mushroom("Brown Mushroom", 39, VanillaMaterialModels.BROWN_MUSHROOM);
 	public static final Mushroom RED_MUSHROOM = new Mushroom("Red Mushroom", 40, VanillaMaterialModels.RED_MUSHROOM);
 	// == Stairs ==
+	public static final QuartzStairs STAIRS_QUARTZ = new QuartzStairs("Quartz Stairs", 156);
 	public static final NetherBrickStairs STAIRS_NETHER_BRICK = new NetherBrickStairs("Nether Brick Stairs", 114);
 	public static final BrickStairs STAIRS_BRICK = new BrickStairs("Brick Stairs", 108);
 	public static final CobblestoneStairs STAIRS_COBBLESTONE = new CobblestoneStairs("Cobblestone Stairs", 67);
@@ -476,6 +482,7 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial EMERALD = new VanillaItemMaterial("Emerald", 388, null);
 	public static final VanillaItemMaterial IRON_INGOT = new VanillaItemMaterial("Iron Ingot", 265, null);
 	public static final VanillaItemMaterial GOLD_INGOT = new VanillaItemMaterial("Gold Ingot", 266, null);
+	public static final VanillaItemMaterial NETHER_QUARTZ = new VanillaItemMaterial("Quartz", 406, null);
 	public static final Stick STICK = new Stick("Stick", 280);
 	public static final VanillaItemMaterial BOWL = new VanillaItemMaterial("Bowl", 281, null);
 	public static final StringItem STRING = new StringItem("String", 287, TRIPWIRE);

@@ -47,6 +47,10 @@ public class PickupItemComponent extends EntityComponent {
 		if (!getOwner().getTransform().isPositionDirty()) {
 			return false;
 		}
+		HealthComponent healthComponent = getOwner().get(HealthComponent.class);
+		if (healthComponent != null && healthComponent.isDead()) {
+			return false;
+		}
 		nearbyEntities = getOwner().getWorld().getNearbyEntities(getOwner(), DISTANCE);
 		return !nearbyEntities.isEmpty();
 	}
@@ -56,10 +60,6 @@ public class PickupItemComponent extends EntityComponent {
 		for (Entity entity : nearbyEntities) {
 			Item item = entity.get(Item.class);
 			if (item != null && item.canBeCollected()) {
-				HealthComponent healthComponent = getOwner().get(HealthComponent.class);
-				if (healthComponent != null && healthComponent.isDead()) {
-					return;
-				}
 				getOwner().getNetwork().callProtocolEvent(new EntityCollectItemEvent(getOwner(), entity));
 				PlayerInventory inv = getOwner().get(PlayerInventory.class);
 				if (inv != null) {

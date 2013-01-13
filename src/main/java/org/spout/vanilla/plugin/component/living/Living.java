@@ -155,15 +155,15 @@ public abstract class Living extends EntityComponent {
 	
 	private byte getCommonMetadata() {
 		byte value = 0;
-		value = (byte) (value | (( isSneaking() ? 1 : 0 ) << 0));
-		value = (byte) (value | (( isOnFire() ? 1 : 0 ) << 1));
+		value = (byte) (value | (( isOnFire() ? 1 : 0 ) << 0));
+		value = (byte) (value | (( isSneaking() ? 1 : 0 ) << 1));
+		value = (byte) (value | (( isRiding() ? 1 : 0 ) << 2));
 		
 		if (getOwner().has(Human.class)) {
-			value = (byte) (value | (( getOwner().get(Human.class).isSprinting() ? 1 : 0 ) << 2));
+			value = (byte) (value | (( getOwner().get(Human.class).isSprinting() ? 1 : 0 ) << 3));
 		}
 		
-		value = (byte) (value | (( isRiding() ? 1 : 0 ) << 3));
-		value += (byte) (value | (( isEatingBlocking() ? 1 : 0 ) << 4));
+		value = (byte) (value | (( isEatingBlocking() ? 1 : 0 ) << 4));
 		
 		if (getOwner().has(EffectsComponent.class)) {
 			value = (byte) (value | (( getOwner().get(EffectsComponent.class).containsEffect(StatusEffect.INVISIBILITY) ? 1 : 0 ) << 5));

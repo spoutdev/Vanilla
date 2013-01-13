@@ -53,7 +53,9 @@ import org.spout.api.protocol.reposition.RepositionManager;
 
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
+import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
+import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.SoundEffect;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.event.cause.PlayerClickBlockCause;
@@ -104,7 +106,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		 */
 		final BlockFace clickedFace = message.getDirection();
 
-		if (holdingMat instanceof Food || holdingMat instanceof Sword) {
+		if ((holdingMat instanceof Food && player.add(HungerComponent.class).getHunger() != VanillaData.HUNGER.getDefaultValue()) || holdingMat instanceof Sword) {
 			player.get(Living.class).setEatingBlocking(true);
 			return;
 		}

@@ -46,6 +46,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -177,9 +178,15 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				final BlockFace placedAgainst;
 				final boolean placedIsClicked;
 				// For snow, tall grass, and the like, place at the clicked block
-				if (toPlace.canPlace(clickedBlock, placedData, BlockFace.BOTTOM, message.getFace(), true, cause) || interactEvent.useItemInHand() == Result.ALLOW) {
+				final BlockFace clickedAgainst;
+				if (!clickedBlock.getMaterial().isPlacementObstacle() && BlockFaces.NESW.contains(clickedFace)) {
+					clickedAgainst = BlockFace.BOTTOM;
+				} else {
+					clickedAgainst = clickedFace.getOpposite();
+				}
+				if (toPlace.canPlace(clickedBlock, placedData, clickedAgainst, message.getFace(), true, cause) || interactEvent.useItemInHand() == Result.ALLOW) {
 					placedBlock = clickedBlock;
-					placedAgainst = BlockFace.BOTTOM;
+					placedAgainst = clickedAgainst;
 					placedIsClicked = true;
 				} else {
 					placedBlock = clickedBlock.translate(clickedFace);

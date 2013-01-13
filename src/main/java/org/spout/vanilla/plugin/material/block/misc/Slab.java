@@ -142,9 +142,9 @@ public class Slab extends VanillaBlockMaterial implements Burnable {
 		}
 
 		if (this.isTop(block)) {
-			return against == BlockFace.BOTTOM;
-		} else {
 			return against == BlockFace.TOP;
+		} else {
+			return against == BlockFace.BOTTOM;
 		}
 	}
 

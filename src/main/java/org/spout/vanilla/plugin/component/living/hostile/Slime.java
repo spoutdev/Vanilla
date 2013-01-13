@@ -30,6 +30,7 @@ import org.spout.vanilla.api.component.Hostile;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.protocol.entity.creature.SlimeEntityProtocol;
 
@@ -41,6 +42,16 @@ public class Slime extends Living implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SlimeEntityProtocol());
+		if (getAttachedCount() == 1) {
+			int spawnHealth = 1;
+			if (getSize() == 2) {
+				spawnHealth = 4;
+			} else if (getSize() == 4) {
+				spawnHealth = 16;
+			}
+			getOwner().add(HealthComponent.class).setSpawnHealth(spawnHealth);
+			
+		}
 	}
 
 	public byte getSize() {

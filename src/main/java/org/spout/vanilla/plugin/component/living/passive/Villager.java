@@ -36,6 +36,7 @@ import org.spout.vanilla.api.component.Passive;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.inventory.Container;
 import org.spout.vanilla.plugin.inventory.CraftingInventory;
 import org.spout.vanilla.plugin.inventory.window.Window;
@@ -49,6 +50,10 @@ public class Villager extends Living implements Container, Passive {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new VillagerEntityProtocol());
+	
+		if (getAttachedCount() == 1) {
+			getOwner().add(HealthComponent.class).setSpawnHealth(20);
+		}
 	}
 
 	private HashMap<Player, Window> viewers = new HashMap<Player, Window>();

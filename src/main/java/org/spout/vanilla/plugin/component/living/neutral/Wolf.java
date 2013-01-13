@@ -30,6 +30,7 @@ import org.spout.vanilla.api.component.Neutral;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.protocol.entity.creature.WolfEntityProtocol;
 
@@ -43,6 +44,10 @@ public class Wolf extends Living implements Neutral {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new WolfEntityProtocol());
+		if (getAttachedCount() == 1) {
+			getOwner().add(HealthComponent.class).setSpawnHealth(8);
+		}
+	
 	}
 
 	public boolean isTamed() {
@@ -51,6 +56,11 @@ public class Wolf extends Living implements Neutral {
 
 	public void setTamed(boolean tamed) {
 		getOwner().getData().put(VanillaData.TAMED, tamed);
+		if (tamed == true) {
+			getOwner().get(HealthComponent.class).setMaxHealth(20);
+		} else {
+			getOwner().get(HealthComponent.class).setMaxHealth(8);
+		}
 	}
 
 	public String getOwnerName() {

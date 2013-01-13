@@ -37,6 +37,7 @@ import org.spout.vanilla.api.component.Passive;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.event.entity.EntityStatusEvent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
@@ -58,6 +59,10 @@ public class Sheep extends Living implements Passive {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SheepEntityProtocol());
 		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.WOOL, 1));
+		
+		if (getAttachedCount() == 1) {
+			getOwner().add(HealthComponent.class).setSpawnHealth(10);
+		}
 	}
 
 	@Override

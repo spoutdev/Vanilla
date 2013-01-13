@@ -36,6 +36,7 @@ import org.spout.vanilla.api.component.Hostile;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.ZombieEntityProtocol;
@@ -54,6 +55,10 @@ public class Zombie extends Living implements Hostile {
 		physics.setCollisionShape(new BoxShape(1F, 2F, 1F));
 		physics.setFriction(10f);
 		physics.setRestitution(0f);
+		
+		if (getAttachedCount() == 1) {
+			getOwner().add(HealthComponent.class).setSpawnHealth(20);
+		}
 	}
 
 	/**

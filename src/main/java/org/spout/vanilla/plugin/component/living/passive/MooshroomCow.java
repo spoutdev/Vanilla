@@ -35,6 +35,7 @@ import org.spout.vanilla.api.component.Passive;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
@@ -51,5 +52,9 @@ public class MooshroomCow extends Living implements Passive {
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.RAW_BEEF, random.nextInt(2) + 1));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.LEATHER, random.nextInt(2)));
+		
+		if (getAttachedCount() == 1) {
+			getOwner().add(HealthComponent.class).setSpawnHealth(10);
+		}
 	}
 }

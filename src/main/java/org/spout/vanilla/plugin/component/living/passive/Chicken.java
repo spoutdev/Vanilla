@@ -37,6 +37,7 @@ import org.spout.vanilla.api.component.Passive;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.component.substance.Item;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
@@ -59,6 +60,10 @@ public class Chicken extends Living implements Passive {
 		DropComponent dropComponent = getOwner().add(DropComponent.class);
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.FEATHER, getRandom().nextInt(2)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.RAW_CHICKEN, 1));
+		
+		if (getAttachedCount() == 1) {
+			getOwner().add(HealthComponent.class).setSpawnHealth(4);
+		}
 	}
 
 	@Override

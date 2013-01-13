@@ -64,9 +64,10 @@ import org.spout.vanilla.plugin.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBlockPlacementMessage> {
-	private void refreshClient(Player player, Block clickedBlock, RepositionManager rm) {
+	private void refreshClient(Player player, Block clickedBlock, BlockFace clickedFace, RepositionManager rm) {
 		//refresh the client just in case it assumed something
 		player.getSession().send(false, new BlockChangeMessage(clickedBlock, rm));
+		player.getSession().send(false, new BlockChangeMessage(clickedBlock.translate(clickedFace), rm));
 		Slot held = PlayerUtil.getHeldSlot(player);
 		if (held != null) {
 			held.set(held.get());
@@ -132,7 +133,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 			
 			//check if the interaction was cancelled by the event
 			if (interactEvent.isCancelled()) {
-				refreshClient(player, clickedBlock, rm);
+				refreshClient(player, clickedBlock, clickedFace, rm);
 				return;
 			}
 
@@ -151,12 +152,12 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 
 			// Checks before placement
 			if (interactEvent.useItemInHand() == Result.DENY) {
-				refreshClient(player, clickedBlock, rm);
+				refreshClient(player, clickedBlock, clickedFace, rm);
 				return;
 			}
 			if (interactEvent.useItemInHand() != Result.ALLOW) {
 				if (clickedMaterial instanceof VanillaBlockMaterial && (((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed())) {
-					refreshClient(player, clickedBlock, rm);
+					refreshClient(player, clickedBlock, clickedFace, rm);
 					return;
 				}
 			}
@@ -180,7 +181,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 					placedAgainst = clickedFace.getOpposite();
 					placedIsClicked = false;
 					if (!toPlace.canPlace(placedBlock, placedData, placedAgainst, message.getFace(), false, cause)) {
-						refreshClient(player, clickedBlock, rm);
+						refreshClient(player, clickedBlock, clickedFace, rm);
 						return;
 					}
 				}
@@ -201,12 +202,12 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 						//For now: simple distance checking
 						Point tpos = placedBlock.getPosition();
 						if (player.getTransform().getPosition().distance(tpos) < 0.6) {
-							refreshClient(player, clickedBlock, rm);
+							refreshClient(player, clickedBlock, clickedFace, rm);
 							return;
 						}
 						HeadComponent head = player.get(HeadComponent.class);
 						if (head != null && head.getPosition().distance(tpos) < 0.6) {
-							refreshClient(player, clickedBlock, rm);
+							refreshClient(player, clickedBlock, clickedFace, rm);
 							return;
 						}
 					}
@@ -216,7 +217,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				Collection<Protection> protections = Spout.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(placedBlock.getPosition());
 				for (Protection p : protections) {
 					if (p.contains(placedBlock.getPosition()) && !VanillaConfiguration.OPS.isOp(player.getName())) {
-						refreshClient(player, clickedBlock, rm);
+						refreshClient(player, clickedBlock, clickedFace, rm);
 						player.sendMessage(ChatStyle.DARK_RED, "This area is a protected spawn point!");
 						return;
 					}
@@ -240,9 +241,8 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				if (!PlayerUtil.isCostSuppressed(player)) {
 					currentSlot.addAmount(-1);
 				}
-				
-				refreshClient(player, clickedBlock, rm);
 			}
+			refreshClient(player, clickedBlock, clickedFace, rm);
 		}
 	}
 }

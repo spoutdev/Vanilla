@@ -30,9 +30,9 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.plugin.protocol.msg.entity.EntityActionMessage;
+import org.spout.vanilla.plugin.data.Animation;
+import org.spout.vanilla.plugin.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityAnimationMessage;
-import org.spout.vanilla.plugin.protocol.msg.entity.EntityStatusMessage;
 
 public final class EntityAnimationHandler extends MessageHandler<EntityAnimationMessage> {
 	@Override
@@ -44,18 +44,8 @@ public final class EntityAnimationHandler extends MessageHandler<EntityAnimation
 		Player player = session.getPlayer();
 
 		switch (message.getAnimation()) {
-			case EAT_FOOD:
-				//TODO: Allow or deny event?
-				session.send(false, new EntityStatusMessage(player.getId(), EntityStatusMessage.EATING_ACCEPTED));
-				//TODO: Set the eating state in the VanillaEntityController
-				break;
-			case CROUCH:
-				session.send(false, new EntityActionMessage(player.getId(), EntityActionMessage.ACTION_CROUCH));
-				//TODO Set this in VanillaEntityController as apparently any entity can crouch?
-				break;
-			case UNCROUCH:
-				session.send(false, new EntityActionMessage(player.getId(), EntityActionMessage.ACTION_UNCROUCH));
-				//TODO Set this in VanillaEntityController as apparently any entity can crouch?
+			case SWING_ARM:
+				player.getNetwork().callProtocolEvent(new EntityAnimationEvent(player, Animation.SWING_ARM), true);
 				break;
 			default:
 		}

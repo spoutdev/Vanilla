@@ -28,7 +28,6 @@ package org.spout.vanilla.plugin.world.generator.normal.populator;
 
 import java.util.Random;
 
-import org.spout.api.Spout;
 import org.spout.api.generator.Populator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
@@ -61,9 +60,6 @@ public class MineshaftPopulator extends Populator {
 			final int z = blockZ + random.nextInt(VARIATION * 2 + 1) - VARIATION;
 			if (mineshaft.canPlaceObject(world, x, y, z)) {
 				mineshaft.placeObject(world, x, y, z);
-				if (Spout.debugMode()) {
-					Spout.log("Placed mineshaft at: (" + x + ", " + y + ", " + z + ")");
-				}
 			}
 		}
 	}

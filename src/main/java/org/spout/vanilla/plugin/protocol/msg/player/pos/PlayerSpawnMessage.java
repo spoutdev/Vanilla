@@ -31,7 +31,6 @@ import java.util.List;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.math.Vector3;
-import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 import org.spout.api.util.SpoutToStringStyle;
 
@@ -42,16 +41,16 @@ public final class PlayerSpawnMessage extends EntityMessage {
 	private final String name;
 	private final List<Parameter<?>> parameters;
 
-	public PlayerSpawnMessage(int id, String name, Vector3 position, int yaw, int pitch, int item, List<Parameter<?>> parameters, RepositionManager rm) {
-		this(id, name, (int) position.getX(), (int) position.getY(), (int) position.getZ(), yaw, pitch, item, parameters, rm);
+	public PlayerSpawnMessage(int id, String name, Vector3 position, int yaw, int pitch, int item, List<Parameter<?>> parameters) {
+		this(id, name, (int) position.getX(), (int) position.getY(), (int) position.getZ(), yaw, pitch, item, parameters);
 	}
 
-	public PlayerSpawnMessage(int id, String name, int x, int y, int z, int yaw, int pitch, int item, List<Parameter<?>> parameters, RepositionManager rm) {
+	public PlayerSpawnMessage(int id, String name, int x, int y, int z, int yaw, int pitch, int item, List<Parameter<?>> parameters) {
 		super(id);
 		this.name = name;
-		this.x = rm.convertX(x);
-		this.y = rm.convertY(y);
-		this.z = rm.convertZ(z);
+		this.x = x;
+		this.y = y;
+		this.z = z;
 		this.yaw = yaw;
 		this.pitch = pitch;
 		this.item = item;

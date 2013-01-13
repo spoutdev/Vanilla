@@ -43,7 +43,9 @@ import org.spout.vanilla.plugin.component.living.hostile.Silverfish;
 import org.spout.vanilla.plugin.component.living.hostile.Skeleton;
 import org.spout.vanilla.plugin.component.living.hostile.Slime;
 import org.spout.vanilla.plugin.component.living.hostile.Spider;
+import org.spout.vanilla.plugin.component.living.hostile.Witch;
 import org.spout.vanilla.plugin.component.living.hostile.Zombie;
+import org.spout.vanilla.plugin.component.living.neutral.Bat;
 import org.spout.vanilla.plugin.component.living.neutral.Enderman;
 import org.spout.vanilla.plugin.component.living.neutral.PigZombie;
 import org.spout.vanilla.plugin.component.living.neutral.Wolf;
@@ -59,6 +61,7 @@ import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public class SpawnEgg extends VanillaItemMaterial {
 	private static final SpawnEgg PARENT = new SpawnEgg("Spawn Egg"); //There is no entity with the ID 0 so this egg is invalid
+	public static final SpawnEgg BAT = new SpawnEgg("Spawn Bat", 65, Bat.class, PARENT);
 	public static final SpawnEgg CREEPER = new SpawnEgg("Spawn Creeper", 50, Creeper.class, PARENT);
 	public static final SpawnEgg SKELETON = new SpawnEgg("Spawn Skeleton", 51, Skeleton.class, PARENT);
 	public static final SpawnEgg SPIDER = new SpawnEgg("Spawn Spider", 52, Spider.class, PARENT);
@@ -78,6 +81,7 @@ public class SpawnEgg extends VanillaItemMaterial {
 	public static final SpawnEgg SQUID = new SpawnEgg("Spawn Squid", 94, Squid.class, PARENT);
 	public static final SpawnEgg WOLF = new SpawnEgg("Spawn Wolf", 95, Wolf.class, PARENT);
 	public static final SpawnEgg MOOSHROOM = new SpawnEgg("Spawn Mooshroom", 96, MooshroomCow.class, PARENT);
+	public static final SpawnEgg WITCH = new SpawnEgg("Spawn Witch", 66, Witch.class, PARENT);
 	public static final SpawnEgg VILLAGER = new SpawnEgg("Spawn Villager", 120, Villager.class, PARENT);
 	public static final SpawnEgg OCELOT = new SpawnEgg("Spawn Ocelot", 98, Ocelot.class, PARENT);
 	private Class<? extends Component> entityComponent;

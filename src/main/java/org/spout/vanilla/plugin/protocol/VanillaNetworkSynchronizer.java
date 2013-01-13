@@ -45,7 +45,6 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
@@ -69,6 +68,7 @@ import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.component.misc.LevelComponent;
 import org.spout.vanilla.plugin.component.substance.material.Sign;
+import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.configuration.WorldConfigurationNode;
 import org.spout.vanilla.plugin.data.Difficulty;
@@ -430,6 +430,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		Difficulty difficulty = world.getComponentHolder().getData().get(VanillaData.DIFFICULTY);
 		Dimension dimension = world.getComponentHolder().getData().get(VanillaData.DIMENSION);
 		WorldType worldType = world.getComponentHolder().getData().get(VanillaData.WORLD_TYPE);
+		
 
 		//TODO Handle infinite height
 		int entityId = player.getId();
@@ -457,6 +458,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());
 		player.getSession().send(false, SPMsg);
 		session.send(false, new PlayerHeldItemChangeMessage(session.getPlayer().add(PlayerInventory.class).getQuickbar().getSelectedSlot().getIndex()));
+	
+		VanillaSky.getSky(world).updatePlayer(player);
 	}
 
 	@Override
@@ -524,10 +527,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		x += chunk.getBlockX();
 		y += chunk.getBlockY();
 		z += chunk.getBlockZ();
-		if (y >= 0 && y < chunk.getWorld().getHeight()) {
-			BlockChangeMessage BCM = new BlockChangeMessage(x, y, z, id, getMinecraftData(material, data), getRepositionManager());
-			session.send(false, BCM);
-		}
+		BlockChangeMessage BCM = new BlockChangeMessage(x, y, z, id, getMinecraftData(material, data), getRepositionManager());
+		session.send(false, BCM);
 	}
 
 	@Override
@@ -613,15 +614,15 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onWindowSetSlot(WindowSlotEvent event) {
+		//TODO: investigate why this happens (12-1-2013)
+		if (event.getItem() != null && event.getItem().getMaterial() == BlockMaterial.AIR) {
+			return null;
+		}
 		return new WindowSlotMessage(event.getWindow(), event.getSlot(), event.getItem());
 	}
 
 	@EventHandler
 	public Message onWindowItems(WindowItemsEvent event) {
-		System.out.println("Sending items...");
-		for (ItemStack item : event.getItems()) {
-			System.out.println(item == null ? "null" : item.getMaterial().getName());
-		}
 		return new WindowItemsMessage(event.getWindow(), event.getItems());
 	}
 

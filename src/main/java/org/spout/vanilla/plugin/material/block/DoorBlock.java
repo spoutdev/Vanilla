@@ -44,6 +44,7 @@ import org.spout.vanilla.plugin.util.PlayerUtil;
 import org.spout.vanilla.plugin.util.RedstoneUtil;
 
 public abstract class DoorBlock extends GroundAttachable implements Directional, Openable, RedstoneTarget {
+
 	public DoorBlock(String name, int id, ResourcePointer<Model> model) {
 		super(name, id, model);
 		this.setCollision(CollisionStrategy.SOLID);
@@ -170,6 +171,11 @@ public abstract class DoorBlock extends GroundAttachable implements Directional,
 
 	private boolean isHingeBlock(Block bottomBlock) {
 		return RedstoneUtil.isConductor(bottomBlock) || RedstoneUtil.isConductor(bottomBlock.translate(BlockFace.TOP));
+	}
+
+	@Override
+	public boolean canPlace(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
+		return super.canPlace(block, data, against, clickedPos, isClickedBlock, cause) && !block.isMaterial(VanillaMaterials.SNOW);
 	}
 
 	@Override

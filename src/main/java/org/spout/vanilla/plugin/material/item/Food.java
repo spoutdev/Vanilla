@@ -29,6 +29,7 @@ package org.spout.vanilla.plugin.material.item;
 import org.spout.api.entity.Entity;
 import org.spout.api.math.Vector2;
 
+import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.data.GameMode;
 import org.spout.vanilla.plugin.data.VanillaData;
@@ -47,6 +48,7 @@ public class Food extends VanillaItemMaterial {
 	}
 
 	public void onEat(Entity entity, Slot slot) {
+		entity.get(Living.class).setEatingBlocking(false);
 		if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 			HungerComponent hunger = entity.get(HungerComponent.class);
 			for (FoodEffect effect : getEffectType()) {

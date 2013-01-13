@@ -30,7 +30,8 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.plugin.component.misc.HeadComponent;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerLookMessage;
 
 public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
@@ -40,12 +41,21 @@ public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 			return;
 		}
 
+		//First look packet is to login/receive terrain, is not a valid rotation
+		if (session.getDataMap().get("first_login", 0) == 0) {
+			session.getDataMap().put("first_login", 1);
+			((VanillaNetworkSynchronizer)session.getPlayer().getNetworkSynchronizer()).sendPosition();
+			return;
+		}
+
 		Player holder = session.getPlayer();
 
 		holder.getTransform().setYaw(message.getYaw());
 		holder.getTransform().setPitch(message.getPitch());
-		if (holder.has(HeadComponent.class)) {
-			holder.get(HeadComponent.class).setRotation(message.getRotation());
+		Human human = holder.get(Human.class);
+		if (human != null) {
+			human.setOnGround(message.isOnGround());
+			human.getHead().setRotation(message.getRotation());
 		}
 	}
 }

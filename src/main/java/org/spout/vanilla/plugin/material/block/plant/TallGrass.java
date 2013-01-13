@@ -27,11 +27,9 @@
 package org.spout.vanilla.plugin.material.block.plant;
 
 import org.spout.api.Spout;
-import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector3;
 import org.spout.api.model.Model;
 import org.spout.api.plugin.Platform;
 import org.spout.api.resource.ResourcePointer;
@@ -98,11 +96,5 @@ public class TallGrass extends DeadBush implements Burnable {
 			return block.isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FLOWER_POT_BLOCK);
 		}
 		return false;
-	}
-
-	@Override
-	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
-		block.setMaterial(this);
-		System.out.println("MAT = " + block.getMaterial());
 	}
 }

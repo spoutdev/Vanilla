@@ -41,8 +41,6 @@ import org.spout.vanilla.plugin.component.substance.material.chest.Chest;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class ChestBlock extends AbstractChestBlock {
-	public final float BURN_TIME = 15;
-
 	public ChestBlock(String name, int id) {
 		super(name, id, Chest.class, VanillaMaterialModels.CHEST);
 		this.setHardness(2.5F).setResistance(4.2F).setTransparent();

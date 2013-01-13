@@ -26,19 +26,25 @@
  */
 package org.spout.vanilla.plugin.component.living.neutral;
 
+import java.util.Random;
+
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.component.impl.TextModelComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
+import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.MathHelper;
+import org.spout.api.math.SinusHelper;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DiggingComponent;
+import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.component.misc.PickupItemComponent;
 import org.spout.vanilla.plugin.component.substance.Item;
@@ -92,28 +98,13 @@ public class Human extends Living {
 		return getGameMode() == GameMode.SURVIVAL;
 	}
 
-	public boolean isOnGround() {
-		return getOwner().getData().get(VanillaData.IS_ON_GROUND);
-	}
-
-	public void setOnGround(boolean onGround) {
-		getOwner().getData().put(VanillaData.IS_ON_GROUND, onGround);
-	}
-
 	public boolean isSprinting() {
 		return getOwner().getData().get(VanillaData.IS_SPRINTING);
 	}
 
 	public void setSprinting(boolean isSprinting) {
 		getOwner().getData().put(VanillaData.IS_SPRINTING, isSprinting);
-	}
-
-	public boolean isSneaking() {
-		return getOwner().getData().get(VanillaData.IS_SNEAKING);
-	}
-
-	public void setSneaking(boolean isSneaking) {
-		getOwner().getData().put(VanillaData.IS_SNEAKING, isSneaking);
+		sendMetaData();
 	}
 
 	public boolean isFalling() {
@@ -148,13 +139,40 @@ public class Human extends Living {
 	}
 
 	/**
-	 * Drops the item specified into the direction the player looks
+	 * Drops the item specified into the direction the player looks, with slight randomness
+	 * 
 	 * @param item to drop
 	 */
 	public void dropItem(ItemStack item) {
-		float yaw = getOwner().getTransform().getYaw();
-		Vector3 impulse = new Vector3(Math.cos(yaw), 0.4F, Math.sin(yaw));
-		Item.drop(this.getOwner().getTransform().getPosition(), item, impulse);
+		final Transform dropFrom;
+		if (getOwner().has(HeadComponent.class)) {
+			dropFrom = getOwner().get(HeadComponent.class).getHeadTransform();
+		} else {
+			dropFrom = getOwner().getTransform().getTransform();
+		}
+		// Some constants
+		final double impulseForce = 0.3;
+		final float maxXZForce = 0.02f;
+		final float maxYForce = 0.1f;
+
+		// Create a velocity vector using the transform, apply (random) force
+		Vector3 impulse = dropFrom.getRotation().getDirection().multiply(impulseForce);
+
+		// Random rotational offset to avoid dropping at the same position
+		Random rand = MathHelper.getRandom();
+		float xzLength = maxXZForce * rand.nextFloat();
+		float yLength = maxYForce * (rand.nextFloat() - rand.nextFloat());
+		impulse = impulse.add(SinusHelper.getRandom2DAxis(rand).multiply(xzLength).toVector3(yLength));
+
+		// Slightly dropping upwards
+		impulse = impulse.add(0.0, 0.1, 0.0);
+
+		// Conversion factor, some sort of unit problem
+		//TODO: This needs an actual value and this value might change when gravity changes!
+		impulse = impulse.multiply(100);
+
+		// Finally drop
+		Item.drop(dropFrom.getPosition(), item, impulse);
 	}
 
 	/**

@@ -44,6 +44,7 @@ import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
+import org.spout.vanilla.plugin.world.LightningSimulator.Intensity;
 
 /**
  * * Common Vanilla-like data mappings that are found in Vanilla.
@@ -96,6 +97,9 @@ public class VanillaData {
 	public static final DefaultedKey<Float> EXPERIENCE_BAR_PROGRESS = new DefaultedKeyImpl<Float>("experience_bar_progress", (float) 0);
 	public static final DefaultedKey<Short> EXPERIENCE_LEVEL = new DefaultedKeyImpl<Short>("experience_level", (short) 0);
 	public static final DefaultedKey<DropInventory> DROP_INVENTORY = new DefaultedKeyFactory<DropInventory>("DropInventory", DropInventory.class);
+	public static final DefaultedKey<Boolean> IS_EATING_BLOCKING = new DefaultedKeyImpl<Boolean>("is_eating_blocking", false);
+	public static final DefaultedKey<Boolean> IS_RIDING = new DefaultedKeyImpl<Boolean>("is_riding", false);
+	public static final DefaultedKey<Boolean> IS_ON_FIRE = new DefaultedKeyImpl<Boolean>("is_on_fire", false);
 	//Human-specific
 	public static final DefaultedKey<Boolean> IS_SPRINTING = new DefaultedKeyImpl<Boolean>("is_sprinting", false);
 	public static final DefaultedKey<Boolean> IS_SNEAKING = new DefaultedKeyImpl<Boolean>("is_sneaking", false);
@@ -129,7 +133,7 @@ public class VanillaData {
 	//Wolf/Ocelot-specific
 	public static final DefaultedKey<Boolean> SITTING = new DefaultedKeyImpl<Boolean>("is_sitting", false);
 	public static final DefaultedKey<Boolean> TAMED = new DefaultedKeyImpl<Boolean>("is_tamed", false);
-	public static final DefaultedKey<String> OWNER = new DefaultedKeyImpl<String>("owner", null);
+	public static final DefaultedKey<String> OWNER = new DefaultedKeyImpl<String>("owner", "");
 	//Ocelot-specific
 	public static final DefaultedKey<Byte> OCELOT_SKIN = new DefaultedKeyImpl<Byte>("skin", (byte) 0);
 	//Redstone-specific
@@ -140,4 +144,17 @@ public class VanillaData {
 	public static final DefaultedKey<Boolean> WAS_VILLAGER = new DefaultedKeyImpl<Boolean>("was_villager", false);
 	//Chicken Specific
 	public static final DefaultedKey<Float> TIME_TILL_EGG = new DefaultedKeyImpl<Float>("time_till_egg", 0f);
+	//Sky specific
+	public static final DefaultedKey<Long> MAX_TIME = new DefaultedKeyImpl<Long>("max_time", 24000L);
+	public static final DefaultedKey<Long> TIME_RATE = new DefaultedKeyImpl<Long>("time_rate", 1L);
+	public static final DefaultedKey<Number> WORLD_TIME = new DefaultedKeyImpl<Number>("time_countdown", 0F);
+	public static final DefaultedKey<Weather> WORLD_WEATHER = new DefaultedKeyImpl<Weather>("world_weather", Weather.CLEAR);
+	public static final DefaultedKey<Weather> WORLD_FORECAST = new DefaultedKeyImpl<Weather>("world_forecast", Weather.CLEAR);
+	public static final DefaultedKey<Float> WEATHER_CHANGE_TIME = new DefaultedKeyImpl<Float>("weather_change_time", 120000F);
+	public static final DefaultedKey<Float> CURRENT_RAIN_STRENGTH = new DefaultedKeyImpl<Float>("current_rain_strength", 0F);
+	public static final DefaultedKey<Float> PREVIOUS_RAIN_STRENGTH = new DefaultedKeyImpl<Float>("previous_rain_strength", 0F);
+	public static final DefaultedKey<Intensity> STORM_INTENSITY = new DefaultedKeyImpl<Intensity>("storm_intensity", null);
+	public static final DefaultedKey<Float> CURRENT_LIGHTNING_STRENGTH = new DefaultedKeyImpl<Float>("current_lightning_strength", 0F);
+	public static final DefaultedKey<Float> PREVIOUS_LIGHTNING_STRENGTH = new DefaultedKeyImpl<Float>("previous_lightning_strength", 0F);
+
 }

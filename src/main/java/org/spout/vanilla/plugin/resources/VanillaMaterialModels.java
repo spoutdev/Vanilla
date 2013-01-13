@@ -196,7 +196,6 @@ public class VanillaMaterialModels {
 	public static final ResourcePointer<Model> SLAB_SPRUCE_WOOD = new ResourcePointer<Model>();
 	public static final ResourcePointer<Model> SLAB_BIRCH_WOOD = new ResourcePointer<Model>();
 	public static final ResourcePointer<Model> SLAB_JUNGLE_WOOD = new ResourcePointer<Model>();
-
 	// Snow
 	public static final ResourcePointer<Model> SNOW_1 = new ResourcePointer<Model>("model://Vanilla/materials/block/nonsolid/snow/snow_1.spm");
 	public static final ResourcePointer<Model> SNOW_2 = new ResourcePointer<Model>("model://Vanilla/materials/block/nonsolid/snow/snow_2.spm");

@@ -76,7 +76,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	@Override
 	public boolean canCreate(Block block, short data, Cause<?> cause) {
 		if (super.canCreate(block, data, cause)) {
-			BlockMaterial mat = block.getMaterial();
+			BlockMaterial mat;
 			for (BlockFace face : BlockFaces.BTNSWE) {
 				mat = block.translate(face).getMaterial();
 				if (mat instanceof VanillaBlockMaterial) {

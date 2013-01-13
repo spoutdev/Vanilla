@@ -41,7 +41,6 @@ import org.spout.vanilla.plugin.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.plugin.event.player.PlayerToggleSneakingEvent;
 import org.spout.vanilla.plugin.event.player.PlayerToggleSprintingEvent;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityActionMessage;
-import org.spout.vanilla.plugin.protocol.msg.entity.EntityMetadataMessage;
 
 public final class EntityActionHandler extends MessageHandler<EntityActionMessage> {
 	@Override
@@ -53,11 +52,9 @@ public final class EntityActionHandler extends MessageHandler<EntityActionMessag
 		Player player = session.getPlayer();
 		Human human = player.get(Human.class);
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
-
 		switch (message.getAction()) {
 			case EntityActionMessage.ACTION_CROUCH:
-				parameters.add(EntityMetadataMessage.Parameters.META_CROUCHED.get());
-				session.send(false, new EntityMetadataMessage(player.getId(), parameters));
+				
 				if (human != null) {
 					if (!Spout.getEventManager().callEvent(new PlayerToggleSneakingEvent(player, true)).isCancelled()) {
 						human.setSneaking(true);
@@ -65,8 +62,6 @@ public final class EntityActionHandler extends MessageHandler<EntityActionMessag
 				}
 				break;
 			case EntityActionMessage.ACTION_UNCROUCH:
-				parameters.add(EntityMetadataMessage.Parameters.META_CROUCHED.get());
-				session.send(false, new EntityMetadataMessage(player.getId(), parameters));
 				if (human != null) {
 					if (!Spout.getEventManager().callEvent(new PlayerToggleSneakingEvent(player, false)).isCancelled()) {
 						human.setSneaking(false);
@@ -77,20 +72,16 @@ public final class EntityActionHandler extends MessageHandler<EntityActionMessag
 				player.getNetwork().callProtocolEvent(new EntityAnimationEvent(player, Animation.LEAVE_BED));
 				break;
 			case EntityActionMessage.ACTION_START_SPRINTING:
-				parameters.add(EntityMetadataMessage.Parameters.META_SPRINTING.get());
-				session.send(false, new EntityMetadataMessage(player.getId(), parameters));
 				if (human != null) {
 					if (!Spout.getEventManager().callEvent(new PlayerToggleSprintingEvent(player, true)).isCancelled()) {
-						human.setSneaking(true);
+						human.setSprinting(true);
 					}
 				}
 				break;
 			case EntityActionMessage.ACTION_STOP_SPRINTING:
-				parameters.add(EntityMetadataMessage.Parameters.META_SPRINTING.get());
-				session.send(false, new EntityMetadataMessage(player.getId(), parameters));
 				if (human != null) {
 					if (!Spout.getEventManager().callEvent(new PlayerToggleSprintingEvent(player, false)).isCancelled()) {
-						human.setSneaking(false);
+						human.setSprinting(false);
 					}
 				}
 				break;

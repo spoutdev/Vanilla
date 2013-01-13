@@ -39,7 +39,6 @@ import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.plugin.component.substance.material.Sign;
 import org.spout.vanilla.plugin.data.MoveReaction;
-import org.spout.vanilla.plugin.data.drops.flag.PlayerFlags;
 import org.spout.vanilla.plugin.event.block.SignUpdateEvent;
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
@@ -54,8 +53,8 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 
 	@Override
 	public void initialize() {
-		getDrops().clear();
-		getDrops().add(VanillaMaterials.SIGN).addFlags(PlayerFlags.SURVIVAL);
+		getDrops().DEFAULT.clear();
+		getDrops().DEFAULT.add(VanillaMaterials.SIGN);
 	}
 
 	@Override
@@ -69,7 +68,7 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 			short data = 0;
 			if (cause instanceof EntityCause) {
 				Entity entity = ((EntityCause) cause).getSource();
-				float yaw = entity.getTransform().getYaw();
+				float yaw = entity.getTransform().getYaw() * -1.0f;
 				float rotation = (yaw + 180F) * 16F / 360F;
 				data = (short) (rotation + 0.5F);
 				data &= 15;

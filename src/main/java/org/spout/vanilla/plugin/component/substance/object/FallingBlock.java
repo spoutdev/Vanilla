@@ -69,10 +69,10 @@ public class FallingBlock extends EntityComponent {
 		int z = pos.getBlockZ();
 		int fallAmt = Math.max(1, MathHelper.floor(Math.abs(fallSpeed)));
 		for (int dy = 0; dy < fallAmt; dy++) {
-			BlockMaterial below = world.getBlockMaterial(x, y - dy - 1, z);
+			BlockMaterial below = world.getBlockMaterial(x, y - dy, z);
 			if (isFallingObstacle(below)) {
 				// Place block on top of this obstacle, if possible
-				Block current = world.getBlock(x, y - dy, z);
+				Block current = world.getBlock(x, y - dy + 1, z);
 				BlockMaterial currentMat = current.getMaterial();
 				if (!(currentMat instanceof VanillaBlockMaterial) || !((VanillaBlockMaterial) currentMat).isPlacementObstacle()) {
 					// Place in the world

@@ -200,6 +200,11 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 	}
 
 	@Override
+	public boolean isPlacementSuppressed() {
+		return true;
+	}
+
+	@Override
 	public EffectRange getPhysicsRange(short data) {
 		return PHYSIC_RANGES[data & 0x3];
 	}

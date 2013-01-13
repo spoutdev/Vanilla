@@ -43,7 +43,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.basic.BasicAir;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector3;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -52,7 +51,6 @@ import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.DiggingComponent;
-import org.spout.vanilla.plugin.component.substance.Item;
 import org.spout.vanilla.plugin.component.substance.material.Sign;
 import org.spout.vanilla.plugin.data.GameMode;
 import org.spout.vanilla.plugin.data.VanillaData;
@@ -65,6 +63,7 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.item.Food;
 import org.spout.vanilla.plugin.material.item.misc.Potion;
 import org.spout.vanilla.plugin.material.item.tool.Tool;
+import org.spout.vanilla.plugin.material.item.tool.weapon.Sword;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerDiggingMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.block.SignMessage;
@@ -139,9 +138,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		}
 
 		if (state == PlayerDiggingMessage.STATE_DROP_ITEM && x == 0 && y == 0 && z == 0) {
-			float yaw = player.getTransform().getYaw();
-			Vector3 impulse = new Vector3(Math.cos(yaw), 0.4F, Math.sin(yaw));
-			Item.drop(player.getTransform().getPosition(), heldItem, impulse);
+			human.dropItem();
 			return;
 		}
 
@@ -150,7 +147,6 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		if (blockMaterial == VanillaMaterials.AIR || blockMaterial == BasicAir.AIR || blockMaterial == VanillaMaterials.WATER || blockMaterial == VanillaMaterials.LAVA) {
 			isInteractable = false;
 		}
-
 		if (state == PlayerDiggingMessage.STATE_START_DIGGING) {
 			PlayerInteractEvent event = new PlayerInteractEvent(player, block.getPosition(), heldItem, Action.LEFT_CLICK, isInteractable, clickedFace);
 			if (Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
@@ -253,6 +249,8 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				((Food) heldItem.getMaterial()).onEat(player, currentSlot);
 			} else if (heldItem.getMaterial() instanceof Potion) {
 				((Potion) heldItem.getMaterial()).onDrink(player, currentSlot);
+			} else if (heldItem.getMaterial() instanceof Sword) {
+				human.setEatingBlocking(false);
 			}
 		}
 	}

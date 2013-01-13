@@ -69,11 +69,11 @@ public class Grass extends SpreadingSolid implements DynamicMaterial, Initializa
 	@Override
 	public boolean canDecayAt(Block block) {
 		block = block.translate(BlockFace.TOP);
-		return block.getMaterial().getOpacity() > 0 || block.getLight() < 4;
+		return block.getMaterial().getOpacity() > 0 || block.getLight() < 3;
 	}
 
 	@Override
 	public long getSpreadingTime(Block b) {
-		return 1000L + MathHelper.getRandom().nextInt(60000) * 3;
+		return 60000L + MathHelper.getRandom().nextInt(60000) * 3;
 	}
 }

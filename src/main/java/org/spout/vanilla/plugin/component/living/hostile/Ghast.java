@@ -35,6 +35,7 @@ import org.spout.vanilla.api.component.Hostile;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.GhastEntityProtocol;
 
@@ -52,6 +53,9 @@ public class Ghast extends Living implements Hostile {
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.GUNPOWDER, random.nextInt(2)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.GHAST_TEAR, random.nextInt(1)));
+		if (getAttachedCount() == 1) {
+			getOwner().add(HealthComponent.class).setSpawnHealth(10);
+		}
 	}
 
 	public boolean haveRedEyes() {

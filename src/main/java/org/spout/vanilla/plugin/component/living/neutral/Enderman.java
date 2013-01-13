@@ -34,6 +34,7 @@ import org.spout.vanilla.api.component.Neutral;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.protocol.entity.creature.EndermanEntityProtocol;
 
 /**
@@ -49,5 +50,9 @@ public class Enderman extends Living implements Neutral {
 		physics.setCollisionShape(new BoxShape(1F, 3F, 1F));
 		physics.setFriction(10f);
 		physics.setRestitution(0f);
+		
+		if (getAttachedCount() == 1) {
+			getOwner().add(HealthComponent.class).setSpawnHealth(40);
+		}
 	}
 }

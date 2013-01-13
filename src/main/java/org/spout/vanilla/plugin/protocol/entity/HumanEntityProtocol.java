@@ -36,6 +36,7 @@ import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.inventory.Slot;
+import org.spout.vanilla.plugin.protocol.ChannelBufferUtils;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerSpawnMessage;
 import org.spout.vanilla.plugin.util.PlayerUtil;
@@ -49,11 +50,11 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		Human human = entity.add(Human.class);
 
 		int id = entity.getId();
-		int x = (int) (entity.getTransform().getPosition().getX() * 32);
-		int y = (int) (entity.getTransform().getPosition().getY() * 32);
-		int z = (int) (entity.getTransform().getPosition().getZ() * 32);
-		int r = (int) (-entity.getTransform().getYaw() * 32);
-		int p = (int) (entity.getTransform().getPitch() * 32);
+		int x = ChannelBufferUtils.protocolifyPosition(rm.convertX(entity.getTransform().getPosition().getX()));
+		int y = ChannelBufferUtils.protocolifyPosition(rm.convertY(entity.getTransform().getPosition().getY()));
+		int z = ChannelBufferUtils.protocolifyPosition(rm.convertZ(entity.getTransform().getPosition().getZ()));
+		int r = ChannelBufferUtils.protocolifyYaw(entity.getTransform().getYaw());
+		int p = ChannelBufferUtils.protocolifyPitch(entity.getTransform().getPitch());
 
 		int item = 0;
 		Slot hand = PlayerUtil.getHeldSlot(entity);
@@ -63,7 +64,7 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 		parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 100));
 
-		messages.add(new PlayerSpawnMessage(id, human.getName(), x, y, z, r, p, item, parameters, rm));
+		messages.add(new PlayerSpawnMessage(id, human.getName(), x, y, z, r, p, item, parameters));
 
 		if (hand != null) {
 			messages.add(new EntityEquipmentMessage(entity.getId(), 0, hand.get()));

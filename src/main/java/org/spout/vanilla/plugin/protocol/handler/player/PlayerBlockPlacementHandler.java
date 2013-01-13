@@ -51,24 +51,28 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 
+import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
+import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
+import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.SoundEffect;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.event.cause.PlayerClickBlockCause;
 import org.spout.vanilla.plugin.event.cause.PlayerPlacementCause;
 import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
-import org.spout.vanilla.plugin.material.item.tool.InteractTool;
+import org.spout.vanilla.plugin.material.item.Food;
+import org.spout.vanilla.plugin.material.item.tool.weapon.Sword;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerBlockPlacementMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBlockPlacementMessage> {
-	private void refreshClient(Player player, Block clickedBlock, Block alterBlock, RepositionManager rm) {
-		//refresh the client just in case it assumed something
+	private void refreshClient(Player player, Block clickedBlock, BlockFace clickedFace, RepositionManager rm) {
+		// refresh the client just in case it assumed something
 		player.getSession().send(false, new BlockChangeMessage(clickedBlock, rm));
-		player.getSession().send(false, new BlockChangeMessage(alterBlock, rm));
+		player.getSession().send(false, new BlockChangeMessage(clickedBlock.translate(clickedFace), rm));
 		Slot held = PlayerUtil.getHeldSlot(player);
 		if (held != null) {
 			held.set(held.get());
@@ -96,21 +100,21 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		Material holdingMat = holding == null ? null : holding.getMaterial();
 
 		/*
-		 * The notch client's packet sending is weird. Here's how it works: If
-		 * the client is clicking a block not in range, sends a packet with
-		 * x=-1,y=255,z=-1 If the client is clicking a block in range with an
-		 * item in hand (id > 255) Sends both the normal block placement packet
-		 * and a (-1,255,-1) one If the client is placing a block in range with
-		 * a block in hand, only one normal packet is sent That is how it
-		 * usually happens. Sometimes it doesn't happen like that. Therefore, a
-		 * hacky workaround.
+		 * The notch client's packet sending is weird. Here's how it works: If the client is clicking a block not in range, sends a packet with x=-1,y=255,z=-1 If the client is clicking a block in
+		 * range with an item in hand (id > 255) Sends both the normal block placement packet and a (-1,255,-1) one If the client is placing a block in range with a block in hand, only one normal
+		 * packet is sent That is how it usually happens. Sometimes it doesn't happen like that. Therefore, a hacky workaround.
 		 */
-		BlockFace clickedFace = message.getDirection();
+		final BlockFace clickedFace = message.getDirection();
+
+		if ((holdingMat instanceof Food && player.add(HungerComponent.class).getHunger() != VanillaData.HUNGER.getDefaultValue()) || holdingMat instanceof Sword) {
+			player.get(Living.class).setEatingBlocking(true);
+			return;
+		}
 		if (clickedFace == BlockFace.THIS) {
 			// Right clicked air with an item.
 			PlayerInteractEvent event = eventManager.callEvent(new PlayerInteractEvent(player, null, holding, Action.RIGHT_CLICK, true, clickedFace));
 
-			//May have been changed by the event
+			// May have been changed by the event
 			holding = currentSlot.get();
 			holdingMat = holding == null ? null : holding.getMaterial();
 
@@ -118,144 +122,133 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				holdingMat.onInteract(player, Action.RIGHT_CLICK);
 			}
 		} else {
-			//TODO: Validate the x/y/z coordinates of the message to check if it is in range of the player
-			//This is an anti-hack requirement (else hackers can load far-away chunks and crash the server)
+			// TODO: Validate the x/y/z coordinates of the message to check if it is in range of the player
+			// This is an anti-hack requirement (else hackers can load far-away chunks and crash the server)
 
-			//Get clicked block and validated face against it was placed
+			// Get clicked block and validated face against it was placed
+			final Block clickedBlock = world.getBlock(message.getX(), message.getY(), message.getZ());
+			final BlockMaterial clickedMaterial = clickedBlock.getMaterial();
 
-			Block clickedBlock = world.getBlock(message.getX(), message.getY(), message.getZ());
-
-			// TODO - maybe add actual limits
-			/*if (clickedBlock.getY() >= world.getHeight() || clickedBlock.getY() < 0) {
-				return;
-			}*/
-
-			//Perform interaction event
+			// Perform interaction event
 			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), currentSlot.get(), Action.RIGHT_CLICK, false, clickedFace));
 
-			//May have been changed by the event
+			// May have been changed by the event
 			holding = currentSlot.get();
 			holdingMat = holding == null ? null : holding.getMaterial();
 
-			//Get the target block and validate 
-			BlockMaterial clickedMaterial = clickedBlock.getMaterial();
-
-			//alternative block to place at may the clicked block deny placement
-			Block alterBlock = clickedBlock.translate(clickedFace);
-			BlockFace alterFace = clickedFace.getOpposite();
-
-			//check if the interaction was cancelled by the event
+			// check if the interaction was cancelled by the event
 			if (interactEvent.isCancelled()) {
-				refreshClient(player, clickedBlock, alterBlock, rm);
+				refreshClient(player, clickedBlock, clickedFace, rm);
 				return;
 			}
-			short durability = 0;
 
-			//perform interaction on the server
-			if (holdingMat != null) {
-				if (holdingMat instanceof InteractTool) {
-					durability = ((InteractTool) holdingMat).getMaxDurability();
+			// perform interaction on the server
+			if (interactEvent.interactWithBlock() != Result.DENY) {
+				if (holdingMat != null && interactEvent.useItemInHand() != Result.DENY) {
+					holdingMat.onInteract(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
 				}
-				holdingMat.onInteract(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
+				clickedMaterial.onInteractBy(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
+
+				// TODO: Put block component interaction handling back in
+				// if (clickedMaterial.hasController()) {
+				// clickedMaterial.getController(clickedBlock).onInteract(player, Action.RIGHT_CLICK);
+				// }
 			}
-			clickedMaterial.onInteractBy(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
-			//			if (clickedMaterial.hasController()) {
-			//				clickedMaterial.getController(clickedBlock).onInteract(player, Action.RIGHT_CLICK);
-			//			} TODO: Put block entity handling back in
 
-			//TODO: Readd durability/breaking handling
-
+			// Checks before placement
+			if (interactEvent.useItemInHand() == Result.DENY) {
+				refreshClient(player, clickedBlock, clickedFace, rm);
+				return;
+			}
 			if (interactEvent.useItemInHand() != Result.ALLOW) {
 				if (clickedMaterial instanceof VanillaBlockMaterial && (((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed())) {
-					refreshClient(player, clickedBlock, alterBlock, rm);
+					refreshClient(player, clickedBlock, clickedFace, rm);
 					return;
 				}
 			}
 
-			Cause<?> cause = new PlayerClickBlockCause(player, clickedBlock);
-
-			//if the material can be placed, place it
-			if (holdingMat != null && holdingMat instanceof Placeable) {
-				short placedData = holding.getData(); //TODO: shouldn't the sub-material deal with this?
+			// If the holding material can be placed, place it
+			if (holdingMat instanceof Placeable) {
+				Cause<?> cause = new PlayerClickBlockCause(player, clickedBlock);
+				short placedData = holding.getData(); // TODO: shouldn't the sub-material deal with this?
 				Placeable toPlace = (Placeable) holdingMat;
 
-				Block target;
-				BlockFace targetFace;
+				final Block placedBlock;
+				final BlockFace placedAgainst;
+				final boolean placedIsClicked;
+				// For snow, tall grass, and the like, place at the clicked block
 				if (toPlace.canPlace(clickedBlock, placedData, clickedFace, message.getFace(), true, cause) || interactEvent.useItemInHand() == Result.ALLOW) {
-					target = clickedBlock;
-					targetFace = clickedFace;
-				} else if (toPlace.canPlace(alterBlock, placedData, alterFace, message.getFace(), false, cause)) {
-					target = alterBlock;
-					targetFace = alterFace;
+					placedBlock = clickedBlock;
+					placedAgainst = clickedFace;
+					placedIsClicked = true;
 				} else {
-					refreshClient(player, clickedBlock, alterBlock, rm);
-					return;
+					placedBlock = clickedBlock.translate(clickedFace);
+					placedAgainst = clickedFace.getOpposite();
+					placedIsClicked = false;
+					if (!toPlace.canPlace(placedBlock, placedData, placedAgainst, message.getFace(), false, cause)) {
+						refreshClient(player, clickedBlock, clickedFace, rm);
+						return;
+					}
 				}
 
-				// TODO - maybe add actual limits
-				/*
-				if (target.getY() >= world.getHeight() || target.getY() < 0) {
-					return;
-				}*/
-
-				//is the player not solid-colliding with the block?
+				// is the player not solid-colliding with the block?
 				if (toPlace instanceof BlockMaterial) {
 					BlockMaterial mat = (BlockMaterial) toPlace;
 					if (mat.isSolid()) {
-						//TODO: Implement collision models to make this work
-						//CollisionModel playerModel = player.getEntity().getCollision();
-						//Vector3 offset = playerModel.resolve(mat.getCollisionModel());
-						//Vector3 dist = player.getEntity().getPosition().subtract(target.getPosition());
-						//if (dist.getX() < offset.getX() || dist.getY() < offset.getY() || dist.getZ() < offset.getZ()) {
-						//	undoPlacement(player, clickedBlock, alterBlock);
-						//	return;
-						//}
+						// TODO: Implement collision models to make this work
+						// CollisionModel playerModel = player.getEntity().getCollision();
+						// Vector3 offset = playerModel.resolve(mat.getCollisionModel());
+						// Vector3 dist = player.getEntity().getPosition().subtract(target.getPosition());
+						// if (dist.getX() < offset.getX() || dist.getY() < offset.getY() || dist.getZ() < offset.getZ()) {
+						// undoPlacement(player, clickedBlock, alterBlock);
+						// return;
+						// }
 
-						//For now: simple distance checking
-						Point tpos = target.getPosition();
+						// For now: simple distance checking
+						Point tpos = placedBlock.getPosition();
 						if (player.getTransform().getPosition().distance(tpos) < 0.6) {
-							refreshClient(player, clickedBlock, alterBlock, rm);
+							refreshClient(player, clickedBlock, clickedFace, rm);
 							return;
 						}
 						HeadComponent head = player.get(HeadComponent.class);
 						if (head != null && head.getPosition().distance(tpos) < 0.6) {
-							refreshClient(player, clickedBlock, alterBlock, rm);
+							refreshClient(player, clickedBlock, clickedFace, rm);
 							return;
 						}
 					}
 				}
 
-				//Check if the player can place the block.
-				Collection<Protection> protections = Spout.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(alterBlock.getPosition());
+				// Check if the player can place the block.
+				Collection<Protection> protections = Spout.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(placedBlock.getPosition());
 				for (Protection p : protections) {
-					if (p.contains(alterBlock.getPosition()) && !VanillaConfiguration.OPS.isOp(player.getName())) {
-						refreshClient(player, clickedBlock, alterBlock, rm);
+					if (p.contains(placedBlock.getPosition()) && !VanillaConfiguration.OPS.isOp(player.getName())) {
+						refreshClient(player, clickedBlock, clickedFace, rm);
 						player.sendMessage(ChatStyle.DARK_RED, "This area is a protected spawn point!");
 						return;
 					}
 				}
-				cause = new PlayerPlacementCause(player, (Material) toPlace, target);
+				cause = new PlayerPlacementCause(player, (Material) toPlace, placedBlock);
 
 				// Perform actual placement
-				toPlace.onPlacement(target, placedData, targetFace, message.getFace(), target == clickedBlock, cause);
+				toPlace.onPlacement(placedBlock, placedData, placedAgainst, message.getFace(), placedIsClicked, cause);
 
 				// Play sound
-				BlockMaterial material = target.getMaterial();
+				BlockMaterial material = placedBlock.getMaterial();
 				SoundEffect sound;
 				if (material instanceof VanillaBlockMaterial) {
 					sound = ((VanillaBlockMaterial) material).getStepSound();
 				} else {
 					sound = SoundEffects.STEP_STONE;
 				}
-				sound.playGlobal(target.getPosition(), 0.8f, 0.8f);
+				sound.playGlobal(placedBlock.getPosition(), 0.8f, 0.8f);
 
 				// Remove block from inventory
 				if (!PlayerUtil.isCostSuppressed(player)) {
 					currentSlot.addAmount(-1);
 				}
-				
-				refreshClient(player, clickedBlock, alterBlock, rm);
 			}
+
+			refreshClient(player, clickedBlock, clickedFace, rm);
 		}
 	}
 }

@@ -28,6 +28,9 @@ package org.spout.vanilla.plugin.material.block.redstone;
 
 import org.spout.api.geo.cuboid.Block;
 
+/**
+ * Represents a target for redstone power, wire does not attach to this material
+ */
 public interface RedstoneTarget {
 	/**
 	 * Checks if a block is receiving power from neighboring blocks.

@@ -37,6 +37,7 @@ import org.spout.api.plugin.Platform;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Liquid;
+import org.spout.vanilla.plugin.material.block.solid.Ice;
 import org.spout.vanilla.plugin.render.VanillaEffects;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
@@ -66,6 +67,8 @@ public class Lava extends Liquid {
 							block.setMaterial(VanillaMaterials.COBBLESTONE);
 						}
 						GeneralEffects.LAVA_FIZZ.playGlobal(block.getPosition());
+					} else if (block.translate(face).getMaterial() instanceof Ice) {
+						block.translate(face).setMaterial(VanillaMaterials.WATER);
 					}
 				}
 			}

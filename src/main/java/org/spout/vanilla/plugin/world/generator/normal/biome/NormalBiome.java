@@ -104,7 +104,6 @@ public abstract class NormalBiome extends VanillaBiome {
 	}
 
 	@Load
-	@SuppressWarnings("unused")
 	private void load(ConfigurationNode node) {
 		final ConfigurationNode groundCoverNode = node.getNode("ground-cover");
 		final int count = groundCoverNode.getKeys(false).size();

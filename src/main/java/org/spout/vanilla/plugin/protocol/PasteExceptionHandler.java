@@ -46,11 +46,11 @@ import org.spout.api.scheduler.TaskPriority;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 
-public class PastieExceptionHandler implements UncaughtExceptionHandler {
+public class PasteExceptionHandler implements UncaughtExceptionHandler {
 	private static final String PASTEBIN_URL = "http://pastebin.com";
 	private final Session session;
 
-	public PastieExceptionHandler(Session session) {
+	public PasteExceptionHandler(Session session) {
 		this.session = session;
 	}
 
@@ -59,7 +59,7 @@ public class PastieExceptionHandler implements UncaughtExceptionHandler {
 		Player player = session.getPlayer();
 		Spout.getEngine().getLogger().log(Level.SEVERE, "Message handler for " + message.getClass().getSimpleName() + " threw exception for player " + (session.getPlayer() != null ? session.getPlayer().getName() : "null"));
 		ex.printStackTrace();
-		if (player != null && player.hasPermission("vanilla.exception.pastie")) {
+		if (player != null && player.hasPermission("vanilla.exception.paste")) {
 			StringBuilder builder = new StringBuilder("Vanilla Error Report:\n");
 			builder.append("( Please submit this report to http://spout.in/issues )\n");
 			builder.append("    Version: ").append(VanillaPlugin.getInstance().getDescription().getVersion()).append("\n");
@@ -67,7 +67,7 @@ public class PastieExceptionHandler implements UncaughtExceptionHandler {
 			builder.append("Stack Trace:").append("\n");
 			builder.append("    Exception: ").append(ex.getClass().getSimpleName()).append("\n");
 			logTrace(builder, ex);
-			Runnable task = new PastieRunnable(session, builder.toString(), "Message handler exception for " + message.getClass().getSimpleName());
+			Runnable task = new PasteRunnable(session, builder.toString(), "Message handler exception for " + message.getClass().getSimpleName());
 			Spout.getEngine().getScheduler().scheduleAsyncDelayedTask(VanillaPlugin.getInstance(), task, 0, TaskPriority.CRITICAL);
 		} else {
 			session.disconnect(false, new Object[]{"Message handler exception for ", message.getClass().getSimpleName()});
@@ -92,12 +92,12 @@ public class PastieExceptionHandler implements UncaughtExceptionHandler {
 		}
 	}
 
-	private static class PastieRunnable implements Runnable {
+	private static class PasteRunnable implements Runnable {
 		private final Session session;
 		private final String message;
 		private final String backupMessage;
 
-		PastieRunnable(Session session, String message, String backupMessage) {
+		PasteRunnable(Session session, String message, String backupMessage) {
 			this.session = session;
 			this.message = message;
 			this.backupMessage = backupMessage;

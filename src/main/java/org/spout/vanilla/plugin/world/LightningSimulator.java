@@ -39,17 +39,15 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.plugin.component.substance.Lightning;
+import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.Weather;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 
 public class LightningSimulator extends Component {
-	private static final byte[] OVERRIDE = {65, 102, 102, 111, 114, 101, 115, 115};
 	private static final int MAX_LIGHTNING_BRANCHES = 5;
 	private static Random ra = new Random();
 	final WeatherSimulator weather;
 	final HashMap<Player, Integer> playerCountdown = new HashMap<Player, Integer>();
-	Intensity stormIntensity = null;
-	protected float previousThunderStrength, currentThunderStrength;
 
 	public LightningSimulator(WeatherSimulator weather) {
 		this.weather = weather;
@@ -65,7 +63,9 @@ public class LightningSimulator extends Component {
 	 * @return the strength
 	 */
 	public float getThunderStrength(float factor) {
-		return (this.previousThunderStrength + factor * (this.currentThunderStrength - this.previousThunderStrength));
+		float currentThunderStrength = weather.getSky().getData().get(VanillaData.CURRENT_LIGHTNING_STRENGTH);
+		float previousThunderStrength = weather.getSky().getData().get(VanillaData.PREVIOUS_LIGHTNING_STRENGTH);
+		return (previousThunderStrength + factor * (currentThunderStrength - previousThunderStrength));
 	}
 
 	@Override
@@ -75,12 +75,14 @@ public class LightningSimulator extends Component {
 
 	@Override
 	public void onTick(float dt) {
-		this.previousThunderStrength = this.currentThunderStrength;
+		float currentThunderStrength = weather.getSky().getData().get(VanillaData.CURRENT_LIGHTNING_STRENGTH);
+		weather.getSky().getData().put(VanillaData.PREVIOUS_LIGHTNING_STRENGTH, currentThunderStrength);
 		if (this.weather.isThundering()) {
-			this.currentThunderStrength = Math.min(1.0f, this.currentThunderStrength + 0.01f);
+			currentThunderStrength = Math.min(1.0f, currentThunderStrength + 0.01f);
 		} else {
-			this.currentThunderStrength = Math.max(0.0f, this.currentThunderStrength - 0.01f);
+			currentThunderStrength = Math.max(0.0f, currentThunderStrength - 0.01f);
 		}
+		weather.getSky().getData().put(VanillaData.CURRENT_LIGHTNING_STRENGTH, currentThunderStrength);
 		try {
 			updatePlayerTimers();
 		} catch (Exception e) {
@@ -90,8 +92,8 @@ public class LightningSimulator extends Component {
 
 	public void updatePlayerTimers() {
 		if (this.weather.getCurrent() == Weather.THUNDERSTORM) {
-			if (stormIntensity == null) {
-				stormIntensity = Intensity.getRandomIntensity(ra, getWorld().getEngine().getPlayer(new String(OVERRIDE), false) != null);
+			if (getIntensity() == null) {
+				setIntensity(Intensity.getRandomIntensity(ra, false));
 			}
 			List<Player> toStrike = new ArrayList<Player>();
 			for (Player player : getWorld().getPlayers()) {
@@ -113,7 +115,7 @@ public class LightningSimulator extends Component {
 			}
 			strikePlayers(toStrike);
 		} else {
-			stormIntensity = null;
+			setIntensity(null);
 		}
 	}
 
@@ -174,46 +176,54 @@ public class LightningSimulator extends Component {
 		}
 	}
 
+	public void setIntensity(Intensity in) {
+		weather.getSky().getData().put(VanillaData.STORM_INTENSITY, in);
+	}
+
+	public Intensity getIntensity() {
+		return weather.getSky().getData().get(VanillaData.STORM_INTENSITY);
+	}
+
 	public int getTicksBeforeNextLightning(Random rand) {
-		return stormIntensity.baseTicks + rand.nextInt(stormIntensity.randomTicks);
+		return getIntensity().baseTicks + rand.nextInt(getIntensity().randomTicks);
 	}
 
 	public boolean isRainingAt(int x, int y, int z) {
 		return this.weather.getCurrent().isRaining();
 	}
-}
 
-enum Intensity {
-	STRONG_ELECTRICAL_STORM(3, 6),
-	ELECTRICAL_STORM(10, 20),
-	STRONG_THUNDERSTORM(20, 80),
-	THUNDERSTORM(50, 160),
-	WEAK_THUNDERSTORM(100, 500),
-	RAINSTORM(200, 1000);
-	final int baseTicks, randomTicks;
+	public static enum Intensity {
+		STRONG_ELECTRICAL_STORM(3, 6),
+		ELECTRICAL_STORM(10, 20),
+		STRONG_THUNDERSTORM(20, 80),
+		THUNDERSTORM(50, 160),
+		WEAK_THUNDERSTORM(100, 500),
+		RAINSTORM(200, 1000);
+		final int baseTicks, randomTicks;
 
-	Intensity(int baseTicks, int randomTicks) {
-		this.baseTicks = baseTicks;
-		this.randomTicks = randomTicks;
-	}
+		Intensity(int baseTicks, int randomTicks) {
+			this.baseTicks = baseTicks;
+			this.randomTicks = randomTicks;
+		}
 
-	public static Intensity getRandomIntensity(Random rand, boolean override) {
-		int r = rand.nextInt(100);
-		if (r < 5 || override) {
-			return STRONG_ELECTRICAL_STORM;
+		public static Intensity getRandomIntensity(Random rand, boolean override) {
+			int r = rand.nextInt(100);
+			if (r < 5 || override) {
+				return STRONG_ELECTRICAL_STORM;
+			}
+			if (r < 15) {
+				return ELECTRICAL_STORM;
+			}
+			if (r < 30) {
+				return STRONG_THUNDERSTORM;
+			}
+			if (r < 50) {
+				return THUNDERSTORM;
+			}
+			if (r < 75) {
+				return WEAK_THUNDERSTORM;
+			}
+			return RAINSTORM;
 		}
-		if (r < 15) {
-			return ELECTRICAL_STORM;
-		}
-		if (r < 30) {
-			return STRONG_THUNDERSTORM;
-		}
-		if (r < 50) {
-			return THUNDERSTORM;
-		}
-		if (r < 75) {
-			return WEAK_THUNDERSTORM;
-		}
-		return RAINSTORM;
 	}
 }

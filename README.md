@@ -1,41 +1,46 @@
-[![Vanilla][Project Logo]][Website]
+[![Vanilla][Project Logo]][Homepage]
 
-What is Vanilla?
-----------------
-Vanilla is a plugin for the Spout platform that provides vanilla Minecraft functionality and gameplay.
+Vanilla is a plugin for the [Spout voxel game platform](https://github.com/SpoutDev/Spout) that provides vanilla [Minecraft](http://minecraft.net) 1.4.7 functionality and gameplay.
 
-Copyright (c) 2011-2013, VanillaDev <<http://www.spout.org/>>
+[Homepage] | [Forums] | [Twitter] | [Facebook]
 
-Who is VanillaDev?
-------------------------
-VanillaDev is the team behind the Vanilla and BukkitBridge projects.  
-[![Zidane](https://secure.gravatar.com/avatar/3b8d6171c3f15daf35328a4f04c83de9?d=mm&r=pg&s=48)](http://forums.spout.org/members/zidane.7/) [![ZNickq](https://secure.gravatar.com/avatar/2d9c36328b81d872ba0c5b9cb82bbfe8?d=mm&r=pg&s=48)](http://forums.spout.org/members/znickq.72/) [![Windwaker](https://secure.gravatar.com/avatar/942913bba29c93344d8a2e4da56c6bf1?d=mm&r=pg&s=48)](http://forums.spout.org/members/windwaker.47/) [![bergerkiller](https://secure.gravatar.com/avatar/231ba19298225157537674cbeb7a9f7f?s=mm&r=pg&s=48)](http://forums.spout.org/members/bergerkiller.3753/) [![DDoSQc](https://secure.gravatar.com/avatar/ec0cc434d9c9b34670d4c8845fe6bebc?s=mm&r=pg&s=48)](http://forums.spout.org/members/ddos.5524/) [![Pamelloes](https://secure.gravatar.com/avatar/a48c6394ae3408c5da63b4a5fc2ad3c6?s=mm&r=pg&s=48)](http://forums.spout.org/members/pamelloes.38/) 
+## Features
+The goal is for Vanilla to feel like vanilla Minecraft, being as close to it as possible, while offering much more freedom.  
+You can see a full feature list [here](http://wiki.spout.org/Vanilla#Features), along with what has and hasn't been implemented.
 
-Visit our [website][Website] or get support on our [forums][Forums].  
-Track and submit issues and bugs on our [issue tracker][Issues].
+## Using
+It's easy to get started! Simply [setup Spout](http://wiki.spout.org/Installing_Spout), and then [place the Vanilla jar in the plugins folder](http://wiki.spout.org/Installing_Vanilla_Plugin)!
 
-[![Follow us on Twitter][Twitter Logo]][Twitter][![Like us on Facebook][Facebook Logo]][Facebook][![Donate to the Vanilla project][Donate Logo]][Donate]
+## Contributing
+Like the project? Feel free to [donate] to help continue development!
 
-Source
-------
-The latest and greatest source can be found on [GitHub].  
-Download the latest builds from [Jenkins].  [![Build Status](http://build.spout.org/job/Vanilla/badge/icon)][Jenkins]  
-View the latest [Javadoc].
+Are you a talented programmer looking to contribute some code? We'd love the help!
+* Open a pull request with your changes, following our [guidelines and coding standards](http://spout.in/prguide).
+* Please follow the above guidelines for your pull request(s) accepted.
+* For help setting up the project, keep reading!
 
-License
--------
-Vanilla is licensed under the [GNU Lesser General Public License Version 3][License], but with a provision that files are released under the MIT license 180 days after they are published. Please see the `LICENSE.txt` file for details.
+## The license
+Vanilla is licensed under the [GNU Lesser General Public License Version 3][License], but with a provision that files are released under the [MIT License][License] 180 days after they are published. Please see the `LICENSE.txt` file for details or see [our license in a nutshell](http://spout.in/licensev1).
 
-Compiling
----------
+[![Spout][Company Logo]](http://www.spout.org)
+
+## Getting the source
+The latest and greatest source can be found here on [GitHub][Source].
+
+If you are using Git, use this command to clone the project:
+
+    git clone git://github.com/VanillaDev/Vanilla.git
+
+Or download the [latest zip archive][Download Source].
+
+## Compiling the source
 Vanilla uses Maven to handle its dependencies.
 
-* Install [Maven 2 or 3](http://maven.apache.org/download.html)  
+* Download and install [Maven 3](http://maven.apache.org/download.html)  
 * Checkout this repo and run: `mvn clean install`
 
-Using with Your Project
------------------------
-For those using [Maven](http://maven.apache.org/download.html) to manage project dependencies, simply include the following in your pom.xml:
+## Using in your project
+If you're using [Maven](http://maven.apache.org/download.html) to manage project dependencies, simply include the following in your `pom.xml`:
 
     <dependency>
         <groupId>org.spout</groupId>
@@ -43,43 +48,29 @@ For those using [Maven](http://maven.apache.org/download.html) to manage project
         <version>1.4.7-SNAPSHOT</version>
     </dependency>
 
-If you do not already have repo.spout.org in your repository list, you will need to add this also:
+If you do not already have repo.spout.org in your repository list, you will need to add this as well:
 
     <repository>
         <id>spout-repo</id>
-        <url>https://repo.spout.org</url>
+        <url>http://repo.spout.org</url>
     </repository>
 
-Coding and Pull Request Formatting
-----------------------------------
-* Generally follow the Oracle coding standards.
-* Use tabs, no spaces.
-* No trailing whitespaces.
-* 200 column limit for readability.
-* All new files must include the license header. This can be done automatically with Maven by running mvn clean.
-* All changes made via pull requests first be compiled locally to verify that the code does indeed compile, and tested to verify that it actually works.
-* Where practical, a test should be included to verify the change. Except in exceptional cases, bug fixes **MUST** include a test case which fails for the current version and passes for the updated version.
-* Commit messages must include:
-    - A brief description of the change
-    - A more detailed description of the change (second line and below, optional)
-    - Sign-off, verifying agreement with the license terms
-* Number of commits in a pull request should be kept to **one commit** and all additional commits must be **squashed** except for circumstantial exceptions.
-* You may have more than one commit in a pull request if the commits are separate changes, otherwise squash the commits.
-* For clarification, see the full pull request guidelines [here](http://spout.in/prguide).
+If you'd prefer to manually import the latest .jar file, you can get it from our [download site][Download], or from our [build server][Builds]. [![Build Status][Build Icon]][Builds]
 
-**Please follow the above conventions if you want your pull request(s) accepted.**
+Want to know how to use the API? Check out the latest [Javadoc].
 
-[Project Logo]: http://cdn.spout.org/img/logo/vanilla_630x150.png
-[License]: http://www.spout.org/SpoutDevLicenseV1.txt
-[Website]: http://www.spout.org
+[Project Logo]: http://cdn.spout.org/vanilla-github.png
+[Company Logo]: http://cdn.spout.org/spout-github.png
+[Homepage]: http://www.getvanilla.org
 [Forums]: http://forums.spout.org
-[GitHub]: https://github.com/VanillaDev/Vanilla
-[Javadoc]: http://jd.spout.org/vanilla/
-[Jenkins]: http://build.spout.org/job/Vanilla
-[Issues]: http://issues.spout.org/browse/Vanilla
+[License]: http://spout.in/licensev1
+[Source]: https://github.com/VanillaDev/Vanilla
+[Download]: http://get.spout.org/dev/vanilla.jar
+[Download Source]: https://github.com/VanillaDev/Vanilla/archive/master.zip
+[Builds]: http://build.spout.org/job/Vanilla
+[Build Icon]: http://build.spout.org/job/Vanilla/badge/icon
+[Javadoc]: http://jd.spout.org/vanilla/latest
+[Issues]: http://issues.spout.org/browse/VANILLA
 [Twitter]: http://spout.in/twitter
-[Twitter Logo]: http://cdn.spout.org/img/button/twitter_follow_us.png
 [Facebook]: http://spout.in/facebook
-[Facebook Logo]: http://cdn.spout.org/img/button/facebook_like_us.png
-[Donate]: https://www.paypal.com/cgi-bin/webscr?hosted_button_id=QNJH72R72TZ64&item_name=Vanilla+donation+%28from+github.com%29&cmd=_s-xclick
-[Donate Logo]: http://cdn.spout.org/img/button/donate_paypal_96x96.png
+[Donate]: http://spout.in/donate

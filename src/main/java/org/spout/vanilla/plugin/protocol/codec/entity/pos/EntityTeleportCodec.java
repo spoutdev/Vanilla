@@ -32,8 +32,6 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
-import org.spout.api.protocol.reposition.NullRepositionManager;
-
 import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityTeleportMessage;
 
 public final class EntityTeleportCodec extends MessageCodec<EntityTeleportMessage> {
@@ -49,7 +47,7 @@ public final class EntityTeleportCodec extends MessageCodec<EntityTeleportMessag
 		int z = buffer.readInt();
 		int rotation = buffer.readUnsignedByte();
 		int pitch = buffer.readUnsignedByte();
-		return new EntityTeleportMessage(id, x, y, z, rotation, pitch, NullRepositionManager.getInstance());
+		return new EntityTeleportMessage(id, x, y, z, rotation, pitch);
 	}
 
 	@Override

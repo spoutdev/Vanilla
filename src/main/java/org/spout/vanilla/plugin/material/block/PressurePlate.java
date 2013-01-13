@@ -30,7 +30,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.block.BlockSnapshot;
 import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
@@ -62,8 +61,8 @@ public abstract class PressurePlate extends GroundAttachable implements Redstone
 	}
 
 	@Override
-	public short getRedstonePowerStrength(BlockSnapshot state) {
-		return ((state.getData() & 0x1) == 1) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	public short getRedstonePowerStrength(short data) {
+		return ((data & 0x1) == 1) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
 	}
 
 	/**

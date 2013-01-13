@@ -33,7 +33,6 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.material.block.BlockSnapshot;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.plugin.data.GameMode;
@@ -131,7 +130,7 @@ public class Lever extends AttachedRedstoneSource implements Toggleable {
 	}
 
 	@Override
-	public short getRedstonePowerStrength(BlockSnapshot state) {
-		return ((state.getData() & 0x8) == 1) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	public short getRedstonePowerStrength(short data) {
+		return ((data & 0x8) == 1) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
 	}
 }

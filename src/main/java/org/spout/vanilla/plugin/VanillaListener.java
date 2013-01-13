@@ -42,7 +42,6 @@ import org.spout.api.event.entity.EntityShownEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockSnapshot;
 import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
@@ -118,7 +117,8 @@ public class VanillaListener implements Listener {
 		//Redstone event
 		BlockMaterial oldMat = event.getBlock().getMaterial();
 		BlockMaterial newMat = event.getSnapshot().getMaterial();
-		BlockSnapshot initialState = new BlockSnapshot(event.getBlock());
+		short prevData = event.getBlock().getData();
+		short newData = event.getSnapshot().getData();
 		//RedstoneChangeEvent
 		//Three possibilities here:
 		//1.) Redstone source material was placed, generating power
@@ -128,13 +128,13 @@ public class VanillaListener implements Listener {
 		short newPower = -1;
 		if (!(oldMat instanceof RedstoneSource) && newMat instanceof RedstoneSource) {
 			prevPower = 0;
-			newPower = ((RedstoneSource) newMat).getRedstonePowerStrength(event.getSnapshot());
+			newPower = ((RedstoneSource) newMat).getRedstonePowerStrength(newData);
 		} else if (!(newMat instanceof RedstoneSource) && oldMat instanceof RedstoneSource) {
-			prevPower = ((RedstoneSource) oldMat).getRedstonePowerStrength(initialState);
+			prevPower = ((RedstoneSource) oldMat).getRedstonePowerStrength(prevData);
 			newPower = 0;
 		} else if (newMat == oldMat && oldMat instanceof RedstoneSource) {
-			prevPower = ((RedstoneSource) oldMat).getRedstonePowerStrength(initialState);
-			newPower = ((RedstoneSource) newMat).getRedstonePowerStrength(event.getSnapshot());
+			prevPower = ((RedstoneSource) oldMat).getRedstonePowerStrength(prevData);
+			newPower = ((RedstoneSource) newMat).getRedstonePowerStrength(newData);
 		}
 		if (prevPower != -1) {
 			RedstoneChangeEvent redstoneEvent = new RedstoneChangeEvent(event.getBlock(), event.getCause(), prevPower, newPower);

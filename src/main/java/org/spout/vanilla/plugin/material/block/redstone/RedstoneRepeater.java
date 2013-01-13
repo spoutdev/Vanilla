@@ -37,7 +37,6 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.material.block.BlockSnapshot;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
 import org.spout.api.math.Vector3;
@@ -210,7 +209,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 	}
 
 	@Override
-	public short getRedstonePowerStrength(BlockSnapshot state) {
+	public short getRedstonePowerStrength(short data) {
 		return this.isPowered() ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
 	}
 }

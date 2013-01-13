@@ -29,7 +29,6 @@ package org.spout.vanilla.plugin.material.block.redstone;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.api.material.block.BlockSnapshot;
 import org.spout.vanilla.plugin.data.RedstonePowerMode;
 
 /**
@@ -57,8 +56,8 @@ public interface RedstoneSource {
 
 	/**
 	 * Gets the amount of redstone power this material generates for itself
-	 * @param state of the block
+	 * @param data
 	 * @return power strength
 	 */
-	public short getRedstonePowerStrength(BlockSnapshot state);
+	public short getRedstonePowerStrength(short data);
 }

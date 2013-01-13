@@ -36,8 +36,7 @@ public class DamageComponent extends EntityComponent {
 
 	private HashMap<Difficulty, Damage> damageList = new HashMap<Difficulty, Damage>();
 
-	@Override
-	public void onAttached() {
+	public DamageComponent() {
 		for (Difficulty difficulty :Difficulty.values() ) {
 			damageList.put(difficulty, new Damage());
 		}

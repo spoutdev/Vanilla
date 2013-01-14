@@ -76,7 +76,7 @@ public class SnowSimulator extends Component {
 		}
 	}
 
-	private static final Vector3[] JUMP_TABLE = new Vector3[27];
+	private static final Vector3[] JUMP_TABLE = new Vector3[3];
 
 	static {
 		for (int i = 0; i < JUMP_TABLE.length; i++) {
@@ -89,57 +89,9 @@ public class SnowSimulator extends Component {
 			case 0:
 				return Vector3.ZERO;
 			case 1:
-				return new Vector3(0, 0, 16);
-			case 2:
-				return new Vector3(0, 0, -16);
-			case 3:
-				return new Vector3(16, 0, 0);
-			case 4:
-				return new Vector3(-16, 0, 0);
-			case 5:
-				return new Vector3(16, 0, 16);
-			case 6:
-				return new Vector3(16, 0, -16);
-			case 7:
-				return new Vector3(-16, 0, -16);
-			case 8:
-				return new Vector3(-16, 0, -16);
-			case 9:
 				return new Vector3(0, 16, 0);
-			case 10:
-				return new Vector3(0, 16, 16);
-			case 11:
-				return new Vector3(0, 16, -16);
-			case 12:
-				return new Vector3(16, 16, 0);
-			case 13:
-				return new Vector3(-16, 16, 0);
-			case 14:
-				return new Vector3(16, 16, 16);
-			case 15:
-				return new Vector3(16, 16, -16);
-			case 16:
-				return new Vector3(-16, 16, -16);
-			case 17:
-				return new Vector3(-16, 16, -16);
-			case 18:
+			case 2:
 				return new Vector3(0, -16, 0);
-			case 19:
-				return new Vector3(0, -16, 16);
-			case 20:
-				return new Vector3(0, -16, -16);
-			case 21:
-				return new Vector3(16, -16, 0);
-			case 22:
-				return new Vector3(-16, -16, 0);
-			case 23:
-				return new Vector3(16, -16, 16);
-			case 24:
-				return new Vector3(16, -16, -16);
-			case 25:
-				return new Vector3(-16, -16, -16);
-			case 26:
-				return new Vector3(-16, -16, -16);
 			default:
 				return Vector3.ZERO;
 		}
@@ -186,29 +138,35 @@ public class SnowSimulator extends Component {
 						//Try to find the surface
 						for (int dy = 1; dy < 16; dy++) {
 							if (region.containsBlock(x, y - dy, z)) {
-								BlockMaterial mat = region.getBlockMaterial(x, y - dy, z);
+								Block block = region.getBlock(x, y - dy, z);
+								BlockMaterial mat = block.getMaterial();
 								if (mat instanceof VanillaBlockMaterial) {
 									VanillaBlockMaterial vbm = (VanillaBlockMaterial) mat;
+									//Place snow ontop of solid
 									if (vbm.canSupport(VanillaMaterials.SNOW, BlockFace.TOP)) {
-										Block block = region.getBlock(x, y - dy + 1, z);
-										if (!VanillaMaterials.SNOW.willMeltAt(block)) {
-											block.setMaterial(VanillaMaterials.SNOW);
+										Block above = block.translate(BlockFace.TOP);
+										if (!VanillaMaterials.SNOW.willMeltAt(above)) {
+											above.setMaterial(VanillaMaterials.SNOW);
 										}
 										return;
+									//Try to grow snow
 									} else if (vbm == VanillaMaterials.SNOW) {
-										short data = region.getBlockData(x, y - dy, z);
+										short data = block.getData();
 										if (data == 0x7) {
-											if (region.getBlockMaterial(x, y - dy + 1, z) == BlockMaterial.AIR) {
-												region.setBlockMaterial(x, y - dy + 1, z, VanillaMaterials.SNOW, (short) 0, null);
+											Block above = block.translate(BlockFace.TOP);
+											if (above.getMaterial() == BlockMaterial.AIR) {
+												above.setMaterial(VanillaMaterials.SNOW);
 											}
 										} else {
-											region.setBlockData(x, y - dy, z, (short) ((data + 1) & 0xF), null);
+											block.setData(data + 1);
 										}
 										return;
 									} else {
 										break;
 									}
 								}
+							} else {
+								break;
 							}
 						}
 					}

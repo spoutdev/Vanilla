@@ -57,6 +57,7 @@ import org.spout.vanilla.api.data.MoveReaction;
 import org.spout.vanilla.api.data.RedstonePowerMode;
 import org.spout.vanilla.api.material.VanillaMaterial;
 import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
@@ -453,10 +454,13 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 * @return True if it is raining, False if not
 	 */
 	public static boolean hasRainNearby(Block block) {
-		if (block.getWorld().getComponentHolder().getData().get(VanillaData.WEATHER).isRaining()) {
-			for (BlockFace face : BlockFaces.NESW) {
-				if (block.translate(face).isAtSurface()) {
-					return true;
+		VanillaSky sky = VanillaSky.getSky(block.getWorld());
+		if (sky.hasWeather()) {
+			if (sky.getWeatherSimulator().isRainingAt(block.getX(), block.getY(), block.getZ(), false)) {
+				for (BlockFace face : BlockFaces.NESW) {
+					if (block.translate(face).isAtSurface()) {
+						return true;
+					}
 				}
 			}
 		}

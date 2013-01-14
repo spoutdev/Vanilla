@@ -303,6 +303,11 @@ public class Human extends Living {
 			changeToFromCreative ^= event.getMode() == GameMode.CREATIVE;
 			GameMode old = getGameMode();
 			mode = event.getMode();
+			
+			//In Survival we shoudn't be able to fly.
+			if (mode != GameMode.CREATIVE) {
+				setCanFly(false);
+			}
 			if (changeToFromCreative) {
 				if (callAbilityChangeEvent().isCancelled()) {
 					mode = old;

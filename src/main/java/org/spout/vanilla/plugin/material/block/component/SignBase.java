@@ -48,7 +48,7 @@ import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 public abstract class SignBase extends AbstractAttachable implements InitializableMaterial, VanillaComplexMaterial {
 	public SignBase(String name, int id) {
 		super(name, id, VanillaMaterialModels.SIGN);
-		this.setAttachable(BlockFaces.NESWB).setHardness(1.0F).setResistance(1.6F).setOpacity((byte) 1);
+		this.setAttachable(BlockFaces.NESWB).setHardness(1.0F).setResistance(1.6F).setTransparent();
 	}
 
 	@Override

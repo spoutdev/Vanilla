@@ -43,6 +43,7 @@ import org.spout.api.scheduler.TaskPriority;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.misc.Snow;
 
 public class SnowSimulator extends Component {
 	final WeatherSimulator weather;
@@ -148,9 +149,9 @@ public class SnowSimulator extends Component {
 										if (!VanillaMaterials.SNOW.willMeltAt(above)) {
 											above.setMaterial(VanillaMaterials.SNOW);
 										}
-										return;
+										break;
 									//Try to grow snow
-									} else if (vbm == VanillaMaterials.SNOW) {
+									} else if (vbm instanceof Snow) {
 										short data = block.getData();
 										if (data == 0x7) {
 											Block above = block.translate(BlockFace.TOP);
@@ -160,7 +161,7 @@ public class SnowSimulator extends Component {
 										} else {
 											block.setData(data + 1);
 										}
-										return;
+										break;
 									} else {
 										break;
 									}

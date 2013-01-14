@@ -38,9 +38,9 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
 
+import org.spout.vanilla.api.data.Weather;
 import org.spout.vanilla.plugin.component.substance.Lightning;
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.data.Weather;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 
 public class LightningSimulator extends Component {

@@ -32,7 +32,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.plugin.protocol.msg.VanillaMainChannelMessage;
+import org.spout.vanilla.api.protocol.msg.VanillaMainChannelMessage;
 
 public final class PlayerDiggingMessage extends VanillaMainChannelMessage {
 	public static final int STATE_START_DIGGING = 0;

@@ -38,7 +38,7 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.render.BufferContainer;
 import org.spout.api.render.effect.BufferEffect;
 
-import org.spout.vanilla.plugin.world.generator.biome.VanillaBiome;
+import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
 
 public abstract class BiomeColorBufferEffect implements BufferEffect {

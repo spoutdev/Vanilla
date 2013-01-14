@@ -29,7 +29,7 @@ package org.spout.vanilla.plugin.material.block.rail;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.plugin.data.RailsState;
+import org.spout.vanilla.api.data.RailsState;
 import org.spout.vanilla.plugin.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.plugin.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.plugin.util.RedstoneUtil;

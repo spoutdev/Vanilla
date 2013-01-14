@@ -32,7 +32,7 @@ import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.plugin.protocol.msg.VanillaBlockDataChannelMessage;
+import org.spout.vanilla.api.protocol.msg.VanillaBlockDataChannelMessage;
 
 public final class ChunkDataMessage extends VanillaBlockDataChannelMessage {
 	private final int x, z;

@@ -35,11 +35,11 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.api.data.GameMode;
+import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
-import org.spout.vanilla.plugin.data.GameMode;
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 
 public class PlayerUtil {

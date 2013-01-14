@@ -37,11 +37,11 @@ import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
 
-import org.spout.vanilla.plugin.inventory.Slot;
-import org.spout.vanilla.plugin.material.Fuel;
+import org.spout.vanilla.api.inventory.Slot;
+import org.spout.vanilla.api.material.Fuel;
+import org.spout.vanilla.api.material.block.Plant;
+import org.spout.vanilla.api.material.block.Spreading;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Plant;
-import org.spout.vanilla.plugin.material.block.Spreading;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.material.block.solid.Log;
 import org.spout.vanilla.plugin.material.item.misc.Dye;

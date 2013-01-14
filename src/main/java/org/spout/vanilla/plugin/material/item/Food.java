@@ -29,11 +29,13 @@ package org.spout.vanilla.plugin.material.item;
 import org.spout.api.entity.Entity;
 import org.spout.api.math.Vector2;
 
+import org.spout.vanilla.api.data.GameMode;
+import org.spout.vanilla.api.inventory.Slot;
+import org.spout.vanilla.api.material.item.FoodEffect;
+
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
-import org.spout.vanilla.plugin.data.GameMode;
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.inventory.Slot;
 
 public class Food extends VanillaItemMaterial {
 	private final FoodEffect[] effects;

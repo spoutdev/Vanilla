@@ -31,7 +31,7 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 
-import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.api.data.GameMode;
 
 /**
  * Event which is called when a player changes the gamemode

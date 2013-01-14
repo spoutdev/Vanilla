@@ -31,7 +31,7 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.plugin.data.effect.StatusEffect;
+import org.spout.vanilla.api.data.effect.StatusEffect;
 
 public class EntityRemoveEffectEvent extends EntityEvent implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();

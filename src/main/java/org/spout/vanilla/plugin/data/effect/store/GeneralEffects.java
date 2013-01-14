@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.plugin.data.effect.store;
 
+import org.spout.vanilla.api.data.effect.Effect;
 import org.spout.vanilla.plugin.data.effect.BatchEffect;
-import org.spout.vanilla.plugin.data.effect.Effect;
 import org.spout.vanilla.plugin.data.effect.GeneralEffect;
 import org.spout.vanilla.plugin.data.effect.SoundEffect;
 import org.spout.vanilla.plugin.data.effect.type.BatchExplosionEffect;

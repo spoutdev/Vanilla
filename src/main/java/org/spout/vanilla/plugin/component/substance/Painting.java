@@ -29,8 +29,8 @@ package org.spout.vanilla.plugin.component.substance;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.api.data.PaintingType;
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.data.PaintingType;
 import org.spout.vanilla.plugin.protocol.entity.object.PaintingEntityProtocol;
 
 public class Painting extends EntityComponent {

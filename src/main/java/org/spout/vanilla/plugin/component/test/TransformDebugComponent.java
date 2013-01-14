@@ -31,6 +31,7 @@ import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.plugin.Platform;
 
+
 public class TransformDebugComponent extends EntityComponent {
 	@Override
 	public void onAttached() {

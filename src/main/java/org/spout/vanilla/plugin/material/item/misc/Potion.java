@@ -29,11 +29,11 @@ package org.spout.vanilla.plugin.material.item.misc;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.api.data.effect.StatusEffect;
+import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.misc.EffectsComponent;
-import org.spout.vanilla.plugin.data.effect.StatusEffect;
 import org.spout.vanilla.plugin.data.effect.StatusEffectContainer;
-import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 

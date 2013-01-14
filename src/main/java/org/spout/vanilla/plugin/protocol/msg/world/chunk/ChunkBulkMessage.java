@@ -33,7 +33,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.plugin.protocol.msg.VanillaBlockDataChannelMessage;
+import org.spout.vanilla.api.protocol.msg.VanillaBlockDataChannelMessage;
 
 public final class ChunkBulkMessage extends VanillaBlockDataChannelMessage {
 	private final int[] x;

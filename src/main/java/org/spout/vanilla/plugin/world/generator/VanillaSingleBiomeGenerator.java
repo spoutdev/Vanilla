@@ -34,7 +34,7 @@ import org.spout.api.generator.biome.selector.PerBlockBiomeSelector;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
-import org.spout.vanilla.plugin.world.generator.biome.VanillaBiome;
+import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
 
 public abstract class VanillaSingleBiomeGenerator extends VanillaBiomeGenerator {
 	private final VanillaBiome biome;

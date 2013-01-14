@@ -31,7 +31,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.proxy.ConnectionInfo;
 import org.spout.api.protocol.proxy.TransformableMessage;
 
-import org.spout.vanilla.plugin.protocol.msg.VanillaMainChannelMessage;
+import org.spout.vanilla.api.protocol.msg.VanillaMainChannelMessage;
 import org.spout.vanilla.plugin.protocol.proxy.VanillaConnectionInfo;
 
 /**

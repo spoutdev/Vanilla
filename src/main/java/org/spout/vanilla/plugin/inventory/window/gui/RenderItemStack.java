@@ -31,8 +31,8 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
 
+import org.spout.vanilla.api.material.VanillaMaterial;
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
-import org.spout.vanilla.plugin.material.VanillaMaterial;
 
 public class RenderItemStack extends RenderPart {
 	private static final float SCALE = 0.75f;

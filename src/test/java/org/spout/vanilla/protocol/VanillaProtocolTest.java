@@ -37,8 +37,8 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.plugin.data.Animation;
-import org.spout.vanilla.plugin.data.GameMode;
+import org.spout.vanilla.api.data.Animation;
+import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.plugin.inventory.window.WindowType;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.VanillaCodecLookupService;

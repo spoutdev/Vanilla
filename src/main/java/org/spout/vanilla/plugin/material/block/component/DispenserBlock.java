@@ -40,11 +40,11 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.api.data.MoveReaction;
+import org.spout.vanilla.api.data.effect.Effect;
 import org.spout.vanilla.plugin.component.substance.Item;
 import org.spout.vanilla.plugin.component.substance.material.Dispenser;
 import org.spout.vanilla.plugin.component.substance.object.projectile.Arrow;
-import org.spout.vanilla.plugin.data.MoveReaction;
-import org.spout.vanilla.plugin.data.effect.Effect;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Directional;

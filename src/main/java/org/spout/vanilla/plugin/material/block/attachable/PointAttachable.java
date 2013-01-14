@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.block.attachable;
 
-import org.spout.vanilla.plugin.material.block.Attachable;
+import org.spout.vanilla.api.material.block.Attachable;
 
 /**
  * Represents a block material that is attached to a single point

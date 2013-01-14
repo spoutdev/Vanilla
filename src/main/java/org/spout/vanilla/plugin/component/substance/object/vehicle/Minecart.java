@@ -26,8 +26,11 @@
  */
 package org.spout.vanilla.plugin.component.substance.object.vehicle;
 
+import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
 import org.spout.vanilla.plugin.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
 
@@ -38,6 +41,7 @@ public class Minecart extends ObjectEntity {
 		if (getOwner().getNetwork().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID) == null) {
 			getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MinecartObjectEntityProtocol(ObjectType.MINECART));
 		}
+		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.MINECART, 1));
 		getOwner().setSavable(true);
 		super.onAttached();
 	}

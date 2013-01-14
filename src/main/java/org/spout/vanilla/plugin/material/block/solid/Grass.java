@@ -28,6 +28,7 @@ package org.spout.vanilla.plugin.material.block.solid;
 
 import org.spout.api.Spout;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
@@ -38,6 +39,7 @@ import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.SpreadingSolid;
+import org.spout.vanilla.plugin.material.block.misc.Snow;
 import org.spout.vanilla.plugin.render.VanillaEffects;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
@@ -69,7 +71,11 @@ public class Grass extends SpreadingSolid implements DynamicMaterial, Initializa
 	@Override
 	public boolean canDecayAt(Block block) {
 		block = block.translate(BlockFace.TOP);
-		return block.getMaterial().getOpacity() > 0 || block.getLight() < 3;
+		BlockMaterial mat = block.getMaterial();
+		if (!(mat instanceof Snow)) {
+			return block.getMaterial().getOpacity() > 0 || block.getLight() < 3;
+		}
+		return false;
 	}
 
 	@Override

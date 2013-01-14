@@ -197,7 +197,13 @@ public class SnowSimulator extends Component {
 										return;
 									} else if (vbm == VanillaMaterials.SNOW) {
 										short data = region.getBlockData(x, y - dy, z);
-										region.setBlockData(x, y - dy, z, (short) ((data + 1) & 0xF), null);
+										if (data == 0x7) {
+											if (region.getBlockMaterial(x, y - dy + 1, z) == BlockMaterial.AIR) {
+												region.setBlockMaterial(x, y - dy + 1, z, VanillaMaterials.SNOW, (short) 0, null);
+											}
+										} else {
+											region.setBlockData(x, y - dy, z, (short) ((data + 1) & 0xF), null);
+										}
 										return;
 									} else {
 										break;

@@ -37,7 +37,7 @@ import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.generator.biome.BiomePopulator;
 import org.spout.api.generator.biome.BiomeSelector;
 import org.spout.api.generator.biome.selector.BiomeSelectorLayer;
-import org.spout.api.generator.biome.selector.PerBlockBiomeSelector;
+import org.spout.api.generator.biome.selector.LayeredBiomeSelector;
 import org.spout.api.generator.biome.selector.PerlinRangeLayer;
 import org.spout.api.generator.biome.selector.RidgedMultiRangeLayer;
 import org.spout.api.generator.biome.selector.VoronoiLayer;
@@ -106,8 +106,8 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 	@Override
 	public void registerBiomes() {
 		// if you want to check out a particular biome, use this!
-		setSelector(new PerBlockBiomeSelector(VanillaBiomes.TUNDRA));
-		//setSelector(new LayeredBiomeSelector(buildSelectorStack(2.5f), VanillaBiomes.OCEAN));
+		//setSelector(new PerBlockBiomeSelector(VanillaBiomes.TUNDRA));
+		setSelector(new LayeredBiomeSelector(buildSelectorStack(2.5f), VanillaBiomes.OCEAN));
 		addGeneratorPopulators(
 				new GroundCoverPopulator(), new RockyShieldPopulator(),
 				new CavePopulator(), new RavinePopulator());

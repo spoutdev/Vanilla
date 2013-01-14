@@ -28,8 +28,6 @@ package org.spout.vanilla.plugin.material.block;
 
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.material.Burnable;
@@ -40,7 +38,7 @@ public class WoodenStairs extends Stairs implements Fuel, Burnable {
 	public final float BURN_TIME = 15;
 
 	public WoodenStairs(String name, int id) {
-		super(name, id, (ResourcePointer<Model>) null);
+		super(name, id, (String) null);
 		this.setHardness(2.0F).setResistance(10.0F);
 	}
 

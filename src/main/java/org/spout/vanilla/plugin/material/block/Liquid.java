@@ -34,8 +34,6 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.block.solid.Ice;
@@ -46,10 +44,10 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	private int delay;
 
 	public Liquid(String name, int id, boolean flowing) {
-		this(name, id, flowing, (ResourcePointer<Model>) null);
+		this(name, id, flowing, (String) null);
 	}
 
-	public Liquid(String name, int id, boolean flowing, ResourcePointer<Model> model) {
+	public Liquid(String name, int id, boolean flowing, String model) {
 		super(name, id, model);
 		this.flowing = flowing;
 		this.setLiquidObstacle(false).setHardness(100.0F).setResistance(166.7F).setOpacity(2).setCollision(CollisionStrategy.SOFT);

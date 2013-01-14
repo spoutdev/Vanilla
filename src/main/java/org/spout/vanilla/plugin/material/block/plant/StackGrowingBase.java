@@ -31,8 +31,6 @@ import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
@@ -46,15 +44,15 @@ import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 public abstract class StackGrowingBase extends GroundAttachable implements Plant, Growing, DynamicMaterial {
 	private static EffectRange dynamicRange = new CuboidEffectRange(0, 0, 0, 0, 1, 0);
 
-	public StackGrowingBase(short dataMask, String name, int id, ResourcePointer<Model> model) {
+	public StackGrowingBase(short dataMask, String name, int id, String model) {
 		super(dataMask, name, id, model);
 	}
 
-	public StackGrowingBase(String name, int id, int data, VanillaBlockMaterial parent, ResourcePointer<Model> model) {
+	public StackGrowingBase(String name, int id, int data, VanillaBlockMaterial parent, String model) {
 		super(name, id, data, parent, model);
 	}
 
-	public StackGrowingBase(String name, int id, ResourcePointer<Model> model) {
+	public StackGrowingBase(String name, int id, String model) {
 		super(name, id, model);
 	}
 

@@ -48,10 +48,8 @@ import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Vector2;
-import org.spout.api.model.Model;
 import org.spout.api.plugin.Platform;
 import org.spout.api.render.RenderMaterial;
-import org.spout.api.resource.ResourcePointer;
 import org.spout.api.util.flag.Flag;
 import org.spout.api.util.flag.FlagBundle;
 
@@ -85,7 +83,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	private ToolLevel miningLevel = ToolLevel.NONE;
 	private final Vector2 pos = null; // TODO: Block item rendering
 
-	public VanillaBlockMaterial(String name, int id, ResourcePointer<Model> model) {
+	public VanillaBlockMaterial(String name, int id, String model) {
 		this((short) 0, name, id, model);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getRenderEffects().contains(VanillaEffects.SKY_TIME)) {
@@ -95,7 +93,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		}
 	}
 
-	public VanillaBlockMaterial(short dataMask, String name, int id, ResourcePointer<Model> model) {
+	public VanillaBlockMaterial(short dataMask, String name, int id, String model) {
 		super(dataMask, name, model);
 		this.minecraftId = id;
 		this.setCollision(CollisionStrategy.NOCOLLIDE);
@@ -110,7 +108,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		}
 	}
 
-	public VanillaBlockMaterial(String name, int id, int data, VanillaBlockMaterial parent, ResourcePointer<Model> model) {
+	public VanillaBlockMaterial(String name, int id, int data, VanillaBlockMaterial parent, String model) {
 		super(name, data, parent, model);
 		this.minecraftId = id;
 		this.setCollision(CollisionStrategy.NOCOLLIDE);

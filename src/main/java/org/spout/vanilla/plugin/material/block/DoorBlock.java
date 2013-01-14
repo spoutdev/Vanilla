@@ -33,8 +33,6 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
@@ -44,7 +42,7 @@ import org.spout.vanilla.plugin.util.PlayerUtil;
 import org.spout.vanilla.plugin.util.RedstoneUtil;
 
 public abstract class DoorBlock extends GroundAttachable implements Directional, Openable, RedstoneTarget {
-	public DoorBlock(String name, int id, ResourcePointer<Model> model) {
+	public DoorBlock(String name, int id, String model) {
 		super(name, id, model);
 		this.setCollision(CollisionStrategy.SOLID);
 	}

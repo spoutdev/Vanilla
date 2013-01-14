@@ -28,15 +28,13 @@ package org.spout.vanilla.plugin.material.block.plant;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Plant;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 
 public class Flower extends GroundAttachable implements Plant {
-	public Flower(String name, int id, ResourcePointer<Model> model) {
+	public Flower(String name, int id, String model) {
 		super(name, id, model);
 		this.setLiquidObstacle(false);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();

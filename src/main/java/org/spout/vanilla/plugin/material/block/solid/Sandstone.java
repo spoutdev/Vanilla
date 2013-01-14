@@ -27,8 +27,6 @@
 package org.spout.vanilla.plugin.material.block.solid;
 
 import org.spout.api.material.source.DataSource;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;
@@ -41,13 +39,13 @@ public class Sandstone extends Solid {
 	public static final Sandstone SMOOTH = new Sandstone("Smooth Sandstone", SandstoneType.SMOOTH, SANDSTONE, VanillaMaterialModels.SANDSTONE_SMOOTH);
 	private final SandstoneType type;
 
-	private Sandstone(String name, ResourcePointer<Model> model) {
+	private Sandstone(String name, String model) {
 		super((short) 0x0003, name, 24, model);
 		this.type = SandstoneType.SANDSTONE;
 		this.setHardness(0.8F).setResistance(1.3F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
-	private Sandstone(String name, SandstoneType type, Sandstone parent, ResourcePointer<Model> model) {
+	private Sandstone(String name, SandstoneType type, Sandstone parent, String model) {
 		super(name, 24, type.getData(), parent, model);
 		this.type = type;
 		this.setHardness(0.8F).setResistance(1.3F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);

@@ -26,9 +26,6 @@
  */
 package org.spout.vanilla.plugin.material.block.solid;
 
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
-
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.plugin.material.block.Solid;
@@ -39,13 +36,13 @@ public class StoneBrick extends Solid {
 	public static final StoneBrick MOSSY_STONE = new StoneBrick("Mossy Stone Brick", 1, STONE, VanillaMaterialModels.STONE_BRICK_MOSSY);
 	public static final StoneBrick CRACKED_STONE = new StoneBrick("Cracked Stone Brick", 2, STONE, VanillaMaterialModels.STONE_BRICK_CRACKED);
 
-	private StoneBrick(String name, ResourcePointer<Model> model) {
+	private StoneBrick(String name, String model) {
 		super((short) 0x0003, name, 98, model);
 		this.setHardness(1.5F).setResistance(10.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
-	private StoneBrick(String name, int data, StoneBrick parent, ResourcePointer<Model> model) {
+	private StoneBrick(String name, int data, StoneBrick parent, String model) {
 		super(name, 98, data, parent, model);
 		this.setHardness(1.5F).setResistance(10.0F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);

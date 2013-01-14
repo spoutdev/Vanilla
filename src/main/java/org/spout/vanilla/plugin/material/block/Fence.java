@@ -29,15 +29,13 @@ package org.spout.vanilla.plugin.material.block;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.block.component.SignBase;
 import org.spout.vanilla.plugin.material.block.misc.Torch;
 
 public abstract class Fence extends VanillaBlockMaterial {
-	public Fence(String name, int id, ResourcePointer<Model> model) {
+	public Fence(String name, int id, String model) {
 		super(name, id, model);
 		this.setCollision(CollisionStrategy.SOLID);
 	}

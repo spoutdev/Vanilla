@@ -28,29 +28,27 @@ package org.spout.vanilla.plugin.util.resources;
 
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 
 public class ModelUtil {
 	@SuppressWarnings("unchecked")
-	public static ResourcePointer<Model>[] getDirectionalModels(ResourcePointer<Model> baseModel, BlockFaces faces) {
-		final ResourcePointer<?>[] dirModels = new ResourcePointer<?>[faces.size()];
+	public static String[] getDirectionalModels(String baseModel, BlockFaces faces) {
+		final String[] dirModels = new String[faces.size()];
 		int i = 0;
 		for (BlockFace face : faces) {
 			dirModels[i++] = getDirectionalModel(baseModel, face);
 		}
-		return (ResourcePointer<Model>[]) dirModels;
+		return dirModels;
 	}
 
-	public static ResourcePointer<Model> getDirectionalModel(ResourcePointer<Model> baseModel, BlockFace face) {
+	public static String getDirectionalModel(String baseModel, BlockFace face) {
 		final String dirModel;
-		String path = baseModel.toString();
+		String path = baseModel;
 		final int index = path.lastIndexOf('.');
 		if (index == -1) {
 			dirModel = path + "_" + face.name().charAt(0);
 		} else {
 			dirModel = new StringBuilder(path).insert(index, "_" + face.name().charAt(0)).toString();
 		}
-		return new ResourcePointer<Model>(dirModel);
+		return new String(dirModel);
 	}
 }

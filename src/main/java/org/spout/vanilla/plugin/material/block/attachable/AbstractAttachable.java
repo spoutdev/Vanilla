@@ -32,8 +32,6 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 import org.spout.api.util.bytebit.ByteBitSet;
 
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
@@ -42,15 +40,15 @@ import org.spout.vanilla.plugin.material.block.Attachable;
 public abstract class AbstractAttachable extends VanillaBlockMaterial implements Attachable {
 	private ByteBitSet attachableFaces = new ByteBitSet(BlockFaces.NONE);
 
-	protected AbstractAttachable(short dataMask, String name, int id, ResourcePointer<Model> model) {
+	protected AbstractAttachable(short dataMask, String name, int id, String model) {
 		super(dataMask, name, id, model);
 	}
 
-	protected AbstractAttachable(String name, int id, ResourcePointer<Model> model) {
+	protected AbstractAttachable(String name, int id, String model) {
 		super(name, id, model);
 	}
 
-	public AbstractAttachable(String name, int id, int data, VanillaBlockMaterial parent, ResourcePointer<Model> model) {
+	public AbstractAttachable(String name, int id, int data, VanillaBlockMaterial parent, String model) {
 		super(name, id, data, parent, model);
 	}
 

@@ -43,8 +43,6 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.Vector3;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 import org.spout.api.scheduler.TaskPriority;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
@@ -77,14 +75,14 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 	public final float BURN_TIME = 15;
 	private final Sapling sapling;
 
-	private Log(String name, Sapling sapling, ResourcePointer<Model> model) {
+	private Log(String name, Sapling sapling, String model) {
 		super(dataMask, name, 17, model);
 		this.setHardness(2.0F).setResistance(10.F).setStepSound(SoundEffects.STEP_WOOD);
 		this.addMiningType(ToolType.AXE);
 		this.sapling = sapling;
 	}
 
-	private Log(String name, int data, Log parent, Sapling sapling, ResourcePointer<Model> model) {
+	private Log(String name, int data, Log parent, Sapling sapling, String model) {
 		super(name, 17, data, parent, model);
 		this.setHardness(2.0F).setResistance(10.F).setStepSound(SoundEffects.STEP_WOOD);
 		this.addMiningType(ToolType.AXE);

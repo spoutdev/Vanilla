@@ -30,15 +30,13 @@ import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.plugin.material.block.attachable.PointAttachable;
 import org.spout.vanilla.plugin.util.resources.ModelUtil;
 
 public class Torch extends AbstractAttachable implements PointAttachable {
-	public Torch(short dataMask, String name, int id, ResourcePointer<Model> model) {
+	public Torch(short dataMask, String name, int id, String model) {
 		super(dataMask, name, id, model);
 		this.setAttachable(BlockFaces.NSEWB).setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();
 		// Register the directional submaterials
@@ -51,7 +49,7 @@ public class Torch extends AbstractAttachable implements PointAttachable {
 		}
 	}
 
-	private Torch(String name, int id, int data, Torch parent, ResourcePointer<Model> model) {
+	private Torch(String name, int id, int data, Torch parent, String model) {
 		super(name, id, data, parent, model);
 		this.setAttachable(BlockFaces.NSEWB).setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}

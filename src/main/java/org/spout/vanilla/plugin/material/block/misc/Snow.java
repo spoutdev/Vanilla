@@ -33,8 +33,6 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
@@ -60,14 +58,14 @@ public class Snow extends GroundAttachable implements DynamicMaterial, Initializ
 		SNOW[7] = new Snow("Snow_7", 7, SNOW[0], VanillaMaterialModels.SNOW_BLOCK);
 	}
 
-	public Snow(String name, int id, ResourcePointer<Model> model) {
+	public Snow(String name, int id, String model) {
 		super((short) 0x07, name, id, model);
 		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent();
 		this.setOcclusion((short) 0, BlockFace.BOTTOM);
 		this.addMiningType(ToolType.SPADE).setMiningLevel(ToolLevel.WOOD);
 	}
 
-	private Snow(String name, int data, Snow parent, ResourcePointer<Model> model) {
+	private Snow(String name, int data, Snow parent, String model) {
 		super(name, SNOW[0].getMinecraftId(), data, parent, model);
 		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent();
 		this.setOcclusion((short) 0, BlockFace.BOTTOM);

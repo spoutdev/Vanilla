@@ -35,8 +35,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.ComplexMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.component.substance.material.VanillaBlockComponent;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
@@ -44,22 +42,22 @@ import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 public class ComponentMaterial extends VanillaBlockMaterial implements ComplexMaterial {
 	private final Class<? extends BlockComponent> componentType;
 
-	public ComponentMaterial(String name, int id, short data, VanillaBlockMaterial parent, Class<? extends BlockComponent> componentType, ResourcePointer<Model> model) {
+	public ComponentMaterial(String name, int id, short data, VanillaBlockMaterial parent, Class<? extends BlockComponent> componentType, String model) {
 		super(name, id, data, parent, model);
 		this.componentType = componentType;
 	}
 
-	public ComponentMaterial(short dataMask, String name, int id, Class<? extends BlockComponent> componentType, ResourcePointer<Model> model) {
+	public ComponentMaterial(short dataMask, String name, int id, Class<? extends BlockComponent> componentType, String model) {
 		super(dataMask, name, id, model);
 		this.componentType = componentType;
 	}
 
-	public ComponentMaterial(String name, int id, Class<? extends BlockComponent> componentType, ResourcePointer<Model> model) {
+	public ComponentMaterial(String name, int id, Class<? extends BlockComponent> componentType, String model) {
 		super(name, id, model);
 		this.componentType = componentType;
 	}
 
-	public ComponentMaterial(String name, int id, int data, ComponentMaterial parent, ResourcePointer<Model> model) {
+	public ComponentMaterial(String name, int id, int data, ComponentMaterial parent, String model) {
 		super(name, id, data, parent, model);
 		this.componentType = parent.componentType;
 	}

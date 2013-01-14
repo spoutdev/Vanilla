@@ -26,9 +26,6 @@
  */
 package org.spout.vanilla.plugin.material.block.solid;
 
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
-
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;
@@ -51,14 +48,14 @@ public class DoubleSlab extends Solid implements Burnable {
 	private Slab singletype;
 	private final boolean wood;
 
-	private DoubleSlab(short datamask, String name, int id, boolean wood, Slab slab, ResourcePointer<Model> model) {
+	private DoubleSlab(short datamask, String name, int id, boolean wood, Slab slab, String model) {
 		super(datamask, name, id, model);
 		this.wood = wood;
 		this.setSingleType(slab).setHardness(2.0F).setResistance(10.0F);
 		this.addMiningType(wood ? ToolType.AXE : ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
-	private DoubleSlab(String name, int data, DoubleSlab parent, Slab slab, ResourcePointer<Model> model) {
+	private DoubleSlab(String name, int data, DoubleSlab parent, Slab slab, String model) {
 		super(name, parent.getMinecraftId(), data, parent, model);
 		this.wood = parent.wood;
 		this.setSingleType(slab).setHardness(2.0F).setResistance(10.0F);

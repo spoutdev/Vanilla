@@ -34,8 +34,6 @@ import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.data.RedstonePowerMode;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
@@ -46,7 +44,7 @@ public abstract class PressurePlate extends GroundAttachable implements Redstone
 	public static final int TICK_DELAY = 1000;
 	private static final EffectRange physicsRange = new ListEffectRange(new CubicEffectRange(1), new CuboidEffectRange(0, -2, 0, 0, -1, 0));
 
-	public PressurePlate(String name, int id, ResourcePointer<Model> model) {
+	public PressurePlate(String name, int id, String model) {
 		super(name, id, model);
 		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
 	}

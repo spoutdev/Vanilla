@@ -204,7 +204,6 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 						player.get(DiggingComponent.class).startDigging(new Point(w, x, y, z), currentItem.getMaterial());
 					} else {
 						player.get(DiggingComponent.class).startDigging(new Point(w, x, y, z), VanillaMaterials.AIR);
-						
 					}
 				} else {
 					// insta-break

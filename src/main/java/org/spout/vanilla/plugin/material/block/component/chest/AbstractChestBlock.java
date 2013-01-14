@@ -31,8 +31,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.component.substance.material.chest.AbstractChest;
 import org.spout.vanilla.plugin.data.Instrument;
@@ -45,7 +43,7 @@ import org.spout.vanilla.plugin.util.PlayerUtil;
 public abstract class AbstractChestBlock extends ComponentMaterial implements Directional, Fuel {
 	public final float BURN_TIME = 15;
 
-	public AbstractChestBlock(String name, int id, Class<? extends AbstractChest> componentType, ResourcePointer<Model> model) {
+	public AbstractChestBlock(String name, int id, Class<? extends AbstractChest> componentType, String model) {
 		super(name, id, componentType, model);
 	}
 

@@ -33,8 +33,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 import org.spout.api.util.bytebit.ByteBitSet;
 import org.spout.api.util.flag.Flag;
 
@@ -63,14 +61,14 @@ public class Slab extends VanillaBlockMaterial implements Burnable {
 	private final ByteBitSet occlusionTop = new ByteBitSet(BlockFace.TOP);
 	private final ByteBitSet occlusionBottom = new ByteBitSet(BlockFace.BOTTOM);
 
-	private Slab(short datamask, String name, int id, boolean wood, ResourcePointer<Model> model) {
+	private Slab(short datamask, String name, int id, boolean wood, String model) {
 		super(datamask, name, id, model);
 		this.wood = wood;
 		this.setHardness(2.0F).setResistance(10.0F).setOpacity(0);
 		this.addMiningType(wood ? ToolType.AXE : ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 
-	private Slab(String name, int data, Slab parent, ResourcePointer<Model> model) {
+	private Slab(String name, int data, Slab parent, String model) {
 		super(name, parent.getMinecraftId(), data, parent, model);
 		this.wood = parent.wood;
 		this.setHardness(2.0F).setResistance(10.0F).setOpacity(0);

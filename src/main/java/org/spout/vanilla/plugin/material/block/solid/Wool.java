@@ -32,8 +32,6 @@ import java.util.Map;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.material.Burnable;
@@ -60,13 +58,13 @@ public class Wool extends Solid implements Burnable {
 	public static final Wool BLACK_WOOL = new Wool("Black Wool", WoolColor.BLACK, WHITE_WOOL, VanillaMaterialModels.WOOL_BLACK);
 	private final WoolColor color;
 
-	private Wool(String name, ResourcePointer<Model> model) {
+	private Wool(String name, String model) {
 		super((short) 0x000F, name, 35, model);
 		this.color = WoolColor.WHITE;
 		this.setHardness(0.8F).setResistance(1.3F).setStepSound(SoundEffects.STEP_CLOTH);
 	}
 
-	private Wool(String name, WoolColor color, Wool parent, ResourcePointer<Model> model) {
+	private Wool(String name, WoolColor color, Wool parent, String model) {
 		super(name, 35, color.getData(), parent, model);
 		this.color = color;
 		this.setHardness(0.8F).setResistance(1.3F).setStepSound(SoundEffects.STEP_CLOTH);

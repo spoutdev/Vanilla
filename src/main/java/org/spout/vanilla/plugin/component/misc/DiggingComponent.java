@@ -36,7 +36,6 @@ import org.spout.vanilla.plugin.data.Animation;
 import org.spout.vanilla.plugin.event.block.network.BlockBreakAnimationEvent;
 import org.spout.vanilla.plugin.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
-import org.spout.vanilla.plugin.material.VanillaMaterial;
 
 public class DiggingComponent extends EntityComponent {
 	private boolean isDigging;
@@ -78,11 +77,11 @@ public class DiggingComponent extends EntityComponent {
 		if (getOwner().getTransform().getPosition().getDistance(position) > 6) { // TODO: Actually get block reach from somewhere instead of just using 6
 			return false;
 		}
-		
-		separator = (float) ((((VanillaBlockMaterial)position.getBlock().getMaterial()).getHardness() * 1.5f) / maxAmount);
+
+		separator = (float) ((((VanillaBlockMaterial) position.getBlock().getMaterial()).getHardness() * 1.5f) / maxAmount);
 		amount = 0;
 		timer = 0;
-		
+
 		isDigging = true;
 		diggingPosition = position;
 		diggingStartTime = System.currentTimeMillis();

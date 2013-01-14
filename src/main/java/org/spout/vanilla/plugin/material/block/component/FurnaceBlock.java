@@ -31,8 +31,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.component.substance.material.Furnace;
 import org.spout.vanilla.plugin.data.MoveReaction;
@@ -48,14 +46,14 @@ public class FurnaceBlock extends ComponentMaterial implements Directional {
 	public static final float SMELT_TIME = 10.f;
 	private final boolean burning;
 
-	public FurnaceBlock(String name, int id, FurnaceBlock parent, boolean burning, ResourcePointer<Model> model) {
+	public FurnaceBlock(String name, int id, FurnaceBlock parent, boolean burning, String model) {
 		super(name, id, BURNING_FLAG, parent, Furnace.class, model);
 		this.burning = burning;
 		this.setHardness(3.5F).setResistance(5.8F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
-	public FurnaceBlock(short dataMask, String name, int id, boolean burning, ResourcePointer<Model> model) {
+	public FurnaceBlock(short dataMask, String name, int id, boolean burning, String model) {
 		super(dataMask, name, id, Furnace.class, model);
 		this.burning = burning;
 		this.setHardness(3.5F).setResistance(5.8F);

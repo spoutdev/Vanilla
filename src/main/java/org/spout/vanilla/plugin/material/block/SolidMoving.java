@@ -31,8 +31,6 @@ import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.component.substance.object.FallingBlock;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
@@ -40,14 +38,14 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class SolidMoving extends Solid {
 	public SolidMoving(String name, int id, int data, VanillaBlockMaterial parent) {
-		this(name, id, data, parent, (ResourcePointer<Model>) null);
+		this(name, id, data, parent, (String) null);
 	}
 
-	public SolidMoving(String name, int id, int data, VanillaBlockMaterial parent, ResourcePointer<Model> model) {
+	public SolidMoving(String name, int id, int data, VanillaBlockMaterial parent, String model) {
 		super(name, id, data, parent, model);
 	}
 
-	public SolidMoving(String name, int id, ResourcePointer<Model> model) {
+	public SolidMoving(String name, int id, String model) {
 		super(name, id, model);
 	}
 

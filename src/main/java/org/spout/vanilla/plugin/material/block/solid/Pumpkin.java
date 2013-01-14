@@ -31,8 +31,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.block.Directional;
@@ -43,7 +41,7 @@ import org.spout.vanilla.plugin.util.resources.ModelUtil;
 public class Pumpkin extends Solid implements Directional {
 	private final boolean lantern;
 
-	public Pumpkin(short dataMask, String name, int id, ResourcePointer<Model> model, boolean lantern) {
+	public Pumpkin(short dataMask, String name, int id, String model, boolean lantern) {
 		super(dataMask, name + "_E", id, ModelUtil.getDirectionalModel(model, BlockFace.EAST));
 		this.setHardness(1.0F).setResistance(1.7F).addMiningType(ToolType.AXE);
 		this.lantern = lantern;
@@ -58,7 +56,7 @@ public class Pumpkin extends Solid implements Directional {
 		new Pumpkin(name, id, i, this, model, lantern);
 	}
 
-	private Pumpkin(String name, int id, int data, Pumpkin parent, ResourcePointer<Model> model, boolean lantern) {
+	private Pumpkin(String name, int id, int data, Pumpkin parent, String model, boolean lantern) {
 		super(name, id, data, parent, model);
 		this.setHardness(1.0F).setResistance(1.7F).addMiningType(ToolType.AXE);
 		this.lantern = lantern;

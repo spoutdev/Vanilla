@@ -29,8 +29,6 @@ package org.spout.vanilla.plugin.material.block.plant;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 
 import org.spout.vanilla.plugin.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
@@ -40,11 +38,11 @@ import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class DeadBush extends GroundAttachable implements Plant, InitializableMaterial {
-	protected DeadBush(String name, int id, short data, ResourcePointer<Model> model) {
+	protected DeadBush(String name, int id, short data, String model) {
 		super(data, name, id, model);
 	}
 
-	protected DeadBush(String name, int id, int data, DeadBush parent, ResourcePointer<Model> model) {
+	protected DeadBush(String name, int id, int data, DeadBush parent, String model) {
 		super(name, id, data, parent, model);
 	}
 

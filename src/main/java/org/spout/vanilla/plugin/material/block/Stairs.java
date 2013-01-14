@@ -31,8 +31,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
-import org.spout.api.model.Model;
-import org.spout.api.resource.ResourcePointer;
 import org.spout.api.util.bytebit.ByteBitSet;
 
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
@@ -41,7 +39,7 @@ import org.spout.vanilla.plugin.util.PlayerUtil;
 public abstract class Stairs extends VanillaBlockMaterial implements Directional {
 	private final ByteBitSet[] occlusion;
 
-	public Stairs(String name, int id, ResourcePointer<Model> model) {
+	public Stairs(String name, int id, String model) {
 		super(name, id, model);
 		this.occlusion = new ByteBitSet[8];
 		for (int i = 0; i < 4; i++) {

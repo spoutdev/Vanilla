@@ -26,14 +26,35 @@
  */
 package org.spout.vanilla.plugin.component.substance.object.vehicle;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.inventory.WindowHolder;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.inventory.block.ChestInventory;
+import org.spout.vanilla.plugin.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
 import org.spout.vanilla.plugin.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
 
 public class StorageMinecart extends Minecart {
+	
 	@Override
 	public void onAttached() {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MinecartObjectEntityProtocol(ObjectType.STORAGE_MINECART));
 		super.onAttached();
+	}
+	
+	public ChestInventory getInventory() {
+		return this.getData().get(VanillaData.CHEST_INVENTORY);
+	}
+	
+	@Override
+	public void onInteract(Action action, Entity source)  {
+		if (!(source instanceof Player)) {
+			return;
+		}
+		
+		source.get(WindowHolder.class).openWindow(new ChestWindow((Player) source, getInventory(), "Minecart"));
 	}
 }

@@ -33,9 +33,11 @@ import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.data.Animation;
+import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.event.block.network.BlockBreakAnimationEvent;
 import org.spout.vanilla.plugin.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.item.tool.MiningTool;
 
 public class DiggingComponent extends EntityComponent {
 	private boolean isDigging;
@@ -55,7 +57,7 @@ public class DiggingComponent extends EntityComponent {
 
 	public void onTick(float dt) {
 		if (timer >= separator) {
-			getOwner().getNetwork().callProtocolEvent(new BlockBreakAnimationEvent(getOwner(), diggingPosition, (byte) ++amount));
+			getOwner().getNetwork().callProtocolEvent(new BlockBreakAnimationEvent(getOwner(), diggingPosition, (byte) amount++));
 			timer = 0;
 		}
 		timer += dt;
@@ -63,6 +65,7 @@ public class DiggingComponent extends EntityComponent {
 
 	/**
 	 * Returns the digging state of the entity
+	 * 
 	 * @return true if player is digging
 	 */
 	public boolean isDigging() {
@@ -71,14 +74,33 @@ public class DiggingComponent extends EntityComponent {
 
 	/**
 	 * Sets isDigging true and records start time, unless already digging
+	 * 
 	 * @return true if successful
 	 */
 	public boolean startDigging(Point position, Material tool) {
 		if (getOwner().getTransform().getPosition().getDistance(position) > 6) { // TODO: Actually get block reach from somewhere instead of just using 6
 			return false;
 		}
+		VanillaBlockMaterial block = (VanillaBlockMaterial) position.getBlock().getMaterial();
+		float modifier = 1f, multiplicator = 1.5f;
+		ToolType type = null;
+		MiningTool mining = null;
 
-		separator = (float) ((((VanillaBlockMaterial) position.getBlock().getMaterial()).getHardness() * 1.5f) / maxAmount);
+		if (tool instanceof MiningTool) {
+			mining = (MiningTool) tool;
+			type = mining.getToolType();
+		}
+
+		if (block.isMiningType(type)) {
+			if (mining != null) {
+				modifier = mining.getDiggingSpeed();
+			}
+		} else {
+			multiplicator = 5f;
+		}
+		System.out.println("Block hardness:" + block.getHardness() + " modifier:" + modifier);
+		separator = (float) ((block.getHardness() * multiplicator) / modifier) / maxAmount;
+		System.out.println(separator);
 		amount = 0;
 		timer = 0;
 
@@ -90,6 +112,7 @@ public class DiggingComponent extends EntityComponent {
 
 	/**
 	 * Sets isDigging false and records total time, unless the dig was invalid/never started.
+	 * 
 	 * @return true if successful
 	 */
 	public boolean stopDigging(Point position) {
@@ -109,6 +132,7 @@ public class DiggingComponent extends EntityComponent {
 
 	/**
 	 * Gets time spent digging
+	 * 
 	 * @return time spent digging
 	 */
 	public long getDiggingTime() {
@@ -122,6 +146,7 @@ public class DiggingComponent extends EntityComponent {
 
 	/**
 	 * Gets last time spent digging in real(client) ticks
+	 * 
 	 * @return ticks spent digging
 	 */
 	public long getDiggingTicks() {
@@ -130,6 +155,7 @@ public class DiggingComponent extends EntityComponent {
 
 	/**
 	 * Adds and checks mining speed for cheating.
+	 * 
 	 * @param damageRemaining Remaining damage on block
 	 * @return false if player is cheating
 	 */
@@ -149,6 +175,7 @@ public class DiggingComponent extends EntityComponent {
 
 	/**
 	 * Checks mining speed for cheating.
+	 * 
 	 * @return false if player is cheating
 	 */
 	public boolean checkMiningSpeed() {

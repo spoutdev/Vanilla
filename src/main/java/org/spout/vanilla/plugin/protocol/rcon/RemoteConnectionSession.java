@@ -60,7 +60,7 @@ public class RemoteConnectionSession implements Console, CommandSource {
 	private final AtomicInteger requestId = new AtomicInteger(-1);
 	private final AtomicReference<Channel> channel = new AtomicReference<Channel>();
 	private State state = State.AUTH;
-	private AtomicReference<ChatChannel> activeChannel = new AtomicReference<ChatChannel>(PlayerChatEvent.CHAT_SEND_CHANNEL);
+	private AtomicReference<ChatChannel> activeChannel = new AtomicReference<ChatChannel>();
 	private DateFormat format = new SimpleDateFormat("hh:mm:ss");
 
 	@Override
@@ -95,6 +95,7 @@ public class RemoteConnectionSession implements Console, CommandSource {
 
 	public RemoteConnectionSession(RemoteConnectionCore core) {
 		this.core = core;
+		activeChannel.set(Spout.getEngine().getChatChannelFactory().create(this));
 		//requestId.set(new Random().nextInt()); // TODO: Find place to allocate request id, might want to have client do this
 	}
 

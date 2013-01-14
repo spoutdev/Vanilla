@@ -199,7 +199,13 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 						GeneralEffects.RANDOM_FIZZ.playGlobal(block.getPosition());
 					}
 				} else if (human.isSurvival() && blockMaterial.getHardness() != 0.0f) {
-					player.get(DiggingComponent.class).startDigging(new Point(w, x, y, z));
+					ItemStack currentItem = PlayerUtil.getHeldSlot(player).get();
+					if (currentItem != null) {
+						player.get(DiggingComponent.class).startDigging(new Point(w, x, y, z), currentItem.getMaterial());
+					} else {
+						player.get(DiggingComponent.class).startDigging(new Point(w, x, y, z), VanillaMaterials.AIR);
+						
+					}
 				} else {
 					// insta-break
 					if (breakBlock(blockMaterial, block, human, session)) {

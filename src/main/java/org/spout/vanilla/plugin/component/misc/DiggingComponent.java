@@ -28,12 +28,15 @@ package org.spout.vanilla.plugin.component.misc;
 
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.Material;
 import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.data.Animation;
 import org.spout.vanilla.plugin.event.block.network.BlockBreakAnimationEvent;
 import org.spout.vanilla.plugin.event.entity.EntityAnimationEvent;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterial;
 
 public class DiggingComponent extends EntityComponent {
 	private boolean isDigging;
@@ -44,15 +47,15 @@ public class DiggingComponent extends EntityComponent {
 	protected int miningDamageAllowance = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_ALLOWANCE.getInt(), miningDamagePeriod = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_PERIOD.getInt();
 	protected int[] miningDamage;
 	private byte amount = 0;
-	private final byte maxAmount = 9;
-	private float timer = 0f;
+	private final byte maxAmount = 8;
+	private float timer = 0f, separator = 0f;
 
 	public boolean canTick() {
 		return isDigging;
 	}
 
 	public void onTick(float dt) {
-		if (timer >= 0.2f) {
+		if (timer >= separator) {
 			getOwner().getNetwork().callProtocolEvent(new BlockBreakAnimationEvent(getOwner(), diggingPosition, (byte) ++amount));
 			timer = 0;
 		}
@@ -71,12 +74,15 @@ public class DiggingComponent extends EntityComponent {
 	 * Sets isDigging true and records start time, unless already digging
 	 * @return true if successful
 	 */
-	public boolean startDigging(Point position) {
+	public boolean startDigging(Point position, Material tool) {
 		if (getOwner().getTransform().getPosition().getDistance(position) > 6) { // TODO: Actually get block reach from somewhere instead of just using 6
 			return false;
 		}
+		
+		separator = (float) ((((VanillaBlockMaterial)position.getBlock().getMaterial()).getHardness() * 1.5f) / maxAmount);
 		amount = 0;
 		timer = 0;
+		
 		isDigging = true;
 		diggingPosition = position;
 		diggingStartTime = System.currentTimeMillis();

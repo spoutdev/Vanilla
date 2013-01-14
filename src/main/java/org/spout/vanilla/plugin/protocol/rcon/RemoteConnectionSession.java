@@ -45,6 +45,7 @@ import org.spout.api.command.Command;
 import org.spout.api.command.CommandSource;
 import org.spout.api.data.ValueHolder;
 import org.spout.api.data.ValueHolderBase;
+import org.spout.api.event.player.PlayerChatEvent;
 import org.spout.api.geo.World;
 import org.spout.api.lang.Locale;
 
@@ -59,7 +60,7 @@ public class RemoteConnectionSession implements Console, CommandSource {
 	private final AtomicInteger requestId = new AtomicInteger(-1);
 	private final AtomicReference<Channel> channel = new AtomicReference<Channel>();
 	private State state = State.AUTH;
-	private AtomicReference<ChatChannel> activeChannel = new AtomicReference<ChatChannel>(Engine.STANDARD_BROADCAST_CHANNEL);
+	private AtomicReference<ChatChannel> activeChannel = new AtomicReference<ChatChannel>(PlayerChatEvent.CHAT_SEND_CHANNEL);
 	private DateFormat format = new SimpleDateFormat("hh:mm:ss");
 
 	@Override

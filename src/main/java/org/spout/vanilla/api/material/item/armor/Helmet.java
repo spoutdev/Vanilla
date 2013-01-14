@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.item.armor;
+package org.spout.vanilla.api.material.item.armor;
 
 public interface Helmet {
 }

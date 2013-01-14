@@ -24,21 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.block.component;
+package org.spout.vanilla.api.material.item.armor;
 
-import org.spout.api.geo.World;
-import org.spout.api.material.ComplexMaterial;
-import org.spout.api.protocol.event.ProtocolEvent;
-
-public interface VanillaComplexMaterial extends ComplexMaterial {
-	/**
-	 * Gets the protocol event to reflect the block state at the location
-	 * or null if none exists
-	 * @param world
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @return event
-	 */
-	public ProtocolEvent getUpdate(World world, int x, int y, int z);
+public interface Chestplate {
 }

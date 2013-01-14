@@ -37,7 +37,7 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.material.block.Attachable;
-import org.spout.vanilla.plugin.material.block.Directional;
+import org.spout.vanilla.api.material.block.Directional;
 
 public abstract class RotatableObject extends RandomObject {
 	protected Quaternion rotation = Quaternion.IDENTITY;

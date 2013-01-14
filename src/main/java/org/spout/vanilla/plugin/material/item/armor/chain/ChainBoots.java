@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.chain;
 
-import org.spout.vanilla.plugin.material.item.armor.Boots;
+import org.spout.vanilla.api.material.item.armor.Boots;
 
 public class ChainBoots extends ChainArmor implements Boots {
 	public ChainBoots(String name, int id, short durability) {

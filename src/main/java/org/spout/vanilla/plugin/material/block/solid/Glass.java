@@ -29,9 +29,9 @@ package org.spout.vanilla.plugin.material.block.solid;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.api.material.block.attachable.PointAttachable;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.material.block.Solid;
-import org.spout.vanilla.plugin.material.block.attachable.PointAttachable;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class Glass extends Solid {

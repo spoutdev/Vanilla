@@ -24,63 +24,56 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.map;
+package org.spout.vanilla.api.material.map;
 
-public enum MapMaterialColor {
-	TRANSPARENT(0, 0, 0),
-	GRASS(127, 178, 56),
-	SAND(247, 233, 163),
-	OTHER(167, 167, 167),
-	LAVA(255, 0, 0),
-	ICE(160, 160, 255),
-	METAL(167, 167, 167),
-	PLANTS(0, 124, 0),
-	SNOW(255, 255, 255),
-	CLAY(164, 168, 184),
-	DIRT(183, 106, 47),
-	STONE(112, 112, 112),
-	WATER(64, 64, 255),
-	WOOD(104, 83, 50);
+
+public class MapColor {
+	private static final MapColor[] colors;
+
+	static {
+		// Generate map colors out of material colors
+		MapMaterialColor[] materialColors = MapMaterialColor.values();
+		colors = new MapColor[materialColors.length * 4];
+		int id = 0;
+		for (MapMaterialColor color : materialColors) {
+			color.levels[3] = colors[id] = new MapColor(id++, color, 180);
+			color.levels[1] = colors[id] = new MapColor(id++, color, 220);
+			color.levels[0] = colors[id] = new MapColor(id++, color, 255);
+			color.levels[2] = colors[id] = new MapColor(id++, color, 220);
+		}
+	}
+
+	public static MapColor[] values() {
+		return colors;
+	}
+
+	/**
+	 * Gets a map color by color ID
+	 * @param id of the color
+	 * @return Map Color
+	 */
+	public static MapColor getById(int id) {
+		return colors[id];
+	}
+
 	private final float r, g, b;
-	protected final MapColor[] levels;
+	private final MapMaterialColor base;
+	private final byte id;
 
-	private MapMaterialColor(int r, int g, int b) {
-		this.r = (float) r / 255F;
-		this.g = (float) g / 255F;
-		this.b = (float) b / 255F;
-		this.levels = new MapColor[4];
+	private MapColor(int id, MapMaterialColor base, int factor) {
+		this.id = (byte) id;
+		this.base = base;
+		this.r = base.getRed() * ((float) factor / 255F);
+		this.g = base.getGreen() * ((float) factor / 255F);
+		this.b = base.getBlue() * ((float) factor / 255F);
 	}
 
 	/**
-	 * Gets the first level shaded map color
-	 * @return level 1 map color
+	 * Gets the base map material color
+	 * @return the base map material color
 	 */
-	public MapColor getLevel1() {
-		return this.levels[0];
-	}
-
-	/**
-	 * Gets the second level shaded map color
-	 * @return level 2 map color
-	 */
-	public MapColor getLevel2() {
-		return this.levels[1];
-	}
-
-	/**
-	 * Gets the third level shaded map color
-	 * @return level 3 map color
-	 */
-	public MapColor getLevel3() {
-		return this.levels[2];
-	}
-
-	/**
-	 * Gets the fourth level shaded map color
-	 * @return level 4 map color
-	 */
-	public MapColor getLevel4() {
-		return this.levels[3];
+	public MapMaterialColor getBase() {
+		return this.base;
 	}
 
 	/**
@@ -108,10 +101,10 @@ public enum MapMaterialColor {
 	}
 
 	/**
-	 * Gets the ID of this material map color
+	 * Gets the ID of this map color
 	 * @return the id
 	 */
 	public byte getId() {
-		return (byte) this.ordinal();
+		return this.id;
 	}
 }

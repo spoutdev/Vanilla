@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.iron;
 
-import org.spout.vanilla.plugin.material.item.armor.Helmet;
+import org.spout.vanilla.api.material.item.armor.Helmet;
 
 public class IronHelmet extends IronArmor implements Helmet {
 	public IronHelmet(String name, int id, short durability) {

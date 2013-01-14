@@ -24,7 +24,13 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.item.armor;
+package org.spout.vanilla.api.material.block.attachable;
 
-public interface Chestplate {
+import org.spout.vanilla.api.material.block.Attachable;
+
+/**
+ * Represents a block material that is attached to a single point
+ * For example: torches and signs
+ */
+public interface PointAttachable extends Attachable {
 }

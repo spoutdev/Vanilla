@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.iron;
 
-import org.spout.vanilla.plugin.material.item.armor.Chestplate;
+import org.spout.vanilla.api.material.item.armor.Chestplate;
 
 public class IronChestplate extends IronArmor implements Chestplate {
 	public IronChestplate(String name, int id, short durability) {

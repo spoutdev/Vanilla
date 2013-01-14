@@ -27,8 +27,8 @@
 package org.spout.vanilla.plugin.material.enchantment.armor;
 
 import org.spout.vanilla.api.material.VanillaMaterial;
+import org.spout.vanilla.api.material.item.armor.Boots;
 import org.spout.vanilla.plugin.material.enchantment.ArmorEnchantment;
-import org.spout.vanilla.plugin.material.item.armor.Boots;
 
 public class FeatherFalling extends ArmorEnchantment {
 	public FeatherFalling(String name, int id) {

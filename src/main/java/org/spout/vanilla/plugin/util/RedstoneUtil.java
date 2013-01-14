@@ -32,9 +32,9 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.api.data.RedstonePowerMode;
+import org.spout.vanilla.api.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.redstone.RedstoneSource;
 
 public class RedstoneUtil {
 	/**

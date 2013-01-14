@@ -28,7 +28,7 @@ package org.spout.vanilla.plugin.material.item.armor.leather;
 
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.plugin.material.item.armor.Helmet;
+import org.spout.vanilla.api.material.item.armor.Helmet;
 
 public class LeatherCap extends LeatherArmor implements Helmet {
 	public static final Vector2 POSITION = Vector2.ZERO;

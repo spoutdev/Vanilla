@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.chain;
 
-import org.spout.vanilla.plugin.material.item.armor.Chestplate;
+import org.spout.vanilla.api.material.item.armor.Chestplate;
 
 public class ChainChestplate extends ChainArmor implements Chestplate {
 	public ChainChestplate(String name, int id, short durability) {

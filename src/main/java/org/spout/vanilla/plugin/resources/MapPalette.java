@@ -38,8 +38,8 @@ import org.apache.commons.io.IOUtils;
 import org.spout.api.math.MathHelper;
 import org.spout.api.resource.Resource;
 
-import org.spout.vanilla.plugin.material.map.MapColor;
-import org.spout.vanilla.plugin.material.map.MapMaterialColor;
+import org.spout.vanilla.api.material.map.MapColor;
+import org.spout.vanilla.api.material.map.MapMaterialColor;
 
 public class MapPalette extends Resource {
 	public static MapPalette DEFAULT;

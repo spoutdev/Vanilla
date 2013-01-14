@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.chain;
 
-import org.spout.vanilla.plugin.material.item.armor.Helmet;
+import org.spout.vanilla.api.material.item.armor.Helmet;
 
 public class ChainHelmet extends ChainArmor implements Helmet {
 	public ChainHelmet(String name, int id, short durability) {

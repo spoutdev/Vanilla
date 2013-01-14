@@ -34,11 +34,12 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.api.material.block.Directional;
 import org.spout.vanilla.api.material.block.Openable;
+import org.spout.vanilla.api.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.plugin.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 import org.spout.vanilla.plugin.util.RedstoneUtil;
 

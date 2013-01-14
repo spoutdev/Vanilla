@@ -36,9 +36,9 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
 
 import org.spout.vanilla.api.data.RedstonePowerMode;
+import org.spout.vanilla.api.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.plugin.material.block.redstone.RedstoneSource;
 
 public abstract class PressurePlate extends GroundAttachable implements RedstoneSource, DynamicMaterial {
 	public static final int TICK_DELAY = 1000;

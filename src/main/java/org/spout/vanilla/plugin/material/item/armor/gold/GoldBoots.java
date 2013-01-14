@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.gold;
 
-import org.spout.vanilla.plugin.material.item.armor.Boots;
+import org.spout.vanilla.api.material.item.armor.Boots;
 
 public class GoldBoots extends GoldArmor implements Boots {
 	public GoldBoots(String name, int id, short durability) {

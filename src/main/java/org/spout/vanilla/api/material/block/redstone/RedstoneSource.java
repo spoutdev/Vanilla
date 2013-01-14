@@ -24,18 +24,40 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.block.redstone;
+package org.spout.vanilla.api.material.block.redstone;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
+
+import org.spout.vanilla.api.data.RedstonePowerMode;
 
 /**
- * Represents a target for redstone power, wire does not attach to this material
+ * Defines a material that can supply redstone power<br>
+ * Redstone wire will automatically attach to this material
  */
-public interface RedstoneTarget {
+public interface RedstoneSource {
 	/**
-	 * Checks if a block is receiving power from neighboring blocks.
-	 * @param block to check
-	 * @return True if the block is receiving power
+	 * Gets how much redstone power this redstone source block provides to the direction given.<br>
+	 * @param block of this redstone source
+	 * @param direction it provides power to
+	 * @param powerMode to use to get the power
+	 * @return how much power this block provides to the given direction
 	 */
-	public boolean isReceivingPower(Block block);
+	short getRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode);
+
+	/**
+	 * Gets if this redstone source block provides power to the direction given.<br>
+	 * @param block of this redstone source
+	 * @param direction it provides power to
+	 * @param powerMode to use to get the power
+	 * @return True if this redstone source block provides power
+	 */
+	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode);
+
+	/**
+	 * Gets the amount of redstone power this material generates for itself
+	 * @param data
+	 * @return power strength
+	 */
+	public short getRedstonePowerStrength(short data);
 }

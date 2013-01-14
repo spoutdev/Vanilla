@@ -30,11 +30,11 @@ import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
+import org.spout.vanilla.api.material.item.armor.Boots;
+import org.spout.vanilla.api.material.item.armor.Chestplate;
+import org.spout.vanilla.api.material.item.armor.Helmet;
+import org.spout.vanilla.api.material.item.armor.Leggings;
 import org.spout.vanilla.plugin.event.entity.EntityEquipmentEvent;
-import org.spout.vanilla.plugin.material.item.armor.Boots;
-import org.spout.vanilla.plugin.material.item.armor.Chestplate;
-import org.spout.vanilla.plugin.material.item.armor.Helmet;
-import org.spout.vanilla.plugin.material.item.armor.Leggings;
 
 /**
  * Represents the four armor slots on a {@link org.spout.vanilla.plugin.component.inventory.PlayerInventory}.

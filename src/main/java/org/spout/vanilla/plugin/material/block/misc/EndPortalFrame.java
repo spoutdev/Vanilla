@@ -34,8 +34,8 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.data.MoveReaction;
+import org.spout.vanilla.api.material.block.Directional;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
-import org.spout.vanilla.plugin.material.block.Directional;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 import org.spout.vanilla.plugin.world.generator.object.VanillaObjects;

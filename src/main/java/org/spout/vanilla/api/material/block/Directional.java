@@ -24,7 +24,27 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.item.armor;
+package org.spout.vanilla.api.material.block;
 
-public interface Leggings {
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
+
+/**
+ * Defines a block material that can face into a cartain direction
+ */
+public interface Directional {
+	/**
+	 * Gets the face to which this block material faces
+	 * @param block to get it of
+	 * @return the facing direction
+	 */
+	public BlockFace getFacing(Block block);
+
+	/**
+	 * Sets the face to which this block material faces
+	 * @param block to set it for
+	 * @param facing direction to set to
+	 */
+	public void setFacing(Block block, BlockFace facing);
 }
+

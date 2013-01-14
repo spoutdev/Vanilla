@@ -31,7 +31,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.api.data.RailsState;
-import org.spout.vanilla.plugin.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.api.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.plugin.util.RedstoneUtil;
 
 public class PoweredRail extends RailBase implements RedstoneTarget {

@@ -44,6 +44,7 @@ import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.plugin.Platform;
 
+import org.spout.vanilla.api.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
@@ -58,7 +59,6 @@ import org.spout.vanilla.plugin.component.player.PlayerListComponent;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.event.block.RedstoneChangeEvent;
 import org.spout.vanilla.plugin.input.VanillaInputExecutor;
-import org.spout.vanilla.plugin.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.plugin.protocol.PasteExceptionHandler;
 
 public class VanillaListener implements Listener {

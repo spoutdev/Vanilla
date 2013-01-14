@@ -27,14 +27,16 @@
 package org.spout.vanilla.plugin.component.misc;
 
 import org.spout.api.component.type.EntityComponent;
+import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.plugin.event.cause.NullDamageCause;
 
 public class FireComponent extends EntityComponent {
-	private float internalTimer = 0.0f;
+	private float internalTimer = 0.0f, rainTimer = 0f;
 	private HealthComponent health;
 	private Living living;
 
@@ -51,6 +53,20 @@ public class FireComponent extends EntityComponent {
 
 	@Override
 	public void onTick(float dt) {
+		if (VanillaSky.getSky(getOwner().getWorld()).hasWeather()) {
+			Point point = getOwner().getTransform().getPosition();
+			if (VanillaSky.getSky(getOwner().getWorld()).getWeatherSimulator().isRainingAt((int) point.getX(), (int) point.getY(), (int) point.getZ(), false)) {
+				rainTimer += dt;
+			} else {
+				rainTimer = 0f;
+			}
+			if (rainTimer >= 2.0f) {
+				setFireTick(0f);
+				setFireHurting(false);
+				rainTimer = 0f;
+			}
+		}
+
 		living.sendMetaData();
 		if (isFireHurting()) {
 			if (internalTimer >= 1.0f) {
@@ -81,14 +97,19 @@ public class FireComponent extends EntityComponent {
 		return getOwner().getData().get(VanillaData.FIRE_HURT);
 	}
 
+	private void setFireHurting(boolean fireHurt) {
+		getOwner().getData().put(VanillaData.FIRE_HURT, fireHurt);
+	}
+
 	/**
 	 * Sets the entity on fire.
+	 * 
 	 * @param time The amount of time in seconds the entity should be on fire.
 	 * @param hurt
 	 */
 	public void setOnFire(float time, boolean hurt) {
-		getOwner().getData().put(VanillaData.FIRE_TICK, time);
-		getOwner().getData().put(VanillaData.FIRE_HURT, hurt);
+		setFireTick(time);
+		setFireHurting(hurt);
 		living.sendMetaData();
 	}
 }

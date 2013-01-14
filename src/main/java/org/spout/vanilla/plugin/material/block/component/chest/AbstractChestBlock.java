@@ -32,10 +32,10 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.api.data.MoveReaction;
+import org.spout.vanilla.api.material.Fuel;
 import org.spout.vanilla.plugin.component.substance.material.chest.AbstractChest;
 import org.spout.vanilla.plugin.data.Instrument;
-import org.spout.vanilla.plugin.data.MoveReaction;
-import org.spout.vanilla.plugin.material.Fuel;
 import org.spout.vanilla.plugin.material.block.Directional;
 import org.spout.vanilla.plugin.material.block.component.ComponentMaterial;
 import org.spout.vanilla.plugin.util.PlayerUtil;

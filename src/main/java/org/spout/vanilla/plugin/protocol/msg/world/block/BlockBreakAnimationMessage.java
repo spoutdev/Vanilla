@@ -33,7 +33,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.plugin.protocol.msg.VanillaBlockDataChannelMessage;
+import org.spout.vanilla.api.protocol.msg.VanillaBlockDataChannelMessage;
 
 public class BlockBreakAnimationMessage extends VanillaBlockDataChannelMessage {
 	private final int entityId;

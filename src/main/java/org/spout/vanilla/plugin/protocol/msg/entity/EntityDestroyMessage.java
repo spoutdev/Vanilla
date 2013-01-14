@@ -35,7 +35,7 @@ import org.spout.api.protocol.proxy.ConnectionInfo;
 import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.plugin.protocol.msg.VanillaMainChannelMessage;
+import org.spout.vanilla.api.protocol.msg.VanillaMainChannelMessage;
 import org.spout.vanilla.plugin.protocol.proxy.VanillaConnectionInfo;
 
 public final class EntityDestroyMessage extends VanillaMainChannelMessage implements TransformableMessage {

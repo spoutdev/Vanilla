@@ -32,8 +32,8 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
+import org.spout.vanilla.api.protocol.msg.VanillaBlockDataChannelMessage;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.protocol.msg.VanillaBlockDataChannelMessage;
 
 public final class BlockChangeMessage extends VanillaBlockDataChannelMessage {
 	private final int x, y, z, metadata;

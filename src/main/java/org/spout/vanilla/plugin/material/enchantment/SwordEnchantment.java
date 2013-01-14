@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.enchantment;
 
-import org.spout.vanilla.plugin.material.VanillaMaterial;
+import org.spout.vanilla.api.material.VanillaMaterial;
 import org.spout.vanilla.plugin.material.item.tool.weapon.Sword;
 
 public abstract class SwordEnchantment extends Enchantment {

@@ -29,9 +29,9 @@ package org.spout.vanilla.plugin.material.block.component;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.api.data.MoveReaction;
 import org.spout.vanilla.plugin.component.substance.material.EnchantmentTable;
 import org.spout.vanilla.plugin.data.Instrument;
-import org.spout.vanilla.plugin.data.MoveReaction;
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.plugin.material.block.Directional;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;

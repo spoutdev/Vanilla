@@ -29,8 +29,8 @@ package org.spout.vanilla.plugin.material.block.plant;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.api.material.block.Plant;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.Plant;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 
 public class Flower extends GroundAttachable implements Plant {

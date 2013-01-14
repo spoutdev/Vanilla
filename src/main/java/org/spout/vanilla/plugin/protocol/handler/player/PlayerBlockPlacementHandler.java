@@ -53,6 +53,7 @@ import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 
 import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
@@ -61,7 +62,6 @@ import org.spout.vanilla.plugin.data.effect.SoundEffect;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.event.cause.PlayerClickBlockCause;
 import org.spout.vanilla.plugin.event.cause.PlayerPlacementCause;
-import org.spout.vanilla.plugin.inventory.Slot;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.item.Food;
 import org.spout.vanilla.plugin.material.item.tool.weapon.Sword;

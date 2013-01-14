@@ -39,7 +39,7 @@ import org.spout.nbt.ListTag;
 import org.spout.nbt.ShortTag;
 import org.spout.nbt.Tag;
 
-import org.spout.vanilla.plugin.material.VanillaMaterial;
+import org.spout.vanilla.api.material.VanillaMaterial;
 
 /**
  * Represents an enchantment

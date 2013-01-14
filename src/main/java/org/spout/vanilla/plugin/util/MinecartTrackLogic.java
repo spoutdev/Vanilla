@@ -36,7 +36,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.plugin.data.RailsState;
+import org.spout.vanilla.api.data.RailsState;
 import org.spout.vanilla.plugin.material.block.rail.Rail;
 import org.spout.vanilla.plugin.material.block.rail.RailBase;
 

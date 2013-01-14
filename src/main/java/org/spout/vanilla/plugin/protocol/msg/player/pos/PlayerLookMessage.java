@@ -32,7 +32,7 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.plugin.protocol.msg.VanillaMainChannelMessage;
+import org.spout.vanilla.api.protocol.msg.VanillaMainChannelMessage;
 
 public final class PlayerLookMessage extends VanillaMainChannelMessage {
 	private final float yaw, pitch, roll;

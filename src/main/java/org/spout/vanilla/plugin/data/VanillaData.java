@@ -36,6 +36,11 @@ import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.api.data.Difficulty;
+import org.spout.vanilla.api.data.Dimension;
+import org.spout.vanilla.api.data.GameMode;
+import org.spout.vanilla.api.data.Weather;
+import org.spout.vanilla.api.data.WorldType;
 import org.spout.vanilla.plugin.inventory.block.ChestInventory;
 import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
 import org.spout.vanilla.plugin.inventory.player.DropInventory;

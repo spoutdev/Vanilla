@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.plugin.material.block.solid;
 
+import org.spout.vanilla.api.material.Burnable;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;
-import org.spout.vanilla.plugin.material.Burnable;
 import org.spout.vanilla.plugin.material.block.Solid;
 import org.spout.vanilla.plugin.material.block.misc.Slab;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;

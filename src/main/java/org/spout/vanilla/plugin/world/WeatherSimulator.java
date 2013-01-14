@@ -35,11 +35,12 @@ import org.spout.api.geo.World;
 import org.spout.api.math.MathHelper;
 import org.spout.api.tickable.BasicTickable;
 
+import org.spout.vanilla.api.data.Weather;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
-import org.spout.vanilla.plugin.data.Climate;
+
+import org.spout.vanilla.api.data.Climate;
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.data.Weather;
-import org.spout.vanilla.plugin.world.generator.biome.VanillaBiome;
+import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
 
 public class WeatherSimulator extends BasicTickable {
 	private final VanillaSky sky;
@@ -80,6 +81,7 @@ public class WeatherSimulator extends BasicTickable {
 
 	/**
 	 * Gets if this Weather simulator supports Lightning storms
+	 * 
 	 * @return True if it has lightning, False if not
 	 */
 	public boolean hasLightning() {
@@ -88,6 +90,7 @@ public class WeatherSimulator extends BasicTickable {
 
 	/**
 	 * Sets if this Weather simulator supports Lightning storms
+	 * 
 	 * @param hasLightning state to set to
 	 */
 	public void setLightning(boolean hasLightning) {
@@ -132,6 +135,7 @@ public class WeatherSimulator extends BasicTickable {
 
 	/**
 	 * Gets the strength of the rain, which is affected by the duration
+	 * 
 	 * @param factor to apply to the changing states
 	 * @return the strength
 	 */
@@ -142,6 +146,7 @@ public class WeatherSimulator extends BasicTickable {
 
 	/**
 	 * Gets the strength of the thunder storm, which is affected by the duration
+	 * 
 	 * @param factor to apply to the changing states
 	 * @return the strength
 	 */
@@ -159,7 +164,7 @@ public class WeatherSimulator extends BasicTickable {
 			final Weather current = getCurrent();
 			Weather forecast = current;
 			while (forecast == current) {
-				//Loop until we pick a weather different from current
+				// Loop until we pick a weather different from current
 				forecast = Weather.get(random.nextInt(3));
 			}
 			setForecast(forecast);

@@ -37,6 +37,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Vector2;
 import org.spout.api.util.flag.Flag;
 
+import org.spout.vanilla.api.material.item.Enchantable;
 import org.spout.vanilla.plugin.component.living.hostile.Silverfish;
 import org.spout.vanilla.plugin.component.living.hostile.Skeleton;
 import org.spout.vanilla.plugin.component.living.hostile.Spider;
@@ -45,7 +46,6 @@ import org.spout.vanilla.plugin.data.drops.flag.ToolEnchantFlags;
 import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.enchantment.Enchantment;
 import org.spout.vanilla.plugin.material.enchantment.Enchantments;
-import org.spout.vanilla.plugin.material.item.Enchantable;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public abstract class Tool extends VanillaItemMaterial implements Enchantable {

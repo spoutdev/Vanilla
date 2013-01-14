@@ -28,7 +28,7 @@ package org.spout.vanilla.plugin.render;
 
 import java.awt.Color;
 
-import org.spout.vanilla.plugin.world.generator.biome.VanillaBiome;
+import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
 
 public class BiomeFoliageColorBufferEffect extends BiomeColorBufferEffect {
 	@Override

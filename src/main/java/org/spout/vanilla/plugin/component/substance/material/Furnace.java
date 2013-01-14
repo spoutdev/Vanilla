@@ -29,14 +29,14 @@ package org.spout.vanilla.plugin.component.substance.material;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.api.inventory.Container;
+import org.spout.vanilla.api.material.Fuel;
+import org.spout.vanilla.api.material.TimedCraftable;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.inventory.Container;
 import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
 import org.spout.vanilla.plugin.inventory.window.block.FurnaceWindow;
 import org.spout.vanilla.plugin.inventory.window.prop.FurnaceProperty;
-import org.spout.vanilla.plugin.material.Fuel;
-import org.spout.vanilla.plugin.material.TimedCraftable;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class Furnace extends ViewedBlockComponent implements Container {

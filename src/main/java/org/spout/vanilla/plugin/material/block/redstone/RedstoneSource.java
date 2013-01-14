@@ -29,7 +29,7 @@ package org.spout.vanilla.plugin.material.block.redstone;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.plugin.data.RedstonePowerMode;
+import org.spout.vanilla.api.data.RedstonePowerMode;
 
 /**
  * Defines a material that can supply redstone power<br>

@@ -45,13 +45,13 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.Vector3;
 import org.spout.api.scheduler.TaskPriority;
 
+import org.spout.vanilla.api.material.Burnable;
+import org.spout.vanilla.api.material.Fuel;
+import org.spout.vanilla.api.material.TimedCraftable;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.data.tool.ToolType;
-import org.spout.vanilla.plugin.material.Burnable;
-import org.spout.vanilla.plugin.material.Fuel;
-import org.spout.vanilla.plugin.material.TimedCraftable;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Directional;
 import org.spout.vanilla.plugin.material.block.Solid;

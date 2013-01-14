@@ -71,6 +71,7 @@ import org.spout.vanilla.plugin.component.misc.FireComponent;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
+import org.spout.vanilla.plugin.component.substance.XPOrb;
 import org.spout.vanilla.plugin.component.substance.material.chest.Chest;
 import org.spout.vanilla.plugin.component.substance.object.FallingBlock;
 import org.spout.vanilla.plugin.component.test.FollowComponent;
@@ -531,6 +532,8 @@ public class TestCommands {
 			clazz = Zombie.class;
 		} else if (name.equalsIgnoreCase("skeleton")) {
 			clazz = Skeleton.class;
+		} else if (name.equalsIgnoreCase("xporb")) {
+			clazz = XPOrb.class;
 		} else {
 			throw new CommandException(name + " was not a valid name for a Living!");
 		}
@@ -579,8 +582,10 @@ public class TestCommands {
 			}
 		}
 		//For testing
-		FollowComponent follow = entity.add(FollowComponent.class);
-		follow.findAndFollow(true, 5);
+		if (!clazz.equals(XPOrb.class)) {
+			FollowComponent follow = entity.add(FollowComponent.class);
+			follow.findAndFollow(true, 5);
+		}
 		if (Spout.getPlatform() == Platform.SERVER && Spout.debugMode()) {
 			entity.add(TransformDebugComponent.class);
 		}

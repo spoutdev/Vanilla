@@ -53,9 +53,10 @@ public class FireComponent extends EntityComponent {
 
 	@Override
 	public void onTick(float dt) {
-		if (VanillaSky.getSky(getOwner().getWorld()).hasWeather()) {
+		VanillaSky sky = VanillaSky.getSky(getOwner().getWorld());
+		if (sky.hasWeather()) {
 			Point point = getOwner().getTransform().getPosition();
-			if (VanillaSky.getSky(getOwner().getWorld()).getWeatherSimulator().isRainingAt((int) point.getX(), (int) point.getY(), (int) point.getZ(), false)) {
+			if (sky.getWeatherSimulator().isRainingAt((int) point.getX(), (int) point.getY(), (int) point.getZ(), false)) {
 				rainTimer += dt;
 			} else {
 				rainTimer = 0f;

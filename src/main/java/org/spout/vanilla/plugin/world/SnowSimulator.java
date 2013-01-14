@@ -149,7 +149,7 @@ public class SnowSimulator extends Component {
 										if (!VanillaMaterials.SNOW.willMeltAt(above)) {
 											above.setMaterial(VanillaMaterials.SNOW);
 										}
-										break;
+										return;
 									//Try to grow snow
 									} else if (vbm instanceof Snow) {
 										short data = block.getData();
@@ -161,7 +161,7 @@ public class SnowSimulator extends Component {
 										} else {
 											block.setData(data + 1);
 										}
-										break;
+										return;
 									} else {
 										break;
 									}

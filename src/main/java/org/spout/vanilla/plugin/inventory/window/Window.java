@@ -106,7 +106,7 @@ public abstract class Window implements InventoryViewer {
 	private static final float SCALE = 0.75f;
 
 	public Window(Player owner, WindowType type, String title, int offset) {
-
+		System.out.println("CONSTR");
 		this.owner = owner;
 		this.type = type;
 		this.title = title;
@@ -162,6 +162,7 @@ public abstract class Window implements InventoryViewer {
 	 */
 	public void open() {
 		opened = true;
+		System.out.println("OPEN");
 		switch (Spout.getPlatform()) {
 			case PROXY:
 			case SERVER:

@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.plugin.inventory.player;
 
+import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
-
+import org.spout.vanilla.plugin.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.plugin.material.item.armor.Boots;
 import org.spout.vanilla.plugin.material.item.armor.Chestplate;
 import org.spout.vanilla.plugin.material.item.armor.Helmet;
@@ -45,6 +46,45 @@ public class PlayerArmorInventory extends Inventory {
 
 	public PlayerArmorInventory() {
 		super(SIZE);
+	}
+
+	/**
+	 * Informs a player of all the equipment (armor)
+	 * 
+	 * @param player to inform
+	 */
+	public void updateSlots(Player player) {
+		for (int i = 0; i < this.size(); i++) {
+			updateSlot(i, get(i), player);
+		}
+	}
+
+	/**
+	 * Informs a player of a certain equipment (armor) change
+	 * 
+	 * @param i - item slot index
+	 * @param item that the slot got set to
+	 * @param player to inform
+	 */
+	public static void updateSlot(int i, ItemStack item, Player player) {
+		final int equip;
+		switch (i) {
+			case PlayerArmorInventory.BOOT_SLOT :
+				equip = 3;
+				break;
+			case PlayerArmorInventory.CHEST_PLATE_SLOT :
+				equip = 1;
+				break;
+			case PlayerArmorInventory.HELMET_SLOT :
+				equip = 0;
+				break;
+			case PlayerArmorInventory.LEGGINGS_SLOT :
+				equip = 2;
+				break;
+			default :
+				return;
+		}
+		player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, equip, item));
 	}
 
 	@Override

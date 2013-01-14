@@ -64,7 +64,12 @@ public class WindowCreativeActionHandler extends MessageHandler<WindowCreativeAc
 		} else {
 			InventoryEntry entry = window.getInventoryEntry(message.getSlot());
 			if (entry != null) {
-				window.onCreativeClick(entry.getInventory(), entry.getSlot(), message.get());
+				if (window.getPlayerInventory().preCreativeClick()) {
+					window.onCreativeClick(entry.getInventory(), entry.getSlot(), message.get());
+				} else {
+					// Cancel - update the slot
+					window.onSlotSet(entry.getInventory(), entry.getSlot(), entry.getInventory().get(entry.getSlot()));
+				}
 			}
 		}
 	}

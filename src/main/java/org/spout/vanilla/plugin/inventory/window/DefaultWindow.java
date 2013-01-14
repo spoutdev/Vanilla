@@ -57,9 +57,7 @@ public class DefaultWindow extends Window {
 	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
 		super.onSlotSet(inventory, slot, item);
 		if (inventory instanceof PlayerArmorInventory) {
-			Player player = getPlayer();
-			//TODO: Fix
-			//player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, slot + 1, item));
+			PlayerArmorInventory.updateSlot(slot, item, getPlayer());
 		}
 	}
 

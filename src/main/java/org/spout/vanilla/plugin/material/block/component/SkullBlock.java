@@ -47,12 +47,12 @@ public class SkullBlock extends ComponentMaterial implements Attachable {
 
 	private SkullBlock(String name, int id) {
 		super((short) 0x7, name, id, Skull.class, null);
-		this.setHardness(1.0F).setResistance(3.0F).setOpaque();
+		this.setHardness(1.0F).setResistance(3.0F).setTransparent();
 	}
 
 	private SkullBlock(String name, int data, SkullBlock parent) {
 		super(name, parent.getId(), data, parent, null);
-		this.setHardness(1.0F).setResistance(3.0F).setOpaque();
+		this.setHardness(1.0F).setResistance(3.0F).setTransparent();
 	}
 
 	@Override

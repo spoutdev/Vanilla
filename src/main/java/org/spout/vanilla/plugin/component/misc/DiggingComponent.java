@@ -98,9 +98,7 @@ public class DiggingComponent extends EntityComponent {
 		} else {
 			multiplicator = 5f;
 		}
-		System.out.println("Block hardness:" + block.getHardness() + " modifier:" + modifier);
 		separator = (float) ((block.getHardness() * multiplicator) / modifier) / maxAmount;
-		System.out.println(separator);
 		amount = 0;
 		timer = 0;
 

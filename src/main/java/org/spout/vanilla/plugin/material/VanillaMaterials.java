@@ -212,6 +212,7 @@ import org.spout.vanilla.plugin.material.item.minecart.MinecartItem;
 import org.spout.vanilla.plugin.material.item.minecart.PoweredMinecartItem;
 import org.spout.vanilla.plugin.material.item.minecart.StorageMinecartItem;
 import org.spout.vanilla.plugin.material.item.misc.BlazeRod;
+import org.spout.vanilla.plugin.material.item.misc.BottleOEnchanting;
 import org.spout.vanilla.plugin.material.item.misc.Clay;
 import org.spout.vanilla.plugin.material.item.misc.Coal;
 import org.spout.vanilla.plugin.material.item.misc.Dye;
@@ -572,7 +573,7 @@ public final class VanillaMaterials {
 	public static final EyeOfEnderItem EYE_OF_ENDER = new EyeOfEnderItem("Eye of Ender", 381);
 	public static final VanillaItemMaterial GLISTERING_MELON = new VanillaItemMaterial("Glistering MelonBlock", 382, null);
 	public static final SpawnEgg SPAWN_EGG = SpawnEgg.PIG;
-	public static final VanillaItemMaterial BOTTLE_O_ENCHANTING = new VanillaItemMaterial("Bottle o' Enchanting", 384, null);
+	public static final BottleOEnchanting BOTTLE_O_ENCHANTING = new BottleOEnchanting("Bottle o' Enchanting", 384);
 	public static final VanillaItemMaterial EXP_BOTTLE = new VanillaItemMaterial("Experience Bottle", 128, null);
 	public static final BlockItem FIRE_CHARGE = new BlockItem("Fire Charge", 385, VanillaMaterials.FIRE, null); // Basic Implementation
 	public static final Fireworks FIREWORKS = new Fireworks("Fireworks", 401);

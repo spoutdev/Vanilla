@@ -24,30 +24,33 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.component.substance.object.projectile;
+package org.spout.vanilla.plugin.material.item.misc;
 
 import org.spout.api.entity.Entity;
-import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
-import org.spout.vanilla.plugin.protocol.entity.object.ObjectEntityProtocol;
-import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.World;
+import org.spout.api.math.Vector3;
+import org.spout.vanilla.plugin.component.substance.object.projectile.XPBottle;
+import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
-public class XPBottle extends ObjectEntity implements Projectile {
-	private Entity shooter;
+import com.bulletphysics.collision.shapes.SphereShape;
 
-	@Override
-	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.EXP_BOTTLE));
-		super.onAttached();
-	}
-	
-	@Override
-	public Entity getShooter() {
-		return shooter;
+public class BottleOEnchanting extends VanillaItemMaterial {
+
+	public BottleOEnchanting(String name, int id) {
+		super(name, id, null);
 	}
 
 	@Override
-	public void setShooter(Entity shooter) {
-		this.shooter = shooter;
+	public void onInteract(Entity entity, Action type) {
+		super.onInteract(entity, type);
+		if (type == Action.RIGHT_CLICK) {
+			World world = entity.getWorld();
+			XPBottle xpbottle = world.createEntity(entity.getTransform().getPosition(), XPBottle.class).add(XPBottle.class);
+			xpbottle.getPhysics().setCollisionShape(new SphereShape(3)); //TODO: Correct this
+			xpbottle.getPhysics().applyImpulse(new Vector3(20, 20, 20)); // TODO: Correct this
+			xpbottle.setShooter(entity);
+			world.spawnEntity(xpbottle.getOwner());
+		}
 	}
 }

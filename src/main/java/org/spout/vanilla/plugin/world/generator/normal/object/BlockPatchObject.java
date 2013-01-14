@@ -64,7 +64,7 @@ public class BlockPatchObject extends RandomObject implements RandomizableObject
 
 	@Override
 	public boolean canPlaceObject(World world, int x, int y, int z) {
-		return world.getBlockMaterial(x, y, z) == placeIn;
+		return world.getBlockMaterial(x, y, z).isMaterial(placeIn);
 	}
 
 	@Override

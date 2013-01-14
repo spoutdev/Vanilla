@@ -35,6 +35,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.plant.Mushroom;
+import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 
 public class MushroomDecorator extends Decorator {
 	private final byte odd;
@@ -60,7 +61,7 @@ public class MushroomDecorator extends Decorator {
 		final World world = chunk.getWorld();
 		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random);
-			final int y = random.nextBoolean() ? world.getHeight() - 1 : random.nextInt(64);
+			final int y = random.nextBoolean() ? NormalGenerator.HEIGHT - 1 : random.nextInt(64);
 			final int z = chunk.getBlockZ(random);
 			final Mushroom mushroom = random.nextInt(4) == 0 ? VanillaMaterials.RED_MUSHROOM : VanillaMaterials.BROWN_MUSHROOM;
 			for (byte size = 6; size > 0; size--) {
@@ -77,12 +78,10 @@ public class MushroomDecorator extends Decorator {
 
 	private int getHighestWorkableBlock(World w, int x, int y, int z) {
 		while (!w.getBlockMaterial(x, y, z).isOpaque()) {
-			y--;
-			if (y <= 0) {
+			if (--y <= 0) {
 				return -1;
 			}
 		}
-		y++;
-		return y;
+		return ++y;
 	}
 }

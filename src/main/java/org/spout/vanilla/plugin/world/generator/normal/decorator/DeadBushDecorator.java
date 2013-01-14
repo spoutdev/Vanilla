@@ -34,6 +34,7 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 
 public class DeadBushDecorator extends Decorator {
 	private final byte odd;
@@ -69,14 +70,12 @@ public class DeadBushDecorator extends Decorator {
 	}
 
 	private int getHighestWorkableBlock(World world, int x, int z) {
-		int y = world.getHeight();
+		int y = NormalGenerator.HEIGHT;
 		while (world.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.AIR, VanillaMaterials.LEAVES)) {
-			y--;
-			if (y == 0) {
+			if (--y <= 0) {
 				return -1;
 			}
 		}
-		y++;
-		return y;
+		return ++y;
 	}
 }

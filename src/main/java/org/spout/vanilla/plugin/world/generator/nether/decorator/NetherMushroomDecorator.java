@@ -69,12 +69,10 @@ public class NetherMushroomDecorator extends Decorator {
 
 	private int getHighestWorkableBlock(World w, int x, int y, int z) {
 		while (!w.getBlockMaterial(x, y, z).isOpaque()) {
-			y--;
-			if (y <= 0) {
+			if (--y <= 0) {
 				return -1;
 			}
 		}
-		y++;
-		return y;
+		return ++y;
 	}
 }

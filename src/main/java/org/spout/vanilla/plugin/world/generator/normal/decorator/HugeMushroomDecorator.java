@@ -33,6 +33,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.HugeMushroomObject;
 import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
 
@@ -72,14 +73,15 @@ public class HugeMushroomDecorator extends Decorator {
 	}
 
 	private int getHighestWorkableBlock(World world, int x, int z) {
-		int y = world.getHeight();
-		while (!world.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.MYCELIUM)) {
-			y--;
-			if (y == 0) {
+		int y = NormalGenerator.HEIGHT;
+		while (!world.getBlockMaterial(x, y, z).isMaterial(
+				VanillaMaterials.DIRT,
+				VanillaMaterials.GRASS,
+				VanillaMaterials.MYCELIUM)) {
+			if (--y <= 0) {
 				return -1;
 			}
 		}
-		y++;
-		return y;
+		return ++y;
 	}
 }

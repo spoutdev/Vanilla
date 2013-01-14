@@ -82,7 +82,7 @@ public class DungeonObject extends RandomObject implements RandomizableObject {
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		byte unsuportedEdgeBlockCount = 0;
+		byte missingWallBlocks = 0;
 		for (byte yy = -1; yy < height + 2; yy++) {
 			for (byte xx = (byte) (-radiusX - 1); xx < radiusX + 2; xx++) {
 				for (byte zz = (byte) (-radiusZ - 1); zz < radiusZ + 2; zz++) {
@@ -95,12 +95,12 @@ public class DungeonObject extends RandomObject implements RandomizableObject {
 							|| zz == -radiusZ - 1 || zz == radiusZ + 1)
 							&& yy == 0 && material.isMaterial(VanillaMaterials.AIR)
 							&& w.getBlockMaterial(x + xx, y + yy + 1, z + zz).isMaterial(VanillaMaterials.AIR)) {
-						unsuportedEdgeBlockCount++;
+						missingWallBlocks++;
 					}
 				}
 			}
 		}
-		return unsuportedEdgeBlockCount > 0 && unsuportedEdgeBlockCount < 6;
+		return missingWallBlocks > 0 && missingWallBlocks < 6;
 	}
 
 	@Override

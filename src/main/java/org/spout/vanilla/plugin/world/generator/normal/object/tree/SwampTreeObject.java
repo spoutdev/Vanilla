@@ -47,11 +47,6 @@ public class SwampTreeObject extends SmallTreeObject {
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		// Can only place trees within height range of the world
-		if (y < 1 || y + totalHeight + 2 > w.getHeight()) {
-			return false;
-		}
-		// Can only place trees on dirt and grass surfaces
 		if (!w.getBlockMaterial(x, y - 1, z).isMaterial(VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
 			return false;
 		}

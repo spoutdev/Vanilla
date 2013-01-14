@@ -29,24 +29,34 @@ package org.spout.vanilla.plugin.world.generator.normal.populator;
 import java.util.Random;
 
 import net.royawesome.jlibnoise.NoiseQuality;
+import net.royawesome.jlibnoise.module.modifier.Clamp;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.generator.Populator;
 import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.MathHelper;
 
-import org.spout.vanilla.plugin.world.generator.normal.object.SnowObject;
+import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.misc.Snow;
+import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 
 public class SnowPopulator extends Populator {
-	private static final Perlin SNOW_HEIGHT = new Perlin();
+	private static final Perlin HEIGHTS = new Perlin();
+	private static final Clamp SNOW_HEIGHTS = new Clamp();
 
 	static {
-		SNOW_HEIGHT.setFrequency(0.2D);
-		SNOW_HEIGHT.setLacunarity(1D);
-		SNOW_HEIGHT.setNoiseQuality(NoiseQuality.STANDARD);
-		SNOW_HEIGHT.setPersistence(0.7D);
-		SNOW_HEIGHT.setOctaveCount(1);
+		HEIGHTS.setFrequency(0.1);
+		HEIGHTS.setNoiseQuality(NoiseQuality.BEST);
+		HEIGHTS.setOctaveCount(2);
+
+		SNOW_HEIGHTS.SetSourceModule(0, HEIGHTS);
+		SNOW_HEIGHTS.setLowerBound(-1);
+		SNOW_HEIGHTS.setUpperBound(1);
 	}
 
 	@Override
@@ -55,23 +65,32 @@ public class SnowPopulator extends Populator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		final int seed = (int) (world.getSeed() * 51);
-		SNOW_HEIGHT.setSeed(seed);
-		final SnowObject snow = new SnowObject();
-		snow.setRandom(random);
+		HEIGHTS.setSeed((int) world.getSeed() * 51);
 		final int x = chunk.getBlockX();
 		final int z = chunk.getBlockZ();
-		double[][] heights = WorldGeneratorUtils.fastNoise(SNOW_HEIGHT, 16, 16, 4, x, 63, z);
+		final double[][] heights = WorldGeneratorUtils.fastNoise(SNOW_HEIGHTS, 16, 16, 4, x, 0, z);
 		for (byte xx = 0; xx < 16; xx++) {
 			for (byte zz = 0; zz < 16; zz++) {
-				if (!snow.canPlaceObject(world, x + xx, 63, z + zz)) {
-					continue;
-				}
-				int count = (int) ((heights[xx][zz] + 1) * 4.0);
-				for (int i = 0; i < count; i++) {
-					snow.placeObject(world, x + xx, 0, z + zz);
+				if (((VanillaBiome) world.getBiome(x + xx, 63, z + zz)).getClimate().hasSnowfall()) {
+					final int y = getHighestWorkableBlock(world, x + xx, z + zz);
+					if (y != -1 && ((VanillaBlockMaterial) world.getBlockMaterial(x + xx, y - 1, z + zz)).
+							canSupport(VanillaMaterials.SNOW, BlockFace.TOP)) {
+						// normalize [-1, 1] to [0, 1] then scale to [0, 7]
+						final short height = (short) MathHelper.floor((heights[xx][zz] * 0.5 + 0.5) * 7);
+						world.setBlockMaterial(x + xx, y, z + zz, Snow.SNOW[height], height, null);
+					}
 				}
 			}
 		}
+	}
+
+	private int getHighestWorkableBlock(World world, int x, int z) {
+		int y = NormalGenerator.HEIGHT;
+		while (world.getBlockMaterial(x, y, z).isInvisible()) {
+			if (--y <= 0) {
+				return -1;
+			}
+		}
+		return ++y;
 	}
 }

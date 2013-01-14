@@ -33,6 +33,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.CactusStackObject;
 
 public class CactusDecorator extends Decorator {
@@ -58,14 +59,12 @@ public class CactusDecorator extends Decorator {
 	}
 
 	private int getHighestWorkableBlock(World world, int x, int z) {
-		int y = world.getHeight();
+		int y = NormalGenerator.HEIGHT;
 		while (world.getBlockMaterial(x, y, z) != VanillaMaterials.SAND) {
-			y--;
-			if (y == 0) {
+			if (--y <= 0) {
 				return -1;
 			}
 		}
-		y++;
-		return y;
+		return ++y;
 	}
 }

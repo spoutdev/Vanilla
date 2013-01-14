@@ -62,12 +62,10 @@ public class FireDecorator extends Decorator {
 
 	private int getHighestWorkableBlock(World world, int x, int y, int z) {
 		while (!world.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.NETHERRACK)) {
-			y--;
-			if (y <= 0) {
+			if (--y <= 0) {
 				return -1;
 			}
 		}
-		y++;
-		return y;
+		return ++y;
 	}
 }

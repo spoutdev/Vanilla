@@ -37,6 +37,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 
 public class VineDecorator extends Decorator {
 	private final byte amount;
@@ -58,19 +59,19 @@ public class VineDecorator extends Decorator {
 		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
-			for (short y = 64; y < 128; y++) {
+			for (int y = NormalGenerator.SEA_LEVEL; y < NormalGenerator.HEIGHT; y++) {
 				final int xx = x - 3 + random.nextInt(7);
 				final int zz = z - 3 + random.nextInt(7);
 				final Block block = world.getBlock(xx, y, zz);
 				if (block.isMaterial(VanillaMaterials.AIR)) {
-					if (block.translate(BlockFace.TOP).isMaterial(VanillaMaterials.VINES)) {
+					final Block top = block.translate(BlockFace.TOP);
+					if (top.isMaterial(VanillaMaterials.VINES)) {
 						block.setMaterial(VanillaMaterials.VINES);
-						block.setData(block.translate(BlockFace.TOP));
+						block.setData(top);
 					} else {
-						Cause<?> cause = null; //TODO: What cause to use here?
 						for (final BlockFace face : BlockFaces.NESW) {
-							if (VanillaMaterials.VINES.canPlace(block, (short) 0, face, face.getOffset(), false, cause)) {
-								VanillaMaterials.VINES.onPlacement(block, (short) 0, face, face.getOffset(), false, cause);
+							if (VanillaMaterials.VINES.canPlace(block, (short) 0, face, face.getOffset(), false, null)) {
+								VanillaMaterials.VINES.onPlacement(block, (short) 0, face, face.getOffset(), false, null);
 								break;
 							}
 						}

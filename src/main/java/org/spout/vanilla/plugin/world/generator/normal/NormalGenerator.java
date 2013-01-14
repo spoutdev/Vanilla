@@ -37,7 +37,7 @@ import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.generator.biome.BiomePopulator;
 import org.spout.api.generator.biome.BiomeSelector;
 import org.spout.api.generator.biome.selector.BiomeSelectorLayer;
-import org.spout.api.generator.biome.selector.LayeredBiomeSelector;
+import org.spout.api.generator.biome.selector.PerBlockBiomeSelector;
 import org.spout.api.generator.biome.selector.PerlinRangeLayer;
 import org.spout.api.generator.biome.selector.RidgedMultiRangeLayer;
 import org.spout.api.generator.biome.selector.VoronoiLayer;
@@ -106,8 +106,8 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 	@Override
 	public void registerBiomes() {
 		// if you want to check out a particular biome, use this!
-		//setSelector(new PerBlockBiomeSelector(VanillaBiomes.MOUNTAINS));
-		setSelector(new LayeredBiomeSelector(buildSelectorStack(2.5f), VanillaBiomes.OCEAN));
+		setSelector(new PerBlockBiomeSelector(VanillaBiomes.TUNDRA));
+		//setSelector(new LayeredBiomeSelector(buildSelectorStack(2.5f), VanillaBiomes.OCEAN));
 		addGeneratorPopulators(
 				new GroundCoverPopulator(), new RockyShieldPopulator(),
 				new CavePopulator(), new RavinePopulator());
@@ -215,7 +215,8 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		short shift = 0;
 		final BiomeSelector selector = getSelector();
 		while (LogicUtil.equalsAny(selector.pickBiome(shift, 0, world.getSeed()),
-				VanillaBiomes.OCEAN, VanillaBiomes.BEACH, VanillaBiomes.RIVER, VanillaBiomes.SWAMP)
+				VanillaBiomes.OCEAN, VanillaBiomes.BEACH, VanillaBiomes.RIVER,
+				VanillaBiomes.SWAMP, VanillaBiomes.MUSHROOM_SHORE, VanillaBiomes.MUSHROOM)
 				&& shift < 1600) {
 			shift += 16;
 		}
@@ -259,13 +260,13 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		//
 		final RidgedMultiRangeLayer rivers =
 				new RidgedMultiRangeLayer(2).
-						setOctaveCount(1).setFrequency(0.005);
+				setOctaveCount(1).setFrequency(0.005);
 		final PerlinRangeLayer hills =
 				new PerlinRangeLayer(1).
-						setOctaveCount(4).setFrequency(0.01 / scale);
+				setOctaveCount(4).setFrequency(0.01 / scale);
 		final PerlinRangeLayer frozenOceans =
 				new PerlinRangeLayer(3).
-						setOctaveCount(4).setFrequency(0.01 / scale);
+				setOctaveCount(4).setFrequency(0.01 / scale);
 		//
 		// LAND LAYERS
 		//
@@ -309,15 +310,15 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		//
 		final BiomeSelectorLayer mushroom =
 				new PerlinRangeLayer(11).
-						setOctaveCount(4).setFrequency(0.01 / scale).
-						addElement(VanillaBiomes.OCEAN, -1, 0.78f).addElement(VanillaBiomes.MUSHROOM_SHORE, 0.78f, 0.85f).addElement(VanillaBiomes.MUSHROOM, 0.85f, 1);
+				setOctaveCount(4).setFrequency(0.01 / scale).
+				addElement(VanillaBiomes.OCEAN, -1, 0.78f).addElement(VanillaBiomes.MUSHROOM_SHORE, 0.78f, 0.85f).addElement(VanillaBiomes.MUSHROOM, 0.85f, 1);
 		final BiomeSelectorLayer beach = rivers.clone().
 				addElement(VanillaBiomes.BEACH, -1, 0.16f).addElement(VanillaBiomes.RIVER, 0.16f, 1);
 		final BiomeSelectorLayer land =
 				new VoronoiLayer(7).
-						setVoronoiFrequency(0.007 / scale).
-						setTurbulenceFrequency(0.004).setTurbulencePower(70).
-						addElements(desertLand, forestLand, jungleLand, plains, swamp, taigaLand, tundraLand);
+				setVoronoiFrequency(0.007 / scale).
+				setTurbulenceFrequency(0.004).setTurbulencePower(70).
+				addElements(desertLand, forestLand, jungleLand, plains, swamp, taigaLand, tundraLand);
 		final BiomeSelectorLayer smallMountains = rivers.clone().
 				addElement(VanillaBiomes.SMALL_MOUNTAINS, -1, 0.16f).addElement(VanillaBiomes.RIVER, 0.16f, 1);
 		final BiomeSelectorLayer mountains = rivers.clone().
@@ -327,8 +328,8 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		//
 		final BiomeSelectorLayer start =
 				new PerlinRangeLayer(5).
-						setOctaveCount(4).setFrequency(0.007 / scale).
-						addElement(mushroom, -1, -0.3f).addElement(VanillaBiomes.OCEAN, -0.3f, -0.05f).addElement(beach, -0.05f, 0).addElement(land, 0, 0.675f).addElement(smallMountains, 0.675f, 0.71f).addElement(mountains, 0.71f, 1);
+				setOctaveCount(4).setFrequency(0.007 / scale).
+				addElement(mushroom, -1, -0.3f).addElement(VanillaBiomes.OCEAN, -0.3f, -0.05f).addElement(beach, -0.05f, 0).addElement(land, 0, 0.675f).addElement(smallMountains, 0.675f, 0.71f).addElement(mountains, 0.71f, 1);
 
 		return start;
 	}

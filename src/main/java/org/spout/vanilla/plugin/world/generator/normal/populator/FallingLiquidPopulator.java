@@ -41,6 +41,7 @@ import org.spout.api.util.set.TInt21TripleHashSet;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Liquid;
+import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 
 public class FallingLiquidPopulator extends Populator {
 	private static final byte WATER_ATTEMPTS = 50;
@@ -52,7 +53,7 @@ public class FallingLiquidPopulator extends Populator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		final int height = world.getHeight();
+		final int height = NormalGenerator.HEIGHT;
 		List<Block> liquids = new ArrayList<Block>();
 		for (byte count = 0; count < WATER_ATTEMPTS; count++) {
 			final int x = chunk.getBlockX(random);

@@ -43,7 +43,6 @@ import org.spout.vanilla.plugin.world.generator.normal.object.OreObject;
 import org.spout.vanilla.plugin.world.generator.normal.object.OreObject.OreType;
 import org.spout.vanilla.plugin.world.generator.normal.object.PondObject;
 import org.spout.vanilla.plugin.world.generator.normal.object.PondObject.PondType;
-import org.spout.vanilla.plugin.world.generator.normal.object.SnowObject;
 import org.spout.vanilla.plugin.world.generator.normal.object.WellObject;
 import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.CactusStackObject;
 import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.HugeMushroomObject;
@@ -98,7 +97,6 @@ public class VanillaObjects {
 	public static final BlockPatchObject SAND_PATCH = new BlockPatchObject(VanillaMaterials.SAND);
 	public static final BlockPatchObject CLAY_PATCH = new BlockPatchObject(VanillaMaterials.CLAY_BLOCK);
 	public static final LootChestObject LOOT_CHEST = new LootChestObject();
-	public static final SnowObject FALLING_SNOW = new SnowObject();
 	public static final GlowstonePatchObject GLOWSTONE_PATCH = new GlowstonePatchObject();
 	public static final Mineshaft MINESHAFT = new Mineshaft();
 	public static final Temple TEMPLE = new Temple();

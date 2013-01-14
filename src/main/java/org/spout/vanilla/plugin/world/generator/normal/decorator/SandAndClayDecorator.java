@@ -50,6 +50,7 @@ public class SandAndClayDecorator extends Decorator {
 		}
 		final World world = chunk.getWorld();
 		final BlockPatchObject sand = new BlockPatchObject(VanillaMaterials.SAND);
+		sand.setRandom(random);
 		for (byte count = 0; count < FIRST_SAND_ROUND; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
@@ -63,7 +64,6 @@ public class SandAndClayDecorator extends Decorator {
 		clay.setHeightRadius((byte) 1);
 		clay.getOverridableMaterials().clear();
 		clay.getOverridableMaterials().add(VanillaMaterials.DIRT);
-		sand.setRandom(random);
 		clay.setRandom(random);
 		for (byte count = 0; count < CLAY_ROUND; count++) {
 			final int x = chunk.getBlockX(random);
@@ -90,12 +90,10 @@ public class SandAndClayDecorator extends Decorator {
 		BlockMaterial material;
 		while ((material = world.getBlockMaterial(x, y, z)) == VanillaMaterials.ICE
 				|| !(material instanceof Solid)) {
-			y--;
-			if (y == 0) {
+			if (--y <= 0) {
 				return -1;
 			}
 		}
-		y++;
-		return y;
+		return ++y;
 	}
 }

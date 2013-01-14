@@ -33,6 +33,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.plugin.world.generator.normal.object.WellObject;
 
 /**
@@ -64,14 +65,12 @@ public class WellDecorator extends Decorator {
 	}
 
 	private int getHighestWorkableBlock(World w, int x, int z) {
-		int y = w.getHeight();
+		int y = NormalGenerator.HEIGHT;
 		while (w.getBlockMaterial(x, y, z) != VanillaMaterials.SAND) {
-			y--;
-			if (y == 0) {
+			if (--y <= 0) {
 				return -1;
 			}
 		}
-		y++;
-		return y;
+		return ++y;
 	}
 }

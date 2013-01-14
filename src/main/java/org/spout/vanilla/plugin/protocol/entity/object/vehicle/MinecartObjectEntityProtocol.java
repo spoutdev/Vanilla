@@ -35,8 +35,12 @@ import org.spout.vanilla.plugin.protocol.entity.object.ObjectEntityProtocol;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
 
 public class MinecartObjectEntityProtocol extends ObjectEntityProtocol {
-	public MinecartObjectEntityProtocol() {
-		super(ObjectType.MINECART);
+	
+	public MinecartObjectEntityProtocol(ObjectType type) {
+		super(type);
+		if (!ObjectType.MINECART.equals(type) && !ObjectType.POWERED_MINECART.equals(type) && !ObjectType.STORAGE_MINECART.equals(type)) {
+			throw new IllegalStateException("Invalid minecart type!");
+		}
 	}
 
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {

@@ -28,17 +28,30 @@ package org.spout.vanilla.plugin.material.item.minecart;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.plugin.component.substance.object.projectile.Snowball;
+import org.spout.vanilla.plugin.component.substance.object.vehicle.Minecart;
 import org.spout.vanilla.plugin.material.block.rail.RailBase;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
+import com.bulletphysics.collision.shapes.SphereShape;
+
 public class MinecartItem extends VanillaItemMaterial {
-	public MinecartItem(String name, int id) {
+	private Class<? extends Minecart> spawnedEntity;
+	
+	public MinecartItem(String name, int id, Class<? extends Minecart> spawnedEntity) {
 		super(name, id, null);
+		this.spawnedEntity = spawnedEntity;
 	}
 
+	public Class<? extends Minecart> getSpawnedEntity() {
+		return spawnedEntity;
+	}
+	
 	@Override
 	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
 		super.onInteract(entity, block, type, clickedface);
@@ -46,7 +59,8 @@ public class MinecartItem extends VanillaItemMaterial {
 		//is clicked position a track?
 		if (block.getMaterial() instanceof RailBase) {
 			//spawn minecart on rail
-			//block.getWorld().createAndSpawnEntity(block.getPosition(), this.getSpawnedEntity());
+			Minecart minecart = block.getWorld().createEntity(block.getPosition(), getSpawnedEntity()).add(getSpawnedEntity());
+			block.getWorld().spawnEntity(minecart.getOwner());
 			//TODO: Subtracting one from the held item?
 			//Shouldn't the held item be passed to this function instead?
 		}

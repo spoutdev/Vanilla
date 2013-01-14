@@ -26,8 +26,10 @@
  */
 package org.spout.vanilla.plugin.material.item.minecart;
 
+import org.spout.vanilla.plugin.component.substance.object.vehicle.StorageMinecart;
+
 public class StorageMinecartItem extends MinecartItem {
 	public StorageMinecartItem(String name, int id) {
-		super(name, id);
+		super(name, id, StorageMinecart.class);
 	}
 }

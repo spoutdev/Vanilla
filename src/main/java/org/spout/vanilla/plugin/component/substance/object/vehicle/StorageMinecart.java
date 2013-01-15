@@ -40,13 +40,15 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
 import org.spout.vanilla.plugin.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
 
-public class StorageMinecart extends Minecart {
+public class StorageMinecart extends MinecartBase {
 	
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MinecartObjectEntityProtocol(ObjectType.STORAGE_MINECART));
-		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.CHEST, 1));
 		super.onAttached();
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MinecartObjectEntityProtocol(ObjectType.STORAGE_MINECART));
+		if (getAttachedCount() == 1) {
+			getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.CHEST, 1));
+		}
 	}
 	
 	public ChestInventory getInventory() {
@@ -59,9 +61,18 @@ public class StorageMinecart extends Minecart {
 			return;
 		}
 		if (Action.RIGHT_CLICK.equals(action)) {
-			source.get(WindowHolder.class).openWindow(new ChestWindow((Player) source, getInventory(), "Minecart"));
+			source.add(WindowHolder.class).openWindow(new ChestWindow((Player) source, getInventory(), "Minecart"));
 		}
-		
 		super.onInteract(action, source);
+	}
+	
+	@Override
+	protected void onDestroy() {
+		for (ItemStack stack : (ItemStack[]) getInventory().toArray()) {
+			if (stack != null) {
+				getOwner().get(DropComponent.class).addDrop(stack);
+			}
+		}
+		super.onDestroy();
 	}
 }

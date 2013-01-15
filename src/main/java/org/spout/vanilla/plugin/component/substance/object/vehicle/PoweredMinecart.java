@@ -33,12 +33,14 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
 import org.spout.vanilla.plugin.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
 
-public class PoweredMinecart extends Minecart {
+public class PoweredMinecart extends MinecartBase {
 	
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MinecartObjectEntityProtocol(ObjectType.POWERED_MINECART));
-		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.FURNACE, 1));
 		super.onAttached();
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MinecartObjectEntityProtocol(ObjectType.POWERED_MINECART));
+		if (getAttachedCount() == 1) {
+			getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.FURNACE, 1));
+		}
 	}
 }

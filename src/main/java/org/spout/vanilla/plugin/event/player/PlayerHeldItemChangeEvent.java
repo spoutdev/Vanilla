@@ -73,14 +73,13 @@
 package org.spout.vanilla.plugin.event.player;
 
 import org.spout.api.entity.Player;
-import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 
 /**
  * Event which is called when a player changes the held item
  */
-public class PlayerHeldItemChangeEvent extends PlayerEvent implements Cancellable {
+public class PlayerHeldItemChangeEvent extends PlayerEvent {
 	private static HandlerList handlers = new HandlerList();
 	private final int oldSlot, newSlot;
 
@@ -104,11 +103,6 @@ public class PlayerHeldItemChangeEvent extends PlayerEvent implements Cancellabl
 	 */
 	public int getNewSlot() {
 		return newSlot;
-	}
-
-	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
 	}
 
 	@Override

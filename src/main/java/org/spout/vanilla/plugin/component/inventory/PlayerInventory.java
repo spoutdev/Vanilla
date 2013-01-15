@@ -26,14 +26,9 @@
  */
 package org.spout.vanilla.plugin.component.inventory;
 
-import org.spout.api.ServerOnly;
-import org.spout.api.Spout;
 import org.spout.api.component.type.EntityComponent;
-import org.spout.api.entity.Entity;
-import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.inventory.block.ChestInventory;
@@ -41,14 +36,11 @@ import org.spout.vanilla.plugin.inventory.player.PlayerArmorInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.plugin.protocol.VanillaNetworkSynchronizer;
 
 /**
  * Represents a players inventory
  */
 public class PlayerInventory extends EntityComponent {
-	private boolean hasDoneCreativeFlush = true;
-	private long lastCreativeClickTime = Long.MAX_VALUE;
 
 	/**
 	 * Gets the quickbar slots of this player inventory
@@ -100,51 +92,6 @@ public class PlayerInventory extends EntityComponent {
 	private void updateAll(Inventory inv) {
 		if (inv != null) {
 			inv.updateAll();
-		}
-	}
-
-	/**
-	 * Called before a creative click is handled on the server, to see if it is a valid message<br>
-	 * This is a temporary workaround for the glitched creative clicks spammed when a
-	 * client opens a window for the first time
-	 * 
-	 * @return True if the creative click can be handled, False if not
-	 */
-	@ServerOnly
-	public boolean preCreativeClick() {
-		if (this.hasDoneCreativeFlush) {
-			return true;
-		}
-		this.lastCreativeClickTime = System.currentTimeMillis();
-		return false;
-	}
-
-	@Override
-	public boolean canTick() {
-		return !this.hasDoneCreativeFlush;
-	}
-
-	@Override
-	public void onTick(float dt) {
-		Entity owner = this.getOwner();
-		// Abort this check for non-MC players
-		if (!(owner instanceof Player) || !(((Player) owner).getNetworkSynchronizer() instanceof VanillaNetworkSynchronizer)) {
-			this.hasDoneCreativeFlush = true;
-			return;
-		}
-		// Check using last creative click message time
-		if (lastCreativeClickTime == Long.MAX_VALUE) {
-			return;
-		}
-		// Finished.
-		this.hasDoneCreativeFlush = (lastCreativeClickTime - System.currentTimeMillis()) > 100;
-	}
-
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		if (Spout.getPlatform() == Platform.SERVER) {
-			this.hasDoneCreativeFlush = this.getQuickbar().isEmpty() && this.getMain().isEmpty() && this.getArmor().isEmpty();
 		}
 	}
 

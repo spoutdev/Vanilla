@@ -24,44 +24,37 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.inventory.player;
+package org.spout.vanilla.plugin.event.player.network;
 
 import org.spout.api.entity.Player;
-import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.api.inventory.Slot;
-
-
-public class PlayerQuickbar extends Inventory {
-	private static final long serialVersionUID = 1L;
-	public static final int SIZE = 9;
-	private int selected = 0;
-
-	public PlayerQuickbar() {
-		super(SIZE);
-	}
-
-	public Slot getSelectedSlot() {
-		return new Slot(this, this.selected);
-	}
-
-	public void setSelectedSlot(int currentSlot) {
-		this.selected = currentSlot;
+public class PlayerSelectedSlotChangeEvent extends PlayerEvent implements ProtocolEvent {
+	private static HandlerList handlers = new HandlerList();
+	private final int slot;
+	
+	public PlayerSelectedSlotChangeEvent(Player p, int slot) {
+		super(p);
+		this.slot = slot;
 	}
 
 	/**
-	 * Informs a player of a certain equipment (held item) change
+	 * Gets the new slot index that is selected
 	 * 
-	 * @param player to inform
+	 * @return Selected slot index
 	 */
-	@SuppressWarnings("unused")
-	public void updateHeldItem(Player player) {
-		ItemStack item = this.get(this.selected);
-		//TODO: This needs implementation
-		// EntityEquipmentEvent does NOT WORK!
-		// Equipment messages with slots 0 - 3 are (now) reserved for armor slots
-		// Slot -1 and 4 both throw an index out of bounds exception on the client
-		// If someone finds out the new method of doing this, that would be great
+	public int getSelectedSlot() {
+		return this.slot;
+	}
+	
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

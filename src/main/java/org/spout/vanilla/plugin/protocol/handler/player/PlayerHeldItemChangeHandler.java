@@ -26,16 +26,14 @@
  */
 package org.spout.vanilla.plugin.protocol.handler.player;
 
-import org.spout.api.Client;
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.plugin.event.player.PlayerHeldItemChangeEvent;
+import org.spout.vanilla.plugin.event.player.network.PlayerSelectedSlotChangeEvent;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerHeldItemChangeMessage;
 import org.spout.vanilla.plugin.util.PlayerUtil;
@@ -50,7 +48,7 @@ public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeld
 		if (human == null) {
 			return;
 		}
-		int newSlot = message.getSlot();
+		final int newSlot = message.getSlot();
 		if (newSlot < 0 || newSlot > 8) {
 			return;
 		}
@@ -60,16 +58,21 @@ public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeld
 			return;
 		}
 		PlayerHeldItemChangeEvent event = new PlayerHeldItemChangeEvent(player, quickbar.getSelectedSlot().getIndex(), newSlot);
-		if (!Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
-			quickbar.setSelectedSlot(newSlot);
-			ItemStack item = quickbar.getSelectedSlot().get();
-			player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, 0, item));
+		if (Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
+			// Reset
+			player.getNetworkSynchronizer().callProtocolEvent(new PlayerSelectedSlotChangeEvent(session.getPlayer(), event.getPreviousSlot()));
+		} else {
+			quickbar.setSelectedSlot(event.getNewSlot());
+			quickbar.updateHeldItem(player);
+			// Changed slot by event handler
+			if (event.getPreviousSlot() != event.getNewSlot()) {
+				player.getNetworkSynchronizer().callProtocolEvent(new PlayerSelectedSlotChangeEvent(session.getPlayer(), event.getNewSlot()));
+			}
 		}
 	}
 
 	@Override
 	public void handleClient(Session session, PlayerHeldItemChangeMessage message) {
-		Player player = ((Client) Spout.getEngine()).getActivePlayer();
 		PlayerQuickbar quickbar = PlayerUtil.getQuickbar(session.getPlayer());
 		if (quickbar == null) {
 			return;

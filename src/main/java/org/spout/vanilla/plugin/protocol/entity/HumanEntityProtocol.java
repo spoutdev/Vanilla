@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
@@ -37,6 +38,8 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.inventory.player.PlayerArmorInventory;
 import org.spout.vanilla.plugin.protocol.ChannelBufferUtils;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerSpawnMessage;
@@ -46,7 +49,7 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
 
-		List<Message> messages = new ArrayList<Message>(2);
+		List<Message> messages = new ArrayList<Message>(6);
 
 		Human human = entity.add(Human.class);
 
@@ -67,11 +70,33 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 
 		messages.add(new PlayerSpawnMessage(id, human.getName(), x, y, z, r, p, item, parameters));
 
+		// Armor
+		PlayerInventory inventory = entity.get(PlayerInventory.class);
+		final ItemStack boots, leggings, chestplate, helmet;
+		if (inventory == null) {
+			boots = leggings = chestplate = helmet = null;
+		} else {
+			final PlayerArmorInventory armor = inventory.getArmor();
+			boots = armor.getBoots();
+			leggings = armor.getLeggings();
+			chestplate = armor.getChestPlate();
+			helmet = armor.getHelmet();
+		}
+		messages.add(new EntityEquipmentMessage(entity.getId(), EntityEquipmentMessage.BOOTS_SLOT, boots));
+		messages.add(new EntityEquipmentMessage(entity.getId(), EntityEquipmentMessage.LEGGINGS_SLOT, leggings));
+		messages.add(new EntityEquipmentMessage(entity.getId(), EntityEquipmentMessage.CHESTPLATE_SLOT, chestplate));
+		messages.add(new EntityEquipmentMessage(entity.getId(), EntityEquipmentMessage.HELMET_SLOT, helmet));
+
+		// Held item
+		// TODO: Equipment message of slot 0 is no longer possible to use
+		// Something else needs to be used here!
+		/*
 		if (hand != null) {
 			messages.add(new EntityEquipmentMessage(entity.getId(), 0, hand.get()));
 		} else {
 			messages.add(new EntityEquipmentMessage(entity.getId(), 0, null));
 		}
+		*/
 		return messages;
 	}
 }

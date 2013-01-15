@@ -74,6 +74,7 @@ import org.spout.vanilla.plugin.inventory.window.prop.WindowProperty;
  * Represents a Window that players can view to display an inventory.
  */
 public abstract class Window implements InventoryViewer {
+	private static final boolean LOG_INFO_MESSAGES = false; // Debug - enable to log all the window information messages
 	private final Player owner;
 	private final List<InventoryConverter> converters = new LinkedList<InventoryConverter>();
 	protected final TObjectIntMap<Integer> properties = new TObjectIntHashMap<Integer>();
@@ -268,19 +269,17 @@ public abstract class Window implements InventoryViewer {
 		Inventory inventory = args.getInventory();
 		int slot = args.getSlot();
 		ItemStack clicked = inventory.get(slot);
-		debug("Spout slot: " + slot);
 		if (args.isShiftClick()) {
-			debug("Shift clicked");
+			debug("[Window] Shift-Clicked slot " + slot);
 			if (clicked != null) {
 				return onShiftClick(clicked, slot, inventory);
 			}
 		} else if (args.isRightClick()) {
-			debug("Right click");
+			debug("[Window] Right-Clicked slot " + slot + " using Cursor: " + cursorItem);
+			debug("[Window] Item at clicked slot: " + (clicked == null ? "Empty" : clicked.getMaterial().getName()));
 			if (clicked == null) {
-				debug("Empty slot");
 				if (cursorItem != null) {
-					debug("Cursor: " + cursorItem.getMaterial().getName());
-					debug("Add one");
+					debug("[Window] Add one");
 					// slot is empty with a not empty cursor
 					// add one
 					clicked = cursorItem.clone();
@@ -297,13 +296,11 @@ public abstract class Window implements InventoryViewer {
 					}
 				}
 			} else if (cursorItem != null) {
-				debug("Slot: " + clicked.getMaterial().getName());
-				debug("Cursor: " + cursorItem.getMaterial().getName());
 				// slot is not empty with not empty cursor
 				if (cursorItem.equalsIgnoreSize(clicked)) {
 					// only stack materials that are the same
 					if (clicked.getMaxStackSize() > clicked.getAmount()) {
-						debug("Stacking");
+						debug("[Window] Stacking");
 						// add one if can fit
 						clicked.setAmount(clicked.getAmount() + 1);
 						inventory.set(slot, clicked);
@@ -314,7 +311,7 @@ public abstract class Window implements InventoryViewer {
 						return true;
 					}
 				} else {
-					debug("Materials don't match. Swapping stacks.");
+					debug("[Window] Materials don't match. Swapping stacks.");
 					// materials don't match
 					// swap stacks
 					ItemStack newCursor = clicked.clone();
@@ -323,8 +320,6 @@ public abstract class Window implements InventoryViewer {
 					return true;
 				}
 			} else {
-				debug("Slot: " + clicked.getMaterial().getName());
-				debug("Empty cursor");
 				// slot is not empty with an empty cursor
 				// split the stack
 				int x = clicked.getAmount();
@@ -338,12 +333,11 @@ public abstract class Window implements InventoryViewer {
 				return true;
 			}
 		} else {
-			debug("Left click");
+			debug("[Window] Left-Clicked slot " + slot + " using Cursor: " + cursorItem);
+			debug("[Window] Item at clicked slot: " + (clicked == null ? "Empty" : clicked.getMaterial().getName()));
 			if (clicked == null) {
-				debug("Empty slot");
 				if (cursorItem != null) {
-					debug("Cursor: " + cursorItem.getMaterial().getName());
-					debug("Put whole stack in slot");
+					debug("[Window] Put whole stack in slot");
 					// slot is empty; cursor is not empty.
 					// put whole stack down
 					clicked = cursorItem.clone();
@@ -355,12 +349,10 @@ public abstract class Window implements InventoryViewer {
 					}
 				}
 			} else if (cursorItem != null) {
-				debug("Clicked: " + clicked.getMaterial().getName());
-				debug("Cursor: " + cursorItem.getMaterial().getName());
 				// slot is not empty; cursor is not empty.
 				// stack
 				if (cursorItem.equalsIgnoreSize(clicked)) {
-					debug("Stacking");
+					debug("[Window] Stacking");
 					clicked.stack(cursorItem);
 					inventory.set(slot, clicked);
 					if (cursorItem.isEmpty()) {
@@ -368,7 +360,7 @@ public abstract class Window implements InventoryViewer {
 					}
 					return true;
 				} else {
-					debug("Materials don't match. Swapping stacks.");
+					debug("[Window] Materials don't match. Swapping stacks.");
 					// materials don't match
 					// swap stacks
 					ItemStack newCursor = clicked.clone();
@@ -376,8 +368,6 @@ public abstract class Window implements InventoryViewer {
 					cursorItem = newCursor;
 				}
 			} else {
-				debug("Clicked: " + clicked.getMaterial().getName());
-				debug("Empty cursor");
 				// slot is not empty; cursor is empty.
 				// pick up stack
 				cursorItem = clicked.clone();
@@ -696,12 +686,13 @@ public abstract class Window implements InventoryViewer {
 	}
 
 	private void debug(String msg) {
-		//debug(Level.INFO, msg);
+		if (LOG_INFO_MESSAGES) {
+			debug(Level.INFO, msg);
+		}
 	}
 
 	@Override
 	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
-
 		InventoryConverter slots = getInventoryConverter(inventory);
 		if (slots == null) {
 			return;
@@ -710,16 +701,13 @@ public abstract class Window implements InventoryViewer {
 		switch (Spout.getPlatform()) {
 			case PROXY:
 			case SERVER:
-				// update held item
 				PlayerQuickbar quickbar = getPlayerInventory().getQuickbar();
-				debug("Slot: " + slot);
-				debug("Current slot: " + quickbar.getSelectedSlot().getIndex());
-				// TODO: Setting boots too for some reason...?
-				//if (inventory instanceof PlayerQuickbar && slot == quickbar.getCurrentSlot()) {
-				//Player player = getPlayer();
-				//player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, 0, item));
-				//}
+				debug("[Window] Slot changed: " + slot + " = " + item);
 				callProtocolEvent(new WindowSlotEvent(this, inventory, slots.revert(slot), item));
+				// Update the held item
+				if (inventory instanceof PlayerQuickbar && slot == quickbar.getSelectedSlot().getIndex()) {
+					((PlayerQuickbar) inventory).updateHeldItem(getPlayer());
+				}
 				break;
 			case CLIENT:
 				slots.getWidgets()[slot].get(InventorySlot.class).setRenderItemStack(new RenderItemStack(item));

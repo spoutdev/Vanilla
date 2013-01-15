@@ -98,6 +98,7 @@ import org.spout.vanilla.plugin.event.player.network.PlayerGameStateEvent;
 import org.spout.vanilla.plugin.event.player.network.PlayerHealthEvent;
 import org.spout.vanilla.plugin.event.player.network.PlayerListEvent;
 import org.spout.vanilla.plugin.event.player.network.PlayerPingEvent;
+import org.spout.vanilla.plugin.event.player.network.PlayerSelectedSlotChangeEvent;
 import org.spout.vanilla.plugin.event.window.WindowCloseEvent;
 import org.spout.vanilla.plugin.event.window.WindowItemsEvent;
 import org.spout.vanilla.plugin.event.window.WindowOpenEvent;
@@ -772,6 +773,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 
 		return new PlayerExperienceMessage(level.getProgress(), level.getLevel(), event.getNewExp());
+	}
+
+	@EventHandler
+	public Message onPlayerSelectedSlotChange(PlayerSelectedSlotChangeEvent event) {
+		return new PlayerHeldItemChangeMessage(event.getSelectedSlot());
 	}
 
 	public enum ChunkInit {

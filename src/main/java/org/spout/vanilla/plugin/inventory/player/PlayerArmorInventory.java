@@ -35,6 +35,7 @@ import org.spout.vanilla.api.material.item.armor.Chestplate;
 import org.spout.vanilla.api.material.item.armor.Helmet;
 import org.spout.vanilla.api.material.item.armor.Leggings;
 import org.spout.vanilla.plugin.event.entity.EntityEquipmentEvent;
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 
 /**
  * Represents the four armor slots on a {@link org.spout.vanilla.plugin.component.inventory.PlayerInventory}.
@@ -69,17 +70,17 @@ public class PlayerArmorInventory extends Inventory {
 	public static void updateSlot(int i, ItemStack item, Player player) {
 		final int equip;
 		switch (i) {
-			case PlayerArmorInventory.BOOT_SLOT :
-				equip = 3;
+			case BOOT_SLOT :
+				equip = EntityEquipmentMessage.BOOTS_SLOT;
 				break;
-			case PlayerArmorInventory.CHEST_PLATE_SLOT :
-				equip = 1;
+			case CHEST_PLATE_SLOT :
+				equip = EntityEquipmentMessage.CHESTPLATE_SLOT;
 				break;
-			case PlayerArmorInventory.HELMET_SLOT :
-				equip = 0;
+			case HELMET_SLOT :
+				equip = EntityEquipmentMessage.HELMET_SLOT;
 				break;
-			case PlayerArmorInventory.LEGGINGS_SLOT :
-				equip = 2;
+			case LEGGINGS_SLOT :
+				equip = EntityEquipmentMessage.LEGGINGS_SLOT;
 				break;
 			default :
 				return;

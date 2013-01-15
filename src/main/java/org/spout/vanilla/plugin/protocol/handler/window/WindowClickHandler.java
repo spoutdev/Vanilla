@@ -26,9 +26,6 @@
  */
 package org.spout.vanilla.plugin.protocol.handler.window;
 
-import java.util.logging.Level;
-
-import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -49,25 +46,14 @@ public final class WindowClickHandler extends MessageHandler<WindowClickMessage>
 		Window window = player.get(WindowHolder.class).getActiveWindow();
 		boolean result = false;
 		int slot = message.getSlot();
-		debug("Window: " + window.getClass().getCanonicalName());
-		debug("Window clicked at slot " + slot);
 		if (slot == 64537) {
-			debug("Outside onClick");
 			result = window.onOutsideClick();
 		} else {
-			debug("Getting args");
 			ClickArguments args = window.getClickArguments(slot, message.isRightClick(), message.isShift());
 			if (args != null) {
-				debug("Clicking");
 				result = window.onClick(args);
 			}
 		}
 		session.send(false, new WindowTransactionMessage(window, message.getTransaction(), result));
-	}
-
-	private void debug(String msg) {
-		if (Spout.debugMode()) {
-			Spout.getLogger().log(Level.INFO, msg);
-		}
 	}
 }

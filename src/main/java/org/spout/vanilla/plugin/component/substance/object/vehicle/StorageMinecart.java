@@ -41,7 +41,7 @@ import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
 import org.spout.vanilla.plugin.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
 
 public class StorageMinecart extends MinecartBase {
-	
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -50,13 +50,13 @@ public class StorageMinecart extends MinecartBase {
 			getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.CHEST, 1));
 		}
 	}
-	
+
 	public ChestInventory getInventory() {
 		return this.getData().get(VanillaData.CHEST_INVENTORY);
 	}
-	
+
 	@Override
-	public void onInteract(Action action, Entity source)  {
+	public void onInteract(Action action, Entity source) {
 		if (!(source instanceof Player)) {
 			return;
 		}
@@ -65,7 +65,7 @@ public class StorageMinecart extends MinecartBase {
 		}
 		super.onInteract(action, source);
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		for (ItemStack stack : (ItemStack[]) getInventory().toArray()) {

@@ -1,3 +1,29 @@
+/*
+ * This file is part of Vanilla.
+ *
+ * Copyright (c) 2011-2012, Spout LLC <http://www.spout.org/>
+ * Vanilla is licensed under the Spout License Version 1.
+ *
+ * Vanilla is free software: you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation, either version 3 of the License, or (at your option)
+ * any later version.
+ *
+ * In addition, 180 days after any changes are published, you can use the
+ * software, incorporating those changes, under the terms of the MIT license,
+ * as described in the Spout License Version 1.
+ *
+ * Vanilla is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License,
+ * the MIT license and the Spout License Version 1 along with this program.
+ * If not, see <http://www.gnu.org/licenses/> for the GNU Lesser General Public
+ * License and see <http://spout.in/licensev1> for the full license, including
+ * the MIT license.
+ */
 package org.spout.vanilla.plugin.component.substance.object.vehicle;
 
 import java.util.ArrayList;
@@ -21,6 +47,7 @@ import org.spout.vanilla.plugin.protocol.msg.entity.EntityStatusMessage;
 public abstract class MinecartBase extends ObjectEntity {
 
 	private int wobble = 0;
+
 	@Override
 	public void onAttached() {
 		getOwner().getData().put(VanillaData.ATTACHED_COUNT, getAttachedCount() + 1);
@@ -30,13 +57,13 @@ public abstract class MinecartBase extends ObjectEntity {
 		getOwner().setSavable(true);
 		super.onAttached();
 	}
-	
+
 	@Override
-	public void onInteract(Action action, Entity source)  {
+	public void onInteract(Action action, Entity source) {
 		if (!(source instanceof Player)) {
 			return;
 		}
-		
+
 		if (wobble > 0) {
 			wobble--;
 		}
@@ -47,28 +74,28 @@ public abstract class MinecartBase extends ObjectEntity {
 			parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 19, wobble));
 			getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), parameters));
 			getOwner().getNetwork().callProtocolEvent(new EntityStatusEvent(getOwner(), EntityStatusMessage.ENTITY_HURT));
-			
+
 			if (wobble > 40) {
 				onDestroy();
 				getOwner().remove();
-				
+
 			}
 		}
 	}
-	
+
 	/**
 	 * A counter of how many times this component has been attached to an entity
 	 * <p/>
-	 * Values > 1 indicate how many times this component has been saved to disk,
-	 * and reloaded
+	 * Values > 1 indicate how many times this component has been saved to disk, and reloaded
 	 * <p/>
 	 * Values == 1 indicate a new component that has never been saved and loaded.
+	 * 
 	 * @return attached count
 	 */
 	public final int getAttachedCount() {
 		return getOwner().getData().get(VanillaData.ATTACHED_COUNT);
 	}
-	
+
 	protected void onDestroy() {
 		List<ItemStack> drops = getOwner().get(DropComponent.class).getDrops();
 		Point entityPosition = getOwner().getTransform().getPosition();

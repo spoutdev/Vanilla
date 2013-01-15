@@ -26,15 +26,29 @@
  */
 package org.spout.vanilla.plugin.component.substance.object.vehicle;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.util.Parameter;
+import org.spout.vanilla.api.inventory.Slot;
+import org.spout.vanilla.api.material.Fuel;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
+import org.spout.vanilla.plugin.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
 import org.spout.vanilla.plugin.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class PoweredMinecart extends MinecartBase {
-	
+
+	private boolean isFueled = false;
+	private float fuel = 0f;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -42,5 +56,56 @@ public class PoweredMinecart extends MinecartBase {
 		if (getAttachedCount() == 1) {
 			getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.FURNACE, 1));
 		}
+	}
+
+	public void setFueled(boolean isFueled) {
+		if (isFueled) {
+			fuel = 180f;
+		} else {
+			fuel = 0f;
+		}
+		updateMetadata();
+	}
+
+	public boolean isFueled() {
+		return isFueled;
+	}
+
+	@Override
+	public boolean canTick() {
+		return fuel > 0f;
+	}
+
+	@Override
+	public void onTick(float dt) {
+		fuel -= dt;
+		if (fuel <= 0f) {
+			updateMetadata();
+		}
+	}
+
+	@Override
+	public void onInteract(Action action, Entity source) {
+		if (!(source instanceof Player)) {
+			return;
+		}
+
+		if (Action.RIGHT_CLICK.equals(action)) {
+			Slot slot = PlayerUtil.getHeldSlot(source);
+			if (slot.get() != null) {
+				ItemStack stack = slot.get();
+				if (stack.getMaterial() instanceof Fuel) {
+					setFueled(true);
+					slot.addAmount(-1);
+				}
+			}
+		}
+		super.onInteract(action, source);
+	}
+
+	private void updateMetadata() {
+		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (this.fuel > 0f ? 1 : 0))); // Powered flag
+		getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), parameters));
 	}
 }

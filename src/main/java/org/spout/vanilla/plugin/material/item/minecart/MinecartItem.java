@@ -33,6 +33,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.plugin.component.substance.object.vehicle.MinecartBase;
 import org.spout.vanilla.plugin.material.block.rail.RailBase;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class MinecartItem extends VanillaItemMaterial {
 	private Class<? extends MinecartBase> spawnedEntity;
@@ -56,6 +57,7 @@ public class MinecartItem extends VanillaItemMaterial {
 				//spawn minecart on rail
 				MinecartBase minecart = block.getWorld().createEntity(block.getPosition(), getSpawnedEntity()).add(getSpawnedEntity());
 				block.getWorld().spawnEntity(minecart.getOwner());
+				PlayerUtil.getHeldSlot(entity).addAmount(-1);
 				//TODO: Subtracting one from the held item?
 				//Shouldn't the held item be passed to this function instead?
 			}

@@ -27,16 +27,19 @@
 package org.spout.vanilla.plugin.inventory.window;
 
 import org.spout.api.Client;
+import org.spout.api.Server;
 import org.spout.api.ServerOnly;
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerArmorInventory;
+import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 
 public class DefaultWindow extends Window {
@@ -51,6 +54,23 @@ public class DefaultWindow extends Window {
 		addInventoryConverter(new InventoryConverter(inventory.getCraftingGrid(), "3-4, 1-2, 0", new Vector2[]{
 				Vector2.ZERO, Vector2.ZERO, Vector2.ZERO, Vector2.ZERO
 		}));
+	}
+
+	@Override
+	public void close() {
+		PlayerCraftingInventory inventory = getPlayerInventory().getCraftingGrid();
+		GridIterator iterator = inventory.getGrid().iterator();
+		while(iterator.hasNext()) {
+			ItemStack item = inventory.get(iterator.next());
+			if (item != null) {
+				getHuman().dropItem(item);
+			}
+		}
+		inventory.clear();
+		//Do not call super-close, DefaultWindow only pseudo-closes
+		if (!(Spout.getEngine() instanceof Server)) {
+			super.close(); 
+		}
 	}
 
 	@Override

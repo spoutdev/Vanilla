@@ -59,10 +59,8 @@ public class WindowHolder extends EntityComponent {
 
 	public void closeWindow() {
 		debug("Closing " + activeWindow.getClass().getCanonicalName());
-		if (!(activeWindow instanceof DefaultWindow && Spout.getEngine() instanceof Server)) {
-			activeWindow.close();
-			debug("Closed " + activeWindow.getClass().getCanonicalName());
-		}
+		activeWindow.close();
+		debug("Closed " + activeWindow.getClass().getCanonicalName());
 		activeWindow = defaultWindow;
 	}
 

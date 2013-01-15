@@ -27,6 +27,8 @@
 package org.spout.vanilla.plugin.inventory.window.block;
 
 import org.spout.api.entity.Player;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.plugin.inventory.block.CraftingTableInventory;
@@ -35,12 +37,26 @@ import org.spout.vanilla.plugin.inventory.window.Window;
 import org.spout.vanilla.plugin.inventory.window.WindowType;
 
 public class CraftingTableWindow extends Window {
+	private final CraftingTableInventory inventory = new CraftingTableInventory();
 	public CraftingTableWindow(Player owner) {
 		this(owner, "Crafting");
 	}
 
 	public CraftingTableWindow(Player owner, String title) {
 		super(owner, WindowType.CRAFTING_TABLE, title, 10);
-		addInventoryConverter(new InventoryConverter(new CraftingTableInventory(), "7-9, 4-6, 1-3, 0", new Vector2[0]));
+		addInventoryConverter(new InventoryConverter(inventory, "7-9, 4-6, 1-3, 0", new Vector2[0]));
+	}
+
+	@Override
+	public void close() {
+		GridIterator iterator = inventory.getGrid().iterator();
+		while(iterator.hasNext()) {
+			ItemStack item = inventory.get(iterator.next());
+			if (item != null) {
+				getHuman().dropItem(item);
+			}
+		}
+		inventory.clear();
+		super.close();
 	}
 }

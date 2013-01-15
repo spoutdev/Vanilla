@@ -47,6 +47,7 @@ import org.spout.api.gui.component.TexturedRectComponent;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
@@ -62,6 +63,7 @@ import org.spout.vanilla.plugin.event.window.WindowItemsEvent;
 import org.spout.vanilla.plugin.event.window.WindowOpenEvent;
 import org.spout.vanilla.plugin.event.window.WindowPropertyEvent;
 import org.spout.vanilla.plugin.event.window.WindowSlotEvent;
+import org.spout.vanilla.plugin.inventory.CraftingInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.inventory.util.GridInventoryConverter;
@@ -232,6 +234,11 @@ public abstract class Window implements InventoryViewer {
 			throw new IllegalStateException("Shift click handling is handled server side.");
 		}
 		final PlayerInventory inventory = getPlayerInventory();
+		if (from instanceof CraftingInventory) {
+			if (((CraftingInventory)from).onShiftClick(slot, inventory)) {
+				return true;
+			}
+		}
 
 		// Transferring to the main inventory, top to bottom
 		if (!(from instanceof PlayerMainInventory)) {
@@ -266,6 +273,14 @@ public abstract class Window implements InventoryViewer {
 	 * @return true if successful
 	 */
 	public boolean onClick(ClickArguments args) {
+		if (handleClick(args)) {
+			reload();
+			return true;
+		}
+		return false;
+	}
+
+	private boolean handleClick(ClickArguments args) {
 		Inventory inventory = args.getInventory();
 		int slot = args.getSlot();
 		ItemStack clicked = inventory.get(slot);
@@ -303,12 +318,25 @@ public abstract class Window implements InventoryViewer {
 						debug("[Window] Stacking");
 						// add one if can fit
 						clicked.setAmount(clicked.getAmount() + 1);
-						inventory.set(slot, clicked);
-						cursorItem.setAmount(cursorItem.getAmount() - 1);
-						if (cursorItem.isEmpty()) {
-							cursorItem = null;
+						if (inventory.canSet(slot, clicked)) {
+							inventory.set(slot, clicked);
+							cursorItem.setAmount(cursorItem.getAmount() - 1);
+							if (cursorItem.isEmpty()) {
+								cursorItem = null;
+							}
+							return true;
+						} else {
+							//Crafting result slot?
+							//Reset state
+							clicked.setAmount(clicked.getAmount() - 1);
+							cursorItem.stack(clicked);
+							if (clicked.isEmpty()) {
+								clicked = null;
+								inventory.set(slot, null, true /*will trigger crafting table to create new result if possible*/);
+							} else {
+								inventory.set(slot, clicked, false /*will not trigger crafting table to create new result (some result still left in slot)*/);
+							}
 						}
-						return true;
 					}
 				} else {
 					debug("[Window] Materials don't match. Swapping stacks.");
@@ -353,13 +381,25 @@ public abstract class Window implements InventoryViewer {
 				// stack
 				if (cursorItem.equalsIgnoreSize(clicked)) {
 					debug("[Window] Stacking");
-					clicked.stack(cursorItem);
-					inventory.set(slot, clicked);
-					if (cursorItem.isEmpty()) {
-						cursorItem = null;
+					//Try to set items
+					if (inventory.canSet(slot, clicked)) {
+						clicked.stack(cursorItem);
+						inventory.set(slot, clicked);
+						if (cursorItem.isEmpty()) {
+							cursorItem = null;
+						}
+					//Else try to pick them up (crafting)
+					} else {
+						cursorItem.stack(clicked);
+						if (clicked.isEmpty()) {
+							clicked = null;
+							inventory.set(slot, null, true /*will trigger crafting table to create new result if possible*/);
+						} else {
+							inventory.set(slot, clicked, false /*will not trigger crafting table to create new result (some result still left in slot)*/);
+						}
 					}
 					return true;
-				} else {
+				} else if (inventory.canSet(slot, cursorItem)) {
 					debug("[Window] Materials don't match. Swapping stacks.");
 					// materials don't match
 					// swap stacks

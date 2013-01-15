@@ -32,12 +32,14 @@ import java.util.logging.Level;
 
 import org.spout.api.Spout;
 import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.recipe.Recipe;
 import org.spout.api.inventory.recipe.RecipeManager;
 import org.spout.api.inventory.shape.Grid;
 import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.material.Material;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 
 /**
  * Represents an inventory that contains a crafting matrix.
@@ -88,6 +90,19 @@ public class CraftingInventory extends Inventory {
 	 */
 	public int getOffset() {
 		return offset;
+	}
+
+	public boolean onShiftClick(int slot, PlayerInventory toInventory) {
+		ItemStack result = get(getOutputSlot());
+		if (slot == outputSlot + offset && result != null) {
+			while(result != null && !result.isEmpty()) {
+				toInventory.add(result);
+				set(getOutputSlot(), null);
+				result = get(getOutputSlot());
+			}
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -149,13 +164,19 @@ public class CraftingInventory extends Inventory {
 			recipe = recipeManager.matchShapelessRecipe(shapeless);
 		}
 		if (recipe != null) {
-			set(getOutputSlot(), recipe.getResult());
-			if (Spout.debugMode()) {
-				Spout.getLogger().log(Level.INFO, "Found result " + recipe.getResult().toString());
-			}
+			updateCraftingSlot(recipe.getResult());
 			return;
 		}
-		set(getOutputSlot(), null);
+		updateCraftingSlot(null);
+	}
+
+	private void updateCraftingSlot(ItemStack item) {
+		//Do not update, or else it triggers the onSlotSet crafting code
+		set(getOutputSlot(), item, false);
+		//Manually inform viewers
+		for (InventoryViewer viewer : this.getViewers()) {
+			viewer.onSlotSet(this, getOutputSlot(), item);
+		}
 	}
 
 	@Override

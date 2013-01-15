@@ -26,16 +26,28 @@
  */
 package org.spout.vanilla.plugin.component.substance.object.vehicle;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.Vector3;
+import org.spout.api.util.Parameter;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
+import org.spout.vanilla.plugin.component.substance.Item;
 import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
+import org.spout.vanilla.plugin.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
 import org.spout.vanilla.plugin.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
 
 public class Minecart extends ObjectEntity {
 
+	private int wobble = 0;
 	@Override
 	public void onAttached() {
 		if (getOwner().getNetwork().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID) == null) {
@@ -44,5 +56,36 @@ public class Minecart extends ObjectEntity {
 		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.MINECART, 1));
 		getOwner().setSavable(true);
 		super.onAttached();
+	}
+	
+	@Override
+	public void onInteract(Action action, Entity source)  {
+		if (!(source instanceof Player)) {
+			return;
+		}
+		
+		if (Action.LEFT_CLICK.equals(action)) {
+			wobble += 10;
+			System.out.println(wobble);
+			List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
+			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) 0)); // Powered flag
+			parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 17, 0)); // Unknown flag; initialized to 0. (Probably time since last collision)
+			parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 18, 1)); // Unknown flag; initialized to 1. (Probably acceleration)
+			
+			parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 19, wobble));
+			getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), parameters));
+			
+			if (wobble > 40) {
+				List<ItemStack> drops = getOwner().get(DropComponent.class).getDrops();
+				Point entityPosition = getOwner().getTransform().getPosition();
+				for (ItemStack stack : drops) {
+					if (stack != null) {
+						Item.dropNaturally(entityPosition, stack);
+					}
+				}
+				getOwner().remove();
+				
+			}
+		}
 	}
 }

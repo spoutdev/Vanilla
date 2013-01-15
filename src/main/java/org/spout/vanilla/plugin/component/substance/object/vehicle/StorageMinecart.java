@@ -58,7 +58,10 @@ public class StorageMinecart extends Minecart {
 		if (!(source instanceof Player)) {
 			return;
 		}
+		if (Action.RIGHT_CLICK.equals(action)) {
+			source.get(WindowHolder.class).openWindow(new ChestWindow((Player) source, getInventory(), "Minecart"));
+		}
 		
-		source.get(WindowHolder.class).openWindow(new ChestWindow((Player) source, getInventory(), "Minecart"));
+		super.onInteract(action, source);
 	}
 }

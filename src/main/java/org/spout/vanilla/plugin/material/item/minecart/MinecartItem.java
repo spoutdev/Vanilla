@@ -56,13 +56,16 @@ public class MinecartItem extends VanillaItemMaterial {
 	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
 		super.onInteract(entity, block, type, clickedface);
 
-		//is clicked position a track?
-		if (block.getMaterial() instanceof RailBase) {
-			//spawn minecart on rail
-			Minecart minecart = block.getWorld().createEntity(block.getPosition(), getSpawnedEntity()).add(getSpawnedEntity());
-			block.getWorld().spawnEntity(minecart.getOwner());
-			//TODO: Subtracting one from the held item?
-			//Shouldn't the held item be passed to this function instead?
+		if (Action.RIGHT_CLICK.equals(type)) {
+			//is clicked position a track?
+			if (block.getMaterial() instanceof RailBase) {
+				//spawn minecart on rail
+				Minecart minecart = block.getWorld().createEntity(block.getPosition(), getSpawnedEntity()).add(getSpawnedEntity());
+				block.getWorld().spawnEntity(minecart.getOwner());
+				//TODO: Subtracting one from the held item?
+				//Shouldn't the held item be passed to this function instead?
+			}
 		}
+		
 	}
 }

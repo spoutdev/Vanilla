@@ -420,7 +420,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@Override
 	protected void worldChanged(World world) {
 		WorldConfigurationNode node = VanillaConfiguration.WORLDS.get(world);
-
 		maxY = node.MAX_Y.getInt() & (~Chunk.BLOCKS.MASK);
 		minY = node.MIN_Y.getInt() & (~Chunk.BLOCKS.MASK);
 		stepY = node.STEP_Y.getInt() & (~Chunk.BLOCKS.MASK);
@@ -432,6 +431,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		Difficulty difficulty = world.getComponentHolder().getData().get(VanillaData.DIFFICULTY);
 		Dimension dimension = world.getComponentHolder().getData().get(VanillaData.DIMENSION);
 		WorldType worldType = world.getComponentHolder().getData().get(VanillaData.WORLD_TYPE);
+		
+		//Use existing gamemode if we are not logging in
+		Human human = player.get(Human.class);
+		if (human != null && !first) {
+			gamemode = human.getGameMode();
+		}
 
 		//TODO Handle infinite height
 		int entityId = player.getId();
@@ -448,12 +453,13 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			player.getSession().send(false, new PlayerRespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
 		}
 
-		if (player.has(PlayerInventory.class)) {
-			player.get(PlayerInventory.class).updateAll();
+		PlayerInventory inv = player.get(PlayerInventory.class);
+		if (inv != null) {
+			inv.updateAll();
 		}
-		if (player.has(Human.class)) {
-			player.get(Human.class).setGamemode(gamemode, false); // Must be here because gamemode may be different; false because client is updated in next call
-			player.get(Human.class).updateAbilities();// TODO - this should probably do a permission check of some kind
+		if (human != null) {
+			human.setGamemode(gamemode, false); // Must be here because gamemode may be different; false because client is updated in next call
+			human.updateAbilities();
 		}
 		Point pos = world.getSpawnPoint().getPosition();
 		PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());

@@ -100,7 +100,7 @@ public class FallingBlock extends EntityComponent {
 	 * @param material
 	 * @return True if it obstructs further falling, False if not
 	 */
-	private boolean isFallingObstacle(BlockMaterial material) {
+	public static boolean isFallingObstacle(BlockMaterial material) {
 		if (material == BlockMaterial.AIR) {
 			return false;
 		}

@@ -41,6 +41,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.SolidMoving;
 import org.spout.vanilla.plugin.world.generator.nether.NetherGenerator;
 
 public class BlockPatchPopulator implements GeneratorPopulator {
@@ -73,7 +74,8 @@ public class BlockPatchPopulator implements GeneratorPopulator {
 		if (y < 0 || y >= NetherGenerator.HEIGHT) {
 			return;
 		}
-		final Random random = WorldGeneratorUtils.getRandom(seed, x, y, z, material.getId());
+		seed = WorldGeneratorUtils.getSeed(seed, 0, 0, 0, material.getId());
+		final Random random = WorldGeneratorUtils.getRandom(seed, x, y, z, 848441);
 		elevation.setSeed((int) (seed * 101));
 		shapeBase.setSeed((int) (seed * 313));
 		shape.setSeed((int) (seed * 661));
@@ -86,20 +88,18 @@ public class BlockPatchPopulator implements GeneratorPopulator {
 		final double[][] values = WorldGeneratorUtils.fastNoise(shape, sizeX, sizeZ, 4, x, 0, z);
 		for (int xx = 0; xx < sizeX; xx++) {
 			for (int zz = 0; zz < sizeZ; zz++) {
-				if (values[xx][zz] > 0.65) {
+				if (values[xx][zz] > 0.6) {
 					final int displacement = MathHelper.clamp((int) Math.ceil(displacements[xx][zz] * scale + scale), 0, sizeY - 1);
 					int yy = getHighestWorkableBlock(blockData, x + xx, y + displacement, z + zz);
 					if (yy == -1 || blockData.get(x + xx, yy + 1, z + zz) != VanillaMaterials.AIR) {
 						continue;
 					}
 					final int depth = random.nextInt(3) + 3;
-					for (int yyy = 0; yyy < depth; yyy++) {
-						if (blockData.get(x + xx, yy - yyy, z + zz) == VanillaMaterials.NETHERRACK) {
-							blockData.set(x + xx, yy - yyy, z + zz, material);
-						} else {
-							break;
-						}
+					int yyy = 0;
+					while (yyy < depth && blockData.get(x + xx, yy - yyy, z + zz).isMaterial(VanillaMaterials.NETHERRACK)) {
+						blockData.set(x + xx, yy - yyy++, z + zz, material);
 					}
+					SolidMoving.simulateFall(blockData, x + xx, yy - --yyy, z + zz, false);
 				}
 			}
 		}

@@ -139,17 +139,14 @@ public class DungeonObject extends RandomObject implements RandomizableObject {
 					continue;
 				}
 				byte adjacentSolidBlockCount = 0;
-				BlockFace wallFace = BlockFace.THIS;
 				for (final BlockFace face : BlockFaces.NESW) {
-					if (!middle.translate(face).getMaterial().isMaterial(VanillaMaterials.AIR)) {
-						wallFace = face;
+					if (middle.translate(face).getMaterial().isOpaque()) {
 						adjacentSolidBlockCount++;
 					}
 				}
 				if (adjacentSolidBlockCount != 1) {
 					continue;
 				}
-				chestObject.setRotation(wallFace.getDirection());
 				chestObject.placeObject(w, xx, y, zz);
 				chestCount++;
 				if (chestCount == maxNumberOfChests) {

@@ -114,12 +114,12 @@ public class MineshaftCorridor extends StructureComponent {
 			attachMaterial(0.95f, 1, 2, sectionZ + 1, VanillaMaterials.TORCH);
 			// loot
 			if (random.nextInt(100) == 0) {
-				final LootChestObject chest = new LootChestObject();
+				final LootChestObject chest = new LootChestObject(getRandom());
 				//TODO: give them proper loot
 				placeObject(2, 0, sectionZ - 1, chest);
 			}
 			if (random.nextInt(100) == 0) {
-				final LootChestObject chest = new LootChestObject();
+				final LootChestObject chest = new LootChestObject(getRandom());
 				//TODO: give them proper loot
 				placeObject(0, 0, sectionZ + 1, chest);
 			}

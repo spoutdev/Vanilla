@@ -31,16 +31,16 @@ import java.util.List;
 import java.util.Random;
 
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.plugin.component.substance.material.chest.Chest;
 import org.spout.vanilla.plugin.inventory.block.ChestInventory;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.world.generator.object.RotatableObject;
+import org.spout.vanilla.plugin.world.generator.object.RandomObject;
 
-public class LootChestObject extends RotatableObject {
+public class LootChestObject extends RandomObject {
 	private int maxNumberOfStacks = 8;
 	private final List<LootProbability> loot = new ArrayList<LootProbability>();
 	private double currentPMax = 0.0;
@@ -60,9 +60,9 @@ public class LootChestObject extends RotatableObject {
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
-		center = new Vector3(x, y, z);
-		setBlockMaterial(w, x, y, z, VanillaMaterials.CHEST, (short) 0);
-		final Chest chest = (Chest) getBlock(w, x, y, z).getComponent();
+		final Block block = w.getBlock(x, y, z);
+		VanillaMaterials.CHEST.onPlacement(block, (short) 0, null, null, false, null);
+		final Chest chest = (Chest) block.getComponent();
 		final ChestInventory inv = chest.getInventory();
 		for (int i = 0; i < getMaxNumberOfStacks(); i++) {
 			final int slot = random.nextInt(inv.size());

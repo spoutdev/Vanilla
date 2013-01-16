@@ -300,7 +300,6 @@ public class DesertTemple extends StructureComponent {
 		lootChest.setRandom(getRandom());
 		for (BlockFace face : BlockFaces.NSEW) {
 			final Vector3 chestPos = face.getOffset().multiply(2).add(10, -11, 10);
-			lootChest.setRotation(face.getDirection());
 			placeObject(chestPos.getFloorX(), chestPos.getFloorY(), chestPos.getFloorZ(), lootChest);
 		}
 	}

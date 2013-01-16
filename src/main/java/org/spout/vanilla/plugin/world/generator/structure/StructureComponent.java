@@ -43,7 +43,6 @@ import org.spout.vanilla.api.material.block.Attachable;
 import org.spout.vanilla.api.material.block.Directional;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Liquid;
-import org.spout.vanilla.plugin.world.generator.object.RotatableObject;
 
 public abstract class StructureComponent {
 	protected Structure parent;
@@ -151,9 +150,6 @@ public abstract class StructureComponent {
 	}
 
 	public void placeObject(int xx, int yy, int zz, WorldGeneratorObject object) {
-		if (object instanceof RotatableObject) {
-			((RotatableObject) object).addRotation(rotation);
-		}
 		final Vector3 transformed = transform(xx, yy, zz);
 		if (object.canPlaceObject(position.getWorld(), transformed.getFloorX(), transformed.getFloorY(), transformed.getFloorZ())) {
 			object.placeObject(position.getWorld(), transformed.getFloorX(), transformed.getFloorY(), transformed.getFloorZ());

@@ -81,7 +81,8 @@ import org.spout.api.event.player.PlayerEvent;
  */
 public class PlayerHeldItemChangeEvent extends PlayerEvent {
 	private static HandlerList handlers = new HandlerList();
-	private final int oldSlot, newSlot;
+	private final int oldSlot;
+	private int newSlot;
 
 	public PlayerHeldItemChangeEvent(Player p, int oldSlot, int newSlot) {
 		super(p);
@@ -103,6 +104,17 @@ public class PlayerHeldItemChangeEvent extends PlayerEvent {
 	 */
 	public int getNewSlot() {
 		return newSlot;
+	}
+
+	/**
+	 * Sets the new slot for the player to select. Values should be between 0 and 8.
+	 * @param slot index of the new selected slot.
+	 */
+	public void setNewSlot(int slot) {
+		if (slot < 0 || slot > 8) {
+			throw new IllegalArgumentException("Valid slots are 0-8");
+		}
+		this.newSlot = slot;
 	}
 
 	@Override

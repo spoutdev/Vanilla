@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.inventory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 
@@ -164,6 +165,7 @@ public class CraftingInventory extends Inventory {
 			}
 		}
 		RecipeManager recipeManager = Spout.getEngine().getRecipeManager();
+		Collections.reverse(materials);
 		Recipe recipe = recipeManager.matchShapedRecipe(materials);
 		if (recipe == null) {
 			recipe = recipeManager.matchShapelessRecipe(shapeless);

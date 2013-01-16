@@ -58,6 +58,11 @@ public class DefaultWindow extends Window {
 
 	@Override
 	public void close() {
+		PlayerInventory pInv =  getPlayerInventory();
+		//Disconnecting
+		if (pInv == null) {
+			return;
+		}
 		PlayerCraftingInventory inventory = getPlayerInventory().getCraftingGrid();
 		GridIterator iterator = inventory.getGrid().iterator();
 		while(iterator.hasNext()) {

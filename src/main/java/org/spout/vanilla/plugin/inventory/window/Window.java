@@ -338,7 +338,7 @@ public abstract class Window implements InventoryViewer {
 							}
 						}
 					}
-				} else {
+				} else if (inventory.canSet(slot, cursorItem)) {
 					debug("[Window] Materials don't match. Swapping stacks.");
 					// materials don't match
 					// swap stacks
@@ -743,7 +743,8 @@ public abstract class Window implements InventoryViewer {
 			case SERVER:
 				PlayerQuickbar quickbar = getPlayerInventory().getQuickbar();
 				debug("[Window] Slot changed: " + slot + " = " + item);
-				callProtocolEvent(new WindowSlotEvent(this, inventory, slots.revert(slot), item));
+				//callProtocolEvent(new WindowSlotEvent(this, inventory, slots.revert(slot), item));
+				reload();
 				// Update the held item
 				if (inventory instanceof PlayerQuickbar && slot == quickbar.getSelectedSlot().getIndex()) {
 					((PlayerQuickbar) inventory).updateHeldItem(getPlayer());

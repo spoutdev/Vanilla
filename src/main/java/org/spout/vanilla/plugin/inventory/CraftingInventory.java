@@ -94,11 +94,16 @@ public class CraftingInventory extends Inventory {
 
 	public boolean onShiftClick(int slot, PlayerInventory toInventory) {
 		ItemStack result = get(getOutputSlot());
+		Material resultMat = (result != null ? result.getMaterial() : null);
 		if (slot == outputSlot + offset && result != null) {
 			while(result != null && !result.isEmpty()) {
 				toInventory.add(result);
 				set(getOutputSlot(), null);
 				result = get(getOutputSlot());
+				//Changed recipes, stop!
+				if (result != null && !result.getMaterial().isMaterial(resultMat)) {
+					break;
+				}
 			}
 			return true;
 		}

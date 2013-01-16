@@ -31,35 +31,35 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.api.data.PaintingType;
 import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.protocol.entity.object.PaintingEntityProtocol;
 
 public class Painting extends EntityComponent {
-	private PaintingType type;
-	private BlockFace face;
 
 	@Override
 	public void onAttached() {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PaintingEntityProtocol());
+		getOwner().setSavable(true);
 	}
 
 	public PaintingType getType() {
-		return type;
+		return getOwner().getData().get(VanillaData.PAINTING_TYPE);
 	}
 
 	public void setType(PaintingType type) {
-		this.type = type;
+		getOwner().getData().put(VanillaData.PAINTING_TYPE, type);
 	}
 
 	public BlockFace getFace() {
-		return face;
+		return getOwner().getData().get(VanillaData.PAINTING_FACE);
 	}
 
 	public void setFace(BlockFace face) {
-		this.face = face;
+		getOwner().getData().put(VanillaData.PAINTING_FACE, face);
 	}
 
 	public int getNativeFace() {
-		return getNativeFace(face);
+		return getNativeFace(getFace());
 	}
 
 	public static int getNativeFace(BlockFace face) {

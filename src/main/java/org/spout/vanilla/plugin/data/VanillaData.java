@@ -33,12 +33,14 @@ import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyArray;
 import org.spout.api.map.DefaultedKeyFactory;
 import org.spout.api.map.DefaultedKeyImpl;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.data.Difficulty;
 import org.spout.vanilla.api.data.Dimension;
 import org.spout.vanilla.api.data.GameMode;
+import org.spout.vanilla.api.data.PaintingType;
 import org.spout.vanilla.api.data.Weather;
 import org.spout.vanilla.api.data.WorldType;
 import org.spout.vanilla.plugin.inventory.block.ChestInventory;
@@ -162,4 +164,7 @@ public class VanillaData {
 	public static final DefaultedKey<Intensity> STORM_INTENSITY = new DefaultedKeyImpl<Intensity>("storm_intensity", null);
 	public static final DefaultedKey<Float> CURRENT_LIGHTNING_STRENGTH = new DefaultedKeyImpl<Float>("current_lightning_strength", 0F);
 	public static final DefaultedKey<Float> PREVIOUS_LIGHTNING_STRENGTH = new DefaultedKeyImpl<Float>("previous_lightning_strength", 0F);
+	//Painting specific
+	public static final DefaultedKey<PaintingType> PAINTING_TYPE = new DefaultedKeyImpl<PaintingType>("painting_type", null);
+	public static final DefaultedKey<BlockFace> PAINTING_FACE = new DefaultedKeyImpl<BlockFace>("painting_face", null);
 }

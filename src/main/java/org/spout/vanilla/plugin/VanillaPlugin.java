@@ -110,9 +110,6 @@ public class VanillaPlugin extends CommonPlugin {
 
 	@Override
 	public void onEnable() {
-		//Config
-		config.load();
-
 		//Commands
 		final CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
 		final RootCommand root = engine.getRootCommand();
@@ -198,7 +195,10 @@ public class VanillaPlugin extends CommonPlugin {
 		//MapPalette.DEFAULT = (MapPalette) Spout.getFilesystem().getResource("mappalette://Vanilla/map/mapColorPalette.dat");
 		RecipeYaml.DEFAULT = (RecipeYaml) Spout.getFilesystem().getResource("recipe://Vanilla/recipes.yml");
 		VanillaRecipes.initialize();
-
+		
+		//Config
+		config.load();
+		
 		getLogger().info("loaded");
 	}
 

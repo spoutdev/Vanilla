@@ -213,11 +213,11 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				}
 			}
 		} else if (state == PlayerDiggingMessage.STATE_CANCEL_DIGGING) {
-			player.get(DiggingComponent.class).stopDigging(new Point(w, x, y, z), false);
+			player.get(DiggingComponent.class).stopDigging(new Point(w, x, y, z));
 		} else if (state == PlayerDiggingMessage.STATE_DONE_DIGGING) {
 			DiggingComponent diggingComponent = player.get(DiggingComponent.class);
 
-			if (!diggingComponent.stopDigging(new Point(w, x, y, z), true) || !isInteractable) {
+			if (!diggingComponent.stopDigging(new Point(w, x, y, z)) || !isInteractable) {
 				if (!diggingComponent.isDigging()) {
 					session.send(false, new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
 					if (block.getComponent() instanceof Sign) {

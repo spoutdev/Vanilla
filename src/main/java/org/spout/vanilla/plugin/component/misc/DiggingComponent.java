@@ -51,7 +51,6 @@ public class DiggingComponent extends EntityComponent {
 	protected int[] miningDamage;
 	private byte amount = 0;
 	private final byte maxAmount = 8;
-	private int blockBroken = 0;
 	private float timer = 0f, separator = 0f;
 
 	public boolean canTick() {
@@ -116,12 +115,9 @@ public class DiggingComponent extends EntityComponent {
 	 * 
 	 * @return true if successful
 	 */
-	public boolean stopDigging(Point position, boolean blockBreak) {
+	public boolean stopDigging(Point position) {
 		if (!isDigging) {
 			return false;
-		}
-		if (blockBreak) {
-			setBlockBroken(getBlockBroken() + 1);
 		}
 		previousDiggingTime = getDiggingTime();
 		isDigging = false;
@@ -187,13 +183,5 @@ public class DiggingComponent extends EntityComponent {
 			return false;
 		}
 		return true;
-	}
-
-	public int getBlockBroken() {
-		return blockBroken;
-	}
-
-	public void setBlockBroken(int blockBroken) {
-		this.blockBroken = blockBroken;
 	}
 }

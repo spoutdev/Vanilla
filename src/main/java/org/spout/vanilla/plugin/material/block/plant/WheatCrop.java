@@ -35,6 +35,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
+import org.spout.api.math.MathHelper;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.plugin.data.drops.flag.BlockFlags;
@@ -64,12 +65,12 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 	@Override
 	public void getBlockFlags(Block block, Set<Flag> flags) {
 		super.getBlockFlags(block, flags);
-		Random rand = new Random();
-		if (rand.nextInt(15) <= getGrowthStage(block)) {
-			flags.add(BlockFlags.SEEDS);
-		}
+		Random rand = MathHelper.getRandom();
 		if (this.isFullyGrown(block)) {
 			flags.add(BlockFlags.FULLY_GROWN);
+			flags.add(BlockFlags.SEEDS);
+		} else if (rand.nextInt(15) <= getGrowthStage(block)) {
+			flags.add(BlockFlags.SEEDS);
 		}
 	}
 

@@ -146,7 +146,6 @@ public class Furnace extends ViewedBlockComponent implements Container {
 			if (getSmeltTime() > 0) {
 				setSmeltTime(-1);
 				setMaxSmeltTime(-1);
-				setBurning(false);
 			}
 
 			// Try to light the furnace
@@ -158,17 +157,18 @@ public class Furnace extends ViewedBlockComponent implements Container {
 				setBurning(true);
 				return;
 			}
+			
+			setBurning(false);
 		}
-
 		// Burning
-		if (fuel > 0) {
+		else if (fuel > 0) {
+			setBurning(true);
 			pulseFuel(dt);
 			final float smeltTime = getSmeltTime();
 			if (smeltTime == -1) {
 				// Try to start smelting
 				if (inventory.hasIngredient()) {
 					if (!canSmelt()) {
-						setBurning(false);
 						return;
 					}
 					float newSmeltTime = ((TimedCraftable) inventory.getIngredient().getMaterial()).getCraftTime();
@@ -190,7 +190,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 				// Reset progress if ingredient is gone
 				if (!inventory.hasIngredient()) {
 					setSmeltTime(-1);
-					setBurning(false);
+					
 					return;
 				}
 				pulseSmeltTime(dt);

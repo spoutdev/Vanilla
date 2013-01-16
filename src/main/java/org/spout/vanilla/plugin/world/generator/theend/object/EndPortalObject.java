@@ -154,7 +154,6 @@ public class EndPortalObject extends WorldGeneratorObject {
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
-		System.out.println("PLACED AT " + x + " / " + y +  " / " + z);
 		Block origin = w.getBlock(x, y, z);
 
 		// Generate the frames

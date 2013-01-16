@@ -39,13 +39,13 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.liquid.Lava;
 import org.spout.vanilla.plugin.material.block.liquid.Water;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class EmptyBucket extends VanillaItemMaterial {
 	public EmptyBucket(String name, int id) {
@@ -78,8 +78,8 @@ public class EmptyBucket extends VanillaItemMaterial {
 				}
 			}
 
-			PlayerQuickbar quickbar = entity.get(PlayerInventory.class).getQuickbar();
-			Material filled; // material to fill the bucket with
+			// Validate the clicked material to see if it can be picked up
+			final Material filled; // material to fill the bucket with
 			if (mat instanceof Water && VanillaMaterials.WATER.isSource(block)) {
 				filled = VanillaMaterials.WATER_BUCKET;
 			} else if (mat instanceof Lava && VanillaMaterials.LAVA.isSource(block)) {
@@ -87,14 +87,21 @@ public class EmptyBucket extends VanillaItemMaterial {
 			} else {
 				return;
 			}
-			Cause<?> cause;
+
+			// Change item if applicable
+			Slot selected = PlayerUtil.getHeldSlot(entity);
+			if (selected != null && !PlayerUtil.isCostSuppressed(entity)) {
+				selected.set(new ItemStack(filled, 1));
+			}
+
+			// Change the clicked block to air
+			final Cause<?> cause;
 			if (entity instanceof Player) {
 				cause = new PlayerCause((Player) entity);
 			} else {
 				cause = new EntityCause(entity);
 			}
 			block.setMaterial(BlockMaterial.AIR, cause);
-			quickbar.set(quickbar.getSelectedSlot().getIndex(), new ItemStack(filled, 1));
 		}
 	}
 }

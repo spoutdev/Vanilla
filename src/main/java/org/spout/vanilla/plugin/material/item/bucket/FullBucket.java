@@ -36,8 +36,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.inventory.Slot;
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.liquid.Water;
 import org.spout.vanilla.plugin.material.item.BlockItem;
@@ -53,9 +51,9 @@ public class FullBucket extends BlockItem {
 	public void onInteract(Entity entity, Block block, Action type, BlockFace face) {
 		super.onInteract(entity, block, type, face);
 		if (type == Action.RIGHT_CLICK) {
-			PlayerQuickbar quickbar = entity.get(PlayerInventory.class).getQuickbar();
-			if (quickbar != null && !PlayerUtil.isCostSuppressed(entity)) {
-				quickbar.set(quickbar.getSelectedSlot().getIndex(), new ItemStack(VanillaMaterials.BUCKET, 1));
+			Slot inv = PlayerUtil.getHeldSlot(entity);
+			if (inv != null && !PlayerUtil.isCostSuppressed(entity)) {
+				inv.set(new ItemStack(VanillaMaterials.BUCKET, 1));
 			}
 		}
 	}

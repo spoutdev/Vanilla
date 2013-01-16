@@ -233,9 +233,6 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				int damageDone;
 				int totalDamage;
 
-				if (heldItem != null && heldItem.getMaterial() instanceof Tool) {
-					currentSlot.addData(((Tool) heldItem.getMaterial()).getDurabilityPenalty(heldItem));
-				}
 				if (heldItem == null) {
 					damageDone = ((int) diggingTicks * 1);
 				} else {
@@ -248,6 +245,16 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				if (totalDamage <= 40) { // Yes, this is a very high allowance - this is because this is only over a single block, and this will spike due to varying latency.
 					if (breakBlock(blockMaterial, block, human, session)) {
 						GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);
+						
+						if (heldItem != null && heldItem.getMaterial() instanceof Tool) {
+							Tool tool = (Tool) heldItem.getMaterial();
+							short damage = tool.getDurabilityPenalty(heldItem);
+							if (currentSlot.get().getData() + damage >= tool.getMaxDurability()) {
+								currentSlot.set(null);
+							} else {
+								currentSlot.addData(damage);
+							}
+						}
 					}
 				}
 			}

@@ -26,12 +26,15 @@
  */
 package org.spout.vanilla.plugin.world.generator.theend.object;
 
+import java.util.Random;
+
 import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
@@ -85,23 +88,28 @@ public class EndPortalObject extends WorldGeneratorObject {
 		return true;
 	}
 
-	private void setActive(Block origin, boolean active) {
-		BlockMaterial material;
-		if (active) {
-			material = VanillaMaterials.END_PORTAL;
-		} else {
-			material = VanillaMaterials.AIR;
-		}
-
-		// Activate or deactivate the portal
+	private void setRandomActive(Block origin, float chance) {
+		// Randomly set the ender eyes
+		Random random = MathHelper.getRandom();
+		boolean allactive = true;
 		int dx, dz;
-		// Set the portal blocks
-		for (dx = -1; dx <= 1; dx++) {
-			for (dz = -1; dz <= 1; dz++) {
-				origin.translate(dx, 0, dz).setMaterial(material);
+		boolean active;
+		for (dx = -2; dx <= 2; dx++) {
+			for (dz = -2; dz <= 2; dz++) {
+				// Ignore corner pieces
+				if (Math.abs(dx) == 2 && Math.abs(dz) == 2) {
+					continue;
+				}
+				allactive |= (active = random.nextFloat() <= chance);
+				VanillaMaterials.END_PORTAL_FRAME.setEyeOfTheEnder(origin.translate(dx, 0, dz), active);
 			}
 		}
+		setPortalActive(origin, allactive);
+	}
+
+	private void setEyesActive(Block origin, boolean active) {
 		// Set ender eyes
+		int dx, dz;
 		for (dx = -2; dx <= 2; dx++) {
 			for (dz = -2; dz <= 2; dz++) {
 				// Ignore corner pieces
@@ -113,11 +121,29 @@ public class EndPortalObject extends WorldGeneratorObject {
 		}
 	}
 
+	private void setPortalActive(Block origin, boolean active) {
+		BlockMaterial material;
+		if (active) {
+			material = VanillaMaterials.END_PORTAL;
+		} else {
+			material = VanillaMaterials.AIR;
+		}
+
+		// Set the portal blocks
+		int dx, dz;
+		for (dx = -1; dx <= 1; dx++) {
+			for (dz = -1; dz <= 1; dz++) {
+				origin.translate(dx, 0, dz).setMaterial(material);
+			}
+		}
+	}
+
 	public void setActive(World w, int x, int y, int z, boolean active) {
 		// No portal found
 		Block origin = getOrigin(w.getBlock(x, y, z));
 		if (origin != null && findFrame(origin, false)) {
-			setActive(origin, active);
+			setEyesActive(origin, active);
+			setPortalActive(origin, active);
 		}
 	}
 
@@ -126,7 +152,9 @@ public class EndPortalObject extends WorldGeneratorObject {
 		return origin != null && findFrame(origin, true);
 	}
 
-	public void placeObject(World w, int x, int y, int z, boolean active) {
+	@Override
+	public void placeObject(World w, int x, int y, int z) {
+		System.out.println("PLACED AT " + x + " / " + y +  " / " + z);
 		Block origin = w.getBlock(x, y, z);
 
 		// Generate the frames
@@ -139,8 +167,8 @@ public class EndPortalObject extends WorldGeneratorObject {
 			placeFrame(frame.translate(BlockFaces.NESW.next(face)), facing);
 		}
 
-		// Set the state of the portal
-		setActive(origin, active);
+		// Set to a random state
+		setRandomActive(origin, 0.1f);
 	}
 
 	@Override
@@ -155,10 +183,5 @@ public class EndPortalObject extends WorldGeneratorObject {
 			}
 		}
 		return true;
-	}
-
-	@Override
-	public void placeObject(World w, int x, int y, int z) {
-		placeObject(w, x, y, z, false);
 	}
 }

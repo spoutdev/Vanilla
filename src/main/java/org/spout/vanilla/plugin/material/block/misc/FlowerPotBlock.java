@@ -35,13 +35,13 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.api.material.InitializableMaterial;
-import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.material.block.plant.Sapling;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 
-public class FlowerPotBlock extends VanillaBlockMaterial implements InitializableMaterial {
+public class FlowerPotBlock extends GroundAttachable implements InitializableMaterial {
 	public static final FlowerPotBlock EMPTY = new FlowerPotBlock("Empty Flower Pot", VanillaMaterialModels.FLOWER_POT_EMPTY);
 	public static final FlowerPotBlock ROSE = new FlowerPotBlock("Rose Flower Pot", 1, VanillaMaterials.ROSE, VanillaMaterialModels.FLOWER_POT_ROSE);
 	public static final FlowerPotBlock DANDELION = new FlowerPotBlock("Dandelion Flower Pot", 2, VanillaMaterials.DANDELION, VanillaMaterialModels.FLOWER_POT_DANDELION);

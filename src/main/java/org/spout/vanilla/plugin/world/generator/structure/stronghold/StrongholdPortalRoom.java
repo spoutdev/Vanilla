@@ -28,12 +28,12 @@ package org.spout.vanilla.plugin.world.generator.structure.stronghold;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.object.VanillaObjects;
 import org.spout.vanilla.plugin.world.generator.structure.ComponentCuboidPart;
 import org.spout.vanilla.plugin.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.plugin.world.generator.structure.Structure;
@@ -117,19 +117,7 @@ public class StrongholdPortalRoom extends StructureComponent {
 			setBlockMaterial(i, 3, 6, VanillaMaterials.STAIRS_STONE_BRICK, (short) 2);
 		}
 		// Place the unlit portal
-		final Random random = getRandom();
-		setBlockMaterial(4, 3, 8, VanillaMaterials.END_PORTAL_FRAME, (short) (2 + (random.nextFloat() > 0.9 ? 4 : 0)));
-		setBlockMaterial(5, 3, 8, VanillaMaterials.END_PORTAL_FRAME, (short) (2 + (random.nextFloat() > 0.9 ? 4 : 0)));
-		setBlockMaterial(6, 3, 8, VanillaMaterials.END_PORTAL_FRAME, (short) (2 + (random.nextFloat() > 0.9 ? 4 : 0)));
-		setBlockMaterial(4, 3, 12, VanillaMaterials.END_PORTAL_FRAME, (short) (random.nextFloat() > 0.9 ? 4 : 0));
-		setBlockMaterial(5, 3, 12, VanillaMaterials.END_PORTAL_FRAME, (short) (random.nextFloat() > 0.9 ? 4 : 0));
-		setBlockMaterial(6, 3, 12, VanillaMaterials.END_PORTAL_FRAME, (short) (random.nextFloat() > 0.9 ? 4 : 0));
-		setBlockMaterial(3, 3, 9, VanillaMaterials.END_PORTAL_FRAME, (short) (3 + (random.nextFloat() > 0.9 ? 4 : 0)));
-		setBlockMaterial(3, 3, 10, VanillaMaterials.END_PORTAL_FRAME, (short) (3 + (random.nextFloat() > 0.9 ? 4 : 0)));
-		setBlockMaterial(3, 3, 11, VanillaMaterials.END_PORTAL_FRAME, (short) (3 + (random.nextFloat() > 0.9 ? 4 : 0)));
-		setBlockMaterial(7, 3, 9, VanillaMaterials.END_PORTAL_FRAME, (short) (1 + (random.nextFloat() > 0.9 ? 4 : 0)));
-		setBlockMaterial(7, 3, 10, VanillaMaterials.END_PORTAL_FRAME, (short) (1 + (random.nextFloat() > 0.9 ? 4 : 0)));
-		setBlockMaterial(7, 3, 11, VanillaMaterials.END_PORTAL_FRAME, (short) (1 + (random.nextFloat() > 0.9 ? 4 : 0)));
+		placeObject(5, 3, 10, VanillaObjects.THE_END_PORTAL);
 		// Place the mob spawner
 		setBlockMaterial(5, 3, 6, VanillaMaterials.MONSTER_SPAWNER);
 	}

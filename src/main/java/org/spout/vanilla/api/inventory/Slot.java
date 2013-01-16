@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.api.inventory;
 
+import java.io.Serializable;
+
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
@@ -33,7 +35,8 @@ import org.spout.api.inventory.ItemStack;
  * Wraps around an Inventory and slot index to provide simple getters and setters<br>
  * This is not an element of an inventory. It is just a wrapper. It does not contain an ItemStack itself.
  */
-public class Slot {
+public class Slot implements Serializable {
+	private static final long serialVersionUID = 5406867981064669422L;
 	private final Inventory inventory;
 	private final int index;
 
@@ -91,5 +94,17 @@ public class Slot {
 	 */
 	public boolean addData(int amount) {
 		return this.inventory.addData(this.index, amount);
+	}
+
+	/**
+	 * Attempts to add an item to the item of this Slot.
+	 * If the slot is empty, the slot is set to the new item.
+	 * Otherwise if the two items can stack, they are stacked.
+	 * The input item amount is modified upon adding
+	 * 
+	 * @param item to add
+	 */
+	public void add(ItemStack item) {
+		this.inventory.add(this.index, this.index, item);
 	}
 }

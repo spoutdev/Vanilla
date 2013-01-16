@@ -29,6 +29,7 @@ package org.spout.vanilla.plugin.inventory.block;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.api.material.Fuel;
 import org.spout.vanilla.api.material.TimedCraftable;
 
@@ -39,9 +40,25 @@ public class FurnaceInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
 	public static final int SIZE = 3;
 	public static final int OUTPUT_SLOT = 2, FUEL_SLOT = 0, INGREDIENT_SLOT = 1;
+	private final Slot fuel, ingredient, output;
 
 	public FurnaceInventory() {
 		super(SIZE);
+		this.fuel = new Slot(this, FUEL_SLOT);
+		this.ingredient = new Slot(this, INGREDIENT_SLOT);
+		this.output = new Slot(this, OUTPUT_SLOT);
+	}
+
+	public Slot getOutputSlot() {
+		return output;
+	}
+
+	public Slot getFuelSlot() {
+		return fuel;
+	}
+
+	public Slot getIngredientSlot() {
+		return ingredient;
 	}
 
 	public ItemStack getOutput() {

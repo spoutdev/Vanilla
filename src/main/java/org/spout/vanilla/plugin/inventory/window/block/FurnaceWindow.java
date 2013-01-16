@@ -27,8 +27,13 @@
 package org.spout.vanilla.plugin.inventory.window.block;
 
 import org.spout.api.entity.Player;
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
 import org.spout.api.math.Vector2;
 
+import org.spout.vanilla.api.material.Fuel;
+import org.spout.vanilla.api.material.TimedCraftable;
 import org.spout.vanilla.plugin.component.substance.material.Furnace;
 import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
@@ -54,6 +59,31 @@ public class FurnaceWindow extends Window {
 			furnace.close(getPlayer());
 		}
 		super.close();
+	}
+
+	@Override
+	public boolean onShiftClick(ItemStack stack, int slot, Inventory from) {
+		if (!(from instanceof FurnaceInventory)) {
+			final FurnaceInventory furnace = this.getFurnace().getInventory();
+			Material material = stack.getMaterial();
+			// Try to put the item into the furnace, fuel first (!)
+			if (material instanceof Fuel && ((Fuel) material).getFuelTime() > 0.0f) {
+				// Put into fuel slot
+				furnace.getFuelSlot().add(stack);
+				from.set(slot, stack);
+				if (stack.isEmpty()) {
+					return true;
+				}
+			} else if (material instanceof TimedCraftable) {
+				// Put into ingredient slot
+				furnace.getIngredientSlot().add(stack);
+				from.set(slot, stack);
+				if (stack.isEmpty()) {
+					return true;
+				}
+			}
+		}
+		return super.onShiftClick(stack, slot, from);
 	}
 
 	public Furnace getFurnace() {

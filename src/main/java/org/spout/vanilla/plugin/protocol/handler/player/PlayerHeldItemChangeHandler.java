@@ -64,10 +64,6 @@ public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeld
 		} else {
 			quickbar.setSelectedSlot(event.getNewSlot());
 			quickbar.updateHeldItem(player);
-			// Changed slot by event handler
-			if (event.getPreviousSlot() != event.getNewSlot()) {
-				player.getNetworkSynchronizer().callProtocolEvent(new PlayerSelectedSlotChangeEvent(session.getPlayer(), event.getNewSlot()));
-			}
 		}
 	}
 

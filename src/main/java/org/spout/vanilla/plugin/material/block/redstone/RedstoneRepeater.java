@@ -137,6 +137,25 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 		block.setDataField(TICK_DELAY_MASK, tickDelayIndex);
 	}
 
+	/**
+	 * Checks whether a redstone repeater block is locked by one or more powered repeaters powering the sides
+	 * 
+	 * @param block of the redstone repeater
+	 * @return True if locked, False if not
+	 */
+	public boolean isLocked(Block block) {
+		BlockFace[] faces = new BlockFace[2];
+		faces[1] = (faces[0] = BlockFaces.NESW.next(getFacing(block), 1)).getOpposite();
+		for (BlockFace face : faces) {
+			Block rel = block.translate(face);
+			BlockMaterial mat = rel.getMaterial();
+			if (mat instanceof RedstoneRepeater && ((RedstoneRepeater) mat).hasRedstonePowerTo(rel, face.getOpposite(), RedstonePowerMode.ALL)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	@Override
 	public BlockFace getFacing(Block block) {
 		return BlockFaces.ESWN.get(block.getDataField(DIRECTION_MASK));
@@ -169,8 +188,8 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 
 	@Override
 	public boolean isReceivingPower(Block block) {
-		BlockFace face = this.getFacing(block).getOpposite();
-		return RedstoneUtil.isEmittingPower(block.translate(face));
+		final BlockFace face = this.getFacing(block);
+		return RedstoneUtil.isEmittingPower(block.translate(face.getOpposite()), face);
 	}
 
 	@Override
@@ -180,6 +199,9 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 
 	@Override
 	public void onDynamicUpdate(Block block, long updateTime, int data) {
+		if (this.isLocked(block)) {
+			return;
+		}
 		boolean receiving = this.isReceivingPower(block);
 		if ((data & 1) == 1) {
 			// Was receiving and should power up

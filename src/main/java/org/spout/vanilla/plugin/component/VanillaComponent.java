@@ -24,33 +24,34 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.component.substance.object;
+package org.spout.vanilla.plugin.component;
 
-import org.spout.api.component.impl.PhysicsComponent;
-import org.spout.vanilla.plugin.component.VanillaComponent;
+import org.spout.api.component.type.EntityComponent;
+import org.spout.vanilla.plugin.data.VanillaData;
 
-public abstract class ObjectEntity extends VanillaComponent {
-	private PhysicsComponent physics;
+public class VanillaComponent extends EntityComponent {
 
 	@Override
 	public void onAttached() {
-		super.onAttached();
-		physics = getOwner().add(PhysicsComponent.class);
+		//Tracks the number of times this component has been attached (i.e how many times it's been saved, then loaded. 1 = fresh entity)
+		getOwner().getData().put(VanillaData.ATTACHED_COUNT, getAttachedCount() + 1);
 	}
-
-	public PhysicsComponent getPhysics() {
-		return physics;
+	
+	public boolean isStatic() {
+		return false;
 	}
-	//
-	//	@Override
-	//	public void onCollided(Point colliderPoint, Point collidedPoint, Block block) {
-	//		if (getPhysics() == null) {
-	//			return;
-	//		}
-	//		if (block.getMaterial() instanceof Solid) {
-	//			getPhysics().setDamping(1f, 1f);
-	//		} else if (block.getMaterial() instanceof Liquid) {
-	//			getPhysics().setDamping(0.8f, 0.8f);
-	//		}
-	//	}
+	
+	/**
+	 * A counter of how many times this component has been attached to an entity
+	 * <p/>
+	 * Values > 1 indicate how many times this component has been saved to disk,
+	 * and reloaded
+	 * <p/>
+	 * Values == 1 indicate a new component that has never been saved and loaded.
+	 * @return attached count
+	 */
+	public final int getAttachedCount() {
+		return getOwner().getData().get(VanillaData.ATTACHED_COUNT);
+	}
+	
 }

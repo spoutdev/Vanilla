@@ -31,11 +31,11 @@ import java.util.List;
 
 import org.spout.api.component.impl.NavigationComponent;
 import org.spout.api.component.impl.PhysicsComponent;
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.plugin.ai.VanillaBlockExaminer;
+import org.spout.vanilla.plugin.component.VanillaComponent;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.DrowningComponent;
 import org.spout.vanilla.plugin.component.misc.EffectsComponent;
@@ -46,7 +46,7 @@ import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.api.data.effect.StatusEffect;
 import org.spout.vanilla.plugin.event.entity.EntityMetaChangeEvent;
 
-public abstract class Living extends EntityComponent {
+public abstract class Living extends VanillaComponent {
 	private HeadComponent head;
 	private HealthComponent health;
 	private PhysicsComponent physics;
@@ -55,6 +55,7 @@ public abstract class Living extends EntityComponent {
 
 	@Override
 	public void onAttached() {
+		super.onAttached();
 		Entity holder = getOwner();
 		head = holder.add(HeadComponent.class);
 		health = holder.add(HealthComponent.class);
@@ -63,11 +64,7 @@ public abstract class Living extends EntityComponent {
 		navigation = holder.add(NavigationComponent.class);
 		holder.add(FireComponent.class);
 		navigation.setDefaultExaminers(new VanillaBlockExaminer());
-
 		holder.setSavable(true);
-
-		//Tracks the number of times this component has been attached (i.e how many times it's been saved, then loaded. 1 = fresh entity)
-		holder.getData().put(VanillaData.ATTACHED_COUNT, getAttachedCount() + 1);
 	}
 
 	public boolean isOnGround() {
@@ -76,19 +73,6 @@ public abstract class Living extends EntityComponent {
 
 	public void setOnGround(boolean onGround) {
 		getOwner().getData().put(VanillaData.IS_ON_GROUND, onGround);
-	}
-
-	/**
-	 * A counter of how many times this component has been attached to an entity
-	 * <p/>
-	 * Values > 1 indicate how many times this component has been saved to disk,
-	 * and reloaded
-	 * <p/>
-	 * Values == 1 indicate a new component that has never been saved and loaded.
-	 * @return attached count
-	 */
-	public final int getAttachedCount() {
-		return getOwner().getData().get(VanillaData.ATTACHED_COUNT);
 	}
 
 	public HeadComponent getHead() {

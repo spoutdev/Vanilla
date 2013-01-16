@@ -68,7 +68,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 	}
 
 	@Override
-	public final List<Message> getUpdateMessages(Entity entity, RepositionManager rm, boolean force) {
+	public List<Message> getUpdateMessages(Entity entity, RepositionManager rm, boolean force) {
 		// Movement
 		final Transform prevTransform = rm.convert(entity.getTransform().getTransform());
 		final Transform newTransform = rm.convert(entity.getTransform().getTransformLive());

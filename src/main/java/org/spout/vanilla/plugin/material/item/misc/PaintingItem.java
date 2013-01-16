@@ -53,12 +53,11 @@ public class PaintingItem extends VanillaItemMaterial {
 		}
 
 		World world = block.getWorld();
-		Entity e = world.createEntity(block.getPosition(), Painting.class);
 		PaintingType[] types = PaintingType.values();
 		PaintingType paintingType = types[random.nextInt(types.length - 1)];
 		BlockFace direction = face.getOpposite();
-
-		e.getTransform().setPosition(paintingType.getCenter(direction, block.getPosition()));
+		
+		Entity e = world.createEntity(block.getPosition(), Painting.class);
 		Painting painting = e.add(Painting.class);
 		painting.setType(paintingType);
 		painting.setFace(direction);

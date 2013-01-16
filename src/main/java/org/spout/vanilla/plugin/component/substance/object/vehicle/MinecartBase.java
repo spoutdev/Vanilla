@@ -50,12 +50,11 @@ public abstract class MinecartBase extends ObjectEntity {
 
 	@Override
 	public void onAttached() {
-		getOwner().getData().put(VanillaData.ATTACHED_COUNT, getAttachedCount() + 1);
+		super.onAttached();
 		if (getAttachedCount() == 1) {
 			getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.MINECART, 1));
 		}
 		getOwner().setSavable(true);
-		super.onAttached();
 	}
 
 	@Override
@@ -81,19 +80,6 @@ public abstract class MinecartBase extends ObjectEntity {
 
 			}
 		}
-	}
-
-	/**
-	 * A counter of how many times this component has been attached to an entity
-	 * <p/>
-	 * Values > 1 indicate how many times this component has been saved to disk, and reloaded
-	 * <p/>
-	 * Values == 1 indicate a new component that has never been saved and loaded.
-	 * 
-	 * @return attached count
-	 */
-	public final int getAttachedCount() {
-		return getOwner().getData().get(VanillaData.ATTACHED_COUNT);
 	}
 
 	protected void onDestroy() {

@@ -187,12 +187,13 @@ public class HungerComponent extends EntityComponent {
 					lastPos = pos; // Set the last position for next run
 				}
 
-				final boolean digging = getOwner().add(DiggingComponent.class).isDigging();
-
-				if (digging) {
-					// digging
+				final DiggingComponent diggingComponent = getOwner().add(DiggingComponent.class);
+				final int digging = diggingComponent.getBlockBroken();
+				for (int i = 0; i <= digging; i++) {
 					exhaustion += 0.025f;
 				}
+				
+				diggingComponent.setBlockBroken(0);
 
 				final float foodSaturation = getFoodSaturation();
 				if (exhaustion >= 4) {

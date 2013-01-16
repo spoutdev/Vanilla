@@ -98,7 +98,6 @@ public class EndPortalObject extends RandomObject {
 
 	private void setRandomActive(Block origin, float chance) {
 		// Randomly set the ender eyes
-		final Random random = this.getRandom();
 		boolean allactive = true;
 		int dx, dz;
 		boolean active;

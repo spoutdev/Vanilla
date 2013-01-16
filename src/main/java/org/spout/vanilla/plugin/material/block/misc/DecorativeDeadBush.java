@@ -24,49 +24,20 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.block.plant;
+package org.spout.vanilla.plugin.material.block.misc;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.api.material.InitializableMaterial;
-import org.spout.vanilla.api.material.block.Plant;
-import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
-public class DeadBush extends GroundAttachable implements Plant, InitializableMaterial {
-	protected DeadBush(String name, int id, short data, String model) {
-		super(data, name, id, model);
-	}
+public class DecorativeDeadBush extends GroundAttachable {
 
-	protected DeadBush(String name, int id, int data, DeadBush parent, String model) {
-		super(name, id, data, parent, model);
-	}
-
-	public DeadBush(String name, int id) {
+	public DecorativeDeadBush(String name, int id) {
 		super(name, id, VanillaMaterialModels.DEADGRASS);
-	}
-
-	public DeadBush(short dataMask, String name, int id) {
-		super(dataMask, name, id, VanillaMaterialModels.DEADGRASS);
-	}
-
-	public DeadBush(String name, int id, int data, VanillaBlockMaterial parent) {
-		super(name, id, data, parent, VanillaMaterialModels.DEADGRASS);
-	}
-
-	@Override
-	public void initialize() {
-		this.setLiquidObstacle(false);
-		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
-	}
-
-	@Override
-	public boolean canSupport(BlockMaterial mat, BlockFace face) {
-		return false;
+		this.setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}
 
 	@Override

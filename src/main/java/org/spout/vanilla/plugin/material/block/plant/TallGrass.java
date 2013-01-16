@@ -33,19 +33,22 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.api.material.Burnable;
+import org.spout.vanilla.api.material.InitializableMaterial;
+import org.spout.vanilla.api.material.block.Plant;
 import org.spout.vanilla.plugin.data.drops.SwitchDrops;
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.render.VanillaEffects;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
-public class TallGrass extends DeadBush implements Burnable {
+public final class TallGrass extends GroundAttachable implements Burnable, Plant, InitializableMaterial {
 	public static final TallGrass DEAD_GRASS = new TallGrass("Dead Grass", 31, VanillaMaterialModels.DEADGRASS);
 	public static final TallGrass TALL_GRASS = new TallGrass("Tall Grass", 1, DEAD_GRASS, VanillaMaterialModels.TALLGRASS);
 	public static final TallGrass FERN = new TallGrass("Fern", 2, DEAD_GRASS, VanillaMaterialModels.FERN);
 
 	private TallGrass(String name, int id, String model) {
-		super(name, id, (short) 0x0003, model);
+		super((short) 0x0003, name, id, model);
 	}
 
 	private TallGrass(String name, int data, TallGrass parent, String model) {
@@ -62,7 +65,7 @@ public class TallGrass extends DeadBush implements Burnable {
 
 	@Override
 	public void initialize() {
-		super.initialize();
+		setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();
 		SwitchDrops drops = getDrops().DEFAULT.clear().addSwitch(ToolTypeFlags.SHEARS);
 		drops.TRUE.add(this);
 		drops.FALSE.add(VanillaMaterials.SEEDS).setChance(0.15);
@@ -75,12 +78,12 @@ public class TallGrass extends DeadBush implements Burnable {
 
 	@Override
 	public int getBurnPower() {
-		return 60;
+		return (this == DEAD_GRASS) ? 0 : 60;
 	}
 
 	@Override
 	public int getCombustChance() {
-		return 100;
+		return (this == DEAD_GRASS) ? 0 : 100;
 	}
 
 	@Override
@@ -91,7 +94,11 @@ public class TallGrass extends DeadBush implements Burnable {
 	@Override
 	public boolean canAttachTo(Block block, BlockFace face) {
 		if (face == BlockFace.TOP) {
-			return block.isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FLOWER_POT_BLOCK);
+			if (this == DEAD_GRASS) {
+				return block.isMaterial(VanillaMaterials.SAND, VanillaMaterials.FLOWER_POT_BLOCK);
+			} else {
+				return block.isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FLOWER_POT_BLOCK);
+			}
 		}
 		return false;
 	}

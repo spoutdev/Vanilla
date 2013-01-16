@@ -47,7 +47,6 @@ import org.spout.api.gui.component.TexturedRectComponent;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
@@ -62,7 +61,6 @@ import org.spout.vanilla.plugin.event.window.WindowCloseEvent;
 import org.spout.vanilla.plugin.event.window.WindowItemsEvent;
 import org.spout.vanilla.plugin.event.window.WindowOpenEvent;
 import org.spout.vanilla.plugin.event.window.WindowPropertyEvent;
-import org.spout.vanilla.plugin.event.window.WindowSlotEvent;
 import org.spout.vanilla.plugin.inventory.CraftingInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
@@ -109,7 +107,6 @@ public abstract class Window implements InventoryViewer {
 	private static final float SCALE = 0.75f;
 
 	public Window(Player owner, WindowType type, String title, int offset) {
-		System.out.println("CONSTR");
 		this.owner = owner;
 		this.type = type;
 		this.title = title;

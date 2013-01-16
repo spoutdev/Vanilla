@@ -27,14 +27,20 @@
 package org.spout.vanilla.plugin.material.item.bucket;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
+import org.spout.api.event.Cause;
+import org.spout.api.event.cause.EntityCause;
+import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.liquid.Lava;
@@ -50,7 +56,28 @@ public class EmptyBucket extends VanillaItemMaterial {
 	@Override
 	public void onInteract(Entity entity, Block block, Action action, BlockFace clickedFace) {
 		if (action == Action.RIGHT_CLICK) {
-			BlockMaterial mat = block.getMaterial();
+			HeadComponent head = entity.get(HeadComponent.class);
+			if (head == null) {
+				return;
+			}
+			BlockMaterial mat;
+			BlockIterator iterator = head.getBlockView();
+			while(true) {
+				if (!iterator.hasNext()) {
+					return;
+				}
+				Block next = iterator.next();
+				mat = next.getMaterial();
+				if (mat instanceof Water && VanillaMaterials.WATER.isSource(block)) {
+					block = next;
+					break;
+				}
+				if (mat instanceof Lava && VanillaMaterials.LAVA.isSource(block)) {
+					block = next;
+					break;
+				}
+			}
+
 			PlayerQuickbar quickbar = entity.get(PlayerInventory.class).getQuickbar();
 			Material filled; // material to fill the bucket with
 			if (mat instanceof Water && VanillaMaterials.WATER.isSource(block)) {
@@ -60,8 +87,14 @@ public class EmptyBucket extends VanillaItemMaterial {
 			} else {
 				return;
 			}
-			quickbar.remove(quickbar.getSelectedSlot().getIndex());
-			quickbar.add(new ItemStack(filled, 1));
+			Cause<?> cause;
+			if (entity instanceof Player) {
+				cause = new PlayerCause((Player) entity);
+			} else {
+				cause = new EntityCause(entity);
+			}
+			block.setMaterial(BlockMaterial.AIR, cause);
+			quickbar.set(quickbar.getSelectedSlot().getIndex(), new ItemStack(filled, 1));
 		}
 	}
 }

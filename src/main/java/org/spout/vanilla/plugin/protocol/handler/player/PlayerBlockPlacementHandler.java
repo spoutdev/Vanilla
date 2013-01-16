@@ -250,7 +250,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				sound.playGlobal(placedBlock.getPosition(), 0.8f, 0.8f);
 
 				// Remove block from inventory
-				if (!PlayerUtil.isCostSuppressed(player)) {
+				if (!PlayerUtil.isCostSuppressed(player) && holdingMat == (currentSlot.get() != null ? currentSlot.get().getMaterial() : null)) {
 					currentSlot.addAmount(-1);
 				}
 			}

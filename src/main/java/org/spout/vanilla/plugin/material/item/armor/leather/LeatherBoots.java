@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.leather;
 
+import org.spout.api.math.Vector2;
 import org.spout.vanilla.api.material.item.armor.Boots;
 
 public class LeatherBoots extends LeatherArmor implements Boots {
 	public LeatherBoots(String name, int id, short durability) {
-		super(name, id, durability, null);
+		super(name, id, durability, new Vector2(0,3));
 		this.setBaseProtection(1);
 	}
 }

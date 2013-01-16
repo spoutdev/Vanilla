@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.chain;
 
+import org.spout.api.math.Vector2;
 import org.spout.vanilla.api.material.item.armor.Helmet;
 
 public class ChainHelmet extends ChainArmor implements Helmet {
 	public ChainHelmet(String name, int id, short durability) {
-		super(name, id, durability, null);
+		super(name, id, durability, new Vector2(1,0));
 		this.setBaseProtection(2);
 	}
 }

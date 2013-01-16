@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.gold;
 
+import org.spout.api.math.Vector2;
 import org.spout.vanilla.api.material.item.armor.Helmet;
 
 public class GoldHelmet extends GoldArmor implements Helmet {
 	public GoldHelmet(String name, int id, short durability) {
-		super(name, id, durability, null);
+		super(name, id, durability, new Vector2(4,0));
 		this.setBaseProtection(2);
 	}
 }

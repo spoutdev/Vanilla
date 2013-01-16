@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.diamond;
 
+import org.spout.api.math.Vector2;
 import org.spout.vanilla.api.material.item.armor.Boots;
 
 public class DiamondBoots extends DiamondArmor implements Boots {
 	public DiamondBoots(String name, int id, short durability) {
-		super(name, id, durability, null);
+		super(name, id, durability, new Vector2(3,3));
 		this.setBaseProtection(3);
 	}
 }

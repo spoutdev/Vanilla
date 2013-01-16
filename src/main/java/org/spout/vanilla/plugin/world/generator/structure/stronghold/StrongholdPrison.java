@@ -29,6 +29,7 @@ package org.spout.vanilla.plugin.world.generator.structure.stronghold;
 import java.util.Arrays;
 import java.util.List;
 
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 
@@ -86,10 +87,8 @@ public class StrongholdPrison extends StructureComponent {
 		setBlockMaterial(4, 3, 2, VanillaMaterials.IRON_BARS);
 		setBlockMaterial(4, 3, 8, VanillaMaterials.IRON_BARS);
 		// Add the cell doors
-		setBlockMaterial(4, 1, 2, VanillaMaterials.IRON_DOOR_BLOCK, (short) 0);
-		setBlockMaterial(4, 2, 2, VanillaMaterials.IRON_DOOR_BLOCK, (short) 8);
-		setBlockMaterial(4, 1, 8, VanillaMaterials.IRON_DOOR_BLOCK, (short) 0);
-		setBlockMaterial(4, 2, 8, VanillaMaterials.IRON_DOOR_BLOCK, (short) 8);
+		placeDoor(4, 1, 2, VanillaMaterials.IRON_DOOR_BLOCK, BlockFace.NORTH);
+		placeDoor(4, 1, 8, VanillaMaterials.IRON_DOOR_BLOCK, BlockFace.NORTH);
 	}
 
 	@Override

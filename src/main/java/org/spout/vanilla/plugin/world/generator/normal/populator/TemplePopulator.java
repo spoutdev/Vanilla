@@ -35,7 +35,7 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.plugin.world.generator.structure.temple.Temple;
 
 public class TemplePopulator extends Populator {
-	private static final short ODD = 400;
+	private static final short ODD = 800;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {

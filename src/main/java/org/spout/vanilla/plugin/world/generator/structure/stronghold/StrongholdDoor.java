@@ -28,6 +28,8 @@ package org.spout.vanilla.plugin.world.generator.structure.stronghold;
 
 import java.util.Random;
 
+import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.world.generator.structure.ComponentCuboidPart;
 import org.spout.vanilla.plugin.world.generator.structure.SimpleBlockMaterialPicker;
@@ -103,8 +105,7 @@ public abstract class StrongholdDoor {
 			parent.setBlockMaterial(xx + 2, yy + 2, zz, VanillaMaterials.STONE_BRICK);
 			parent.setBlockMaterial(xx + 2, yy + 1, zz, VanillaMaterials.STONE_BRICK);
 			parent.setBlockMaterial(xx + 2, yy, zz, VanillaMaterials.STONE_BRICK);
-			parent.setBlockMaterial(xx + 1, yy, zz, VanillaMaterials.WOODEN_DOOR_BLOCK, (short) 1);
-			parent.setBlockMaterial(xx + 1, yy + 1, zz, VanillaMaterials.WOODEN_DOOR_BLOCK, (short) 8);
+			parent.placeDoor(xx + 1, yy, zz, VanillaMaterials.WOODEN_DOOR_BLOCK, BlockFace.EAST);
 		}
 	}
 
@@ -122,8 +123,7 @@ public abstract class StrongholdDoor {
 			parent.setBlockMaterial(xx + 2, yy + 2, zz, VanillaMaterials.STONE_BRICK);
 			parent.setBlockMaterial(xx + 2, yy + 1, zz, VanillaMaterials.STONE_BRICK);
 			parent.setBlockMaterial(xx + 2, yy, zz, VanillaMaterials.STONE_BRICK);
-			parent.setBlockMaterial(xx + 1, yy, zz, VanillaMaterials.IRON_DOOR_BLOCK, (short) 1);
-			parent.setBlockMaterial(xx + 1, yy + 1, zz, VanillaMaterials.IRON_DOOR_BLOCK, (short) 8);
+			parent.placeDoor(xx + 1, yy, zz, VanillaMaterials.IRON_DOOR_BLOCK, BlockFace.EAST);
 			parent.setBlockMaterial(xx + 2, yy + 1, zz + 1, VanillaMaterials.STONE_BUTTON, (short) 3);
 			parent.setBlockMaterial(xx + 2, yy + 1, zz - 1, VanillaMaterials.STONE_BUTTON, (short) 4);
 		}

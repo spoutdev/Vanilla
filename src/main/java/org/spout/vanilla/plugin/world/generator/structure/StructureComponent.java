@@ -42,6 +42,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.api.material.block.Attachable;
 import org.spout.vanilla.api.material.block.Directional;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.DoorBlock;
 import org.spout.vanilla.plugin.material.block.Liquid;
 
 public abstract class StructureComponent {
@@ -124,11 +125,10 @@ public abstract class StructureComponent {
 	}
 
 	public void attachMaterial(int xx, int yy, int zz, Attachable attachable) {
+		final Block block = getBlock(xx, yy, zz);
 		for (BlockFace face : BlockFaces.BTNSWE) {
-			final Vector3 offset = face.getOffset();
-			final Block to = getBlock(xx + offset.getFloorX(), yy + offset.getFloorY(), zz + offset.getFloorZ());
-			if (attachable.canAttachTo(to, face.getOpposite())) {
-				final Block block = getBlock(xx, yy, zz);
+			final Block adjacent = block.translate(face);
+			if (attachable.canAttachTo(adjacent, face.getOpposite())) {
 				block.setMaterial((BlockMaterial) attachable);
 				attachable.setAttachedFace(block, face, null);
 			}
@@ -154,6 +154,12 @@ public abstract class StructureComponent {
 		if (object.canPlaceObject(position.getWorld(), transformed.getFloorX(), transformed.getFloorY(), transformed.getFloorZ())) {
 			object.placeObject(position.getWorld(), transformed.getFloorX(), transformed.getFloorY(), transformed.getFloorZ());
 		}
+	}
+
+	public void placeDoor(int xx, int yy, int zz, DoorBlock door, BlockFace facing) {
+		final Block bottom = getBlock(xx, yy, zz);
+		door.create(getBlock(xx, yy, zz), bottom.translate(BlockFace.TOP),
+				BlockFace.fromYaw(facing.getDirection().getYaw() + rotation.getYaw()), false, false);
 	}
 
 	protected Vector3 transform(int x, int y, int z) {

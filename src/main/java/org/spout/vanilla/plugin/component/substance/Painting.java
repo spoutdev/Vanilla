@@ -26,12 +26,21 @@
  */
 package org.spout.vanilla.plugin.component.substance;
 
+import java.util.List;
+
 import org.spout.api.component.type.EntityComponent;
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.api.data.PaintingType;
 import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.object.PaintingEntityProtocol;
 
 public class Painting extends EntityComponent {
@@ -39,9 +48,27 @@ public class Painting extends EntityComponent {
 	@Override
 	public void onAttached() {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PaintingEntityProtocol());
+		getOwner().getData().put(VanillaData.ATTACHED_COUNT, getAttachedCount() + 1);
+		if (getAttachedCount() == 1) {
+			getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.PAINTING, 1));
+		}
 		getOwner().setSavable(true);
+		super.onAttached();
 	}
 
+	/**
+	 * A counter of how many times this component has been attached to an entity
+	 * <p/>
+	 * Values > 1 indicate how many times this component has been saved to disk, and reloaded
+	 * <p/>
+	 * Values == 1 indicate a new component that has never been saved and loaded.
+	 * 
+	 * @return attached count
+	 */
+	public final int getAttachedCount() {
+		return getOwner().getData().get(VanillaData.ATTACHED_COUNT);
+	}
+	
 	public PaintingType getType() {
 		return getOwner().getData().get(VanillaData.PAINTING_TYPE);
 	}
@@ -75,5 +102,27 @@ public class Painting extends EntityComponent {
 			default:
 				return -1;
 		}
+	}
+	
+	@Override
+	public void onInteract(Action action, Entity source) {
+		if (!(source instanceof Player)) {
+			return;
+		}
+		
+		if (Action.LEFT_CLICK.equals(action)) {
+			destroy();
+		}
+	}
+	
+	private void destroy() {
+		List<ItemStack> drops = getOwner().get(DropComponent.class).getDrops();
+		Point entityPosition = getOwner().getTransform().getPosition();
+		for (ItemStack stack : drops) {
+			if (stack != null) {
+				Item.dropNaturally(entityPosition, stack);
+			}
+		}
+		getOwner().remove();
 	}
 }

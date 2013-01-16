@@ -29,6 +29,7 @@ package org.spout.vanilla.plugin.material.block.misc;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
@@ -37,33 +38,53 @@ import org.spout.vanilla.api.material.InitializableMaterial;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.plant.Sapling;
+import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class FlowerPotBlock extends VanillaBlockMaterial implements InitializableMaterial {
-	public static final FlowerPotBlock EMPTY = new FlowerPotBlock("Empty Flower Pot");
-	public static final FlowerPotBlock ROSE = new FlowerPotBlock("Rose Flower Pot", 1);
-	public static final FlowerPotBlock DANDELION = new FlowerPotBlock("Dandelion Flower Pot", 2);
-	public static final FlowerPotBlock OAK_SAPLING = new FlowerPotBlock("Oak Sapling Flower Pot", 3);
-	public static final FlowerPotBlock SPRUCE_SAPLING = new FlowerPotBlock("Spruce Sapling Flower Pot", 4);
-	public static final FlowerPotBlock BIRCH_SAPLING = new FlowerPotBlock("Birch Sapling Flower Pot", 5);
-	public static final FlowerPotBlock JUNGLE_TREE_SAPLING = new FlowerPotBlock("Jungle Tree Sapling Flower Pot", 6);
-	public static final FlowerPotBlock RED_MUSHROOM = new FlowerPotBlock("Red Mushroom Flower Pot", 7);
-	public static final FlowerPotBlock BROWN_MUSHROOM = new FlowerPotBlock("Brown Mushroom Flower Pot", 8);
-	public static final FlowerPotBlock CACTUS = new FlowerPotBlock("Cactus Flower Pot", 9);
-	public static final FlowerPotBlock DEAD_BUSH = new FlowerPotBlock("Dead Bush Flower Pot", 10);
-	public static final FlowerPotBlock FERN = new FlowerPotBlock("Fern Flower Pot", 11);
+	public static final FlowerPotBlock EMPTY = new FlowerPotBlock("Empty Flower Pot", VanillaMaterialModels.FLOWER_POT_EMPTY);
+	public static final FlowerPotBlock ROSE = new FlowerPotBlock("Rose Flower Pot", 1, VanillaMaterials.ROSE, VanillaMaterialModels.FLOWER_POT_ROSE);
+	public static final FlowerPotBlock DANDELION = new FlowerPotBlock("Dandelion Flower Pot", 2, VanillaMaterials.DANDELION, VanillaMaterialModels.FLOWER_POT_DANDELION);
+	public static final FlowerPotBlock OAK_SAPLING = new FlowerPotBlock("Oak Sapling Flower Pot", 3, Sapling.DEFAULT, VanillaMaterialModels.FLOWER_POT_OAK_SAPLING);
+	public static final FlowerPotBlock SPRUCE_SAPLING = new FlowerPotBlock("Spruce Sapling Flower Pot", 4, Sapling.SPRUCE, VanillaMaterialModels.FLOWER_POT_SPRUCE_SAPLING);
+	public static final FlowerPotBlock BIRCH_SAPLING = new FlowerPotBlock("Birch Sapling Flower Pot", 5, Sapling.BIRCH, VanillaMaterialModels.FLOWER_POT_BIRCH_SAPLING);
+	public static final FlowerPotBlock JUNGLE_SAPLING = new FlowerPotBlock("Jungle Tree Sapling Flower Pot", 6, Sapling.JUNGLE, VanillaMaterialModels.FLOWER_POT_JUNGLE_SAPLING);
+	public static final FlowerPotBlock RED_MUSHROOM = new FlowerPotBlock("Red Mushroom Flower Pot", 7, VanillaMaterials.RED_MUSHROOM, VanillaMaterialModels.FLOWER_POT_RED_MUSHROOM);
+	public static final FlowerPotBlock BROWN_MUSHROOM = new FlowerPotBlock("Brown Mushroom Flower Pot", 8, VanillaMaterials.BROWN_MUSHROOM, VanillaMaterialModels.FLOWER_POT_BROWN_MUSHROOM);
+	public static final FlowerPotBlock CACTUS = new FlowerPotBlock("Cactus Flower Pot", 9, VanillaMaterials.CACTUS, VanillaMaterialModels.FLOWER_POT_CACTUS);
+	public static final FlowerPotBlock DEAD_BUSH = new FlowerPotBlock("Dead Bush Flower Pot", 10, VanillaMaterials.DEAD_BUSH, VanillaMaterialModels.FLOWER_POT_DEAD_BUSH);
+	public static final FlowerPotBlock FERN = new FlowerPotBlock("Fern Flower Pot", 11, VanillaMaterials.FERN, VanillaMaterialModels.FLOWER_POT_FERN);
+	private final BlockMaterial flowerMaterial;
 
-	private FlowerPotBlock(String name) {
-		super((short) 0xF, name, 140, null);
+	private FlowerPotBlock(String name, String model) {
+		super((short) 0xF, name, 140, model);
 		setHardness(0.0f).setResistance(0.0f).setTransparent();
+		this.flowerMaterial = null;
 	}
 
-	private FlowerPotBlock(String name, int data) {
-		super(name, 140, data, EMPTY, null);
+	private FlowerPotBlock(String name, int data, BlockMaterial flowerMaterial, String model) {
+		super(name, 140, data, EMPTY, model);
 		setHardness(0.0f).setResistance(0.0f).setTransparent();
+		this.flowerMaterial = flowerMaterial;
 	}
 
-	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedFace) {
+	/**
+	 * Obtains the Flower Pot Block material for the flower material specified
+	 * 
+	 * @param flowerMaterial to get the flower pot for
+	 * @return The flower pot block of the flower, or null if none is found
+	 */
+	public FlowerPotBlock getForFlower(Material flowerMaterial) {
+		for (Material material : EMPTY.getSubMaterials()) {
+			if (material instanceof FlowerPotBlock && flowerMaterial.isMaterial(((FlowerPotBlock) material).flowerMaterial)) {
+				return (FlowerPotBlock) material;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteract(entity, block, type, clickedFace);
 		if (type != Action.RIGHT_CLICK) {
 			return;
@@ -72,35 +93,14 @@ public class FlowerPotBlock extends VanillaBlockMaterial implements Initializabl
 		if (selected == null || selected.get() == null) {
 			return;
 		}
-		Material held = selected.get().getMaterial();
-		int data;
-		if (held == VanillaMaterials.ROSE) {
-			data = 1;
-		} else if (held == VanillaMaterials.DANDELION) {
-			data = 2;
-		} else if (held == Sapling.DEFAULT) {
-			data = 3;
-		} else if (held == Sapling.SPRUCE) {
-			data = 4;
-		} else if (held == Sapling.BIRCH) {
-			data = 5;
-		} else if (held == Sapling.JUNGLE) {
-			data = 6;
-		} else if (held == VanillaMaterials.RED_MUSHROOM) {
-			data = 7;
-		} else if (held == VanillaMaterials.BROWN_MUSHROOM) {
-			data = 8;
-		} else if (held == VanillaMaterials.CACTUS) {
-			data = 9;
-		} else if (held == VanillaMaterials.DEAD_BUSH) {
-			data = 10;
-		} else if (held == VanillaMaterials.TALL_GRASS) {
-			data = 11;
-		} else {
+		FlowerPotBlock material = getForFlower(selected.get().getMaterial());
+		if (material == null) {
 			return;
 		}
-		block.setData(data);
-		selected.addAmount(-1);
+		block.setMaterial(material);
+		if (!PlayerUtil.isCostSuppressed(entity)) {
+			selected.addAmount(-1);
+		}
 	}
 
 	@Override

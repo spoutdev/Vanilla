@@ -43,7 +43,7 @@ public class Flower extends GroundAttachable implements Plant {
 	@Override
 	public boolean canAttachTo(Block block, BlockFace face) {
 		if (super.canAttachTo(block, face)) {
-			return block.isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FARMLAND, VanillaMaterials.FLOWER_POT_BLOCK);
+			return block.isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FARMLAND);
 		}
 		return false;
 	}

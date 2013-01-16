@@ -394,10 +394,10 @@ public final class VanillaMaterials {
 	public static final CocoaPlant COCOA_PLANT = new CocoaPlant("Cocoa Plant", 127);
 	public static final CommandBlock COMMAND_BLOCK = new CommandBlock("Command Block", 137);
 	public static final BeaconBlock BEACON_BLOCK = new BeaconBlock("Beacon Block", 138);
-	public static final FlowerPotBlock FLOWER_POT_BLOCK = FlowerPotBlock.EMPTY;
 	public static final Carrots CARROTS = new Carrots("Carrots", 141);
 	public static final Potatoes POTATOES = new Potatoes("Potatoes", 142);
 	public static final WoodButton WOOD_BUTTON = new WoodButton("Wood Button", 143);
+	public static final FlowerPotBlock FLOWER_POT_BLOCK = FlowerPotBlock.EMPTY;
 	public static final SkullBlock SKELETON_SKULL_BLOCK = SkullBlock.SKELETON_SKULL;
 	public static final AnvilBlock ANVIL = new AnvilBlock("Anvil", 145); // Anvil actually has 3 states, handled by data.
 	/*

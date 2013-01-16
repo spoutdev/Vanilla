@@ -58,7 +58,7 @@ public class EndPortalObject extends WorldGeneratorObject {
 		}
 		BlockFace facing = VanillaMaterials.END_PORTAL_FRAME.getFacing(frameBlock);
 		// Rotates the facing 90 degrees to the left
-		BlockFace lookDirection = BlockFaces.NESW.next(facing, -1);
+		BlockFace lookDirection = BlockFaces.NESW.previous(facing);
 		// Get the corner piece
 		Block corner = frameBlock;
 		for (int i = 0; i < 4 && isEndFrame(corner, facing, false); i++) {
@@ -75,10 +75,10 @@ public class EndPortalObject extends WorldGeneratorObject {
 			if (!isEndFrame(frame, facing, withEnderEye)) {
 				return false;
 			}
-			if (!isEndFrame(frame.translate(BlockFaces.NESW.previous(face, 1)), facing, withEnderEye)) {
+			if (!isEndFrame(frame.translate(BlockFaces.NESW.previous(face)), facing, withEnderEye)) {
 				return false;
 			}
-			if (!isEndFrame(frame.translate(BlockFaces.NESW.next(face, 1)), facing, withEnderEye)) {
+			if (!isEndFrame(frame.translate(BlockFaces.NESW.next(face)), facing, withEnderEye)) {
 				return false;
 			}
 		}
@@ -135,8 +135,8 @@ public class EndPortalObject extends WorldGeneratorObject {
 			BlockFace facing = face.getOpposite();
 			// Place the three pieces
 			placeFrame(frame, facing);
-			placeFrame(frame.translate(BlockFaces.NESW.previous(face, 1)), facing);
-			placeFrame(frame.translate(BlockFaces.NESW.next(face, 1)), facing);
+			placeFrame(frame.translate(BlockFaces.NESW.previous(face)), facing);
+			placeFrame(frame.translate(BlockFaces.NESW.next(face)), facing);
 		}
 
 		// Set the state of the portal

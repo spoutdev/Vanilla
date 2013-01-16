@@ -289,8 +289,8 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 				this.setFaceAttached(block, spreadDirection, true);
 			} else {
 				Block neigh = block.translate(spreadDirection);
-				BlockFace left = BlockFaces.NESW.previous(spreadDirection, 1);
-				BlockFace right = BlockFaces.NESW.next(spreadDirection, 1);
+				BlockFace left = BlockFaces.NESW.previous(spreadDirection);
+				BlockFace right = BlockFaces.NESW.next(spreadDirection);
 
 				// attach relative left
 				if (this.isAttachedTo(block, left)) {

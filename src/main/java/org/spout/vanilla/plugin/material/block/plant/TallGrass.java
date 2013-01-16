@@ -95,9 +95,9 @@ public final class TallGrass extends GroundAttachable implements Burnable, Plant
 	public boolean canAttachTo(Block block, BlockFace face) {
 		if (face == BlockFace.TOP) {
 			if (this == DEAD_GRASS) {
-				return block.isMaterial(VanillaMaterials.SAND, VanillaMaterials.FLOWER_POT_BLOCK);
+				return block.isMaterial(VanillaMaterials.SAND);
 			} else {
-				return block.isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FLOWER_POT_BLOCK);
+				return block.isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT);
 			}
 		}
 		return false;

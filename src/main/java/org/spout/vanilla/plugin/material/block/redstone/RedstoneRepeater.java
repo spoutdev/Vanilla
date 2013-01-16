@@ -145,7 +145,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 	 */
 	public boolean isLocked(Block block) {
 		BlockFace[] faces = new BlockFace[2];
-		faces[1] = (faces[0] = BlockFaces.NESW.next(getFacing(block), 1)).getOpposite();
+		faces[1] = (faces[0] = BlockFaces.NESW.next(getFacing(block))).getOpposite();
 		for (BlockFace face : faces) {
 			Block rel = block.translate(face);
 			BlockMaterial mat = rel.getMaterial();

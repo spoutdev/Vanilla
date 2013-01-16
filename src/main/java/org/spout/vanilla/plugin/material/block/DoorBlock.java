@@ -181,8 +181,8 @@ public abstract class DoorBlock extends GroundAttachable implements Directional,
 	public void onPlacement(Block block, short data, BlockFace face, Vector3 clickedPos, boolean isClicked, Cause<?> cause) {
 		BlockFace facing = PlayerUtil.getFacing(cause).getOpposite();
 		Block above = block.translate(BlockFace.TOP);
-		Block left = block.translate(BlockFaces.NESW.previous(facing, 1));
-		Block right = block.translate(BlockFaces.NESW.next(facing, 1));
+		Block left = block.translate(BlockFaces.NESW.previous(facing));
+		Block right = block.translate(BlockFaces.NESW.next(facing));
 		boolean hingeLeft = isDoorBlock(right) || (!isDoorBlock(left) && !isHingeBlock(right) && isHingeBlock(left));
 		create(block, above, facing, hingeLeft, false);
 	}

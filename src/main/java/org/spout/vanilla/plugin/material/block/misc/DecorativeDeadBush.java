@@ -48,7 +48,7 @@ public class DecorativeDeadBush extends GroundAttachable {
 	@Override
 	public boolean canAttachTo(Block block, BlockFace face) {
 		if (super.canAttachTo(block, face)) {
-			return block.isMaterial(VanillaMaterials.SAND, VanillaMaterials.FLOWER_POT_BLOCK);
+			return block.isMaterial(VanillaMaterials.SAND);
 		}
 		return false;
 	}

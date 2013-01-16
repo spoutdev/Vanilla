@@ -68,7 +68,7 @@ public class Cactus extends StackGrowingBase implements TimedCraftable {
 	@Override
 	public boolean canAttachTo(Block block, BlockFace face) {
 		if (super.canAttachTo(block, face)) {
-			return block.isMaterial(VanillaMaterials.SAND, VanillaMaterials.CACTUS, VanillaMaterials.FLOWER_POT_BLOCK);
+			return block.isMaterial(VanillaMaterials.SAND, VanillaMaterials.CACTUS);
 		}
 		return false;
 	}

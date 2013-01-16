@@ -55,7 +55,6 @@ public class VanillaMaterialModels {
 	public static final String FARM_LAND = "model://Vanilla/materials/block/solid/farmland/farmland.spm";
 	public static final String FENCE_GATE = null;
 	public static final String FIRE = null;
-	public static final String FLOWER_POT = null;
 	public static final String GLASS_PANE = null;
 	public static final String LADDER = null;
 	public static final String LEVER = null;
@@ -184,4 +183,17 @@ public class VanillaMaterialModels {
 	public static final String SNOW_6 = "model://Vanilla/materials/block/nonsolid/snow/snow_6.spm";
 	public static final String SNOW_7 = "model://Vanilla/materials/block/nonsolid/snow/snow_7.spm";
 	public static final String SNOW_BLOCK = "model://Vanilla/materials/block/solid/snowblock/snowblock.spm";
+	// Flower pot
+	public static final String FLOWER_POT_EMPTY = null;
+	public static final String FLOWER_POT_ROSE = null;
+	public static final String FLOWER_POT_DANDELION = null;
+	public static final String FLOWER_POT_OAK_SAPLING = null;
+	public static final String FLOWER_POT_SPRUCE_SAPLING = null;
+	public static final String FLOWER_POT_BIRCH_SAPLING = null;
+	public static final String FLOWER_POT_JUNGLE_SAPLING = null;
+	public static final String FLOWER_POT_RED_MUSHROOM = null;
+	public static final String FLOWER_POT_BROWN_MUSHROOM = null;
+	public static final String FLOWER_POT_CACTUS = null;
+	public static final String FLOWER_POT_DEAD_BUSH = null;
+	public static final String FLOWER_POT_FERN = null;
 }

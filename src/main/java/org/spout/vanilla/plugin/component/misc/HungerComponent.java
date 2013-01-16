@@ -189,7 +189,7 @@ public class HungerComponent extends EntityComponent {
 
 				final DiggingComponent diggingComponent = getOwner().add(DiggingComponent.class);
 				final int digging = diggingComponent.getBlockBroken();
-				for (int i = 0; i <= digging; i++) {
+				for (int i = 0; i < digging; i++) {
 					exhaustion += 0.025f;
 				}
 				

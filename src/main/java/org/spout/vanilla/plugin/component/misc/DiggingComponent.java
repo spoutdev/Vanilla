@@ -59,7 +59,7 @@ public class DiggingComponent extends EntityComponent {
 
 	public void onTick(float dt) {
 		if (timer >= separator) {
-			getOwner().getNetwork().callProtocolEvent(new BlockBreakAnimationEvent(getOwner(), diggingPosition, (byte) amount++));
+			getOwner().getNetwork().callProtocolEvent(new BlockBreakAnimationEvent(getOwner(), diggingPosition, (byte) amount++), true);
 			timer = 0;
 		}
 		timer += dt;

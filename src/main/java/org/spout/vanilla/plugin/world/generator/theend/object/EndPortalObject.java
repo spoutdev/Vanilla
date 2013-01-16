@@ -28,17 +28,17 @@ package org.spout.vanilla.plugin.world.generator.theend.object;
 
 import java.util.Random;
 
-import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.object.RandomObject;
 
-public class EndPortalObject extends WorldGeneratorObject {
+public class EndPortalObject extends RandomObject {
+
 	private static boolean isEndFrame(Block block, BlockFace facing, boolean withEnderEye) {
 		return (block.isMaterial(VanillaMaterials.END_PORTAL_FRAME) &&
 				VanillaMaterials.END_PORTAL_FRAME.getFacing(block) == facing) &&
@@ -48,6 +48,14 @@ public class EndPortalObject extends WorldGeneratorObject {
 	private static void placeFrame(Block block, BlockFace facing) {
 		block.setMaterial(VanillaMaterials.END_PORTAL_FRAME);
 		VanillaMaterials.END_PORTAL_FRAME.setFacing(block, facing);
+	}
+
+	public EndPortalObject() {
+		super();
+	}
+
+	public EndPortalObject(Random random) {
+		super(random);
 	}
 
 	/**
@@ -90,7 +98,7 @@ public class EndPortalObject extends WorldGeneratorObject {
 
 	private void setRandomActive(Block origin, float chance) {
 		// Randomly set the ender eyes
-		Random random = MathHelper.getRandom();
+		final Random random = this.getRandom();
 		boolean allactive = true;
 		int dx, dz;
 		boolean active;

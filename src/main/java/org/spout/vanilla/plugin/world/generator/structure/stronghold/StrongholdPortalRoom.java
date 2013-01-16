@@ -39,6 +39,7 @@ import org.spout.vanilla.plugin.world.generator.structure.SimpleBlockMaterialPic
 import org.spout.vanilla.plugin.world.generator.structure.Structure;
 import org.spout.vanilla.plugin.world.generator.structure.StructureComponent;
 import org.spout.vanilla.plugin.world.generator.structure.stronghold.StrongholdDoor.IronFenceDoor;
+import org.spout.vanilla.plugin.world.generator.theend.object.EndPortalObject;
 
 public class StrongholdPortalRoom extends StructureComponent {
 	public StrongholdPortalRoom(Structure parent) {
@@ -117,7 +118,7 @@ public class StrongholdPortalRoom extends StructureComponent {
 			setBlockMaterial(i, 3, 6, VanillaMaterials.STAIRS_STONE_BRICK, (short) 2);
 		}
 		// Place the unlit portal
-		placeObject(5, 3, 10, VanillaObjects.THE_END_PORTAL);
+		placeObject(5, 3, 10, new EndPortalObject(getRandom()));
 		// Place the mob spawner
 		setBlockMaterial(5, 3, 6, VanillaMaterials.MONSTER_SPAWNER);
 	}

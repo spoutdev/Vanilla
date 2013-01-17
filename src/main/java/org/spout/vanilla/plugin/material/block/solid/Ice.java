@@ -110,7 +110,7 @@ public class Ice extends SpreadingSolid implements InitializableMaterial {
 
 	@Override
 	public boolean canSpreadTo(Block from, Block to) {
-		return super.canSpreadTo(from, to) && VanillaMaterials.WATER.isSource(to);
+		return super.canSpreadTo(from, to) && VanillaMaterials.WATER.isSource(to) && to.isAtSurface();
 	}
 
 	@Override

@@ -36,8 +36,8 @@ import org.spout.vanilla.plugin.inventory.window.WindowType;
 
 public class ChestWindow extends AbstractChestWindow {
 	public ChestWindow(Player owner, Chest chest) {
-		super(owner, chest, WindowType.CHEST, chest.getInventory().getTitle(), chest.getInventory().size());
-		addInventoryConverter(new GridInventoryConverter(chest.getInventory(), 9, Vector2.ZERO));
+		super(owner, chest, WindowType.CHEST, chest.getLargestInventory().getTitle(), chest.getLargestInventory().size());
+		addInventoryConverter(new GridInventoryConverter(chest.getLargestInventory(), 9, Vector2.ZERO));
 	}
 
 	public ChestWindow(Player owner, ChestInventory inv, String title) {

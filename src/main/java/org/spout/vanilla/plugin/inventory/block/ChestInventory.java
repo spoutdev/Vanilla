@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.inventory.block;
 
 import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 
 /**
  * Represents the inventory of a
@@ -36,17 +37,22 @@ public class ChestInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
 	public static final int SINGLE_SIZE = 27;
 	public static final int DOUBLE_SIZE = SINGLE_SIZE * 2;
+	private final ChestInventory left, right;
+
+	public ChestInventory() {
+		super(SINGLE_SIZE);
+		left = right = null;
+	}
 
 	public ChestInventory(int size) {
 		super(size);
+		left = right = null;
 	}
 
-	public ChestInventory(boolean d) {
-		this(d ? DOUBLE_SIZE : SINGLE_SIZE);
-	}
-
-	public ChestInventory() {
-		this(false);
+	public ChestInventory(ChestInventory left, ChestInventory right) {
+		super(0);
+		this.left = left;
+		this.right = right;
 	}
 
 	public String getTitle(String def) {
@@ -57,6 +63,29 @@ public class ChestInventory extends Inventory {
 				return "Large chest";
 			default:
 				return def;
+		}
+	}
+	
+	@Override
+	public ItemStack[] getContents() {
+		if (left == null || right == null) {
+			return super.getContents();
+		}
+		ItemStack[] items = new ItemStack[DOUBLE_SIZE];
+		System.arraycopy(left.getContents(), 0, items, 0, SINGLE_SIZE);
+		System.arraycopy(right.getContents(), 0, items, SINGLE_SIZE, SINGLE_SIZE);
+		return items;
+	}
+
+	@Override
+	public ItemStack set(int i, ItemStack item, boolean update) {
+		if (left == null || right == null) {
+			return super.set(i, item, update);
+		}
+		if (i < SINGLE_SIZE) {
+			return left.set(i, item, update);
+		} else {
+			return right.set(i - SINGLE_SIZE, item, update);
 		}
 	}
 

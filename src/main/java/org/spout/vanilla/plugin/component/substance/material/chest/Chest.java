@@ -45,7 +45,7 @@ public class Chest extends AbstractChest implements Container {
 	 * @return true if has a double inventory.
 	 */
 	public boolean isDouble() {
-		return getInventory().size() == ChestInventory.DOUBLE_SIZE;
+		return VanillaMaterials.CHEST.isDouble(getBlock());
 	}
 
 	@Override
@@ -62,38 +62,27 @@ public class Chest extends AbstractChest implements Container {
 		super.setOpened(player, opened);
 	}
 
-	/**
-	 * Sets the size of the Chest's inventory to either
-	 * {@link ChestInventory#DOUBLE_SIZE} or
-	 * {@link ChestInventory#SINGLE_SIZE}.
-	 * @param d whether the chest should be a double or single chest
-	 */
-	public void setDouble(boolean d) {
-		// Return if chest is already specified size
-		ChestInventory oldInventory = getInventory();
-		if ((d && oldInventory.size() == ChestInventory.DOUBLE_SIZE) || (!d && oldInventory.size() == ChestInventory.SINGLE_SIZE)) {
-			return;
-		}
-
-		// Create new inventory and try to merge with the old inventory
-		ChestInventory newInventory = new ChestInventory(d);
-		newInventory.addAll(oldInventory);
-		getData().put(VanillaData.CHEST_INVENTORY, newInventory);
-	}
-
 	@Override
 	public ChestInventory getInventory() {
 		return getData().get(VanillaData.CHEST_INVENTORY);
 	}
 
+	public ChestInventory getLargestInventory() {
+		final Block block = getBlock();
+		final Block otherHalf = VanillaMaterials.CHEST.getOtherHalf(block);
+		ChestInventory inventory = getInventory();
+		if (otherHalf != null) {
+			if (block.translate(BlockFace.EAST).equals(otherHalf) || block.translate(BlockFace.NORTH).equals(otherHalf)) {
+				inventory = new ChestInventory(((Chest)otherHalf.getComponent()).getInventory(), inventory);
+			} else {
+				inventory = new ChestInventory(inventory, ((Chest)otherHalf.getComponent()).getInventory());
+			}
+		}
+		return inventory;
+	}
+
 	@Override
 	public void open(Player player) {
-		// Get the block at the component's position
-		final Block block = getBlock();
-
-		// Make sure it's the right size and open the chest if closed
-		setDouble(VanillaMaterials.CHEST.isDouble(block));
-
 		// Finally open the window
 		player.get(WindowHolder.class).openWindow(new ChestWindow(player, this));
 

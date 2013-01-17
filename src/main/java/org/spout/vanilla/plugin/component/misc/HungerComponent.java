@@ -188,7 +188,7 @@ public class HungerComponent extends EntityComponent {
 					final boolean jumping = human.isJumping();
 					if (world.getBlock(pos).getMaterial() instanceof Water && world.getBlock(lastPos).getMaterial() instanceof Water) {
 						// swimming						;
-						exhaustion += 0.015F * Math.sqrt(dx * dx + dy * dy + dz * dz) * 0.01F;
+						exhaustion += 0.015F * Math.sqrt(dx * dx + dy * dy + dz * dz);
 					} else if (sprinting && jumping) {
 						// sprint jumping
 						exhaustion += 0.8f;
@@ -197,10 +197,10 @@ public class HungerComponent extends EntityComponent {
 						exhaustion += 0.2f;
 					} else if (sprinting) {
 						// sprinting
-						exhaustion += 0.1f * Math.sqrt(dx * dx + dz * dz) * 0.01F;
+						exhaustion += 0.1f * Math.sqrt(dx * dx + dz * dz);
 					} else {
 						// walking
-						exhaustion += 0.01F * Math.sqrt(dx * dx + dz * dz) * 0.01F;
+						exhaustion += Math.sqrt(dx * dx + dz * dz) * 0.01F;
 					}
 					lastPos = pos; // Set the last position for next run
 				}

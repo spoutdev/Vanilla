@@ -79,8 +79,8 @@ public class DefaultWindow extends Window {
 	}
 
 	@Override
-	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
-		super.onSlotSet(inventory, slot, item);
+	public void onSlotSet(Inventory inventory, int slot, ItemStack item, ItemStack previous) {
+		super.onSlotSet(inventory, slot, item, previous);
 		if (inventory instanceof PlayerArmorInventory) {
 			PlayerArmorInventory.updateSlot(slot, item, getPlayer());
 		}

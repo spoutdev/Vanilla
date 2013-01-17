@@ -729,7 +729,7 @@ public abstract class Window implements InventoryViewer {
 	}
 
 	@Override
-	public void onSlotSet(Inventory inventory, int slot, ItemStack item) {
+	public void onSlotSet(Inventory inventory, int slot, ItemStack item, ItemStack previous) {
 		InventoryConverter slots = getInventoryConverter(inventory);
 		if (slots == null) {
 			return;

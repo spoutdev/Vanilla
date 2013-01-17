@@ -112,7 +112,7 @@ public class CraftingInventory extends Inventory {
 	}
 
 	@Override
-	public void onSlotChanged(int slot, ItemStack item) {
+	public void onSlotChanged(int slot, ItemStack item, ItemStack previous) {
 		if (slot == outputSlot + offset) {
 			craft();
 			return;
@@ -182,7 +182,7 @@ public class CraftingInventory extends Inventory {
 		set(getOutputSlot(), item, false);
 		//Manually inform viewers
 		for (InventoryViewer viewer : this.getViewers()) {
-			viewer.onSlotSet(this, getOutputSlot(), item);
+			viewer.onSlotSet(this, getOutputSlot(), item, null);
 		}
 	}
 

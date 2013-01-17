@@ -56,7 +56,6 @@ public final class EntityPaintingMessage extends EntityMessage {
 		z = rm.convertZ(pos.getBlockZ());
 		direction = painting.getNativeFace();
 		title = painting.getType().getName();
-		System.out.println(this);
 	}
 
 	public int getX() {

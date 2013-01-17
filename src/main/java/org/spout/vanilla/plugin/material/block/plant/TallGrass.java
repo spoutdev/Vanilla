@@ -27,6 +27,8 @@
 package org.spout.vanilla.plugin.material.block.plant;
 
 import org.spout.api.Spout;
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -71,6 +73,11 @@ public final class TallGrass extends GroundAttachable implements Burnable, Plant
 		drops.FALSE.add(VanillaMaterials.SEEDS).setChance(0.15);
 	}
 
+	@Override
+	public boolean isPlacementObstacle() {
+		return false;
+	}
+	
 	@Override
 	public boolean canSupport(BlockMaterial mat, BlockFace face) {
 		return mat.equals(VanillaMaterials.FIRE);

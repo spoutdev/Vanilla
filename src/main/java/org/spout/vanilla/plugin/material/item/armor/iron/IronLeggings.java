@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.iron;
 
+import org.spout.api.math.Vector2;
 import org.spout.vanilla.api.material.item.armor.Leggings;
 
 public class IronLeggings extends IronArmor implements Leggings {
 	public IronLeggings(String name, int id, short durability) {
-		super(name, id, durability, null);
+		super(name, id, durability, new Vector2(2,2));
 		this.setBaseProtection(5);
 	}
 }

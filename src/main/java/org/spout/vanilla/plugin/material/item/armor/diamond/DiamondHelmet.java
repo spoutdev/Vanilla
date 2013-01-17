@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.diamond;
 
+import org.spout.api.math.Vector2;
 import org.spout.vanilla.api.material.item.armor.Helmet;
 
 public class DiamondHelmet extends DiamondArmor implements Helmet {
 	public DiamondHelmet(String name, int id, short durability) {
-		super(name, id, durability, null);
+		super(name, id, durability, new Vector2(3,0));
 		this.setBaseProtection(3);
 	}
 }

@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.chain;
 
+import org.spout.api.math.Vector2;
 import org.spout.vanilla.api.material.item.armor.Leggings;
 
 public class ChainLeggings extends ChainArmor implements Leggings {
 	public ChainLeggings(String name, int id, short durability) {
-		super(name, id, durability, null);
+		super(name, id, durability, new Vector2(1,3));
 		this.setBaseProtection(4);
 	}
 }

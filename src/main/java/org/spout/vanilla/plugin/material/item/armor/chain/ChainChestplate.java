@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.chain;
 
+import org.spout.api.math.Vector2;
 import org.spout.vanilla.api.material.item.armor.Chestplate;
 
 public class ChainChestplate extends ChainArmor implements Chestplate {
 	public ChainChestplate(String name, int id, short durability) {
-		super(name, id, durability, null);
+		super(name, id, durability, new Vector2(1,1));
 		this.setBaseProtection(5);
 	}
 }

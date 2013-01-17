@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.gold;
 
+import org.spout.api.math.Vector2;
 import org.spout.vanilla.api.material.item.armor.Boots;
 
 public class GoldBoots extends GoldArmor implements Boots {
 	public GoldBoots(String name, int id, short durability) {
-		super(name, id, durability, null);
+		super(name, id, durability, new Vector2(4,3));
 		this.setBaseProtection(1);
 	}
 }

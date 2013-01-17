@@ -33,6 +33,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
+import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.inventory.Slot;
@@ -43,22 +44,22 @@ import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class Dye extends VanillaItemMaterial implements Placeable {
-	public static final Dye INK_SAC = new Dye("Ink Sac");
-	public static final Dye ROSE_RED = new Dye("Rose Red", DyeColor.RED, INK_SAC);
-	public static final Dye CACTUS_GREEN = new Dye("Cactus Green", DyeColor.GREEN, INK_SAC);
-	public static final Dye COCOA_BEANS = new Dye("Cocoa Beans", DyeColor.BROWN, INK_SAC);
-	public static final Dye LAPIS_LAZULI = new Dye("Lapis Lazuli", DyeColor.BLUE, INK_SAC);
-	public static final Dye PURPLE = new Dye("Purple Dye", DyeColor.PURPLE, INK_SAC);
-	public static final Dye CYAN = new Dye("Cyan Dye", DyeColor.CYAN, INK_SAC);
-	public static final Dye LIGHT_GRAY = new Dye("Light Gray Dye", DyeColor.LIGHT_GRAY, INK_SAC);
-	public static final Dye GRAY = new Dye("Gray Dye", DyeColor.GRAY, INK_SAC);
-	public static final Dye PINK = new Dye("Pink Dye", DyeColor.PINK, INK_SAC);
-	public static final Dye LIME = new Dye("Lime Dye", DyeColor.LIME, INK_SAC);
-	public static final Dye DANDELION_YELLOW = new Dye("Dandelion Yellow", DyeColor.YELLOW, INK_SAC);
-	public static final Dye LIGHT_BLUE = new Dye("Light Blue Dye", DyeColor.LIGHT_BLUE, INK_SAC);
-	public static final Dye MAGENTA = new Dye("Magenta Dye", DyeColor.MAGENTA, INK_SAC);
-	public static final Dye ORANGE = new Dye("Orange Dye", DyeColor.ORANGE, INK_SAC);
-	public static final Dye BONE_MEAL = new Dye("Bone Meal", DyeColor.WHITE, INK_SAC);
+	public static final Dye INK_SAC = new Dye("Ink Sac", new Vector2(15,4));
+	public static final Dye ROSE_RED = new Dye("Rose Red", DyeColor.RED, INK_SAC, new Vector2(14,5));
+	public static final Dye CACTUS_GREEN = new Dye("Cactus Green", DyeColor.GREEN, INK_SAC, new Vector2(14,6));
+	public static final Dye COCOA_BEANS = new Dye("Cocoa Beans", DyeColor.BROWN, INK_SAC, new Vector2(14,7));
+	public static final Dye LAPIS_LAZULI = new Dye("Lapis Lazuli", DyeColor.BLUE, INK_SAC, new Vector2(14,8));
+	public static final Dye PURPLE = new Dye("Purple Dye", DyeColor.PURPLE, INK_SAC, new Vector2(14,9));
+	public static final Dye CYAN = new Dye("Cyan Dye", DyeColor.CYAN, INK_SAC, new Vector2(14,10));
+	public static final Dye LIGHT_GRAY = new Dye("Light Gray Dye", DyeColor.LIGHT_GRAY, INK_SAC, new Vector2(14,11));
+	public static final Dye GRAY = new Dye("Gray Dye", DyeColor.GRAY, INK_SAC, new Vector2(14,4));
+	public static final Dye PINK = new Dye("Pink Dye", DyeColor.PINK, INK_SAC, new Vector2(15,5));
+	public static final Dye LIME = new Dye("Lime Dye", DyeColor.LIME, INK_SAC, new Vector2(15,6));
+	public static final Dye DANDELION_YELLOW = new Dye("Dandelion Yellow", DyeColor.YELLOW, INK_SAC, new Vector2(15,7));
+	public static final Dye LIGHT_BLUE = new Dye("Light Blue Dye", DyeColor.LIGHT_BLUE, INK_SAC, new Vector2(15,8));
+	public static final Dye MAGENTA = new Dye("Magenta Dye", DyeColor.MAGENTA, INK_SAC, new Vector2(15,9));
+	public static final Dye ORANGE = new Dye("Orange Dye", DyeColor.ORANGE, INK_SAC, new Vector2(15,10));
+	public static final Dye BONE_MEAL = new Dye("Bone Meal", DyeColor.WHITE, INK_SAC, new Vector2(15,11));
 	private final DyeColor color;
 
 	public static enum DyeColor implements DataSource {
@@ -90,13 +91,13 @@ public class Dye extends VanillaItemMaterial implements Placeable {
 		}
 	}
 
-	private Dye(String name) {
-		super((short) 0x0F, name, 351, null);
+	private Dye(String name, Vector2 pos) {
+		super((short) 0x0F, name, 351, pos);
 		this.color = DyeColor.BLACK;
 	}
 
-	private Dye(String name, DyeColor color, Dye parent) {
-		super(name, 351, color.getData(), parent, null);
+	private Dye(String name, DyeColor color, Dye parent, Vector2 pos) {
+		super(name, 351, color.getData(), parent, pos);
 		this.color = color;
 	}
 

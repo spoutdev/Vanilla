@@ -29,8 +29,11 @@ package org.spout.vanilla.api.data;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 
 public enum PaintingType {
 	KEBAB("Kebab", 16, 16),
@@ -52,10 +55,10 @@ public enum PaintingType {
 	STAGE("Stage", 32, 32),
 	VOID("Void", 32, 32),
 	SKULL_AND_ROSES("SkullAndRoses", 32, 32),
-	//WITHER("Wither", 32, 32),
+	// WITHER("Wither", 32, 32),
 	FIGHTERS("Fighters", 64, 32),
 	SKELETON("Skeleton", 64, 64),
-	DONKEY_KONG("DonkeyKong", 64,64),
+	DONKEY_KONG("DonkeyKong", 64, 64),
 	POINTER("Pointer", 64, 64),
 	PIG_SCENE("Pigscene", 64, 64),
 	FLAMING_SKULL("Flaming Skull", 64, 64);
@@ -115,11 +118,42 @@ public enum PaintingType {
 				break;
 		}
 
-		System.out.println("Facing: " + direction);
-		System.out.println("Type: " + name);
-		System.out.println("centerX: " + centerX);
-		System.out.println("centerY: " + centerY);
-		System.out.println("centerZ: " + centerZ);
+		return new Point(pos.getWorld(), centerX, centerY, centerZ);
+	}
+
+	public Point getOriginalPos(BlockFace direction, Point pos) {
+		final int x = pos.getBlockX();
+		final int y = pos.getBlockY();
+		final int z = pos.getBlockZ();
+
+		final int blockWidth = 16;
+		int centerHeight = Math.round(height / blockWidth / 2);
+		int centerWidth = width / blockWidth / 2;
+
+		if (centerHeight >= 1) {
+			centerHeight -= 1;
+		}
+		if (centerWidth >= 1) {
+			centerWidth -= 1;
+		}
+		int centerX = x;
+		int centerY = y - centerHeight;
+		int centerZ = z;
+
+		switch (direction) {
+			case NORTH:
+				centerZ += centerWidth;
+				break;
+			case SOUTH:
+				centerZ -= centerWidth;
+				break;
+			case EAST:
+				centerX += centerWidth;
+				break;
+			case WEST:
+				centerX -= centerWidth;
+				break;
+		}
 
 		return new Point(pos.getWorld(), centerX, centerY, centerZ);
 	}
@@ -132,5 +166,32 @@ public enum PaintingType {
 
 	public static PaintingType get(String name) {
 		return nameMap.get(name);
+	}
+
+	public boolean canBePlaced(Block block, BlockFace direction) {
+		boolean good = true;
+		// A value higher than 0 means that it takes more block than just 1
+		int blockHeight = getHeight() / 16 - 1;
+		int blockWidth = getWidth() / 16 - 1;
+		for (int height = 0; height <= blockHeight && good; height++) {
+			for (int width = 0; width <= blockWidth && good; width++) {
+				Vector3 vector = Vector3.ZERO;
+				switch (direction) {
+					case NORTH:
+					case SOUTH:
+						vector = vector.add(0, 0, width);
+						break;
+					case EAST:
+					case WEST:
+						vector = vector.add(width, 0, 0);
+						break;
+				}
+				if (!block.translate(direction.getOpposite().getOffset()).translate(vector.add(0, height, 0)).getMaterial().equals(BlockMaterial.AIR)
+						|| block.translate(vector.add(0, height, 0)).getMaterial().equals(BlockMaterial.AIR)) {
+					good = false;
+				}
+			}
+		}
+		return good;
 	}
 }

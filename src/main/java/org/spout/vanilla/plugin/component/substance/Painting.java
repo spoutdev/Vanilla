@@ -31,9 +31,11 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.data.PaintingType;
 import org.spout.vanilla.plugin.VanillaPlugin;
@@ -45,7 +47,9 @@ import org.spout.vanilla.plugin.protocol.entity.object.PaintingEntityProtocol;
 
 public class Painting extends VanillaComponent {
 
-	public Point originalPos;
+	private Point originalPos;
+	private float timer = 0f;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -59,10 +63,18 @@ public class Painting extends VanillaComponent {
 	public boolean isStatic() {
 		return true;
 	}
-	
+
 	public void onTick(float dt) {
+		// We set a timer so we don't spam the server for nothing.
+		if (timer >= 1f) {
+			timer = 0f;
+			if (!getType().canBePlaced(getOwner().getWorld().getBlock(getType().getOriginalPos(getFace(), getOwner().getTransform().getPosition())), getFace())) {
+				destroy();
+			}
+		}
+		timer += dt;
 	}
-	
+
 	public PaintingType getType() {
 		return getOwner().getData().get(VanillaData.PAINTING_TYPE);
 	}
@@ -97,18 +109,18 @@ public class Painting extends VanillaComponent {
 				return -1;
 		}
 	}
-	
+
 	@Override
 	public void onInteract(Action action, Entity source) {
 		if (!(source instanceof Player)) {
 			return;
 		}
-		
+
 		if (Action.LEFT_CLICK.equals(action)) {
 			destroy();
 		}
 	}
-	
+
 	private void destroy() {
 		List<ItemStack> drops = getOwner().get(DropComponent.class).getDrops();
 		Point entityPosition = getOwner().getTransform().getPosition();

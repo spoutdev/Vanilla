@@ -40,9 +40,11 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Rectangle;
 
 import org.spout.vanilla.api.data.GameMode;
+import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
@@ -52,8 +54,13 @@ import org.spout.vanilla.plugin.event.cause.HealCause;
 import org.spout.vanilla.plugin.event.cause.NullDamageCause;
 import org.spout.vanilla.plugin.event.player.network.PlayerHealthEvent;
 import org.spout.vanilla.plugin.material.block.liquid.Water;
+import org.spout.vanilla.plugin.material.item.Food;
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityStatusMessage;
 
 public class HungerComponent extends EntityComponent {
+	//Timer used for when eating. Prevents insta-eating.
+	private float eatingTimer;
+	private Slot foodEating;
 	private Human human;
 	private static final float TIMER_START = 4;
 	private float timer = TIMER_START;
@@ -130,6 +137,19 @@ public class HungerComponent extends EntityComponent {
 				final int health = healthComponent.getHealth();
 				final int hunger = getHunger();
 
+				
+				//Timer when eating. Sends a Enting done if the player eated the food the whole time.
+				if (eatingTimer != 0f) {
+					if (eatingTimer >= 1.5f) {
+						((Player)getOwner()).getSession().send(false, new EntityStatusMessage(getOwner().getId(), EntityStatusMessage.EATING_ACCEPTED));
+						((Food) foodEating.get().getMaterial()).onEat(getOwner(), foodEating);
+						eatingTimer = 0f;
+						foodEating = null;
+					} else {
+						eatingTimer += dt;
+					}
+				}
+				
 				// Regenerate health
 				if (health < 20 && hunger > 17) {
 					timer -= dt;
@@ -354,5 +374,19 @@ public class HungerComponent extends EntityComponent {
 		setFoodSaturation(VanillaData.FOOD_SATURATION.getDefaultValue());
 		setExhaustion(VanillaData.EXHAUSTION.getDefaultValue());
 		setPoisoned(VanillaData.POISONED.getDefaultValue());
+	}
+
+	/**
+	 * Sets the player as eating. This will starts a timer to be sure the player doesn't instant-eat the food. Does nothing if eating is true but slot is null.
+	 * @param eating Is the player eating? If true, starts the timer.
+	 * @param slot The slot associated with the food being used.
+	 */
+	public void setEating(boolean eating, Slot slot) {
+		if (eating && slot != null) {
+			eatingTimer = 0.01f; // The tick works only if it's higher than 0.
+			foodEating = slot;
+		} else {
+			eatingTimer = 0f;
+		}
 	}
 }

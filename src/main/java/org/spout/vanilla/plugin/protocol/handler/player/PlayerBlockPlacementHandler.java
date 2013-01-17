@@ -106,9 +106,10 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		 * packet is sent That is how it usually happens. Sometimes it doesn't happen like that. Therefore, a hacky workaround.
 		 */
 		final BlockFace clickedFace = message.getDirection();
-
-		if ((holdingMat instanceof Food && player.add(HungerComponent.class).getHunger() != VanillaData.HUNGER.getDefaultValue()) || holdingMat instanceof Sword) {
+		HungerComponent hunger = player.add(HungerComponent.class);
+		if ((holdingMat instanceof Food &&  hunger.getHunger() != VanillaData.HUNGER.getDefaultValue()) || holdingMat instanceof Sword) {
 			player.get(Living.class).setEatingBlocking(true);
+			hunger.setEating(true, currentSlot);
 			return;
 		}
 		if (clickedFace == BlockFace.THIS) {

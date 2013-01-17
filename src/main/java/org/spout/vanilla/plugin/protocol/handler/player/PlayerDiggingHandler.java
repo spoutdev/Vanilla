@@ -53,6 +53,7 @@ import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.api.material.VanillaMaterial;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.DiggingComponent;
+import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.component.substance.material.Sign;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.drops.flag.PlayerFlags;
@@ -260,7 +261,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 			}
 		} else if (state == PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
 			if (heldItem.getMaterial() instanceof Food) {
-				((Food) heldItem.getMaterial()).onEat(player, currentSlot);
+				player.add(HungerComponent.class).setEating(false, currentSlot);
 			} else if (heldItem.getMaterial() instanceof Potion) {
 				((Potion) heldItem.getMaterial()).onDrink(player, currentSlot);
 			} else if (heldItem.getMaterial() instanceof Sword) {

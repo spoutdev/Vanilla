@@ -43,6 +43,7 @@ import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 
 public class DefaultWindow extends Window {
+	private boolean opened = false;
 	public DefaultWindow(Player owner) {
 		super(owner, WindowType.DEFAULT, "Inventory", 9);
 		PlayerInventory inventory = getPlayerInventory();
@@ -76,6 +77,7 @@ public class DefaultWindow extends Window {
 		if (!(Spout.getEngine() instanceof Server)) {
 			super.close(); 
 		}
+		opened = false;
 	}
 
 	@Override
@@ -109,17 +111,31 @@ public class DefaultWindow extends Window {
 
 		return super.onShiftClick(stack, slot, from);
 	}
+	
+	@Override
+	public boolean onClick(ClickArguments args) {
+		opened = true;
+		return super.onClick(args);
+	}
 
 	@Override
 	public int getId() {
 		return 0;
 	}
+	
+	@Override
+	public boolean isOpened() {
+		if (Spout.getEngine() instanceof Client) {
+			return super.isOpened();
+		}
+		return opened;
+	}
 
 	@Override
 	public void open() {
-		if (!(Spout.getEngine() instanceof Client)) {
-			throw new UnsupportedOperationException("A player's inventory window cannot be opened from the server.");
+		opened = true;
+		if (Spout.getEngine() instanceof Client) {
+			super.open();
 		}
-		super.open();
 	}
 }

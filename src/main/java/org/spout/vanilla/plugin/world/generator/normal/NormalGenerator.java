@@ -29,6 +29,8 @@ package org.spout.vanilla.plugin.world.generator.normal;
 import java.util.Random;
 
 import net.royawesome.jlibnoise.NoiseQuality;
+import net.royawesome.jlibnoise.exception.NoModuleException;
+import net.royawesome.jlibnoise.module.Module;
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
@@ -45,6 +47,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.MathHelper;
+import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.LogicUtil;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
@@ -153,39 +156,17 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		final int sizeX = size.getFloorX();
 		final int sizeY = MathHelper.clamp(size.getFloorY(), 0, HEIGHT);
 		final int sizeZ = size.getFloorZ();
+		final NormalTerrain terrain = new NormalTerrain();
+		terrain.SetSourceModule(0, NOISE);
+		terrain.setSeed(seed);
+		terrain.setBiomeSource(biomes, new Vector2(x, z), new Vector2(sizeX, sizeZ), getSelector());
 		PERLIN.setSeed((int) seed);
+		final double[][][] noise = WorldGeneratorUtils.fastNoise(terrain, sizeX, sizeY, sizeZ, 4, x, y, z);
 		final Random random = WorldGeneratorUtils.getRandom(seed, x, y, z, 6516);
-		final double[][][] noise = WorldGeneratorUtils.fastNoise(NOISE, sizeX, sizeY, sizeZ, 4, x, y, z);
-		final BiomeSelector selector = getSelector();
-		final TIntPairObjectHashMap<NormalBiome> biomeCache = new TIntPairObjectHashMap<NormalBiome>();
 		for (int xx = 0; xx < sizeX; xx++) {
 			for (int zz = 0; zz < sizeZ; zz++) {
-				double maxSum = 0;
-				double minSum = 0;
-				int count = 0;
-				for (int sx = -SMOOTH_SIZE; sx <= SMOOTH_SIZE; sx++) {
-					for (int sz = -SMOOTH_SIZE; sz <= SMOOTH_SIZE; sz++) {
-						final NormalBiome adjacent;
-						if (xx + sx < 0 || zz + sz < 0
-								|| xx + sx >= sizeX || zz + sz >= sizeZ) {
-							if (biomeCache.containsKey(x + xx + sx, z + zz + sz)) {
-								adjacent = biomeCache.get(x + xx + sx, z + zz + sz);
-							} else {
-								adjacent = (NormalBiome) selector.pickBiome(x + xx + sx, y, z + zz + sz, seed);
-								biomeCache.put(x + xx + sx, z + zz + sz, adjacent);
-							}
-						} else {
-							adjacent = (NormalBiome) biomes.getBiome(xx + sx, y, zz + sz);
-						}
-						minSum += adjacent.getMin();
-						maxSum += adjacent.getMax();
-						count++;
-					}
-				}
-				final double minElevation = minSum / count;
-				final double smoothHeight = (maxSum / count - minElevation) / 2;
 				for (int yy = 0; yy < sizeY; yy++) {
-					double noiseValue = noise[xx][yy][zz] - 1 / smoothHeight * (y + yy - smoothHeight - minElevation);
+					double noiseValue = noise[xx][yy][zz];
 					if (noiseValue >= 0) {
 						blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.STONE);
 					} else {
@@ -207,6 +188,77 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 					}
 				}
 			}
+		}
+	}
+
+	private static class NormalTerrain extends Module {
+		private long seed;
+		private BiomeManager biomeManager;
+		private Vector2 biomeManagerOrigin;
+		private Vector2 biomeManagerSize;
+		private BiomeSelector selector;
+		private final TIntPairObjectHashMap<NormalBiome> biomeCache = new TIntPairObjectHashMap<NormalBiome>();
+
+		private NormalTerrain() {
+			super(1);
+		}
+
+		@Override
+		public int GetSourceModuleCount() {
+			return 1;
+		}
+
+		@Override
+		public double GetValue(double x, double y, double z) {
+			if (SourceModule[0] == null) {
+				throw new NoModuleException();
+			}
+			double minSum = 0;
+			double maxSum = 0;
+			double sum = 0;
+			for (int xx = -SMOOTH_SIZE; xx <= SMOOTH_SIZE; xx++) {
+				for (int zz = -SMOOTH_SIZE; zz <= SMOOTH_SIZE; zz++) {
+					final NormalBiome biome = getBiome(x + xx, z + zz);
+					minSum += biome.getMin();
+					maxSum += biome.getMax();
+					sum++;
+				}
+			}
+			final double minElevation = minSum / sum;
+			final double smoothHeight = (maxSum / sum - minElevation) / 2;
+			return SourceModule[0].GetValue(x, y, z) - 1 / smoothHeight * (y - smoothHeight - minElevation);
+		}
+
+		private NormalBiome getBiome(double x, double z) {
+			final double dx = x - biomeManagerOrigin.getX();
+			final double dz = z - biomeManagerOrigin.getY();
+			final NormalBiome biome;
+			if (dx >= 0 && dz >= 0
+					&& dx < biomeManagerSize.getX() && dz < biomeManagerSize.getY()) {
+				biome = (NormalBiome) biomeManager.getBiome(MathHelper.floor(dx), 0, MathHelper.floor(dz));
+			} else {
+				final int fx = MathHelper.floor(x);
+				final int fz = MathHelper.floor(z);
+				if (biomeCache.containsKey(fx, fz)) {
+					biome = biomeCache.get(fx, fz);
+				} else {
+					biome = (NormalBiome) selector.pickBiome(fx, 0, fz, seed);
+					biomeCache.put(fx, fz, biome);
+				}
+			}
+			return biome;
+		}
+
+		private void setSeed(long seed) {
+			this.seed = seed;
+		}
+
+		private void setBiomeSource(BiomeManager manager, Vector2 managerOrigin,
+				Vector2 managerSize, BiomeSelector selector) {
+			this.biomeManager = manager;
+			this.biomeManagerOrigin = managerOrigin;
+			this.biomeManagerSize = managerSize;
+			this.selector = selector;
 		}
 	}
 

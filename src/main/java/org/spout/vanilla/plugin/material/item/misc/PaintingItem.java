@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.plugin.material.item.misc;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.spout.api.entity.Entity;
@@ -34,9 +36,11 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.data.PaintingType;
 import org.spout.vanilla.plugin.component.substance.Painting;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public class PaintingItem extends VanillaItemMaterial {
@@ -52,12 +56,46 @@ public class PaintingItem extends VanillaItemMaterial {
 			return;
 		}
 		if (!BlockFace.TOP.equals(face) && !BlockFace.BOTTOM.equals(face)) {
+			List<PaintingType> list = new ArrayList<PaintingType>();
 			World world = block.getWorld();
-			PaintingType[] types = PaintingType.values();
-			PaintingType paintingType = types[random.nextInt(types.length - 1)];
 			BlockFace direction = face.getOpposite();
+			PaintingType[] types = PaintingType.values();
+			boolean good = true;
+			for (PaintingType paintingType : types) {
+				good = true;
+				//A value higher than 0 means that it takes more block than just 1
+				int blockHeight = paintingType.getHeight() / 16 - 1;
+				int blockWidth = paintingType.getWidth() / 16 - 1;
+				if (blockHeight >= 1 || blockWidth >= 1) {
+					for (int height = 0; height <= blockHeight && good; height++) {
+						for (int width = 0; width <= blockWidth && good; width++) {
+							Vector3 vector = Vector3.ZERO;
+							switch (direction) {
+								case NORTH:
+								case SOUTH:
+									vector = vector.add(0, 0, width);
+									break;
+								case EAST:
+								case WEST:
+									vector = vector.add(width,0,0);
+									break;
+							}
+							if (!block.translate(face.getOffset()).translate(vector.add(0,height,0)).getMaterial().equals(VanillaMaterials.AIR) || block.translate(vector.add(0,height,0)).getMaterial().equals(VanillaMaterials.AIR)) {
+								good = false;
+							}
+						}
+					}
+					if (good) {
+						list.add(paintingType);
+					}
+				} else {
+					list.add(paintingType);
+				}
+			}
+			PaintingType paintingType = list.get(random.nextInt(list.size() - 1));
 			
-			Entity e = world.createEntity(block.getPosition(), Painting.class);
+			
+			Entity e = world.createEntity(paintingType.getCenter(direction, block.getPosition()), Painting.class);
 			Painting painting = e.add(Painting.class);
 			painting.setType(paintingType);
 			painting.setFace(direction);

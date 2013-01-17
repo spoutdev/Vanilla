@@ -54,8 +54,8 @@ public enum PaintingType {
 	SKULL_AND_ROSES("SkullAndRoses", 32, 32),
 	//WITHER("Wither", 32, 32),
 	FIGHTERS("Fighters", 64, 32),
-	SKELETON("Skeleton", 64, 48),
-	DONKEY_KONG("DonkeyKong", 64, 48),
+	SKELETON("Skeleton", 64, 64),
+	DONKEY_KONG("DonkeyKong", 64,64),
 	POINTER("Pointer", 64, 64),
 	PIG_SCENE("Pigscene", 64, 64),
 	FLAMING_SKULL("Flaming Skull", 64, 64);
@@ -87,9 +87,15 @@ public enum PaintingType {
 		final int z = pos.getBlockZ();
 
 		final int blockWidth = 16;
-		final int centerHeight = height / blockWidth / 2;
-		final int centerWidth = width / blockWidth / 2 - 1;
+		int centerHeight = Math.round(height / blockWidth / 2);
+		int centerWidth = width / blockWidth / 2;
 
+		if (centerHeight >= 1) {
+			centerHeight -= 1;
+		}
+		if (centerWidth >= 1) {
+			centerWidth -= 1;
+		}
 		int centerX = x;
 		int centerY = y + centerHeight;
 		int centerZ = z;

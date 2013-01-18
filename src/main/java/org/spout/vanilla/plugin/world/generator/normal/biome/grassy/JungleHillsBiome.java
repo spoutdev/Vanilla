@@ -29,7 +29,7 @@ package org.spout.vanilla.plugin.world.generator.normal.biome.grassy;
 public class JungleHillsBiome extends JungleBiome {
 	public JungleHillsBiome(int biomeId) {
 		super(biomeId);
-		setMinMax(63, 110);
+		setElevation(63, 110);
 	}
 
 	@Override

@@ -28,6 +28,7 @@ package org.spout.vanilla.plugin.world.generator.object;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -133,6 +134,6 @@ public class VanillaObjects {
 	}
 
 	public static Collection<WorldGeneratorObject> getObjects() {
-		return BY_NAME.values();
+		return Collections.unmodifiableCollection(BY_NAME.values());
 	}
 }

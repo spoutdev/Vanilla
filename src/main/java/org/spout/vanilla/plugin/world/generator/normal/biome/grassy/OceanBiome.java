@@ -41,7 +41,7 @@ public class OceanBiome extends GrassyBiome {
 		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new NormalTreeWGOFactory()),
 				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory()),
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator());
-		setMinMax(40, 58);
+		setElevation(40, 58);
 		setGrassColorMultiplier(new Color(142, 185, 113));
 		setFoliageColorMultiplier(new Color(113, 167, 77));
 	}

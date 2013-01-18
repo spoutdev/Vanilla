@@ -41,7 +41,7 @@ public class RiverBiome extends GrassyBiome {
 		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new NormalTreeWGOFactory()),
 				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory()),
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator());
-		setMinMax(49, 53);
+		setElevation(49, 53);
 		setGrassColorMultiplier(new Color(142, 185, 113));
 		setFoliageColorMultiplier(new Color(113, 167, 77));
 	}

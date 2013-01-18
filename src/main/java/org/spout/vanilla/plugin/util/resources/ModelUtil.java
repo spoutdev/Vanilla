@@ -42,13 +42,12 @@ public class ModelUtil {
 
 	public static String getDirectionalModel(String baseModel, BlockFace face) {
 		final String dirModel;
-		String path = baseModel;
-		final int index = path.lastIndexOf('.');
+		final int index = baseModel.lastIndexOf('.');
 		if (index == -1) {
-			dirModel = path + "_" + face.name().charAt(0);
+			dirModel = baseModel + "_" + face.name().charAt(0);
 		} else {
-			dirModel = new StringBuilder(path).insert(index, "_" + face.name().charAt(0)).toString();
+			dirModel = new StringBuilder(baseModel).insert(index, "_" + face.name().charAt(0)).toString();
 		}
-		return new String(dirModel);
+		return dirModel;
 	}
 }

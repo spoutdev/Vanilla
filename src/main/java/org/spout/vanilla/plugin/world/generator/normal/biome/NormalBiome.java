@@ -46,9 +46,9 @@ import org.spout.vanilla.plugin.world.generator.normal.populator.GroundCoverPopu
 public abstract class NormalBiome extends VanillaBiome {
 	// elevation values
 	@Setting({"elevation", "min"})
-	protected float min;
+	private float minElevation;
 	@Setting({"elevation", "max"})
-	protected float max;
+	private float maxElevation;
 	// ground cover
 	protected GroundCoverLayer[] groundCover = new GroundCoverLayer[0];
 
@@ -56,17 +56,17 @@ public abstract class NormalBiome extends VanillaBiome {
 		super(biomeId, decorators);
 	}
 
-	protected void setMinMax(float min, float max) {
-		this.min = min;
-		this.max = max;
+	protected void setElevation(float min, float max) {
+		this.minElevation = min;
+		this.maxElevation = max;
 	}
 
-	public float getMin() {
-		return min;
+	public float getMinElevation() {
+		return minElevation;
 	}
 
-	public float getMax() {
-		return max;
+	public float getMaxElevation() {
+		return maxElevation;
 	}
 
 	protected void setTopCover(GroundCoverLayer[] groundCover) {

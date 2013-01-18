@@ -64,29 +64,29 @@ import org.spout.vanilla.plugin.world.generator.normal.biome.snowy.TundraHillsBi
 import org.spout.vanilla.plugin.world.generator.theend.biome.EndStoneBiome;
 
 public class VanillaBiomes {
-	public static final VanillaBiome OCEAN = new OceanBiome(0);
-	public static final VanillaBiome PLAINS = new PlainBiome(1);
-	public static final VanillaBiome DESERT = new DesertBiome(2);
-	public static final VanillaBiome DESERT_HILLS = new DesertHillsBiome(17);
-	public static final VanillaBiome MOUNTAINS = new MountainsBiome(3);
-	public static final VanillaBiome FOREST = new ForestBiome(4);
-	public static final VanillaBiome FOREST_HILLS = new ForestHillsBiome(18);
-	public static final VanillaBiome TAIGA = new TaigaBiome(5);
-	public static final VanillaBiome TAIGA_HILLS = new TaigaHillsBiome(19);
-	public static final VanillaBiome SWAMP = new SwampBiome(6);
-	public static final VanillaBiome RIVER = new RiverBiome(7);
-	public static final VanillaBiome FROZEN_RIVER = new FrozenRiverBiome(11);
-	public static final VanillaBiome NETHERRACK = new NetherrackBiome(8);
-	public static final VanillaBiome TUNDRA = new TundraBiome(12);
-	public static final VanillaBiome TUNDRA_HILLS = new TundraHillsBiome(13);
-	public static final VanillaBiome MUSHROOM = new MushroomBiome(14);
-	public static final VanillaBiome MUSHROOM_SHORE = new MushroomShoreBiome(15);
-	public static final VanillaBiome BEACH = new BeachBiome(16);
-	public static final VanillaBiome SMALL_MOUNTAINS = new SmallMountainsBiome(20);
-	public static final VanillaBiome JUNGLE = new JungleBiome(21);
-	public static final VanillaBiome JUNGLE_HILLS = new JungleHillsBiome(22);
-	public static final VanillaBiome FROZEN_OCEAN = new FrozenOceanBiome(10);
-	public static final VanillaBiome ENDSTONE = new EndStoneBiome(22);
+	public static final OceanBiome OCEAN = new OceanBiome(0);
+	public static final PlainBiome PLAINS = new PlainBiome(1);
+	public static final DesertBiome DESERT = new DesertBiome(2);
+	public static final DesertHillsBiome DESERT_HILLS = new DesertHillsBiome(17);
+	public static final MountainsBiome MOUNTAINS = new MountainsBiome(3);
+	public static final ForestBiome FOREST = new ForestBiome(4);
+	public static final ForestHillsBiome FOREST_HILLS = new ForestHillsBiome(18);
+	public static final TaigaBiome TAIGA = new TaigaBiome(5);
+	public static final TaigaHillsBiome TAIGA_HILLS = new TaigaHillsBiome(19);
+	public static final SwampBiome SWAMP = new SwampBiome(6);
+	public static final RiverBiome RIVER = new RiverBiome(7);
+	public static final FrozenRiverBiome FROZEN_RIVER = new FrozenRiverBiome(11);
+	public static final NetherrackBiome NETHERRACK = new NetherrackBiome(8);
+	public static final TundraBiome TUNDRA = new TundraBiome(12);
+	public static final TundraHillsBiome TUNDRA_HILLS = new TundraHillsBiome(13);
+	public static final MushroomBiome MUSHROOM = new MushroomBiome(14);
+	public static final MushroomShoreBiome MUSHROOM_SHORE = new MushroomShoreBiome(15);
+	public static final BeachBiome BEACH = new BeachBiome(16);
+	public static final SmallMountainsBiome SMALL_MOUNTAINS = new SmallMountainsBiome(20);
+	public static final JungleBiome JUNGLE = new JungleBiome(21);
+	public static final JungleHillsBiome JUNGLE_HILLS = new JungleHillsBiome(22);
+	public static final FrozenOceanBiome FROZEN_OCEAN = new FrozenOceanBiome(10);
+	public static final EndStoneBiome ENDSTONE = new EndStoneBiome(22);
 	private static final Map<String, VanillaBiome> BY_NAME = new HashMap<String, VanillaBiome>();
 
 	static {

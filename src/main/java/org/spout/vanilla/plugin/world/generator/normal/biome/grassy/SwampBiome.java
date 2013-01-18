@@ -46,7 +46,7 @@ public class SwampBiome extends GrassyBiome {
 				new TallGrassDecorator(new NormalTallGrassFactory()), new DeadBushDecorator(), new LilyPadDecorator(),
 				new MushroomDecorator((byte) 1, (byte) 3), new SugarCaneDecorator((byte) 6, (byte) 25, (byte) 2),
 				new PumpkinDecorator());
-		setMinMax(53, 66);
+		setElevation(58, 65);
 		setGrassColorMultiplier(new Color(92, 105, 78));
 		setFoliageColorMultiplier(new Color(73, 97, 55));
 		setWaterColorMultiplier(new Color(224, 255, 174));

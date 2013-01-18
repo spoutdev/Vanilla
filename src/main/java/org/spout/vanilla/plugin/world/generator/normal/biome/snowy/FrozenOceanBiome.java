@@ -33,7 +33,7 @@ import org.spout.vanilla.plugin.world.generator.normal.decorator.SandAndClayDeco
 public class FrozenOceanBiome extends SnowyBiome {
 	public FrozenOceanBiome(int biomeId) {
 		super(biomeId, new SandAndClayDecorator());
-		setMinMax(40, 58);
+		setElevation(40, 58);
 		setGrassColorMultiplier(new Color(128, 180, 151));
 		setFoliageColorMultiplier(new Color(96, 161, 123));
 	}

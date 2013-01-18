@@ -42,6 +42,7 @@ import org.spout.api.math.Rectangle;
 import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
+import org.spout.vanilla.plugin.component.player.hud.DrowningWidget;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 import org.spout.vanilla.plugin.event.cause.BlockDamageCause;
@@ -52,36 +53,21 @@ import org.spout.vanilla.plugin.material.block.liquid.Water;
  * The drowning component requires a health component and head component
  */
 public class DrowningComponent extends EntityComponent {
+
 	private Entity owner;
 	private HealthComponent health;
 	private HeadComponent head;
 	public static final float MAX_AIR = VanillaData.AIR_SECS.getDefaultValue();
 	private int damageTimer = 20;
 	// Client
-	private final Widget bubbles = new Widget();
-	private static final float SCALE = 0.75f; // TODO: Apply directly from engine
+	//private final Widget bubbles = new Widget();
+	//private static final float SCALE = 0.75f; // TODO: Apply directly from engine
 
 	@Override
 	public void onAttached() {
 		owner = getOwner();
 		health = owner.add(HealthComponent.class);
 		head = owner.add(HeadComponent.class);
-		if (Spout.getEngine() instanceof Client && getOwner() instanceof Player) {
-			// Air meter
-			final RenderPartsHolderComponent bubblesRect = bubbles.add(RenderPartsHolderComponent.class);
-			float x = 0.09f * SCALE;
-			float dx = 0.06f * SCALE;
-			for (int i = 0; i < 10; i++) {
-				final RenderPart bubble = new RenderPart();
-				bubble.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
-				bubble.setColor(Color.WHITE);
-				bubble.setSprite(new Rectangle(x, -0.69f, 0.06f * SCALE, 0.06f));
-				bubble.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f));
-				bubblesRect.add(bubble);
-				x += dx;
-			}
-			getOwner().add(HUDComponent.class).attachWidget(bubbles);
-		}
 	}
 
 	@Override
@@ -118,44 +104,33 @@ public class DrowningComponent extends EntityComponent {
 					return;
 				}
 				// Animate air meter
+				setAir(5);
 				final float maxSecsBubbles = VanillaData.AIR_SECS.getDefaultValue();
 				final float secsBubbles = getData().get(VanillaData.AIR_SECS);
 				if (secsBubbles == maxSecsBubbles) {
 					hideBubbles();
 				} else {
 					final float nbBubExact = secsBubbles / maxSecsBubbles * 10f;
-					final int nbBub = (int) nbBubExact;
-					int bubId = 0;
-					for (RenderPart bub : bubbles.get(RenderPartsHolderComponent.class).getRenderParts()) {
-						if (bubId > nbBub) {
-							bub.setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Empty
-						} else if (bubId == nbBub) {
-							if (nbBubExact - nbBub >= 0.02f) {
-								bub.setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Empty
-							} else {
-								bub.setSource(new Rectangle(25f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Explode
-							}
-						} else {
-							bub.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Full
-						}
-						bubId++;
-					}
+					getOwner().add(HUDComponent.class).setDrowning(nbBubExact);
 				}
-				bubbles.update();
 				break;
 		}
 	}
 
 	public void hideBubbles() {
-		for (RenderPart bubble : bubbles.get(RenderPartsHolderComponent.class).getRenderParts()) {
+		for (RenderPart bubble : getOwner().add(HUDComponent.class).getAirMeter().getRenderParts()) {
 			bubble.setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Empty
 		}
+
+		getOwner().add(HUDComponent.class).getAirMeter().update();
 	}
 
 	public void showBubbles() {
-		for (RenderPart bubble : bubbles.get(RenderPartsHolderComponent.class).getRenderParts()) {
+		for (RenderPart bubble : getOwner().add(HUDComponent.class).getAirMeter().getRenderParts()) {
 			bubble.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Full
 		}
+
+		getOwner().add(HUDComponent.class).getAirMeter().update();
 	}
 
 	public float getAir() {

@@ -265,12 +265,12 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		// hills
 		final PerlinRangeLayer hills =
 				new PerlinRangeLayer(1).
-				setOctaveCount(4).
+				setOctaveCount(2).
 				setFrequency(0.004 / scale);
 		// frozen oceans
 		final PerlinRangeLayer frozenOceans =
 				new PerlinRangeLayer(3).
-				setOctaveCount(4).
+				setOctaveCount(2).
 				setFrequency(0.004 / scale);
 		//
 		// LAND LAYERS
@@ -351,7 +351,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		// mushroom
 		final BiomeSelectorLayer mushroom =
 				new PerlinRangeLayer(11).
-				setOctaveCount(4).
+				setOctaveCount(2).
 				setFrequency(0.004 / scale).
 				addElement(VanillaBiomes.OCEAN, -1, 0.78f).
 				addElement(VanillaBiomes.MUSHROOM_SHORE, 0.78f, 0.85f).
@@ -365,16 +365,16 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		final BiomeSelectorLayer land =
 				new WhittakerLayer(7).
 				setHumidityOctaveCount(2).
-				setHumidityFrequency(0.004 / scale).
+				setHumidityFrequency(0.002 / scale).
 				setTemperatureOctaveCount(2).
-				setTemperatureFrequency(0.004 / scale).
-				addElement(desertLand, -1, -0.5f, 0, 1).
-				addElement(forestLand, -0.5f, 0.5f, 0, 1).
-				addElement(jungleLand, 0.5f, 1, 0, 1).
-				addElement(plains, -1, 0, -0.5f, 0).
-				addElement(swamp, 0, 1, -0.5f, 0).
-				addElement(taigaLand, 0, 1, -1, -0.5f).
-				addElement(tundraLand, -1, 0, -1, -0.5f);
+				setTemperatureFrequency(0.002 / scale).
+				addElement(desertLand, -1, -0.3f, 0, 1).
+				addElement(forestLand, -0.3f, 0.3f, 0, 1).
+				addElement(jungleLand, 0.3f, 1, 0, 1).
+				addElement(plains, -1, 0, -0.3f, 0).
+				addElement(swamp, 0, 1, -0.3f, 0).
+				addElement(taigaLand, 0, 1, -1, -0.3f).
+				addElement(tundraLand, -1, 0, -1, -0.3f);
 		// small mountains
 		final BiomeSelectorLayer smallMountains =
 				rivers.clone().
@@ -391,7 +391,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		// start
 		final BiomeSelectorLayer start =
 				new PerlinRangeLayer(5).
-				setOctaveCount(4).
+				setOctaveCount(2).
 				setFrequency(0.0028 / scale).
 				addElement(mushroom, -1, -0.3f).
 				addElement(VanillaBiomes.OCEAN, -0.3f, -0.05f).

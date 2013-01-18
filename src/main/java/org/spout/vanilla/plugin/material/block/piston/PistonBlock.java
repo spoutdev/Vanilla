@@ -96,7 +96,16 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 
 	@Override
 	public boolean isReceivingPower(Block block) {
-		return RedstoneUtil.isReceivingPower(block);
+		final BlockFace facing = getFacing(block);
+		for (BlockFace face : BlockFaces.NESWBT) {
+			if (face == facing) {
+				continue;
+			}
+			if (RedstoneUtil.isEmittingPower(block.translate(face), face.getOpposite())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override

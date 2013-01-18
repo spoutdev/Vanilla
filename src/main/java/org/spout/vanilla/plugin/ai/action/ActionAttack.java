@@ -55,7 +55,7 @@ public class ActionAttack implements Action {
 	@Override
 	public void activate() {
 		List<Player> targets = agent.getSensor(NearbyPlayersSensor.class).getPlayers();
-		target = targets.size() == 0 ? targets.iterator().next() : null;
+		target = targets.size() > 0 ? targets.iterator().next() : null;
 	}
 
 	@Override

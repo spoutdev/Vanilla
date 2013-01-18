@@ -75,6 +75,6 @@ public class NearbyPlayersSensor implements Sensor {
 	 * @return True if player detected, false if not.
 	 */
 	public boolean detectedPlayer() {
-		return state.get("hasNearbyPlayers");
+		return (Boolean) state.get("hasNearbyPlayers");
 	}
 }

@@ -29,6 +29,7 @@ package org.spout.vanilla.plugin.component.living;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.spout.api.ai.goap.GoapAIComponent;
 import org.spout.api.component.impl.NavigationComponent;
 import org.spout.api.component.impl.PhysicsComponent;
 import org.spout.api.entity.Entity;
@@ -52,6 +53,7 @@ public abstract class Living extends VanillaComponent {
 	private PhysicsComponent physics;
 	private DrowningComponent drowning;
 	private NavigationComponent navigation;
+	private GoapAIComponent ai;
 
 	@Override
 	public void onAttached() {
@@ -62,8 +64,9 @@ public abstract class Living extends VanillaComponent {
 		physics = holder.add(PhysicsComponent.class);
 		drowning = holder.add(DrowningComponent.class);
 		navigation = holder.add(NavigationComponent.class);
-		holder.add(FireComponent.class);
 		navigation.setDefaultExaminers(new VanillaBlockExaminer());
+		ai = holder.add(GoapAIComponent.class);
+		holder.add(FireComponent.class);
 		holder.setSavable(true);
 	}
 
@@ -93,6 +96,10 @@ public abstract class Living extends VanillaComponent {
 
 	public NavigationComponent getNavigation() {
 		return navigation;
+	}
+
+	public GoapAIComponent getAI() {
+		return ai;
 	}
 
 	public boolean isRiding() {

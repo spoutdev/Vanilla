@@ -26,13 +26,4 @@
  */
 package org.spout.vanilla.plugin.component.player.hud;
 
-import org.spout.api.gui.Widget;
-
-/**
- *
- * @author Craig <tenowg at thedemgel.com>
- */
-public interface CrosshairWidget {
-    
-    public void init(Widget crosshair, float scale, float start_X);
-}
+public abstract class CrosshairWidget extends GUIWidget {}

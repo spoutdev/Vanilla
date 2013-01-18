@@ -40,12 +40,9 @@ import org.spout.api.plugin.Platform;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.player.hud.ArmorWidget;
 import org.spout.vanilla.plugin.component.player.hud.CrosshairWidget;
+import org.spout.vanilla.plugin.component.player.hud.DrowningWidget;
 import org.spout.vanilla.plugin.component.player.hud.ExpBarWidget;
-import org.spout.vanilla.plugin.component.player.hud.VanillaHotBar;
 import org.spout.vanilla.plugin.component.player.hud.HotBarWidget;
-import org.spout.vanilla.plugin.component.player.hud.VanillaArmorWidget;
-import org.spout.vanilla.plugin.component.player.hud.VanillaCrosshair;
-import org.spout.vanilla.plugin.component.player.hud.VanillaExpBar;
 
 /**
  * Component attached to clients-only that updates the Heads Up Display.
@@ -61,11 +58,13 @@ public class HUDComponent extends EntityComponent {
     private final Widget hotbar = new Widget();
     private final Widget exp = new Widget();
     private final Widget armor = new Widget();
+    private final Widget air = new Widget();
     
     private HotBarWidget hotBar;
     private ArmorWidget armorWidget;
     private ExpBarWidget expBar;
     private CrosshairWidget crosshairWidget;
+    private DrowningWidget drowningWidget;
 
     @Override
     public void onAttached() {
@@ -75,15 +74,6 @@ public class HUDComponent extends EntityComponent {
         if (Spout.getPlatform() != Platform.CLIENT) {
             throw new IllegalStateException("This component is only attached to clients!");
         }
-
-        setDefault(VanillaHotBar.class);
-        setDefault(VanillaArmorWidget.class);
-        setDefault(VanillaExpBar.class);
-        setDefault(VanillaCrosshair.class);
-        initHUD();
-        // TODO: Call these methods in DrowningComponent, HealthComponent, etc.
-        setArmor(15);
-        setHotbarSlot(0);
     }
 
     public void setDefault(Class clazz) {
@@ -111,6 +101,10 @@ public class HUDComponent extends EntityComponent {
         if (widget instanceof CrosshairWidget) {
             crosshairWidget = (CrosshairWidget) widget;
         }
+        
+        if (widget instanceof DrowningWidget) {
+            drowningWidget = (DrowningWidget) widget;
+        }
     }
 
     public void attachWidget(Widget widget) {
@@ -127,7 +121,7 @@ public class HUDComponent extends EntityComponent {
      * @param amount Amount of armor to display
      */
     public void setArmor(int amount) {
-        armorWidget.setUpdateArmor(armor, amount);
+        armorWidget.update(amount);
     }
 
     /**
@@ -136,7 +130,7 @@ public class HUDComponent extends EntityComponent {
      * @param percent The advancement between 0 and 1
      */
     public void setExp(float percent) {
-        expBar.setExpBar(exp, percent, SCALE, START_X);
+        expBar.update(percent);
     }
 
     /**
@@ -145,9 +139,41 @@ public class HUDComponent extends EntityComponent {
      * @param slot Index of the slot to set
      */
     public void setHotbarSlot(int slot) {
-        hotBar.setHotbarSlot(hotbar, slot, SCALE);
+        hotBar.update(slot);
     }
 
+    public void setDrowning(float bub) {
+        drowningWidget.update(bub);
+    }
+    
+    public Widget getAirMeter() {
+        return air;
+    }
+    
+    public Widget getHotBar() {
+        return hotbar;
+    }
+    
+    public Widget getExpMeter() {
+        return exp;
+    }
+    
+    public Widget getArmorMeter() {
+        return armor;
+    }
+    
+    public Widget getCrosshair() {
+        return crosshair;
+    }
+    
+    public void setupHUD() {
+        initHUD();
+        setArmor(15);
+        setHotbarSlot(0);
+        setExp(0);
+        setDrowning(1f);
+    }
+    
     private void initHUD() {
         hud.setTakesInput(false);
 
@@ -166,11 +192,13 @@ public class HUDComponent extends EntityComponent {
         boolean survival = true;
         if (survival) {
             // Experience bar
-            setExp(0);
 
             // Armor bar
             armorWidget.init(armor, SCALE, START_X);
             hud.attachWidget(VanillaPlugin.getInstance(), armor);
+            
+            drowningWidget.init(air, SCALE, START_X);
+            hud.attachWidget(VanillaPlugin.getInstance(), air);
         }
 
         hud.attachWidget(VanillaPlugin.getInstance(), exp);

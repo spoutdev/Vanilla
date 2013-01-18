@@ -56,6 +56,11 @@ import org.spout.vanilla.plugin.component.misc.SleepComponent;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.component.player.PingComponent;
 import org.spout.vanilla.plugin.component.player.PlayerListComponent;
+import org.spout.vanilla.plugin.component.player.hud.VanillaArmorWidget;
+import org.spout.vanilla.plugin.component.player.hud.VanillaCrosshair;
+import org.spout.vanilla.plugin.component.player.hud.VanillaDrowning;
+import org.spout.vanilla.plugin.component.player.hud.VanillaExpBar;
+import org.spout.vanilla.plugin.component.player.hud.VanillaHotBar;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.event.block.RedstoneChangeEvent;
 import org.spout.vanilla.plugin.input.VanillaInputExecutor;
@@ -97,13 +102,21 @@ public class VanillaListener implements Listener {
 		}
 		Player player = ((Client) Spout.getEngine()).getActivePlayer();
 		player.add(Human.class);
-		player.add(HUDComponent.class).openHUD();
 		player.add(PlayerInventory.class);
 		player.add(WindowHolder.class);
 		player.add(CameraComponent.class).setSpeed(10f);
 		player.add(HealthComponent.class);
 		player.add(HungerComponent.class);
 		player.add(HitBlockComponent.class).setRange(5f);
+                
+                HUDComponent HUD = player.add(HUDComponent.class);
+                HUD.setDefault(VanillaArmorWidget.class);
+                HUD.setDefault(VanillaHotBar.class);
+                HUD.setDefault(VanillaCrosshair.class);
+                HUD.setDefault(VanillaExpBar.class);
+                HUD.setDefault(VanillaDrowning.class);
+                HUD.setupHUD();
+                HUD.openHUD();
 
 		((Client) Spout.getEngine()).getInputManager().addInputExecutors(new VanillaInputExecutor(player));
 	}

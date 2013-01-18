@@ -33,14 +33,11 @@ import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 
-/**
- *
- * @author Craig <tenowg at thedemgel.com>
- */
-public class VanillaArmorWidget implements ArmorWidget {
+public class VanillaArmorWidget extends ArmorWidget {
 
     @Override
     public void init(Widget armor, float scale, float start_X) {
+        super.init(armor, scale, start_X);
         final RenderPartsHolderComponent armorRect = armor.add(RenderPartsHolderComponent.class);
         float x = start_X;
         float dx = 0.06f * scale;
@@ -56,8 +53,8 @@ public class VanillaArmorWidget implements ArmorWidget {
     }
 
     @Override
-    public void setUpdateArmor(Widget armor, int amount) {
-        RenderPartsHolderComponent armorRect = armor.get(RenderPartsHolderComponent.class);
+    public void update(int amount) {
+        RenderPartsHolderComponent armorRect = widget.get(RenderPartsHolderComponent.class);
 
         if (amount == 0) {
             for (RenderPart armorPart : armorRect.getRenderParts()) {
@@ -79,6 +76,15 @@ public class VanillaArmorWidget implements ArmorWidget {
             }
         }
         
-        armor.update();
+        widget.update();
+    }
+
+    @Override
+    public void animate() {
+    }
+
+    @Override
+    public void update(float percent) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

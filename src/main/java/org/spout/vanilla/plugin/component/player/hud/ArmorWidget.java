@@ -26,15 +26,6 @@
  */
 package org.spout.vanilla.plugin.component.player.hud;
 
-import org.spout.api.gui.Widget;
+public abstract class ArmorWidget extends GUIWidget {
 
-/**
- *
- * @author Craig <tenowg at thedemgel.com>
- */
-public interface ArmorWidget {
-
-    public void init(Widget armor, float scale, float start_X);
-
-    public void setUpdateArmor(Widget armor, int amount);
 }

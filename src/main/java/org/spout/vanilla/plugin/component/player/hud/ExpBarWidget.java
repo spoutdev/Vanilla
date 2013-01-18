@@ -26,15 +26,5 @@
  */
 package org.spout.vanilla.plugin.component.player.hud;
 
-import org.spout.api.gui.Widget;
-
-/**
- *
- * @author Craig <tenowg at thedemgel.com>
- */
-public interface ExpBarWidget {
-    
-    public void init(Widget exp, float scale, float start_X);
-
-    public void setExpBar(Widget exp, float percent, float scale, float start_X);
+public abstract class ExpBarWidget extends GUIWidget {
 }

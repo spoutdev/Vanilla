@@ -46,6 +46,7 @@ import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DiggingComponent;
+import org.spout.vanilla.plugin.component.misc.DrowningComponent;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.component.misc.PickupItemComponent;
@@ -72,6 +73,7 @@ public class Human extends Living {
 		Entity holder = getOwner();
 		holder.add(PickupItemComponent.class);
 		holder.add(DiggingComponent.class);
+                holder.add(DrowningComponent.class);
 		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
 		//Add height offset if loading from disk
 		//		if (holder instanceof Player) {

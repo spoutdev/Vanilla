@@ -35,16 +35,13 @@ import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 
-/**
- *
- * @author Craig <tenowg at thedemgel.com>
- */
-public class VanillaHotBar implements HotBarWidget {
+public class VanillaHotBar extends HotBarWidget {
 
     @Override
     public void init(Widget hotbar, float scale, float start_X) {
+        super.init(hotbar, scale, start_X);
         // Setup the hotbar
-        final RenderPartsHolderComponent hotbarRect = hotbar.add(RenderPartsHolderComponent.class);
+        final RenderPartsHolderComponent hotbarRect = widget.add(RenderPartsHolderComponent.class);
         final RenderPart hotbarBgRect = new RenderPart();
         hotbarBgRect.setRenderMaterial(VanillaRenderMaterials.HOTBAR_MATERIAL);
         hotbarBgRect.setColor(Color.WHITE);
@@ -65,13 +62,23 @@ public class VanillaHotBar implements HotBarWidget {
      * @param slot Index of the slot to set
      */
     @Override
-    public void setHotbarSlot(Widget hotbar, int slot, float scale) {
+    public void update(int slot) {
         if (slot < 0 || slot > 8) {
             throw new IllegalArgumentException("Slot must be between 0 and 8");
         }
 
-        final RenderPart rect = hotbar.get(RenderPartsHolderComponent.class).get(1);
-        rect.setSprite(new Rectangle(-0.72f * scale + (slot * .1175f), -1.005f, 0.24f * scale, 0.24f * scale));
-        hotbar.update();
+        final RenderPart rect = widget.get(RenderPartsHolderComponent.class).get(1);
+        rect.setSprite(new Rectangle(-0.72f * SCALE + (slot * .1175f), -1.005f, 0.24f * SCALE, 0.24f * SCALE));
+        widget.update();
+    }
+
+    @Override
+    public void update(float percent) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void animate() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

@@ -54,6 +54,7 @@ public class NearbyPlayersSensor implements Sensor {
 	public WorldState generateState() {
 		ArrayList<Player> players = new ArrayList<Player>();
 		for (Player player : agent.getEntity().getWorld().getNearbyPlayers(agent.getEntity(), radius)) {
+			System.out.println("Sensed player: " + player.toString());
 			players.add(player);
 		}
 		boolean hasThreat = players.size() > 0;

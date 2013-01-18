@@ -37,6 +37,7 @@ import org.spout.vanilla.api.component.Hostile;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.ai.action.ActionAttack;
+import org.spout.vanilla.plugin.ai.goal.AttackPlayerGoal;
 import org.spout.vanilla.plugin.ai.sensor.NearbyPlayersSensor;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DamageComponent;
@@ -71,9 +72,12 @@ public class Zombie extends Living implements Hostile {
 		damage.getDamageLevel(Difficulty.NORMAL).setAmount(4);
 		damage.getDamageLevel(Difficulty.HARD).setAmount(6);
 		damage.getDamageLevel(Difficulty.HARDCORE).setAmount(damage.getDamageLevel(Difficulty.HARD).getAmount());
+		final NearbyPlayersSensor playersSensor = new NearbyPlayersSensor(getAI());
+		playersSensor.setSensorRadius(10);
+		getAI().registerSensor(playersSensor);
 		//Go attack nearby players AI
+		getAI().registerGoal(new AttackPlayerGoal(getAI()));
 		getAI().registerAction(new ActionAttack(getAI()));
-		getAI().registerSensor(new NearbyPlayersSensor(getAI()));
 	}
 
 	/**

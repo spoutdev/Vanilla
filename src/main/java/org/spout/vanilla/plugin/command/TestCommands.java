@@ -581,11 +581,6 @@ public class TestCommands {
 				entity = skeletonPrefab.createEntity(pos);
 			}
 		}
-		//For testing
-		if (!clazz.equals(XPOrb.class)) {
-			FollowComponent follow = entity.add(FollowComponent.class);
-			follow.findAndFollow(true, 5);
-		}
 		if (Spout.getPlatform() == Platform.SERVER && Spout.debugMode()) {
 			entity.add(TransformDebugComponent.class);
 		}

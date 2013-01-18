@@ -44,7 +44,7 @@ import org.spout.vanilla.plugin.ai.sensor.NearbyPlayersSensor;
  * onCollided.
  */
 public class ActionAttack implements Action {
-	private static final WorldState EFFECTS = WorldState.createImmutable("hasPlayer", false);
+	private static final WorldState EFFECTS = WorldState.createImmutable("hasNearbyPlayers", false);
 	private final PlannerAgent agent;
 	private Player target;
 
@@ -56,6 +56,7 @@ public class ActionAttack implements Action {
 	public void activate() {
 		List<Player> targets = agent.getSensor(NearbyPlayersSensor.class).getPlayers();
 		target = targets.size() > 0 ? targets.iterator().next() : null;
+		System.out.println(target);
 	}
 
 	@Override
@@ -75,7 +76,7 @@ public class ActionAttack implements Action {
 
 	@Override
 	public WorldState getPreconditions() {
-		return WorldState.createEmptyState();
+		return EFFECTS;
 	}
 
 	@Override
@@ -91,6 +92,7 @@ public class ActionAttack implements Action {
 			return;
 		}
 		//Gogo, get that fool!
-		navi.setDestination(agent.getEntity().getTransform().getPosition());
+		System.out.println("Commencing navigation");
+		navi.setDestination(target.getTransform().getPosition());
 	}
 }

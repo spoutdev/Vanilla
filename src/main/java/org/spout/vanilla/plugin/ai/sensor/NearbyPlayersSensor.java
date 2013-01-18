@@ -43,6 +43,7 @@ import org.spout.api.entity.Player;
 public class NearbyPlayersSensor implements Sensor {
 	private final PlannerAgent agent;
 	private final WorldState state;
+	private int radius;
 
 	public NearbyPlayersSensor(PlannerAgent agent) {
 		this.agent = agent;
@@ -52,7 +53,7 @@ public class NearbyPlayersSensor implements Sensor {
 	@Override
 	public WorldState generateState() {
 		ArrayList<Player> players = new ArrayList<Player>();
-		for (Player player : agent.getEntity().getWorld().getNearbyPlayers(agent.getEntity(), 10)) {
+		for (Player player : agent.getEntity().getWorld().getNearbyPlayers(agent.getEntity(), radius)) {
 			players.add(player);
 		}
 		boolean hasThreat = players.size() > 0;
@@ -76,5 +77,21 @@ public class NearbyPlayersSensor implements Sensor {
 	 */
 	public boolean detectedPlayer() {
 		return (Boolean) state.get("hasNearbyPlayers");
+	}
+
+	/**
+	 * Sets the radius the sensor will scan for players.
+	 * @param radius radius to scan for players
+	 */
+	public void setSensorRadius(int radius) {
+		this.radius = radius;
+	}
+
+	/**
+	 * Gets the radius this sensor will scan for.
+	 * @return radius the sensor scans for.
+	 */
+	public int getSensorRadius() {
+		return radius;
 	}
 }

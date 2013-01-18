@@ -26,6 +26,9 @@
  */
 package org.spout.vanilla.plugin.ai.action;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.spout.api.ai.goap.Action;
 import org.spout.api.ai.goap.PlannerAgent;
 import org.spout.api.ai.goap.WorldState;
@@ -51,7 +54,8 @@ public class ActionAttack implements Action {
 
 	@Override
 	public void activate() {
-		target = agent.getSensor(NearbyPlayersSensor.class).getPlayers().iterator().next();
+		List<Player> targets = agent.getSensor(NearbyPlayersSensor.class).getPlayers();
+		target = targets.size() == 0 ? targets.iterator().next() : null;
 	}
 
 	@Override

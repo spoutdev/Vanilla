@@ -65,6 +65,7 @@ import org.spout.vanilla.plugin.protocol.msg.player.PlayerGameStateMessage;
  * A component that identifies the entity as a Vanilla player.
  */
 public class Human extends Living {
+
 	public static final int SPAWN_HEALTH = 20;
 
 	@Override
@@ -73,7 +74,7 @@ public class Human extends Living {
 		Entity holder = getOwner();
 		holder.add(PickupItemComponent.class);
 		holder.add(DiggingComponent.class);
-                holder.add(DrowningComponent.class);
+		holder.add(DrowningComponent.class);
 		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
 		//Add height offset if loading from disk
 		//		if (holder instanceof Player) {
@@ -141,7 +142,9 @@ public class Human extends Living {
 	}
 
 	/**
-	 * Drops the item specified into the direction the player looks, with slight randomness
+	 * Drops the item specified into the direction the player looks, with
+	 * slight randomness
+	 *
 	 * @param item to drop
 	 */
 	public void dropItem(ItemStack item) {
@@ -305,7 +308,7 @@ public class Human extends Living {
 			changeToFromCreative ^= event.getMode() == GameMode.CREATIVE;
 			GameMode old = getGameMode();
 			mode = event.getMode();
-			
+
 			//In Survival we shoudn't be able to fly.
 			setCanFly(mode == GameMode.CREATIVE);
 			if (changeToFromCreative) {

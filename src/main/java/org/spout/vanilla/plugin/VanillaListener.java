@@ -104,19 +104,19 @@ public class VanillaListener implements Listener {
 		player.add(Human.class);
 		player.add(PlayerInventory.class);
 		player.add(WindowHolder.class);
-		player.add(CameraComponent.class).setSpeed(10f);
+                player.add(CameraComponent.class).setSpeed(10f);
 		player.add(HealthComponent.class);
 		player.add(HungerComponent.class);
 		player.add(HitBlockComponent.class).setRange(5f);
                 
-                HUDComponent HUD = player.add(HUDComponent.class);
-                HUD.setDefault(VanillaArmorWidget.class);
-                HUD.setDefault(VanillaHotBar.class);
-                HUD.setDefault(VanillaCrosshair.class);
-                HUD.setDefault(VanillaExpBar.class);
-                HUD.setDefault(VanillaDrowning.class);
-                HUD.setupHUD();
-                HUD.openHUD();
+		HUDComponent HUD = player.add(HUDComponent.class);
+		HUD.setDefault(VanillaArmorWidget.class);
+		HUD.setDefault(VanillaHotBar.class);
+		HUD.setDefault(VanillaCrosshair.class);
+		HUD.setDefault(VanillaExpBar.class);
+		HUD.setDefault(VanillaDrowning.class);
+		HUD.setupHUD();
+		HUD.openHUD();
 
 		((Client) Spout.getEngine()).getInputManager().addInputExecutors(new VanillaInputExecutor(player));
 	}

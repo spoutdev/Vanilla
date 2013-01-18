@@ -49,158 +49,157 @@ import org.spout.vanilla.plugin.component.player.hud.HotBarWidget;
  */
 public class HUDComponent extends EntityComponent {
 
-    private static final float SCALE = 0.75f; // TODO: Apply directly from engine
-    private static final float START_X = -0.71f * SCALE;
-    // The main hud screen
-    private final Screen hud = new Screen();
-    // The core elements of the main hud
-    private final Widget crosshair = new Widget();
-    private final Widget hotbar = new Widget();
-    private final Widget exp = new Widget();
-    private final Widget armor = new Widget();
-    private final Widget air = new Widget();
-    
-    private HotBarWidget hotBar;
-    private ArmorWidget armorWidget;
-    private ExpBarWidget expBar;
-    private CrosshairWidget crosshairWidget;
-    private DrowningWidget drowningWidget;
+	private static final float SCALE = 0.75f; // TODO: Apply directly from engine
+	private static final float START_X = -0.71f * SCALE;
+	// The main hud screen
+	private final Screen hud = new Screen();
+	// The core elements of the main hud
+	private final Widget crosshair = new Widget();
+	private final Widget hotbar = new Widget();
+	private final Widget exp = new Widget();
+	private final Widget armor = new Widget();
+	private final Widget air = new Widget();
+	private HotBarWidget hotBar;
+	private ArmorWidget armorWidget;
+	private ExpBarWidget expBar;
+	private CrosshairWidget crosshairWidget;
+	private DrowningWidget drowningWidget;
 
-    @Override
-    public void onAttached() {
-        if (!(getOwner() instanceof Player)) {
-            throw new IllegalStateException("May only attach this component to players!");
-        }
-        if (Spout.getPlatform() != Platform.CLIENT) {
-            throw new IllegalStateException("This component is only attached to clients!");
-        }
-    }
+	@Override
+	public void onAttached() {
+		if (!(getOwner() instanceof Player)) {
+			throw new IllegalStateException("May only attach this component to players!");
+		}
+		if (Spout.getPlatform() != Platform.CLIENT) {
+			throw new IllegalStateException("This component is only attached to clients!");
+		}
+	}
 
-    public void setDefault(Class clazz) {
-        Object widget = new Object();
-        try {
-            widget = clazz.newInstance();
-        } catch (InstantiationException ex) {
-            Logger.getLogger(HUDComponent.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(HUDComponent.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        if (widget instanceof HotBarWidget) {
-            hotBar = (HotBarWidget)widget;
-        }
-        
-        if (widget instanceof ArmorWidget) {
-            armorWidget = (ArmorWidget) widget;
-        }
-        
-        if (widget instanceof ExpBarWidget) {
-            expBar = (ExpBarWidget) widget;
-        }
-        
-        if (widget instanceof CrosshairWidget) {
-            crosshairWidget = (CrosshairWidget) widget;
-        }
-        
-        if (widget instanceof DrowningWidget) {
-            drowningWidget = (DrowningWidget) widget;
-        }
-    }
+	public void setDefault(Class clazz) {
+		Object widget = new Object();
+		try {
+			widget = clazz.newInstance();
+		} catch (InstantiationException ex) {
+			Logger.getLogger(HUDComponent.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (IllegalAccessException ex) {
+			Logger.getLogger(HUDComponent.class.getName()).log(Level.SEVERE, null, ex);
+		}
 
-    public void attachWidget(Widget widget) {
-        hud.attachWidget(VanillaPlugin.getInstance(), widget);
-    }
+		if (widget instanceof HotBarWidget) {
+			hotBar = (HotBarWidget) widget;
+		}
 
-    public void openHUD() {
-        ((Client) Spout.getEngine()).getScreenStack().openScreen(hud);
-    }
+		if (widget instanceof ArmorWidget) {
+			armorWidget = (ArmorWidget) widget;
+		}
 
-    /**
-     * Sets the amount of armor to display.
-     *
-     * @param amount Amount of armor to display
-     */
-    public void setArmor(int amount) {
-        armorWidget.update(amount);
-    }
+		if (widget instanceof ExpBarWidget) {
+			expBar = (ExpBarWidget) widget;
+		}
 
-    /**
-     * Modify the advancement of the xp bar.
-     *
-     * @param percent The advancement between 0 and 1
-     */
-    public void setExp(float percent) {
-        expBar.update(percent);
-    }
+		if (widget instanceof CrosshairWidget) {
+			crosshairWidget = (CrosshairWidget) widget;
+		}
 
-    /**
-     * Sets the selected hotbar slot.
-     *
-     * @param slot Index of the slot to set
-     */
-    public void setHotbarSlot(int slot) {
-        hotBar.update(slot);
-    }
+		if (widget instanceof DrowningWidget) {
+			drowningWidget = (DrowningWidget) widget;
+		}
+	}
 
-    public void setDrowning(float bub) {
-        drowningWidget.update(bub);
-    }
-    
-    public Widget getAirMeter() {
-        return air;
-    }
-    
-    public Widget getHotBar() {
-        return hotbar;
-    }
-    
-    public Widget getExpMeter() {
-        return exp;
-    }
-    
-    public Widget getArmorMeter() {
-        return armor;
-    }
-    
-    public Widget getCrosshair() {
-        return crosshair;
-    }
-    
-    public void setupHUD() {
-        initHUD();
-        setArmor(15);
-        setHotbarSlot(0);
-        setExp(0);
-        setDrowning(1f);
-    }
-    
-    private void initHUD() {
-        hud.setTakesInput(false);
+	public void attachWidget(Widget widget) {
+		hud.attachWidget(VanillaPlugin.getInstance(), widget);
+	}
 
-        // Setup crosshairs
-        crosshairWidget.init(crosshair, SCALE, START_X);
-        hud.attachWidget(VanillaPlugin.getInstance(), crosshair);
+	public void openHUD() {
+		((Client) Spout.getEngine()).getScreenStack().openScreen(hud);
+	}
 
-        // Setup the hotbar
-        hotBar.init(hotbar, SCALE, START_X);
-        hud.attachWidget(VanillaPlugin.getInstance(), hotbar);
+	/**
+	 * Sets the amount of armor to display.
+	 *
+	 * @param amount Amount of armor to display
+	 */
+	public void setArmor(int amount) {
+		armorWidget.update(amount);
+	}
 
-        // Experience level text
-        expBar.init(exp, SCALE, START_X);
+	/**
+	 * Modify the advancement of the xp bar.
+	 *
+	 * @param percent The advancement between 0 and 1
+	 */
+	public void setExp(float percent) {
+		expBar.update(percent);
+	}
 
-        // Setup survival-specific hud components
-        boolean survival = true;
-        if (survival) {
-            // Experience bar
+	/**
+	 * Sets the selected hotbar slot.
+	 *
+	 * @param slot Index of the slot to set
+	 */
+	public void setHotbarSlot(int slot) {
+		hotBar.update(slot);
+	}
 
-            // Armor bar
-            armorWidget.init(armor, SCALE, START_X);
-            hud.attachWidget(VanillaPlugin.getInstance(), armor);
-            
-            drowningWidget.init(air, SCALE, START_X);
-            hud.attachWidget(VanillaPlugin.getInstance(), air);
-        }
+	public void setDrowning(float bub) {
+		drowningWidget.update(bub);
+	}
 
-        hud.attachWidget(VanillaPlugin.getInstance(), exp);
-    }
+	public Widget getAirMeter() {
+		return air;
+	}
+
+	public Widget getHotBar() {
+		return hotbar;
+	}
+
+	public Widget getExpMeter() {
+		return exp;
+	}
+
+	public Widget getArmorMeter() {
+		return armor;
+	}
+
+	public Widget getCrosshair() {
+		return crosshair;
+	}
+
+	public void setupHUD() {
+		initHUD();
+		setArmor(15);
+		setHotbarSlot(0);
+		setExp(0);
+		setDrowning(1f);
+	}
+
+	private void initHUD() {
+		hud.setTakesInput(false);
+
+		// Setup crosshairs
+		crosshairWidget.init(crosshair, SCALE, START_X);
+		hud.attachWidget(VanillaPlugin.getInstance(), crosshair);
+
+		// Setup the hotbar
+		hotBar.init(hotbar, SCALE, START_X);
+		hud.attachWidget(VanillaPlugin.getInstance(), hotbar);
+
+		// Experience level text
+		expBar.init(exp, SCALE, START_X);
+
+		// Setup survival-specific hud components
+		boolean survival = true;
+		if (survival) {
+			// Experience bar
+
+			// Armor bar
+			armorWidget.init(armor, SCALE, START_X);
+			hud.attachWidget(VanillaPlugin.getInstance(), armor);
+
+			drowningWidget.init(air, SCALE, START_X);
+			hud.attachWidget(VanillaPlugin.getInstance(), air);
+		}
+
+		hud.attachWidget(VanillaPlugin.getInstance(), exp);
+	}
 }

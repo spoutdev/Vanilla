@@ -35,52 +35,52 @@ import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 
 public class VanillaDrowning extends DrowningWidget {
 
-    @Override
-    public void init(Widget drowning, float scale, float start_X) {
-        super.init(drowning, scale, start_X);
+	@Override
+	public void init(Widget drowning, float scale, float start_X) {
+		super.init(drowning, scale, start_X);
 
-        final RenderPartsHolderComponent bubblesRect = widget.add(RenderPartsHolderComponent.class);
-        float x = 0.09f * SCALE;
-        float dx = 0.06f * SCALE;
-        for (int i = 0; i < 10; i++) {
-            final RenderPart bubble = new RenderPart();
-            bubble.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
-            bubble.setColor(Color.WHITE);
-            bubble.setSprite(new Rectangle(x, -0.69f, 0.06f * SCALE, 0.06f));
-            bubble.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f));
-            bubblesRect.add(bubble);
-            x += dx;
-        }
-    }
+		final RenderPartsHolderComponent bubblesRect = widget.add(RenderPartsHolderComponent.class);
+		float x = 0.09f * SCALE;
+		float dx = 0.06f * SCALE;
+		for (int i = 0; i < 10; i++) {
+			final RenderPart bubble = new RenderPart();
+			bubble.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
+			bubble.setColor(Color.WHITE);
+			bubble.setSprite(new Rectangle(x, -0.69f, 0.06f * SCALE, 0.06f));
+			bubble.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f));
+			bubblesRect.add(bubble);
+			x += dx;
+		}
+	}
 
-    @Override
-    public void update(int amount) {
-    }
+	@Override
+	public void update(int amount) {
+	}
 
-    @Override
-    public void update(float nbBubExact) {
-        final int nbBub = (int) nbBubExact;
-        int bubId = 0;
-        for (RenderPart bub : widget.get(RenderPartsHolderComponent.class).getRenderParts()) {
-            if (bubId > nbBub) {
-                bub.setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Empty
-            } else if (bubId == nbBub) {
-                if (nbBubExact - nbBub >= 0.02f) {
-                    bub.setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Empty
-                } else {
-                    bub.setSource(new Rectangle(25f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Explode
-                }
-            } else {
-                bub.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Full
-            }
-            bubId++;
-        }
-        
-        widget.update();
-    }
+	@Override
+	public void update(float nbBubExact) {
+		final int nbBub = (int) nbBubExact;
+		int bubId = 0;
+		for (RenderPart bub : widget.get(RenderPartsHolderComponent.class).getRenderParts()) {
+			if (bubId > nbBub) {
+				bub.setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Empty
+			} else if (bubId == nbBub) {
+				if (nbBubExact - nbBub >= 0.02f) {
+					bub.setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Empty
+				} else {
+					bub.setSource(new Rectangle(25f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Explode
+				}
+			} else {
+				bub.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Full
+			}
+			bubId++;
+		}
 
-    @Override
-    public void animate() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+		widget.update();
+	}
+
+	@Override
+	public void animate() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }

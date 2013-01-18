@@ -26,4 +26,5 @@
  */
 package org.spout.vanilla.plugin.component.player.hud;
 
-public abstract class CrosshairWidget extends GUIWidget {}
+public abstract class CrosshairWidget extends GUIWidget {
+}

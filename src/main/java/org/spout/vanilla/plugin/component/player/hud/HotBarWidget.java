@@ -26,4 +26,5 @@
  */
 package org.spout.vanilla.plugin.component.player.hud;
 
-public abstract class HotBarWidget extends GUIWidget {}
+public abstract class HotBarWidget extends GUIWidget {
+}

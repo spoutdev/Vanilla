@@ -53,6 +53,7 @@ import org.spout.vanilla.plugin.material.block.liquid.Water;
  * The drowning component requires a health component and head component
  */
 public class DrowningComponent extends EntityComponent {
+
 	private Entity owner;
 	private HealthComponent health;
 	private HeadComponent head;
@@ -103,14 +104,14 @@ public class DrowningComponent extends EntityComponent {
 					return;
 				}
 				// Animate air meter
-                                setAir(5);
+				setAir(5);
 				final float maxSecsBubbles = VanillaData.AIR_SECS.getDefaultValue();
 				final float secsBubbles = getData().get(VanillaData.AIR_SECS);
 				if (secsBubbles == maxSecsBubbles) {
 					hideBubbles();
 				} else {
 					final float nbBubExact = secsBubbles / maxSecsBubbles * 10f;
-                                        getOwner().add(HUDComponent.class).setDrowning(nbBubExact);
+					getOwner().add(HUDComponent.class).setDrowning(nbBubExact);
 				}
 				break;
 		}
@@ -120,16 +121,16 @@ public class DrowningComponent extends EntityComponent {
 		for (RenderPart bubble : getOwner().add(HUDComponent.class).getAirMeter().getRenderParts()) {
 			bubble.setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Empty
 		}
-                
-                getOwner().add(HUDComponent.class).getAirMeter().update();
+
+		getOwner().add(HUDComponent.class).getAirMeter().update();
 	}
 
 	public void showBubbles() {
 		for (RenderPart bubble : getOwner().add(HUDComponent.class).getAirMeter().getRenderParts()) {
 			bubble.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Full
 		}
-                
-                getOwner().add(HUDComponent.class).getAirMeter().update();
+
+		getOwner().add(HUDComponent.class).getAirMeter().update();
 	}
 
 	public float getAir() {

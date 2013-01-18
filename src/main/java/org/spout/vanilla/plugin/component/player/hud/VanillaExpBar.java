@@ -38,49 +38,48 @@ import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 
 public class VanillaExpBar extends ExpBarWidget {
 
-    @Override
-    public void init(Widget exp, float scale, float start_X) {
-        super.init(exp, scale, start_X);
-        final LabelComponent lvlTxt = widget.add(LabelComponent.class);
-        widget.setGeometry(new Rectangle(-0.02f, -0.79f, 0, 0));
-        lvlTxt.setFont(VanillaRenderMaterials.FONT);
-        lvlTxt.setText(new ChatArguments(ChatStyle.BRIGHT_GREEN, "50"));
+	@Override
+	public void init(Widget exp, float scale, float start_X) {
+		super.init(exp, scale, start_X);
+		final LabelComponent lvlTxt = widget.add(LabelComponent.class);
+		widget.setGeometry(new Rectangle(-0.02f, -0.79f, 0, 0));
+		lvlTxt.setFont(VanillaRenderMaterials.FONT);
+		lvlTxt.setText(new ChatArguments(ChatStyle.BRIGHT_GREEN, "50"));
 
-        // Setup survival-specific hud components
-        boolean survival = true;
-        if (survival) {
-            // Experience bar
-            final RenderPartsHolderComponent expRect = widget.add(RenderPartsHolderComponent.class);
-            final RenderPart expBgRect = new RenderPart();
-            expBgRect.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
-            expBgRect.setColor(Color.WHITE);
-            expBgRect.setSprite(new Rectangle(START_X, -0.82f, 1.81f * SCALE, 0.04f));
-            expBgRect.setSource(new Rectangle(0, 64f / 256f, 0.91f, 0.019f));
-            expRect.add(expBgRect);
+		// Setup survival-specific hud components
+		boolean survival = true;
+		if (survival) {
+			// Experience bar
+			final RenderPartsHolderComponent expRect = widget.add(RenderPartsHolderComponent.class);
+			final RenderPart expBgRect = new RenderPart();
+			expBgRect.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
+			expBgRect.setColor(Color.WHITE);
+			expBgRect.setSprite(new Rectangle(START_X, -0.82f, 1.81f * SCALE, 0.04f));
+			expBgRect.setSource(new Rectangle(0, 64f / 256f, 0.91f, 0.019f));
+			expRect.add(expBgRect);
 
-            final RenderPart expBarRect = new RenderPart();
-            expBarRect.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
-            expBarRect.setColor(Color.WHITE);
-            expRect.add(expBarRect);
-        }
-    }
+			final RenderPart expBarRect = new RenderPart();
+			expBarRect.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
+			expBarRect.setColor(Color.WHITE);
+			expRect.add(expBarRect);
+		}
+	}
 
-    @Override
-    public void update(float percent) {
-        final RenderPart rect = widget.get(RenderPartsHolderComponent.class).get(1);
-        rect.setSprite(new Rectangle(START_X, -0.82f, 1.81f * SCALE * percent, 0.04f));
-        rect.setSource(new Rectangle(0, 69f / 256f, 182f / 256f * percent, 5f / 256f));
-        widget.update();
-    }
+	@Override
+	public void update(float percent) {
+		final RenderPart rect = widget.get(RenderPartsHolderComponent.class).get(1);
+		rect.setSprite(new Rectangle(START_X, -0.82f, 1.81f * SCALE * percent, 0.04f));
+		rect.setSource(new Rectangle(0, 69f / 256f, 182f / 256f * percent, 5f / 256f));
+		widget.update();
+	}
 
-    @Override
-    public void animate() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public void animate() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-    @Override
-    public void update(int amount) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
+	@Override
+	public void update(int amount) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }

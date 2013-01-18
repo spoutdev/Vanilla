@@ -29,19 +29,20 @@ package org.spout.vanilla.plugin.component.player.hud;
 import org.spout.api.gui.Widget;
 
 public abstract class GUIWidget {
-    protected float SCALE;
-    protected float START_X;
-    protected Widget widget;
 
-    public void init(Widget widget, float scale, float start_X) {
-        SCALE = scale;
-        START_X = start_X;
-        this.widget = widget;
-    }
+	protected float SCALE;
+	protected float START_X;
+	protected Widget widget;
 
-    public abstract void update(int amount);
-    
-    public abstract void update(float percent);
-    
-    public abstract void animate();
+	public void init(Widget widget, float scale, float start_X) {
+		SCALE = scale;
+		START_X = start_X;
+		this.widget = widget;
+	}
+
+	public abstract void update(int amount);
+
+	public abstract void update(float percent);
+
+	public abstract void animate();
 }

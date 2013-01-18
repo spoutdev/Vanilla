@@ -34,29 +34,28 @@ import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 
 public class VanillaCrosshair extends CrosshairWidget {
 
-    @Override
-    public void init(Widget crosshair, float scale, float start_X) {
-        super.init(widget, scale, start_X);
-        final TexturedRectComponent crosshairRect = crosshair.add(TexturedRectComponent.class);
-        crosshairRect.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
-        crosshairRect.setColor(Color.WHITE);
-        crosshairRect.setSprite(new Rectangle(-0.0625f * SCALE, -0.0625f, 0.125f * SCALE, 0.125f));
-        crosshairRect.setSource(new Rectangle(0f / 256f, 0f / 256f, 16f / 256f, 16f / 256f));
-    }
+	@Override
+	public void init(Widget crosshair, float scale, float start_X) {
+		super.init(widget, scale, start_X);
+		final TexturedRectComponent crosshairRect = crosshair.add(TexturedRectComponent.class);
+		crosshairRect.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
+		crosshairRect.setColor(Color.WHITE);
+		crosshairRect.setSprite(new Rectangle(-0.0625f * SCALE, -0.0625f, 0.125f * SCALE, 0.125f));
+		crosshairRect.setSource(new Rectangle(0f / 256f, 0f / 256f, 16f / 256f, 16f / 256f));
+	}
 
-    @Override
-    public void update(int amount) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public void update(int amount) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-    @Override
-    public void update(float percent) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	@Override
+	public void update(float percent) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 
-    @Override
-    public void animate() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
+	@Override
+	public void animate() {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 }

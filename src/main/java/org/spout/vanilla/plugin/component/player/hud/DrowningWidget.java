@@ -27,5 +27,4 @@
 package org.spout.vanilla.plugin.component.player.hud;
 
 public abstract class DrowningWidget extends GUIWidget {
-
 }

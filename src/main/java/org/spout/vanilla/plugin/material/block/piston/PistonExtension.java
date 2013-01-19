@@ -35,9 +35,9 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.api.data.MoveReaction;
 import org.spout.vanilla.api.material.block.Directional;
 
-import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 
-public class PistonExtension extends Solid implements Directional {
+public class PistonExtension extends VanillaBlockMaterial implements Directional {
 	public PistonExtension(String name, int id) {
 		super(name, id, null);
 		this.setHardness(0.5F).setResistance(0.8F).setTransparent();

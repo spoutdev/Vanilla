@@ -64,6 +64,7 @@ import org.spout.vanilla.plugin.input.VanillaInputExecutor;
 import org.spout.vanilla.plugin.protocol.PasteExceptionHandler;
 
 public class VanillaListener implements Listener {
+	@SuppressWarnings("unused")
 	private final VanillaPlugin plugin;
 
 	public VanillaListener(VanillaPlugin plugin) {

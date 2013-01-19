@@ -34,6 +34,7 @@ import org.spout.api.component.impl.TextModelComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
+import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.MathHelper;
@@ -52,7 +53,9 @@ import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.component.misc.PickupItemComponent;
 import org.spout.vanilla.plugin.component.substance.Item;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
+import org.spout.vanilla.plugin.configuration.WorldConfigurationNode;
 import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.data.ViewDistance;
 import org.spout.vanilla.plugin.event.entity.HumanAbilityChangeEvent;
 import org.spout.vanilla.plugin.event.player.PlayerGameModeChangedEvent;
 import org.spout.vanilla.plugin.event.player.network.PlayerAbilityUpdateEvent;
@@ -85,6 +88,24 @@ public class Human extends Living {
 			getOwner().get(TextModelComponent.class).setSize(0.5f);
 			getOwner().get(TextModelComponent.class).setTranslation(new Vector3(0, 3f, 0));
 		}
+	}
+
+	public ViewDistance getViewDistance() {
+		return getData().get(VanillaData.VIEW_DISTANCE);
+	}
+
+	public void setViewDistance(ViewDistance distance) {
+		getData().put(VanillaData.VIEW_DISTANCE, distance);
+		WorldConfigurationNode config = VanillaConfiguration.WORLDS.get(getOwner().getWorld().getName());
+		int viewDistance;
+		switch(distance) {
+			case FAR: viewDistance = config.FAR_VIEW_DISTANCE.getInt(); break;
+			case NORMAL: viewDistance = config.NORMAL_VIEW_DISTANCE.getInt(); break;
+			case SHORT: viewDistance = config.SHORT_VIEW_DISTANCE.getInt(); break;
+			case TINY: viewDistance = config.TINY_VIEW_DISTANCE.getInt(); break;
+			default: viewDistance = config.NORMAL_VIEW_DISTANCE.getInt(); break;
+		}
+		getOwner().setViewDistance(viewDistance * Chunk.BLOCKS.SIZE);
 	}
 
 	public boolean isAdventure() {

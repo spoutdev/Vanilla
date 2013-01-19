@@ -47,6 +47,10 @@ public final class WorldConfigurationNode extends ConfigurationHolderConfigurati
 	public final ConfigurationHolder MIN_Y = new ConfigurationHolder(32, "min-y");
 	public final ConfigurationHolder MAX_Y = new ConfigurationHolder(224, "max-y");
 	public final ConfigurationHolder STEP_Y = new ConfigurationHolder(160, "step-y");
+	public final ConfigurationHolder FAR_VIEW_DISTANCE = new ConfigurationHolder(10, "view-distance", "far");
+	public final ConfigurationHolder NORMAL_VIEW_DISTANCE = new ConfigurationHolder(7, "view-distance", "normal");
+	public final ConfigurationHolder SHORT_VIEW_DISTANCE = new ConfigurationHolder(5, "view-distance", "short");
+	public final ConfigurationHolder TINY_VIEW_DISTANCE = new ConfigurationHolder(3, "view-distance", "tiny");
 	private final String name;
 	private final WorldConfiguration parent;
 

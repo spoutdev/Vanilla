@@ -40,6 +40,7 @@ import org.spout.vanilla.plugin.protocol.handler.player.PlayerChatHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerDiggingHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerGroundHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerHeldItemChangeHandler;
+import org.spout.vanilla.plugin.protocol.handler.player.PlayerLocaleViewDistanceHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerLookHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerPositionHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerPositionLookHandler;
@@ -64,6 +65,7 @@ import org.spout.vanilla.plugin.protocol.msg.player.PlayerChatMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerDiggingMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerGroundMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerHeldItemChangeMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.PlayerLocaleViewDistanceMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerStatusMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerTabCompleteMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerHandshakeMessage;
@@ -104,6 +106,7 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(PlayerStatusMessage.class, PlayerStatusHandler.class);
 			bind(EncryptionKeyResponseMessage.class, EncryptionKeyResponseHandler.class);
 			bind(PlayerTabCompleteMessage.class, PlayerTabCompleteHandler.class);
+			bind(PlayerLocaleViewDistanceMessage.class, PlayerLocaleViewDistanceHandler.class);
 		} catch (Exception ex) {
 			throw new ExceptionInInitializerError(ex);
 		}

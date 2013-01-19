@@ -77,6 +77,7 @@ import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.component.misc.LevelComponent;
 import org.spout.vanilla.plugin.component.substance.material.Sign;
+import org.spout.vanilla.plugin.component.test.ForceMessagesComponent;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.configuration.WorldConfigurationNode;
@@ -567,7 +568,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		int hash = HASH_SEED;
 		hash += (hash << 5) + entityId;
 		hash += (hash << 5) + tickCounter;
-		return (hash & FORCE_MASK) == 0;
+		return (hash & FORCE_MASK) == 0 || (Spout.debugMode() && getPlayer().has(ForceMessagesComponent.class));
 	}
 
 	@Override

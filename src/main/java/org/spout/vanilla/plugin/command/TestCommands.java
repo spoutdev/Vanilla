@@ -74,6 +74,7 @@ import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.component.substance.XPOrb;
 import org.spout.vanilla.plugin.component.substance.material.chest.Chest;
 import org.spout.vanilla.plugin.component.substance.object.FallingBlock;
+import org.spout.vanilla.plugin.component.test.ForceMessagesComponent;
 import org.spout.vanilla.plugin.component.test.TransformDebugComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
@@ -452,7 +453,7 @@ public class TestCommands {
 		}
 	}
 
-	@Command(aliases = "debug", usage = "[type] (/resend /resendall /look)", desc = "Debug commands", max = 2)
+	@Command(aliases = "debug", usage = "[type] (/resend /resendall /look /packets)", desc = "Debug commands", max = 2)
 	@CommandPermissions("vanilla.command.debug")
 	public void debug(CommandContext args, CommandSource source) throws CommandException {
 		Player player;
@@ -495,6 +496,8 @@ public class TestCommands {
 				chunk.initLighting();
 			}
 			source.sendMessage("Chunk lighting is being initialized");
+		}  else if (args.getString(0, "").contains("packets")) {
+			player.add(ForceMessagesComponent.class);
 		}
 	}
 

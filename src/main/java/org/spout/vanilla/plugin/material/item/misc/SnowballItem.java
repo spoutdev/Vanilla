@@ -26,37 +26,25 @@
  */
 package org.spout.vanilla.plugin.material.item.misc;
 
-import com.bulletphysics.collision.shapes.SphereShape;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.World;
-import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.plugin.component.substance.object.projectile.Snowball;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
+import org.spout.vanilla.plugin.material.item.ThrowItem;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 
-public class SnowballItem extends VanillaItemMaterial {
+public class SnowballItem  extends ThrowItem{
 	public SnowballItem(String name, int id) {
-		super(name, id, null);
+		super(name, id, Snowball.class);
 	}
 
 	@Override
 	public void onInteract(Entity entity, Action type) {
 		super.onInteract(entity, type);
 		if (type == Action.RIGHT_CLICK) {
-			World world = entity.getWorld();
-			Snowball snowball = world.createEntity(entity.getTransform().getPosition(), Snowball.class).add(Snowball.class);
-			snowball.getPhysics().setCollisionShape(new SphereShape(3)); //TODO: Correct this
-			snowball.getPhysics().applyImpulse(new Vector3(20, 20, 20)); // TODO: Correct this
-			snowball.setShooter(entity);
-			world.spawnEntity(snowball.getOwner());
-			
 			Slot slot = PlayerUtil.getHeldSlot(entity);
-			if (!PlayerUtil.isCostSuppressed(entity) && slot.get() != null && VanillaMaterials.SNOWBALL.equals(slot.get().getMaterial())) {
+			if (!PlayerUtil.isCostSuppressed(entity) && slot != null &&slot.get() != null && VanillaMaterials.SNOWBALL.equals(slot.get().getMaterial())) {
 				slot.addAmount(-1);
 			}
 		}

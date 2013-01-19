@@ -24,29 +24,36 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.item.misc;
+package org.spout.vanilla.plugin.material.item;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.vanilla.api.inventory.Slot;
-import org.spout.vanilla.plugin.component.substance.object.projectile.XPBottle;
-import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.item.ThrowItem;
-import org.spout.vanilla.plugin.util.PlayerUtil;
+import org.spout.api.geo.World;
+import org.spout.api.math.Vector3;
+import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
+import org.spout.vanilla.plugin.component.substance.object.projectile.Projectile;
+import com.bulletphysics.collision.shapes.SphereShape;
 
-public class BottleOEnchanting extends ThrowItem {
-	public BottleOEnchanting(String name, int id) {
-		super(name, id, XPBottle.class);
+public abstract class ThrowItem extends VanillaItemMaterial {
+
+	private Class<? extends ObjectEntity> itemThrown;
+	public ThrowItem(String name, int id, Class<? extends ObjectEntity> itemThrown) {
+		super(name, id, null);
+		this.itemThrown = itemThrown;
 	}
-
+	
 	@Override
 	public void onInteract(Entity entity, Action type) {
 		super.onInteract(entity, type);
 		if (type == Action.RIGHT_CLICK) {
-			Slot slot = PlayerUtil.getHeldSlot(entity);
-			if (!PlayerUtil.isCostSuppressed(entity) && slot != null && slot.get() != null && VanillaMaterials.BOTTLE_O_ENCHANTING.equals(slot.get().getMaterial())) {
-				slot.addAmount(-1);
+			World world = entity.getWorld();
+			ObjectEntity item = world.createEntity(entity.getTransform().getPosition(), itemThrown).add(itemThrown);
+			item.getPhysics().setCollisionShape(new SphereShape(3)); //TODO: Correct this
+			item.getPhysics().applyImpulse(new Vector3(20, 20, 20)); // TODO: Correct this
+			if (item instanceof Projectile) {
+				((Projectile) item).setShooter(entity);
 			}
+			world.spawnEntity(item.getOwner());
 		}
 	}
 }

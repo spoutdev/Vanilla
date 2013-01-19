@@ -29,14 +29,14 @@ package org.spout.vanilla.plugin.material.item.misc;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.vanilla.api.inventory.Slot;
-import org.spout.vanilla.plugin.component.substance.object.projectile.XPBottle;
+import org.spout.vanilla.plugin.component.substance.object.projectile.EnderPearl;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.item.ThrowItem;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 
-public class BottleOEnchanting extends ThrowItem {
-	public BottleOEnchanting(String name, int id) {
-		super(name, id, XPBottle.class);
+public class EnderPearlItem extends ThrowItem {
+	public EnderPearlItem(String name, int id) {
+		super(name, id, EnderPearl.class);
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class BottleOEnchanting extends ThrowItem {
 		super.onInteract(entity, type);
 		if (type == Action.RIGHT_CLICK) {
 			Slot slot = PlayerUtil.getHeldSlot(entity);
-			if (!PlayerUtil.isCostSuppressed(entity) && slot != null && slot.get() != null && VanillaMaterials.BOTTLE_O_ENCHANTING.equals(slot.get().getMaterial())) {
+			if (!PlayerUtil.isCostSuppressed(entity) && slot != null && slot.get() != null && VanillaMaterials.ENDER_PEARL.equals(slot.get().getMaterial())) {
 				slot.addAmount(-1);
 			}
 		}

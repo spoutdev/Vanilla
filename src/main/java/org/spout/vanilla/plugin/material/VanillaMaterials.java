@@ -219,6 +219,7 @@ import org.spout.vanilla.plugin.material.item.misc.Clay;
 import org.spout.vanilla.plugin.material.item.misc.Coal;
 import org.spout.vanilla.plugin.material.item.misc.Dye;
 import org.spout.vanilla.plugin.material.item.misc.EnchantedBook;
+import org.spout.vanilla.plugin.material.item.misc.EnderPearlItem;
 import org.spout.vanilla.plugin.material.item.misc.EyeOfEnderItem;
 import org.spout.vanilla.plugin.material.item.misc.Fireworks;
 import org.spout.vanilla.plugin.material.item.misc.FlowerPot;
@@ -559,7 +560,7 @@ public final class VanillaMaterials {
 	public static final MusicDisc MUSIC_DISK_11 = new MusicDisc("Music Disc - 11", 2266).setMusic(Music.ELEVEN);
 	public static final MusicDisc MUSIC_DISK_WAIT = new MusicDisc("Music Disk - wait", 2267).setMusic(Music.WAIT);
 	// == Potions and special items ==
-	public static final VanillaItemMaterial ENDER_PEARL = new VanillaItemMaterial("Ender Pearl", 368, null);
+	public static final EnderPearlItem ENDER_PEARL = new EnderPearlItem("Ender Pearl", 368);
 	public static final BlazeRod BLAZE_ROD = new BlazeRod("Blaze Rod", 369);
 	public static final VanillaItemMaterial GHAST_TEAR = new VanillaItemMaterial("Ghast Tear", 370, null);
 	public static final VanillaItemMaterial GOLD_NUGGET = new VanillaItemMaterial("Gold Nugget", 371, null);

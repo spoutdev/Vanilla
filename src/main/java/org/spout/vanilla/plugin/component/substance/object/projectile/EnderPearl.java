@@ -24,29 +24,31 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.item.misc;
+package org.spout.vanilla.plugin.component.substance.object.projectile;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.vanilla.api.inventory.Slot;
-import org.spout.vanilla.plugin.component.substance.object.projectile.XPBottle;
-import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.item.ThrowItem;
-import org.spout.vanilla.plugin.util.PlayerUtil;
 
-public class BottleOEnchanting extends ThrowItem {
-	public BottleOEnchanting(String name, int id) {
-		super(name, id, XPBottle.class);
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
+import org.spout.vanilla.plugin.protocol.entity.object.ObjectEntityProtocol;
+import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
+
+public class EnderPearl extends ObjectEntity implements Projectile {
+	private Entity shooter;
+
+	@Override
+	public void onAttached() {
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.ENDER_PEARL));
+		super.onAttached();
 	}
 
 	@Override
-	public void onInteract(Entity entity, Action type) {
-		super.onInteract(entity, type);
-		if (type == Action.RIGHT_CLICK) {
-			Slot slot = PlayerUtil.getHeldSlot(entity);
-			if (!PlayerUtil.isCostSuppressed(entity) && slot != null && slot.get() != null && VanillaMaterials.BOTTLE_O_ENCHANTING.equals(slot.get().getMaterial())) {
-				slot.addAmount(-1);
-			}
-		}
+	public Entity getShooter() {
+		return shooter;
+	}
+
+	@Override
+	public void setShooter(Entity shooter) {
+		this.shooter = shooter;
 	}
 }

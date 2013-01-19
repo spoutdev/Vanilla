@@ -33,8 +33,11 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.plugin.component.substance.object.projectile.Snowball;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class SnowballItem extends VanillaItemMaterial {
 	public SnowballItem(String name, int id) {
@@ -51,6 +54,11 @@ public class SnowballItem extends VanillaItemMaterial {
 			snowball.getPhysics().applyImpulse(new Vector3(20, 20, 20)); // TODO: Correct this
 			snowball.setShooter(entity);
 			world.spawnEntity(snowball.getOwner());
+			
+			Slot slot = PlayerUtil.getHeldSlot(entity);
+			if (!PlayerUtil.isCostSuppressed(entity) && slot.get() != null && VanillaMaterials.SNOWBALL.equals(slot.get().getMaterial())) {
+				slot.addAmount(-1);
+			}
 		}
 	}
 }

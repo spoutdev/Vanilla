@@ -36,6 +36,7 @@ import org.spout.vanilla.plugin.material.enchantment.armor.FireProtection;
 import org.spout.vanilla.plugin.material.enchantment.armor.ProjectileProtection;
 import org.spout.vanilla.plugin.material.enchantment.armor.Protection;
 import org.spout.vanilla.plugin.material.enchantment.armor.Respiration;
+import org.spout.vanilla.plugin.material.enchantment.armor.Thorns;
 import org.spout.vanilla.plugin.material.enchantment.bow.Flame;
 import org.spout.vanilla.plugin.material.enchantment.bow.Infinity;
 import org.spout.vanilla.plugin.material.enchantment.bow.Power;
@@ -62,6 +63,7 @@ public class Enchantments {
 	public static final ProjectileProtection PROJECTILE_PROTECTION = register(new ProjectileProtection("Projectile Protection", 4));
 	public static final Respiration RESPIRATION = register(new Respiration("Respiration", 5));
 	public static final AquaAffinity AQUA_AFFINITY = register(new AquaAffinity("Aqua Affinity", 6));
+	public static final Thorns THORNS = register(new Thorns("Thorns", 7));
 	// ==Sword Enchantments==
 	public static final Sharpness SHARPNESS = register(new Sharpness("Sharpness", 16));
 	public static final Smite SMITE = register(new Smite("Smite", 17));

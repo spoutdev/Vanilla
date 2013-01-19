@@ -125,7 +125,7 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 		} else if (material instanceof Potion && ((Potion) material).isSplash()) {
 			shootEffect = GeneralEffects.RANDOM_BOW;
 			//TODO: Spawn
-		} else if (material.equals(VanillaMaterials.EXP_BOTTLE)) {
+		} else if (material.equals(VanillaMaterials.BOTTLE_O_ENCHANTING)) {
 			shootEffect = GeneralEffects.RANDOM_BOW;
 			//TODO: Spawn
 		} else if (material instanceof SpawnEgg) {

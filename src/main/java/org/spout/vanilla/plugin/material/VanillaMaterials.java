@@ -576,7 +576,6 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial GLISTERING_MELON = new VanillaItemMaterial("Glistering MelonBlock", 382, null);
 	public static final SpawnEgg SPAWN_EGG = SpawnEgg.PIG;
 	public static final BottleOEnchanting BOTTLE_O_ENCHANTING = new BottleOEnchanting("Bottle o' Enchanting", 384);
-	public static final VanillaItemMaterial EXP_BOTTLE = new VanillaItemMaterial("Experience Bottle", 128, null);
 	public static final BlockItem FIRE_CHARGE = new BlockItem("Fire Charge", 385, VanillaMaterials.FIRE, null); // Basic Implementation
 	public static final Fireworks FIREWORKS = new Fireworks("Fireworks", 401);
 	public static final BlockItem FIREWORKS_CHARGE = new BlockItem("Fireworks Charge", 402, VanillaMaterials.FIRE, null); //implementation is not certain.

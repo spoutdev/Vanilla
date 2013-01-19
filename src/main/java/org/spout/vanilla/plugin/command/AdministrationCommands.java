@@ -32,6 +32,7 @@ import gnu.trove.list.linked.TLongLinkedList;
 import org.spout.api.Client;
 import org.spout.api.Server;
 import org.spout.api.Spout;
+import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
@@ -356,14 +357,24 @@ public class AdministrationCommands {
 		}
 
 		sky.setWeather(weather);
+		ChatArguments message;
 
 		switch (weather) {
 			case RAIN:
-				source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Weather set to ", ChatStyle.WHITE, "Rain/Snow", ChatStyle.BRIGHT_GREEN, ".");
+				message = new ChatArguments(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Weather set to ", ChatStyle.WHITE, "RAIN/SNOW", ChatStyle.BRIGHT_GREEN, ".");
 				break;
 			default:
-				source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Weather set to ", ChatStyle.WHITE, weather.name(), ChatStyle.BRIGHT_GREEN, ".");
+				message = new ChatArguments(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Weather set to ", ChatStyle.WHITE, weather.name(), ChatStyle.BRIGHT_GREEN, ".");
 				break;
+		}
+		if (Spout.getEngine() instanceof Client) {
+			source.sendMessage(message);
+		} else {
+			for (Player player : ((Server) Spout.getEngine()).getOnlinePlayers()) {
+				if (player.getWorld().equals(world)) {
+					player.sendMessage(message);
+				}
+			}
 		}
 	}
 

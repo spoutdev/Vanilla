@@ -62,7 +62,6 @@ public class NormalSky extends VanillaSky {
 		if (event.isCancelled()) {
 			return;
 		}
-		this.getWorld().getDataMap().put(VanillaData.WEATHER, newWeather);
 		for (Player player : this.getWorld().getPlayers()) {
 			player.getNetworkSynchronizer().callProtocolEvent(event);
 		}

@@ -27,7 +27,6 @@
 package org.spout.vanilla.plugin.component.world;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -57,7 +56,6 @@ public abstract class VanillaSky extends WorldComponent {
 	private AtomicLong countdown = new AtomicLong(REFRESH_RATE);
 	private WeatherSimulator weather;
 	private String model;
-	private HashSet<Player> tracked = new HashSet<Player>();
 	private static final HashMap<World, VanillaSky> skies = new HashMap<World, VanillaSky>();
 
 	@Override
@@ -109,13 +107,6 @@ public abstract class VanillaSky extends WorldComponent {
 		}
 
 		final List<Player> playerList = getWorld().getPlayers();
-		HashSet<Player> players = new HashSet<Player>(playerList);
-		players.removeAll(tracked);
-		for (Player player : players) {
-			updatePlayer(player);
-		}
-		tracked.clear();
-		tracked.addAll(playerList);
 
 		// Sleeping players
 		boolean skipNight = false;

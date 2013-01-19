@@ -474,7 +474,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 * @return True if rain is falling on the Block, false if not
 	 */
 	public static boolean isRaining(Block block) {
-		return block.getWorld().getComponentHolder().getData().get(VanillaData.WEATHER).isRaining() && block.isAtSurface();
+		return block.getWorld().getComponentHolder().getData().get(VanillaData.WORLD_WEATHER).isRaining() && block.isAtSurface();
 	}
 
 	/**

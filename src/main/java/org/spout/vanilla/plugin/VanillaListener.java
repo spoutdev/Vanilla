@@ -57,6 +57,7 @@ import org.spout.vanilla.plugin.component.misc.SleepComponent;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.component.player.PingComponent;
 import org.spout.vanilla.plugin.component.player.PlayerListComponent;
+import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.event.block.RedstoneChangeEvent;
 import org.spout.vanilla.plugin.input.VanillaInputExecutor;
@@ -89,6 +90,7 @@ public class VanillaListener implements Listener {
 		player.add(HungerComponent.class);
 		player.add(LevelComponent.class);
 		player.getSession().setUncaughtExceptionHandler(new PasteExceptionHandler(player.getSession()));
+		VanillaSky.getSky(player.getWorld()).updatePlayer(player);
 	}
 
 	@EventHandler

@@ -241,7 +241,7 @@ public class VanillaPlugin extends CommonPlugin {
 				world.getDataMap().put(VanillaData.DIMENSION, Dimension.get(worldNode.SKY_TYPE.getString()));
 
 				world.addLightingManager(VanillaLighting.BLOCK_LIGHT);
-				world.addLightingManager(VanillaLighting.BLOCK_LIGHT);
+				world.addLightingManager(VanillaLighting.SKY_LIGHT);
 
 				// Add to worlds
 				worlds.add(world);
@@ -250,7 +250,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 		final int radius = VanillaConfiguration.SPAWN_RADIUS.getInt();
 		final int protectionRadius = VanillaConfiguration.SPAWN_PROTECTION_RADIUS.getInt();
-		SpawnLoader loader = new SpawnLoader(LOADER_THREAD_COUNT);
+		SpawnLoader loader = new SpawnLoader(1);
 
 		if (worlds.isEmpty()) {
 			return;
@@ -274,10 +274,10 @@ public class VanillaPlugin extends CommonPlugin {
 				int effectiveRadius = newWorld ? (2 * radius) : radius;
 				loader.load(world, cx, cz, effectiveRadius, newWorld);
 
-				//if (worldConfig.LOADED_SPAWN.getBoolean()) { // TODO - this doesn't really work for anything since it doesn't hold all chunks
-				Entity e = world.createAndSpawnEntity(point, ObserverComponent.class, LoadOption.LOAD_GEN);
-				e.setObserver(new FlatIterator(cx, 0, cz, 16, effectiveRadius));
-				//}
+				if (worldConfig.LOADED_SPAWN.getBoolean()) {
+					Entity e = world.createAndSpawnEntity(point, ObserverComponent.class, LoadOption.LOAD_GEN);
+					e.setObserver(new FlatIterator(cx, 0, cz, 16, effectiveRadius));
+				}
 
 				// Grab safe spawn if newly created world.
 				if (newWorld && world.getGenerator() instanceof VanillaGenerator) {

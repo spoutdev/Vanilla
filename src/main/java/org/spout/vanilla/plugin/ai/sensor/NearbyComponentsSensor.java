@@ -44,20 +44,30 @@ import org.spout.api.entity.Entity;
 public class NearbyComponentsSensor implements Sensor {
 	private final PlannerAgent agent;
 	private final WorldState state;
-	private Class<? extends EntityComponent> clazz;
+	private final List<Class<? extends EntityComponent>> classes;
 	private int radius;
 
-	public NearbyComponentsSensor(PlannerAgent agent, Class<? extends EntityComponent> clazz) {
+	public NearbyComponentsSensor(PlannerAgent agent, Class<? extends EntityComponent>... classes) {
 		this.agent = agent;
-		this.clazz = clazz;
 		this.state = WorldState.createEmptyState();
+		this.classes = new ArrayList<Class<? extends EntityComponent>>();
+		for (Class<? extends EntityComponent> clazz : classes) {
+			this.classes.add(clazz);
+		}
 	}
 
 	@Override
 	public WorldState generateState() {
 		ArrayList<Entity> entities = new ArrayList<Entity>();
 		for (Entity entity : agent.getEntity().getWorld().getNearbyEntities(agent.getEntity(), radius)) {
-			if (entity.get(clazz) == null) {
+			boolean hasClass = false;
+			for (Class clazz : classes) {
+				if (entity.get(clazz) != null) {
+					hasClass = true;
+					break;
+				}
+			}
+			if (!hasClass) {
 				continue;
 			}
 			entities.add(entity);
@@ -101,14 +111,39 @@ public class NearbyComponentsSensor implements Sensor {
 		return radius;
 	}
 
-	public Class<? extends EntityComponent> searchingFor() {
-		return clazz;
+	/**
+	 * Returns the classes this Entity is sensing.
+	 * @return classes the entity is sensing
+	 */
+	public List<Class<? extends EntityComponent>> sensing() {
+		return Collections.unmodifiableList(classes);
 	}
 
+	/**
+	 * Adds a new class for the Entity to sense.
+	 * @param clazz
+	 */
 	public void shouldSense(Class<? extends EntityComponent> clazz) {
 		if (clazz == null) {
 			throw new IllegalArgumentException("Must be a non-null class to search for!");
 		}
-		this.clazz = clazz;
+		if (classes.contains(clazz)) {
+			return;
+		}
+		classes.add(clazz);
+	}
+
+	/**
+	 * Removes a class from being sensed anymore. Ignores classes that are null or aren't contained in the list.
+	 * @param clazz The class to remove
+	 */
+	public void removeSense(Class<? extends EntityComponent> clazz) {
+		if (clazz == null) {
+			return;
+		}
+		if (!classes.contains(clazz)) {
+			return;
+		}
+		classes.remove(clazz);
 	}
 }

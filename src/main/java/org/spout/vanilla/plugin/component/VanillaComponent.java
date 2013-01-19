@@ -35,6 +35,7 @@ public class VanillaComponent extends EntityComponent {
 	public void onAttached() {
 		//Tracks the number of times this component has been attached (i.e how many times it's been saved, then loaded. 1 = fresh entity)
 		getOwner().getData().put(VanillaData.ATTACHED_COUNT, getAttachedCount() + 1);
+		getOwner().setSavable(true);
 	}
 
 	public boolean isStatic() {

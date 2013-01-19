@@ -27,20 +27,20 @@
 package org.spout.vanilla.plugin.component;
 
 import org.spout.api.component.type.EntityComponent;
+
 import org.spout.vanilla.plugin.data.VanillaData;
 
 public class VanillaComponent extends EntityComponent {
-
 	@Override
 	public void onAttached() {
 		//Tracks the number of times this component has been attached (i.e how many times it's been saved, then loaded. 1 = fresh entity)
 		getOwner().getData().put(VanillaData.ATTACHED_COUNT, getAttachedCount() + 1);
 	}
-	
+
 	public boolean isStatic() {
 		return false;
 	}
-	
+
 	/**
 	 * A counter of how many times this component has been attached to an entity
 	 * <p/>
@@ -53,5 +53,4 @@ public class VanillaComponent extends EntityComponent {
 	public final int getAttachedCount() {
 		return getOwner().getData().get(VanillaData.ATTACHED_COUNT);
 	}
-	
 }

@@ -65,6 +65,7 @@ import org.spout.api.util.FlatIterator;
 import org.spout.vanilla.api.data.Difficulty;
 import org.spout.vanilla.api.data.Dimension;
 import org.spout.vanilla.api.data.GameMode;
+
 import org.spout.vanilla.plugin.command.AdministrationCommands;
 import org.spout.vanilla.plugin.command.InputCommandExecutor;
 import org.spout.vanilla.plugin.command.TestCommands;
@@ -195,10 +196,10 @@ public class VanillaPlugin extends CommonPlugin {
 		//MapPalette.DEFAULT = (MapPalette) Spout.getFilesystem().getResource("mappalette://Vanilla/map/mapColorPalette.dat");
 		RecipeYaml.DEFAULT = (RecipeYaml) Spout.getFilesystem().getResource("recipe://Vanilla/recipes.yml");
 		VanillaRecipes.initialize();
-		
+
 		//Config
 		config.load();
-		
+
 		getLogger().info("loaded");
 	}
 

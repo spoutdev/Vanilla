@@ -30,11 +30,11 @@ import org.spout.api.ai.goap.Goal;
 import org.spout.api.ai.goap.PlannerAgent;
 import org.spout.api.ai.goap.WorldState;
 
-import org.spout.vanilla.plugin.ai.sensor.NearbyPlayersSensor;
+import org.spout.vanilla.plugin.ai.sensor.NearbyComponentsSensor;
 
 public class AttackPlayerGoal implements Goal {
 	private final PlannerAgent agent;
-	private static WorldState GOAL = WorldState.create("hasNearbyPlayers", false);
+	private static WorldState GOAL = WorldState.create("hasNearbyEntities", false);
 
 	public AttackPlayerGoal(PlannerAgent agent) {
 		this.agent = agent;
@@ -47,7 +47,7 @@ public class AttackPlayerGoal implements Goal {
 
 	@Override
 	public int getPriority() {
-		return agent.getSensor(NearbyPlayersSensor.class).detectedPlayer() == true ? 1 : 0;
+		return agent.getSensor(NearbyComponentsSensor.class).hasFoundEntity() == true ? 1 : 0;
 	}
 
 	@Override

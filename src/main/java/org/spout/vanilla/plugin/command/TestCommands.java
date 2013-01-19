@@ -74,7 +74,6 @@ import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.component.substance.XPOrb;
 import org.spout.vanilla.plugin.component.substance.material.chest.Chest;
 import org.spout.vanilla.plugin.component.substance.object.FallingBlock;
-import org.spout.vanilla.plugin.component.test.FollowComponent;
 import org.spout.vanilla.plugin.component.test.TransformDebugComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;

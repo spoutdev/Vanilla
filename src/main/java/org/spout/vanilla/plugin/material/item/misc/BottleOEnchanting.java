@@ -26,17 +26,17 @@
  */
 package org.spout.vanilla.plugin.material.item.misc;
 
+import com.bulletphysics.collision.shapes.SphereShape;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.plugin.component.substance.object.projectile.XPBottle;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
-import com.bulletphysics.collision.shapes.SphereShape;
-
 public class BottleOEnchanting extends VanillaItemMaterial {
-
 	public BottleOEnchanting(String name, int id) {
 		super(name, id, null);
 	}

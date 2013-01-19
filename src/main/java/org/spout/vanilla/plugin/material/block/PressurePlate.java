@@ -37,6 +37,7 @@ import org.spout.api.material.range.ListEffectRange;
 
 import org.spout.vanilla.api.data.RedstonePowerMode;
 import org.spout.vanilla.api.material.block.redstone.RedstoneSource;
+
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 

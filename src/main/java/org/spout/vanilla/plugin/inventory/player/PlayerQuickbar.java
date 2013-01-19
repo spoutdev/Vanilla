@@ -32,7 +32,6 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.api.inventory.Slot;
 
-
 public class PlayerQuickbar extends Inventory {
 	private static final long serialVersionUID = 1L;
 	public static final int SIZE = 9;
@@ -52,7 +51,6 @@ public class PlayerQuickbar extends Inventory {
 
 	/**
 	 * Informs a player of a certain equipment (held item) change
-	 * 
 	 * @param player to inform
 	 */
 	@SuppressWarnings("unused")

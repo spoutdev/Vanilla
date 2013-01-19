@@ -41,6 +41,7 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.material.block.Attachable;
 import org.spout.vanilla.api.material.block.Directional;
+
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.DoorBlock;
 import org.spout.vanilla.plugin.material.block.Liquid;

@@ -29,14 +29,14 @@ package org.spout.vanilla.plugin.component.living.hostile;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.api.component.Hostile;
+import org.spout.vanilla.api.data.Difficulty;
+import org.spout.vanilla.api.data.effect.StatusEffect;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DamageComponent;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
-import org.spout.vanilla.api.data.Difficulty;
-import org.spout.vanilla.api.data.effect.StatusEffect;
 import org.spout.vanilla.plugin.data.effect.StatusEffectContainer;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.WitherEntityProtocol;

@@ -57,6 +57,7 @@ import org.spout.vanilla.api.data.MoveReaction;
 import org.spout.vanilla.api.data.RedstonePowerMode;
 import org.spout.vanilla.api.material.VanillaMaterial;
 import org.spout.vanilla.api.material.block.redstone.RedstoneSource;
+
 import org.spout.vanilla.plugin.component.substance.Item;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.data.Instrument;

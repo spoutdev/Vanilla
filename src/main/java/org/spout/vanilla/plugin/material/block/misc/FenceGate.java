@@ -40,6 +40,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.api.material.block.Openable;
 import org.spout.vanilla.api.material.block.redstone.RedstoneTarget;
+
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;

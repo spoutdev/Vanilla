@@ -37,6 +37,7 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.api.data.effect.StatusEffect;
 import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.api.material.VanillaMaterial;
+
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.EffectsComponent;

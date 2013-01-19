@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.plugin.world.generator.structure;
 
-
 import org.spout.api.material.BlockMaterial;
 
 public interface BlockMaterialPicker {

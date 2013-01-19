@@ -32,6 +32,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.api.inventory.Container;
 import org.spout.vanilla.api.material.Fuel;
 import org.spout.vanilla.api.material.TimedCraftable;
+
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
@@ -157,7 +158,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 				setBurning(true);
 				return;
 			}
-			
+
 			setBurning(false);
 		}
 		// Burning
@@ -190,7 +191,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 				// Reset progress if ingredient is gone
 				if (!inventory.hasIngredient()) {
 					setSmeltTime(-1);
-					
+
 					return;
 				}
 				pulseSmeltTime(dt);

@@ -150,7 +150,7 @@ public class SnowSimulator extends Component {
 											above.setMaterial(VanillaMaterials.SNOW);
 										}
 										return;
-									//Try to grow snow
+										//Try to grow snow
 									} else if (vbm instanceof Snow) {
 										short data = block.getData();
 										if (data == 0x7) {

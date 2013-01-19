@@ -36,6 +36,7 @@ import org.spout.api.material.range.ListEffectRange;
 
 import org.spout.vanilla.api.data.RedstonePowerMode;
 import org.spout.vanilla.api.material.block.redstone.RedstoneSource;
+
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
 

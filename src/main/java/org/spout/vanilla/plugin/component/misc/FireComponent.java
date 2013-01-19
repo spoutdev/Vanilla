@@ -104,7 +104,6 @@ public class FireComponent extends EntityComponent {
 
 	/**
 	 * Sets the entity on fire.
-	 * 
 	 * @param time The amount of time in seconds the entity should be on fire.
 	 * @param hurt
 	 */

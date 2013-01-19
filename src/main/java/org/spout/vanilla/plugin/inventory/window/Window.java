@@ -232,7 +232,7 @@ public abstract class Window implements InventoryViewer {
 		}
 		final PlayerInventory inventory = getPlayerInventory();
 		if (from instanceof CraftingInventory) {
-			if (((CraftingInventory)from).onShiftClick(slot, inventory)) {
+			if (((CraftingInventory) from).onShiftClick(slot, inventory)) {
 				return true;
 			}
 		}
@@ -385,7 +385,7 @@ public abstract class Window implements InventoryViewer {
 						if (cursorItem.isEmpty()) {
 							cursorItem = null;
 						}
-					//Else try to pick them up (crafting)
+						//Else try to pick them up (crafting)
 					} else {
 						cursorItem.stack(clicked);
 						if (clicked.isEmpty()) {

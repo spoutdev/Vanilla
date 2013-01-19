@@ -73,7 +73,6 @@ public class SolidMoving extends Solid {
 	 * not a SolidMoving, nothing will happen, else it and the blocks above will
 	 * be subject to the simulation. If the blocks fall on a placement obstacle
 	 * (such as a torch) they will be removed.
-	 *
 	 * @param buffer The buffer in which to simulate the fall.
 	 * @param x The x coordinate of the block.
 	 * @param y The y coordinate of the block.
@@ -90,7 +89,7 @@ public class SolidMoving extends Solid {
 			return;
 		}
 		int baseY = buffer.getBase().getFloorY();
-		for (int obstacleY = y; --obstacleY >= baseY;) {
+		for (int obstacleY = y; --obstacleY >= baseY; ) {
 			if (FallingBlock.isFallingObstacle(buffer.get(x, obstacleY, z))) {
 				// obstacle found
 				if (obstacleY == y - 1) {

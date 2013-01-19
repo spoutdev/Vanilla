@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.material.block.solid;
 
 import org.spout.vanilla.api.material.InitializableMaterial;
+
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.VanillaMaterials;

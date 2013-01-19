@@ -32,6 +32,7 @@ import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.api.data.GameMode;
+
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 
 public class PlayerAbilityUpdateEvent extends PlayerEvent implements ProtocolEvent {

@@ -32,6 +32,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.api.material.Burnable;
 import org.spout.vanilla.api.material.Fuel;
 import org.spout.vanilla.api.material.InitializableMaterial;
+
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;

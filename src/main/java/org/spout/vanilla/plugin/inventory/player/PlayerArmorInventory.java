@@ -30,10 +30,12 @@ import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
+
 import org.spout.vanilla.api.material.item.armor.Boots;
 import org.spout.vanilla.api.material.item.armor.Chestplate;
 import org.spout.vanilla.api.material.item.armor.Helmet;
 import org.spout.vanilla.api.material.item.armor.Leggings;
+
 import org.spout.vanilla.plugin.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 
@@ -51,7 +53,6 @@ public class PlayerArmorInventory extends Inventory {
 
 	/**
 	 * Informs a player of all the equipment (armor)
-	 * 
 	 * @param player to inform
 	 */
 	public void updateSlots(Player player) {
@@ -62,7 +63,6 @@ public class PlayerArmorInventory extends Inventory {
 
 	/**
 	 * Informs a player of a certain equipment (armor) change
-	 * 
 	 * @param i - item slot index
 	 * @param item that the slot got set to
 	 * @param player to inform
@@ -70,19 +70,19 @@ public class PlayerArmorInventory extends Inventory {
 	public static void updateSlot(int i, ItemStack item, Player player) {
 		final int equip;
 		switch (i) {
-			case BOOT_SLOT :
+			case BOOT_SLOT:
 				equip = EntityEquipmentMessage.BOOTS_SLOT;
 				break;
-			case CHEST_PLATE_SLOT :
+			case CHEST_PLATE_SLOT:
 				equip = EntityEquipmentMessage.CHESTPLATE_SLOT;
 				break;
-			case HELMET_SLOT :
+			case HELMET_SLOT:
 				equip = EntityEquipmentMessage.HELMET_SLOT;
 				break;
-			case LEGGINGS_SLOT :
+			case LEGGINGS_SLOT:
 				equip = EntityEquipmentMessage.LEGGINGS_SLOT;
 				break;
-			default :
+			default:
 				return;
 		}
 		player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, equip, item));

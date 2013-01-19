@@ -34,6 +34,7 @@ import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.api.material.Fuel;
 import org.spout.vanilla.api.material.TimedCraftable;
+
 import org.spout.vanilla.plugin.component.substance.material.Furnace;
 import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;

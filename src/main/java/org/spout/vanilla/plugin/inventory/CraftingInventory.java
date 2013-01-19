@@ -29,7 +29,6 @@ package org.spout.vanilla.plugin.inventory;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
 
 import org.spout.api.Spout;
 import org.spout.api.inventory.Inventory;
@@ -40,6 +39,7 @@ import org.spout.api.inventory.recipe.RecipeManager;
 import org.spout.api.inventory.shape.Grid;
 import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.material.Material;
+
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 
 /**
@@ -97,7 +97,7 @@ public class CraftingInventory extends Inventory {
 		ItemStack result = get(getOutputSlot());
 		Material resultMat = (result != null ? result.getMaterial() : null);
 		if (slot == outputSlot + offset && result != null) {
-			while(result != null && !result.isEmpty()) {
+			while (result != null && !result.isEmpty()) {
 				toInventory.add(result);
 				set(getOutputSlot(), null);
 				result = get(getOutputSlot());

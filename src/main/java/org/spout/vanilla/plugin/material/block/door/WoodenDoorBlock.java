@@ -33,6 +33,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.api.material.InitializableMaterial;
+
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;

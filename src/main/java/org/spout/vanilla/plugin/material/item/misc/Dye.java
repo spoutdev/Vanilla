@@ -36,6 +36,7 @@ import org.spout.api.material.source.DataSource;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.inventory.Slot;
+
 import org.spout.vanilla.plugin.component.living.passive.Sheep;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.solid.Wool.WoolColor;

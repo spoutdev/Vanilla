@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.material.item.misc;
 
 import org.spout.vanilla.api.material.Fuel;
+
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public class Stick extends VanillaItemMaterial implements Fuel {

@@ -31,13 +31,12 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.data.PaintingType;
+
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.VanillaComponent;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
@@ -46,7 +45,6 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.object.PaintingEntityProtocol;
 
 public class Painting extends VanillaComponent {
-
 	private Point originalPos;
 	private float timer = 0f;
 

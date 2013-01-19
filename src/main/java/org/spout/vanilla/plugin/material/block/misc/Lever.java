@@ -38,6 +38,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.api.data.RedstonePowerMode;
 import org.spout.vanilla.api.material.Toggleable;
+
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.block.AttachedRedstoneSource;

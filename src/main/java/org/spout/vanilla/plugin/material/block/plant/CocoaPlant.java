@@ -39,13 +39,14 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.data.drops.flag.BlockFlags;
 import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.api.material.InitializableMaterial;
 import org.spout.vanilla.api.material.block.Growing;
 import org.spout.vanilla.api.material.block.Plant;
+
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.data.drops.flag.BlockFlags;
 import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.plugin.material.block.solid.Log;
 import org.spout.vanilla.plugin.material.item.misc.Dye;

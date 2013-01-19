@@ -33,55 +33,60 @@ import java.util.List;
 import org.spout.api.ai.Sensor;
 import org.spout.api.ai.goap.PlannerAgent;
 import org.spout.api.ai.goap.WorldState;
-import org.spout.api.entity.Player;
+import org.spout.api.component.type.EntityComponent;
+import org.spout.api.entity.Entity;
 
 /**
- * Simple Sensor that detects Players around the Entity this sensor belongs to.
- *
+ * Simple Sensor that detects Entities with a specified Component nearby.
+ * <p/>
  * TODO Probably should have some sort of sight limitation on this sensor. Would be a great optimization.
  */
-public class NearbyPlayersSensor implements Sensor {
+public class NearbyComponentsSensor implements Sensor {
 	private final PlannerAgent agent;
 	private final WorldState state;
+	private Class<? extends EntityComponent> clazz;
 	private int radius;
 
-	public NearbyPlayersSensor(PlannerAgent agent) {
+	public NearbyComponentsSensor(PlannerAgent agent, Class<? extends EntityComponent> clazz) {
 		this.agent = agent;
+		this.clazz = clazz;
 		this.state = WorldState.createEmptyState();
 	}
 
 	@Override
 	public WorldState generateState() {
-		ArrayList<Player> players = new ArrayList<Player>();
-		for (Player player : agent.getEntity().getWorld().getNearbyPlayers(agent.getEntity(), radius)) {
-			System.out.println("Sensed player: " + player.toString());
-			players.add(player);
+		ArrayList<Entity> entities = new ArrayList<Entity>();
+		for (Entity entity : agent.getEntity().getWorld().getNearbyEntities(agent.getEntity(), radius)) {
+			if (entity.get(clazz) == null) {
+				continue;
+			}
+			entities.add(entity);
 		}
-		boolean hasThreat = players.size() > 0;
-		state.put("hasNearbyPlayers", hasThreat);
-		state.put("players", hasThreat ? players : Collections.emptyList());
+		boolean found = entities.size() > 0;
+		state.put("hasNearbyEntities", found);
+		state.put("entities", found ? entities : Collections.emptyList());
 		return state;
 	}
 
 	/**
-	 * Returns all the players this sensor has detected.
-	 * @return Players detected
+	 * Returns all the entities this sensor found.
+	 * @return Entities found
 	 */
-	public List<Player> getPlayers() {
-		final List<Player> targets = state.get("players");
-		return targets == null ? new ArrayList<Player>() : targets;
+	public List<Entity> getEntities() {
+		final List<Entity> targets = state.get("entities");
+		return targets == null ? new ArrayList<Entity>() : targets;
 	}
 
 	/**
 	 * Returns if the sensor sensed a player nearby.
 	 * @return True if player detected, false if not.
 	 */
-	public boolean detectedPlayer() {
-		return (Boolean) state.get("hasNearbyPlayers");
+	public boolean hasFoundEntity() {
+		return (Boolean) state.get("hasNearbyEntities");
 	}
 
 	/**
-	 * Sets the radius the sensor will scan for players.
+	 * Sets the radius the sensor will scan for entities.
 	 * @param radius radius to scan for players
 	 */
 	public void setSensorRadius(int radius) {
@@ -94,5 +99,16 @@ public class NearbyPlayersSensor implements Sensor {
 	 */
 	public int getSensorRadius() {
 		return radius;
+	}
+
+	public Class<? extends EntityComponent> searchingFor() {
+		return clazz;
+	}
+
+	public void shouldSense(Class<? extends EntityComponent> clazz) {
+		if (clazz == null) {
+			throw new IllegalArgumentException("Must be a non-null class to search for!");
+		}
+		this.clazz = clazz;
 	}
 }

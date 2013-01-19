@@ -35,6 +35,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
 
 import org.spout.vanilla.api.material.InitializableMaterial;
+
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;

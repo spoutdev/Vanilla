@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.api.material.block;
 
-
 /**
  * A plant grown on Farm land
  */

@@ -33,6 +33,7 @@ import org.spout.api.material.Material;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.api.protocol.msg.VanillaMainChannelMessage;
+
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class EntityItemDataMessage extends VanillaMainChannelMessage {

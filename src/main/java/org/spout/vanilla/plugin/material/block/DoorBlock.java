@@ -37,6 +37,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.api.material.block.Directional;
 import org.spout.vanilla.api.material.block.Openable;
 import org.spout.vanilla.api.material.block.redstone.RedstoneTarget;
+
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;

@@ -28,6 +28,7 @@ package org.spout.vanilla.plugin.material.enchantment.armor;
 
 import org.spout.vanilla.api.material.VanillaMaterial;
 import org.spout.vanilla.api.material.item.armor.Boots;
+
 import org.spout.vanilla.plugin.material.enchantment.ArmorEnchantment;
 import org.spout.vanilla.plugin.material.enchantment.Enchantment;
 import org.spout.vanilla.plugin.material.enchantment.Enchantments;

@@ -70,6 +70,7 @@ import org.spout.vanilla.api.data.WorldType;
 import org.spout.vanilla.api.material.block.component.VanillaComplexMaterial;
 import org.spout.vanilla.api.protocol.msg.VanillaBlockDataChannelMessage;
 import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
+
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
@@ -432,7 +433,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		Difficulty difficulty = world.getComponentHolder().getData().get(VanillaData.DIFFICULTY);
 		Dimension dimension = world.getComponentHolder().getData().get(VanillaData.DIMENSION);
 		WorldType worldType = world.getComponentHolder().getData().get(VanillaData.WORLD_TYPE);
-		
+
 		//Use existing gamemode if we are not logging in
 		Human human = player.get(Human.class);
 		if (human != null && !first) {

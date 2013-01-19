@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.material.enchantment;
 
 import org.spout.vanilla.api.material.VanillaMaterial;
+
 import org.spout.vanilla.plugin.material.item.tool.Tool;
 
 public abstract class ToolEnchantment extends Enchantment {

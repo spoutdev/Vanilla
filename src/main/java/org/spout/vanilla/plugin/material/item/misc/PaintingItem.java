@@ -36,7 +36,9 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.api.data.PaintingType;
+
 import org.spout.vanilla.plugin.component.substance.Painting;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
@@ -54,7 +56,7 @@ public class PaintingItem extends VanillaItemMaterial {
 		}
 		if (!BlockFace.TOP.equals(face) && !BlockFace.BOTTOM.equals(face)) {
 			List<PaintingType> list = new ArrayList<PaintingType>();
-			
+
 			World world = block.getWorld();
 			BlockFace direction = face.getOpposite();
 			for (PaintingType paintingType : PaintingType.values()) {
@@ -63,7 +65,7 @@ public class PaintingItem extends VanillaItemMaterial {
 				}
 			}
 			PaintingType paintingType = list.get(random.nextInt(list.size() - 1));
-			
+
 			Entity e = world.createEntity(paintingType.getCenter(direction, block.getPosition()), Painting.class);
 			Painting painting = e.add(Painting.class);
 			painting.setType(paintingType);

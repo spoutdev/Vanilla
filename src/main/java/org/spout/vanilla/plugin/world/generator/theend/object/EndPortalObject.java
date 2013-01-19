@@ -38,7 +38,6 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.world.generator.object.RandomObject;
 
 public class EndPortalObject extends RandomObject {
-
 	private static boolean isEndFrame(Block block, BlockFace facing, boolean withEnderEye) {
 		return (block.isMaterial(VanillaMaterials.END_PORTAL_FRAME) &&
 				VanillaMaterials.END_PORTAL_FRAME.getFacing(block) == facing) &&

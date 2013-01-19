@@ -30,6 +30,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.api.material.item.Enchantable;
+
 import org.spout.vanilla.plugin.event.cause.DamageCause;
 import org.spout.vanilla.plugin.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.plugin.material.enchantment.Enchantment;

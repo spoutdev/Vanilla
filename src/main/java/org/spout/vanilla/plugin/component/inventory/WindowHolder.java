@@ -28,7 +28,6 @@ package org.spout.vanilla.plugin.component.inventory;
 
 import java.util.logging.Level;
 
-import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;

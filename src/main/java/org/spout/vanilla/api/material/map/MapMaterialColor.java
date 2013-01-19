@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.api.material.map;
 
-
 public enum MapMaterialColor {
 	TRANSPARENT(0, 0, 0),
 	GRASS(127, 178, 56),

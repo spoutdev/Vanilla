@@ -34,16 +34,17 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.api.component.Hostile;
+import org.spout.vanilla.api.data.Difficulty;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.ai.action.ActionAttack;
 import org.spout.vanilla.plugin.ai.goal.AttackPlayerGoal;
-import org.spout.vanilla.plugin.ai.sensor.NearbyPlayersSensor;
+import org.spout.vanilla.plugin.ai.sensor.NearbyComponentsSensor;
 import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.DamageComponent;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
-import org.spout.vanilla.api.data.Difficulty;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.ZombieEntityProtocol;
@@ -72,9 +73,9 @@ public class Zombie extends Living implements Hostile {
 		damage.getDamageLevel(Difficulty.NORMAL).setAmount(4);
 		damage.getDamageLevel(Difficulty.HARD).setAmount(6);
 		damage.getDamageLevel(Difficulty.HARDCORE).setAmount(damage.getDamageLevel(Difficulty.HARD).getAmount());
-		final NearbyPlayersSensor playersSensor = new NearbyPlayersSensor(getAI());
-		playersSensor.setSensorRadius(10);
-		getAI().registerSensor(playersSensor);
+		final NearbyComponentsSensor humanSensor = new NearbyComponentsSensor(getAI(), Human.class);
+		humanSensor.setSensorRadius(10);
+		getAI().registerSensor(humanSensor);
 		//Go attack nearby players AI
 		getAI().registerGoal(new AttackPlayerGoal(getAI()));
 		getAI().registerAction(new ActionAttack(getAI()));

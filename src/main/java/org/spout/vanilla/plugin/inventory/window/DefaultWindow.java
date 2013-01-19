@@ -44,6 +44,7 @@ import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 
 public class DefaultWindow extends Window {
 	private boolean opened = false;
+
 	public DefaultWindow(Player owner) {
 		super(owner, WindowType.DEFAULT, "Inventory", 9);
 		PlayerInventory inventory = getPlayerInventory();
@@ -59,14 +60,14 @@ public class DefaultWindow extends Window {
 
 	@Override
 	public void close() {
-		PlayerInventory pInv =  getPlayerInventory();
+		PlayerInventory pInv = getPlayerInventory();
 		//Disconnecting
 		if (pInv == null) {
 			return;
 		}
 		PlayerCraftingInventory inventory = getPlayerInventory().getCraftingGrid();
 		GridIterator iterator = inventory.getGrid().iterator();
-		while(iterator.hasNext()) {
+		while (iterator.hasNext()) {
 			ItemStack item = inventory.get(iterator.next());
 			if (item != null) {
 				getHuman().dropItem(item);
@@ -75,7 +76,7 @@ public class DefaultWindow extends Window {
 		inventory.clear();
 		//Do not call super-close, DefaultWindow only pseudo-closes
 		if (!(Spout.getEngine() instanceof Server)) {
-			super.close(); 
+			super.close();
 		}
 		opened = false;
 	}
@@ -111,7 +112,7 @@ public class DefaultWindow extends Window {
 
 		return super.onShiftClick(stack, slot, from);
 	}
-	
+
 	@Override
 	public boolean onClick(ClickArguments args) {
 		opened = true;
@@ -122,7 +123,7 @@ public class DefaultWindow extends Window {
 	public int getId() {
 		return 0;
 	}
-	
+
 	@Override
 	public boolean isOpened() {
 		if (Spout.getEngine() instanceof Client) {

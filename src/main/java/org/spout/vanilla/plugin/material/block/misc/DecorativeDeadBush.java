@@ -34,7 +34,6 @@ import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class DecorativeDeadBush extends GroundAttachable {
-
 	public DecorativeDeadBush(String name, int id) {
 		super(name, id, VanillaMaterialModels.DEADGRASS);
 		this.setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();

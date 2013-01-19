@@ -30,6 +30,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 
 import org.spout.vanilla.api.inventory.Container;
+
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.inventory.block.DispenserInventory;

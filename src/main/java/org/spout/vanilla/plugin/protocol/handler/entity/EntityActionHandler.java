@@ -36,6 +36,7 @@ import org.spout.api.protocol.Session;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.data.Animation;
+
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.plugin.event.player.PlayerToggleSneakingEvent;

@@ -39,6 +39,7 @@ import org.spout.api.protocol.MessageCodec;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.api.protocol.msg.VanillaMainChannelMessage;
+
 import org.spout.vanilla.plugin.protocol.VanillaProtocol;
 
 public class UnregisterPluginChannelMessage extends VanillaMainChannelMessage {

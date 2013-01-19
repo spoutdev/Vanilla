@@ -36,7 +36,6 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.plant.Sapling;
-import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.plugin.world.generator.object.LargePlantObject;
 
 public abstract class TreeObject extends LargePlantObject {

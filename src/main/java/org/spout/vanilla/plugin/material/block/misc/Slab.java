@@ -37,6 +37,7 @@ import org.spout.api.util.bytebit.ByteBitSet;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.api.material.Burnable;
+
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;

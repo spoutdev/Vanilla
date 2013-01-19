@@ -34,6 +34,7 @@ import org.spout.api.geo.LoadOption;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.api.data.GameMode;
+
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.passive.Sheep;
 import org.spout.vanilla.plugin.component.substance.Item;

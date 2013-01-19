@@ -33,8 +33,9 @@ import java.util.List;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 
-import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.api.data.effect.StatusEffect;
+
+import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.data.effect.StatusEffectContainer;
 import org.spout.vanilla.plugin.event.entity.network.EntityEffectEvent;

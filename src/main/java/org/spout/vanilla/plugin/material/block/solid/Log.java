@@ -49,6 +49,7 @@ import org.spout.vanilla.api.material.Burnable;
 import org.spout.vanilla.api.material.Fuel;
 import org.spout.vanilla.api.material.TimedCraftable;
 import org.spout.vanilla.api.material.block.Directional;
+
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;

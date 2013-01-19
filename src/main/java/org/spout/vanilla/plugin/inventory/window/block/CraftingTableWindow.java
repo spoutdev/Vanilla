@@ -38,6 +38,7 @@ import org.spout.vanilla.plugin.inventory.window.WindowType;
 
 public class CraftingTableWindow extends Window {
 	private final CraftingTableInventory inventory = new CraftingTableInventory();
+
 	public CraftingTableWindow(Player owner) {
 		this(owner, "Crafting");
 	}
@@ -50,7 +51,7 @@ public class CraftingTableWindow extends Window {
 	@Override
 	public void close() {
 		GridIterator iterator = inventory.getGrid().iterator();
-		while(iterator.hasNext()) {
+		while (iterator.hasNext()) {
 			ItemStack item = inventory.get(iterator.next());
 			if (item != null) {
 				getHuman().dropItem(item);

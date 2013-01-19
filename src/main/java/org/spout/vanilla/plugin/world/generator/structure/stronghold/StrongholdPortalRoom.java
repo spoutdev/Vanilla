@@ -33,7 +33,6 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.world.generator.object.VanillaObjects;
 import org.spout.vanilla.plugin.world.generator.structure.ComponentCuboidPart;
 import org.spout.vanilla.plugin.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.plugin.world.generator.structure.Structure;

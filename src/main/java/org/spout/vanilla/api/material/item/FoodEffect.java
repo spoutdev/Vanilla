@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.api.material.item;
 
-
 public class FoodEffect {
 	private FoodEffects effect;
 	private float change;

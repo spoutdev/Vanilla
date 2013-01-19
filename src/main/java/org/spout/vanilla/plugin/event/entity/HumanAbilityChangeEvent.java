@@ -31,6 +31,7 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 
 import org.spout.vanilla.api.data.GameMode;
+
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 
 public class HumanAbilityChangeEvent extends EntityEvent implements Cancellable {

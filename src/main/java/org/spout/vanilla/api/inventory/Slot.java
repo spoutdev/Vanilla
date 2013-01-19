@@ -101,7 +101,6 @@ public class Slot implements Serializable {
 	 * If the slot is empty, the slot is set to the new item.
 	 * Otherwise if the two items can stack, they are stacked.
 	 * The input item amount is modified upon adding
-	 * 
 	 * @param item to add
 	 */
 	public void add(ItemStack item) {

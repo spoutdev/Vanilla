@@ -46,6 +46,7 @@ import org.spout.vanilla.api.material.InitializableMaterial;
 import org.spout.vanilla.api.material.block.Directional;
 import org.spout.vanilla.api.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.api.material.block.redstone.RedstoneTarget;
+
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.util.PlayerUtil;
@@ -139,7 +140,6 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 
 	/**
 	 * Checks whether a redstone repeater block is locked by one or more powered repeaters powering the sides
-	 * 
 	 * @param block of the redstone repeater
 	 * @return True if locked, False if not
 	 */

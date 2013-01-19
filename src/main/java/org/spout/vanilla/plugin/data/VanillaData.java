@@ -43,6 +43,7 @@ import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.api.data.PaintingType;
 import org.spout.vanilla.api.data.Weather;
 import org.spout.vanilla.api.data.WorldType;
+
 import org.spout.vanilla.plugin.inventory.block.ChestInventory;
 import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
 import org.spout.vanilla.plugin.inventory.player.DropInventory;

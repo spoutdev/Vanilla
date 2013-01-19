@@ -36,7 +36,6 @@ import com.google.common.base.Preconditions;
 
 import org.jboss.netty.channel.Channel;
 
-import org.spout.api.Engine;
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.channel.ChatChannel;
@@ -45,7 +44,6 @@ import org.spout.api.command.Command;
 import org.spout.api.command.CommandSource;
 import org.spout.api.data.ValueHolder;
 import org.spout.api.data.ValueHolderBase;
-import org.spout.api.event.player.PlayerChatEvent;
 import org.spout.api.geo.World;
 import org.spout.api.lang.Locale;
 

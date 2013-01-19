@@ -37,6 +37,7 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.api.inventory.Slot;
+
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.data.VanillaData;

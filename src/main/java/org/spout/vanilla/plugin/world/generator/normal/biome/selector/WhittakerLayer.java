@@ -72,7 +72,7 @@ public class WhittakerLayer implements BiomeSelectorLayer {
 	}
 
 	public WhittakerLayer addElement(LayeredBiomeSelectorElement element,
-			float minHumidity, float maxHumidity, float minTemperature, float maxTemperature) {
+									 float minHumidity, float maxHumidity, float minTemperature, float maxTemperature) {
 		return addElement(new WhittakerElement(element, minHumidity, maxHumidity,
 				minTemperature, maxTemperature));
 	}
@@ -153,8 +153,8 @@ public class WhittakerLayer implements BiomeSelectorLayer {
 		}
 
 		public WhittakerElement(LayeredBiomeSelectorElement element,
-				float minHumidity, float maxHumidity,
-				float minTemperature, float maxTemperature) {
+								float minHumidity, float maxHumidity,
+								float minTemperature, float maxTemperature) {
 			this(element);
 			this.minHumidity = minHumidity;
 			this.maxHumidity = maxHumidity;

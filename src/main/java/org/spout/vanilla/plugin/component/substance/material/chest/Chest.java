@@ -31,6 +31,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.api.inventory.Container;
+
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
@@ -73,9 +74,9 @@ public class Chest extends AbstractChest implements Container {
 		ChestInventory inventory = getInventory();
 		if (otherHalf != null) {
 			if (block.translate(BlockFace.EAST).equals(otherHalf) || block.translate(BlockFace.NORTH).equals(otherHalf)) {
-				inventory = new ChestInventory(((Chest)otherHalf.getComponent()).getInventory(), inventory);
+				inventory = new ChestInventory(((Chest) otherHalf.getComponent()).getInventory(), inventory);
 			} else {
-				inventory = new ChestInventory(inventory, ((Chest)otherHalf.getComponent()).getInventory());
+				inventory = new ChestInventory(inventory, ((Chest) otherHalf.getComponent()).getInventory());
 			}
 		}
 		return inventory;

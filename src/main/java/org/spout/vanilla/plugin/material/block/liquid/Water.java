@@ -38,6 +38,7 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.api.data.Climate;
+
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Liquid;
 import org.spout.vanilla.plugin.render.VanillaEffects;

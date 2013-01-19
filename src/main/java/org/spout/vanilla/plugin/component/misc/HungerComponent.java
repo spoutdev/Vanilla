@@ -40,11 +40,10 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Rectangle;
 
-import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.api.inventory.Slot;
+
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
@@ -137,11 +136,10 @@ public class HungerComponent extends EntityComponent {
 				final int health = healthComponent.getHealth();
 				final int hunger = getHunger();
 
-				
 				//Timer when eating. Sends a Enting done if the player eated the food the whole time.
 				if (eatingTimer != 0f) {
 					if (eatingTimer >= 1.5f) {
-						((Player)getOwner()).getSession().send(false, new EntityStatusMessage(getOwner().getId(), EntityStatusMessage.EATING_ACCEPTED));
+						((Player) getOwner()).getSession().send(false, new EntityStatusMessage(getOwner().getId(), EntityStatusMessage.EATING_ACCEPTED));
 						((Food) foodEating.get().getMaterial()).onEat(getOwner(), foodEating);
 						eatingTimer = 0f;
 						foodEating = null;
@@ -149,7 +147,7 @@ public class HungerComponent extends EntityComponent {
 						eatingTimer += dt;
 					}
 				}
-				
+
 				// Regenerate health
 				if (health < 20 && hunger > 17) {
 					timer -= dt;
@@ -185,7 +183,7 @@ public class HungerComponent extends EntityComponent {
 					int dx = lastPos.getBlockX() - pos.getBlockX();
 					int dy = lastPos.getBlockY() - pos.getBlockY();
 					int dz = lastPos.getBlockZ() - pos.getBlockZ();
-					
+
 					final boolean sprinting = human.isSprinting();
 					final boolean jumping = human.isJumping();
 					if (world.getBlock(pos).getMaterial() instanceof Water && world.getBlock(lastPos).getMaterial() instanceof Water) {
@@ -212,7 +210,7 @@ public class HungerComponent extends EntityComponent {
 				for (int i = 0; i < digging; i++) {
 					exhaustion += 0.025f;
 				}
-				
+
 				diggingComponent.setBlockBroken(0);
 
 				final float foodSaturation = getFoodSaturation();

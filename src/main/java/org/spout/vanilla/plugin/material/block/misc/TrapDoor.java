@@ -40,6 +40,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.api.material.Fuel;
 import org.spout.vanilla.api.material.block.Openable;
 import org.spout.vanilla.api.material.block.redstone.RedstoneTarget;
+
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;

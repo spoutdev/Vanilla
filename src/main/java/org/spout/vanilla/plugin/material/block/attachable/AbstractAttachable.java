@@ -35,6 +35,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.util.bytebit.ByteBitSet;
 
 import org.spout.vanilla.api.material.block.Attachable;
+
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 
 public abstract class AbstractAttachable extends VanillaBlockMaterial implements Attachable {

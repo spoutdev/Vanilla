@@ -34,6 +34,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.api.material.Burnable;
+
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Solid;

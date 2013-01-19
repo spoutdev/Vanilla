@@ -52,8 +52,9 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 
-import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.api.inventory.Slot;
+
+import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
@@ -107,7 +108,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		 */
 		final BlockFace clickedFace = message.getDirection();
 		HungerComponent hunger = player.add(HungerComponent.class);
-		if ((holdingMat instanceof Food &&  hunger.getHunger() != VanillaData.HUNGER.getDefaultValue()) || holdingMat instanceof Sword) {
+		if ((holdingMat instanceof Food && hunger.getHunger() != VanillaData.HUNGER.getDefaultValue()) || holdingMat instanceof Sword) {
 			player.get(Living.class).setEatingBlocking(true);
 			hunger.setEating(true, currentSlot);
 			return;

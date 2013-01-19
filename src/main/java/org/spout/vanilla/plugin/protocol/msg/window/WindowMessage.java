@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.protocol.msg.window;
 
 import org.spout.vanilla.api.protocol.msg.VanillaMainChannelMessage;
+
 import org.spout.vanilla.plugin.inventory.window.Window;
 
 /**

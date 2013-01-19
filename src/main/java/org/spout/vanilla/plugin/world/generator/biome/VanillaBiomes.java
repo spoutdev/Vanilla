@@ -38,6 +38,7 @@ import org.spout.api.util.config.annotated.AnnotatedObjectConfiguration;
 import org.spout.api.util.config.serialization.Serialization;
 
 import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
+
 import org.spout.vanilla.plugin.util.ColorSerializer;
 import org.spout.vanilla.plugin.world.generator.nether.biome.NetherrackBiome;
 import org.spout.vanilla.plugin.world.generator.normal.biome.grassy.ForestBiome;

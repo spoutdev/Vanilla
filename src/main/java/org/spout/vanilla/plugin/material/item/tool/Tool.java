@@ -38,6 +38,7 @@ import org.spout.api.math.Vector2;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.api.material.item.Enchantable;
+
 import org.spout.vanilla.plugin.component.living.hostile.Silverfish;
 import org.spout.vanilla.plugin.component.living.hostile.Skeleton;
 import org.spout.vanilla.plugin.component.living.hostile.Spider;

@@ -37,6 +37,7 @@ import org.spout.api.material.range.PlusEffectRange;
 
 import org.spout.vanilla.api.data.RedstonePowerMode;
 import org.spout.vanilla.api.material.Toggleable;
+
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.AttachedRedstoneSource;

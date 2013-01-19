@@ -33,6 +33,7 @@ import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.api.protocol.msg.VanillaBlockDataChannelMessage;
+
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public final class BlockChangeMessage extends VanillaBlockDataChannelMessage {

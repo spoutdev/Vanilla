@@ -30,8 +30,9 @@ import java.util.HashMap;
 
 import org.spout.api.component.type.EntityComponent;
 
-import org.spout.vanilla.plugin.data.Damage;
 import org.spout.vanilla.api.data.Difficulty;
+
+import org.spout.vanilla.plugin.data.Damage;
 
 public class DamageComponent extends EntityComponent {
 	private HashMap<Difficulty, Damage> damageList = new HashMap<Difficulty, Damage>();

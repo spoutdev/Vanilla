@@ -26,28 +26,27 @@
  */
 package org.spout.vanilla.plugin.ai.action;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.spout.api.ai.goap.Action;
 import org.spout.api.ai.goap.PlannerAgent;
 import org.spout.api.ai.goap.WorldState;
 import org.spout.api.component.impl.NavigationComponent;
-import org.spout.api.entity.Player;
+import org.spout.api.entity.Entity;
 
-import org.spout.vanilla.plugin.ai.sensor.NearbyPlayersSensor;
+import org.spout.vanilla.plugin.ai.sensor.NearbyComponentsSensor;
 
 /**
  * Very basic Attack action that directs the Entity to go attack the player that is nearby.
- *
+ * <p/>
  * The attack is simply the Entity colliding with the player. Actual attack damage is done within
  * onCollided.
  */
 public class ActionAttack implements Action {
-	private static final WorldState EFFECTS = WorldState.createImmutable("hasNearbyPlayers", false);
-	private static final WorldState PRECONDITIONS = WorldState.createImmutable("hasNearbyPlayers", true);
+	private static final WorldState EFFECTS = WorldState.createImmutable("hasNearbyEntities", false);
+	private static final WorldState PRECONDITIONS = WorldState.createImmutable("hasNearbyEntities", true);
 	private final PlannerAgent agent;
-	private Player target;
+	private Entity target;
 
 	public ActionAttack(PlannerAgent agent) {
 		this.agent = agent;
@@ -55,7 +54,7 @@ public class ActionAttack implements Action {
 
 	@Override
 	public void activate() {
-		List<Player> targets = agent.getSensor(NearbyPlayersSensor.class).getPlayers();
+		List<Entity> targets = agent.getSensor(NearbyComponentsSensor.class).getEntities();
 		target = targets.size() > 0 ? targets.iterator().next() : null;
 	}
 
@@ -82,7 +81,7 @@ public class ActionAttack implements Action {
 	@Override
 	public boolean isComplete() {
 		final NavigationComponent navi = agent.getEntity().get(NavigationComponent.class); //You will always be in our hearts Navi...
-		return target == null || target.isRemoved() || !agent.getSensor(NearbyPlayersSensor.class).detectedPlayer() || (navi != null && !navi.isNavigating());
+		return target == null || target.isRemoved() || !agent.getSensor(NearbyComponentsSensor.class).hasFoundEntity() || (navi != null && !navi.isNavigating());
 	}
 
 	@Override

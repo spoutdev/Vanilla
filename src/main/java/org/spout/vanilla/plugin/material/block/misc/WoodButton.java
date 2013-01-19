@@ -39,6 +39,7 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.api.data.RedstonePowerMode;
 import org.spout.vanilla.api.material.block.attachable.PointAttachable;
+
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.block.AttachedRedstoneSource;

@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.component.substance.object.projectile;
 
 import org.spout.api.entity.Entity;
+
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectEntityProtocol;
@@ -40,7 +41,7 @@ public class XPBottle extends ObjectEntity implements Projectile {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.EXP_BOTTLE));
 		super.onAttached();
 	}
-	
+
 	@Override
 	public Entity getShooter() {
 		return shooter;

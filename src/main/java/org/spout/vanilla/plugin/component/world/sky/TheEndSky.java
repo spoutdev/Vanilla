@@ -26,9 +26,7 @@
  */
 package org.spout.vanilla.plugin.component.world.sky;
 
-
 import org.spout.api.entity.Player;
-
 
 import org.spout.vanilla.api.data.Weather;
 

@@ -29,6 +29,7 @@ package org.spout.vanilla.plugin.world.generator.normal.biome.sandy;
 import org.spout.api.generator.biome.Decorator;
 
 import org.spout.vanilla.api.data.Climate;
+
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.plugin.world.generator.normal.populator.GroundCoverPopulator;

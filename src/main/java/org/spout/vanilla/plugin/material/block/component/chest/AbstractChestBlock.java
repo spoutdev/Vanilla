@@ -36,6 +36,7 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.api.data.MoveReaction;
 import org.spout.vanilla.api.material.Fuel;
 import org.spout.vanilla.api.material.block.Directional;
+
 import org.spout.vanilla.plugin.component.substance.material.chest.AbstractChest;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.material.block.component.ComponentMaterial;

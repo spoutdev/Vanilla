@@ -30,6 +30,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.plugin.component.substance.object.vehicle.MinecartBase;
 import org.spout.vanilla.plugin.material.block.rail.RailBase;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
@@ -37,7 +38,7 @@ import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class MinecartItem extends VanillaItemMaterial {
 	private Class<? extends MinecartBase> spawnedEntity;
-	
+
 	public MinecartItem(String name, int id, Class<? extends MinecartBase> spawnedEntity) {
 		super(name, id, null);
 		this.spawnedEntity = spawnedEntity;
@@ -46,7 +47,7 @@ public class MinecartItem extends VanillaItemMaterial {
 	public Class<? extends MinecartBase> getSpawnedEntity() {
 		return spawnedEntity;
 	}
-	
+
 	@Override
 	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
 		super.onInteract(entity, block, type, clickedface);
@@ -62,6 +63,5 @@ public class MinecartItem extends VanillaItemMaterial {
 				//Shouldn't the held item be passed to this function instead?
 			}
 		}
-		
 	}
 }

@@ -35,6 +35,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.api.material.InitializableMaterial;
+
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.material.block.plant.Sapling;
@@ -70,7 +71,6 @@ public class FlowerPotBlock extends GroundAttachable implements InitializableMat
 
 	/**
 	 * Obtains the Flower Pot Block material for the flower material specified
-	 * 
 	 * @param flowerMaterial to get the flower pot for
 	 * @return The flower pot block of the flower, or null if none is found
 	 */

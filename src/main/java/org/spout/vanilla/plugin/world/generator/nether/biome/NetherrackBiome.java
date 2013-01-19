@@ -29,6 +29,7 @@ package org.spout.vanilla.plugin.world.generator.nether.biome;
 import java.awt.Color;
 
 import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
+
 import org.spout.vanilla.plugin.world.generator.nether.decorator.FireDecorator;
 import org.spout.vanilla.plugin.world.generator.nether.decorator.GlowstoneDecorator;
 import org.spout.vanilla.plugin.world.generator.nether.decorator.LavaFallDecorator;

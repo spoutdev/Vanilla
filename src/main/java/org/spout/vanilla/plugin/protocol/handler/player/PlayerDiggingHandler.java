@@ -51,6 +51,7 @@ import org.spout.api.util.flag.Flag;
 import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.api.material.VanillaMaterial;
+
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.DiggingComponent;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
@@ -246,7 +247,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				if (totalDamage <= 40) { // Yes, this is a very high allowance - this is because this is only over a single block, and this will spike due to varying latency.
 					if (breakBlock(blockMaterial, block, human, session)) {
 						GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);
-						
+
 						if (heldItem != null && heldItem.getMaterial() instanceof Tool) {
 							Tool tool = (Tool) heldItem.getMaterial();
 							short damage = tool.getDurabilityPenalty(heldItem);

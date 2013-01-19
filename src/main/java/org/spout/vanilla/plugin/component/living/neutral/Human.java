@@ -42,6 +42,7 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.api.inventory.Slot;
+
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.Living;
@@ -303,7 +304,7 @@ public class Human extends Living {
 			changeToFromCreative ^= event.getMode() == GameMode.CREATIVE;
 			GameMode old = getGameMode();
 			mode = event.getMode();
-			
+
 			//In Survival we shoudn't be able to fly.
 			setCanFly(mode == GameMode.CREATIVE);
 			if (changeToFromCreative) {

@@ -31,6 +31,7 @@ import org.spout.api.math.Vector2;
 import org.spout.api.render.RenderMaterial;
 
 import org.spout.vanilla.api.material.VanillaMaterial;
+
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 
 public class VanillaItemMaterial extends Material implements VanillaMaterial {

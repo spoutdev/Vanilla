@@ -41,7 +41,6 @@ import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
  * Represents a players inventory
  */
 public class PlayerInventory extends EntityComponent {
-
 	/**
 	 * Gets the quickbar slots of this player inventory
 	 * @return the quickbar slots

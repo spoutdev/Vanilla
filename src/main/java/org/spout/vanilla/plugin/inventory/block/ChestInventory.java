@@ -65,7 +65,7 @@ public class ChestInventory extends Inventory {
 				return def;
 		}
 	}
-	
+
 	@Override
 	public ItemStack[] getContents() {
 		if (left == null || right == null) {

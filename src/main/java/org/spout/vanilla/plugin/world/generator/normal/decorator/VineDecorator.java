@@ -28,7 +28,6 @@ package org.spout.vanilla.plugin.world.generator.normal.decorator;
 
 import java.util.Random;
 
-import org.spout.api.event.Cause;
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;

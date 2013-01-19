@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.api.material.map;
 
-
 public class MapColor {
 	private static final MapColor[] colors;
 

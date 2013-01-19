@@ -36,7 +36,6 @@ import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.plugin.component.substance.Painting;
-import org.spout.vanilla.plugin.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.plugin.protocol.entity.VanillaEntityProtocol;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.spawn.EntityPaintingMessage;
@@ -48,10 +47,9 @@ public class PaintingEntityProtocol extends VanillaEntityProtocol {
 		parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 300));
 		return Arrays.<Message>asList(new EntityPaintingMessage(entity.add(Painting.class), rm), new EntityMetadataMessage(entity.getId(), parameters));
 	}
-	
+
 	@Override
 	public final List<Message> getUpdateMessages(Entity entity, RepositionManager rm, boolean force) {
 		return new ArrayList<Message>();
-		
 	}
 }

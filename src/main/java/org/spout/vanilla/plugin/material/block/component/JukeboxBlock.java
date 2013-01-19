@@ -33,6 +33,7 @@ import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.api.data.MoveReaction;
 import org.spout.vanilla.api.material.Fuel;
+
 import org.spout.vanilla.plugin.component.substance.material.Jukebox;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;

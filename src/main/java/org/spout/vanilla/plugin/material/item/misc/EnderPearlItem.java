@@ -37,6 +37,7 @@ import org.spout.vanilla.plugin.util.PlayerUtil;
 public class EnderPearlItem extends ThrowItem {
 	public EnderPearlItem(String name, int id) {
 		super(name, id, EnderPearl.class);
+		this.setMaxStackSize(16);
 	}
 
 	@Override

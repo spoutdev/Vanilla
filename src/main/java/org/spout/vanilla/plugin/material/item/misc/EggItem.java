@@ -39,6 +39,7 @@ import org.spout.vanilla.plugin.util.PlayerUtil;
 public class EggItem extends ThrowItem {
 	public EggItem(String name, int id) {
 		super(name, id, Egg.class);
+		this.setMaxStackSize(16);
 	}
 
 	@Override

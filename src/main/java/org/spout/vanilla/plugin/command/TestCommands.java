@@ -38,6 +38,7 @@ import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.CommandPermissions;
 import org.spout.api.component.Component;
 import org.spout.api.component.impl.HitBlockComponent;
+import org.spout.api.component.impl.ObserverComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityPrefab;
 import org.spout.api.entity.Player;
@@ -58,9 +59,9 @@ import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.VanillaComponent;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
-import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.living.hostile.Creeper;
 import org.spout.vanilla.plugin.component.living.hostile.EnderDragon;
 import org.spout.vanilla.plugin.component.living.hostile.Skeleton;
@@ -410,7 +411,7 @@ public class TestCommands {
 		}
 	}
 
-	@Command(aliases = {"killall", "ka"}, desc = "Kill all non-player or world resources.entities within a world", min = 0, max = 1)
+	@Command(aliases = {"killall", "ka"}, desc = "Kill all non-player or world entities within a world", min = 0, max = 1)
 	@CommandPermissions("vanilla.command.debug")
 	public void killall(CommandContext args, CommandSource source) throws CommandException {
 		World world = null;
@@ -433,23 +434,23 @@ public class TestCommands {
 		List<Entity> entities = world.getAll();
 		int count = 0;
 		for (Entity entity : entities) {
-			if (entity instanceof Player || !entity.has(Living.class)) {
+			if (entity instanceof Player || (entity.get(VanillaComponent.class) == null)) {
 				continue;
 			}
 			count++;
 			entity.remove();
-			Spout.log(entity.get(Living.class) + " was killed");
+			Spout.log(entity.get(VanillaComponent.class) + " was killed");
 		}
 		if (count > 0) {
 			if (!isConsole) {
 				if (count == 1) {
 					source.sendMessage("1 entity has been killed.");
 				} else {
-					source.sendMessage(count, " resources.entities have been killed.");
+					source.sendMessage(count, " entities have been killed.");
 				}
 			}
 		} else {
-			source.sendMessage("No valid resources.entities found to kill");
+			source.sendMessage("No valid entities found to kill");
 		}
 	}
 
@@ -496,7 +497,7 @@ public class TestCommands {
 				chunk.initLighting();
 			}
 			source.sendMessage("Chunk lighting is being initialized");
-		}  else if (args.getString(0, "").contains("packets")) {
+		} else if (args.getString(0, "").contains("packets")) {
 			player.add(ForceMessagesComponent.class);
 		}
 	}

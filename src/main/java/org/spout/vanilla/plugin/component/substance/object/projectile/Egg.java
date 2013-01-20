@@ -27,8 +27,12 @@
 package org.spout.vanilla.plugin.component.substance.object.projectile;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.living.passive.Chicken;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectEntityProtocol;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
@@ -50,5 +54,25 @@ public class Egg extends ObjectEntity implements Projectile {
 	@Override
 	public void setShooter(Entity shooter) {
 		this.shooter = shooter;
+	}
+
+	@Override
+	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
+		HealthComponent health = entity.get(HealthComponent.class);
+		if (health != null) {
+			health.damage(0);
+		}
+		Entity toSpawn = colliderPoint.getWorld().createEntity(colliderPoint, Chicken.class);
+		Chicken chicken = toSpawn.get(Chicken.class);
+		colliderPoint.getWorld().spawnEntity(toSpawn);
+		getOwner().remove();
+	}
+
+	@Override
+	public void onCollided(Point collidedroint, Point collidedPoint, Block block) {
+		Entity toSpawn = collidedPoint.getWorld().createEntity(collidedPoint, Chicken.class);
+		Chicken chicken = toSpawn.get(Chicken.class);
+		collidedPoint.getWorld().spawnEntity(toSpawn);
+		getOwner().remove();
 	}
 }

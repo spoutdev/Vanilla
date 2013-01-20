@@ -218,6 +218,7 @@ import org.spout.vanilla.plugin.material.item.misc.BottleOEnchanting;
 import org.spout.vanilla.plugin.material.item.misc.Clay;
 import org.spout.vanilla.plugin.material.item.misc.Coal;
 import org.spout.vanilla.plugin.material.item.misc.Dye;
+import org.spout.vanilla.plugin.material.item.misc.EggItem;
 import org.spout.vanilla.plugin.material.item.misc.EnchantedBook;
 import org.spout.vanilla.plugin.material.item.misc.EnderPearlItem;
 import org.spout.vanilla.plugin.material.item.misc.EyeOfEnderItem;
@@ -505,7 +506,7 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial BOOK_AND_QUILL = new VanillaItemMaterial("Book and Quill", 386, null);
 	public static final VanillaItemMaterial WRITTEN_BOOK = new VanillaItemMaterial("Written Book", 387, null);
 	public static final VanillaItemMaterial SLIMEBALL = new VanillaItemMaterial("Slimeball", 341, null);
-	public static final VanillaItemMaterial EGG = new VanillaItemMaterial("Egg", 344, null);
+	public static final EggItem EGG = new EggItem("Egg", 344);
 	public static final VanillaItemMaterial COMPASS = new VanillaItemMaterial("Compass", 345, null);
 	public static final VanillaItemMaterial CLOCK = new VanillaItemMaterial("Clock", 347, null);
 	public static final VanillaItemMaterial GLOWSTONE_DUST = new VanillaItemMaterial("Glowstone Dust", 348, null);

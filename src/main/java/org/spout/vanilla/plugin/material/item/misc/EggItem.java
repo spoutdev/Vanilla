@@ -43,7 +43,7 @@ public class EggItem extends ThrowItem {
 
 	@Override
 	public void onInteract(Entity entity, Action type) {
-		super.onInteract(entity, type);
+		super.onInteract(entity, type, 10f);
 		if (type == Action.RIGHT_CLICK) {
 			Slot slot = PlayerUtil.getHeldSlot(entity);
 			if (!PlayerUtil.isCostSuppressed(entity) && slot != null && slot.get() != null && VanillaMaterials.EGG.equals(slot.get().getMaterial())) {

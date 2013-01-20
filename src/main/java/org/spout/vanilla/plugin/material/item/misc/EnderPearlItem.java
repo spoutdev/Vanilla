@@ -41,7 +41,7 @@ public class EnderPearlItem extends ThrowItem {
 
 	@Override
 	public void onInteract(Entity entity, Action type) {
-		super.onInteract(entity, type);
+		super.onInteract(entity, type, 10f);
 		if (type == Action.RIGHT_CLICK) {
 			Slot slot = PlayerUtil.getHeldSlot(entity);
 			if (!PlayerUtil.isCostSuppressed(entity) && slot != null && slot.get() != null && VanillaMaterials.ENDER_PEARL.equals(slot.get().getMaterial())) {

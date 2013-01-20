@@ -37,20 +37,33 @@ import com.bulletphysics.collision.shapes.SphereShape;
 public abstract class ThrowItem extends VanillaItemMaterial {
 
 	private Class<? extends ObjectEntity> itemThrown;
+
 	public ThrowItem(String name, int id, Class<? extends ObjectEntity> itemThrown) {
 		super(name, id, null);
 		this.itemThrown = itemThrown;
 	}
-	
+
 	@Override
 	public void onInteract(Entity entity, Action type) {
+		onInteract(entity, type, 5f);
+	}
+
+	public void onInteract(Entity entity, Action type, float mass) {
 		super.onInteract(entity, type);
 		if (type == Action.RIGHT_CLICK) {
 			World world = entity.getWorld();
-			ObjectEntity item = world.createEntity(entity.getTransform().getPosition(), itemThrown).add(itemThrown);
-			item.getPhysics().setMass(10f);
-			item.getPhysics().setCollisionShape(new SphereShape(3)); //TODO: Correct this
-			item.getPhysics().applyImpulse(new Vector3(20, 5, 0)); // TODO: Correct this
+			ObjectEntity item = world.createEntity(entity.getTransform().getPosition().add(0, 1.6f, 0), itemThrown).add(itemThrown);
+			item.getPhysics().setMass(mass);
+			item.getPhysics().setCollisionShape(new SphereShape(0.1f)); // TODO: Correct this
+
+			double pitchRadians = Math.toRadians(entity.getTransform().getPitch());
+			double yawRadians = Math.toRadians(entity.getTransform().getYaw());
+
+			double sinPitch = Math.sin(pitchRadians);
+			double cosPitch = Math.cos(pitchRadians);
+			double sinYaw = Math.sin(yawRadians);
+			double cosYaw = Math.cos(yawRadians);
+			item.getPhysics().applyImpulse(new Vector3((-cosPitch * sinYaw) * -300, (sinPitch) * -300, (-cosPitch * cosYaw) * -300)); // TODO: Correct this
 			if (item instanceof Projectile) {
 				((Projectile) item).setShooter(entity);
 			}

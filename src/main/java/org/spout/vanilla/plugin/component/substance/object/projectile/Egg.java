@@ -62,17 +62,22 @@ public class Egg extends ObjectEntity implements Projectile {
 		if (health != null) {
 			health.damage(0);
 		}
-		Entity toSpawn = colliderPoint.getWorld().createEntity(colliderPoint, Chicken.class);
-		Chicken chicken = toSpawn.get(Chicken.class);
-		colliderPoint.getWorld().spawnEntity(toSpawn);
+		spawnChicken(collidedPoint);
+		
 		getOwner().remove();
 	}
 
 	@Override
 	public void onCollided(Point collidedroint, Point collidedPoint, Block block) {
-		Entity toSpawn = collidedPoint.getWorld().createEntity(collidedPoint, Chicken.class);
-		Chicken chicken = toSpawn.get(Chicken.class);
-		collidedPoint.getWorld().spawnEntity(toSpawn);
+		spawnChicken(collidedPoint);
 		getOwner().remove();
+	}
+	
+	private void spawnChicken(Point point) {
+		if (this.getRandom().nextInt(8) == 0) { //1 chance out of 8 to spawn a egg on collision
+			Entity toSpawn = point.getWorld().createEntity(point, Chicken.class);
+			toSpawn.add(Chicken.class);
+			point.getWorld().spawnEntity(toSpawn);
+		}
 	}
 }

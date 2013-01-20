@@ -41,7 +41,7 @@ public class BottleOEnchanting extends ThrowItem {
 
 	@Override
 	public void onInteract(Entity entity, Action type) {
-		super.onInteract(entity, type);
+		super.onInteract(entity, type, 25f);
 		if (type == Action.RIGHT_CLICK) {
 			Slot slot = PlayerUtil.getHeldSlot(entity);
 			if (!PlayerUtil.isCostSuppressed(entity) && slot != null && slot.get() != null && VanillaMaterials.BOTTLE_O_ENCHANTING.equals(slot.get().getMaterial())) {

@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.lighting;
 
 import org.spout.api.lighting.LightingManager;
+import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 
 public abstract class VanillaLightingManager extends LightingManager<VanillaCuboidLightBuffer> {
@@ -40,6 +41,6 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	}
 
 	@Override
-	public void resolve(VanillaCuboidLightBuffer light, ImmutableCuboidBlockMaterialBuffer material, int[] hx, int[] hz, int[] oldHy, int[] newHy, int changedColumns) {
+	public void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int[] hx, int[] hz, int[] oldHy, int[] newHy, int changedColumns) {
 	}
 }

@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.lighting;
 
+import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 
 public class VanillaBlocklightLightingManager extends VanillaLightingManager {
@@ -34,12 +35,15 @@ public class VanillaBlocklightLightingManager extends VanillaLightingManager {
 	}
 
 	@Override
-	public void resolve(VanillaCuboidLightBuffer light, ImmutableCuboidBlockMaterialBuffer material, int[] x, int[] y, int[] z, int changedBlocks) {
-		//Spout.getLogger().info(getClass().getSimpleName() + ":" + changedBlocks + " blocks changed");
+	public void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int[] x, int[] y, int[] z, int changedBlocks) {
+		/*if (changedBlocks > 0) {
+			Spout.getLogger().info(getClass().getSimpleName() + ":" + changedBlocks + " blocks changed");
+			Spout.getLogger().info("Material (" + x[0] + ", " + y[0] + ", " + z[0] + ") changed to: " + material.get(x[0], y[0], z[0]));
+		}*/
 	}
 
 	@Override
-	public void resolve(VanillaCuboidLightBuffer light, ImmutableCuboidBlockMaterialBuffer material, int[] bx, int[] by, int[] bz, int[] tx, int[] ty, int[] tz, int changedCuboids) {
+	public void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int[] bx, int[] by, int[] bz, int[] tx, int[] ty, int[] tz, int changedCuboids) {
 		//Spout.getLogger().info(getClass().getSimpleName() + ":" + changedCuboids + " cuboids changed");
 	}
 }

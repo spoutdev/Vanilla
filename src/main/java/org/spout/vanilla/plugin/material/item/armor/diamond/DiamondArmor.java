@@ -33,6 +33,6 @@ import org.spout.vanilla.plugin.material.item.armor.Armor;
 public abstract class DiamondArmor extends Armor {
 	protected DiamondArmor(String name, int id, short durability, Vector2 pos) {
 		super(name, id, durability, pos);
-		this.setEnchantability(10);
+		setEnchantability(10);
 	}
 }

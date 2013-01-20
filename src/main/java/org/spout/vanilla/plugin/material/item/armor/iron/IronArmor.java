@@ -33,6 +33,6 @@ import org.spout.vanilla.plugin.material.item.armor.Armor;
 public abstract class IronArmor extends Armor {
 	protected IronArmor(String name, int id, short durability, Vector2 pos) {
 		super(name, id, durability, pos);
-		this.setEnchantability(9);
+		setEnchantability(9);
 	}
 }

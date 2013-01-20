@@ -38,6 +38,7 @@ public class VanillaItemMaterial extends Material implements VanillaMaterial {
 	private final int minecraftId;
 	private int meleeDamage = 1;
 	private final Vector2 pos;
+	private int enchantability;
 
 	public VanillaItemMaterial(String name, int id, Vector2 pos) {
 		super(name);
@@ -55,6 +56,30 @@ public class VanillaItemMaterial extends Material implements VanillaMaterial {
 		super(name, data, parent);
 		this.minecraftId = id;
 		this.pos = pos;
+	}
+
+	/**
+	 * Gets the enchantability of this item material to use in the process of enchanting
+	 * @return Enchantability level of this item material
+	 */
+	public int getEnchantability() {
+		return enchantability;
+	}
+
+	/**
+	 * Gets whether this item material is enchantable (has an enchantability greater than 0)
+	 * @return true if this item material's enchantability is greater than 0
+	 */
+	public boolean isEnchantable() {
+		return enchantability > 0;
+	}
+
+	/**
+	 * Sets the enchantability of this item material
+	 * @param enchantability Enchantability to set
+	 */
+	public void setEnchantability(int enchantability) {
+		this.enchantability = enchantability;
 	}
 
 	@Override

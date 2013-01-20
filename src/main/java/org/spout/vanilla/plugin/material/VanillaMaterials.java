@@ -214,6 +214,7 @@ import org.spout.vanilla.plugin.material.item.minecart.MinecartItem;
 import org.spout.vanilla.plugin.material.item.minecart.PoweredMinecartItem;
 import org.spout.vanilla.plugin.material.item.minecart.StorageMinecartItem;
 import org.spout.vanilla.plugin.material.item.misc.BlazeRod;
+import org.spout.vanilla.plugin.material.item.misc.Book;
 import org.spout.vanilla.plugin.material.item.misc.BottleOEnchanting;
 import org.spout.vanilla.plugin.material.item.misc.Clay;
 import org.spout.vanilla.plugin.material.item.misc.Coal;
@@ -244,7 +245,6 @@ import org.spout.vanilla.plugin.material.item.tool.weapon.Sword;
 import org.spout.vanilla.plugin.material.map.Map;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
-// TODO: Remove all casts and separate remaining "set" methods out into each material's init() method
 public final class VanillaMaterials {
 	public static final BlockMaterial AIR = BlockMaterial.AIR;
 	public static final Stone STONE = new Stone("Stone", 1);
@@ -465,7 +465,7 @@ public final class VanillaMaterials {
 	public static final Bow BOW = new Bow("Bow", 261, (short) 385);
 	public static final VanillaItemMaterial ARROW = new VanillaItemMaterial("Arrow", 262, null);
 	public static final FishingRod FISHING_ROD = new FishingRod("Fishing Rod", 346, (short) 65);
-	public static final CarrotOnAStick CARROT_ON_A_STICK = new CarrotOnAStick("Carrot on a Stick", 398, (short) 25); //TODO: Check dur value
+	public static final CarrotOnAStick CARROT_ON_A_STICK = new CarrotOnAStick("Carrot on a Stick", 398, (short) 26);
 	// == Buckets=
 	public static final EmptyBucket BUCKET = new EmptyBucket("Bucket", 325);
 	public static final FullBucket WATER_BUCKET = new FullBucket("Water Bucket", 326, WATER);
@@ -502,7 +502,7 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial CLAY_BRICK = new VanillaItemMaterial("Brick", 336, null);
 	public static final BlockItem SUGAR_CANE = new BlockItem("Sugar Cane", 338, VanillaMaterials.SUGAR_CANE_BLOCK, null);
 	public static final VanillaItemMaterial PAPER = new VanillaItemMaterial("Paper", 339, null);
-	public static final VanillaItemMaterial BOOK = new VanillaItemMaterial("Book", 340, null);
+	public static final Book BOOK = new Book("Book", 340, null);
 	public static final VanillaItemMaterial BOOK_AND_QUILL = new VanillaItemMaterial("Book and Quill", 386, null);
 	public static final VanillaItemMaterial WRITTEN_BOOK = new VanillaItemMaterial("Written Book", 387, null);
 	public static final VanillaItemMaterial SLIMEBALL = new VanillaItemMaterial("Slimeball", 341, null);

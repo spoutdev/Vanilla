@@ -24,21 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.api.material.item;
+package org.spout.vanilla.plugin.material.item.misc;
 
-/**
- * Represents an item material that can be enchanted
- */
-public interface Enchantable {
-	/**
-	 * Gets the enchantability of this item material to use in the process of enchanting
-	 * @return Enchantability level of this item material
-	 */
-	public int getEnchantability();
+import org.spout.api.math.Vector2;
 
-	/**
-	 * Sets the enchantability of this item material
-	 * @param enchantability Enchantability to set
-	 */
-	public void setEnchantability(int enchantability);
+import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
+
+public class Book extends VanillaItemMaterial {
+	public Book(String name, int id, Vector2 pos) {
+		super(name, id, pos);
+		setEnchantability(1);
+	}
 }

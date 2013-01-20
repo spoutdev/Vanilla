@@ -27,24 +27,49 @@
 package org.spout.vanilla.plugin.component.substance.material;
 
 import org.spout.api.entity.Player;
-import org.spout.api.inventory.Inventory;
 
 import org.spout.vanilla.api.inventory.Container;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.plugin.inventory.window.block.EnchantmentTableWindow;
+import org.spout.vanilla.plugin.inventory.window.prop.EnchantmentTableProperty;
 
 public class EnchantmentTable extends ViewedBlockComponent implements Container {
 	private final EnchantmentTableInventory inventory = new EnchantmentTableInventory();
+	private final int[] levels = new int[3];
 
 	@Override
-	public Inventory getInventory() {
+	public EnchantmentTableInventory getInventory() {
 		return inventory;
+	}
+
+	@Override
+	public void onTick(float dt) {
+		EnchantmentTableInventory inventory = getInventory();
+		for (Player player : viewers) {
+			if (inventory.has()) {
+				for (int i = 0; i < levels.length; i++) {
+					player.get(WindowHolder.class).getActiveWindow().setProperty(i, levels[i]);
+				}
+			}
+		}
 	}
 
 	@Override
 	public void open(Player player) {
 		player.get(WindowHolder.class).openWindow(new EnchantmentTableWindow(player, inventory));
+		setSlotLevel(EnchantmentTableProperty.SLOT_1, 1);
+		setSlotLevel(EnchantmentTableProperty.SLOT_2, 15);
+		setSlotLevel(EnchantmentTableProperty.SLOT_3, 30);
+	}
+
+	/**
+	 * Sets the level of the enchantment in the given {@link EnchantmentTableProperty} slot.
+	 * @param slot Slot to set
+	 * @param level Level of the enchantment
+	 */
+	public void setSlotLevel(EnchantmentTableProperty slot, int level) {
+		levels[slot.getId()] = level;
 	}
 }

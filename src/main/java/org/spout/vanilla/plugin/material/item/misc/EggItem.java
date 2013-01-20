@@ -24,37 +24,31 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.item;
+package org.spout.vanilla.plugin.material.item.misc;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.World;
-import org.spout.api.math.Vector3;
-import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
-import org.spout.vanilla.plugin.component.substance.object.projectile.Projectile;
-import com.bulletphysics.collision.shapes.SphereShape;
 
-public abstract class ThrowItem extends VanillaItemMaterial {
+import org.spout.vanilla.api.inventory.Slot;
 
-	private Class<? extends ObjectEntity> itemThrown;
-	public ThrowItem(String name, int id, Class<? extends ObjectEntity> itemThrown) {
-		super(name, id, null);
-		this.itemThrown = itemThrown;
+import org.spout.vanilla.plugin.component.substance.object.projectile.Egg;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.item.ThrowItem;
+import org.spout.vanilla.plugin.util.PlayerUtil;
+
+public class EggItem extends ThrowItem {
+	public EggItem(String name, int id) {
+		super(name, id, Egg.class);
 	}
-	
+
 	@Override
 	public void onInteract(Entity entity, Action type) {
 		super.onInteract(entity, type);
 		if (type == Action.RIGHT_CLICK) {
-			World world = entity.getWorld();
-			ObjectEntity item = world.createEntity(entity.getTransform().getPosition(), itemThrown).add(itemThrown);
-			item.getPhysics().setMass(10f);
-			item.getPhysics().setCollisionShape(new SphereShape(3)); //TODO: Correct this
-			item.getPhysics().applyImpulse(new Vector3(20, 5, 0)); // TODO: Correct this
-			if (item instanceof Projectile) {
-				((Projectile) item).setShooter(entity);
+			Slot slot = PlayerUtil.getHeldSlot(entity);
+			if (!PlayerUtil.isCostSuppressed(entity) && slot != null && slot.get() != null && VanillaMaterials.EGG.equals(slot.get().getMaterial())) {
+				slot.addAmount(-1);
 			}
-			world.spawnEntity(item.getOwner());
 		}
 	}
 }

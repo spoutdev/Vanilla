@@ -69,7 +69,7 @@ public class LevelComponent extends EntityComponent {
 			return;
 		}
 
-		getData().put(VanillaData.EXPERIENCE_AMOUNT, experience);
+		getData().put(VanillaData.EXPERIENCE_AMOUNT, event.getNewExp());
 	}
 
 	/**

@@ -33,6 +33,6 @@ import org.spout.vanilla.plugin.material.item.armor.Armor;
 public abstract class LeatherArmor extends Armor {
 	protected LeatherArmor(String name, int id, short durability, Vector2 pos) {
 		super(name, id, durability, pos);
-		this.setEnchantability(15);
+		setEnchantability(15);
 	}
 }

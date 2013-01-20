@@ -46,7 +46,7 @@ public class Item extends ObjectEntity {
 	/**
 	 * The default delay in ms before the item can be picked up for a dropped item
 	 */
-	public static final long DROP_PICKUP_DELAY = 2000;
+	public static final long DROP_PICKUP_DELAY = 495;
 
 	@Override
 	public void onAttached() {

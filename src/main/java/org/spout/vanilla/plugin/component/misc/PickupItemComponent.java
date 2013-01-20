@@ -45,9 +45,6 @@ public class PickupItemComponent extends EntityComponent {
 
 	@Override
 	public boolean canTick() {
-		if (!getOwner().getTransform().isPositionDirty()) {
-			return false;
-		}
 		HealthComponent healthComponent = getOwner().get(HealthComponent.class);
 		if (healthComponent != null && healthComponent.isDead()) {
 			return false;

@@ -29,6 +29,8 @@ package org.spout.vanilla.plugin.material.block.component;
 import java.util.Set;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.api.data.MoveReaction;
@@ -36,6 +38,7 @@ import org.spout.vanilla.api.material.Fuel;
 
 import org.spout.vanilla.plugin.component.substance.material.Jukebox;
 import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
 public class JukeboxBlock extends ComponentMaterial implements Fuel {
@@ -48,8 +51,9 @@ public class JukeboxBlock extends ComponentMaterial implements Fuel {
 
 	@Override
 	public void onPostDestroy(Block block, Set<Flag> flags) {
-		//TODO Write Jukebox
-		//stopMusic();
+		//Note: Eject logic not part of drops, because item is always ejected
+		// Or shouldn't it? If it becomes part of drops, turn this into setPlaying(false).
+		((Jukebox) block.getComponent()).eject();
 		super.onPostDestroy(block, flags);
 	}
 
@@ -66,5 +70,13 @@ public class JukeboxBlock extends ComponentMaterial implements Fuel {
 	@Override
 	public float getFuelTime() {
 		return BURN_TIME;
+	}
+
+	@Override
+	public boolean canSupport(BlockMaterial material, BlockFace face) {
+		if (material.isMaterial(VanillaMaterials.FIRE)) {
+			return face == BlockFace.TOP;
+		}
+		return true;
 	}
 }

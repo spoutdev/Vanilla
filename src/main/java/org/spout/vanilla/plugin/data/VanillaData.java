@@ -29,6 +29,7 @@ package org.spout.vanilla.plugin.data;
 import java.util.Random;
 
 import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyArray;
 import org.spout.api.map.DefaultedKeyFactory;
@@ -90,6 +91,10 @@ public class VanillaData {
 	public static final DefaultedKey<Float> MAX_SMELT_TIME = new DefaultedKeyImpl<Float>("max_smelt_time", FurnaceBlock.SMELT_TIME);
 	// Skull block
 	public static final DefaultedKey<Float> SKULL_ROTATION = new DefaultedKeyImpl<Float>("skull_rot", 0.0f);
+	// Note block
+	public static final DefaultedKey<Integer> NOTE = new DefaultedKeyImpl<Integer>("note", 0);
+	// Jukebox
+	public static final DefaultedKey<ItemStack> JUKEBOX_ITEM = new DefaultedKeyImpl<ItemStack>("playedItem", null);
 	// TNT
 	public static final DefaultedKey<Float> FUSE = new DefaultedKeyImpl<Float>("fuse", (float) random.nextInt(5) + 1);
 	public static final DefaultedKey<Float> EXPLOSION_SIZE = new DefaultedKeyImpl<Float>("explosion_size", 4f);

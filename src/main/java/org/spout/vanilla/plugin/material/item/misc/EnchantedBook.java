@@ -26,24 +26,10 @@
  */
 package org.spout.vanilla.plugin.material.item.misc;
 
-import org.spout.vanilla.api.material.item.Enchantable;
-
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
-public class EnchantedBook extends VanillaItemMaterial implements Enchantable {
-	private int enchantability;
-
+public class EnchantedBook extends VanillaItemMaterial {
 	public EnchantedBook(String name, int id) {
 		super(name, id, null);
-	}
-
-	@Override
-	public int getEnchantability() {
-		return enchantability;
-	}
-
-	@Override
-	public void setEnchantability(int enchantability) {
-		this.enchantability = enchantability;
 	}
 }

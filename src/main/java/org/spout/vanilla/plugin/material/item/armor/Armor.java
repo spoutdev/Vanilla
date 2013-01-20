@@ -29,17 +29,14 @@ package org.spout.vanilla.plugin.material.item.armor;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.api.material.item.Enchantable;
-
 import org.spout.vanilla.plugin.event.cause.DamageCause;
 import org.spout.vanilla.plugin.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.plugin.material.enchantment.Enchantment;
 import org.spout.vanilla.plugin.material.enchantment.Enchantments;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
-public abstract class Armor extends VanillaItemMaterial implements Enchantable {
+public abstract class Armor extends VanillaItemMaterial {
 	private int protection;
-	private int enchantability;
 	private short durability;
 
 	protected Armor(String name, int id, short durability, Vector2 pos) {
@@ -91,15 +88,5 @@ public abstract class Armor extends VanillaItemMaterial implements Enchantable {
 	@Override
 	public boolean hasNBTData() {
 		return true;
-	}
-
-	@Override
-	public int getEnchantability() {
-		return enchantability;
-	}
-
-	@Override
-	public void setEnchantability(int enchantability) {
-		this.enchantability = enchantability;
 	}
 }

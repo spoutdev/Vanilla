@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.component.substance.object.projectile;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 
@@ -62,22 +63,31 @@ public class Egg extends ObjectEntity implements Projectile {
 		if (health != null) {
 			health.damage(0);
 		}
-		spawnChicken(collidedPoint);
-		
+		spawnChickens(colliderPoint);
 		getOwner().remove();
+	}
+
+	/**
+	 * Spawns a chicken by a chance of 1/8.
+	 * If a chicken is spawned, there is an additional chance of 1/32 to spawn four instead of one chicken.
+	 * 
+	 * @param point the point the chicken(s) will spawn at.
+	 */
+	private void spawnChickens(Point point) {
+		if (getRandom().nextInt(8) == 0) {
+			int chickensToSpawn = 1;
+			if (getRandom().nextInt(32) == 0) {
+				chickensToSpawn = 4;
+			}
+			for (int i = 0; i < chickensToSpawn; i++) {
+				point.getWorld().createAndSpawnEntity(point, Chicken.class, LoadOption.NO_LOAD);
+			}
+		}
 	}
 
 	@Override
 	public void onCollided(Point collidedroint, Point collidedPoint, Block block) {
-		spawnChicken(collidedPoint);
+		spawnChickens(collidedPoint);
 		getOwner().remove();
-	}
-	
-	private void spawnChicken(Point point) {
-		if (this.getRandom().nextInt(8) == 0) { //1 chance out of 8 to spawn a egg on collision
-			Entity toSpawn = point.getWorld().createEntity(point, Chicken.class);
-			toSpawn.add(Chicken.class);
-			point.getWorld().spawnEntity(toSpawn);
-		}
 	}
 }

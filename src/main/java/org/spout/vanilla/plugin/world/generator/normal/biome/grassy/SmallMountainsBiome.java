@@ -31,7 +31,7 @@ import java.awt.Color;
 public class SmallMountainsBiome extends MountainsBiome {
 	public SmallMountainsBiome(int biomeId) {
 		super(biomeId);
-		setElevation(63, 97);
+		setElevation(60, 97);
 		setGrassColorMultiplier(new Color(138, 182, 137));
 		setFoliageColorMultiplier(new Color(109, 163, 107));
 	}

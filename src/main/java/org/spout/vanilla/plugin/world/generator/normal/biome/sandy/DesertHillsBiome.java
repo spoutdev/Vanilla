@@ -29,7 +29,7 @@ package org.spout.vanilla.plugin.world.generator.normal.biome.sandy;
 public class DesertHillsBiome extends DesertBiome {
 	public DesertHillsBiome(int biomeId) {
 		super(biomeId);
-		setElevation(63, 97);
+		setElevation(60, 97);
 	}
 
 	@Override

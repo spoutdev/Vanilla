@@ -186,7 +186,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 				final double minElevation = minSum / count;
 				final double smoothHeight = (maxSum / count - minElevation) / 2;
 				for (int yy = 0; yy < sizeY; yy++) {
-					double noiseValue = noise[xx][yy][zz] - 1 / smoothHeight * (y + yy - smoothHeight - minElevation);
+					final double noiseValue = noise[xx][yy][zz] - 1 / smoothHeight * (y + yy - smoothHeight - minElevation);
 					if (noiseValue >= 0) {
 						blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.STONE);
 					} else {
@@ -368,7 +368,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 				setHumidityOctaveCount(2).
 				setHumidityFrequency(0.002 / scale).
 				setTemperatureOctaveCount(2).
-				setTemperatureFrequency(0.002 / scale).
+				setTemperatureFrequency(0.001 / scale).
 				addElement(desertLand, 20, 50).
 				addElement(forestLand, 15, 200).
 				addElement(jungleLand, 20, 300).
@@ -376,16 +376,6 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 				addElement(swamp, 10, 300).
 				addElement(taigaLand, 0, 50).
 				addElement(tundraLand, -5, 50);
-		// small mountains
-		final BiomeSelectorLayer smallMountains =
-				rivers.clone().
-				addElement(VanillaBiomes.SMALL_MOUNTAINS, -1, 0.16f).
-				addElement(VanillaBiomes.RIVER, 0.16f, 1);
-		// mountains
-		final BiomeSelectorLayer mountains =
-				rivers.clone().
-				addElement(VanillaBiomes.MOUNTAINS, -1, 0.16f).
-				addElement(VanillaBiomes.RIVER, 0.16f, 1);
 		//
 		// STARTING LAYER
 		//
@@ -396,10 +386,10 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 				setFrequency(0.0028 / scale).
 				addElement(mushroom, -1, -0.3f).
 				addElement(VanillaBiomes.OCEAN, -0.3f, -0.05f).
-				addElement(shore, -0.05f, 0).addElement(land, 0, 0.675f).
-				addElement(smallMountains, 0.675f, 0.71f).
-				addElement(mountains, 0.71f, 1);
-
+				addElement(shore, -0.05f, 0).
+				addElement(land, 0, 0.675f).
+				addElement(VanillaBiomes.SMALL_MOUNTAINS, 0.675f, 0.71f).
+				addElement(VanillaBiomes.MOUNTAINS, 0.71f, 1);
 		return start;
 	}
 }

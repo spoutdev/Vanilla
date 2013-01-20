@@ -40,7 +40,7 @@ public class DesertBiome extends SandyBiome {
 		super(biomeId, new SandAndClayDecorator(), new CactusDecorator(),
 				new DeadBushDecorator((byte) 8, (byte) 2), new MushroomDecorator(),
 				new SugarCaneDecorator((byte) 6, (byte) 30, (byte) 3), new WellDecorator());
-		setElevation(63, 78);
+		setElevation(60, 74);
 		setGrassColorMultiplier(new Color(191, 183, 85));
 		setFoliageColorMultiplier(new Color(174, 164, 42));
 	}

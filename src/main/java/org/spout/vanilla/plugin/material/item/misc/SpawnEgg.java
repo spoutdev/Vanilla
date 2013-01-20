@@ -34,6 +34,8 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.api.inventory.Slot;
+
 import org.spout.vanilla.plugin.component.living.hostile.Blaze;
 import org.spout.vanilla.plugin.component.living.hostile.CaveSpider;
 import org.spout.vanilla.plugin.component.living.hostile.Creeper;
@@ -57,10 +59,12 @@ import org.spout.vanilla.plugin.component.living.passive.Pig;
 import org.spout.vanilla.plugin.component.living.passive.Sheep;
 import org.spout.vanilla.plugin.component.living.passive.Squid;
 import org.spout.vanilla.plugin.component.living.passive.Villager;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class SpawnEgg extends VanillaItemMaterial {
-	private static final SpawnEgg PARENT = new SpawnEgg("Spawn Egg"); //There is no entity with the ID 0 so this egg is invalid
+	public static final SpawnEgg PARENT = new SpawnEgg("Spawn Egg"); //There is no entity with the ID 0 so this egg is invalid
 	public static final SpawnEgg BAT = new SpawnEgg("Spawn Bat", 65, Bat.class, PARENT);
 	public static final SpawnEgg CREEPER = new SpawnEgg("Spawn Creeper", 50, Creeper.class, PARENT);
 	public static final SpawnEgg SKELETON = new SpawnEgg("Spawn Skeleton", 51, Skeleton.class, PARENT);
@@ -99,6 +103,10 @@ public class SpawnEgg extends VanillaItemMaterial {
 	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
 		if (type != Action.RIGHT_CLICK) {
 			return;
+		}
+		Slot slot = PlayerUtil.getHeldSlot(entity);
+		if (!PlayerUtil.isCostSuppressed(entity) && slot != null &&slot.get() != null && slot.get().getMaterial().isMaterial(VanillaMaterials.SPAWN_EGG)) {
+			slot.addAmount(-1);
 		}
 		block.getWorld().createAndSpawnEntity(block.translate(clickedface).getPosition(), entityComponent, LoadOption.NO_LOAD);
 	}

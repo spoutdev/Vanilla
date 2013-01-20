@@ -575,7 +575,7 @@ public final class VanillaMaterials {
 	public static final BlockItem CAULDRON = new BlockItem("Cauldron", 380, VanillaMaterials.CAULDRON_BLOCK, null);
 	public static final EyeOfEnderItem EYE_OF_ENDER = new EyeOfEnderItem("Eye of Ender", 381);
 	public static final VanillaItemMaterial GLISTERING_MELON = new VanillaItemMaterial("Glistering MelonBlock", 382, null);
-	public static final SpawnEgg SPAWN_EGG = SpawnEgg.PIG;
+	public static final SpawnEgg SPAWN_EGG = SpawnEgg.PARENT;
 	public static final BottleOEnchanting BOTTLE_O_ENCHANTING = new BottleOEnchanting("Bottle o' Enchanting", 384);
 	public static final BlockItem FIRE_CHARGE = new BlockItem("Fire Charge", 385, VanillaMaterials.FIRE, null); // Basic Implementation
 	public static final Fireworks FIREWORKS = new Fireworks("Fireworks", 401);

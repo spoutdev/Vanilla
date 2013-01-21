@@ -62,7 +62,9 @@ import org.spout.api.util.hashing.IntPairHashed;
 import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
 import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
-
+import org.spout.nbt.CompoundMap;
+import org.spout.nbt.IntTag;
+import org.spout.nbt.StringTag;
 import org.spout.vanilla.api.component.substance.material.SignComponent;
 import org.spout.vanilla.api.data.Difficulty;
 import org.spout.vanilla.api.data.Dimension;
@@ -71,6 +73,7 @@ import org.spout.vanilla.api.data.Weather;
 import org.spout.vanilla.api.data.WorldType;
 import org.spout.vanilla.api.event.block.BlockActionEvent;
 import org.spout.vanilla.api.event.block.BlockControllerDataEvent;
+import org.spout.vanilla.api.event.block.CommandBlockUpdateEvent;
 import org.spout.vanilla.api.event.block.SignUpdateEvent;
 import org.spout.vanilla.api.event.block.network.BlockBreakAnimationEvent;
 import org.spout.vanilla.api.event.entity.EntityAnimationEvent;
@@ -90,12 +93,12 @@ import org.spout.vanilla.api.event.player.network.PlayerSelectedSlotChangeEvent;
 import org.spout.vanilla.api.material.block.component.VanillaComplexMaterial;
 import org.spout.vanilla.api.protocol.msg.VanillaBlockDataChannelMessage;
 import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
-
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.component.misc.LevelComponent;
+import org.spout.vanilla.plugin.component.substance.material.CommandBlockComponent;
 import org.spout.vanilla.plugin.component.test.ForceMessagesComponent;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
@@ -722,6 +725,19 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	public Message onSignUpdate(SignUpdateEvent event) {
 		SignComponent sign = event.getSign();
 		return new SignMessage(sign.getOwner().getX(), sign.getOwner().getY(), sign.getOwner().getZ(), event.getLines(), getRepositionManager());
+	}
+	
+	@EventHandler
+	public Message onCommandBlockUpdate(CommandBlockUpdateEvent event) {
+		CommandBlockComponent commandBlock = event.getCommandBlock();
+		CompoundMap data = new CompoundMap();
+		data.put(new StringTag("id", "Control"));
+		data.put(new IntTag("x", commandBlock.getOwner().getX()));
+		data.put(new IntTag("y", commandBlock.getOwner().getY()));
+		data.put(new IntTag("z", commandBlock.getOwner().getZ()));
+		data.put(new StringTag("Command", event.getCommand()));
+		
+		return new EntityTileDataMessage(commandBlock.getOwner().getX(), commandBlock.getOwner().getY(), commandBlock.getOwner().getZ(), 2, data, getRepositionManager());
 	}
 
 	@EventHandler

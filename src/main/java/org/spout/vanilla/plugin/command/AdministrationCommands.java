@@ -59,6 +59,7 @@ import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.component.misc.LevelComponent;
+import org.spout.vanilla.plugin.component.substance.material.CommandBlockComponent;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.configuration.OpConfiguration;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
@@ -74,89 +75,169 @@ public class AdministrationCommands {
 		plugin.getEngine().getScheduler().scheduleSyncRepeatingTask(plugin, tpsMonitor, 0, 50, TaskPriority.CRITICAL);
 	}
 
-	@Command(aliases = "clear", usage = "[player]", desc = "Clears your inventory", min = 0, max = 1)
+	@Command(aliases = "clear", usage = "[player] [id] [data]", desc = "Clears your inventory", min = 0, max = 3)
 	@CommandPermissions("vanilla.command.clear")
 	public void clear(CommandContext args, CommandSource source) throws CommandException {
+		
+		Player player;
+		Material material = null;
+		Integer data = null;
+		
 		if (args.length() == 0) {
 			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to clear your own inventory.");
 			}
-			PlayerInventory inv = ((Player) source).get(PlayerInventory.class);
-			if (inv == null) {
-				source.sendMessage(plugin.getPrefix(), ChatStyle.RED, "You have no inventory!");
-				return;
+			player = (Player) source;
+		} else if (args.length() <= 2) {
+			if (args.isInteger(0)) {
+				if (!(source instanceof Player)) {
+					throw new CommandException("You must be a player to clear your own inventory.");
+				}
+				player = (Player) source;
+				material = VanillaMaterials.getMaterial((short) args.getInteger(0));
+				if (material == null) {
+					throw new CommandException(args.getInteger(0) + " is not a valid item ID.");
+				}
+				if (args.length() == 2) {
+					data = args.getInteger(1);
+				}
+			} else {
+				player = plugin.getEngine().getPlayer(args.getString(0), false);
+				if (player == null) {
+					if (!(source instanceof Player)) {
+						throw new CommandException("You must be a player to clear your own inventory.");
+					}
+					material = Material.get(args.getString(0));
+					if (material == null) {
+						throw new CommandException(args.getString(0) + " is not a valid item ID.");
+					}
+					if (args.length() == 2) {
+						data = args.getInteger(1);
+					}
+				} else if (args.length() == 2) {
+					if (args.isInteger(0)) {
+						material = VanillaMaterials.getMaterial((short) args.getInteger(0));
+					} else {
+						material = Material.get(args.getString(0));
+					}
+					if (material == null) {
+						throw new CommandException(args.getString(0) + " is not a valid item ID.");
+					}
+				}
 			}
-			inv.clear();
-		}
-		if (args.length() == 1) {
-			Player player = args.getPlayer(0, false);
+		} else {
+			player = plugin.getEngine().getPlayer(args.getString(0), false);
 			if (player == null) {
-				source.sendMessage(plugin.getPrefix(), ChatStyle.RED, "Player is not online!");
-				return;
+				throw new CommandException(args.getString(0) + " is not online.");
 			}
-			PlayerInventory inv = player.get(PlayerInventory.class);
-			if (inv == null) {
-				source.sendMessage(plugin.getPrefix(), ChatStyle.RED, "Player has no inventory!");
-				return;
+			
+			if (args.isInteger(1)) {
+				material = VanillaMaterials.getMaterial((short) args.getInteger(0));
+			} else {
+				material = Material.get(args.getString(0));
 			}
-			player.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Your inventory has been cleared.");
-			if (source instanceof Player && source.equals(player)) {
-				return;
+			
+			if (material == null) {
+				throw new CommandException(args.getString(0) + " is not a valid item ID.");
+			}
+			
+			data = args.getInteger(2);
+		}
+		
+		PlayerInventory inv = ((Player) source).get(PlayerInventory.class);
+		if (inv == null) {
+			throw new CommandException("Player has no inventory!");
+		}
+		
+		// clearing the inventory and counting the removed items
+		int cleared = 0;
+		if (material == null) {
+			for (int i = 0; i < inv.getMain().size(); i++) {
+				ItemStack item = inv.getMain().get(i);
+				if (item != null) {
+					cleared += item.getAmount();
+					inv.getMain().set(i, null);
+				}
+			}
+			
+			for (int i = 0; i < inv.getQuickbar().size(); i++) {
+				ItemStack item = inv.getQuickbar().get(i);
+				if (item != null) {
+					cleared += item.getAmount();
+					inv.getQuickbar().set(i, null);
+				}
+			}
+		} else if (data == null) {
+			for (int i = 0; i < inv.getMain().size(); i++) {
+				ItemStack item = inv.getMain().get(i);
+				if (item != null && item.isMaterial(material)) {
+					cleared += item.getAmount();
+					inv.getMain().set(i, null);
+				}
+			}
+			
+			for (int i = 0; i < inv.getQuickbar().size(); i++) {
+				ItemStack item = inv.getQuickbar().get(i);
+				if (item != null && item.isMaterial(material)) {
+					cleared += item.getAmount();
+					inv.getQuickbar().set(i, null);
+				}
+			}
+		} else {			
+			for (int i = 0; i < inv.getMain().size(); i++) {
+				ItemStack item = inv.getMain().get(i);
+				if (item != null && item.isMaterial(material) && item.getData() == data) {
+					cleared += item.getAmount();
+					inv.getMain().set(i, null);
+				}
+			}
+			
+			for (int i = 0; i < inv.getQuickbar().size(); i++) {
+				ItemStack item = inv.getQuickbar().get(i);
+				if (item != null && item.isMaterial(material) && item.getData() == data) {
+					cleared += item.getAmount();
+					inv.getQuickbar().set(i, null);
+				}
 			}
 		}
-		source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Inventory cleared.");
+		
+		source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Cleared the inventory of ", ChatStyle.WHITE, player.getName(), ChatStyle.BRIGHT_GREEN, 
+				", removing ", ChatStyle.WHITE, cleared, ChatStyle.BRIGHT_GREEN, " items.");
 	}
 
-	@Command(aliases = {"give"}, usage = "[player] <block> [amount] ", desc = "Lets a player spawn items", min = 1, max = 3)
+	@Command(aliases = {"give"}, usage = "[player] <block> [amount] [data]", desc = "Lets a player spawn items", min = 1, max = 4)
 	@CommandPermissions("vanilla.command.give")
 	public void give(CommandContext args, CommandSource source) throws CommandException {
+		
 		int index = 0;
-		Player player = null;
-
-		if (args.length() != 1) {
-			if (Spout.getEngine() instanceof Client) {
-				throw new CommandException("You cannot search for players unless you are in server mode.");
-			}
-			player = Spout.getEngine().getPlayer(args.getString(index++), true);
-		}
-
+		Player player = Spout.getEngine().getPlayer(args.getString(index++), false);		
 		if (player == null) {
-			switch (args.length()) {
-				case 3:
-					throw new CommandException(args.getString(0) + " is not online.");
-				case 2:
-					index--;
-				case 1:
-					if (!(source instanceof Player)) {
-						throw new CommandException("You must be a player to give yourself materials!");
-					}
-
-					player = (Player) source;
-					break;
+			if (args.length() == 4) {
+				throw new CommandException(args.getString(0) + " is not online.");
+			} else if (args.length() > 0) {
+				index--;
 			}
-		}
+			
+			if (!(source instanceof Player)) {
+				throw new CommandException("You must be a player to give yourself materials!");
+			}
 
+			player = (Player) source;
+		}
+		
 		Material material;
 		if (args.isInteger(index)) {
-			material = VanillaMaterials.getMaterial((short) args.getInteger(index));
+			material = VanillaMaterials.getMaterial((short) args.getInteger(index++));
 		} else {
-			String name = args.getString(index);
-
-			if (name.contains(":")) {
-				String[] parts = args.getString(index).split(":");
-				material = VanillaMaterials.getMaterial(Short.parseShort(parts[0]), Short.parseShort(parts[1]));
-			} else {
-				material = Material.get(args.getString(index));
-			}
+			material = Material.get(args.getString(index++));
 		}
-
-		if (material == null) {
-			throw new CommandException(args.getString(index) + " is not a block!");
-		}
-
-		int count = args.getInteger(++index, 1);
-		player.get(PlayerInventory.class).add(new ItemStack(material, count));
-		source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Gave ", ChatStyle.WHITE, player.getName() + " ", count, ChatStyle.BRIGHT_GREEN, " of ", ChatStyle.WHITE,
+		
+		int quantity = args.getInteger(index++, 1);
+		int data = args.getInteger(index, 0);
+		
+		player.get(PlayerInventory.class).add(new ItemStack(material, data, quantity));
+		
+		source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Gave ", ChatStyle.WHITE, player.getName() + " ", quantity, ChatStyle.BRIGHT_GREEN, " of ", ChatStyle.WHITE,
 				material.getDisplayName());
 	}
 
@@ -227,6 +308,9 @@ public class AdministrationCommands {
 		} else if (source instanceof Player) {
 			Player player = (Player) source;
 			world = player.getWorld();
+		} else if (source instanceof CommandBlockComponent) {
+			CommandBlockComponent commandBlock = (CommandBlockComponent) source;
+			world = commandBlock.getBlock().getWorld();
 		} else {
 			throw new CommandException("You must specify a world.");
 		}
@@ -245,18 +329,28 @@ public class AdministrationCommands {
 		}
 	}
 
-	@Command(aliases = {"gamemode", "gm"}, usage = "[player] <0|1|2|survival|creative|adventure> (0 = SURVIVAL, 1 = CREATIVE, 2 = ADVENTURE)", desc = "Change a player's game mode", min = 1, max = 2)
+	@Command(aliases = {"gamemode", "gm"}, usage = "<0|1|2|survival|creative|adventure|s|c|a> [player] (0 = SURVIVAL, 1 = CREATIVE, 2 = ADVENTURE)", desc = "Change a player's game mode", min = 1, max = 2)
 	@CommandPermissions("vanilla.command.gamemode")
 	public void gamemode(CommandContext args, CommandSource source) throws CommandException {
-		int index = 0;
+		GameMode mode;
+		try {
+			if (args.isInteger(0)) {
+				mode = GameMode.get(args.getInteger(0));
+			} else {
+				mode = GameMode.get(args.getString(0).replace("c", "creative").replace("s", "survival").replace("a", "adventure"));
+			}
+		} catch (Exception e) {
+			throw new CommandException("A game mode must be either a number between 0 and 2, 'CREATIVE', 'SURVIVAL', 'ADVENTURE', 'c', 's', or 'a'");
+		}
+		
 		Player player;
 		if (args.length() == 2) {
 			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			player = Spout.getEngine().getPlayer(args.getString(index++), true);
+			player = Spout.getEngine().getPlayer(args.getString(1), true);
 			if (player == null) {
-				throw new CommandException(args.getString(0) + " is not online.");
+				throw new CommandException(args.getString(1) + " is not online.");
 			}
 		} else {
 			if (!(source instanceof Player)) {
@@ -269,19 +363,7 @@ public class AdministrationCommands {
 		if (!player.has(Human.class)) {
 			throw new CommandException("Invalid player!");
 		}
-
-		GameMode mode;
-
-		try {
-			if (args.isInteger(index)) {
-				mode = GameMode.get(args.getInteger(index));
-			} else {
-				mode = GameMode.get(args.getString(index));
-			}
-		} catch (Exception e) {
-			throw new CommandException("A game mode must be either a number between 0 and 2, 'CREATIVE', 'SURVIVAL' or 'ADVENTURE'");
-		}
-
+		
 		player.get(Human.class).setGamemode(mode);
 
 		if (!player.equals(source)) {
@@ -328,7 +410,7 @@ public class AdministrationCommands {
 		}
 	}
 
-	@Command(aliases = "weather", usage = "<0|1|2> (0 = CLEAR, 1 = RAIN/SNOW, 2 = THUNDERSTORM) [world]", desc = "Changes the weather", min = 1, max = 2)
+	@Command(aliases = "weather", usage = "<0|1|2|clear|rain|thunder> (0 = CLEAR, 1 = RAIN/SNOW, 2 = THUNDERSTORM) [world]", desc = "Changes the weather", min = 1, max = 2)
 	@CommandPermissions("vanilla.command.weather")
 	public void weather(CommandContext args, CommandSource source) throws CommandException {
 		World world;
@@ -349,7 +431,7 @@ public class AdministrationCommands {
 			if (args.isInteger(0)) {
 				weather = Weather.get(args.getInteger(0));
 			} else {
-				weather = Weather.get(args.getString(0).replace("snow", "rain"));
+				weather = Weather.get(args.getString(0).replace("snow", "rain").replace("thunder", "thunderstorm"));
 			}
 		} catch (Exception e) {
 			throw new CommandException("Weather must be a mode between 0 and 2, 'CLEAR', 'RAIN', 'SNOW', or 'THUNDERSTORM'");

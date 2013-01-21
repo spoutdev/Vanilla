@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.component.substance.material.chest;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
@@ -35,6 +36,8 @@ import org.spout.vanilla.api.inventory.Container;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
+import org.spout.vanilla.plugin.event.inventory.ChestCloseEvent;
+import org.spout.vanilla.plugin.event.inventory.ChestOpenEvent;
 import org.spout.vanilla.plugin.inventory.block.ChestInventory;
 import org.spout.vanilla.plugin.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
@@ -83,12 +86,24 @@ public class Chest extends AbstractChest implements Container {
 	}
 
 	@Override
-	public void open(Player player) {
-		// Finally open the window
-		player.get(WindowHolder.class).openWindow(new ChestWindow(player, this));
+	public boolean open(Player player) {
+		ChestOpenEvent event = Spout.getEventManager().callEvent(new ChestOpenEvent(this, player));
+		if (!event.isCancelled()) {
+			// Finally open the window
+			player.get(WindowHolder.class).openWindow(new ChestWindow(player, this));
+			SoundEffects.RANDOM_CHESTOPEN.playGlobal(player.getTransform().getPosition());
+			super.open(player);
+			return true;
+		}
+		return false;
+	}
 
-		SoundEffects.RANDOM_CHESTOPEN.playGlobal(player.getTransform().getPosition());
-
-		super.open(player);
+	@Override
+	public boolean close(Player player) {
+		ChestCloseEvent event = Spout.getEventManager().callEvent(new ChestCloseEvent(this, player));
+		if (!event.isCancelled()) {
+			return super.close(player);
+		}
+		return false;
 	}
 }

@@ -39,12 +39,21 @@ public abstract class ViewedBlockComponent extends VanillaBlockComponent {
 
 	/**
 	 * Opens a window for the given player.
+	 * 
 	 * @param player
+	 * @return true if the component opened successfully
 	 */
-	public abstract void open(Player player);
+	public abstract boolean open(Player player);
 
-	public void close(Player player) {
+	/**
+	 * Closes the window for the given player
+	 * 
+	 * @param player
+	 * @return true if the window was closed successfully
+	 */
+	public boolean close(Player player) {
 		viewers.remove(player);
+		return true;
 	}
 
 	public void closeAll() {
@@ -62,8 +71,9 @@ public abstract class ViewedBlockComponent extends VanillaBlockComponent {
 		super.onInteractBy(entity, action, face);
 		if (action == Action.RIGHT_CLICK && entity instanceof Player) {
 			Player player = (Player) entity;
-			viewers.add(player);
-			open(player);
+			if (open(player)) {
+				viewers.add(player);
+			}
 		}
 	}
 }

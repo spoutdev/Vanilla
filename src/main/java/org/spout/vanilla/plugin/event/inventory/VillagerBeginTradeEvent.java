@@ -26,27 +26,23 @@
  */
 package org.spout.vanilla.plugin.event.inventory;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
-import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.inventory.InventoryEvent;
+import org.spout.api.event.inventory.InventoryOpenEvent;
 
-import org.spout.vanilla.api.inventory.Container;
 import org.spout.vanilla.plugin.component.living.passive.Villager;
 
 /**
- * Event which is called when a villager is started trading with.
- * todo implement calling of this event
+ * Event which is fired when a villager is started trading with.
  */
-public class VillagerBeginTradeEvent extends InventoryEvent implements Cancellable {
+public class VillagerBeginTradeEvent extends InventoryOpenEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	private final Villager villager;
-	private final Cause cause;
 
-	public VillagerBeginTradeEvent(Villager villager, Cause<?> reason) {
-		super(villager.getInventory(),reason);
+	public VillagerBeginTradeEvent(Villager villager, Entity entity) {
+		super(villager.getInventory(), entity);
 		this.villager = villager;
-		this.cause = reason;
 	}
 
 	/**
@@ -54,16 +50,8 @@ public class VillagerBeginTradeEvent extends InventoryEvent implements Cancellab
 	 *
 	 * @return villager
 	 */
-	public Container getEnchantmentTable() {
+	public Villager getVillager() {
 		return villager;
-	}
-
-	/**
-	 * Returns the Cause which caused the VillagerBeginTradeEvent
-	 * @return cause
-	 */
-	public Cause<?> getCause() {
-		return cause;
 	}
 
 	@Override

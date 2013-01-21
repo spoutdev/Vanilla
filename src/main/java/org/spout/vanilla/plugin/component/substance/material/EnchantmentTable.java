@@ -26,11 +26,14 @@
  */
 package org.spout.vanilla.plugin.component.substance.material;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 
 import org.spout.vanilla.api.inventory.Container;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
+import org.spout.vanilla.plugin.event.inventory.EnchantmentTableCloseEvent;
+import org.spout.vanilla.plugin.event.inventory.EnchantmentTableOpenEvent;
 import org.spout.vanilla.plugin.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.plugin.inventory.window.block.EnchantmentTableWindow;
 import org.spout.vanilla.plugin.inventory.window.prop.EnchantmentTableProperty;
@@ -57,11 +60,25 @@ public class EnchantmentTable extends ViewedBlockComponent implements Container 
 	}
 
 	@Override
-	public void open(Player player) {
-		player.get(WindowHolder.class).openWindow(new EnchantmentTableWindow(player, inventory));
-		setSlotLevel(EnchantmentTableProperty.SLOT_1, 1);
-		setSlotLevel(EnchantmentTableProperty.SLOT_2, 15);
-		setSlotLevel(EnchantmentTableProperty.SLOT_3, 30);
+	public boolean open(Player player) {
+		EnchantmentTableOpenEvent event = Spout.getEventManager().callEvent(new EnchantmentTableOpenEvent(this, player));
+		if (!event.isCancelled()) {
+			player.get(WindowHolder.class).openWindow(new EnchantmentTableWindow(player, inventory));
+			setSlotLevel(EnchantmentTableProperty.SLOT_1, 1);
+			setSlotLevel(EnchantmentTableProperty.SLOT_2, 15);
+			setSlotLevel(EnchantmentTableProperty.SLOT_3, 30);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean close(Player player) {
+		EnchantmentTableCloseEvent event = Spout.getEventManager().callEvent(new EnchantmentTableCloseEvent(this, player));
+		if (!event.isCancelled()) {
+			return super.close(player);
+		}
+		return false;
 	}
 
 	/**

@@ -26,27 +26,22 @@
  */
 package org.spout.vanilla.plugin.event.inventory;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
-import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.inventory.InventoryEvent;
-
-import org.spout.vanilla.api.inventory.Container;
+import org.spout.api.event.inventory.InventoryCloseEvent;
 import org.spout.vanilla.plugin.component.substance.material.Dispenser;
 
 /**
- * Event which is called when a Dispenser is closed.
- * todo implement calling of this event
+ * Event which is fired when a Dispenser is closed.
  */
-public class DispenserCloseEvent extends InventoryEvent implements Cancellable {
+public class DispenserCloseEvent extends InventoryCloseEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	private final Dispenser dispenser;
-	private final Cause cause;
 
-	public DispenserCloseEvent(Dispenser dispenser, Cause<?> reason) {
-		super(dispenser.getInventory(),reason);
+	public DispenserCloseEvent(Dispenser dispenser, Entity entity) {
+		super(dispenser.getInventory(), entity);
 		this.dispenser = dispenser;
-		this.cause = reason;
 	}
 
 	/**
@@ -54,16 +49,8 @@ public class DispenserCloseEvent extends InventoryEvent implements Cancellable {
 	 *
 	 * @return dispenser
 	 */
-	public Container getDispenser() {
+	public Dispenser getDispenser() {
 		return dispenser;
-	}
-
-	/**
-	 * Returns the Cause which caused the DispenserCloseEvent
-	 * @return cause
-	 */
-	public Cause<?> getCause() {
-		return cause;
 	}
 
 	@Override

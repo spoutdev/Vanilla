@@ -53,15 +53,19 @@ public abstract class AbstractChest extends ViewedBlockComponent {
 	}
 
 	@Override
-	public void open(Player player) {
+	public boolean open(Player player) {
 		setOpened(player, true);
+		return true;
 	}
 
 	@Override
-	public void close(Player player) {
-		super.close(player);
-		if (viewers.isEmpty()) {
-			setOpened(player, false);
+	public boolean close(Player player) {
+		if (super.close(player)) {
+			if (viewers.isEmpty()) {
+				setOpened(player, false);
+			}
+			return true;
 		}
+		return false;
 	}
 }

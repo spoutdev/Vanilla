@@ -26,27 +26,23 @@
  */
 package org.spout.vanilla.plugin.event.inventory;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
-import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.inventory.InventoryEvent;
+import org.spout.api.event.inventory.InventoryOpenEvent;
 
-import org.spout.vanilla.api.inventory.Container;
 import org.spout.vanilla.plugin.component.substance.material.EnchantmentTable;
 
 /**
- * Event which is called when an EnchantmentTable is opened / looked into.
- * todo implement calling of this event
+ * Event which is fired when an EnchantmentTable is opened.
  */
-public class EnchantmentTableOpenEvent extends InventoryEvent implements Cancellable {
+public class EnchantmentTableOpenEvent extends InventoryOpenEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	private final EnchantmentTable enchantmentTable;
-	private final Cause cause;
 
-	public EnchantmentTableOpenEvent(EnchantmentTable enchantmentTable, Cause<?> reason) {
-		super(enchantmentTable.getInventory(),reason);
+	public EnchantmentTableOpenEvent(EnchantmentTable enchantmentTable, Entity entity) {
+		super(enchantmentTable.getInventory(), entity);
 		this.enchantmentTable = enchantmentTable;
-		this.cause = reason;
 	}
 
 	/**
@@ -54,16 +50,8 @@ public class EnchantmentTableOpenEvent extends InventoryEvent implements Cancell
 	 *
 	 * @return enchantmentTable
 	 */
-	public Container getEnchantmentTable() {
+	public EnchantmentTable getEnchantmentTable() {
 		return enchantmentTable;
-	}
-
-	/**
-	 * Returns the Cause which caused the EnchantmentTableOpenEvent
-	 * @return cause
-	 */
-	public Cause<?> getCause() {
-		return cause;
 	}
 
 	@Override

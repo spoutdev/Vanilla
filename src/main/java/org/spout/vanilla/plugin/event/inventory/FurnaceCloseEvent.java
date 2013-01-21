@@ -26,27 +26,22 @@
  */
 package org.spout.vanilla.plugin.event.inventory;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
-import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.inventory.InventoryEvent;
-
-import org.spout.vanilla.api.inventory.Container;
+import org.spout.api.event.inventory.InventoryCloseEvent;
 import org.spout.vanilla.plugin.component.substance.material.Furnace;
 
 /**
- * Event which is called when a furnace is closed.
- * todo implement calling of this event
+ * Event which is fired when a furnace is closed.
  */
-public class FurnaceCloseEvent extends InventoryEvent implements Cancellable {
+public class FurnaceCloseEvent extends InventoryCloseEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	private final Furnace furnace;
-	private final Cause cause;
 
-	public FurnaceCloseEvent(Furnace furnace, Cause<?> reason) {
-		super(furnace.getInventory(),reason);
+	public FurnaceCloseEvent(Furnace furnace, Entity entity) {
+		super(furnace.getInventory(), entity);
 		this.furnace = furnace;
-		this.cause = reason;
 	}
 
 	/**
@@ -54,16 +49,8 @@ public class FurnaceCloseEvent extends InventoryEvent implements Cancellable {
 	 *
 	 * @return furnace
 	 */
-	public Container getFurnace() {
+	public Furnace getFurnace() {
 		return furnace;
-	}
-
-	/**
-	 * Returns the Cause which caused the FurnaceCloseEvent
-	 * @return cause
-	 */
-	public Cause<?> getCause() {
-		return cause;
 	}
 
 	@Override

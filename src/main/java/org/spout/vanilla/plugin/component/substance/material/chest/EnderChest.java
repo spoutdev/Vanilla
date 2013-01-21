@@ -34,8 +34,8 @@ import org.spout.vanilla.plugin.inventory.window.block.chest.EnderChestWindow;
 
 public class EnderChest extends AbstractChest {
 	@Override
-	public void open(Player player) {
+	public boolean open(Player player) {
 		player.get(WindowHolder.class).openWindow(new EnderChestWindow(player, this, player.get(PlayerInventory.class).getEnderChestInventory()));
-		super.open(player);
+		return super.open(player);
 	}
 }

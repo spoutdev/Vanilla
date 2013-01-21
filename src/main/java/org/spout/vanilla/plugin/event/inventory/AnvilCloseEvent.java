@@ -26,27 +26,22 @@
  */
 package org.spout.vanilla.plugin.event.inventory;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
-import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.inventory.InventoryEvent;
-
-import org.spout.vanilla.api.inventory.Container;
+import org.spout.api.event.inventory.InventoryCloseEvent;
 import org.spout.vanilla.plugin.component.substance.material.Anvil;
 
 /**
- * Event which is called when an Anvil is closed.
- * todo implement calling of this event
+ * Event which is fired when an Anvil is closed.
  */
-public class AnvilCloseEvent extends InventoryEvent implements Cancellable {
+public class AnvilCloseEvent extends InventoryCloseEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	private final Anvil anvil;
-	private final Cause cause;
 
-	public AnvilCloseEvent(Anvil anvil, Cause<?> reason) {
-		super(anvil.getInventory(),reason);
+	public AnvilCloseEvent(Anvil anvil, Entity entity) {
+		super(anvil.getInventory(), entity);
 		this.anvil = anvil;
-		this.cause = reason;
 	}
 
 	/**
@@ -54,16 +49,8 @@ public class AnvilCloseEvent extends InventoryEvent implements Cancellable {
 	 *
 	 * @return anvil
 	 */
-	public Container getAnvil() {
+	public Anvil getAnvil() {
 		return anvil;
-	}
-
-	/**
-	 * Returns the Cause which caused the AnvilCloseEvent
-	 * @return cause
-	 */
-	public Cause<?> getCause() {
-		return cause;
 	}
 
 	@Override

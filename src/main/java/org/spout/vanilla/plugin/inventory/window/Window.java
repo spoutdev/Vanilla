@@ -160,6 +160,7 @@ public abstract class Window implements InventoryViewer {
 	/**
 	 * Opens the window from the server on the client.
 	 */
+	@SuppressWarnings("incomplete-switch")
 	public void open() {
 		opened = true;
 		System.out.println("OPEN");

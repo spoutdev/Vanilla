@@ -26,12 +26,15 @@
  */
 package org.spout.vanilla.plugin.component.substance.material;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 
 import org.spout.vanilla.api.inventory.Container;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
+import org.spout.vanilla.plugin.event.inventory.BeaconCloseEvent;
+import org.spout.vanilla.plugin.event.inventory.BeaconOpenEvent;
 import org.spout.vanilla.plugin.inventory.block.BeaconInventory;
 import org.spout.vanilla.plugin.inventory.window.block.BeaconWindow;
 
@@ -44,7 +47,21 @@ public class Beacon extends ViewedBlockComponent implements Container {
 	}
 
 	@Override
-	public void open(Player player) {
-		player.get(WindowHolder.class).openWindow(new BeaconWindow(player, inventory));
+	public boolean open(Player player) {
+		BeaconOpenEvent event = Spout.getEventManager().callEvent(new BeaconOpenEvent(this, player));
+		if (!event.isCancelled()) {
+			player.get(WindowHolder.class).openWindow(new BeaconWindow(player, inventory));
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean close(Player player) {
+		BeaconCloseEvent event = Spout.getEventManager().callEvent(new BeaconCloseEvent(this, player));
+		if (!event.isCancelled()) {
+			return super.close(player);
+		}
+		return false;
 	}
 }

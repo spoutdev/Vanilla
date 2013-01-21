@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.component.substance.material;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.ItemStack;
 
@@ -35,6 +36,8 @@ import org.spout.vanilla.api.material.TimedCraftable;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.event.inventory.FurnaceCloseEvent;
+import org.spout.vanilla.plugin.event.inventory.FurnaceOpenEvent;
 import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
 import org.spout.vanilla.plugin.inventory.window.block.FurnaceWindow;
 import org.spout.vanilla.plugin.inventory.window.prop.FurnaceProperty;
@@ -209,12 +212,26 @@ public class Furnace extends ViewedBlockComponent implements Container {
 	}
 
 	@Override
-	public void open(Player player) {
-		WindowHolder window = player.get(WindowHolder.class);
-		if (window != null) {
-			window.openWindow(new FurnaceWindow(player, this, getInventory()));
-			updateProgressArrow(player);
-			updateFireIcon(player);
+	public boolean open(Player player) {
+		FurnaceOpenEvent event = Spout.getEventManager().callEvent(new FurnaceOpenEvent(this, player));
+		if (!event.isCancelled()) {
+			WindowHolder window = player.get(WindowHolder.class);
+			if (window != null) {
+				window.openWindow(new FurnaceWindow(player, this, getInventory()));
+				updateProgressArrow(player);
+				updateFireIcon(player);
+			}
+			return true;
 		}
+		return false;
+	}
+
+	@Override
+	public boolean close(Player player) {
+		FurnaceCloseEvent event = Spout.getEventManager().callEvent(new FurnaceCloseEvent(this, player));
+		if (!event.isCancelled()) {
+			return super.close(player);
+		}
+		return false;
 	}
 }

@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.component.substance.material;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 
@@ -33,6 +34,8 @@ import org.spout.vanilla.api.inventory.Container;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.event.inventory.DispenserCloseEvent;
+import org.spout.vanilla.plugin.event.inventory.DispenserOpenEvent;
 import org.spout.vanilla.plugin.inventory.block.DispenserInventory;
 import org.spout.vanilla.plugin.inventory.window.block.DispenserWindow;
 
@@ -53,7 +56,21 @@ public class Dispenser extends ViewedBlockComponent implements Container {
 	}
 
 	@Override
-	public void open(Player player) {
-		player.get(WindowHolder.class).openWindow(new DispenserWindow(player, inventory));
+	public boolean open(Player player) {
+		DispenserOpenEvent event = Spout.getEventManager().callEvent(new DispenserOpenEvent(this, player));
+		if (!event.isCancelled()) {
+			player.get(WindowHolder.class).openWindow(new DispenserWindow(player, inventory));
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean close(Player player) {
+		DispenserCloseEvent event = Spout.getEventManager().callEvent(new DispenserCloseEvent(this, player));
+		if (!event.isCancelled()) {
+			return super.close(player);
+		}
+		return false;
 	}
 }

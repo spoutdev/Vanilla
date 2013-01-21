@@ -26,27 +26,22 @@
  */
 package org.spout.vanilla.plugin.event.inventory;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
-import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.inventory.InventoryEvent;
-
-import org.spout.vanilla.api.inventory.Container;
+import org.spout.api.event.inventory.InventoryCloseEvent;
 import org.spout.vanilla.plugin.component.substance.material.Beacon;
 
 /**
- * Event which is called when a Beacon is closed.
- * todo implement calling of this event
+ * Event which is fired when a Beacon is closed.
  */
-public class BeaconCloseEvent extends InventoryEvent implements Cancellable {
+public class BeaconCloseEvent extends InventoryCloseEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
 	private final Beacon beacon;
-	private final Cause cause;
 
-	public BeaconCloseEvent(Beacon beacon, Cause<?> reason) {
-		super(beacon.getInventory(),reason);
+	public BeaconCloseEvent(Beacon beacon, Entity entity) {
+		super(beacon.getInventory(), entity);
 		this.beacon = beacon;
-		this.cause = reason;
 	}
 
 	/**
@@ -54,16 +49,8 @@ public class BeaconCloseEvent extends InventoryEvent implements Cancellable {
 	 *
 	 * @return beacon
 	 */
-	public Container getBeacon() {
+	public Beacon getBeacon() {
 		return beacon;
-	}
-
-	/**
-	 * Returns the Cause which caused the BeaconCloseEvent
-	 * @return cause
-	 */
-	public Cause<?> getCause() {
-		return cause;
 	}
 
 	@Override

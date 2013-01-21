@@ -49,6 +49,8 @@ import org.spout.api.util.Named;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.chat.VanillaStyleHandler;
+import org.spout.vanilla.plugin.protocol.codec.world.block.CommandBlockCodec;
+import org.spout.vanilla.plugin.protocol.handler.world.block.CommandBlockHandler;
 import org.spout.vanilla.plugin.protocol.msg.ServerPluginMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerChatMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerHandshakeMessage;
@@ -68,7 +70,7 @@ public class VanillaProtocol extends Protocol {
 	public final static DefaultedKey<Long> LOGIN_TIME = new DefaultedKeyImpl<Long>("handshake_time", -1L);
 	public final static DefaultedKey<ChunkNetCache> CHUNK_NET_CACHE = new DefaultedKeyImpl<ChunkNetCache>("chunk_net_cache", (ChunkNetCache) null);
 	public static final DefaultedKey<ArrayList<String>> REGISTERED_CUSTOM_PACKETS = new DefaultedKey<ArrayList<String>>() {
-		private final List<String> defaultRestricted = Arrays.asList("REGISTER", "UNREGISTER");
+		private final List<String> defaultRestricted = Arrays.asList("REGISTER", "UNREGISTER", "MC|AdvCdm");
 
 		public ArrayList<String> getDefaultValue() {
 			return new ArrayList<String>(defaultRestricted);
@@ -86,6 +88,7 @@ public class VanillaProtocol extends Protocol {
 		registerPacket(RegisterPluginChannelCodec.class, new RegisterPluginChannelMessageHandler());
 		registerPacket(UnregisterPluginChannelCodec.class, new UnregisterPluginChannelMessageHandler());
 		registerPacket(ChunkCacheCodec.class, new ChunkCacheHandler());
+		registerPacket(CommandBlockCodec.class, new CommandBlockHandler());
 	}
 
 	@Override

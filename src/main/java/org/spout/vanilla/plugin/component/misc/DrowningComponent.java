@@ -67,6 +67,7 @@ public class DrowningComponent extends EntityComponent {
 		return !health.isDead();
 	}
 
+	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void onTick(float dt) {
 		switch (Spout.getPlatform()) {
@@ -96,25 +97,33 @@ public class DrowningComponent extends EntityComponent {
 					return;
 				}
 				// Animate air meter
-				setAir(5);
 				final float maxSecsBubbles = VanillaData.AIR_SECS.getDefaultValue();
 				final float secsBubbles = getData().get(VanillaData.AIR_SECS);
 				if (secsBubbles == maxSecsBubbles) {
 					hideBubbles();
 				} else {
 					final float nbBubExact = secsBubbles / maxSecsBubbles * 10f;
-					getOwner().add(HUDComponent.class).setDrowning(nbBubExact);
-							}
+					HUDComponent hud = getOwner().get(HUDComponent.class);
+					if (hud != null) {
+						hud.setDrowning(nbBubExact);
+					}
+				}
 				break;
 		}
 	}
 
 	public void hideBubbles() {
-		getOwner().add(HUDComponent.class).getAirMeter().hide();
+		HUDComponent hud = getOwner().get(HUDComponent.class);
+		if (hud != null) {
+			hud.getAirMeter().hide();
+		}
 	}
 
 	public void showBubbles() {
-		getOwner().add(HUDComponent.class).getAirMeter().show();
+		HUDComponent hud = getOwner().get(HUDComponent.class);
+		if (hud != null) {
+			hud.getAirMeter().show();
+		}
 	}
 
 	public float getAir() {

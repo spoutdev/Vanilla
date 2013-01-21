@@ -119,7 +119,7 @@ public class HealthComponent extends EntityComponent {
 				x += dx;
 			}
 
-			getOwner().add(HUDComponent.class).attachWidget(hearts);
+			getOwner().get(HUDComponent.class).attachWidget(hearts);
 		}
 	}
 
@@ -128,6 +128,7 @@ public class HealthComponent extends EntityComponent {
 		return true;
 	}
 
+	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void onTick(float dt) {
 		switch (Spout.getPlatform()) {

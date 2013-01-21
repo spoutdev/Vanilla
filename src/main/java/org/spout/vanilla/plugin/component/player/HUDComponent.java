@@ -27,8 +27,6 @@
 package org.spout.vanilla.plugin.component.player;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.spout.api.Client;
 import org.spout.api.Spout;
 import org.spout.api.component.type.EntityComponent;
@@ -42,13 +40,13 @@ import org.spout.vanilla.plugin.component.player.hud.ArmorWidget;
 import org.spout.vanilla.plugin.component.player.hud.CrosshairWidget;
 import org.spout.vanilla.plugin.component.player.hud.DrowningWidget;
 import org.spout.vanilla.plugin.component.player.hud.ExpBarWidget;
+import org.spout.vanilla.plugin.component.player.hud.GUIWidget;
 import org.spout.vanilla.plugin.component.player.hud.HotBarWidget;
 
 /**
  * Component attached to clients-only that updates the Heads Up Display.
  */
 public class HUDComponent extends EntityComponent {
-	
 	private static final float SCALE = 0.75f; // TODO: Apply directly from engine
 	private static final float START_X = -0.71f * SCALE;
 	// The main hud screen
@@ -64,7 +62,7 @@ public class HUDComponent extends EntityComponent {
 	private ExpBarWidget expBar = null;
 	private CrosshairWidget crosshairWidget = null;
 	private DrowningWidget drowningWidget = null;
-	
+
 	@Override
 	public void onAttached() {
 		if (!(getOwner() instanceof Player)) {
@@ -82,10 +80,10 @@ public class HUDComponent extends EntityComponent {
 	 * To replace use setDefault(Class clazz, boolean force)
 	 * @param clazz 
 	 */
-	public void setDefault(Class clazz) {
+	public void setDefault(Class<? extends GUIWidget> clazz) {
 		setDefault(clazz, false);
 	}
-	
+
 	/**
 	 * Will update the class used for each part of the HUD
 	 * 
@@ -95,14 +93,14 @@ public class HUDComponent extends EntityComponent {
 	 * 
 	 * @param clazz
 	 */
-	public void setDefault(Class clazz, boolean force) {
-		Object widget = new Object();
+	public void setDefault(Class<? extends GUIWidget> clazz, boolean force) {
+		GUIWidget widget = null;
 		try {
 			widget = clazz.newInstance();
 		} catch (InstantiationException ex) {
-			Logger.getLogger(HUDComponent.class.getName()).log(Level.SEVERE, null, ex);
+			Spout.getLogger().log(Level.SEVERE, null, ex);
 		} catch (IllegalAccessException ex) {
-			Logger.getLogger(HUDComponent.class.getName()).log(Level.SEVERE, null, ex);
+			Spout.getLogger().log(Level.SEVERE, null, ex);
 		}
 
 		if (widget instanceof HotBarWidget) {
@@ -112,29 +110,25 @@ public class HUDComponent extends EntityComponent {
 			}
 			hotBar = (HotBarWidget) widget;
 		}
-
-		if (widget instanceof ArmorWidget) {
+		else if (widget instanceof ArmorWidget) {
 			if (armorWidget != null && force == false) {
 				return;
 			}
 			armorWidget = (ArmorWidget) widget;
 		}
-
-		if (widget instanceof ExpBarWidget) {
+		else if (widget instanceof ExpBarWidget) {
 			if (expBar != null && force == false) {
 				return;
 			}
 			expBar = (ExpBarWidget) widget;
 		}
-
-		if (widget instanceof CrosshairWidget) {
+		else if (widget instanceof CrosshairWidget) {
 			if (crosshairWidget != null && force == false) {
 				return;
 			}
 			crosshairWidget = (CrosshairWidget) widget;
 		}
-
-		if (widget instanceof DrowningWidget) {
+		else if (widget instanceof DrowningWidget) {
 			if (drowningWidget != null && force == false) {
 				return;
 			}

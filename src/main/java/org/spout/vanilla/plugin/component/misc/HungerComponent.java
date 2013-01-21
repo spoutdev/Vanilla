@@ -111,6 +111,7 @@ public class HungerComponent extends EntityComponent {
 		return !human.isCreative() && !human.getHealth().isDead();
 	}
 
+	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void onTick(float dt) {
 		/*

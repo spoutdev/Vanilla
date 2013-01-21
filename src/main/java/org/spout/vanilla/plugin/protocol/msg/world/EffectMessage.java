@@ -41,7 +41,7 @@ public final class EffectMessage extends VanillaMainChannelMessage {
 	private final boolean volumeDecrease;
 
 	public EffectMessage(int id, Block block, int data, RepositionManager rm) {
-		this(id, block, data, true, rm);
+		this(id, block, data, false, rm);
 	}
 
 	public EffectMessage(int id, Block block, int data, boolean volumeDecrease, RepositionManager rm) {
@@ -49,7 +49,7 @@ public final class EffectMessage extends VanillaMainChannelMessage {
 	}
 
 	public EffectMessage(int id, int x, int y, int z, int data, RepositionManager rm) {
-		this(id, x, y, z, data, true, rm);
+		this(id, x, y, z, data, false, rm);
 	}
 
 	public EffectMessage(int id, int x, int y, int z, int data, boolean volumeDecrease, RepositionManager rm) {

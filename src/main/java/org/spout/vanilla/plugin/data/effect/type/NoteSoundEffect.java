@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.data.effect.type;
 
-import java.util.Set;
+import java.util.Collection;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
@@ -48,11 +48,11 @@ public class NoteSoundEffect extends SoundEffect {
 		this.play(player, position, volume, pitch);
 	}
 
-	public void play(Set<Player> players, Point position, int tone) {
+	public void play(Collection<Player> players, Point position, int tone) {
 		this.play(players, position, this.getDefaultVolume(), tone);
 	}
 
-	public void play(Set<Player> players, Point position, float volume, int tone) {
+	public void play(Collection<Player> players, Point position, float volume, int tone) {
 		for (Player player : players) {
 			this.play(player, position, volume, tone);
 		}

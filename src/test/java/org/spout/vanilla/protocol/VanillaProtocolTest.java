@@ -82,7 +82,6 @@ import org.spout.vanilla.plugin.protocol.msg.player.PlayerGroundMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerHealthMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerHeldItemChangeMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerLocaleViewDistanceMessage;
-import org.spout.vanilla.plugin.protocol.msg.player.PlayerSoundEffectMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerStatisticMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerStatusMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerTabCompleteMessage;
@@ -109,6 +108,7 @@ import org.spout.vanilla.plugin.protocol.msg.window.WindowSlotMessage;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowTransactionMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.EffectMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.ExplosionMessage;
+import org.spout.vanilla.plugin.protocol.msg.world.SoundEffectMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.block.BlockActionMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.block.BlockBreakAnimationMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.block.BlockBulkMessage;
@@ -168,7 +168,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new EntityMetadataMessage(1, TEST_PARAMS),
 			new EntityEffectMessage(1, (byte) 1, (byte) 1, (short) 34),
 			new EntityRemoveEffectMessage(1, (byte) 1),
-			new PlayerSoundEffectMessage("random.bow", 12.5f, 0.0f, 12.0f, 1.0f, 1.0f, NullRepositionManager.getInstance()),
+			new SoundEffectMessage("random.bow", 12.5f, 0.0f, 12.0f, 1.0f, 1.0f, NullRepositionManager.getInstance()),
 			new EntityDestroyMessage(new int[]{2}),
 			new PlayerExperienceMessage(1.2F, (short) 2, (short) 3),
 			new ChunkDataMessage(1, 2, true, new boolean[16], new byte[][]{new byte[16 * 16 * 16 * 5 / 2], null, null, null, null, null, null, null, null, null, new byte[Chunk.BLOCKS.HALF_VOLUME * 5], null, null, null, null, null}, new byte[16 * 16], null, NullRepositionManager.getInstance()),

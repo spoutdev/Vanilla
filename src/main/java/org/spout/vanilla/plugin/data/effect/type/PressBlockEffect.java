@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.data.effect.type;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
@@ -55,7 +55,7 @@ public class PressBlockEffect extends Effect {
 		SoundEffects.RANDOM_CLICK.play(player, position, 0.3f, pressed ? 0.6f : 0.5f);
 	}
 
-	public void play(List<Player> players, Point position, boolean pressed) {
+	public void play(Collection<Player> players, Point position, boolean pressed) {
 		for (Player player : players) {
 			this.play(player, position, pressed);
 		}

@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.api.data.effect;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
@@ -52,7 +52,7 @@ public abstract class Effect {
 	 * @param ignore Entity to ignore
 	 * @return a Set of nearby Players
 	 */
-	public List<Player> getNearbyPlayers(Point position, Player ignore) {
+	public Collection<Player> getNearbyPlayers(Point position, Player ignore) {
 		return position.getWorld().getNearbyPlayers(position, ignore, this.getRange());
 	}
 
@@ -66,7 +66,7 @@ public abstract class Effect {
 
 	public abstract void play(Player player, Point position);
 
-	public void play(List<Player> players, Point position) {
+	public void play(Collection<Player> players, Point position) {
 		for (Player player : players) {
 			this.play(player, position);
 		}

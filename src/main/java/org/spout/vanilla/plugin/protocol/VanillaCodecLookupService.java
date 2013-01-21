@@ -66,7 +66,6 @@ import org.spout.vanilla.plugin.protocol.codec.player.PlayerGroundCodec;
 import org.spout.vanilla.plugin.protocol.codec.player.PlayerHealthCodec;
 import org.spout.vanilla.plugin.protocol.codec.player.PlayerHeldItemChangeCodec;
 import org.spout.vanilla.plugin.protocol.codec.player.PlayerLocaleViewDistanceCodec;
-import org.spout.vanilla.plugin.protocol.codec.player.PlayerSoundEffectCodec;
 import org.spout.vanilla.plugin.protocol.codec.player.PlayerStatisticCodec;
 import org.spout.vanilla.plugin.protocol.codec.player.PlayerStatusCodec;
 import org.spout.vanilla.plugin.protocol.codec.player.PlayerTabCompleteCodec;
@@ -95,6 +94,7 @@ import org.spout.vanilla.plugin.protocol.codec.window.WindowSlotCodec;
 import org.spout.vanilla.plugin.protocol.codec.window.WindowTransactionCodec;
 import org.spout.vanilla.plugin.protocol.codec.world.EffectCodec;
 import org.spout.vanilla.plugin.protocol.codec.world.ExplosionCodec;
+import org.spout.vanilla.plugin.protocol.codec.world.SoundEffectCodec;
 import org.spout.vanilla.plugin.protocol.codec.world.block.BlockActionCodec;
 import org.spout.vanilla.plugin.protocol.codec.world.block.BlockBreakAnimationCodec;
 import org.spout.vanilla.plugin.protocol.codec.world.block.BlockBulkCodec;
@@ -206,7 +206,7 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			/* 0x3D */
 			bind(EffectCodec.class);
 			/* 0x3E */
-			bind(PlayerSoundEffectCodec.class);
+			bind(SoundEffectCodec.class);
 			/* 0x46 */
 			bind(PlayerGameStateCodec.class);
 			/* 0x47 */

@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.data.effect.type;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
@@ -62,7 +62,7 @@ public class ExplosionEffect extends Effect {
 		player.getSession().getNetworkSynchronizer().callProtocolEvent(new PlayExplosionEffectEvent(position, this, size));
 	}
 
-	public void play(List<Player> players, Point position, float size) {
+	public void play(Collection<Player> players, Point position, float size) {
 		for (Player player : players) {
 			this.play(player, position, size);
 		}

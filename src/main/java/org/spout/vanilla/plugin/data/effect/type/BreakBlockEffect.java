@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.data.effect.type;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
@@ -49,7 +49,7 @@ public class BreakBlockEffect extends GeneralEffect {
 		}
 	}
 
-	public void play(List<Player> players, Point position, BlockMaterial material) {
+	public void play(Collection<Player> players, Point position, BlockMaterial material) {
 		int id = VanillaMaterials.getMinecraftId(material);
 		if (id != -1) {
 			this.play(players, position, id);

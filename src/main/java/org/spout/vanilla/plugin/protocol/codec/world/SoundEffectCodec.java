@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.protocol.codec.player;
+package org.spout.vanilla.plugin.protocol.codec.world;
 
 import java.io.IOException;
 
@@ -35,11 +35,11 @@ import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 
 import org.spout.vanilla.plugin.protocol.ChannelBufferUtils;
-import org.spout.vanilla.plugin.protocol.msg.player.PlayerSoundEffectMessage;
+import org.spout.vanilla.plugin.protocol.msg.world.SoundEffectMessage;
 
-public final class PlayerSoundEffectCodec extends MessageCodec<PlayerSoundEffectMessage> {
-	public PlayerSoundEffectCodec() {
-		super(PlayerSoundEffectMessage.class, 0x3e);
+public final class SoundEffectCodec extends MessageCodec<SoundEffectMessage> {
+	public SoundEffectCodec() {
+		super(SoundEffectMessage.class, 0x3e);
 	}
 
 	/*
@@ -50,18 +50,18 @@ public final class PlayerSoundEffectCodec extends MessageCodec<PlayerSoundEffect
 	 */
 
 	@Override
-	public PlayerSoundEffectMessage decode(ChannelBuffer buffer) throws IOException {
+	public SoundEffectMessage decode(ChannelBuffer buffer) throws IOException {
 		String soundName = ChannelBufferUtils.readString(buffer);
 		float x = (float) buffer.readInt() / 8.0f;
 		float y = (float) buffer.readInt() / 8.0f;
 		float z = (float) buffer.readInt() / 8.0f;
 		float volume = buffer.readFloat();
 		float pitch = 63f / (float) buffer.readUnsignedByte();
-		return new PlayerSoundEffectMessage(soundName, x, y, z, volume, pitch, NullRepositionManager.getInstance());
+		return new SoundEffectMessage(soundName, x, y, z, volume, pitch, NullRepositionManager.getInstance());
 	}
 
 	@Override
-	public ChannelBuffer encode(PlayerSoundEffectMessage message) throws IOException {
+	public ChannelBuffer encode(SoundEffectMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		ChannelBufferUtils.writeString(buffer, message.getSoundName());
 		buffer.writeInt((int) (message.getX() * 8.0f));

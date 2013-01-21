@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.protocol.msg.player;
+package org.spout.vanilla.plugin.protocol.msg.world;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -34,15 +34,15 @@ import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.api.protocol.msg.VanillaMainChannelMessage;
 
-public class PlayerSoundEffectMessage extends VanillaMainChannelMessage {
+public class SoundEffectMessage extends VanillaMainChannelMessage {
 	private final float x, y, z, volume, pitch;
 	private final String soundName;
 
-	public PlayerSoundEffectMessage(String soundName, Vector3 position, float volume, float pitch, RepositionManager rm) {
+	public SoundEffectMessage(String soundName, Vector3 position, float volume, float pitch, RepositionManager rm) {
 		this(soundName, position.getX(), position.getY(), position.getZ(), volume, pitch, rm);
 	}
 
-	public PlayerSoundEffectMessage(String soundName, float x, float y, float z, float volume, float pitch, RepositionManager rm) {
+	public SoundEffectMessage(String soundName, float x, float y, float z, float volume, float pitch, RepositionManager rm) {
 		this.x = rm.convertX(x);
 		this.y = rm.convertY(y);
 		this.z = rm.convertZ(z);
@@ -95,7 +95,7 @@ public class PlayerSoundEffectMessage extends VanillaMainChannelMessage {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final PlayerSoundEffectMessage other = (PlayerSoundEffectMessage) obj;
+		final SoundEffectMessage other = (SoundEffectMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.soundName, other.soundName)
 				.append(this.x, other.x)

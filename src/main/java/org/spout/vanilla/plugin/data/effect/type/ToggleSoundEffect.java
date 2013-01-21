@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.data.effect.type;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
@@ -62,7 +62,7 @@ public class ToggleSoundEffect extends SoundEffect {
 		(open ? this.open : this.close).play(player, position);
 	}
 
-	public void play(List<Player> players, Point position, boolean open) {
+	public void play(Collection<Player> players, Point position, boolean open) {
 		for (Player player : players) {
 			this.play(player, position, open);
 		}

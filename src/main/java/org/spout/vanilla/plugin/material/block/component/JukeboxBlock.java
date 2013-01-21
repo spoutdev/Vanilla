@@ -26,12 +26,11 @@
  */
 package org.spout.vanilla.plugin.material.block.component;
 
-import java.util.Set;
-
+import org.spout.api.component.type.BlockComponent;
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.api.data.MoveReaction;
 import org.spout.vanilla.api.material.Fuel;
@@ -50,11 +49,14 @@ public class JukeboxBlock extends ComponentMaterial implements Fuel {
 	}
 
 	@Override
-	public void onPostDestroy(Block block, Set<Flag> flags) {
+	public boolean onDestroy(Block block, Cause<?> cause) {
 		//Note: Eject logic not part of drops, because item is always ejected
 		// Or shouldn't it? If it becomes part of drops, turn this into setPlaying(false).
-		((Jukebox) block.getComponent()).eject();
-		super.onPostDestroy(block, flags);
+		BlockComponent comp = block.getComponent();
+		if (comp instanceof Jukebox) {
+			((Jukebox) comp).eject();
+		}
+		return super.onDestroy(block, cause);
 	}
 
 	@Override

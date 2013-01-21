@@ -130,7 +130,6 @@ import org.spout.vanilla.plugin.protocol.msg.player.PlayerExperienceMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerGameStateMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerHealthMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerHeldItemChangeMessage;
-import org.spout.vanilla.plugin.protocol.msg.player.PlayerSoundEffectMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerTimeMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerListMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerLoginRequestMessage;
@@ -145,6 +144,7 @@ import org.spout.vanilla.plugin.protocol.msg.window.WindowPropertyMessage;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowSlotMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.EffectMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.ExplosionMessage;
+import org.spout.vanilla.plugin.protocol.msg.world.SoundEffectMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.block.BlockActionMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.block.BlockBreakAnimationMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.block.BlockChangeMessage;
@@ -643,7 +643,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onSoundEffect(PlaySoundEffectEvent event) {
-		return new PlayerSoundEffectMessage(event.getSound().getName(), event.getPosition(), event.getVolume(), event.getPitch(), getRepositionManager());
+		return new SoundEffectMessage(event.getSound().getName(), event.getPosition(), event.getVolume(), event.getPitch(), getRepositionManager());
 	}
 
 	@EventHandler
@@ -656,9 +656,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		int x = event.getPosition().getBlockX();
 		int y = event.getPosition().getBlockY();
 		int z = event.getPosition().getBlockZ();
-		if (y < 0 || y > 255) {
-			return null; // don't play effects outside the byte range
-		}
 		return new EffectMessage(event.getEffect().getId(), x, y, z, event.getData(), getRepositionManager());
 	}
 

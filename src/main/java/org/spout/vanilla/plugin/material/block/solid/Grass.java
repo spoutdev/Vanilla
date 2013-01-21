@@ -26,7 +26,11 @@
  */
 package org.spout.vanilla.plugin.material.block.solid;
 
+import java.util.Random;
+
 import org.spout.api.Spout;
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
@@ -34,6 +38,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
 import org.spout.api.plugin.Platform;
 
+import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.api.material.InitializableMaterial;
 
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
@@ -41,8 +46,10 @@ import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.SpreadingSolid;
 import org.spout.vanilla.plugin.material.block.misc.Snow;
+import org.spout.vanilla.plugin.material.item.misc.Dye;
 import org.spout.vanilla.plugin.render.VanillaEffects;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class Grass extends SpreadingSolid implements DynamicMaterial, InitializableMaterial {
 	public Grass(String name, int id) {
@@ -82,5 +89,76 @@ public class Grass extends SpreadingSolid implements DynamicMaterial, Initializa
 	@Override
 	public long getSpreadingTime(Block b) {
 		return 60000L + MathHelper.getRandom().nextInt(60000) * 3;
+	}
+
+	@Override
+	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
+		super.onInteractBy(entity, block, type, clickedFace);
+		Slot inv = PlayerUtil.getHeldSlot(entity);
+
+		if (inv != null && inv.get() != null && inv.get().isMaterial(Dye.BONE_MEAL) && type.equals(Action.RIGHT_CLICK)) {
+			// This flag is used to determine if we should remove a Bone Meal if at least one block
+			// gets a Tall Grass attached to the top of it, then we should remove a bone meal.
+			boolean shouldConsume = false;
+
+			final Random random = MathHelper.getRandom();
+			// Minecraft does grass growing by Bone Meal as follows. Keep in mind the radius is 8.
+			// - Tall Grass is placed 9/10 times.
+			// - If Tall Grass fails, place Dandelion 2/3 times (within the 1/10 window Tall Grass failed on)
+			// - If Dandelion fails, place Rose within the 1/3 times window that Dandelion failed (which is within the 1/10 window Tall Grass failed on).
+			for (int dx = -4; dx < 4; dx++) {
+				for (int dy = -1; dy <= 1; dy++) {
+					for (int dz = -4; dz < 4; dz++) {
+						//Fertilization only occurs 1/3 times.
+						if (random.nextInt(3) != 2) {
+							continue;
+						}
+						// Grass/flowers have lower chance to go to a lower/higher height than the center block is at.
+						// It incurs another 1/3 times. Only do this when iterating over -1 or 1 on the dy, otherwise its on the same
+						// plane and we don't care.
+						if (dy != 0) {
+							if (random.nextInt(3) != 2) {
+								continue;
+							}
+						}
+
+						final Block around = block.translate(dx, dy, dz);
+
+						// Only spread to Grass blocks
+						if (!around.getMaterial().equals(VanillaMaterials.GRASS)) {
+							continue;
+						}
+
+						final Block aboveAround = around.translate(BlockFace.TOP);
+
+						// Make sure the block above the translated one is Air.
+						if (!aboveAround.getMaterial().equals(VanillaMaterials.AIR)) {
+							continue;
+						}
+
+						if (random.nextInt(10) != 0) {
+							if (VanillaMaterials.TALL_GRASS.canAttachTo(around, BlockFace.TOP)) {
+								aboveAround.setMaterial(VanillaMaterials.TALL_GRASS);
+								shouldConsume = true;
+							}
+						} else if (random.nextInt(3) != 0) {
+							if (VanillaMaterials.DANDELION.canAttachTo(around, BlockFace.TOP)) {
+								aboveAround.setMaterial(VanillaMaterials.DANDELION);
+								shouldConsume = true;
+							}
+						} else {
+							if (VanillaMaterials.ROSE.canAttachTo(around, BlockFace.TOP)) {
+								aboveAround.setMaterial(VanillaMaterials.ROSE);
+								shouldConsume = true;
+							}
+						}
+					}
+				}
+			}
+
+			if (!PlayerUtil.isCostSuppressed(entity) && shouldConsume) {
+				inv.addAmount(-1);
+			}
+		}
 	}
 }

@@ -29,7 +29,6 @@ package org.spout.vanilla.plugin.material.block.misc;
 import java.util.Random;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
@@ -89,13 +88,6 @@ public class Snow extends GroundAttachable implements DynamicMaterial, Initializ
 	@Override
 	public boolean isPlacementObstacle() {
 		return false;
-	}
-
-	@Override
-	public void onUpdate(BlockMaterial oldMaterial, Block block) {
-		if (block.translate(BlockFace.BOTTOM).isMaterial(VanillaMaterials.AIR)) {
-			block.setMaterial(VanillaMaterials.AIR);
-		}
 	}
 
 	public final boolean willMeltAt(Block block) {

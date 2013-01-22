@@ -80,8 +80,8 @@ public class Grass extends SpreadingSolid implements DynamicMaterial, Initializa
 	public boolean canDecayAt(Block block) {
 		block = block.translate(BlockFace.TOP);
 		BlockMaterial mat = block.getMaterial();
-		if (!(mat instanceof Snow)) {
-			return block.getMaterial().getOpacity() > 0 || block.getLight() < 3;
+		if ((!(mat instanceof Snow)) || (!(mat.isMaterial(VanillaMaterials.SLAB)))) {
+			return (block.getMaterial().getOpacity() > 0 && block.getLight() < 4);
 		}
 		return false;
 	}

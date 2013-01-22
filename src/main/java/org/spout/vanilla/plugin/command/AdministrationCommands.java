@@ -316,7 +316,11 @@ public class AdministrationCommands {
 					return;
 				}
 
-				level.setExperience(amount);
+				if (amount > 0) {
+					level.addExperience(amount);
+				} else {
+					level.removeExperience(amount);
+				}
 				player.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Your experience has been set to ", ChatStyle.WHITE, amount, ChatStyle.BRIGHT_GREEN, ".");
 			} else {
 				throw new CommandException(args.getString(0) + " is not online.");

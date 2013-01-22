@@ -42,12 +42,21 @@ import org.spout.vanilla.plugin.event.entity.EntityCollectItemEvent;
 public class PickupItemComponent extends EntityComponent {
 	private final int DISTANCE = VanillaConfiguration.ITEM_PICKUP_RANGE.getInt();
 	private List<Entity> nearbyEntities;
+	private final int WAIT_RESET = 30;
+	private int wait = 0;
 
 	@Override
 	public boolean canTick() {
 		HealthComponent healthComponent = getOwner().get(HealthComponent.class);
-		if (healthComponent != null && healthComponent.isDead()) {
-			return false;
+		if (healthComponent != null) {
+			if (!healthComponent.isDead() && wait != 0) {
+				wait--;
+				return false;
+			}
+			if (healthComponent.isDead()) {
+				wait = WAIT_RESET;
+				return false;
+			}
 		}
 		nearbyEntities = getOwner().getWorld().getNearbyEntities(getOwner(), DISTANCE);
 		return !nearbyEntities.isEmpty();

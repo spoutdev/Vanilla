@@ -423,7 +423,6 @@ public class HealthComponent extends EntityComponent {
 	 * Damages this entity with the given {@link DamageCause} and damager.
 	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
 	 * @param cause cause of this entity being damaged
-	 * @param damager entity that damaged this entity
 	 * @param sendHurtMessage whether to send the hurt packet to all players online
 	 */
 	public void damage(int amount, DamageCause<?> cause, boolean sendHurtMessage) {

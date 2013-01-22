@@ -24,52 +24,48 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.inventory.window.prop;
+package org.spout.vanilla.api.event.inventory;
 
-import gnu.trove.map.TIntObjectMap;
-import gnu.trove.map.hash.TIntObjectHashMap;
+import org.spout.api.entity.Entity;
+import org.spout.api.event.Cancellable;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.inventory.InventoryOpenEvent;
+
+import org.spout.vanilla.api.component.substance.material.EnchantmentTableComponent;
+import org.spout.vanilla.plugin.component.substance.material.EnchantmentTable;
 
 /**
- * Represents a property of
- * {@link org.spout.vanilla.plugin.inventory.window.WindowType#ENCHANTMENT_TABLE}
+ * Event which is fired when an EnchantmentTable is opened.
  */
-public enum EnchantmentTableProperty implements WindowProperty {
-	/**
-	 * The value of the first slot level.
-	 */
-	SLOT_1(0),
-	/**
-	 * The value of the second slot level.
-	 */
-	SLOT_2(1),
-	/**
-	 * The value of the third slot level.
-	 */
-	SLOT_3(2);
-	private final int id;
-	private static final TIntObjectMap<EnchantmentTableProperty> idMap = new TIntObjectHashMap<EnchantmentTableProperty>(EnchantmentTableProperty.values().length);
+public class EnchantmentTableOpenEvent extends InventoryOpenEvent implements Cancellable {
+	private static HandlerList handlers = new HandlerList();
+	private final EnchantmentTableComponent enchantmentTable;
 
-	private EnchantmentTableProperty(int id) {
-		this.id = id;
+	public EnchantmentTableOpenEvent(EnchantmentTableComponent enchantmentTable, Entity entity) {
+		super(enchantmentTable.getInventory(), entity);
+		this.enchantmentTable = enchantmentTable;
+	}
+
+	/**
+	 * Returns the enchantmentTable which caused this event.
+	 *
+	 * @return enchantmentTable
+	 */
+	public EnchantmentTableComponent getEnchantmentTable() {
+		return enchantmentTable;
 	}
 
 	@Override
-	public int getId() {
-		return id;
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
 	}
 
-	static {
-		for (EnchantmentTableProperty prop : EnchantmentTableProperty.values()) {
-			idMap.put(prop.getId(), prop);
-		}
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 
-	/**
-	 * Returns the property with the specified id
-	 * @param id of property
-	 * @return property with specified id
-	 */
-	public static EnchantmentTableProperty get(int id) {
-		return idMap.get(id);
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
 	}
 }

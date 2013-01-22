@@ -24,46 +24,26 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.player.network;
+package org.spout.vanilla.api.event.player.network;
 
 import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-public class PlayerListEvent extends Event implements ProtocolEvent {
+public class PlayerPingEvent extends Event implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();
-	private long ping;
-	private boolean online;
-	private String playerDisplayName;
+	private int hash;
 
-	public PlayerListEvent(String playerDisplayName, long pingDelayMS, boolean online) {
-		this.ping = pingDelayMS;
-		this.online = online;
-		this.playerDisplayName = playerDisplayName;
+	public PlayerPingEvent(int hash) {
+		this.hash = hash;
 	}
 
 	/**
-	 * Gets the name of the player that this event relates to
-	 * @return the player's name
+	 * Gets the Hash code for this ping message
+	 * @return ping unique code
 	 */
-	public String getPlayerDisplayName() {
-		return this.playerDisplayName;
-	}
-
-	/**
-	 * Gets the player's online status
-	 * @return true if the player is online
-	 */
-	public boolean getOnline() {
-		return this.online;
-	}
-
-	/**
-	 * Gets the network delay between the server and the player
-	 * @return true if the player is online
-	 */
-	public long getPingDelay() {
-		return this.ping;
+	public int getHash() {
+		return this.hash;
 	}
 
 	@Override

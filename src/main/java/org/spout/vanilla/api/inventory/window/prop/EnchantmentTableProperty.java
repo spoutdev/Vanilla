@@ -24,28 +24,32 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.inventory.window.prop;
+package org.spout.vanilla.api.inventory.window.prop;
 
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
 /**
  * Represents a property of
- * {@link org.spout.vanilla.plugin.inventory.window.WindowType#FURNACE}
+ * {@link org.spout.vanilla.plugin.inventory.window.WindowType#ENCHANTMENT_TABLE}
  */
-public enum FurnaceProperty implements WindowProperty {
+public enum EnchantmentTableProperty implements WindowProperty {
 	/**
-	 * The value of the progress arrow on the furnace.
+	 * The value of the first slot level.
 	 */
-	PROGRESS_ARROW(0),
+	SLOT_1(0),
 	/**
-	 * The value of the fire icon on the furnace.
+	 * The value of the second slot level.
 	 */
-	FIRE_ICON(1);
+	SLOT_2(1),
+	/**
+	 * The value of the third slot level.
+	 */
+	SLOT_3(2);
 	private final int id;
-	private static final TIntObjectMap<FurnaceProperty> idMap = new TIntObjectHashMap<FurnaceProperty>(FurnaceProperty.values().length);
+	private static final TIntObjectMap<EnchantmentTableProperty> idMap = new TIntObjectHashMap<EnchantmentTableProperty>(EnchantmentTableProperty.values().length);
 
-	private FurnaceProperty(int id) {
+	private EnchantmentTableProperty(int id) {
 		this.id = id;
 	}
 
@@ -55,17 +59,17 @@ public enum FurnaceProperty implements WindowProperty {
 	}
 
 	static {
-		for (FurnaceProperty prop : FurnaceProperty.values()) {
+		for (EnchantmentTableProperty prop : EnchantmentTableProperty.values()) {
 			idMap.put(prop.getId(), prop);
 		}
 	}
 
 	/**
-	 * Returns the property from the specified id.
+	 * Returns the property with the specified id
 	 * @param id of property
 	 * @return property with specified id
 	 */
-	public static FurnaceProperty get(int id) {
+	public static EnchantmentTableProperty get(int id) {
 		return idMap.get(id);
 	}
 }

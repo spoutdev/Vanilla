@@ -24,33 +24,33 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.inventory;
+package org.spout.vanilla.api.event.inventory;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryCloseEvent;
-import org.spout.vanilla.plugin.component.substance.material.Beacon;
+import org.spout.vanilla.api.component.substance.material.BrewingStandComponent;
 
 /**
- * Event which is fired when a Beacon is closed.
+ * Event which is called when a BrewingStand is closed.
  */
-public class BeaconCloseEvent extends InventoryCloseEvent implements Cancellable {
+public class BrewingStandCloseEvent extends InventoryCloseEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private final Beacon beacon;
+	private final BrewingStandComponent brewingStand;
 
-	public BeaconCloseEvent(Beacon beacon, Entity entity) {
-		super(beacon.getInventory(), entity);
-		this.beacon = beacon;
+	public BrewingStandCloseEvent(BrewingStandComponent brewingStand, Entity entity) {
+		super(brewingStand.getInventory(), entity);
+		this.brewingStand = brewingStand;
 	}
 
 	/**
-	 * Returns the beacon which caused this event.
+	 * Returns the brewingStand which caused this event.
 	 *
-	 * @return beacon
+	 * @return brewingStand
 	 */
-	public Beacon getBeacon() {
-		return beacon;
+	public BrewingStandComponent getBrewingStand() {
+		return brewingStand;
 	}
 
 	@Override

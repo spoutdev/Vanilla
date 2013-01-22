@@ -32,7 +32,7 @@ import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 
-import org.spout.vanilla.plugin.event.player.network.PlayerPingEvent;
+import org.spout.vanilla.api.event.player.network.PlayerPingEvent;
 
 public class PingComponent extends EntityComponent {
 	private Player player;

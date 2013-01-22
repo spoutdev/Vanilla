@@ -24,33 +24,33 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.inventory;
+package org.spout.vanilla.api.event.inventory;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryCloseEvent;
-import org.spout.vanilla.plugin.component.substance.material.Anvil;
+import org.spout.vanilla.api.component.substance.material.BeaconComponent;
 
 /**
- * Event which is fired when an Anvil is closed.
+ * Event which is fired when a Beacon is closed.
  */
-public class AnvilCloseEvent extends InventoryCloseEvent implements Cancellable {
+public class BeaconCloseEvent extends InventoryCloseEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private final Anvil anvil;
+	private final BeaconComponent beacon;
 
-	public AnvilCloseEvent(Anvil anvil, Entity entity) {
-		super(anvil.getInventory(), entity);
-		this.anvil = anvil;
+	public BeaconCloseEvent(BeaconComponent beacon, Entity entity) {
+		super(beacon.getInventory(), entity);
+		this.beacon = beacon;
 	}
 
 	/**
-	 * Returns the anvil which caused this event.
+	 * Returns the beacon which caused this event.
 	 *
-	 * @return anvil
+	 * @return beacon
 	 */
-	public Anvil getAnvil() {
-		return anvil;
+	public BeaconComponent getBeacon() {
+		return beacon;
 	}
 
 	@Override

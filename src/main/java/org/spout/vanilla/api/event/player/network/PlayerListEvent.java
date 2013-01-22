@@ -24,29 +24,54 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.api.component.substance.material;
+package org.spout.vanilla.api.event.player.network;
 
-import org.spout.vanilla.api.inventory.Container;
+import org.spout.api.event.Event;
+import org.spout.api.event.HandlerList;
+import org.spout.api.protocol.event.ProtocolEvent;
 
-public abstract class FurnaceComponent extends ViewedBlockComponent implements Container {
+public class PlayerListEvent extends Event implements ProtocolEvent {
+	private static HandlerList handlers = new HandlerList();
+	private long ping;
+	private boolean online;
+	private String playerDisplayName;
 
-	public abstract float getMaxSmeltTime();
+	public PlayerListEvent(String playerDisplayName, long pingDelayMS, boolean online) {
+		this.ping = pingDelayMS;
+		this.online = online;
+		this.playerDisplayName = playerDisplayName;
+	}
 
-	public abstract void setMaxSmeltTime(float maxSmeltTime);
+	/**
+	 * Gets the name of the player that this event relates to
+	 * @return the player's name
+	 */
+	public String getPlayerDisplayName() {
+		return this.playerDisplayName;
+	}
 
-	public abstract float getSmeltTime();
+	/**
+	 * Gets the player's online status
+	 * @return true if the player is online
+	 */
+	public boolean getOnline() {
+		return this.online;
+	}
 
-	public abstract void setSmeltTime(float smeltTime);
+	/**
+	 * Gets the network delay between the server and the player
+	 * @return true if the player is online
+	 */
+	public long getPingDelay() {
+		return this.ping;
+	}
 
-	public abstract float getMaxFuel();
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
 
-	public abstract void setMaxFuel(float maxFuel);
-
-	public abstract float getFuel();
-
-	public abstract void setFuel(float fuel);
-
-	public abstract boolean canSmelt();
-
-	public abstract void smelt();
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
 }

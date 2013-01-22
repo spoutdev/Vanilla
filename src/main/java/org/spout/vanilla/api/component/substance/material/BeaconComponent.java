@@ -24,16 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.inventory.window.prop;
+package org.spout.vanilla.api.component.substance.material;
 
-/**
- * Represents a property of a
- * {@link org.spout.vanilla.plugin.inventory.window.Window}.
- */
-public interface WindowProperty {
-	/**
-	 * Returns the id sent to the client of the property.
-	 * @return id sent to the client
-	 */
-	public int getId();
+import org.spout.vanilla.api.inventory.Container;
+
+public abstract class BeaconComponent extends ViewedBlockComponent implements Container {
 }

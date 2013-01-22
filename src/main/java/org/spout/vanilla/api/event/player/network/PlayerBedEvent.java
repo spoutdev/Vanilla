@@ -24,32 +24,56 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.player.network;
+package org.spout.vanilla.api.event.player.network;
 
 import org.spout.api.entity.Player;
+import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.api.data.GameMode;
-
-public class PlayerGameStateEvent extends PlayerEvent implements ProtocolEvent {
+/**
+ * Event which is called when a player enters or leaves a bed
+ */
+public class PlayerBedEvent extends PlayerEvent implements Cancellable, ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();
-	private byte reason;
-	private GameMode gameMode;
+	private final Block bed;
+	private boolean entered;
 
-	public PlayerGameStateEvent(Player p, byte reason, GameMode gameMode) {
+	public PlayerBedEvent(Player p, Block bed, boolean entered) {
 		super(p);
-		this.reason = reason;
-		this.gameMode = gameMode;
+		this.bed = bed;
+		this.entered = entered;
 	}
 
-	public byte getReason() {
-		return this.reason;
+	/**
+	 * Returns the bed block involved in this event.
+	 * @return the bed block involved in this event
+	 */
+	public Block getBed() {
+		return bed;
 	}
 
-	public GameMode getGameMode() {
-		return this.gameMode;
+	/**
+	 * Gets if the player entered the bed.
+	 * @return True if the bed was entered.
+	 */
+	public boolean isEntered() {
+		return entered;
+	}
+
+	/**
+	 * Sets if a player has entered the bed.
+	 * @param entered The new status of if the player has entered a bed (true or false).
+	 */
+	public void setEntered(boolean entered) {
+		this.entered = entered;
+	}
+
+	@Override
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
 	}
 
 	@Override

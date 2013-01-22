@@ -66,7 +66,7 @@ import org.spout.vanilla.api.event.entity.EntityHealthChangeEvent;
 import org.spout.vanilla.api.event.entity.EntityStatusEvent;
 import org.spout.vanilla.api.event.entity.VanillaEntityDeathEvent;
 import org.spout.vanilla.api.event.player.PlayerDeathEvent;
-import org.spout.vanilla.plugin.event.player.network.PlayerHealthEvent;
+import org.spout.vanilla.api.event.player.network.PlayerHealthEvent;
 import org.spout.vanilla.plugin.inventory.player.PlayerArmorInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;

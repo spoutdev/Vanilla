@@ -24,47 +24,26 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.inventory;
+package org.spout.vanilla.api.event.player.network;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.Cancellable;
+import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.inventory.InventoryOpenEvent;
+import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.plugin.component.substance.material.Dispenser;
-
-/**
- * Event which is fired when a Dispenser is opened.
- */
-public class DispenserOpenEvent extends InventoryOpenEvent implements Cancellable {
+public class PlayerHealthEvent extends PlayerEvent implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();
-	private final Dispenser dispenser;
 
-	public DispenserOpenEvent(Dispenser dispenser, Entity entity) {
-		super(dispenser.getInventory(), entity);
-		this.dispenser = dispenser;
-	}
-
-	/**
-	 * Returns the dispenser which caused this event.
-	 *
-	 * @return dispenser
-	 */
-	public Dispenser getDispenser() {
-		return dispenser;
-	}
-
-	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
+	public PlayerHealthEvent(Player p) {
+		super(p);
 	}
 
 	@Override
 	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
 		return handlers;
 	}
 }

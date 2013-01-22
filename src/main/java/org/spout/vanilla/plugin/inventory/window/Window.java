@@ -68,7 +68,7 @@ import org.spout.vanilla.plugin.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 import org.spout.vanilla.plugin.inventory.window.gui.InventorySlot;
 import org.spout.vanilla.plugin.inventory.window.gui.RenderItemStack;
-import org.spout.vanilla.plugin.inventory.window.prop.WindowProperty;
+import org.spout.vanilla.api.inventory.window.prop.WindowProperty;
 
 /**
  * Represents a Window that players can view to display an inventory.

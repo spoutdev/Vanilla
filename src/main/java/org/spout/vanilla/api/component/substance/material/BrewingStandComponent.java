@@ -24,36 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.player.network;
+package org.spout.vanilla.api.component.substance.material;
 
-import org.spout.api.entity.Player;
-import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.vanilla.api.inventory.Container;
 
-public class PlayerSelectedSlotChangeEvent extends PlayerEvent implements ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
-	private final int slot;
-
-	public PlayerSelectedSlotChangeEvent(Player p, int slot) {
-		super(p);
-		this.slot = slot;
-	}
-
-	/**
-	 * Gets the new slot index that is selected
-	 * @return Selected slot index
-	 */
-	public int getSelectedSlot() {
-		return this.slot;
-	}
-
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
+public abstract class BrewingStandComponent  extends ViewedBlockComponent implements Container {
 }

@@ -59,7 +59,7 @@ import org.spout.vanilla.plugin.data.ViewDistance;
 import org.spout.vanilla.api.event.entity.HumanAbilityChangeEvent;
 import org.spout.vanilla.api.event.player.PlayerGameModeChangedEvent;
 import org.spout.vanilla.plugin.event.player.network.PlayerAbilityUpdateEvent;
-import org.spout.vanilla.plugin.event.player.network.PlayerGameStateEvent;
+import org.spout.vanilla.api.event.player.network.PlayerGameStateEvent;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.protocol.entity.HumanEntityProtocol;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerGameStateMessage;

@@ -24,34 +24,46 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.player.network;
+package org.spout.vanilla.api.event.inventory;
 
-import org.spout.api.event.Event;
+import org.spout.api.entity.Entity;
+import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.inventory.InventoryCloseEvent;
+import org.spout.vanilla.api.component.substance.material.EnchantmentTableComponent;
 
-public class PlayerPingEvent extends Event implements ProtocolEvent {
+/**
+ * Event which is fired when an EnchantmentTable is closed.
+ */
+public class EnchantmentTableCloseEvent extends InventoryCloseEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private int hash;
+	private final EnchantmentTableComponent enchantmentTable;
 
-	public PlayerPingEvent(int hash) {
-		this.hash = hash;
+	public EnchantmentTableCloseEvent(EnchantmentTableComponent enchantmentTable, Entity entity) {
+		super(enchantmentTable.getInventory(), entity);
+		this.enchantmentTable = enchantmentTable;
 	}
 
 	/**
-	 * Gets the Hash code for this ping message
-	 * @return ping unique code
+	 * Returns the enchantmentTable which caused this event.
+	 *
+	 * @return enchantmentTable
 	 */
-	public int getHash() {
-		return this.hash;
+	public EnchantmentTableComponent getEnchantmentTable() {
+		return enchantmentTable;
+	}
+
+	@Override
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 
 	@Override
 	public HandlerList getHandlers() {
-		return handlers;
-	}
-
-	public static HandlerList getHandlerList() {
 		return handlers;
 	}
 }

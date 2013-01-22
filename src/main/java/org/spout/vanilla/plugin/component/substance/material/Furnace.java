@@ -31,20 +31,19 @@ import org.spout.api.entity.Player;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.api.component.substance.material.FurnaceComponent;
-import org.spout.vanilla.api.inventory.Container;
 import org.spout.vanilla.api.material.Fuel;
 import org.spout.vanilla.api.material.TimedCraftable;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.event.inventory.FurnaceCloseEvent;
-import org.spout.vanilla.plugin.event.inventory.FurnaceOpenEvent;
+import org.spout.vanilla.api.event.inventory.FurnaceCloseEvent;
+import org.spout.vanilla.api.event.inventory.FurnaceOpenEvent;
 import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
 import org.spout.vanilla.plugin.inventory.window.block.FurnaceWindow;
-import org.spout.vanilla.plugin.inventory.window.prop.FurnaceProperty;
+import org.spout.vanilla.api.inventory.window.prop.FurnaceProperty;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
-public class Furnace extends FurnaceComponent implements Container {
+public class Furnace extends FurnaceComponent {
 	public final float MAX_FUEL_INCREMENT = 12.5f;
 	public final float MAX_SMELT_TIME_INCREMENT = 9f;
 

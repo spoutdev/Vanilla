@@ -24,14 +24,13 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.inventory;
+package org.spout.vanilla.api.event.inventory;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryCloseEvent;
 import org.spout.vanilla.api.component.substance.material.FurnaceComponent;
-import org.spout.vanilla.plugin.component.substance.material.Furnace;
 
 /**
  * Event which is fired when a furnace is closed.
@@ -40,7 +39,7 @@ public class FurnaceCloseEvent extends InventoryCloseEvent implements Cancellabl
 	private static HandlerList handlers = new HandlerList();
 	private final FurnaceComponent furnace;
 
-	public FurnaceCloseEvent(Furnace furnace, Entity entity) {
+	public FurnaceCloseEvent(FurnaceComponent furnace, Entity entity) {
 		super(furnace.getInventory(), entity);
 		this.furnace = furnace;
 	}

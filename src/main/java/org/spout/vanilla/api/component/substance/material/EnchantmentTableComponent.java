@@ -24,47 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.inventory;
+package org.spout.vanilla.api.component.substance.material;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.Cancellable;
-import org.spout.api.event.HandlerList;
-import org.spout.api.event.inventory.InventoryOpenEvent;
+import org.spout.vanilla.api.inventory.Container;
 
-import org.spout.vanilla.plugin.component.substance.material.Anvil;
-
-/**
- * Event which is fired when an Anvil is opened.
- */
-public class AnvilOpenEvent extends InventoryOpenEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
-	private final Anvil anvil;
-
-	public AnvilOpenEvent(Anvil anvil, Entity entity) {
-		super(anvil.getInventory(), entity);
-		this.anvil = anvil;
-	}
-
-	/**
-	 * Returns the anvil which caused this event.
-	 *
-	 * @return anvil
-	 */
-	public Anvil getAnvil() {
-		return anvil;
-	}
-
-	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
-
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
+public abstract class EnchantmentTableComponent extends ViewedBlockComponent implements Container {
 }

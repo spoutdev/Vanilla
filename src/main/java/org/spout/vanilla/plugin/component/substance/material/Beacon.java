@@ -30,16 +30,15 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 
-import org.spout.vanilla.api.component.substance.material.ViewedBlockComponent;
-import org.spout.vanilla.api.inventory.Container;
+import org.spout.vanilla.api.component.substance.material.BeaconComponent;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
-import org.spout.vanilla.plugin.event.inventory.BeaconCloseEvent;
-import org.spout.vanilla.plugin.event.inventory.BeaconOpenEvent;
+import org.spout.vanilla.api.event.inventory.BeaconCloseEvent;
+import org.spout.vanilla.api.event.inventory.BeaconOpenEvent;
 import org.spout.vanilla.plugin.inventory.block.BeaconInventory;
 import org.spout.vanilla.plugin.inventory.window.block.BeaconWindow;
 
-public class Beacon extends ViewedBlockComponent implements Container {
+public class Beacon extends BeaconComponent {
 	private final BeaconInventory inventory = new BeaconInventory();
 
 	@Override

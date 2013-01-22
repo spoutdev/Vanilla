@@ -24,35 +24,34 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.inventory;
+package org.spout.vanilla.api.event.inventory;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryOpenEvent;
 
-import org.spout.vanilla.plugin.component.substance.material.BrewingStand;
+import org.spout.vanilla.api.component.substance.material.AnvilComponent;
 
 /**
- * Event which is called when a BrewingStand is opened / looked into.
- * todo implement calling of this event
+ * Event which is fired when an Anvil is opened.
  */
-public class BrewingStandOpenEvent extends InventoryOpenEvent implements Cancellable {
+public class AnvilOpenEvent extends InventoryOpenEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private final BrewingStand brewingStand;
+	private final AnvilComponent anvil;
 
-	public BrewingStandOpenEvent(BrewingStand brewingStand, Entity entity) {
-		super(brewingStand.getInventory(), entity);
-		this.brewingStand = brewingStand;
+	public AnvilOpenEvent(AnvilComponent anvil, Entity entity) {
+		super(anvil.getInventory(), entity);
+		this.anvil = anvil;
 	}
 
 	/**
-	 * Returns the brewingStand which caused this event.
+	 * Returns the anvil which caused this event.
 	 *
-	 * @return brewingStand
+	 * @return anvil
 	 */
-	public BrewingStand getBrewingStand() {
-		return brewingStand;
+	public AnvilComponent getAnvil() {
+		return anvil;
 	}
 
 	@Override

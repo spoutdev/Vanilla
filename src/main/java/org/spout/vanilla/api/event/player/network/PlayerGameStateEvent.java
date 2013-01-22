@@ -24,47 +24,40 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.inventory;
+package org.spout.vanilla.api.event.player.network;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.Cancellable;
+import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.inventory.InventoryOpenEvent;
+import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.plugin.component.substance.material.Furnace;
+import org.spout.vanilla.api.data.GameMode;
 
-/**
- * Event which is called when a furnace is opened.
- */
-public class FurnaceOpenEvent extends InventoryOpenEvent implements Cancellable {
+public class PlayerGameStateEvent extends PlayerEvent implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();
-	private final Furnace furnace;
+	private byte reason;
+	private GameMode gameMode;
 
-	public FurnaceOpenEvent(Furnace furnace, Entity entity) {
-		super(furnace.getInventory(), entity);
-		this.furnace = furnace;
+	public PlayerGameStateEvent(Player p, byte reason, GameMode gameMode) {
+		super(p);
+		this.reason = reason;
+		this.gameMode = gameMode;
 	}
 
-	/**
-	 * Returns the furnace which caused this event.
-	 *
-	 * @return furnace
-	 */
-	public Furnace getFurnace() {
-		return furnace;
+	public byte getReason() {
+		return this.reason;
 	}
 
-	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
+	public GameMode getGameMode() {
+		return this.gameMode;
 	}
 
 	@Override
 	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
 		return handlers;
 	}
 }

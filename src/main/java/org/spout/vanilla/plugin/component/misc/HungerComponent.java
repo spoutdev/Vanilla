@@ -51,7 +51,7 @@ import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.api.event.cause.HealCause;
 import org.spout.vanilla.api.event.cause.NullDamageCause;
-import org.spout.vanilla.plugin.event.player.network.PlayerHealthEvent;
+import org.spout.vanilla.api.event.player.network.PlayerHealthEvent;
 import org.spout.vanilla.plugin.material.block.liquid.Water;
 import org.spout.vanilla.plugin.material.item.Food;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityStatusMessage;

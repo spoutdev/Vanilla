@@ -24,46 +24,36 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.inventory;
+package org.spout.vanilla.api.event.player.network;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.Cancellable;
+import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.inventory.InventoryCloseEvent;
-import org.spout.vanilla.plugin.component.substance.material.EnchantmentTable;
+import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.protocol.event.ProtocolEvent;
 
-/**
- * Event which is fired when an EnchantmentTable is closed.
- */
-public class EnchantmentTableCloseEvent extends InventoryCloseEvent implements Cancellable {
+public class PlayerSelectedSlotChangeEvent extends PlayerEvent implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();
-	private final EnchantmentTable enchantmentTable;
+	private final int slot;
 
-	public EnchantmentTableCloseEvent(EnchantmentTable enchantmentTable, Entity entity) {
-		super(enchantmentTable.getInventory(), entity);
-		this.enchantmentTable = enchantmentTable;
+	public PlayerSelectedSlotChangeEvent(Player p, int slot) {
+		super(p);
+		this.slot = slot;
 	}
 
 	/**
-	 * Returns the enchantmentTable which caused this event.
-	 *
-	 * @return enchantmentTable
+	 * Gets the new slot index that is selected
+	 * @return Selected slot index
 	 */
-	public EnchantmentTable getEnchantmentTable() {
-		return enchantmentTable;
-	}
-
-	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
+	public int getSelectedSlot() {
+		return this.slot;
 	}
 
 	@Override
 	public HandlerList getHandlers() {
+		return handlers;
+	}
+
+	public static HandlerList getHandlerList() {
 		return handlers;
 	}
 }

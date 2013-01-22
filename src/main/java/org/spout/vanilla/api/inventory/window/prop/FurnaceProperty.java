@@ -24,47 +24,48 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.inventory;
+package org.spout.vanilla.api.inventory.window.prop;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.Cancellable;
-import org.spout.api.event.HandlerList;
-import org.spout.api.event.inventory.InventoryOpenEvent;
-
-import org.spout.vanilla.plugin.component.substance.material.Beacon;
+import gnu.trove.map.TIntObjectMap;
+import gnu.trove.map.hash.TIntObjectHashMap;
 
 /**
- * Event which is fired when a Beacon is opened / looked into.
+ * Represents a property of
+ * {@link org.spout.vanilla.plugin.inventory.window.WindowType#FURNACE}
  */
-public class BeaconOpenEvent extends InventoryOpenEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
-	private final Beacon beacon;
+public enum FurnaceProperty implements WindowProperty {
+	/**
+	 * The value of the progress arrow on the furnace.
+	 */
+	PROGRESS_ARROW(0),
+	/**
+	 * The value of the fire icon on the furnace.
+	 */
+	FIRE_ICON(1);
+	private final int id;
+	private static final TIntObjectMap<FurnaceProperty> idMap = new TIntObjectHashMap<FurnaceProperty>(FurnaceProperty.values().length);
 
-	public BeaconOpenEvent(Beacon beacon, Entity entity) {
-		super(beacon.getInventory(), entity);
-		this.beacon = beacon;
+	private FurnaceProperty(int id) {
+		this.id = id;
+	}
+
+	@Override
+	public int getId() {
+		return id;
+	}
+
+	static {
+		for (FurnaceProperty prop : FurnaceProperty.values()) {
+			idMap.put(prop.getId(), prop);
+		}
 	}
 
 	/**
-	 * Returns the beacon which caused this event.
-	 *
-	 * @return beacon
+	 * Returns the property from the specified id.
+	 * @param id of property
+	 * @return property with specified id
 	 */
-	public Beacon getBeacon() {
-		return beacon;
-	}
-
-	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
-
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
+	public static FurnaceProperty get(int id) {
+		return idMap.get(id);
 	}
 }

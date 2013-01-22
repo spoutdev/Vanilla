@@ -81,6 +81,10 @@ public class Item extends ObjectEntity {
 		getData().put(VanillaData.UNCOLLECTABLE_TICKS, Long.valueOf(uncollectableTicks));
 	}
 
+	public void setUncollectableDelay(long uncollectableTickDelay) {
+		setUncollectableTicks(getOwner().getWorld().getAge() + uncollectableTickDelay);
+	}
+
 	public boolean canBeCollected() {
 		return getUncollectableTicks() < getOwner().getWorld().getAge();
 	}
@@ -109,7 +113,7 @@ public class Item extends ObjectEntity {
 		}
 		Entity entity = position.getWorld().createEntity(position, Item.class);
 		Item item = entity.add(Item.class);
-		item.setUncollectableTicks(position.getWorld().getAge() + DROP_PICKUP_DELAY);
+		item.setUncollectableDelay(DROP_PICKUP_DELAY);
 		item.setItemStack(itemStack);
 		item.getPhysics().applyImpulse(velocity);
 		if (position.getChunk(LoadOption.NO_LOAD) != null) {

@@ -192,8 +192,9 @@ public class Human extends Living {
 		//TODO: This needs an actual value and this value might change when gravity changes!
 		impulse = impulse.multiply(100);
 
-		// Finally drop
-		Item.drop(dropFrom.getPosition(), item, impulse);
+		// Finally drop using a 2 second pickup delay
+		Item spawnedItem = Item.drop(dropFrom.getPosition(), item, impulse);
+		spawnedItem.setUncollectableDelay(2000);
 	}
 
 	/**

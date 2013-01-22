@@ -111,11 +111,11 @@ public class WeatherSimulator extends BasicTickable {
 		Biome biome = getWorld().getBiome(x, y, z);
 		if (biome instanceof VanillaBiome) {
 			VanillaBiome vb = (VanillaBiome) biome;
-			if (vb.getClimate() != Climate.COLD) {
-				return false;
+			if (vb.getClimate().hasSnowfall()) {
+				return getCurrent().isRaining() && y > getWorld().getSurfaceHeight(x, z);
 			}
 		}
-		return getCurrent().isRaining() && y > getWorld().getSurfaceHeight(x, z);
+		return false;
 	}
 
 	public boolean isRainingAt(int x, int y, int z, boolean includeSnow) {
@@ -123,12 +123,12 @@ public class WeatherSimulator extends BasicTickable {
 			Biome biome = getWorld().getBiome(x, y, z);
 			if (biome instanceof VanillaBiome) {
 				VanillaBiome vb = (VanillaBiome) biome;
-				if (vb.getClimate() == Climate.COLD) {
-					return false;
+				if (vb.getClimate().hasRainfall()) {
+					return getCurrent().isRaining() && y > getWorld().getSurfaceHeight(x, z);
 				}
 			}
 		}
-		return getCurrent().isRaining() && y > getWorld().getSurfaceHeight(x, z);
+		return false;
 	}
 
 	/**

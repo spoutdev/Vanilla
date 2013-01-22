@@ -73,20 +73,35 @@ public class Item extends ObjectEntity {
 		getData().put(Data.HELD_ITEM, stack);
 	}
 
-	public long getUncollectableTicks() {
+	/**
+	 * Gets the time from which this item can be picked up
+	 * 
+	 * @return uncollectable time in milliseconds
+	 */
+	public long getUncollectableTime() {
 		return getData().get(VanillaData.UNCOLLECTABLE_TICKS).longValue();
 	}
 
-	public void setUncollectableTicks(long uncollectableTicks) {
-		getData().put(VanillaData.UNCOLLECTABLE_TICKS, Long.valueOf(uncollectableTicks));
+	/**
+	 * Sets the time from which this item can be picked up
+	 * 
+	 * @param uncollectableTime in milliseconds
+	 */
+	public void setUncollectableTime(long uncollectableTime) {
+		getData().put(VanillaData.UNCOLLECTABLE_TICKS, Long.valueOf(uncollectableTime));
 	}
 
-	public void setUncollectableDelay(long uncollectableTickDelay) {
-		setUncollectableTicks(getOwner().getWorld().getAge() + uncollectableTickDelay);
+	/**
+	 * Sets the delay from the current time until this item can be picked up
+	 * 
+	 * @param uncollectableDelay in milliseconds
+	 */
+	public void setUncollectableDelay(long uncollectableDelay) {
+		setUncollectableTime(getOwner().getWorld().getAge() + uncollectableDelay);
 	}
 
 	public boolean canBeCollected() {
-		return getUncollectableTicks() < getOwner().getWorld().getAge();
+		return getUncollectableTime() < getOwner().getWorld().getAge();
 	}
 
 	/**

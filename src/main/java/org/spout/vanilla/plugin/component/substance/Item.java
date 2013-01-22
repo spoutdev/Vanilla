@@ -48,7 +48,7 @@ public class Item extends ObjectEntity {
 	 * The default delay in ms before the item can be picked up for a dropped item
 	 */
 	public static final long DROP_PICKUP_DELAY = 495;
-	private int timeLeft = VanillaConfiguration.ITEM_SPAWN_TIME.getInt();
+	private float timeLeft = VanillaConfiguration.ITEM_SPAWN_TIME.getFloat();
 
 	@Override
 	public void onAttached() {
@@ -124,8 +124,9 @@ public class Item extends ObjectEntity {
 
 	@Override
 	public void onTick(float dt) {
-		if (timeLeft-- <= 0) {
-			getOwner().remove();
+		timeLeft -= dt;
+			if (timeLeft <= 0.05) {
+				getOwner().remove();
 		}
 	}
 }

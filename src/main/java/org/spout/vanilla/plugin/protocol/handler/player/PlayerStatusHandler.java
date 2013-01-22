@@ -36,7 +36,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.event.cause.HealthChangeCause;
+import org.spout.vanilla.api.event.cause.HealthChangeCause;
 import org.spout.vanilla.plugin.event.player.PlayerRespawnEvent;
 import org.spout.vanilla.plugin.protocol.VanillaProtocol;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerStatusMessage;

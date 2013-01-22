@@ -32,7 +32,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.event.player.PlayerHeldItemChangeEvent;
+import org.spout.vanilla.api.event.player.PlayerHeldItemChangeEvent;
 import org.spout.vanilla.plugin.event.player.network.PlayerSelectedSlotChangeEvent;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerHeldItemChangeMessage;

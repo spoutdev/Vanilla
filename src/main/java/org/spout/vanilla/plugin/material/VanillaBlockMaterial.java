@@ -70,7 +70,7 @@ import org.spout.vanilla.plugin.data.effect.SoundEffect;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;
-import org.spout.vanilla.plugin.event.block.BlockActionEvent;
+import org.spout.vanilla.api.event.block.BlockActionEvent;
 import org.spout.vanilla.plugin.render.VanillaEffects;
 
 public abstract class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial {

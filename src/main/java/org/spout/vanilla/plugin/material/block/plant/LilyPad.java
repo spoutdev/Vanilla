@@ -39,7 +39,7 @@ import org.spout.api.util.BlockIterator;
 import org.spout.vanilla.api.inventory.Slot;
 
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
-import org.spout.vanilla.plugin.event.cause.PlayerBreakCause;
+import org.spout.vanilla.api.event.cause.PlayerBreakCause;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.material.block.liquid.Water;
 import org.spout.vanilla.plugin.util.PlayerUtil;

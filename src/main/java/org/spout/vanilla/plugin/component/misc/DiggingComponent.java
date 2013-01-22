@@ -35,8 +35,8 @@ import org.spout.vanilla.api.data.Animation;
 
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.data.tool.ToolType;
-import org.spout.vanilla.plugin.event.block.network.BlockBreakAnimationEvent;
-import org.spout.vanilla.plugin.event.entity.EntityAnimationEvent;
+import org.spout.vanilla.api.event.block.network.BlockBreakAnimationEvent;
+import org.spout.vanilla.api.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.item.tool.MiningTool;
 

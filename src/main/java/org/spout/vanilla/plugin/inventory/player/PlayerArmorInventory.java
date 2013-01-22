@@ -36,7 +36,7 @@ import org.spout.vanilla.api.material.item.armor.Chestplate;
 import org.spout.vanilla.api.material.item.armor.Helmet;
 import org.spout.vanilla.api.material.item.armor.Leggings;
 
-import org.spout.vanilla.plugin.event.entity.EntityEquipmentEvent;
+import org.spout.vanilla.api.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 
 /**

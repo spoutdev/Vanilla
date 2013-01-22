@@ -32,7 +32,7 @@ import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.api.data.Animation;
 
-import org.spout.vanilla.plugin.event.entity.EntityAnimationEvent;
+import org.spout.vanilla.api.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.plugin.event.player.network.PlayerBedEvent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.misc.BedBlock;

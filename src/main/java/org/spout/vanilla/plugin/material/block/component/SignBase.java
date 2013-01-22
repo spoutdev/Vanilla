@@ -42,7 +42,7 @@ import org.spout.vanilla.api.material.InitializableMaterial;
 import org.spout.vanilla.api.material.block.component.VanillaComplexMaterial;
 
 import org.spout.vanilla.plugin.component.substance.material.Sign;
-import org.spout.vanilla.plugin.event.block.SignUpdateEvent;
+import org.spout.vanilla.api.event.block.SignUpdateEvent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;

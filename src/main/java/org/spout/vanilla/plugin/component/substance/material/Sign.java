@@ -30,10 +30,24 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
 
+import org.spout.vanilla.api.component.substance.material.SignComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.event.block.SignUpdateEvent;
+import org.spout.vanilla.api.event.block.SignUpdateEvent;
 
-public class Sign extends VanillaBlockComponent {
+public class Sign extends SignComponent {
+	private static final int CHARS_PER_LINE = 16;
+	private static final int MAX_LINES = 4;
+
+	@Override
+	public int getMaxCharsPerLine() {
+		return CHARS_PER_LINE;
+	}
+
+	@Override
+	public int getMaxLines() {
+		return MAX_LINES;
+	}
+
 	/**
 	 * Gets a copy of the text from this sign
 	 * @return copy of the text
@@ -54,7 +68,7 @@ public class Sign extends VanillaBlockComponent {
 			return;
 		}
 
-		String[] lines = new String[4];
+		String[] lines = new String[MAX_LINES];
 		for (int i = 0; i < lines.length; i++) {
 			lines[i] = "";
 		}
@@ -67,15 +81,15 @@ public class Sign extends VanillaBlockComponent {
 	 * @param cause of the sign change
 	 */
 	public void setText(String[] text, Cause<?> cause) {
-		if (text == null || text.length != 4) {
-			throw new IllegalArgumentException("Text must be an array of length 4");
+		if (text == null || text.length != MAX_LINES) {
+			throw new IllegalArgumentException("Text must be an array of length " + MAX_LINES);
 		}
 		if (cause == null) {
 			throw new IllegalArgumentException("Source may not be null");
 		}
-		for (int i = 0; i < 4; i++) {
-			if (text[i].length() > 16) {
-				text[i] = text[i].substring(0, 16);
+		for (int i = 0; i < MAX_LINES; i++) {
+			if (text[i].length() > CHARS_PER_LINE) {
+				text[i] = text[i].substring(0, CHARS_PER_LINE);
 			}
 		}
 		SignUpdateEvent event = new SignUpdateEvent(this, text, cause);

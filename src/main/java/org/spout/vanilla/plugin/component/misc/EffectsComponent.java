@@ -78,6 +78,12 @@ public class EffectsComponent extends EntityComponent {
 
 			if (!removed) {
 				switch (effect.getEffect()) {
+					case HUNGER:
+						if (getOwner() instanceof Player && !getOwner().get(Human.class).isSurvival()) {
+							HungerComponent hunger = getOwner().add(HungerComponent.class);
+							hunger.setExhaustion(hunger.getExhaustion() + 0.025f);
+						}
+						break;
 					case REGENERATION:
 						if (getOwner() instanceof Player && !getOwner().get(Human.class).isSurvival()) {
 							break;

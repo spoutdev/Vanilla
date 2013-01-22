@@ -26,16 +26,21 @@
  */
 package org.spout.vanilla.plugin.material.item;
 
+import java.util.Random;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.api.data.GameMode;
+import org.spout.vanilla.api.data.effect.StatusEffect;
 import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.api.material.item.FoodEffect;
 
 import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.misc.EffectsComponent;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.data.effect.StatusEffectContainer;
 
 public class Food extends VanillaItemMaterial {
 	private final FoodEffect[] effects;
@@ -56,16 +61,18 @@ public class Food extends VanillaItemMaterial {
 			for (FoodEffect effect : getEffectType()) {
 				switch (effect.getEffect()) {
 					case HEALTH_REGENERATION:
-						//TODO: Need potions implemented to work.
+						entity.add(EffectsComponent.class).addEffect(new StatusEffectContainer(StatusEffect.REGENERATION, effect.getChange()));
 						break;
 					case HUNGER:
 						hunger.setHunger((int) (hunger.getHunger() + effect.getChange()));
 						break;
 					case POISON:
-						//TODO: Need potions to apply that.
+						if (new Random().nextInt(101) < effect.getChange()) {
+							entity.add(EffectsComponent.class).addEffect(new StatusEffectContainer(StatusEffect.HUNGER, 30));
+						}
 						break;
 					case SATURATION:
-						hunger.setFoodSaturation((float) (hunger.getFoodSaturation() + effect.getChange()));
+						hunger.setFoodSaturation(hunger.getFoodSaturation() + effect.getChange());
 						break;
 				}
 			}

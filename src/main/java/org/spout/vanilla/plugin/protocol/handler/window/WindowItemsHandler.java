@@ -31,8 +31,8 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
-import org.spout.vanilla.plugin.inventory.window.InventoryEntry;
 import org.spout.vanilla.plugin.inventory.window.Window;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowItemsMessage;
 
@@ -46,11 +46,11 @@ public class WindowItemsHandler extends MessageHandler<WindowItemsMessage> {
 		Window window = player.get(WindowHolder.class).getActiveWindow();
 		ItemStack[] slots = msg.getItems();
 		for (int i = 0; i < slots.length; i++) {
-			InventoryEntry entry = window.getInventoryEntry(i);
+			Slot entry = window.getSlot(i);
 			if (entry == null) {
 				return;
 			}
-			entry.getInventory().set(entry.getSlot(), slots[i]);
+			entry.getInventory().set(entry.getIndex(), slots[i]);
 		}
 	}
 }

@@ -28,21 +28,24 @@ package org.spout.vanilla.plugin.inventory.window;
 
 import org.spout.api.inventory.Inventory;
 
+import org.spout.vanilla.api.inventory.Slot;
+
 /**
  * Represents the arguments of a click on a
  * {@link Window}
  */
-public class ClickArguments extends InventoryEntry {
+public class ClickArguments {
+	private final Slot slot;
 	private final boolean rightClick, shiftClick;
 
 	public ClickArguments(Inventory inventory, int slot, boolean rightClick, boolean shiftClick) {
-		super(inventory, slot);
+		this.slot = new Slot(inventory, slot);
 		this.rightClick = rightClick;
 		this.shiftClick = shiftClick;
 	}
 
-	public ClickArguments(InventoryEntry entry, boolean rightClick, boolean shiftClick) {
-		super(entry);
+	public ClickArguments(Slot slot, boolean rightClick, boolean shiftClick) {
+		this.slot = slot;
 		this.rightClick = rightClick;
 		this.shiftClick = shiftClick;
 	}
@@ -61,5 +64,9 @@ public class ClickArguments extends InventoryEntry {
 	 */
 	public boolean isShiftClick() {
 		return shiftClick;
+	}
+
+	public Slot getSlot() {
+		return slot;
 	}
 }

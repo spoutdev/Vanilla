@@ -30,10 +30,10 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.inventory.window.ClickArguments;
-import org.spout.vanilla.plugin.inventory.window.InventoryEntry;
 import org.spout.vanilla.plugin.inventory.window.Window;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowCreativeActionMessage;
 
@@ -62,9 +62,9 @@ public class WindowCreativeActionHandler extends MessageHandler<WindowCreativeAc
 			window.setCursorItem(message.get());
 			window.onOutsideClick();
 		} else {
-			InventoryEntry entry = window.getInventoryEntry(message.getSlot());
+			Slot entry = window.getSlot(message.getSlot());
 			if (entry != null) {
-				window.onCreativeClick(entry.getInventory(), entry.getSlot(), message.get());
+				window.onCreativeClick(entry.getInventory(), entry.getIndex(), message.get());
 			}
 		}
 	}

@@ -30,8 +30,8 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
-import org.spout.vanilla.plugin.inventory.window.InventoryEntry;
 import org.spout.vanilla.plugin.inventory.window.Window;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowSlotMessage;
 
@@ -44,11 +44,11 @@ public class WindowSlotHandler extends MessageHandler<WindowSlotMessage> {
 
 		Player player = session.getPlayer();
 		Window window = player.get(WindowHolder.class).getActiveWindow();
-		InventoryEntry entry = window.getInventoryEntry(msg.getSlot());
+		Slot entry = window.getSlot(msg.getSlot());
 		if (entry == null) {
 			return;
 		}
 
-		entry.getInventory().set(entry.getSlot(), msg.get());
+		entry.getInventory().set(entry.getIndex(), msg.get());
 	}
 }

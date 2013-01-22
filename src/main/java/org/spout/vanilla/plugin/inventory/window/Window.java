@@ -52,6 +52,7 @@ import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.event.ProtocolEvent;
 
+import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
@@ -210,9 +211,9 @@ public abstract class Window implements InventoryViewer {
 
 		ItemStack[] items = new ItemStack[getSize()];
 		for (int i = 0; i < items.length; i++) {
-			InventoryEntry entry = getInventoryEntry(i);
+			Slot entry = getSlot(i);
 			if (entry != null) {
-				items[i] = entry.getInventory().get(entry.getSlot());
+				items[i] = entry.getInventory().get(entry.getIndex());
 			}
 		}
 
@@ -279,8 +280,9 @@ public abstract class Window implements InventoryViewer {
 	}
 
 	private boolean handleClick(ClickArguments args) {
-		Inventory inventory = args.getInventory();
-		int slot = args.getSlot();
+		Slot s = args.getSlot();
+		Inventory inventory = s.getInventory();
+		int slot = s.getIndex();
 		ItemStack clicked = inventory.get(slot);
 		if (args.isShiftClick()) {
 			debug("[Window] Shift-Clicked slot " + slot);
@@ -496,14 +498,14 @@ public abstract class Window implements InventoryViewer {
 	 * @param nativeSlot clicked
 	 * @return inventory entry at slot
 	 */
-	public InventoryEntry getInventoryEntry(int nativeSlot) {
+	public Slot getSlot(int nativeSlot) {
 		int slot;
-		debug("Getting InventoryEntry from: " + nativeSlot);
+		debug("Getting Slot from: " + nativeSlot);
 		for (InventoryConverter converter : converters) {
 			slot = converter.convert(nativeSlot);
 			if (slot != -1) {
 				debug("Found: " + slot);
-				return new InventoryEntry(converter.getInventory(), slot);
+				return new Slot(converter.getInventory(), slot);
 			}
 		}
 		return null;
@@ -517,9 +519,9 @@ public abstract class Window implements InventoryViewer {
 	 * @return
 	 */
 	public ClickArguments getClickArguments(int nativeSlot, boolean rightClick, boolean shiftClick) {
-		InventoryEntry entry = getInventoryEntry(nativeSlot);
+		Slot entry = getSlot(nativeSlot);
 		if (entry != null) {
-			return new ClickArguments(entry.getInventory(), entry.getSlot(), rightClick, shiftClick);
+			return new ClickArguments(entry.getInventory(), entry.getIndex(), rightClick, shiftClick);
 		}
 		return null;
 	}

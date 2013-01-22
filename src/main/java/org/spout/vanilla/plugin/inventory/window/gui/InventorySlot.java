@@ -38,22 +38,22 @@ import org.spout.api.input.Keyboard;
 import org.spout.api.math.IntVector2;
 import org.spout.api.math.Vector2;
 
+import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.inventory.window.ClickArguments;
-import org.spout.vanilla.plugin.inventory.window.InventoryEntry;
 import org.spout.vanilla.plugin.inventory.window.Window;
 
 public class InventorySlot extends ControlComponent {
 	private RenderItemStack item;
 	private final RenderPart hitBox = new RenderPart();
 	private Vector2 pos = Vector2.ZERO;
-	private InventoryEntry entry;
+	private Slot entry;
 
-	public void setInventoryEntry(InventoryEntry entry) {
+	public void setSlot(Slot entry) {
 		this.entry = entry;
 	}
 
-	public InventoryEntry getInventoryEntry() {
+	public Slot getSlot() {
 		return entry;
 	}
 

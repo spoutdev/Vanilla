@@ -38,6 +38,7 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
+import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.object.ItemEntityProtocol;
@@ -47,6 +48,7 @@ public class Item extends ObjectEntity {
 	 * The default delay in ms before the item can be picked up for a dropped item
 	 */
 	public static final long DROP_PICKUP_DELAY = 495;
+	private int timeLeft = VanillaConfiguration.ITEM_SPAWN_TIME.getInt();
 
 	@Override
 	public void onAttached() {
@@ -56,7 +58,6 @@ public class Item extends ObjectEntity {
 		physics.setMass(5f);
 		physics.setCollisionShape(new BoxShape(0.125F, 0.125F, 0.125F));
 		physics.setRestitution(0f);
-		physics.setDamping(0.6F, 0.6F);
 	}
 
 	@Override
@@ -115,5 +116,12 @@ public class Item extends ObjectEntity {
 			position.getWorld().spawnEntity(entity);
 		}
 		return item;
+	}
+
+	@Override
+	public void onTick(float dt) {
+		if (timeLeft-- <= 0) {
+			getOwner().remove();
+		}
 	}
 }

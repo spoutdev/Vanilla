@@ -28,6 +28,7 @@ package org.spout.vanilla.plugin.material.block;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CubicEffectRange;
@@ -78,9 +79,20 @@ public abstract class PressurePlate extends GroundAttachable implements Redstone
 	}
 
 	@Override
-	public void onEntityCollision(Entity entity, Block block) {
-		this.setPressed(block, true);
+	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
+		super.onCollided(colliderPoint, collidedPoint, entity);
+		if (this.canTrigger(entity)) {
+			this.setPressed(collidedPoint.getBlock(), true);
+		}
 	}
+
+	/**
+	 * Checks whether a given entity can trigger this pressure plate
+	 * 
+	 * @param entity to check for
+	 * @return True if the pressure plate is triggered, False if not
+	 */
+	public abstract boolean canTrigger(Entity entity);
 
 	@Override
 	public short getRedstonePower(Block block, RedstonePowerMode powerMode) {

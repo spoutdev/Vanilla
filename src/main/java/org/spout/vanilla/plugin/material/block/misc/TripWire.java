@@ -33,6 +33,7 @@ import java.util.Set;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.flag.Flag;
@@ -154,7 +155,7 @@ public class TripWire extends GroundAttachable implements InitializableMaterial 
 	}
 
 	@Override
-	public void onEntityCollision(Entity entity, Block block) {
-		trample(block);
+	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
+		trample(collidedPoint.getBlock());
 	}
 }

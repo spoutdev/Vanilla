@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.block.pressureplate;
 
+import org.spout.api.entity.Entity;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.material.block.PressurePlate;
 
@@ -38,5 +39,10 @@ public class WoodenPressurePlate extends PressurePlate {
 	@Override
 	public Instrument getInstrument() {
 		return Instrument.BASS_GUITAR;
+	}
+
+	@Override
+	public boolean canTrigger(Entity entity) {
+		return true;
 	}
 }

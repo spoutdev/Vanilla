@@ -27,7 +27,6 @@
 package org.spout.vanilla.plugin.material.block.pressureplate;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.plugin.component.substance.Item;
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
@@ -41,10 +40,7 @@ public class StonePressurePlate extends PressurePlate {
 	}
 
 	@Override
-	public void onEntityCollision(Entity entity, Block block) {
-		if (entity.has(Item.class)) {
-			return;
-		}
-		super.onEntityCollision(entity, block);
+	public boolean canTrigger(Entity entity) {
+		return !entity.has(Item.class);
 	}
 }

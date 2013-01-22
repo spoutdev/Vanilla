@@ -32,10 +32,8 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.api.data.RedstonePowerMode;
+import org.spout.vanilla.api.material.block.redstone.IndirectRedstoneSource;
 import org.spout.vanilla.api.material.block.redstone.RedstoneSource;
-
-import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
-import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class RedstoneUtil {
 	/**
@@ -53,7 +51,7 @@ public class RedstoneUtil {
 	 * @return True if it is a redstone conductor
 	 */
 	public static boolean isConductor(BlockMaterial mat) {
-		return mat instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) mat).isRedstoneConductor();
+		return mat instanceof IndirectRedstoneSource && ((IndirectRedstoneSource) mat).isRedstoneConductor();
 	}
 
 	/**
@@ -78,15 +76,6 @@ public class RedstoneUtil {
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * Gets if the given block is emitting power to surrounding blocks
-	 * @param block to check
-	 * @return True if emitting power, False if not
-	 */
-	public static boolean isEmittingPower(Block block) {
-		return isEmittingPower(block, RedstonePowerMode.ALL);
 	}
 
 	/**
@@ -118,18 +107,18 @@ public class RedstoneUtil {
 	 */
 	public static boolean isEmittingPower(Block block, BlockFace to, RedstonePowerMode powerMode) {
 		BlockMaterial mat = block.getMaterial();
-		// Use direction for sources
-		if (mat instanceof RedstoneSource && to != BlockFace.THIS) {
-			if (((RedstoneSource) mat).hasRedstonePowerTo(block, to, powerMode)) {
-				return true;
-			} else if (mat.equals(VanillaMaterials.REDSTONE_WIRE)) {
-				return false;
-			}
-		}
-		if (mat instanceof VanillaBlockMaterial) {
-			return ((VanillaBlockMaterial) mat).hasRedstonePower(block, powerMode);
-		} else {
+		if (!(mat instanceof IndirectRedstoneSource)) {
 			return false;
 		}
+		// Powered itself?
+		if (to == BlockFace.THIS) {
+			return ((IndirectRedstoneSource) mat).hasRedstonePower(block, powerMode);
+		}
+		// Use direction for direct sources
+		if (mat instanceof RedstoneSource && ((RedstoneSource) mat).hasDirectRedstonePower(block, to, powerMode)) {
+			return true;
+		}
+		// Fall-back to indirect redstone sources
+		return ((IndirectRedstoneSource) mat).hasIndirectRedstonePower(block, to, powerMode);
 	}
 }

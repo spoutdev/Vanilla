@@ -87,21 +87,16 @@ public class DetectorRail extends RailBase implements RedstoneSource, DynamicMat
 
 	@Override
 	public short getRedstonePower(Block block, RedstonePowerMode powerMode) {
-		return this.hasRedstonePower(block, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+		return this.isPowering(block) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
 	}
 
 	@Override
-	public boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
-		return this.isPowering(block);
+	public short getDirectRedstonePower(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return this.hasDirectRedstonePower(block, direction, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
 	}
 
 	@Override
-	public short getRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
-		return this.hasRedstonePowerTo(block, direction, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
-	}
-
-	@Override
-	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+	public boolean hasDirectRedstonePower(Block block, BlockFace direction, RedstonePowerMode powerMode) {
 		return this.isPowering(block) && direction == BlockFace.BOTTOM;
 	}
 

@@ -96,8 +96,8 @@ public class TripWireHook extends AttachedRedstoneSource implements Toggleable, 
 	}
 
 	@Override
-	public boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
-		return this.isToggled(block);
+	public short getRedstonePower(Block block, RedstonePowerMode powerMode) {
+		return this.isToggled(block) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
 	}
 
 	@Override

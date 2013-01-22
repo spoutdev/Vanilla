@@ -90,27 +90,31 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 
 	@Override
 	public boolean isReceivingPower(Block block) {
-		return RedstoneUtil.isEmittingPower(this.getBlockAttachedTo(block));
+		BlockFace attached = this.getAttachedFace(block);
+		return RedstoneUtil.isEmittingPower(block.translate(attached), attached.getOpposite());
 	}
 
 	@Override
 	public short getRedstonePower(Block block, RedstonePowerMode powerMode) {
-		return this.hasRedstonePower(block, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+		return this.isPowered() ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
 	}
 
 	@Override
-	public boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
-		return this.isPowered();
+	public short getIndirectRedstonePower(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		if (this.getAttachedFace(block) == direction) {
+			return REDSTONE_POWER_MIN;
+		}
+		return super.getIndirectRedstonePower(block, direction, powerMode);
 	}
 
 	@Override
-	public short getRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
-		return this.hasRedstonePowerTo(block, direction, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	public short getDirectRedstonePower(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return (this.isPowered() && direction == BlockFace.TOP) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
 	}
 
 	@Override
-	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
-		return this.isPowered() && direction == BlockFace.TOP;
+	public boolean hasDirectRedstonePower(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return this.getDirectRedstonePower(block, direction, powerMode) > 0;
 	}
 
 	@Override

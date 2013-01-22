@@ -149,7 +149,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 		for (BlockFace face : faces) {
 			Block rel = block.translate(face);
 			BlockMaterial mat = rel.getMaterial();
-			if (mat instanceof RedstoneRepeater && ((RedstoneRepeater) mat).hasRedstonePowerTo(rel, face.getOpposite(), RedstonePowerMode.ALL)) {
+			if (mat instanceof RedstoneRepeater && ((RedstoneRepeater) mat).hasDirectRedstonePower(rel, face.getOpposite(), RedstonePowerMode.ALL)) {
 				return true;
 			}
 		}
@@ -172,17 +172,12 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 	}
 
 	@Override
-	public boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
-		return false;
+	public short getDirectRedstonePower(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return this.hasDirectRedstonePower(block, direction, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
 	}
 
 	@Override
-	public short getRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
-		return this.hasRedstonePowerTo(block, direction, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
-	}
-
-	@Override
-	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+	public boolean hasDirectRedstonePower(Block block, BlockFace direction, RedstonePowerMode powerMode) {
 		return this.isPowered() && this.getFacing(block) == direction;
 	}
 

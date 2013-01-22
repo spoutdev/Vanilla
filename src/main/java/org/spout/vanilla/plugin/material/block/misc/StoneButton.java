@@ -54,8 +54,8 @@ public class StoneButton extends AttachedRedstoneSource implements PointAttachab
 	}
 
 	@Override
-	public boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
-		return this.isPressed(block);
+	public short getRedstonePower(Block block, RedstonePowerMode powerMode) {
+		return this.isPressed(block) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
 	}
 
 	@Override

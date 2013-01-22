@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.material.block;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.DynamicMaterial;
@@ -37,18 +38,16 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
 
 import org.spout.vanilla.api.data.RedstonePowerMode;
-import org.spout.vanilla.api.material.block.redstone.RedstoneSource;
 
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
-import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 
-public abstract class PressurePlate extends GroundAttachable implements RedstoneSource, DynamicMaterial {
+public abstract class PressurePlate extends AttachedRedstoneSource implements DynamicMaterial {
 	public static final int TICK_DELAY = 1000;
 	private static final EffectRange physicsRange = new ListEffectRange(new CubicEffectRange(1), new CuboidEffectRange(0, -2, 0, 0, -1, 0));
 
 	public PressurePlate(String name, int id, String model) {
 		super(name, id, model);
-		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
+		this.setAttachable(BlockFace.BOTTOM).setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
 	}
 
 	/**
@@ -58,6 +57,15 @@ public abstract class PressurePlate extends GroundAttachable implements Redstone
 	 */
 	public boolean isPressed(Block block) {
 		return block.isDataBitSet(0x1);
+	}
+
+	@Override
+	public void setAttachedFace(Block block, BlockFace attachedFace, Cause<?> cause) {
+	}
+
+	@Override
+	public BlockFace getAttachedFace(short data) {
+		return BlockFace.BOTTOM;
 	}
 
 	@Override
@@ -96,22 +104,7 @@ public abstract class PressurePlate extends GroundAttachable implements Redstone
 
 	@Override
 	public short getRedstonePower(Block block, RedstonePowerMode powerMode) {
-		return this.hasRedstonePower(block, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
-	}
-
-	@Override
-	public boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
-		return this.isPressed(block);
-	}
-
-	@Override
-	public short getRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
-		return this.hasRedstonePower(block, powerMode) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
-	}
-
-	@Override
-	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
-		return direction == BlockFace.BOTTOM && this.isPressed(block);
+		return this.isPressed(block) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
 	}
 
 	@Override

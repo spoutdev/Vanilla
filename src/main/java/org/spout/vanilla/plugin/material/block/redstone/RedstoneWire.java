@@ -119,12 +119,17 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 	}
 
 	@Override
-	public boolean hasRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
-		return this.getRedstonePowerTo(block, direction, powerMode) > 0;
+	public short getIndirectRedstonePower(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return 0;
 	}
 
 	@Override
-	public short getRedstonePowerTo(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+	public boolean hasDirectRedstonePower(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return this.getDirectRedstonePower(block, direction, powerMode) > 0;
+	}
+
+	@Override
+	public short getDirectRedstonePower(Block block, BlockFace direction, RedstonePowerMode powerMode) {
 		if (powerMode == RedstonePowerMode.ALLEXCEPTWIRE) {
 			return REDSTONE_POWER_MIN;
 		}
@@ -148,11 +153,6 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 	}
 
 	@Override
-	public boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
-		return powerMode == RedstonePowerMode.ALLEXCEPTWIRE ? false : block.getData() > 0;
-	}
-
-	@Override
 	public boolean isReceivingPower(Block block) {
 		return this.getReceivingPower(block) > 0;
 	}
@@ -173,7 +173,7 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 				//handle solid blocks and redstone sources
 				maxPower = (short) Math.max(maxPower, ((VanillaBlockMaterial) mat).getRedstonePower(rel, RedstonePowerMode.ALLEXCEPTWIRE));
 				if (mat instanceof RedstoneSource) {
-					maxPower = (short) Math.max(maxPower, ((RedstoneSource) mat).getRedstonePowerTo(rel, face.getOpposite(), RedstonePowerMode.ALL));
+					maxPower = (short) Math.max(maxPower, ((RedstoneSource) mat).getDirectRedstonePower(rel, face.getOpposite(), RedstonePowerMode.ALL));
 				}
 			}
 			//shortcut just in case the answer is simple

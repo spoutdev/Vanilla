@@ -55,6 +55,7 @@ import org.spout.api.util.flag.FlagBundle;
 import org.spout.vanilla.api.data.MoveReaction;
 import org.spout.vanilla.api.data.RedstonePowerMode;
 import org.spout.vanilla.api.material.VanillaMaterial;
+import org.spout.vanilla.api.material.block.redstone.IndirectRedstoneSource;
 import org.spout.vanilla.api.material.block.redstone.RedstoneSource;
 
 import org.spout.vanilla.plugin.component.substance.Item;
@@ -72,7 +73,7 @@ import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.api.event.block.BlockActionEvent;
 import org.spout.vanilla.plugin.render.VanillaEffects;
 
-public abstract class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial {
+public abstract class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial, IndirectRedstoneSource {
 	public static short REDSTONE_POWER_MAX = 15;
 	public static short REDSTONE_POWER_MIN = 0;
 	private final int minecraftId;
@@ -239,29 +240,27 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		return Instrument.PIANO;
 	}
 
-	/**
-	 * Gets whether this block material acts as a solid redstone conductor
-	 * @return True if it is a conductor
-	 */
+	@Override
 	public boolean isRedstoneConductor() {
 		return false;
 	}
 
-	/**
-	 * Gets the power level of this block<br>
-	 * @param block to get it of
-	 * @return the redstone power level
-	 */
-	public short getRedstonePower(Block block) {
+	@Override
+	public short getIndirectRedstonePower(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return this.getRedstonePower(block);
+	}
+
+	@Override
+	public final boolean hasIndirectRedstonePower(Block block, BlockFace direction, RedstonePowerMode powerMode) {
+		return this.getIndirectRedstonePower(block, direction, powerMode) > 0;
+	}
+
+	@Override
+	public final short getRedstonePower(Block block) {
 		return this.getRedstonePower(block, RedstonePowerMode.ALL);
 	}
 
-	/**
-	 * Gets the power level of a single block
-	 * @param block to get it of
-	 * @param powerMode to use to find the power
-	 * @return the redstone power level
-	 */
+	@Override
 	public short getRedstonePower(Block block, RedstonePowerMode powerMode) {
 		if (!this.isRedstoneConductor()) {
 			return REDSTONE_POWER_MIN;
@@ -274,42 +273,20 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 			neigh = block.translate(face);
 			mat = neigh.getMaterial();
 			if (mat instanceof RedstoneSource) {
-				power = (short) Math.max(power, ((RedstoneSource) mat).getRedstonePowerTo(neigh, face.getOpposite(), powerMode));
+				power = (short) Math.max(power, ((RedstoneSource) mat).getDirectRedstonePower(neigh, face.getOpposite(), powerMode));
 			}
 		}
 		return power;
 	}
 
-	/**
-	 * Gets if this block is being powered or not
-	 * @param block to get it of
-	 * @return True if the block receives power
-	 */
-	public boolean hasRedstonePower(Block block) {
+	@Override
+	public final boolean hasRedstonePower(Block block) {
 		return this.hasRedstonePower(block, RedstonePowerMode.ALL);
 	}
 
-	/**
-	 * Gets if this block is being powered or not
-	 * @param block to get it of
-	 * @param powerMode to use to find out the power levels
-	 * @return True if the block receives power
-	 */
-	public boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
-		if (this.isRedstoneConductor()) {
-			Block neigh;
-			BlockMaterial mat;
-			for (BlockFace face : BlockFaces.NESWBT) {
-				neigh = block.translate(face);
-				mat = neigh.getMaterial();
-				if (mat instanceof RedstoneSource) {
-					if (((RedstoneSource) mat).hasRedstonePowerTo(neigh, face.getOpposite(), powerMode)) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
+	@Override
+	public final boolean hasRedstonePower(Block block, RedstonePowerMode powerMode) {
+		return this.getRedstonePower(block, powerMode) > 0;
 	}
 
 	public VanillaBlockMaterial setResistance(Float newResistance) {

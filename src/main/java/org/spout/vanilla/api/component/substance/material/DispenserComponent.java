@@ -24,47 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.inventory;
+package org.spout.vanilla.api.component.substance.material;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.Cancellable;
-import org.spout.api.event.HandlerList;
-import org.spout.api.event.inventory.InventoryOpenEvent;
+import org.spout.vanilla.api.inventory.Container;
 
-import org.spout.vanilla.plugin.component.substance.material.EnchantmentTable;
-
-/**
- * Event which is fired when an EnchantmentTable is opened.
- */
-public class EnchantmentTableOpenEvent extends InventoryOpenEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
-	private final EnchantmentTable enchantmentTable;
-
-	public EnchantmentTableOpenEvent(EnchantmentTable enchantmentTable, Entity entity) {
-		super(enchantmentTable.getInventory(), entity);
-		this.enchantmentTable = enchantmentTable;
-	}
-
-	/**
-	 * Returns the enchantmentTable which caused this event.
-	 *
-	 * @return enchantmentTable
-	 */
-	public EnchantmentTable getEnchantmentTable() {
-		return enchantmentTable;
-	}
-
-	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
-
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
+public abstract class DispenserComponent extends ViewedBlockComponent implements Container {
 }

@@ -24,26 +24,46 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.player.network;
+package org.spout.vanilla.api.event.inventory;
 
-import org.spout.api.entity.Player;
+import org.spout.api.entity.Entity;
+import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.inventory.InventoryCloseEvent;
+import org.spout.vanilla.api.component.substance.material.AnvilComponent;
 
-public class PlayerHealthEvent extends PlayerEvent implements ProtocolEvent {
+/**
+ * Event which is fired when an Anvil is closed.
+ */
+public class AnvilCloseEvent extends InventoryCloseEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
+	private final AnvilComponent anvil;
 
-	public PlayerHealthEvent(Player p) {
-		super(p);
+	public AnvilCloseEvent(AnvilComponent anvil, Entity entity) {
+		super(anvil.getInventory(), entity);
+		this.anvil = anvil;
+	}
+
+	/**
+	 * Returns the anvil which caused this event.
+	 *
+	 * @return anvil
+	 */
+	public AnvilComponent getAnvil() {
+		return anvil;
+	}
+
+	@Override
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
+	}
+
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 
 	@Override
 	public HandlerList getHandlers() {
-		return handlers;
-	}
-
-	public static HandlerList getHandlerList() {
 		return handlers;
 	}
 }

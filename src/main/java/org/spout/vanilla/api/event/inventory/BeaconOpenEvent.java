@@ -24,51 +24,35 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.player.network;
+package org.spout.vanilla.api.event.inventory;
 
-import org.spout.api.entity.Player;
+import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.protocol.event.ProtocolEvent;
+import org.spout.api.event.inventory.InventoryOpenEvent;
+
+import org.spout.vanilla.api.component.substance.material.BeaconComponent;
+import org.spout.vanilla.plugin.component.substance.material.Beacon;
 
 /**
- * Event which is called when a player enters or leaves a bed
+ * Event which is fired when a Beacon is opened / looked into.
  */
-public class PlayerBedEvent extends PlayerEvent implements Cancellable, ProtocolEvent {
+public class BeaconOpenEvent extends InventoryOpenEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private final Block bed;
-	private boolean entered;
+	private final BeaconComponent beacon;
 
-	public PlayerBedEvent(Player p, Block bed, boolean entered) {
-		super(p);
-		this.bed = bed;
-		this.entered = entered;
+	public BeaconOpenEvent(BeaconComponent beacon, Entity entity) {
+		super(beacon.getInventory(), entity);
+		this.beacon = beacon;
 	}
 
 	/**
-	 * Returns the bed block involved in this event.
-	 * @return the bed block involved in this event
+	 * Returns the beacon which caused this event.
+	 *
+	 * @return beacon
 	 */
-	public Block getBed() {
-		return bed;
-	}
-
-	/**
-	 * Gets if the player entered the bed.
-	 * @return True if the bed was entered.
-	 */
-	public boolean isEntered() {
-		return entered;
-	}
-
-	/**
-	 * Sets if a player has entered the bed.
-	 * @param entered The new status of if the player has entered a bed (true or false).
-	 */
-	public void setEntered(boolean entered) {
-		this.entered = entered;
+	public BeaconComponent getBeacon() {
+		return beacon;
 	}
 
 	@Override
@@ -76,12 +60,12 @@ public class PlayerBedEvent extends PlayerEvent implements Cancellable, Protocol
 		super.setCancelled(cancelled);
 	}
 
-	@Override
-	public HandlerList getHandlers() {
+	public static HandlerList getHandlerList() {
 		return handlers;
 	}
 
-	public static HandlerList getHandlerList() {
+	@Override
+	public HandlerList getHandlers() {
 		return handlers;
 	}
 }

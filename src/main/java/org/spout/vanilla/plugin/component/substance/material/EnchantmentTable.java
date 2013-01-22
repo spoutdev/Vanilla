@@ -29,17 +29,16 @@ package org.spout.vanilla.plugin.component.substance.material;
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 
-import org.spout.vanilla.api.component.substance.material.ViewedBlockComponent;
-import org.spout.vanilla.api.inventory.Container;
+import org.spout.vanilla.api.component.substance.material.EnchantmentTableComponent;
+import org.spout.vanilla.api.inventory.window.prop.EnchantmentTableProperty;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
-import org.spout.vanilla.plugin.event.inventory.EnchantmentTableCloseEvent;
-import org.spout.vanilla.plugin.event.inventory.EnchantmentTableOpenEvent;
+import org.spout.vanilla.api.event.inventory.EnchantmentTableCloseEvent;
+import org.spout.vanilla.api.event.inventory.EnchantmentTableOpenEvent;
 import org.spout.vanilla.plugin.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.plugin.inventory.window.block.EnchantmentTableWindow;
-import org.spout.vanilla.plugin.inventory.window.prop.EnchantmentTableProperty;
 
-public class EnchantmentTable extends ViewedBlockComponent implements Container {
+public class EnchantmentTable extends EnchantmentTableComponent {
 	private final EnchantmentTableInventory inventory = new EnchantmentTableInventory();
 	private final int[] levels = new int[3];
 

@@ -24,33 +24,34 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.inventory;
+package org.spout.vanilla.api.event.inventory;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.inventory.InventoryCloseEvent;
-import org.spout.vanilla.plugin.component.substance.material.BrewingStand;
+import org.spout.api.event.inventory.InventoryOpenEvent;
+
+import org.spout.vanilla.api.component.substance.material.FurnaceComponent;
 
 /**
- * Event which is called when a BrewingStand is closed.
+ * Event which is called when a furnace is opened.
  */
-public class BrewingStandCloseEvent extends InventoryCloseEvent implements Cancellable {
+public class FurnaceOpenEvent extends InventoryOpenEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private final BrewingStand brewingStand;
+	private final FurnaceComponent furnace;
 
-	public BrewingStandCloseEvent(BrewingStand brewingStand, Entity entity) {
-		super(brewingStand.getInventory(), entity);
-		this.brewingStand = brewingStand;
+	public FurnaceOpenEvent(FurnaceComponent furnace, Entity entity) {
+		super(furnace.getInventory(), entity);
+		this.furnace = furnace;
 	}
 
 	/**
-	 * Returns the brewingStand which caused this event.
+	 * Returns the furnace which caused this event.
 	 *
-	 * @return brewingStand
+	 * @return furnace
 	 */
-	public BrewingStand getBrewingStand() {
-		return brewingStand;
+	public FurnaceComponent getFurnace() {
+		return furnace;
 	}
 
 	@Override

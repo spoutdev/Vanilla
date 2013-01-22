@@ -24,46 +24,16 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.inventory;
-
-import org.spout.api.entity.Entity;
-import org.spout.api.event.Cancellable;
-import org.spout.api.event.HandlerList;
-import org.spout.api.event.inventory.InventoryCloseEvent;
-import org.spout.vanilla.plugin.component.substance.material.Dispenser;
+package org.spout.vanilla.api.inventory.window.prop;
 
 /**
- * Event which is fired when a Dispenser is closed.
+ * Represents a property of a
+ * {@link org.spout.vanilla.plugin.inventory.window.Window}.
  */
-public class DispenserCloseEvent extends InventoryCloseEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
-	private final Dispenser dispenser;
-
-	public DispenserCloseEvent(Dispenser dispenser, Entity entity) {
-		super(dispenser.getInventory(), entity);
-		this.dispenser = dispenser;
-	}
-
+public interface WindowProperty {
 	/**
-	 * Returns the dispenser which caused this event.
-	 *
-	 * @return dispenser
+	 * Returns the id sent to the client of the property.
+	 * @return id sent to the client
 	 */
-	public Dispenser getDispenser() {
-		return dispenser;
-	}
-
-	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
-
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
+	public int getId();
 }

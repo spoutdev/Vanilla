@@ -24,29 +24,48 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.api.component.substance.material;
+package org.spout.vanilla.api.event.inventory;
 
-import org.spout.vanilla.api.inventory.Container;
+import org.spout.api.entity.Entity;
+import org.spout.api.event.Cancellable;
+import org.spout.api.event.HandlerList;
+import org.spout.api.event.inventory.InventoryOpenEvent;
 
-public abstract class FurnaceComponent extends ViewedBlockComponent implements Container {
+import org.spout.vanilla.api.component.substance.material.DispenserComponent;
+import org.spout.vanilla.plugin.component.substance.material.Dispenser;
 
-	public abstract float getMaxSmeltTime();
+/**
+ * Event which is fired when a Dispenser is opened.
+ */
+public class DispenserOpenEvent extends InventoryOpenEvent implements Cancellable {
+	private static HandlerList handlers = new HandlerList();
+	private final DispenserComponent dispenser;
 
-	public abstract void setMaxSmeltTime(float maxSmeltTime);
+	public DispenserOpenEvent(DispenserComponent dispenser, Entity entity) {
+		super(dispenser.getInventory(), entity);
+		this.dispenser = dispenser;
+	}
 
-	public abstract float getSmeltTime();
+	/**
+	 * Returns the dispenser which caused this event.
+	 *
+	 * @return dispenser
+	 */
+	public DispenserComponent getDispenser() {
+		return dispenser;
+	}
 
-	public abstract void setSmeltTime(float smeltTime);
+	@Override
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
+	}
 
-	public abstract float getMaxFuel();
+	public static HandlerList getHandlerList() {
+		return handlers;
+	}
 
-	public abstract void setMaxFuel(float maxFuel);
-
-	public abstract float getFuel();
-
-	public abstract void setFuel(float fuel);
-
-	public abstract boolean canSmelt();
-
-	public abstract void smelt();
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
+	}
 }

@@ -30,17 +30,16 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 
-import org.spout.vanilla.api.component.substance.material.ViewedBlockComponent;
-import org.spout.vanilla.api.inventory.Container;
+import org.spout.vanilla.api.component.substance.material.DispenserComponent;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.event.inventory.DispenserCloseEvent;
-import org.spout.vanilla.plugin.event.inventory.DispenserOpenEvent;
+import org.spout.vanilla.api.event.inventory.DispenserCloseEvent;
+import org.spout.vanilla.api.event.inventory.DispenserOpenEvent;
 import org.spout.vanilla.plugin.inventory.block.DispenserInventory;
 import org.spout.vanilla.plugin.inventory.window.block.DispenserWindow;
 
-public class Dispenser extends ViewedBlockComponent implements Container {
+public class Dispenser extends DispenserComponent {
 	private final DispenserInventory inventory = new DispenserInventory();
 
 	public boolean isPowered() {

@@ -30,6 +30,7 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.api.component.substance.material.FurnaceComponent;
 import org.spout.vanilla.api.inventory.Container;
 import org.spout.vanilla.api.material.Fuel;
 import org.spout.vanilla.api.material.TimedCraftable;
@@ -43,22 +44,26 @@ import org.spout.vanilla.plugin.inventory.window.block.FurnaceWindow;
 import org.spout.vanilla.plugin.inventory.window.prop.FurnaceProperty;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
-public class Furnace extends ViewedBlockComponent implements Container {
+public class Furnace extends FurnaceComponent implements Container {
 	public final float MAX_FUEL_INCREMENT = 12.5f;
 	public final float MAX_SMELT_TIME_INCREMENT = 9f;
 
+	@Override
 	public float getMaxSmeltTime() {
 		return getData().get(VanillaData.MAX_SMELT_TIME);
 	}
 
+	@Override
 	public void setMaxSmeltTime(float maxSmeltTime) {
 		getData().put(VanillaData.MAX_SMELT_TIME, maxSmeltTime);
 	}
 
+	@Override
 	public float getSmeltTime() {
 		return getData().get(VanillaData.SMELT_TIME);
 	}
 
+	@Override
 	public void setSmeltTime(float smeltTime) {
 		getData().put(VanillaData.SMELT_TIME, smeltTime);
 		for (Player player : viewers) {
@@ -78,18 +83,22 @@ public class Furnace extends ViewedBlockComponent implements Container {
 		}
 	}
 
+	@Override
 	public float getMaxFuel() {
 		return getData().get(VanillaData.MAX_FURNACE_FUEL);
 	}
 
+	@Override
 	public void setMaxFuel(float maxFuel) {
 		getData().put(VanillaData.MAX_FURNACE_FUEL, maxFuel);
 	}
 
+	@Override
 	public float getFuel() {
 		return getData().get(VanillaData.FURNACE_FUEL);
 	}
 
+	@Override
 	public void setFuel(float fuel) {
 		getData().put(VanillaData.FURNACE_FUEL, fuel);
 		for (Player player : viewers) {
@@ -115,12 +124,14 @@ public class Furnace extends ViewedBlockComponent implements Container {
 		setSmeltTime(getSmeltTime() - dt);
 	}
 
+	@Override
 	public boolean canSmelt() {
 		FurnaceInventory inventory = getInventory();
 		ItemStack output = inventory.getOutput();
 		return inventory.hasIngredient() && (output == null || output.getMaterial() == ((TimedCraftable) inventory.getIngredient().getMaterial()).getResult().getMaterial());
 	}
 
+	@Override
 	public void smelt() {
 		FurnaceInventory inventory = getInventory();
 		if (!inventory.hasIngredient()) {

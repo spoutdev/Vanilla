@@ -24,47 +24,21 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.inventory;
+package org.spout.vanilla.api.component.substance.material;
 
+import org.spout.api.component.ChunkComponentOwner;
+import org.spout.api.component.type.BlockComponent;
 import org.spout.api.entity.Entity;
-import org.spout.api.event.Cancellable;
-import org.spout.api.event.HandlerList;
-import org.spout.api.event.inventory.InventoryCloseEvent;
-import org.spout.vanilla.api.component.substance.material.FurnaceComponent;
-import org.spout.vanilla.plugin.component.substance.material.Furnace;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.block.BlockFace;
 
-/**
- * Event which is fired when a furnace is closed.
- */
-public class FurnaceCloseEvent extends InventoryCloseEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
-	private final FurnaceComponent furnace;
-
-	public FurnaceCloseEvent(Furnace furnace, Entity entity) {
-		super(furnace.getInventory(), entity);
-		this.furnace = furnace;
+public abstract class VanillaBlockComponent extends BlockComponent {
+	public void onInteractBy(Entity entity, Action action, BlockFace face) {
 	}
 
-	/**
-	 * Returns the furnace which caused this event.
-	 *
-	 * @return furnace
-	 */
-	public FurnaceComponent getFurnace() {
-		return furnace;
-	}
-
-	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
-
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
+	public Block getBlock() {
+		ChunkComponentOwner owner = getOwner();
+		return owner.getChunk().getBlock(owner.getX(), owner.getY(), owner.getZ());
 	}
 }

@@ -24,9 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.data.effect;
-
-import org.spout.vanilla.api.data.effect.StatusEffect;
+package org.spout.vanilla.api.data.effect;
 
 public class StatusEffectContainer {
 	private final StatusEffect effect;

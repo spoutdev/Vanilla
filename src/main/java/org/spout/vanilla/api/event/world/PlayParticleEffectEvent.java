@@ -24,24 +24,49 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.world;
+package org.spout.vanilla.api.event.world;
 
+import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.world.WorldEvent;
-import org.spout.api.geo.World;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-public class TimeUpdateEvent extends WorldEvent implements ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
-	private final long newTime;
+import org.spout.vanilla.api.data.effect.GeneralEffect;
 
-	public TimeUpdateEvent(World world, long newTime) {
-		super(world);
-		this.newTime = newTime;
+public class PlayParticleEffectEvent extends Event implements ProtocolEvent {
+	private static HandlerList handlers = new HandlerList();
+	private Point position;
+	private GeneralEffect effect;
+	private int data;
+
+	public PlayParticleEffectEvent(Point position, GeneralEffect effect, int data) {
+		this.position = position;
+		this.effect = effect;
+		this.data = data;
 	}
 
-	public long getNewTime() {
-		return this.newTime;
+	/**
+	 * Gets the Position where the Sound should be played
+	 * @return position of the Sound
+	 */
+	public Point getPosition() {
+		return this.position;
+	}
+
+	/**
+	 * Gets the Effect to play
+	 * @return the Effect
+	 */
+	public GeneralEffect getEffect() {
+		return this.effect;
+	}
+
+	/**
+	 * Gets the data to use for the Effect
+	 * @return Effect data
+	 */
+	public int getData() {
+		return this.data;
 	}
 
 	@Override

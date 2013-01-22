@@ -24,57 +24,49 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.world;
+package org.spout.vanilla.api.data.effect;
 
-import org.spout.api.event.Event;
-import org.spout.api.event.HandlerList;
+import java.util.Collection;
+
+import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.plugin.data.effect.GeneralEffect;
+/**
+ * Plays all set Effects when playing
+ */
+public class BatchEffect extends Effect {
+	private final Effect[] effects;
 
-public class PlayParticleEffectEvent extends Event implements ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
-	private Point position;
-	private GeneralEffect effect;
-	private int data;
-
-	public PlayParticleEffectEvent(Point position, GeneralEffect effect, int data) {
-		this.position = position;
-		this.effect = effect;
-		this.data = data;
+	public BatchEffect(Effect... effects) {
+		this(getMaxRange(effects), effects);
 	}
 
-	/**
-	 * Gets the Position where the Sound should be played
-	 * @return position of the Sound
-	 */
-	public Point getPosition() {
-		return this.position;
+	public BatchEffect(int range, Effect... effects) {
+		super(range);
+		this.effects = effects;
 	}
 
-	/**
-	 * Gets the Effect to play
-	 * @return the Effect
-	 */
-	public GeneralEffect getEffect() {
-		return this.effect;
-	}
-
-	/**
-	 * Gets the data to use for the Effect
-	 * @return Effect data
-	 */
-	public int getData() {
-		return this.data;
+	public Effect[] getEffects() {
+		return this.effects;
 	}
 
 	@Override
-	public HandlerList getHandlers() {
-		return handlers;
+	public void play(Player player, Point position) {
+		for (Effect effect : this.effects) {
+			effect.play(player, position);
+		}
 	}
 
-	public static HandlerList getHandlerList() {
-		return handlers;
+	@Override
+	public void play(Collection<Player> players, Point position) {
+		int distanceSquared;
+		for (Player player : players) {
+			distanceSquared = (int) player.getTransform().getPosition().distanceSquared(position);
+			for (Effect effect : this.effects) {
+				if (distanceSquared <= (effect.getRange() * effect.getRange())) {
+					effect.play(player, position);
+				}
+			}
+		}
 	}
 }

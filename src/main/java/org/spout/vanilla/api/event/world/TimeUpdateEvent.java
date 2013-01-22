@@ -24,54 +24,24 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.world;
+package org.spout.vanilla.api.event.world;
 
-import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.world.WorldEvent;
+import org.spout.api.geo.World;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.api.data.Weather;
-
-import org.spout.vanilla.plugin.component.world.VanillaSky;
-
-public class WeatherChangeEvent extends WorldEvent implements Cancellable, ProtocolEvent {
+public class TimeUpdateEvent extends WorldEvent implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();
-	private Weather current, weather;
+	private final long newTime;
 
-	public WeatherChangeEvent(VanillaSky sky, Weather current, Weather weather) {
-		super(sky.getWorld());
-		this.current = current;
-		this.weather = weather;
+	public TimeUpdateEvent(World world, long newTime) {
+		super(world);
+		this.newTime = newTime;
 	}
 
-	/**
-	 * Gets the weather at the time the event is called.
-	 * @return the current weather.
-	 */
-	public Weather getCurrentWeather() {
-		return current;
-	}
-
-	/**
-	 * Gets the new weather set after the event.
-	 * @return the new weather.
-	 */
-	public Weather getNewWeather() {
-		return weather;
-	}
-
-	/**
-	 * Sets the outcome of the event.
-	 * @param weather
-	 */
-	public void setNewWeather(Weather weather) {
-		this.weather = weather;
-	}
-
-	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
+	public long getNewTime() {
+		return this.newTime;
 	}
 
 	@Override

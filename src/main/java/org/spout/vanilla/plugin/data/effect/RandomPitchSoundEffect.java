@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.data.effect;
 
 import java.util.Random;
+import org.spout.vanilla.api.data.effect.SoundEffect;
 
 /**
  * Randomizes the pitch level by the amount set

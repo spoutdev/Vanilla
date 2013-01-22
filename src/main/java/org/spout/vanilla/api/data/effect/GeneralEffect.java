@@ -24,55 +24,70 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.data.effect.type;
+package org.spout.vanilla.api.data.effect;
 
 import java.util.Collection;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.api.data.effect.Effect;
+import org.spout.vanilla.api.event.world.PlayParticleEffectEvent;
 
-import org.spout.vanilla.plugin.event.world.PlayExplosionEffectEvent;
+public class GeneralEffect extends Effect {
+	private static final int PARTICLE_RANGE = 32;
+	private final int id;
+	private int data;
 
-public class ExplosionEffect extends Effect {
-	private static final int EXPLOSION_RANGE = 64;
-	private static final float DEFAULT_SIZE = 5.0f;
-	private float size;
-
-	public ExplosionEffect() {
-		this(EXPLOSION_RANGE, DEFAULT_SIZE);
+	public GeneralEffect(int id) {
+		this(id, 0);
 	}
 
-	public ExplosionEffect(int range, float size) {
+	public GeneralEffect(int id, int data) {
+		this(id, data, PARTICLE_RANGE);
+	}
+
+	public GeneralEffect(int id, int data, int range) {
 		super(range);
-		this.size = size;
+		this.id = id;
+		this.data = data;
 	}
 
-	public float getDefaultSize() {
-		return this.size;
+	/**
+	 * Gets the Id of this Effect
+	 * @return Effect Id
+	 */
+	public int getId() {
+		return this.id;
+	}
+
+	/**
+	 * Gets the Default data for this Effect
+	 * @return default data
+	 */
+	public int getDefaultData() {
+		return this.data;
 	}
 
 	@Override
 	public void play(Player player, Point position) {
-		this.play(player, position, this.getDefaultSize());
+		this.play(player, position, this.getDefaultData());
 	}
 
-	public void play(Player player, Point position, float size) {
-		player.getSession().getNetworkSynchronizer().callProtocolEvent(new PlayExplosionEffectEvent(position, this, size));
+	public void play(Player player, Point position, int data) {
+		player.getSession().getNetworkSynchronizer().callProtocolEvent(new PlayParticleEffectEvent(position, this, data));
 	}
 
-	public void play(Collection<Player> players, Point position, float size) {
+	public void play(Collection<Player> players, Point position, int data) {
 		for (Player player : players) {
-			this.play(player, position, size);
+			this.play(player, position, data);
 		}
 	}
 
-	public void playGlobal(Point position, float size) {
-		this.playGlobal(position, size, null);
+	public void playGlobal(Point position, int data) {
+		this.playGlobal(position, data, null);
 	}
 
-	public void playGlobal(Point position, float size, Player ignore) {
-		this.play(getNearbyPlayers(position, ignore), position, size);
+	public void playGlobal(Point position, int data, Player ignore) {
+		this.play(getNearbyPlayers(position, ignore), position, data);
 	}
 }

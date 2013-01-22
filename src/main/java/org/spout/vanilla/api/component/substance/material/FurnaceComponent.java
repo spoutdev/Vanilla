@@ -24,21 +24,27 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.component.substance.material;
+package org.spout.vanilla.api.component.substance.material;
 
-import org.spout.api.component.ChunkComponentOwner;
-import org.spout.api.component.type.BlockComponent;
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockFace;
+public abstract class FurnaceComponent extends ViewedBlockComponent {
 
-public abstract class VanillaBlockComponent extends BlockComponent {
-	public void onInteractBy(Entity entity, Action action, BlockFace face) {
-	}
+	public abstract float getMaxSmeltTime();
 
-	public Block getBlock() {
-		ChunkComponentOwner owner = getOwner();
-		return owner.getChunk().getBlock(owner.getX(), owner.getY(), owner.getZ());
-	}
+	public abstract void setMaxSmeltTime(float maxSmeltTime);
+
+	public abstract float getSmeltTime();
+
+	public abstract void setSmeltTime(float smeltTime);
+
+	public abstract float getMaxFuel();
+
+	public abstract void setMaxFuel(float maxFuel);
+
+	public abstract float getFuel();
+
+	public abstract void setFuel(float fuel);
+
+	public abstract boolean canSmelt();
+
+	public abstract void smelt();
 }

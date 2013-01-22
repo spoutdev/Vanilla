@@ -30,6 +30,7 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 
+import org.spout.vanilla.api.component.substance.material.ViewedBlockComponent;
 import org.spout.vanilla.api.inventory.Container;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;

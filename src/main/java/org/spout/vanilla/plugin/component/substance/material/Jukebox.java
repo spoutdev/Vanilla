@@ -32,6 +32,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.MaterialSource;
 import org.spout.api.math.Vector3;
+import org.spout.vanilla.api.component.substance.material.VanillaBlockComponent;
 import org.spout.vanilla.api.data.Music;
 import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.plugin.component.substance.Item;

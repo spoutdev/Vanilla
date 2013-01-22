@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.block;
+package org.spout.vanilla.api.event.block;
 
 import java.util.Arrays;
 
@@ -34,18 +34,18 @@ import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.plugin.component.substance.material.Sign;
+import org.spout.vanilla.api.component.substance.material.SignComponent;
 
 /**
  * Event which is called when the text on a sign changes
  */
 public class SignUpdateEvent extends Event implements ProtocolEvent, Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private final Sign sign;
+	private final SignComponent sign;
 	private final Cause<?> cause;
 	private String[] newLines;
 
-	public SignUpdateEvent(Sign sign, String[] newLines, Cause<?> cause) {
+	public SignUpdateEvent(SignComponent sign, String[] newLines, Cause<?> cause) {
 		if (newLines == null || newLines.length != 4) {
 			throw new IllegalArgumentException("Array size must be 4");
 		}
@@ -67,10 +67,10 @@ public class SignUpdateEvent extends Event implements ProtocolEvent, Cancellable
 	}
 
 	/**
-	 * Get the sign which text is being changed
+	 * Get the SignComponent which text is being changed
 	 * @return sign which is being changed
 	 */
-	public Sign getSign() {
+	public SignComponent getSign() {
 		return sign;
 	}
 

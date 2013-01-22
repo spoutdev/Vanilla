@@ -24,47 +24,34 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.inventory;
+package org.spout.vanilla.api.component.substance.material;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.Cancellable;
-import org.spout.api.event.HandlerList;
-import org.spout.api.event.inventory.InventoryCloseEvent;
-import org.spout.vanilla.api.component.substance.material.FurnaceComponent;
-import org.spout.vanilla.plugin.component.substance.material.Furnace;
+import org.spout.api.event.Cause;
 
-/**
- * Event which is fired when a furnace is closed.
- */
-public class FurnaceCloseEvent extends InventoryCloseEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
-	private final FurnaceComponent furnace;
-
-	public FurnaceCloseEvent(Furnace furnace, Entity entity) {
-		super(furnace.getInventory(), entity);
-		this.furnace = furnace;
-	}
+public abstract class SignComponent extends VanillaBlockComponent {
 
 	/**
-	 * Returns the furnace which caused this event.
-	 *
-	 * @return furnace
+	 * The maximum number of characters per line
+	 * @return max characters per line
 	 */
-	public FurnaceComponent getFurnace() {
-		return furnace;
-	}
+	public abstract int getMaxCharsPerLine();
 
-	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
-	}
+	/**
+	 * The maximum number of lines this sign supports
+	 * @return max lines
+	 */
+	public abstract int getMaxLines();
 
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
+	/**
+	 * Gets a copy of the text from this sign
+	 * @return copy of the text
+	 */
+	public abstract String[] getText();
 
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
+	/**
+	 * Sets the text on this sign. The text must be 4 lines, no longer than 16 chars in length
+	 * @param text to set
+	 * @param cause of the sign change
+	 */
+	public abstract void setText(String[] text, Cause<?> cause);
 }

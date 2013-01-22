@@ -62,6 +62,7 @@ import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
 import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
+import org.spout.vanilla.api.component.substance.material.SignComponent;
 import org.spout.vanilla.api.data.Difficulty;
 import org.spout.vanilla.api.data.Dimension;
 import org.spout.vanilla.api.data.GameMode;
@@ -76,7 +77,6 @@ import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.component.misc.LevelComponent;
-import org.spout.vanilla.plugin.component.substance.material.Sign;
 import org.spout.vanilla.plugin.component.test.ForceMessagesComponent;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
@@ -84,7 +84,7 @@ import org.spout.vanilla.plugin.configuration.WorldConfigurationNode;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.api.event.block.BlockActionEvent;
 import org.spout.vanilla.api.event.block.BlockControllerDataEvent;
-import org.spout.vanilla.plugin.event.block.SignUpdateEvent;
+import org.spout.vanilla.api.event.block.SignUpdateEvent;
 import org.spout.vanilla.api.event.block.network.BlockBreakAnimationEvent;
 import org.spout.vanilla.api.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.api.event.entity.EntityCollectItemEvent;
@@ -708,7 +708,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onSignUpdate(SignUpdateEvent event) {
-		Sign sign = event.getSign();
+		SignComponent sign = event.getSign();
 		return new SignMessage(sign.getOwner().getX(), sign.getOwner().getY(), sign.getOwner().getZ(), event.getLines(), getRepositionManager());
 	}
 

@@ -30,6 +30,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.api.data.effect.Effect;
+import org.spout.vanilla.api.data.effect.ExplosionEffect;
 
 public class BatchExplosionEffect extends ExplosionEffect {
 	private Effect[] effects;

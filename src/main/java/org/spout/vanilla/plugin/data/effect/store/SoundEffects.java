@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.data.effect.store;
 
-import org.spout.vanilla.plugin.data.effect.SoundEffect;
+import org.spout.vanilla.api.data.effect.SoundEffect;
 import org.spout.vanilla.plugin.data.effect.type.NoSoundEffect;
 import org.spout.vanilla.plugin.data.effect.type.NoteSoundEffect;
 

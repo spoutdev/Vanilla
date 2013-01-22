@@ -59,7 +59,7 @@ import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.data.effect.SoundEffect;
+import org.spout.vanilla.api.data.effect.SoundEffect;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.api.event.cause.PlayerClickBlockCause;
 import org.spout.vanilla.api.event.cause.PlayerPlacementCause;

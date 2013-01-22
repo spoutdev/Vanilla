@@ -30,7 +30,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.plugin.data.effect.GeneralEffect;
+import org.spout.vanilla.api.data.effect.GeneralEffect;
 import org.spout.vanilla.api.event.block.BlockActionEvent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 

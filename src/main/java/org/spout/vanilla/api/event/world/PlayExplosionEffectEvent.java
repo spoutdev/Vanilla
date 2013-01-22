@@ -24,26 +24,25 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.world;
+package org.spout.vanilla.api.event.world;
 
 import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.plugin.data.effect.SoundEffect;
+import org.spout.vanilla.api.data.effect.ExplosionEffect;
 
-public class PlaySoundEffectEvent extends Event implements ProtocolEvent {
+public class PlayExplosionEffectEvent extends Event implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();
 	private Point position;
-	private SoundEffect sound;
-	private float pitch, volume;
+	private ExplosionEffect effect;
+	private float size;
 
-	public PlaySoundEffectEvent(Point position, SoundEffect sound, float volume, float pitch) {
+	public PlayExplosionEffectEvent(Point position, ExplosionEffect effect, float size) {
 		this.position = position;
-		this.sound = sound;
-		this.pitch = pitch;
-		this.volume = volume;
+		this.effect = effect;
+		this.size = size;
 	}
 
 	/**
@@ -55,27 +54,19 @@ public class PlaySoundEffectEvent extends Event implements ProtocolEvent {
 	}
 
 	/**
-	 * Gets the Sound being played
-	 * @return Sound to play
+	 * Gets the Effect to play
+	 * @return the Effect
 	 */
-	public SoundEffect getSound() {
-		return this.sound;
+	public ExplosionEffect getEffect() {
+		return this.effect;
 	}
 
 	/**
-	 * Gets the Pitch to play the Sound at
-	 * @return Sound pitch
+	 * Gets the size of the Explosion Effect
+	 * @return Effect size
 	 */
-	public float getPitch() {
-		return this.pitch;
-	}
-
-	/**
-	 * Gets the Volume to play the Sound at
-	 * @return Sound volume
-	 */
-	public float getVolume() {
-		return this.volume;
+	public float getSize() {
+		return this.size;
 	}
 
 	@Override

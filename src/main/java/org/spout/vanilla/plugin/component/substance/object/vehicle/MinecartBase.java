@@ -39,8 +39,8 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.component.substance.Item;
 import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
-import org.spout.vanilla.plugin.event.entity.EntityMetaChangeEvent;
-import org.spout.vanilla.plugin.event.entity.EntityStatusEvent;
+import org.spout.vanilla.api.event.entity.EntityMetaChangeEvent;
+import org.spout.vanilla.api.event.entity.EntityStatusEvent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityStatusMessage;
 

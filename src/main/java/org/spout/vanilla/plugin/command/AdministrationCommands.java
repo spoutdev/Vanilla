@@ -61,7 +61,7 @@ import org.spout.vanilla.plugin.component.misc.LevelComponent;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.configuration.OpConfiguration;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
-import org.spout.vanilla.plugin.event.cause.HealthChangeCause;
+import org.spout.vanilla.api.event.cause.HealthChangeCause;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class AdministrationCommands {

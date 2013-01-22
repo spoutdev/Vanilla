@@ -38,9 +38,9 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.api.data.Animation;
 
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.event.entity.EntityAnimationEvent;
-import org.spout.vanilla.plugin.event.player.PlayerToggleSneakingEvent;
-import org.spout.vanilla.plugin.event.player.PlayerToggleSprintingEvent;
+import org.spout.vanilla.api.event.entity.EntityAnimationEvent;
+import org.spout.vanilla.api.event.player.PlayerToggleSneakingEvent;
+import org.spout.vanilla.api.event.player.PlayerToggleSprintingEvent;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityActionMessage;
 
 public final class EntityActionHandler extends MessageHandler<EntityActionMessage> {

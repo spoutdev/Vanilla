@@ -63,9 +63,8 @@ import org.spout.vanilla.plugin.component.player.hud.VanillaCrosshair;
 import org.spout.vanilla.plugin.component.player.hud.VanillaDrowning;
 import org.spout.vanilla.plugin.component.player.hud.VanillaExpBar;
 import org.spout.vanilla.plugin.component.player.hud.VanillaHotBar;
-import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
-import org.spout.vanilla.plugin.event.block.RedstoneChangeEvent;
+import org.spout.vanilla.api.event.block.RedstoneChangeEvent;
 import org.spout.vanilla.plugin.input.VanillaInputExecutor;
 import org.spout.vanilla.plugin.protocol.PasteExceptionHandler;
 

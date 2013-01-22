@@ -35,7 +35,7 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.chat.VanillaStyleHandler;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
-import org.spout.vanilla.plugin.event.game.ServerListPingEvent;
+import org.spout.vanilla.api.event.game.ServerListPingEvent;
 import org.spout.vanilla.plugin.protocol.msg.ServerListPingMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerKickMessage;
 

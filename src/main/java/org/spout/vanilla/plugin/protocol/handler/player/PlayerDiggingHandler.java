@@ -59,7 +59,7 @@ import org.spout.vanilla.plugin.component.substance.material.Sign;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.drops.flag.PlayerFlags;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
-import org.spout.vanilla.plugin.event.cause.PlayerBreakCause;
+import org.spout.vanilla.api.event.cause.PlayerBreakCause;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Liquid;
 import org.spout.vanilla.plugin.material.item.Food;

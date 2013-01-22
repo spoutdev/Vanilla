@@ -35,7 +35,7 @@ import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.api.material.map.MapColor;
 
-import org.spout.vanilla.plugin.event.item.MapItemUpdateEvent;
+import org.spout.vanilla.api.event.item.MapItemUpdateEvent;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public class Map extends VanillaItemMaterial {

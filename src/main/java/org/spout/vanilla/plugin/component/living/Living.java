@@ -46,7 +46,7 @@ import org.spout.vanilla.plugin.component.misc.FireComponent;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.event.entity.EntityMetaChangeEvent;
+import org.spout.vanilla.api.event.entity.EntityMetaChangeEvent;
 
 public abstract class Living extends VanillaComponent {
 	private HeadComponent head;

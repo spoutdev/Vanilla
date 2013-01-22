@@ -34,7 +34,7 @@ import org.spout.vanilla.api.inventory.Slot;
 
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.misc.EffectsComponent;
-import org.spout.vanilla.plugin.data.effect.StatusEffectContainer;
+import org.spout.vanilla.api.data.effect.StatusEffectContainer;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 

@@ -49,7 +49,7 @@ public abstract class SignComponent extends VanillaBlockComponent {
 	public abstract String[] getText();
 
 	/**
-	 * Sets the text on this sign. The text must be 4 lines, no longer than 16 chars in length
+	 * Sets the text on this sign.
 	 * @param text to set
 	 * @param cause of the sign change
 	 */

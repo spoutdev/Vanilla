@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.data;
 
-import org.spout.vanilla.plugin.data.effect.StatusEffectContainer;
+import org.spout.vanilla.api.data.effect.StatusEffectContainer;
 
 public class Damage {
 	private int amount;

@@ -24,57 +24,35 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.world;
+package org.spout.vanilla.plugin.data.effect.type;
 
-import org.spout.api.event.Event;
-import org.spout.api.event.HandlerList;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.protocol.event.ProtocolEvent;
+import java.util.Random;
+import org.spout.vanilla.api.data.effect.SoundEffect;
 
-import org.spout.vanilla.plugin.data.effect.type.ExplosionEffect;
+/**
+ * Randomizes the pitch level by the amount set
+ */
+public class RandomPitchSoundEffect extends SoundEffect {
+	private final float randomPitch;
 
-public class PlayExplosionEffectEvent extends Event implements ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
-	private Point position;
-	private ExplosionEffect effect;
-	private float size;
-
-	public PlayExplosionEffectEvent(Point position, ExplosionEffect effect, float size) {
-		this.position = position;
-		this.effect = effect;
-		this.size = size;
-	}
-
-	/**
-	 * Gets the Position where the Sound should be played
-	 * @return position of the Sound
-	 */
-	public Point getPosition() {
-		return this.position;
-	}
-
-	/**
-	 * Gets the Effect to play
-	 * @return the Effect
-	 */
-	public ExplosionEffect getEffect() {
-		return this.effect;
-	}
-
-	/**
-	 * Gets the size of the Explosion Effect
-	 * @return Effect size
-	 */
-	public float getSize() {
-		return this.size;
+	public RandomPitchSoundEffect(SoundEffect sound, float randomPitch) {
+		super(sound, sound.getDefaultVolume(), sound.getDefaultPitch());
+		this.randomPitch = randomPitch;
 	}
 
 	@Override
-	public HandlerList getHandlers() {
-		return handlers;
+	public SoundEffect adjust(float volume, float pitch) {
+		return new RandomPitchSoundEffect(super.adjust(volume, pitch), this.randomPitch);
 	}
 
-	public static HandlerList getHandlerList() {
-		return handlers;
+	@Override
+	public SoundEffect randomPitch(float amount) {
+		return new RandomPitchSoundEffect(this, this.randomPitch + amount);
+	}
+
+	@Override
+	public float getDefaultPitch() {
+		Random random = new Random();
+		return super.getDefaultPitch() + random.nextFloat() * this.randomPitch;
 	}
 }

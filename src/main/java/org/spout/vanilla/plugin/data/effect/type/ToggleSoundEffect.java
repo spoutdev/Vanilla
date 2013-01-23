@@ -31,7 +31,7 @@ import java.util.Collection;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.plugin.data.effect.SoundEffect;
+import org.spout.vanilla.api.data.effect.SoundEffect;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 
 public class ToggleSoundEffect extends SoundEffect {

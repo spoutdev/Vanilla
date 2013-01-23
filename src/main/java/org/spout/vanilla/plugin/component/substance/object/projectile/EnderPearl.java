@@ -27,11 +27,17 @@
 package org.spout.vanilla.plugin.component.substance.object.projectile;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectEntityProtocol;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class EnderPearl extends ObjectEntity implements Projectile {
 	private Entity shooter;
@@ -50,5 +56,24 @@ public class EnderPearl extends ObjectEntity implements Projectile {
 	@Override
 	public void setShooter(Entity shooter) {
 		this.shooter = shooter;
+	}
+
+	/**
+	 * Called when the entity collides with a block.
+	 * @param colliderPoint The point where this entity collided with the material
+	 * @param collidedPoint The point where the material was collided with the entity
+	 * @param block The block this entity collided with
+	 */
+	public void onCollided(Point colliderPoint, Point collidedPoint, Block block) {
+		if (getShooter() != null && getShooter() instanceof Player) {
+			HealthComponent health = getShooter().get(HealthComponent.class);
+			if (health != null && !health.isDead()) {
+				if (!PlayerUtil.isCreativePlayer(getShooter())) {
+					health.damage(5);
+				}
+				((Player)getShooter()).teleport(block.translate(BlockFace.TOP).getPosition());
+			}
+		}
+		getOwner().remove();
 	}
 }

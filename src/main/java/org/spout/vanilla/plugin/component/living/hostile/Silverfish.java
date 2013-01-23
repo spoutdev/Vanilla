@@ -32,6 +32,7 @@ import org.spout.vanilla.api.data.Difficulty;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DamageComponent;
+import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
@@ -47,7 +48,7 @@ public class Silverfish extends Living implements Hostile {
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(8);
 		}
-
+		getOwner().add(DropComponent.class).addXpDrop((short)5);
 		DamageComponent damage = getOwner().add(DamageComponent.class);
 		damage.getDamageLevel(Difficulty.EASY).setAmount(1);
 		damage.getDamageLevel(Difficulty.NORMAL).setAmount(damage.getDamageLevel(Difficulty.EASY).getAmount());

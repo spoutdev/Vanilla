@@ -109,6 +109,7 @@ public class VanillaData {
 	public static final DefaultedKey<Float> EXPERIENCE_BAR_PROGRESS = new DefaultedKeyImpl<Float>("experience_bar_progress", (float) 0);
 	public static final DefaultedKey<Short> EXPERIENCE_LEVEL = new DefaultedKeyImpl<Short>("experience_level", (short) 0);
 	public static final DefaultedKey<DropInventory> DROP_INVENTORY = new DefaultedKeyFactory<DropInventory>("DropInventory", DropInventory.class);
+	public static final DefaultedKey<Short> DROP_EXPERIENCE = new DefaultedKeyImpl<Short>("DropExperience", (short) 0);
 	public static final DefaultedKey<Boolean> IS_EATING_BLOCKING = new DefaultedKeyImpl<Boolean>("is_eating_blocking", false);
 	public static final DefaultedKey<Boolean> IS_RIDING = new DefaultedKeyImpl<Boolean>("is_riding", false);
 	public static final DefaultedKey<Float> FIRE_TICK = new DefaultedKeyImpl<Float>("is_on_fire", 0.0f);

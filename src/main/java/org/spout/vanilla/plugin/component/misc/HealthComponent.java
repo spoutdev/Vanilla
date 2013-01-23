@@ -38,6 +38,7 @@ import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
@@ -51,6 +52,7 @@ import org.spout.vanilla.api.data.Animation;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.component.substance.XPOrb;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
@@ -220,7 +222,6 @@ public class HealthComponent extends EntityComponent {
 		} else {
 			event = new VanillaEntityDeathEvent(owner);
 		}
-		//TODO: xp drops?
 		if (!Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
 			if (!(owner instanceof Player)) {
 				owner.remove();
@@ -235,6 +236,13 @@ public class HealthComponent extends EntityComponent {
 					if (stack != null) {
 						Item.drop(entityPosition, stack, Vector3.ZERO);
 					}
+				}
+				if (dropComponent.getXpDrop() > 0) {
+					Point pos = getOwner().getTransform().getPosition();
+
+					XPOrb xporb = pos.getWorld().createEntity(pos, XPOrb.class).add(XPOrb.class);
+					xporb.setExperience(dropComponent.getXpDrop());
+					pos.getWorld().spawnEntity(xporb.getOwner());
 				}
 			}
 			HungerComponent hungerComponent = owner.get(HungerComponent.class);

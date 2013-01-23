@@ -37,6 +37,7 @@ import org.spout.vanilla.api.inventory.Slot;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
@@ -57,7 +58,7 @@ public class Cow extends Living implements Passive {
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.RAW_BEEF, random.nextInt(2) + 1));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.LEATHER, random.nextInt(2)));
-
+		dropComponent.addXpDrop((short) (getRandom().nextInt(3) + 1));
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(10);
 		}

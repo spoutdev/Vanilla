@@ -57,10 +57,11 @@ public class Witch extends Living implements Hostile {
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.SPIDER_EYE, random.nextInt(6)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.STICK, random.nextInt(6)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.SUGAR, random.nextInt(6)));
+		dropComponent.addXpDrop((short)5);
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(26);
 		}
-		
+
 		/*
 		 * TODO:
 		 * 

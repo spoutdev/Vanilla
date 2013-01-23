@@ -49,7 +49,7 @@ public class Blaze extends Living implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BlazeEntityProtocol());
-		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.BLAZE_ROD, getRandom().nextInt(1)));
+		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.BLAZE_ROD, getRandom().nextInt(1))).addXpDrop((short)10);
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(20);
 		}

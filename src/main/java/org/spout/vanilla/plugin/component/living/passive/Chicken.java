@@ -60,6 +60,7 @@ public class Chicken extends Living implements Passive {
 		DropComponent dropComponent = getOwner().add(DropComponent.class);
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.FEATHER, getRandom().nextInt(2)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.RAW_CHICKEN, 1));
+		dropComponent.addXpDrop((short) (getRandom().nextInt(3) + 1));
 
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(4);

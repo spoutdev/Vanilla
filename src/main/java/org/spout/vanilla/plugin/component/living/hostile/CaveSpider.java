@@ -56,6 +56,7 @@ public class CaveSpider extends Living implements Hostile {
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.STRING, random.nextInt(2)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.SPIDER_EYE, random.nextInt(1)));
+		dropComponent.addXpDrop((short)3);
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(12);
 		}

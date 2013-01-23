@@ -53,6 +53,7 @@ public class Ghast extends Living implements Hostile {
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.GUNPOWDER, random.nextInt(2)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.GHAST_TEAR, random.nextInt(1)));
+		dropComponent.addXpDrop((short)5);
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(10);
 		}

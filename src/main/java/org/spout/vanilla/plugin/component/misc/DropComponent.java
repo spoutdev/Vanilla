@@ -35,9 +35,20 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.plugin.data.VanillaData;
 
 public class DropComponent extends EntityComponent {
-	public void addDrop(ItemStack itemstack) {
+
+	public DropComponent addXpDrop(short amount) {
+		getOwner().getData().put(VanillaData.DROP_EXPERIENCE, amount);
+		return this;
+	}
+
+	public short getXpDrop() {
+		return getOwner().getData().get(VanillaData.DROP_EXPERIENCE);
+	}
+
+	public DropComponent addDrop(ItemStack itemstack) {
 		Inventory dropInventory = getOwner().getData().get(VanillaData.DROP_INVENTORY);
 		dropInventory.add(itemstack);
+		return this;
 	}
 
 	public List<ItemStack> getDrops() {

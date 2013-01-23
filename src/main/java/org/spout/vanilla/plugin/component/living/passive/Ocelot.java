@@ -30,6 +30,7 @@ import org.spout.vanilla.api.component.Passive;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
+import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.protocol.entity.creature.OcelotEntityProtocol;
@@ -46,6 +47,7 @@ public class Ocelot extends Living implements Passive {
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(10);
 		}
+		getOwner().add(DropComponent.class).addXpDrop((short) (getRandom().nextInt(3) + 1));
 	}
 
 	public boolean isTamed() {

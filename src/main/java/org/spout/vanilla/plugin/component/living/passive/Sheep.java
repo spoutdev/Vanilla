@@ -63,6 +63,7 @@ public class Sheep extends Living implements Passive {
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(10);
 		}
+		getOwner().add(DropComponent.class).addXpDrop((short) (getRandom().nextInt(3) + 1));
 	}
 
 	@Override

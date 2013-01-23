@@ -58,6 +58,7 @@ public class MagmaCube extends Living implements Hostile {
 		}
 
 		//TODO: Damage varies on the size.
+		//TODO: XP varies from size.
 	}
 
 	public byte getSize() {

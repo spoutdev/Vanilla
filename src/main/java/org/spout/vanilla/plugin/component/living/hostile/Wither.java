@@ -49,7 +49,7 @@ public class Wither extends Living implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new WitherEntityProtocol());
-		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.NETHER_STAR, 1));
+		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.NETHER_STAR, 1)).addXpDrop((short)50);
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(300);
 		}

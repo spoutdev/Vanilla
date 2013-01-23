@@ -32,7 +32,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.component.substance.object.Item;
 
 public class ItemEntityProtocol extends ObjectEntityProtocol {
 	public ItemEntityProtocol() {

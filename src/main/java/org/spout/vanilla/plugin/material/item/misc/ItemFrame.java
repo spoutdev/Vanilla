@@ -24,51 +24,39 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.block.component;
+package org.spout.vanilla.plugin.material.item.misc;
 
-import java.util.Set;
-
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.util.flag.Flag;
+import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.plugin.component.substance.object.Item;
-import org.spout.vanilla.plugin.component.substance.material.BrewingStand;
-import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
+import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
-public class BrewingStandBlock extends ComponentMaterial {
-	public BrewingStandBlock(String name, int id) {
-		super(name, id, BrewingStand.class, VanillaMaterialModels.BREWING_STAND);
-		this.setResistance(2.5F).setHardness(10.F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
-		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
+public class ItemFrame extends VanillaItemMaterial {
+	public ItemFrame(String name, int id, Vector2 pos) {
+		super(name, id, pos);
 	}
 
 	@Override
-	public void onPostDestroy(Block block, Set<Flag> flags) {
-		BrewingStand brewingStand = (BrewingStand) block.getComponent();
-		//Drop items
-		Inventory inventory = brewingStand.getInventory();
-		Point position = block.getPosition();
-		for (ItemStack item : inventory) {
-			if (item == null) {
-				continue;
-			}
-			Item.dropNaturally(position, item);
+	public void onInteract(Entity entity, Block block, Action type, BlockFace face) {
+		if (!(entity instanceof Player) || type != Action.RIGHT_CLICK || face == BlockFace.BOTTOM || face == BlockFace.THIS || face == BlockFace.TOP) {
+			return;
 		}
-		super.onPostDestroy(block, flags);
-	}
 
-	@Override
-	public byte getLightLevel(short data) {
-		return 1;
-	}
-
-	@Override
-	public boolean isPlacementSuppressed() {
-		return true;
+		World world = block.getWorld();
+		Point pos = block.getPosition();
+		System.out.println("Position: " + pos);
+		Entity e = world.createEntity(new Point(world, pos.getBlockX(), pos.getBlockY(), pos.getBlockZ()),
+				org.spout.vanilla.plugin.component.substance.object.ItemFrame.class);
+		org.spout.vanilla.plugin.component.substance.object.ItemFrame frame
+				= e.add(org.spout.vanilla.plugin.component.substance.object.ItemFrame.class);
+		frame.setOrientation(face);
+		System.out.println("Spawning");
+		world.spawnEntity(e);
 	}
 }

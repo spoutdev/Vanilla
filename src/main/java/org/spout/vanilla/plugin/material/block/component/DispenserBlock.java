@@ -45,7 +45,7 @@ import org.spout.vanilla.api.data.effect.Effect;
 import org.spout.vanilla.api.material.block.Directional;
 import org.spout.vanilla.api.material.block.redstone.RedstoneTarget;
 
-import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.component.substance.material.Dispenser;
 import org.spout.vanilla.plugin.component.substance.object.projectile.Arrow;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;

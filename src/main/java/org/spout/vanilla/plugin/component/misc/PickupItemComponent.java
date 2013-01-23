@@ -34,7 +34,7 @@ import org.spout.api.entity.Entity;
 import org.spout.vanilla.api.event.entity.EntityCollectItemEvent;
 
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
-import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 
 /**

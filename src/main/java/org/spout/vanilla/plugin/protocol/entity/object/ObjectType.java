@@ -26,34 +26,82 @@
  */
 package org.spout.vanilla.plugin.protocol.entity.object;
 
-public enum ObjectType {
-	BOAT(1),
-	ITEM(2),
-	MINECART(10),
-	STORAGE_MINECART(11),
-	POWERED_MINECART(12),
-	PRIMED_TNT(50),
-	ENDER_CRYSTAL(51),
-	ARROW(60),
-	SNOWBALL(61),
-	EGG(62),
-	ENDER_PEARL(65),
-	WITHER_SKULL(66),
-	FALLING_OBJECT(70),
-	ITEM_FRAME(71),
-	EYE_OF_ENDER(72),
-	POTION(73),
-	DRAGON_EGG(74),
-	EXP_BOTTLE(75),
-	FIREWORKS_ROCKET(76),
-	FISHING_BOB(90);
-	private final int id;
+import java.util.HashMap;
 
-	private ObjectType(int id) {
+import org.spout.vanilla.plugin.component.substance.object.EyeOfEnder;
+import org.spout.vanilla.plugin.component.substance.object.FallingBlock;
+import org.spout.vanilla.plugin.component.substance.object.FallingDragonEgg;
+import org.spout.vanilla.plugin.component.substance.object.FireworksRocket;
+import org.spout.vanilla.plugin.component.substance.object.Item;
+import org.spout.vanilla.plugin.component.substance.object.ItemFrame;
+import org.spout.vanilla.plugin.component.substance.material.Skull;
+import org.spout.vanilla.plugin.component.substance.object.EnderCrystal;
+import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
+import org.spout.vanilla.plugin.component.substance.object.Tnt;
+import org.spout.vanilla.plugin.component.substance.object.WitherSkull;
+import org.spout.vanilla.plugin.component.substance.object.projectile.Arrow;
+import org.spout.vanilla.plugin.component.substance.object.projectile.Egg;
+import org.spout.vanilla.plugin.component.substance.object.projectile.EnderPearl;
+import org.spout.vanilla.plugin.component.substance.object.projectile.FishingBob;
+import org.spout.vanilla.plugin.component.substance.object.projectile.Potion;
+import org.spout.vanilla.plugin.component.substance.object.projectile.Snowball;
+import org.spout.vanilla.plugin.component.substance.object.projectile.XPBottle;
+import org.spout.vanilla.plugin.component.substance.object.vehicle.Boat;
+import org.spout.vanilla.plugin.component.substance.object.vehicle.Minecart;
+import org.spout.vanilla.plugin.component.substance.object.vehicle.PoweredMinecart;
+import org.spout.vanilla.plugin.component.substance.object.vehicle.StorageMinecart;
+
+public enum ObjectType {
+	BOAT(1, Boat.class),
+	ITEM(2, Item.class),
+	MINECART(10, Minecart.class),
+	STORAGE_MINECART(11, StorageMinecart.class),
+	POWERED_MINECART(12, PoweredMinecart.class),
+	PRIMED_TNT(50, Tnt.class),
+	ENDER_CRYSTAL(51, EnderCrystal.class),
+	ARROW(60, Arrow.class),
+	SNOWBALL(61, Snowball.class),
+	EGG(62, Egg.class),
+	ENDER_PEARL(65, EnderPearl.class),
+	WITHER_SKULL(66, WitherSkull.class),
+	FALLING_OBJECT(70, FallingBlock.class),
+	ITEM_FRAME(71, ItemFrame.class),
+	EYE_OF_ENDER(72, EyeOfEnder.class),
+	POTION(73, Potion.class),
+	DRAGON_EGG(74, FallingDragonEgg.class),
+	EXP_BOTTLE(75, XPBottle.class),
+	FIREWORKS_ROCKET(76, FireworksRocket.class),
+	FISHING_BOB(90, FishingBob.class);
+	private final int id;
+	private final Class<? extends ObjectEntity> componentType;
+	private static final HashMap<Integer, ObjectType> idMap = new HashMap<Integer, ObjectType>();
+	private static final HashMap<Class<? extends ObjectEntity>, ObjectType> typeMap = new HashMap<Class<? extends ObjectEntity>, ObjectType>();
+
+	private ObjectType(int id, Class<? extends ObjectEntity> componentType) {
 		this.id = id;
+		this.componentType = componentType;
 	}
 
 	public int getId() {
 		return id;
+	}
+
+	public Class<? extends ObjectEntity> getComponentType() {
+		return componentType;
+	}
+
+	public static ObjectType get(int id) {
+		return idMap.get(id);
+	}
+
+	public static ObjectType get(Class<? extends ObjectType> type) {
+		return typeMap.get(type);
+	}
+
+	static {
+		for (ObjectType type : ObjectType.values()) {
+			idMap.put(type.getId(), type);
+			typeMap.put(type.getComponentType(), type);
+		}
 	}
 }

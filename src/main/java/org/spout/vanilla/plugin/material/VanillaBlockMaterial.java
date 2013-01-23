@@ -59,7 +59,7 @@ import org.spout.vanilla.api.material.VanillaMaterial;
 import org.spout.vanilla.api.material.block.redstone.IndirectRedstoneSource;
 import org.spout.vanilla.api.material.block.redstone.RedstoneSource;
 
-import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.VanillaData;

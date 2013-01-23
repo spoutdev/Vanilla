@@ -24,23 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.block.pressureplate;
+package org.spout.vanilla.plugin.component.substance.object;
 
-import org.spout.api.entity.Entity;
-
-import org.spout.vanilla.plugin.component.substance.object.Item;
-import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.plugin.material.block.PressurePlate;
-
-public class StonePressurePlate extends PressurePlate {
-	public StonePressurePlate(String name, int id) {
-		super(name, id, null);
-		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 0);
-		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
-	}
-
-	@Override
-	public boolean canTrigger(Entity entity) {
-		return !entity.has(Item.class);
-	}
+public class WitherSkull extends ObjectEntity {
 }

@@ -58,7 +58,7 @@ import org.spout.vanilla.api.inventory.window.prop.WindowProperty;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 import org.spout.vanilla.plugin.event.window.WindowCloseEvent;
 import org.spout.vanilla.plugin.event.window.WindowItemsEvent;

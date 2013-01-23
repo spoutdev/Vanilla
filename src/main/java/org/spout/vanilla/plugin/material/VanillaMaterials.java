@@ -225,6 +225,7 @@ import org.spout.vanilla.plugin.material.item.misc.EnderPearlItem;
 import org.spout.vanilla.plugin.material.item.misc.EyeOfEnderItem;
 import org.spout.vanilla.plugin.material.item.misc.Fireworks;
 import org.spout.vanilla.plugin.material.item.misc.FlowerPot;
+import org.spout.vanilla.plugin.material.item.misc.ItemFrame;
 import org.spout.vanilla.plugin.material.item.misc.MusicDisc;
 import org.spout.vanilla.plugin.material.item.misc.PaintingItem;
 import org.spout.vanilla.plugin.material.item.misc.Potion;
@@ -522,7 +523,7 @@ public final class VanillaMaterials {
 	public static final BlockItem PUMPKIN_SEEDS = new BlockItem("Pumpkin Seeds", 361, PUMPKIN_STEM, null);
 	public static final BlockItem MELON_SEEDS = new BlockItem("MelonBlock Seeds", 362, MELON_STEM, null);
 	public static final FlowerPot FLOWER_POT = new FlowerPot("Flower Pot", 390);
-	public static final VanillaItemMaterial ITEM_FRAME = new VanillaItemMaterial("Item Frame", 389, null);
+	public static final ItemFrame ITEM_FRAME = new ItemFrame("Item Frame", 389, null);
 	public static final Skull SKELETON_SKULL = Skull.SKELETON_SKULL;
 	// == Food ==
 	public static final RawFish RAW_FISH = new RawFish("Raw Fish", 349, new FoodEffect(FoodEffects.HUNGER, 2), new FoodEffect(FoodEffects.SATURATION, 1.2f));

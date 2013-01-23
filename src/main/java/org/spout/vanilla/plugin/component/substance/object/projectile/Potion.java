@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.plugin.component.substance.object.projectile;
 
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 
-public class Potion extends EntityComponent implements Projectile {
+import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
+
+public class Potion extends ObjectEntity implements Projectile {
 	private Entity shooter;
 
 	@Override

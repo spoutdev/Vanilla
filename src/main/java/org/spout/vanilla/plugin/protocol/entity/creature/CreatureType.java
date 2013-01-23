@@ -90,14 +90,14 @@ public enum CreatureType {
 	WITHER(64, Wither.class),
 	WOLF(95, Wolf.class),
 	ZOMBIE(54, Zombie.class);
-	private int id;
-	private Class<? extends Living> component;
+	private final int id;
+	private final Class<? extends Living> componentType;
 	private static final Map<Class<?>, CreatureType> types = new HashMap<Class<?>, CreatureType>();
-	private static final Map<String, CreatureType> names = new HashMap<String, CreatureType>();
+	private static final Map<Integer, CreatureType> idMap = new HashMap<Integer, CreatureType>();
 
-	private CreatureType(int id, Class<? extends Living> component) {
+	private CreatureType(int id, Class<? extends Living> componentType) {
 		this.id = id;
-		this.component = component;
+		this.componentType = componentType;
 	}
 
 	/**
@@ -111,36 +111,29 @@ public enum CreatureType {
 	 * Gets the entity component associated with the creature type
 	 * @return component
 	 */
-	public Class<? extends Living> getComponent() {
-		return component;
-	}
-
-	/**
-	 * Gets the creature type associated with its given name, case-insensitive
-	 * @return creature type, or null if no creature type matching the name could be found
-	 */
-	public static CreatureType byName(String name) {
-		if (name != null) {
-			return names.get(name.toLowerCase());
-		}
-		return null;
+	public Class<? extends Living> getComponentType() {
+		return componentType;
 	}
 
 	/**
 	 * Gets the creature type associated with its exact entity component class
 	 * @return creature type, or null if no creature type matching the component could be found
 	 */
-	public static CreatureType byClass(Class<? extends EntityComponent> clazz) {
+	public static CreatureType get(Class<? extends EntityComponent> clazz) {
 		if (clazz != null) {
 			return types.get(clazz);
 		}
 		return null;
 	}
 
+	public static CreatureType get(int id) {
+		return idMap.get(id);
+	}
+
 	static {
 		for (CreatureType ct : values()) {
-			names.put(ct.name().toLowerCase(), ct);
-			types.put(ct.getComponent(), ct);
+			types.put(ct.getComponentType(), ct);
+			idMap.put(ct.getId(), ct);
 		}
 	}
 }

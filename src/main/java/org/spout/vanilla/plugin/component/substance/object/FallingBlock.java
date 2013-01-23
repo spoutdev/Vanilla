@@ -36,12 +36,11 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.substance.Item;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.protocol.entity.object.FallingBlockProtocol;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
 
-public class FallingBlock extends EntityComponent {
+public class FallingBlock extends ObjectEntity {
 	private static float FALL_INCREMENT = -0.04F;
 	private static float FALL_MULTIPLIER = 0.98F;
 	private VanillaBlockMaterial material;

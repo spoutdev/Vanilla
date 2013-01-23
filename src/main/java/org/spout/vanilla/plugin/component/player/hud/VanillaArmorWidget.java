@@ -32,30 +32,34 @@ import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
-
+import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 
 public class VanillaArmorWidget extends ArmorWidget {
 	@Override
-	public void init(Widget armor, float scale, float start_X) {
-		super.init(armor, scale, start_X);
-		final RenderPartsHolderComponent armorRect = armor.add(RenderPartsHolderComponent.class);
-		float x = start_X;
-		float dx = 0.06f * scale;
+	public void init(Widget armor, HUDComponent hud) {
+		super.init(armor, hud);
+		final RenderPartsHolderComponent armorRect = widget.add(RenderPartsHolderComponent.class);
+		float x = START_X;
+		float dx = 0.06f * SCALE;
 		for (int i = 0; i < 10; i++) {
 			final RenderPart armorPart = new RenderPart();
 			armorPart.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
 			armorPart.setColor(Color.WHITE);
-			armorPart.setSprite(new Rectangle(x, -0.7f, 0.06f * scale, 0.06f));
+			armorPart.setSprite(new Rectangle(x, -0.7f, 0.06f * SCALE, 0.06f));
 			armorPart.setSource(new Rectangle(52f / 256f, 9f / 256f, 12f / 256f, 12f / 256f));
 			armorRect.add(armorPart);
 			x += dx;
 		}
+		
+		attach();
 	}
 
 	@Override
-	public void update(int amount) {
+	public void update() {
 		RenderPartsHolderComponent armorRect = widget.get(RenderPartsHolderComponent.class);
+		
+		int amount = hud.getArmor();
 
 		if (amount == 0) {
 			for (RenderPart armorPart : armorRect.getRenderParts()) {
@@ -81,11 +85,6 @@ public class VanillaArmorWidget extends ArmorWidget {
 
 	@Override
 	public void animate() {
-	}
-
-	@Override
-	public void update(float percent) {
-		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override

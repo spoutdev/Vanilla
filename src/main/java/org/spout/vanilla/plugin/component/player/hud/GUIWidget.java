@@ -27,29 +27,65 @@
 package org.spout.vanilla.plugin.component.player.hud;
 
 import org.spout.api.gui.Widget;
+import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.player.HUDComponent;
 
+/**
+ * Basic GUI item used for HUD Widgets
+ */
 public abstract class GUIWidget {
 	protected float SCALE;
 	protected float START_X;
-	protected Widget widget;
-
-	public void init(Widget widget, float scale, float start_X) {
-		SCALE = scale;
-		START_X = start_X;
+	protected Widget widget = new Widget();
+	protected HUDComponent hud;
+	
+	/**
+	 * Initial code for a Widget, this method needs to be called as super
+	 * from init in Widget main code.
+	 * @param widget
+	 * @param hud 
+	 */
+	public void init(Widget widget, HUDComponent hud) {
+		SCALE = hud.getScale();
+		START_X = hud.getStartX();
 		this.widget = widget;
+		this.hud = hud;
 	}
+	
+	/**
+	 * Update code for a widget, should be used to update the
+	 * widget after any data has changed.
+	 */
+	public abstract void update();
 
-	public abstract void update(int amount);
-
-	public abstract void update(float percent);
-
+	/**
+	 * Animate code for a widget, should be used if data has
+	 * not been updated but animates.
+	 */
 	public abstract void animate();
-
+	
+	/**
+	 * Code to show/maximize the view of the widget.
+	 */
 	public abstract void show();
-
+	
+	/**
+	 * Code to hide/minimize the view of the widget.
+	 */
 	public abstract void hide();
-
+	
+	/**
+	 * Returns the widget
+	 * @return widget 
+	 */
 	public Widget getWidget() {
 		return widget;
+	}
+	
+	/**
+	 * Attaches the widget to the main hud.
+	 */
+	public void attach() {
+		hud.attachWidget(widget);
 	}
 }

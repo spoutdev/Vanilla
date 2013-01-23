@@ -34,23 +34,43 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.plugin.data.VanillaData;
 
+/**
+ * Handle item/XP drop from a entity.
+ */
 public class DropComponent extends EntityComponent {
-
+	/**
+	 * Add a amount of XP the entity drops.
+	 * @param amount The amount of XP the entity drops.
+	 * @return The current component.
+	 */
 	public DropComponent addXpDrop(short amount) {
 		getOwner().getData().put(VanillaData.DROP_EXPERIENCE, amount);
 		return this;
 	}
 
+	/**
+	 * Retrieve the amount of XP the entity drops on death.
+	 * @return the amount of XP.
+	 */
 	public short getXpDrop() {
 		return getOwner().getData().get(VanillaData.DROP_EXPERIENCE);
 	}
 
+	/**
+	 * Add a item the entity drops.
+	 * @param itemstack Contains the item to drop.
+	 * @return The current component.
+	 */
 	public DropComponent addDrop(ItemStack itemstack) {
 		Inventory dropInventory = getOwner().getData().get(VanillaData.DROP_INVENTORY);
 		dropInventory.add(itemstack);
 		return this;
 	}
 
+	/**
+	 * Retrieve a list of all the item drops this entity does.
+	 * @return A list of all the items this entity drops.
+	 */
 	public List<ItemStack> getDrops() {
 		return getOwner().getData().get(VanillaData.DROP_INVENTORY);
 	}

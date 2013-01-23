@@ -40,6 +40,9 @@ import org.spout.vanilla.api.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.item.tool.MiningTool;
 
+/**
+ * Component that mainly handles the block breaking animation.
+ */
 public class DiggingComponent extends EntityComponent {
 	private boolean isDigging;
 	protected Point diggingPosition;

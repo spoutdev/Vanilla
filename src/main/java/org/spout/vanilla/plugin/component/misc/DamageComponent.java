@@ -34,6 +34,9 @@ import org.spout.vanilla.api.data.Difficulty;
 
 import org.spout.vanilla.plugin.data.Damage;
 
+/**
+ * Component that contains the amount of damage this entity does.
+ */
 public class DamageComponent extends EntityComponent {
 	private HashMap<Difficulty, Damage> damageList = new HashMap<Difficulty, Damage>();
 
@@ -43,6 +46,11 @@ public class DamageComponent extends EntityComponent {
 		}
 	}
 
+	/**
+	 * Get the damage level depending of the difficulty level.
+	 * @param difficulty The difficulty level
+	 * @return The {@link Damage} associated with the difficulty.
+	 */
 	public Damage getDamageLevel(Difficulty difficulty) {
 		return damageList.get(difficulty);
 	}

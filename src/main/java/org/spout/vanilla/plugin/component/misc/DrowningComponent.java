@@ -42,6 +42,7 @@ import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.plugin.material.block.liquid.Water;
 
 /**
+ * Component that handles a entity drowning in water.
  * The drowning component requires a health component and head component
  */
 public class DrowningComponent extends EntityComponent {
@@ -126,10 +127,18 @@ public class DrowningComponent extends EntityComponent {
 		}
 	}
 
+	/**
+	 * Retrieve the amount of air the entity currently have.
+	 * @return The amount of air in seconds.
+	 */
 	public float getAir() {
 		return getData().get(VanillaData.AIR_SECS);
 	}
 
+	/**
+	 * Sets the amount of air the entity currently have.
+	 * @param airSecs The amount of air (in seconds) that the entity have.
+	 */
 	public void setAir(float airSecs) {
 		getData().put(VanillaData.AIR_SECS, airSecs);
 	}

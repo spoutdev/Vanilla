@@ -42,6 +42,9 @@ import org.spout.vanilla.api.event.entity.network.EntityEffectEvent;
 import org.spout.vanilla.api.event.entity.network.EntityRemoveEffectEvent;
 import org.spout.vanilla.plugin.material.item.misc.Potion;
 
+/**
+ * Component handling status effects. This includes food poisoning, regeneration, etc.
+ */
 public class EffectsComponent extends EntityComponent {
 	private List<StatusEffectContainer> list = new ArrayList<StatusEffectContainer>();
 	private HealthComponent health;
@@ -131,6 +134,10 @@ public class EffectsComponent extends EntityComponent {
 		}
 	}
 
+	/**
+	 * Add a effect to the entity.
+	 * @param effect The effect to add.
+	 */
 	public void addEffect(StatusEffectContainer effect) {
 		if (containsEffect(effect.getEffect())) {
 			removeEffect(effect.getEffect());
@@ -153,6 +160,10 @@ public class EffectsComponent extends EntityComponent {
 		}
 	}
 
+	/**
+	 * Remove a effect from the entity.
+	 * @param effect The effect to remove.
+	 */
 	public void removeEffect(StatusEffect effect) {
 		if (containsEffect(effect)) {
 			getOwner().getNetwork().callProtocolEvent(new EntityRemoveEffectEvent(getOwner(), effect));
@@ -160,6 +171,11 @@ public class EffectsComponent extends EntityComponent {
 		}
 	}
 
+	/**
+	 * Checks if a effect is currently enabled on the entity.
+	 * @param effect The effect to verify.
+	 * @return True if the effect is currently enabled, else false.
+	 */
 	public boolean containsEffect(StatusEffect effect) {
 		boolean result = false;
 		for (StatusEffectContainer effectContainer : list) {

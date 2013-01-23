@@ -56,10 +56,15 @@ import org.spout.vanilla.plugin.material.block.liquid.Water;
 import org.spout.vanilla.plugin.material.item.Food;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityStatusMessage;
 
+/**
+ * Component to handle everything related to the hunger system.
+ * It controls the Hunger level, the food saturation value, the exhaustion value and the eating process.
+ */
 public class HungerComponent extends EntityComponent {
 	//Timer used for when eating. Prevents insta-eating.
 	private float eatingTimer;
 	private Slot foodEating;
+
 	private Human human;
 	private static final float TIMER_START = 4;
 	private float timer = TIMER_START;
@@ -277,10 +282,19 @@ public class HungerComponent extends EntityComponent {
 		}
 	}
 
+	/**
+	 * Retrieve the hunger level of the entity.
+	 * @return The hunger level.
+	 */
 	public int getHunger() {
 		return getData().get(VanillaData.HUNGER);
 	}
 
+	/**
+	 * Sets the hunger level of the entity.
+	 * The maximum is 20.
+	 * @param hunger The hunger level of the entity
+	 */
 	public void setHunger(int hunger) {
 		getData().put(VanillaData.HUNGER, Math.min(hunger, 20));
 		reload();
@@ -323,27 +337,52 @@ public class HungerComponent extends EntityComponent {
 		widget.update();
 	}
 
+	/**
+	 * Retrieve the food saturation value of the entity.
+	 * @return The food saturation value.
+	 */
 	public float getFoodSaturation() {
 		return getData().get(VanillaData.FOOD_SATURATION);
 	}
 
+	/**
+	 * Sets the food saturation level of the entity.
+	 * A value of 0 makes the food bar "jump". It can't be higher than the current hunger level.
+	 * @param foodSaturation The food saturation value.
+	 */
 	public void setFoodSaturation(float foodSaturation) {
 		getData().put(VanillaData.FOOD_SATURATION, Math.min(foodSaturation, getHunger()));
 		reload();
 	}
 
+	/**
+	 * Retrieve the exhaustion value of the entity.
+	 * @return The exhaustion value.
+	 */
 	public float getExhaustion() {
 		return getData().get(VanillaData.EXHAUSTION);
 	}
 
+	/**
+	 * Sets the exhaustion value of the entity.
+	 * @param exhaustion The exhaustion value.
+	 */
 	public void setExhaustion(float exhaustion) {
 		getData().put(VanillaData.EXHAUSTION, exhaustion);
 	}
 
+	/**
+	 * Retrieve the poisoned status.
+	 * @return True if the entity is poisoned else false
+	 */
 	public boolean isPoisoned() {
 		return getData().get(VanillaData.POISONED);
 	}
 
+	/**
+	 * Set the entity poisoned by food or not
+	 * @param poisoned True if he is poisoned else false
+	 */
 	public void setPoisoned(boolean poisoned) {
 		getData().put(VanillaData.POISONED, poisoned);
 		if (Spout.getEngine() instanceof Client) {

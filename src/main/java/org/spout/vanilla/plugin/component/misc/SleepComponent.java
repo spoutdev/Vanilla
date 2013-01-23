@@ -37,6 +37,9 @@ import org.spout.vanilla.api.event.player.network.PlayerBedEvent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.misc.BedBlock;
 
+/**
+ * Component that handle the player sleeping on a bed or any similar blocks.
+ */
 public class SleepComponent extends EntityComponent {
 	private final float sleepSeconds = 5;
 	private float sleepTimer = sleepSeconds;
@@ -44,10 +47,18 @@ public class SleepComponent extends EntityComponent {
 	private Block bed;
 	private Player player;
 
+	/**
+	 * Retrieve the bed associated with the entity sleeping.
+	 * @return The bed.
+	 */
 	public Block getBed() {
 		return bed;
 	}
 
+	/**
+	 * Make the entity sleeps on the given bed
+	 * @param bed The bed the entity sleeps on.
+	 */
 	public void sleep(Block bed) {
 		sleeping = true;
 		this.bed = bed;
@@ -55,6 +66,9 @@ public class SleepComponent extends EntityComponent {
 		player.getNetwork().callProtocolEvent(new PlayerBedEvent(player, bed, true));
 	}
 
+	/**
+	 * Wake up the entity.
+	 */
 	public void wake() {
 		sleeping = false;
 		skipNight = false;
@@ -63,12 +77,20 @@ public class SleepComponent extends EntityComponent {
 		player.getNetworkSynchronizer().callProtocolEvent(new EntityAnimationEvent(player, Animation.LEAVE_BED));
 	}
 
+	/**
+	 * Set the bed as occuped or not.
+	 * @param occupy True if we want to set it to occuped, else false.
+	 */
 	private void occupy(boolean occupy) {
 		if (bed != null && bed.getMaterial() == VanillaMaterials.BED_BLOCK) {
 			((BedBlock) bed.getMaterial()).setOccupied(bed, player, occupy);
 		}
 	}
 
+	/**
+	 * If the player can skip the night.
+	 * @return True if the player can skip the night else false.
+	 */
 	public boolean canSkipNight() {
 		return skipNight;
 	}

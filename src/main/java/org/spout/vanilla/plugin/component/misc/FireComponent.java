@@ -35,6 +35,9 @@ import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.api.event.cause.NullDamageCause;
 
+/**
+ * Component handling a entity being on fire.
+ */
 public class FireComponent extends EntityComponent {
 	private float internalTimer = 0.0f, rainTimer = 0f;
 	private HealthComponent health;
@@ -82,22 +85,42 @@ public class FireComponent extends EntityComponent {
 		internalTimer += dt;
 	}
 
+	/**
+	 * Set the firetick value. Any value higher than 0 will put the entity on fire.
+	 * @param fireTick The fire tick amount.
+	 */
 	private void setFireTick(float fireTick) {
 		getOwner().getData().put(VanillaData.FIRE_TICK, fireTick);
 	}
 
+	/**
+	 * Retrieve the firetick value. Any value higher than 0 means the entity is on fire.
+	 * @return The firetick value.
+	 */
 	public float getFireTick() {
 		return getOwner().getData().get(VanillaData.FIRE_TICK);
 	}
 
+	/**
+	 * Check if the entity is on fire or not
+	 * @return True if the entity is on fire else false.
+	 */
 	public boolean isOnFire() {
 		return getFireTick() > 0;
 	}
 
-	private boolean isFireHurting() {
+	/**
+	 * Check if the fire hurts or not.
+	 * @return True if the fire hurts and false if it doesn't
+	 */
+	public boolean isFireHurting() {
 		return getOwner().getData().get(VanillaData.FIRE_HURT);
 	}
 
+	/**
+	 * Sets if the fire should hurt or not. Maybe we just want to be warm? ^^
+	 * @param fireHurt True if the fire should hurt else false.
+	 */
 	private void setFireHurting(boolean fireHurt) {
 		getOwner().getData().put(VanillaData.FIRE_HURT, fireHurt);
 	}
@@ -105,7 +128,7 @@ public class FireComponent extends EntityComponent {
 	/**
 	 * Sets the entity on fire.
 	 * @param time The amount of time in seconds the entity should be on fire.
-	 * @param hurt
+	 * @param hurt True if the fire should hurt else false.
 	 */
 	public void setOnFire(float time, boolean hurt) {
 		setFireTick(time);

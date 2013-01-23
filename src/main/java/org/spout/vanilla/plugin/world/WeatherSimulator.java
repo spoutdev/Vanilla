@@ -159,12 +159,19 @@ public class WeatherSimulator extends BasicTickable {
 			final Weather current = getCurrent();
 			Weather forecast = current;
 			while (forecast == current) {
-				// Loop until we pick a weather different from current
-				forecast = Weather.get(random.nextInt(3));
+				// When Rain/Snow or Thunderstorms occur, always go to Clear after.
+				if (current == Weather.RAIN || current == Weather.THUNDERSTORM) {
+					forecast = Weather.CLEAR;
+				} else {
+					forecast = Weather.get(random.nextInt(3));
+				}
+				setForecast(forecast);
 			}
 			setForecast(forecast);
 			secondsUntilWeatherChange = current.getBaseWeatherTime() + random.nextInt(current.getRandomWeatherTime());
-			Spout.getLogger().info("Weather changed to: " + current + ", next change in " + secondsUntilWeatherChange / 1000F + " s");
+			if (Spout.debugMode()) {
+				Spout.getLogger().info("Weather changed to: " + current + ", next change in " + secondsUntilWeatherChange / 1000F + "s");
+			}
 		}
 		float currentRainStrength = sky.getData().get(VanillaData.CURRENT_RAIN_STRENGTH);
 		sky.getData().put(VanillaData.PREVIOUS_RAIN_STRENGTH, currentRainStrength);

@@ -38,6 +38,9 @@ import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.plugin.inventory.window.block.EnchantmentTableWindow;
 
+/**
+ * Component that represents a enchantment table in a world.
+ */
 public class EnchantmentTable extends EnchantmentTableComponent {
 	private final EnchantmentTableInventory inventory = new EnchantmentTableInventory();
 	private final int[] levels = new int[3];

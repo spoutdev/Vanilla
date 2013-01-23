@@ -38,6 +38,9 @@ import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.inventory.block.AnvilInventory;
 import org.spout.vanilla.plugin.inventory.window.block.AnvilWindow;
 
+/**
+ * Component that represents a Anvil in the world.
+ */
 public class Anvil extends AnvilComponent {
 	private final AnvilInventory inventory = new AnvilInventory();
 

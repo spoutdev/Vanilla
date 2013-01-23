@@ -43,6 +43,9 @@ import org.spout.vanilla.plugin.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
+/**
+ * Represents a basic chest in the world.
+ */
 public class Chest extends AbstractChest implements Container {
 	/**
 	 * Whether the chest has a double inventory.

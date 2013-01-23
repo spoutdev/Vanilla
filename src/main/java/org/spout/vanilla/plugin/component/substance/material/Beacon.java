@@ -38,6 +38,9 @@ import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.inventory.block.BeaconInventory;
 import org.spout.vanilla.plugin.inventory.window.block.BeaconWindow;
 
+/**
+ * Component that represents a Anvil in the world.
+ */
 public class Beacon extends BeaconComponent {
 	private final BeaconInventory inventory = new BeaconInventory();
 

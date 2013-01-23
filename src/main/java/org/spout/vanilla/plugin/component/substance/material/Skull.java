@@ -30,11 +30,22 @@ import org.spout.vanilla.api.component.substance.material.VanillaBlockComponent;
 
 import org.spout.vanilla.plugin.data.VanillaData;
 
+/**
+ * Component that represents a Skull in the world.
+ */
 public class Skull extends VanillaBlockComponent {
+	/**
+	 * Retrieve the rotation of the Skull.
+	 * @return The rotation.
+	 */
 	public float getRotation() {
 		return getData().get(VanillaData.SKULL_ROTATION);
 	}
 
+	/**
+	 * Sets the rotation of the skull.
+	 * @param rotation The rotation.
+	 */
 	public void setRotation(float rotation) {
 		getData().put(VanillaData.SKULL_ROTATION, rotation);
 	}

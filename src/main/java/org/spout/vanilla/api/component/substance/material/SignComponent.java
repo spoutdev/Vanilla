@@ -28,6 +28,9 @@ package org.spout.vanilla.api.component.substance.material;
 
 import org.spout.api.event.Cause;
 
+/**
+ * Component that represents any kind of Sign.
+ */
 public abstract class SignComponent extends VanillaBlockComponent {
 	/**
 	 * The maximum number of characters per line

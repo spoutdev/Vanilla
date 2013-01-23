@@ -34,6 +34,9 @@ import org.spout.api.entity.Player;
 
 import org.spout.vanilla.api.event.player.network.PlayerPingEvent;
 
+/**
+ * Component that pings periodictly the client to see if it's still connected.
+ */
 public class PingComponent extends EntityComponent {
 	private Player player;
 	private final Random random = new Random();

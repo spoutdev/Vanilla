@@ -35,6 +35,9 @@ import org.spout.vanilla.api.event.block.SignUpdateEvent;
 
 import org.spout.vanilla.plugin.data.VanillaData;
 
+/**
+ * Component that represents a Sign in a world.
+ */
 public class Sign extends SignComponent {
 	private static final int CHARS_PER_LINE = 16;
 	private static final int MAX_LINES = 4;

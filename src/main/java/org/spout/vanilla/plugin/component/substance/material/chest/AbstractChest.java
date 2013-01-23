@@ -32,6 +32,9 @@ import org.spout.vanilla.api.component.substance.material.ViewedBlockComponent;
 
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 
+/**
+ * Base class for Chests.
+ */
 public abstract class AbstractChest extends ViewedBlockComponent {
 	private boolean opened = false;
 

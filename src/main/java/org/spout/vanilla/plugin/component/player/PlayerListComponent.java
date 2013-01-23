@@ -37,6 +37,9 @@ import org.spout.api.entity.Player;
 
 import org.spout.vanilla.api.event.player.network.PlayerListEvent;
 
+/**
+ * Component that handles the Player list (TAB) list.
+ */
 public class PlayerListComponent extends EntityComponent {
 	private Player player;
 	private Server server;
@@ -94,6 +97,9 @@ public class PlayerListComponent extends EntityComponent {
 		}
 	}
 
+	/**
+	 * Force a update of the list.
+	 */
 	public void force() {
 		force = true;
 	}

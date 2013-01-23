@@ -39,13 +39,24 @@ import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.inventory.block.DispenserInventory;
 import org.spout.vanilla.plugin.inventory.window.block.DispenserWindow;
 
+/**
+ * Component that represent a Dispenser in the world.
+ */
 public class Dispenser extends DispenserComponent {
 	private final DispenserInventory inventory = new DispenserInventory();
 
+	/**
+	 * Retrieve the powered status of the dispenser.
+	 * @return True if the dispenser is powered. Else false.
+	 */
 	public boolean isPowered() {
 		return getData().get(VanillaData.IS_POWERED);
 	}
 
+	/**
+	 * Sets the powered status of the dispenser
+	 * @param powered True if the dispenser is powered else false.
+	 */
 	public void setPowered(boolean powered) {
 		getData().put(VanillaData.IS_POWERED, powered);
 	}

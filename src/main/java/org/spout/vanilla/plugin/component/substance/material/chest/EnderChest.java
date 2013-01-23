@@ -32,6 +32,9 @@ import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.inventory.window.block.chest.EnderChestWindow;
 
+/**
+ * Component that represents a Ender Chest in the world.
+ */
 public class EnderChest extends AbstractChest {
 	@Override
 	public boolean open(Player player) {

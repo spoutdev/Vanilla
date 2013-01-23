@@ -28,5 +28,8 @@ package org.spout.vanilla.api.component.substance.material;
 
 import org.spout.vanilla.api.inventory.Container;
 
+/**
+ * Component that represents any kind of Anvils.
+ */
 public abstract class AnvilComponent extends ViewedBlockComponent implements Container {
 }

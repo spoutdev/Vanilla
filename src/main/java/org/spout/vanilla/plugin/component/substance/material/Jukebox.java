@@ -43,6 +43,9 @@ import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.item.misc.MusicDisc;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 
+/**
+ * Component that represents a Jukebox in the world.
+ */
 public class Jukebox extends VanillaBlockComponent {
 	@Override
 	public void onInteractBy(Entity entity, Action type, BlockFace face) {

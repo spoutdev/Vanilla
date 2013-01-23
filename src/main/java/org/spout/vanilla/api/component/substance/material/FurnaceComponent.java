@@ -28,24 +28,67 @@ package org.spout.vanilla.api.component.substance.material;
 
 import org.spout.vanilla.api.inventory.Container;
 
+/**
+ * Represents any kind of furnace.
+ */
 public abstract class FurnaceComponent extends ViewedBlockComponent implements Container {
+	/**
+	 * Retrieve the maximum time to smelt something.
+	 * @return The maximum time to smelt.
+	 */
 	public abstract float getMaxSmeltTime();
 
+	/**
+	 * Sets the maximum amount of time to smelt something.
+	 * @param maxSmeltTime The maximum time to smelt.
+	 */
 	public abstract void setMaxSmeltTime(float maxSmeltTime);
 
+	/**
+	 * Retrieve the current smelting time.
+	 * @return The current smelting time.
+	 */
 	public abstract float getSmeltTime();
 
+	/**
+	 * Sets the current smelting time.
+	 * @param smeltTime The current smelting time.
+	 */
 	public abstract void setSmeltTime(float smeltTime);
 
+	/**
+	 * Retrieve the maximum fuel amount currently set in the furnace.
+	 * @return The max fuel amount.
+	 */
+	//TODO: Better description anyone?
 	public abstract float getMaxFuel();
 
+	/**
+	 * Sets the maximum amount of fuel this furnace can hold.
+	 * @param maxFuel The maximum amount of fuel.
+	 */
 	public abstract void setMaxFuel(float maxFuel);
 
+	/**
+	 * Retrieve the current amount of fuel in this furnace.
+	 * @return The current amount of fuel.
+	 */
 	public abstract float getFuel();
 
+	/**
+	 * Set the current amount of fuel in this furnace.
+	 * @param fuel The current amount of fuel.
+	 */
 	public abstract void setFuel(float fuel);
 
+	/**
+	 * Check if all the criteria for smelting is met.
+	 * @return True if smelting can happen else false.
+	 */
 	public abstract boolean canSmelt();
 
+	/**
+	 * Activate the smelting process.
+	 */
 	public abstract void smelt();
 }

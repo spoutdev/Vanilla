@@ -43,6 +43,9 @@ import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
 import org.spout.vanilla.plugin.inventory.window.block.FurnaceWindow;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
+/**
+ * Represents a furnace in a world.
+ */
 public class Furnace extends FurnaceComponent {
 	public final float MAX_FUEL_INCREMENT = 12.5f;
 	public final float MAX_SMELT_TIME_INCREMENT = 9f;

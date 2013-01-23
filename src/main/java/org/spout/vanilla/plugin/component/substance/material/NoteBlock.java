@@ -39,7 +39,15 @@ import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 
+/**
+ * Component that represents a Note Block in the world.
+ */
 public class NoteBlock extends VanillaBlockComponent {
+
+	/**
+	 * Retrieve the instrument played by this note block.
+	 * @return The instrument played.
+	 */
 	public Instrument getInstrument() {
 		BlockMaterial below = this.getBlock().translate(BlockFace.BOTTOM).getMaterial();
 		return below instanceof VanillaBlockMaterial ? ((VanillaBlockMaterial) below).getInstrument() : Instrument.PIANO;

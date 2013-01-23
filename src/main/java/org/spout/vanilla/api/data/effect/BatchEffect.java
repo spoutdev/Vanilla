@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.data.effect.type;
+package org.spout.vanilla.api.data.effect;
 
 import java.util.Collection;
 
@@ -33,46 +33,42 @@ import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.api.data.effect.Effect;
 
-import org.spout.vanilla.plugin.event.world.PlayExplosionEffectEvent;
+/**
+ * Plays all set Effects when playing
+ */
+public class BatchEffect extends Effect {
+	private final Effect[] effects;
 
-public class ExplosionEffect extends Effect {
-	private static final int EXPLOSION_RANGE = 64;
-	private static final float DEFAULT_SIZE = 5.0f;
-	private float size;
-
-	public ExplosionEffect() {
-		this(EXPLOSION_RANGE, DEFAULT_SIZE);
+	public BatchEffect(Effect... effects) {
+		this(getMaxRange(effects), effects);
 	}
 
-	public ExplosionEffect(int range, float size) {
+	public BatchEffect(int range, Effect... effects) {
 		super(range);
-		this.size = size;
+		this.effects = effects;
 	}
 
-	public float getDefaultSize() {
-		return this.size;
+	public Effect[] getEffects() {
+		return this.effects;
 	}
 
 	@Override
 	public void play(Player player, Point position) {
-		this.play(player, position, this.getDefaultSize());
-	}
-
-	public void play(Player player, Point position, float size) {
-		player.getSession().getNetworkSynchronizer().callProtocolEvent(new PlayExplosionEffectEvent(position, this, size));
-	}
-
-	public void play(Collection<Player> players, Point position, float size) {
-		for (Player player : players) {
-			this.play(player, position, size);
+		for (Effect effect : this.effects) {
+			effect.play(player, position);
 		}
 	}
 
-	public void playGlobal(Point position, float size) {
-		this.playGlobal(position, size, null);
-	}
-
-	public void playGlobal(Point position, float size, Player ignore) {
-		this.play(getNearbyPlayers(position, ignore), position, size);
+	@Override
+	public void play(Collection<Player> players, Point position) {
+		int distanceSquared;
+		for (Player player : players) {
+			distanceSquared = (int) player.getTransform().getPosition().distanceSquared(position);
+			for (Effect effect : this.effects) {
+				if (distanceSquared <= (effect.getRange() * effect.getRange())) {
+					effect.play(player, position);
+				}
+			}
+		}
 	}
 }

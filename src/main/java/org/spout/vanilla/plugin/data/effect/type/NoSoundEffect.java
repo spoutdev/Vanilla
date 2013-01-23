@@ -29,7 +29,7 @@ package org.spout.vanilla.plugin.data.effect.type;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.plugin.data.effect.SoundEffect;
+import org.spout.vanilla.api.data.effect.SoundEffect;
 
 public class NoSoundEffect extends SoundEffect {
 	public NoSoundEffect() {

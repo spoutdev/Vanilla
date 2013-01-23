@@ -32,8 +32,8 @@ import org.spout.api.entity.Player;
 import org.spout.vanilla.api.data.Weather;
 
 import org.spout.vanilla.plugin.component.world.VanillaSky;
-import org.spout.vanilla.plugin.event.world.TimeUpdateEvent;
-import org.spout.vanilla.plugin.event.world.WeatherChangeEvent;
+import org.spout.vanilla.api.event.world.TimeUpdateEvent;
+import org.spout.vanilla.api.event.world.WeatherChangeEvent;
 import org.spout.vanilla.plugin.util.MathHelper;
 import org.spout.vanilla.plugin.world.WeatherSimulator;
 
@@ -57,7 +57,7 @@ public class NormalSky extends VanillaSky {
 
 	@Override
 	public void updateWeather(Weather oldWeather, Weather newWeather) {
-		WeatherChangeEvent event = Spout.getEventManager().callEvent(new WeatherChangeEvent(this, oldWeather, newWeather));
+		WeatherChangeEvent event = Spout.getEventManager().callEvent(new WeatherChangeEvent(this.getWorld(), oldWeather, newWeather));
 		if (event.isCancelled()) {
 			return;
 		}
@@ -90,7 +90,7 @@ public class NormalSky extends VanillaSky {
 	public void updatePlayer(Player player) {
 		TimeUpdateEvent event = new TimeUpdateEvent(getWorld(), getTime());
 		player.getNetworkSynchronizer().callProtocolEvent(event);
-		WeatherChangeEvent weatherEvent = new WeatherChangeEvent(this, Weather.CLEAR, getWeather());
+		WeatherChangeEvent weatherEvent = new WeatherChangeEvent(this.getWorld(), Weather.CLEAR, getWeather());
 		player.getNetworkSynchronizer().callProtocolEvent(weatherEvent);
 	}
 }

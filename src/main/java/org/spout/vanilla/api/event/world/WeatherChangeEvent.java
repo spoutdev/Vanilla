@@ -24,58 +24,55 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.world;
+package org.spout.vanilla.api.event.world;
 
-import org.spout.api.event.Event;
+import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
-import org.spout.api.geo.discrete.Point;
+import org.spout.api.event.world.WorldEvent;
+import org.spout.api.geo.World;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.plugin.data.effect.SoundEffect;
+import org.spout.vanilla.api.data.Weather;
 
-public class PlaySoundEffectEvent extends Event implements ProtocolEvent {
+import org.spout.vanilla.plugin.component.world.VanillaSky;
+
+public class WeatherChangeEvent extends WorldEvent implements Cancellable, ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();
-	private Point position;
-	private SoundEffect sound;
-	private float pitch, volume;
+	private Weather current, weather;
 
-	public PlaySoundEffectEvent(Point position, SoundEffect sound, float volume, float pitch) {
-		this.position = position;
-		this.sound = sound;
-		this.pitch = pitch;
-		this.volume = volume;
+	public WeatherChangeEvent(World world, Weather current, Weather weather) {
+		super(world);
+		this.current = current;
+		this.weather = weather;
 	}
 
 	/**
-	 * Gets the Position where the Sound should be played
-	 * @return position of the Sound
+	 * Gets the weather at the time the event is called.
+	 * @return the current weather.
 	 */
-	public Point getPosition() {
-		return this.position;
+	public Weather getCurrentWeather() {
+		return current;
 	}
 
 	/**
-	 * Gets the Sound being played
-	 * @return Sound to play
+	 * Gets the new weather set after the event.
+	 * @return the new weather.
 	 */
-	public SoundEffect getSound() {
-		return this.sound;
+	public Weather getNewWeather() {
+		return weather;
 	}
 
 	/**
-	 * Gets the Pitch to play the Sound at
-	 * @return Sound pitch
+	 * Sets the outcome of the event.
+	 * @param weather
 	 */
-	public float getPitch() {
-		return this.pitch;
+	public void setNewWeather(Weather weather) {
+		this.weather = weather;
 	}
 
-	/**
-	 * Gets the Volume to play the Sound at
-	 * @return Sound volume
-	 */
-	public float getVolume() {
-		return this.volume;
+	@Override
+	public void setCancelled(boolean cancelled) {
+		super.setCancelled(cancelled);
 	}
 
 	@Override

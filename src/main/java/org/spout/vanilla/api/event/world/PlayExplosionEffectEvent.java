@@ -24,25 +24,25 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.world;
+package org.spout.vanilla.api.event.world;
 
 import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.plugin.data.effect.GeneralEffect;
+import org.spout.vanilla.api.data.effect.ExplosionEffect;
 
-public class PlayParticleEffectEvent extends Event implements ProtocolEvent {
+public class PlayExplosionEffectEvent extends Event implements ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();
 	private Point position;
-	private GeneralEffect effect;
-	private int data;
+	private ExplosionEffect effect;
+	private float size;
 
-	public PlayParticleEffectEvent(Point position, GeneralEffect effect, int data) {
+	public PlayExplosionEffectEvent(Point position, ExplosionEffect effect, float size) {
 		this.position = position;
 		this.effect = effect;
-		this.data = data;
+		this.size = size;
 	}
 
 	/**
@@ -57,16 +57,16 @@ public class PlayParticleEffectEvent extends Event implements ProtocolEvent {
 	 * Gets the Effect to play
 	 * @return the Effect
 	 */
-	public GeneralEffect getEffect() {
+	public ExplosionEffect getEffect() {
 		return this.effect;
 	}
 
 	/**
-	 * Gets the data to use for the Effect
-	 * @return Effect data
+	 * Gets the size of the Explosion Effect
+	 * @return Effect size
 	 */
-	public int getData() {
-		return this.data;
+	public float getSize() {
+		return this.size;
 	}
 
 	@Override

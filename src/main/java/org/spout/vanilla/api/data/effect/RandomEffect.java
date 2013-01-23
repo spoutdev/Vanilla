@@ -24,34 +24,43 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.data.effect;
+package org.spout.vanilla.api.data.effect;
 
-import java.util.Random;
+import java.util.Collection;
+
+import org.spout.api.entity.Player;
+import org.spout.api.geo.discrete.Point;
 
 /**
- * Randomizes the pitch level by the amount set
+ * Picks a random Effect when playing
  */
-public class RandomPitchSoundEffect extends SoundEffect {
-	private final float randomPitch;
+public abstract class RandomEffect extends Effect {
+	private final Effect[] effects;
 
-	public RandomPitchSoundEffect(SoundEffect sound, float randomPitch) {
-		super(sound, sound.getDefaultVolume(), sound.getDefaultPitch());
-		this.randomPitch = randomPitch;
+	public RandomEffect(Effect... effects) {
+		this(getMaxRange(effects), effects);
+	}
+
+	public RandomEffect(int range, Effect... effects) {
+		super(range);
+		this.effects = effects;
+	}
+
+	public Effect[] getEffects() {
+		return this.effects;
+	}
+
+	public Effect getRandomEffect() {
+		return effects[(int) (Math.random() * effects.length)];
 	}
 
 	@Override
-	public SoundEffect adjust(float volume, float pitch) {
-		return new RandomPitchSoundEffect(super.adjust(volume, pitch), this.randomPitch);
+	public void play(Player player, Point position) {
+		this.getRandomEffect().play(player, position);
 	}
 
 	@Override
-	public SoundEffect randomPitch(float amount) {
-		return new RandomPitchSoundEffect(this, this.randomPitch + amount);
-	}
-
-	@Override
-	public float getDefaultPitch() {
-		Random random = new Random();
-		return super.getDefaultPitch() + random.nextFloat() * this.randomPitch;
+	public void play(Collection<Player> players, Point position) {
+		this.getRandomEffect().play(players, position);
 	}
 }

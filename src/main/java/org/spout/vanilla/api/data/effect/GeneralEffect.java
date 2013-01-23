@@ -24,45 +24,70 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.data.effect;
+package org.spout.vanilla.api.data.effect;
 
 import java.util.Collection;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.api.data.effect.Effect;
+import org.spout.vanilla.api.event.world.PlayParticleEffectEvent;
 
-/**
- * Picks a random Effect when playing
- */
-public class RandomEffect extends Effect {
-	private final Effect[] effects;
+public class GeneralEffect extends Effect {
+	private static final int PARTICLE_RANGE = 32;
+	private final int id;
+	private int data;
 
-	public RandomEffect(Effect... effects) {
-		this(getMaxRange(effects), effects);
+	public GeneralEffect(int id) {
+		this(id, 0);
 	}
 
-	public RandomEffect(int range, Effect... effects) {
+	public GeneralEffect(int id, int data) {
+		this(id, data, PARTICLE_RANGE);
+	}
+
+	public GeneralEffect(int id, int data, int range) {
 		super(range);
-		this.effects = effects;
+		this.id = id;
+		this.data = data;
 	}
 
-	public Effect[] getEffects() {
-		return this.effects;
+	/**
+	 * Gets the Id of this Effect
+	 * @return Effect Id
+	 */
+	public int getId() {
+		return this.id;
 	}
 
-	public Effect getRandomEffect() {
-		return effects[(int) (Math.random() * effects.length)];
+	/**
+	 * Gets the Default data for this Effect
+	 * @return default data
+	 */
+	public int getDefaultData() {
+		return this.data;
 	}
 
 	@Override
 	public void play(Player player, Point position) {
-		this.getRandomEffect().play(player, position);
+		this.play(player, position, this.getDefaultData());
 	}
 
-	@Override
-	public void play(Collection<Player> players, Point position) {
-		this.getRandomEffect().play(players, position);
+	public void play(Player player, Point position, int data) {
+		player.getSession().getNetworkSynchronizer().callProtocolEvent(new PlayParticleEffectEvent(position, this, data));
+	}
+
+	public void play(Collection<Player> players, Point position, int data) {
+		for (Player player : players) {
+			this.play(player, position, data);
+		}
+	}
+
+	public void playGlobal(Point position, int data) {
+		this.playGlobal(position, data, null);
+	}
+
+	public void playGlobal(Point position, int data, Player ignore) {
+		this.play(getNearbyPlayers(position, ignore), position, data);
 	}
 }

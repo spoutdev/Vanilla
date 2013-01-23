@@ -7,8 +7,10 @@ in vec2 uvcoord;
 uniform sampler2D Diffuse;
 
 layout(location=0) out vec4 outputColor;
+layout(location=1) out vec4 normalColor;
 
 void main() {
 	vec4 fontsample = texture(Diffuse, uvcoord);
 	outputColor = fontsample * color;
+	normalColor = (normal + vec4(1, 1, 1, 1)) / 2;
 }

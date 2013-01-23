@@ -2,6 +2,7 @@
 
 in vec2 uvcoord;
 in vec4 color;
+in vec4 normal;
 
 
 uniform sampler2D Stars;
@@ -13,6 +14,7 @@ uniform vec4 dayColor;
 uniform vec4 nightColor;
 
 layout(location=0) out vec4 outputColor;
+layout(location=1) out vec4 normalColor;
 
 void main() {
 
@@ -46,4 +48,6 @@ void main() {
 	
 	
 	outputColor = skyColor;
+	
+	normalColor = (normal + vec4(1, 1, 1, 1)) / 2;
 }

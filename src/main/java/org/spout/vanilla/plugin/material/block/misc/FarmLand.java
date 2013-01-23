@@ -26,12 +26,16 @@
  */
 package org.spout.vanilla.plugin.material.block.misc;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CuboidEffectRange;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
 
+import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.api.material.InitializableMaterial;
 import org.spout.vanilla.api.material.block.Crop;
 
@@ -40,6 +44,7 @@ import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.liquid.Water;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class FarmLand extends VanillaBlockMaterial implements InitializableMaterial, DynamicMaterial {
 	private static final EffectRange WATER_CHECK_RANGE = new CuboidEffectRange(-4, 0, -4, 4, 1, 4);
@@ -120,6 +125,28 @@ public class FarmLand extends VanillaBlockMaterial implements InitializableMater
 		} else if (!hasCropsNearby(block)) {
 			// not wet and has no crops connecting to this farm land, turn this block into dirt
 			block.setMaterial(VanillaMaterials.DIRT);
+		}
+	}
+
+	@Override
+	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
+		super.onInteractBy(entity, block, type, clickedFace);
+		Slot inv = PlayerUtil.getHeldSlot(entity);
+
+		if (inv != null && inv.get() != null && type.equals(Action.RIGHT_CLICK) && clickedFace.equals(BlockFace.TOP) && block.translate(BlockFace.TOP).isMaterial(VanillaMaterials.AIR)) {
+			if (inv.get().isMaterial(VanillaMaterials.CARROT)) {
+				block.translate(clickedFace).setMaterial(VanillaMaterials.CARROT_CROP);
+				if (!(PlayerUtil.isCostSuppressed(entity))) {
+					inv.addAmount(-1);
+				}
+			}
+
+			if (inv.get().isMaterial(VanillaMaterials.POTATO)) {
+				block.translate(clickedFace).setMaterial(VanillaMaterials.POTATO_CROP);
+				if (!(PlayerUtil.isCostSuppressed(entity))) {
+					inv.addAmount(-1);
+				}
+			}
 		}
 	}
 }

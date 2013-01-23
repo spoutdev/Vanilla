@@ -49,8 +49,8 @@ import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.material.item.misc.Dye;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 
-public class Carrots extends GroundAttachable implements Growing, Crop, DynamicMaterial, InitializableMaterial {
-	public Carrots(String name, int id) {
+public class CarrotCrop extends GroundAttachable implements Growing, Crop, DynamicMaterial, InitializableMaterial {
+	public CarrotCrop(String name, int id) {
 		super(name, id, null);
 		this.setResistance(0.0F).setHardness(0.0F).setTransparent();
 	}
@@ -71,7 +71,7 @@ public class Carrots extends GroundAttachable implements Growing, Crop, DynamicM
 
 	@Override
 	public int getGrowthStageCount() {
-		return 4;
+		return 8;
 	}
 
 	@Override
@@ -81,17 +81,17 @@ public class Carrots extends GroundAttachable implements Growing, Crop, DynamicM
 
 	@Override
 	public int getGrowthStage(Block block) {
-		return block.getDataField(0x3);
+		return block.getDataField(0x7);
 	}
 
 	@Override
 	public void setGrowthStage(Block block, int stage) {
-		block.setData(stage & 0x3);
+		block.setData(stage & 0x7);
 	}
 
 	@Override
 	public boolean isFullyGrown(Block block) {
-		return block.getData() == 0x3;
+		return block.getData() == 0x7;
 	}
 
 	@Override
@@ -104,11 +104,11 @@ public class Carrots extends GroundAttachable implements Growing, Crop, DynamicM
 		super.onInteractBy(entity, block, type, clickedFace);
 		Slot inv = PlayerUtil.getHeldSlot(entity);
 		if (inv != null && inv.get() != null && inv.get().isMaterial(Dye.BONE_MEAL)) {
-			if (this.getGrowthStage(block) != 0x3) {
+			if (this.getGrowthStage(block) != 0x7) {
 				if (!PlayerUtil.isCostSuppressed(entity)) {
 					inv.addAmount(-1);
 				}
-				this.setGrowthStage(block, 0x3);
+				this.setGrowthStage(block, 0x7);
 			}
 		}
 	}
@@ -134,7 +134,7 @@ public class Carrots extends GroundAttachable implements Growing, Crop, DynamicM
 				Random rand = new Random(block.getWorld().getAge());
 				int chance = VanillaBlockMaterial.getCropGrowthChance(block);
 				if (rand.nextInt(chance + 1) == 0) {
-					this.setGrowthStage(block, this.getGrowthStage(block));
+					this.setGrowthStage(block, this.getGrowthStage(block) + 1);
 				}
 			}
 			//TODO : delay before update

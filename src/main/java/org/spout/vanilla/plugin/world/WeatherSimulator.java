@@ -35,7 +35,6 @@ import org.spout.api.geo.World;
 import org.spout.api.math.MathHelper;
 import org.spout.api.tickable.BasicTickable;
 
-import org.spout.vanilla.api.data.Climate;
 import org.spout.vanilla.api.data.Weather;
 import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
 

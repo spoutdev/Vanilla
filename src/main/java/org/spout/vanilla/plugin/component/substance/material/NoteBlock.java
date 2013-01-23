@@ -30,7 +30,9 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+
 import org.spout.vanilla.api.component.substance.material.VanillaBlockComponent;
+
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
@@ -38,7 +40,6 @@ import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class NoteBlock extends VanillaBlockComponent {
-
 	public Instrument getInstrument() {
 		BlockMaterial below = this.getBlock().translate(BlockFace.BOTTOM).getMaterial();
 		return below instanceof VanillaBlockMaterial ? ((VanillaBlockMaterial) below).getInstrument() : Instrument.PIANO;

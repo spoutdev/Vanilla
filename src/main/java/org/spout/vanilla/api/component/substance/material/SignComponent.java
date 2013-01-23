@@ -29,7 +29,6 @@ package org.spout.vanilla.api.component.substance.material;
 import org.spout.api.event.Cause;
 
 public abstract class SignComponent extends VanillaBlockComponent {
-
 	/**
 	 * The maximum number of characters per line
 	 * @return max characters per line

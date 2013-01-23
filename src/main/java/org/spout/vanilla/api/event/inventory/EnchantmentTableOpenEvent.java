@@ -32,7 +32,6 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryOpenEvent;
 
 import org.spout.vanilla.api.component.substance.material.EnchantmentTableComponent;
-import org.spout.vanilla.plugin.component.substance.material.EnchantmentTable;
 
 /**
  * Event which is fired when an EnchantmentTable is opened.
@@ -48,7 +47,6 @@ public class EnchantmentTableOpenEvent extends InventoryOpenEvent implements Can
 
 	/**
 	 * Returns the enchantmentTable which caused this event.
-	 *
 	 * @return enchantmentTable
 	 */
 	public EnchantmentTableComponent getEnchantmentTable() {

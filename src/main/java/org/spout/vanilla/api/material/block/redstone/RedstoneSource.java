@@ -39,7 +39,6 @@ public interface RedstoneSource extends IndirectRedstoneSource {
 	/**
 	 * Gets how much redstone power this redstone source block provides to the direction given.<br>
 	 * This is direct power, which can power other solid blocks
-	 * 
 	 * @param block of this redstone source
 	 * @param direction it provides power to
 	 * @param powerMode to use to get the power
@@ -50,7 +49,6 @@ public interface RedstoneSource extends IndirectRedstoneSource {
 	/**
 	 * Gets if this redstone source block provides power to the direction given.<br>
 	 * This is direct power, which can power other solid blocks
-	 * 
 	 * @param block of this redstone source
 	 * @param direction it provides power to
 	 * @param powerMode to use to get the power

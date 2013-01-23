@@ -39,6 +39,7 @@ import org.spout.api.math.IntVector2;
 import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.api.inventory.Slot;
+
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.inventory.window.ClickArguments;
 import org.spout.vanilla.plugin.inventory.window.Window;

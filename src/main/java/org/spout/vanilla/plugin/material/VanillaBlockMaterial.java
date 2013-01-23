@@ -54,6 +54,7 @@ import org.spout.api.util.flag.FlagBundle;
 
 import org.spout.vanilla.api.data.MoveReaction;
 import org.spout.vanilla.api.data.RedstonePowerMode;
+import org.spout.vanilla.api.event.block.BlockActionEvent;
 import org.spout.vanilla.api.material.VanillaMaterial;
 import org.spout.vanilla.api.material.block.redstone.IndirectRedstoneSource;
 import org.spout.vanilla.api.material.block.redstone.RedstoneSource;
@@ -70,7 +71,6 @@ import org.spout.vanilla.plugin.data.effect.SoundEffect;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;
-import org.spout.vanilla.api.event.block.BlockActionEvent;
 import org.spout.vanilla.plugin.render.VanillaEffects;
 
 public abstract class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial, IndirectRedstoneSource {

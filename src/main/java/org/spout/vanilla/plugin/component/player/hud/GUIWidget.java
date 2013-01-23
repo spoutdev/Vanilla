@@ -29,7 +29,6 @@ package org.spout.vanilla.plugin.component.player.hud;
 import org.spout.api.gui.Widget;
 
 public abstract class GUIWidget {
-
 	protected float SCALE;
 	protected float START_X;
 	protected Widget widget;
@@ -45,11 +44,11 @@ public abstract class GUIWidget {
 	public abstract void update(float percent);
 
 	public abstract void animate();
-	
+
 	public abstract void show();
-	
+
 	public abstract void hide();
-	
+
 	public Widget getWidget() {
 		return widget;
 	}

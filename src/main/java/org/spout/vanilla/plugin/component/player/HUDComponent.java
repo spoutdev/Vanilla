@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.component.player;
 
 import java.util.logging.Level;
+
 import org.spout.api.Client;
 import org.spout.api.Spout;
 import org.spout.api.component.type.EntityComponent;
@@ -76,9 +77,9 @@ public class HUDComponent extends EntityComponent {
 	/**
 	 * Will update the class used for each part of the HUD
 	 * Will not replace a class if one already is placed
-	 * 
+	 * <p/>
 	 * To replace use setDefault(Class clazz, boolean force)
-	 * @param clazz 
+	 * @param clazz
 	 */
 	public void setDefault(Class<? extends GUIWidget> clazz) {
 		setDefault(clazz, false);
@@ -86,11 +87,10 @@ public class HUDComponent extends EntityComponent {
 
 	/**
 	 * Will update the class used for each part of the HUD
-	 * 
+	 * <p/>
 	 * Second param is to force the update, a false will only update the
 	 * class if a class isn't already placed, true will replace any class
 	 * and force an update (forced update not implemented yet)
-	 * 
 	 * @param clazz
 	 */
 	public void setDefault(Class<? extends GUIWidget> clazz, boolean force) {
@@ -109,26 +109,22 @@ public class HUDComponent extends EntityComponent {
 				return;
 			}
 			hotBar = (HotBarWidget) widget;
-		}
-		else if (widget instanceof ArmorWidget) {
+		} else if (widget instanceof ArmorWidget) {
 			if (armorWidget != null && force == false) {
 				return;
 			}
 			armorWidget = (ArmorWidget) widget;
-		}
-		else if (widget instanceof ExpBarWidget) {
+		} else if (widget instanceof ExpBarWidget) {
 			if (expBar != null && force == false) {
 				return;
 			}
 			expBar = (ExpBarWidget) widget;
-		}
-		else if (widget instanceof CrosshairWidget) {
+		} else if (widget instanceof CrosshairWidget) {
 			if (crosshairWidget != null && force == false) {
 				return;
 			}
 			crosshairWidget = (CrosshairWidget) widget;
-		}
-		else if (widget instanceof DrowningWidget) {
+		} else if (widget instanceof DrowningWidget) {
 			if (drowningWidget != null && force == false) {
 				return;
 			}
@@ -146,7 +142,6 @@ public class HUDComponent extends EntityComponent {
 
 	/**
 	 * Sets the amount of armor to display.
-	 * 
 	 * @param amount Amount of armor to display
 	 */
 	public void setArmor(int amount) {
@@ -155,7 +150,6 @@ public class HUDComponent extends EntityComponent {
 
 	/**
 	 * Modify the advancement of the xp bar.
-	 * 
 	 * @param percent The advancement between 0 and 1
 	 */
 	public void setExp(float percent) {
@@ -164,7 +158,6 @@ public class HUDComponent extends EntityComponent {
 
 	/**
 	 * Sets the selected hotbar slot.
-	 * 
 	 * @param slot Index of the slot to set
 	 */
 	public void setHotbarSlot(int slot) {
@@ -217,7 +210,7 @@ public class HUDComponent extends EntityComponent {
 		// Experience level text
 		expBar.init(exp, SCALE, START_X);
 		hud.attachWidget(VanillaPlugin.getInstance(), exp);
-		
+
 		// Armor bar
 		armorWidget.init(armor, SCALE, START_X);
 		hud.attachWidget(VanillaPlugin.getInstance(), armor);

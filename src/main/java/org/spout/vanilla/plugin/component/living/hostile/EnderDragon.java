@@ -47,7 +47,7 @@ public class EnderDragon extends Living implements Hostile {
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(200);
 		}
-		getOwner().add(DropComponent.class).addXpDrop((short)20000);
+		getOwner().add(DropComponent.class).addXpDrop((short) 20000);
 		DamageComponent damage = getOwner().add(DamageComponent.class);
 		damage.getDamageLevel(Difficulty.EASY).setAmount(3);
 		damage.getDamageLevel(Difficulty.NORMAL).setAmount(5);

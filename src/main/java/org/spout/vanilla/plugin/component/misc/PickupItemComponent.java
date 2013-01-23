@@ -31,10 +31,11 @@ import java.util.List;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 
+import org.spout.vanilla.api.event.entity.EntityCollectItemEvent;
+
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.substance.Item;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
-import org.spout.vanilla.api.event.entity.EntityCollectItemEvent;
 
 /**
  * Component that adds a detector to resources.entities to scan for and pickup items.

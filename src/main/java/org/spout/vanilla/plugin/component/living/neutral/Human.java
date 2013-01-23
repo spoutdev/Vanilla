@@ -42,6 +42,9 @@ import org.spout.api.math.SinusHelper;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.data.GameMode;
+import org.spout.vanilla.api.event.entity.HumanAbilityChangeEvent;
+import org.spout.vanilla.api.event.player.PlayerGameModeChangedEvent;
+import org.spout.vanilla.api.event.player.network.PlayerGameStateEvent;
 import org.spout.vanilla.api.inventory.Slot;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
@@ -56,10 +59,7 @@ import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.configuration.WorldConfigurationNode;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.ViewDistance;
-import org.spout.vanilla.api.event.entity.HumanAbilityChangeEvent;
-import org.spout.vanilla.api.event.player.PlayerGameModeChangedEvent;
 import org.spout.vanilla.plugin.event.player.network.PlayerAbilityUpdateEvent;
-import org.spout.vanilla.api.event.player.network.PlayerGameStateEvent;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.protocol.entity.HumanEntityProtocol;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerGameStateMessage;
@@ -98,12 +98,22 @@ public class Human extends Living {
 		getData().put(VanillaData.VIEW_DISTANCE, distance);
 		WorldConfigurationNode config = VanillaConfiguration.WORLDS.get(getOwner().getWorld().getName());
 		int viewDistance;
-		switch(distance) {
-			case FAR: viewDistance = config.FAR_VIEW_DISTANCE.getInt(); break;
-			case NORMAL: viewDistance = config.NORMAL_VIEW_DISTANCE.getInt(); break;
-			case SHORT: viewDistance = config.SHORT_VIEW_DISTANCE.getInt(); break;
-			case TINY: viewDistance = config.TINY_VIEW_DISTANCE.getInt(); break;
-			default: viewDistance = config.NORMAL_VIEW_DISTANCE.getInt(); break;
+		switch (distance) {
+			case FAR:
+				viewDistance = config.FAR_VIEW_DISTANCE.getInt();
+				break;
+			case NORMAL:
+				viewDistance = config.NORMAL_VIEW_DISTANCE.getInt();
+				break;
+			case SHORT:
+				viewDistance = config.SHORT_VIEW_DISTANCE.getInt();
+				break;
+			case TINY:
+				viewDistance = config.TINY_VIEW_DISTANCE.getInt();
+				break;
+			default:
+				viewDistance = config.NORMAL_VIEW_DISTANCE.getInt();
+				break;
 		}
 		getOwner().setViewDistance(viewDistance * Chunk.BLOCKS.SIZE);
 	}

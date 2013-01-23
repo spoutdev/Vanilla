@@ -31,8 +31,8 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.api.data.Animation;
-
 import org.spout.vanilla.api.event.entity.EntityAnimationEvent;
+
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityAnimationMessage;
 
 public final class EntityAnimationHandler extends MessageHandler<EntityAnimationMessage> {

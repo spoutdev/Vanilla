@@ -39,7 +39,6 @@ public abstract class ViewedBlockComponent extends VanillaBlockComponent {
 
 	/**
 	 * Opens a window for the given player.
-	 * 
 	 * @param player
 	 * @return true if the component opened successfully
 	 */
@@ -47,7 +46,6 @@ public abstract class ViewedBlockComponent extends VanillaBlockComponent {
 
 	/**
 	 * Closes the window for the given player
-	 * 
 	 * @param player
 	 * @return true if the window was closed successfully
 	 */

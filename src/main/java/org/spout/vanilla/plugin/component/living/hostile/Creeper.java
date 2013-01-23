@@ -52,7 +52,7 @@ public class Creeper extends Living implements Hostile {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreeperEntityProtocol());
 		PhysicsComponent physics = getOwner().add(PhysicsComponent.class);
-		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.GUNPOWDER, getRandom().nextInt(2))).addXpDrop((short)5);
+		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.GUNPOWDER, getRandom().nextInt(2))).addXpDrop((short) 5);
 		physics.setMass(2f);
 		physics.setCollisionShape(new BoxShape(1F, 2F, 1F));
 		physics.setFriction(10f);

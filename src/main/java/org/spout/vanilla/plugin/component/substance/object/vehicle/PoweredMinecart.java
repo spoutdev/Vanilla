@@ -35,12 +35,12 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.api.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.api.material.Fuel;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
-import org.spout.vanilla.api.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
 import org.spout.vanilla.plugin.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;

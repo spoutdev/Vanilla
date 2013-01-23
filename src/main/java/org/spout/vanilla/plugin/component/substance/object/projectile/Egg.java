@@ -70,7 +70,6 @@ public class Egg extends ObjectEntity implements Projectile {
 	/**
 	 * Spawns a chicken by a chance of 1/8.
 	 * If a chicken is spawned, there is an additional chance of 1/32 to spawn four instead of one chicken.
-	 * 
 	 * @param point the point the chicken(s) will spawn at.
 	 */
 	private void spawnChickens(Point point) {

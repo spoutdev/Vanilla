@@ -56,7 +56,7 @@ public class Spider extends Living implements Hostile {
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(16);
 		}
-		getOwner().add(DropComponent.class).addXpDrop((short)5);
+		getOwner().add(DropComponent.class).addXpDrop((short) 5);
 		DamageComponent damage = getOwner().add(DamageComponent.class);
 		damage.getDamageLevel(Difficulty.EASY).setAmount(2);
 		damage.getDamageLevel(Difficulty.NORMAL).setAmount(2);

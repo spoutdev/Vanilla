@@ -33,13 +33,13 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.api.component.Hostile;
 import org.spout.vanilla.api.data.Difficulty;
 import org.spout.vanilla.api.data.effect.StatusEffect;
+import org.spout.vanilla.api.data.effect.StatusEffectContainer;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DamageComponent;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
-import org.spout.vanilla.api.data.effect.StatusEffectContainer;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
@@ -56,7 +56,7 @@ public class CaveSpider extends Living implements Hostile {
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.STRING, random.nextInt(2)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.SPIDER_EYE, random.nextInt(1)));
-		dropComponent.addXpDrop((short)3);
+		dropComponent.addXpDrop((short) 3);
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(12);
 		}

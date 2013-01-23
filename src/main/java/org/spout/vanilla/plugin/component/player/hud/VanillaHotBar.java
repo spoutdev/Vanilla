@@ -27,14 +27,15 @@
 package org.spout.vanilla.plugin.component.player.hud;
 
 import java.awt.Color;
+
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
+
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 
 public class VanillaHotBar extends HotBarWidget {
-
 	@Override
 	public void init(Widget hotbar, float scale, float start_X) {
 		super.init(hotbar, scale, start_X);
@@ -56,7 +57,6 @@ public class VanillaHotBar extends HotBarWidget {
 
 	/**
 	 * Sets the selected hotbar slot.
-	 *
 	 * @param slot Index of the slot to set
 	 */
 	@Override

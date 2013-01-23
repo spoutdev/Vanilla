@@ -47,7 +47,6 @@ public class AnvilOpenEvent extends InventoryOpenEvent implements Cancellable {
 
 	/**
 	 * Returns the anvil which caused this event.
-	 *
 	 * @return anvil
 	 */
 	public AnvilComponent getAnvil() {

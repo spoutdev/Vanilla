@@ -31,13 +31,13 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.api.component.Hostile;
 import org.spout.vanilla.api.data.Difficulty;
 import org.spout.vanilla.api.data.effect.StatusEffect;
+import org.spout.vanilla.api.data.effect.StatusEffectContainer;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DamageComponent;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
-import org.spout.vanilla.api.data.effect.StatusEffectContainer;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.WitherEntityProtocol;
 
@@ -49,7 +49,7 @@ public class Wither extends Living implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new WitherEntityProtocol());
-		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.NETHER_STAR, 1)).addXpDrop((short)50);
+		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.NETHER_STAR, 1)).addXpDrop((short) 50);
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(300);
 		}

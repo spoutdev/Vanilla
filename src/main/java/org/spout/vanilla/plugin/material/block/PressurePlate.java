@@ -96,7 +96,6 @@ public abstract class PressurePlate extends AttachedRedstoneSource implements Dy
 
 	/**
 	 * Checks whether a given entity can trigger this pressure plate
-	 * 
 	 * @param entity to check for
 	 * @return True if the pressure plate is triggered, False if not
 	 */

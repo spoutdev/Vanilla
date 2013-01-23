@@ -48,7 +48,6 @@ public class BrewingStandOpenEvent extends InventoryOpenEvent implements Cancell
 
 	/**
 	 * Returns the brewingStand which caused this event.
-	 *
 	 * @return brewingStand
 	 */
 	public BrewingStandComponent getBrewingStand() {

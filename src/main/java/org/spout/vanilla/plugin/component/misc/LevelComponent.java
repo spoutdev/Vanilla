@@ -101,7 +101,7 @@ public class LevelComponent extends EntityComponent {
 	 * @param amount the amount to add.
 	 */
 	public void addExperience(int amount) {
-		setProgress(getProgress() + ((float)amount / getXpCap()));
+		setProgress(getProgress() + ((float) amount / getXpCap()));
 		setExperience((short) (getExperience() + amount));
 		while (getProgress() >= 1.0f) {
 			setLevel((short) (getLevel() + 1));

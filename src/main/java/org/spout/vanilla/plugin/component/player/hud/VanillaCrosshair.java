@@ -27,13 +27,14 @@
 package org.spout.vanilla.plugin.component.player.hud;
 
 import java.awt.Color;
+
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.TexturedRectComponent;
 import org.spout.api.math.Rectangle;
+
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 
 public class VanillaCrosshair extends CrosshairWidget {
-
 	@Override
 	public void init(Widget crosshair, float scale, float start_X) {
 		super.init(widget, scale, start_X);

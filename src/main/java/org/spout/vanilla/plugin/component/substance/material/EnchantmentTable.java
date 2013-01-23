@@ -30,11 +30,11 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 
 import org.spout.vanilla.api.component.substance.material.EnchantmentTableComponent;
+import org.spout.vanilla.api.event.inventory.EnchantmentTableCloseEvent;
+import org.spout.vanilla.api.event.inventory.EnchantmentTableOpenEvent;
 import org.spout.vanilla.api.inventory.window.prop.EnchantmentTableProperty;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
-import org.spout.vanilla.api.event.inventory.EnchantmentTableCloseEvent;
-import org.spout.vanilla.api.event.inventory.EnchantmentTableOpenEvent;
 import org.spout.vanilla.plugin.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.plugin.inventory.window.block.EnchantmentTableWindow;
 

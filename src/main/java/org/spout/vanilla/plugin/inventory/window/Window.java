@@ -53,6 +53,8 @@ import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.api.inventory.Slot;
+import org.spout.vanilla.api.inventory.window.prop.WindowProperty;
+
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
@@ -69,7 +71,6 @@ import org.spout.vanilla.plugin.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 import org.spout.vanilla.plugin.inventory.window.gui.InventorySlot;
 import org.spout.vanilla.plugin.inventory.window.gui.RenderItemStack;
-import org.spout.vanilla.api.inventory.window.prop.WindowProperty;
 
 /**
  * Represents a Window that players can view to display an inventory.

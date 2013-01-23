@@ -31,8 +31,9 @@ import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
 
 import org.spout.vanilla.api.component.substance.material.SignComponent;
-import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.api.event.block.SignUpdateEvent;
+
+import org.spout.vanilla.plugin.data.VanillaData;
 
 public class Sign extends SignComponent {
 	private static final int CHARS_PER_LINE = 16;

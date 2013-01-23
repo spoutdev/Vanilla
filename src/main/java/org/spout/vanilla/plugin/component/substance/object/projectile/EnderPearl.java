@@ -71,7 +71,7 @@ public class EnderPearl extends ObjectEntity implements Projectile {
 				if (!PlayerUtil.isCreativePlayer(getShooter())) {
 					health.damage(5);
 				}
-				((Player)getShooter()).teleport(block.translate(BlockFace.TOP).getPosition());
+				((Player) getShooter()).teleport(block.translate(BlockFace.TOP).getPosition());
 			}
 		}
 		getOwner().remove();

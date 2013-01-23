@@ -26,17 +26,21 @@
  */
 package org.spout.vanilla.item;
 
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
+
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.EngineFaker;
+
 import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.api.event.cause.NullDamageCause;
+
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.enchantment.Enchantment;
 import org.spout.vanilla.plugin.material.enchantment.Enchantments;
 import org.spout.vanilla.plugin.material.item.armor.Armor;
+
+import static org.junit.Assert.assertTrue;
 
 public class DamageTest {
 	static {

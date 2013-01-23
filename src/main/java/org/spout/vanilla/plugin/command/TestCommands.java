@@ -38,7 +38,6 @@ import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.CommandPermissions;
 import org.spout.api.component.Component;
 import org.spout.api.component.impl.HitBlockComponent;
-import org.spout.api.component.impl.ObserverComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityPrefab;
 import org.spout.api.entity.Player;

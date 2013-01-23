@@ -32,10 +32,11 @@ import org.spout.api.chat.ChatArguments;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.api.event.game.ServerListPingEvent;
+
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.chat.VanillaStyleHandler;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
-import org.spout.vanilla.api.event.game.ServerListPingEvent;
 import org.spout.vanilla.plugin.protocol.msg.ServerListPingMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerKickMessage;
 

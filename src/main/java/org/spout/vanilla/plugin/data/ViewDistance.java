@@ -31,10 +31,10 @@ public enum ViewDistance {
 	NORMAL(1),
 	SHORT(2),
 	TINY(3);
-
 	final byte id;
+
 	ViewDistance(int id) {
-		this.id = (byte)id;
+		this.id = (byte) id;
 	}
 
 	public int getId() {

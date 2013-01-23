@@ -28,6 +28,7 @@ package org.spout.vanilla.plugin.material.enchantment.armor;
 
 import org.spout.vanilla.api.material.VanillaMaterial;
 import org.spout.vanilla.api.material.item.armor.Chestplate;
+
 import org.spout.vanilla.plugin.material.enchantment.ArmorEnchantment;
 
 public class Thorns extends ArmorEnchantment {

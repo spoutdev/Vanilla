@@ -31,6 +31,7 @@ import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.api.event.cause.DamageCause;
 import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
+
 import org.spout.vanilla.plugin.material.enchantment.Enchantment;
 import org.spout.vanilla.plugin.material.enchantment.Enchantments;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;

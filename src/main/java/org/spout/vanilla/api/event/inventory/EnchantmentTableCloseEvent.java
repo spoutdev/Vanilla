@@ -30,6 +30,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryCloseEvent;
+
 import org.spout.vanilla.api.component.substance.material.EnchantmentTableComponent;
 
 /**
@@ -46,7 +47,6 @@ public class EnchantmentTableCloseEvent extends InventoryCloseEvent implements C
 
 	/**
 	 * Returns the enchantmentTable which caused this event.
-	 *
 	 * @return enchantmentTable
 	 */
 	public EnchantmentTableComponent getEnchantmentTable() {

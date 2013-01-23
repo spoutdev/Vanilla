@@ -32,6 +32,7 @@ import org.spout.api.math.Vector2;
 import org.spout.api.util.StringUtil;
 
 import org.spout.vanilla.api.inventory.Slot;
+
 import org.spout.vanilla.plugin.inventory.window.gui.InventorySlot;
 
 /**

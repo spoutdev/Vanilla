@@ -30,6 +30,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryCloseEvent;
+
 import org.spout.vanilla.plugin.component.living.passive.Villager;
 
 /**
@@ -46,7 +47,6 @@ public class VillagerEndTradeEvent extends InventoryCloseEvent implements Cancel
 
 	/**
 	 * Returns the villager which caused this event.
-	 *
 	 * @return villager
 	 */
 	public Villager getVillager() {

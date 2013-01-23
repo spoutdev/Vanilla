@@ -32,9 +32,11 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.MaterialSource;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.api.component.substance.material.VanillaBlockComponent;
 import org.spout.vanilla.api.data.Music;
 import org.spout.vanilla.api.inventory.Slot;
+
 import org.spout.vanilla.plugin.component.substance.Item;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
@@ -42,7 +44,6 @@ import org.spout.vanilla.plugin.material.item.misc.MusicDisc;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class Jukebox extends VanillaBlockComponent {
-
 	@Override
 	public void onInteractBy(Entity entity, Action type, BlockFace face) {
 		super.onInteract(entity, type);
@@ -61,7 +62,6 @@ public class Jukebox extends VanillaBlockComponent {
 
 	/**
 	 * Gets the item that is currently being played by this Jukebox
-	 * 
 	 * @return Played item
 	 */
 	public ItemStack getPlayedItem() {
@@ -70,7 +70,6 @@ public class Jukebox extends VanillaBlockComponent {
 
 	/**
 	 * Sets the item that is currently being played by this Jukebox
-	 * 
 	 * @param item to set to
 	 */
 	public void setPlayedItem(ItemStack item) {
@@ -84,7 +83,6 @@ public class Jukebox extends VanillaBlockComponent {
 
 	/**
 	 * Tests whether this Jukebox can play the material specified
-	 * 
 	 * @param material to play
 	 * @return True if it can play it, False if not
 	 */
@@ -94,7 +92,6 @@ public class Jukebox extends VanillaBlockComponent {
 
 	/**
 	 * Gets the current music this Jukebox plays
-	 * 
 	 * @return Music
 	 */
 	public Music getMusic() {

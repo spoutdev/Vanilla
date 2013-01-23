@@ -32,7 +32,6 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.api.data.MoveReaction;
-import org.spout.vanilla.api.data.RedstonePowerMode;
 
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;

@@ -30,10 +30,10 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 
 import org.spout.vanilla.api.component.substance.material.BrewingStandComponent;
-
-import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.api.event.inventory.BrewingStandCloseEvent;
 import org.spout.vanilla.api.event.inventory.BrewingStandOpenEvent;
+
+import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.plugin.inventory.window.block.BrewingStandWindow;
 

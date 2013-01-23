@@ -39,6 +39,7 @@ import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.data.Animation;
 import org.spout.vanilla.api.data.GameMode;
+
 import org.spout.vanilla.plugin.inventory.window.WindowType;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.VanillaCodecLookupService;
@@ -91,12 +92,12 @@ import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerKickMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerListMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerLoginRequestMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerPingMessage;
-import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerPositionMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerLookMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerPositionLookMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerPositionMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerRespawnMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerSpawnMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerSpawnPositionMessage;
-import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerLookMessage;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowCloseMessage;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowCreativeActionMessage;

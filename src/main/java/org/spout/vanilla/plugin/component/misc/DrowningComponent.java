@@ -33,12 +33,12 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 
 import org.spout.vanilla.api.data.GameMode;
+import org.spout.vanilla.api.event.cause.BlockDamageCause;
+import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
 
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.api.event.cause.BlockDamageCause;
-import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.plugin.material.block.liquid.Water;
 
 /**
@@ -46,7 +46,6 @@ import org.spout.vanilla.plugin.material.block.liquid.Water;
  * The drowning component requires a health component and head component
  */
 public class DrowningComponent extends EntityComponent {
-	
 	private Entity owner;
 	private HealthComponent health;
 	private HeadComponent head;

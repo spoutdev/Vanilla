@@ -36,6 +36,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.data.effect.StatusEffect;
+import org.spout.vanilla.api.event.entity.EntityMetaChangeEvent;
 
 import org.spout.vanilla.plugin.ai.examiner.VanillaBlockExaminer;
 import org.spout.vanilla.plugin.component.VanillaComponent;
@@ -46,7 +47,6 @@ import org.spout.vanilla.plugin.component.misc.FireComponent;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.api.event.entity.EntityMetaChangeEvent;
 
 public abstract class Living extends VanillaComponent {
 	private HeadComponent head;

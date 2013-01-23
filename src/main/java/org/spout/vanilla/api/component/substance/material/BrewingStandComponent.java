@@ -28,5 +28,5 @@ package org.spout.vanilla.api.component.substance.material;
 
 import org.spout.vanilla.api.inventory.Container;
 
-public abstract class BrewingStandComponent  extends ViewedBlockComponent implements Container {
+public abstract class BrewingStandComponent extends ViewedBlockComponent implements Container {
 }

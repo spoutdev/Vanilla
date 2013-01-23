@@ -30,6 +30,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryCloseEvent;
+
 import org.spout.vanilla.api.component.substance.material.BrewingStandComponent;
 
 /**
@@ -46,7 +47,6 @@ public class BrewingStandCloseEvent extends InventoryCloseEvent implements Cance
 
 	/**
 	 * Returns the brewingStand which caused this event.
-	 *
 	 * @return brewingStand
 	 */
 	public BrewingStandComponent getBrewingStand() {

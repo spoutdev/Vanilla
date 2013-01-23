@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.component.player.hud;
 
 import java.awt.Color;
+
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.gui.Widget;
@@ -34,10 +35,10 @@ import org.spout.api.gui.component.LabelComponent;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
+
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 
 public class VanillaExpBar extends ExpBarWidget {
-
 	@Override
 	public void init(Widget exp, float scale, float start_X) {
 		super.init(exp, scale, start_X);

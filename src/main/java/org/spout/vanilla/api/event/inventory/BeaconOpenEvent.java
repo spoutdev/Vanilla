@@ -32,7 +32,6 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryOpenEvent;
 
 import org.spout.vanilla.api.component.substance.material.BeaconComponent;
-import org.spout.vanilla.plugin.component.substance.material.Beacon;
 
 /**
  * Event which is fired when a Beacon is opened / looked into.
@@ -48,7 +47,6 @@ public class BeaconOpenEvent extends InventoryOpenEvent implements Cancellable {
 
 	/**
 	 * Returns the beacon which caused this event.
-	 *
 	 * @return beacon
 	 */
 	public BeaconComponent getBeacon() {

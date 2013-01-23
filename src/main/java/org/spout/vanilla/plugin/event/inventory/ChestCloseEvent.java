@@ -30,6 +30,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryCloseEvent;
+
 import org.spout.vanilla.plugin.component.substance.material.chest.Chest;
 
 /**
@@ -46,7 +47,6 @@ public class ChestCloseEvent extends InventoryCloseEvent implements Cancellable 
 
 	/**
 	 * Returns the chest which caused this event.
-	 *
 	 * @return chest
 	 */
 	public Chest getChest() {

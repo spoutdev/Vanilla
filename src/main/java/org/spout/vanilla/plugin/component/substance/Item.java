@@ -75,7 +75,6 @@ public class Item extends ObjectEntity {
 
 	/**
 	 * Gets the time from which this item can be picked up
-	 * 
 	 * @return uncollectable time in milliseconds
 	 */
 	public long getUncollectableTime() {
@@ -84,7 +83,6 @@ public class Item extends ObjectEntity {
 
 	/**
 	 * Sets the time from which this item can be picked up
-	 * 
 	 * @param uncollectableTime in milliseconds
 	 */
 	public void setUncollectableTime(long uncollectableTime) {
@@ -93,7 +91,6 @@ public class Item extends ObjectEntity {
 
 	/**
 	 * Sets the delay from the current time until this item can be picked up
-	 * 
 	 * @param uncollectableDelay in milliseconds
 	 */
 	public void setUncollectableDelay(long uncollectableDelay) {
@@ -140,8 +137,8 @@ public class Item extends ObjectEntity {
 	@Override
 	public void onTick(float dt) {
 		timeLeft -= dt;
-			if (timeLeft <= 0.05) {
-				getOwner().remove();
+		if (timeLeft <= 0.05) {
+			getOwner().remove();
 		}
 	}
 }

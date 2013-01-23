@@ -52,6 +52,7 @@ import org.spout.api.util.concurrent.AtomicFloat;
 import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.api.data.Time;
 import org.spout.vanilla.api.data.Weather;
+import org.spout.vanilla.api.event.cause.HealthChangeCause;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
@@ -61,7 +62,6 @@ import org.spout.vanilla.plugin.component.misc.LevelComponent;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.configuration.OpConfiguration;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
-import org.spout.vanilla.api.event.cause.HealthChangeCause;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class AdministrationCommands {

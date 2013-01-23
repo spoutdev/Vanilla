@@ -47,7 +47,6 @@ public class FurnaceOpenEvent extends InventoryOpenEvent implements Cancellable 
 
 	/**
 	 * Returns the furnace which caused this event.
-	 *
 	 * @return furnace
 	 */
 	public FurnaceComponent getFurnace() {

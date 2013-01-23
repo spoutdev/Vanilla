@@ -29,7 +29,6 @@ package org.spout.vanilla.api.component.substance.material;
 import org.spout.vanilla.api.inventory.Container;
 
 public abstract class FurnaceComponent extends ViewedBlockComponent implements Container {
-
 	public abstract float getMaxSmeltTime();
 
 	public abstract void setMaxSmeltTime(float maxSmeltTime);

@@ -42,16 +42,16 @@ import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
 
+import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
+import org.spout.vanilla.api.event.cause.HealCause;
+import org.spout.vanilla.api.event.cause.NullDamageCause;
+import org.spout.vanilla.api.event.player.network.PlayerHealthEvent;
 import org.spout.vanilla.api.inventory.Slot;
 
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
-import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
-import org.spout.vanilla.api.event.cause.HealCause;
-import org.spout.vanilla.api.event.cause.NullDamageCause;
-import org.spout.vanilla.api.event.player.network.PlayerHealthEvent;
 import org.spout.vanilla.plugin.material.block.liquid.Water;
 import org.spout.vanilla.plugin.material.item.Food;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityStatusMessage;
@@ -64,7 +64,6 @@ public class HungerComponent extends EntityComponent {
 	//Timer used for when eating. Prevents insta-eating.
 	private float eatingTimer;
 	private Slot foodEating;
-
 	private Human human;
 	private static final float TIMER_START = 4;
 	private float timer = TIMER_START;

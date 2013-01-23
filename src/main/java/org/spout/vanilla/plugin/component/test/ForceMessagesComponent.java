@@ -34,7 +34,7 @@ public class ForceMessagesComponent extends EntityComponent {
 
 	@Override
 	public void onAttached() {
-		((Player)getOwner()).sendMessage("Forcing packet updates for 60 seconds");
+		((Player) getOwner()).sendMessage("Forcing packet updates for 60 seconds");
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class ForceMessagesComponent extends EntityComponent {
 		time -= dt;
 		if (time <= 0) {
 			this.getOwner().detach(ForceMessagesComponent.class);
-			((Player)getOwner()).sendMessage("Ending forced packet updates");
+			((Player) getOwner()).sendMessage("Ending forced packet updates");
 		}
 	}
 }

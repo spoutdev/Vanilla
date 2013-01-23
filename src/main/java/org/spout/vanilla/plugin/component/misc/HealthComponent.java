@@ -38,7 +38,6 @@ import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
-import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
@@ -48,14 +47,6 @@ import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.data.Animation;
-
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
-import org.spout.vanilla.plugin.component.player.HUDComponent;
-import org.spout.vanilla.plugin.component.substance.Item;
-import org.spout.vanilla.plugin.component.substance.XPOrb;
-import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
-import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 import org.spout.vanilla.api.event.cause.DamageCause;
 import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.api.event.cause.HealCause;
@@ -69,6 +60,14 @@ import org.spout.vanilla.api.event.entity.EntityStatusEvent;
 import org.spout.vanilla.api.event.entity.VanillaEntityDeathEvent;
 import org.spout.vanilla.api.event.player.PlayerDeathEvent;
 import org.spout.vanilla.api.event.player.network.PlayerHealthEvent;
+
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.player.HUDComponent;
+import org.spout.vanilla.plugin.component.substance.Item;
+import org.spout.vanilla.plugin.component.substance.XPOrb;
+import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 import org.spout.vanilla.plugin.inventory.player.PlayerArmorInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;

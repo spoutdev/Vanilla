@@ -32,7 +32,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.plugin.data.effect.GeneralEffect;
+import org.spout.vanilla.api.data.effect.GeneralEffect;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class BreakBlockEffect extends GeneralEffect {

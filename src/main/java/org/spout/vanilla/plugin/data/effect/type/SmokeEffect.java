@@ -30,7 +30,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.plugin.data.effect.GeneralEffect;
+import org.spout.vanilla.api.data.effect.GeneralEffect;
 
 public class SmokeEffect extends GeneralEffect {
 	private static final int SMOKE_NORTH_EAST = 0;

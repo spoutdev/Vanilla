@@ -30,6 +30,7 @@ import org.spout.api.protocol.HandlerLookupService;
 
 import org.spout.vanilla.plugin.protocol.handler.EncryptionKeyResponseHandler;
 import org.spout.vanilla.plugin.protocol.handler.ServerListPingHandler;
+import org.spout.vanilla.plugin.protocol.handler.ServerPluginHandler;
 import org.spout.vanilla.plugin.protocol.handler.entity.EntityActionHandler;
 import org.spout.vanilla.plugin.protocol.handler.entity.EntityAnimationHandler;
 import org.spout.vanilla.plugin.protocol.handler.entity.EntityInteractHandler;
@@ -52,8 +53,10 @@ import org.spout.vanilla.plugin.protocol.handler.player.conn.PlayerPingHandler;
 import org.spout.vanilla.plugin.protocol.handler.window.WindowClickHandler;
 import org.spout.vanilla.plugin.protocol.handler.window.WindowCloseHandler;
 import org.spout.vanilla.plugin.protocol.handler.window.WindowCreativeActionHandler;
+import org.spout.vanilla.plugin.protocol.handler.world.block.CommandBlockHandler;
 import org.spout.vanilla.plugin.protocol.handler.world.block.SignHandler;
 import org.spout.vanilla.plugin.protocol.msg.ServerListPingMessage;
+import org.spout.vanilla.plugin.protocol.msg.ServerPluginMessage;
 import org.spout.vanilla.plugin.protocol.msg.auth.EncryptionKeyResponseMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityActionMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityAnimationMessage;
@@ -77,6 +80,7 @@ import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerPositionMessage;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowCloseMessage;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowCreativeActionMessage;
+import org.spout.vanilla.plugin.protocol.msg.world.block.CommandBlockMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.block.SignMessage;
 
 public class VanillaHandlerLookupService extends HandlerLookupService {
@@ -107,6 +111,8 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(EncryptionKeyResponseMessage.class, EncryptionKeyResponseHandler.class);
 			bind(PlayerTabCompleteMessage.class, PlayerTabCompleteHandler.class);
 			bind(PlayerLocaleViewDistanceMessage.class, PlayerLocaleViewDistanceHandler.class);
+			bind(ServerPluginMessage.class, ServerPluginHandler.class);
+			bind(CommandBlockMessage.class, CommandBlockHandler.class);
 		} catch (Exception ex) {
 			throw new ExceptionInInitializerError(ex);
 		}

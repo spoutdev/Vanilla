@@ -24,12 +24,36 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.block.misc;
+package org.spout.vanilla.plugin.protocol.handler.world.block;
 
-import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.api.entity.Player;
+import org.spout.api.event.cause.PlayerCause;
+import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.Session;
+import org.spout.vanilla.plugin.component.substance.material.CommandBlockComponent;
+import org.spout.vanilla.plugin.protocol.msg.world.block.CommandBlockMessage;
 
-public class CommandBlock extends Solid {
-	public CommandBlock(String name, int id) {
-		super(name, id, null);
+public class CommandBlockHandler extends MessageHandler<CommandBlockMessage> {
+
+	public void handleServer(final Session session, final CommandBlockMessage message) {
+		if (!session.hasPlayer()) {
+			return;
+		}
+		
+		final Player player = session.getPlayer();
+		
+		int x = message.getX();
+		int y = message.getY();
+		int z = message.getZ();
+		String command = message.getCommandInput();
+		
+		CommandBlockComponent commandBlock = (CommandBlockComponent) player.getWorld().getBlockComponent(x, y, z);
+		
+		if (commandBlock == null) {
+			return;
+		}
+		
+		commandBlock.setCommandInput(command, new PlayerCause(player));
+		player.sendMessage("Command set: " + command);
 	}
 }

@@ -67,6 +67,7 @@ import org.spout.vanilla.api.data.Dimension;
 import org.spout.vanilla.api.data.GameMode;
 
 import org.spout.vanilla.plugin.command.AdministrationCommands;
+import org.spout.vanilla.plugin.command.CommandBlockCommands;
 import org.spout.vanilla.plugin.command.InputCommandExecutor;
 import org.spout.vanilla.plugin.command.TestCommands;
 import org.spout.vanilla.plugin.component.world.sky.NetherSky;
@@ -80,6 +81,7 @@ import org.spout.vanilla.plugin.inventory.recipe.VanillaRecipes;
 import org.spout.vanilla.plugin.lighting.VanillaLighting;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.component.CommandBlock;
 import org.spout.vanilla.plugin.protocol.LANThread;
 import org.spout.vanilla.plugin.protocol.VanillaProtocol;
 import org.spout.vanilla.plugin.protocol.rcon.RemoteConnectionCore;
@@ -115,6 +117,8 @@ public class VanillaPlugin extends CommonPlugin {
 		final CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
 		final RootCommand root = engine.getRootCommand();
 		root.addSubCommands(this, AdministrationCommands.class, commandRegFactory);
+		CommandBlock.setRootCommand(new RootCommand(this));
+		CommandBlock.getRootCommand().addSubCommands(this, CommandBlockCommands.class, commandRegFactory);
 
 		if (engine.debugMode()) {
 			engine.getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);

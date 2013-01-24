@@ -39,6 +39,7 @@ import org.jboss.netty.util.CharsetUtil;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
@@ -326,6 +327,21 @@ public final class ChannelBufferUtils {
 
 	public static void writeColor(Color color, ChannelBuffer buf) {
 		buf.writeInt(color.getRGB());
+	}
+
+	public static byte getNativeDirection(BlockFace face) {
+		switch (face) {
+			case SOUTH:
+				return 3;
+			case WEST:
+				return 0;
+			case NORTH:
+				return 1;
+			case EAST:
+				return 2;
+			default:
+				return -1;
+		}
 	}
 
 	public static int protocolifyPosition(float pos) {

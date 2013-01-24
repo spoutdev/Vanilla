@@ -34,7 +34,6 @@ import org.spout.vanilla.plugin.component.substance.object.FallingDragonEgg;
 import org.spout.vanilla.plugin.component.substance.object.FireworksRocket;
 import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.component.substance.object.ItemFrame;
-import org.spout.vanilla.plugin.component.substance.material.Skull;
 import org.spout.vanilla.plugin.component.substance.object.EnderCrystal;
 import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
 import org.spout.vanilla.plugin.component.substance.object.Tnt;
@@ -47,9 +46,9 @@ import org.spout.vanilla.plugin.component.substance.object.projectile.Potion;
 import org.spout.vanilla.plugin.component.substance.object.projectile.Snowball;
 import org.spout.vanilla.plugin.component.substance.object.projectile.XPBottle;
 import org.spout.vanilla.plugin.component.substance.object.vehicle.Boat;
-import org.spout.vanilla.plugin.component.substance.object.vehicle.Minecart;
-import org.spout.vanilla.plugin.component.substance.object.vehicle.PoweredMinecart;
-import org.spout.vanilla.plugin.component.substance.object.vehicle.StorageMinecart;
+import org.spout.vanilla.plugin.component.substance.object.vehicle.minecart.Minecart;
+import org.spout.vanilla.plugin.component.substance.object.vehicle.minecart.PoweredMinecart;
+import org.spout.vanilla.plugin.component.substance.object.vehicle.minecart.StorageMinecart;
 
 public enum ObjectType {
 	BOAT(1, Boat.class),

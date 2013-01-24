@@ -24,39 +24,44 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.item.misc;
+package org.spout.vanilla.plugin.material.item.vehicle.minecart;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector2;
 
+import org.spout.vanilla.plugin.component.substance.object.vehicle.minecart.MinecartBase;
+import org.spout.vanilla.plugin.material.block.rail.RailBase;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
-public class ItemFrame extends VanillaItemMaterial {
-	public ItemFrame(String name, int id, Vector2 pos) {
-		super(name, id, pos);
+public class MinecartItem extends VanillaItemMaterial {
+	private Class<? extends MinecartBase> spawnedEntity;
+
+	public MinecartItem(String name, int id, Class<? extends MinecartBase> spawnedEntity) {
+		super(name, id, null);
+		this.spawnedEntity = spawnedEntity;
+	}
+
+	public Class<? extends MinecartBase> getSpawnedEntity() {
+		return spawnedEntity;
 	}
 
 	@Override
-	public void onInteract(Entity entity, Block block, Action type, BlockFace face) {
-		if (!(entity instanceof Player) || type != Action.RIGHT_CLICK || face == BlockFace.BOTTOM || face == BlockFace.THIS || face == BlockFace.TOP) {
-			return;
-		}
+	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
+		super.onInteract(entity, block, type, clickedface);
 
-		World world = block.getWorld();
-		Point pos = block.getPosition();
-		System.out.println("Position: " + pos);
-		Entity e = world.createEntity(new Point(world, pos.getBlockX(), pos.getBlockY(), pos.getBlockZ()),
-				org.spout.vanilla.plugin.component.substance.object.ItemFrame.class);
-		org.spout.vanilla.plugin.component.substance.object.ItemFrame frame
-				= e.add(org.spout.vanilla.plugin.component.substance.object.ItemFrame.class);
-		frame.setOrientation(face);
-		System.out.println("Spawning");
-		world.spawnEntity(e);
+		if (Action.RIGHT_CLICK.equals(type)) {
+			//is clicked position a track?
+			if (block.getMaterial() instanceof RailBase) {
+				//spawn minecart on rail
+				MinecartBase minecart = block.getWorld().createEntity(block.getPosition(), getSpawnedEntity()).add(getSpawnedEntity());
+				block.getWorld().spawnEntity(minecart.getOwner());
+				PlayerUtil.getHeldSlot(entity).addAmount(-1);
+				//TODO: Subtracting one from the held item?
+				//Shouldn't the held item be passed to this function instead?
+			}
+		}
 	}
 }

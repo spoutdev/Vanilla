@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.component.substance.object.vehicle;
+package org.spout.vanilla.plugin.component.substance.object.vehicle.minecart;
 
 import java.util.ArrayList;
 import java.util.List;

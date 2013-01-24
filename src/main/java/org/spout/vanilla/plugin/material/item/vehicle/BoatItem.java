@@ -24,44 +24,46 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.item.minecart;
+package org.spout.vanilla.plugin.material.item.vehicle;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.LoadOption;
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.plugin.component.substance.object.vehicle.MinecartBase;
-import org.spout.vanilla.plugin.material.block.rail.RailBase;
+import org.spout.vanilla.plugin.component.misc.HeadComponent;
+import org.spout.vanilla.plugin.component.substance.object.vehicle.Boat;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
-import org.spout.vanilla.plugin.util.PlayerUtil;
 
-public class MinecartItem extends VanillaItemMaterial {
-	private Class<? extends MinecartBase> spawnedEntity;
-
-	public MinecartItem(String name, int id, Class<? extends MinecartBase> spawnedEntity) {
-		super(name, id, null);
-		this.spawnedEntity = spawnedEntity;
-	}
-
-	public Class<? extends MinecartBase> getSpawnedEntity() {
-		return spawnedEntity;
+public class BoatItem extends VanillaItemMaterial {
+	public BoatItem(String name, int id, Vector2 pos) {
+		super(name, id, pos);
 	}
 
 	@Override
-	public void onInteract(Entity entity, Block block, Action type, BlockFace clickedface) {
-		super.onInteract(entity, block, type, clickedface);
-
-		if (Action.RIGHT_CLICK.equals(type)) {
-			//is clicked position a track?
-			if (block.getMaterial() instanceof RailBase) {
-				//spawn minecart on rail
-				MinecartBase minecart = block.getWorld().createEntity(block.getPosition(), getSpawnedEntity()).add(getSpawnedEntity());
-				block.getWorld().spawnEntity(minecart.getOwner());
-				PlayerUtil.getHeldSlot(entity).addAmount(-1);
-				//TODO: Subtracting one from the held item?
-				//Shouldn't the held item be passed to this function instead?
-			}
+	public void onInteract(Entity entity, Action type) {
+		if (!(entity instanceof Player) || type != Action.RIGHT_CLICK) {
+			return;
 		}
+
+		HeadComponent head = entity.add(HeadComponent.class);
+		Block b = head.getBlockView(1).next();
+		if (!b.isMaterial(VanillaMaterials.WATER)) {
+			System.out.println("No water");
+			return;
+		}
+
+		World world = b.getWorld();
+		world.createAndSpawnEntity(b.getPosition().add(0, 0.25f, 0), Boat.class, LoadOption.LOAD_ONLY);
+	}
+
+	@Override
+	public void onInteract(Entity entity, Block block, Action type, BlockFace face) {
+		onInteract(entity, type);
 	}
 }

@@ -24,35 +24,65 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.component.substance.object.vehicle;
+package org.spout.vanilla.plugin.component.substance.object.vehicle.minecart;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.util.Parameter;
+
+import org.spout.vanilla.api.event.entity.EntityMetaChangeEvent;
+import org.spout.vanilla.api.inventory.Slot;
+import org.spout.vanilla.api.material.Fuel;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
-import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.inventory.block.ChestInventory;
-import org.spout.vanilla.plugin.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
 import org.spout.vanilla.plugin.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
+import org.spout.vanilla.plugin.util.PlayerUtil;
 
-public class StorageMinecart extends MinecartBase {
+public class PoweredMinecart extends MinecartBase {
+	private boolean isFueled = false;
+	private float fuel = 0f;
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MinecartObjectEntityProtocol(ObjectType.STORAGE_MINECART));
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MinecartObjectEntityProtocol(ObjectType.POWERED_MINECART));
 		if (getAttachedCount() == 1) {
-			getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.CHEST, 1));
+			getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.FURNACE, 1));
 		}
 	}
 
-	public ChestInventory getInventory() {
-		return this.getData().get(VanillaData.CHEST_INVENTORY);
+	public void setFueled(boolean isFueled) {
+		if (isFueled) {
+			fuel = 180f;
+		} else {
+			fuel = 0f;
+		}
+		updateMetadata();
+	}
+
+	public boolean isFueled() {
+		return isFueled;
+	}
+
+	@Override
+	public boolean canTick() {
+		return fuel > 0f;
+	}
+
+	@Override
+	public void onTick(float dt) {
+		fuel -= dt;
+		if (fuel <= 0f) {
+			updateMetadata();
+		}
 	}
 
 	@Override
@@ -60,19 +90,23 @@ public class StorageMinecart extends MinecartBase {
 		if (!(source instanceof Player)) {
 			return;
 		}
+
 		if (Action.RIGHT_CLICK.equals(action)) {
-			source.add(WindowHolder.class).openWindow(new ChestWindow((Player) source, getInventory(), "Minecart"));
+			Slot slot = PlayerUtil.getHeldSlot(source);
+			if (slot.get() != null) {
+				ItemStack stack = slot.get();
+				if (stack.getMaterial() instanceof Fuel) {
+					setFueled(true);
+					slot.addAmount(-1);
+				}
+			}
 		}
 		super.onInteract(action, source);
 	}
 
-	@Override
-	protected void onDestroy() {
-		for (ItemStack stack : (ItemStack[]) getInventory().toArray()) {
-			if (stack != null) {
-				getOwner().get(DropComponent.class).addDrop(stack);
-			}
-		}
-		super.onDestroy();
+	private void updateMetadata() {
+		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (this.fuel > 0f ? 1 : 0))); // Powered flag
+		getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), parameters));
 	}
 }

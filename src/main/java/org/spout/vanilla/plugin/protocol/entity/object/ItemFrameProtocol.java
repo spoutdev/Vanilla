@@ -38,6 +38,7 @@ import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.plugin.component.substance.object.ItemFrame;
+import org.spout.vanilla.plugin.protocol.ChannelBufferUtils;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.spawn.EntityObjectMessage;
 
@@ -49,7 +50,7 @@ public class ItemFrameProtocol extends ObjectEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
 		List<Message> msgs = new ArrayList<Message>();
-		msgs.add(new EntityObjectMessage(entity, (byte) typeId, toByte(entity.add(ItemFrame.class).getOrientation()), rm));
+		msgs.add(new EntityObjectMessage(entity, (byte) typeId, ChannelBufferUtils.getNativeDirection(entity.add(ItemFrame.class).getOrientation()), rm));
 		msgs.add(new EntityMetadataMessage(entity.getId(), getSpawnParameters(entity)));
 		return msgs;
 	}
@@ -60,23 +61,7 @@ public class ItemFrameProtocol extends ObjectEntityProtocol {
 		ItemFrame frame = entity.add(ItemFrame.class);
 		Material mat = frame.getMaterial();
 		params.add(new Parameter<ItemStack>(Parameter.TYPE_ITEM, 2, mat == null ? null : new ItemStack(mat, 1)));
-		System.out.println("Orientation: " + toByte(frame.getOrientation()));
 		System.out.println("Face: " + frame.getOrientation());
 		return params;
-	}
-
-	private byte toByte(BlockFace face) {
-		switch (face) {
-			case SOUTH:
-				return 3;
-			case WEST:
-				return 0;
-			case NORTH:
-				return 1;
-			case EAST:
-				return 2;
-			default:
-				throw new IllegalArgumentException("Specified BlockFace must be NESW");
-		}
 	}
 }

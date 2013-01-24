@@ -24,9 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.item.minecart;
+package org.spout.vanilla.plugin.material.item.vehicle.minecart;
 
-import org.spout.vanilla.plugin.component.substance.object.vehicle.PoweredMinecart;
+import org.spout.vanilla.plugin.component.substance.object.vehicle.minecart.PoweredMinecart;
 
 public class PoweredMinecartItem extends MinecartItem {
 	public PoweredMinecartItem(String name, int id) {

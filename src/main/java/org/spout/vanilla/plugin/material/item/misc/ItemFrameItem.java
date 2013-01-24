@@ -24,30 +24,38 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.protocol.entity.object.vehicle;
-
-import java.util.List;
+package org.spout.vanilla.plugin.material.item.misc;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
+import org.spout.api.entity.Player;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.plugin.component.substance.object.vehicle.Boat;
-import org.spout.vanilla.plugin.protocol.ChannelBufferUtils;
-import org.spout.vanilla.plugin.protocol.entity.object.ObjectEntityProtocol;
-import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
+import org.spout.vanilla.plugin.component.substance.object.ItemFrame;
+import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
-public class BoatObjectEntityProtocol extends ObjectEntityProtocol {
-	public BoatObjectEntityProtocol() {
-		super(ObjectType.BOAT);
+public class ItemFrameItem extends VanillaItemMaterial {
+	public ItemFrameItem(String name, int id, Vector2 pos) {
+		super(name, id, pos);
 	}
 
 	@Override
-	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		List<Parameter<?>> params = super.getSpawnParameters(entity);
-		Boat boat = entity.add(Boat.class);
-		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 17, boat.getTimeSinceLastHit()));
-		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 18, (int) ChannelBufferUtils.getNativeDirection(boat.getForwardDirection())));
-		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 19, boat.getDamageTaken()));
-		return params;
+	public void onInteract(Entity entity, Block block, Action type, BlockFace face) {
+		if (!(entity instanceof Player) || type != Action.RIGHT_CLICK || face == BlockFace.BOTTOM || face == BlockFace.THIS || face == BlockFace.TOP) {
+			return;
+		}
+
+		World world = block.getWorld();
+		Point pos = block.getPosition();
+		System.out.println("Position: " + pos);
+		Entity e = world.createEntity(new Point(world, pos.getBlockX(), pos.getBlockY(), pos.getBlockZ()), ItemFrame.class);
+		ItemFrame frame = e.add(ItemFrame.class);
+		frame.setOrientation(face);
+		System.out.println("Spawning");
+		world.spawnEntity(e);
 	}
 }

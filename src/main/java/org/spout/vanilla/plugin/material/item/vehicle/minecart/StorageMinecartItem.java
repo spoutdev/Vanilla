@@ -24,16 +24,12 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.component.substance.object.vehicle;
+package org.spout.vanilla.plugin.material.item.vehicle.minecart;
 
-import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
-import org.spout.vanilla.plugin.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
+import org.spout.vanilla.plugin.component.substance.object.vehicle.minecart.StorageMinecart;
 
-public class Minecart extends MinecartBase {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MinecartObjectEntityProtocol(ObjectType.MINECART));
+public class StorageMinecartItem extends MinecartItem {
+	public StorageMinecartItem(String name, int id) {
+		super(name, id, StorageMinecart.class);
 	}
 }

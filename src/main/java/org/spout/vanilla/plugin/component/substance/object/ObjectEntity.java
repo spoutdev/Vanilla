@@ -36,12 +36,8 @@ public abstract class ObjectEntity extends VanillaComponent {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		physics = getOwner().add(PhysicsComponent.class);
 	}
 
-	public PhysicsComponent getPhysics() {
-		return physics;
-	}
 	//
 	//	@Override
 	//	public void onCollided(Point colliderPoint, Point collidedPoint, Block block) {

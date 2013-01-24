@@ -28,6 +28,7 @@ package org.spout.vanilla.plugin.component.substance.object;
 
 import com.bulletphysics.collision.shapes.BoxShape;
 
+import org.spout.api.component.impl.PhysicsComponent;
 import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
@@ -74,7 +75,7 @@ public class Tnt extends ObjectEntity {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.PRIMED_TNT));
 		holder = getOwner();
 		super.onAttached();
-		getPhysics().setCollisionShape(new BoxShape(1, 1, 1));
+		getOwner().add(PhysicsComponent.class).setCollisionShape(new BoxShape(1, 1, 1));
 	}
 
 	@Override

@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.block.misc;
 
+import org.spout.api.component.impl.PhysicsComponent;
 import org.spout.api.event.Cause;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
@@ -76,7 +77,7 @@ public class TntBlock extends Solid implements RedstoneTarget, Burnable {
 		World world = pos.getWorld();
 		Tnt tnt = world.createEntity(pos, Tnt.class).add(Tnt.class);
 		double v = 0.5d;
-		tnt.getPhysics().applyImpulse(new Vector3(v, v, v));
+		tnt.getOwner().add(PhysicsComponent.class).applyImpulse(new Vector3(v, v, v));
 		world.spawnEntity(tnt.getOwner());
 		block.setMaterial(VanillaMaterials.AIR, cause);
 	}

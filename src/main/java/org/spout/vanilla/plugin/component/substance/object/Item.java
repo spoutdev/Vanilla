@@ -53,7 +53,7 @@ public class Item extends ObjectEntity {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
-		PhysicsComponent physics = getPhysics();
+		PhysicsComponent physics = getOwner().add(PhysicsComponent.class);
 		physics.setMass(5f);
 		physics.setCollisionShape(new BoxShape(0.125F, 0.125F, 0.125F));
 		physics.setRestitution(0f);
@@ -126,7 +126,7 @@ public class Item extends ObjectEntity {
 		Item item = entity.add(Item.class);
 		item.setUncollectableDelay(DROP_PICKUP_DELAY);
 		item.setItemStack(itemStack);
-		item.getPhysics().applyImpulse(velocity);
+		entity.add(PhysicsComponent.class).applyImpulse(velocity);
 		if (position.getChunk(LoadOption.NO_LOAD) != null) {
 			position.getWorld().spawnEntity(entity);
 		}

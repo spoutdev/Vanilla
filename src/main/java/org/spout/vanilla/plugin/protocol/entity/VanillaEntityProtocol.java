@@ -31,7 +31,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.spout.api.component.impl.PhysicsComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.math.Vector3;
@@ -70,10 +69,10 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 	@Override
 	public List<Message> getUpdateMessages(Entity entity, RepositionManager rm, boolean force) {
 		// Movement
-		final Transform prevTransform = rm.convert(entity.getTransform().getTransform());
-		final Transform newTransform = rm.convert(entity.getTransform().getTransformLive());
+		final Transform prevTransform = rm.convert(entity.getScene().getTransform());
+		final Transform newTransform = rm.convert(entity.getScene().getTransform());
 
-		final boolean looked = entity.getTransform().isRotationDirty();
+		final boolean looked = entity.getScene().isRotationDirty();
 
 		final int lastX = protocolifyPosition(prevTransform.getPosition().getX());
 		final int lastY = protocolifyPosition(prevTransform.getPosition().getY());
@@ -121,10 +120,10 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		}
 
 		// Physics
-		PhysicsComponent physics = entity.get(PhysicsComponent.class);
-		if (physics != null && physics.isLinearVelocityDirty()) {
+		//TODO: Actually not used?
+		/*if (physics != null && physics.isLinearVelocityDirty()) {
 			messages.add(new EntityVelocityMessage(entity.getId(), new Vector3(0, 0, 0)));
-		}
+		}*/
 
 		// Extra metadata
 		List<Parameter<?>> params = getUpdateParameters(entity);

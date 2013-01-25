@@ -415,10 +415,10 @@ public class AdministrationCommands {
 			throw new CommandException("Only a player may call this command.");
 		}
 		Player player = (Player) source;
-		if (!(player.getTransform().getPosition().getWorld().getGenerator() instanceof BiomeGenerator)) {
+		if (!(player.getScene().getPosition().getWorld().getGenerator() instanceof BiomeGenerator)) {
 			throw new CommandException("This map does not appear to have any biome data.");
 		}
-		Point pos = player.getTransform().getPosition();
+		Point pos = player.getScene().getPosition();
 		Biome biome = pos.getWorld().getBiome(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ());
 		source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Current biome: ", ChatStyle.WHITE, (biome != null ? biome.getName() : "none"));
 	}

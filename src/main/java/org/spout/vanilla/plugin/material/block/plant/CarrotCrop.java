@@ -35,6 +35,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
+import org.spout.api.math.MathHelper;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.api.inventory.Slot;
@@ -131,7 +132,7 @@ public class CarrotCrop extends GroundAttachable implements Growing, Crop, Dynam
 		if (!this.isFullyGrown(block)) {
 			if (block.translate(BlockFace.TOP).getLight() >= this.getMinimumLightToGrow()) {
 				// Grow using a calculated chance of growing
-				Random rand = new Random(block.getWorld().getAge());
+				final Random rand = MathHelper.getRandom();
 				int chance = VanillaBlockMaterial.getCropGrowthChance(block);
 				if (rand.nextInt(chance + 1) == 0) {
 					this.setGrowthStage(block, this.getGrowthStage(block) + 1);

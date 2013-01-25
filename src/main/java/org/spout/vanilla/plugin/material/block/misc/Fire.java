@@ -37,6 +37,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
+import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.api.data.Dimension;
 import org.spout.vanilla.api.material.Burnable;
@@ -145,12 +146,12 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 
 	@Override
 	public void onFirstUpdate(Block block, long currentTime) {
-		block.dynamicUpdate(currentTime + 1000 + (new Random()).nextInt(2000), true);
+		block.dynamicUpdate(currentTime + 1000 + (MathHelper.getRandom()).nextInt(2000), true);
 	}
 
 	@Override
 	public void onDynamicUpdate(Block b, long updateTime, int data) {
-		Random rand = new Random();
+		final Random rand = MathHelper.getRandom();
 
 		// Make fire strength increase over time
 		short blockData = b.getData();

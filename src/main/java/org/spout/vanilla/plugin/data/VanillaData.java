@@ -35,6 +35,7 @@ import org.spout.api.map.DefaultedKeyArray;
 import org.spout.api.map.DefaultedKeyFactory;
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
@@ -58,7 +59,7 @@ import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
  * * Common Vanilla-like data mappings that are found in Vanilla.
  */
 public class VanillaData {
-	private static final Random random = new Random();
+	private static final Random random = MathHelper.getRandom();
 	//World-specific
 	public static final DefaultedKey<Dimension> DIMENSION = new DefaultedKeyImpl<Dimension>("dimension", Dimension.NORMAL);
 	public static final DefaultedKey<Difficulty> DIFFICULTY = new DefaultedKeyImpl<Difficulty>("difficulty", Difficulty.EASY);

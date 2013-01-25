@@ -136,7 +136,7 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 		if (!this.isFullyGrown(block)) {
 			if (block.translate(BlockFace.TOP).getLight() >= this.getMinimumLightToGrow()) {
 				// Grow using a calculated chance of growing
-				Random rand = new Random(block.getWorld().getAge());
+				final Random rand = MathHelper.getRandom();
 				int chance = VanillaBlockMaterial.getCropGrowthChance(block);
 				if (rand.nextInt(chance + 1) == 0) {
 					this.setGrowthStage(block, this.getGrowthStage(block) + 1);
@@ -147,6 +147,6 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 	}
 
 	private long getGrowthTime(Block block) {
-		return 20000L + new Random(block.getWorld().getAge()).nextInt(60000);
+		return 20000L + MathHelper.getRandom().nextInt(60000);
 	}
 }

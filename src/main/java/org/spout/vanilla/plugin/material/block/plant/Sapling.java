@@ -36,6 +36,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
+import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.api.material.Fuel;
@@ -55,7 +56,7 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 	public static final Sapling BIRCH = new Sapling("Birch Sapling", 2, DEFAULT);
 	public static final Sapling JUNGLE = new Sapling("Jungle Sapling", 3, DEFAULT);
 	public final float BURN_TIME = 5;
-	private static final short dataMask = 0x3;
+	private static final short dataMask = 0x3;	
 
 	private Sapling(String name) {
 		super(dataMask, name, 6, null);
@@ -120,7 +121,7 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 	 * @param type of tree
 	 */
 	public void growTree(Block block, Sapling type) {
-		TreeObject.growTree(type, block, new Random());
+		TreeObject.growTree(type, block, MathHelper.getRandom());
 	}
 
 	@Override
@@ -147,6 +148,6 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 	}
 
 	private long getGrowthTime(Block block) {
-		return 240000L + new Random(block.getWorld().getAge()).nextInt(240000);
+		return 240000L + MathHelper.getRandom().nextInt(240000);
 	}
 }

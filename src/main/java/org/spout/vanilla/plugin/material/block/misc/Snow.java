@@ -32,6 +32,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
+import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.api.material.InitializableMaterial;
 
@@ -118,7 +119,7 @@ public class Snow extends GroundAttachable implements DynamicMaterial, Initializ
 		} else { // not warm enough to melt the snow and last poll was a long time ago, might as well skip repeated polls
 			long age = block.getWorld().getAge();
 			if (age - updateTime > POLL_TIME) {
-				block.dynamicUpdate(age + new Random().nextInt((int) POLL_TIME), true);
+				block.dynamicUpdate(age + MathHelper.getRandom().nextInt((int) POLL_TIME), true);
 				return;
 			}
 		}

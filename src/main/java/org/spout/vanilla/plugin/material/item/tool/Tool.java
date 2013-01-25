@@ -34,6 +34,7 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector2;
 import org.spout.api.util.flag.Flag;
 
@@ -48,7 +49,7 @@ import org.spout.vanilla.plugin.material.enchantment.Enchantments;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public abstract class Tool extends VanillaItemMaterial {
-	private final Random rand = new Random();
+	private static final Random rand = MathHelper.getRandom();
 	private short durability;
 	private Map<BlockMaterial, Float> strengthModifiers = new HashMap<BlockMaterial, Float>();
 	private ToolType toolType;

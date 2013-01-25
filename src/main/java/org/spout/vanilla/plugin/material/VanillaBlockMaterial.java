@@ -46,6 +46,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 import org.spout.api.render.RenderMaterial;
@@ -162,7 +163,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	@Override
 	public void onPostDestroy(Block block, Set<Flag> flags) {
 		//TODO stack items together for more performance
-		Random random = new Random(block.getWorld().getAge());
+		final Random random = MathHelper.getRandom();
 		for (ItemStack item : this.getDrops().getDrops(random, flags)) {
 			Item.dropNaturally(block.getPosition(), item);
 		}

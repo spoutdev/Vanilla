@@ -35,6 +35,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.api.material.TimedCraftable;
 
@@ -56,7 +57,7 @@ public class Cactus extends StackGrowingBase implements TimedCraftable {
 	@Override
 	public long getGrowTime(Block block) {
 		//Requires 16 minutes
-		return (16 * 60 * 1000) + new Random(block.getWorld().getAge()).nextInt(21000) - 10000;
+		return (16 * 60 * 1000) + MathHelper.getRandom().nextInt(21000) - 10000;
 	}
 
 	@Override

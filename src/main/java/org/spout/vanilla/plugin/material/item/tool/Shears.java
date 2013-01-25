@@ -32,6 +32,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.api.data.GameMode;
 
@@ -44,7 +45,7 @@ import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class Shears extends Tool {
-	private Random rand = new Random();
+	private static final Random rand = MathHelper.getRandom();
 
 	public Shears(String name, int id, short durability) {
 		super(name, id, durability, ToolType.SHEARS, null);

@@ -39,6 +39,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
+import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.api.material.block.Plant;
@@ -117,7 +118,7 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 
 	@Override
 	public void onDynamicUpdate(Block block, long updateTime, int data) {
-		Random rand = new Random(block.getWorld().getAge());
+		final Random rand = MathHelper.getRandom();
 		if (rand.nextInt(25) == 0) {
 			// can we spread?
 			int max = MAX_PER_GROUP;
@@ -146,6 +147,6 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 	}
 
 	private long getGrowthTime(Block block) {
-		return 120000L + new Random(block.getWorld().getAge()).nextInt(120000);
+		return 120000L + MathHelper.getRandom().nextInt(120000);
 	}
 }

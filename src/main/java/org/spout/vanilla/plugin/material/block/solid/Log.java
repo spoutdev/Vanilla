@@ -228,7 +228,6 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 		private final static int LOG_SCAN_RANGE = 4;
 		private final List<Block> blocks = new ArrayList<Block>(SCAN_RADIUS * SCAN_RADIUS * SCAN_RADIUS);
 		private final Region r;
-		private static final Random rand = MathHelper.getRandom();
 		private final Cause<?> cause;
 		private final Block center;
 
@@ -247,6 +246,8 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 
 		@Override
 		public void run() {
+			final Random rand = MathHelper.getRandom();
+			
 			boolean found = false;
 			int start = rand.nextInt(blocks.size());
 			for (int i = start; i < start + blocks.size(); i++) {

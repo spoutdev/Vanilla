@@ -28,8 +28,6 @@ package org.spout.vanilla.plugin.material.item.misc;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -44,8 +42,6 @@ import org.spout.vanilla.plugin.component.substance.Painting;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public class PaintingItem extends VanillaItemMaterial {
-	private static final Random random = MathHelper.getRandom();
-
 	public PaintingItem(String name, int id) {
 		super(name, id, null);
 	}
@@ -65,7 +61,7 @@ public class PaintingItem extends VanillaItemMaterial {
 					list.add(paintingType);
 				}
 			}
-			PaintingType paintingType = list.get(random.nextInt(list.size() - 1));
+			PaintingType paintingType = list.get(MathHelper.getRandom().nextInt(list.size() - 1));
 
 			Entity e = world.createEntity(paintingType.getCenter(direction, block.getPosition()), Painting.class);
 			Painting painting = e.add(Painting.class);

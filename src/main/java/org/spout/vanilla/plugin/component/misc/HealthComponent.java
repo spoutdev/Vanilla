@@ -91,7 +91,6 @@ public class HealthComponent extends EntityComponent {
 	private final Widget hearts = new Widget();
 	private boolean animateHearts;
 	private int heartAnimationTicks;
-	private static final Random random = MathHelper.getRandom();
 	private static final float SCALE = 0.75f; // TODO: Apply directly from engine
 	private static final float START_X = -0.71f * SCALE;
 
@@ -198,7 +197,7 @@ public class HealthComponent extends EntityComponent {
 						RenderPart heart = parts.get(i);
 						RenderPart heartBg = parts.get(i + 10);
 
-						if (random.nextBoolean()) {
+						if (MathHelper.getRandom().nextBoolean()) {
 							y = -0.765f; // Twitch up
 						} else {
 							y = -0.775f; // Twitch down

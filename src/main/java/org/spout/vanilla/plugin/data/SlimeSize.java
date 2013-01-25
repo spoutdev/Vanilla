@@ -26,23 +26,17 @@
  */
 package org.spout.vanilla.plugin.data;
 
-import java.util.Random;
-
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.math.MathHelper;
 
 public class SlimeSize extends DefaultedKeyImpl<Byte> {
-	private static final Random random = MathHelper.getRandom();
-
 	public SlimeSize(String keyString) {
 		super(keyString, null);
 	}
 
 	@Override
 	public Byte getDefaultValue() {
-		synchronized (random) {
-			byte[] validSlimeSizes = {0, 1, 2, 4};
-			return validSlimeSizes[random.nextInt(validSlimeSizes.length)];
-		}
+		byte[] validSlimeSizes = {0, 1, 2, 4};
+		return validSlimeSizes[MathHelper.getRandom().nextInt(validSlimeSizes.length)];
 	}
 }

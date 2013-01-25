@@ -28,8 +28,6 @@ package org.spout.vanilla.plugin.component.misc;
 
 import java.awt.Color;
 import java.util.List;
-import java.util.Random;
-
 import org.spout.api.Client;
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -72,7 +70,6 @@ public class HungerComponent extends EntityComponent {
 	// Client
 	private final Widget widget = new Widget();
 	private static final float SCALE = 0.75f; // TODO: Apply directly from engine
-	private static final Random random = MathHelper.getRandom();
 	private int hungerTicks;
 
 	@Override
@@ -252,7 +249,7 @@ public class HungerComponent extends EntityComponent {
 							RenderPart part = parts.get(i);
 							RenderPart partBg = parts.get(i + 10);
 
-							int rand = random.nextInt(3);
+							int rand = MathHelper.getRandom().nextInt(3);
 							if (rand == 0) {
 								y = -0.765f; // Twitch up
 							} else if (rand == 1) {

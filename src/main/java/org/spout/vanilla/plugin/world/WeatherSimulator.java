@@ -43,7 +43,6 @@ import org.spout.vanilla.plugin.data.VanillaData;
 
 public class WeatherSimulator extends BasicTickable {
 	private final VanillaSky sky;
-	private final Random random = MathHelper.getRandom();
 	private final AtomicBoolean forceWeatherUpdate = new AtomicBoolean(false);
 	private LightningSimulator lightning;
 	private final SnowSimulator snowfall;
@@ -151,6 +150,7 @@ public class WeatherSimulator extends BasicTickable {
 
 	@Override
 	public void onTick(float dt) {
+		final Random random = MathHelper.getRandom();
 		float secondsUntilWeatherChange = sky.getData().get(VanillaData.WEATHER_CHANGE_TIME);
 		secondsUntilWeatherChange -= dt;
 		if (forceWeatherUpdate.compareAndSet(true, false) || secondsUntilWeatherChange <= 0) {

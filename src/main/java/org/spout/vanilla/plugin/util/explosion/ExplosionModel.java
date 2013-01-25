@@ -51,7 +51,6 @@ public abstract class ExplosionModel {
 	private List<ExplosionBlockSlot> blockList = new ArrayList<ExplosionBlockSlot>();
 	private Map<Vector3, ExplosionBlockSlot> blocks = new HashMap<Vector3, ExplosionBlockSlot>();
 	public List<Block> blocksToDestroy = new ArrayList<Block>(100);
-	public Random random = org.spout.api.math.MathHelper.getRandom();
 
 	public synchronized ExplosionBlockSlot getBlock(Vector3 position) {
 		ExplosionBlockSlot block = this.blocks.get(position);
@@ -125,7 +124,7 @@ public abstract class ExplosionModel {
 				if (material == VanillaMaterials.AIR) {
 					if (fire) {
 						BlockMaterial below = block.translate(BlockFace.BOTTOM).getMaterial();
-						if (below.isSolid() && this.random.nextInt(3) == 0) {
+						if (below.isSolid() && org.spout.api.math.MathHelper.getRandom().nextInt(3) == 0) {
 							block.setMaterial(VanillaMaterials.FIRE);
 						}
 					}

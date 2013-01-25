@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.plugin.data;
 
-import java.util.Random;
-
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
@@ -35,7 +33,6 @@ import org.spout.api.map.DefaultedKeyArray;
 import org.spout.api.map.DefaultedKeyFactory;
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
@@ -59,7 +56,6 @@ import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
  * * Common Vanilla-like data mappings that are found in Vanilla.
  */
 public class VanillaData {
-	private static final Random random = MathHelper.getRandom();
 	//World-specific
 	public static final DefaultedKey<Dimension> DIMENSION = new DefaultedKeyImpl<Dimension>("dimension", Dimension.NORMAL);
 	public static final DefaultedKey<Difficulty> DIFFICULTY = new DefaultedKeyImpl<Difficulty>("difficulty", Difficulty.EASY);
@@ -96,7 +92,7 @@ public class VanillaData {
 	// Jukebox
 	public static final DefaultedKey<ItemStack> JUKEBOX_ITEM = new DefaultedKeyImpl<ItemStack>("playedItem", null);
 	// TNT
-	public static final DefaultedKey<Float> FUSE = new DefaultedKeyImpl<Float>("fuse", (float) random.nextInt(5) + 1);
+	public static final DefaultedKey<Float> FUSE = new DefaultedKeyImpl<Float>("fuse", 5F);
 	public static final DefaultedKey<Float> EXPLOSION_SIZE = new DefaultedKeyImpl<Float>("explosion_size", 4f);
 	public static final DefaultedKey<Boolean> MAKES_FIRE = new DefaultedKeyImpl<Boolean>("makes_fire", false);
 	//Entity data

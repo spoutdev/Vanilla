@@ -43,7 +43,7 @@ public class BlazeEntityProtocol extends CreatureProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, ATTACK_INDEX, (byte) (entity.add(Blaze.class).isAttacking() ? 1 : 0)));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, ATTACK_INDEX, (byte) (entity.add(Blaze.class).isAggressive() ? 1 : 0)));
 		return parameters;
 	}
 }

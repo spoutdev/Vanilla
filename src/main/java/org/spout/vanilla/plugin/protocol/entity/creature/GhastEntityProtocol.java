@@ -44,7 +44,7 @@ public class GhastEntityProtocol extends CreatureProtocol {
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
 		Ghast ghast = entity.add(Ghast.class);
-		byte data = ghast.haveRedEyes() ? (byte) 1 : 0;
+		byte data = ghast.hasRedEyes() ? (byte) 1 : 0;
 		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, RED_EYES, data));
 
 		return parameters;

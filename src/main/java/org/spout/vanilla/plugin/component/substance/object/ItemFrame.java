@@ -58,7 +58,7 @@ public class ItemFrame extends ObjectEntity {
 		Entity entity = getOwner();
 		switch (action) {
 			case LEFT_CLICK:
-				Point pos = entity.getTransform().getPosition();
+				Point pos = entity.getScene().getPosition();
 				Item.dropNaturally(pos, new ItemStack(material, 1));
 				Item.dropNaturally(pos, new ItemStack(VanillaMaterials.ITEM_FRAME, 1));
 				entity.remove();

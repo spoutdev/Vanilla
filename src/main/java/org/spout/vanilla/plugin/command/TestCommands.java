@@ -37,7 +37,7 @@ import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.CommandPermissions;
 import org.spout.api.component.Component;
-import org.spout.api.component.impl.HitBlockComponent;
+import org.spout.api.component.impl.InteractComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityPrefab;
 import org.spout.api.entity.Player;
@@ -221,7 +221,7 @@ public class TestCommands {
 		}
 
 		Player player = (Player) source;
-		if (VanillaObjects.NETHER_PORTAL.find(player.getTransform().getPosition(), args.getInteger(0))) {
+		if (VanillaObjects.NETHER_PORTAL.find(player.getScene().getPosition(), args.getInteger(0))) {
 			player.sendMessage(ChatStyle.BRIGHT_GREEN, "Found portal frame!");
 		} else {
 			player.sendMessage(ChatStyle.RED, "Portal frame not found.");
@@ -245,7 +245,7 @@ public class TestCommands {
 		if (Spout.getPlatform() != Platform.CLIENT) {
 			blockIt = player.get(HeadComponent.class).getBlockView();
 		} else {
-			blockIt = player.get(HitBlockComponent.class).getAlignedBlocks();
+			blockIt = player.get(InteractComponent.class).getAlignedBlocks();
 		}
 
 		Block block = null;
@@ -281,7 +281,7 @@ public class TestCommands {
 			player = ((Client) Spout.getEngine()).getActivePlayer();
 		}
 
-		BlockIterator blockIt = player.get(HitBlockComponent.class).getAlignedBlocks();
+		BlockIterator blockIt = player.get(InteractComponent.class).getAlignedBlocks();
 
 		Block block = null;
 		while (blockIt.hasNext()) {
@@ -375,7 +375,7 @@ public class TestCommands {
 		}
 
 		Entity entity = (Player) source;
-		Point position = entity.getTransform().getPosition();
+		Point position = entity.getScene().getPosition();
 
 		ExplosionModels.SPHERICAL.execute(position, 4.0f);
 	}
@@ -391,7 +391,7 @@ public class TestCommands {
 			throw new CommandException("Invalid object name.");
 		}
 		final Player player = (Player) source;
-		final Point loc = player.getTransform().getPosition();
+		final Point loc = player.getScene().getPosition();
 		final World world = loc.getWorld();
 		final int x = loc.getBlockX();
 		final int y = loc.getBlockY();
@@ -472,7 +472,7 @@ public class TestCommands {
 
 		if (args.getString(0, "").contains("look")) {
 			Quaternion rotation = player.getData().get(VanillaData.HEAD_ROTATION);
-			Point startPosition = player.getTransform().getPosition();
+			Point startPosition = player.getScene().getPosition();
 			Vector3 offset = rotation.getDirection().multiply(0.1);
 			for (int i = 0; i < 100; i++) {
 				startPosition = startPosition.add(offset);
@@ -514,7 +514,7 @@ public class TestCommands {
 			player = ((Client) Spout.getEngine()).getActivePlayer();
 		}
 
-		final Point pos = player.getTransform().getPosition();
+		final Point pos = player.getScene().getPosition();
 		final String name = args.getString(0);
 		Class<? extends Component> clazz;
 		// TODO: Make entity prefabs for all resources.entities

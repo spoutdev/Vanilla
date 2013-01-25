@@ -41,7 +41,7 @@ public class TransformDebugComponent extends EntityComponent {
 
 	@Override
 	public void onTick(float dt) {
-		if (getOwner().getTransform().isPositionDirty()) {
+		if (getOwner().getScene().isPositionDirty()) {
 			Spout.log(getOwner().toString() + " is translating!");
 		}
 	}

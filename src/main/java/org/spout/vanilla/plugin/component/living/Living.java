@@ -31,7 +31,6 @@ import java.util.List;
 
 import org.spout.api.ai.goap.GoapAIComponent;
 import org.spout.api.component.impl.NavigationComponent;
-import org.spout.api.component.impl.PhysicsComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
@@ -51,7 +50,6 @@ import org.spout.vanilla.plugin.data.VanillaData;
 public abstract class Living extends VanillaComponent {
 	private HeadComponent head;
 	private HealthComponent health;
-	private PhysicsComponent physics;
 	private DrowningComponent drowning;
 	private NavigationComponent navigation;
 	private GoapAIComponent ai;
@@ -62,7 +60,6 @@ public abstract class Living extends VanillaComponent {
 		Entity holder = getOwner();
 		head = holder.add(HeadComponent.class);
 		health = holder.add(HealthComponent.class);
-		physics = holder.add(PhysicsComponent.class);
 		drowning = holder.add(DrowningComponent.class);
 		navigation = holder.add(NavigationComponent.class);
 		navigation.setDefaultExaminers(new VanillaBlockExaminer());
@@ -85,10 +82,6 @@ public abstract class Living extends VanillaComponent {
 
 	public HealthComponent getHealth() {
 		return health;
-	}
-
-	public PhysicsComponent getPhysics() {
-		return physics;
 	}
 
 	public DrowningComponent getDrowning() {

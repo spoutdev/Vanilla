@@ -30,13 +30,14 @@ import com.bulletphysics.collision.shapes.BoxShape;
 
 import org.spout.api.component.impl.PhysicsComponent;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.component.Hostile;
-
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreeperEntityProtocol;
 
@@ -44,9 +45,6 @@ import org.spout.vanilla.plugin.protocol.entity.creature.CreeperEntityProtocol;
  * A component that identifies the entity as a Creeper.
  */
 public class Creeper extends Living implements Hostile {
-	private byte fuse = -1;
-	private boolean charged = false;
-
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -65,18 +63,20 @@ public class Creeper extends Living implements Hostile {
 	}
 
 	public byte getFuse() {
-		return fuse;
+		return getData().get(VanillaData.CREEPER_FUSE);
 	}
 
 	public void setFuse(byte fuse) {
-		this.fuse = fuse;
+		getData().put(VanillaData.CREEPER_FUSE, fuse);
+		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, fuse));
 	}
 
 	public boolean isCharged() {
-		return charged;
+		return getData().get(VanillaData.CHARGED);
 	}
 
 	public void setCharged(boolean charged) {
-		this.charged = charged;
+		getData().put(VanillaData.CHARGED, charged);
+		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, charged ? (byte) 1 : 0));
 	}
 }

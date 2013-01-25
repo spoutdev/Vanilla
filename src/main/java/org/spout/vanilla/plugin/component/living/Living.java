@@ -131,9 +131,7 @@ public abstract class Living extends VanillaComponent {
 	}
 
 	public void sendMetaData() {
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 0, getCommonMetadata()));
-		getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), parameters));
+		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 0, getCommonMetadata()));
 	}
 
 	private byte getCommonMetadata() {

@@ -158,6 +158,18 @@ public class VanillaData {
 	public static final DefaultedKey<Boolean> WAS_VILLAGER = new DefaultedKeyImpl<Boolean>("was_villager", false);
 	//Chicken Specific
 	public static final DefaultedKey<Float> TIME_TILL_EGG = new DefaultedKeyImpl<Float>("time_till_egg", 0f);
+	// Iron Golem Specific
+	public static final DefaultedKey<Boolean> NATURALLY_SPAWNED = new DefaultedKeyImpl<Boolean>("spawned_naturally", true);
+	// Creeper
+	public static final DefaultedKey<Byte> CREEPER_FUSE = new DefaultedKeyImpl<Byte>("fuse", (byte) -1);
+	public static final DefaultedKey<Boolean> CHARGED = new DefaultedKeyImpl<Boolean>("charged", false);
+	// Spider
+	public static final DefaultedKey<Boolean> AGGRESSIVE = new DefaultedKeyImpl<Boolean>("aggressive", false);
+	// Ghast
+	public static final DefaultedKey<Boolean> RED_EYES = new DefaultedKeyImpl<Boolean>("red_eyes", false);
+	// Enderman
+	public static final DefaultedKey<Byte> HELD_MATERIAL = new DefaultedKeyImpl<Byte>("held_material", (byte) 0);
+	public static final DefaultedKey<Byte> HELD_MATERIAL_DATA = new DefaultedKeyImpl<Byte>("held_material_data", (byte) 0);
 	//Sky specific
 	public static final DefaultedKey<Long> MAX_TIME = new DefaultedKeyImpl<Long>("max_time", 24000L);
 	public static final DefaultedKey<Long> TIME_RATE = new DefaultedKeyImpl<Long>("time_rate", 1L);

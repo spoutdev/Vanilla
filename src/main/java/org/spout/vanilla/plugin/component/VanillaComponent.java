@@ -26,8 +26,13 @@
  */
 package org.spout.vanilla.plugin.component;
 
-import org.spout.api.component.type.EntityComponent;
+import java.util.Arrays;
+import java.util.List;
 
+import org.spout.api.component.type.EntityComponent;
+import org.spout.api.util.Parameter;
+
+import org.spout.vanilla.api.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.plugin.data.VanillaData;
 
 public class VanillaComponent extends EntityComponent {
@@ -40,6 +45,10 @@ public class VanillaComponent extends EntityComponent {
 
 	public boolean isStatic() {
 		return false;
+	}
+
+	protected void setMetadata(Parameter<?>... p) {
+		getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), Arrays.asList(p)));
 	}
 
 	/**

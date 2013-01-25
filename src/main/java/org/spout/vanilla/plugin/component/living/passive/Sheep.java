@@ -31,6 +31,7 @@ import java.util.Random;
 import org.spout.api.event.cause.EntityCause;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.component.Passive;
 import org.spout.vanilla.api.event.entity.EntityStatusEvent;
@@ -79,6 +80,13 @@ public class Sheep extends Living implements Passive {
 
 	public void setSheared(boolean sheared) {
 		getOwner().getData().put(VanillaData.SHEARED, sheared);
+		Parameter<Byte> param;
+		if (sheared) {
+			param = new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (getColor().getData() | 16));
+		} else {
+			param = new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (getColor().getData() & -17));
+		}
+		setMetadata(param);
 	}
 
 	/**
@@ -94,7 +102,10 @@ public class Sheep extends Living implements Passive {
 	 * @param color
 	 */
 	public void setColor(Wool.WoolColor color) {
-		getOwner().getData().put(VanillaData.WOOL_COLOR, color.getData());
+		short oldData = getColor().getData();
+		short newData = color.getData();
+		getOwner().getData().put(VanillaData.WOOL_COLOR, newData);
+		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (oldData & 240 | newData & 15)));
 	}
 
 	private boolean isBlockEatableTallGrass(int x, int y, int z) {

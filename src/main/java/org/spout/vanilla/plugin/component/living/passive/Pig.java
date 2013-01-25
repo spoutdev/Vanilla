@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.component.living.passive;
 
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.component.Passive;
 
@@ -60,5 +61,6 @@ public class Pig extends Living implements Passive {
 
 	public void setSaddled(boolean saddled) {
 		getOwner().getData().put(VanillaData.SADDLED, saddled);
+		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, saddled ? (byte) 1 : 0));
 	}
 }

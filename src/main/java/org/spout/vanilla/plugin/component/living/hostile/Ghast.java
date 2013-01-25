@@ -29,6 +29,7 @@ package org.spout.vanilla.plugin.component.living.hostile;
 import java.util.Random;
 
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.component.Hostile;
 
@@ -36,6 +37,7 @@ import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.GhastEntityProtocol;
 
@@ -43,8 +45,6 @@ import org.spout.vanilla.plugin.protocol.entity.creature.GhastEntityProtocol;
  * A component that identifies the entity as a Ghast.
  */
 public class Ghast extends Living implements Hostile {
-	private boolean redEyes;
-
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -61,11 +61,12 @@ public class Ghast extends Living implements Hostile {
 		//TODO: Fireball damage
 	}
 
-	public boolean haveRedEyes() {
-		return redEyes;
+	public boolean hasRedEyes() {
+		return getData().get(VanillaData.RED_EYES);
 	}
 
 	public void setRedEyes(boolean redEyes) {
-		this.redEyes = redEyes;
+		getData().put(VanillaData.RED_EYES, redEyes);
+		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, redEyes ? (byte) 1 : 0));
 	}
 }

@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.plugin.component.living.hostile;
 
+import org.spout.api.util.Parameter;
+
 import org.spout.vanilla.api.component.Hostile;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
@@ -62,6 +64,7 @@ public class Slime extends Living implements Hostile {
 	public void setSize(byte size) {
 		if (size >= 0 && size <= 4 && size != 3) {
 			getOwner().getData().put(VanillaData.SLIME_SIZE, size);
+			setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, size));
 		}
 	}
 }

@@ -29,14 +29,18 @@ package org.spout.vanilla.plugin.component.living.neutral;
 import com.bulletphysics.collision.shapes.BoxShape;
 
 import org.spout.api.component.impl.PhysicsComponent;
+import org.spout.api.material.Material;
+import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.component.Neutral;
 import org.spout.vanilla.api.data.Difficulty;
-
+import org.spout.vanilla.api.material.VanillaMaterial;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DamageComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.EndermanEntityProtocol;
 
 /**
@@ -62,5 +66,33 @@ public class Enderman extends Living implements Neutral {
 		damage.getDamageLevel(Difficulty.NORMAL).setAmount(7);
 		damage.getDamageLevel(Difficulty.HARD).setAmount(10);
 		damage.getDamageLevel(Difficulty.HARDCORE).setAmount(damage.getDamageLevel(Difficulty.HARD).getAmount());
+	}
+
+	public Material getHeldMaterial() {
+		return VanillaMaterials.getMaterial(getData().get(VanillaData.HELD_MATERIAL));
+	}
+
+	public void setHeldMaterial(VanillaMaterial mat) {
+		byte id = (byte) mat.getMinecraftId();
+		getData().put(VanillaData.HELD_MATERIAL, id);
+		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, id));
+	}
+
+	public byte getHeldMaterialData() {
+		return getData().get(VanillaData.HELD_MATERIAL_DATA);
+	}
+
+	public void setHeldMaterialData(byte data) {
+		getData().put(VanillaData.HELD_MATERIAL_DATA, data);
+		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, data));
+	}
+
+	public boolean isAggressive() {
+		return getData().get(VanillaData.AGGRESSIVE);
+	}
+
+	public void setAggressive(boolean aggro) {
+		getData().put(VanillaData.AGGRESSIVE, aggro);
+		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 18, aggro ? (byte) 1 : 0));
 	}
 }

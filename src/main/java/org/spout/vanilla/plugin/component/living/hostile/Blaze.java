@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.component.living.hostile;
 
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.component.Hostile;
 import org.spout.vanilla.api.data.Difficulty;
@@ -36,6 +37,7 @@ import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DamageComponent;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.BlazeEntityProtocol;
 
@@ -43,8 +45,6 @@ import org.spout.vanilla.plugin.protocol.entity.creature.BlazeEntityProtocol;
  * A component that identifies the entity as a Blaze.
  */
 public class Blaze extends Living implements Hostile {
-	private boolean attacking = false;
-
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -60,11 +60,12 @@ public class Blaze extends Living implements Hostile {
 		damage.getDamageLevel(Difficulty.HARDCORE).setAmount(damage.getDamageLevel(Difficulty.HARD).getAmount());
 	}
 
-	public boolean isAttacking() {
-		return attacking;
+	public boolean isAggressive() {
+		return getData().get(VanillaData.AGGRESSIVE);
 	}
 
-	public void setAttacking(boolean attacking) {
-		this.attacking = attacking;
+	public void setAggresive(boolean aggro) {
+		getData().put(VanillaData.AGGRESSIVE, aggro);
+		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, aggro ? (byte) 1 : 0));
 	}
 }

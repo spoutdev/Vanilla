@@ -29,6 +29,7 @@ package org.spout.vanilla.plugin.component.living.util;
 import java.util.Random;
 
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.component.Utility;
 
@@ -36,6 +37,7 @@ import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
@@ -55,5 +57,14 @@ public class IronGolem extends Living implements Utility {
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(100);
 		}
+	}
+
+	public boolean wasNaturallySpawned() {
+		return getData().get(VanillaData.NATURALLY_SPAWNED);
+	}
+
+	public void setNaturallySpawned(boolean naturallySpawned) {
+		getData().put(VanillaData.NATURALLY_SPAWNED, naturallySpawned);
+		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, naturallySpawned ? 0 : (byte) 1));
 	}
 }

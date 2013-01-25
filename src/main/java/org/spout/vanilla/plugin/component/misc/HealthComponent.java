@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.component.misc;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -45,6 +46,7 @@ import org.spout.api.gui.render.RenderPart;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector3;
+import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.data.Animation;
 import org.spout.vanilla.api.event.cause.DamageCause;
@@ -56,12 +58,14 @@ import org.spout.vanilla.api.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.api.event.entity.EntityDamageEvent;
 import org.spout.vanilla.api.event.entity.EntityHealEvent;
 import org.spout.vanilla.api.event.entity.EntityHealthChangeEvent;
+import org.spout.vanilla.api.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.api.event.entity.EntityStatusEvent;
 import org.spout.vanilla.api.event.entity.VanillaEntityDeathEvent;
 import org.spout.vanilla.api.event.player.PlayerDeathEvent;
 import org.spout.vanilla.api.event.player.network.PlayerHealthEvent;
 
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.living.hostile.EnderDragon;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.component.substance.XPOrb;
@@ -344,8 +348,14 @@ public class HealthComponent extends EntityComponent {
 			}
 		}
 
-		if (getOwner() instanceof Player) {
-			getOwner().getNetwork().callProtocolEvent(new PlayerHealthEvent(((Player) getOwner())));
+		// Special cases
+		Entity owner = getOwner();
+		if (owner instanceof Player) {
+			owner.getNetwork().callProtocolEvent(new PlayerHealthEvent(((Player) getOwner())));
+		} else if (owner instanceof EnderDragon) {
+			List<Parameter<?>> params = new ArrayList<Parameter<?>>(1);
+			params.add(new Parameter<Short>(Parameter.TYPE_SHORT, 16, (short) health));
+			owner.getNetwork().callProtocolEvent(new EntityMetaChangeEvent(owner, params));
 		}
 	}
 

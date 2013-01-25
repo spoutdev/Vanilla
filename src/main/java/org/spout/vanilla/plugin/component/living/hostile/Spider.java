@@ -29,6 +29,7 @@ package org.spout.vanilla.plugin.component.living.hostile;
 import java.util.Random;
 
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.component.Hostile;
 import org.spout.vanilla.api.data.Difficulty;
@@ -38,6 +39,7 @@ import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DamageComponent;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.SpiderEntityProtocol;
 
@@ -62,5 +64,14 @@ public class Spider extends Living implements Hostile {
 		damage.getDamageLevel(Difficulty.NORMAL).setAmount(2);
 		damage.getDamageLevel(Difficulty.HARD).setAmount(3);
 		damage.getDamageLevel(Difficulty.HARDCORE).setAmount(damage.getDamageLevel(Difficulty.HARD).getAmount());
+	}
+
+	public boolean isAggressive() {
+		return getData().get(VanillaData.AGGRESSIVE);
+	}
+
+	public void setAggressive(boolean aggro) {
+		getData().put(VanillaData.AGGRESSIVE, aggro);
+		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, aggro ? (byte) 1 : 0));
 	}
 }

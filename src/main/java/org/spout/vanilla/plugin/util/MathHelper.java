@@ -28,10 +28,19 @@ package org.spout.vanilla.plugin.util;
 
 import java.util.Random;
 
+import org.spout.api.collision.BoundingBox;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.SinusHelper;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+
 public class MathHelper {
+	public static float getBlockDensity() {
+		// TODO: Not sure how this is supposed to be calculated
+		return 1;
+	}
+
 	/**
 	 * Gets the celestial angle at a certain time of the day
 	 * @param timeMillis time

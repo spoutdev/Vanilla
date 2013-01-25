@@ -32,16 +32,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.util.MathHelper;
 
 public abstract class ExplosionModel {
 	private List<ExplosionBlockSlot> blockList = new ArrayList<ExplosionBlockSlot>();
@@ -63,41 +67,106 @@ public abstract class ExplosionModel {
 		return this.blockList;
 	}
 
-	public synchronized void execute(Point position, float size, boolean fire, Cause<?> cause) {
+	/**
+	 * Calculated with the following:
+	 *
+	 * o: Origin of explosion
+	 * p: Location of entity for impact to be calculated for
+	 * s: The damage radius
+	 * di: distance from origin
+	 * de: density of non-air blocks from the position to the origin
+	 * i: impact of explosion
+	 *
+	 * 1. Calculate impact with <code>i = (1 - di / size) * de</code>
+	 * 2. Return <code>(int) ((i * i + i) / 2 * 8 * size + 1)</code>
+	 *
+	 * Example:
+	 * M
+	 *
+	 * @param o
+	 * @param p
+	 * @param s
+	 * @return
+	 */
+	private int getDamage(Point o, Point p, double s) {
+		double di = p.distance(o);
+	 	double de = MathHelper.getBlockDensity(); // TODO: Implement
+		double i = (1 - di / s) * de;
+		return (int) ((i * i + i) / 2 * 8 * s + 1);
+	}
+
+	public synchronized void execute(Point position, float size, boolean fire, boolean damage, boolean ignoreWater, Cause<?> cause) {
 		//reset all blocks for the next explosion
 		for (ExplosionBlockSlot block : this.blockList) {
 			block.isSet = false;
 		}
 
-		//find all resources.entities in the affected blocks and perform damage
-		//TODO: Entity Damage
-
 		//TODO: Block Event?
 
-		//perform block changes
-		BlockMaterial material;
-		for (Block block : this.blocksToDestroy) {
-			material = block.getMaterial();
+		// See if it's touching water
+		boolean breakBlocks = true;
+		if (!ignoreWater) {
+			Block block = position.getBlock();
+			for (BlockFace face : BlockFaces.NESWBT) {
+				if (block.translate(face).isMaterial(VanillaMaterials.WATER)) {
+					breakBlocks = false;
+					break;
+				}
+			}
 
-			if (material == VanillaMaterials.AIR) {
-				if (fire) {
-					BlockMaterial below = block.translate(BlockFace.BOTTOM).getMaterial();
-					if (below.isSolid() && this.random.nextInt(3) == 0) {
-						block.setMaterial(VanillaMaterials.FIRE);
+		}
+
+		// perform block changes
+		if (breakBlocks) {
+			BlockMaterial material;
+			for (Block block : this.blocksToDestroy) {
+				material = block.getMaterial();
+
+				if (material == VanillaMaterials.AIR) {
+					if (fire) {
+						BlockMaterial below = block.translate(BlockFace.BOTTOM).getMaterial();
+						if (below.isSolid() && this.random.nextInt(3) == 0) {
+							block.setMaterial(VanillaMaterials.FIRE);
+						}
 					}
+				} else if (material != VanillaMaterials.FIRE) {
+					//TODO: Item dropping yield?
+					if (material instanceof VanillaBlockMaterial) {
+						((VanillaBlockMaterial) material).onIgnite(block, cause);
+					} else {
+						material.destroy(block, cause);
+					}
+					block.setMaterial(VanillaMaterials.AIR);
 				}
-			} else if (material != VanillaMaterials.FIRE) {
-				//TODO: Item dropping yield?
-				if (material instanceof VanillaBlockMaterial) {
-					((VanillaBlockMaterial) material).onIgnite(block, cause);
-				} else {
-					material.destroy(block, cause);
+			}
+		}
+
+		// Damage entities within radius
+		if (damage) {
+			size *= 2;
+			for (Entity entity : position.getWorld().getNearbyEntities(position, (int) size)) {
+				// Check if entity can be damaged
+				HealthComponent health = entity.get(HealthComponent.class);
+				if (health == null) {
+					continue;
 				}
-				block.setMaterial(VanillaMaterials.AIR);
+				health.damage(getDamage(position, entity.getTransform().getPosition(), size));
 			}
 		}
 
 		//explosion packet (TODO: Limit the amount sent per tick? Don't want to lag-out clients!)
 		GeneralEffects.EXPLOSION.playGlobal(position, size);
+	}
+
+	public synchronized void execute(Point pos, float size, boolean fire, boolean damage, Cause<?> cause) {
+		execute(pos, size, fire, damage, false, cause);
+	}
+
+	public synchronized void execute(Point pos, float size, boolean fire, Cause<?> cause) {
+		execute(pos, size, fire, true, cause);
+	}
+
+	public synchronized void execute(Point pos, float size, Cause<?> cause) {
+		execute(pos, size, false, cause);
 	}
 }

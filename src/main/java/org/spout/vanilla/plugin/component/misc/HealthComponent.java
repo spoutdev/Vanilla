@@ -43,6 +43,7 @@ import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector3;
 
@@ -86,7 +87,7 @@ public class HealthComponent extends EntityComponent {
 	private final Widget hearts = new Widget();
 	private boolean animateHearts;
 	private int heartAnimationTicks;
-	private final Random random = new Random();
+	private static final Random random = MathHelper.getRandom();
 	private static final float SCALE = 0.75f; // TODO: Apply directly from engine
 	private static final float START_X = -0.71f * SCALE;
 

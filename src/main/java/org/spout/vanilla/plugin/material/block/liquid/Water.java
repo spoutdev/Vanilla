@@ -35,6 +35,7 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectIterator;
 import org.spout.api.material.range.EffectRange;
+import org.spout.api.math.MathHelper;
 import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.api.data.Climate;
@@ -118,7 +119,7 @@ public class Water extends Liquid implements DynamicMaterial {
 
 	@Override
 	public void onFirstUpdate(Block b, long currentTime) {
-		b.dynamicUpdate(60000 + new Random(b.getWorld().getAge()).nextInt(60000) + currentTime, true);
+		b.dynamicUpdate(60000 + MathHelper.getRandom().nextInt(60000) + currentTime, true);
 		super.onFirstUpdate(b, currentTime);
 	}
 
@@ -141,7 +142,7 @@ public class Water extends Liquid implements DynamicMaterial {
 		}
 
 		// Has nearby non-water blocks?
-		Random rand = new Random(block.getWorld().getAge());
+		final Random rand = MathHelper.getRandom();
 		if (rand.nextInt(1000) == 0) {
 			EffectIterator iterator = EffectRange.NEIGHBORS.iterator();
 			while (iterator.hasNext()) {

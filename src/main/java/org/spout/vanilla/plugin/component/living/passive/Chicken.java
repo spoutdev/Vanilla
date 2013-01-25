@@ -26,10 +26,9 @@
  */
 package org.spout.vanilla.plugin.component.living.passive;
 
-import java.util.Random;
-
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.component.Passive;
@@ -54,7 +53,7 @@ public class Chicken extends Living implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		Float nextEgg = (float) (new Random().nextInt(MINIMUM_EGG_BREEDING_TIME) + MINIMUM_EGG_BREEDING_TIME);
+		Float nextEgg = (float) (MathHelper.getRandom().nextInt(MINIMUM_EGG_BREEDING_TIME) + MINIMUM_EGG_BREEDING_TIME);
 		getOwner().getData().put(VanillaData.TIME_TILL_EGG, nextEgg);
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.CHICKEN));
 		DropComponent dropComponent = getOwner().add(DropComponent.class);
@@ -80,7 +79,7 @@ public class Chicken extends Living implements Passive {
 	private void layEgg() {
 		Point position = getOwner().getTransform().getPosition();
 		Item.drop(position, new ItemStack(VanillaMaterials.EGG, 1), Vector3.ZERO);
-		Float nextEgg = (float) (new Random().nextInt(MINIMUM_EGG_BREEDING_TIME) + MINIMUM_EGG_BREEDING_TIME);
+		Float nextEgg = (float) (MathHelper.getRandom().nextInt(MINIMUM_EGG_BREEDING_TIME) + MINIMUM_EGG_BREEDING_TIME);
 		getOwner().getData().put(VanillaData.TIME_TILL_EGG, nextEgg);
 	}
 

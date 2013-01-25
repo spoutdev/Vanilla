@@ -31,6 +31,7 @@ import java.util.Random;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
+import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.api.event.player.network.PlayerPingEvent;
 
@@ -39,7 +40,7 @@ import org.spout.vanilla.api.event.player.network.PlayerPingEvent;
  */
 public class PingComponent extends EntityComponent {
 	private Player player;
-	private final Random random = new Random();
+	private static final Random random = MathHelper.getRandom();
 	private final float timeout = 30;
 	private final float longTimeout = 120;
 	private final int repeatRate = 8;

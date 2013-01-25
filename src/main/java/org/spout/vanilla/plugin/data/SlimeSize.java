@@ -29,9 +29,10 @@ package org.spout.vanilla.plugin.data;
 import java.util.Random;
 
 import org.spout.api.map.DefaultedKeyImpl;
+import org.spout.api.math.MathHelper;
 
 public class SlimeSize extends DefaultedKeyImpl<Byte> {
-	private Random random = new Random();
+	private static final Random random = MathHelper.getRandom();
 
 	public SlimeSize(String keyString) {
 		super(keyString, null);

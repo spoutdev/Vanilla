@@ -40,6 +40,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Rectangle;
 
 import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
@@ -71,7 +72,7 @@ public class HungerComponent extends EntityComponent {
 	// Client
 	private final Widget widget = new Widget();
 	private static final float SCALE = 0.75f; // TODO: Apply directly from engine
-	private final Random random = new Random();
+	private static final Random random = MathHelper.getRandom();
 	private int hungerTicks;
 
 	@Override

@@ -37,6 +37,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
@@ -47,7 +48,7 @@ public abstract class ExplosionModel {
 	private List<ExplosionBlockSlot> blockList = new ArrayList<ExplosionBlockSlot>();
 	private Map<Vector3, ExplosionBlockSlot> blocks = new HashMap<Vector3, ExplosionBlockSlot>();
 	public List<Block> blocksToDestroy = new ArrayList<Block>(100);
-	public Random random = new Random();
+	public Random random = MathHelper.getRandom();
 
 	public synchronized ExplosionBlockSlot getBlock(Vector3 position) {
 		ExplosionBlockSlot block = this.blocks.get(position);

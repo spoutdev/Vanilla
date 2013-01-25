@@ -98,7 +98,7 @@ public class FollowComponent extends EntityComponent {
 		if (potentialToFollow.size() == 0) {
 			return null;
 		}
-		final Random random = new Random();
+		final static Random random = MathHelper.getRandom();
 		final int choice = random.nextInt(potentialToFollow.size());
 		final Entity chosenEntity = (Entity) potentialToFollow.get(choice);
 		follow(chosenEntity);

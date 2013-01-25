@@ -36,6 +36,7 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.api.data.PaintingType;
 
@@ -43,7 +44,7 @@ import org.spout.vanilla.plugin.component.substance.Painting;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public class PaintingItem extends VanillaItemMaterial {
-	private final Random random = new Random();
+	private static final Random random = MathHelper.getRandom();
 
 	public PaintingItem(String name, int id) {
 		super(name, id, null);

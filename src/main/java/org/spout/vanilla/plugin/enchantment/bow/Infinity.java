@@ -24,15 +24,13 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.item.tool.weapon;
+package org.spout.vanilla.plugin.enchantment.bow;
 
-import org.spout.vanilla.plugin.data.tool.ToolLevel;
-import org.spout.vanilla.plugin.data.tool.ToolType;
-import org.spout.vanilla.plugin.material.item.tool.MiningTool;
+import org.spout.vanilla.api.enchantment.BowEnchantment;
 
-public class Sword extends MiningTool {
-	public Sword(String name, int id, ToolLevel toolLevel) {
-		super(name, id, toolLevel, ToolType.SWORD);
-		this.setDamage(4 + toolLevel.getDamageBonus()).setEnchantability(toolLevel.getEnchantability());
+public class Infinity extends BowEnchantment {
+	public Infinity(String name, int id) {
+		super(name, id);
+		setMaximumLevel(1).setWeight(1);
 	}
 }

@@ -24,15 +24,27 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.item.tool.weapon;
+package org.spout.vanilla.plugin.enchantment.armor;
 
-import org.spout.vanilla.plugin.data.tool.ToolLevel;
-import org.spout.vanilla.plugin.data.tool.ToolType;
-import org.spout.vanilla.plugin.material.item.tool.MiningTool;
+import org.spout.vanilla.api.enchantment.ArmorEnchantment;
+import org.spout.vanilla.api.enchantment.Enchantment;
+import org.spout.vanilla.api.material.VanillaMaterial;
+import org.spout.vanilla.api.material.item.armor.Boots;
 
-public class Sword extends MiningTool {
-	public Sword(String name, int id, ToolLevel toolLevel) {
-		super(name, id, toolLevel, ToolType.SWORD);
-		this.setDamage(4 + toolLevel.getDamageBonus()).setEnchantability(toolLevel.getEnchantability());
+import org.spout.vanilla.plugin.enchantment.VanillaEnchantments;
+
+public class FireProtection extends ArmorEnchantment {
+	public FireProtection(String name, int id) {
+		super(name, id);
+		setMaximumLevel(4).setWeight(5);
+	}
+
+	@Override
+	public boolean compatibleWith(Enchantment enchantment, VanillaMaterial material) {
+		if (material instanceof Boots) {
+			return enchantment.equals(VanillaEnchantments.FEATHER_FALLING);
+		}
+
+		return !enchantment.equals(VanillaEnchantments.PROTECTION, VanillaEnchantments.BLAST_PROTECTION, VanillaEnchantments.PROJECTILE_PROTECTION);
 	}
 }

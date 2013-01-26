@@ -52,6 +52,7 @@ import org.spout.vanilla.plugin.protocol.handler.player.conn.PlayerPingHandler;
 import org.spout.vanilla.plugin.protocol.handler.window.WindowClickHandler;
 import org.spout.vanilla.plugin.protocol.handler.window.WindowCloseHandler;
 import org.spout.vanilla.plugin.protocol.handler.window.WindowCreativeActionHandler;
+import org.spout.vanilla.plugin.protocol.handler.window.WindowEnchantItemHandler;
 import org.spout.vanilla.plugin.protocol.handler.world.block.SignHandler;
 import org.spout.vanilla.plugin.protocol.msg.ServerListPingMessage;
 import org.spout.vanilla.plugin.protocol.msg.auth.EncryptionKeyResponseMessage;
@@ -77,6 +78,7 @@ import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerPositionMessage;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowCloseMessage;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowCreativeActionMessage;
+import org.spout.vanilla.plugin.protocol.msg.window.WindowEnchantItemMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.block.SignMessage;
 
 public class VanillaHandlerLookupService extends HandlerLookupService {
@@ -107,6 +109,7 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(EncryptionKeyResponseMessage.class, EncryptionKeyResponseHandler.class);
 			bind(PlayerTabCompleteMessage.class, PlayerTabCompleteHandler.class);
 			bind(PlayerLocaleViewDistanceMessage.class, PlayerLocaleViewDistanceHandler.class);
+			bind(WindowEnchantItemMessage.class, WindowEnchantItemHandler.class);
 		} catch (Exception ex) {
 			throw new ExceptionInInitializerError(ex);
 		}

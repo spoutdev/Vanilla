@@ -24,15 +24,22 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.item.tool.weapon;
+package org.spout.vanilla.plugin.enchantment.tool;
 
-import org.spout.vanilla.plugin.data.tool.ToolLevel;
-import org.spout.vanilla.plugin.data.tool.ToolType;
-import org.spout.vanilla.plugin.material.item.tool.MiningTool;
+import org.spout.vanilla.api.enchantment.Enchantment;
+import org.spout.vanilla.api.enchantment.ToolEnchantment;
+import org.spout.vanilla.api.material.VanillaMaterial;
 
-public class Sword extends MiningTool {
-	public Sword(String name, int id, ToolLevel toolLevel) {
-		super(name, id, toolLevel, ToolType.SWORD);
-		this.setDamage(4 + toolLevel.getDamageBonus()).setEnchantability(toolLevel.getEnchantability());
+import org.spout.vanilla.plugin.enchantment.VanillaEnchantments;
+
+public class SilkTouch extends ToolEnchantment {
+	public SilkTouch(String name, int id) {
+		super(name, id);
+		setMaximumLevel(1).setWeight(1);
+	}
+
+	@Override
+	public boolean compatibleWith(Enchantment enchantment, VanillaMaterial material) {
+		return !enchantment.equals(VanillaEnchantments.FORTUNE);
 	}
 }

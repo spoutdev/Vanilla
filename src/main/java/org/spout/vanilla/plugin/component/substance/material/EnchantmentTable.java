@@ -28,16 +28,17 @@ package org.spout.vanilla.plugin.component.substance.material;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
+import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.api.component.substance.material.EnchantmentTableComponent;
 import org.spout.vanilla.api.enchantment.Enchantment;
 import org.spout.vanilla.api.event.inventory.EnchantmentTableCloseEvent;
 import org.spout.vanilla.api.event.inventory.EnchantmentTableOpenEvent;
-import org.spout.vanilla.api.inventory.window.prop.EnchantmentTableProperty;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.plugin.inventory.window.block.EnchantmentTableWindow;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 /**
  * Component that represents a enchantment table in a world.
@@ -67,11 +68,7 @@ public class EnchantmentTable extends EnchantmentTableComponent {
 	public boolean open(Player player) {
 		EnchantmentTableOpenEvent event = Spout.getEventManager().callEvent(new EnchantmentTableOpenEvent(this, player));
 		if (!event.isCancelled()) {
-			player.get(WindowHolder.class).openWindow(new EnchantmentTableWindow(player, inventory));
-			// TODO: Calculate enchantment levels for an item elsewhere, taking into account nearby books and other factors
-			inventory.setEnchantmentLevel(EnchantmentTableProperty.SLOT_1, 1);
-			inventory.setEnchantmentLevel(EnchantmentTableProperty.SLOT_2, 15);
-			inventory.setEnchantmentLevel(EnchantmentTableProperty.SLOT_3, 30);
+			player.get(WindowHolder.class).openWindow(new EnchantmentTableWindow(player, this, inventory));
 			return true;
 		}
 		return false;
@@ -84,5 +81,47 @@ public class EnchantmentTable extends EnchantmentTableComponent {
 			return super.close(player);
 		}
 		return false;
+	}
+
+	/**
+	 * Returns the amount of bookshelves within a 2 block radius for the X/Z coordinates and 1 block above this enchantment table for the Y coordinate
+	 * @return Amount of bookshelves near this enchantment table
+	 */
+	public int getNearbyBookshelves() {
+		Block block = getBlock();
+		int x = block.getX();
+		int y = block.getY();
+		int z = block.getZ();
+
+		// Check for obstructions - if there are any blocks right next to the enchantment table, all nearby bookshelves are nullified
+		for (int xx = x - 1; xx <= x + 1; xx++) {
+			for (int yy = y; yy <= y + 1; yy++) {
+				for (int zz = z - 1; zz <= z + 1; zz++) {
+					if (xx == x && zz == z) {
+						continue; // Ignore the enchantment table itself
+					}
+
+					if (!VanillaMaterials.AIR.equals(block.getWorld().getBlock(xx, yy, zz))) {
+						return 0;
+					}
+				}
+			}
+		}
+
+		// Find bookshelves within the radius
+		int bookshelves = 0;
+		mainLoop: for (int xx = x - 2; xx <= x + 2; xx++) {
+			for (int yy = y; yy <= y + 1; yy++) {
+				for (int zz = z - 2; zz <= z + 2; zz++) {
+					if (VanillaMaterials.BOOKSHELF.equals(block.getWorld().getBlock(xx, yy, zz).getMaterial())) {
+						if (++bookshelves >= 15) {
+							break mainLoop;
+						}
+					}
+				}
+			}
+		}
+
+		return bookshelves;
 	}
 }

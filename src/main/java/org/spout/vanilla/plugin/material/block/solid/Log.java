@@ -279,8 +279,8 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 			if (range <= 0) {
 				return false;
 			}
-			for (int i = 0; i < BlockFaces.NESW.size(); i++) {
-				Block block = b.translate(BlockFaces.NESW.get(i));
+			for (int i = 0; i < BlockFaces.NESWBT.size(); i++) {
+				Block block = b.translate(BlockFaces.NESWBT.get(i));
 				BlockMaterial mat = block.getMaterial();
 				if (mat.getId() == VanillaMaterials.LOG.getId()) {
 					return true;

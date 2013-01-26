@@ -177,7 +177,7 @@ public class LightningSimulator extends Component {
 	}
 
 	public void setIntensity(Intensity in) {
-		weather.getSky().getData().put(VanillaData.STORM_INTENSITY, in.ordinal());
+		weather.getSky().getData().put(VanillaData.STORM_INTENSITY, in != null ? in.ordinal() : -1);
 	}
 
 	public Intensity getIntensity() {

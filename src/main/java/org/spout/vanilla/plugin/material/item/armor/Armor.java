@@ -29,11 +29,11 @@ package org.spout.vanilla.plugin.material.item.armor;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector2;
 
+import org.spout.vanilla.api.enchantment.Enchantment;
 import org.spout.vanilla.api.event.cause.DamageCause;
 import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
 
-import org.spout.vanilla.plugin.material.enchantment.Enchantment;
-import org.spout.vanilla.plugin.material.enchantment.Enchantments;
+import org.spout.vanilla.plugin.enchantment.VanillaEnchantments;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public abstract class Armor extends VanillaItemMaterial {
@@ -63,20 +63,20 @@ public abstract class Armor extends VanillaItemMaterial {
 		int amount = 0;
 		int level = 0;
 		// Armor can only have one of these protection enchantments
-		if (Enchantment.hasEnchantment(item, Enchantments.PROTECTION) && !type.equals(DamageType.COMMAND, DamageType.VOID)) {
-			level = Enchantment.getEnchantmentLevel(item, Enchantments.PROTECTION);
-		} else if (Enchantment.hasEnchantment(item, Enchantments.BLAST_PROTECTION) && type.equals(DamageType.EXPLOSION)) {
-			level = Enchantment.getEnchantmentLevel(item, Enchantments.BLAST_PROTECTION);
-		} else if (Enchantment.hasEnchantment(item, Enchantments.FIRE_PROTECTION) && type.equals(DamageType.BURN, DamageType.FIRE_SOURCE)) {
-			level = Enchantment.getEnchantmentLevel(item, Enchantments.FIRE_PROTECTION);
-		} else if (Enchantment.hasEnchantment(item, Enchantments.PROJECTILE_PROTECTION) && type.equals(DamageType.PROJECTILE, DamageType.FIREBALL)) {
-			level = Enchantment.getEnchantmentLevel(item, Enchantments.PROJECTILE_PROTECTION);
+		if (Enchantment.hasEnchantment(item, VanillaEnchantments.PROTECTION) && !type.equals(DamageType.COMMAND, DamageType.VOID)) {
+			level = Enchantment.getEnchantmentLevel(item, VanillaEnchantments.PROTECTION);
+		} else if (Enchantment.hasEnchantment(item, VanillaEnchantments.BLAST_PROTECTION) && type.equals(DamageType.EXPLOSION)) {
+			level = Enchantment.getEnchantmentLevel(item, VanillaEnchantments.BLAST_PROTECTION);
+		} else if (Enchantment.hasEnchantment(item, VanillaEnchantments.FIRE_PROTECTION) && type.equals(DamageType.BURN, DamageType.FIRE_SOURCE)) {
+			level = Enchantment.getEnchantmentLevel(item, VanillaEnchantments.FIRE_PROTECTION);
+		} else if (Enchantment.hasEnchantment(item, VanillaEnchantments.PROJECTILE_PROTECTION) && type.equals(DamageType.PROJECTILE, DamageType.FIREBALL)) {
+			level = Enchantment.getEnchantmentLevel(item, VanillaEnchantments.PROJECTILE_PROTECTION);
 		}
 		amount += level * 3;
 
 		// Feather Falling is compatible with all of the above enchantments
-		if (Enchantment.hasEnchantment(item, Enchantments.FEATHER_FALLING) && type.equals(DamageType.FALL)) {
-			amount += Enchantment.getEnchantmentLevel(item, Enchantments.FEATHER_FALLING);
+		if (Enchantment.hasEnchantment(item, VanillaEnchantments.FEATHER_FALLING) && type.equals(DamageType.FALL)) {
+			amount += Enchantment.getEnchantmentLevel(item, VanillaEnchantments.FEATHER_FALLING);
 		}
 
 		return amount;

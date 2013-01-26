@@ -31,24 +31,26 @@ import org.spout.api.util.flag.Flag;
 import org.spout.vanilla.plugin.data.drops.flag.ToolLevelFlags;
 
 public class ToolLevel {
-	public static final ToolLevel NONE = new ToolLevel(ToolLevelFlags.NONE, ToolLevelFlags.NONE_UP, 1.0f, 0, 0);
-	public static final ToolLevel WOOD = new ToolLevel(ToolLevelFlags.WOOD, ToolLevelFlags.WOOD_UP, 2.0f, 59, 0);
-	public static final ToolLevel STONE = new ToolLevel(ToolLevelFlags.STONE, ToolLevelFlags.STONE_UP, 4.0f, 131, 1);
-	public static final ToolLevel IRON = new ToolLevel(ToolLevelFlags.IRON, ToolLevelFlags.IRON_UP, 6.0f, 250, 2);
-	public static final ToolLevel DIAMOND = new ToolLevel(ToolLevelFlags.DIAMOND, ToolLevelFlags.DIAMOND_UP, 8.0f, 1561, 3);
-	public static final ToolLevel GOLD = new ToolLevel(ToolLevelFlags.GOLD, ToolLevelFlags.GOLD_UP, 12.0f, 32, 0);
+	public static final ToolLevel NONE = new ToolLevel(ToolLevelFlags.NONE, ToolLevelFlags.NONE_UP, 1.0f, 0, 0, 0);
+	public static final ToolLevel WOOD = new ToolLevel(ToolLevelFlags.WOOD, ToolLevelFlags.WOOD_UP, 2.0f, 59, 0, 15);
+	public static final ToolLevel STONE = new ToolLevel(ToolLevelFlags.STONE, ToolLevelFlags.STONE_UP, 4.0f, 131, 1, 5);
+	public static final ToolLevel IRON = new ToolLevel(ToolLevelFlags.IRON, ToolLevelFlags.IRON_UP, 6.0f, 250, 2, 14);
+	public static final ToolLevel DIAMOND = new ToolLevel(ToolLevelFlags.DIAMOND, ToolLevelFlags.DIAMOND_UP, 8.0f, 1561, 3, 10);
+	public static final ToolLevel GOLD = new ToolLevel(ToolLevelFlags.GOLD, ToolLevelFlags.GOLD_UP, 12.0f, 32, 0, 22);
 	private final Flag toolFlag;
 	private final Flag dropFlag;
 	private final float diggingSpeed;
 	private final short maxDurability;
 	private final short damageBonus;
+	private final int enchantability;
 
-	public ToolLevel(Flag toolFlag, Flag dropFlag, float diggingSpeed, int maxDurability, int damageBonus) {
+	public ToolLevel(Flag toolFlag, Flag dropFlag, float diggingSpeed, int maxDurability, int damageBonus, int enchantability) {
 		this.toolFlag = toolFlag;
 		this.dropFlag = dropFlag;
 		this.diggingSpeed = diggingSpeed;
 		this.maxDurability = (short) maxDurability;
 		this.damageBonus = (short) damageBonus;
+		this.enchantability = enchantability;
 	}
 
 	/**
@@ -89,5 +91,13 @@ public class ToolLevel {
 	 */
 	public short getMaxDurability() {
 		return this.maxDurability;
+	}
+
+	/**
+	 * Gets the enchantability that a tool with this level has
+	 * @return Tool enchantability
+	 */
+	public int getEnchantability() {
+		return enchantability;
 	}
 }

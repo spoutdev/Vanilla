@@ -38,14 +38,15 @@ import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector2;
 import org.spout.api.util.flag.Flag;
 
+import org.spout.vanilla.api.enchantment.Enchantment;
+
 import org.spout.vanilla.plugin.component.living.hostile.Silverfish;
 import org.spout.vanilla.plugin.component.living.hostile.Skeleton;
 import org.spout.vanilla.plugin.component.living.hostile.Spider;
 import org.spout.vanilla.plugin.component.living.hostile.Zombie;
 import org.spout.vanilla.plugin.data.drops.flag.ToolEnchantFlags;
 import org.spout.vanilla.plugin.data.tool.ToolType;
-import org.spout.vanilla.plugin.material.enchantment.Enchantment;
-import org.spout.vanilla.plugin.material.enchantment.Enchantments;
+import org.spout.vanilla.plugin.enchantment.VanillaEnchantments;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 public abstract class Tool extends VanillaItemMaterial {
@@ -61,9 +62,9 @@ public abstract class Tool extends VanillaItemMaterial {
 	}
 
 	public short getDurabilityPenalty(ItemStack item) {
-		if (Enchantment.hasEnchantment(item, Enchantments.UNBREAKING)) {
+		if (Enchantment.hasEnchantment(item, VanillaEnchantments.UNBREAKING)) {
 			// Level 1 = 50%, Level 2 = 67%, Level 3 = 75% chance to not consume durability
-			if (100 - (100 / (Enchantment.getEnchantmentLevel(item, Enchantments.UNBREAKING) + 1)) > MathHelper.getRandom().nextInt(100)) {
+			if (100 - (100 / (Enchantment.getEnchantmentLevel(item, VanillaEnchantments.UNBREAKING) + 1)) > MathHelper.getRandom().nextInt(100)) {
 				return (short) 0;
 			}
 		}
@@ -112,7 +113,7 @@ public abstract class Tool extends VanillaItemMaterial {
 	public void getItemFlags(ItemStack item, Set<Flag> flags) {
 		super.getItemFlags(item, flags);
 		flags.add(this.toolType.getToolFlag());
-		if (Enchantment.hasEnchantment(item, Enchantments.SILK_TOUCH)) {
+		if (Enchantment.hasEnchantment(item, VanillaEnchantments.SILK_TOUCH)) {
 			flags.add(ToolEnchantFlags.SILK_TOUCH);
 		}
 	}
@@ -121,15 +122,15 @@ public abstract class Tool extends VanillaItemMaterial {
 		final Random rand = MathHelper.getRandom();
 		// These enchantments conflict with each other, so only one is possible per item
 		int damage = 0;
-		if (Enchantment.hasEnchantment(heldItem, Enchantments.BANE_OF_ARTHROPODS)) {
+		if (Enchantment.hasEnchantment(heldItem, VanillaEnchantments.BANE_OF_ARTHROPODS)) {
 			if (damaged.has(Spider.class) || damaged.has(Silverfish.class)) {
-				damage = rand.nextInt(Enchantment.getEnchantmentLevel(heldItem, Enchantments.BANE_OF_ARTHROPODS) * 4);
+				damage = rand.nextInt(Enchantment.getEnchantmentLevel(heldItem, VanillaEnchantments.BANE_OF_ARTHROPODS) * 4);
 			}
-		} else if (Enchantment.hasEnchantment(heldItem, Enchantments.SHARPNESS)) {
-			damage = rand.nextInt(Enchantment.getEnchantmentLevel(heldItem, Enchantments.SHARPNESS) * 3);
-		} else if (Enchantment.hasEnchantment(heldItem, Enchantments.SMITE)) {
+		} else if (Enchantment.hasEnchantment(heldItem, VanillaEnchantments.SHARPNESS)) {
+			damage = rand.nextInt(Enchantment.getEnchantmentLevel(heldItem, VanillaEnchantments.SHARPNESS) * 3);
+		} else if (Enchantment.hasEnchantment(heldItem, VanillaEnchantments.SMITE)) {
 			if (damaged.has(Skeleton.class) || damaged.has(Zombie.class)) {
-				damage = rand.nextInt(Enchantment.getEnchantmentLevel(heldItem, Enchantments.SMITE) * 4);
+				damage = rand.nextInt(Enchantment.getEnchantmentLevel(heldItem, VanillaEnchantments.SMITE) * 4);
 			}
 		}
 

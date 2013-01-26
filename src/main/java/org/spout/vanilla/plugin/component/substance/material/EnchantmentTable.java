@@ -30,6 +30,7 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 
 import org.spout.vanilla.api.component.substance.material.EnchantmentTableComponent;
+import org.spout.vanilla.api.enchantment.Enchantment;
 import org.spout.vanilla.api.event.inventory.EnchantmentTableCloseEvent;
 import org.spout.vanilla.api.event.inventory.EnchantmentTableOpenEvent;
 import org.spout.vanilla.api.inventory.window.prop.EnchantmentTableProperty;
@@ -43,7 +44,6 @@ import org.spout.vanilla.plugin.inventory.window.block.EnchantmentTableWindow;
  */
 public class EnchantmentTable extends EnchantmentTableComponent {
 	private final EnchantmentTableInventory inventory = new EnchantmentTableInventory();
-	private final int[] levels = new int[3];
 
 	@Override
 	public EnchantmentTableInventory getInventory() {
@@ -53,10 +53,11 @@ public class EnchantmentTable extends EnchantmentTableComponent {
 	@Override
 	public void onTick(float dt) {
 		EnchantmentTableInventory inventory = getInventory();
-		for (Player player : viewers) {
-			if (inventory.has()) {
-				for (int i = 0; i < levels.length; i++) {
-					player.get(WindowHolder.class).getActiveWindow().setProperty(i, levels[i]);
+		// Only display enchantment levels if there is an item and it is not enchanted
+		if (inventory.has()) {
+			for (Player player : viewers) {
+				for (int i = 0; i < 3; i++) {
+					player.get(WindowHolder.class).getActiveWindow().setProperty(i, !Enchantment.isEnchanted(inventory.get()) ? inventory.getEnchantmentLevel(i) : 0);
 				}
 			}
 		}
@@ -67,9 +68,10 @@ public class EnchantmentTable extends EnchantmentTableComponent {
 		EnchantmentTableOpenEvent event = Spout.getEventManager().callEvent(new EnchantmentTableOpenEvent(this, player));
 		if (!event.isCancelled()) {
 			player.get(WindowHolder.class).openWindow(new EnchantmentTableWindow(player, inventory));
-			setSlotLevel(EnchantmentTableProperty.SLOT_1, 1);
-			setSlotLevel(EnchantmentTableProperty.SLOT_2, 15);
-			setSlotLevel(EnchantmentTableProperty.SLOT_3, 30);
+			// TODO: Calculate enchantment levels for an item elsewhere, taking into account nearby books and other factors
+			inventory.setEnchantmentLevel(EnchantmentTableProperty.SLOT_1, 1);
+			inventory.setEnchantmentLevel(EnchantmentTableProperty.SLOT_2, 15);
+			inventory.setEnchantmentLevel(EnchantmentTableProperty.SLOT_3, 30);
 			return true;
 		}
 		return false;
@@ -82,14 +84,5 @@ public class EnchantmentTable extends EnchantmentTableComponent {
 			return super.close(player);
 		}
 		return false;
-	}
-
-	/**
-	 * Sets the level of the enchantment in the given {@link EnchantmentTableProperty} slot.
-	 * @param slot Slot to set
-	 * @param level Level of the enchantment
-	 */
-	public void setSlotLevel(EnchantmentTableProperty slot, int level) {
-		levels[slot.getId()] = level;
 	}
 }

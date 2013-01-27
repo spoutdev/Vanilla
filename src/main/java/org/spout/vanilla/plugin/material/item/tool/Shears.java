@@ -30,7 +30,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.api.data.GameMode;
 
@@ -66,7 +66,7 @@ public class Shears extends Tool {
 
 			other.getWorld().createAndSpawnEntity(other.getTransform().getPosition(), Item.class, LoadOption.NO_LOAD);
 			Item item = entity.add(Item.class);
-			item.setItemStack(new ItemStack(VanillaMaterials.WOOL, col, MathHelper.getRandom().nextInt(3) + 1));
+			item.setItemStack(new ItemStack(VanillaMaterials.WOOL, col, GenericMath.getRandom().nextInt(3) + 1));
 
 			if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 				PlayerQuickbar quickbar = entity.get(PlayerInventory.class).getQuickbar();

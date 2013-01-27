@@ -35,9 +35,9 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
+import org.spout.api.math.VectorMath;
 
 import org.spout.vanilla.api.material.block.Attachable;
 import org.spout.vanilla.api.material.block.Directional;
@@ -164,11 +164,11 @@ public abstract class StructureComponent {
 	}
 
 	protected Vector3 transform(int x, int y, int z) {
-		return MathHelper.round(rotate(x, y, z).add(position));
+		return VectorMath.round(rotate(x, y, z).add(position));
 	}
 
 	protected Vector3 rotate(int x, int y, int z) {
-		return MathHelper.transform(new Vector3(x, y, z).subtract(rotationPoint), rotation).add(rotationPoint);
+		return VectorMath.transform(new Vector3(x, y, z).subtract(rotationPoint), rotation).add(rotationPoint);
 	}
 
 	public Point getPosition() {

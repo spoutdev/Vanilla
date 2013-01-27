@@ -26,9 +26,8 @@
  */
 package org.spout.vanilla.plugin.data.effect.type;
 
-import java.util.Random;
+import org.spout.api.math.GenericMath;
 
-import org.spout.api.math.MathHelper;
 import org.spout.vanilla.api.data.effect.SoundEffect;
 
 /**
@@ -54,7 +53,6 @@ public class RandomPitchSoundEffect extends SoundEffect {
 
 	@Override
 	public float getDefaultPitch() {
-		final Random random = MathHelper.getRandom();
-		return super.getDefaultPitch() + random.nextFloat() * this.randomPitch;
+		return super.getDefaultPitch() + GenericMath.getRandom().nextFloat() * this.randomPitch;
 	}
 }

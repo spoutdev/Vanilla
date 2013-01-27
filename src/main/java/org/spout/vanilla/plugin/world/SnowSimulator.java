@@ -36,7 +36,7 @@ import org.spout.api.geo.cuboid.Region;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 import org.spout.api.scheduler.TaskPriority;
 
@@ -114,11 +114,11 @@ public class SnowSimulator extends Component {
 			if (!player.isOnline() || !weather.isRaining()) {
 				return;
 			}
-			Random rand = MathHelper.getRandom();
+			Random rand = GenericMath.getRandom();
 			Point playerPos = player.getTransform().getPosition();
-			final int posX = MathHelper.floor(playerPos.getX());
-			final int posY = MathHelper.floor(playerPos.getY());
-			final int posZ = MathHelper.floor(playerPos.getZ());
+			final int posX = GenericMath.floor(playerPos.getX());
+			final int posY = GenericMath.floor(playerPos.getY());
+			final int posZ = GenericMath.floor(playerPos.getZ());
 			for (int tries = 0; tries < 10; tries++) {
 				//pick a random chunk between -4, -4, to 4, 4 relative to the player's position
 				int cx = (rand.nextBoolean() ? -1 : 1) * rand.nextInt(5);

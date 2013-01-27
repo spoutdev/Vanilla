@@ -28,12 +28,11 @@ package org.spout.vanilla.plugin.util;
 
 import java.util.Random;
 
-import org.spout.api.collision.BoundingBox;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.SinusHelper;
+import org.spout.api.math.GenericMath;
+import org.spout.api.math.TrigMath;
 import org.spout.api.math.Vector3;
+import org.spout.api.math.VectorMath;
 
-import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class MathHelper {
 	public static float getBlockDensity() {
@@ -55,7 +54,7 @@ public class MathHelper {
 			timeFactor--;
 		}
 
-		float value = ((float) org.spout.api.math.MathHelper.cos(timeFactor * org.spout.api.math.MathHelper.PI) + 1.0f) / 2.0f;
+		float value = (TrigMath.cos(timeFactor * (float) TrigMath.PI) + 1.0f) / 2.0f;
 		timeFactor += (1.0f - value - timeFactor) / 3f;
 		return timeFactor;
 	}
@@ -69,8 +68,8 @@ public class MathHelper {
 	 */
 	public static float getRealCelestialAngle(long timeMillis, float timeMillisTune) {
 		float celestial = MathHelper.getCelestialAngle(timeMillis, timeMillisTune);
-		celestial *= org.spout.api.math.MathHelper.TWO_PI;
-		celestial = 1.0f - ((float) org.spout.api.math.MathHelper.cos(celestial) * 2.0f + 0.5f);
+		celestial *= TrigMath.TWO_PI;
+		celestial = 1.0f - ((float) TrigMath.cos(celestial) * 2.0f + 0.5f);
 		if (celestial < 0) {
 			celestial = 0.0f;
 		} else if (celestial > 1) {
@@ -89,7 +88,7 @@ public class MathHelper {
 		Random rand = new Random();
 		float xzLength = maxXZForce * rand.nextFloat();
 		float yLength = maxYForce * (rand.nextFloat() - rand.nextFloat());
-		return SinusHelper.getRandom2DAxis(rand).multiply(xzLength).toVector3(yLength);
+		return VectorMath.getRandomDirection2D(rand).multiply(xzLength).toVector3(yLength);
 	}
 
 	// TODO: Get these two functions working in the API!
@@ -111,6 +110,6 @@ public class MathHelper {
 	}
 
 	public static float getLookAtPitch(Vector3 offset) {
-		return (float) -Math.toDegrees(Math.atan(offset.getY() / org.spout.api.math.MathHelper.length(offset.getX(), offset.getZ())));
+		return (float) -Math.toDegrees(Math.atan(offset.getY() / GenericMath.length(offset.getX(), offset.getZ())));
 	}
 }

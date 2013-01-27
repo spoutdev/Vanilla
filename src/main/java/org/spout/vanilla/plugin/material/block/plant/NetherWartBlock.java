@@ -33,7 +33,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.api.material.block.Growing;
@@ -111,7 +111,7 @@ public class NetherWartBlock extends GroundAttachable implements Plant, Growing,
 		if (this.isFullyGrown(block) || block.getBiomeType() != VanillaBiomes.NETHERRACK) {
 			return;
 		}
-		final Random rand = MathHelper.getRandom();
+		final Random rand = GenericMath.getRandom();
 		if (rand.nextInt(10) != 0) {
 			//TODO : Delay before first grow
 			block.dynamicUpdate(updateTime + getGrowthTime(block), true);
@@ -129,6 +129,6 @@ public class NetherWartBlock extends GroundAttachable implements Plant, Growing,
 	}
 
 	private long getGrowthTime(Block block) {
-		return 120000L + MathHelper.getRandom().nextInt(120000);
+		return 120000L + GenericMath.getRandom().nextInt(120000);
 	}
 }

@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.spout.api.Spout;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 import org.spout.api.tickable.BasicTickable;
 
 import org.spout.vanilla.api.data.Weather;
@@ -150,7 +150,7 @@ public class WeatherSimulator extends BasicTickable {
 
 	@Override
 	public void onTick(float dt) {
-		final Random random = MathHelper.getRandom();
+		final Random random = GenericMath.getRandom();
 		float secondsUntilWeatherChange = sky.getData().get(VanillaData.WEATHER_CHANGE_TIME);
 		secondsUntilWeatherChange -= dt;
 		if (forceWeatherUpdate.compareAndSet(true, false) || secondsUntilWeatherChange <= 0) {

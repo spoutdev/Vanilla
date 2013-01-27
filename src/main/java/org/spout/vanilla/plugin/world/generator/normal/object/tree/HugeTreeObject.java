@@ -32,9 +32,9 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.SinusHelper;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
+import org.spout.api.math.VectorMath;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Liquid;
@@ -92,7 +92,7 @@ public class HugeTreeObject extends TreeObject {
 		generateLeaves(w, x, y + totalHeight, z, (byte) 2);
 		final byte leavesEnd = (byte) (totalHeight - 2 - random.nextInt(4));
 		for (byte yy = (byte) (totalHeight / 2); yy < leavesEnd; yy += random.nextInt(4) + 2) {
-			final Vector2 randomOffset = SinusHelper.getRandom2DAxis(random);
+			final Vector2 randomOffset = VectorMath.getRandomDirection2D(random);
 			generateLeaves(w, (int) (x + (randomOffset.getX() * 4f + 0.5f)), y + yy, (int) (z + (randomOffset.getY() * 4f + 0.5f)), (byte) 0);
 			for (byte branchLengthCount = 0; branchLengthCount < branchLength; branchLengthCount++) {
 				final int bx = (int) (randomOffset.getX() * branchLengthCount + 1.5f);

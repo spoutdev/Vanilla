@@ -37,7 +37,7 @@ import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
 
@@ -77,7 +77,7 @@ public class SnowPopulator extends Populator {
 					if (y != -1 && ((VanillaBlockMaterial) world.getBlockMaterial(x + xx, y - 1, z + zz)).
 							canSupport(VanillaMaterials.SNOW, BlockFace.TOP)) {
 						// normalize [-1, 1] to [0, 1] then scale to [0, 7]
-						final short height = (short) MathHelper.floor((heights[xx][zz] * 0.5 + 0.5) * 7);
+						final short height = (short) GenericMath.floor((heights[xx][zz] * 0.5 + 0.5) * 7);
 						world.setBlockMaterial(x + xx, y, z + zz, Snow.SNOW[height], height, null);
 					}
 				}

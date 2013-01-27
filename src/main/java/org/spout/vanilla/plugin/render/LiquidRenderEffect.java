@@ -26,7 +26,8 @@
  */
 package org.spout.vanilla.plugin.render;
 
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
+import org.spout.api.math.TrigMath;
 import org.spout.api.math.Vector2;
 import org.spout.api.render.effect.RenderEffect;
 import org.spout.api.render.effect.SnapshotRender;
@@ -40,15 +41,14 @@ public class LiquidRenderEffect implements RenderEffect {
 
 	@Override
 	public void preRender(SnapshotRender snapshotRender) {
-		float x = (float) (MathHelper.mod(2.0 * MathHelper.PI * freqX / 1000.0 * System.currentTimeMillis(), 2.0f * MathHelper.PI) - MathHelper.PI);
-		x = amplX * (float) (MathHelper.sin(x) + 1.0f);
-		float y = (float) (MathHelper.mod(2.0 * MathHelper.PI * freqY / 1000.0 * System.currentTimeMillis(), 2.0f * MathHelper.PI) - MathHelper.PI);
-		y = amplY * (float) (MathHelper.sin(y) + 1.0f);
+		float x = (float) (GenericMath.mod(TrigMath.TWO_PI * freqX / 1000.0 * System.currentTimeMillis(), TrigMath.TWO_PI) - TrigMath.PI);
+		x = amplX * (float) (TrigMath.sin(x) + 1.0f);
+		float y = (float) (GenericMath.mod(TrigMath.TWO_PI * freqY / 1000.0 * System.currentTimeMillis(), TrigMath.TWO_PI) - TrigMath.PI);
+		y = amplY * (float) (TrigMath.sin(y) + 1.0f);
 		snapshotRender.getMaterial().getShader().setUniform("animation", new Vector2(x * size, y * size));
 	}
 
 	@Override
 	public void postRender(SnapshotRender snapshotRender) {
-
 	}
 }

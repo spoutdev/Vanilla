@@ -27,7 +27,7 @@
 package org.spout.vanilla.plugin.data;
 
 import org.spout.api.map.DefaultedKeyImpl;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 
 public class SlimeSize extends DefaultedKeyImpl<Byte> {
 	public SlimeSize(String keyString) {
@@ -37,6 +37,6 @@ public class SlimeSize extends DefaultedKeyImpl<Byte> {
 	@Override
 	public Byte getDefaultValue() {
 		byte[] validSlimeSizes = {0, 1, 2, 4};
-		return validSlimeSizes[MathHelper.getRandom().nextInt(validSlimeSizes.length)];
+		return validSlimeSizes[GenericMath.getRandom().nextInt(validSlimeSizes.length)];
 	}
 }

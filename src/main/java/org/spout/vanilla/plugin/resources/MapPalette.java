@@ -34,8 +34,8 @@ import java.io.OutputStream;
 import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.io.IOUtils;
+import org.spout.api.math.GenericMath;
 
-import org.spout.api.math.MathHelper;
 import org.spout.api.resource.Resource;
 
 import org.spout.vanilla.api.material.map.MapColor;
@@ -146,7 +146,7 @@ public class MapPalette extends Resource {
 						if (color.getBase() == MapMaterialColor.TRANSPARENT) {
 							continue;
 						}
-						diff = MathHelper.lengthSquared(color.getRed() - rf, color.getGreen() - gf, color.getBlue() - bf);
+						diff = GenericMath.lengthSquared(color.getRed() - rf, color.getGreen() - gf, color.getBlue() - bf);
 						if (diff < nearestDiff) {
 							nearestDiff = diff;
 							nearest = color;

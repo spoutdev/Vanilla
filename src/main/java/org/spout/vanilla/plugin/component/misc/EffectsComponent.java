@@ -40,7 +40,7 @@ import org.spout.vanilla.api.event.entity.network.EntityRemoveEffectEvent;
 
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.material.item.misc.Potion;
+import org.spout.vanilla.plugin.material.item.potion.Potion;
 
 /**
  * Component handling status effects. This includes food poisoning, regeneration, etc.

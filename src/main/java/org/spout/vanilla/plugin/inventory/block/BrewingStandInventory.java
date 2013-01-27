@@ -29,9 +29,12 @@ package org.spout.vanilla.plugin.inventory.block;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.api.material.PotionReagent;
+
+import org.spout.vanilla.plugin.material.item.potion.Potion;
+
 /**
- * Represents the inventory of a
- * {@link org.spout.vanilla.plugin.component.substance.material.BrewingStand}
+ * Represents the inventory of a {@link org.spout.vanilla.plugin.component.substance.material.BrewingStand}
  */
 public class BrewingStandInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
@@ -44,7 +47,7 @@ public class BrewingStandInventory extends Inventory {
 	}
 
 	/**
-	 * Gets the output slot at the given index. There are three output slots; the index given must be between 0 and 3.
+	 * Gets the output slot at the given index. There are three output slots; the index given must be between 0 and 2.
 	 * @param index of the output slot
 	 * @return {@link ItemStack} in the output
 	 */
@@ -58,6 +61,20 @@ public class BrewingStandInventory extends Inventory {
 	}
 
 	/**
+	 * Whether the inventory contains an item in any of the output slots
+	 * @return true if there is an item in at least one of the output slots
+	 */
+	public boolean hasOutput() {
+		for (int i = 0; i < OUTPUT_SLOTS.length; i++) {
+			if (getOutput(i) != null) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
 	 * Gets the input of the brewing stand
 	 * @return {@link ItemStack} in input of brewing stand.
 	 */
@@ -65,16 +82,36 @@ public class BrewingStandInventory extends Inventory {
 		return get(INPUT_SLOT);
 	}
 
+	/**
+	 * Whether the inventory contains an item in the input slot
+	 * @return true if an item is present
+	 */
+	public boolean hasInput() {
+		return getInput() != null;
+	}
+
 	@Override
 	public boolean canSet(int i, ItemStack item) {
 		if (!super.canSet(i, item)) {
 			return false;
 		}
-		for (int outputSlot : OUTPUT_SLOTS) {
-			if (outputSlot == i) {
-				return false;
+
+		// Only allow potion ingredients to be put in the input slot
+		if (i == INPUT_SLOT) {
+			if (item != null && item.getMaterial() instanceof PotionReagent) {
+				return true;
 			}
 		}
-		return true;
+
+		for (int outputSlot : OUTPUT_SLOTS) {
+			if (outputSlot == i) {
+				// Slot is an output slot, make sure the item is something that can become a potion
+				if (item != null && item.getMaterial() instanceof Potion) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 }

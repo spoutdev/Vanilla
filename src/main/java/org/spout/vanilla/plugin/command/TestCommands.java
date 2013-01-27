@@ -325,7 +325,7 @@ public class TestCommands {
 				player.get(WindowHolder.class).openWindow(new EnchantmentTableWindow(player, null, new EnchantmentTableInventory()));
 				break;
 			case BREWING_STAND:
-				player.get(WindowHolder.class).openWindow(new BrewingStandWindow(player, new BrewingStandInventory()));
+				player.get(WindowHolder.class).openWindow(new BrewingStandWindow(player, null, new BrewingStandInventory()));
 				break;
 			case VILLAGER:
 				player.get(WindowHolder.class).openWindow(new VillagerWindow(player, new VillagerInventory()));

@@ -26,14 +26,12 @@
  */
 package org.spout.vanilla.plugin.material.block.component;
 
-import java.util.Set;
-
+import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.component.substance.material.BrewingStand;
@@ -48,9 +46,9 @@ public class BrewingStandBlock extends ComponentMaterial {
 	}
 
 	@Override
-	public void onPostDestroy(Block block, Set<Flag> flags) {
+	public boolean onDestroy(Block block, Cause<?> cause) {
 		BrewingStand brewingStand = (BrewingStand) block.getComponent();
-		//Drop items
+		// Drop items
 		Inventory inventory = brewingStand.getInventory();
 		Point position = block.getPosition();
 		for (ItemStack item : inventory) {
@@ -59,7 +57,7 @@ public class BrewingStandBlock extends ComponentMaterial {
 			}
 			Item.dropNaturally(position, item);
 		}
-		super.onPostDestroy(block, flags);
+		return super.onDestroy(block, cause);
 	}
 
 	@Override
@@ -70,5 +68,22 @@ public class BrewingStandBlock extends ComponentMaterial {
 	@Override
 	public boolean isPlacementSuppressed() {
 		return true;
+	}
+
+	/**
+	 * Sets the amount of potions on this brewing stand to display as "filled"
+	 * @param block Brewing stand to change
+	 * @param amount Number of potions to set as "filled"
+	 */
+	public void setFilledPotionSlots(Block block, int amount) {
+		if (amount < 0 || amount > 3) {
+			throw new IllegalArgumentException("Amount must be between 0 and 3");
+		}
+
+		int data = 0;
+		for (int i = 0; i < amount; i++) {
+			data |= 1 << i;
+		}
+		block.setData(data);
 	}
 }

@@ -63,7 +63,7 @@ import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Liquid;
 import org.spout.vanilla.plugin.material.item.Food;
-import org.spout.vanilla.plugin.material.item.misc.Potion;
+import org.spout.vanilla.plugin.material.item.potion.Potion;
 import org.spout.vanilla.plugin.material.item.tool.Tool;
 import org.spout.vanilla.plugin.material.item.tool.weapon.Sword;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerDiggingMessage;

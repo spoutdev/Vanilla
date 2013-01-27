@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.item.misc;
+package org.spout.vanilla.plugin.material.item.potion;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
@@ -170,6 +170,7 @@ public class Potion extends VanillaItemMaterial {
 	private Potion(String name) {
 		super((short) 0x7FFF, name, 373, null);
 		this.time = 0;
+		setMaxStackSize(1);
 	}
 
 	private Potion(String name, int effect, short tier, short duration, short splash, Potion parent) {
@@ -188,6 +189,7 @@ public class Potion extends VanillaItemMaterial {
 	private Potion(String name, int data, Potion parent) {
 		super(name, 373, data, parent, null);
 		this.time = 0;
+		setMaxStackSize(1);
 	}
 
 	public Potion(String name, StatusEffect effect, short tier, short duration, short splash, float time, Potion parent) {

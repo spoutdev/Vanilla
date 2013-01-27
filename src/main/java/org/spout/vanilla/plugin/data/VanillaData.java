@@ -43,6 +43,7 @@ import org.spout.vanilla.api.data.PaintingType;
 import org.spout.vanilla.api.data.Weather;
 import org.spout.vanilla.api.data.WorldType;
 
+import org.spout.vanilla.plugin.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.plugin.inventory.block.ChestInventory;
 import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
 import org.spout.vanilla.plugin.inventory.player.DropInventory;
@@ -79,6 +80,9 @@ public class VanillaData {
 	public static final DefaultedKey<Float> FOOD_SATURATION = new DefaultedKeyImpl<Float>("food_saturation", 5f);
 	public static final DefaultedKey<Float> EXHAUSTION = new DefaultedKeyImpl<Float>("exhaustion", 0f);
 	public static final DefaultedKey<Boolean> POISONED = new DefaultedKeyImpl<Boolean>("poisoned", false);
+	// Brewing stand
+	public static final DefaultedKey<BrewingStandInventory> BREWING_STAND_INVENTORY = new DefaultedKeyFactory<BrewingStandInventory>("brewing_inventory", BrewingStandInventory.class);
+	public static final DefaultedKey<Float> BREW_TIME = new DefaultedKeyImpl<Float>("brew_time", -1f);
 	// Furnace
 	public static final DefaultedKey<FurnaceInventory> FURNACE_INVENTORY = new DefaultedKeyFactory<FurnaceInventory>("inventory", FurnaceInventory.class);
 	public static final DefaultedKey<Float> FURNACE_FUEL = new DefaultedKeyImpl<Float>("fuel", 0f);

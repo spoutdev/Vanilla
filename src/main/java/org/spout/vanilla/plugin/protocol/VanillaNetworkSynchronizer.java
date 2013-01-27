@@ -422,6 +422,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	protected void worldChanged(World world) {
+		GameMode gamemode;
 		WorldConfigurationNode node = VanillaConfiguration.WORLDS.get(world);
 		maxY = node.MAX_Y.getInt() & (~Chunk.BLOCKS.MASK);
 		minY = node.MIN_Y.getInt() & (~Chunk.BLOCKS.MASK);
@@ -430,7 +431,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		highY = minY + stepY;
 		lastY = Integer.MAX_VALUE;
 
-		GameMode gamemode = world.getComponentHolder().getData().get(VanillaData.GAMEMODE);
+		if (player.getData().get("game_mode") == null) {
+			gamemode = world.getComponentHolder().getData().get(VanillaData.GAMEMODE);
+			player.getData().put(VanillaData.GAMEMODE, gamemode);
+		} else {
+			gamemode = player.getData().get(VanillaData.GAMEMODE);
+		}
 		Difficulty difficulty = world.getComponentHolder().getData().get(VanillaData.DIFFICULTY);
 		Dimension dimension = world.getComponentHolder().getData().get(VanillaData.DIMENSION);
 		WorldType worldType = world.getComponentHolder().getData().get(VanillaData.WORLD_TYPE);

@@ -55,13 +55,16 @@ public class OpConfiguration {
 	 * Sets a player as an operator.
 	 * @param playerName Player to op/deop.
 	 * @param op If true, the player gets opped, if not, then deopped.
-	 * @return true if no exception occured during saving the config, false if
+	 * @return true if no exception occurred during saving the config, false if
 	 *         one occured.
 	 */
 	public boolean setOp(String playerName, boolean op) {
 		List<String> list = getOps();
+
 		if (op) {
-			list.add(playerName.toLowerCase());
+			if (!(getOps().contains(playerName.toLowerCase()))) {
+				list.add(playerName.toLowerCase());
+			}
 		} else {
 			list.remove(playerName.toLowerCase());
 		}
@@ -77,7 +80,7 @@ public class OpConfiguration {
 	}
 
 	/**
-	 * Checks wether the passed player is an operator.
+	 * Checks whether the passed player is an operator.
 	 * @param playerName The name of the player to check.
 	 * @return true if player is op, false when not.
 	 */

@@ -36,7 +36,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.api.data.Weather;
 
@@ -123,9 +123,9 @@ public class LightningSimulator extends Component {
 	public void strikePlayers(List<Player> toStrike) {
 		for (Player player : toStrike) {
 			Point playerPos = player.getTransform().getPosition();
-			final int posX = MathHelper.floor(playerPos.getX());
-			final int posY = MathHelper.floor(playerPos.getY());
-			final int posZ = MathHelper.floor(playerPos.getZ());
+			final int posX = GenericMath.floor(playerPos.getX());
+			final int posY = GenericMath.floor(playerPos.getY());
+			final int posZ = GenericMath.floor(playerPos.getZ());
 			for (int tries = 0; tries < 10; tries++) {
 				//pick a random chunk between -4, -4, to 4, 4 relative to the player's position to strike at
 				int cx = (ra.nextBoolean() ? -1 : 1) * ra.nextInt(5);

@@ -35,7 +35,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.api.inventory.Slot;
@@ -66,7 +66,7 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 	@Override
 	public void getBlockFlags(Block block, Set<Flag> flags) {
 		super.getBlockFlags(block, flags);
-		Random rand = MathHelper.getRandom();
+		Random rand = GenericMath.getRandom();
 		if (this.isFullyGrown(block)) {
 			flags.add(BlockFlags.FULLY_GROWN);
 			flags.add(BlockFlags.SEEDS);
@@ -136,7 +136,7 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 		if (!this.isFullyGrown(block)) {
 			if (block.translate(BlockFace.TOP).getLight() >= this.getMinimumLightToGrow()) {
 				// Grow using a calculated chance of growing
-				final Random rand = MathHelper.getRandom();
+				final Random rand = GenericMath.getRandom();
 				int chance = VanillaBlockMaterial.getCropGrowthChance(block);
 				if (rand.nextInt(chance + 1) == 0) {
 					this.setGrowthStage(block, this.getGrowthStage(block) + 1);
@@ -147,6 +147,6 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 	}
 
 	private long getGrowthTime(Block block) {
-		return 20000L + MathHelper.getRandom().nextInt(60000);
+		return 20000L + GenericMath.getRandom().nextInt(60000);
 	}
 }

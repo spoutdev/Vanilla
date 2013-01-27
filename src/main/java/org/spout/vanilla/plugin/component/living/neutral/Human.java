@@ -37,9 +37,9 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.MathHelper;
-import org.spout.api.math.SinusHelper;
+import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
+import org.spout.api.math.VectorMath;
 
 import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.api.event.entity.HumanAbilityChangeEvent;
@@ -190,10 +190,10 @@ public class Human extends Living {
 		Vector3 impulse = dropFrom.getRotation().getDirection().multiply(impulseForce);
 
 		// Random rotational offset to avoid dropping at the same position
-		Random rand = MathHelper.getRandom();
+		Random rand = GenericMath.getRandom();
 		float xzLength = maxXZForce * rand.nextFloat();
 		float yLength = maxYForce * (rand.nextFloat() - rand.nextFloat());
-		impulse = impulse.add(SinusHelper.getRandom2DAxis(rand).multiply(xzLength).toVector3(yLength));
+		impulse = impulse.add(VectorMath.getRandomDirection2D(rand).multiply(xzLength).toVector3(yLength));
 
 		// Slightly dropping upwards
 		impulse = impulse.add(0.0, 0.1, 0.0);

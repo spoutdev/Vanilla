@@ -31,9 +31,9 @@ import java.util.List;
 
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
+import org.spout.api.math.VectorMath;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.misc.Slab;
@@ -318,6 +318,6 @@ public class DesertTemple extends StructureComponent {
 	public BoundingBox getBoundingBox() {
 		final Vector3 rotatedMin = transform(0, 0, 0);
 		final Vector3 rotatedMax = transform(20, 14, 20);
-		return new BoundingBox(MathHelper.min(rotatedMin, rotatedMax), MathHelper.max(rotatedMin, rotatedMax));
+		return new BoundingBox(VectorMath.min(rotatedMin, rotatedMax), VectorMath.max(rotatedMin, rotatedMax));
 	}
 }

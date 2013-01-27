@@ -33,7 +33,7 @@ import org.spout.api.event.Cause;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
@@ -85,7 +85,7 @@ public class ExplosionModelSpherical extends ExplosionModel {
 			for (ExplosionSlot slot : layer.slots) {
 				//prepare the block information
 				if (!slot.block.isSet) {
-					slot.block.prepare(world, xoff, yoff, zoff, MathHelper.getRandom());
+					slot.block.prepare(world, xoff, yoff, zoff, GenericMath.getRandom());
 				}
 
 				//subtract damage factor

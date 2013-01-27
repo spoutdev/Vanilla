@@ -33,7 +33,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
@@ -66,7 +66,7 @@ public class FallingBlock extends ObjectEntity {
 		int x = pos.getBlockX();
 		int y = pos.getBlockY();
 		int z = pos.getBlockZ();
-		int fallAmt = Math.max(1, MathHelper.floor(Math.abs(fallSpeed)));
+		int fallAmt = Math.max(1, GenericMath.floor(Math.abs(fallSpeed)));
 		for (int dy = 0; dy < fallAmt; dy++) {
 			BlockMaterial below = world.getBlockMaterial(x, y - dy, z);
 			if (isFallingObstacle(below)) {

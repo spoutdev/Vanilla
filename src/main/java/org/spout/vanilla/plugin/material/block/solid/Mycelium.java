@@ -28,7 +28,7 @@ package org.spout.vanilla.plugin.material.block.solid;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.api.material.InitializableMaterial;
 
@@ -64,6 +64,6 @@ public class Mycelium extends SpreadingSolid implements InitializableMaterial {
 
 	@Override
 	public long getSpreadingTime(Block b) {
-		return 120000L + MathHelper.getRandom().nextInt(60000) * 5;
+		return 120000L + GenericMath.getRandom().nextInt(60000) * 5;
 	}
 }

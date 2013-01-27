@@ -38,7 +38,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 import org.spout.api.math.Rectangle;
 
 import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
@@ -249,7 +249,7 @@ public class HungerComponent extends EntityComponent {
 							RenderPart part = parts.get(i);
 							RenderPart partBg = parts.get(i + 10);
 
-							int rand = MathHelper.getRandom().nextInt(3);
+							int rand = GenericMath.getRandom().nextInt(3);
 							if (rand == 0) {
 								y = -0.765f; // Twitch up
 							} else if (rand == 1) {

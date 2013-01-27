@@ -30,8 +30,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.MathHelper;
 import org.spout.api.math.Vector3;
+import org.spout.api.math.VectorMath;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.world.generator.normal.object.LootChestObject;
@@ -180,7 +180,7 @@ public class StrongholdLibrary extends StructureComponent {
 	public BoundingBox getBoundingBox() {
 		final Vector3 rotatedMin = transform(0, 0, 0);
 		final Vector3 rotatedMax = transform(13, height - 1, 14);
-		return new BoundingBox(MathHelper.min(rotatedMin, rotatedMax), MathHelper.max(rotatedMin, rotatedMax));
+		return new BoundingBox(VectorMath.min(rotatedMin, rotatedMax), VectorMath.max(rotatedMin, rotatedMax));
 	}
 
 	public boolean isLargeRoom() {

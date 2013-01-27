@@ -40,7 +40,7 @@ import org.jboss.netty.util.CharsetUtil;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.Parameter;
@@ -345,7 +345,7 @@ public final class ChannelBufferUtils {
 	}
 
 	public static int protocolifyPosition(float pos) {
-		return MathHelper.floor(pos * 32);
+		return GenericMath.floor(pos * 32);
 	}
 
 	public static float deProtocolifyPosition(int pos) {
@@ -353,7 +353,7 @@ public final class ChannelBufferUtils {
 	}
 
 	public static int protocolifyPitch(float pitch) {
-		return MathHelper.wrapByte(MathHelper.floor((pitch / 360) * 256));
+		return GenericMath.wrapByte(GenericMath.floor((pitch / 360) * 256));
 	}
 
 	public static float deProtocolifyPitch(int pitch) {

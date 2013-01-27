@@ -34,7 +34,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.api.material.InitializableMaterial;
 
@@ -58,7 +58,7 @@ public class SugarCaneBlock extends StackGrowingBase implements InitializableMat
 
 	@Override
 	public long getGrowTime(Block block) {
-		return 180000L + MathHelper.getRandom().nextInt(180000);
+		return 180000L + GenericMath.getRandom().nextInt(180000);
 	}
 
 	@Override

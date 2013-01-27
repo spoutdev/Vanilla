@@ -28,8 +28,8 @@ package org.spout.vanilla.plugin.protocol.msg.player.pos;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
+import org.spout.api.math.QuaternionMath;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.api.protocol.msg.VanillaMainChannelMessage;
@@ -46,7 +46,7 @@ public final class PlayerLookMessage extends VanillaMainChannelMessage {
 	}
 
 	public Quaternion getRotation() {
-		return MathHelper.rotation(this.pitch, this.yaw, this.roll);
+		return QuaternionMath.rotation(this.pitch, this.yaw, this.roll);
 	}
 
 	public float getYaw() {

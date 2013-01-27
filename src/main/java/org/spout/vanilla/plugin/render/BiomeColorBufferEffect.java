@@ -34,7 +34,7 @@ import gnu.trove.list.array.TFloatArrayList;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.ChunkSnapshotModel;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 import org.spout.api.render.BufferContainer;
 import org.spout.api.render.effect.BufferEffect;
 
@@ -63,9 +63,9 @@ public abstract class BiomeColorBufferEffect implements BufferEffect {
 			float r = 0;
 			float g = 0;
 			float b = 0;
-			final int x = MathHelper.floor(vertices.get(i));
-			final int y = MathHelper.floor(vertices.get(i + 1));
-			final int z = MathHelper.floor(vertices.get(i + 2));
+			final int x = GenericMath.floor(vertices.get(i));
+			final int y = GenericMath.floor(vertices.get(i + 1));
+			final int z = GenericMath.floor(vertices.get(i + 2));
 			for (byte xx = -1; xx <= 1; xx++) {
 				for (byte zz = -1; zz <= 1; zz++) {
 					VanillaBiome biome = (VanillaBiome) world.getBiome(x + xx, y, z + zz);

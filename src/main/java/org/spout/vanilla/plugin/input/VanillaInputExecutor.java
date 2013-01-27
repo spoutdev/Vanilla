@@ -32,7 +32,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.entity.state.PlayerInputState;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.input.InputExecutor;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.QuaternionMath;
 import org.spout.api.math.Vector3;
 
 public class VanillaInputExecutor implements InputExecutor {
@@ -69,6 +69,6 @@ public class VanillaInputExecutor implements InputExecutor {
 		if (inputState.getCrouch()) {
 			offset = offset.subtract(ts.upVector().multiply(camera.getSpeed()).multiply(dt));
 		}
-		tc.translateAndSetRotation(offset, MathHelper.rotation(inputState.pitch(), inputState.yaw(), ts.getRotation().getRoll()));
+		tc.translateAndSetRotation(offset, QuaternionMath.rotation(inputState.pitch(), inputState.yaw(), ts.getRotation().getRoll()));
 	}
 }

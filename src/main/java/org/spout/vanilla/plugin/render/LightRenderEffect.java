@@ -26,7 +26,8 @@
  */
 package org.spout.vanilla.plugin.render;
 
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
+import org.spout.api.math.TrigMath;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.Vector4;
 import org.spout.api.render.effect.RenderEffect;
@@ -34,7 +35,7 @@ import org.spout.api.render.effect.SnapshotRender;
 
 public class LightRenderEffect implements RenderEffect {
 	private static final float size = 256f;
-	private static final float lat = (float) ((25.0 / 180.0) * MathHelper.PI);
+	private static final float lat = (float) ((25.0 / 180.0) * TrigMath.PI);
 	private static final float sunSize = 0.2f;
 	private static final float ambient = 0.33f;
 	private static final Vector4 moonColor = new Vector4(0.33f, 0.33f, 0.50f, 1.0f);
@@ -63,7 +64,7 @@ public class LightRenderEffect implements RenderEffect {
 		//TODO : Replace by the real color of the sky taking account of the time
 		float f = (float) ((System.currentTimeMillis() % 15000) / 15000.0);
 
-		float rads = (float) (f * 2 * MathHelper.PI);
+		float rads = (float) (f * TrigMath.TWO_PI);
 
 		float x = (float) Math.sin(rads);
 

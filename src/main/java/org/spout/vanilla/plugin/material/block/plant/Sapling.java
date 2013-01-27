@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.plugin.material.block.plant;
 
-import java.util.Random;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
@@ -36,7 +35,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.api.material.Fuel;
@@ -121,7 +120,7 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 	 * @param type of tree
 	 */
 	public void growTree(Block block, Sapling type) {
-		TreeObject.growTree(type, block, MathHelper.getRandom());
+		TreeObject.growTree(type, block, GenericMath.getRandom());
 	}
 
 	@Override
@@ -148,6 +147,6 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 	}
 
 	private long getGrowthTime(Block block) {
-		return 240000L + MathHelper.getRandom().nextInt(240000);
+		return 240000L + GenericMath.getRandom().nextInt(240000);
 	}
 }

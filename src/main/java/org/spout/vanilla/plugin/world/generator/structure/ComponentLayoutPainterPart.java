@@ -28,9 +28,9 @@ package org.spout.vanilla.plugin.world.generator.structure;
 
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.IntVector3;
-import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
+import org.spout.api.math.VectorMath;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
@@ -155,7 +155,7 @@ public class ComponentLayoutPainterPart extends ComponentPart {
 
 	private Vector3 transform(int x, int z) {
 		final Vector3 rotPoint = new Vector3(rotationPoint.getX(), rotationPoint.getY(), rotationPoint.getZ());
-		return MathHelper.round(MathHelper.transform(new Vector3(x, 0, z).
+		return VectorMath.round(VectorMath.transform(new Vector3(x, 0, z).
 				subtract(rotPoint), rotation).
 				add(rotPoint).add(new Vector3(position.getX(), position.getY(), position.getZ())));
 	}

@@ -35,7 +35,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.api.inventory.Slot;
@@ -88,7 +88,7 @@ public class Grass extends SpreadingSolid implements DynamicMaterial, Initializa
 
 	@Override
 	public long getSpreadingTime(Block b) {
-		return 60000L + MathHelper.getRandom().nextInt(60000) * 3;
+		return 60000L + GenericMath.getRandom().nextInt(60000) * 3;
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class Grass extends SpreadingSolid implements DynamicMaterial, Initializa
 			// gets a Tall Grass attached to the top of it, then we should remove a bone meal.
 			boolean shouldConsume = false;
 
-			final Random random = MathHelper.getRandom();
+			final Random random = GenericMath.getRandom();
 			// Minecraft does grass growing by Bone Meal as follows. Keep in mind the radius is 8.
 			// - Tall Grass is placed 9/10 times.
 			// - If Tall Grass fails, place Dandelion 2/3 times (within the 1/10 window Tall Grass failed on)

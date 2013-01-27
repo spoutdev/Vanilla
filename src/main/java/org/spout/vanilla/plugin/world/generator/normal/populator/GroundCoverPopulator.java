@@ -36,7 +36,7 @@ import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.MaterialRegistry;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.config.ConfigurationNode;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
@@ -54,7 +54,7 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 		final Random random = WorldGeneratorUtils.getRandom(seed, x, y, z, 13823);
 		final Vector3 size = blockData.getSize();
 		final int sizeX = size.getFloorX();
-		final int sizeY = MathHelper.clamp(size.getFloorY(), 0, NormalGenerator.HEIGHT);
+		final int sizeY = GenericMath.clamp(size.getFloorY(), 0, NormalGenerator.HEIGHT);
 		final int sizeZ = size.getFloorZ();
 		for (int xx = 0; xx < sizeX; xx++) {
 			for (int zz = 0; zz < sizeZ; zz++) {

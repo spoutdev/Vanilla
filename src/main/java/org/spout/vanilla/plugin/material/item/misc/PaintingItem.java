@@ -34,7 +34,7 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.api.data.PaintingType;
 
@@ -61,7 +61,7 @@ public class PaintingItem extends VanillaItemMaterial {
 					list.add(paintingType);
 				}
 			}
-			PaintingType paintingType = list.get(MathHelper.getRandom().nextInt(list.size() - 1));
+			PaintingType paintingType = list.get(GenericMath.getRandom().nextInt(list.size() - 1));
 
 			Entity e = world.createEntity(paintingType.getCenter(direction, block.getPosition()), Painting.class);
 			Painting painting = e.add(Painting.class);

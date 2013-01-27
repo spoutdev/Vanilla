@@ -29,7 +29,7 @@ package org.spout.vanilla.plugin.component.player;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.api.event.player.network.PlayerPingEvent;
 
@@ -109,7 +109,7 @@ public class PingComponent extends EntityComponent {
 	 * Sends a new request to the client to return a ping message.
 	 */
 	public void request() {
-		int hash = MathHelper.getRandom().nextInt(Integer.MAX_VALUE);
+		int hash = GenericMath.getRandom().nextInt(Integer.MAX_VALUE);
 		pingTime[lastRequestCount] = System.currentTimeMillis();
 		pingHash[lastRequestCount] = hash;
 		lastRequestCount++;

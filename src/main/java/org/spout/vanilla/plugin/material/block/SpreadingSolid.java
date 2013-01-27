@@ -35,8 +35,8 @@ import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
+import org.spout.api.math.GenericMath;
 import org.spout.api.math.IntVector3;
-import org.spout.api.math.MathHelper;
 
 import org.spout.vanilla.api.material.block.Spreading;
 
@@ -135,7 +135,7 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 	 */
 	private boolean onSpread(Block block, boolean spread) {
 		Block around;
-		final Random rand = MathHelper.getRandom();
+		final Random rand = GenericMath.getRandom();
 		boolean couldSpread = false;
 		for (IntVector3 next : this.getSpreadRange()) {
 			around = block.translate(next);

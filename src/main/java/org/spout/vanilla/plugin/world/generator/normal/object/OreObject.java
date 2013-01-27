@@ -30,8 +30,9 @@ import java.util.Random;
 
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.SinusHelper;
+import org.spout.api.math.TrigMath;
 import org.spout.api.math.Vector2;
+import org.spout.api.math.VectorMath;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.world.generator.object.RandomObject;
@@ -64,6 +65,7 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Gets the maximum height this ore should be placed
+	 *
 	 * @return maximum height
 	 */
 	public short getMaxHeight() {
@@ -72,6 +74,7 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Gets the amount of this ore placed per chunk
+	 *
 	 * @return placement count
 	 */
 	public byte getAmount() {
@@ -80,6 +83,7 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Gets the size of a cluster of this ore
+	 *
 	 * @return cluster size
 	 */
 	public byte getClusterSize() {
@@ -88,6 +92,7 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Gets the ore material used
+	 *
 	 * @return ore material
 	 */
 	public BlockMaterial getMaterial() {
@@ -117,6 +122,7 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Generates a cluster of this ore at the position using the random given
+	 *
 	 * @param world to place in
 	 * @param originX of the cluster
 	 * @param originY of the cluster
@@ -125,7 +131,7 @@ public class OreObject extends RandomObject {
 	@Override
 	public void placeObject(World world, int originX, int originY, int originZ) {
 		final float angle = random.nextFloat() * (float) Math.PI;
-		Vector2 offset = SinusHelper.get2DAxis(angle).multiply(clusterSize).divide(8);
+		Vector2 offset = VectorMath.getDirection2D(angle).multiply(clusterSize).divide(8);
 		final float x1 = ((originX + 8) + offset.getX());
 		final float x2 = ((originX + 8) - offset.getX());
 		final float z1 = ((originZ + 8) + offset.getY());
@@ -137,7 +143,7 @@ public class OreObject extends RandomObject {
 			final float seedX = x1 + (x2 - x1) * count / clusterSize;
 			final float seedY = y1 + (y2 - y1) * count / clusterSize;
 			final float seedZ = z1 + (z2 - z1) * count / clusterSize;
-			final float size = ((SinusHelper.sin(count * (float) Math.PI / clusterSize) + 1) * random.nextFloat() * clusterSize / 16 + 1) / 2;
+			final float size = ((TrigMath.sin(count * (float) Math.PI / clusterSize) + 1) * random.nextFloat() * clusterSize / 16 + 1) / 2;
 
 			final int startX = (int) (seedX - size);
 			final int startY = (int) (seedY - size);

@@ -29,7 +29,7 @@ package org.spout.vanilla.plugin.util.explosion;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 
 public class ExplosionLayer {
@@ -57,7 +57,7 @@ public class ExplosionLayer {
 						dx = x / fact - 1.0;
 						dy = y / fact - 1.0;
 						dz = z / fact - 1.0;
-						double d = 0.3 / MathHelper.length(dx, dy, dz);
+						double d = 0.3 / GenericMath.length(dx, dy, dz);
 						dx *= d;
 						dy *= d;
 						dz *= d;
@@ -90,9 +90,9 @@ public class ExplosionLayer {
 	 * @return an already stored or new slot
 	 */
 	public ExplosionSlot createSlot(final double dx, final double dy, final double dz) {
-		int x = MathHelper.floor(dx * this.index + 0.5);
-		int y = MathHelper.floor(dy * this.index + 0.5);
-		int z = MathHelper.floor(dz * this.index + 0.5);
+		int x = GenericMath.floor(dx * this.index + 0.5);
+		int y = GenericMath.floor(dy * this.index + 0.5);
+		int z = GenericMath.floor(dz * this.index + 0.5);
 		Vector3 pos = new Vector3(x, y, z);
 		ExplosionSlot slot = this.tmpSlotMap.get(pos);
 		if (slot == null) {

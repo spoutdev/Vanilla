@@ -36,7 +36,7 @@ import org.spout.api.generator.GeneratorPopulator;
 import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
@@ -81,7 +81,7 @@ public class BlockPatchPopulator implements GeneratorPopulator {
 		shape.setSeed((int) (seed * 661));
 		final Vector3 size = blockData.getSize();
 		final int sizeX = size.getFloorX();
-		final int sizeY = MathHelper.clamp(size.getFloorY(), 0, NetherGenerator.HEIGHT);
+		final int sizeY = GenericMath.clamp(size.getFloorY(), 0, NetherGenerator.HEIGHT);
 		final int sizeZ = size.getFloorZ();
 		final int scale = sizeY / 2;
 		final double[][] displacements = WorldGeneratorUtils.fastNoise(elevation, sizeX, sizeZ, 4, x, 0, z);
@@ -89,7 +89,7 @@ public class BlockPatchPopulator implements GeneratorPopulator {
 		for (int xx = 0; xx < sizeX; xx++) {
 			for (int zz = 0; zz < sizeZ; zz++) {
 				if (values[xx][zz] > 0.6) {
-					final int displacement = MathHelper.clamp((int) Math.ceil(displacements[xx][zz] * scale + scale), 0, sizeY - 1);
+					final int displacement = GenericMath.clamp((int) Math.ceil(displacements[xx][zz] * scale + scale), 0, sizeY - 1);
 					int yy = getHighestWorkableBlock(blockData, x + xx, y + displacement, z + zz);
 					if (yy == -1 || blockData.get(x + xx, yy + 1, z + zz) != VanillaMaterials.AIR) {
 						continue;

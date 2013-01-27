@@ -33,7 +33,8 @@ import org.spout.api.component.impl.NavigationComponent;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
+import org.spout.api.math.VectorMath;
 
 public class FollowComponent extends EntityComponent {
 	private Entity toFollow;
@@ -59,7 +60,7 @@ public class FollowComponent extends EntityComponent {
 		}
 
 		//Within 2 blocks of the followed entity? No need to continue
-		if (MathHelper.distance(getOwner().getTransform().getPosition(), toFollow.getTransform().getPosition()) <= 3) {
+		if (VectorMath.distance(getOwner().getTransform().getPosition(), toFollow.getTransform().getPosition()) <= 3) {
 			navigate.stop();
 			return;
 		}
@@ -98,7 +99,7 @@ public class FollowComponent extends EntityComponent {
 		if (potentialToFollow.size() == 0) {
 			return null;
 		}
-		Random random = MathHelper.getRandom();
+		Random random = GenericMath.getRandom();
 		final int choice = random.nextInt(potentialToFollow.size());
 		final Entity chosenEntity = (Entity) potentialToFollow.get(choice);
 		follow(chosenEntity);

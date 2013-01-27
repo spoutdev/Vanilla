@@ -38,7 +38,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.data.MoveReaction;
@@ -95,7 +95,7 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 			GeneralEffects.RANDOM_CLICK2.playGlobal(block.getPosition());
 			return false;
 		}
-		final Random rand = MathHelper.getRandom();
+		final Random rand = GenericMath.getRandom();
 		Vector3 direction = this.getFacing(block).getOffset();
 
 		// Calculate position to shoot from

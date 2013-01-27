@@ -29,7 +29,7 @@ package org.spout.vanilla.plugin.component.misc;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.Material;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.api.data.Animation;
 import org.spout.vanilla.api.event.block.network.BlockBreakAnimationEvent;
@@ -178,7 +178,7 @@ public class DiggingComponent extends EntityComponent {
 	 * @return false if player is cheating
 	 */
 	public boolean checkMiningSpeed() {
-		if (MathHelper.mean(miningDamage) > miningDamageAllowance) { // TODO: Make this configurable?
+		if (GenericMath.mean(miningDamage) > miningDamageAllowance) { // TODO: Make this configurable?
 			return false;
 		}
 		return true;

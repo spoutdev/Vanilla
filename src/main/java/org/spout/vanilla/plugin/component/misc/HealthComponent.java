@@ -30,7 +30,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.Client;
@@ -44,7 +43,7 @@ import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.Parameter;
@@ -197,7 +196,7 @@ public class HealthComponent extends EntityComponent {
 						RenderPart heart = parts.get(i);
 						RenderPart heartBg = parts.get(i + 10);
 
-						if (MathHelper.getRandom().nextBoolean()) {
+						if (GenericMath.getRandom().nextBoolean()) {
 							y = -0.765f; // Twitch up
 						} else {
 							y = -0.775f; // Twitch down

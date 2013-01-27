@@ -29,9 +29,10 @@ package org.spout.vanilla.plugin.component.misc;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
-import org.spout.api.math.MathHelper;
 import org.spout.api.math.Quaternion;
+import org.spout.api.math.QuaternionMath;
 import org.spout.api.math.Vector3;
+import org.spout.api.math.VectorMath;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.plugin.data.VanillaData;
@@ -60,7 +61,7 @@ public class HeadComponent extends EntityComponent {
 	 * @param lookingAt {@link org.spout.api.math.Vector3} to look at
 	 */
 	public void setLooking(Vector3 lookingAt) {
-		setRotation(MathHelper.rotationTo(Vector3.ZERO, lookingAt));
+		setRotation(QuaternionMath.rotationTo(Vector3.FORWARD, lookingAt));
 	}
 
 	/**
@@ -68,7 +69,7 @@ public class HeadComponent extends EntityComponent {
 	 * @return Head direction vector
 	 */
 	public Vector3 getLookingAt() {
-		return MathHelper.getDirectionVector(getRotation());
+		return VectorMath.getDirection(getRotation());
 	}
 
 	/**

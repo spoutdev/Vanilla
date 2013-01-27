@@ -27,7 +27,7 @@
 package org.spout.vanilla.plugin.material.item;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.api.data.GameMode;
@@ -66,7 +66,7 @@ public class Food extends VanillaItemMaterial {
 						hunger.setHunger((int) (hunger.getHunger() + effect.getChange()));
 						break;
 					case POISON:
-						if (MathHelper.getRandom().nextInt(101) < effect.getChange()) {
+						if (GenericMath.getRandom().nextInt(101) < effect.getChange()) {
 							entity.add(EffectsComponent.class).addEffect(new StatusEffectContainer(StatusEffect.HUNGER, 30));
 						}
 						break;

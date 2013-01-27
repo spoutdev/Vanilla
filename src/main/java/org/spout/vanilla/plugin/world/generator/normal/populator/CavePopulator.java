@@ -29,9 +29,10 @@ package org.spout.vanilla.plugin.world.generator.normal.populator;
 import java.util.Random;
 
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.MathHelper;
-import org.spout.api.math.SinusHelper;
+import org.spout.api.math.GenericMath;
+import org.spout.api.math.TrigMath;
 import org.spout.api.math.Vector3;
+import org.spout.api.math.VectorMath;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
@@ -98,9 +99,9 @@ public class CavePopulator extends OverlapingPopulator {
 		}
 
 		for (; startingNode < nodeAmount; startingNode++) {
-			final double horizontalSize = 1.5 + SinusHelper.sin((float) (startingNode * Math.PI / nodeAmount)) * horizontalScale;
+			final double horizontalSize = 1.5 + TrigMath.sin((float) (startingNode * Math.PI / nodeAmount)) * horizontalScale;
 			final double verticalSize = horizontalSize * verticalScale;
-			target = target.add(SinusHelper.get3DAxis((float) horizontalAngle, (float) verticalAngle));
+			target = target.add(VectorMath.getDirection3D((float) horizontalAngle, (float) verticalAngle));
 
 			if (extraVerticalScale) {
 				verticalAngle *= 0.92;
@@ -144,10 +145,10 @@ public class CavePopulator extends OverlapingPopulator {
 				continue;
 			}
 
-			final Vector3 start = new Vector3(MathHelper.floor(target.getX() - horizontalSize) - chunk.getFloorX() - 1,
-					MathHelper.floor(target.getY() - verticalSize) - 1, MathHelper.floor(target.getZ() - horizontalSize) - chunk.getFloorZ() - 1);
-			final Vector3 end = new Vector3(MathHelper.floor(target.getX() + horizontalSize) - chunk.getFloorX() + 1,
-					MathHelper.floor(target.getY() + verticalSize) + 1, MathHelper.floor(target.getZ() + horizontalSize) - chunk.getFloorZ() + 1);
+			final Vector3 start = new Vector3(GenericMath.floor(target.getX() - horizontalSize) - chunk.getFloorX() - 1,
+					GenericMath.floor(target.getY() - verticalSize) - 1, GenericMath.floor(target.getZ() - horizontalSize) - chunk.getFloorZ() - 1);
+			final Vector3 end = new Vector3(GenericMath.floor(target.getX() + horizontalSize) - chunk.getFloorX() + 1,
+					GenericMath.floor(target.getY() + verticalSize) + 1, GenericMath.floor(target.getZ() + horizontalSize) - chunk.getFloorZ() + 1);
 			final CaveNode node = new CaveNode(blockData, chunk, start, end, target, verticalSize, horizontalSize);
 
 			if (node.canPlace()) {
@@ -234,9 +235,9 @@ public class CavePopulator extends OverlapingPopulator {
 
 		private static Vector3 clamp(Vector3 point) {
 			return new Vector3(
-					MathHelper.clamp(point.getFloorX(), 0, 16),
-					MathHelper.clamp(point.getFloorY(), 1, 120),
-					MathHelper.clamp(point.getFloorZ(), 0, 16));
+					GenericMath.clamp(point.getFloorX(), 0, 16),
+					GenericMath.clamp(point.getFloorY(), 1, 120),
+					GenericMath.clamp(point.getFloorZ(), 0, 16));
 		}
 	}
 }

@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
@@ -39,6 +38,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
+import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
@@ -124,7 +124,7 @@ public abstract class ExplosionModel {
 				if (material == VanillaMaterials.AIR) {
 					if (fire) {
 						BlockMaterial below = block.translate(BlockFace.BOTTOM).getMaterial();
-						if (below.isSolid() && org.spout.api.math.MathHelper.getRandom().nextInt(3) == 0) {
+						if (below.isSolid() && GenericMath.getRandom().nextInt(3) == 0) {
 							block.setMaterial(VanillaMaterials.FIRE);
 						}
 					}

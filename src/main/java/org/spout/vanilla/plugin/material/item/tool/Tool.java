@@ -34,7 +34,7 @@ import java.util.Set;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.MathHelper;
+import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector2;
 import org.spout.api.util.flag.Flag;
 
@@ -64,7 +64,7 @@ public abstract class Tool extends VanillaItemMaterial {
 	public short getDurabilityPenalty(ItemStack item) {
 		if (Enchantment.hasEnchantment(item, VanillaEnchantments.UNBREAKING)) {
 			// Level 1 = 50%, Level 2 = 67%, Level 3 = 75% chance to not consume durability
-			if (100 - (100 / (Enchantment.getEnchantmentLevel(item, VanillaEnchantments.UNBREAKING) + 1)) > MathHelper.getRandom().nextInt(100)) {
+			if (100 - (100 / (Enchantment.getEnchantmentLevel(item, VanillaEnchantments.UNBREAKING) + 1)) > GenericMath.getRandom().nextInt(100)) {
 				return (short) 0;
 			}
 		}
@@ -119,7 +119,7 @@ public abstract class Tool extends VanillaItemMaterial {
 	}
 
 	public int getDamageBonus(Entity damaged, ItemStack heldItem) {
-		final Random rand = MathHelper.getRandom();
+		final Random rand = GenericMath.getRandom();
 		// These enchantments conflict with each other, so only one is possible per item
 		int damage = 0;
 		if (Enchantment.hasEnchantment(heldItem, VanillaEnchantments.BANE_OF_ARTHROPODS)) {

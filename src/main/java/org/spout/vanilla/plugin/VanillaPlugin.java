@@ -41,6 +41,7 @@ import org.spout.api.command.RootCommand;
 import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
 import org.spout.api.command.annotated.SimpleInjector;
+import org.spout.api.component.impl.DatatableComponent;
 import org.spout.api.component.impl.NetworkComponent;
 import org.spout.api.component.impl.ObserverComponent;
 import org.spout.api.entity.Entity;
@@ -236,9 +237,10 @@ public class VanillaPlugin extends CommonPlugin {
 				World world = engine.loadWorld(worldNode.getWorldName(), generator);
 
 				// Apply general settings
-				world.getDataMap().put(VanillaData.GAMEMODE, GameMode.get(worldNode.GAMEMODE.getString()));
-				world.getDataMap().put(VanillaData.DIFFICULTY, Difficulty.get(worldNode.DIFFICULTY.getString()));
-				world.getDataMap().put(VanillaData.DIMENSION, Dimension.get(worldNode.SKY_TYPE.getString()));
+				final DatatableComponent data = world.getComponentHolder().getData();
+				data.put(VanillaData.GAMEMODE, GameMode.get(worldNode.GAMEMODE.getString()));
+				data.put(VanillaData.DIFFICULTY, Difficulty.get(worldNode.DIFFICULTY.getString()));
+				data.put(VanillaData.DIMENSION, Dimension.get(worldNode.SKY_TYPE.getString()));
 
 				world.addLightingManager(VanillaLighting.BLOCK_LIGHT);
 				world.addLightingManager(VanillaLighting.SKY_LIGHT);

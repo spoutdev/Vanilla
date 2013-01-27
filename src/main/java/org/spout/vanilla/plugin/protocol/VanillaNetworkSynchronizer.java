@@ -37,6 +37,7 @@ import gnu.trove.set.TIntSet;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
+import org.spout.api.component.impl.DatatableComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
@@ -430,40 +431,43 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		highY = minY + stepY;
 		lastY = Integer.MAX_VALUE;
 
-		GameMode gamemode = world.getComponentHolder().getData().get(VanillaData.GAMEMODE);
-		Difficulty difficulty = world.getComponentHolder().getData().get(VanillaData.DIFFICULTY);
-		Dimension dimension = world.getComponentHolder().getData().get(VanillaData.DIMENSION);
-		WorldType worldType = world.getComponentHolder().getData().get(VanillaData.WORLD_TYPE);
+		final DatatableComponent data = world.getComponentHolder().getData();
+		final Human human = player.get(Human.class);
+		GameMode gamemode = null;
+		Difficulty difficulty = data.get(VanillaData.DIFFICULTY);
+		Dimension dimension = data.get(VanillaData.DIMENSION);
+		WorldType worldType = data.get(VanillaData.WORLD_TYPE);
 
-		//Use existing gamemode if we are not logging in
-		Human human = player.get(Human.class);
-		if (human != null && !first) {
-			gamemode = human.getGameMode();
-		}
-
-		//TODO Handle infinite height
 		int entityId = player.getId();
 
 		if (first) {
 			first = false;
+			gamemode = data.get(VanillaData.GAMEMODE);
 			Server server = (Server) session.getEngine();
 			PlayerLoginRequestMessage idMsg = new PlayerLoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) server.getMaxPlayers());
 			player.getSession().send(false, true, idMsg);
 			player.getSession().setState(State.GAME);
 		} else {
+			if (human != null) {
+				gamemode = human.getGameMode();
+			}
 			player.getSession().send(false, new PlayerRespawnMessage(0, difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
 			player.getSession().send(false, new PlayerRespawnMessage(1, difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
 			player.getSession().send(false, new PlayerRespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
+		}
+
+		if (human != null) {
+			if (first) {
+				human.setGamemode(gamemode, false);
+			}
+			human.updateAbilities();
 		}
 
 		PlayerInventory inv = player.get(PlayerInventory.class);
 		if (inv != null) {
 			inv.updateAll();
 		}
-		if (human != null) {
-			human.setGamemode(gamemode, false); // Must be here because gamemode may be different; false because client is updated in next call
-			human.updateAbilities();
-		}
+
 		Point pos = world.getSpawnPoint().getPosition();
 		PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());
 		player.getSession().send(false, SPMsg);

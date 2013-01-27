@@ -322,7 +322,7 @@ public class TestCommands {
 				player.get(WindowHolder.class).openWindow(new DispenserWindow(player, new DispenserInventory()));
 				break;
 			case ENCHANTMENT_TABLE:
-				player.get(WindowHolder.class).openWindow(new EnchantmentTableWindow(player, new EnchantmentTableInventory()));
+				player.get(WindowHolder.class).openWindow(new EnchantmentTableWindow(player, null, new EnchantmentTableInventory()));
 				break;
 			case BREWING_STAND:
 				player.get(WindowHolder.class).openWindow(new BrewingStandWindow(player, new BrewingStandInventory()));

@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.lighting;
 
 import org.spout.api.lighting.LightingManager;
+import org.spout.api.lighting.Modifiable;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 
@@ -36,8 +37,8 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	}
 
 	@Override
-	public VanillaCuboidLightBuffer deserialize(int baseX, int baseY, int baseZ, int sizeX, int sizeY, int sizeZ, byte[] data) {
-		return new VanillaCuboidLightBuffer(getId(), baseX, baseY, baseZ, sizeX, sizeY, sizeZ, data);
+	public VanillaCuboidLightBuffer deserialize(Modifiable holder, int baseX, int baseY, int baseZ, int sizeX, int sizeY, int sizeZ, byte[] data) {
+		return new VanillaCuboidLightBuffer(holder, getId(), baseX, baseY, baseZ, sizeX, sizeY, sizeZ, data);
 	}
 
 	@Override

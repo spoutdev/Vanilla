@@ -536,7 +536,7 @@ public final class VanillaMaterials {
 	public static final RawFish RAW_FISH = new RawFish("Raw Fish", 349, new FoodEffect(FoodEffects.HUNGER, 2), new FoodEffect(FoodEffects.SATURATION, 1.2f));
 	public static final Food COOKED_FISH = new Food("Cooked Fish", 350, null, new FoodEffect(FoodEffects.HUNGER, 5), new FoodEffect(FoodEffects.SATURATION, 6));
 	public static final Food RED_APPLE = new Food("Apple", 260, null, new FoodEffect(FoodEffects.HUNGER, 4), new FoodEffect(FoodEffects.SATURATION, 2.4f));
-	public static final Food MUSHROOM_SOUP = new Food("Mushroom Soup", 282, null, new FoodEffect(FoodEffects.HUNGER, 6), new FoodEffect(FoodEffects.SATURATION, 7.2f));
+	public static final Food MUSHROOM_STEW = new Food("Mushroom Stew", 282, null, new FoodEffect(FoodEffects.HUNGER, 6), new FoodEffect(FoodEffects.SATURATION, 7.2f));
 	public static final Food BREAD = new Food("Bread", 297, null, new FoodEffect(FoodEffects.HUNGER, 5), new FoodEffect(FoodEffects.SATURATION, 6));
 	public static final RawPorkchop RAW_PORKCHOP = new RawPorkchop("Raw Porkchop", 319, new FoodEffect(FoodEffects.HUNGER, 3), new FoodEffect(FoodEffects.SATURATION, 1.8f));
 	public static final Food COOKED_PORKCHOP = new Food("Cooked Porkchop", 320, null, new FoodEffect(FoodEffects.HUNGER, 8), new FoodEffect(FoodEffects.SATURATION, 12.8f));

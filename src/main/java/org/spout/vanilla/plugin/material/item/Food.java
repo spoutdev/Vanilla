@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.material.item;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector2;
 
@@ -40,6 +41,7 @@ import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.EffectsComponent;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class Food extends VanillaItemMaterial {
 	private final FoodEffect[] effects;
@@ -76,6 +78,9 @@ public class Food extends VanillaItemMaterial {
 				}
 			}
 			slot.addAmount(-1);
+			if (slot.get().getMaterial().equals(VanillaMaterials.MUSHROOM_STEW)) {
+				slot.add(new ItemStack(VanillaMaterials.BOWL, 1));
+			}
 		}
 	}
 }

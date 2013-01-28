@@ -442,7 +442,15 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 		if (first) {
 			first = false;
-			gamemode = data.get(VanillaData.GAMEMODE);
+			if (human != null && human.getAttachedCount() > 1) {
+				gamemode = human.getGameMode();
+			} else {
+				gamemode = data.get(VanillaData.GAMEMODE);
+				if (human != null) {
+					human.setGamemode(gamemode);
+				}
+			}
+
 			Server server = (Server) session.getEngine();
 			PlayerLoginRequestMessage idMsg = new PlayerLoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) server.getMaxPlayers());
 			player.getSession().send(false, true, idMsg);

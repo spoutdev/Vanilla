@@ -28,7 +28,7 @@ package org.spout.vanilla.plugin.component.living.hostile;
 
 import com.bulletphysics.collision.shapes.BoxShape;
 
-import org.spout.api.component.impl.SceneComponent;
+import org.spout.api.component.impl.PhysicsComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
@@ -57,11 +57,12 @@ public class Zombie extends Living implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ZombieEntityProtocol());
-		SceneComponent scene = getOwner().getScene();
+		PhysicsComponent physics = getOwner().add(PhysicsComponent.class);
 		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.ROTTEN_FLESH, getRandom().nextInt(2))).addXpDrop((short) 5);
-		scene.setShape(5f, new BoxShape(1F, 2F, 1F));
-		scene.setFriction(10f);
-		scene.setRestitution(0f);
+		physics.setMass(5f);
+		physics.setCollisionShape(new BoxShape(1F, 2F, 1F));
+		physics.setFriction(10f);
+		physics.setRestitution(0f);
 
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(20);

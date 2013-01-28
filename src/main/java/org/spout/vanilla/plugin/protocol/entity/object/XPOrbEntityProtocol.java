@@ -42,9 +42,9 @@ public class XPOrbEntityProtocol extends VanillaEntityProtocol {
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
 		XPOrb xp = entity.add(XPOrb.class);
 		int id = entity.getId();
-		int x = (int) (entity.getScene().getPosition().getX() * 32);
-		int y = (int) (entity.getScene().getPosition().getY() * 32);
-		int z = (int) (entity.getScene().getPosition().getZ() * 32);
+		int x = (int) (entity.getTransform().getPosition().getX() * 32);
+		int y = (int) (entity.getTransform().getPosition().getY() * 32);
+		int z = (int) (entity.getTransform().getPosition().getZ() * 32);
 		return Arrays.<Message>asList(new EntityExperienceOrbMessage(id, x, y, z, xp.getExperience(), rm));
 	}
 }

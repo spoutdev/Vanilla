@@ -28,7 +28,7 @@ package org.spout.vanilla.plugin.component.substance.object;
 
 import com.bulletphysics.collision.shapes.BoxShape;
 
-import org.spout.api.component.impl.SceneComponent;
+import org.spout.api.component.impl.PhysicsComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.LoadOption;
@@ -53,9 +53,10 @@ public class Item extends ObjectEntity {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
-		SceneComponent scene = getOwner().getScene();
-		scene.setShape(5f, new BoxShape(0.125F, 0.125F, 0.125F));
-		scene.setRestitution(0f);
+		PhysicsComponent physics = getOwner().add(PhysicsComponent.class);
+		physics.setMass(5f);
+		physics.setCollisionShape(new BoxShape(0.125F, 0.125F, 0.125F));
+		physics.setRestitution(0f);
 	}
 
 	@Override
@@ -125,7 +126,7 @@ public class Item extends ObjectEntity {
 		Item item = entity.add(Item.class);
 		item.setUncollectableDelay(DROP_PICKUP_DELAY);
 		item.setItemStack(itemStack);
-		entity.getScene().translate(velocity);
+		entity.add(PhysicsComponent.class).applyImpulse(velocity);
 		if (position.getChunk(LoadOption.NO_LOAD) != null) {
 			position.getWorld().spawnEntity(entity);
 		}

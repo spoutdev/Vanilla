@@ -46,6 +46,7 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.object.PaintingEntityProtocol;
 
 public class Painting extends VanillaComponent {
+	private Point originalPos;
 	private float timer = 0f;
 
 	@Override
@@ -66,7 +67,7 @@ public class Painting extends VanillaComponent {
 		// We set a timer so we don't spam the server for nothing.
 		if (timer >= 1f) {
 			timer = 0f;
-			if (!getType().canBePlaced(getOwner().getWorld().getBlock(getType().getOriginalPos(getFace(), getOwner().getScene().getPosition())), getFace())) {
+			if (!getType().canBePlaced(getOwner().getWorld().getBlock(getType().getOriginalPos(getFace(), getOwner().getTransform().getPosition())), getFace())) {
 				destroy();
 			}
 		}
@@ -121,7 +122,7 @@ public class Painting extends VanillaComponent {
 
 	private void destroy() {
 		List<ItemStack> drops = getOwner().get(DropComponent.class).getDrops();
-		Point entityPosition = getOwner().getScene().getPosition();
+		Point entityPosition = getOwner().getTransform().getPosition();
 		for (ItemStack stack : drops) {
 			if (stack != null) {
 				Item.dropNaturally(entityPosition, stack);

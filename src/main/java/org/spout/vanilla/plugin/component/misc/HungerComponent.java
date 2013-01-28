@@ -174,7 +174,7 @@ public class HungerComponent extends EntityComponent {
 
 				// Exhaustion
 
-				final Point pos = getOwner().getScene().getPosition();
+				final Point pos = getOwner().getTransform().getPosition();
 				if (lastPos == null) {
 					lastPos = pos;
 					return;

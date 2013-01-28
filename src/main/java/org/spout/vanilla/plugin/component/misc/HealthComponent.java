@@ -233,14 +233,14 @@ public class HealthComponent extends EntityComponent {
 			DropComponent dropComponent = owner.get(DropComponent.class);
 			if (dropComponent != null) {
 				List<ItemStack> drops = dropComponent.getDrops();
-				Point entityPosition = owner.getScene().getPosition();
+				Point entityPosition = owner.getTransform().getPosition();
 				for (ItemStack stack : drops) {
 					if (stack != null) {
 						Item.drop(entityPosition, stack, Vector3.ZERO);
 					}
 				}
 				if (dropComponent.getXpDrop() > 0) {
-					Point pos = getOwner().getScene().getPosition();
+					Point pos = getOwner().getTransform().getPosition();
 
 					XPOrb xporb = pos.getWorld().createEntity(pos, XPOrb.class).add(XPOrb.class);
 					xporb.setExperience(dropComponent.getXpDrop());
@@ -270,7 +270,7 @@ public class HealthComponent extends EntityComponent {
 			toDrop.addAll(craftingGrid);
 			toDrop.addAll(mainInventory);
 			toDrop.addAll(quickbar);
-			Point position = owner.getScene().getPosition();
+			Point position = owner.getTransform().getPosition();
 			for (ItemStack stack : toDrop) {
 				if (stack != null) {
 					Item.dropNaturally(position, stack);

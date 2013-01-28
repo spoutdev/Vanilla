@@ -28,6 +28,7 @@ package org.spout.vanilla.plugin.component.substance.object;
 
 import com.bulletphysics.collision.shapes.BoxShape;
 
+import org.spout.api.component.impl.PhysicsComponent;
 import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
@@ -74,8 +75,7 @@ public class Tnt extends ObjectEntity {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.PRIMED_TNT));
 		holder = getOwner();
 		super.onAttached();
-		//TODO: Correct mass
-		getOwner().getScene().setShape(5f, new BoxShape(1, 1, 1));
+		getOwner().add(PhysicsComponent.class).setCollisionShape(new BoxShape(1, 1, 1));
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public class Tnt extends ObjectEntity {
 		pulse(dt);
 		if (getFuse() <= 0) {
 			ExplosionModel explosion = new ExplosionModelSpherical();
-			explosion.execute(holder.getScene().getPosition(), getExplosionSize(), makesFire(), VanillaMaterials.TNT.toCause(holder.getScene().getPosition()));
+			explosion.execute(holder.getTransform().getPosition(), getExplosionSize(), makesFire(), VanillaMaterials.TNT.toCause(holder.getTransform().getPosition()));
 			holder.remove();
 		}
 	}

@@ -468,7 +468,7 @@ public abstract class Window implements InventoryViewer {
 		}
 
 		if (cursorItem != null) {
-			Item.dropNaturally(this.owner.getScene().getPosition(), cursorItem);
+			Item.dropNaturally(this.owner.getTransform().getPosition(), cursorItem);
 			cursorItem = null;
 		}
 	}

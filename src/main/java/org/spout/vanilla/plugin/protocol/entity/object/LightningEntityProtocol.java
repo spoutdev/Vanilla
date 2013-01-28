@@ -41,6 +41,6 @@ public class LightningEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
 		Lightning light = entity.add(Lightning.class);
-		return Arrays.<Message>asList(new EntityThunderboltMessage(entity.getId(), entity.getScene().getPosition().getBlockX(), entity.getScene().getPosition().getBlockY(), entity.getScene().getPosition().getBlockZ(), rm));
+		return Arrays.<Message>asList(new EntityThunderboltMessage(entity.getId(), entity.getTransform().getPosition().getBlockX(), entity.getTransform().getPosition().getBlockY(), entity.getTransform().getPosition().getBlockZ(), rm));
 	}
 }

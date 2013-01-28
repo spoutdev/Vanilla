@@ -77,7 +77,7 @@ public class Chicken extends Living implements Passive {
 	}
 
 	private void layEgg() {
-		Point position = getOwner().getScene().getPosition();
+		Point position = getOwner().getTransform().getPosition();
 		Item.drop(position, new ItemStack(VanillaMaterials.EGG, 1), Vector3.ZERO);
 		Float nextEgg = (float) (GenericMath.getRandom().nextInt(MINIMUM_EGG_BREEDING_TIME) + MINIMUM_EGG_BREEDING_TIME);
 		getOwner().getData().put(VanillaData.TIME_TILL_EGG, nextEgg);

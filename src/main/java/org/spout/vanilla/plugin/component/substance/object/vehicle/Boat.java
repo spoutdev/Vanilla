@@ -60,7 +60,7 @@ public class Boat extends ObjectEntity {
 			damage(10);
 			if (damageTaken > 40) {
 				Entity entity = getOwner();
-				Item.dropNaturally(entity.getScene().getPosition(), new ItemStack(VanillaMaterials.BOAT, 1));
+				Item.dropNaturally(entity.getTransform().getPosition(), new ItemStack(VanillaMaterials.BOAT, 1));
 				entity.remove();
 			}
 		}

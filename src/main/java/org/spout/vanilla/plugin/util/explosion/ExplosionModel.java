@@ -149,7 +149,7 @@ public abstract class ExplosionModel {
 				if (health == null) {
 					continue;
 				}
-				health.damage(getDamage(position, entity.getScene().getPosition(), size));
+				health.damage(getDamage(position, entity.getTransform().getPosition(), size));
 			}
 		}
 

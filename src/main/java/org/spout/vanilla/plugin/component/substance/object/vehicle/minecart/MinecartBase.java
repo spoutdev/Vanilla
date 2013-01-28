@@ -83,7 +83,7 @@ public abstract class MinecartBase extends ObjectEntity {
 
 	protected void onDestroy() {
 		List<ItemStack> drops = getOwner().get(DropComponent.class).getDrops();
-		Point entityPosition = getOwner().getScene().getPosition();
+		Point entityPosition = getOwner().getTransform().getPosition();
 		for (ItemStack stack : drops) {
 			if (stack != null) {
 				Item.dropNaturally(entityPosition, stack);

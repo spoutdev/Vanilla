@@ -412,7 +412,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 
 	public void sendPosition() {
-		sendPosition(player.getScene().getPosition(), player.getScene().getRotation());
+		sendPosition(player.getTransform().getPosition(), player.getTransform().getRotation());
 	}
 
 	@Override
@@ -496,7 +496,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@Override
 	public void finalizeTick() {
-		Point currentPosition = player.getScene().getPosition();
+		Point currentPosition = player.getTransform().getPosition();
 
 		int y = currentPosition.getBlockY();
 

@@ -102,7 +102,7 @@ public class Lever extends AttachedRedstoneSource implements Toggleable {
 			// Add +1 to change direction
 			if (cause instanceof EntityCause) {
 				// set data using direction
-				Vector3 direction = block.getPosition().subtract((((EntityCause) cause).getSource()).getScene().getPosition());
+				Vector3 direction = block.getPosition().subtract((((EntityCause) cause).getSource()).getTransform().getPosition());
 				direction = direction.abs();
 				if (direction.getX() > direction.getZ()) {
 					data++;

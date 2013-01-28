@@ -110,7 +110,7 @@ public class HeadComponent extends EntityComponent {
 	 * @return Head position
 	 */
 	public Point getPosition() {
-		return getOwner().getScene().getPosition().add(0.0f, this.getHeight(), 0.0f);
+		return getOwner().getTransform().getPosition().add(0.0f, this.getHeight(), 0.0f);
 	}
 
 	/**

@@ -28,7 +28,7 @@ package org.spout.vanilla.plugin.material.item;
 
 import com.bulletphysics.collision.shapes.SphereShape;
 
-import org.spout.api.component.impl.SceneComponent;
+import org.spout.api.component.impl.PhysicsComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
@@ -54,18 +54,19 @@ public abstract class ThrowItem extends VanillaItemMaterial {
 		super.onInteract(entity, type);
 		if (type == Action.RIGHT_CLICK) {
 			World world = entity.getWorld();
-			ObjectEntity item = world.createEntity(entity.getScene().getPosition().add(0, 1.6f, 0), itemThrown).add(itemThrown);
-			SceneComponent scene = item.getOwner().getScene();
-			scene.setShape(mass, new SphereShape(0.1f)); // TODO: Correct this
+			ObjectEntity item = world.createEntity(entity.getTransform().getPosition().add(0, 1.6f, 0), itemThrown).add(itemThrown);
+			PhysicsComponent physics = item.getOwner().add(PhysicsComponent.class);
+			physics.setMass(mass);
+			physics.setCollisionShape(new SphereShape(0.1f)); // TODO: Correct this
 
-			double pitchRadians = Math.toRadians(entity.getScene().getRotation().getPitch());
-			double yawRadians = Math.toRadians(entity.getScene().getRotation().getYaw());
+			double pitchRadians = Math.toRadians(entity.getTransform().getPitch());
+			double yawRadians = Math.toRadians(entity.getTransform().getYaw());
 
 			double sinPitch = Math.sin(pitchRadians);
 			double cosPitch = Math.cos(pitchRadians);
 			double sinYaw = Math.sin(yawRadians);
 			double cosYaw = Math.cos(yawRadians);
-			scene.impulse(new Vector3((-cosPitch * sinYaw) * -300, (sinPitch) * -300, (-cosPitch * cosYaw) * -300)); //TODO: Need real parameters
+			physics.applyImpulse(new Vector3((-cosPitch * sinYaw) * -300, (sinPitch) * -300, (-cosPitch * cosYaw) * -300)); // TODO: Correct this
 			if (item instanceof Projectile) {
 				((Projectile) item).setShooter(entity);
 			}

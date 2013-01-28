@@ -53,7 +53,7 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 
 		Point rawPosition = new Point(message.getPosition(), holder.getWorld());
 		Point newPosition = rmInverse.convert(rawPosition);
-		Point position = holder.getScene().getPosition();
+		Point position = holder.getTransform().getPosition();
 
 		if (holder.getNetworkSynchronizer().isTeleportPending()) {
 			if (position.getX() == newPosition.getX() && position.getZ() == newPosition.getZ() && Math.abs(position.getY() - newPosition.getY()) < 16) {
@@ -68,7 +68,7 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 				final double dist = dx * dx + dy * dy + dz * dz;
 				WorldConfigurationNode node = VanillaConfiguration.WORLDS.get(holder.getWorld());
 				if (dist < 100 || node.ALLOW_FLIGHT.getBoolean()) {
-					holder.getScene().getTransform().setPosition(newPosition);
+					holder.getTransform().setPosition(newPosition);
 					holder.get(Human.class).setOnGround(message.isOnGround());
 				} else {
 					holder.kick("Moved too quickly");

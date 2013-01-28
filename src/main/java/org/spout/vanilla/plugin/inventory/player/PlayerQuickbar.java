@@ -30,7 +30,9 @@ import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.api.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.api.inventory.Slot;
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 
 public class PlayerQuickbar extends Inventory {
 	private static final long serialVersionUID = 1L;
@@ -56,10 +58,6 @@ public class PlayerQuickbar extends Inventory {
 	@SuppressWarnings("unused")
 	public void updateHeldItem(Player player) {
 		ItemStack item = this.get(this.selected);
-		//TODO: This needs implementation
-		// EntityEquipmentEvent does NOT WORK!
-		// Equipment messages with slots 0 - 3 are (now) reserved for armor slots
-		// Slot -1 and 4 both throw an index out of bounds exception on the client
-		// If someone finds out the new method of doing this, that would be great
+		player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, EntityEquipmentMessage.HELD_SLOT, item), true);
 	}
 }

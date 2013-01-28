@@ -72,7 +72,7 @@ import org.spout.vanilla.plugin.component.substance.XPOrb;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
-import org.spout.vanilla.plugin.inventory.player.PlayerArmorInventory;
+import org.spout.vanilla.plugin.inventory.entity.EntityArmorInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
@@ -262,7 +262,7 @@ public class HealthComponent extends EntityComponent {
 		PlayerInventory playerInventory = owner.get(PlayerInventory.class);
 		if (playerInventory != null) {
 			Set<ItemStack> toDrop = new HashSet<ItemStack>();
-			PlayerArmorInventory armorInventory = playerInventory.getArmor();
+			EntityArmorInventory armorInventory = playerInventory.getArmor();
 			PlayerCraftingInventory craftingGrid = playerInventory.getCraftingGrid();
 			PlayerMainInventory mainInventory = playerInventory.getMain();
 			PlayerQuickbar quickbar = playerInventory.getQuickbar();

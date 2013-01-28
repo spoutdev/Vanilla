@@ -39,7 +39,7 @@ import org.spout.vanilla.api.inventory.Slot;
 
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.inventory.player.PlayerArmorInventory;
+import org.spout.vanilla.plugin.inventory.entity.EntityArmorInventory;
 import org.spout.vanilla.plugin.protocol.ChannelBufferUtils;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerSpawnMessage;
@@ -72,31 +72,25 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 
 		// Armor
 		PlayerInventory inventory = entity.get(PlayerInventory.class);
-		final ItemStack boots, leggings, chestplate, helmet;
+		final ItemStack boots, leggings, chestplate, helmet, held;
 		if (inventory == null) {
-			boots = leggings = chestplate = helmet = null;
+			boots = leggings = chestplate = helmet = held = null;
 		} else {
-			final PlayerArmorInventory armor = inventory.getArmor();
+			final EntityArmorInventory armor = inventory.getArmor();
 			boots = armor.getBoots();
 			leggings = armor.getLeggings();
 			chestplate = armor.getChestPlate();
 			helmet = armor.getHelmet();
+			held = inventory.getQuickbar().getSelectedSlot().get();
+		}
+		if (held != null) {
+			messages.add(new EntityEquipmentMessage(entity.getId(), EntityEquipmentMessage.HELD_SLOT, held));
 		}
 		messages.add(new EntityEquipmentMessage(entity.getId(), EntityEquipmentMessage.BOOTS_SLOT, boots));
 		messages.add(new EntityEquipmentMessage(entity.getId(), EntityEquipmentMessage.LEGGINGS_SLOT, leggings));
 		messages.add(new EntityEquipmentMessage(entity.getId(), EntityEquipmentMessage.CHESTPLATE_SLOT, chestplate));
 		messages.add(new EntityEquipmentMessage(entity.getId(), EntityEquipmentMessage.HELMET_SLOT, helmet));
 
-		// Held item
-		// TODO: Equipment message of slot 0 is no longer possible to use
-		// Something else needs to be used here!
-		/*
-		if (hand != null) {
-			messages.add(new EntityEquipmentMessage(entity.getId(), 0, hand.get()));
-		} else {
-			messages.add(new EntityEquipmentMessage(entity.getId(), 0, null));
-		}
-		*/
 		return messages;
 	}
 }

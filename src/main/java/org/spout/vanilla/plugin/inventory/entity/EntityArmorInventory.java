@@ -24,8 +24,9 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.inventory.player;
+package org.spout.vanilla.plugin.inventory.entity;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
@@ -40,34 +41,34 @@ import org.spout.vanilla.api.material.item.armor.Leggings;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 
 /**
- * Represents the four armor slots on a {@link org.spout.vanilla.plugin.component.inventory.PlayerInventory}.
+ * Represents the four armor slots of an Entity's inventory.<br/>
  */
-public class PlayerArmorInventory extends Inventory {
+public class EntityArmorInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
 	public static final int SIZE = 4;
 	public static final int BOOT_SLOT = 0, LEGGINGS_SLOT = 1, CHEST_PLATE_SLOT = 2, HELMET_SLOT = 3;
 
-	public PlayerArmorInventory() {
+	public EntityArmorInventory() {
 		super(SIZE);
 	}
 
 	/**
-	 * Informs a player of all the equipment (armor)
-	 * @param player to inform
+	 * Informs an entity of all the equipment (armor)
+	 * @param entity to inform
 	 */
-	public void updateSlots(Player player) {
+	public void updateSlots(Entity entity) {
 		for (int i = 0; i < this.size(); i++) {
-			updateSlot(i, get(i), player);
+			updateSlot(i, get(i), entity);
 		}
 	}
 
 	/**
-	 * Informs a player of a certain equipment (armor) change
+	 * Informs an entity of a certain equipment (armor) change
 	 * @param i - item slot index
 	 * @param item that the slot got set to
-	 * @param player to inform
+	 * @param entity to inform
 	 */
-	public static void updateSlot(int i, ItemStack item, Player player) {
+	public static void updateSlot(int i, ItemStack item, Entity entity) {
 		final int equip;
 		switch (i) {
 			case BOOT_SLOT:
@@ -85,7 +86,7 @@ public class PlayerArmorInventory extends Inventory {
 			default:
 				return;
 		}
-		player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, equip, item));
+		entity.getNetwork().callProtocolEvent(new EntityEquipmentEvent(entity, equip, item), true);
 	}
 
 	@Override

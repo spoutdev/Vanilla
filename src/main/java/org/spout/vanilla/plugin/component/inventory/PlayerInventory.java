@@ -32,7 +32,7 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.inventory.block.ChestInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerArmorInventory;
+import org.spout.vanilla.plugin.inventory.entity.EntityArmorInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
@@ -61,7 +61,7 @@ public class PlayerInventory extends EntityComponent {
 	 * Gets the armor inventory of this player inventory
 	 * @return an Inventory with the armor items
 	 */
-	public PlayerArmorInventory getArmor() {
+	public EntityArmorInventory getArmor() {
 		return getData().get(VanillaData.ARMOR_INVENTORY);
 	}
 

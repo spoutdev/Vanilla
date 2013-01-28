@@ -179,7 +179,7 @@ public class Human extends Living {
 		if (getOwner().has(HeadComponent.class)) {
 			dropFrom = getOwner().get(HeadComponent.class).getHeadTransform();
 		} else {
-			dropFrom = getOwner().getTransform().getTransform();
+			dropFrom = getOwner().getScene().getTransform();
 		}
 		// Some constants
 		final double impulseForce = 0.3;

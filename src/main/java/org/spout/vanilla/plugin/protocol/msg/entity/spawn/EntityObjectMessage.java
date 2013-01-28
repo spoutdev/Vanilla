@@ -28,7 +28,6 @@ package org.spout.vanilla.plugin.protocol.msg.entity.spawn;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import org.spout.api.component.impl.PhysicsComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
@@ -36,7 +35,6 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
 import org.spout.vanilla.plugin.protocol.ChannelBufferUtils;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityMessage;
 
@@ -50,7 +48,7 @@ public final class EntityObjectMessage extends EntityMessage {
 		super(entity);
 		this.type = type;
 		this.throwerId = throwerId;
-		Transform transform = entity.getTransform().getTransform();
+		Transform transform = entity.getScene().getTransform();
 		Point pos = transform.getPosition();
 
 		double p = 32d;
@@ -60,7 +58,8 @@ public final class EntityObjectMessage extends EntityMessage {
 
 		double v = 3.9d;
 		Vector3 factor = new Vector3(v, v, v);
-		Vector3 velocity = entity.add(PhysicsComponent.class).getLinearVelocity();
+
+		Vector3 velocity = entity.getScene().getMovementVelocity(); //TODO: Check if it's alright.
 		velocity = velocity.max(factor.multiply(-1)).min(factor);
 
 		double s = 8000d;

@@ -111,7 +111,7 @@ public class PlayerUtil {
 		if (entity.has(HeadComponent.class)) {
 			position = entity.get(HeadComponent.class).getPosition();
 		} else {
-			position = entity.getTransform().getPosition();
+			position = entity.getScene().getPosition();
 		}
 		Vector3 diff = position.subtract(block.getX(), block.getY(), block.getZ());
 		if (Math.abs(diff.getX()) < 2.0f && Math.abs(diff.getZ()) < 2.0f) {
@@ -147,7 +147,7 @@ public class PlayerUtil {
 		if (entity.has(HeadComponent.class)) {
 			return entity.get(HeadComponent.class).getRotation().getYaw();
 		} else {
-			return entity.getTransform().getYaw();
+			return entity.getScene().getRotation().getYaw();
 		}
 	}
 

@@ -27,13 +27,13 @@
 package org.spout.vanilla.plugin.component.substance.object;
 
 import org.spout.api.collision.CollisionStrategy;
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.GenericMath;
+import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
@@ -61,7 +61,7 @@ public class FallingBlock extends ObjectEntity {
 
 	@Override
 	public void onTick(float dt) {
-		Point pos = this.getOwner().getTransform().getPosition();
+		Point pos = this.getOwner().getScene().getPosition();
 		World world = pos.getWorld();
 		int x = pos.getBlockX();
 		int y = pos.getBlockY();
@@ -85,7 +85,7 @@ public class FallingBlock extends ObjectEntity {
 		}
 		if (!this.getOwner().isRemoved()) {
 			fallSpeed += (FALL_INCREMENT * dt * 20);
-			this.getOwner().getTransform().setPosition(pos.add(0, fallSpeed, 0F));
+			this.getOwner().getScene().translate(new Vector3(0, fallSpeed, 0F));
 			fallSpeed *= FALL_MULTIPLIER;
 		}
 	}

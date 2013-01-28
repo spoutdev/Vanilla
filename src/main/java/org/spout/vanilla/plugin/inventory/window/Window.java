@@ -53,6 +53,7 @@ import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.api.inventory.Slot;
+import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 import org.spout.vanilla.api.inventory.window.prop.WindowProperty;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
@@ -66,7 +67,6 @@ import org.spout.vanilla.plugin.event.window.WindowOpenEvent;
 import org.spout.vanilla.plugin.event.window.WindowPropertyEvent;
 import org.spout.vanilla.plugin.inventory.CraftingInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 import org.spout.vanilla.plugin.inventory.window.gui.InventorySlot;
@@ -242,7 +242,7 @@ public abstract class Window implements InventoryViewer {
 
 		// Transferring to the main inventory, top to bottom
 		if (!(from instanceof PlayerMainInventory)) {
-			final PlayerMainInventory main = inventory.getMain();
+			final Inventory main = inventory.getMain();
 			final int height = 3;
 			final int length = 9;
 			for (int y = height - 1; y >= 0; y--) {
@@ -257,7 +257,7 @@ public abstract class Window implements InventoryViewer {
 		}
 
 		// Transferring to the quickbar inventory
-		if (!(from instanceof PlayerQuickbar)) {
+		if (!(from instanceof QuickbarInventory)) {
 			inventory.getQuickbar().add(stack);
 			from.set(slot, stack);
 			if (stack.isEmpty()) {
@@ -742,13 +742,13 @@ public abstract class Window implements InventoryViewer {
 		switch (Spout.getPlatform()) {
 			case PROXY:
 			case SERVER:
-				PlayerQuickbar quickbar = getPlayerInventory().getQuickbar();
+				QuickbarInventory quickbar = getPlayerInventory().getQuickbar();
 				debug("[Window] Slot changed: " + slot + " = " + item);
 				//callProtocolEvent(new WindowSlotEvent(this, inventory, slots.revert(slot), item));
 				reload();
 				// Update the held item
-				if (inventory instanceof PlayerQuickbar && slot == quickbar.getSelectedSlot().getIndex()) {
-					((PlayerQuickbar) inventory).updateHeldItem(getPlayer());
+				if (inventory instanceof QuickbarInventory && slot == quickbar.getSelectedSlot().getIndex()) {
+					((QuickbarInventory) inventory).updateHeldItem(getPlayer());
 				}
 				break;
 			case CLIENT:

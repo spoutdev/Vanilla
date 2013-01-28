@@ -24,36 +24,41 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.inventory.entity;
+package org.spout.vanilla.plugin.component.inventory;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
-import org.spout.vanilla.api.event.entity.EntityEquipmentEvent;
+import org.spout.vanilla.api.component.inventory.EntityInventoryComponent;
 import org.spout.vanilla.api.inventory.entity.ArmorInventory;
+import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
+import org.spout.vanilla.plugin.data.VanillaData;
 
-import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 
-public class EntityArmorInventory extends ArmorInventory {
+public class VanillaEntityInventory extends EntityInventoryComponent {
 
 	@Override
-	public void updateSlot(int i, ItemStack item, Entity entity) {
-		final int equip;
-		switch (i) {
-			case BOOT_SLOT:
-				equip = EntityEquipmentMessage.BOOTS_SLOT;
-				break;
-			case CHEST_PLATE_SLOT:
-				equip = EntityEquipmentMessage.CHESTPLATE_SLOT;
-				break;
-			case HELMET_SLOT:
-				equip = EntityEquipmentMessage.HELMET_SLOT;
-				break;
-			case LEGGINGS_SLOT:
-				equip = EntityEquipmentMessage.LEGGINGS_SLOT;
-				break;
-			default:
-				return;
-		}
-		entity.getNetwork().callProtocolEvent(new EntityEquipmentEvent(entity, equip, item), true);
+	public ArmorInventory getArmor() {
+		return getData().get(VanillaData.ARMOR_INVENTORY);
+	}
+
+	@Override
+	public QuickbarInventory getQuickbar() {
+		return getData().get(VanillaData.ENTITY_HELD_INVENTORY);
+	}
+
+	@Override
+	public ItemStack getHeldItem() {
+		return getQuickbar().getSelectedItem();
+	}
+
+	@Override
+	public void updateAll() {
+		updateAll(getArmor());
+		updateAll(getQuickbar());
+	}
+
+	@Override
+	public void clear() {
+		getArmor().clear();
+		getQuickbar().clear();
 	}
 }

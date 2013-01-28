@@ -36,10 +36,10 @@ import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.inventory.Slot;
+import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.inventory.entity.EntityArmorInventory;
 import org.spout.vanilla.plugin.protocol.ChannelBufferUtils;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerSpawnMessage;
@@ -76,7 +76,7 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		if (inventory == null) {
 			boots = leggings = chestplate = helmet = held = null;
 		} else {
-			final EntityArmorInventory armor = inventory.getArmor();
+			final ArmorInventory armor = inventory.getArmor();
 			boots = armor.getBoots();
 			leggings = armor.getLeggings();
 			chestplate = armor.getChestPlate();

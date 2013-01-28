@@ -27,15 +27,15 @@
 package org.spout.vanilla.plugin.inventory.window.block.chest;
 
 import org.spout.api.entity.Player;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.plugin.component.substance.material.chest.EnderChest;
-import org.spout.vanilla.plugin.inventory.block.ChestInventory;
 import org.spout.vanilla.plugin.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.plugin.inventory.window.WindowType;
 
 public class EnderChestWindow extends AbstractChestWindow {
-	public EnderChestWindow(Player owner, EnderChest chest, ChestInventory inventory) {
+	public EnderChestWindow(Player owner, EnderChest chest, Inventory inventory) {
 		super(owner, chest, WindowType.CHEST, "Ender chest", inventory.size());
 		addInventoryConverter(new GridInventoryConverter(inventory, 9, Vector2.ZERO));
 	}

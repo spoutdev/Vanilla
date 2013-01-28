@@ -46,9 +46,10 @@ import org.spout.vanilla.api.data.WorldType;
 import org.spout.vanilla.plugin.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.plugin.inventory.block.ChestInventory;
 import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
-import org.spout.vanilla.plugin.inventory.player.DropInventory;
 import org.spout.vanilla.plugin.inventory.entity.EntityArmorInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
+import org.spout.vanilla.plugin.inventory.entity.EntityQuickbarInventory;
+import org.spout.vanilla.plugin.inventory.player.DropInventory;
+import org.spout.vanilla.api.inventory.entity.PlayerCraftingInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
@@ -129,6 +130,7 @@ public class VanillaData {
 	public static final DefaultedKey<EntityArmorInventory> ARMOR_INVENTORY = new DefaultedKeyFactory<EntityArmorInventory>("armor", EntityArmorInventory.class);
 	public static final DefaultedKey<PlayerQuickbar> QUICKBAR_INVENTORY = new DefaultedKeyFactory<PlayerQuickbar>("quickbar", PlayerQuickbar.class);
 	public static final DefaultedKey<ChestInventory> ENDER_CHEST_INVENTORY = new DefaultedKeyFactory<ChestInventory>("ender_chest_inventory", ChestInventory.class);
+	public static final DefaultedKey<EntityQuickbarInventory> ENTITY_HELD_INVENTORY = new DefaultedKeyFactory<EntityQuickbarInventory>("held", EntityQuickbarInventory.class);
 	//Creature-specific
 	public static final DefaultedKey<Integer> LINE_OF_SIGHT = new DefaultedKeyImpl<Integer>("line_of_sight", 1);
 	//Item-specific

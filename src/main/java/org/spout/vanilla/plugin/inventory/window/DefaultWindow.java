@@ -37,9 +37,10 @@ import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 
+import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.inventory.entity.EntityArmorInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
+import org.spout.vanilla.api.inventory.entity.PlayerCraftingInventory;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 
 public class DefaultWindow extends Window {
@@ -85,7 +86,7 @@ public class DefaultWindow extends Window {
 	public void onSlotSet(Inventory inventory, int slot, ItemStack item, ItemStack previous) {
 		super.onSlotSet(inventory, slot, item, previous);
 		if (inventory instanceof EntityArmorInventory) {
-			EntityArmorInventory.updateSlot(slot, item, getPlayer());
+			((EntityArmorInventory) inventory).updateSlot(slot, item, getPlayer());
 		}
 	}
 
@@ -100,7 +101,7 @@ public class DefaultWindow extends Window {
 		// Transferring to the armor slots
 		if (!(from instanceof EntityArmorInventory)) {
 			// Transferring to the armor slots
-			final EntityArmorInventory armor = inventory.getArmor();
+			final ArmorInventory armor = inventory.getArmor();
 			for (int i = 0; i < armor.size(); i++) {
 				if (armor.get(i) == null && armor.canSet(i, stack)) {
 					armor.set(i, ItemStack.cloneSpecial(stack));

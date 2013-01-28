@@ -37,11 +37,11 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.api.inventory.Slot;
+import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 
 public class PlayerUtil {
 	/**
@@ -68,7 +68,7 @@ public class PlayerUtil {
 	 * @param entity to get the quickbar of
 	 * @return The quickbar, or null
 	 */
-	public static PlayerQuickbar getQuickbar(Entity entity) {
+	public static QuickbarInventory getQuickbar(Entity entity) {
 		if (entity instanceof Player && entity.has(PlayerInventory.class)) {
 			return entity.get(PlayerInventory.class).getQuickbar();
 		} else {
@@ -83,7 +83,7 @@ public class PlayerUtil {
 	 * @return Current slot
 	 */
 	public static Slot getHeldSlot(Entity entity) {
-		PlayerQuickbar bar = getQuickbar(entity);
+		QuickbarInventory bar = getQuickbar(entity);
 		return bar == null ? null : bar.getSelectedSlot();
 	}
 

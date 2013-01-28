@@ -26,16 +26,19 @@
  */
 package org.spout.vanilla.plugin.protocol.entity.creature;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.api.component.inventory.EntityInventoryComponent;
 import org.spout.vanilla.plugin.protocol.entity.BasicEntityProtocol;
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.spawn.EntityMobMessage;
 
 public class CreatureProtocol extends BasicEntityProtocol {
@@ -45,6 +48,9 @@ public class CreatureProtocol extends BasicEntityProtocol {
 
 	@Override
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
+
+		List<Message> messages = new ArrayList<Message>(6);
+
 		int entityId = entity.getId();
 		Vector3 position = entity.getTransform().getPosition().multiply(32).floor();
 		int yaw = (int) (entity.getTransform().getYaw() * 32);
@@ -54,6 +60,32 @@ public class CreatureProtocol extends BasicEntityProtocol {
 			parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 1)); //Official expects some metadata to spawn
 		}
 		//TODO Headyaw
-		return Arrays.<Message>asList(new EntityMobMessage(entityId, this.typeId, position, yaw, pitch, 0, (short) 0, (short) 0, (short) 0, parameters, rm));
+
+		messages.add(new EntityMobMessage(entityId, this.typeId, position, yaw, pitch, 0, (short) 0, (short) 0, (short) 0, parameters, rm));
+		EntityInventoryComponent inventory = entity.get(EntityInventoryComponent.class);
+		if (inventory != null) {
+			final ItemStack held, boots, legs, chest, helm;
+			held = inventory.getHeldItem();
+			if (held != null) {
+				messages.add(new EntityEquipmentMessage(entityId, EntityEquipmentMessage.HELD_SLOT, held));
+			}
+			boots = inventory.getArmor().getBoots();
+			if (boots != null) {
+				messages.add(new EntityEquipmentMessage(entityId, EntityEquipmentMessage.BOOTS_SLOT, boots));
+			}
+			legs = inventory.getArmor().getLeggings();
+			if (legs != null) {
+				messages.add(new EntityEquipmentMessage(entityId, EntityEquipmentMessage.LEGGINGS_SLOT, legs));
+			}
+			chest = inventory.getArmor().getChestPlate();
+			if (chest != null) {
+				messages.add(new EntityEquipmentMessage(entityId, EntityEquipmentMessage.CHESTPLATE_SLOT, chest));
+			}
+			helm = inventory.getArmor().getHelmet();
+			if (helm != null) {
+				messages.add(new EntityEquipmentMessage(entityId, EntityEquipmentMessage.HELMET_SLOT, helm));
+			}
+		}
+		return messages;
 	}
 }

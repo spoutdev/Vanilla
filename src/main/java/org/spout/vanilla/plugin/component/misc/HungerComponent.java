@@ -143,7 +143,9 @@ public class HungerComponent extends EntityComponent {
 				if (eatingTimer != 0f) {
 					if (eatingTimer >= 1.5f) {
 						((Player) getOwner()).getSession().send(false, new EntityStatusMessage(getOwner().getId(), EntityStatusMessage.EATING_ACCEPTED));
-						((Food) foodEating.get().getMaterial()).onEat(getOwner(), foodEating);
+						if (foodEating.get() != null && foodEating.get().getMaterial() instanceof Food) {
+							((Food) foodEating.get().getMaterial()).onEat(getOwner(), foodEating);
+						}
 						eatingTimer = 0f;
 						foodEating = null;
 					} else {

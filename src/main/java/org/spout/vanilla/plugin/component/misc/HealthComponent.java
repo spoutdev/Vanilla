@@ -42,6 +42,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Rectangle;
@@ -63,6 +64,9 @@ import org.spout.vanilla.api.event.entity.EntityStatusEvent;
 import org.spout.vanilla.api.event.entity.VanillaEntityDeathEvent;
 import org.spout.vanilla.api.event.player.PlayerDeathEvent;
 import org.spout.vanilla.api.event.player.network.PlayerHealthEvent;
+import org.spout.vanilla.api.inventory.entity.ArmorInventory;
+import org.spout.vanilla.api.inventory.entity.PlayerCraftingInventory;
+import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.hostile.EnderDragon;
@@ -72,10 +76,6 @@ import org.spout.vanilla.plugin.component.substance.XPOrb;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
-import org.spout.vanilla.plugin.inventory.entity.EntityArmorInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityStatusMessage;
 
 /**
@@ -262,10 +262,10 @@ public class HealthComponent extends EntityComponent {
 		PlayerInventory playerInventory = owner.get(PlayerInventory.class);
 		if (playerInventory != null) {
 			Set<ItemStack> toDrop = new HashSet<ItemStack>();
-			EntityArmorInventory armorInventory = playerInventory.getArmor();
+			ArmorInventory armorInventory = playerInventory.getArmor();
 			PlayerCraftingInventory craftingGrid = playerInventory.getCraftingGrid();
-			PlayerMainInventory mainInventory = playerInventory.getMain();
-			PlayerQuickbar quickbar = playerInventory.getQuickbar();
+			Inventory mainInventory = playerInventory.getMain();
+			QuickbarInventory quickbar = playerInventory.getQuickbar();
 			toDrop.addAll(armorInventory);
 			toDrop.addAll(craftingGrid);
 			toDrop.addAll(mainInventory);

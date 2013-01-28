@@ -26,38 +26,25 @@
  */
 package org.spout.vanilla.plugin.inventory.player;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.api.event.entity.EntityEquipmentEvent;
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 
-public class PlayerQuickbar extends Inventory {
+public class PlayerQuickbar extends QuickbarInventory {
 	private static final long serialVersionUID = 1L;
 	public static final int SIZE = 9;
-	private int selected = 0;
 
 	public PlayerQuickbar() {
 		super(SIZE);
 	}
 
-	public Slot getSelectedSlot() {
-		return new Slot(this, this.selected);
-	}
-
-	public void setSelectedSlot(int currentSlot) {
-		this.selected = currentSlot;
-	}
-
-	/**
-	 * Informs a player of a certain equipment (held item) change
-	 * @param player to inform
-	 */
-	@SuppressWarnings("unused")
-	public void updateHeldItem(Player player) {
+	@Override
+	public void updateHeldItem(Entity entity) {
 		ItemStack item = this.get(this.selected);
-		player.getNetwork().callProtocolEvent(new EntityEquipmentEvent(player, EntityEquipmentMessage.HELD_SLOT, item), true);
+		entity.getNetwork().callProtocolEvent(new EntityEquipmentEvent(entity, EntityEquipmentMessage.HELD_SLOT, item), true);
 	}
 }

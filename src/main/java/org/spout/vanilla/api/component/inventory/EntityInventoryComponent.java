@@ -24,36 +24,54 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.inventory.entity;
+package org.spout.vanilla.api.component.inventory;
 
-import org.spout.api.entity.Entity;
+import org.spout.api.component.type.EntityComponent;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.vanilla.api.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.api.inventory.entity.ArmorInventory;
+import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
-import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
+/**
+ * Represents the inventory that an Entity might have.
+ */
+public abstract class EntityInventoryComponent extends EntityComponent {
 
-public class EntityArmorInventory extends ArmorInventory {
+	/**
+	 * Returns the entity's armor inventory
+	 * @return armor
+	 */
+	public abstract ArmorInventory getArmor();
 
-	@Override
-	public void updateSlot(int i, ItemStack item, Entity entity) {
-		final int equip;
-		switch (i) {
-			case BOOT_SLOT:
-				equip = EntityEquipmentMessage.BOOTS_SLOT;
-				break;
-			case CHEST_PLATE_SLOT:
-				equip = EntityEquipmentMessage.CHESTPLATE_SLOT;
-				break;
-			case HELMET_SLOT:
-				equip = EntityEquipmentMessage.HELMET_SLOT;
-				break;
-			case LEGGINGS_SLOT:
-				equip = EntityEquipmentMessage.LEGGINGS_SLOT;
-				break;
-			default:
-				return;
+	/**
+	 * Gets the quickbar slots for this entity
+	 * @return quickbar
+	 */
+	public abstract QuickbarInventory getQuickbar();
+
+	/**
+	 * Returns the entity's held item
+	 * @return itemstack
+	 */
+	public abstract ItemStack getHeldItem();
+
+	/**
+	 * Update all inventories attached to this component
+	 */
+	public abstract void updateAll();
+
+	/**
+	 * Updates all slots of the given inventory
+	 * @param inv to update
+	 */
+	protected void updateAll(Inventory inv) {
+		if (inv != null) {
+			inv.updateAll();
 		}
-		entity.getNetwork().callProtocolEvent(new EntityEquipmentEvent(entity, equip, item), true);
 	}
+
+	/**
+	 * Clears all inventory slots
+	 */
+	public abstract void clear();
 }

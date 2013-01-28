@@ -46,6 +46,7 @@ import org.spout.vanilla.api.event.entity.HumanAbilityChangeEvent;
 import org.spout.vanilla.api.event.player.PlayerGameModeChangedEvent;
 import org.spout.vanilla.api.event.player.network.PlayerGameStateEvent;
 import org.spout.vanilla.api.inventory.Slot;
+import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
@@ -60,7 +61,6 @@ import org.spout.vanilla.plugin.configuration.WorldConfigurationNode;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.ViewDistance;
 import org.spout.vanilla.plugin.event.player.network.PlayerAbilityUpdateEvent;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.protocol.entity.HumanEntityProtocol;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerGameStateMessage;
 
@@ -215,7 +215,7 @@ public class Human extends Living {
 			return;
 		}
 
-		PlayerQuickbar quickbar = getOwner().get(PlayerInventory.class).getQuickbar();
+		QuickbarInventory quickbar = getOwner().get(PlayerInventory.class).getQuickbar();
 		Slot selected = quickbar.getSelectedSlot();
 		ItemStack drop = selected.get();
 		if (drop == null) {

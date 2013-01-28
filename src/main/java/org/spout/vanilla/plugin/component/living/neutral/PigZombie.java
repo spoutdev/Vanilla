@@ -30,6 +30,7 @@ import org.spout.vanilla.api.component.Neutral;
 import org.spout.vanilla.api.data.Difficulty;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.inventory.VanillaEntityInventory;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DamageComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
@@ -44,6 +45,7 @@ public class PigZombie extends Living implements Neutral {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.PIG_ZOMBIE));
+		getOwner().add(VanillaEntityInventory.class);
 
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(20);

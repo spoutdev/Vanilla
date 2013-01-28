@@ -40,6 +40,7 @@ import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.ai.action.ActionAttack;
 import org.spout.vanilla.plugin.ai.goal.AttackPlayerGoal;
 import org.spout.vanilla.plugin.ai.sensor.NearbyComponentsSensor;
+import org.spout.vanilla.plugin.component.inventory.VanillaEntityInventory;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.DamageComponent;
@@ -59,6 +60,8 @@ public class Zombie extends Living implements Hostile {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ZombieEntityProtocol());
 		PhysicsComponent physics = getOwner().add(PhysicsComponent.class);
 		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.ROTTEN_FLESH, getRandom().nextInt(2))).addXpDrop((short) 5);
+		VanillaEntityInventory inventory = getOwner().add(VanillaEntityInventory.class);
+
 		physics.setMass(5f);
 		physics.setCollisionShape(new BoxShape(1F, 2F, 1F));
 		physics.setFriction(10f);
@@ -73,6 +76,9 @@ public class Zombie extends Living implements Hostile {
 		damage.getDamageLevel(Difficulty.NORMAL).setAmount(4);
 		damage.getDamageLevel(Difficulty.HARD).setAmount(6);
 		damage.getDamageLevel(Difficulty.HARDCORE).setAmount(damage.getDamageLevel(Difficulty.HARD).getAmount());
+
+
+
 		final NearbyComponentsSensor humanSensor = new NearbyComponentsSensor(getAI(), Human.class);
 		humanSensor.setSensorRadius(10);
 		getAI().registerSensor(humanSensor);

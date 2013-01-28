@@ -27,33 +27,44 @@
 package org.spout.vanilla.plugin.inventory.entity;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.api.event.entity.EntityEquipmentEvent;
-import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 
+import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 
-public class EntityArmorInventory extends ArmorInventory {
+/**
+ * Represents the four armor slots of an Entity's inventory.<br/>
+ */
+public class EntityQuickbarInventory extends QuickbarInventory {
+	private static final long serialVersionUID = 1L;
+	public static final int SIZE = 1;
+	public static final int HELD_SLOT = 0;
+
+	public EntityQuickbarInventory() {
+		super(SIZE);
+	}
+
+	/**
+	 * Returns the item the {@link org.spout.api.inventory.ItemStack} in the held slot.
+	 * @return
+	 */
+	public ItemStack get() {
+		return get(HELD_SLOT);
+	}
+
+	/**
+	 * Sets the {@link org.spout.api.inventory.ItemStack} in the held slot.
+	 * @param held
+	 */
+	public void set(ItemStack held) {
+		set(HELD_SLOT, held);
+	}
 
 	@Override
-	public void updateSlot(int i, ItemStack item, Entity entity) {
-		final int equip;
-		switch (i) {
-			case BOOT_SLOT:
-				equip = EntityEquipmentMessage.BOOTS_SLOT;
-				break;
-			case CHEST_PLATE_SLOT:
-				equip = EntityEquipmentMessage.CHESTPLATE_SLOT;
-				break;
-			case HELMET_SLOT:
-				equip = EntityEquipmentMessage.HELMET_SLOT;
-				break;
-			case LEGGINGS_SLOT:
-				equip = EntityEquipmentMessage.LEGGINGS_SLOT;
-				break;
-			default:
-				return;
-		}
-		entity.getNetwork().callProtocolEvent(new EntityEquipmentEvent(entity, equip, item), true);
+	public void updateHeldItem(Entity entity) {
+		entity.getNetwork().callProtocolEvent(new EntityEquipmentEvent(entity, EntityEquipmentMessage.HELD_SLOT, get()), true);
 	}
 }

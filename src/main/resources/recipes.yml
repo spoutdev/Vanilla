@@ -889,7 +889,7 @@ recipes:
 
   Mushroom Stew:
     type: Shapeless
-    result: MUSHROOM_SOUP,1
+    result: MUSHROOM_STEW,1
     ingredients: [BOWL, BROWN_MUSHROOM, RED_MUSHROOM]
 
   Bread:

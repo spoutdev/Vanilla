@@ -32,6 +32,10 @@ import org.spout.api.event.entity.EntityEvent;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.event.ProtocolEvent;
 
+/**
+ * Represents an entity equiping an item.<br/>
+ * By default, slot 0 is for a held-item change, and slots 1-4 are for armor.<br/>
+ */
 public class EntityEquipmentEvent extends EntityEvent implements ProtocolEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private int slot;

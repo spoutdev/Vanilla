@@ -32,10 +32,11 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.SpoutToStringStyle;
 
 public final class EntityEquipmentMessage extends EntityMessage {
-	public static final int BOOTS_SLOT = 0;
-	public static final int LEGGINGS_SLOT = 1;
-	public static final int CHESTPLATE_SLOT = 2;
-	public static final int HELMET_SLOT = 3;
+	public static final int HELD_SLOT = 0;
+	public static final int BOOTS_SLOT = 1;
+	public static final int LEGGINGS_SLOT = 2;
+	public static final int CHESTPLATE_SLOT = 3;
+	public static final int HELMET_SLOT = 4;
 	private int slot;
 	private final ItemStack item;
 

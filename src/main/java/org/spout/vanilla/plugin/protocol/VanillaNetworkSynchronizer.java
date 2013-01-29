@@ -46,6 +46,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.geo.discrete.Transform;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
@@ -554,8 +555,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 
 	@Override
-	public void syncEntity(Entity e, boolean spawn, boolean destroy, boolean update) {
-		super.syncEntity(e, spawn, destroy, update);
+	public void syncEntity(Entity e, Transform liveTransform, boolean spawn, boolean destroy, boolean update) {
+		super.syncEntity(e, liveTransform, spawn, destroy, update);
 		EntityProtocol ep = e.getNetwork().getEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID);
 		if (ep != null) {
 			List<Message> messages = new ArrayList<Message>();
@@ -568,7 +569,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			}
 			if (update) {
 				boolean force = shouldForce(e.getId());
-				messages.addAll(ep.getUpdateMessages(e, getRepositionManager(), force));
+				messages.addAll(ep.getUpdateMessages(e, liveTransform, getRepositionManager(), force));
 			}
 			for (Message message : messages) {
 				this.session.send(false, message);

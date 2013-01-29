@@ -28,9 +28,11 @@ package org.spout.vanilla.plugin.protocol.entity.object;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
@@ -49,7 +51,7 @@ public class PaintingEntityProtocol extends VanillaEntityProtocol {
 	}
 
 	@Override
-	public final List<Message> getUpdateMessages(Entity entity, RepositionManager rm, boolean force) {
-		return new ArrayList<Message>();
+	public final List<Message> getUpdateMessages(Entity entity, Transform liveTransform, RepositionManager rm, boolean force) {
+		return Collections.emptyList();
 	}
 }

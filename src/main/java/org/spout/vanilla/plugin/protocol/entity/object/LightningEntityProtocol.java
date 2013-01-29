@@ -33,14 +33,12 @@ import org.spout.api.entity.Entity;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 
-import org.spout.vanilla.plugin.component.substance.Lightning;
 import org.spout.vanilla.plugin.protocol.entity.VanillaEntityProtocol;
 import org.spout.vanilla.plugin.protocol.msg.entity.spawn.EntityThunderboltMessage;
 
 public class LightningEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
-		Lightning light = entity.add(Lightning.class);
 		return Arrays.<Message>asList(new EntityThunderboltMessage(entity.getId(), entity.getScene().getPosition().getBlockX(), entity.getScene().getPosition().getBlockY(), entity.getScene().getPosition().getBlockZ(), rm));
 	}
 }

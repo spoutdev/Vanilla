@@ -47,7 +47,6 @@ import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityHeadYawMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityRelativePositionMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityRelativePositionYawMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityTeleportMessage;
-import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityVelocityMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityYawMessage;
 
 import static org.spout.vanilla.plugin.protocol.ChannelBufferUtils.protocolifyPitch;
@@ -67,10 +66,10 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 	}
 
 	@Override
-	public List<Message> getUpdateMessages(Entity entity, RepositionManager rm, boolean force) {
+	public List<Message> getUpdateMessages(Entity entity, Transform liveTransform, RepositionManager rm, boolean force) {
 		// Movement
 		final Transform prevTransform = rm.convert(entity.getScene().getTransform());
-		final Transform newTransform = rm.convert(entity.getScene().getTransform());
+		final Transform newTransform = rm.convert(liveTransform);
 
 		final boolean looked = entity.getScene().isRotationDirty();
 

@@ -32,6 +32,7 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
@@ -74,13 +75,15 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 				human.getHealth().setHealth(human.getHealth().getMaxHealth(), HealthChangeCause.SPAWN);
 			}
 
+			final Transform spawn = new Transform(player.getScene().getTransform());
+			spawn.setPosition(point);
 			//send spawn to everyone else
 			Set<? extends Player> observers = player.getChunk().getObservingPlayers();
 			for (Player otherPlayer : observers) {
 				if (player == otherPlayer) {
 					continue;
 				}
-				otherPlayer.getNetworkSynchronizer().syncEntity(player, true, false, false);
+				otherPlayer.getNetworkSynchronizer().syncEntity(player, spawn, true, false, false);
 			}
 		}
 	}

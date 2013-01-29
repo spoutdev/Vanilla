@@ -36,6 +36,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.api.component.Hostile;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
+import org.spout.vanilla.plugin.component.inventory.VanillaEntityInventory;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
@@ -52,6 +53,7 @@ public class Skeleton extends Living implements Hostile {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SkeletonEntityProtocol());
 		PhysicsComponent physics = getOwner().add(PhysicsComponent.class);
 		DropComponent dropComponent = getOwner().add(DropComponent.class);
+		getOwner().add(VanillaEntityInventory.class);
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.ARROW, random.nextInt(2)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.BONE, random.nextInt(2)));

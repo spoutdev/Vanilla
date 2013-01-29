@@ -26,60 +26,52 @@
  */
 package org.spout.vanilla.plugin.component.inventory;
 
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.api.component.inventory.PlayerInventoryComponent;
+import org.spout.vanilla.api.inventory.entity.ArmorInventory;
+import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
+import org.spout.vanilla.api.inventory.entity.PlayerCraftingInventory;
+
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.inventory.block.ChestInventory;
-import org.spout.vanilla.plugin.inventory.entity.EntityArmorInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 
 /**
  * Represents a players inventory
  */
-public class PlayerInventory extends EntityComponent {
-	/**
-	 * Gets the quickbar slots of this player inventory
-	 * @return the quickbar slots
-	 */
-	public PlayerQuickbar getQuickbar() {
+public class PlayerInventory extends PlayerInventoryComponent {
+
+	@Override
+	public QuickbarInventory getQuickbar() {
 		return getData().get(VanillaData.QUICKBAR_INVENTORY);
 	}
 
-	/**
-	 * Gets the item inventory of this player inventory
-	 * @return an Inventory with the items
-	 */
-	public PlayerMainInventory getMain() {
+	@Override
+	public Inventory getMain() {
 		return getData().get(VanillaData.MAIN_INVENTORY);
 	}
 
-	/**
-	 * Gets the armor inventory of this player inventory
-	 * @return an Inventory with the armor items
-	 */
-	public EntityArmorInventory getArmor() {
+	@Override
+	public ArmorInventory getArmor() {
 		return getData().get(VanillaData.ARMOR_INVENTORY);
 	}
 
-	/**
-	 * Gets the crafting grid inventory of this player inventory
-	 * @return an inventory with the crafting grid items
-	 */
+	@Override
 	public PlayerCraftingInventory getCraftingGrid() {
 		return getData().get(VanillaData.CRAFTING_INVENTORY);
 	}
 
-	public ChestInventory getEnderChestInventory() {
+	@Override
+	public Inventory getEnderChestInventory() {
 		return getData().get(VanillaData.ENDER_CHEST_INVENTORY);
 	}
 
-	/**
-	 * Updates all sub-inventories associated with this inventory
-	 */
+	@Override
+	public ItemStack getHeldItem() {
+		return getQuickbar().getSelectedItem();
+	}
+
+	@Override
 	public void updateAll() {
 		updateAll(getQuickbar());
 		updateAll(getMain());
@@ -88,18 +80,7 @@ public class PlayerInventory extends EntityComponent {
 		updateAll(getEnderChestInventory());
 	}
 
-	private void updateAll(Inventory inv) {
-		if (inv != null) {
-			inv.updateAll();
-		}
-	}
-
-	/**
-	 * Attempts to add the specified item to the quickbar and then the main if
-	 * not all of the item is transferred.
-	 * @param item to add
-	 * @return true if item is completely transferred
-	 */
+	@Override
 	public boolean add(ItemStack item) {
 		getQuickbar().add(item);
 		if (!item.isEmpty()) {
@@ -108,9 +89,7 @@ public class PlayerInventory extends EntityComponent {
 		return true;
 	}
 
-	/**
-	 * Clears all inventories
-	 */
+	@Override
 	public void clear() {
 		getMain().clear();
 		getCraftingGrid().clear();

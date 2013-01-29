@@ -33,6 +33,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.shape.Grid;
 import org.spout.api.plugin.Platform;
 
+import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.substance.material.chest.AbstractChest;
 import org.spout.vanilla.plugin.inventory.block.ChestInventory;
@@ -89,7 +90,7 @@ public class AbstractChestWindow extends Window {
 		// From chest to inventory/quickbar
 		if (from instanceof ChestInventory) {
 			// To quickbar (reversed)
-			final PlayerQuickbar qbar = inventory.getQuickbar();
+			final QuickbarInventory qbar = inventory.getQuickbar();
 			qbar.add(qbar.size() - 1, 0, stack);
 			from.set(slot, stack);
 			if (stack.isEmpty()) {
@@ -97,7 +98,7 @@ public class AbstractChestWindow extends Window {
 			}
 
 			// To main inventory (reversed)
-			final PlayerMainInventory main = inventory.getMain();
+			final Inventory main = inventory.getMain();
 			final int height = 3;
 			final int length = 9;
 			for (int y = 0; y < height; y++) {

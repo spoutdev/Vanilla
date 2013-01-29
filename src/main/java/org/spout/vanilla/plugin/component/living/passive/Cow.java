@@ -34,12 +34,12 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.api.component.Passive;
 import org.spout.vanilla.api.inventory.Slot;
+import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
@@ -66,7 +66,7 @@ public class Cow extends Living implements Passive {
 	@Override
 	public void onInteract(Action action, Entity source) {
 		if (Action.RIGHT_CLICK.equals(action)) {
-			PlayerQuickbar playerQuickbar = PlayerUtil.getQuickbar(source);
+			QuickbarInventory playerQuickbar = PlayerUtil.getQuickbar(source);
 			if (playerQuickbar == null) {
 				return;
 			}

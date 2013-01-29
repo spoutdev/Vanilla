@@ -34,10 +34,10 @@ import org.spout.api.inventory.shape.Grid;
 import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 
+import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.inventory.block.DispenserInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 import org.spout.vanilla.plugin.inventory.window.Window;
@@ -61,7 +61,7 @@ public class DispenserWindow extends Window {
 		final PlayerInventory inventory = getPlayerInventory();
 
 		// From main inventory/quickbar to the dispenser
-		if (from instanceof PlayerMainInventory || from instanceof PlayerQuickbar) {
+		if (from instanceof PlayerMainInventory || from instanceof QuickbarInventory) {
 			for (InventoryConverter conv : this.getInventoryConverters()) {
 				Inventory inv = conv.getInventory();
 				if (inv instanceof DispenserInventory) {
@@ -84,7 +84,7 @@ public class DispenserWindow extends Window {
 		// From chest to inventory/quickbar
 		if (from instanceof DispenserInventory) {
 			// To quickbar (reversed)
-			final PlayerQuickbar qbar = inventory.getQuickbar();
+			final QuickbarInventory qbar = inventory.getQuickbar();
 			qbar.add(qbar.size() - 1, 0, stack);
 			from.set(slot, stack);
 			if (stack.isEmpty()) {
@@ -92,7 +92,7 @@ public class DispenserWindow extends Window {
 			}
 
 			// To main inventory (reversed)
-			final PlayerMainInventory main = inventory.getMain();
+			final Inventory main = inventory.getMain();
 			final int height = 3;
 			final int length = 9;
 			for (int y = 0; y < height; y++) {

@@ -33,9 +33,9 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.api.event.player.PlayerHeldItemChangeEvent;
 import org.spout.vanilla.api.event.player.network.PlayerSelectedSlotChangeEvent;
+import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerHeldItemChangeMessage;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 
@@ -54,7 +54,7 @@ public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeld
 			return;
 		}
 		Player player = session.getPlayer();
-		PlayerQuickbar quickbar = PlayerUtil.getQuickbar(session.getPlayer());
+		QuickbarInventory quickbar = PlayerUtil.getQuickbar(session.getPlayer());
 		if (quickbar == null) {
 			return;
 		}
@@ -74,7 +74,7 @@ public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeld
 
 	@Override
 	public void handleClient(Session session, PlayerHeldItemChangeMessage message) {
-		PlayerQuickbar quickbar = PlayerUtil.getQuickbar(session.getPlayer());
+		QuickbarInventory quickbar = PlayerUtil.getQuickbar(session.getPlayer());
 		if (quickbar == null) {
 			return;
 		}

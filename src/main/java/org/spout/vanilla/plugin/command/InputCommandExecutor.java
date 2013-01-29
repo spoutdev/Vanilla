@@ -38,10 +38,10 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.inventory.window.Window;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
@@ -97,7 +97,7 @@ public class InputCommandExecutor implements CommandExecutor {
 			}
 		} else if (name.startsWith("+hotbar_")) {
 			Player player = (Player) source;
-			PlayerQuickbar quickbar = player.get(PlayerInventory.class).getQuickbar();
+			QuickbarInventory quickbar = player.get(PlayerInventory.class).getQuickbar();
 			HUDComponent hud = player.get(HUDComponent.class);
 			int newSlot = quickbar.getSelectedSlot().getIndex();
 			if (name.endsWith("left")) {

@@ -24,36 +24,50 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.inventory.entity;
+package org.spout.vanilla.api.inventory.entity;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.vanilla.api.event.entity.EntityEquipmentEvent;
-import org.spout.vanilla.api.inventory.entity.ArmorInventory;
+import org.spout.vanilla.api.inventory.Slot;
 
-import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
+/**
+ * Represents an entity's quickbar inventory slots.
+ */
+public abstract class QuickbarInventory extends Inventory {
+	protected int selected = 0;
 
-public class EntityArmorInventory extends ArmorInventory {
-
-	@Override
-	public void updateSlot(int i, ItemStack item, Entity entity) {
-		final int equip;
-		switch (i) {
-			case BOOT_SLOT:
-				equip = EntityEquipmentMessage.BOOTS_SLOT;
-				break;
-			case CHEST_PLATE_SLOT:
-				equip = EntityEquipmentMessage.CHESTPLATE_SLOT;
-				break;
-			case HELMET_SLOT:
-				equip = EntityEquipmentMessage.HELMET_SLOT;
-				break;
-			case LEGGINGS_SLOT:
-				equip = EntityEquipmentMessage.LEGGINGS_SLOT;
-				break;
-			default:
-				return;
-		}
-		entity.getNetwork().callProtocolEvent(new EntityEquipmentEvent(entity, equip, item), true);
+	public QuickbarInventory(int size) {
+		super(size);
 	}
+
+	/**
+	 * Returns the currently selected itemstack
+	 * @return itemstack selected
+	 */
+	public ItemStack getSelectedItem() {
+		return getSelectedSlot().get();
+	}
+
+	/**
+	 * returns the slot that is currently selected on the hotbar
+	 * @return slot selected
+	 */
+	public Slot getSelectedSlot() {
+		return new Slot(this, this.selected);
+	}
+
+	/**
+	 * Sets the currently selected slot to the index given
+	 * @param currentSlot
+	 */
+	public void setSelectedSlot(int currentSlot) {
+		this.selected = currentSlot;
+	}
+
+	/**
+	 * Informs a player of a certain equipment (held item) change
+	 * @param entity to inform
+	 */
+	public abstract void updateHeldItem(Entity entity);
 }

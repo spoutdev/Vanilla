@@ -105,6 +105,7 @@ public class VanillaMaterialModels {
 	public static final String SOUL_SAND = "model://Vanilla/materials/block/solid/soulsand/soulsand.spm";
 	public static final String SPONGE = "model://Vanilla/materials/block/solid/sponge/sponge.spm";
 	public static final String STONE = "model://Vanilla/materials/block/solid/stone/stone.spm";
+	public static final String COMMAND_BLOCK = null;
 	// Wool
 	public static final String WOOL_WHITE = "model://Vanilla/materials/block/solid/whitewool/whitewool.spm";
 	public static final String WOOL_ORANGE = "model://Vanilla/materials/block/solid/orangewool/orangewool.spm";

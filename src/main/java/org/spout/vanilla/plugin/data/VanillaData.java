@@ -155,6 +155,8 @@ public class VanillaData {
 	public static final DefaultedKey<Byte> OCELOT_SKIN = new DefaultedKeyImpl<Byte>("skin", (byte) 0);
 	//Redstone-specific
 	public static final DefaultedKey<Boolean> IS_POWERED = new DefaultedKeyImpl<Boolean>("is_powered", false);
+	//CommandBlock-specific
+	public static final DefaultedKey<String> COMMAND_BLOCK_INPUT = new DefaultedKeyImpl<String>("command_block_input", "");
 	//Sign-specific
 	public static final DefaultedKey<String[]> SIGN_TEXT = new DefaultedKeyArray<String>("sign_text", 4, String.class);
 	//Zombie Specific

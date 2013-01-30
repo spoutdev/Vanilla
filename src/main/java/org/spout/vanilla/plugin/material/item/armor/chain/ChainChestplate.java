@@ -26,11 +26,19 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.chain;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.inventory.Inventory;
+import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 import org.spout.vanilla.api.material.item.armor.Chestplate;
 
 public class ChainChestplate extends ChainArmor implements Chestplate {
 	public ChainChestplate(String name, int id, short durability) {
 		super(name, id, durability, null);
 		this.setBaseProtection(5);
+	}
+
+	@Override
+	public boolean canEquip(Entity entity, Inventory inventory, int slot) {
+		return inventory instanceof ArmorInventory && slot == ArmorInventory.CHEST_PLATE_SLOT;
 	}
 }

@@ -301,7 +301,7 @@ public abstract class Window implements InventoryViewer {
 					clicked = cursorItem.clone();
 					clicked.setAmount(1);
 					// Can it be set?
-					if (inventory.canSet(slot, clicked)) {
+					if (inventory.canSet(slot, clicked, owner)) {
 						inventory.set(slot, clicked);
 						// remove from cursor
 						cursorItem.setAmount(cursorItem.getAmount() - 1);
@@ -319,7 +319,7 @@ public abstract class Window implements InventoryViewer {
 						debug("[Window] Stacking");
 						// add one if can fit
 						clicked.setAmount(clicked.getAmount() + 1);
-						if (inventory.canSet(slot, clicked)) {
+						if (inventory.canSet(slot, clicked, owner)) {
 							inventory.set(slot, clicked);
 							cursorItem.setAmount(cursorItem.getAmount() - 1);
 							if (cursorItem.isEmpty()) {
@@ -339,7 +339,7 @@ public abstract class Window implements InventoryViewer {
 							}
 						}
 					}
-				} else if (inventory.canSet(slot, cursorItem)) {
+				} else if (inventory.canSet(slot, cursorItem, owner)) {
 					debug("[Window] Materials don't match. Swapping stacks.");
 					// materials don't match
 					// swap stacks
@@ -371,7 +371,7 @@ public abstract class Window implements InventoryViewer {
 					// put whole stack down
 					clicked = cursorItem.clone();
 					// Can it be set?
-					if (inventory.canSet(slot, clicked)) {
+					if (inventory.canSet(slot, clicked, owner)) {
 						inventory.set(slot, clicked);
 						cursorItem = null;
 						return true;
@@ -383,7 +383,7 @@ public abstract class Window implements InventoryViewer {
 				if (cursorItem.equalsIgnoreSize(clicked)) {
 					debug("[Window] Stacking");
 					//Try to set items
-					if (inventory.canSet(slot, clicked)) {
+					if (inventory.canSet(slot, clicked, owner)) {
 						clicked.stack(cursorItem);
 						inventory.set(slot, clicked);
 						if (cursorItem.isEmpty()) {
@@ -400,7 +400,7 @@ public abstract class Window implements InventoryViewer {
 						}
 					}
 					return true;
-				} else if (inventory.canSet(slot, cursorItem)) {
+				} else if (inventory.canSet(slot, cursorItem, owner)) {
 					debug("[Window] Materials don't match. Swapping stacks.");
 					// materials don't match
 					// swap stacks

@@ -26,12 +26,16 @@
  */
 package org.spout.vanilla.plugin.material.block.solid;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 import org.spout.vanilla.api.material.block.Directional;
 
 import org.spout.vanilla.plugin.data.tool.ToolType;
@@ -90,5 +94,13 @@ public class Pumpkin extends Solid implements Directional {
 	 */
 	public boolean isLantern() {
 		return lantern;
+	}
+
+	@Override
+	public boolean canEquip(Entity entity, Inventory inventory, int slot) {
+		if (!(inventory instanceof ArmorInventory)) {
+			return false;
+		}
+		return (!isLantern() || !(entity instanceof Player)) && slot == ArmorInventory.HELMET_SLOT;
 	}
 }

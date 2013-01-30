@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.plugin.material.item;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector2;
 import org.spout.api.render.RenderMaterial;
@@ -90,6 +92,11 @@ public class VanillaItemMaterial extends Material implements VanillaMaterial {
 	@Override
 	public short getMinecraftData(short data) {
 		return data;
+	}
+
+	@Override
+	public boolean canEquip(Entity entity, Inventory inventory, int slot) {
+		return false;
 	}
 
 	@Override

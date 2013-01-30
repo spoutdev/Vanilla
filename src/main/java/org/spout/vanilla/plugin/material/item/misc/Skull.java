@@ -26,6 +26,9 @@
  */
 package org.spout.vanilla.plugin.material.item.misc;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.inventory.Inventory;
+import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 import org.spout.vanilla.plugin.material.block.component.SkullBlock;
 import org.spout.vanilla.plugin.material.item.BlockItem;
 
@@ -47,5 +50,10 @@ public class Skull extends BlockItem {
 	@Override
 	public Skull getParentMaterial() {
 		return (Skull) super.getParentMaterial();
+	}
+
+	@Override
+	public boolean canEquip(Entity entity, Inventory inventory, int slot) {
+		return inventory instanceof ArmorInventory && slot == ArmorInventory.HELMET_SLOT;
 	}
 }

@@ -104,7 +104,7 @@ public class DefaultWindow extends Window {
 			// Transferring to the armor slots
 			final ArmorInventory armor = inventory.getArmor();
 			for (int i = 0; i < armor.size(); i++) {
-				if (armor.get(i) == null && armor.canSet(i, stack)) {
+				if (armor.get(i) == null && armor.canSet(i, stack, getPlayer())) {
 					armor.set(i, ItemStack.cloneSpecial(stack));
 					from.set(slot, stack.setAmount(0));
 					return true;

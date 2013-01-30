@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.inventory.block;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
@@ -98,7 +99,7 @@ public class EnchantmentTableInventory extends Inventory {
 	}
 
 	@Override
-	public boolean canSet(int i, ItemStack item) {
+	public boolean canSet(int i, ItemStack item, Entity entity) {
 		return item.getMaterial() instanceof VanillaItemMaterial && ((VanillaItemMaterial) item.getMaterial()).isEnchantable();
 	}
 }

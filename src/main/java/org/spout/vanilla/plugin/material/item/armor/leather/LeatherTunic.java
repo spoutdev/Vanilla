@@ -26,11 +26,19 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.leather;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.inventory.Inventory;
+import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 import org.spout.vanilla.api.material.item.armor.Chestplate;
 
 public class LeatherTunic extends LeatherArmor implements Chestplate {
 	public LeatherTunic(String name, int id, short durability) {
 		super(name, id, durability, null);
 		this.setBaseProtection(3);
+	}
+
+	@Override
+	public boolean canEquip(Entity entity, Inventory inventory, int slot) {
+		return inventory instanceof ArmorInventory && slot == ArmorInventory.CHEST_PLATE_SLOT;
 	}
 }

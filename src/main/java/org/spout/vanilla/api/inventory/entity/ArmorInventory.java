@@ -29,12 +29,7 @@ package org.spout.vanilla.api.inventory.entity;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.Material;
-
-import org.spout.vanilla.api.material.item.armor.Boots;
-import org.spout.vanilla.api.material.item.armor.Chestplate;
-import org.spout.vanilla.api.material.item.armor.Helmet;
-import org.spout.vanilla.api.material.item.armor.Leggings;
+import org.spout.vanilla.api.material.VanillaMaterial;
 
 /**
  * Represents the four armor slots of an Entity's inventory.<br/>
@@ -67,24 +62,12 @@ public abstract class ArmorInventory extends Inventory {
 	public abstract void updateSlot(int i, ItemStack item, Entity entity);
 
 	@Override
-	public boolean canSet(int i, ItemStack item) {
-		if (!super.canSet(i, item)) {
+	public boolean canSet(int i, ItemStack item, Entity entity) {
+		if (!super.canSet(i, item, entity)) {
 			return false;
 		}
 		if (item != null) {
-			Material material = item.getMaterial();
-			switch (i) {
-				case BOOT_SLOT:
-					return material instanceof Boots;
-				case LEGGINGS_SLOT:
-					return material instanceof Leggings;
-				case CHEST_PLATE_SLOT:
-					return material instanceof Chestplate;
-				case HELMET_SLOT:
-					return material instanceof Helmet;
-				default:
-					return false;
-			}
+			return ((VanillaMaterial) item.getMaterial()).canEquip(entity, this, i);
 		}
 		return true;
 	}

@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.inventory.block;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
@@ -91,8 +92,8 @@ public class BrewingStandInventory extends Inventory {
 	}
 
 	@Override
-	public boolean canSet(int i, ItemStack item) {
-		if (!super.canSet(i, item)) {
+	public boolean canSet(int i, ItemStack item, Entity entity) {
+		if (!super.canSet(i, item, entity)) {
 			return false;
 		}
 

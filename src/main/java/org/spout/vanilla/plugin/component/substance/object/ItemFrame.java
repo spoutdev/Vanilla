@@ -66,7 +66,7 @@ public class ItemFrame extends ObjectEntity {
 				break;
 			case RIGHT_CLICK:
 				Slot slot = PlayerUtil.getHeldSlot(source);
-				if (slot != null) {
+				if (slot != null && slot.get() != null) {
 					setMaterial(slot.get().getMaterial());
 					slot.addAmount(-1);
 				}

@@ -30,7 +30,6 @@ import org.spout.api.protocol.HandlerLookupService;
 
 import org.spout.vanilla.plugin.protocol.handler.EncryptionKeyResponseHandler;
 import org.spout.vanilla.plugin.protocol.handler.ServerListPingHandler;
-import org.spout.vanilla.plugin.protocol.handler.ServerPluginHandler;
 import org.spout.vanilla.plugin.protocol.handler.entity.EntityActionHandler;
 import org.spout.vanilla.plugin.protocol.handler.entity.EntityAnimationHandler;
 import org.spout.vanilla.plugin.protocol.handler.entity.EntityInteractHandler;
@@ -112,7 +111,6 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(PlayerTabCompleteMessage.class, PlayerTabCompleteHandler.class);
 			bind(PlayerLocaleViewDistanceMessage.class, PlayerLocaleViewDistanceHandler.class);
 			bind(WindowEnchantItemMessage.class, WindowEnchantItemHandler.class);
-			bind(ServerPluginMessage.class, ServerPluginHandler.class);
 		} catch (Exception ex) {
 			throw new ExceptionInInitializerError(ex);
 		}

@@ -62,13 +62,14 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.Protocol;
+import org.spout.api.protocol.dynamicid.DynamicWrapperMessage;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.api.protocol.msg.VanillaMainChannelMessage;
 
 import org.spout.vanilla.plugin.protocol.VanillaProtocol;
 
-public class ServerPluginMessage extends VanillaMainChannelMessage {
+public class ServerPluginMessage extends VanillaMainChannelMessage implements DynamicWrapperMessage {
 	private final byte[] data;
 	private final String type;
 
@@ -117,6 +118,7 @@ public class ServerPluginMessage extends VanillaMainChannelMessage {
 				.isEquals();
 	}
 
+	@Override
 	public Message unwrap(boolean upstream, Protocol activeProtocol) throws IOException {
 		MessageCodec<?> codec = VanillaProtocol.getCodec(getType(), activeProtocol);
 		if (codec != null) {

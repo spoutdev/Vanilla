@@ -49,6 +49,8 @@ import org.spout.api.util.Named;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.chat.VanillaStyleHandler;
+import org.spout.vanilla.plugin.protocol.plugin.CommandBlockCodec;
+import org.spout.vanilla.plugin.protocol.plugin.CommandBlockHandler;
 import org.spout.vanilla.plugin.protocol.msg.ServerPluginMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerChatMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerHandshakeMessage;
@@ -86,6 +88,7 @@ public class VanillaProtocol extends Protocol {
 		registerPacket(RegisterPluginChannelCodec.class, new RegisterPluginChannelMessageHandler());
 		registerPacket(UnregisterPluginChannelCodec.class, new UnregisterPluginChannelMessageHandler());
 		registerPacket(ChunkCacheCodec.class, new ChunkCacheHandler());
+		registerPacket(CommandBlockCodec.class, new CommandBlockHandler());
 	}
 
 	@Override

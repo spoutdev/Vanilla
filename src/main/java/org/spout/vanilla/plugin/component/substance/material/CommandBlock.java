@@ -195,10 +195,13 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 			System.out.println("Processing command: " + c);
 			String[] args = c.split(" ");
 			String root = args[0];
-			List<String> arguments = new ArrayList<String>();
+			ChatArguments arguments = new ChatArguments();
 			if (args.length > 1) {
 				for (int i = 1; i < args.length; i++) {
-					arguments.add(args[i]);
+					arguments.append(args[i]);
+					if (i != args.length - 1) {
+						arguments.append(" ");
+					}
 				}
 			}
 			// TODO: Argument handling doesn't seem to be working... am I doing it wrong?

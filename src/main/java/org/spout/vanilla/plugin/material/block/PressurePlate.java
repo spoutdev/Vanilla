@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.block;
 
+import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
@@ -41,13 +42,20 @@ import org.spout.vanilla.api.data.RedstonePowerMode;
 
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 
+import com.bulletphysics.collision.shapes.BoxShape;
+
 public abstract class PressurePlate extends AttachedRedstoneSource implements DynamicMaterial {
 	public static final int TICK_DELAY = 1000;
 	private static final EffectRange physicsRange = new ListEffectRange(new CubicEffectRange(1), new CuboidEffectRange(0, -2, 0, 0, -1, 0));
 
 	public PressurePlate(String name, int id, String model) {
 		super(name, id, model);
-		this.setAttachable(BlockFace.BOTTOM).setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 1);
+		this.setAttachable(BlockFace.BOTTOM).setHardness(0.5F).setResistance(0.8F).setTransparent();
+		this.setCollision(CollisionStrategy.SOLID);
+		this.setCollisionShape(new BoxShape(1.0f, 0.03125f, 1.0f));
+		//TODO: Create the box model and different up/down collision shapes
+	    // UP height = 0.0625F
+	    // DOWN height = 0.03125F
 	}
 
 	/**

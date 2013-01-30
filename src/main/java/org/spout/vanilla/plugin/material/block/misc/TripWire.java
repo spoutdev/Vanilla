@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
@@ -44,6 +45,8 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
+import com.bulletphysics.collision.shapes.BoxShape;
+
 public class TripWire extends GroundAttachable implements InitializableMaterial {
 	public static final int MAX_DISTANCE = 42;
 	public static final int MAX_DISTANCE_SQUARED = MAX_DISTANCE * MAX_DISTANCE;
@@ -51,6 +54,8 @@ public class TripWire extends GroundAttachable implements InitializableMaterial 
 	public TripWire(String name, int id) {
 		super(name, id, VanillaMaterialModels.TRIP_WIRE);
 		this.setHardness(0.0f).setResistance(0.0f).setTransparent();
+		this.setCollision(CollisionStrategy.SOLID);
+		this.setCollisionShape(new BoxShape(1f, 1f, 1f));
 	}
 
 	@Override
@@ -156,6 +161,7 @@ public class TripWire extends GroundAttachable implements InitializableMaterial 
 
 	@Override
 	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
+		super.onCollided(colliderPoint, collidedPoint, entity);
 		trample(collidedPoint.getBlock());
 	}
 }

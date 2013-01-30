@@ -26,20 +26,20 @@
  */
 package org.spout.vanilla.protocol;
 
+import static org.spout.vanilla.protocol.ChannelBufferUtilsTest.TEST_PARAMS;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
-import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 import org.spout.api.util.Parameter;
-
 import org.spout.vanilla.api.data.Animation;
 import org.spout.vanilla.api.data.GameMode;
-
 import org.spout.vanilla.plugin.inventory.window.WindowType;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.VanillaCodecLookupService;
@@ -118,13 +118,10 @@ import org.spout.vanilla.plugin.protocol.msg.world.block.SignMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.chunk.ChunkBulkMessage;
 import org.spout.vanilla.plugin.protocol.msg.world.chunk.ChunkDataMessage;
 
-import static org.spout.vanilla.protocol.ChannelBufferUtilsTest.TEST_PARAMS;
-
 public class VanillaProtocolTest extends BaseProtocolTest {
 	private static final VanillaCodecLookupService CODEC_LOOKUP = new VanillaCodecLookupService();
 	static boolean[] allFalse = new boolean[16];
-	static byte[] chunkData = new byte[10240];
-	static byte[][] columnData = new byte[][]{chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData, chunkData};
+	static byte[][] columnData = new byte[16][10240];
 	static byte[] biomeData1 = new byte[256];
 	static byte[] biomeData2 = new byte[256];
 	private static final Message[] TEST_MESSAGES = new Message[]{
@@ -172,7 +169,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new SoundEffectMessage("random.bow", 12.5f, 0.0f, 12.0f, 1.0f, 1.0f, NullRepositionManager.getInstance()),
 			new EntityDestroyMessage(new int[]{2}),
 			new PlayerExperienceMessage(1.2F, (short) 2, (short) 3),
-			new ChunkDataMessage(1, 2, true, new boolean[16], new byte[][]{new byte[16 * 16 * 16 * 5 / 2], null, null, null, null, null, null, null, null, null, new byte[Chunk.BLOCKS.HALF_VOLUME * 5], null, null, null, null, null}, new byte[16 * 16], null, NullRepositionManager.getInstance()),
+			new ChunkDataMessage(1, 2, true, new boolean[16], columnData, biomeData1, null, NullRepositionManager.getInstance()),
 			new BlockBulkMessage(2, 3, new short[]{2, 3, 4, /**/ 3, 6, 4, /**/ 8, 5, 5}, new short[]{1, 2, 3}, new byte[]{3, 4, 5}, NullRepositionManager.getInstance()),
 			new BlockChangeMessage(1, 2, 3, (short) 87, 2, NullRepositionManager.getInstance()),
 			new BlockActionMessage(1, 2, 3, (byte) 4, (byte) 5, (byte) 29, NullRepositionManager.getInstance()),
@@ -205,10 +202,16 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 	};
 
 	static {
-		for (Message msg : TEST_MESSAGES) {
-			if (msg instanceof ChunkDataMessage) {
-				Arrays.fill(((ChunkDataMessage) msg).getData()[0], (byte) 5);
+		Random r = new Random();
+		for (int i = 0; i < columnData.length; i++) {
+			byte[] data = columnData[i];
+			for (int j = 0; j < data.length; j++) {
+				data[j] = (byte) r.nextInt();
 			}
+		}
+		for (int i = 0; i < biomeData1.length; i++) {
+			biomeData1[i] = (byte) r.nextInt();
+			biomeData2[i] = (byte) r.nextInt();
 		}
 	}
 

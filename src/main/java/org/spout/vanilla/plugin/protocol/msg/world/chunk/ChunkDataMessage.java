@@ -101,7 +101,9 @@ public final class ChunkDataMessage extends VanillaBlockDataChannelMessage {
 				.append("hasAdditionalData", hasAdditionalData)
 				.append("contiguous", contiguous)
 				.append("data", data, false)
+				.append("data(hash)", hash(data))
 				.append("biomeData", data, false)
+				.append("biomeData(hash)", hash(biomeData))
 				.append("unload", unload, false)
 				.toString();
 	}
@@ -124,5 +126,27 @@ public final class ChunkDataMessage extends VanillaBlockDataChannelMessage {
 				.append(this.biomeData, other.biomeData)
 				.append(this.unload, other.unload)
 				.isEquals();
+	}
+	
+	private final static int hash(byte[][] arr) {
+		if (arr == null) {
+			return 0;
+		}
+		int hash = 1;
+		for (int i = 0; i < arr.length; i++) {
+			hash += (hash << 5) + hash(arr[i]);
+		}
+		return hash;
+	}
+	
+	private final static int hash(byte[] arr) {
+		if (arr == null) {
+			return 0;
+		}
+		int hash = 1;
+		for (int i = 0; i < arr.length; i++) {
+			hash += (hash << 5) + arr[i];
+		}
+		return hash;
 	}
 }

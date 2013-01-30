@@ -373,9 +373,10 @@ public class HealthComponent extends EntityComponent {
 	 */
 	public void heal(int amount, HealCause cause) {
 		EntityHealEvent event = new EntityHealEvent(getOwner(), amount, cause);
-		Spout.getEngine().getEventManager().callEvent(event);
-
-		setHealth(getHealth() + event.getHealAmount(), HealthChangeCause.HEAL);
+		EntityHealEvent healEvent = Spout.getEngine().getEventManager().callEvent(event);
+		if (!healEvent.isCancelled()) {
+			setHealth(getHealth() + event.getHealAmount(), HealthChangeCause.HEAL);
+		}
 	}
 
 	/**

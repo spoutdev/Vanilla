@@ -31,13 +31,13 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.api.data.MoveReaction;
 import org.spout.vanilla.api.material.Fuel;
-
+import org.spout.vanilla.api.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.plugin.component.substance.material.NoteBlock;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 import org.spout.vanilla.plugin.util.RedstoneUtil;
 
-public class NoteBlockBlock extends ComponentMaterial implements Fuel {
+public class NoteBlockBlock extends ComponentMaterial implements Fuel, RedstoneTarget {
 	public final float BURN_TIME = 15;
 
 	public NoteBlockBlock(String name, int id) {
@@ -77,11 +77,8 @@ public class NoteBlockBlock extends ComponentMaterial implements Fuel {
 		return BURN_TIME;
 	}
 
+	@Override
 	public boolean isReceivingPower(Block block) {
 		return RedstoneUtil.isReceivingPower(block);
-	}
-
-	public NoteBlock getBlockComponent() {
-		return new NoteBlock();
 	}
 }

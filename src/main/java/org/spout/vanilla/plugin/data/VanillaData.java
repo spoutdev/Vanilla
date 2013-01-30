@@ -108,7 +108,7 @@ public class VanillaData {
 	public static final DefaultedKey<Boolean> HAS_DEATH_ANIMATION = new DefaultedKeyImpl<Boolean>("has_death_animation", true);
 	public static final DefaultedKey<Short> EXPERIENCE_AMOUNT = new DefaultedKeyImpl<Short>("experience_amount", (short) 0);
 	public static final DefaultedKey<Float> EXPERIENCE_BAR_PROGRESS = new DefaultedKeyImpl<Float>("experience_bar_progress", (float) 0);
-	public static final DefaultedKey<Short> EXPERIENCE_LEVEL = new DefaultedKeyImpl<Short>("experience_level", (short) 0);
+	public static final DefaultedKey<Short> EXPERIENCE_LEVEL = new DefaultedKeyImpl<Short>("experience_level", (short) 1);
 	public static final DefaultedKey<DropInventory> DROP_INVENTORY = new DefaultedKeyFactory<DropInventory>("DropInventory", DropInventory.class);
 	public static final DefaultedKey<Short> DROP_EXPERIENCE = new DefaultedKeyImpl<Short>("DropExperience", (short) 0);
 	public static final DefaultedKey<Boolean> IS_EATING_BLOCKING = new DefaultedKeyImpl<Boolean>("is_eating_blocking", false);
@@ -188,4 +188,7 @@ public class VanillaData {
 	//Painting specific
 	public static final DefaultedKey<PaintingType> PAINTING_TYPE = new DefaultedKeyImpl<PaintingType>("painting_type", null);
 	public static final DefaultedKey<BlockFace> PAINTING_FACE = new DefaultedKeyImpl<BlockFace>("painting_face", null);
+	// Cmd block
+	public static final DefaultedKey<String> COMMAND = new DefaultedKeyImpl<String>("command", null);
+	public static final DefaultedKey<String> CHAT_CHANNEL = new DefaultedKeyImpl<String>("chat_channel", "CommandBlock");
 }

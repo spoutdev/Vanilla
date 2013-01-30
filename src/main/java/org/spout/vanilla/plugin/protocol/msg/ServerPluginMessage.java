@@ -69,7 +69,7 @@ import org.spout.vanilla.api.protocol.msg.VanillaMainChannelMessage;
 
 import org.spout.vanilla.plugin.protocol.VanillaProtocol;
 
-public class ServerPluginMessage extends VanillaMainChannelMessage implements DynamicWrapperMessage {
+public class ServerPluginMessage extends VanillaMainChannelMessage {
 	private final byte[] data;
 	private final String type;
 

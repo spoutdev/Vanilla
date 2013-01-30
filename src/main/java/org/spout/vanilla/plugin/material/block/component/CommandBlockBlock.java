@@ -24,12 +24,45 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.block.misc;
+package org.spout.vanilla.plugin.material.block.component;
 
-import org.spout.vanilla.plugin.material.block.Solid;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.BlockMaterial;
 
-public class CommandBlock extends Solid {
-	public CommandBlock(String name, int id) {
-		super(name, id, null);
+import org.spout.vanilla.api.data.MoveReaction;
+import org.spout.vanilla.api.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.plugin.component.substance.material.CommandBlock;
+import org.spout.vanilla.plugin.util.RedstoneUtil;
+
+public class CommandBlockBlock extends ComponentMaterial implements RedstoneTarget {
+	public CommandBlockBlock(String name, int id) {
+		super(name, id, CommandBlock.class, null);
+	}
+
+	@Override
+	public void onUpdate(BlockMaterial oldMaterial, Block block) {
+		super.onUpdate(oldMaterial, block);
+		CommandBlock cmdBlock = (CommandBlock) block.getComponent();
+		cmdBlock.setPowered(isReceivingPower(block));
+	}
+
+	@Override
+	public boolean hasPhysics() {
+		return true;
+	}
+
+	@Override
+	public MoveReaction getMoveReaction(Block block) {
+		return MoveReaction.DENY;
+	}
+
+	@Override
+	public boolean isPlacementSuppressed() {
+		return true;
+	}
+
+	@Override
+	public boolean isReceivingPower(Block block) {
+		return RedstoneUtil.isReceivingPower(block);
 	}
 }

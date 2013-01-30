@@ -67,12 +67,12 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 				final double dz = position.getZ() - newPosition.getZ();
 				final double dist = dx * dx + dy * dy + dz * dz;
 				WorldConfigurationNode node = VanillaConfiguration.WORLDS.get(holder.getWorld());
-				if (dist < 100 || node.ALLOW_FLIGHT.getBoolean()) {
-					holder.getScene().getTransform().setPosition(newPosition);
+				//if (dist < 100 || node.ALLOW_FLIGHT.getBoolean()) {
+					holder.getScene().setPosition(newPosition);
 					holder.get(Human.class).setOnGround(message.isOnGround());
-				} else {
-					holder.kick("Moved too quickly");
-				}
+				//} else {
+					//holder.kick("Moved too quickly");
+				//}
 			}
 		}
 	}

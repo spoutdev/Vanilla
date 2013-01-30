@@ -70,6 +70,7 @@ public class VanillaInputExecutor implements InputExecutor {
 			offset = offset.subtract(ts.upVector().multiply(camera.getSpeed()).multiply(dt));
 		}
 
-		sc.getTransform().translateAndSetRotation(offset, QuaternionMath.rotation(inputState.pitch(), inputState.yaw(), ts.getRotation().getRoll()));
+		ts.translateAndSetRotation(offset, QuaternionMath.rotation(inputState.pitch(), inputState.yaw(), ts.getRotation().getRoll()));
+		sc.setTransform(ts);
 	}
 }

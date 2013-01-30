@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -38,11 +39,13 @@ import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.channel.ChatChannel;
 import org.spout.api.chat.channel.PermissionChatChannel;
+import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.command.Command;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.RootCommand;
 import org.spout.api.data.ValueHolder;
 import org.spout.api.entity.Player;
+import org.spout.api.event.Cause;
 import org.spout.api.event.server.PreCommandEvent;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
@@ -52,9 +55,10 @@ import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.api.component.substance.material.VanillaBlockComponent;
 import org.spout.vanilla.api.data.GameMode;
-
+import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.LevelComponent;
+import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.data.VanillaData;
 
 public class CommandBlock extends VanillaBlockComponent implements CommandSource {
@@ -66,9 +70,35 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 	public static final String NEAREST_PLAYER = "" + TARGET_CHAR + NEAREST_PLAYER_CHAR;
 	public static final String RANDOM_PLAYER = "" + TARGET_CHAR + RANDOM_PLAYER_CHAR;
 	public static final String ALL_PLAYERS = "" + TARGET_CHAR + ALL_PLAYERS_CHAR;
+	private String name = "" + TARGET_CHAR;
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setCommand(String cmd, Cause<?> cause) {
+		if (cause != null && cause.getSource() instanceof CommandSource) {
+			CommandSource cmdSource = (CommandSource) cause.getSource();
+			ChatArguments prefix = VanillaPlugin.getInstance().getPrefix();
+			if (!cmdSource.hasPermission("vanilla.commandblock." + cmd.split(" ")[0])) {
+				cmdSource.sendMessage(prefix, ChatStyle.RED, " You don't have permission to do that.");
+				return;
+			}
+			cmdSource.sendMessage(prefix, ChatStyle.WHITE, "Command set: ", ChatStyle.BRIGHT_GREEN, cmd);
+		}
+
+		if (!cmd.startsWith("/")) {
+			cmd = "say " + cmd;
+			// TODO: Add support for '/say' for non-players
+		} else {
+			cmd = cmd.replaceFirst("/", "");
+		}
+
+		getData().put(VanillaData.COMMAND, cmd);
+	}
 
 	public void setCommand(String cmd) {
-		getData().put(VanillaData.COMMAND, cmd);
+		setCommand(cmd, null);
 	}
 
 	public String getCommand() {
@@ -88,100 +118,68 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 		return getData().get(VanillaData.IS_POWERED);
 	}
 
-	private boolean isTarget(char c) {
-		return c == NEAREST_PLAYER_CHAR || c == RANDOM_PLAYER_CHAR || c == ALL_PLAYERS_CHAR;
-	}
-
-	private String getStatement(String substring) {
-		if (substring.length() > 2 && substring.charAt(2) == '[' && substring.contains("]")) {
-			int closingIndex = substring.indexOf(']');
-			if (closingIndex < substring.length() - 1) {
-				return substring.substring(0, closingIndex + 1);
-			}
-			return substring;
-		}
-		if (substring.length() > 2) {
-			return substring.substring(0, 2);
-		}
-		return substring;
-	}
-
 	public void execute() {
 		if (!(Spout.getEngine() instanceof Server)) {
 			throw new IllegalStateException("CommandBlocks are run from the server.");
 		}
-
-		System.out.println("Executing CommandBlock");
 
 		String cmd = getCommand();
 		if (cmd == null) {
 			return;
 		}
 
-		if (!cmd.startsWith("/")) {
-			cmd = "say " + cmd;
-			// TODO: Add support for '/say' for non-players
-		} else {
-			cmd = cmd.replaceFirst("/", "");
-		}
-
 		char[] chars = cmd.toCharArray();
 		int targetIndex = -1;
 		for (int i = 0; i < chars.length; i++) {
-			if (chars[i] == '@' && i + 1 < chars.length && isTarget(chars[i + 1])) {
+			if (chars[i] == TARGET_CHAR && i + 1 < chars.length && isTarget(chars[i + 1])) {
 				// string contains an identifier
 				targetIndex = i;
 				break;
 			}
 		}
 
-		System.out.println("Command: " + cmd);
-		System.out.println("Target index: " + targetIndex);
-
 		List<String> cmds = new ArrayList<String>();
 		if (targetIndex != -1) {
 
 			// if we found a target, format the command
-			final String statement = getStatement(cmd.substring(targetIndex));
+			final String statement = getStatement(cmd, targetIndex);
 			final PlayerFilter filter = new PlayerFilter(statement);
+			try {
+				filter.init();
+			} catch (IllegalArgumentException e) {
+				Spout.getLogger().log(Level.WARNING, "Could not execute CommandBlock at "
+						+ getBlock().getPosition().toString() + " because of illegal syntax.", e);
+			}
+
 			final Point center = new Point(getBlock().getWorld(), filter.x, filter.y, filter.z);
 			final char target = statement.charAt(1);
 			final List<Player> allPlayers = Arrays.asList(((Server) Spout.getEngine()).getOnlinePlayers());
-
-			System.out.println("Statement: " + statement);
-			System.out.println("Filter: " + filter.toString());
-			System.out.println("Target: " + target);
 
 			switch (target) {
 
 				case NEAREST_PLAYER_CHAR:
 					// find the closest suitable player
-					System.out.println("Finding closest suitable player...");
 					List<Player> nearbyPlayers = center.getWorld().getNearbyPlayers(center, filter.maxRadius);
 					Player nearbyPlayer = filter.findPlayer(nearbyPlayers);
 					if (nearbyPlayer == null) {
 						return;
 					}
-					System.out.println("Found: " + nearbyPlayer.getName());
 					cmds.add(cmd.replace(statement, nearbyPlayer.getName()));
 					break;
 
 				case RANDOM_PLAYER_CHAR:
 					// find a random but suitable player in any location
-					System.out.println("Finding random suitable player...");
 					Collections.shuffle(allPlayers);
-					Player player = filter.findPlayer(allPlayers);
+					Player player = filter.findPlayer(allPlayers, true);
 					if (player == null) {
 						return;
 					}
-					System.out.println("Found: " + player.getName());
 					cmds.add(cmd.replace(statement, player.getName()));
 					break;
 
 				case ALL_PLAYERS_CHAR:
 					// use all players, but filter out any players that are not suitable
-					System.out.println("Filtering all players");
-					for (Player p : filter.filter(allPlayers)) {
+					for (Player p : filter.filter(allPlayers, true)) {
 						cmds.add(cmd.replace(statement, p.getName()));
 					}
 					break;
@@ -192,7 +190,6 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 
 		for (String c : cmds) {
 			// send commands
-			System.out.println("Processing command: " + c);
 			String[] args = c.split(" ");
 			String root = args[0];
 			ChatArguments arguments = new ChatArguments();
@@ -205,13 +202,26 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 				}
 			}
 			// TODO: Argument handling doesn't seem to be working... am I doing it wrong?
-			System.out.println("Root: " + root);
+			sendMessage("Processing command: " + c);
 			processCommand(root, new ChatArguments(arguments));
 		}
 	}
 
+	private boolean isTarget(char c) {
+		return c == NEAREST_PLAYER_CHAR || c == RANDOM_PLAYER_CHAR || c == ALL_PLAYERS_CHAR;
+	}
+
+	private String getStatement(String cmd, int index) {
+		cmd = cmd.substring(index);
+		if (cmd.length() > 6 && cmd.charAt(2) == '[' && cmd.contains("]")) {
+			return cmd.substring(0, cmd.indexOf("]") + 1);
+		}
+		return cmd.substring(0, 2);
+	}
+
 	private class PlayerFilter {
 		private final Block block = getBlock();
+		private final String statement;
 		private int x = block.getX();
 		private int y = block.getY();
 		private int z = block.getZ();
@@ -227,10 +237,13 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 		private int minScore = 0;
 
 		public PlayerFilter(String statement) {
+			this.statement = statement;
+		}
 
+		public void init() throws IllegalArgumentException {
 			/*
 			 * Accepted syntax:
-			 * @<target>[<argument>=<value>,...]
+			 * @<target>[<argument>=<v>,...]
 			 *
 			 * Arguments:
 			 * x: x-coordinate of search center
@@ -250,74 +263,66 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 				throw new IllegalArgumentException("Arguments must begin with an '@' symbol.");
 			}
 
-			try {
-				int startArgs = statement.indexOf("["), endArgs = statement.indexOf("]");
-				if (startArgs != -1 && endArgs != -1) {
-					// has arguments
-					String[] args = statement.substring(startArgs + 1, endArgs).split(",");
-					int start = 0;
-					// check first 4 args for the shortcut syntax
-					for (int i = 0; i < 4; i++) {
-						String arg = args[i];
-						if (arg == null || arg.contains("=")) {
-							// null arg or arg has a value break
-							start = i;
-							break;
-						}
-						switch (i) {
-							case 0:
-								x = parseInt(arg);
-								break;
-							case 1:
-								y = parseInt(arg);
-								break;
-							case 2:
-								z = parseInt(arg);
-								break;
-							case 3:
-								maxRadius = parseInt(arg);
-								break;
-						}
+			int startArgs = statement.indexOf("["), endArgs = statement.indexOf("]");
+			if (startArgs != -1 && endArgs != -1) {
+				// has arguments
+				String[] args = statement.substring(startArgs + 1, endArgs).split(",");
+				// check first 4 args for the shortcut syntax
+				for (int i = 0; i < 4; i++) {
+					String arg = args[i];
+					if (arg == null || arg.contains("=")) {
+						// null arg or arg has a v break
+						continue;
 					}
-
-					// pick up where we left off
-					for (int i = start; i < args.length; i++) {
-						String arg = args[i];
-						if (arg == null) {
-							continue;
-						}
-
-						String value = arg.substring(arg.indexOf("=") + 1);
-						if (arg.equalsIgnoreCase("x")) {
-							x = parseInt(value);
-						} else if (arg.equalsIgnoreCase("y")) {
-							y = parseInt(value);
-						} else if (arg.equalsIgnoreCase("z")) {
-							z = parseInt(value);
-						} else if (arg.equalsIgnoreCase("r")) {
-							maxRadius = parseInt(value);
-						} else if (arg.equalsIgnoreCase("mr")) {
-							minRadius = parseInt(value);
-						} else if (arg.equalsIgnoreCase("m")) {
-							mode = GameMode.get(parseInt(value));
-						} else if (arg.equalsIgnoreCase("c")) {
-							int v = parseInt(value);
-							if (v < 0) {
-								reversedList = true;
-							}
-							playerListSize = Math.abs(v);
-						} else if (arg.equalsIgnoreCase("l")) {
-							maxExpLevel = parseInt(value);
-						} else if (arg.equalsIgnoreCase("ml")) {
-							minExpLevel = parseInt(value);
-						}
-						// TODO: Implement scoring
+					switch (i) {
+						case 0:
+							x = parseInt(arg);
+							break;
+						case 1:
+							y = parseInt(arg);
+							break;
+						case 2:
+							z = parseInt(arg);
+							break;
+						case 3:
+							maxRadius = parseInt(arg);
+							break;
 					}
 				}
-			} catch (IllegalArgumentException e) {
-				throw new IllegalArgumentException("Incorrect syntax on statement '" + statement + "'.", e);
-			} catch (IndexOutOfBoundsException e) {
-				throw new IllegalArgumentException("Incorrect syntax on statement '" + statement + "'.", e);
+
+				for (int i = 0; i < args.length; i++) {
+					String arg = args[i];
+					if (arg == null || !arg.contains("=")) {
+						continue;
+					}
+					String[] s = arg.split("=");
+					String a = s[0];
+					String v = s[1];
+					if (a.equalsIgnoreCase("x")) {
+						x = parseInt(v);
+					} else if (a.equalsIgnoreCase("y")) {
+						y = parseInt(v);
+					} else if (a.equalsIgnoreCase("z")) {
+						z = parseInt(v);
+					} else if (a.equalsIgnoreCase("r")) {
+						maxRadius = parseInt(v);
+					} else if (a.equalsIgnoreCase("rm")) {
+						minRadius = parseInt(v);
+					} else if (a.equalsIgnoreCase("m")) {
+						mode = GameMode.get(parseInt(v));
+					} else if (a.equalsIgnoreCase("c")) {
+						int vv = parseInt(v);
+						if (vv < 0) {
+							reversedList = true;
+						}
+						playerListSize = Math.abs(vv);
+					} else if (a.equalsIgnoreCase("l")) {
+						maxExpLevel = parseInt(v);
+					} else if (a.equalsIgnoreCase("lm")) {
+						minExpLevel = parseInt(v);
+					}
+					// TODO: Implement scoring
+				}
 			}
 		}
 
@@ -329,25 +334,27 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 			}
 		}
 
-		public Player findPlayer(List<Player> players) {
+		public Player findPlayer(List<Player> players, boolean ignoreDistance) {
 			for (Player p : players) {
-				System.out.println("for: " + p.getName());
 				if (accept(p)) {
-					System.out.println("Accepted");
 					return p;
 				}
 			}
 			return null;
 		}
 
-		public List<Player> filter(List<Player> players) {
+		public Player findPlayer(List<Player> players) {
+			return findPlayer(players, false);
+		}
+
+		public List<Player> filter(List<Player> players, boolean ignoreDistance) {
 			if (reversedList) {
 				Collections.reverse(players);
 			}
 			List<Player> filteredPlayers = new ArrayList<Player>();
 			int entries = 0;
 			for (Player player : players) {
-				if (accept(player) && (playerListSize == 0 || entries < playerListSize)) {
+				if (accept(player, ignoreDistance) && (playerListSize == 0 || entries < playerListSize)) {
 					entries++;
 					filteredPlayers.add(player);
 				}
@@ -355,13 +362,21 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 			return filteredPlayers;
 		}
 
-		public boolean accept(Player p) {
+		public List<Player> filter(List<Player> players) {
+			return filter(players, false);
+		}
+
+		public boolean accept(Player p, boolean ignoreDistance) {
 			Point center = new Point(block.getWorld(), x, y, z);
 			int lvl = p.add(LevelComponent.class).getLevel();
 			int distance = (int) p.getTransform().getPosition().distance(center);
-			return distance >= minRadius && distance <= maxRadius
+			return ((distance >= minRadius && distance <= maxRadius) || ignoreDistance)
 					&& (mode == null || mode == p.add(Human.class).getGameMode())
 					&& lvl >= minExpLevel && (maxExpLevel == 0 || lvl <= maxExpLevel);
+		}
+
+		public boolean accept(Player p) {
+			return accept(p, false);
 		}
 
 		@Override
@@ -379,13 +394,13 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 					.append("min_exp_lvl", minExpLevel)
 					.append("objective", objective)
 					.append("max_score", maxScore)
-					.append("min_score", minScore).toString();
+					.append("min_score", minScore).build();
 		}
 	}
 
 	@Override
 	public boolean sendMessage(Object... message) {
-		return false;
+		return sendMessage(new ChatArguments(message));
 	}
 
 	@Override
@@ -401,9 +416,6 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 		command = event.getCommand();
 		arguments = event.getArguments();
 
-		System.out.println("Command: " + command);
-		System.out.println("Args: " + arguments.getPlainString());
-
 		final RootCommand rootCmd = Spout.getEngine().getRootCommand();
 		Command cmd = rootCmd.getChild(command);
 		if (cmd != null) {
@@ -415,17 +427,21 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 
 	@Override
 	public boolean sendMessage(ChatArguments message) {
+		if (VanillaConfiguration.COMMAND_BLOCK_VERBOSE.getBoolean()) {
+			Spout.getLogger().info("[ " + getName() + "] " + message.getPlainString());
+			return true;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean sendRawMessage(Object... message) {
-		return false;
+		return sendMessage(message);
 	}
 
 	@Override
 	public boolean sendRawMessage(ChatArguments message) {
-		return false;
+		return sendMessage(message);
 	}
 
 	@Override
@@ -501,6 +517,6 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 
 	@Override
 	public String getName() {
-		return "@";
+		return name;
 	}
 }

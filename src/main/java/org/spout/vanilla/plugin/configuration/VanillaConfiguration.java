@@ -72,6 +72,7 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	// Component-specific
 	public static final ConfigurationHolder ITEM_PICKUP_RANGE = new ConfigurationHolder(2, "component", "item-pickup-range");
 	public static final ConfigurationHolder ITEM_SPAWN_TIME = new ConfigurationHolder(300, "component", "item-spawn-time");
+	public static final ConfigurationHolder COMMAND_BLOCK_VERBOSE = new ConfigurationHolder(false, "component", "command-block-verbose");
 	// Redstone-specific
 	public static final ConfigurationHolder REDSTONE_MIN_RANGE = new ConfigurationHolder(0, "redstone", "redstone-min-power-range");
 	public static final ConfigurationHolder REDSTONE_MAX_RANGE = new ConfigurationHolder(15, "redstone", "redstone-max-power-range");

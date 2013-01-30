@@ -28,9 +28,9 @@ package org.spout.vanilla.plugin.protocol.plugin;
 
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
-import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.component.type.BlockComponent;
 import org.spout.api.entity.Player;
+import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
@@ -47,11 +47,8 @@ public class CommandBlockHandler extends MessageHandler<CommandBlockMessage> {
 		ChatArguments prefix = VanillaPlugin.getInstance().getPrefix();
 		if (c == null || !(c instanceof CommandBlock)) {
 			Spout.getLogger().warning("CommandBlock information received, but there is no CommandBlock at {" + x + "," + y + "," + z + "}.");
-		} else if (player.hasPermission("vanilla.commandblock." + text.split(" ")[0])) {
-			((CommandBlock) c).setCommand(text);
-			player.sendMessage(prefix, ChatStyle.WHITE, "Command set: ", ChatStyle.BRIGHT_GREEN, text);
-		} else {
-			player.sendMessage(prefix, ChatStyle.RED, "You don't have permission to do that.");
+			return;
 		}
+		((CommandBlock) c).setCommand(text, new PlayerCause(player));
 	}
 }

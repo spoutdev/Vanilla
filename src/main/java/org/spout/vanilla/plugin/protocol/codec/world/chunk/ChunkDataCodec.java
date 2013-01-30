@@ -187,16 +187,26 @@ public final class ChunkDataCodec extends MessageCodec<ChunkDataMessage> {
 			uncompressedData = message.getSession().getDataMap().get(VanillaProtocol.CHUNK_NET_CACHE).handle(uncompressedData);
 		}
 
-		byte[] compressedData = new byte[uncompressedSize + 128];
+		byte[] compressedData = new byte[uncompressedSize >> 2];
 
 		Deflater deflater = new Deflater(COMPRESSION_LEVEL);
 		deflater.setInput(uncompressedData);
 		deflater.finish();
 
-		int compressed = deflater.deflate(compressedData);
+		int compressed;
 		try {
+			compressed = deflater.deflate(compressedData);
 			if (compressed == 0) {
-				throw new IOException("Not all bytes compressed.");
+				throw new IOException("No compressed data found");
+			} else if (compressed == compressedData.length) {
+				boolean done = false;
+				while (!done) {
+					byte[] newCompressedData = new byte[1 + compressedData.length + (compressedData.length >> 1)];
+					System.arraycopy(compressedData, 0, newCompressedData, 0, compressedData.length);
+					compressedData = newCompressedData;
+					compressed += deflater.deflate(compressedData, compressed, compressedData.length - compressed);
+					done = compressed < compressedData.length;
+				}
 			}
 		} finally {
 			deflater.end();

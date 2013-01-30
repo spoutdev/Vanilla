@@ -39,6 +39,7 @@ import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.api.inventory.Slot;
+
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.object.ItemFrameProtocol;

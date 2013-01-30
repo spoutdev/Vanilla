@@ -29,8 +29,6 @@ package org.spout.vanilla.plugin.protocol.entity.creature;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.protocol.Message;
-import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
 public class ZombieEntityProtocol extends CreatureProtocol {

@@ -28,6 +28,7 @@ package org.spout.vanilla.plugin.component.misc;
 
 import java.awt.Color;
 import java.util.List;
+
 import org.spout.api.Client;
 import org.spout.api.Server;
 import org.spout.api.Spout;

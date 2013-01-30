@@ -34,8 +34,6 @@ import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.api.data.Weather;
 
-import org.spout.vanilla.plugin.component.world.VanillaSky;
-
 public class WeatherChangeEvent extends WorldEvent implements Cancellable, ProtocolEvent {
 	private static HandlerList handlers = new HandlerList();
 	private Weather current, weather;

@@ -30,6 +30,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
+
 import org.spout.vanilla.api.material.item.armor.Boots;
 import org.spout.vanilla.api.material.item.armor.Chestplate;
 import org.spout.vanilla.api.material.item.armor.Helmet;

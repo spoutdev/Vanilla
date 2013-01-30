@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.plugin.render;
 
-import org.spout.api.math.GenericMath;
 import org.spout.api.math.TrigMath;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.Vector4;

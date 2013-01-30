@@ -36,6 +36,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.event.entity.EntityMetaChangeEvent;
+
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;

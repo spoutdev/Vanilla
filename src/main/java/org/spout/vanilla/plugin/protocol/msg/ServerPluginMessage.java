@@ -62,7 +62,6 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.Protocol;
-import org.spout.api.protocol.dynamicid.DynamicWrapperMessage;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.api.protocol.msg.VanillaMainChannelMessage;

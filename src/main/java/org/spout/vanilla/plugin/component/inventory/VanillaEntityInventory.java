@@ -27,14 +27,14 @@
 package org.spout.vanilla.plugin.component.inventory;
 
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.api.component.inventory.EntityInventoryComponent;
 import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
+
 import org.spout.vanilla.plugin.data.VanillaData;
 
-
 public class VanillaEntityInventory extends EntityInventoryComponent {
-
 	@Override
 	public ArmorInventory getArmor() {
 		return getData().get(VanillaData.ARMOR_INVENTORY);

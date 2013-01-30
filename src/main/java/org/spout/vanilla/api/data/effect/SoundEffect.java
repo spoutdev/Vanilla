@@ -31,8 +31,9 @@ import java.util.Collection;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.plugin.data.effect.type.RandomPitchSoundEffect;
 import org.spout.vanilla.api.event.world.PlaySoundEffectEvent;
+
+import org.spout.vanilla.plugin.data.effect.type.RandomPitchSoundEffect;
 
 public class SoundEffect extends Effect {
 	private static final int SOUND_RANGE = 16;

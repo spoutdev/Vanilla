@@ -34,6 +34,7 @@ import org.spout.api.inventory.shape.Grid;
 import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
+
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.substance.material.chest.AbstractChest;
 import org.spout.vanilla.plugin.inventory.block.ChestInventory;

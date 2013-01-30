@@ -27,11 +27,11 @@
 package org.spout.vanilla.plugin.material.block.misc;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CuboidEffectRange;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.IntVector3;
 

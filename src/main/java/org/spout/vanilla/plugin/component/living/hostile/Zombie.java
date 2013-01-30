@@ -77,8 +77,6 @@ public class Zombie extends Living implements Hostile {
 		damage.getDamageLevel(Difficulty.HARD).setAmount(6);
 		damage.getDamageLevel(Difficulty.HARDCORE).setAmount(damage.getDamageLevel(Difficulty.HARD).getAmount());
 
-
-
 		final NearbyComponentsSensor humanSensor = new NearbyComponentsSensor(getAI(), Human.class);
 		humanSensor.setSensorRadius(10);
 		getAI().registerSensor(humanSensor);

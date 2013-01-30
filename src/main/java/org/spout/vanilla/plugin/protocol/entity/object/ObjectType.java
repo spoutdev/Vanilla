@@ -28,13 +28,13 @@ package org.spout.vanilla.plugin.protocol.entity.object;
 
 import java.util.HashMap;
 
+import org.spout.vanilla.plugin.component.substance.object.EnderCrystal;
 import org.spout.vanilla.plugin.component.substance.object.EyeOfEnder;
 import org.spout.vanilla.plugin.component.substance.object.FallingBlock;
 import org.spout.vanilla.plugin.component.substance.object.FallingDragonEgg;
 import org.spout.vanilla.plugin.component.substance.object.FireworksRocket;
 import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.component.substance.object.ItemFrame;
-import org.spout.vanilla.plugin.component.substance.object.EnderCrystal;
 import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
 import org.spout.vanilla.plugin.component.substance.object.Tnt;
 import org.spout.vanilla.plugin.component.substance.object.WitherSkull;

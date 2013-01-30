@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.plugin.enchantment;
 
-import static org.spout.vanilla.api.enchantment.EnchantmentRegistrar.register;
-
 import org.spout.vanilla.plugin.enchantment.armor.AquaAffinity;
 import org.spout.vanilla.plugin.enchantment.armor.BlastProtection;
 import org.spout.vanilla.plugin.enchantment.armor.FeatherFalling;
@@ -50,6 +48,8 @@ import org.spout.vanilla.plugin.enchantment.tool.sword.Knockback;
 import org.spout.vanilla.plugin.enchantment.tool.sword.Looting;
 import org.spout.vanilla.plugin.enchantment.tool.sword.Sharpness;
 import org.spout.vanilla.plugin.enchantment.tool.sword.Smite;
+
+import static org.spout.vanilla.api.enchantment.EnchantmentRegistrar.register;
 
 public class VanillaEnchantments {
 	// ==Armor Enchantments==

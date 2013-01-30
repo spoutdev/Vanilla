@@ -28,6 +28,7 @@ package org.spout.vanilla.plugin.material.item.misc;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;

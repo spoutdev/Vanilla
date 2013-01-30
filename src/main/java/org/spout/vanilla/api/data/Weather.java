@@ -34,7 +34,7 @@ public enum Weather {
 	 * Minecraft has a period of 10 minutes (base, guaranteed) + a random amount out of 140 minutes which there will be no weather.
 	 * Rain/Snow has a period of 3 minutes (base, guaranteed) + a random amount out of 10 minutes which there will be rain/snow.
 	 * Thunder has a period of 10 minutes (base, guaranteed) + a random amount out of 10 minutes which there will be a thunderstorm.
-	 **/
+	 */
 	CLEAR(false, 600000, 8400000),
 	RAIN(true, 180000, 600000),
 	THUNDERSTORM(true, 600000, 600000);

@@ -33,7 +33,6 @@ import org.spout.api.math.TrigMath;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.VectorMath;
 
-
 public class MathHelper {
 	public static float getBlockDensity() {
 		// TODO: Not sure how this is supposed to be calculated

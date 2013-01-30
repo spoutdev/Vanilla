@@ -55,6 +55,7 @@ import org.spout.api.util.flag.FlagBundle;
 
 import org.spout.vanilla.api.data.MoveReaction;
 import org.spout.vanilla.api.data.RedstonePowerMode;
+import org.spout.vanilla.api.data.effect.SoundEffect;
 import org.spout.vanilla.api.event.block.BlockActionEvent;
 import org.spout.vanilla.api.material.VanillaMaterial;
 import org.spout.vanilla.api.material.block.redstone.IndirectRedstoneSource;
@@ -68,7 +69,6 @@ import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 import org.spout.vanilla.plugin.data.drops.flag.DropFlags;
 import org.spout.vanilla.plugin.data.drops.flag.PlayerFlags;
 import org.spout.vanilla.plugin.data.drops.type.block.BlockDrops;
-import org.spout.vanilla.api.data.effect.SoundEffect;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;

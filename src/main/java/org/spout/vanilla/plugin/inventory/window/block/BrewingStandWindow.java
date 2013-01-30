@@ -46,7 +46,7 @@ public class BrewingStandWindow extends Window {
 
 	public BrewingStandWindow(Player owner, BrewingStandInventory inventory, String title) {
 		super(owner, WindowType.BREWING_STAND, title, 4);
-		addInventoryConverter(new InventoryConverter(inventory, new int[] {0, 1, 2, 3}, new Vector2[0]));
+		addInventoryConverter(new InventoryConverter(inventory, new int[]{0, 1, 2, 3}, new Vector2[0]));
 	}
 
 	public BrewingStandWindow(Player owner, BrewingStand brewingStand, BrewingStandInventory inventory) {

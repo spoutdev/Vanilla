@@ -37,6 +37,7 @@ import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.component.inventory.EntityInventoryComponent;
+
 import org.spout.vanilla.plugin.protocol.entity.BasicEntityProtocol;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.spawn.EntityMobMessage;

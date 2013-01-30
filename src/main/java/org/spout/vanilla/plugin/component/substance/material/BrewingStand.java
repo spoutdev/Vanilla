@@ -48,7 +48,6 @@ import org.spout.vanilla.plugin.material.item.potion.Potion;
  */
 public class BrewingStand extends BrewingStandComponent {
 	private final float BREW_TIME_INCREMENT = 20f;
-
 	private ItemStack input;
 
 	@Override

@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.plugin.material.block.solid;
 
-
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;

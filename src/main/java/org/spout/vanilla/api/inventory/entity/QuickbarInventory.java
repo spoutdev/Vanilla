@@ -29,6 +29,7 @@ package org.spout.vanilla.api.inventory.entity;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.api.inventory.Slot;
 
 /**

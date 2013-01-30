@@ -28,13 +28,13 @@ package org.spout.vanilla.plugin.inventory.entity;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.api.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 
 public class EntityArmorInventory extends ArmorInventory {
-
 	@Override
 	public void updateSlot(int i, ItemStack item, Entity entity) {
 		final int equip;

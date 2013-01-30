@@ -31,8 +31,8 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.api.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.api.inventory.entity.ArmorInventory;
-import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 import org.spout.vanilla.api.inventory.entity.PlayerCraftingInventory;
+import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
 import org.spout.vanilla.plugin.data.VanillaData;
 
@@ -40,7 +40,6 @@ import org.spout.vanilla.plugin.data.VanillaData;
  * Represents a players inventory
  */
 public class PlayerInventory extends PlayerInventoryComponent {
-
 	@Override
 	public QuickbarInventory getQuickbar() {
 		return getData().get(VanillaData.QUICKBAR_INVENTORY);

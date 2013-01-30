@@ -31,8 +31,6 @@ import java.util.Collection;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.api.data.effect.Effect;
-
 /**
  * Plays all set Effects when playing
  */

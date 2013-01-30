@@ -68,20 +68,19 @@ public abstract class ExplosionModel {
 
 	/**
 	 * Calculated with the following:
-	 *
+	 * <p/>
 	 * o: Origin of explosion
 	 * p: Location of entity for impact to be calculated for
 	 * s: The damage radius
 	 * di: distance from origin
 	 * de: density of non-air blocks from the position to the origin
 	 * i: impact of explosion
-	 *
+	 * <p/>
 	 * 1. Calculate impact with <code>i = (1 - di / size) * de</code>
 	 * 2. Return <code>(int) ((i * i + i) / 2 * 8 * size + 1)</code>
-	 *
+	 * <p/>
 	 * Example:
 	 * M
-	 *
 	 * @param o
 	 * @param p
 	 * @param s
@@ -89,7 +88,7 @@ public abstract class ExplosionModel {
 	 */
 	private int getDamage(Point o, Point p, double s) {
 		double di = p.distance(o);
-	 	double de = MathHelper.getBlockDensity(); // TODO: Implement
+		double de = MathHelper.getBlockDensity(); // TODO: Implement
 		double i = (1 - di / s) * de;
 		return (int) ((i * i + i) / 2 * 8 * s + 1);
 	}
@@ -112,7 +111,6 @@ public abstract class ExplosionModel {
 					break;
 				}
 			}
-
 		}
 
 		// perform block changes

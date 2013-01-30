@@ -247,7 +247,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 		@Override
 		public void run() {
 			final Random rand = GenericMath.getRandom();
-			
+
 			boolean found = false;
 			int start = rand.nextInt(blocks.size());
 			for (int i = start; i < start + blocks.size(); i++) {

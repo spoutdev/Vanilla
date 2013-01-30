@@ -43,7 +43,6 @@ import org.spout.vanilla.plugin.util.PlayerUtil;
  * Component that represents a Note Block in the world.
  */
 public class NoteBlock extends VanillaBlockComponent {
-
 	/**
 	 * Retrieve the instrument played by this note block.
 	 * @return The instrument played.

@@ -110,7 +110,8 @@ public class EnchantmentTable extends EnchantmentTableComponent {
 
 		// Find bookshelves within the radius
 		int bookshelves = 0;
-		mainLoop: for (int xx = x - 2; xx <= x + 2; xx++) {
+		mainLoop:
+		for (int xx = x - 2; xx <= x + 2; xx++) {
 			for (int yy = y; yy <= y + 1; yy++) {
 				for (int zz = z - 2; zz <= z + 2; zz++) {
 					if (VanillaMaterials.BOOKSHELF.equals(block.getWorld().getBlock(xx, yy, zz).getMaterial())) {

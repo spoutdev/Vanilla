@@ -35,6 +35,7 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.api.component.Neutral;
 import org.spout.vanilla.api.data.Difficulty;
 import org.spout.vanilla.api.material.VanillaMaterial;
+
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DamageComponent;

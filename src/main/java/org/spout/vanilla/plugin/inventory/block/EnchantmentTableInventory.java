@@ -40,7 +40,6 @@ public class EnchantmentTableInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
 	public static final int SIZE = 1;
 	public static final int SLOT = 0;
-
 	private final int[] levels = new int[3];
 
 	public EnchantmentTableInventory() {

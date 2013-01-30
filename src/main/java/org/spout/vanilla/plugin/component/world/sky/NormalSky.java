@@ -30,10 +30,10 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 
 import org.spout.vanilla.api.data.Weather;
-
-import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.api.event.world.TimeUpdateEvent;
 import org.spout.vanilla.api.event.world.WeatherChangeEvent;
+
+import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.util.MathHelper;
 import org.spout.vanilla.plugin.world.WeatherSimulator;
 

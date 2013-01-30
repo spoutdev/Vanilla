@@ -27,12 +27,12 @@
 package org.spout.vanilla.plugin.component;
 
 import java.util.Arrays;
-import java.util.List;
 
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.event.entity.EntityMetaChangeEvent;
+
 import org.spout.vanilla.plugin.data.VanillaData;
 
 public class VanillaComponent extends EntityComponent {

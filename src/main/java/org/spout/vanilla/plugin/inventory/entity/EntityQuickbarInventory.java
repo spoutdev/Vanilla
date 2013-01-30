@@ -27,12 +27,11 @@
 package org.spout.vanilla.plugin.inventory.entity;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.Player;
-import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.vanilla.api.event.entity.EntityEquipmentEvent;
 
+import org.spout.vanilla.api.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
+
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 
 /**

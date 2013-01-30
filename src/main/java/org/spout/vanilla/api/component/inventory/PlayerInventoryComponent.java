@@ -28,15 +28,14 @@ package org.spout.vanilla.api.component.inventory;
 
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 import org.spout.vanilla.api.inventory.entity.PlayerCraftingInventory;
-import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
 /**
  * Represents the inventory that an Entity might have.
  */
 public abstract class PlayerInventoryComponent extends EntityInventoryComponent {
-
 	/**
 	 * Returns the entity's armor inventory
 	 * @return armor

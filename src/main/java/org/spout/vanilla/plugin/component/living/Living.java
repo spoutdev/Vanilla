@@ -26,9 +26,6 @@
  */
 package org.spout.vanilla.plugin.component.living;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.spout.api.ai.goap.GoapAIComponent;
 import org.spout.api.component.impl.NavigationComponent;
 import org.spout.api.component.impl.PhysicsComponent;
@@ -36,7 +33,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.data.effect.StatusEffect;
-import org.spout.vanilla.api.event.entity.EntityMetaChangeEvent;
 
 import org.spout.vanilla.plugin.ai.examiner.VanillaBlockExaminer;
 import org.spout.vanilla.plugin.component.VanillaComponent;

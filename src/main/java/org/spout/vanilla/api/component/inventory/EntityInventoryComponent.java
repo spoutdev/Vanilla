@@ -29,6 +29,7 @@ package org.spout.vanilla.api.component.inventory;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
@@ -36,7 +37,6 @@ import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
  * Represents the inventory that an Entity might have.
  */
 public abstract class EntityInventoryComponent extends EntityComponent {
-
 	/**
 	 * Returns the entity's armor inventory
 	 * @return armor

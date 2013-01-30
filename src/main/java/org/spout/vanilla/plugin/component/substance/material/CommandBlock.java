@@ -31,7 +31,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.Server;
@@ -39,7 +38,6 @@ import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.channel.ChatChannel;
 import org.spout.api.chat.channel.PermissionChatChannel;
-import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.command.Command;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.RootCommand;
@@ -54,6 +52,7 @@ import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.api.component.substance.material.VanillaBlockComponent;
 import org.spout.vanilla.api.data.GameMode;
+
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.LevelComponent;
 import org.spout.vanilla.plugin.data.VanillaData;

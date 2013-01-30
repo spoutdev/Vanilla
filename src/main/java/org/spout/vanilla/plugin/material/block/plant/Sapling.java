@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.plugin.material.block.plant;
 
-
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -55,7 +54,7 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 	public static final Sapling BIRCH = new Sapling("Birch Sapling", 2, DEFAULT);
 	public static final Sapling JUNGLE = new Sapling("Jungle Sapling", 3, DEFAULT);
 	public final float BURN_TIME = 5;
-	private static final short dataMask = 0x3;	
+	private static final short dataMask = 0x3;
 
 	private Sapling(String name) {
 		super(dataMask, name, 6, null);

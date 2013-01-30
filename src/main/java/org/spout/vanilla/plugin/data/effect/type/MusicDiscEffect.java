@@ -30,7 +30,6 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.api.data.Music;
-
 import org.spout.vanilla.api.data.effect.GeneralEffect;
 
 public class MusicDiscEffect extends GeneralEffect {

@@ -34,11 +34,13 @@ import java.util.Set;
 
 import org.spout.api.Spout;
 import org.spout.api.collision.CollisionStrategy;
+import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -506,5 +508,10 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 			top = top.getRelative(BlockFace.BOTTOM, LoadOption.NO_LOAD);
 		}
 		return rval;
+	}
+
+	@Override
+	public boolean canEquip(Entity entity, Inventory inventory, int slot) {
+		return false;
 	}
 }

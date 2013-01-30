@@ -26,8 +26,11 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.leather;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.math.Vector2;
 
+import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 import org.spout.vanilla.api.material.item.armor.Helmet;
 
 public class LeatherCap extends LeatherArmor implements Helmet {
@@ -36,5 +39,10 @@ public class LeatherCap extends LeatherArmor implements Helmet {
 	public LeatherCap(String name, int id, short durability) {
 		super(name, id, durability, POSITION);
 		this.setBaseProtection(1);
+	}
+
+	@Override
+	public boolean canEquip(Entity entity, Inventory inventory, int slot) {
+		return inventory instanceof ArmorInventory && slot == ArmorInventory.HELMET_SLOT;
 	}
 }

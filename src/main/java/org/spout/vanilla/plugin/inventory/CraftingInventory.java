@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.spout.api.Spout;
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
@@ -187,7 +188,7 @@ public class CraftingInventory extends Inventory {
 	}
 
 	@Override
-	public boolean canSet(int i, ItemStack item) {
-		return super.canSet(i, item) && i != outputSlot;
+	public boolean canSet(int i, ItemStack item, Entity entity) {
+		return super.canSet(i, item, entity) && i != outputSlot;
 	}
 }

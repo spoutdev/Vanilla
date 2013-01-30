@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.inventory.block;
 
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
@@ -102,7 +103,7 @@ public class FurnaceInventory extends Inventory {
 	}
 
 	@Override
-	public boolean canSet(int i, ItemStack item) {
-		return super.canSet(i, item) && i != OUTPUT_SLOT;
+	public boolean canSet(int i, ItemStack item, Entity entity) {
+		return super.canSet(i, item, entity) && i != OUTPUT_SLOT;
 	}
 }

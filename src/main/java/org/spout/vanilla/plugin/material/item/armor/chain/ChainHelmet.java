@@ -26,11 +26,19 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.chain;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.inventory.Inventory;
+import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 import org.spout.vanilla.api.material.item.armor.Helmet;
 
 public class ChainHelmet extends ChainArmor implements Helmet {
 	public ChainHelmet(String name, int id, short durability) {
 		super(name, id, durability, null);
 		this.setBaseProtection(2);
+	}
+
+	@Override
+	public boolean canEquip(Entity entity, Inventory inventory, int slot) {
+		return inventory instanceof ArmorInventory && slot == ArmorInventory.HELMET_SLOT;
 	}
 }

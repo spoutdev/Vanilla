@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.api.material;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.inventory.Inventory;
 import org.spout.api.material.source.MaterialSource;
 import org.spout.api.math.Vector2;
 import org.spout.api.render.RenderMaterial;
@@ -58,6 +60,15 @@ public interface VanillaMaterial extends MaterialSource {
 	 * @return minecraft data
 	 */
 	public short getMinecraftData(short data);
+
+	/**
+	 * Gets if the Material can be equipped in the given {@link org.spout.vanilla.api.inventory.entity.ArmorInventory} slot by the Entity.
+	 * @param entity that is attemptign to equip the item.
+	 * @param inventory the item is being equipped into.
+	 * @param slot the item is being equipped in.
+	 * @return true if the material can be equipped in the slot
+	 */
+	public boolean canEquip(Entity entity, Inventory inventory, int slot);
 
 	public RenderMaterial getRenderMaterial();
 

@@ -26,11 +26,19 @@
  */
 package org.spout.vanilla.plugin.material.item.armor.chain;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.inventory.Inventory;
+import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 import org.spout.vanilla.api.material.item.armor.Leggings;
 
 public class ChainLeggings extends ChainArmor implements Leggings {
 	public ChainLeggings(String name, int id, short durability) {
 		super(name, id, durability, null);
 		this.setBaseProtection(4);
+	}
+
+	@Override
+	public boolean canEquip(Entity entity, Inventory inventory, int slot) {
+		return inventory instanceof ArmorInventory && slot == ArmorInventory.LEGGINGS_SLOT;
 	}
 }

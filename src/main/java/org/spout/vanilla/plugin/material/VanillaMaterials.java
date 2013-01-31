@@ -237,6 +237,7 @@ import org.spout.vanilla.plugin.material.item.misc.SpawnEgg;
 import org.spout.vanilla.plugin.material.item.misc.Stick;
 import org.spout.vanilla.plugin.material.item.misc.StringItem;
 import org.spout.vanilla.plugin.material.item.misc.Sugar;
+import org.spout.vanilla.plugin.material.item.potion.GlassBottle;
 import org.spout.vanilla.plugin.material.item.potion.Potion;
 import org.spout.vanilla.plugin.material.item.tool.CarrotOnAStick;
 import org.spout.vanilla.plugin.material.item.tool.FishingRod;
@@ -574,7 +575,7 @@ public final class VanillaMaterials {
 	public static final GhastTear GHAST_TEAR = new GhastTear("Ghast Tear", 370);
 	public static final VanillaItemMaterial GOLD_NUGGET = new VanillaItemMaterial("Gold Nugget", 371, null);
 	public static final NetherWartItem NETHER_WART = new NetherWartItem("Nether Wart", 372);
-	public static final VanillaItemMaterial GLASS_BOTTLE = new VanillaItemMaterial("Glass Bottle", 374, null);
+	public static final GlassBottle GLASS_BOTTLE = new GlassBottle("Glass Bottle", 374);
 	public static final VanillaItemMaterial NETHER_STAR = new VanillaItemMaterial("Nether Star", 399, null);
 	public static final Food SPIDER_EYE = new Food("Spider Eye", 375, null);
 	public static final VanillaItemMaterial FERMENTED_SPIDER_EYE = new VanillaItemMaterial("Fermented Spider Eye", 376, null);

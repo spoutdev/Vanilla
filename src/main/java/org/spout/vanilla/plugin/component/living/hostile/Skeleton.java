@@ -30,7 +30,7 @@ import java.util.Random;
 
 import com.bulletphysics.collision.shapes.BoxShape;
 
-import org.spout.api.component.impl.PhysicsComponent;
+import org.spout.api.component.impl.SceneComponent;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.api.component.Hostile;
@@ -51,16 +51,15 @@ public class Skeleton extends Living implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SkeletonEntityProtocol());
-		PhysicsComponent physics = getOwner().add(PhysicsComponent.class);
+		SceneComponent scene = getOwner().getScene();
 		DropComponent dropComponent = getOwner().add(DropComponent.class);
 		getOwner().add(VanillaEntityInventory.class);
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.ARROW, random.nextInt(2)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.BONE, random.nextInt(2)));
-		physics.setMass(5f);
-		physics.setCollisionShape(new BoxShape(1F, 2F, 1F));
-		physics.setFriction(1f);
-		physics.setRestitution(0f);
+		scene.setShape(5f, new BoxShape(1F, 2F, 1F));
+		scene.setFriction(1f);
+		scene.setRestitution(0f);
 		if (getAttachedCount() == 1) {
 			getOwner().add(HealthComponent.class).setSpawnHealth(20);
 		}

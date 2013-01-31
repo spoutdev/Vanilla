@@ -31,7 +31,7 @@ import org.spout.api.command.Command;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandExecutor;
 import org.spout.api.command.CommandSource;
-import org.spout.api.component.impl.HitBlockComponent;
+import org.spout.api.component.impl.InteractComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
 import org.spout.api.geo.cuboid.Block;
@@ -65,7 +65,7 @@ public class InputCommandExecutor implements CommandExecutor {
 				holder.openWindow(holder.getDefaultWindow());
 			}
 		} else if (name.equalsIgnoreCase("+break_block")) {
-			HitBlockComponent hit = ((Player) source).get(HitBlockComponent.class);
+			InteractComponent hit = ((Player) source).get(InteractComponent.class);
 			if (hit != null) {
 				Block hitting = hit.getTargetBlock();
 				if (hitting != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
@@ -74,7 +74,7 @@ public class InputCommandExecutor implements CommandExecutor {
 				}
 			}
 		} else if (name.equalsIgnoreCase("+select_block")) {
-			HitBlockComponent hit = ((Player) source).get(HitBlockComponent.class);
+			InteractComponent hit = ((Player) source).get(InteractComponent.class);
 			if (hit != null) {
 				Block hitting = hit.getTargetBlock(true);
 				if (hitting != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
@@ -83,7 +83,7 @@ public class InputCommandExecutor implements CommandExecutor {
 				}
 			}
 		} else if (name.equalsIgnoreCase("+place_block")) {
-			HitBlockComponent hit = ((Player) source).get(HitBlockComponent.class);
+			InteractComponent hit = ((Player) source).get(InteractComponent.class);
 			if (hit != null) {
 				Block hitting = hit.getTargetBlock();
 				if (hitting != null && selection != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {

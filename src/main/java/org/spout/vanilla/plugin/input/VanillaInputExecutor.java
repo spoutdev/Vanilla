@@ -27,7 +27,7 @@
 package org.spout.vanilla.plugin.input;
 
 import org.spout.api.component.impl.CameraComponent;
-import org.spout.api.component.impl.TransformComponent;
+import org.spout.api.component.impl.SceneComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.entity.state.PlayerInputState;
 import org.spout.api.geo.discrete.Transform;
@@ -47,8 +47,8 @@ public class VanillaInputExecutor implements InputExecutor {
 	@Override
 	public void execute(float dt) {
 		PlayerInputState inputState = player.input();
-		TransformComponent tc = player.getTransform();
-		Transform ts = tc.getTransformLive();
+		SceneComponent sc = player.getScene();
+		Transform ts = sc.getTransform(); //TODO: Maybe need getTransformLive?
 
 		Vector3 offset = Vector3.ZERO;
 		if (inputState.getForward()) {
@@ -69,6 +69,8 @@ public class VanillaInputExecutor implements InputExecutor {
 		if (inputState.getCrouch()) {
 			offset = offset.subtract(ts.upVector().multiply(camera.getSpeed()).multiply(dt));
 		}
-		tc.translateAndSetRotation(offset, QuaternionMath.rotation(inputState.pitch(), inputState.yaw(), ts.getRotation().getRoll()));
+
+		ts.translateAndSetRotation(offset, QuaternionMath.rotation(inputState.pitch(), inputState.yaw(), ts.getRotation().getRoll()));
+		sc.setTransform(ts);
 	}
 }

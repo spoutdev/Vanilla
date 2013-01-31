@@ -369,7 +369,7 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 		public boolean accept(Player p, boolean ignoreDistance) {
 			Point center = new Point(block.getWorld(), x, y, z);
 			int lvl = p.add(LevelComponent.class).getLevel();
-			int distance = (int) p.getTransform().getPosition().distance(center);
+			int distance = (int) p.getScene().getPosition().distance(center);
 			return ((distance >= minRadius && distance <= maxRadius) || ignoreDistance)
 					&& (mode == null || mode == p.add(Human.class).getGameMode())
 					&& lvl >= minExpLevel && (maxExpLevel == 0 || lvl <= maxExpLevel);

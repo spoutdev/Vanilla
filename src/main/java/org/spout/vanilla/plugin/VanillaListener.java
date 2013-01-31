@@ -29,7 +29,7 @@ package org.spout.vanilla.plugin;
 import org.spout.api.Client;
 import org.spout.api.Spout;
 import org.spout.api.component.impl.CameraComponent;
-import org.spout.api.component.impl.HitBlockComponent;
+import org.spout.api.component.impl.InteractComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
@@ -122,7 +122,7 @@ public class VanillaListener implements Listener {
 		player.add(CameraComponent.class).setSpeed(10f);
 		player.add(HealthComponent.class);
 		player.add(HungerComponent.class);
-		player.add(HitBlockComponent.class).setRange(5f);
+		player.add(InteractComponent.class).setRange(5f);
 
 		((Client) Spout.getEngine()).getInputManager().addInputExecutors(new VanillaInputExecutor(player));
 	}

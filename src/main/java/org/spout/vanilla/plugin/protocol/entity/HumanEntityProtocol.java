@@ -54,11 +54,11 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		Human human = entity.add(Human.class);
 
 		int id = entity.getId();
-		int x = ChannelBufferUtils.protocolifyPosition(rm.convertX(entity.getTransform().getPosition().getX()));
-		int y = ChannelBufferUtils.protocolifyPosition(rm.convertY(entity.getTransform().getPosition().getY()));
-		int z = ChannelBufferUtils.protocolifyPosition(rm.convertZ(entity.getTransform().getPosition().getZ()));
-		int r = ChannelBufferUtils.protocolifyYaw(entity.getTransform().getYaw());
-		int p = ChannelBufferUtils.protocolifyPitch(entity.getTransform().getPitch());
+		int x = ChannelBufferUtils.protocolifyPosition(rm.convertX(entity.getScene().getPosition().getX()));
+		int y = ChannelBufferUtils.protocolifyPosition(rm.convertY(entity.getScene().getPosition().getY()));
+		int z = ChannelBufferUtils.protocolifyPosition(rm.convertZ(entity.getScene().getPosition().getZ()));
+		int r = ChannelBufferUtils.protocolifyYaw(entity.getScene().getRotation().getYaw());
+		int p = ChannelBufferUtils.protocolifyPitch(entity.getScene().getRotation().getPitch());
 
 		int item = 0;
 		Slot hand = PlayerUtil.getHeldSlot(entity);

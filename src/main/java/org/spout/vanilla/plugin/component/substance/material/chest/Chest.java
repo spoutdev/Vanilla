@@ -94,7 +94,7 @@ public class Chest extends AbstractChest implements Container {
 		if (!event.isCancelled()) {
 			// Finally open the window
 			player.get(WindowHolder.class).openWindow(new ChestWindow(player, this));
-			SoundEffects.RANDOM_CHESTOPEN.playGlobal(player.getTransform().getPosition());
+			SoundEffects.RANDOM_CHESTOPEN.playGlobal(player.getScene().getPosition());
 			super.open(player);
 			return true;
 		}

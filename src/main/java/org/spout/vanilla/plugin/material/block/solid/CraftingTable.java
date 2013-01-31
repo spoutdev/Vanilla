@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.block.component;
+package org.spout.vanilla.plugin.material.block.solid;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -38,8 +38,8 @@ import org.spout.vanilla.plugin.inventory.window.block.CraftingTableWindow;
 import org.spout.vanilla.plugin.material.block.Solid;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 
-public class CraftingTableBlock extends Solid {
-	public CraftingTableBlock(String name, int id) {
+public class CraftingTable extends Solid {
+	public CraftingTable(String name, int id) {
 		super(name, id, VanillaMaterialModels.CRAFTING_TABLE);
 		this.setHardness(4.2F);
 	}

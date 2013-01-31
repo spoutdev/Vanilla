@@ -26,17 +26,42 @@
  */
 package org.spout.vanilla.plugin.inventory.window.block;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector2;
 
+import org.spout.vanilla.api.event.inventory.AnvilCloseEvent;
 import org.spout.vanilla.plugin.inventory.block.AnvilInventory;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 import org.spout.vanilla.plugin.inventory.window.Window;
 import org.spout.vanilla.plugin.inventory.window.WindowType;
 
 public class AnvilWindow extends Window {
-	public AnvilWindow(Player owner, AnvilInventory inventory) {
+	private final Block block;
+	private final AnvilInventory inventory;
+
+	public AnvilWindow(Player owner, AnvilInventory inventory, Block block) {
 		super(owner, WindowType.ANVIL, "Anvil", 3);
+		this.inventory = inventory;
+		this.block = block;
 		addInventoryConverter(new InventoryConverter(inventory, "0-3", new Vector2[0]));
+	}
+
+	@Override
+	public void close() {
+		AnvilCloseEvent event = Spout.getEventManager().callEvent(new AnvilCloseEvent(block, inventory, getPlayer()));
+		if (event.isCancelled()) {
+			return;
+		}
+
+		for (ItemStack item : inventory) {
+			if (item != null) {
+				getHuman().dropItem(item);
+			}
+		}
+		inventory.clear();
+		super.close();
 	}
 }

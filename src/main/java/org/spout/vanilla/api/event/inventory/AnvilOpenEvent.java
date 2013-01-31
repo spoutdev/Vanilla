@@ -30,18 +30,19 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryOpenEvent;
+import org.spout.api.geo.cuboid.Block;
 
-import org.spout.vanilla.api.component.substance.material.AnvilComponent;
+import org.spout.vanilla.plugin.inventory.block.AnvilInventory;
 
 /**
  * Event which is fired when an Anvil is opened.
  */
 public class AnvilOpenEvent extends InventoryOpenEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private final AnvilComponent anvil;
+	private final Block anvil;
 
-	public AnvilOpenEvent(AnvilComponent anvil, Entity entity) {
-		super(anvil.getInventory(), entity);
+	public AnvilOpenEvent(Block anvil, AnvilInventory inventory, Entity entity) {
+		super(inventory, entity);
 		this.anvil = anvil;
 	}
 
@@ -49,7 +50,7 @@ public class AnvilOpenEvent extends InventoryOpenEvent implements Cancellable {
 	 * Returns the anvil which caused this event.
 	 * @return anvil
 	 */
-	public AnvilComponent getAnvil() {
+	public Block getAnvil() {
 		return anvil;
 	}
 

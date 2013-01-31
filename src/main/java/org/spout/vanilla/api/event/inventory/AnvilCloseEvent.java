@@ -30,18 +30,18 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryCloseEvent;
-
-import org.spout.vanilla.api.component.substance.material.AnvilComponent;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.Inventory;
 
 /**
  * Event which is fired when an Anvil is closed.
  */
 public class AnvilCloseEvent extends InventoryCloseEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private final AnvilComponent anvil;
+	private final Block anvil;
 
-	public AnvilCloseEvent(AnvilComponent anvil, Entity entity) {
-		super(anvil.getInventory(), entity);
+	public AnvilCloseEvent(Block anvil, Inventory inventory, Entity entity) {
+		super(inventory, entity);
 		this.anvil = anvil;
 	}
 
@@ -49,7 +49,7 @@ public class AnvilCloseEvent extends InventoryCloseEvent implements Cancellable 
 	 * Returns the anvil which caused this event.
 	 * @return anvil
 	 */
-	public AnvilComponent getAnvil() {
+	public Block getAnvil() {
 		return anvil;
 	}
 

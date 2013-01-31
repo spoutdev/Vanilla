@@ -24,25 +24,32 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.block.component;
+package org.spout.vanilla.plugin.material.block.solid;
 
+import org.spout.api.Spout;
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
+import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.api.event.inventory.AnvilOpenEvent;
 import org.spout.vanilla.api.material.block.Directional;
-
-import org.spout.vanilla.plugin.component.substance.material.Anvil;
+import org.spout.vanilla.plugin.component.inventory.WindowHolder;
+import org.spout.vanilla.plugin.inventory.block.AnvilInventory;
+import org.spout.vanilla.plugin.inventory.window.block.AnvilWindow;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.Solid;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 
-public class AnvilBlock extends ComponentMaterial implements Directional {
-	public AnvilBlock(String name, int id) {
-		super(name, id, Anvil.class, VanillaMaterialModels.ANVIL);
+public class Anvil extends Solid implements Directional {
+	public Anvil(String name, int id) {
+		super(name, id, VanillaMaterialModels.ANVIL);
 		this.setHardness(5.0F).setResistance(6000.0F);
 	}
 
@@ -70,6 +77,20 @@ public class AnvilBlock extends ComponentMaterial implements Directional {
 	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
 		this.setFacing(block, PlayerUtil.getFacing(cause));
+	}
+
+	@Override
+	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
+		if (!(entity instanceof Player)) {
+			return;
+		}
+
+		Player player = (Player) entity;
+		AnvilInventory inventory = new AnvilInventory();
+		AnvilOpenEvent event = Spout.getEventManager().callEvent(new AnvilOpenEvent(block, inventory, player));
+		if (!event.isCancelled()) {
+			player.get(WindowHolder.class).openWindow(new AnvilWindow(player, new AnvilInventory(), block));
+		}
 	}
 
 	/**

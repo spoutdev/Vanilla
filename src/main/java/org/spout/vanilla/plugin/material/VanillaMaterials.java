@@ -46,11 +46,11 @@ import org.spout.vanilla.api.material.item.FoodEffects;
 import org.spout.vanilla.plugin.component.substance.object.vehicle.minecart.Minecart;
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;
-import org.spout.vanilla.plugin.material.block.component.AnvilBlock;
+import org.spout.vanilla.plugin.material.block.solid.Anvil;
 import org.spout.vanilla.plugin.material.block.component.BeaconBlock;
 import org.spout.vanilla.plugin.material.block.component.BrewingStandBlock;
 import org.spout.vanilla.plugin.material.block.component.CommandBlockBlock;
-import org.spout.vanilla.plugin.material.block.component.CraftingTableBlock;
+import org.spout.vanilla.plugin.material.block.solid.CraftingTable;
 import org.spout.vanilla.plugin.material.block.component.DispenserBlock;
 import org.spout.vanilla.plugin.material.block.component.EnchantmentTableBlock;
 import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
@@ -343,7 +343,7 @@ public final class VanillaMaterials {
 	public static final ChestBlock CHEST = new ChestBlock("Chest", 54);
 	public static final EnderChestBlock ENDER_CHEST_BLOCK = new EnderChestBlock("Ender Chest", 130);
 	public static final RedstoneWire REDSTONE_WIRE = new RedstoneWire("Redstone Wire", 55);
-	public static final CraftingTableBlock CRAFTING_TABLE = new CraftingTableBlock("Crafting Table", 58);
+	public static final CraftingTable CRAFTING_TABLE = new CraftingTable("Crafting Table", 58);
 	public static final WheatCrop WHEAT_CROP = new WheatCrop("Wheat Crop", 59);
 	public static final CarrotCrop CARROT_CROP = new CarrotCrop("Carrot Crop", 141);
 	public static final PotatoCrop POTATO_CROP = new PotatoCrop("Potato Crop", 142);
@@ -410,7 +410,7 @@ public final class VanillaMaterials {
 	public static final WoodButton WOOD_BUTTON = new WoodButton("Wood Button", 143);
 	public static final FlowerPotBlock FLOWER_POT_BLOCK = FlowerPotBlock.EMPTY;
 	public static final SkullBlock SKELETON_SKULL_BLOCK = SkullBlock.SKELETON_SKULL;
-	public static final AnvilBlock ANVIL = new AnvilBlock("Anvil", 145); // Anvil actually has 3 states, handled by data.
+	public static final Anvil ANVIL = new Anvil("Anvil", 145); // Anvil actually has 3 states, handled by data.
 	/*
 	 * Items
 	 */

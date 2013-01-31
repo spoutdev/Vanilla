@@ -36,12 +36,13 @@ import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
 
+import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 
 public class VanillaExpBar extends ExpBarWidget {
 	@Override
-	public void init(Widget exp, float scale, float start_X) {
-		super.init(exp, scale, start_X);
+	public void init(Widget exp, HUDComponent hud) {
+		super.init(exp, hud);
 		final LabelComponent lvlTxt = widget.add(LabelComponent.class);
 		widget.setGeometry(new Rectangle(-0.02f, -0.79f, 0, 0));
 		lvlTxt.setFont(VanillaRenderMaterials.FONT);
@@ -63,11 +64,18 @@ public class VanillaExpBar extends ExpBarWidget {
 			expBarRect.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
 			expBarRect.setColor(Color.WHITE);
 			expRect.add(expBarRect);
+			
+			final RenderPart rect = widget.get(RenderPartsHolderComponent.class).get(1);
+			rect.setSprite(new Rectangle(START_X, -0.82f, 1.81f * SCALE * 0f, 0.04f));
+			rect.setSource(new Rectangle(0, 69f / 256f, 182f / 256f * 0f, 5f / 256f));
 		}
+		
+		attach();
 	}
 
 	@Override
-	public void update(float percent) {
+	public void update() {
+		float percent = hud.getExpPercent();
 		final RenderPart rect = widget.get(RenderPartsHolderComponent.class).get(1);
 		rect.setSprite(new Rectangle(START_X, -0.82f, 1.81f * SCALE * percent, 0.04f));
 		rect.setSource(new Rectangle(0, 69f / 256f, 182f / 256f * percent, 5f / 256f));
@@ -76,11 +84,6 @@ public class VanillaExpBar extends ExpBarWidget {
 
 	@Override
 	public void animate() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public void update(int amount) {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 

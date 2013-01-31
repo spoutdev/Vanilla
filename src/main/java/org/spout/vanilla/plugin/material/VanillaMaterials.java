@@ -131,6 +131,7 @@ import org.spout.vanilla.plugin.material.block.pressureplate.WoodenPressurePlate
 import org.spout.vanilla.plugin.material.block.rail.DetectorRail;
 import org.spout.vanilla.plugin.material.block.rail.PoweredRail;
 import org.spout.vanilla.plugin.material.block.rail.Rail;
+import org.spout.vanilla.plugin.material.block.redstone.RedstoneDust;
 import org.spout.vanilla.plugin.material.block.redstone.RedstoneRepeater;
 import org.spout.vanilla.plugin.material.block.redstone.RedstoneTorch;
 import org.spout.vanilla.plugin.material.block.redstone.RedstoneWire;
@@ -487,7 +488,7 @@ public final class VanillaMaterials {
 	// == Others ==
 	public static final Coal COAL = Coal.COAL;
 	public static final Clay CLAY = new Clay("Clay", 337);
-	public static final BlockItem REDSTONE_DUST = new BlockItem("Redstone", 331, VanillaMaterials.REDSTONE_WIRE, null);
+	public static final RedstoneDust REDSTONE_DUST = new RedstoneDust("Redstone", 331, VanillaMaterials.REDSTONE_WIRE, null);
 	public static final VanillaItemMaterial DIAMOND = new VanillaItemMaterial("Diamond", 264, null);
 	public static final VanillaItemMaterial EMERALD = new VanillaItemMaterial("Emerald", 388, null);
 	public static final VanillaItemMaterial IRON_INGOT = new VanillaItemMaterial("Iron Ingot", 265, null);

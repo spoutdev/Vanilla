@@ -26,9 +26,6 @@
  */
 package org.spout.vanilla.plugin.component.misc;
 
-import java.awt.Color;
-import java.util.List;
-
 import org.spout.api.Client;
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -36,11 +33,6 @@ import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.gui.Widget;
-import org.spout.api.gui.component.RenderPartsHolderComponent;
-import org.spout.api.gui.render.RenderPart;
-import org.spout.api.math.GenericMath;
-import org.spout.api.math.Rectangle;
 
 import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.api.event.cause.HealCause;
@@ -51,7 +43,6 @@ import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 import org.spout.vanilla.plugin.material.block.liquid.Water;
 import org.spout.vanilla.plugin.material.item.Food;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityStatusMessage;
@@ -68,10 +59,9 @@ public class HungerComponent extends EntityComponent {
 	private static final float TIMER_START = 4;
 	private float timer = TIMER_START;
 	private Point lastPos;
-	// Client
-	private final Widget widget = new Widget();
-	private static final float SCALE = 0.75f; // TODO: Apply directly from engine
-	private int hungerTicks;
+	
+	private float fx;
+	private float bx;
 
 	@Override
 	public void onAttached() {
@@ -79,34 +69,6 @@ public class HungerComponent extends EntityComponent {
 			throw new IllegalStateException("HungerComponent may only be attached to players.");
 		}
 		human = getOwner().add(Human.class);
-		if (Spout.getEngine() instanceof Client) {
-			// Hunger bar
-			final RenderPartsHolderComponent hungerRect = widget.add(RenderPartsHolderComponent.class);
-			float x = 0.09f * SCALE;
-			float dx = 0.06f * SCALE;
-			for (int i = 0; i < 10; i++) {
-				final RenderPart hunger = new RenderPart();
-				hunger.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
-				hunger.setColor(Color.WHITE);
-				hunger.setSprite(new Rectangle(x, -0.77f, 0.075f * SCALE, 0.07f));
-				hunger.setSource(new Rectangle(52f / 256f, 27f / 256f, 9f / 256f, 9f / 256f));
-				hungerRect.add(hunger);
-				x += dx;
-			}
-
-			x = 0.09f * SCALE;
-			for (int i = 0; i < 10; i++) {
-				final RenderPart hungerBg = new RenderPart();
-				hungerBg.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
-				hungerBg.setColor(Color.WHITE);
-				hungerBg.setSprite(new Rectangle(x, -0.77f, 0.075f * SCALE, 0.07f));
-				hungerBg.setSource(new Rectangle(16f / 256f, 27f / 256f, 9f / 256f, 9f / 256f));
-				hungerRect.add(hungerBg);
-				x += dx;
-			}
-
-			getOwner().add(HUDComponent.class).attachWidget(widget);
-		}
 	}
 
 	@Override
@@ -236,48 +198,10 @@ public class HungerComponent extends EntityComponent {
 				if (!(getOwner() instanceof Player)) {
 					return;
 				}
-				float x;
-				float y;
-				float dx = 0.06f * SCALE;
 
-				// Animate hunger bar
-				float saturation = getFoodSaturation();
-				if (saturation <= 0) {
-					List<RenderPart> parts = widget.get(RenderPartsHolderComponent.class).getRenderParts();
-					if (hungerTicks == 98) {
-						x = 0.09f * SCALE;
-						y = -0.77f;
-						for (int i = 0; i < 10; i++) {
+				HUDComponent HUD = getOwner().get(HUDComponent.class);
+				HUD.getHungerMeter().animate();
 
-							RenderPart part = parts.get(i);
-							RenderPart partBg = parts.get(i + 10);
-
-							int rand = GenericMath.getRandom().nextInt(3);
-							if (rand == 0) {
-								y = -0.765f; // Twitch up
-							} else if (rand == 1) {
-								y = -0.775f; // Twitch down
-							}
-
-							part.setSprite(new Rectangle(x, y, 0.075f * SCALE, 0.07f));
-							partBg.setSprite(new Rectangle(x, y, 0.075f * SCALE, 0.07f));
-							x += dx;
-						}
-						hungerTicks++;
-						widget.update();
-					} else if (hungerTicks == 100) {
-						// Reset hunger bar to normal
-						x = 0.09f * SCALE;
-						for (int i = 0; i < 10; i++) {
-							parts.get(i).setSprite(new Rectangle(x, -0.77f, 0.075f * SCALE, 0.07f));
-							parts.get(i + 10).setSprite(new Rectangle(x, -0.77f, 0.075f * SCALE, 0.07f));
-							x += dx;
-						}
-						hungerTicks = 0;
-					} else {
-						hungerTicks++;
-					}
-				}
 				break;
 		}
 	}
@@ -290,6 +214,15 @@ public class HungerComponent extends EntityComponent {
 		return getData().get(VanillaData.HUNGER);
 	}
 
+	// Need to confirm what fx/bx equals to rename methods propertly
+	public float getFx() {
+		return fx;
+	}
+	
+	public float getBx() {
+		return bx;
+	}
+	
 	/**
 	 * Sets the hunger level of the entity.
 	 * The maximum is 20.
@@ -299,42 +232,11 @@ public class HungerComponent extends EntityComponent {
 		getData().put(VanillaData.HUNGER, Math.min(hunger, 20));
 		reload();
 		if (Spout.getEngine() instanceof Client) {
-			render(52, 16);
+			//render(52, 16);
+			fx = 52;
+			bx = 16;
+			getOwner().get(HUDComponent.class).getHungerMeter().update();
 		}
-	}
-
-	private void render(float fx, float bx) {
-		int hunger = getHunger();
-		RenderPartsHolderComponent hungerRect = widget.get(RenderPartsHolderComponent.class);
-		if (hunger == 0) {
-
-			for (int i = 0; i < 10; i++) {
-				hungerRect.get(i).setSource(new Rectangle(142f / 256f, 27f / 256f, 9f / 256f, 9f / 256f)); // Foreground
-			}
-
-			for (int i = 10; i < 20; i++) {
-				hungerRect.get(i).setSource(new Rectangle(bx / 256f, 27f / 256f, 9f / 256f, 9f / 256f)); // Background
-			}
-		} else {
-
-			for (int i = 9; i >= 0; i--) {
-				if (hunger == 0) {
-					fx = 142f; // Empty
-				} else if (hunger == 1) {
-					fx += 9f; // Half
-					hunger = 0;
-				} else {
-					hunger -= 2; // Full
-				}
-				hungerRect.get(i).setSource(new Rectangle(fx / 256f, 27f / 256f, 9f / 256f, 9f / 256f));
-			}
-
-			for (int i = 19; i >= 10; i--) {
-				hungerRect.get(i).setSource(new Rectangle(bx / 256f, 27f / 256f, 9f / 256f, 9f / 256f));
-			}
-		}
-
-		widget.update();
 	}
 
 	/**
@@ -387,10 +289,13 @@ public class HungerComponent extends EntityComponent {
 		getData().put(VanillaData.POISONED, poisoned);
 		if (Spout.getEngine() instanceof Client) {
 			if (poisoned) {
-				render(88, 133);
+				fx = 88;
+				bx = 133;
 			} else {
-				render(52, 16);
+				fx = 52;
+				bx = 16;	
 			}
+			getOwner().get(HUDComponent.class).getHungerMeter().update();
 		}
 	}
 

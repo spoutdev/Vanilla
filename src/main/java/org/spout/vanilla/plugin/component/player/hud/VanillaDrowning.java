@@ -33,12 +33,14 @@ import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
 
+import org.spout.vanilla.plugin.component.misc.DrowningComponent;
+import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 
 public class VanillaDrowning extends DrowningWidget {
 	@Override
-	public void init(Widget drowning, float scale, float start_X) {
-		super.init(drowning, scale, start_X);
+	public void init(Widget drowning, HUDComponent hud) {
+		super.init(drowning, hud);
 
 		final RenderPartsHolderComponent bubblesRect = widget.add(RenderPartsHolderComponent.class);
 		float x = 0.09f * SCALE;
@@ -52,14 +54,13 @@ public class VanillaDrowning extends DrowningWidget {
 			bubblesRect.add(bubble);
 			x += dx;
 		}
+		
+		attach();
 	}
 
 	@Override
-	public void update(int amount) {
-	}
-
-	@Override
-	public void update(float nbBubExact) {
+	public void update() {
+		float nbBubExact = hud.getOwner().get(DrowningComponent.class).getNbBubExact();
 		final int nbBub = (int) nbBubExact;
 		int bubId = 0;
 		for (RenderPart bub : widget.get(RenderPartsHolderComponent.class).getRenderParts()) {

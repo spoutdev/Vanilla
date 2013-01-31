@@ -33,18 +33,21 @@ import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
 
+import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
 
 public class VanillaHotBar extends HotBarWidget {
 	@Override
-	public void init(Widget hotbar, float scale, float start_X) {
-		super.init(hotbar, scale, start_X);
+	public void init(Widget hotbar, HUDComponent hud) {
+		super.init(hotbar, hud);
 		// Setup the hotbar
 		final RenderPartsHolderComponent hotbarRect = widget.add(RenderPartsHolderComponent.class);
 		final RenderPart hotbarBgRect = new RenderPart();
 		hotbarBgRect.setRenderMaterial(VanillaRenderMaterials.HOTBAR_MATERIAL);
 		hotbarBgRect.setColor(Color.WHITE);
-		hotbarBgRect.setSprite(new Rectangle(start_X, -1f, 1.42f * scale, 0.17f));
+		hotbarBgRect.setSprite(new Rectangle(START_X, -1f, 1.42f * SCALE, 0.17f));
 		hotbarBgRect.setSource(new Rectangle(0, 0, 0.71f, 0.085f));
 		hotbarRect.add(hotbarBgRect, 1);
 
@@ -52,7 +55,10 @@ public class VanillaHotBar extends HotBarWidget {
 		hotbarSlotRect.setRenderMaterial(VanillaRenderMaterials.HOTBAR_MATERIAL);
 		hotbarSlotRect.setColor(Color.WHITE);
 		hotbarSlotRect.setSource(new Rectangle(0, 22f / 256f, 30f / 256f, 24f / 256f));
+		hotbarSlotRect.setSprite(new Rectangle(-0.72f * SCALE + (0 * .1175f), -1.005f, 0.24f * SCALE, 0.24f * SCALE));
 		hotbarRect.add(hotbarSlotRect, 0);
+		
+		attach();
 	}
 
 	/**
@@ -60,7 +66,13 @@ public class VanillaHotBar extends HotBarWidget {
 	 * @param slot Index of the slot to set
 	 */
 	@Override
-	public void update(int slot) {
+	public void update() {
+		QuickbarInventory quickbar = hud.getOwner().get(PlayerInventory.class).getQuickbar();
+		if (quickbar == null) {
+			return;
+		}
+		int slot = quickbar.getSelectedSlot().getIndex();
+		
 		if (slot < 0 || slot > 8) {
 			throw new IllegalArgumentException("Slot must be between 0 and 8");
 		}
@@ -70,10 +82,6 @@ public class VanillaHotBar extends HotBarWidget {
 		widget.update();
 	}
 
-	@Override
-	public void update(float percent) {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
 
 	@Override
 	public void animate() {

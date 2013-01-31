@@ -102,16 +102,22 @@ public class DrowningComponent extends EntityComponent {
 				if (secsBubbles == maxSecsBubbles) {
 					hideBubbles();
 				} else {
-					final float nbBubExact = secsBubbles / maxSecsBubbles * 10f;
 					HUDComponent hud = getOwner().get(HUDComponent.class);
 					if (hud != null) {
-						hud.setDrowning(nbBubExact);
+						hud.getAirMeter().update();
 					}
 				}
 				break;
 		}
 	}
 
+	public float getNbBubExact() {
+		final float maxSecsBubbles = VanillaData.AIR_SECS.getDefaultValue();
+		final float secsBubbles = getData().get(VanillaData.AIR_SECS);
+		
+		return (float) secsBubbles / maxSecsBubbles * 10f;
+	}
+	
 	public void hideBubbles() {
 		HUDComponent hud = getOwner().get(HUDComponent.class);
 		if (hud != null) {

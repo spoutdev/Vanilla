@@ -26,45 +26,5 @@
  */
 package org.spout.vanilla.plugin.component.player.hud;
 
-import java.awt.Color;
-
-import org.spout.api.gui.Widget;
-import org.spout.api.gui.component.TexturedRectComponent;
-import org.spout.api.math.Rectangle;
-
-import org.spout.vanilla.plugin.component.player.HUDComponent;
-import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
-
-public class VanillaCrosshair extends CrosshairWidget {
-	@Override
-	public void init(Widget crosshair, HUDComponent hud) {
-		super.init(crosshair, hud);
-		final TexturedRectComponent crosshairRect = widget.add(TexturedRectComponent.class);
-		crosshairRect.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
-		crosshairRect.setColor(Color.WHITE);
-		crosshairRect.setSprite(new Rectangle(-0.0625f * SCALE, -0.0625f, 0.125f * SCALE, 0.125f));
-		crosshairRect.setSource(new Rectangle(0f / 256f, 0f / 256f, 16f / 256f, 16f / 256f));
-		
-		attach();
-	}
-
-	@Override
-	public void animate() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public void show() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public void hide() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
-
-	@Override
-	public void update() {
-		throw new UnsupportedOperationException("Not supported yet.");
-	}
+public abstract class HungerWidget extends GUIWidget {
 }

@@ -115,8 +115,8 @@ public class InputCommandExecutor implements CommandExecutor {
 				newSlot = Integer.parseInt(name.substring(name.indexOf('_') + 1)) - 1;
 			}
 
-			hud.setHotbarSlot(newSlot);
 			quickbar.setSelectedSlot(newSlot);
+			hud.getHotBar().update();
 		}
 	}
 }

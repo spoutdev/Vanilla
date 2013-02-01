@@ -38,7 +38,7 @@ import org.spout.vanilla.api.inventory.Container;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
-import org.spout.vanilla.plugin.inventory.CraftingInventory;
+import org.spout.vanilla.api.inventory.CraftingInventory;
 import org.spout.vanilla.plugin.inventory.window.Window;
 import org.spout.vanilla.plugin.protocol.entity.creature.VillagerEntityProtocol;
 

@@ -42,7 +42,7 @@ import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.api.data.PaintingType;
 import org.spout.vanilla.api.data.Weather;
 import org.spout.vanilla.api.data.WorldType;
-import org.spout.vanilla.api.inventory.entity.PlayerCraftingInventory;
+import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
 
 import org.spout.vanilla.plugin.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.plugin.inventory.block.ChestInventory;

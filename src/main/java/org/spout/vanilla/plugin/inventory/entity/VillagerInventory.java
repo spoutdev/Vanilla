@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.inventory.entity;
 
-import org.spout.vanilla.plugin.inventory.CraftingInventory;
+import org.spout.vanilla.api.inventory.CraftingInventory;
 
 /**
  * Represents the inventory of a

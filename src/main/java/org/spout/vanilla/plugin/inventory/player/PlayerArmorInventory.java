@@ -24,30 +24,38 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.item.misc;
+package org.spout.vanilla.plugin.inventory.player;
 
-import org.spout.vanilla.plugin.material.block.component.SkullBlock;
-import org.spout.vanilla.plugin.material.item.BlockItem;
+import org.spout.vanilla.plugin.inventory.entity.EntityArmorInventory;
+import org.spout.vanilla.plugin.material.block.solid.Pumpkin;
 
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
+
+import org.spout.vanilla.api.material.item.armor.Boots;
+import org.spout.vanilla.api.material.item.armor.Chestplate;
 import org.spout.vanilla.api.material.item.armor.Helmet;
+import org.spout.vanilla.api.material.item.armor.Leggings;
 
-public class Skull extends BlockItem implements Helmet {
-	public static final Skull SKELETON_SKULL = new Skull("Skeleton Skull");
-	public static final Skull WITHER_SKELETON_SKULL = new Skull("Wither Skeleton Skull", 1, SkullBlock.WITHER_SKELETON_SKULL);
-	public static final Skull ZOMBIE_HEAD = new Skull("Zombie Head", 2, SkullBlock.ZOMBIE_HEAD);
-	public static final Skull HEAD = new Skull("Head", 3, SkullBlock.HEAD);
-	public static final Skull CREEPER_HEAD = new Skull("Creeper Head", 4, SkullBlock.CREEPER_HEAD);
-
-	private Skull(String name) {
-		super((short) 0x7, name, 397, SkullBlock.SKELETON_SKULL, null);
-	}
-
-	private Skull(String name, int data, SkullBlock placed) {
-		super(name, 397, data, SKELETON_SKULL, placed, null);
-	}
+public class PlayerArmorInventory extends EntityArmorInventory {
 
 	@Override
-	public Skull getParentMaterial() {
-		return (Skull) super.getParentMaterial();
+	public boolean canSet(int slot, ItemStack item) {
+		if (item != null) {
+			Material material = item.getMaterial();
+			switch (slot) {
+				case BOOT_SLOT:
+					return material instanceof Boots;
+				case LEGGINGS_SLOT:
+					return material instanceof Leggings;
+				case CHEST_PLATE_SLOT:
+					return material instanceof Chestplate;
+				case HELMET_SLOT:
+					return material instanceof Helmet || (material instanceof Pumpkin && !((Pumpkin) material).isLantern());
+				default:
+					return false;
+			}
+		}
+		return true;
 	}
 }

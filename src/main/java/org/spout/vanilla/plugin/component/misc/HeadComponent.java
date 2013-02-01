@@ -93,7 +93,7 @@ public class HeadComponent extends EntityComponent {
 	 * Sets the current height of the head above the main position
 	 * @param height
 	 */
-	public void setHeight(int height) {
+	public void setHeight(float height) {
 		getData().put(VanillaData.HEAD_HEIGHT, height);
 	}
 
@@ -101,7 +101,7 @@ public class HeadComponent extends EntityComponent {
 	 * Gets the current height of the head above the main position
 	 * @return Head height
 	 */
-	public int getHeight() {
+	public float getHeight() {
 		return getData().get(VanillaData.HEAD_HEIGHT);
 	}
 

@@ -139,7 +139,7 @@ public class VanillaData {
 	//Item-specific
 	public static final DefaultedKey<Number> UNCOLLECTABLE_TICKS = new DefaultedKeyImpl<Number>("uncollectable_ticks", (long) 0);
 	//Head-specific
-	public static final DefaultedKey<Float> HEAD_HEIGHT = new DefaultedKeyImpl<Float>("head_height", 1.62f);
+	public static final DefaultedKey<Float> HEAD_HEIGHT = new DefaultedKeyImpl<Float>("head_height_v2", 1.62f);
 	public static final DefaultedKey<Quaternion> HEAD_ROTATION = new DefaultedKeyImpl<Quaternion>("head_rotation", Quaternion.IDENTITY);
 	//XPOrb-specific
 	public static final DefaultedKey<Long> TIME_DISPERSED = new DefaultedKeyImpl<Long>("time_dispersed", Long.valueOf(0));

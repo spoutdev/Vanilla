@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.inventory;
+package org.spout.vanilla.api.inventory;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,12 +40,12 @@ import org.spout.api.inventory.shape.Grid;
 import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.material.Material;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.api.component.inventory.PlayerInventoryComponent;
 
 /**
  * Represents an inventory that contains a crafting matrix.
  */
-public class CraftingInventory extends Inventory {
+public abstract class CraftingInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
 	private final Grid grid;
 	private final int outputSlot, offset;
@@ -93,23 +93,13 @@ public class CraftingInventory extends Inventory {
 		return offset;
 	}
 
-	public boolean onShiftClick(int slot, PlayerInventory toInventory) {
-		ItemStack result = get(getOutputSlot());
-		Material resultMat = (result != null ? result.getMaterial() : null);
-		if (slot == outputSlot + offset && result != null) {
-			while (result != null && !result.isEmpty()) {
-				toInventory.add(result);
-				set(getOutputSlot(), null);
-				result = get(getOutputSlot());
-				//Changed recipes, stop!
-				if (result != null && !result.getMaterial().isMaterial(resultMat)) {
-					break;
-				}
-			}
-			return true;
-		}
-		return false;
-	}
+	/**
+	 * Handles a shift click on the given inventory slot
+	 * @param slot
+	 * @param toInventory
+	 * @return
+	 */
+	public abstract boolean onShiftClick(int slot, PlayerInventoryComponent toInventory);
 
 	@Override
 	public void onSlotChanged(int slot, ItemStack item, ItemStack previous) {

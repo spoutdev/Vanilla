@@ -24,11 +24,13 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.api.inventory.entity;
+package org.spout.vanilla.plugin.inventory.player;
 
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
 
-import org.spout.vanilla.plugin.inventory.CraftingInventory;
+import org.spout.vanilla.api.component.inventory.PlayerInventoryComponent;
+import org.spout.vanilla.api.inventory.CraftingInventory;
 
 /**
  * Represents the crafting inventory in the player's inventory.
@@ -76,5 +78,24 @@ public class PlayerCraftingInventory extends CraftingInventory {
 
 	public ItemStack getOutput() {
 		return get(OUTPUT);
+	}
+
+	@Override
+	public boolean onShiftClick(int slot, PlayerInventoryComponent toInventory) {
+		ItemStack result = get(getOutputSlot());
+		Material resultMat = (result != null ? result.getMaterial() : null);
+		if (slot == getOutputSlot() + getOffset() && result != null) {
+			while (result != null && !result.isEmpty()) {
+				toInventory.add(result);
+				set(getOutputSlot(), null);
+				result = get(getOutputSlot());
+				//Changed recipes, stop!
+				if (result != null && !result.getMaterial().isMaterial(resultMat)) {
+					break;
+				}
+			}
+			return true;
+		}
+		return false;
 	}
 }

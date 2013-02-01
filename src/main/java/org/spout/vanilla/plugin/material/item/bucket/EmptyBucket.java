@@ -36,7 +36,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
-import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.api.inventory.Slot;
@@ -55,35 +54,35 @@ public class EmptyBucket extends VanillaItemMaterial {
 	}
 
 	@Override
-	public void onInteract(Entity entity, Block block, Action action, BlockFace clickedFace) {
+	public void onInteract(Entity entity, Action action) {
 		if (action == Action.RIGHT_CLICK) {
 			HeadComponent head = entity.get(HeadComponent.class);
 			if (head == null) {
 				return;
 			}
-			BlockMaterial mat;
+			Block block;
 			BlockIterator iterator = head.getBlockView();
 			while (true) {
 				if (!iterator.hasNext()) {
 					return;
 				}
-				Block next = iterator.next();
-				mat = next.getMaterial();
-				if (mat instanceof Water && VanillaMaterials.WATER.isSource(block)) {
-					block = next;
+				block = iterator.next();
+				if (block.getMaterial().isPlacementObstacle()) {
+					return;
+				}
+				if (block.getMaterial() instanceof Water && VanillaMaterials.WATER.isSource(block)) {
 					break;
 				}
-				if (mat instanceof Lava && VanillaMaterials.LAVA.isSource(block)) {
-					block = next;
+				if (block.getMaterial() instanceof Lava && VanillaMaterials.LAVA.isSource(block)) {
 					break;
 				}
 			}
 
 			// Validate the clicked material to see if it can be picked up
 			final Material filled; // material to fill the bucket with
-			if (mat instanceof Water && VanillaMaterials.WATER.isSource(block)) {
+			if (block.getMaterial() instanceof Water && VanillaMaterials.WATER.isSource(block)) {
 				filled = VanillaMaterials.WATER_BUCKET;
-			} else if (mat instanceof Lava && VanillaMaterials.LAVA.isSource(block)) {
+			} else if (block.getMaterial() instanceof Lava && VanillaMaterials.LAVA.isSource(block)) {
 				filled = VanillaMaterials.LAVA_BUCKET;
 			} else {
 				return;

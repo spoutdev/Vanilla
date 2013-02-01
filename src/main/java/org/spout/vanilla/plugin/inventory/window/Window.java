@@ -65,7 +65,7 @@ import org.spout.vanilla.plugin.event.window.WindowCloseEvent;
 import org.spout.vanilla.plugin.event.window.WindowItemsEvent;
 import org.spout.vanilla.plugin.event.window.WindowOpenEvent;
 import org.spout.vanilla.plugin.event.window.WindowPropertyEvent;
-import org.spout.vanilla.plugin.inventory.CraftingInventory;
+import org.spout.vanilla.api.inventory.CraftingInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.plugin.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;

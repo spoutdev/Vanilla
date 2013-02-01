@@ -31,7 +31,7 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.api.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.api.inventory.entity.ArmorInventory;
-import org.spout.vanilla.api.inventory.entity.PlayerCraftingInventory;
+import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
 import org.spout.vanilla.plugin.data.VanillaData;

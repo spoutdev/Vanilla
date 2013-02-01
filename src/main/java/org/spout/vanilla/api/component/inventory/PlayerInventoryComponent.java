@@ -30,7 +30,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.api.inventory.entity.ArmorInventory;
-import org.spout.vanilla.api.inventory.entity.PlayerCraftingInventory;
+import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
 
 /**
  * Represents the inventory that an Entity might have.

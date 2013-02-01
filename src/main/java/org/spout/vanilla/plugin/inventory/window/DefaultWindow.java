@@ -38,7 +38,7 @@ import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.api.inventory.entity.ArmorInventory;
-import org.spout.vanilla.api.inventory.entity.PlayerCraftingInventory;
+import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
 
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.inventory.entity.EntityArmorInventory;

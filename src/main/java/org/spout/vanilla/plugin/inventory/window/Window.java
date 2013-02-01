@@ -40,6 +40,7 @@ import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Player;
+import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.gui.Screen;
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.LabelComponent;
@@ -52,6 +53,7 @@ import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.event.ProtocolEvent;
 
+import org.spout.vanilla.api.event.inventory.InventoryCanSetEvent;
 import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 import org.spout.vanilla.api.inventory.window.prop.WindowProperty;
@@ -299,7 +301,9 @@ public abstract class Window implements InventoryViewer {
 					clicked = cursorItem.clone();
 					clicked.setAmount(1);
 					// Can it be set?
-					if (inventory.canSet(slot, clicked)) {
+					boolean canSet = inventory.canSet(slot, clicked);
+					InventoryCanSetEvent event = Spout.getEventManager().callEvent(new InventoryCanSetEvent(inventory, new PlayerCause(owner), slot, clicked, canSet));
+					if (!event.isCancelled()) {
 						inventory.set(slot, clicked);
 						// remove from cursor
 						cursorItem.setAmount(cursorItem.getAmount() - 1);
@@ -337,14 +341,19 @@ public abstract class Window implements InventoryViewer {
 							}
 						}
 					}
-				} else if (inventory.canSet(slot, cursorItem)) {
-					debug("[Window] Materials don't match. Swapping stacks.");
-					// materials don't match
-					// swap stacks
-					ItemStack newCursor = clicked.clone();
-					inventory.set(slot, cursorItem);
-					cursorItem = newCursor;
-					return true;
+				} else {
+					// Can it be set?
+					boolean canSet = inventory.canSet(slot, cursorItem);
+					InventoryCanSetEvent event = Spout.getEventManager().callEvent(new InventoryCanSetEvent(inventory, new PlayerCause(owner), slot, clicked, canSet));
+					if (!event.isCancelled()) {
+						debug("[Window] Materials don't match. Swapping stacks.");
+						// materials don't match
+						// swap stacks
+						ItemStack newCursor = clicked.clone();
+						inventory.set(slot, cursorItem);
+						cursorItem = newCursor;
+						return true;
+					}
 				}
 			} else {
 				// slot is not empty with an empty cursor
@@ -369,7 +378,9 @@ public abstract class Window implements InventoryViewer {
 					// put whole stack down
 					clicked = cursorItem.clone();
 					// Can it be set?
-					if (inventory.canSet(slot, clicked)) {
+					boolean canSet = inventory.canSet(slot, clicked);
+					InventoryCanSetEvent event = Spout.getEventManager().callEvent(new InventoryCanSetEvent(inventory, new PlayerCause(owner), slot, clicked, canSet));
+					if (!event.isCancelled()) {
 						inventory.set(slot, clicked);
 						cursorItem = null;
 						return true;
@@ -398,13 +409,18 @@ public abstract class Window implements InventoryViewer {
 						}
 					}
 					return true;
-				} else if (inventory.canSet(slot, cursorItem)) {
-					debug("[Window] Materials don't match. Swapping stacks.");
-					// materials don't match
-					// swap stacks
-					ItemStack newCursor = clicked.clone();
-					inventory.set(slot, cursorItem);
-					cursorItem = newCursor;
+				} else {
+					// Can it be set?
+					boolean canSet = inventory.canSet(slot, clicked);
+					InventoryCanSetEvent event = Spout.getEventManager().callEvent(new InventoryCanSetEvent(inventory, new PlayerCause(owner), slot, clicked, canSet));
+					if (!event.isCancelled()) {
+						debug("[Window] Materials don't match. Swapping stacks.");
+						// materials don't match
+						// swap stacks
+						ItemStack newCursor = clicked.clone();
+						inventory.set(slot, cursorItem);
+						cursorItem = newCursor;
+					}
 				}
 			} else {
 				// slot is not empty; cursor is empty.

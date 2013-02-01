@@ -69,10 +69,10 @@ public class DispenserWindow extends Window {
 					Grid grid = inv.grid(3);
 					final int height = grid.getHeight();
 					final int length = grid.getLength();
-					for (int y = height - 1; y >= 0; y--) {
-						int x1 = length * y;
-						int x2 = x1 + length - 1;
-						inv.add(x1, x2, stack);
+					for (int row = height - 1; row >= 0; row--) {
+						int startSlot = length * row;
+						int endSlot = startSlot + length - 1;
+						inv.add(startSlot, endSlot, stack);
 						from.set(slot, stack);
 						if (stack.isEmpty()) {
 							return true;
@@ -94,12 +94,10 @@ public class DispenserWindow extends Window {
 
 			// To main inventory (reversed)
 			final Inventory main = inventory.getMain();
-			final int height = 3;
-			final int length = 9;
-			for (int y = 0; y < height; y++) {
-				int x1 = length * y;
-				int x2 = x1 + length - 1;
-				main.add(x2, x1, stack);
+			for (int row = 0; row < PlayerMainInventory.HEIGHT; row++) {
+				int startSlot = PlayerMainInventory.LENGTH * row;
+				int endSlot = startSlot + PlayerMainInventory.LENGTH - 1;
+				main.add(endSlot, startSlot, stack);
 				from.set(slot, stack);
 				if (stack.isEmpty()) {
 					return true;

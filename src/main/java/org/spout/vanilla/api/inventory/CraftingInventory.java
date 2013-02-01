@@ -97,9 +97,25 @@ public abstract class CraftingInventory extends Inventory {
 	 * Handles a shift click on the given inventory slot
 	 * @param slot
 	 * @param toInventory
-	 * @return
+	 * @return true if the action completed successfully.
 	 */
-	public abstract boolean onShiftClick(int slot, PlayerInventoryComponent toInventory);
+	public boolean onShiftClick(int slot, PlayerInventoryComponent toInventory) {
+		ItemStack result = get(getOutputSlot());
+		Material resultMat = (result != null ? result.getMaterial() : null);
+		if (slot == getOutputSlot() + getOffset() && result != null) {
+			while (result != null && !result.isEmpty()) {
+				toInventory.add(result);
+				set(getOutputSlot(), null);
+				result = get(getOutputSlot());
+				//Changed recipes, stop!
+				if (result != null && !result.getMaterial().isMaterial(resultMat)) {
+					break;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
 
 	@Override
 	public void onSlotChanged(int slot, ItemStack item, ItemStack previous) {

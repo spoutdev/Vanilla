@@ -26,19 +26,47 @@
  */
 package org.spout.vanilla.plugin.protocol.handler.player;
 
+import gnu.trove.iterator.TDoubleIterator;
+import gnu.trove.iterator.TLongIterator;
+import gnu.trove.list.TDoubleList;
+import gnu.trove.list.TLongList;
+import gnu.trove.list.linked.TDoubleLinkedList;
+import gnu.trove.list.linked.TLongLinkedList;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 
+import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.player.PingComponent;
-import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
-import org.spout.vanilla.plugin.configuration.WorldConfigurationNode;
+import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerPositionMessage;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+
 public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMessage> {
+	long last = System.nanoTime();
+	//Player movement is 0.21 apart
+	//Player running is 0.27 apart
+	//Player swimming is 0.14-0.11 apart
+	//Player flying is 0.5+
+	private final Cache<Session, PositionTracker> cache = CacheBuilder.newBuilder().expireAfterAccess(1, TimeUnit.SECONDS).build();
+	private final Callable<PositionTracker> loader = new Callable<PositionTracker>() {
+		public PositionTracker call() {
+			return new PositionTracker();
+		}
+	};
+
 	@Override
 	public void handleServer(Session session, PlayerPositionMessage message) {
 		if (!session.hasPlayer()) {
@@ -61,19 +89,157 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 			}
 		} else {
 			if (!position.equals(newPosition)) {
-				//TODO: better movement checking
+				holder.getScene().setPosition(newPosition);
+				final Human human = holder.get(Human.class);
+
+				//Don't use client onGround value, calculate ourselves
+				//MC Client is on ground if y value is whole number, or half step (e.g 55.0, or 65.5)
+				float yDiff = Math.abs(newPosition.getBlockY() - newPosition.getY());
+				if (yDiff > 0.4) {
+					yDiff -= 0.5F; //half blocks
+				}
+				final BlockMaterial ground = newPosition.getBlock().translate(BlockFace.BOTTOM).getMaterial();
+				final boolean onGround = yDiff < 0.01 && (ground instanceof VanillaBlockMaterial && ((VanillaBlockMaterial)ground).isSolid());
+				final boolean wasOnGround = human.isOnGround();
+				human.setOnGround(onGround);
+				
+				//Update falling state
+				final boolean wasFalling = human.isFalling();
+				if (!onGround && newPosition.getY() < position.getY()) {
+					human.setFalling(true);
+				} else {
+					human.setFalling(false);
+				}
+				
+				//Hover tracking
+				if (wasOnGround && !onGround) {
+					human.getData().put("position_on_ground", position);
+					human.getData().put("time_in_air", holder.getWorld().getAge());
+				} else if (!wasOnGround && !onGround) {
+					//Changed directions
+					if (wasFalling && !human.isFalling()) {
+						human.getData().remove("time_in_air");
+					}
+					float time = human.getData().get("time_in_air", holder.getWorld().getAge());
+					//hovering or still rising
+					if (time + 1000 < holder.getWorld().getAge() && newPosition.getY() - position.getY() >= 0) {
+						if (!human.canFly()) {
+							holder.sendMessage("Hover cheating?");
+						}
+					}
+				} else if (!wasOnGround && onGround) {
+					human.getData().remove("position_on_ground");
+					human.getData().remove("time_in_air");
+				}
+
+				//Movement tracking
+				PositionTracker tracker = null;
+				try {
+					tracker = cache.get(session, loader);
+				} catch (ExecutionException e) {
+					throw new RuntimeException(e);
+				}
+				tracker.updateTracker(human, position, newPosition, message.getCreationTimestamp());
+
+				//Debug
+				/*
 				final double dx = position.getX() - newPosition.getX();
 				final double dy = position.getY() - newPosition.getY();
 				final double dz = position.getZ() - newPosition.getZ();
-				final double dist = dx * dx + dy * dy + dz * dz;
-				WorldConfigurationNode node = VanillaConfiguration.WORLDS.get(holder.getWorld());
-				//if (dist < 100 || node.ALLOW_FLIGHT.getBoolean()) {
-					holder.getScene().setPosition(newPosition);
-					holder.get(Human.class).setOnGround(message.isOnGround());
-				//} else {
-					//holder.kick("Moved too quickly");
-				//}
+				System.out.println("Player position packet statistics:");
+				System.out.println("    Prev position: (" + position.getX() + ", " + position.getY() + ", " + position.getZ() + ")");
+				System.out.println("    New position: (" + newPosition.getX() + ", " + newPosition.getY() + ", " + newPosition.getZ() + ")");
+				System.out.println("    DX: " + dx);
+				System.out.println("    DY: " + dy);
+				System.out.println("    DZ: " + dz);
+				System.out.println("    Distance: " + position.distance(newPosition));
+				System.out.println("    Time since last packet: " + (System.nanoTime() - last) / 1E6D + " ms");
+				System.out.println("    Avg Distance: " + tracker.getAvgMovement());
+				System.out.println("    Avg packet delta: " + (tracker.getAvgMessageTime() / 1E6D) + " ms");
+				System.out.println("    Message On Ground: " + message.isOnGround());
+				System.out.println("    Calculated On Ground: " + onGround);
+				System.out.println("    Sneaking: " + human.isSneaking());
+				System.out.println("    Sprinting: " + human.isSprinting());
+				last = System.nanoTime();
+				*/
+
+				if (tracker.isFilled()) {
+					//Flying?
+					if (tracker.getAvgMovement() > 0.3D && !human.canFly()) {
+						holder.sendMessage("Flying? (Speed: " + tracker.getAvgMovement());
+					}
+					//Flooding packets?
+					if (tracker.getAvgMessageTime() < 40F * 1E6F) {
+						holder.sendMessage("Speed Hacking?");
+					}
+				}
 			}
 		}
+	}
+	
+	private static class PositionTracker {
+		 private final TLongList messageTimeDeltas = new TLongLinkedList();
+		 private final TDoubleList distanceDeltas = new TDoubleLinkedList();
+		 private long lastMessage = System.nanoTime();
+
+		 public boolean isFilled() {
+			 return messageTimeDeltas.size() >= 50;
+		 }
+
+		 public void updateTracker(Human human, Point prevPoint, Point newPoint, long created) {
+			 //Don't track updates if the last one was > 500 ms ago
+			 if (created - lastMessage > 500 * 1E6) {
+				 lastMessage = created;
+			 } else {
+				 messageTimeDeltas.add(created - lastMessage);
+				 distanceDeltas.add(normalizeDistance(human, prevPoint, newPoint));
+				 if (messageTimeDeltas.size() > 50) {
+					 messageTimeDeltas.removeAt(0);
+				 }
+				 if (distanceDeltas.size() > 50) {
+					 distanceDeltas.removeAt(0);
+				 }
+				 lastMessage = created;
+			 }
+		 }
+
+		 private double normalizeDistance(Human human, Point prevPoint, Point newPoint) {
+			 final float dx = prevPoint.getX() - newPoint.getX();
+			 final float dz = prevPoint.getZ() - newPoint.getZ();
+			 final float dist = (float) Math.sqrt(dx * dx + dz * dz);
+			 final double tpsModifier = 1D / Math.max(1F, 20F / VanillaPlugin.getInstance().getTPSMonitor().getTPS());
+
+			 if (human.isSneaking()) {
+				 return (dist / 0.08D) * 0.22D * tpsModifier;
+			 }
+			 if (human.isSprinting()) {
+				 return (dist / 0.32D) * 0.22D * tpsModifier;
+			 }
+			 return dist * tpsModifier;
+		 }
+
+		 public double getAvgMovement() {
+			 if (distanceDeltas.size() == 0) {
+				 return 0;
+			 }
+			 double total = 0;
+			 TDoubleIterator i = distanceDeltas.iterator();
+			 while(i.hasNext()) {
+				 total += i.next();
+			 }
+			 return total / distanceDeltas.size();
+		 }
+
+		 public double getAvgMessageTime() {
+			 if (messageTimeDeltas.size() == 0) {
+				 return 0;
+			 }
+			 long total = 0;
+			 TLongIterator i = messageTimeDeltas.iterator();
+			 while(i.hasNext()) {
+				 total += i.next();
+			 }
+			 return total / (double)messageTimeDeltas.size();
+		 }
 	}
 }

@@ -68,6 +68,7 @@ import org.spout.vanilla.api.data.Dimension;
 import org.spout.vanilla.api.data.GameMode;
 
 import org.spout.vanilla.plugin.command.AdministrationCommands;
+import org.spout.vanilla.plugin.command.AdministrationCommands.TPSMonitor;
 import org.spout.vanilla.plugin.command.InputCommandExecutor;
 import org.spout.vanilla.plugin.command.TestCommands;
 import org.spout.vanilla.plugin.component.world.sky.NetherSky;
@@ -322,5 +323,14 @@ public class VanillaPlugin extends CommonPlugin {
 
 	public ChatArguments getPrefix() {
 		return ((PluginLogger) getLogger()).getTag();
+	}
+
+	private TPSMonitor monitor;
+	public TPSMonitor getTPSMonitor() {
+		return monitor;
+	}
+
+	public void setTPSMonitor(TPSMonitor monitor) {
+		this.monitor = monitor;
 	}
 }

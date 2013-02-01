@@ -71,6 +71,7 @@ public class AdministrationCommands {
 	public AdministrationCommands(VanillaPlugin plugin) {
 		this.plugin = plugin;
 		tpsMonitor = new TicksPerSecondMonitor();
+		plugin.setTPSMonitor(tpsMonitor);
 		plugin.getEngine().getScheduler().scheduleSyncRepeatingTask(plugin, tpsMonitor, 0, 50, TaskPriority.CRITICAL);
 	}
 
@@ -430,7 +431,7 @@ public class AdministrationCommands {
 		source.sendMessage("Average TPS: " + tpsMonitor.getAvgTPS());
 	}
 
-	private static class TicksPerSecondMonitor implements Runnable {
+	private static class TicksPerSecondMonitor implements Runnable, TPSMonitor {
 		private static final int MAX_MEASUREMENTS = 20 * 60;
 		private TLongLinkedList timings = new TLongLinkedList();
 		private long lastTime = System.currentTimeMillis();
@@ -471,5 +472,10 @@ public class AdministrationCommands {
 		public float getAvgTPS() {
 			return avgTicksPerSecond.get();
 		}
+	}
+
+	public static interface TPSMonitor {
+		public float getTPS();
+		public float getAvgTPS();
 	}
 }

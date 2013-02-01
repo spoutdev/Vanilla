@@ -37,6 +37,7 @@ import org.spout.vanilla.api.protocol.msg.VanillaMainChannelMessage;
 public final class PlayerPositionMessage extends VanillaMainChannelMessage {
 	private final double x, y, z, stance;
 	private final boolean onGround;
+	private final long creationTimestamp = System.nanoTime();
 
 	public PlayerPositionMessage(double x, double y, double z, double stance, boolean onGround, RepositionManager rm) {
 		this.x = rm.convertX(x);
@@ -97,5 +98,9 @@ public final class PlayerPositionMessage extends VanillaMainChannelMessage {
 				.append(this.stance, other.stance)
 				.append(this.onGround, other.onGround)
 				.isEquals();
+	}
+
+	public long getCreationTimestamp() {
+		return creationTimestamp;
 	}
 }

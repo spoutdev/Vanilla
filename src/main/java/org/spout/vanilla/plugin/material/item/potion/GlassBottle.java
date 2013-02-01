@@ -49,17 +49,20 @@ public class GlassBottle extends VanillaItemMaterial {
 	@Override
 	public void onInteract(Entity entity, Action action) {
 		if (action == Action.RIGHT_CLICK) {
-			HeadComponent head = entity.get(HeadComponent.class);
-			if (head == null) {
+			HeadComponent interact = entity.get(HeadComponent.class);
+			if (interact == null) {
 				return;
 			}
 			Block block;
-			BlockIterator iterator = head.getBlockView();
+			BlockIterator iterator = interact.getBlockView();
 			while (true) {
 				if (!iterator.hasNext()) {
 					return;
 				}
 				block = iterator.next();
+				if (block.getMaterial().isPlacementObstacle()) {
+					return;
+				}
 				if (block.getMaterial() instanceof Water && VanillaMaterials.WATER.isSource(block)) {
 					break;
 				}

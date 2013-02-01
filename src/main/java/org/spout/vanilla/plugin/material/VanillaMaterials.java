@@ -226,6 +226,7 @@ import org.spout.vanilla.plugin.material.item.misc.Fireworks;
 import org.spout.vanilla.plugin.material.item.misc.FlowerPot;
 import org.spout.vanilla.plugin.material.item.misc.GhastTear;
 import org.spout.vanilla.plugin.material.item.misc.GlisteringMelon;
+import org.spout.vanilla.plugin.material.item.misc.GlowstoneDust;
 import org.spout.vanilla.plugin.material.item.misc.ItemFrameItem;
 import org.spout.vanilla.plugin.material.item.misc.MagmaCream;
 import org.spout.vanilla.plugin.material.item.misc.MusicDisc;
@@ -519,7 +520,7 @@ public final class VanillaMaterials {
 	public static final EggItem EGG = new EggItem("Egg", 344);
 	public static final VanillaItemMaterial COMPASS = new VanillaItemMaterial("Compass", 345, null);
 	public static final VanillaItemMaterial CLOCK = new VanillaItemMaterial("Clock", 347, null);
-	public static final VanillaItemMaterial GLOWSTONE_DUST = new VanillaItemMaterial("Glowstone Dust", 348, null);
+	public static final GlowstoneDust GLOWSTONE_DUST = new GlowstoneDust("Glowstone Dust", 348);
 	public static final Dye DYE = Dye.INK_SAC;
 	public static final VanillaItemMaterial BONE = new VanillaItemMaterial("Bone", 352, null);
 	public static final Sugar SUGAR = new Sugar("Sugar", 353);

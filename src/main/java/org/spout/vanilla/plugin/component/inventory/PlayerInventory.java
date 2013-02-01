@@ -40,6 +40,7 @@ import org.spout.vanilla.plugin.data.VanillaData;
  * Represents a players inventory
  */
 public class PlayerInventory extends PlayerInventoryComponent {
+
 	@Override
 	public QuickbarInventory getQuickbar() {
 		return getData().get(VanillaData.QUICKBAR_INVENTORY);
@@ -52,7 +53,7 @@ public class PlayerInventory extends PlayerInventoryComponent {
 
 	@Override
 	public ArmorInventory getArmor() {
-		return getData().get(VanillaData.ARMOR_INVENTORY);
+		return getData().get(VanillaData.PLAYER_ARMOR_INVENTORY);
 	}
 
 	@Override

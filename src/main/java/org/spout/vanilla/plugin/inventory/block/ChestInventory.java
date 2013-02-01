@@ -37,6 +37,7 @@ public class ChestInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
 	public static final int SINGLE_SIZE = 27;
 	public static final int DOUBLE_SIZE = SINGLE_SIZE * 2;
+	public static final int LENGTH = 9;
 	private final ChestInventory left, right;
 
 	public ChestInventory() {

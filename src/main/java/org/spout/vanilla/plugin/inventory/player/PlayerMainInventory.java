@@ -31,6 +31,8 @@ import org.spout.api.inventory.Inventory;
 public class PlayerMainInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
 	public static final int SIZE = 27;
+	public static final int HEIGHT = 3;
+	public static final int LENGTH = 9;
 
 	public PlayerMainInventory() {
 		super(SIZE);

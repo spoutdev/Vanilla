@@ -92,7 +92,9 @@ public class NormalSky extends VanillaSky {
 	public void updatePlayer(Player player) {
 		TimeUpdateEvent event = new TimeUpdateEvent(getWorld(), getTime());
 		player.getNetworkSynchronizer().callProtocolEvent(event);
-		WeatherChangeEvent weatherEvent = new WeatherChangeEvent(this.getWorld(), Weather.CLEAR, getWeather());
-		player.getNetworkSynchronizer().callProtocolEvent(weatherEvent);
+		if (Weather.CLEAR != getWeather()) {
+			WeatherChangeEvent weatherEvent = new WeatherChangeEvent(this.getWorld(), Weather.CLEAR, getWeather());
+			player.getNetworkSynchronizer().callProtocolEvent(weatherEvent);
+		}
 	}
 }

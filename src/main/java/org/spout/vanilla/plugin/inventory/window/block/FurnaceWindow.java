@@ -39,7 +39,7 @@ import org.spout.vanilla.plugin.component.substance.material.Furnace;
 import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 import org.spout.vanilla.plugin.inventory.window.Window;
-import org.spout.vanilla.plugin.inventory.window.WindowType;
+import org.spout.vanilla.api.inventory.window.WindowType;
 
 public class FurnaceWindow extends Window {
 	private Furnace furnace;

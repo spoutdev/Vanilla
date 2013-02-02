@@ -24,37 +24,49 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.window;
+package org.spout.vanilla.api.event.window;
 
 import org.spout.api.event.HandlerList;
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.plugin.inventory.window.Window;
+import org.spout.vanilla.api.inventory.window.AbstractWindow;
 
-public class WindowPropertyEvent extends WindowEvent {
+public class WindowSlotEvent extends WindowEvent {
 	private static HandlerList handlers = new HandlerList();
-	private int id;
-	private int value;
+	private int slot;
+	private ItemStack item;
+	private Inventory inventory;
 
-	public WindowPropertyEvent(Window window, int id, int value) {
+	public WindowSlotEvent(AbstractWindow window, Inventory inventory, int slot, ItemStack item) {
 		super(window);
-		this.id = id;
-		this.value = value;
+		this.inventory = inventory;
+		this.slot = slot;
+		this.item = item;
 	}
 
 	/**
-	 * Gets the id of the Window property that got changed
-	 * @return property Id
+	 * Gets the Inventory within the item got changed
+	 * @return the Inventory of the item
 	 */
-	public int getId() {
-		return this.id;
+	public Inventory getInventory() {
+		return this.inventory;
 	}
 
 	/**
-	 * Gets the value the property got set to
-	 * @return the new property value
+	 * Gets the slot of the Inventory that got changed
+	 * @return changed slot relative to the Inventory
 	 */
-	public int getValue() {
-		return this.value;
+	public int getSlot() {
+		return this.slot;
+	}
+
+	/**
+	 * Gets the item the slot is set to
+	 * @return the item
+	 */
+	public ItemStack getItem() {
+		return this.item;
 	}
 
 	@Override

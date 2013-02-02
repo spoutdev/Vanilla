@@ -24,17 +24,17 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.inventory.window;
+package org.spout.vanilla.api.inventory.window;
 
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
 import org.spout.api.render.RenderMaterial;
 
-import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
+import org.spout.vanilla.api.data.VanillaRenderMaterials;
 
 /**
- * Represents a type of {@link Window}
+ * Represents a type of {@link org.spout.vanilla.plugin.inventory.window.Window}
  */
 public enum WindowType {
 	/**

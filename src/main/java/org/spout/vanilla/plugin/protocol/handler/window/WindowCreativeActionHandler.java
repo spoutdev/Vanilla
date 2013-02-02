@@ -34,7 +34,7 @@ import org.spout.vanilla.api.inventory.Slot;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.inventory.window.ClickArguments;
+import org.spout.vanilla.api.inventory.window.ClickArguments;
 import org.spout.vanilla.plugin.inventory.window.Window;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowCreativeActionMessage;
 

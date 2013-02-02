@@ -30,7 +30,7 @@ import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
 /**
- * Represents a property of {@link org.spout.vanilla.plugin.inventory.window.WindowType#BREWING_STAND}
+ * Represents a property of {@link org.spout.vanilla.api.inventory.window.WindowType#BREWING_STAND}
  */
 public enum BrewingStandProperty implements WindowProperty {
 	/**

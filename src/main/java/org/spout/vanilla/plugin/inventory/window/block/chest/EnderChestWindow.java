@@ -32,7 +32,7 @@ import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.plugin.component.substance.material.chest.EnderChest;
 import org.spout.vanilla.plugin.inventory.util.GridInventoryConverter;
-import org.spout.vanilla.plugin.inventory.window.WindowType;
+import org.spout.vanilla.api.inventory.window.WindowType;
 
 public class EnderChestWindow extends AbstractChestWindow {
 	public EnderChestWindow(Player owner, EnderChest chest, Inventory inventory) {

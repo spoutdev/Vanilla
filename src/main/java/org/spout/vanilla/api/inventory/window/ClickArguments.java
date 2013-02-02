@@ -24,57 +24,49 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.window;
+package org.spout.vanilla.api.inventory.window;
 
-import org.spout.api.event.HandlerList;
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.plugin.inventory.window.Window;
+import org.spout.vanilla.api.inventory.Slot;
 
-public class WindowSlotEvent extends WindowEvent {
-	private static HandlerList handlers = new HandlerList();
-	private int slot;
-	private ItemStack item;
-	private Inventory inventory;
+/**
+ * Represents the arguments of a click on a
+ * {@link org.spout.vanilla.plugin.inventory.window.Window}
+ */
+public class ClickArguments {
+	private final Slot slot;
+	private final boolean rightClick, shiftClick;
 
-	public WindowSlotEvent(Window window, Inventory inventory, int slot, ItemStack item) {
-		super(window);
-		this.inventory = inventory;
+	public ClickArguments(Inventory inventory, int slot, boolean rightClick, boolean shiftClick) {
+		this.slot = new Slot(inventory, slot);
+		this.rightClick = rightClick;
+		this.shiftClick = shiftClick;
+	}
+
+	public ClickArguments(Slot slot, boolean rightClick, boolean shiftClick) {
 		this.slot = slot;
-		this.item = item;
+		this.rightClick = rightClick;
+		this.shiftClick = shiftClick;
 	}
 
 	/**
-	 * Gets the Inventory within the item got changed
-	 * @return the Inventory of the item
+	 * Returns true if the click was a right click
+	 * @return true if window was right clicked
 	 */
-	public Inventory getInventory() {
-		return this.inventory;
+	public boolean isRightClick() {
+		return rightClick;
 	}
 
 	/**
-	 * Gets the slot of the Inventory that got changed
-	 * @return changed slot relative to the Inventory
+	 * Returns true if the client was holding shift when the window was clicked
+	 * @return true if shift was being held down
 	 */
-	public int getSlot() {
-		return this.slot;
+	public boolean isShiftClick() {
+		return shiftClick;
 	}
 
-	/**
-	 * Gets the item the slot is set to
-	 * @return the item
-	 */
-	public ItemStack getItem() {
-		return this.item;
-	}
-
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
+	public Slot getSlot() {
+		return slot;
 	}
 }

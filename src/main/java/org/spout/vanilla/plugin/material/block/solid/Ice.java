@@ -59,6 +59,7 @@ public class Ice extends SpreadingSolid implements InitializableMaterial {
 	public void initialize() {
 		setReplacedMaterial(VanillaMaterials.WATER);
 		getDrops().DEFAULT.clear();
+		getDrops().EXPLOSION.clear();
 	}
 
 	@Override

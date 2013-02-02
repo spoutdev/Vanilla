@@ -34,11 +34,6 @@ import org.spout.api.math.Vector3;
 import org.spout.api.math.VectorMath;
 
 public class MathHelper {
-	public static float getBlockDensity() {
-		// TODO: Not sure how this is supposed to be calculated
-		return 1;
-	}
-
 	/**
 	 * Gets the celestial angle at a certain time of the day
 	 * @param timeMillis time

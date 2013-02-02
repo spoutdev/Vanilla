@@ -40,7 +40,9 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
+import org.spout.api.util.BlockIterator;
 
+import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
@@ -88,8 +90,22 @@ public abstract class ExplosionModel {
 	 */
 	private int getDamage(Point o, Point p, double s) {
 		double di = p.distance(o);
-		double de = MathHelper.getBlockDensity(); // TODO: Implement
-		double i = (1 - di / s) * de;
+		int amt = 0, solid = 0;
+		BlockIterator iterator = new BlockIterator(o, p);
+		while(iterator.hasNext()) {
+			amt++;
+			BlockMaterial next = iterator.next().getMaterial();
+			if (next.isSolid()) {
+				solid++;
+			}
+		}
+		double density;
+		if (amt == 0) {
+			density = 1;
+		} else {
+			density = (double)(amt - solid) / (double)amt;
+		}
+		double i = (1 - di / s) * density;
 		return (int) ((i * i + i) / 2 * 8 * s + 1);
 	}
 
@@ -145,6 +161,10 @@ public abstract class ExplosionModel {
 				// Check if entity can be damaged
 				HealthComponent health = entity.get(HealthComponent.class);
 				if (health == null) {
+					continue;
+				}
+				Human human = entity.get(Human.class);
+				if (human != null && human.isCreative()) {
 					continue;
 				}
 				health.damage(getDamage(position, entity.getScene().getPosition(), size));

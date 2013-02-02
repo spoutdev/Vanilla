@@ -73,6 +73,7 @@ import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.render.VanillaEffects;
+import org.spout.vanilla.plugin.util.MathHelper;
 
 public abstract class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial, IndirectRedstoneSource {
 	public static short REDSTONE_POWER_MAX = 15;
@@ -104,6 +105,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		this.setTransparent();
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
+		this.getDrops().EXPLOSION.add(this);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getRenderEffects().contains(VanillaEffects.SKY_TIME)) {
 				getModel().getRenderMaterial().addRenderEffect(VanillaEffects.SKY_TIME);
@@ -119,6 +121,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		this.setTransparent();
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
+		this.getDrops().EXPLOSION.add(this);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getRenderEffects().contains(VanillaEffects.SKY_TIME)) {
 				getModel().getRenderMaterial().addRenderEffect(VanillaEffects.SKY_TIME);
@@ -154,8 +157,10 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 */
 	public void onIgnite(Block block, Cause<?> cause) {
 		HashSet<Flag> dropFlags = new HashSet<Flag>();
-		if (Math.random() > 0.3) {
+		if (GenericMath.getRandom().nextInt(100) < 77) {
 			dropFlags.add(DropFlags.NO_DROPS);
+		} else {
+			dropFlags.add(DropFlags.EXPLOSION_DROPS);
 		}
 		this.destroy(block, dropFlags, cause);
 	}

@@ -36,6 +36,10 @@ public class DropFlags {
 	 */
 	public static final FlagSingle NO_DROPS = new FlagSingle();
 	/**
+	 * Explosion drops
+	 */
+	public static final FlagSingle EXPLOSION_DROPS = new FlagSingle();
+	/**
 	 * Contents are passed in
 	 */
 	public static final FlagData<ItemStack[]> CONTENTS = new FlagData<ItemStack[]>();

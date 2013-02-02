@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.data.drops.type.block;
 
 import org.spout.vanilla.plugin.data.drops.Drops;
+import org.spout.vanilla.plugin.data.drops.flag.DropFlags;
 import org.spout.vanilla.plugin.data.drops.flag.PlayerFlags;
 import org.spout.vanilla.plugin.data.drops.flag.ToolEnchantFlags;
 
@@ -43,11 +44,16 @@ public class BlockDrops extends Drops {
 	 * All the drops when not broken using a tool enchanted with silk touch
 	 */
 	public final Drops DEFAULT;
+	/**
+	 * All of the drops when destroyed by an explosion
+	 */
+	public final Drops EXPLOSION;
 
 	public BlockDrops() {
 		this.NOT_CREATIVE = this.forFlags(PlayerFlags.CREATIVE.NOT);
 		this.SILK_TOUCH = this.NOT_CREATIVE.forFlags(ToolEnchantFlags.SILK_TOUCH);
 		this.DEFAULT = this.NOT_CREATIVE.forFlags(ToolEnchantFlags.SILK_TOUCH.NOT);
+		this.EXPLOSION = this.forFlags(DropFlags.EXPLOSION_DROPS);
 	}
 
 	@Override

@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.math.Vector3;
-import org.spout.api.math.VectorMath;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.world.generator.structure.ComponentCuboidPart;
@@ -125,7 +124,7 @@ public class StrongholdCorridor extends StructureComponent {
 	public BoundingBox getBoundingBox() {
 		final Vector3 rotatedMin = transform(0, 0, 0);
 		final Vector3 rotatedMax = transform(4, 4, length - 1);
-		return new BoundingBox(VectorMath.min(rotatedMin, rotatedMax), VectorMath.max(rotatedMin, rotatedMax));
+		return new BoundingBox(Vector3.min(rotatedMin, rotatedMax), Vector3.max(rotatedMin, rotatedMax));
 	}
 
 	public int getLength() {

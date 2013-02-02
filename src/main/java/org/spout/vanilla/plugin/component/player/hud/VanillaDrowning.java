@@ -35,7 +35,7 @@ import org.spout.api.math.Rectangle;
 
 import org.spout.vanilla.plugin.component.misc.DrowningComponent;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
-import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
+import org.spout.vanilla.api.data.VanillaRenderMaterials;
 
 public class VanillaDrowning extends DrowningWidget {
 	@Override

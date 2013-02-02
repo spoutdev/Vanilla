@@ -38,7 +38,7 @@ import org.spout.vanilla.plugin.component.substance.material.BrewingStand;
 import org.spout.vanilla.plugin.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 import org.spout.vanilla.plugin.inventory.window.Window;
-import org.spout.vanilla.plugin.inventory.window.WindowType;
+import org.spout.vanilla.api.inventory.window.WindowType;
 import org.spout.vanilla.plugin.material.item.potion.Potion;
 
 public class BrewingStandWindow extends Window {

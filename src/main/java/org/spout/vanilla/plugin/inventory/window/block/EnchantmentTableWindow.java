@@ -38,7 +38,7 @@ import org.spout.vanilla.plugin.component.substance.material.EnchantmentTable;
 import org.spout.vanilla.plugin.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 import org.spout.vanilla.plugin.inventory.window.Window;
-import org.spout.vanilla.plugin.inventory.window.WindowType;
+import org.spout.vanilla.api.inventory.window.WindowType;
 
 public class EnchantmentTableWindow extends Window {
 	private final EnchantmentTable enchantmentTable;

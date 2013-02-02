@@ -32,7 +32,7 @@ import org.spout.api.math.Vector2;
 import org.spout.vanilla.plugin.inventory.entity.VillagerInventory;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 import org.spout.vanilla.plugin.inventory.window.Window;
-import org.spout.vanilla.plugin.inventory.window.WindowType;
+import org.spout.vanilla.api.inventory.window.WindowType;
 
 public class VillagerWindow extends Window {
 	public VillagerWindow(Player owner, VillagerInventory inventory, String title) {

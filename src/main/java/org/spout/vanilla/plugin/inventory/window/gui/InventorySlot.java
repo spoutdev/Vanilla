@@ -39,10 +39,10 @@ import org.spout.api.math.IntVector2;
 import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.api.inventory.Slot;
+import org.spout.vanilla.api.inventory.window.AbstractWindow;
+import org.spout.vanilla.api.inventory.window.ClickArguments;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
-import org.spout.vanilla.plugin.inventory.window.ClickArguments;
-import org.spout.vanilla.plugin.inventory.window.Window;
 
 public class InventorySlot extends ControlComponent {
 	private RenderItemStack item;
@@ -79,7 +79,7 @@ public class InventorySlot extends ControlComponent {
 		}
 	}
 
-	public Window getWindow() {
+	public AbstractWindow getWindow() {
 		if (!(Spout.getEngine() instanceof Client)) {
 			throw new IllegalStateException("Cannot handle GUIs on the server.");
 		}
@@ -97,7 +97,7 @@ public class InventorySlot extends ControlComponent {
 
 	@Override
 	public void onClicked(IntVector2 position, boolean mouseDown) {
-		Window window = getWindow();
+		AbstractWindow window = getWindow();
 		window.onClick(new ClickArguments(entry, false, window.isShiftDown()));
 	}
 

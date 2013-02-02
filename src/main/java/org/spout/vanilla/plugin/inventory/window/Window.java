@@ -29,10 +29,6 @@ package org.spout.vanilla.plugin.inventory.window;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-
-import gnu.trove.map.TObjectIntMap;
-import gnu.trove.map.hash.TObjectIntHashMap;
 
 import org.spout.api.Client;
 import org.spout.api.ServerOnly;
@@ -46,51 +42,39 @@ import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.LabelComponent;
 import org.spout.api.gui.component.TexturedRectComponent;
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
-import org.spout.api.protocol.event.ProtocolEvent;
 
+import org.spout.vanilla.api.component.inventory.PlayerInventoryComponent;
+import org.spout.vanilla.api.data.VanillaRenderMaterials;
 import org.spout.vanilla.api.event.inventory.InventoryCanSetEvent;
+import org.spout.vanilla.api.event.window.WindowCloseEvent;
+import org.spout.vanilla.api.event.window.WindowOpenEvent;
+import org.spout.vanilla.api.event.window.WindowPropertyEvent;
 import org.spout.vanilla.api.inventory.Slot;
+import org.spout.vanilla.api.inventory.CraftingInventory;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
-import org.spout.vanilla.api.inventory.window.prop.WindowProperty;
+import org.spout.vanilla.api.inventory.window.AbstractWindow;
+import org.spout.vanilla.api.inventory.window.ClickArguments;
+import org.spout.vanilla.api.inventory.window.WindowType;
 
-import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.substance.object.Item;
-import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
-import org.spout.vanilla.plugin.event.window.WindowCloseEvent;
-import org.spout.vanilla.plugin.event.window.WindowItemsEvent;
-import org.spout.vanilla.plugin.event.window.WindowOpenEvent;
-import org.spout.vanilla.plugin.event.window.WindowPropertyEvent;
-import org.spout.vanilla.api.inventory.CraftingInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.plugin.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 import org.spout.vanilla.plugin.inventory.window.gui.InventorySlot;
 import org.spout.vanilla.plugin.inventory.window.gui.RenderItemStack;
+import org.spout.vanilla.plugin.VanillaPlugin;
 
 /**
  * Represents a Window that players can view to display an inventory.
  */
-public abstract class Window implements InventoryViewer {
-	private static final boolean LOG_INFO_MESSAGES = false; // Debug - enable to log all the window information messages
-	private final Player owner;
+public abstract class Window extends AbstractWindow {
 	private final List<InventoryConverter> converters = new LinkedList<InventoryConverter>();
-	protected final TObjectIntMap<Integer> properties = new TObjectIntHashMap<Integer>();
-	protected final int offset;
-	protected final WindowType type;
-	protected final String title;
 	protected boolean opened;
-	protected ItemStack cursorItem;
-	private static int windowId = 0;
-	protected int id = -1;
-	// Client only
-	protected boolean shiftDown;
 	// Widgets
 	protected final Screen popup = new Screen();
 	protected final Widget background = new Widget();
@@ -111,22 +95,14 @@ public abstract class Window implements InventoryViewer {
 	private static final float SCALE = 0.75f;
 
 	public Window(Player owner, WindowType type, String title, int offset) {
-		this.owner = owner;
-		this.type = type;
-		this.title = title;
-		this.offset = offset;
+		super(owner, type, title, offset);
 
-		PlayerInventory inventory = getPlayerInventory();
+		PlayerInventoryComponent inventory = getPlayerInventory();
 		GridInventoryConverter main = new GridInventoryConverter(inventory.getMain(), 9, offset, MAIN_POSITION);
 		addInventoryConverter(main);
 		addInventoryConverter(new GridInventoryConverter(inventory.getQuickbar(), 9, offset + main.getGrid().getSize(), QUICKBAR_POSITION));
 
 		switch (Spout.getPlatform()) {
-			case PROXY:
-			case SERVER:
-				// Initialize the window id on the server
-				id = windowId++;
-				break;
 			case CLIENT:
 				VanillaPlugin plugin = VanillaPlugin.getInstance();
 				popup.setGrabsMouse(false);
@@ -161,10 +137,8 @@ public abstract class Window implements InventoryViewer {
 		this(owner, type, title, 0);
 	}
 
-	/**
-	 * Opens the window from the server on the client.
-	 */
 	@SuppressWarnings("incomplete-switch")
+	@Override
 	public void open() {
 		opened = true;
 		System.out.println("OPEN");
@@ -180,9 +154,7 @@ public abstract class Window implements InventoryViewer {
 		}
 	}
 
-	/**
-	 * Closes this window
-	 */
+	@Override
 	public void close() {
 		removeAllInventoryConverters();
 		opened = false;
@@ -203,39 +175,13 @@ public abstract class Window implements InventoryViewer {
 		}
 	}
 
-	/**
-	 * Reloads the window's items
-	 */
 	@ServerOnly
-	public void reload() {
-		if (Spout.getPlatform() == Platform.CLIENT) {
-			throw new IllegalStateException("Cannot reload window in client mode.");
-		}
-
-		ItemStack[] items = new ItemStack[getSize()];
-		for (int i = 0; i < items.length; i++) {
-			Slot entry = getSlot(i);
-			if (entry != null) {
-				items[i] = entry.getInventory().get(entry.getIndex());
-			}
-		}
-
-		callProtocolEvent(new WindowItemsEvent(this, items));
-	}
-
-	/**
-	 * Handles a click when the shift button is held down
-	 * @param stack clicked
-	 * @param slot clicked
-	 * @param from inventory with item
-	 * @return true if successful
-	 */
-	@ServerOnly
+	@Override
 	public boolean onShiftClick(ItemStack stack, int slot, Inventory from) {
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			throw new IllegalStateException("Shift click handling is handled server side.");
 		}
-		final PlayerInventory inventory = getPlayerInventory();
+		final PlayerInventoryComponent inventory = getPlayerInventory();
 		if (from instanceof CraftingInventory) {
 			if (((CraftingInventory) from).onShiftClick(slot, inventory)) {
 				return true;
@@ -267,11 +213,7 @@ public abstract class Window implements InventoryViewer {
 		return false;
 	}
 
-	/**
-	 * Handles a click on the server or the client.
-	 * @param args to handle
-	 * @return true if successful
-	 */
+	@Override
 	public boolean onClick(ClickArguments args) {
 		if (handleClick(args)) {
 			reload();
@@ -302,7 +244,7 @@ public abstract class Window implements InventoryViewer {
 					clicked.setAmount(1);
 					// Can it be set?
 					boolean canSet = inventory.canSet(slot, clicked);
-					InventoryCanSetEvent event = Spout.getEventManager().callEvent(new InventoryCanSetEvent(inventory, new PlayerCause(owner), slot, clicked, canSet));
+					InventoryCanSetEvent event = Spout.getEventManager().callEvent(new InventoryCanSetEvent(inventory, new PlayerCause(getPlayer()), slot, clicked, canSet));
 					if (!event.isCancelled()) {
 						inventory.set(slot, clicked);
 						// remove from cursor
@@ -344,7 +286,7 @@ public abstract class Window implements InventoryViewer {
 				} else {
 					// Can it be set?
 					boolean canSet = inventory.canSet(slot, cursorItem);
-					InventoryCanSetEvent event = Spout.getEventManager().callEvent(new InventoryCanSetEvent(inventory, new PlayerCause(owner), slot, clicked, canSet));
+					InventoryCanSetEvent event = Spout.getEventManager().callEvent(new InventoryCanSetEvent(inventory, new PlayerCause(getPlayer()), slot, clicked, canSet));
 					if (!event.isCancelled()) {
 						debug("[Window] Materials don't match. Swapping stacks.");
 						// materials don't match
@@ -379,7 +321,7 @@ public abstract class Window implements InventoryViewer {
 					clicked = cursorItem.clone();
 					// Can it be set?
 					boolean canSet = inventory.canSet(slot, clicked);
-					InventoryCanSetEvent event = Spout.getEventManager().callEvent(new InventoryCanSetEvent(inventory, new PlayerCause(owner), slot, clicked, canSet));
+					InventoryCanSetEvent event = Spout.getEventManager().callEvent(new InventoryCanSetEvent(inventory, new PlayerCause(getPlayer()), slot, clicked, canSet));
 					if (!event.isCancelled()) {
 						inventory.set(slot, clicked);
 						cursorItem = null;
@@ -412,7 +354,7 @@ public abstract class Window implements InventoryViewer {
 				} else {
 					// Can it be set?
 					boolean canSet = inventory.canSet(slot, clicked);
-					InventoryCanSetEvent event = Spout.getEventManager().callEvent(new InventoryCanSetEvent(inventory, new PlayerCause(owner), slot, clicked, canSet));
+					InventoryCanSetEvent event = Spout.getEventManager().callEvent(new InventoryCanSetEvent(inventory, new PlayerCause(getPlayer()), slot, clicked, canSet));
 					if (!event.isCancelled()) {
 						debug("[Window] Materials don't match. Swapping stacks.");
 						// materials don't match
@@ -433,12 +375,7 @@ public abstract class Window implements InventoryViewer {
 		return false;
 	}
 
-	/**
-	 * Handles a click on the creative message
-	 * @param inventory clicked
-	 * @param clickedSlot slot clicked
-	 * @param item clicked
-	 */
+	@Override
 	public void onCreativeClick(Inventory inventory, int clickedSlot, ItemStack item) {
 		switch (Spout.getPlatform()) {
 			case PROXY:
@@ -454,10 +391,7 @@ public abstract class Window implements InventoryViewer {
 		}
 	}
 
-	/**
-	 * Called when the cursor clicks outside of the window.
-	 * @return true if successful
-	 */
+	@Override
 	public boolean onOutsideClick() {
 		switch (Spout.getPlatform()) {
 			case PROXY:
@@ -472,25 +406,20 @@ public abstract class Window implements InventoryViewer {
 		}
 	}
 
-	/**
-	 * Drops the cursor
-	 */
 	@ServerOnly
+	@Override
 	public void dropCursorItem() {
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			throw new IllegalStateException("Cannot drop cursor item from client.");
 		}
 
 		if (cursorItem != null) {
-			Item.dropNaturally(this.owner.getScene().getPosition(), cursorItem);
+			Item.dropNaturally(getPlayer().getScene().getPosition(), cursorItem);
 			cursorItem = null;
 		}
 	}
 
-	/**
-	 * Gets the number of slots on the window.
-	 * @return size of window
-	 */
+	@Override
 	public int getSize() {
 		int size = 0;
 		for (InventoryConverter converter : converters) {
@@ -499,20 +428,12 @@ public abstract class Window implements InventoryViewer {
 		return size;
 	}
 
-	/**
-	 * Whether the window is currently being viewed.
-	 * @return true if being viewed
-	 */
+	@Override
 	public boolean isOpened() {
 		return opened;
 	}
 
-	/**
-	 * Gets the inventory at the specified native slot. Returns -1 if
-	 * non-existent.
-	 * @param nativeSlot clicked
-	 * @return inventory entry at slot
-	 */
+	@Override
 	public Slot getSlot(int nativeSlot) {
 		int slot;
 		debug("Getting Slot from: " + nativeSlot);
@@ -526,13 +447,7 @@ public abstract class Window implements InventoryViewer {
 		return null;
 	}
 
-	/**
-	 * Arguments to handle
-	 * @param nativeSlot
-	 * @param rightClick
-	 * @param shiftClick
-	 * @return
-	 */
+	@Override
 	public ClickArguments getClickArguments(int nativeSlot, boolean rightClick, boolean shiftClick) {
 		Slot entry = getSlot(nativeSlot);
 		if (entry != null) {
@@ -542,27 +457,11 @@ public abstract class Window implements InventoryViewer {
 	}
 
 	/**
-	 * Gets the owner of this window
-	 * @return player
-	 */
-	public final Player getPlayer() {
-		return owner;
-	}
-
-	/**
 	 * Gets the human viewing the window
 	 * @return human
 	 */
 	public final Human getHuman() {
-		return owner.get(Human.class);
-	}
-
-	/**
-	 * Returns the player inventory.
-	 * @return player inventory
-	 */
-	public final PlayerInventory getPlayerInventory() {
-		return owner.get(PlayerInventory.class);
+		return getPlayer().get(Human.class);
 	}
 
 	/**
@@ -637,113 +536,11 @@ public abstract class Window implements InventoryViewer {
 		}
 	}
 
-	/**
-	 * Sets a property of the window.
-	 * @param prop property to set
-	 * @param value set
-	 */
-	public void setProperty(WindowProperty prop, int value) {
-		setProperty(prop.getId(), value);
-	}
-
-	/**
-	 * Returns the value of the specified property.
-	 * @param prop
-	 * @return value of property
-	 */
-	public int getProperty(WindowProperty prop) {
-		return properties.get(prop);
-	}
-
-	/**
-	 * Returns the id of the window.
-	 * @return id window
-	 */
-	public int getId() {
-		return id;
-	}
-
-	/**
-	 * Returns the type of the window.
-	 * @return window type
-	 */
-	public WindowType getType() {
-		return type;
-	}
-
-	/**
-	 * Returns the title of the window.
-	 * @return title
-	 */
-	public String getTitle() {
-		return title;
-	}
-
-	/**
-	 * Whether or not there is an item on the cursor
-	 * @return true if has item on cursor
-	 */
-	public boolean hasCursorItem() {
-		return cursorItem != null;
-	}
-
-	/**
-	 * Gets the item on the cursor
-	 * @return item on cursor
-	 */
-	public ItemStack getCursorItem() {
-		return cursorItem;
-	}
-
-	/**
-	 * Sets the item on the cursor.
-	 * @param cursorItem
-	 */
-	public void setCursorItem(ItemStack cursorItem) {
-		this.cursorItem = cursorItem;
-		if (Spout.getPlatform() == Platform.CLIENT) {
-			// TODO: Attach item to cursor
-		}
-	}
-
-	public void setShiftDown(boolean shiftDown) {
-		this.shiftDown = shiftDown;
-	}
-
-	public boolean isShiftDown() {
-		return shiftDown;
-	}
-
 	public boolean canTick() {
 		return false;
 	}
 
 	public void onTick(float dt) {
-	}
-
-	protected void callProtocolEvent(ProtocolEvent event) {
-		// TODO: C->S events
-		if (getPlayer() == null) {
-			debug(Level.WARNING, "Sending protocol message with null player");
-			return;
-		}
-		if (getPlayer().getNetworkSynchronizer() == null) {
-			debug(Level.WARNING, "Sending protocol message with null network synchronizer");
-			return;
-		}
-		getPlayer().getNetworkSynchronizer().callProtocolEvent(event);
-	}
-
-	private void debug(Level level, String msg) {
-		if (Spout.debugMode()) {
-			Spout.getLogger().log(level, msg);
-		}
-	}
-
-	private void debug(String msg) {
-		if (LOG_INFO_MESSAGES) {
-			debug(Level.INFO, msg);
-		}
 	}
 
 	@Override

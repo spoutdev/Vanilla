@@ -64,6 +64,7 @@ import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
 import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
+import org.spout.vanilla.api.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.api.component.substance.material.SignComponent;
 import org.spout.vanilla.api.data.Difficulty;
 import org.spout.vanilla.api.data.Dimension;
@@ -108,11 +109,11 @@ import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.configuration.WorldConfigurationNode;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.event.player.network.PlayerAbilityUpdateEvent;
-import org.spout.vanilla.plugin.event.window.WindowCloseEvent;
-import org.spout.vanilla.plugin.event.window.WindowItemsEvent;
-import org.spout.vanilla.plugin.event.window.WindowOpenEvent;
-import org.spout.vanilla.plugin.event.window.WindowPropertyEvent;
-import org.spout.vanilla.plugin.event.window.WindowSlotEvent;
+import org.spout.vanilla.api.event.window.WindowCloseEvent;
+import org.spout.vanilla.api.event.window.WindowItemsEvent;
+import org.spout.vanilla.api.event.window.WindowOpenEvent;
+import org.spout.vanilla.api.event.window.WindowPropertyEvent;
+import org.spout.vanilla.api.event.window.WindowSlotEvent;
 import org.spout.vanilla.plugin.inventory.window.DefaultWindow;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.container.VanillaContainer;
@@ -622,7 +623,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (event.getWindow() instanceof DefaultWindow) {
 			return null; // no message for the default Window
 		}
-		PlayerInventory inventory = event.getWindow().getPlayerInventory();
+		PlayerInventoryComponent inventory = event.getWindow().getPlayerInventory();
 		int size = event.getWindow().getSize() - (inventory.getMain().size() + inventory.getQuickbar().size());
 		return new WindowOpenMessage(event.getWindow(), size);
 	}

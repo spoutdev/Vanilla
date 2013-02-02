@@ -24,28 +24,17 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.window;
+package org.spout.vanilla.api.event.window;
 
 import org.spout.api.event.HandlerList;
-import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.plugin.inventory.window.Window;
+import org.spout.vanilla.api.inventory.window.AbstractWindow;
 
-public class WindowItemsEvent extends WindowEvent {
+public class WindowOpenEvent extends WindowEvent {
 	private static HandlerList handlers = new HandlerList();
-	private ItemStack[] items;
 
-	public WindowItemsEvent(Window window, ItemStack[] items) {
+	public WindowOpenEvent(AbstractWindow window) {
 		super(window);
-		this.items = items;
-	}
-
-	/**
-	 * Gets the new Items that are set for the Window
-	 * @return items
-	 */
-	public ItemStack[] getItems() {
-		return this.items;
 	}
 
 	@Override

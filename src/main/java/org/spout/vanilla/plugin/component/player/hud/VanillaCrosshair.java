@@ -33,7 +33,7 @@ import org.spout.api.gui.component.TexturedRectComponent;
 import org.spout.api.math.Rectangle;
 
 import org.spout.vanilla.plugin.component.player.HUDComponent;
-import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
+import org.spout.vanilla.api.data.VanillaRenderMaterials;
 
 public class VanillaCrosshair extends CrosshairWidget {
 	@Override

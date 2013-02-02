@@ -31,7 +31,7 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 
 /**
  * Represents a property of
- * {@link org.spout.vanilla.plugin.inventory.window.WindowType#ENCHANTMENT_TABLE}
+ * {@link org.spout.vanilla.api.inventory.window.WindowType#ENCHANTMENT_TABLE}
  */
 public enum EnchantmentTableProperty implements WindowProperty {
 	/**

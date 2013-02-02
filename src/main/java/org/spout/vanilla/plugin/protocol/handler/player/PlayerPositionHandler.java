@@ -72,16 +72,16 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 		if (!session.hasPlayer()) {
 			return;
 		}
-		Player holder = session.getPlayer();
-		RepositionManager rmInverse = holder.getNetworkSynchronizer().getRepositionManager().getInverse();
+		final Player holder = session.getPlayer();
+		final RepositionManager rmInverse = holder.getNetworkSynchronizer().getRepositionManager().getInverse();
 
 		if (holder.has(PingComponent.class)) {
 			holder.get(PingComponent.class).refresh();
 		}
 
-		Point rawPosition = new Point(message.getPosition(), holder.getWorld());
-		Point newPosition = rmInverse.convert(rawPosition);
-		Point position = holder.getScene().getPosition();
+		final Point rawPosition = new Point(message.getPosition(), holder.getWorld());
+		final Point newPosition = rmInverse.convert(rawPosition);
+		final Point position = holder.getScene().getPosition();
 
 		if (holder.getNetworkSynchronizer().isTeleportPending()) {
 			if (position.getX() == newPosition.getX() && position.getZ() == newPosition.getZ() && Math.abs(position.getY() - newPosition.getY()) < 16) {
@@ -89,8 +89,13 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 			}
 		} else {
 			if (!position.equals(newPosition)) {
-				holder.getScene().setPosition(newPosition);
 				final Human human = holder.get(Human.class);
+				//Compare against live instead of snapshot value
+				Point livePosition = human.getLivePosition();
+				if (livePosition == null) {
+					livePosition = position;
+				}
+				human.setLivePosition(newPosition);
 
 				//Don't use client onGround value, calculate ourselves
 				//MC Client is on ground if y value is whole number, or half step (e.g 55.0, or 65.5)
@@ -113,16 +118,16 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 				
 				//Hover tracking
 				if (wasOnGround && !onGround) {
-					human.getData().put("position_on_ground", position);
+					human.getData().put("position_on_ground", livePosition);
 					human.getData().put("time_in_air", holder.getWorld().getAge());
 				} else if (!wasOnGround && !onGround) {
 					//Changed directions
-					if (wasFalling && !human.isFalling()) {
+					if (wasFalling && !human.isFalling() || human.isInWater()) {
 						human.getData().remove("time_in_air");
 					}
 					float time = human.getData().get("time_in_air", holder.getWorld().getAge());
 					//hovering or still rising
-					if (time + 1000 < holder.getWorld().getAge() && newPosition.getY() - position.getY() >= 0) {
+					if (time + 2000 < holder.getWorld().getAge() && newPosition.getY() - livePosition.getY() >= 0) {
 						if (!human.canFly()) {
 							holder.sendMessage("Hover cheating?");
 						}
@@ -139,20 +144,21 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 				} catch (ExecutionException e) {
 					throw new RuntimeException(e);
 				}
-				tracker.updateTracker(human, position, newPosition, message.getCreationTimestamp());
+				tracker.updateTracker(human, livePosition, newPosition, message.getCreationTimestamp());
 
 				//Debug
 				/*
-				final double dx = position.getX() - newPosition.getX();
-				final double dy = position.getY() - newPosition.getY();
-				final double dz = position.getZ() - newPosition.getZ();
+				final double dx = livePosition.getX() - newPosition.getX();
+				final double dy = livePosition.getY() - newPosition.getY();
+				final double dz = livePosition.getZ() - newPosition.getZ();
 				System.out.println("Player position packet statistics:");
-				System.out.println("    Prev position: (" + position.getX() + ", " + position.getY() + ", " + position.getZ() + ")");
+				System.out.println("    Stale position: (" + position.getX() + ", " + position.getY() + ", " + position.getZ() + ")");
+				System.out.println("    Prev position: (" + livePosition.getX() + ", " + livePosition.getY() + ", " + livePosition.getZ() + ")");
 				System.out.println("    New position: (" + newPosition.getX() + ", " + newPosition.getY() + ", " + newPosition.getZ() + ")");
 				System.out.println("    DX: " + dx);
 				System.out.println("    DY: " + dy);
 				System.out.println("    DZ: " + dz);
-				System.out.println("    Distance: " + position.distance(newPosition));
+				System.out.println("    Distance: " + livePosition.distance(newPosition));
 				System.out.println("    Time since last packet: " + (System.nanoTime() - last) / 1E6D + " ms");
 				System.out.println("    Avg Distance: " + tracker.getAvgMovement());
 				System.out.println("    Avg packet delta: " + (tracker.getAvgMessageTime() / 1E6D) + " ms");
@@ -160,9 +166,10 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 				System.out.println("    Calculated On Ground: " + onGround);
 				System.out.println("    Sneaking: " + human.isSneaking());
 				System.out.println("    Sprinting: " + human.isSprinting());
+				System.out.println("    Swimming: " + human.isInWater());
+				System.out.println("    Ping: " + holder.get(PingComponent.class).getPing());
 				last = System.nanoTime();
 				*/
-
 				if (tracker.isFilled()) {
 					//Flying?
 					if (tracker.getAvgMovement() > 0.3D && !human.canFly()) {

@@ -103,6 +103,9 @@ public abstract class Window extends AbstractWindow {
 		addInventoryConverter(new GridInventoryConverter(inventory.getQuickbar(), 9, offset + main.getGrid().getSize(), QUICKBAR_POSITION));
 
 		switch (Spout.getPlatform()) {
+			case PROXY:
+			case SERVER:
+				break;
 			case CLIENT:
 				VanillaPlugin plugin = VanillaPlugin.getInstance();
 				popup.setGrabsMouse(false);

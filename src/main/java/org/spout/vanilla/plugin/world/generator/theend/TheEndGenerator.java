@@ -47,13 +47,15 @@ import org.spout.vanilla.plugin.world.generator.VanillaSingleBiomeGenerator;
 import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
 
 public class TheEndGenerator extends VanillaSingleBiomeGenerator {
-	private static final int SEA_LEVEL = 62;
-	private static final int ISLAND_HEIGHT = 56;
-	private static final int ISLAND_OFFSET = 8;
-	private static final int ISLAND_RADIUS = 144;
-	private static final double ISLAND_TOTAL_OFFSET = ISLAND_OFFSET + ISLAND_HEIGHT / 2d;
-	private static final double ISLAND_HEIGHT_SCALE = ((double) ISLAND_RADIUS / (double) ISLAND_HEIGHT) * 2d;
-	public static final int HEIGHT = ((ISLAND_HEIGHT + ISLAND_OFFSET + 1) / 4) * 4 + 4;
+	private static final int ISLAND_RADIUS = 52;
+	private static final int ISLAND_BOTTOM = 8;
+	private static final int ISLAND_SURFACE = 58;
+	private static final int ISLAND_TOP = 64;
+	private static final double LOWER_SMOOTH_SIZE = (ISLAND_SURFACE - ISLAND_BOTTOM) / 2d;
+	private static final double UPPER_SMOOTH_SIZE = (ISLAND_TOP - ISLAND_SURFACE) / 2d;
+	private static final double LOWER_SMOOTH_START = ISLAND_BOTTOM + LOWER_SMOOTH_SIZE;
+	private static final double UPPER_SMOOTH_START = ISLAND_SURFACE + UPPER_SMOOTH_SIZE;
+	public static final int HEIGHT = ISLAND_TOP;
 	// noise for generation
 	private static final Perlin PERLIN = new Perlin();
 	private static final ScalePoint NOISE = new ScalePoint();
@@ -101,13 +103,14 @@ public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 					final int totalX = x + xx;
 					final int totalY = y + yy;
 					final int totalZ = z + zz;
-					final double distanceY = (totalY - ISLAND_TOTAL_OFFSET) * ISLAND_HEIGHT_SCALE;
-					final double distance = Math.sqrt(totalX * totalX + distanceY * distanceY + totalZ * totalZ);
-					if (distance == 0) {
-						blockData.set(totalX, totalY, totalZ, VanillaMaterials.END_STONE);
-						continue;
+					final double distance = Math.sqrt(totalX * totalX + totalZ * totalZ);
+					double density = noise[xx][yy][zz] * 0.5 + 0.5;
+					if (y + yy < ISLAND_SURFACE) {
+						density += 1 / LOWER_SMOOTH_SIZE * (y + yy - LOWER_SMOOTH_START);
+					} else if (y + yy >= ISLAND_SURFACE) {
+						density -= 1 / UPPER_SMOOTH_SIZE * (y + yy - UPPER_SMOOTH_START);
 					}
-					final double density = ISLAND_RADIUS / distance * (noise[xx][yy][zz] * 0.5 + 0.5);
+					density *= ISLAND_RADIUS / distance;
 					if (density >= 1) {
 						blockData.set(totalX, totalY, totalZ, VanillaMaterials.END_STONE);
 					}
@@ -146,7 +149,7 @@ public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 		int[][] heights = new int[Chunk.BLOCKS.SIZE][Chunk.BLOCKS.SIZE];
 		for (int x = 0; x < Chunk.BLOCKS.SIZE; x++) {
 			for (int z = 0; z < Chunk.BLOCKS.SIZE; z++) {
-				heights[x][z] = SEA_LEVEL;
+				heights[x][z] = ISLAND_SURFACE;
 			}
 		}
 		return heights;

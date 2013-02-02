@@ -37,9 +37,14 @@ import org.spout.vanilla.plugin.world.generator.theend.TheEndGenerator;
 import org.spout.vanilla.plugin.world.generator.theend.object.SpireObject;
 
 public class SpireDecorator extends Decorator {
+	private static final byte ODD = 5;
+
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {
+			return;
+		}
+		if (random.nextInt(ODD) != 0) {
 			return;
 		}
 		final World world = chunk.getWorld();

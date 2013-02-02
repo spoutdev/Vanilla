@@ -110,9 +110,9 @@ public class NetherGenerator extends VanillaSingleBiomeGenerator {
 					double value = noise[xx][yy][zz];
 					if (SMOOTH_HEIGHT > 0) {
 						if (yy + y < LOW_SMOOTH_START) {
-							value += (1d / cubic(SMOOTH_HEIGHT)) * cubic(LOW_SMOOTH_START - yy - y);
+							value -= 1d / cubic(SMOOTH_HEIGHT) * cubic(y + yy - LOW_SMOOTH_START);
 						} else if (yy + y > HIGH_SMOOTH_START) {
-							value += (1d / cubic(SMOOTH_HEIGHT)) * cubic(y + yy - HIGH_SMOOTH_START);
+							value += 1d / cubic(SMOOTH_HEIGHT) * cubic(y + yy - HIGH_SMOOTH_START);
 						}
 					}
 					if (value >= 0) {

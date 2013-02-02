@@ -29,7 +29,6 @@ package org.spout.vanilla.protocol;
 import static org.spout.vanilla.protocol.ChannelBufferUtilsTest.TEST_PARAMS;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 import org.spout.api.inventory.ItemStack;
@@ -40,7 +39,7 @@ import org.spout.api.protocol.reposition.NullRepositionManager;
 import org.spout.api.util.Parameter;
 import org.spout.vanilla.api.data.Animation;
 import org.spout.vanilla.api.data.GameMode;
-import org.spout.vanilla.plugin.inventory.window.WindowType;
+import org.spout.vanilla.api.inventory.window.WindowType;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.VanillaCodecLookupService;
 import org.spout.vanilla.plugin.protocol.msg.ServerListPingMessage;

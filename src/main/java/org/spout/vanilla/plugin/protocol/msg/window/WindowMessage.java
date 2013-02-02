@@ -26,9 +26,8 @@
  */
 package org.spout.vanilla.plugin.protocol.msg.window;
 
+import org.spout.vanilla.api.inventory.window.AbstractWindow;
 import org.spout.vanilla.api.protocol.msg.VanillaMainChannelMessage;
-
-import org.spout.vanilla.plugin.inventory.window.Window;
 
 /**
  * An abstraction of messages meant for Windows
@@ -36,7 +35,7 @@ import org.spout.vanilla.plugin.inventory.window.Window;
 public abstract class WindowMessage extends VanillaMainChannelMessage {
 	private final int instanceId;
 
-	public WindowMessage(Window window) {
+	public WindowMessage(AbstractWindow window) {
 		this.instanceId = window.getId();
 	}
 

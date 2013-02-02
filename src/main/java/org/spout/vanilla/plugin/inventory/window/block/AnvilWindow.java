@@ -36,7 +36,7 @@ import org.spout.vanilla.api.event.inventory.AnvilCloseEvent;
 import org.spout.vanilla.plugin.inventory.block.AnvilInventory;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 import org.spout.vanilla.plugin.inventory.window.Window;
-import org.spout.vanilla.plugin.inventory.window.WindowType;
+import org.spout.vanilla.api.inventory.window.WindowType;
 
 public class AnvilWindow extends Window {
 	private final Block block;

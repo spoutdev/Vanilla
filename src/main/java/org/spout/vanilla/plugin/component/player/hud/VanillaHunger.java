@@ -29,14 +29,14 @@ package org.spout.vanilla.plugin.component.player.hud;
 import java.awt.Color;
 import java.util.List;
 import java.util.Random;
-import org.spout.api.component.Component;
+
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
-import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
+import org.spout.vanilla.api.data.VanillaRenderMaterials;
 
 public class VanillaHunger extends HungerWidget {
 	private int hungerTicks;

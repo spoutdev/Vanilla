@@ -65,7 +65,7 @@ import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
+import org.spout.vanilla.api.data.VanillaRenderMaterials;
 import org.spout.vanilla.plugin.data.drops.flag.DropFlags;
 import org.spout.vanilla.plugin.data.drops.flag.PlayerFlags;
 import org.spout.vanilla.plugin.data.drops.type.block.BlockDrops;
@@ -73,7 +73,6 @@ import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.data.tool.ToolLevel;
 import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.render.VanillaEffects;
-import org.spout.vanilla.plugin.util.MathHelper;
 
 public abstract class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial, IndirectRedstoneSource {
 	public static short REDSTONE_POWER_MAX = 15;

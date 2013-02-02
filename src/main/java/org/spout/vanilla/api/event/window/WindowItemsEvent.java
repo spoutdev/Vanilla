@@ -24,49 +24,36 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.inventory.window;
+package org.spout.vanilla.api.event.window;
 
-import org.spout.api.inventory.Inventory;
+import org.spout.api.event.HandlerList;
+import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.vanilla.api.inventory.window.AbstractWindow;
 
-/**
- * Represents the arguments of a click on a
- * {@link Window}
- */
-public class ClickArguments {
-	private final Slot slot;
-	private final boolean rightClick, shiftClick;
+public class WindowItemsEvent extends WindowEvent {
+	private static HandlerList handlers = new HandlerList();
+	private ItemStack[] items;
 
-	public ClickArguments(Inventory inventory, int slot, boolean rightClick, boolean shiftClick) {
-		this.slot = new Slot(inventory, slot);
-		this.rightClick = rightClick;
-		this.shiftClick = shiftClick;
-	}
-
-	public ClickArguments(Slot slot, boolean rightClick, boolean shiftClick) {
-		this.slot = slot;
-		this.rightClick = rightClick;
-		this.shiftClick = shiftClick;
+	public WindowItemsEvent(AbstractWindow window, ItemStack[] items) {
+		super(window);
+		this.items = items;
 	}
 
 	/**
-	 * Returns true if the click was a right click
-	 * @return true if window was right clicked
+	 * Gets the new Items that are set for the Window
+	 * @return items
 	 */
-	public boolean isRightClick() {
-		return rightClick;
+	public ItemStack[] getItems() {
+		return this.items;
 	}
 
-	/**
-	 * Returns true if the client was holding shift when the window was clicked
-	 * @return true if shift was being held down
-	 */
-	public boolean isShiftClick() {
-		return shiftClick;
+	@Override
+	public HandlerList getHandlers() {
+		return handlers;
 	}
 
-	public Slot getSlot() {
-		return slot;
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

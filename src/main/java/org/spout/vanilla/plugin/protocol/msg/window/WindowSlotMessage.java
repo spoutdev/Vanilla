@@ -31,13 +31,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.plugin.inventory.window.Window;
+import org.spout.vanilla.api.inventory.window.AbstractWindow;
 
 public final class WindowSlotMessage extends WindowMessage {
 	private final int slot;
 	private final ItemStack item;
 
-	public WindowSlotMessage(Window window, int slot, ItemStack item) {
+	public WindowSlotMessage(AbstractWindow window, int slot, ItemStack item) {
 		this(window.getId(), slot, item);
 	}
 

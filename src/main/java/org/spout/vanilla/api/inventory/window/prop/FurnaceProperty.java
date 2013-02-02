@@ -31,7 +31,7 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 
 /**
  * Represents a property of
- * {@link org.spout.vanilla.plugin.inventory.window.WindowType#FURNACE}
+ * {@link org.spout.vanilla.api.inventory.window.WindowType#FURNACE}
  */
 public enum FurnaceProperty implements WindowProperty {
 	/**

@@ -31,12 +31,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.plugin.inventory.window.Window;
+import org.spout.vanilla.api.inventory.window.AbstractWindow;
 
 public final class WindowItemsMessage extends WindowMessage {
 	private final ItemStack[] items;
 
-	public WindowItemsMessage(Window window, ItemStack[] items) {
+	public WindowItemsMessage(AbstractWindow window, ItemStack[] items) {
 		this(window.getId(), items);
 	}
 

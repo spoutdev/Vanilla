@@ -24,48 +24,37 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.api.event.player;
+package org.spout.vanilla.api.event.window;
 
-import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
 
-/**
- * Event which is called when a player changes an inv-slot
- */
-public class PlayerSlotChangeEvent extends PlayerEvent {
+import org.spout.vanilla.api.inventory.window.AbstractWindow;
+
+public class WindowPropertyEvent extends WindowEvent {
 	private static HandlerList handlers = new HandlerList();
-	private final int oldSlot;
-	private int newSlot;
+	private int id;
+	private int value;
 
-	public PlayerSlotChangeEvent(Player p, int oldSlot, int newSlot) {
-		super(p);
-		this.oldSlot = oldSlot;
-		this.newSlot = newSlot;
+	public WindowPropertyEvent(AbstractWindow window, int id, int value) {
+		super(window);
+		this.id = id;
+		this.value = value;
 	}
 
 	/**
-	 * Gets whether the slot has actually changed
-	 * @return True if it changed, False if not
+	 * Gets the id of the Window property that got changed
+	 * @return property Id
 	 */
-	public boolean hasChanged() {
-		return oldSlot != newSlot;
+	public int getId() {
+		return this.id;
 	}
 
 	/**
-	 * Gets the previously selected slot
-	 * @return previously selected slot
+	 * Gets the value the property got set to
+	 * @return the new property value
 	 */
-	public int getOldSlot() {
-		return oldSlot;
-	}
-
-	/**
-	 * Gets the newly selected slot
-	 * @return newly selected slot
-	 */
-	public int getNewSlot() {
-		return newSlot;
+	public int getValue() {
+		return this.value;
 	}
 
 	@Override

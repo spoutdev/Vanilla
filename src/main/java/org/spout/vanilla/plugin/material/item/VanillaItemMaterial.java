@@ -32,7 +32,7 @@ import org.spout.api.render.RenderMaterial;
 
 import org.spout.vanilla.api.material.VanillaMaterial;
 
-import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
+import org.spout.vanilla.api.data.VanillaRenderMaterials;
 
 public class VanillaItemMaterial extends Material implements VanillaMaterial {
 	private final int minecraftId;

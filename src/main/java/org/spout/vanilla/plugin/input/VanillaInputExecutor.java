@@ -38,6 +38,7 @@ import org.spout.api.math.Vector3;
 public class VanillaInputExecutor implements InputExecutor {
 	private Player player;
 	private CameraComponent camera;
+	private float speed = 10;
 
 	public VanillaInputExecutor(Player player) {
 		this.player = player;
@@ -52,22 +53,22 @@ public class VanillaInputExecutor implements InputExecutor {
 
 		Vector3 offset = Vector3.ZERO;
 		if (inputState.getForward()) {
-			offset = offset.subtract(ts.forwardVector().multiply(camera.getSpeed()).multiply(dt));
+			offset = offset.subtract(ts.forwardVector().multiply(speed).multiply(dt));
 		}
 		if (inputState.getBackward()) {
-			offset = offset.add(ts.forwardVector().multiply(camera.getSpeed()).multiply(dt));
+			offset = offset.add(ts.forwardVector().multiply(speed).multiply(dt));
 		}
 		if (inputState.getLeft()) {
-			offset = offset.subtract(ts.rightVector().multiply(camera.getSpeed()).multiply(dt));
+			offset = offset.subtract(ts.rightVector().multiply(speed).multiply(dt));
 		}
 		if (inputState.getRight()) {
-			offset = offset.add(ts.rightVector().multiply(camera.getSpeed()).multiply(dt));
+			offset = offset.add(ts.rightVector().multiply(speed).multiply(dt));
 		}
 		if (inputState.getJump()) {
-			offset = offset.add(ts.upVector().multiply(camera.getSpeed()).multiply(dt));
+			offset = offset.add(ts.upVector().multiply(speed).multiply(dt));
 		}
 		if (inputState.getCrouch()) {
-			offset = offset.subtract(ts.upVector().multiply(camera.getSpeed()).multiply(dt));
+			offset = offset.subtract(ts.upVector().multiply(speed).multiply(dt));
 		}
 
 		ts.translateAndSetRotation(offset, QuaternionMath.rotation(inputState.pitch(), inputState.yaw(), ts.getRotation().getRoll()));

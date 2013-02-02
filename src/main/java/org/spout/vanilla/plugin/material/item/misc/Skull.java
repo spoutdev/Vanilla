@@ -29,7 +29,9 @@ package org.spout.vanilla.plugin.material.item.misc;
 import org.spout.vanilla.plugin.material.block.component.SkullBlock;
 import org.spout.vanilla.plugin.material.item.BlockItem;
 
-public class Skull extends BlockItem {
+import org.spout.vanilla.api.material.item.armor.Helmet;
+
+public class Skull extends BlockItem implements Helmet {
 	public static final Skull SKELETON_SKULL = new Skull("Skeleton Skull");
 	public static final Skull WITHER_SKELETON_SKULL = new Skull("Wither Skeleton Skull", 1, SkullBlock.WITHER_SKELETON_SKULL);
 	public static final Skull ZOMBIE_HEAD = new Skull("Zombie Head", 2, SkullBlock.ZOMBIE_HEAD);

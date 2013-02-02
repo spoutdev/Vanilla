@@ -24,25 +24,28 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.window;
+package org.spout.vanilla.plugin.material.item.misc;
 
-import org.spout.api.event.HandlerList;
+import org.spout.vanilla.api.material.PotionReagent;
+import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
+import org.spout.vanilla.plugin.material.item.potion.Potion;
 
-import org.spout.vanilla.plugin.inventory.window.Window;
-
-public class WindowOpenEvent extends WindowEvent {
-	private static HandlerList handlers = new HandlerList();
-
-	public WindowOpenEvent(Window window) {
-		super(window);
+public class GlowstoneDust extends VanillaItemMaterial implements PotionReagent {
+	public GlowstoneDust(String name, int id) {
+		super(name, id, null);
 	}
 
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
+	@Override // TODO: finish :p
+	public Potion getResult(Potion original) {
+		if (Potion.REGENERATION.equals(original)) {
+			return Potion.REGENERATION_II;
+		} else if (Potion.REGENERATION_EXTENDED.equals(original)) {
+			return Potion.REGENERATION_II;
+		} else if (Potion.WATER_BOTTLE.equals(original)) {
+			return Potion.THICK;
+		}
+
+		return null;
 	}
 
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
 }

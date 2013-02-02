@@ -50,8 +50,9 @@ public class RedstoneOre extends Ore implements TimedCraftable, InitializableMat
 	@Override
 	public void initialize() {
 		getDrops().clear();
-		getDrops().add(VanillaMaterials.REDSTONE_DUST, 4);
+		getDrops().DEFAULT.add(VanillaMaterials.REDSTONE_DUST, 4);
 		getDrops().SILK_TOUCH.add(VanillaMaterials.REDSTONE_ORE);
+		getDrops().EXPLOSION.add(VanillaMaterials.REDSTONE_DUST, 4);
 	}
 
 	@Override

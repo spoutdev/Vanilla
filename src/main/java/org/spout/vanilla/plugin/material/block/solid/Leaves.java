@@ -78,6 +78,7 @@ public class Leaves extends Solid implements Burnable, InitializableMaterial {
 		if (getData() == 0) {
 			drops.FALSE.add(VanillaMaterials.RED_APPLE).setChance(0.005);
 		}
+		getDrops().EXPLOSION.clear();
 	}
 
 	@Override

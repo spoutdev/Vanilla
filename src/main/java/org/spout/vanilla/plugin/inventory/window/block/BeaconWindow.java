@@ -32,7 +32,7 @@ import org.spout.api.math.Vector2;
 import org.spout.vanilla.plugin.inventory.block.BeaconInventory;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 import org.spout.vanilla.plugin.inventory.window.Window;
-import org.spout.vanilla.plugin.inventory.window.WindowType;
+import org.spout.vanilla.api.inventory.window.WindowType;
 
 public class BeaconWindow extends Window {
 	public BeaconWindow(Player owner, BeaconInventory inventory) {

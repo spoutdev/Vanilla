@@ -42,6 +42,8 @@ import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.api.data.PaintingType;
 import org.spout.vanilla.api.data.Weather;
 import org.spout.vanilla.api.data.WorldType;
+
+import org.spout.vanilla.plugin.inventory.player.PlayerArmorInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
 
 import org.spout.vanilla.plugin.inventory.block.BrewingStandInventory;
@@ -105,6 +107,7 @@ public class VanillaData {
 	public static final DefaultedKey<Boolean> IS_FALLING = new DefaultedKeyImpl<Boolean>("is_falling", false);
 	public static final DefaultedKey<Boolean> IS_ON_GROUND = new DefaultedKeyImpl<Boolean>("is_on_Ground", true);
 	public static final DefaultedKey<Boolean> IS_JUMPING = new DefaultedKeyImpl<Boolean>("is_jumping", false);
+	public static final DefaultedKey<Boolean> IS_IN_WATER = new DefaultedKeyImpl<Boolean>("is_in_water", false);
 	public static final DefaultedKey<Boolean> HAS_DEATH_ANIMATION = new DefaultedKeyImpl<Boolean>("has_death_animation", true);
 	public static final DefaultedKey<Short> EXPERIENCE_AMOUNT = new DefaultedKeyImpl<Short>("experience_amount", (short) 0);
 	public static final DefaultedKey<Float> EXPERIENCE_BAR_PROGRESS = new DefaultedKeyImpl<Float>("experience_bar_progress", (float) 0);
@@ -128,6 +131,7 @@ public class VanillaData {
 	public static final DefaultedKey<PlayerMainInventory> MAIN_INVENTORY = new DefaultedKeyFactory<PlayerMainInventory>("main", PlayerMainInventory.class);
 	public static final DefaultedKey<PlayerCraftingInventory> CRAFTING_INVENTORY = new DefaultedKeyFactory<PlayerCraftingInventory>("crafting", PlayerCraftingInventory.class);
 	public static final DefaultedKey<EntityArmorInventory> ARMOR_INVENTORY = new DefaultedKeyFactory<EntityArmorInventory>("armor", EntityArmorInventory.class);
+	public static final DefaultedKey<PlayerArmorInventory> PLAYER_ARMOR_INVENTORY = new DefaultedKeyFactory<PlayerArmorInventory>("armor", PlayerArmorInventory.class);
 	public static final DefaultedKey<PlayerQuickbar> QUICKBAR_INVENTORY = new DefaultedKeyFactory<PlayerQuickbar>("quickbar", PlayerQuickbar.class);
 	public static final DefaultedKey<ChestInventory> ENDER_CHEST_INVENTORY = new DefaultedKeyFactory<ChestInventory>("ender_chest_inventory", ChestInventory.class);
 	public static final DefaultedKey<EntityQuickbarInventory> ENTITY_HELD_INVENTORY = new DefaultedKeyFactory<EntityQuickbarInventory>("held", EntityQuickbarInventory.class);
@@ -136,7 +140,7 @@ public class VanillaData {
 	//Item-specific
 	public static final DefaultedKey<Number> UNCOLLECTABLE_TICKS = new DefaultedKeyImpl<Number>("uncollectable_ticks", (long) 0);
 	//Head-specific
-	public static final DefaultedKey<Integer> HEAD_HEIGHT = new DefaultedKeyImpl<Integer>("head_height", 1);
+	public static final DefaultedKey<Float> HEAD_HEIGHT = new DefaultedKeyImpl<Float>("head_height_v2", 1.62f);
 	public static final DefaultedKey<Quaternion> HEAD_ROTATION = new DefaultedKeyImpl<Quaternion>("head_rotation", Quaternion.IDENTITY);
 	//XPOrb-specific
 	public static final DefaultedKey<Long> TIME_DISPERSED = new DefaultedKeyImpl<Long>("time_dispersed", Long.valueOf(0));

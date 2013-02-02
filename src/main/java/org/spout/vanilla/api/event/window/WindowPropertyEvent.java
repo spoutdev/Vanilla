@@ -24,28 +24,37 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.event.window;
+package org.spout.vanilla.api.event.window;
 
 import org.spout.api.event.HandlerList;
-import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.plugin.inventory.window.Window;
+import org.spout.vanilla.api.inventory.window.AbstractWindow;
 
-public class WindowItemsEvent extends WindowEvent {
+public class WindowPropertyEvent extends WindowEvent {
 	private static HandlerList handlers = new HandlerList();
-	private ItemStack[] items;
+	private int id;
+	private int value;
 
-	public WindowItemsEvent(Window window, ItemStack[] items) {
+	public WindowPropertyEvent(AbstractWindow window, int id, int value) {
 		super(window);
-		this.items = items;
+		this.id = id;
+		this.value = value;
 	}
 
 	/**
-	 * Gets the new Items that are set for the Window
-	 * @return items
+	 * Gets the id of the Window property that got changed
+	 * @return property Id
 	 */
-	public ItemStack[] getItems() {
-		return this.items;
+	public int getId() {
+		return this.id;
+	}
+
+	/**
+	 * Gets the value the property got set to
+	 * @return the new property value
+	 */
+	public int getValue() {
+		return this.value;
 	}
 
 	@Override

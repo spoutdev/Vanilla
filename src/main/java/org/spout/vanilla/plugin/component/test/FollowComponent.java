@@ -60,7 +60,7 @@ public class FollowComponent extends EntityComponent {
 		}
 
 		//Within 2 blocks of the followed entity? No need to continue
-		if (VectorMath.distance(getOwner().getScene().getPosition(), toFollow.getScene().getPosition()) <= 3) {
+		if (getOwner().getScene().getPosition().distanceSquared(toFollow.getScene().getPosition()) <= 9) {
 			navigate.stop();
 			return;
 		}

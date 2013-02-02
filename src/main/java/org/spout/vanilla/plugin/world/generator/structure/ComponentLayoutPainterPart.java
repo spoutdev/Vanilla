@@ -155,8 +155,7 @@ public class ComponentLayoutPainterPart extends ComponentPart {
 
 	private Vector3 transform(int x, int z) {
 		final Vector3 rotPoint = new Vector3(rotationPoint.getX(), rotationPoint.getY(), rotationPoint.getZ());
-		return VectorMath.round(VectorMath.transform(new Vector3(x, 0, z).
-				subtract(rotPoint), rotation).
-				add(rotPoint).add(new Vector3(position.getX(), position.getY(), position.getZ())));
+		return VectorMath.transform(new Vector3(x, 0, z).subtract(rotPoint), rotation).
+				add(rotPoint).add(position.getX(), position.getY(), position.getZ()).round();
 	}
 }

@@ -50,6 +50,7 @@ public class LapisLazuliOre extends Ore implements TimedCraftable, Initializable
 		getDrops().clear();
 		getDrops().DEFAULT.addRange(Dye.LAPIS_LAZULI, 2, 4);
 		getDrops().SILK_TOUCH.add(VanillaMaterials.LAPIS_LAZULI_ORE);
+		getDrops().EXPLOSION.addRange(Dye.LAPIS_LAZULI, 2, 4);
 	}
 
 	@Override

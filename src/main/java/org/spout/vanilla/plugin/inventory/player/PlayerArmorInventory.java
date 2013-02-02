@@ -24,49 +24,38 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.inventory.window;
+package org.spout.vanilla.plugin.inventory.player;
 
-import org.spout.api.inventory.Inventory;
+import org.spout.vanilla.plugin.inventory.entity.EntityArmorInventory;
+import org.spout.vanilla.plugin.material.block.solid.Pumpkin;
 
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
 
-/**
- * Represents the arguments of a click on a
- * {@link Window}
- */
-public class ClickArguments {
-	private final Slot slot;
-	private final boolean rightClick, shiftClick;
+import org.spout.vanilla.api.material.item.armor.Boots;
+import org.spout.vanilla.api.material.item.armor.Chestplate;
+import org.spout.vanilla.api.material.item.armor.Helmet;
+import org.spout.vanilla.api.material.item.armor.Leggings;
 
-	public ClickArguments(Inventory inventory, int slot, boolean rightClick, boolean shiftClick) {
-		this.slot = new Slot(inventory, slot);
-		this.rightClick = rightClick;
-		this.shiftClick = shiftClick;
-	}
+public class PlayerArmorInventory extends EntityArmorInventory {
 
-	public ClickArguments(Slot slot, boolean rightClick, boolean shiftClick) {
-		this.slot = slot;
-		this.rightClick = rightClick;
-		this.shiftClick = shiftClick;
-	}
-
-	/**
-	 * Returns true if the click was a right click
-	 * @return true if window was right clicked
-	 */
-	public boolean isRightClick() {
-		return rightClick;
-	}
-
-	/**
-	 * Returns true if the client was holding shift when the window was clicked
-	 * @return true if shift was being held down
-	 */
-	public boolean isShiftClick() {
-		return shiftClick;
-	}
-
-	public Slot getSlot() {
-		return slot;
+	@Override
+	public boolean canSet(int slot, ItemStack item) {
+		if (item != null) {
+			Material material = item.getMaterial();
+			switch (slot) {
+				case BOOT_SLOT:
+					return material instanceof Boots;
+				case LEGGINGS_SLOT:
+					return material instanceof Leggings;
+				case CHEST_PLATE_SLOT:
+					return material instanceof Chestplate;
+				case HELMET_SLOT:
+					return material instanceof Helmet || (material instanceof Pumpkin && !((Pumpkin) material).isLantern());
+				default:
+					return false;
+			}
+		}
+		return true;
 	}
 }

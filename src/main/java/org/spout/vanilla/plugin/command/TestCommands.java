@@ -83,7 +83,7 @@ import org.spout.vanilla.plugin.inventory.block.DispenserInventory;
 import org.spout.vanilla.plugin.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
 import org.spout.vanilla.plugin.inventory.entity.VillagerInventory;
-import org.spout.vanilla.plugin.inventory.window.WindowType;
+import org.spout.vanilla.api.inventory.window.WindowType;
 import org.spout.vanilla.plugin.inventory.window.block.BrewingStandWindow;
 import org.spout.vanilla.plugin.inventory.window.block.CraftingTableWindow;
 import org.spout.vanilla.plugin.inventory.window.block.DispenserWindow;

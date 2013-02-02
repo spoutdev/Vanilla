@@ -45,6 +45,7 @@ public class Stone extends Solid implements InitializableMaterial {
 	public void initialize() {
 		this.getDrops().DEFAULT.clear().add(VanillaMaterials.COBBLESTONE);
 		this.getDrops().SILK_TOUCH.add(VanillaMaterials.STONE);
+		this.getDrops().EXPLOSION.clear().add(VanillaMaterials.COBBLESTONE);
 	}
 
 	@Override

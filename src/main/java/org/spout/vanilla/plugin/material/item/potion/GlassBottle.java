@@ -24,44 +24,37 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.item.bucket;
+package org.spout.vanilla.plugin.material.item.potion;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.Player;
-import org.spout.api.event.Cause;
-import org.spout.api.event.cause.EntityCause;
-import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.Material;
+
 import org.spout.api.util.BlockIterator;
-
 import org.spout.vanilla.api.inventory.Slot;
-
+import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.liquid.Lava;
 import org.spout.vanilla.plugin.material.block.liquid.Water;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 
-public class EmptyBucket extends VanillaItemMaterial {
-	public EmptyBucket(String name, int id) {
+public class GlassBottle extends VanillaItemMaterial {
+	public GlassBottle(String name, int id) {
 		super(name, id, null);
-		setMaxStackSize(16);
 	}
-
+	
+	// TODO: handle cauldron
 	@Override
 	public void onInteract(Entity entity, Action action) {
 		if (action == Action.RIGHT_CLICK) {
-			HeadComponent head = entity.get(HeadComponent.class);
-			if (head == null) {
+			HeadComponent interact = entity.get(HeadComponent.class);
+			if (interact == null) {
 				return;
 			}
 			Block block;
-			BlockIterator iterator = head.getBlockView();
+			BlockIterator iterator = interact.getBlockView();
 			while (true) {
 				if (!iterator.hasNext()) {
 					return;
@@ -73,35 +66,19 @@ public class EmptyBucket extends VanillaItemMaterial {
 				if (block.getMaterial() instanceof Water && VanillaMaterials.WATER.isSource(block)) {
 					break;
 				}
-				if (block.getMaterial() instanceof Lava && VanillaMaterials.LAVA.isSource(block)) {
-					break;
+			}
+
+			Slot slot = PlayerUtil.getHeldSlot(entity);
+			if (slot != null) {
+				ItemStack fullbottle = new ItemStack(Potion.WATER_BOTTLE, 1);
+				entity.get(PlayerInventory.class).getQuickbar().add(fullbottle);
+				if (!fullbottle.isEmpty()) {
+					entity.get(PlayerInventory.class).getMain().add(fullbottle);
+				}
+				if (fullbottle.isEmpty() && !PlayerUtil.isCostSuppressed(entity)) {
+					slot.addAmount(-1);
 				}
 			}
-
-			// Validate the clicked material to see if it can be picked up
-			final Material filled; // material to fill the bucket with
-			if (block.getMaterial() instanceof Water && VanillaMaterials.WATER.isSource(block)) {
-				filled = VanillaMaterials.WATER_BUCKET;
-			} else if (block.getMaterial() instanceof Lava && VanillaMaterials.LAVA.isSource(block)) {
-				filled = VanillaMaterials.LAVA_BUCKET;
-			} else {
-				return;
-			}
-
-			// Change item if applicable
-			Slot selected = PlayerUtil.getHeldSlot(entity);
-			if (selected != null && !PlayerUtil.isCostSuppressed(entity)) {
-				selected.set(new ItemStack(filled, 1));
-			}
-
-			// Change the clicked block to air
-			final Cause<?> cause;
-			if (entity instanceof Player) {
-				cause = new PlayerCause((Player) entity);
-			} else {
-				cause = new EntityCause(entity);
-			}
-			block.setMaterial(BlockMaterial.AIR, cause);
 		}
 	}
 }

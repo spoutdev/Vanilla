@@ -24,52 +24,25 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.api.inventory.window.prop;
+package org.spout.vanilla.api.event.window;
 
-import gnu.trove.map.TIntObjectMap;
-import gnu.trove.map.hash.TIntObjectHashMap;
+import org.spout.api.event.HandlerList;
 
-/**
- * Represents a property of
- * {@link org.spout.vanilla.api.inventory.window.WindowType#ENCHANTMENT_TABLE}
- */
-public enum EnchantmentTableProperty implements WindowProperty {
-	/**
-	 * The value of the first slot level.
-	 */
-	SLOT_1(0),
-	/**
-	 * The value of the second slot level.
-	 */
-	SLOT_2(1),
-	/**
-	 * The value of the third slot level.
-	 */
-	SLOT_3(2);
-	private final int id;
-	private static final TIntObjectMap<EnchantmentTableProperty> idMap = new TIntObjectHashMap<EnchantmentTableProperty>(EnchantmentTableProperty.values().length);
+import org.spout.vanilla.api.inventory.window.AbstractWindow;
 
-	private EnchantmentTableProperty(int id) {
-		this.id = id;
+public class WindowOpenEvent extends WindowEvent {
+	private static HandlerList handlers = new HandlerList();
+
+	public WindowOpenEvent(AbstractWindow window) {
+		super(window);
 	}
 
 	@Override
-	public int getId() {
-		return id;
+	public HandlerList getHandlers() {
+		return handlers;
 	}
 
-	static {
-		for (EnchantmentTableProperty prop : EnchantmentTableProperty.values()) {
-			idMap.put(prop.getId(), prop);
-		}
-	}
-
-	/**
-	 * Returns the property with the specified id
-	 * @param id of property
-	 * @return property with specified id
-	 */
-	public static EnchantmentTableProperty get(int id) {
-		return idMap.get(id);
+	public static HandlerList getHandlerList() {
+		return handlers;
 	}
 }

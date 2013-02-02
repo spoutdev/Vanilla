@@ -69,6 +69,7 @@ public class Grass extends SpreadingSolid implements DynamicMaterial, Initializa
 		getDrops().DEFAULT.clear();
 		getDrops().DEFAULT.add(VanillaMaterials.DIRT);
 		getDrops().SILK_TOUCH.add(VanillaMaterials.GRASS);
+		getDrops().EXPLOSION.clear().add(VanillaMaterials.DIRT);
 	}
 
 	@Override

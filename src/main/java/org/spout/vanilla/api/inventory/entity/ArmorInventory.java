@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.api.inventory.entity;
 
+import org.spout.vanilla.plugin.material.block.solid.Pumpkin;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
@@ -67,13 +69,10 @@ public abstract class ArmorInventory extends Inventory {
 	public abstract void updateSlot(int i, ItemStack item, Entity entity);
 
 	@Override
-	public boolean canSet(int i, ItemStack item) {
-		if (!super.canSet(i, item)) {
-			return false;
-		}
+	public boolean canSet(int slot, ItemStack item) {
 		if (item != null) {
 			Material material = item.getMaterial();
-			switch (i) {
+			switch (slot) {
 				case BOOT_SLOT:
 					return material instanceof Boots;
 				case LEGGINGS_SLOT:
@@ -81,7 +80,7 @@ public abstract class ArmorInventory extends Inventory {
 				case CHEST_PLATE_SLOT:
 					return material instanceof Chestplate;
 				case HELMET_SLOT:
-					return material instanceof Helmet;
+					return material instanceof Helmet || material instanceof Pumpkin;
 				default:
 					return false;
 			}

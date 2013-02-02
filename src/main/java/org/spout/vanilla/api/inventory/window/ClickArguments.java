@@ -24,56 +24,49 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.api.event.player;
+package org.spout.vanilla.api.inventory.window;
 
-import org.spout.api.entity.Player;
-import org.spout.api.event.HandlerList;
-import org.spout.api.event.player.PlayerEvent;
+import org.spout.api.inventory.Inventory;
+
+import org.spout.vanilla.api.inventory.Slot;
 
 /**
- * Event which is called when a player changes an inv-slot
+ * Represents the arguments of a click on a
+ * {@link org.spout.vanilla.plugin.inventory.window.Window}
  */
-public class PlayerSlotChangeEvent extends PlayerEvent {
-	private static HandlerList handlers = new HandlerList();
-	private final int oldSlot;
-	private int newSlot;
+public class ClickArguments {
+	private final Slot slot;
+	private final boolean rightClick, shiftClick;
 
-	public PlayerSlotChangeEvent(Player p, int oldSlot, int newSlot) {
-		super(p);
-		this.oldSlot = oldSlot;
-		this.newSlot = newSlot;
+	public ClickArguments(Inventory inventory, int slot, boolean rightClick, boolean shiftClick) {
+		this.slot = new Slot(inventory, slot);
+		this.rightClick = rightClick;
+		this.shiftClick = shiftClick;
+	}
+
+	public ClickArguments(Slot slot, boolean rightClick, boolean shiftClick) {
+		this.slot = slot;
+		this.rightClick = rightClick;
+		this.shiftClick = shiftClick;
 	}
 
 	/**
-	 * Gets whether the slot has actually changed
-	 * @return True if it changed, False if not
+	 * Returns true if the click was a right click
+	 * @return true if window was right clicked
 	 */
-	public boolean hasChanged() {
-		return oldSlot != newSlot;
+	public boolean isRightClick() {
+		return rightClick;
 	}
 
 	/**
-	 * Gets the previously selected slot
-	 * @return previously selected slot
+	 * Returns true if the client was holding shift when the window was clicked
+	 * @return true if shift was being held down
 	 */
-	public int getOldSlot() {
-		return oldSlot;
+	public boolean isShiftClick() {
+		return shiftClick;
 	}
 
-	/**
-	 * Gets the newly selected slot
-	 * @return newly selected slot
-	 */
-	public int getNewSlot() {
-		return newSlot;
-	}
-
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
+	public Slot getSlot() {
+		return slot;
 	}
 }

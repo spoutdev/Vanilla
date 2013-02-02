@@ -33,16 +33,16 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.shape.Grid;
 import org.spout.api.plugin.Platform;
 
+import org.spout.vanilla.api.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.substance.material.chest.AbstractChest;
 import org.spout.vanilla.plugin.inventory.block.ChestInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 import org.spout.vanilla.plugin.inventory.window.Window;
-import org.spout.vanilla.plugin.inventory.window.WindowType;
+import org.spout.vanilla.api.inventory.window.WindowType;
 
 public class AbstractChestWindow extends Window {
 	private AbstractChest chest;
@@ -65,20 +65,18 @@ public class AbstractChestWindow extends Window {
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			throw new IllegalStateException("Shift click handling is handled server side.");
 		}
-		final PlayerInventory inventory = getPlayerInventory();
+		final PlayerInventoryComponent inventory = getPlayerInventory();
 
 		// From main inventory/quickbar to the chest
 		if (from instanceof PlayerMainInventory || from instanceof PlayerQuickbar) {
 			for (InventoryConverter conv : this.getInventoryConverters()) {
 				Inventory inv = conv.getInventory();
 				if (inv instanceof ChestInventory) {
-					Grid grid = inv.grid(9);
-					final int height = grid.getHeight();
-					final int length = grid.getLength();
-					for (int y = height - 1; y >= 0; y--) {
-						int x1 = length * y;
-						int x2 = x1 + length - 1;
-						inv.add(x1, x2, stack);
+					Grid grid = inv.grid(ChestInventory.LENGTH);
+					for (int row = grid.getHeight() - 1; row >= 0; row--) {
+						int startSlot = ChestInventory.LENGTH * row;
+						int endSlot = startSlot + ChestInventory.LENGTH - 1;
+						inv.add(startSlot, endSlot, stack);
 						from.set(slot, stack);
 						if (stack.isEmpty()) {
 							return true;
@@ -100,12 +98,10 @@ public class AbstractChestWindow extends Window {
 
 			// To main inventory (reversed)
 			final Inventory main = inventory.getMain();
-			final int height = 3;
-			final int length = 9;
-			for (int y = 0; y < height; y++) {
-				int x1 = length * y;
-				int x2 = x1 + length - 1;
-				main.add(x2, x1, stack);
+			for (int row = 0; row < PlayerMainInventory.HEIGHT; row++) {
+				int startSlot = PlayerMainInventory.LENGTH * row;
+				int endSlot = startSlot + PlayerMainInventory.LENGTH - 1;
+				main.add(endSlot, startSlot, stack);
 				from.set(slot, stack);
 				if (stack.isEmpty()) {
 					return true;

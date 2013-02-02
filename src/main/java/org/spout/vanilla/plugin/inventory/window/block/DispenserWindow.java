@@ -34,15 +34,15 @@ import org.spout.api.inventory.shape.Grid;
 import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 
+import org.spout.vanilla.api.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.inventory.block.DispenserInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.plugin.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
 import org.spout.vanilla.plugin.inventory.window.Window;
-import org.spout.vanilla.plugin.inventory.window.WindowType;
+import org.spout.vanilla.api.inventory.window.WindowType;
 
 public class DispenserWindow extends Window {
 	public DispenserWindow(Player owner, DispenserInventory inventory) {
@@ -59,7 +59,7 @@ public class DispenserWindow extends Window {
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			throw new IllegalStateException("Shift click handling is handled server side.");
 		}
-		final PlayerInventory inventory = getPlayerInventory();
+		final PlayerInventoryComponent inventory = getPlayerInventory();
 
 		// From main inventory/quickbar to the dispenser
 		if (from instanceof PlayerMainInventory || from instanceof QuickbarInventory) {
@@ -69,10 +69,10 @@ public class DispenserWindow extends Window {
 					Grid grid = inv.grid(3);
 					final int height = grid.getHeight();
 					final int length = grid.getLength();
-					for (int y = height - 1; y >= 0; y--) {
-						int x1 = length * y;
-						int x2 = x1 + length - 1;
-						inv.add(x1, x2, stack);
+					for (int row = height - 1; row >= 0; row--) {
+						int startSlot = length * row;
+						int endSlot = startSlot + length - 1;
+						inv.add(startSlot, endSlot, stack);
 						from.set(slot, stack);
 						if (stack.isEmpty()) {
 							return true;
@@ -94,12 +94,10 @@ public class DispenserWindow extends Window {
 
 			// To main inventory (reversed)
 			final Inventory main = inventory.getMain();
-			final int height = 3;
-			final int length = 9;
-			for (int y = 0; y < height; y++) {
-				int x1 = length * y;
-				int x2 = x1 + length - 1;
-				main.add(x2, x1, stack);
+			for (int row = 0; row < PlayerMainInventory.HEIGHT; row++) {
+				int startSlot = PlayerMainInventory.LENGTH * row;
+				int endSlot = startSlot + PlayerMainInventory.LENGTH - 1;
+				main.add(endSlot, startSlot, stack);
 				from.set(slot, stack);
 				if (stack.isEmpty()) {
 					return true;

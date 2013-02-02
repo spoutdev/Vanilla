@@ -131,6 +131,7 @@ import org.spout.vanilla.plugin.material.block.pressureplate.WoodenPressurePlate
 import org.spout.vanilla.plugin.material.block.rail.DetectorRail;
 import org.spout.vanilla.plugin.material.block.rail.PoweredRail;
 import org.spout.vanilla.plugin.material.block.rail.Rail;
+import org.spout.vanilla.plugin.material.block.redstone.RedstoneDust;
 import org.spout.vanilla.plugin.material.block.redstone.RedstoneRepeater;
 import org.spout.vanilla.plugin.material.block.redstone.RedstoneTorch;
 import org.spout.vanilla.plugin.material.block.redstone.RedstoneWire;
@@ -225,6 +226,7 @@ import org.spout.vanilla.plugin.material.item.misc.Fireworks;
 import org.spout.vanilla.plugin.material.item.misc.FlowerPot;
 import org.spout.vanilla.plugin.material.item.misc.GhastTear;
 import org.spout.vanilla.plugin.material.item.misc.GlisteringMelon;
+import org.spout.vanilla.plugin.material.item.misc.GlowstoneDust;
 import org.spout.vanilla.plugin.material.item.misc.ItemFrameItem;
 import org.spout.vanilla.plugin.material.item.misc.MagmaCream;
 import org.spout.vanilla.plugin.material.item.misc.MusicDisc;
@@ -237,6 +239,7 @@ import org.spout.vanilla.plugin.material.item.misc.SpawnEgg;
 import org.spout.vanilla.plugin.material.item.misc.Stick;
 import org.spout.vanilla.plugin.material.item.misc.StringItem;
 import org.spout.vanilla.plugin.material.item.misc.Sugar;
+import org.spout.vanilla.plugin.material.item.potion.GlassBottle;
 import org.spout.vanilla.plugin.material.item.potion.Potion;
 import org.spout.vanilla.plugin.material.item.tool.CarrotOnAStick;
 import org.spout.vanilla.plugin.material.item.tool.FishingRod;
@@ -486,7 +489,7 @@ public final class VanillaMaterials {
 	// == Others ==
 	public static final Coal COAL = Coal.COAL;
 	public static final Clay CLAY = new Clay("Clay", 337);
-	public static final BlockItem REDSTONE_DUST = new BlockItem("Redstone", 331, VanillaMaterials.REDSTONE_WIRE, null);
+	public static final RedstoneDust REDSTONE_DUST = new RedstoneDust("Redstone", 331, VanillaMaterials.REDSTONE_WIRE, null);
 	public static final VanillaItemMaterial DIAMOND = new VanillaItemMaterial("Diamond", 264, null);
 	public static final VanillaItemMaterial EMERALD = new VanillaItemMaterial("Emerald", 388, null);
 	public static final VanillaItemMaterial IRON_INGOT = new VanillaItemMaterial("Iron Ingot", 265, null);
@@ -517,7 +520,7 @@ public final class VanillaMaterials {
 	public static final EggItem EGG = new EggItem("Egg", 344);
 	public static final VanillaItemMaterial COMPASS = new VanillaItemMaterial("Compass", 345, null);
 	public static final VanillaItemMaterial CLOCK = new VanillaItemMaterial("Clock", 347, null);
-	public static final VanillaItemMaterial GLOWSTONE_DUST = new VanillaItemMaterial("Glowstone Dust", 348, null);
+	public static final GlowstoneDust GLOWSTONE_DUST = new GlowstoneDust("Glowstone Dust", 348);
 	public static final Dye DYE = Dye.INK_SAC;
 	public static final VanillaItemMaterial BONE = new VanillaItemMaterial("Bone", 352, null);
 	public static final Sugar SUGAR = new Sugar("Sugar", 353);
@@ -574,7 +577,7 @@ public final class VanillaMaterials {
 	public static final GhastTear GHAST_TEAR = new GhastTear("Ghast Tear", 370);
 	public static final VanillaItemMaterial GOLD_NUGGET = new VanillaItemMaterial("Gold Nugget", 371, null);
 	public static final NetherWartItem NETHER_WART = new NetherWartItem("Nether Wart", 372);
-	public static final VanillaItemMaterial GLASS_BOTTLE = new VanillaItemMaterial("Glass Bottle", 374, null);
+	public static final GlassBottle GLASS_BOTTLE = new GlassBottle("Glass Bottle", 374);
 	public static final VanillaItemMaterial NETHER_STAR = new VanillaItemMaterial("Nether Star", 399, null);
 	public static final Food SPIDER_EYE = new Food("Spider Eye", 375, null);
 	public static final VanillaItemMaterial FERMENTED_SPIDER_EYE = new VanillaItemMaterial("Fermented Spider Eye", 376, null);

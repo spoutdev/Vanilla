@@ -65,7 +65,7 @@ import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.data.Instrument;
 import org.spout.vanilla.plugin.data.VanillaData;
-import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
+import org.spout.vanilla.api.data.VanillaRenderMaterials;
 import org.spout.vanilla.plugin.data.drops.flag.DropFlags;
 import org.spout.vanilla.plugin.data.drops.flag.PlayerFlags;
 import org.spout.vanilla.plugin.data.drops.type.block.BlockDrops;
@@ -104,6 +104,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		this.setTransparent();
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
+		this.getDrops().EXPLOSION.add(this);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getRenderEffects().contains(VanillaEffects.SKY_TIME)) {
 				getModel().getRenderMaterial().addRenderEffect(VanillaEffects.SKY_TIME);
@@ -119,6 +120,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		this.setTransparent();
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
+		this.getDrops().EXPLOSION.add(this);
 		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getRenderEffects().contains(VanillaEffects.SKY_TIME)) {
 				getModel().getRenderMaterial().addRenderEffect(VanillaEffects.SKY_TIME);
@@ -154,8 +156,10 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 */
 	public void onIgnite(Block block, Cause<?> cause) {
 		HashSet<Flag> dropFlags = new HashSet<Flag>();
-		if (Math.random() > 0.3) {
+		if (GenericMath.getRandom().nextInt(100) < 77) {
 			dropFlags.add(DropFlags.NO_DROPS);
+		} else {
+			dropFlags.add(DropFlags.EXPLOSION_DROPS);
 		}
 		this.destroy(block, dropFlags, cause);
 	}

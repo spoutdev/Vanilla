@@ -48,6 +48,7 @@ public class Gravel extends SolidMoving implements InitializableMaterial {
 		SwitchDrops drops = getDrops().DEFAULT.clear().addSwitch().setChance(0.1);
 		drops.TRUE.add(VanillaMaterials.FLINT);
 		drops.FALSE.add(this);
+		this.getDrops().EXPLOSION.clear().add(this);
 	}
 
 	@Override

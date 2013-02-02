@@ -33,7 +33,7 @@ import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.api.material.VanillaMaterial;
 
-import org.spout.vanilla.plugin.data.VanillaRenderMaterials;
+import org.spout.vanilla.api.data.VanillaRenderMaterials;
 
 public class RenderItemStack extends RenderPart {
 	private static final float SCALE = 0.75f;

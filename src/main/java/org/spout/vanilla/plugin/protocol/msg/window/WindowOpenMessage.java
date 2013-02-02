@@ -30,15 +30,18 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.plugin.inventory.window.Window;
-import org.spout.vanilla.plugin.inventory.window.WindowType;
+import org.spout.vanilla.api.inventory.window.AbstractWindow;
+
+import org.spout.vanilla.api.inventory.window.WindowType;
+
+
 
 public final class WindowOpenMessage extends WindowMessage {
 	private final int slots;
 	private final String title;
 	private final WindowType type;
 
-	public WindowOpenMessage(Window window, int slots) {
+	public WindowOpenMessage(AbstractWindow window, int slots) {
 		this(window.getId(), window.getType(), window.getTitle(), slots);
 	}
 

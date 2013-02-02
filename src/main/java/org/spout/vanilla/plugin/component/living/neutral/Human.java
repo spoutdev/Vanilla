@@ -27,6 +27,7 @@
 package org.spout.vanilla.plugin.component.living.neutral;
 
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
@@ -35,6 +36,7 @@ import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.GenericMath;
@@ -61,6 +63,7 @@ import org.spout.vanilla.plugin.configuration.WorldConfigurationNode;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.ViewDistance;
 import org.spout.vanilla.plugin.event.player.network.PlayerAbilityUpdateEvent;
+import org.spout.vanilla.plugin.material.block.liquid.Water;
 import org.spout.vanilla.plugin.protocol.entity.HumanEntityProtocol;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerGameStateMessage;
 
@@ -153,6 +156,14 @@ public class Human extends Living {
 
 	public void setJumping(boolean isJumping) {
 		getOwner().getData().put(VanillaData.IS_JUMPING, isJumping);
+	}
+
+	public boolean isInWater() {
+		return getOwner().getData().get(VanillaData.IS_IN_WATER);
+	}
+
+	public void setInWater(boolean inWater) {
+		getOwner().getData().put(VanillaData.IS_IN_WATER, inWater);
 	}
 
 	public String getName() {
@@ -373,5 +384,28 @@ public class Human extends Living {
 
 	public void updateAbilities() {
 		updateAbilities(true);
+	}
+
+	private final AtomicReference<Point> livePosition = new AtomicReference<Point>(null);
+	@Override
+	public boolean canTick() {
+		return true;
+	}
+
+	@Override
+	public void onTick(float dt) {
+		super.onTick(dt);
+		final Point position = getOwner().getScene().getPosition();
+		livePosition.set(position);
+		setInWater(position.getBlock().getMaterial() instanceof Water);
+	}
+
+	public Point getLivePosition() {
+		return livePosition.get();
+	}
+
+	public void setLivePosition(Point point) {
+		livePosition.set(point);
+		getOwner().getScene().setPosition(point);
 	}
 }

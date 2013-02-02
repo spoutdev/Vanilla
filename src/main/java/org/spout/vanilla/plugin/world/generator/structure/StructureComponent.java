@@ -164,7 +164,7 @@ public abstract class StructureComponent {
 	}
 
 	protected Vector3 transform(int x, int y, int z) {
-		return VectorMath.round(rotate(x, y, z).add(position));
+		return rotate(x, y, z).add(position).round();
 	}
 
 	protected Vector3 rotate(int x, int y, int z) {

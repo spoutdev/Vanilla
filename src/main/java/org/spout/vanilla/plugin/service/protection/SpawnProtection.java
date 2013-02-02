@@ -30,7 +30,6 @@ import org.spout.api.geo.Protection;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Vector3;
-import org.spout.api.math.VectorMath;
 
 public class SpawnProtection extends Protection {
 	private final Vector3 center;
@@ -44,6 +43,6 @@ public class SpawnProtection extends Protection {
 
 	@Override
 	public boolean contains(Point point) {
-		return VectorMath.distanceSquared(center, point) <= radius * radius;
+		return center.distanceSquared(point) <= radius * radius;
 	}
 }

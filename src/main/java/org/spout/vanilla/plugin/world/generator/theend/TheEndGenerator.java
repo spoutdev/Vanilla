@@ -68,9 +68,9 @@ public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 		PERLIN.setOctaveCount(16);
 
 		NOISE.SetSourceModule(0, PERLIN);
-		NOISE.setxScale(0.7);
+		NOISE.setxScale(1);
 		NOISE.setyScale(1);
-		NOISE.setzScale(0.7);
+		NOISE.setzScale(1);
 	}
 
 	public TheEndGenerator() {

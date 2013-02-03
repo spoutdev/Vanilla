@@ -84,7 +84,7 @@ public class SpireObject extends LargePlantObject {
 		}
 		w.setBlockMaterial(x, y + totalHeight, z, crystalBase, (short) 0, null);
 		if (spawnEnderCrystal) {
-			w.createAndSpawnEntity(new Point(w, x + 0.5f, y + totalHeight + 1, z + 0.5f), EnderCrystal.class, LoadOption.NO_LOAD);
+			w.createAndSpawnEntity(new Point(w, x + 0.5f, y + totalHeight, z + 0.5f), EnderCrystal.class, LoadOption.NO_LOAD);
 		}
 	}
 

@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.plugin.inventory.util;
 
+import org.spout.api.Client;
+import org.spout.api.Spout;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.shape.Grid;
@@ -50,13 +52,15 @@ public class GridInventoryConverter extends InventoryConverter {
 		super(inventory, new int[inventory.size()], new Vector2[inventory.size()], offset);
 		this.grid = inventory.grid(length);
 		this.pos = pos;
-		GridIterator iter = grid.iterator();
-		while (iter.hasNext()) {
-			int i = iter.next(), x = iter.getX(), y = iter.getY(), size = grid.getSize();
-			slots[i] = (offset + size) - (length * y) - (length - x);
-			InventorySlot slot = widgets[i].get(InventorySlot.class);
-			slot.setRenderItemStack(new RenderItemStack(new ItemStack(VanillaMaterials.LEATHER_CAP, 1))); // TODO: Handle this in onClick
-			slot.setPosition(pos.add(x * SLOT_WIDTH, y * SLOT_HEIGHT));
+		if (Spout.getEngine() instanceof Client) {
+			GridIterator iter = grid.iterator();
+			while (iter.hasNext()) {
+				int i = iter.next(), x = iter.getX(), y = iter.getY(), size = grid.getSize();
+				slots[i] = (offset + size) - (length * y) - (length - x);
+				InventorySlot slot = widgets[i].get(InventorySlot.class);
+				slot.setRenderItemStack(new RenderItemStack(new ItemStack(VanillaMaterials.LEATHER_CAP, 1))); // TODO: Handle this in onClick
+				slot.setPosition(pos.add(x * SLOT_WIDTH, y * SLOT_HEIGHT));
+			}
 		}
 	}
 

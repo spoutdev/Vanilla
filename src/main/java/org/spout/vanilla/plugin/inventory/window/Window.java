@@ -77,8 +77,8 @@ public abstract class Window extends AbstractWindow {
 	protected boolean opened;
 	// Widgets
 	protected final Screen popup = new Screen();
-	protected final Widget background = ((Client)Spout.getEngine()).getScreenStack().makeWidget();
-	protected final Widget label = ((Client)Spout.getEngine()).getScreenStack().makeWidget();
+	protected final Widget background;
+	protected final Widget label;
 	// Measurements
 	// Background
 	public static final float WIDTH = 0.6875f;
@@ -105,8 +105,11 @@ public abstract class Window extends AbstractWindow {
 		switch (Spout.getPlatform()) {
 			case PROXY:
 			case SERVER:
+				background = label = null;
 				break;
 			case CLIENT:
+				background = ((Client)Spout.getEngine()).getScreenStack().makeWidget();
+				label = ((Client)Spout.getEngine()).getScreenStack().makeWidget();
 				VanillaPlugin plugin = VanillaPlugin.getInstance();
 				popup.setGrabsMouse(false);
 

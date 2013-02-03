@@ -77,8 +77,8 @@ public abstract class Window extends AbstractWindow {
 	protected boolean opened;
 	// Widgets
 	protected final Screen popup = new Screen();
-	protected final Widget background = new Widget();
-	protected final Widget label = new Widget();
+	protected final Widget background = ((Client)Spout.getEngine()).getScreenStack().makeWidget();
+	protected final Widget label = ((Client)Spout.getEngine()).getScreenStack().makeWidget();
 	// Measurements
 	// Background
 	public static final float WIDTH = 0.6875f;

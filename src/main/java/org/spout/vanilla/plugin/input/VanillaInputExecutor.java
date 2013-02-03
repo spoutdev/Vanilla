@@ -38,7 +38,7 @@ import org.spout.api.math.Vector3;
 public class VanillaInputExecutor implements InputExecutor {
 	private Player player;
 	private CameraComponent camera;
-	private float speed = 10;
+	private float speed = 50;
 
 	public VanillaInputExecutor(Player player) {
 		this.player = player;

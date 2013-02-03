@@ -30,7 +30,7 @@ import org.spout.vanilla.api.enchantment.BowEnchantment;
 
 public class Power extends BowEnchantment {
 	public Power(String name, int id) {
-		super(name, id);
+		super(name, id, 1, 10, 15);
 		setMaximumLevel(5).setWeight(10);
 	}
 }

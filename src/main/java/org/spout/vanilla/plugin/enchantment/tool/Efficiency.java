@@ -30,7 +30,7 @@ import org.spout.vanilla.api.enchantment.ToolEnchantment;
 
 public class Efficiency extends ToolEnchantment {
 	public Efficiency(String name, int id) {
-		super(name, id);
+		super(name, id, 1, 10, 50);
 		setMaximumLevel(5).setWeight(10);
 	}
 }

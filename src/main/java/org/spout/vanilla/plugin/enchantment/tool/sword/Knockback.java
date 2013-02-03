@@ -30,7 +30,7 @@ import org.spout.vanilla.api.enchantment.SwordEnchantment;
 
 public class Knockback extends SwordEnchantment {
 	public Knockback(String name, int id) {
-		super(name, id);
+		super(name, id, 5, 20, 50);
 		setMaximumLevel(2).setWeight(5);
 	}
 }

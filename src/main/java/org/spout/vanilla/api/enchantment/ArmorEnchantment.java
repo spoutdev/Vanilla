@@ -31,8 +31,8 @@ import org.spout.vanilla.api.material.VanillaMaterial;
 import org.spout.vanilla.plugin.material.item.armor.Armor;
 
 public abstract class ArmorEnchantment extends Enchantment {
-	protected ArmorEnchantment(String name, int id) {
-		super(name, id);
+	protected ArmorEnchantment(String name, int id, int baseEnchantmentLevel, int deltaEnchantmentLevel, int enchantmentLevelRange) {
+		super(name, id, baseEnchantmentLevel, deltaEnchantmentLevel, enchantmentLevelRange);
 	}
 
 	@Override

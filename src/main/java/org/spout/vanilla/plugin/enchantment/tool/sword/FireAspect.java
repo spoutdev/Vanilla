@@ -30,7 +30,7 @@ import org.spout.vanilla.api.enchantment.SwordEnchantment;
 
 public class FireAspect extends SwordEnchantment {
 	public FireAspect(String name, int id) {
-		super(name, id);
+		super(name, id, 10, 20, 50);
 		setMaximumLevel(2).setWeight(2);
 	}
 }

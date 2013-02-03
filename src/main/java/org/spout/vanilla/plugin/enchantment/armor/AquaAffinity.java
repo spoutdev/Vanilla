@@ -32,7 +32,7 @@ import org.spout.vanilla.api.material.item.armor.Helmet;
 
 public class AquaAffinity extends ArmorEnchantment {
 	public AquaAffinity(String name, int id) {
-		super(name, id);
+		super(name, id, 1, 0, 40);
 		setMaximumLevel(1).setWeight(2);
 	}
 

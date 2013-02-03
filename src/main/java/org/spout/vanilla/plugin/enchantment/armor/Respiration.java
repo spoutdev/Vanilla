@@ -32,7 +32,7 @@ import org.spout.vanilla.api.material.item.armor.Helmet;
 
 public class Respiration extends ArmorEnchantment {
 	public Respiration(String name, int id) {
-		super(name, id);
+		super(name, id, 10, 10, 30);
 		setMaximumLevel(3).setWeight(2);
 	}
 

@@ -30,11 +30,14 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.api.enchantment.Enchantment;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
-import org.spout.vanilla.plugin.enchantment.VanillaEnchantments;
+import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.plugin.component.misc.LevelComponent;
 import org.spout.vanilla.plugin.inventory.block.EnchantmentTableInventory;
+import org.spout.vanilla.plugin.inventory.window.block.EnchantmentTableWindow;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowEnchantItemMessage;
 
 public class WindowEnchantItemHandler extends MessageHandler<WindowEnchantItemMessage> {
@@ -44,13 +47,22 @@ public class WindowEnchantItemHandler extends MessageHandler<WindowEnchantItemMe
 			return;
 		}
 		Player player = session.getPlayer();
-		EnchantmentTableInventory inv = (EnchantmentTableInventory) player.get(WindowHolder.class).getActiveWindow().getInventoryConverters().get(2).getInventory();
+		EnchantmentTableWindow window = (EnchantmentTableWindow) player.get(WindowHolder.class).getActiveWindow();
+		EnchantmentTableInventory inv = (EnchantmentTableInventory) window.getInventoryConverters().get(2).getInventory();
 		int enchantSlot = message.getEnchantment();
-		int enchantLevel = inv.getEnchantmentLevel(enchantSlot);
-		System.out.println("Enchantment slot: " + enchantSlot);
-		System.out.println("Enchantment level: " + enchantLevel);
+		int enchantLevel = window.getEnchantmentLevel(enchantSlot);
 
-		Enchantment.addEnchantment(inv.get(), VanillaEnchantments.UNBREAKING, true);
-		// TODO: Use enchantment level to calculate enchantments for an item
+		Human human = player.get(Human.class);
+		LevelComponent levelComponent = player.get(LevelComponent.class);
+
+		if (human == null || levelComponent == null)
+			return;
+		if (human.getGameMode() != GameMode.CREATIVE && levelComponent.getLevel() < enchantLevel)
+			return;
+		if (!Enchantment.addRandomEnchantments(inv.get(), enchantLevel))
+			return;
+		inv.update(EnchantmentTableInventory.SLOT, inv.get());
+		if (human.getGameMode() != GameMode.CREATIVE)
+			levelComponent.removeLevels(enchantLevel);
 	}
 }

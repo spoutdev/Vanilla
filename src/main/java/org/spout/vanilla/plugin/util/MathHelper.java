@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.util;
 
+import java.util.Map;
 import java.util.Random;
 
 import org.spout.api.math.GenericMath;
@@ -54,8 +55,8 @@ public class MathHelper {
 	}
 
 	/**
-	 * Gets the (real?) celestial angle at a certain time of the day<br> The use
-	 * of this function is unknown...
+	 * Gets the (real?) celestial angle at a certain time of the day<br>
+	 * The use of this function is unknown...
 	 * @param timeMillis time
 	 * @param timeMillisTune fine runing
 	 * @return celestial angle, a value from 0 to 1
@@ -105,5 +106,26 @@ public class MathHelper {
 
 	public static float getLookAtPitch(Vector3 offset) {
 		return (float) -Math.toDegrees(Math.atan(offset.getY() / GenericMath.length(offset.getX(), offset.getZ())));
+	}
+
+	/**
+	 * Chooses an item randomly from a list, with the probability of each item proportional to its given weight
+	 * @param random The random number generator to be used
+	 * @param weightMap A map from the items that can be chosen to their respective weights
+	 * @return The randomly chosen item, or null if the total weight is not positive.
+	 */
+	public static <T> T chooseWeightedRandom(Random random, Map<T, Integer> weightMap) {
+		int totalWeight = 0;
+		for (Integer i : weightMap.values())
+			totalWeight += i;
+		if (totalWeight <= 0)
+			return null;
+		int j = random.nextInt(totalWeight);
+		for (T t : weightMap.keySet()) {
+			j -= weightMap.get(t);
+			if (j < 0)
+				return t;
+		}
+		return null;
 	}
 }

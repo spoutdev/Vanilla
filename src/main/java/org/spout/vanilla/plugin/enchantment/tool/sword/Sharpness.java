@@ -34,7 +34,7 @@ import org.spout.vanilla.plugin.enchantment.VanillaEnchantments;
 
 public class Sharpness extends SwordEnchantment {
 	public Sharpness(String name, int id) {
-		super(name, id);
+		super(name, id, 1, 11, 20);
 		setMaximumLevel(5).setWeight(10);
 	}
 

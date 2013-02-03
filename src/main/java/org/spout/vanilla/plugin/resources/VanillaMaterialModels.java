@@ -40,8 +40,8 @@ public class VanillaMaterialModels {
 	public static final String SIGN = null;
 	public static final String CHEST = null;
 	public static final String ENDER_CHEST = null;
-	public static final String IRON_DOOR = null;
-	public static final String WOODEN_DOOR = null;
+	public static final String IRON_DOOR = "model://Vanilla/materials/block/animated/door/iron_bot_close.spm";
+	public static final String WOODEN_DOOR = "model://Vanilla/materials/block/animated/door/wooden_bot_close.spm";
 	public static final String COBBLESTONE_WALL = null;
 	public static final String MOSSY_COBBLESTONE_WALL = null;
 	public static final String NETHER_BRICK_FENCE = null;

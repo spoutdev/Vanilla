@@ -84,39 +84,38 @@ public class MineshaftRoom extends StructureComponent {
 
 	@Override
 	public List<StructureComponent> getNextComponents() {
+		final List<StructureComponent> components = new ArrayList<StructureComponent>(3);
 		final Random random = getRandom();
-		final List<StructureComponent> components = new ArrayList<StructureComponent>(4);
-		for (byte direction = 0; direction < 4; direction++) {
-			if (random.nextBoolean()) {
-				continue;
-			}
-			final StructureComponent component;
-			if (random.nextInt(4) == 0) {
-				component = new MineshaftStaircase(parent);
-				component.setPosition(position.add(0, -5, 0));
-			} else {
-				component = new MineshaftCorridor(parent);
-				component.setPosition(position);
-			}
-			component.randomize();
-			final int yaw = 90 * direction;
-			component.setRotation(new Quaternion(yaw, 0, 1, 0));
-			switch (yaw) {
-				case 90:
-					component.offsetPosition(lenght, 1, depth / 2);
-					break;
-				case 180:
-					component.offsetPosition(lenght / 2, 1, 0);
-					break;
-				case 270:
-					component.offsetPosition(0, 1, depth / 2);
-					break;
-				default:
-					component.offsetPosition(lenght / 2, 1, depth);
-			}
-			components.add(component);
+		if (random.nextBoolean()) {
+			final StructureComponent front = pickComponent(random);
+			front.setPosition(position.add(rotate(lenght / 2, 1, depth)));
+			front.setRotation(rotation);
+			front.randomize();
+			components.add(front);
+		}
+		if (random.nextBoolean()) {
+			final StructureComponent right = pickComponent(random);
+			right.setPosition(position.add(rotate(0, 1, depth / 2)));
+			right.setRotation(rotation.rotate(-90, 0, 1, 0));
+			right.randomize();
+			components.add(right);
+		}
+		if (random.nextBoolean()) {
+			final StructureComponent left = pickComponent(random);
+			left.setPosition(position.add(rotate(lenght, 1, depth / 2)));
+			left.setRotation(rotation.rotate(90, 0, 1, 0));
+			left.randomize();
+			components.add(left);
 		}
 		return components;
+	}
+
+	private StructureComponent pickComponent(Random random) {
+		if (random.nextInt(4) == 0) {
+			return new MineshaftStaircase(parent);
+		} else {
+			return new MineshaftCorridor(parent);
+		}
 	}
 
 	public byte getDepth() {

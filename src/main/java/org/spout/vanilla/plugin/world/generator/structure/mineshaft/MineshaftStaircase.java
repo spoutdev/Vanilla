@@ -57,13 +57,13 @@ public class MineshaftStaircase extends StructureComponent {
 		box.setPicker(picker);
 		// case
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
-		box.setMinMax(0, 5, 0, 2, 7, 1);
+		box.setMinMax(0, 0, 0, 2, 2, 1);
 		box.fill(false);
-		box.setMinMax(0, 0, 7, 2, 2, 8);
-		box.fill(false);
+		box.setMinMax(0, -5, 7, 2, -3, 8);
+		box.fill(false);	
 		// steps
 		for (byte steps = 0; steps < 5; steps++) {
-			box.setMinMax(0, 5 - steps - (steps >= 4 ? 0 : 1), 2 + steps, 2, 7 - steps, 2 + steps);
+			box.setMinMax(0, -steps - (steps >= 4 ? 0 : 1), 2 + steps, 2, 2 - steps, 2 + steps);
 			box.fill(false);
 		}
 	}
@@ -78,60 +78,28 @@ public class MineshaftStaircase extends StructureComponent {
 		final StructureComponent component;
 		final float draw = getRandom().nextFloat();
 		if (draw > 0.8) {
-			component = new MineshaftRoom(parent);
-			component.setPosition(position.add(0, -1, 0));
+			final MineshaftRoom room = new MineshaftRoom(parent);
+			room.randomize();
+			room.setPosition(position.add(rotate(-room.getLenght() / 2 + 1, -6, 8)));
+			component = room;
 		} else if (draw > 0.4) {
 			component = new MineshaftIntersection(parent);
-			component.setPosition(position);
+			component.setPosition(position.add(rotate(0, -5, 8)));
+			component.randomize();
 		} else {
 			component = new MineshaftCorridor(parent);
-			component.setPosition(position);
-			component.setRotation(rotation);
+			component.setPosition(position.add(rotate(0, -5, 8)));
+			component.randomize();
 		}
-		component.randomize();
-		switch ((int) rotation.getYaw()) {
-			case 90:
-				component.offsetPosition(8, 0, 0);
-				if (component instanceof MineshaftRoom) {
-					final MineshaftRoom room = ((MineshaftRoom) component);
-					component.offsetPosition(0, 0, -room.getDepth() / 2 - 1);
-				} else if (component instanceof MineshaftIntersection) {
-					component.offsetPosition(1, 0, -3);
-				}
-				break;
-			case 180:
-				component.offsetPosition(0, 0, -8);
-				if (component instanceof MineshaftRoom) {
-					final MineshaftRoom room = ((MineshaftRoom) component);
-					component.offsetPosition(-room.getLenght() / 2 - 1, 0, -room.getDepth());
-				} else if (component instanceof MineshaftIntersection) {
-					component.offsetPosition(-2, 0, -4);
-				}
-				break;
-			case -90:
-				component.offsetPosition(-8, 0, 0);
-				if (component instanceof MineshaftRoom) {
-					final MineshaftRoom room = ((MineshaftRoom) component);
-					component.offsetPosition(-room.getLenght(), 0, -room.getDepth() / 2 + 1);
-				} else if (component instanceof MineshaftIntersection) {
-					component.offsetPosition(-3, 0, -1);
-				}
-				break;
-			default:
-				component.offsetPosition(0, 0, 8);
-				if (component instanceof MineshaftRoom) {
-					final MineshaftRoom room = ((MineshaftRoom) component);
-					component.offsetPosition(-room.getLenght() / 2 + 1, 0, 0);
-				}
-		}
+		component.setRotation(rotation);
 		components.add(component);
 		return components;
 	}
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(0, 0, 0);
-		final Vector3 rotatedMax = transform(2, 7, 8);
+		final Vector3 rotatedMin = transform(0, -5, 0);
+		final Vector3 rotatedMax = transform(2, 2, 8);
 		return new BoundingBox(Vector3.min(rotatedMin, rotatedMax), Vector3.max(rotatedMin, rotatedMax));
 	}
 }

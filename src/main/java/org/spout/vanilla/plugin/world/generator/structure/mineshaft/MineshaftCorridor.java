@@ -162,54 +162,22 @@ public class MineshaftCorridor extends StructureComponent {
 		final StructureComponent component;
 		final float draw = getRandom().nextFloat();
 		if (draw > 0.8) {
-			component = new MineshaftRoom(parent);
-			component.setPosition(position.add(0, -1, 0));
+			final MineshaftRoom room = new MineshaftRoom(parent);
+			room.randomize();
+			room.setPosition(position.add(rotate(-room.getLenght() / 2 + 1, -1, sections * 5)));
+			component = room;
 		} else if (draw > 0.6) {
 			component = new MineshaftStaircase(parent);
-			component.setPosition(position.add(0, -5, 0));
-			component.setRotation(rotation);
+			component.setPosition(position.add(rotate(0, 0, sections * 5)));
+			component.randomize();
 		} else if (draw > 0.1) {
 			component = new MineshaftIntersection(parent);
-			component.setPosition(position);
+			component.setPosition(position.add(rotate(0, 0, sections * 5)));
+			component.randomize();
 		} else {
 			return components;
 		}
-		component.randomize();
-		switch ((int) rotation.getYaw()) {
-			case 90:
-				component.offsetPosition(sections * 5, 0, 0);
-				if (component instanceof MineshaftRoom) {
-					final MineshaftRoom room = ((MineshaftRoom) component);
-					component.offsetPosition(0, 0, -room.getDepth() / 2 - 1);
-				} else if (component instanceof MineshaftIntersection) {
-					component.offsetPosition(1, 0, -3);
-				}
-				break;
-			case 180:
-				component.offsetPosition(0, 0, -sections * 5);
-				if (component instanceof MineshaftRoom) {
-					final MineshaftRoom room = ((MineshaftRoom) component);
-					component.offsetPosition(-room.getLenght() / 2 - 1, 0, -room.getDepth());
-				} else if (component instanceof MineshaftIntersection) {
-					component.offsetPosition(-2, 0, -4);
-				}
-				break;
-			case -90:
-				component.offsetPosition(-sections * 5, 0, 0);
-				if (component instanceof MineshaftRoom) {
-					final MineshaftRoom room = ((MineshaftRoom) component);
-					component.offsetPosition(-room.getLenght(), 0, -room.getDepth() / 2 + 1);
-				} else if (component instanceof MineshaftIntersection) {
-					component.offsetPosition(-3, 0, -1);
-				}
-				break;
-			default:
-				component.offsetPosition(0, 0, sections * 5);
-				if (component instanceof MineshaftRoom) {
-					final MineshaftRoom room = ((MineshaftRoom) component);
-					component.offsetPosition(-room.getLenght() / 2 + 1, 0, 0);
-				}
-		}
+		component.setRotation(rotation);
 		components.add(component);
 		return components;
 	}

@@ -109,45 +109,67 @@ public class MineshaftIntersection extends StructureComponent {
 
 	@Override
 	public List<StructureComponent> getNextComponents() {
+		final List<StructureComponent> components = new ArrayList<StructureComponent>(7);
+		final boolean twoFloors = hasTwoFloors();
 		final Random random = getRandom();
-		final List<StructureComponent> components = new ArrayList<StructureComponent>(4);
-		for (byte direction = 0; direction < height + 2; direction++) {
-			if (random.nextBoolean()) {
-				continue;
-			}
-			final StructureComponent component;
-			if (random.nextInt(4) == 0) {
-				component = new MineshaftStaircase(parent);
-				component.setPosition(position.add(0, -5, 0));
-			} else {
-				component = new MineshaftCorridor(parent);
-				component.setPosition(position);
-			}
-			if (direction > 3) {
-				component.offsetPosition(0, 4, 0);
-			}
-			component.randomize();
-			final int yaw = 90 * direction;
-			component.setRotation(new Quaternion(yaw, 0, 1, 0));
-			switch (yaw) {
-				case 450:
-				case 90:
-					component.offsetPosition(4, 0, 3);
-					break;
-				case 540:
-				case 180:
-					component.offsetPosition(2, 0, 0);
-					break;
-				case 630:
-				case 270:
-					component.offsetPosition(-1, 0, 1);
-					break;
-				default:
-					component.offsetPosition(0, 0, 5);
-			}
-			components.add(component);
+		if (random.nextBoolean()) {
+			final StructureComponent bottomFront = pickComponent(random);
+			bottomFront.setPosition(position.add(rotate(0, 0, 5)));
+			bottomFront.setRotation(rotation);
+			bottomFront.randomize();
+			components.add(bottomFront);
+		}
+		if (random.nextBoolean()) {
+			final StructureComponent bottomRight = pickComponent(random);
+			bottomRight.setPosition(position.add(rotate(-1, 0, 1)));
+			bottomRight.setRotation(rotation.rotate(-90, 0, 1, 0));
+			bottomRight.randomize();
+			components.add(bottomRight);
+		}
+		if (random.nextBoolean()) {
+			final StructureComponent bottomLeft = pickComponent(random);
+			bottomLeft.setPosition(position.add(rotate(4, 0, 3)));
+			bottomLeft.setRotation(rotation.rotate(90, 0, 1, 0));
+			bottomLeft.randomize();
+			components.add(bottomLeft);
+		}
+		if (twoFloors && random.nextBoolean()) {
+			final StructureComponent topFront = pickComponent(random);
+			topFront.setPosition(position.add(rotate(0, 4, 5)));
+			topFront.setRotation(rotation);
+			topFront.randomize();
+			components.add(topFront);
+		}
+		if (twoFloors && random.nextBoolean()) {
+			final StructureComponent topRight = pickComponent(random);
+			topRight.setPosition(position.add(rotate(-1, 4, 1)));
+			topRight.setRotation(rotation.rotate(-90, 0, 1, 0));
+			topRight.randomize();
+			components.add(topRight);
+		}
+		if (twoFloors && random.nextBoolean()) {
+			final StructureComponent topLeft = pickComponent(random);
+			topLeft.setPosition(position.add(rotate(4, 4, 3)));
+			topLeft.setRotation(rotation.rotate(90, 0, 1, 0));
+			topLeft.randomize();
+			components.add(topLeft);
+		}
+		if (twoFloors && random.nextBoolean()) {
+			final StructureComponent topBack = pickComponent(random);
+			topBack.setPosition(position.add(rotate(2, 4, 0)));
+			topBack.setRotation(rotation.rotate(180, 0, 1, 0));
+			topBack.randomize();
+			components.add(topBack);
 		}
 		return components;
+	}
+
+	private StructureComponent pickComponent(Random random) {
+		if (random.nextInt(4) == 0) {
+			return new MineshaftStaircase(parent);
+		} else {
+			return new MineshaftCorridor(parent);
+		}
 	}
 
 	public boolean hasTwoFloors() {

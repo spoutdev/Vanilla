@@ -24,35 +24,32 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.world.generator.object;
+package org.spout.vanilla.plugin.world.generator.biome;
 
-import java.util.Random;
+import org.spout.api.generator.biome.BiomeGenerator;
+import org.spout.api.geo.World;
+import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
-public abstract class LargePlantObject extends RandomObject implements RandomizableObject {
-	// size control
-	protected byte baseHeight;
-	protected byte randomHeight;
-	protected byte totalHeight;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.VanillaGenerator;
 
-	protected LargePlantObject(byte baseHeight, byte randomHeight) {
-		this(null, baseHeight, randomHeight);
+public abstract class VanillaBiomeGenerator extends BiomeGenerator implements VanillaGenerator {
+	private boolean voidBellowZero = false;
+
+	@Override
+	public void generate(CuboidBlockMaterialBuffer blockData, int chunkX, int chunkY, int chunkZ, World world) {
+		if (chunkY < 0) {
+			if (voidBellowZero) {
+				blockData.flood(VanillaMaterials.AIR);
+			} else {
+				blockData.flood(VanillaMaterials.BEDROCK);
+			}
+		} else {
+			super.generate(blockData, chunkX, chunkY, chunkZ, world);
+		}
 	}
 
-	protected LargePlantObject(Random random, byte baseHeight, byte randomHeight) {
-		super(random);
-		this.baseHeight = baseHeight;
-		this.randomHeight = randomHeight;
-	}
-
-	public void setBaseHeight(byte baseHeight) {
-		this.baseHeight = baseHeight;
-	}
-
-	public void setRandomHeight(byte randHeight) {
-		this.randomHeight = randHeight;
-	}
-
-	public void setTotalHeight(byte height) {
-		this.totalHeight = height;
+	protected void hasVoidBellowZero(boolean voidBellowZero) {
+		this.voidBellowZero = voidBellowZero;
 	}
 }

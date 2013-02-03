@@ -24,36 +24,35 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.world.generator;
+package org.spout.vanilla.plugin.world.generator.object;
 
-import java.util.Arrays;
+import java.util.Random;
 
-import org.spout.api.generator.biome.BiomeManager;
-import org.spout.api.generator.biome.Simple2DBiomeManager;
-import org.spout.api.generator.biome.selector.PerBlockBiomeSelector;
-import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Chunk;
+public abstract class VariableHeightObject extends RandomObject implements RandomizableObject {
+	// size control
+	protected byte baseHeight;
+	protected byte randomHeight;
+	protected byte totalHeight;
 
-import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
-
-public abstract class VanillaSingleBiomeGenerator extends VanillaBiomeGenerator {
-	private final VanillaBiome biome;
-
-	public VanillaSingleBiomeGenerator(VanillaBiome biome) {
-		this.biome = biome;
+	protected VariableHeightObject(byte baseHeight, byte randomHeight) {
+		this(null, baseHeight, randomHeight);
 	}
 
-	@Override
-	public void registerBiomes() {
-		setSelector(new PerBlockBiomeSelector(biome));
+	protected VariableHeightObject(Random random, byte baseHeight, byte randomHeight) {
+		super(random);
+		this.baseHeight = baseHeight;
+		this.randomHeight = randomHeight;
 	}
 
-	@Override
-	public BiomeManager generateBiomes(int chunkX, int chunkZ, World world) {
-		final BiomeManager biomeManager = new Simple2DBiomeManager(chunkX, chunkZ);
-		final byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
-		Arrays.fill(biomeData, (byte) biome.getId());
-		biomeManager.deserialize(biomeData);
-		return biomeManager;
+	public void setBaseHeight(byte baseHeight) {
+		this.baseHeight = baseHeight;
+	}
+
+	public void setRandomHeight(byte randHeight) {
+		this.randomHeight = randHeight;
+	}
+
+	public void setTotalHeight(byte height) {
+		this.totalHeight = height;
 	}
 }

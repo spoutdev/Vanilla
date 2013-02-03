@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.world.generator.normal.object.tree;
+package org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree;
 
 import java.util.Random;
 
@@ -140,16 +140,16 @@ public class HugeTreeObject extends TreeObject {
 	}
 
 	private void placeVines(World w, int x, int y, int z, byte faceOdd) {
-		if (w.getBlockMaterial(x + 1, y, z) == VanillaMaterials.AIR && random.nextInt(faceOdd) != 0) {
+		if (w.getBlockMaterial(x + 1, y, z).isInvisible() && random.nextInt(faceOdd) != 0) {
 			w.setBlockMaterial(x + 1, y, z, VanillaMaterials.VINES, (short) 2, null);
 		}
-		if (w.getBlockMaterial(x - 1, y, z) == VanillaMaterials.AIR && random.nextInt(faceOdd) > 0) {
+		if (w.getBlockMaterial(x - 1, y, z).isInvisible() && random.nextInt(faceOdd) != 0) {
 			w.setBlockMaterial(x - 1, y, z, VanillaMaterials.VINES, (short) 8, null);
 		}
-		if (w.getBlockMaterial(x, y, z + 1) == VanillaMaterials.AIR && random.nextInt(faceOdd) > 0) {
+		if (w.getBlockMaterial(x, y, z + 1).isInvisible() && random.nextInt(faceOdd) != 0) {
 			w.setBlockMaterial(x, y, z + 1, VanillaMaterials.VINES, (short) 4, null);
 		}
-		if (w.getBlockMaterial(x, y, z - 1) == VanillaMaterials.AIR && random.nextInt(faceOdd) > 0) {
+		if (w.getBlockMaterial(x, y, z - 1).isInvisible() && random.nextInt(faceOdd) != 0) {
 			w.setBlockMaterial(x, y, z - 1, VanillaMaterials.VINES, (short) 1, null);
 		}
 	}

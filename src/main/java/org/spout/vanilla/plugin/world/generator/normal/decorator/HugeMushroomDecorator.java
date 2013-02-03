@@ -34,8 +34,8 @@ import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
-import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.HugeMushroomObject;
-import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.HugeMushroomObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.HugeMushroomObject.HugeMushroomType;
 
 public class HugeMushroomDecorator extends Decorator {
 	private final byte amount;

@@ -46,7 +46,7 @@ import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.material.block.solid.Log;
 import org.spout.vanilla.plugin.material.item.misc.Dye;
 import org.spout.vanilla.plugin.util.PlayerUtil;
-import org.spout.vanilla.plugin.world.generator.normal.object.tree.TreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.TreeObject;
 
 public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel, DynamicMaterial {
 	public static final Sapling DEFAULT = new Sapling("Sapling");

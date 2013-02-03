@@ -43,7 +43,7 @@ import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Liquid;
-import org.spout.vanilla.plugin.world.generator.VanillaSingleBiomeGenerator;
+import org.spout.vanilla.plugin.world.generator.biome.VanillaSingleBiomeGenerator;
 import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.plugin.world.generator.nether.populator.BlockPatchPopulator;
 import org.spout.vanilla.plugin.world.generator.nether.populator.NetherCavePopulator;

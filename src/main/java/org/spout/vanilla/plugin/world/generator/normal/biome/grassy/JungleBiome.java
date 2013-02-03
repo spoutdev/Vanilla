@@ -39,11 +39,11 @@ import org.spout.vanilla.plugin.world.generator.normal.decorator.TallGrassDecora
 import org.spout.vanilla.plugin.world.generator.normal.decorator.TallGrassDecorator.TallGrassFactory;
 import org.spout.vanilla.plugin.world.generator.normal.decorator.TreeDecorator;
 import org.spout.vanilla.plugin.world.generator.normal.decorator.VineDecorator;
-import org.spout.vanilla.plugin.world.generator.normal.object.tree.BigTreeObject;
-import org.spout.vanilla.plugin.world.generator.normal.object.tree.HugeTreeObject;
-import org.spout.vanilla.plugin.world.generator.normal.object.tree.ShrubObject;
-import org.spout.vanilla.plugin.world.generator.normal.object.tree.SmallTreeObject;
-import org.spout.vanilla.plugin.world.generator.normal.object.tree.TreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.BigTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.HugeTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.ShrubObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.SmallTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.TreeObject;
 
 public class JungleBiome extends GrassyBiome {
 	public JungleBiome(int biomeId) {

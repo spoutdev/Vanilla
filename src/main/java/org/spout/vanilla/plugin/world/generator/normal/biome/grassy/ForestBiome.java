@@ -36,9 +36,9 @@ import org.spout.vanilla.plugin.world.generator.normal.decorator.SandAndClayDeco
 import org.spout.vanilla.plugin.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.plugin.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.plugin.world.generator.normal.decorator.TreeDecorator;
-import org.spout.vanilla.plugin.world.generator.normal.object.tree.SmallTreeObject;
-import org.spout.vanilla.plugin.world.generator.normal.object.tree.TreeObject;
-import org.spout.vanilla.plugin.world.generator.normal.object.tree.TreeObject.TreeType;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.SmallTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.TreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.TreeObject.TreeType;
 
 public class ForestBiome extends GrassyBiome {
 	public ForestBiome(int biomeId) {

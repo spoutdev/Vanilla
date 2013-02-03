@@ -36,9 +36,9 @@ import org.spout.vanilla.plugin.world.generator.normal.decorator.SandAndClayDeco
 import org.spout.vanilla.plugin.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.plugin.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.plugin.world.generator.normal.decorator.TreeDecorator;
-import org.spout.vanilla.plugin.world.generator.normal.object.tree.PineTreeObject;
-import org.spout.vanilla.plugin.world.generator.normal.object.tree.SpruceTreeObject;
-import org.spout.vanilla.plugin.world.generator.normal.object.tree.TreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.PineTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.SpruceTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.TreeObject;
 
 public class TaigaBiome extends SnowyBiome {
 	public TaigaBiome(int biomeId) {

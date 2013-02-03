@@ -24,31 +24,36 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.world.generator;
+package org.spout.vanilla.plugin.world.generator.biome;
 
-import org.spout.api.generator.biome.BiomeGenerator;
+import java.util.Arrays;
+
+import org.spout.api.generator.biome.BiomeManager;
+import org.spout.api.generator.biome.Simple2DBiomeManager;
+import org.spout.api.generator.biome.selector.PerBlockBiomeSelector;
 import org.spout.api.geo.World;
-import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
+import org.spout.api.geo.cuboid.Chunk;
 
-import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
 
-public abstract class VanillaBiomeGenerator extends BiomeGenerator implements VanillaGenerator {
-	private boolean voidBellowZero = false;
+public abstract class VanillaSingleBiomeGenerator extends VanillaBiomeGenerator {
+	private final VanillaBiome biome;
 
-	@Override
-	public void generate(CuboidBlockMaterialBuffer blockData, int chunkX, int chunkY, int chunkZ, World world) {
-		if (chunkY < 0) {
-			if (voidBellowZero) {
-				blockData.flood(VanillaMaterials.AIR);
-			} else {
-				blockData.flood(VanillaMaterials.BEDROCK);
-			}
-		} else {
-			super.generate(blockData, chunkX, chunkY, chunkZ, world);
-		}
+	public VanillaSingleBiomeGenerator(VanillaBiome biome) {
+		this.biome = biome;
 	}
 
-	protected void hasVoidBellowZero(boolean voidBellowZero) {
-		this.voidBellowZero = voidBellowZero;
+	@Override
+	public void registerBiomes() {
+		setSelector(new PerBlockBiomeSelector(biome));
+	}
+
+	@Override
+	public BiomeManager generateBiomes(int chunkX, int chunkZ, World world) {
+		final BiomeManager biomeManager = new Simple2DBiomeManager(chunkX, chunkZ);
+		final byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
+		Arrays.fill(biomeData, (byte) biome.getId());
+		biomeManager.deserialize(biomeData);
+		return biomeManager;
 	}
 }

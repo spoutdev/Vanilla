@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.world.generator.normal.object.tree;
+package org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -36,9 +36,9 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.plant.Sapling;
-import org.spout.vanilla.plugin.world.generator.object.LargePlantObject;
+import org.spout.vanilla.plugin.world.generator.object.VariableHeightObject;
 
-public abstract class TreeObject extends LargePlantObject {
+public abstract class TreeObject extends VariableHeightObject {
 	// metadata control
 	protected short leavesMetadata;
 	protected short logMetadata;
@@ -150,13 +150,13 @@ public abstract class TreeObject extends LargePlantObject {
 		BIRCH((short) 2),
 		JUNGLE((short) 3);
 		//
-		final private short metadata;
-		final private static TreeType[] cache;
+		private final short metadata;
+		private final static TreeType[] BY_METADATA;
 
 		static {
-			cache = new TreeType[TreeType.values().length];
+			BY_METADATA = new TreeType[TreeType.values().length];
 			for (TreeType t : TreeType.values()) {
-				cache[t.getMetadata() & 0xFFFF] = t;
+				BY_METADATA[t.getMetadata() & 0xFFFF] = t;
 			}
 		}
 
@@ -164,8 +164,7 @@ public abstract class TreeObject extends LargePlantObject {
 			if (metadata < 0 || metadata > 3) {
 				return null;
 			}
-
-			return cache[metadata];
+			return BY_METADATA[metadata];
 		}
 
 		private TreeType(short metadata) {

@@ -49,9 +49,9 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.plugin.material.item.misc.Dye;
 import org.spout.vanilla.plugin.util.PlayerUtil;
-import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.HugeMushroomObject;
-import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.HugeMushroomObject.HugeMushroomType;
-import org.spout.vanilla.plugin.world.generator.object.LargePlantObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.HugeMushroomObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.HugeMushroomObject.HugeMushroomType;
+import org.spout.vanilla.plugin.world.generator.object.VariableHeightObject;
 
 public class Mushroom extends GroundAttachable implements Spreading, Plant, DynamicMaterial {
 	private static final EffectRange MUSHROOM_RANGE = new CuboidEffectRange(-4, -1, -4, 4, 1, 4);
@@ -75,7 +75,7 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 				inv.addAmount(-1);
 			}
 			final BlockMaterial mushroomType = block.getMaterial();
-			final LargePlantObject mushroom;
+			final VariableHeightObject mushroom;
 			if (mushroomType == VanillaMaterials.RED_MUSHROOM) {
 				mushroom = new HugeMushroomObject(HugeMushroomType.RED);
 			} else {

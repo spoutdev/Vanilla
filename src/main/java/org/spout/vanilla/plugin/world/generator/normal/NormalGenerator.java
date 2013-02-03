@@ -55,7 +55,7 @@ import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Liquid;
-import org.spout.vanilla.plugin.world.generator.VanillaBiomeGenerator;
+import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomeGenerator;
 import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.plugin.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.plugin.world.generator.normal.biome.selector.WhittakerLayer;

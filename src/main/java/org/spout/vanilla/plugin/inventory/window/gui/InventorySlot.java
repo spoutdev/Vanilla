@@ -31,7 +31,9 @@ import java.util.List;
 
 import org.spout.api.Client;
 import org.spout.api.Spout;
-import org.spout.api.event.player.PlayerKeyEvent;
+import org.spout.api.event.player.input.PlayerClickEvent;
+import org.spout.api.event.player.input.PlayerKeyEvent;
+import org.spout.api.event.player.input.PlayerMouseMoveEvent;
 import org.spout.api.gui.component.ControlComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.input.Keyboard;
@@ -96,7 +98,7 @@ public class InventorySlot extends ControlComponent {
 	}
 
 	@Override
-	public void onClicked(IntVector2 position, boolean mouseDown) {
+	public void onClicked(PlayerClickEvent event) {
 		AbstractWindow window = getWindow();
 		window.onClick(new ClickArguments(entry, false, window.isShiftDown()));
 	}
@@ -108,6 +110,6 @@ public class InventorySlot extends ControlComponent {
 	}
 
 	@Override
-	public void onMouseMove(IntVector2 position) {
+	public void onMouseMove(PlayerMouseMoveEvent event) {
 	}
 }

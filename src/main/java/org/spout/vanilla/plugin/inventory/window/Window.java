@@ -124,7 +124,7 @@ public abstract class Window extends AbstractWindow {
 				LabelComponent labelComponent = label.add(LabelComponent.class);
 				labelComponent.setFont(VanillaRenderMaterials.FONT);
 				labelComponent.setText(new ChatArguments(ChatStyle.GRAY, title));
-				label.setGeometry(new Rectangle(0, 0.45f, 0, 0));
+				label.getTransform().translate(0, 0.45f, 0f);
 				popup.attachWidget(plugin, label);
 
 				for (InventoryConverter converter : converters) {

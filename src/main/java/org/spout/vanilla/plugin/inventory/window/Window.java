@@ -108,8 +108,8 @@ public abstract class Window extends AbstractWindow {
 				background = label = null;
 				break;
 			case CLIENT:
-				background = ((Client)Spout.getEngine()).getScreenStack().makeWidget();
-				label = ((Client)Spout.getEngine()).getScreenStack().makeWidget();
+				background = ((Client)Spout.getEngine()).getScreenStack().createWidget();
+				label = ((Client)Spout.getEngine()).getScreenStack().createWidget();
 				VanillaPlugin plugin = VanillaPlugin.getInstance();
 				popup.setGrabsMouse(false);
 

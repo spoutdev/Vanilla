@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.plugin.inventory.util;
 
+import org.spout.api.Client;
+import org.spout.api.Spout;
 import org.spout.api.gui.Widget;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.math.Vector2;
@@ -50,7 +52,7 @@ public class InventoryConverter {
 		this.offset = offset;
 		widgets = new Widget[positions.length];
 		for (int i = 0; i < widgets.length; i++) {
-			Widget widget = widgets[i] = new Widget();
+			Widget widget = widgets[i] = ((Client)Spout.getEngine()).getScreenStack().makeWidget();
 			InventorySlot slot = widget.add(InventorySlot.class);
 			slot.setSlot(new Slot(inventory, i));
 			slot.setPosition(positions[i]);

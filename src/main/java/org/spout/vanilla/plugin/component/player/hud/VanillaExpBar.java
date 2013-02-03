@@ -44,7 +44,7 @@ public class VanillaExpBar extends ExpBarWidget {
 	public void init(Widget exp, HUDComponent hud) {
 		super.init(exp, hud);
 		final LabelComponent lvlTxt = widget.add(LabelComponent.class);
-		widget.setGeometry(new Rectangle(-0.02f, -0.79f, 0, 0));
+		widget.getTransform().translate(-0.02f, -0.79f, 0f);
 		lvlTxt.setFont(VanillaRenderMaterials.FONT);
 		lvlTxt.setText(new ChatArguments(ChatStyle.BRIGHT_GREEN, "50"));
 

@@ -53,7 +53,7 @@ public class InventoryConverter {
 		if (Spout.getEngine() instanceof Client) {
 			widgets = new Widget[positions.length];
 			for (int i = 0; i < widgets.length; i++) {
-				Widget widget = widgets[i] = ((Client)Spout.getEngine()).getScreenStack().makeWidget();
+				Widget widget = widgets[i] = ((Client)Spout.getEngine()).getScreenStack().createWidget();
 				InventorySlot slot = widget.add(InventorySlot.class);
 				slot.setSlot(new Slot(inventory, i));
 				slot.setPosition(positions[i]);

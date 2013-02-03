@@ -38,7 +38,7 @@ import org.spout.vanilla.plugin.component.player.HUDComponent;
 public abstract class GUIWidget {
 	protected float SCALE;
 	protected float START_X;
-	protected Widget widget = ((Client)Spout.getEngine()).getScreenStack().makeWidget();
+	protected Widget widget = ((Client)Spout.getEngine()).getScreenStack().createWidget();
 	protected HUDComponent hud;
 	
 	/**

@@ -96,7 +96,7 @@ public class HealthComponent extends EntityComponent {
 	
 	public HealthComponent() {
 		if (Spout.getPlatform()==Platform.CLIENT) {
-			hearts = ((Client)Spout.getEngine()).getScreenStack().makeWidget();
+			hearts = ((Client)Spout.getEngine()).getScreenStack().createWidget();
 		}
 	}
 

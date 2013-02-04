@@ -38,11 +38,11 @@ public abstract class VanillaBiome extends Biome {
 	private final int biomeId;
 	@Setting
 	private Climate climate = Climate.MODERATE;
-	@Setting({"grass-color-multiplier"})
+	@Setting({"color-multiplier", "grass"})
 	private Color grassColorMultiplier = new Color(255, 255, 255);
-	@Setting({"foliage-color-multiplier"})
+	@Setting({"color-multiplier", "foliage"})
 	private Color foliageColorMultiplier = new Color(255, 255, 255);
-	@Setting({"water-color-multiplier"})
+	@Setting({"color-multiplier", "water"})
 	private Color waterColorMultiplier = new Color(255, 255, 255);
 
 	protected VanillaBiome(int biomeId, Decorator... decorators) {
@@ -56,6 +56,7 @@ public abstract class VanillaBiome extends Biome {
 
 	/**
 	 * Gets the Climate of this Biome
+	 *
 	 * @return the climate
 	 */
 	public Climate getClimate() {
@@ -64,6 +65,7 @@ public abstract class VanillaBiome extends Biome {
 
 	/**
 	 * Sets the Climate for this Biome
+	 *
 	 * @param climate to set to
 	 */
 	public void setClimate(Climate climate) {

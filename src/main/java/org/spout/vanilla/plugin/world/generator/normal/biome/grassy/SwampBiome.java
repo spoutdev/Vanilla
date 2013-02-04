@@ -37,14 +37,14 @@ import org.spout.vanilla.plugin.world.generator.normal.decorator.SandAndClayDeco
 import org.spout.vanilla.plugin.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.plugin.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.plugin.world.generator.normal.decorator.TreeDecorator;
-import org.spout.vanilla.plugin.world.generator.normal.object.tree.SwampTreeObject;
-import org.spout.vanilla.plugin.world.generator.normal.object.tree.TreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.SwampTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.TreeObject;
 
 public class SwampBiome extends GrassyBiome {
 	public SwampBiome(int biomeId) {
 		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new SwampTreeWGOFactory()),
 				new TallGrassDecorator(new NormalTallGrassFactory()), new DeadBushDecorator(), new LilyPadDecorator(),
-				new MushroomDecorator((byte) 1, (byte) 3), new SugarCaneDecorator((byte) 6, (byte) 25, (byte) 2),
+				new MushroomDecorator((byte) 1, (byte) 3), new SugarCaneDecorator((byte) 15, (byte) 2),
 				new PumpkinDecorator());
 		setElevation(56, 66);
 		setGrassColorMultiplier(new Color(92, 105, 78));

@@ -77,8 +77,8 @@ public abstract class Window extends AbstractWindow {
 	protected boolean opened;
 	// Widgets
 	protected final Screen popup = new Screen();
-	protected final Widget background = new Widget();
-	protected final Widget label = new Widget();
+	protected final Widget background;
+	protected final Widget label;
 	// Measurements
 	// Background
 	public static final float WIDTH = 0.6875f;
@@ -105,8 +105,11 @@ public abstract class Window extends AbstractWindow {
 		switch (Spout.getPlatform()) {
 			case PROXY:
 			case SERVER:
+				background = label = null;
 				break;
 			case CLIENT:
+				background = ((Client)Spout.getEngine()).getScreenStack().createWidget();
+				label = ((Client)Spout.getEngine()).getScreenStack().createWidget();
 				VanillaPlugin plugin = VanillaPlugin.getInstance();
 				popup.setGrabsMouse(false);
 
@@ -121,7 +124,7 @@ public abstract class Window extends AbstractWindow {
 				LabelComponent labelComponent = label.add(LabelComponent.class);
 				labelComponent.setFont(VanillaRenderMaterials.FONT);
 				labelComponent.setText(new ChatArguments(ChatStyle.GRAY, title));
-				label.setGeometry(new Rectangle(0, 0.45f, 0, 0));
+				label.getTransform().translate(0, 0.45f, 0f);
 				popup.attachWidget(plugin, label);
 
 				for (InventoryConverter converter : converters) {

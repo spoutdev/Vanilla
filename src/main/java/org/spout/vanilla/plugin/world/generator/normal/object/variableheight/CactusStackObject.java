@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.world.generator.normal.object.largeplant;
+package org.spout.vanilla.plugin.world.generator.normal.object.variableheight;
 
 import java.util.Random;
 
@@ -32,37 +32,36 @@ import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.liquid.Water;
-import org.spout.vanilla.plugin.world.generator.object.LargePlantObject;
+import org.spout.vanilla.plugin.world.generator.object.VariableHeightObject;
 
-public class SugarCaneStackObject extends LargePlantObject {
-	public SugarCaneStackObject() {
+public class CactusStackObject extends VariableHeightObject {
+	public CactusStackObject() {
 		this(null);
 	}
 
-	public SugarCaneStackObject(Random random) {
-		super(random, (byte) 2, (byte) 4);
+	public CactusStackObject(Random random) {
+		super(random, (byte) 1, (byte) 3);
 		randomize();
 	}
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
 		final BlockMaterial below = w.getBlockMaterial(x, y - 1, z);
-		return w.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.AIR)
-				&& below.isMaterial(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.SAND)
-				&& (w.getBlockMaterial(x - 1, y - 1, z) instanceof Water
-				|| w.getBlockMaterial(x + 1, y - 1, z) instanceof Water
-				|| w.getBlockMaterial(x, y - 1, z - 1) instanceof Water
-				|| w.getBlockMaterial(x, y - 1, z + 1) instanceof Water);
+		return (below.isMaterial(VanillaMaterials.SAND, VanillaMaterials.CACTUS))
+				&& w.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.AIR)
+				&& w.getBlockMaterial(x - 1, y, z).isMaterial(VanillaMaterials.AIR)
+				&& w.getBlockMaterial(x + 1, y, z).isMaterial(VanillaMaterials.AIR)
+				&& w.getBlockMaterial(x, y, z - 1).isMaterial(VanillaMaterials.AIR)
+				&& w.getBlockMaterial(x, y, z + 1).isMaterial(VanillaMaterials.AIR);
 	}
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
 		for (byte yy = 0; yy < totalHeight; yy++) {
-			if (!w.getBlockMaterial(x, y + yy, z).isMaterial(VanillaMaterials.AIR)) {
+			if (!canPlaceObject(w, x, y + yy, z)) {
 				return;
 			}
-			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.SUGAR_CANE_BLOCK, (short) 0, null);
+			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.CACTUS, (short) 0, null);
 		}
 	}
 

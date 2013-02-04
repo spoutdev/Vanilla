@@ -47,6 +47,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector3;
+import org.spout.api.plugin.Platform;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.data.Animation;
@@ -87,11 +88,17 @@ public class HealthComponent extends EntityComponent {
 	private DamageCause<?> lastDamageCause = new NullDamageCause(DamageType.UNKNOWN);
 	private Object lastDamager;
 	// Client only
-	private final Widget hearts = new Widget();
+	private Widget hearts;
 	private boolean animateHearts;
 	private int heartAnimationTicks;
 	private static final float SCALE = 0.75f; // TODO: Apply directly from engine
 	private static final float START_X = -0.71f * SCALE;
+	
+	public HealthComponent() {
+		if (Spout.getPlatform()==Platform.CLIENT) {
+			hearts = ((Client)Spout.getEngine()).getScreenStack().createWidget();
+		}
+	}
 
 	@Override
 	public void onAttached() {

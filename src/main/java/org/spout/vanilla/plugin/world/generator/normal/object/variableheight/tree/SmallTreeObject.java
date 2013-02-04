@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.world.generator.normal.object.tree;
+package org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree;
 
 import java.util.Random;
 
@@ -123,7 +123,7 @@ public class SmallTreeObject extends TreeObject {
 			if (totalHeight >= 6 && random.nextInt(5) == 0) {
 				for (byte yy = 0; yy < 2; yy++) {
 					final byte odd = (byte) (4 - yy);
-					final Vector3 position = new Vector3(x, y + yy, z);
+					final Vector3 position = new Vector3(x, y + yy + totalHeight - 5, z);
 					for (BlockFace face : BlockFaces.NSEW) {
 						if (random.nextInt(odd) != 0) {
 							continue;

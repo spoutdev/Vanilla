@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.world.generator.normal.object.tree;
+package org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree;
 
 import java.util.Random;
 
@@ -33,16 +33,16 @@ import org.spout.api.geo.World;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.plant.Sapling;
 
-public class PineTreeObject extends TreeObject {
-	private byte leavesSizeY = -1;
-	private byte leavesAbsoluteMaxRadius = -1;
+public class SpruceTreeObject extends TreeObject {
+	private byte leavesBottomY = -1;
+	private byte leavesMaxRadius = -1;
 
-	public PineTreeObject() {
+	public SpruceTreeObject() {
 		this(null);
 	}
 
-	public PineTreeObject(Random random) {
-		super(random, (byte) 6, (byte) 4, (short) 1);
+	public SpruceTreeObject(Random random) {
+		super(random, (byte) 7, (byte) 5, (short) 1);
 		overridable.add(VanillaMaterials.AIR);
 		overridable.add(VanillaMaterials.LEAVES);
 		overridable.add(Sapling.SPRUCE);
@@ -56,8 +56,8 @@ public class PineTreeObject extends TreeObject {
 		findRandomLeavesSize();
 		int checkRadius = 0;
 		for (byte yy = 0; yy < totalHeight + 2; yy++) {
-			if (yy == leavesSizeY) {
-				checkRadius = leavesAbsoluteMaxRadius;
+			if (yy == leavesBottomY) {
+				checkRadius = leavesMaxRadius;
 			}
 			for (byte xx = (byte) -checkRadius; xx < checkRadius + 1; xx++) {
 				for (byte zz = (byte) -checkRadius; zz < checkRadius + 1; zz++) {
@@ -72,16 +72,12 @@ public class PineTreeObject extends TreeObject {
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
-		if (leavesSizeY == -1 || leavesAbsoluteMaxRadius == -1) {
+		if (leavesBottomY == -1 || leavesMaxRadius == -1) {
 			findRandomLeavesSize();
 		}
 		w.setBlockMaterial(x, y - 1, z, VanillaMaterials.DIRT, (short) 0, null);
-		byte leavesRadius = (byte) random.nextInt(2);
-		byte leavesMaxRadius = 1;
-		final byte leavesBottomY = (byte) (totalHeight - leavesSizeY);
-		boolean firstMaxedRadius = false;
-		for (int leavesY = 0; leavesY < leavesBottomY + 1; leavesY++) {
-			int yy = totalHeight - leavesY;
+		byte leavesRadius = 0;
+		for (byte yy = totalHeight; yy >= leavesBottomY; yy--) {
 			for (byte xx = (byte) -leavesRadius; xx < leavesRadius + 1; xx++) {
 				for (byte zz = (byte) -leavesRadius; zz < leavesRadius + 1; zz++) {
 					if (Math.abs(xx) != leavesRadius || Math.abs(zz) != leavesRadius || leavesRadius <= 0) {
@@ -89,32 +85,27 @@ public class PineTreeObject extends TreeObject {
 					}
 				}
 			}
-			if (leavesRadius >= leavesMaxRadius) {
-				leavesRadius = (byte) (firstMaxedRadius ? 1 : 0);
-				firstMaxedRadius = true;
-				if (++leavesMaxRadius > leavesAbsoluteMaxRadius) {
-					leavesMaxRadius = leavesAbsoluteMaxRadius;
-				}
-			} else {
+			if (leavesRadius > 0 && yy == y + leavesBottomY + 1) {
+				leavesRadius--;
+			} else if (leavesRadius < leavesMaxRadius) {
 				leavesRadius++;
 			}
 		}
-		final byte trunkHeightReducer = (byte) random.nextInt(3);
-		for (int yy = 0; yy < totalHeight - trunkHeightReducer; yy++) {
+		for (int yy = 0; yy < totalHeight - 1; yy++) {
 			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.LOG, logMetadata, null);
 		}
 	}
 
 	private void findRandomLeavesSize() {
-		leavesSizeY = (byte) (random.nextInt(2) + 1);
-		leavesAbsoluteMaxRadius = (byte) (2 + random.nextInt(2));
+		leavesBottomY = (byte) (totalHeight - random.nextInt(2) - 3);
+		leavesMaxRadius = (byte) (1 + random.nextInt(totalHeight - leavesBottomY + 1));
 	}
 
-	public void setLeavesAbsoluteMaxRadius(byte leavesAbsoluteMaxRadius) {
-		this.leavesAbsoluteMaxRadius = leavesAbsoluteMaxRadius;
+	public void setLeavesBottomY(byte leavesBottomY) {
+		this.leavesBottomY = leavesBottomY;
 	}
 
-	public void setLeavesSizeY(byte leavesSizeY) {
-		this.leavesSizeY = leavesSizeY;
+	public void setLeavesMaxRadius(byte leavesMaxRadius) {
+		this.leavesMaxRadius = leavesMaxRadius;
 	}
 }

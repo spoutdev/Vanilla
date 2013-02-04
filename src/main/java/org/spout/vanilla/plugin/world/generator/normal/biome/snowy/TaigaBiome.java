@@ -36,16 +36,16 @@ import org.spout.vanilla.plugin.world.generator.normal.decorator.SandAndClayDeco
 import org.spout.vanilla.plugin.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.plugin.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.plugin.world.generator.normal.decorator.TreeDecorator;
-import org.spout.vanilla.plugin.world.generator.normal.object.tree.PineTreeObject;
-import org.spout.vanilla.plugin.world.generator.normal.object.tree.SpruceTreeObject;
-import org.spout.vanilla.plugin.world.generator.normal.object.tree.TreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.PineTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.SpruceTreeObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.TreeObject;
 
 public class TaigaBiome extends SnowyBiome {
 	public TaigaBiome(int biomeId) {
 		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new TaigaTreeWGOFactory()),
 				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory()), new MushroomDecorator(),
 				new SugarCaneDecorator(), new PumpkinDecorator());
-		setElevation(60, 83);
+		setElevation(63, 83);
 		setGrassColorMultiplier(new Color(130, 181, 147));
 		setFoliageColorMultiplier(new Color(99, 162, 119));
 	}

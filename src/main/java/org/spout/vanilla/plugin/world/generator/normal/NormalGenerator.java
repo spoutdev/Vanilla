@@ -29,6 +29,7 @@ package org.spout.vanilla.plugin.world.generator.normal;
 import java.util.Random;
 
 import net.royawesome.jlibnoise.NoiseQuality;
+import net.royawesome.jlibnoise.module.modifier.Exponent;
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
@@ -54,7 +55,7 @@ import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Liquid;
-import org.spout.vanilla.plugin.world.generator.VanillaBiomeGenerator;
+import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomeGenerator;
 import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.plugin.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.plugin.world.generator.normal.biome.selector.WhittakerLayer;
@@ -186,7 +187,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 				final double minElevation = minSum / count;
 				final double smoothHeight = (maxSum / count - minElevation) / 2;
 				for (int yy = 0; yy < sizeY; yy++) {
-					final double noiseValue = noise[xx][yy][zz] - 1 / smoothHeight * (y + yy - smoothHeight - minElevation);
+					final double noiseValue = pow(noise[xx][yy][zz], 2) - 1 / smoothHeight * (y + yy - smoothHeight - minElevation);
 					if (noiseValue >= 0) {
 						blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.STONE);
 					} else {
@@ -209,6 +210,14 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 				}
 			}
 		}
+	}
+
+	private static double pow(double val, int pow) {
+		val = val * 0.5 + 0.5;
+		for (int i = 1; i < pow; i++) {
+			val *= val;
+		}
+		return (val - 0.5) / 0.5;
 	}
 
 	@Override
@@ -261,135 +270,135 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		// rivers
 		final RidgedMultiRangeLayer rivers =
 				new RidgedMultiRangeLayer(2).
-						setOctaveCount(1).
-						setFrequency(0.005 / scale);
+				setOctaveCount(1).
+				setFrequency(0.005 / scale);
 		// hills
 		final PerlinRangeLayer hills =
 				new PerlinRangeLayer(1).
-						setOctaveCount(2).
-						setFrequency(0.004 / scale);
+				setOctaveCount(2).
+				setFrequency(0.004 / scale);
 		// frozen oceans
 		final PerlinRangeLayer frozenOceans =
 				new PerlinRangeLayer(3).
-						setOctaveCount(2).
-						setFrequency(0.004 / scale);
+				setOctaveCount(2).
+				setFrequency(0.004 / scale);
 		//
 		// LAND LAYERS
 		//
 		// desert
 		final BiomeSelectorLayer desert =
 				hills.clone().
-						addElement(VanillaBiomes.DESERT, -1, 0.5f).
-						addElement(VanillaBiomes.DESERT_HILLS, 0.5f, 1);
+				addElement(VanillaBiomes.DESERT, -1, 0.5f).
+				addElement(VanillaBiomes.DESERT_HILLS, 0.5f, 1);
 		// desert land
 		final BiomeSelectorLayer desertLand =
 				rivers.clone().
-						addElement(desert, -1, 0.16f).
-						addElement(VanillaBiomes.RIVER, 0.16f, 1);
+				addElement(desert, -1, 0.16f).
+				addElement(VanillaBiomes.RIVER, 0.16f, 1);
 		// forest
 		final BiomeSelectorLayer forest =
 				hills.clone().
-						addElement(VanillaBiomes.FOREST, -1, 0.5f).
-						addElement(VanillaBiomes.FOREST_HILLS, 0.5f, 1);
+				addElement(VanillaBiomes.FOREST, -1, 0.5f).
+				addElement(VanillaBiomes.FOREST_HILLS, 0.5f, 1);
 		// forest land
 		final BiomeSelectorLayer forestLand =
 				rivers.clone().
-						addElement(forest, -1, 0.16f).
-						addElement(VanillaBiomes.RIVER, 0.16f, 1);
+				addElement(forest, -1, 0.16f).
+				addElement(VanillaBiomes.RIVER, 0.16f, 1);
 		// jungle
 		final BiomeSelectorLayer jungle =
 				hills.clone().
-						addElement(VanillaBiomes.JUNGLE, -1, 0.5f).
-						addElement(VanillaBiomes.JUNGLE_HILLS, 0.5f, 1);
+				addElement(VanillaBiomes.JUNGLE, -1, 0.5f).
+				addElement(VanillaBiomes.JUNGLE_HILLS, 0.5f, 1);
 		// jungle land
 		final BiomeSelectorLayer jungleLand =
 				rivers.clone().
-						addElement(jungle, -1, 0.16f).
-						addElement(VanillaBiomes.RIVER, 0.16f, 1);
+				addElement(jungle, -1, 0.16f).
+				addElement(VanillaBiomes.RIVER, 0.16f, 1);
 		// plains
 		final BiomeSelectorLayer plains =
 				rivers.clone().
-						addElement(VanillaBiomes.PLAINS, -1, 0.16f).
-						addElement(VanillaBiomes.RIVER, 0.16f, 1);
+				addElement(VanillaBiomes.PLAINS, -1, 0.16f).
+				addElement(VanillaBiomes.RIVER, 0.16f, 1);
 		// swamp
 		final BiomeSelectorLayer swamp =
 				rivers.clone().
-						addElement(VanillaBiomes.SWAMP, -1, 0.16f).
-						addElement(VanillaBiomes.RIVER, 0.16f, 1);
+				addElement(VanillaBiomes.SWAMP, -1, 0.16f).
+				addElement(VanillaBiomes.RIVER, 0.16f, 1);
 		// taiga
 		final BiomeSelectorLayer taiga =
 				hills.clone().
-						addElement(VanillaBiomes.TAIGA, -1, 0.5f).
-						addElement(VanillaBiomes.TAIGA_HILLS, 0.5f, 1);
+				addElement(VanillaBiomes.TAIGA, -1, 0.5f).
+				addElement(VanillaBiomes.TAIGA_HILLS, 0.5f, 1);
 		// taiga sub-land
 		final BiomeSelectorLayer taigaSubland =
 				rivers.clone().
-						addElement(taiga, -1, 0.16f).
-						addElement(VanillaBiomes.FROZEN_RIVER, 0.16f, 1);
+				addElement(taiga, -1, 0.16f).
+				addElement(VanillaBiomes.FROZEN_RIVER, 0.16f, 1);
 		// taiga land
 		final BiomeSelectorLayer taigaLand =
 				frozenOceans.clone().
-						addElement(taigaSubland, -1, 0.4f).
-						addElement(VanillaBiomes.FROZEN_OCEAN, 0.4f, 1);
+				addElement(taigaSubland, -1, 0.4f).
+				addElement(VanillaBiomes.FROZEN_OCEAN, 0.4f, 1);
 		// tundra
 		final BiomeSelectorLayer tundra =
 				hills.clone().
-						addElement(VanillaBiomes.TUNDRA, -1, 0.5f).
-						addElement(VanillaBiomes.TUNDRA_HILLS, 0.5f, 1);
+				addElement(VanillaBiomes.TUNDRA, -1, 0.5f).
+				addElement(VanillaBiomes.TUNDRA_HILLS, 0.5f, 1);
 		// tundra sub-land
 		final BiomeSelectorLayer tundraSubland =
 				rivers.clone().
-						addElement(tundra, -1, 0.16f).
-						addElement(VanillaBiomes.FROZEN_RIVER, 0.16f, 1);
+				addElement(tundra, -1, 0.16f).
+				addElement(VanillaBiomes.FROZEN_RIVER, 0.16f, 1);
 		// tundra land
 		final BiomeSelectorLayer tundraLand =
 				frozenOceans.clone().
-						addElement(tundraSubland, -1, 0.4f).
-						addElement(VanillaBiomes.FROZEN_OCEAN, 0.4f, 1);
+				addElement(tundraSubland, -1, 0.4f).
+				addElement(VanillaBiomes.FROZEN_OCEAN, 0.4f, 1);
 		//
 		//	PRIMARY LAYERS
 		//
 		// mushroom
 		final BiomeSelectorLayer mushroom =
 				new PerlinRangeLayer(11).
-						setOctaveCount(2).
-						setFrequency(0.004 / scale).
-						addElement(VanillaBiomes.OCEAN, -1, 0.78f).
-						addElement(VanillaBiomes.MUSHROOM_SHORE, 0.78f, 0.85f).
-						addElement(VanillaBiomes.MUSHROOM, 0.85f, 1);
+				setOctaveCount(2).
+				setFrequency(0.004 / scale).
+				addElement(VanillaBiomes.OCEAN, -1, 0.78f).
+				addElement(VanillaBiomes.MUSHROOM_SHORE, 0.78f, 0.85f).
+				addElement(VanillaBiomes.MUSHROOM, 0.85f, 1);
 		// shore
 		final BiomeSelectorLayer shore =
 				rivers.clone().
-						addElement(VanillaBiomes.BEACH, -1, 0.16f).
-						addElement(VanillaBiomes.RIVER, 0.16f, 1);
+				addElement(VanillaBiomes.BEACH, -1, 0.16f).
+				addElement(VanillaBiomes.RIVER, 0.16f, 1);
 		// land
 		final BiomeSelectorLayer land =
 				new WhittakerLayer(7).
-						setHumidityOctaveCount(2).
-						setHumidityFrequency(0.002 / scale).
-						setTemperatureOctaveCount(2).
-						setTemperatureFrequency(0.001 / scale).
-						addElement(desertLand, 20, 50).
-						addElement(forestLand, 15, 200).
-						addElement(jungleLand, 20, 300).
-						addElement(plains, 10, 50).
-						addElement(swamp, 10, 300).
-						addElement(taigaLand, 0, 50).
-						addElement(tundraLand, -5, 50);
+				setHumidityOctaveCount(2).
+				setHumidityFrequency(0.002 / scale).
+				setTemperatureOctaveCount(2).
+				setTemperatureFrequency(0.001 / scale).
+				addElement(desertLand, 20, 50).
+				addElement(forestLand, 15, 200).
+				addElement(jungleLand, 20, 300).
+				addElement(plains, 10, 50).
+				addElement(swamp, 10, 300).
+				addElement(taigaLand, 0, 50).
+				addElement(tundraLand, -5, 50);
 		//
 		// STARTING LAYER
 		//
 		// start
 		final BiomeSelectorLayer start =
 				new PerlinRangeLayer(5).
-						setOctaveCount(2).
-						setFrequency(0.0028 / scale).
-						addElement(mushroom, -1, -0.3f).
-						addElement(VanillaBiomes.OCEAN, -0.3f, -0.05f).
-						addElement(shore, -0.05f, 0).
-						addElement(land, 0, 0.675f).
-						addElement(VanillaBiomes.SMALL_MOUNTAINS, 0.675f, 0.71f).
-						addElement(VanillaBiomes.MOUNTAINS, 0.71f, 1);
+				setOctaveCount(2).
+				setFrequency(0.0028 / scale).
+				addElement(mushroom, -1, -0.3f).
+				addElement(VanillaBiomes.OCEAN, -0.3f, -0.05f).
+				addElement(shore, -0.05f, 0).
+				addElement(land, 0, 0.675f).
+				addElement(VanillaBiomes.SMALL_MOUNTAINS, 0.675f, 0.71f).
+				addElement(VanillaBiomes.MOUNTAINS, 0.71f, 1);
 		return start;
 	}
 }

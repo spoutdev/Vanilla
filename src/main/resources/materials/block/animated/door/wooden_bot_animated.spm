@@ -1,0 +1,7 @@
+Mesh: mesh://Vanilla/materials/block/animated/door/wooden_botdoor_close.obj
+Material: material://Vanilla/materials/block/animated/door/wooden_botdoor_close.smt
+Skeleton: skeleton://Vanilla/materials/block/animated/door/door_animated.ske
+Animation:
+    open: animation://Vanilla/materials/block/animated/door/door_opening.sam
+    close: animation://Vanilla/materials/block/animated/door/door_closing.sam
+    

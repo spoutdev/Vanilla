@@ -34,22 +34,21 @@ import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
-import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.SugarCaneStackObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.SugarCaneStackObject;
 
 /**
  * Decorator that decorates a biome with sugar canes.
  */
 public class SugarCaneDecorator extends Decorator {
-	private final byte maxClusterSize;
 	private final byte clusterPlaceAttempts;
 	private final byte numberOfClusters;
+	private byte maxClusterSize = 4;
 
 	public SugarCaneDecorator() {
-		this((byte) 6, (byte) 20, (byte) 1);
+		this((byte) 10, (byte) 1);
 	}
 
-	public SugarCaneDecorator(byte maxClusterSize, byte clusterPlaceAttempts, byte numberOfClusters) {
-		this.maxClusterSize = maxClusterSize;
+	public SugarCaneDecorator(byte clusterPlaceAttempts, byte numberOfClusters) {
 		this.clusterPlaceAttempts = clusterPlaceAttempts;
 		this.numberOfClusters = numberOfClusters;
 	}
@@ -95,5 +94,13 @@ public class SugarCaneDecorator extends Decorator {
 			}
 		}
 		return ++y;
+	}
+
+	public byte getMaxClusterSize() {
+		return maxClusterSize;
+	}
+
+	public void setMaxClusterSize(byte maxClusterSize) {
+		this.maxClusterSize = maxClusterSize;
 	}
 }

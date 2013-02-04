@@ -34,7 +34,7 @@ import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
-import org.spout.vanilla.plugin.world.generator.normal.object.largeplant.CactusStackObject;
+import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.CactusStackObject;
 
 public class CactusDecorator extends Decorator {
 	private static final byte AMOUNT = 2;

@@ -243,7 +243,7 @@ public class TestCommands {
 
 		BlockIterator blockIt;
 		if (Spout.getPlatform() != Platform.CLIENT) {
-			blockIt = player.get(HeadComponent.class).getBlockView();
+			blockIt = player.get(HeadComponent.class).getBlockView(300);
 		} else {
 			blockIt = player.get(InteractComponent.class).getAlignedBlocks();
 		}

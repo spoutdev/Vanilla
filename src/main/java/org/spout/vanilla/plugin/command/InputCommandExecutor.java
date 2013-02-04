@@ -101,12 +101,12 @@ public class InputCommandExecutor implements CommandExecutor {
 			QuickbarInventory quickbar = player.get(PlayerInventory.class).getQuickbar();
 			HUDComponent hud = player.get(HUDComponent.class);
 			int newSlot = quickbar.getSelectedSlot().getIndex();
-			if (name.endsWith("left")) {
+			if (name.endsWith("right")) {
 				newSlot--;
 				if (newSlot < 0) {
 					newSlot = 8;
 				}
-			} else if (name.endsWith("right")) {
+			} else if (name.endsWith("left")) {
 				newSlot++;
 				if (newSlot > 8) {
 					newSlot = 0;

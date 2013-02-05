@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.plugin.protocol.msg.window;
 
+import java.util.Arrays;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.inventory.ItemStack;
@@ -43,6 +45,7 @@ public final class WindowItemsMessage extends WindowMessage {
 	public WindowItemsMessage(int windowInstanceId, ItemStack[] items) {
 		super(windowInstanceId);
 		this.items = items;
+		System.out.println("Window items: " + Arrays.toString(items));
 	}
 
 	public ItemStack[] getItems() {

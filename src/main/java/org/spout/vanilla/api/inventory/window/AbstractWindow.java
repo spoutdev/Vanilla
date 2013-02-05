@@ -103,7 +103,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 	 * Reloads the window's items
 	 */
 	@ServerOnly
-	public void reload() {
+	public final void reload() {
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			throw new IllegalStateException("Cannot reload window in client mode.");
 		}
@@ -112,7 +112,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 		for (int i = 0; i < items.length; i++) {
 			Slot entry = getSlot(i);
 			if (entry != null) {
-				items[i] = entry.getInventory().get(entry.getIndex());
+				items[i] = entry.get();
 			}
 		}
 

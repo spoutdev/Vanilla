@@ -53,6 +53,7 @@ import org.spout.vanilla.api.event.inventory.InventoryCanSetEvent;
 import org.spout.vanilla.api.event.window.WindowCloseEvent;
 import org.spout.vanilla.api.event.window.WindowOpenEvent;
 import org.spout.vanilla.api.event.window.WindowPropertyEvent;
+import org.spout.vanilla.api.event.window.WindowSlotEvent;
 import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.api.inventory.CraftingInventory;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;

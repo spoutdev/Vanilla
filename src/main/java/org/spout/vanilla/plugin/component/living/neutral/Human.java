@@ -56,7 +56,7 @@ import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DiggingComponent;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
-import org.spout.vanilla.plugin.component.misc.PickupItemComponent;
+import org.spout.vanilla.plugin.component.misc.PlayerPickupItemComponent;
 import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.configuration.WorldConfigurationNode;
@@ -77,7 +77,7 @@ public class Human extends Living {
 	public void onAttached() {
 		super.onAttached();
 		Entity holder = getOwner();
-		holder.add(PickupItemComponent.class);
+		holder.add(PlayerPickupItemComponent.class);
 		holder.add(DiggingComponent.class);
 		holder.getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new HumanEntityProtocol());
 		//Add height offset if loading from disk

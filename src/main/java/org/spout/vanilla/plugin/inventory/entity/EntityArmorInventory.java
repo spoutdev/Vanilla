@@ -28,13 +28,40 @@ package org.spout.vanilla.plugin.inventory.entity;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
 
 import org.spout.vanilla.api.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.api.inventory.entity.ArmorInventory;
+import org.spout.vanilla.api.material.item.armor.Boots;
+import org.spout.vanilla.api.material.item.armor.Chestplate;
+import org.spout.vanilla.api.material.item.armor.Helmet;
+import org.spout.vanilla.api.material.item.armor.Leggings;
 
+import org.spout.vanilla.plugin.material.block.solid.Pumpkin;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 
 public class EntityArmorInventory extends ArmorInventory {
+
+	@Override
+	public boolean canSet(int slot, ItemStack item) {
+		if (item != null) {
+			Material material = item.getMaterial();
+			switch (slot) {
+				case BOOT_SLOT:
+					return material instanceof Boots;
+				case LEGGINGS_SLOT:
+					return material instanceof Leggings;
+				case CHEST_PLATE_SLOT:
+					return material instanceof Chestplate;
+				case HELMET_SLOT:
+					return material instanceof Helmet || material instanceof Pumpkin;
+				default:
+					return false;
+			}
+		}
+		return true;
+	}
+
 	@Override
 	public void updateSlot(int i, ItemStack item, Entity entity) {
 		final int equip;

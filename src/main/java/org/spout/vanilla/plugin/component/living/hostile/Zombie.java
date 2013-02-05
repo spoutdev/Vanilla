@@ -45,6 +45,7 @@ import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.DamageComponent;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
+import org.spout.vanilla.plugin.component.misc.EntityPickupItemComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
@@ -59,6 +60,8 @@ public class Zombie extends Living implements Hostile {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ZombieEntityProtocol());
 		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.ROTTEN_FLESH, getRandom().nextInt(2))).addXpDrop((short) 5);
+		getOwner().add(VanillaEntityInventory.class);
+		getOwner().add(EntityPickupItemComponent.class);
 		SceneComponent scene = getOwner().getScene();
 		scene.setShape(5f, new BoxShape(1F, 2F, 1F));
 		scene.setFriction(1f);

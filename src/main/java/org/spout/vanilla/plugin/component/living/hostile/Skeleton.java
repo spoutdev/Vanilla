@@ -39,6 +39,7 @@ import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.inventory.VanillaEntityInventory;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
+import org.spout.vanilla.plugin.component.misc.EntityPickupItemComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.SkeletonEntityProtocol;
@@ -54,6 +55,7 @@ public class Skeleton extends Living implements Hostile {
 		SceneComponent scene = getOwner().getScene();
 		DropComponent dropComponent = getOwner().add(DropComponent.class);
 		getOwner().add(VanillaEntityInventory.class);
+		getOwner().add(EntityPickupItemComponent.class);
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.ARROW, random.nextInt(2)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.BONE, random.nextInt(2)));

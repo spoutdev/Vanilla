@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.spout.api.component.type.EntityComponent;
+import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.living.hostile.Blaze;
@@ -62,42 +63,45 @@ import org.spout.vanilla.plugin.component.living.util.IronGolem;
 import org.spout.vanilla.plugin.component.living.util.SnowGolem;
 
 public enum CreatureType {
-	BAT(65, Bat.class),
-	BLAZE(61, Blaze.class),
-	CAVE_SPIDER(59, CaveSpider.class),
-	CHICKEN(93, Chicken.class),
-	COW(92, Cow.class),
-	CREEPER(50, Creeper.class),
-	ENDER_DRAGON(63, EnderDragon.class),
-	ENDERMAN(58, Enderman.class),
-	GHAST(56, Ghast.class),
-	GIANT(53, Giant.class),
-	IRON_GOLEM(99, IronGolem.class),
-	MAGMA_CUBE(62, MagmaCube.class),
-	MUSHROOM_COW(96, MooshroomCow.class),
-	OCELOT(98, Ocelot.class),
-	PIG(90, Pig.class),
-	PIG_ZOMBIE(57, PigZombie.class),
-	SHEEP(91, Sheep.class),
-	SILVERFISH(60, Silverfish.class),
-	SKELETON(51, Skeleton.class),
-	SLIME(55, Slime.class),
-	SNOW_GOLEM(97, SnowGolem.class),
-	SPIDER(52, Spider.class),
-	SQUID(94, Squid.class),
-	VILLAGER(120, Villager.class),
-	WITCH(66, Witch.class),
-	WITHER(64, Wither.class),
-	WOLF(95, Wolf.class),
-	ZOMBIE(54, Zombie.class);
+	BAT(65, Bat.class, "Bat"),
+	BLAZE(61, Blaze.class, "Blaze"),
+	CAVE_SPIDER(59, CaveSpider.class, "Cave Spider"),
+	CHICKEN(93, Chicken.class, "Chicken"),
+	COW(92, Cow.class, "Cow"),
+	CREEPER(50, Creeper.class, "Creeper"),
+	ENDER_DRAGON(63, EnderDragon.class, "Ender Dragon"),
+	ENDERMAN(58, Enderman.class, "Enderman"),
+	GHAST(56, Ghast.class, "Ghast"),
+	GIANT(53, Giant.class, "Giant"),
+	IRON_GOLEM(99, IronGolem.class, "Iron Golem"),
+	MAGMA_CUBE(62, MagmaCube.class, "Magma Cube"),
+	MUSHROOM_COW(96, MooshroomCow.class, "Mushroom Cow"),
+	OCELOT(98, Ocelot.class, "Ocelot"),
+	PIG(90, Pig.class, "Pig"),
+	PIG_ZOMBIE(57, PigZombie.class, "Zombie Pigman"),
+	SHEEP(91, Sheep.class, "Sheep"),
+	SILVERFISH(60, Silverfish.class, "Silverfish"),
+	SKELETON(51, Skeleton.class, "Skeleton"),
+	SLIME(55, Slime.class, "Slime"),
+	SNOW_GOLEM(97, SnowGolem.class, "Snow Golem"),
+	SPIDER(52, Spider.class, "Spider"),
+	SQUID(94, Squid.class, "Squid"),
+	VILLAGER(120, Villager.class, "Villager"),
+	WITCH(66, Witch.class, "Witch"),
+	WITHER(64, Wither.class, "Wither"),
+	WOLF(95, Wolf.class, "Wolf"),
+	ZOMBIE(54, Zombie.class, "Zombie");
 	private final int id;
+        private final String name;
 	private final Class<? extends Living> componentType;
 	private static final Map<Class<?>, CreatureType> types = new HashMap<Class<?>, CreatureType>();
 	private static final Map<Integer, CreatureType> idMap = new HashMap<Integer, CreatureType>();
+        private static final Map<String, CreatureType> nameMap = new HashMap<String, CreatureType>();
 
-	private CreatureType(int id, Class<? extends Living> componentType) {
+	private CreatureType(int id, Class<? extends Living> componentType, String name) {
 		this.id = id;
 		this.componentType = componentType;
+                this.name = name;
 	}
 
 	/**
@@ -106,6 +110,14 @@ public enum CreatureType {
 	public int getId() {
 		return id;
 	}
+        
+        /**
+         * Gets the minecraft protocol Display name for the creature type
+         * @return 
+         */
+        public String getName(){
+            return name;
+        }
 
 	/**
 	 * Gets the entity component associated with the creature type
@@ -126,14 +138,41 @@ public enum CreatureType {
 		return null;
 	}
 
+        /**
+         * Gets the creature type associated with its minecraft protocol id
+         * @param id minecraft protocol id for the entity
+         * @return 
+         */
 	public static CreatureType get(int id) {
 		return idMap.get(id);
 	}
-
+        
+        /**
+         * Gets the creature type associated with its minecraft protocol Display Name
+         * @param name minecraft protocol display name of the entity
+         * @return 
+         */
+        public static CreatureType get(String name) {
+		return nameMap.get(name);
+	}
+        
+        /**
+         * Gets the creature type associated with this Spout Entity
+         * @param entity spout entity to get the creature type of
+         * @return 
+         */
+        public static CreatureType get(Entity entity) {
+		if(types.containsKey(entity.get(Living.class).getClass())){
+                    return types.get(entity.get(Living.class).getClass());
+                }
+                return null;
+	}
+        
 	static {
 		for (CreatureType ct : values()) {
 			types.put(ct.getComponentType(), ct);
 			idMap.put(ct.getId(), ct);
+                        nameMap.put(ct.getName(), ct);
 		}
 	}
 }

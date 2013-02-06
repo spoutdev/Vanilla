@@ -26,6 +26,9 @@
  */
 package org.spout.vanilla.api.component.inventory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
@@ -68,6 +71,17 @@ public abstract class EntityInventoryComponent extends EntityComponent {
 		if (inv != null) {
 			inv.updateAll();
 		}
+	}
+
+	/**
+	 * Returns a List of all inventories that are dropped when the component owner is removed.
+	 * @return list of droppable inventories
+	 */
+	public List<Inventory> getDroppable() {
+		List<Inventory> inventories = new ArrayList<Inventory>(2);
+		inventories.add(getArmor());
+		inventories.add(getQuickbar());
+		return inventories;
 	}
 
 	/**

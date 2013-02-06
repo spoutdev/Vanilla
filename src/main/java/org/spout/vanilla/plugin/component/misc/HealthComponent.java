@@ -50,6 +50,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.plugin.Platform;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.api.component.inventory.EntityInventoryComponent;
 import org.spout.vanilla.api.data.Animation;
 import org.spout.vanilla.api.event.cause.DamageCause;
 import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
@@ -65,11 +66,7 @@ import org.spout.vanilla.api.event.entity.EntityStatusEvent;
 import org.spout.vanilla.api.event.entity.VanillaEntityDeathEvent;
 import org.spout.vanilla.api.event.player.PlayerDeathEvent;
 import org.spout.vanilla.api.event.player.network.PlayerHealthEvent;
-import org.spout.vanilla.api.inventory.entity.ArmorInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
-import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.hostile.EnderDragon;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.component.substance.XPOrb;
@@ -234,26 +231,9 @@ public class HealthComponent extends EntityComponent {
 		if (!Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
 			if (!(owner instanceof Player)) {
 				owner.remove();
-			} else {
-				dropPlayerItems((Player) owner);
 			}
-			DropComponent dropComponent = owner.get(DropComponent.class);
-			if (dropComponent != null) {
-				List<ItemStack> drops = dropComponent.getDrops();
-				Point entityPosition = owner.getScene().getPosition();
-				for (ItemStack stack : drops) {
-					if (stack != null) {
-						Item.drop(entityPosition, stack, Vector3.ZERO);
-					}
-				}
-				if (dropComponent.getXpDrop() > 0) {
-					Point pos = getOwner().getScene().getPosition();
-
-					XPOrb xporb = pos.getWorld().createEntity(pos, XPOrb.class).add(XPOrb.class);
-					xporb.setExperience(dropComponent.getXpDrop());
-					pos.getWorld().spawnEntity(xporb.getOwner());
-				}
-			}
+			dropInventoryItems(owner);
+			dropDropInventory(owner);
 			HungerComponent hungerComponent = owner.get(HungerComponent.class);
 			if (hungerComponent != null) {
 				hungerComponent.reset();
@@ -263,28 +243,47 @@ public class HealthComponent extends EntityComponent {
 
 	/**
 	 * Drops all items from all Inventories of a Player.
-	 * @param owner the player.
+	 * @param owner the entity.
 	 */
-	private void dropPlayerItems(Player owner) {
-		PlayerInventory playerInventory = owner.get(PlayerInventory.class);
-		if (playerInventory != null) {
+	private void dropInventoryItems(Entity owner) {
+		EntityInventoryComponent inventory = owner.get(EntityInventoryComponent.class);
+		if (inventory != null) {
 			Set<ItemStack> toDrop = new HashSet<ItemStack>();
-			ArmorInventory armorInventory = playerInventory.getArmor();
-			PlayerCraftingInventory craftingGrid = playerInventory.getCraftingGrid();
-			Inventory mainInventory = playerInventory.getMain();
-			QuickbarInventory quickbar = playerInventory.getQuickbar();
-			toDrop.addAll(armorInventory);
-			toDrop.addAll(craftingGrid);
-			toDrop.addAll(mainInventory);
-			toDrop.addAll(quickbar);
+			for (Inventory inv : inventory.getDroppable()) {
+				toDrop.addAll(inv);
+			}
 			Point position = owner.getScene().getPosition();
 			for (ItemStack stack : toDrop) {
 				if (stack != null) {
 					Item.dropNaturally(position, stack);
 				}
 			}
-			playerInventory.clear();
-			playerInventory.updateAll();
+			inventory.clear();
+			inventory.updateAll();
+		}
+	}
+
+	/**
+	 * Drops all items/xp in the DropComponent of the given entity
+	 * @param owner the entity
+	 */
+	private void dropDropInventory(Entity owner) {
+		DropComponent dropComponent = owner.get(DropComponent.class);
+		if (dropComponent != null) {
+			List<ItemStack> drops = dropComponent.getDrops();
+			Point entityPosition = owner.getScene().getPosition();
+			for (ItemStack stack : drops) {
+				if (stack != null) {
+					Item.drop(entityPosition, stack, Vector3.ZERO);
+				}
+			}
+			if (dropComponent.getXpDrop() > 0) {
+				Point pos = getOwner().getScene().getPosition();
+
+				XPOrb xporb = pos.getWorld().createEntity(pos, XPOrb.class).add(XPOrb.class);
+				xporb.setExperience(dropComponent.getXpDrop());
+				pos.getWorld().spawnEntity(xporb.getOwner());
+			}
 		}
 	}
 

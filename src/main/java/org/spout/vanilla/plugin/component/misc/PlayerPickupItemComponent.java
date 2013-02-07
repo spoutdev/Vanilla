@@ -28,7 +28,6 @@ package org.spout.vanilla.plugin.component.misc;
 
 import java.util.List;
 
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.api.event.entity.EntityCollectItemEvent;
@@ -40,32 +39,11 @@ import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 /**
  * Component that adds a detector to resources.entities to scan for and pickup items.
  */
-public class PickupItemComponent extends EntityComponent {
-	private final int DISTANCE = VanillaConfiguration.ITEM_PICKUP_RANGE.getInt();
-	private List<Entity> nearbyEntities;
-	private final int WAIT_RESET = 30;
-	private int wait = 0;
-
-	@Override
-	public boolean canTick() {
-		HealthComponent healthComponent = getOwner().get(HealthComponent.class);
-		if (healthComponent != null) {
-			if (!healthComponent.isDead() && wait != 0) {
-				wait--;
-				return false;
-			}
-			if (healthComponent.isDead()) {
-				wait = WAIT_RESET;
-				return false;
-			}
-		}
-		nearbyEntities = getOwner().getWorld().getNearbyEntities(getOwner(), DISTANCE);
-		return !nearbyEntities.isEmpty();
-	}
+public class PlayerPickupItemComponent extends EntityPickupItemComponent {
 
 	@Override
 	public void onTick(float dt) {
-		for (Entity entity : nearbyEntities) {
+		for (Entity entity : getNearbyEntities()) {
 			Item item = entity.get(Item.class);
 			if (item != null && item.canBeCollected()) {
 				getOwner().getNetwork().callProtocolEvent(new EntityCollectItemEvent(getOwner(), entity));

@@ -53,6 +53,7 @@ import org.spout.vanilla.api.event.inventory.InventoryCanSetEvent;
 import org.spout.vanilla.api.event.window.WindowCloseEvent;
 import org.spout.vanilla.api.event.window.WindowOpenEvent;
 import org.spout.vanilla.api.event.window.WindowPropertyEvent;
+import org.spout.vanilla.api.event.window.WindowSlotEvent;
 import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.api.inventory.CraftingInventory;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
@@ -124,7 +125,7 @@ public abstract class Window extends AbstractWindow {
 				LabelComponent labelComponent = label.add(LabelComponent.class);
 				labelComponent.setFont(VanillaRenderMaterials.FONT);
 				labelComponent.setText(new ChatArguments(ChatStyle.GRAY, title));
-				label.getTransform().translate(0, 0.45f, 0f);
+				label.getTransform().add(0, 0.45f);
 				popup.attachWidget(plugin, label);
 
 				for (InventoryConverter converter : converters) {

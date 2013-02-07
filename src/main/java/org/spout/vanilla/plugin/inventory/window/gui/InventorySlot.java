@@ -33,22 +33,17 @@ import org.spout.api.Client;
 import org.spout.api.Spout;
 import org.spout.api.event.player.input.PlayerClickEvent;
 import org.spout.api.event.player.input.PlayerKeyEvent;
-import org.spout.api.event.player.input.PlayerMouseMoveEvent;
 import org.spout.api.gui.component.ControlComponent;
 import org.spout.api.gui.render.RenderPart;
-import org.spout.api.input.Keyboard;
-import org.spout.api.math.IntVector2;
 import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.api.inventory.window.AbstractWindow;
-import org.spout.vanilla.api.inventory.window.ClickArguments;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 
 public class InventorySlot extends ControlComponent {
 	private RenderItemStack item;
-	private final RenderPart hitBox = new RenderPart();
 	private Vector2 pos = Vector2.ZERO;
 	private Slot entry;
 
@@ -78,6 +73,7 @@ public class InventorySlot extends ControlComponent {
 		if (item != null) {
 			item.setZIndex(0);
 			item.setPosition(pos);
+			getOwner().setHitBox(item.getSprite());
 		}
 	}
 
@@ -99,17 +95,16 @@ public class InventorySlot extends ControlComponent {
 
 	@Override
 	public void onClicked(PlayerClickEvent event) {
-		AbstractWindow window = getWindow();
-		window.onClick(new ClickArguments(entry, false, window.isShiftDown()));
+		System.out.println("Slot clicked!");
 	}
 
 	@Override
 	public void onKey(PlayerKeyEvent event) {
-		Keyboard key = event.getKey();
-		getWindow().setShiftDown((key == Keyboard.KEY_LSHIFT || key == Keyboard.KEY_RSHIFT) && event.isPressed());
+		System.out.println("Key pressed!");
 	}
 
 	@Override
-	public void onMouseMove(PlayerMouseMoveEvent event) {
+	public void onHover() {
+		System.out.println("Hovering over");
 	}
 }

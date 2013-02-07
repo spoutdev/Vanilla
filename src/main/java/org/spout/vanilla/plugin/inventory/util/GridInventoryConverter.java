@@ -52,11 +52,11 @@ public class GridInventoryConverter extends InventoryConverter {
 		super(inventory, new int[inventory.size()], new Vector2[inventory.size()], offset);
 		this.grid = inventory.grid(length);
 		this.pos = pos;
-		if (Spout.getEngine() instanceof Client) {
-			GridIterator iter = grid.iterator();
-			while (iter.hasNext()) {
-				int i = iter.next(), x = iter.getX(), y = iter.getY(), size = grid.getSize();
-				slots[i] = (offset + size) - (length * y) - (length - x);
+		GridIterator iter = grid.iterator();
+		while (iter.hasNext()) {
+			int i = iter.next(), x = iter.getX(), y = iter.getY(), size = grid.getSize();
+			slots[i] = (offset + size) - (length * y) - (length - x);
+			if (Spout.getEngine() instanceof Client) {
 				InventorySlot slot = widgets[i].get(InventorySlot.class);
 				slot.setRenderItemStack(new RenderItemStack(new ItemStack(VanillaMaterials.LEATHER_CAP, 1))); // TODO: Handle this in onClick
 				slot.setPosition(pos.add(x * SLOT_WIDTH, y * SLOT_HEIGHT));

@@ -53,7 +53,7 @@ import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.component.misc.LevelComponent;
-import org.spout.vanilla.plugin.component.misc.PickupItemComponent;
+import org.spout.vanilla.plugin.component.misc.PlayerPickupItemComponent;
 import org.spout.vanilla.plugin.component.misc.SleepComponent;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.component.player.PingComponent;
@@ -92,7 +92,7 @@ public class VanillaListener implements Listener {
 		player.add(WindowHolder.class);
 		player.add(PlayerListComponent.class);
 		player.add(PingComponent.class);
-		player.add(PickupItemComponent.class);
+		player.add(PlayerPickupItemComponent.class);
 		player.add(SleepComponent.class);
 		player.add(HungerComponent.class);
 		player.add(LevelComponent.class);

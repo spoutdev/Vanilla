@@ -30,6 +30,9 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.api.inventory.entity.ArmorInventory;
+
+import java.util.ArrayList;
+import java.util.List;
 import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
 
 /**
@@ -82,5 +85,15 @@ public abstract class PlayerInventoryComponent extends EntityInventoryComponent 
 		if (inv != null) {
 			inv.updateAll();
 		}
+	}
+
+	@Override
+	public List<Inventory> getDroppable() {
+		List<Inventory> inventories = new ArrayList<Inventory>(5);
+		inventories.add(getQuickbar());
+		inventories.add(getArmor());
+		inventories.add(getCraftingGrid());
+		inventories.add(getMain());
+		return inventories;
 	}
 }

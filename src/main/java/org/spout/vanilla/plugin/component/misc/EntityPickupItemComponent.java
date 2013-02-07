@@ -76,6 +76,9 @@ public class EntityPickupItemComponent extends EntityComponent {
 	public void onTick(float dt) {
 		for (Entity entity : nearbyEntities) {
 			Item item = entity.get(Item.class);
+			if (item == null) {
+				continue;
+			}
 			VanillaEntityInventory inv = getOwner().get(VanillaEntityInventory.class);
 			ArmorInventory armorInv = inv.getArmor();
 			// Check if this item is equipable armor and has more protection than the currently equipped item

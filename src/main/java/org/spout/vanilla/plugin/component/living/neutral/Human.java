@@ -47,7 +47,7 @@ import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.api.event.entity.HumanAbilityChangeEvent;
 import org.spout.vanilla.api.event.player.PlayerGameModeChangedEvent;
 import org.spout.vanilla.api.event.player.network.PlayerGameStateEvent;
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.Slot;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
 import org.spout.vanilla.plugin.VanillaPlugin;

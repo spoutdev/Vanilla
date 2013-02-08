@@ -37,7 +37,7 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.api.data.effect.StatusEffect;
 import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.api.event.cause.PlayerDamageCause;
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.Slot;
 import org.spout.vanilla.api.material.VanillaMaterial;
 
 import org.spout.vanilla.plugin.component.living.Living;

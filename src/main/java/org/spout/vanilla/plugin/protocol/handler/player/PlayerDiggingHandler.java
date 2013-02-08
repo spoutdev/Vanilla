@@ -50,7 +50,7 @@ import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.api.event.cause.PlayerBreakCause;
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.Slot;
 import org.spout.vanilla.api.material.VanillaMaterial;
 
 import org.spout.vanilla.plugin.component.living.neutral.Human;

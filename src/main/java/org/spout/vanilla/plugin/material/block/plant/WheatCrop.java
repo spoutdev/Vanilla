@@ -38,7 +38,7 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.GenericMath;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.Slot;
 import org.spout.vanilla.api.material.InitializableMaterial;
 import org.spout.vanilla.api.material.block.Crop;
 import org.spout.vanilla.api.material.block.Growing;

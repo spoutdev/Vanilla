@@ -35,7 +35,7 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.component.substance.material.VanillaBlockComponent;
 import org.spout.vanilla.api.data.Music;
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.Slot;
 
 import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.data.VanillaData;

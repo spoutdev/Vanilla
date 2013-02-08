@@ -36,7 +36,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.data.GameMode;
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.Slot;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;

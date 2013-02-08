@@ -38,7 +38,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.GenericMath;
 import org.spout.api.plugin.Platform;
 
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.Slot;
 import org.spout.vanilla.api.material.InitializableMaterial;
 
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;

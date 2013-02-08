@@ -29,7 +29,7 @@ package org.spout.vanilla.plugin.material.item.misc;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.Slot;
 
 import org.spout.vanilla.plugin.component.substance.object.projectile.XPBottle;
 import org.spout.vanilla.plugin.material.VanillaMaterials;

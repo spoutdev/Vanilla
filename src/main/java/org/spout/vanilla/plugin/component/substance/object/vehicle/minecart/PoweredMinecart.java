@@ -36,7 +36,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.event.entity.EntityMetaChangeEvent;
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.Slot;
 import org.spout.vanilla.api.material.Fuel;
 
 import org.spout.vanilla.plugin.VanillaPlugin;

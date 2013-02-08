@@ -35,7 +35,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.Slot;
 import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;

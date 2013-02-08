@@ -28,7 +28,7 @@ package org.spout.vanilla.api.inventory.window;
 
 import org.spout.api.inventory.Inventory;
 
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.Slot;
 
 /**
  * Represents the arguments of a click on a

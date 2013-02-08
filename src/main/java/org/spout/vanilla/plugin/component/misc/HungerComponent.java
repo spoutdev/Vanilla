@@ -38,7 +38,7 @@ import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.api.event.cause.HealCause;
 import org.spout.vanilla.api.event.cause.NullDamageCause;
 import org.spout.vanilla.api.event.player.network.PlayerHealthEvent;
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.Slot;
 
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.player.HUDComponent;

@@ -34,7 +34,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.Slot;
 
 import org.spout.vanilla.plugin.component.living.hostile.Blaze;
 import org.spout.vanilla.plugin.component.living.hostile.CaveSpider;

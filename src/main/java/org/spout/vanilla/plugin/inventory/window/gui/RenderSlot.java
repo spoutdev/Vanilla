@@ -41,7 +41,7 @@ import org.spout.api.math.IntVector2;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.Slot;
 import org.spout.vanilla.api.inventory.window.AbstractWindow;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;

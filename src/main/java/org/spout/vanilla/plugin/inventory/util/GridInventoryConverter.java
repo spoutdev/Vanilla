@@ -29,15 +29,12 @@ package org.spout.vanilla.plugin.inventory.util;
 import org.spout.api.Client;
 import org.spout.api.Spout;
 import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.shape.Grid;
 import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.Slot;
 import org.spout.vanilla.plugin.inventory.window.gui.RenderSlot;
-import org.spout.vanilla.plugin.inventory.window.gui.RenderItemStack;
-import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 /**
  * Represents an {@link InventoryConverter} that converts slots given the

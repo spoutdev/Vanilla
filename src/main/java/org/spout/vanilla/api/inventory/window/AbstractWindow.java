@@ -43,7 +43,7 @@ import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.api.component.inventory.PlayerInventoryComponent;
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.Slot;
 import org.spout.vanilla.api.inventory.window.prop.WindowProperty;
 
 public abstract class AbstractWindow implements InventoryViewer {

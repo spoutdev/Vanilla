@@ -53,7 +53,7 @@ import org.spout.vanilla.api.event.inventory.InventoryCanSetEvent;
 import org.spout.vanilla.api.event.window.WindowCloseEvent;
 import org.spout.vanilla.api.event.window.WindowOpenEvent;
 import org.spout.vanilla.api.event.window.WindowPropertyEvent;
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.Slot;
 import org.spout.vanilla.api.inventory.CraftingInventory;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 import org.spout.vanilla.api.inventory.window.AbstractWindow;
@@ -65,8 +65,6 @@ import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.plugin.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
-import org.spout.vanilla.plugin.inventory.window.gui.RenderSlot;
-import org.spout.vanilla.plugin.inventory.window.gui.RenderItemStack;
 import org.spout.vanilla.plugin.VanillaPlugin;
 
 /**

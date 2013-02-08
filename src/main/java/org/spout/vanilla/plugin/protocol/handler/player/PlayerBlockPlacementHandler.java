@@ -55,7 +55,7 @@ import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.vanilla.api.data.effect.SoundEffect;
 import org.spout.vanilla.api.event.cause.PlayerClickBlockCause;
 import org.spout.vanilla.api.event.cause.PlayerPlacementCause;
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.Slot;
 
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;

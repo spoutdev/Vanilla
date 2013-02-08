@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.api.component.substance.material;
 
-import org.spout.vanilla.api.inventory.Container;
+import org.spout.api.inventory.Container;
 
 /**
  * Represents any kind of furnace.

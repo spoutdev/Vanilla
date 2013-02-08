@@ -34,7 +34,7 @@ import org.spout.api.math.Vector2;
 import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.api.data.effect.StatusEffect;
 import org.spout.vanilla.api.data.effect.StatusEffectContainer;
-import org.spout.vanilla.api.inventory.Slot;
+import org.spout.api.inventory.Slot;
 import org.spout.vanilla.api.material.item.FoodEffect;
 
 import org.spout.vanilla.plugin.component.living.Living;

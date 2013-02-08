@@ -32,22 +32,24 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 
+import org.spout.vanilla.api.component.misc.DrowningComponent;
+import org.spout.vanilla.api.component.misc.HeadComponent;
 import org.spout.vanilla.api.data.GameMode;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.api.event.cause.BlockDamageCause;
 import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
 
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
-import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.material.block.liquid.Water;
 
 /**
  * Component that handles a entity drowning in water.
  * The drowning component requires a health component and head component
  */
-public class DrowningComponent extends EntityComponent {
+public class Drowning extends DrowningComponent {
 	private Entity owner;
-	private HealthComponent health;
+	private Health health;
 	private HeadComponent head;
 	public static final float MAX_AIR = VanillaData.AIR_SECS.getDefaultValue();
 	private int damageTimer = 20;
@@ -58,7 +60,7 @@ public class DrowningComponent extends EntityComponent {
 	@Override
 	public void onAttached() {
 		owner = getOwner();
-		health = owner.add(HealthComponent.class);
+		health = owner.add(Health.class);
 		head = owner.add(HeadComponent.class);
 	}
 
@@ -111,13 +113,7 @@ public class DrowningComponent extends EntityComponent {
 		}
 	}
 
-	public float getNbBubExact() {
-		final float maxSecsBubbles = VanillaData.AIR_SECS.getDefaultValue();
-		final float secsBubbles = getData().get(VanillaData.AIR_SECS);
-		
-		return (float) secsBubbles / maxSecsBubbles * 10f;
-	}
-	
+	@Override
 	public void hideBubbles() {
 		HUDComponent hud = getOwner().get(HUDComponent.class);
 		if (hud != null) {
@@ -125,26 +121,11 @@ public class DrowningComponent extends EntityComponent {
 		}
 	}
 
+	@Override
 	public void showBubbles() {
 		HUDComponent hud = getOwner().get(HUDComponent.class);
 		if (hud != null) {
 			hud.getAirMeter().show();
 		}
-	}
-
-	/**
-	 * Retrieve the amount of air the entity currently have.
-	 * @return The amount of air in seconds.
-	 */
-	public float getAir() {
-		return getData().get(VanillaData.AIR_SECS);
-	}
-
-	/**
-	 * Sets the amount of air the entity currently have.
-	 * @param airSecs The amount of air (in seconds) that the entity have.
-	 */
-	public void setAir(float airSecs) {
-		getData().put(VanillaData.AIR_SECS, airSecs);
 	}
 }

@@ -54,8 +54,9 @@ import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DiggingComponent;
-import org.spout.vanilla.plugin.component.misc.HeadComponent;
-import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.api.component.misc.HeadComponent;
+
+import org.spout.vanilla.plugin.component.misc.Health;
 import org.spout.vanilla.plugin.component.misc.PlayerPickupItemComponent;
 import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
@@ -85,7 +86,7 @@ public class Human extends Living {
 		//			((Player) holder).teleport(holder.getTransform().getPosition().add(0, 1.85F, 0));
 		//		}
 		if (getAttachedCount() == 1) {
-			holder.add(HealthComponent.class).setSpawnHealth(SPAWN_HEALTH);
+			holder.add(Health.class).setSpawnHealth(SPAWN_HEALTH);
 		}
 		if (getOwner().has(TextModelComponent.class)) {
 			getOwner().get(TextModelComponent.class).setSize(0.5f);

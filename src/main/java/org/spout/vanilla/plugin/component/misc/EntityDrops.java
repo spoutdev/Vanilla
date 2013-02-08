@@ -26,32 +26,31 @@
  */
 package org.spout.vanilla.plugin.component.misc;
 
-import java.util.HashMap;
+import java.util.List;
+import org.spout.vanilla.plugin.inventory.player.DropInventory;
 
-import org.spout.api.component.type.EntityComponent;
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.map.DefaultedKey;
+import org.spout.api.map.DefaultedKeyFactory;
 
-import org.spout.vanilla.api.data.Difficulty;
-
-import org.spout.vanilla.api.data.Damage;
+import org.spout.vanilla.api.component.misc.EntityDropComponent;
 
 /**
- * Component that contains the amount of damage this entity does.
+ * Handle item/XP drop from a entity.
  */
-public class DamageComponent extends EntityComponent {
-	private HashMap<Difficulty, Damage> damageList = new HashMap<Difficulty, Damage>();
+public class EntityDrops extends EntityDropComponent {
+	private static final DefaultedKey<DropInventory> DROP_INVENTORY = new DefaultedKeyFactory<DropInventory>("EntityDrops", DropInventory.class);
 
-	public DamageComponent() {
-		for (Difficulty difficulty : Difficulty.values()) {
-			damageList.put(difficulty, new Damage());
-		}
+	@Override
+	public EntityDropComponent addDrop(ItemStack itemstack) {
+		Inventory dropInventory = getOwner().getData().get(DROP_INVENTORY);
+		dropInventory.add(itemstack);
+		return this;
 	}
 
-	/**
-	 * Get the damage level depending of the difficulty level.
-	 * @param difficulty The difficulty level
-	 * @return The {@link Damage} associated with the difficulty.
-	 */
-	public Damage getDamageLevel(Difficulty difficulty) {
-		return damageList.get(difficulty);
+	@Override
+	public List<ItemStack> getDrops() {
+		return getOwner().getData().get(DROP_INVENTORY);
 	}
 }

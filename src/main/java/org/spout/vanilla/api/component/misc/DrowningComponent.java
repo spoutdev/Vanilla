@@ -24,46 +24,55 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.material.item.vehicle;
+package org.spout.vanilla.api.component.misc;
 
+import org.spout.api.Spout;
+import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.api.component.misc.HeadComponent;
-import org.spout.vanilla.plugin.component.substance.object.vehicle.Boat;
-import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
+import org.spout.vanilla.api.data.GameMode;
+import org.spout.vanilla.api.data.VanillaData;
+import org.spout.vanilla.api.event.cause.BlockDamageCause;
+import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
 
-public class BoatItem extends VanillaItemMaterial {
-	public BoatItem(String name, int id, Vector2 pos) {
-		super(name, id, pos);
+/**
+ * Component that handles a entity drowning in water.
+ * The drowning component requires a health component and head component
+ */
+public abstract class DrowningComponent extends EntityComponent {
+
+	public float getNbBubExact() {
+		final float maxSecsBubbles = VanillaData.AIR_SECS.getDefaultValue();
+		final float secsBubbles = getData().get(VanillaData.AIR_SECS);
+		
+		return secsBubbles / maxSecsBubbles * 10f;
 	}
 
-	@Override
-	public void onInteract(Entity entity, Action type) {
-		if (!(entity instanceof Player) || type != Action.RIGHT_CLICK) {
-			return;
-		}
+	/**
+	 * Hide bubbles in the GUI
+	 */
+	public abstract void hideBubbles();
 
-		HeadComponent head = entity.add(HeadComponent.class);
-		Block b = head.getBlockView(1).next();
-		if (!b.isMaterial(VanillaMaterials.WATER)) {
-			System.out.println("No water");
-			return;
-		}
+	/**
+	 * Show bubbles in the GUI
+	 */
+	public abstract void showBubbles();
 
-		World world = b.getWorld();
-		world.createAndSpawnEntity(b.getPosition().add(0, 0.25f, 0), Boat.class, LoadOption.LOAD_ONLY);
+	/**
+	 * Retrieve the amount of air the entity currently have.
+	 * @return The amount of air in seconds.
+	 */
+	public float getAir() {
+		return getData().get(VanillaData.AIR_SECS);
 	}
 
-	@Override
-	public void onInteract(Entity entity, Block block, Action type, BlockFace face) {
-		onInteract(entity, type);
+	/**
+	 * Sets the amount of air the entity currently have.
+	 * @param airSecs The amount of air (in seconds) that the entity have.
+	 */
+	public void setAir(float airSecs) {
+		getData().put(VanillaData.AIR_SECS, airSecs);
 	}
 }

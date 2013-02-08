@@ -33,7 +33,7 @@ import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.math.Rectangle;
 
-import org.spout.vanilla.plugin.component.misc.DrowningComponent;
+import org.spout.vanilla.plugin.component.misc.Drowning;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.api.data.VanillaRenderMaterials;
 
@@ -60,7 +60,7 @@ public class VanillaDrowning extends DrowningWidget {
 
 	@Override
 	public void update() {
-		float nbBubExact = hud.getOwner().get(DrowningComponent.class).getNbBubExact();
+		float nbBubExact = hud.getOwner().get(Drowning.class).getNbBubExact();
 		final int nbBub = (int) nbBubExact;
 		int bubId = 0;
 		for (RenderPart bub : widget.get(RenderPartsHolderComponent.class).getRenderParts()) {

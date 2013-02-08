@@ -29,12 +29,12 @@ package org.spout.vanilla.plugin.component.living.hostile;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.api.component.Hostile;
+import org.spout.vanilla.api.data.VanillaData;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.DropComponent;
-import org.spout.vanilla.plugin.component.misc.HealthComponent;
-import org.spout.vanilla.api.data.VanillaData;
+import org.spout.vanilla.plugin.component.misc.EntityDrops;
+import org.spout.vanilla.plugin.component.misc.Health;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.MagmaCubeEntityProtocol;
 
@@ -46,7 +46,7 @@ public class MagmaCube extends Living implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MagmaCubeEntityProtocol());
-		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.MAGMA_CREAM, getRandom().nextInt(1)));
+		getOwner().add(EntityDrops.class).addDrop(new ItemStack(VanillaMaterials.MAGMA_CREAM, getRandom().nextInt(1)));
 		if (getAttachedCount() == 1) {
 			int spawnHealth = 1;
 			if (getSize() == 2) {
@@ -54,7 +54,7 @@ public class MagmaCube extends Living implements Hostile {
 			} else if (getSize() == 4) {
 				spawnHealth = 16;
 			}
-			getOwner().add(HealthComponent.class).setSpawnHealth(spawnHealth);
+			getOwner().add(Health.class).setSpawnHealth(spawnHealth);
 		}
 
 		//TODO: Damage varies on the size.

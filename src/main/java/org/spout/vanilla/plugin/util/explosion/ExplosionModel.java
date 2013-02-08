@@ -43,11 +43,10 @@ import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.component.misc.Health;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.util.MathHelper;
 
 public abstract class ExplosionModel {
 	private List<ExplosionBlockSlot> blockList = new ArrayList<ExplosionBlockSlot>();
@@ -159,7 +158,7 @@ public abstract class ExplosionModel {
 			size *= 2;
 			for (Entity entity : position.getWorld().getNearbyEntities(position, (int) size)) {
 				// Check if entity can be damaged
-				HealthComponent health = entity.get(HealthComponent.class);
+				Health health = entity.get(Health.class);
 				if (health == null) {
 					continue;
 				}

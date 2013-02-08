@@ -24,31 +24,46 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.component.living.util;
+package org.spout.vanilla.api.component.misc;
 
-import org.spout.api.inventory.ItemStack;
+import org.spout.api.component.type.EntityComponent;
 
-import org.spout.vanilla.api.component.Utility;
-
-import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.EntityDrops;
-import org.spout.vanilla.plugin.component.misc.Health;
-import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
-import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
+import org.spout.vanilla.api.data.VanillaData;
 
 /**
- * A component that identifies the entity as a SnowGolem.
+ * Component handling a entity being on fire.
  */
-public class SnowGolem extends Living implements Utility {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.SNOW_GOLEM));
-		getOwner().add(EntityDrops.class).addDrop(new ItemStack(VanillaMaterials.SNOWBALL, getRandom().nextInt(15)));
-		if (getAttachedCount() == 1) {
-			getOwner().add(Health.class).setSpawnHealth(100);
-		}
+public abstract class BurnComponent extends EntityComponent {
+	private float internalTimer = 0.0f, rainTimer = 0f;
+
+	/**
+	 * Retrieve the firetick value. Any value higher than 0 means the entity is on fire.
+	 * @return The firetick value.
+	 */
+	public float getFireTick() {
+		return getOwner().getData().get(VanillaData.FIRE_TICK);
 	}
+
+	/**
+	 * Check if the entity is on fire or not
+	 * @return True if the entity is on fire else false.
+	 */
+	public boolean isOnFire() {
+		return getFireTick() > 0;
+	}
+
+	/**
+	 * Check if the fire hurts or not.
+	 * @return True if the fire hurts and false if it doesn't
+	 */
+	public boolean isFireHurting() {
+		return getOwner().getData().get(VanillaData.FIRE_HURT);
+	}
+
+	/**
+	 * Sets the entity on fire.
+	 * @param time The amount of time in seconds the entity should be on fire.
+	 * @param hurt True if the fire should hurt else false.
+	 */
+	public abstract void setOnFire(float time, boolean hurt);
 }

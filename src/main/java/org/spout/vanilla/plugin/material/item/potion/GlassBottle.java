@@ -34,7 +34,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.BlockIterator;
 import org.spout.api.inventory.Slot;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
-import org.spout.vanilla.plugin.component.misc.HeadComponent;
+import org.spout.vanilla.api.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.liquid.Water;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;

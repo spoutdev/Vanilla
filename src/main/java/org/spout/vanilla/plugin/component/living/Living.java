@@ -29,22 +29,21 @@ package org.spout.vanilla.plugin.component.living;
 import org.spout.api.ai.goap.GoapAIComponent;
 import org.spout.api.component.impl.NavigationComponent;
 import org.spout.api.entity.Entity;
-import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.api.component.VanillaComponent;
+import org.spout.vanilla.api.component.living.LivingComponent;
+import org.spout.vanilla.api.component.misc.DrowningComponent;
+import org.spout.vanilla.api.component.misc.HeadComponent;
+import org.spout.vanilla.api.component.misc.HealthComponent;
 import org.spout.vanilla.api.data.effect.StatusEffect;
-import org.spout.vanilla.api.data.VanillaData;
 
 import org.spout.vanilla.plugin.ai.examiner.VanillaBlockExaminer;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.component.misc.DrowningComponent;
+import org.spout.vanilla.plugin.component.misc.Burn;
+import org.spout.vanilla.plugin.component.misc.Drowning;
 import org.spout.vanilla.plugin.component.misc.EffectsComponent;
-import org.spout.vanilla.plugin.component.misc.FireComponent;
-import org.spout.vanilla.plugin.component.misc.HeadComponent;
-import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.component.misc.Health;
 
-
-public abstract class Living extends VanillaComponent {
+public abstract class Living extends LivingComponent {
 	private HeadComponent head;
 	private HealthComponent health;
 	private DrowningComponent drowning;
@@ -56,78 +55,45 @@ public abstract class Living extends VanillaComponent {
 		super.onAttached();
 		Entity holder = getOwner();
 		head = holder.add(HeadComponent.class);
-		health = holder.add(HealthComponent.class);
-		drowning = holder.add(DrowningComponent.class);
+		health = holder.add(Health.class);
+		drowning = holder.add(Drowning.class);
 		navigation = holder.add(NavigationComponent.class);
 		navigation.setDefaultExaminers(new VanillaBlockExaminer());
 		ai = holder.add(GoapAIComponent.class);
-		holder.add(FireComponent.class);
+		holder.add(Burn.class);
 		holder.setSavable(true);
 	}
 
-	public boolean isOnGround() {
-		return getOwner().getData().get(VanillaData.IS_ON_GROUND);
-	}
-
-	public void setOnGround(boolean onGround) {
-		getOwner().getData().put(VanillaData.IS_ON_GROUND, onGround);
-	}
-
+	@Override
 	public HeadComponent getHead() {
 		return head;
 	}
 
+	@Override
 	public HealthComponent getHealth() {
 		return health;
 	}
 
+	@Override
 	public DrowningComponent getDrowning() {
 		return drowning;
 	}
 
+	@Override
 	public NavigationComponent getNavigation() {
 		return navigation;
 	}
 
+	@Override
 	public GoapAIComponent getAI() {
 		return ai;
 	}
 
-	public boolean isRiding() {
-		return getOwner().getData().get(VanillaData.IS_RIDING);
-	}
-
-	public void setRiding(boolean isRiding) {
-		getOwner().getData().put(VanillaData.IS_RIDING, isRiding);
-		sendMetaData();
-	}
-
-	public boolean isEatingBlocking() {
-		return getOwner().getData().get(VanillaData.IS_EATING_BLOCKING);
-	}
-
-	public void setEatingBlocking(boolean isEatingBlocking) {
-		getOwner().getData().put(VanillaData.IS_EATING_BLOCKING, isEatingBlocking);
-		sendMetaData();
-	}
-
-	public boolean isSneaking() {
-		return getOwner().getData().get(VanillaData.IS_SNEAKING);
-	}
-
-	public void setSneaking(boolean isSneaking) {
-		getOwner().getData().put(VanillaData.IS_SNEAKING, isSneaking);
-		sendMetaData();
-	}
-
-	public void sendMetaData() {
-		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 0, getCommonMetadata()));
-	}
-
-	private byte getCommonMetadata() {
+	@Override
+	protected byte getCommonMetadata() {
 		byte value = 0;
-		if (getOwner().has(FireComponent.class)) {
-			value = (byte) (value | ((getOwner().get(FireComponent.class).isOnFire() ? 1 : 0) << 0));
+		if (getOwner().has(Burn.class)) {
+			value = (byte) (value | ((getOwner().get(Burn.class).isOnFire() ? 1 : 0) << 0));
 		}
 
 		value = (byte) (value | ((isSneaking() ? 1 : 0) << 1));

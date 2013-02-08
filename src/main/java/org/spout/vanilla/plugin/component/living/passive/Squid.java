@@ -34,8 +34,8 @@ import org.spout.vanilla.api.component.Passive;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.DropComponent;
-import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.component.misc.EntityDrops;
+import org.spout.vanilla.plugin.component.misc.Health;
 import org.spout.vanilla.plugin.material.item.misc.Dye;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
@@ -49,10 +49,11 @@ public class Squid extends Living implements Passive {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.SQUID));
 		Random random = getRandom();
-		getOwner().add(DropComponent.class).addDrop(new ItemStack(Dye.INK_SAC, random.nextInt(2) + 1));
-		getOwner().add(DropComponent.class).addXpDrop((short) (getRandom().nextInt(3) + 1));
+		EntityDrops dropComponent = getOwner().add(EntityDrops.class);
+		dropComponent.addDrop(new ItemStack(Dye.INK_SAC, random.nextInt(2) + 1));
+		dropComponent.addXpDrop((short) (getRandom().nextInt(3) + 1));
 		if (getAttachedCount() == 1) {
-			getOwner().add(HealthComponent.class).setSpawnHealth(10);
+			getOwner().add(Health.class).setSpawnHealth(10);
 		}
 	}
 }

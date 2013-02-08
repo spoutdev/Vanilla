@@ -27,11 +27,9 @@
 package org.spout.vanilla.plugin.component.misc;
 
 import java.util.List;
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.inventory.VanillaEntityInventory;
 import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
-import org.spout.vanilla.plugin.inventory.entity.EntityArmorInventory;
 import org.spout.vanilla.plugin.inventory.entity.EntityQuickbarInventory;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 import org.spout.vanilla.plugin.material.item.armor.Armor;
@@ -40,7 +38,6 @@ import org.spout.vanilla.plugin.material.item.tool.Tool;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.api.event.entity.EntityCollectItemEvent;
@@ -57,13 +54,13 @@ public class EntityPickupItemComponent extends EntityComponent {
 
 	@Override
 	public boolean canTick() {
-		HealthComponent healthComponent = getOwner().get(HealthComponent.class);
-		if (healthComponent != null) {
-			if (!healthComponent.isDead() && wait != 0) {
+		Health health = getOwner().get(Health.class);
+		if (health != null) {
+			if (!health.isDead() && wait != 0) {
 				wait--;
 				return false;
 			}
-			if (healthComponent.isDead()) {
+			if (health.isDead()) {
 				wait = WAIT_RESET;
 				return false;
 			}

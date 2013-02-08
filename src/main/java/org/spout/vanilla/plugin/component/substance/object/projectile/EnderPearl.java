@@ -33,7 +33,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.component.misc.Health;
 import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectEntityProtocol;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
@@ -66,7 +66,7 @@ public class EnderPearl extends ObjectEntity implements Projectile {
 	 */
 	public void onCollided(Point colliderPoint, Point collidedPoint, Block block) {
 		if (getShooter() != null && getShooter() instanceof Player) {
-			HealthComponent health = getShooter().get(HealthComponent.class);
+			Health health = getShooter().get(Health.class);
 			if (health != null && !health.isDead()) {
 				if (!PlayerUtil.isCreativePlayer(getShooter())) {
 					health.damage(5);

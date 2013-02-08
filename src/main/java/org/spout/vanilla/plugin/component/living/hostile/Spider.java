@@ -32,14 +32,14 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.component.Hostile;
+import org.spout.vanilla.api.component.misc.DamageComponent;
 import org.spout.vanilla.api.data.Difficulty;
+import org.spout.vanilla.api.data.VanillaData;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.DamageComponent;
-import org.spout.vanilla.plugin.component.misc.DropComponent;
-import org.spout.vanilla.plugin.component.misc.HealthComponent;
-import org.spout.vanilla.api.data.VanillaData;
+import org.spout.vanilla.plugin.component.misc.EntityDrops;
+import org.spout.vanilla.plugin.component.misc.Health;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.SpiderEntityProtocol;
 
@@ -51,14 +51,14 @@ public class Spider extends Living implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SpiderEntityProtocol());
-		DropComponent dropComponent = getOwner().add(DropComponent.class);
+		EntityDrops dropComponent = getOwner().add(EntityDrops.class);
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.STRING, random.nextInt(2)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.SPIDER_EYE, random.nextInt(1)));
+		dropComponent.addXpDrop((short) 5);
 		if (getAttachedCount() == 1) {
-			getOwner().add(HealthComponent.class).setSpawnHealth(16);
+			getOwner().add(Health.class).setSpawnHealth(16);
 		}
-		getOwner().add(DropComponent.class).addXpDrop((short) 5);
 		DamageComponent damage = getOwner().add(DamageComponent.class);
 		damage.getDamageLevel(Difficulty.EASY).setAmount(2);
 		damage.getDamageLevel(Difficulty.NORMAL).setAmount(2);

@@ -30,14 +30,15 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.component.Hostile;
+import org.spout.vanilla.api.component.misc.DamageComponent;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.api.data.Difficulty;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.DamageComponent;
-import org.spout.vanilla.plugin.component.misc.DropComponent;
-import org.spout.vanilla.plugin.component.misc.HealthComponent;
-import org.spout.vanilla.api.data.VanillaData;
+
+import org.spout.vanilla.plugin.component.misc.EntityDrops;
+import org.spout.vanilla.plugin.component.misc.Health;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.BlazeEntityProtocol;
 
@@ -49,9 +50,9 @@ public class Blaze extends Living implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BlazeEntityProtocol());
-		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.BLAZE_ROD, getRandom().nextInt(1))).addXpDrop((short) 10);
+		getOwner().add(EntityDrops.class).addDrop(new ItemStack(VanillaMaterials.BLAZE_ROD, getRandom().nextInt(1))).addXpDrop((short) 10);
 		if (getAttachedCount() == 1) {
-			getOwner().add(HealthComponent.class).setSpawnHealth(20);
+			getOwner().add(Health.class).setSpawnHealth(20);
 		}
 		DamageComponent damage = getOwner().add(DamageComponent.class);
 		damage.getDamageLevel(Difficulty.EASY).setAmount(3);

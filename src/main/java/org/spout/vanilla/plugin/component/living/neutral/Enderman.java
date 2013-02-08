@@ -38,8 +38,10 @@ import org.spout.vanilla.api.material.VanillaMaterial;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.DamageComponent;
-import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.api.component.misc.DamageComponent;
+
+import org.spout.vanilla.plugin.component.misc.Health;
+
 import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.EndermanEntityProtocol;
@@ -58,7 +60,7 @@ public class Enderman extends Living implements Neutral {
 		scene.setRestitution(0f);
 
 		if (getAttachedCount() == 1) {
-			getOwner().add(HealthComponent.class).setSpawnHealth(40);
+			getOwner().add(Health.class).setSpawnHealth(40);
 		}
 
 		DamageComponent damage = getOwner().add(DamageComponent.class);

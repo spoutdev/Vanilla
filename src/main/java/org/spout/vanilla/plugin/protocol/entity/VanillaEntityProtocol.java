@@ -39,7 +39,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.plugin.component.misc.HeadComponent;
+import org.spout.vanilla.api.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.protocol.ChannelBufferUtils;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityDestroyMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityMetadataMessage;

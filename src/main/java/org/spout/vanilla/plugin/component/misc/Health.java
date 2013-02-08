@@ -34,7 +34,6 @@ import java.util.Set;
 
 import org.spout.api.Client;
 import org.spout.api.Spout;
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
@@ -51,15 +50,13 @@ import org.spout.api.plugin.Platform;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.component.inventory.EntityInventoryComponent;
+import org.spout.vanilla.api.component.misc.HealthComponent;
 import org.spout.vanilla.api.data.Animation;
 import org.spout.vanilla.api.event.cause.DamageCause;
-import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
-import org.spout.vanilla.api.event.cause.HealCause;
 import org.spout.vanilla.api.event.cause.HealthChangeCause;
 import org.spout.vanilla.api.event.cause.NullDamageCause;
 import org.spout.vanilla.api.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.api.event.entity.EntityDamageEvent;
-import org.spout.vanilla.api.event.entity.EntityHealEvent;
 import org.spout.vanilla.api.event.entity.EntityHealthChangeEvent;
 import org.spout.vanilla.api.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.api.event.entity.EntityStatusEvent;
@@ -79,19 +76,15 @@ import org.spout.vanilla.plugin.protocol.msg.entity.EntityStatusMessage;
 /**
  * Component that adds a health-like attribute to resources.entities.
  */
-public class HealthComponent extends EntityComponent {
-	private static final int DEATH_TIME_TICKS = 30;
-	// Damage
-	private DamageCause<?> lastDamageCause = new NullDamageCause(DamageType.UNKNOWN);
-	private Object lastDamager;
+public class Health extends HealthComponent {
+	private static final float START_X = -0.71f * SCALE;
+
 	// Client only
 	private Widget hearts;
 	private boolean animateHearts;
 	private int heartAnimationTicks;
-	private static final float SCALE = 0.75f; // TODO: Apply directly from engine
-	private static final float START_X = -0.71f * SCALE;
-	
-	public HealthComponent() {
+
+	public Health() {
 		if (Spout.getPlatform()==Platform.CLIENT) {
 			hearts = ((Client)Spout.getEngine()).getScreenStack().createWidget();
 		}
@@ -129,11 +122,6 @@ public class HealthComponent extends EntityComponent {
 
 			getOwner().get(HUDComponent.class).attachWidget(hearts);
 		}
-	}
-
-	@Override
-	public boolean canTick() {
-		return true;
 	}
 
 	@SuppressWarnings("incomplete-switch")
@@ -264,11 +252,11 @@ public class HealthComponent extends EntityComponent {
 	}
 
 	/**
-	 * Drops all items/xp in the DropComponent of the given entity
+	 * Drops all items/xp in the EntityDropComponent of the given entity
 	 * @param owner the entity
 	 */
 	private void dropDropInventory(Entity owner) {
-		DropComponent dropComponent = owner.get(DropComponent.class);
+		EntityDrops dropComponent = owner.get(EntityDrops.class);
 		if (dropComponent != null) {
 			List<ItemStack> drops = dropComponent.getDrops();
 			Point entityPosition = owner.getScene().getPosition();
@@ -287,61 +275,7 @@ public class HealthComponent extends EntityComponent {
 		}
 	}
 
-	/**
-	 * Gets the last cause of the damage
-	 * @return the last damager
-	 */
-	public DamageCause<?> getLastDamageCause() {
-		return lastDamageCause;
-	}
-
-	/**
-	 * Gets the last entity that damages this entity
-	 * @return last damager
-	 */
-	public Object getLastDamager() {
-		return lastDamager;
-	}
-
-	/**
-	 * Gets the maximum health this entity can have
-	 * @return the maximum health
-	 */
-	public int getMaxHealth() {
-		return getData().get(VanillaData.MAX_HEALTH);
-	}
-
-	/**
-	 * Sets the maximum health this entity can have
-	 * @param maxHealth to set to
-	 */
-	public void setMaxHealth(int maxHealth) {
-		getData().put(VanillaData.MAX_HEALTH, maxHealth);
-	}
-
-	/**
-	 * Sets the initial maximum health and sets the health to this value
-	 * @param maxHealth of this health component
-	 */
-	public void setSpawnHealth(int maxHealth) {
-		this.setMaxHealth(maxHealth);
-		//Do not call setHealth yet, network has not been initialized if loading from file
-		getData().put(VanillaData.HEALTH, maxHealth);
-	}
-
-	/**
-	 * Gets the health of this entity (hitpoints)
-	 * @return the health value
-	 */
-	public int getHealth() {
-		return getData().get(VanillaData.HEALTH);
-	}
-
-	/**
-	 * Sets the current health value for this entity
-	 * @param health hitpoints value to set to
-	 * @param cause of the change
-	 */
+	@Override
 	public void setHealth(int health, HealthChangeCause cause) {
 		EntityHealthChangeEvent event = new EntityHealthChangeEvent(getOwner(), cause, health - getHealth());
 		Spout.getEngine().getEventManager().callEvent(event);
@@ -364,90 +298,7 @@ public class HealthComponent extends EntityComponent {
 		}
 	}
 
-	/**
-	 * Heals this entity
-	 * @param amount amount the entity will be healed by
-	 */
-	public void heal(int amount) {
-		heal(amount, HealCause.UNKNOWN);
-	}
-
-	/**
-	 * Heals this entity with the given {@link HealCause}
-	 * @param amount amount the entity will be healed by
-	 * @param cause cause of this entity being healed
-	 */
-	public void heal(int amount, HealCause cause) {
-		EntityHealEvent event = new EntityHealEvent(getOwner(), amount, cause);
-		EntityHealEvent healEvent = Spout.getEngine().getEventManager().callEvent(event);
-		if (!healEvent.isCancelled()) {
-			setHealth(getHealth() + event.getHealAmount(), HealthChangeCause.HEAL);
-		}
-	}
-
-	/**
-	 * Sets the health value to 0
-	 * @param cause of the change
-	 */
-	public void kill(HealthChangeCause cause) {
-		setHealth(0, cause);
-	}
-
-	/**
-	 * Returns true if the entity is equal to or less than zero health remaining
-	 * @return dead
-	 */
-	public boolean isDead() {
-		return getHealth() <= 0;
-	}
-
-	/**
-	 * @return
-	 */
-	public boolean isDying() {
-		return getDeathTicks() > 0;
-	}
-
-	/**
-	 * @return
-	 */
-	public int getDeathTicks() {
-		return getData().get(VanillaData.DEATH_TICKS);
-	}
-
-	/**
-	 * @param deathTicks
-	 */
-	public void setDeathTicks(int deathTicks) {
-		if (deathTicks > DEATH_TIME_TICKS) {
-			deathTicks = DEATH_TIME_TICKS;
-		}
-		getData().put(VanillaData.DEATH_TICKS, deathTicks);
-	}
-
-	/**
-	 * Damages this entity
-	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
-	 */
-	public void damage(int amount) {
-		damage(amount, new NullDamageCause(DamageType.UNKNOWN));
-	}
-
-	/**
-	 * Damages this entity with the given {@link DamageCause}.
-	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
-	 * @param cause cause of this entity being damaged
-	 */
-	public void damage(int amount, DamageCause<?> cause) {
-		damage(amount, cause, true);
-	}
-
-	/**
-	 * Damages this entity with the given {@link DamageCause} and damager.
-	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
-	 * @param cause cause of this entity being damaged
-	 * @param sendHurtMessage whether to send the hurt packet to all players online
-	 */
+	@Override
 	public void damage(int amount, DamageCause<?> cause, boolean sendHurtMessage) {
 		Cause<?> eventCause;
 		if (cause instanceof Cause<?>) {
@@ -476,17 +327,5 @@ public class HealthComponent extends EntityComponent {
 			getOwner().getNetwork().callProtocolEvent(new EntityStatusEvent(getOwner(), EntityStatusMessage.ENTITY_HURT));
 			//getHurtEffect().playGlobal(getParent().getParent().getPosition());
 		}
-	}
-
-	public boolean hasDeathAnimation() {
-		return getData().get(VanillaData.HAS_DEATH_ANIMATION);
-	}
-
-	public void setDeathAnimation(boolean hasDeathAnimation) {
-		getData().put(VanillaData.HAS_DEATH_ANIMATION, hasDeathAnimation);
-	}
-
-	public boolean hasInfiniteHealth() {
-		return getHealth() == -1;
 	}
 }

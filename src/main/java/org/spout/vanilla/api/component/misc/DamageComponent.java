@@ -24,31 +24,34 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.component.living.util;
+package org.spout.vanilla.api.component.misc;
 
-import org.spout.api.inventory.ItemStack;
+import java.util.HashMap;
 
-import org.spout.vanilla.api.component.Utility;
+import org.spout.api.component.type.EntityComponent;
 
-import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.EntityDrops;
-import org.spout.vanilla.plugin.component.misc.Health;
-import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
-import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
+import org.spout.vanilla.api.data.Damage;
+import org.spout.vanilla.api.data.Difficulty;
+
 
 /**
- * A component that identifies the entity as a SnowGolem.
+ * Component that contains the amount of damage this entity does.
  */
-public class SnowGolem extends Living implements Utility {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.SNOW_GOLEM));
-		getOwner().add(EntityDrops.class).addDrop(new ItemStack(VanillaMaterials.SNOWBALL, getRandom().nextInt(15)));
-		if (getAttachedCount() == 1) {
-			getOwner().add(Health.class).setSpawnHealth(100);
+public class DamageComponent extends EntityComponent {
+	private HashMap<Difficulty, Damage> damageList = new HashMap<Difficulty, Damage>();
+
+	public DamageComponent() {
+		for (Difficulty difficulty : Difficulty.values()) {
+			damageList.put(difficulty, new Damage());
 		}
+	}
+
+	/**
+	 * Get the damage level depending of the difficulty level.
+	 * @param difficulty The difficulty level
+	 * @return The {@link Damage} associated with the difficulty.
+	 */
+	public Damage getDamageLevel(Difficulty difficulty) {
+		return damageList.get(difficulty);
 	}
 }

@@ -57,7 +57,7 @@ import org.spout.vanilla.api.event.cause.HealthChangeCause;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.component.misc.Health;
 import org.spout.vanilla.plugin.component.misc.LevelComponent;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.configuration.OpConfiguration;
@@ -390,14 +390,14 @@ public class AdministrationCommands {
 			if (!(source instanceof Player)) {
 				throw new CommandException("Don't be silly...you cannot kill yourself as the console.");
 			}
-			((Player) source).get(HealthComponent.class).kill(HealthChangeCause.COMMAND);
+			((Player) source).get(Health.class).kill(HealthChangeCause.COMMAND);
 		} else {
 			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
 			Player victim = ((Server) Spout.getEngine()).getPlayer(args.getString(0), true);
 			if (victim != null) {
-				victim.get(HealthComponent.class).kill(HealthChangeCause.COMMAND);
+				victim.get(Health.class).kill(HealthChangeCause.COMMAND);
 			}
 		}
 	}

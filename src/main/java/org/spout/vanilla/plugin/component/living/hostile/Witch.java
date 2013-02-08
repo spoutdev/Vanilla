@@ -34,8 +34,8 @@ import org.spout.vanilla.api.component.Hostile;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.DropComponent;
-import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.component.misc.EntityDrops;
+import org.spout.vanilla.plugin.component.misc.Health;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
@@ -48,7 +48,7 @@ public class Witch extends Living implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.WITCH));
-		DropComponent dropComponent = getOwner().add(DropComponent.class);
+		EntityDrops dropComponent = getOwner().add(EntityDrops.class);
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.GLASS_BOTTLE, random.nextInt(6)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.GLOWSTONE_DUST, random.nextInt(6)));
@@ -59,7 +59,7 @@ public class Witch extends Living implements Hostile {
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.SUGAR, random.nextInt(6)));
 		dropComponent.addXpDrop((short) 5);
 		if (getAttachedCount() == 1) {
-			getOwner().add(HealthComponent.class).setSpawnHealth(26);
+			getOwner().add(Health.class).setSpawnHealth(26);
 		}
 
 		/*

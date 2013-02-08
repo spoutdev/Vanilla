@@ -32,12 +32,12 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.component.Hostile;
+import org.spout.vanilla.api.data.VanillaData;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.DropComponent;
-import org.spout.vanilla.plugin.component.misc.HealthComponent;
-import org.spout.vanilla.api.data.VanillaData;
+import org.spout.vanilla.plugin.component.misc.EntityDrops;
+import org.spout.vanilla.plugin.component.misc.Health;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.GhastEntityProtocol;
 
@@ -49,13 +49,13 @@ public class Ghast extends Living implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new GhastEntityProtocol());
-		DropComponent dropComponent = getOwner().add(DropComponent.class);
+		EntityDrops dropComponent = getOwner().add(EntityDrops.class);
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.GUNPOWDER, random.nextInt(2)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.GHAST_TEAR, random.nextInt(1)));
 		dropComponent.addXpDrop((short) 5);
 		if (getAttachedCount() == 1) {
-			getOwner().add(HealthComponent.class).setSpawnHealth(10);
+			getOwner().add(Health.class).setSpawnHealth(10);
 		}
 
 		//TODO: Fireball damage

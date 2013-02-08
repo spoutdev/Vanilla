@@ -67,9 +67,11 @@ import org.spout.vanilla.plugin.component.living.hostile.Skeleton;
 import org.spout.vanilla.plugin.component.living.hostile.Zombie;
 import org.spout.vanilla.plugin.component.living.neutral.Enderman;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.component.misc.FireComponent;
-import org.spout.vanilla.plugin.component.misc.HeadComponent;
-import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.component.misc.Burn;
+
+import org.spout.vanilla.api.component.misc.HeadComponent;
+
+import org.spout.vanilla.plugin.component.misc.Health;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.component.substance.XPOrb;
 import org.spout.vanilla.plugin.component.substance.material.chest.Chest;
@@ -347,7 +349,7 @@ public class TestCommands {
 		} else {
 			player = ((Client) Spout.getEngine()).getActivePlayer();
 		}
-		player.get(HealthComponent.class).damage(args.getInteger(0));
+		player.get(Health.class).damage(args.getInteger(0));
 	}
 
 	@Command(aliases = "hunger", usage = "<amount> <hungry>", desc = "Modify your hunger", min = 2, max = 2)
@@ -592,14 +594,14 @@ public class TestCommands {
 	@Command(aliases = "fire", usage = "<time> <hurt>", desc = "Set you on fire", min = 2, max = 2)
 	@CommandPermissions("vanilla.command.debug")
 	public void fire(CommandContext args, CommandSource source) throws CommandException {
-		FireComponent fire = null;
+		Burn fire = null;
 		if (Spout.getPlatform() == Platform.CLIENT) {
-			fire = ((Client) Spout.getEngine()).getActivePlayer().add(FireComponent.class);
+			fire = ((Client) Spout.getEngine()).getActivePlayer().add(Burn.class);
 		} else {
 			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to change your hunger!");
 			}
-			fire = ((Player) source).add(FireComponent.class);
+			fire = ((Player) source).add(Burn.class);
 		}
 
 		fire.setOnFire(args.getFloat(0), Boolean.parseBoolean(args.getString(1)));

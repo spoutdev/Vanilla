@@ -40,7 +40,7 @@ import org.spout.api.inventory.Slot;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
-import org.spout.vanilla.plugin.component.misc.HeadComponent;
+import org.spout.vanilla.api.component.misc.HeadComponent;
 import org.spout.vanilla.api.data.VanillaData;
 
 public class PlayerUtil {

@@ -37,7 +37,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.component.misc.Health;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
@@ -57,7 +57,7 @@ public class Item extends ObjectEntity {
 		SceneComponent scene = getOwner().getScene();
 		scene.setShape(5f, new BoxShape(0.125F, 0.125F, 0.125F));
 		scene.setRestitution(0f);
-		getOwner().add(HealthComponent.class).setMaxHealth(20);
+		getOwner().add(Health.class).setMaxHealth(20);
 	}
 
 	@Override

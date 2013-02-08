@@ -24,31 +24,26 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.component.misc;
+package org.spout.vanilla.api.component.misc;
 
 import java.util.List;
 
 import org.spout.api.component.type.EntityComponent;
-import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.map.DefaultedKey;
-import org.spout.api.map.DefaultedKeyFactory;
 
 import org.spout.vanilla.api.data.VanillaData;
-import org.spout.vanilla.plugin.inventory.player.DropInventory;
 
 /**
  * Handle item/XP drop from a entity.
  */
-public class DropComponent extends EntityComponent {
-	private static final DefaultedKey<DropInventory> DROP_INVENTORY = new DefaultedKeyFactory<DropInventory>("DropInventory", DropInventory.class);
+public abstract class EntityDropComponent extends EntityComponent {
 
 	/**
 	 * Add a amount of XP the entity drops.
 	 * @param amount The amount of XP the entity drops.
 	 * @return The current component.
 	 */
-	public DropComponent addXpDrop(short amount) {
+	public EntityDropComponent addXpDrop(short amount) {
 		getOwner().getData().put(VanillaData.DROP_EXPERIENCE, amount);
 		return this;
 	}
@@ -66,17 +61,11 @@ public class DropComponent extends EntityComponent {
 	 * @param itemstack Contains the item to drop.
 	 * @return The current component.
 	 */
-	public DropComponent addDrop(ItemStack itemstack) {
-		Inventory dropInventory = getOwner().getData().get(DROP_INVENTORY);
-		dropInventory.add(itemstack);
-		return this;
-	}
+	public abstract EntityDropComponent addDrop(ItemStack itemstack);
 
 	/**
 	 * Retrieve a list of all the item drops this entity does.
 	 * @return A list of all the items this entity drops.
 	 */
-	public List<ItemStack> getDrops() {
-		return getOwner().getData().get(DROP_INVENTORY);
-	}
+	public abstract List<ItemStack> getDrops();
 }

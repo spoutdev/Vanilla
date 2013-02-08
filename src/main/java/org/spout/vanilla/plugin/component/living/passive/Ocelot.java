@@ -27,12 +27,12 @@
 package org.spout.vanilla.plugin.component.living.passive;
 
 import org.spout.vanilla.api.component.Passive;
+import org.spout.vanilla.api.data.VanillaData;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.DropComponent;
-import org.spout.vanilla.plugin.component.misc.HealthComponent;
-import org.spout.vanilla.api.data.VanillaData;
+import org.spout.vanilla.plugin.component.misc.EntityDrops;
+import org.spout.vanilla.plugin.component.misc.Health;
 import org.spout.vanilla.plugin.protocol.entity.creature.OcelotEntityProtocol;
 
 /**
@@ -45,9 +45,9 @@ public class Ocelot extends Living implements Passive {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new OcelotEntityProtocol());
 
 		if (getAttachedCount() == 1) {
-			getOwner().add(HealthComponent.class).setSpawnHealth(10);
+			getOwner().add(Health.class).setSpawnHealth(10);
 		}
-		getOwner().add(DropComponent.class).addXpDrop((short) (getRandom().nextInt(3) + 1));
+		getOwner().add(EntityDrops.class).addXpDrop((short) (getRandom().nextInt(3) + 1));
 	}
 
 	public boolean isTamed() {

@@ -31,6 +31,7 @@ import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 
 import org.spout.vanilla.api.data.VanillaData;
+
 import org.spout.vanilla.plugin.protocol.entity.player.ExperienceChangeEvent;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerExperienceMessage;
 

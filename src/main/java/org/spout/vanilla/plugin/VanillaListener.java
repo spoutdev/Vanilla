@@ -50,7 +50,7 @@ import org.spout.vanilla.api.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.component.misc.Health;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.component.misc.LevelComponent;
 import org.spout.vanilla.plugin.component.misc.PlayerPickupItemComponent;
@@ -122,7 +122,7 @@ public class VanillaListener implements Listener {
 		player.add(PlayerInventory.class);
 		player.add(WindowHolder.class);
 		player.add(CameraComponent.class);
-		player.add(HealthComponent.class);
+		player.add(Health.class);
 		player.add(HungerComponent.class);
 		player.add(InteractComponent.class).setRange(5f);
 

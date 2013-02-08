@@ -31,7 +31,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.component.misc.Health;
 import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectEntityProtocol;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
@@ -57,7 +57,7 @@ public class Snowball extends ObjectEntity implements Projectile {
 
 	@Override
 	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
-		HealthComponent health = entity.get(HealthComponent.class);
+		Health health = entity.get(Health.class);
 		if (health != null) {
 			health.damage(0);
 		}

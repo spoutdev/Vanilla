@@ -30,12 +30,12 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.component.Passive;
+import org.spout.vanilla.api.data.VanillaData;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.DropComponent;
-import org.spout.vanilla.plugin.component.misc.HealthComponent;
-import org.spout.vanilla.api.data.VanillaData;
+import org.spout.vanilla.plugin.component.misc.EntityDrops;
+import org.spout.vanilla.plugin.component.misc.Health;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.PigEntityProtocol;
 
@@ -47,12 +47,14 @@ public class Pig extends Living implements Passive {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PigEntityProtocol());
-		getOwner().add(DropComponent.class).addDrop(new ItemStack(VanillaMaterials.RAW_PORKCHOP, getRandom().nextInt(2) + 1));
+		EntityDrops dropComponent = getOwner().add(EntityDrops.class);
+		dropComponent.addDrop(new ItemStack(VanillaMaterials.RAW_PORKCHOP, getRandom().nextInt(2) + 1));
+		dropComponent.addXpDrop((short) (getRandom().nextInt(3) + 1));
 
 		if (getAttachedCount() == 1) {
-			getOwner().add(HealthComponent.class).setSpawnHealth(10);
+			getOwner().add(Health.class).setSpawnHealth(10);
 		}
-		getOwner().add(DropComponent.class).addXpDrop((short) (getRandom().nextInt(3) + 1));
+
 	}
 
 	public boolean isSaddled() {

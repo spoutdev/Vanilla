@@ -24,19 +24,44 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.data;
+package org.spout.vanilla.api.data;
 
-import org.spout.api.map.DefaultedKeyImpl;
-import org.spout.api.math.GenericMath;
+import org.spout.vanilla.api.data.effect.StatusEffectContainer;
 
-public class SlimeSize extends DefaultedKeyImpl<Byte> {
-	public SlimeSize(String keyString) {
-		super(keyString, null);
+public class Damage {
+	private int amount;
+	private StatusEffectContainer effect;
+
+	public Damage() {
+		setAmount(0);
+		setEffect(null);
 	}
 
-	@Override
-	public Byte getDefaultValue() {
-		byte[] validSlimeSizes = {0, 1, 2, 4};
-		return validSlimeSizes[GenericMath.getRandom().nextInt(validSlimeSizes.length)];
+	public Damage(int amount) {
+		this.setAmount(amount);
+		this.setEffect(null);
+	}
+
+	public Damage(int amount, StatusEffectContainer effect) {
+		this.setAmount(amount);
+		this.setEffect(effect);
+	}
+
+	public int getAmount() {
+		return amount;
+	}
+
+	public Damage setAmount(int amount) {
+		this.amount = amount;
+		return this;
+	}
+
+	public StatusEffectContainer getEffect() {
+		return effect;
+	}
+
+	public Damage setEffect(StatusEffectContainer effect) {
+		this.effect = effect;
+		return this;
 	}
 }

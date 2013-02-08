@@ -30,7 +30,7 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.api.material.TimedCraftable;
 
-import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.api.data.Instrument;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.VanillaMaterials;

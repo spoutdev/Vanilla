@@ -42,7 +42,7 @@ import org.spout.api.inventory.Slot;
 
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.material.block.liquid.Water;
 import org.spout.vanilla.plugin.material.item.Food;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityStatusMessage;

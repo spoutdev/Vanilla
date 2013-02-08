@@ -107,7 +107,7 @@ import org.spout.vanilla.plugin.component.test.ForceMessagesComponent;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.configuration.WorldConfigurationNode;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.event.player.network.PlayerAbilityUpdateEvent;
 import org.spout.vanilla.api.event.window.WindowCloseEvent;
 import org.spout.vanilla.api.event.window.WindowItemsEvent;

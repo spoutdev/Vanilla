@@ -24,29 +24,42 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.data;
+package org.spout.vanilla.api.component;
 
-public enum ViewDistance {
-	FAR(0),
-	NORMAL(1),
-	SHORT(2),
-	TINY(3);
-	final byte id;
+import java.util.Arrays;
 
-	ViewDistance(int id) {
-		this.id = (byte) id;
+import org.spout.api.component.type.EntityComponent;
+import org.spout.api.util.Parameter;
+
+import org.spout.vanilla.api.data.VanillaData;
+import org.spout.vanilla.api.event.entity.EntityMetaChangeEvent;
+
+public class VanillaComponent extends EntityComponent {
+	@Override
+	public void onAttached() {
+		//Tracks the number of times this component has been attached (i.e how many times it's been saved, then loaded. 1 = fresh entity)
+		getOwner().getData().put(VanillaData.ATTACHED_COUNT, getAttachedCount() + 1);
+		getOwner().setSavable(true);
 	}
 
-	public int getId() {
-		return id;
+	public boolean isStatic() {
+		return false;
 	}
 
-	public static ViewDistance byId(int id) {
-		for (ViewDistance v : values()) {
-			if (v.id == id) {
-				return v;
-			}
-		}
-		return null;
+	protected void setMetadata(Parameter<?>... p) {
+		getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), Arrays.asList(p)));
+	}
+
+	/**
+	 * A counter of how many times this component has been attached to an entity
+	 * <p/>
+	 * Values > 1 indicate how many times this component has been saved to disk,
+	 * and reloaded
+	 * <p/>
+	 * Values == 1 indicate a new component that has never been saved and loaded.
+	 * @return attached count
+	 */
+	public final int getAttachedCount() {
+		return getOwner().getData().get(VanillaData.ATTACHED_COUNT);
 	}
 }

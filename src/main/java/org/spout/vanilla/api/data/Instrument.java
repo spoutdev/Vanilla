@@ -24,45 +24,30 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.component.misc;
+package org.spout.vanilla.api.data;
 
-import org.spout.api.component.type.EntityComponent;
-import org.spout.api.util.BlockIterator;
+import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
+import org.spout.vanilla.plugin.data.effect.type.NoteSoundEffect;
 
-import org.spout.vanilla.api.data.VanillaData;
+public enum Instrument {
+	PIANO(SoundEffects.NOTE_HARP, 0),
+	BASS_DRUM(SoundEffects.NOTE_BD, 1),
+	SNARE_DRUM(SoundEffects.NOTE_SNARE, 2),
+	CLICK(SoundEffects.NOTE_HAT, 3),
+	BASS_GUITAR(SoundEffects.NOTE_BASSATTACK, 4);
+	private final NoteSoundEffect sound;
+	private final int id;
 
-/**
- * Component that gives the entity the ability to interact with the world within a range
- */
-public class InteractComponent extends EntityComponent {
-	/**
-	 * Sets the maximum distance this Living Entity can interact at
-	 * @param reach distance
-	 */
-	public void setReach(int reach) {
-		getData().put(VanillaData.INTERACT_REACH, reach);
+	private Instrument(NoteSoundEffect effect, int id) {
+		this.sound = effect;
+		this.id = id;
 	}
 
-	/**
-	 * Gets the maximum distance this Living Entity can interact at
-	 * @return reach distance
-	 */
-	public int getReach() {
-		return getData().get(VanillaData.INTERACT_REACH);
+	public int getId() {
+		return id;
 	}
 
-	/**
-	 * @return
-	 */
-	public BlockIterator getBlockView() {
-		return getBlockView(getReach());
-	}
-
-	/**
-	 * @param reach
-	 * @return
-	 */
-	public BlockIterator getBlockView(int reach) {
-		return new BlockIterator(getOwner().getWorld(), getOwner().getScene().getTransform(), reach);
+	public NoteSoundEffect getEffect() {
+		return this.sound;
 	}
 }

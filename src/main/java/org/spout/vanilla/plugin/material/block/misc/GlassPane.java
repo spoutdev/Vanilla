@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.block.misc;
 
-import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.api.data.Instrument;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 

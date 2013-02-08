@@ -31,7 +31,7 @@ import com.bulletphysics.collision.shapes.BoxShape;
 import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectEntityProtocol;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;

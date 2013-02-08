@@ -58,7 +58,7 @@ import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.VanillaComponent;
+import org.spout.vanilla.api.component.VanillaComponent;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.component.living.hostile.Creeper;
@@ -76,7 +76,7 @@ import org.spout.vanilla.plugin.component.substance.material.chest.Chest;
 import org.spout.vanilla.plugin.component.substance.object.FallingBlock;
 import org.spout.vanilla.plugin.component.test.ForceMessagesComponent;
 import org.spout.vanilla.plugin.component.test.TransformDebugComponent;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.plugin.inventory.block.DispenserInventory;

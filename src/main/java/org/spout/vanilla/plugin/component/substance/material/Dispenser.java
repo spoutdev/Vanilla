@@ -35,7 +35,7 @@ import org.spout.vanilla.api.event.inventory.DispenserCloseEvent;
 import org.spout.vanilla.api.event.inventory.DispenserOpenEvent;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.inventory.block.DispenserInventory;
 import org.spout.vanilla.plugin.inventory.window.block.DispenserWindow;
 

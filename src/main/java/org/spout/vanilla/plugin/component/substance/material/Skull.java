@@ -28,7 +28,7 @@ package org.spout.vanilla.plugin.component.substance.material;
 
 import org.spout.vanilla.api.component.substance.material.VanillaBlockComponent;
 
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 
 /**
  * Component that represents a Skull in the world.

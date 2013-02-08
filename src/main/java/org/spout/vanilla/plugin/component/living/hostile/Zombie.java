@@ -47,7 +47,7 @@ import org.spout.vanilla.plugin.component.misc.DamageComponent;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
 import org.spout.vanilla.plugin.component.misc.EntityPickupItemComponent;
 import org.spout.vanilla.plugin.component.misc.HealthComponent;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.ZombieEntityProtocol;
 

@@ -30,7 +30,7 @@ import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.api.data.MoveReaction;
 
-import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.api.data.Instrument;
 import org.spout.vanilla.plugin.material.block.Solid;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 

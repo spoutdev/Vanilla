@@ -29,7 +29,7 @@ package org.spout.vanilla.plugin.component.substance;
 import org.spout.api.component.type.EntityComponent;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.protocol.entity.object.XPOrbEntityProtocol;
 
 public class XPOrb extends EntityComponent {

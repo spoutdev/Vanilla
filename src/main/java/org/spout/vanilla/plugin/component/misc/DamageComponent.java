@@ -32,7 +32,7 @@ import org.spout.api.component.type.EntityComponent;
 
 import org.spout.vanilla.api.data.Difficulty;
 
-import org.spout.vanilla.plugin.data.Damage;
+import org.spout.vanilla.api.data.Damage;
 
 /**
  * Component that contains the amount of damage this entity does.

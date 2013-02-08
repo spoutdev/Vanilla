@@ -39,7 +39,7 @@ import org.spout.vanilla.api.data.Weather;
 import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
 
 import org.spout.vanilla.plugin.component.world.VanillaSky;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 
 public class WeatherSimulator extends BasicTickable {
 	private final VanillaSky sky;

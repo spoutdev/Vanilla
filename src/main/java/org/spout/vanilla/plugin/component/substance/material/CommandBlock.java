@@ -59,7 +59,7 @@ import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.LevelComponent;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 
 public class CommandBlock extends VanillaBlockComponent implements CommandSource {
 	public static final ChatChannel CHAT_CHANNEL = new PermissionChatChannel("CommandBlock", "vanilla.commandblock.recieve");

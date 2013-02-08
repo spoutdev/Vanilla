@@ -63,8 +63,8 @@ import org.spout.vanilla.api.material.block.redstone.RedstoneSource;
 
 import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
-import org.spout.vanilla.plugin.data.Instrument;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.Instrument;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.api.data.VanillaRenderMaterials;
 import org.spout.vanilla.plugin.data.drops.flag.DropFlags;
 import org.spout.vanilla.plugin.data.drops.flag.PlayerFlags;

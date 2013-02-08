@@ -41,7 +41,7 @@ import org.spout.vanilla.api.data.Time;
 import org.spout.vanilla.api.data.Weather;
 
 import org.spout.vanilla.plugin.component.misc.SleepComponent;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.render.VanillaEffects;
 import org.spout.vanilla.plugin.world.WeatherSimulator;
 

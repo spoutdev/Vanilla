@@ -30,11 +30,12 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.map.DefaultedKey;
+import org.spout.api.map.DefaultedKeyFactory;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.component.misc.DropComponent;
-import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.inventory.block.ChestInventory;
 import org.spout.vanilla.plugin.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
@@ -42,6 +43,8 @@ import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
 import org.spout.vanilla.plugin.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
 
 public class StorageMinecart extends MinecartBase {
+	public static final DefaultedKey<ChestInventory> CHEST_INVENTORY = new DefaultedKeyFactory<ChestInventory>("chest_inventory", ChestInventory.class);
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -52,7 +55,7 @@ public class StorageMinecart extends MinecartBase {
 	}
 
 	public ChestInventory getInventory() {
-		return this.getData().get(VanillaData.CHEST_INVENTORY);
+		return this.getData().get(CHEST_INVENTORY);
 	}
 
 	@Override

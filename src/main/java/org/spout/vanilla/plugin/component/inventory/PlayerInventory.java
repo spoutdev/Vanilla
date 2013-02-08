@@ -28,42 +28,52 @@ package org.spout.vanilla.plugin.component.inventory;
 
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.map.DefaultedKey;
+import org.spout.api.map.DefaultedKeyFactory;
 
 import org.spout.vanilla.api.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.api.inventory.entity.ArmorInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.inventory.block.ChestInventory;
+import org.spout.vanilla.plugin.inventory.player.PlayerArmorInventory;
+import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
+import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
+import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 
 /**
  * Represents a players inventory
  */
 public class PlayerInventory extends PlayerInventoryComponent {
+	private static final DefaultedKey<PlayerMainInventory> MAIN_INVENTORY = new DefaultedKeyFactory<PlayerMainInventory>("main", PlayerMainInventory.class);
+	private static final DefaultedKey<PlayerCraftingInventory> CRAFTING_INVENTORY = new DefaultedKeyFactory<PlayerCraftingInventory>("crafting", PlayerCraftingInventory.class);
+	private static final DefaultedKey<PlayerArmorInventory> PLAYER_ARMOR_INVENTORY = new DefaultedKeyFactory<PlayerArmorInventory>("armor", PlayerArmorInventory.class);
+	private static final DefaultedKey<PlayerQuickbar> QUICKBAR_INVENTORY = new DefaultedKeyFactory<PlayerQuickbar>("quickbar", PlayerQuickbar.class);
+	public static final DefaultedKey<ChestInventory> ENDER_CHEST_INVENTORY = new DefaultedKeyFactory<ChestInventory>("ender_chest_inventory", ChestInventory.class);
 
 	@Override
 	public QuickbarInventory getQuickbar() {
-		return getData().get(VanillaData.QUICKBAR_INVENTORY);
+		return getData().get(QUICKBAR_INVENTORY);
 	}
 
 	@Override
 	public Inventory getMain() {
-		return getData().get(VanillaData.MAIN_INVENTORY);
+		return getData().get(MAIN_INVENTORY);
 	}
 
 	@Override
 	public ArmorInventory getArmor() {
-		return getData().get(VanillaData.PLAYER_ARMOR_INVENTORY);
+		return getData().get(PLAYER_ARMOR_INVENTORY);
 	}
 
 	@Override
 	public PlayerCraftingInventory getCraftingGrid() {
-		return getData().get(VanillaData.CRAFTING_INVENTORY);
+		return getData().get(CRAFTING_INVENTORY);
 	}
 
 	@Override
 	public Inventory getEnderChestInventory() {
-		return getData().get(VanillaData.ENDER_CHEST_INVENTORY);
+		return getData().get(ENDER_CHEST_INVENTORY);
 	}
 
 	@Override

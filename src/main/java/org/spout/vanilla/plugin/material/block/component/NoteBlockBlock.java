@@ -34,7 +34,7 @@ import org.spout.vanilla.api.material.Fuel;
 import org.spout.vanilla.api.material.block.redstone.RedstoneTarget;
 
 import org.spout.vanilla.plugin.component.substance.material.NoteBlock;
-import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.api.data.Instrument;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 import org.spout.vanilla.plugin.util.RedstoneUtil;
 

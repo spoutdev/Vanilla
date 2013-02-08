@@ -35,7 +35,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.math.VectorMath;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 
 /**
  * Component that controls the rotation of a head on Vanilla resources.entities.

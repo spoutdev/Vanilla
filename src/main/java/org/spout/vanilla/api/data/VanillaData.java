@@ -24,37 +24,15 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.data;
+package org.spout.vanilla.api.data;
 
-import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyArray;
-import org.spout.api.map.DefaultedKeyFactory;
 import org.spout.api.map.DefaultedKeyImpl;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
-
-import org.spout.vanilla.api.data.Difficulty;
-import org.spout.vanilla.api.data.Dimension;
-import org.spout.vanilla.api.data.GameMode;
-import org.spout.vanilla.api.data.PaintingType;
-import org.spout.vanilla.api.data.Weather;
-import org.spout.vanilla.api.data.WorldType;
-
-import org.spout.vanilla.plugin.inventory.player.PlayerArmorInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
-
-import org.spout.vanilla.plugin.inventory.block.BrewingStandInventory;
-import org.spout.vanilla.plugin.inventory.block.ChestInventory;
-import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
-import org.spout.vanilla.plugin.inventory.entity.EntityArmorInventory;
-import org.spout.vanilla.plugin.inventory.entity.EntityQuickbarInventory;
-import org.spout.vanilla.plugin.inventory.player.DropInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
 
 /**
  * * Common Vanilla-like data mappings that are found in Vanilla.
@@ -77,22 +55,17 @@ public class VanillaData {
 	public static final DefaultedKey<Vector3> MOVEMENT_SPEED = new DefaultedKeyImpl<Vector3>("movement_speed", Vector3.ZERO);
 	public static final DefaultedKey<Integer> INTERACT_REACH = new DefaultedKeyImpl<Integer>("interact_reach", 5);
 	public static final DefaultedKey<Vector3> VELOCITY = new DefaultedKeyImpl<Vector3>("velocity", Vector3.ZERO);
-	public static final DefaultedKey<Inventory> ENTITY_INVENTORY = new DefaultedKeyImpl<Inventory>("inventory", null);
-	public static final DefaultedKey<ChestInventory> CHEST_INVENTORY = new DefaultedKeyFactory<ChestInventory>("chest_inventory", ChestInventory.class);
 	public static final DefaultedKey<Integer> HUNGER = new DefaultedKeyImpl<Integer>("hunger", 20);
 	public static final DefaultedKey<Float> FOOD_SATURATION = new DefaultedKeyImpl<Float>("food_saturation", 5f);
 	public static final DefaultedKey<Float> EXHAUSTION = new DefaultedKeyImpl<Float>("exhaustion", 0f);
 	public static final DefaultedKey<Boolean> POISONED = new DefaultedKeyImpl<Boolean>("poisoned", false);
 	// Brewing stand
-	public static final DefaultedKey<BrewingStandInventory> BREWING_STAND_INVENTORY = new DefaultedKeyFactory<BrewingStandInventory>("brewing_inventory", BrewingStandInventory.class);
 	public static final DefaultedKey<Float> BREW_TIME = new DefaultedKeyImpl<Float>("brew_time", -1f);
 	// Furnace
-	public static final DefaultedKey<FurnaceInventory> FURNACE_INVENTORY = new DefaultedKeyFactory<FurnaceInventory>("inventory", FurnaceInventory.class);
 	public static final DefaultedKey<Float> FURNACE_FUEL = new DefaultedKeyImpl<Float>("fuel", 0f);
 	public static final DefaultedKey<Float> MAX_FURNACE_FUEL = new DefaultedKeyImpl<Float>("max_fuel", 0f);
 	public static final DefaultedKey<Float> SMELT_TIME = new DefaultedKeyImpl<Float>("smelt_time", -1f);
-	public static final DefaultedKey<Float> MAX_SMELT_TIME = new DefaultedKeyImpl<Float>("max_smelt_time", FurnaceBlock.SMELT_TIME);
-	// Skull block
+    // Skull block
 	public static final DefaultedKey<Float> SKULL_ROTATION = new DefaultedKeyImpl<Float>("skull_rot", 0.0f);
 	// Note block
 	public static final DefaultedKey<Integer> NOTE = new DefaultedKeyImpl<Integer>("note", 0);
@@ -112,7 +85,6 @@ public class VanillaData {
 	public static final DefaultedKey<Short> EXPERIENCE_AMOUNT = new DefaultedKeyImpl<Short>("experience_amount", (short) 0);
 	public static final DefaultedKey<Float> EXPERIENCE_BAR_PROGRESS = new DefaultedKeyImpl<Float>("experience_bar_progress", (float) 0);
 	public static final DefaultedKey<Short> EXPERIENCE_LEVEL = new DefaultedKeyImpl<Short>("experience_level", (short) 1);
-	public static final DefaultedKey<DropInventory> DROP_INVENTORY = new DefaultedKeyFactory<DropInventory>("DropInventory", DropInventory.class);
 	public static final DefaultedKey<Short> DROP_EXPERIENCE = new DefaultedKeyImpl<Short>("DropExperience", (short) 0);
 	public static final DefaultedKey<Boolean> IS_EATING_BLOCKING = new DefaultedKeyImpl<Boolean>("is_eating_blocking", false);
 	public static final DefaultedKey<Boolean> IS_RIDING = new DefaultedKeyImpl<Boolean>("is_riding", false);
@@ -127,15 +99,7 @@ public class VanillaData {
 	public static final DefaultedKey<Number> FLYING_SPEED = new DefaultedKeyImpl<Number>("flying_speed", (byte) 12);
 	public static final DefaultedKey<Number> WALKING_SPEED = new DefaultedKeyImpl<Number>("walking_speed", (byte) 25);
 	public static final DefaultedKey<ViewDistance> VIEW_DISTANCE = new DefaultedKeyImpl<ViewDistance>("view_distance", ViewDistance.NORMAL);
-	// Inventory
-	public static final DefaultedKey<PlayerMainInventory> MAIN_INVENTORY = new DefaultedKeyFactory<PlayerMainInventory>("main", PlayerMainInventory.class);
-	public static final DefaultedKey<PlayerCraftingInventory> CRAFTING_INVENTORY = new DefaultedKeyFactory<PlayerCraftingInventory>("crafting", PlayerCraftingInventory.class);
-	public static final DefaultedKey<EntityArmorInventory> ARMOR_INVENTORY = new DefaultedKeyFactory<EntityArmorInventory>("armor", EntityArmorInventory.class);
-	public static final DefaultedKey<PlayerArmorInventory> PLAYER_ARMOR_INVENTORY = new DefaultedKeyFactory<PlayerArmorInventory>("armor", PlayerArmorInventory.class);
-	public static final DefaultedKey<PlayerQuickbar> QUICKBAR_INVENTORY = new DefaultedKeyFactory<PlayerQuickbar>("quickbar", PlayerQuickbar.class);
-	public static final DefaultedKey<ChestInventory> ENDER_CHEST_INVENTORY = new DefaultedKeyFactory<ChestInventory>("ender_chest_inventory", ChestInventory.class);
-	public static final DefaultedKey<EntityQuickbarInventory> ENTITY_HELD_INVENTORY = new DefaultedKeyFactory<EntityQuickbarInventory>("held", EntityQuickbarInventory.class);
-	//Creature-specific
+    //Creature-specific
 	public static final DefaultedKey<Integer> LINE_OF_SIGHT = new DefaultedKeyImpl<Integer>("line_of_sight", 1);
 	//Item-specific
 	public static final DefaultedKey<Number> UNCOLLECTABLE_TICKS = new DefaultedKeyImpl<Number>("uncollectable_ticks", (long) 0);

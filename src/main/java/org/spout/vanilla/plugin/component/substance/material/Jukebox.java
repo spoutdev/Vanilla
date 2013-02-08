@@ -38,7 +38,7 @@ import org.spout.vanilla.api.data.Music;
 import org.spout.api.inventory.Slot;
 
 import org.spout.vanilla.plugin.component.substance.object.Item;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.item.misc.MusicDisc;
 import org.spout.vanilla.plugin.util.PlayerUtil;

@@ -38,7 +38,7 @@ import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
 
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.material.block.liquid.Water;
 
 /**

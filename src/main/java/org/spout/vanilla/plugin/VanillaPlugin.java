@@ -77,7 +77,7 @@ import org.spout.vanilla.plugin.component.world.sky.TheEndSky;
 import org.spout.vanilla.plugin.configuration.InputConfiguration;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.configuration.WorldConfigurationNode;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.inventory.recipe.VanillaRecipes;
 import org.spout.vanilla.plugin.lighting.VanillaLighting;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;

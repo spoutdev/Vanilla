@@ -33,7 +33,7 @@ import org.spout.api.material.source.DataSource;
 import org.spout.vanilla.api.material.Burnable;
 import org.spout.vanilla.api.material.Fuel;
 
-import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.api.data.Instrument;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.VanillaMaterials;

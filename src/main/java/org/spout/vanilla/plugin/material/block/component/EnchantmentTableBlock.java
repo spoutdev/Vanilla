@@ -33,7 +33,7 @@ import org.spout.vanilla.api.data.MoveReaction;
 import org.spout.vanilla.api.material.block.Directional;
 
 import org.spout.vanilla.plugin.component.substance.material.EnchantmentTable;
-import org.spout.vanilla.plugin.data.Instrument;
+import org.spout.vanilla.api.data.Instrument;
 import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 

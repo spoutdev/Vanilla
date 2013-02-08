@@ -29,12 +29,13 @@ package org.spout.vanilla.plugin.component.substance.material.chest;
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.map.DefaultedKey;
+import org.spout.api.map.DefaultedKeyFactory;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.api.inventory.Container;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
-import org.spout.vanilla.plugin.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.event.inventory.ChestCloseEvent;
 import org.spout.vanilla.plugin.event.inventory.ChestOpenEvent;
@@ -47,6 +48,8 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
  * Represents a basic chest in the world.
  */
 public class Chest extends AbstractChest implements Container {
+	private static final DefaultedKey<ChestInventory> CHEST_INVENTORY = new DefaultedKeyFactory<ChestInventory>("chest_inventory", ChestInventory.class);
+
 	/**
 	 * Whether the chest has a double inventory.
 	 * @return true if has a double inventory.
@@ -71,7 +74,7 @@ public class Chest extends AbstractChest implements Container {
 
 	@Override
 	public ChestInventory getInventory() {
-		return getData().get(VanillaData.CHEST_INVENTORY);
+		return getData().get(CHEST_INVENTORY);
 	}
 
 	public ChestInventory getLargestInventory() {

@@ -61,7 +61,7 @@ import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.item.Food;

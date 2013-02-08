@@ -29,6 +29,9 @@ package org.spout.vanilla.plugin.component.substance.material;
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.map.DefaultedKey;
+import org.spout.api.map.DefaultedKeyFactory;
+import org.spout.api.map.DefaultedKeyImpl;
 
 import org.spout.vanilla.api.component.substance.material.FurnaceComponent;
 import org.spout.vanilla.api.event.inventory.FurnaceCloseEvent;
@@ -38,26 +41,30 @@ import org.spout.vanilla.api.material.Fuel;
 import org.spout.vanilla.api.material.TimedCraftable;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
 import org.spout.vanilla.plugin.inventory.window.block.FurnaceWindow;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
 
 /**
  * Represents a furnace in a world.
  */
 public class Furnace extends FurnaceComponent {
+	private static final DefaultedKey<FurnaceInventory> FURNACE_INVENTORY = new DefaultedKeyFactory<FurnaceInventory>("inventory", FurnaceInventory.class);
+	private static final DefaultedKey<Float> MAX_SMELT_TIME = new DefaultedKeyImpl<Float>("max_smelt_time", FurnaceBlock.SMELT_TIME);
+
 	public final float MAX_FUEL_INCREMENT = 12.5f;
 	public final float MAX_SMELT_TIME_INCREMENT = 9f;
 
 	@Override
 	public float getMaxSmeltTime() {
-		return getData().get(VanillaData.MAX_SMELT_TIME);
+		return getData().get(MAX_SMELT_TIME);
 	}
 
 	@Override
 	public void setMaxSmeltTime(float maxSmeltTime) {
-		getData().put(VanillaData.MAX_SMELT_TIME, maxSmeltTime);
+		getData().put(MAX_SMELT_TIME, maxSmeltTime);
 	}
 
 	@Override
@@ -221,7 +228,7 @@ public class Furnace extends FurnaceComponent {
 
 	@Override
 	public FurnaceInventory getInventory() {
-		return getData().get(VanillaData.FURNACE_INVENTORY);
+		return getData().get(FURNACE_INVENTORY);
 	}
 
 	@Override

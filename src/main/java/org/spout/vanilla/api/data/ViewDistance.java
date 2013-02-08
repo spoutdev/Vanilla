@@ -24,30 +24,29 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.data;
+package org.spout.vanilla.api.data;
 
-import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
-import org.spout.vanilla.plugin.data.effect.type.NoteSoundEffect;
+public enum ViewDistance {
+	FAR(0),
+	NORMAL(1),
+	SHORT(2),
+	TINY(3);
+	final byte id;
 
-public enum Instrument {
-	PIANO(SoundEffects.NOTE_HARP, 0),
-	BASS_DRUM(SoundEffects.NOTE_BD, 1),
-	SNARE_DRUM(SoundEffects.NOTE_SNARE, 2),
-	CLICK(SoundEffects.NOTE_HAT, 3),
-	BASS_GUITAR(SoundEffects.NOTE_BASSATTACK, 4);
-	private final NoteSoundEffect sound;
-	private final int id;
-
-	private Instrument(NoteSoundEffect effect, int id) {
-		this.sound = effect;
-		this.id = id;
+	ViewDistance(int id) {
+		this.id = (byte) id;
 	}
 
 	public int getId() {
 		return id;
 	}
 
-	public NoteSoundEffect getEffect() {
-		return this.sound;
+	public static ViewDistance byId(int id) {
+		for (ViewDistance v : values()) {
+			if (v.id == id) {
+				return v;
+			}
+		}
+		return null;
 	}
 }

@@ -27,22 +27,28 @@
 package org.spout.vanilla.plugin.component.inventory;
 
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.map.DefaultedKey;
+import org.spout.api.map.DefaultedKeyFactory;
 
 import org.spout.vanilla.api.component.inventory.EntityInventoryComponent;
 import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.plugin.inventory.entity.EntityArmorInventory;
+import org.spout.vanilla.plugin.inventory.entity.EntityQuickbarInventory;
 
 public class VanillaEntityInventory extends EntityInventoryComponent {
+	private static final DefaultedKey<EntityArmorInventory> ARMOR_INVENTORY = new DefaultedKeyFactory<EntityArmorInventory>("armor", EntityArmorInventory.class);
+	private static final DefaultedKey<EntityQuickbarInventory> ENTITY_HELD_INVENTORY = new DefaultedKeyFactory<EntityQuickbarInventory>("held", EntityQuickbarInventory.class);
+
 	@Override
 	public ArmorInventory getArmor() {
-		return getData().get(VanillaData.ARMOR_INVENTORY);
+		return getData().get(ARMOR_INVENTORY);
 	}
 
 	@Override
 	public QuickbarInventory getQuickbar() {
-		return getData().get(VanillaData.ENTITY_HELD_INVENTORY);
+		return getData().get(ENTITY_HELD_INVENTORY);
 	}
 
 	@Override

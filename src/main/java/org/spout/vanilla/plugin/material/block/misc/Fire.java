@@ -42,7 +42,7 @@ import org.spout.api.math.IntVector3;
 import org.spout.vanilla.api.data.Dimension;
 import org.spout.vanilla.api.material.Burnable;
 
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;

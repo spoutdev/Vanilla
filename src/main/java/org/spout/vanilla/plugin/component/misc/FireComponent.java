@@ -34,7 +34,7 @@ import org.spout.vanilla.api.event.cause.NullDamageCause;
 
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 
 /**
  * Component handling a entity being on fire.

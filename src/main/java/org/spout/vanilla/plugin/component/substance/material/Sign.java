@@ -33,7 +33,7 @@ import org.spout.api.event.Cause;
 import org.spout.vanilla.api.component.substance.material.SignComponent;
 import org.spout.vanilla.api.event.block.SignUpdateEvent;
 
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 
 /**
  * Component that represents a Sign in a world.

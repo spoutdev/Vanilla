@@ -40,7 +40,7 @@ import org.spout.vanilla.api.material.item.FoodEffect;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.EffectsComponent;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
 public class Food extends VanillaItemMaterial {

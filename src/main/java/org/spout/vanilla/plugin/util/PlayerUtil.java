@@ -41,7 +41,7 @@ import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.misc.HeadComponent;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 
 public class PlayerUtil {
 	/**

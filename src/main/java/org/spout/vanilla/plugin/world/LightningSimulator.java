@@ -41,7 +41,7 @@ import org.spout.api.math.GenericMath;
 import org.spout.vanilla.api.data.Weather;
 
 import org.spout.vanilla.plugin.component.substance.Lightning;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 
 public class LightningSimulator extends Component {

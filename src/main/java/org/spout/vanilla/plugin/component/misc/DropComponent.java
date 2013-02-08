@@ -31,13 +31,18 @@ import java.util.List;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.map.DefaultedKey;
+import org.spout.api.map.DefaultedKeyFactory;
 
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
+import org.spout.vanilla.plugin.inventory.player.DropInventory;
 
 /**
  * Handle item/XP drop from a entity.
  */
 public class DropComponent extends EntityComponent {
+	private static final DefaultedKey<DropInventory> DROP_INVENTORY = new DefaultedKeyFactory<DropInventory>("DropInventory", DropInventory.class);
+
 	/**
 	 * Add a amount of XP the entity drops.
 	 * @param amount The amount of XP the entity drops.
@@ -62,7 +67,7 @@ public class DropComponent extends EntityComponent {
 	 * @return The current component.
 	 */
 	public DropComponent addDrop(ItemStack itemstack) {
-		Inventory dropInventory = getOwner().getData().get(VanillaData.DROP_INVENTORY);
+		Inventory dropInventory = getOwner().getData().get(DROP_INVENTORY);
 		dropInventory.add(itemstack);
 		return this;
 	}
@@ -72,6 +77,6 @@ public class DropComponent extends EntityComponent {
 	 * @return A list of all the items this entity drops.
 	 */
 	public List<ItemStack> getDrops() {
-		return getOwner().getData().get(VanillaData.DROP_INVENTORY);
+		return getOwner().getData().get(DROP_INVENTORY);
 	}
 }

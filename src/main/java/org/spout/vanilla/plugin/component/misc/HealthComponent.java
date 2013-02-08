@@ -72,7 +72,7 @@ import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.component.substance.XPOrb;
 import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
-import org.spout.vanilla.plugin.data.VanillaData;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.api.data.VanillaRenderMaterials;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityStatusMessage;
 

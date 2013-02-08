@@ -50,7 +50,7 @@ public class RenderItemStack extends RenderPart {
 		}
 		this.item = item;
 		setRenderMaterial(VanillaRenderMaterials.ITEMS_MATERIAL);
-		setSource(new Rectangle(((VanillaMaterial) item.getMaterial()).getPosition(), SOURCE_EXTENTS));
+		setSource(new Rectangle(((VanillaMaterial) item.getMaterial()).getSpritePosition(), SOURCE_EXTENTS));
 	}
 
 	public ItemStack getItem() {

@@ -34,7 +34,8 @@ import org.spout.api.inventory.shape.Grid;
 import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.plugin.inventory.window.gui.InventorySlot;
+import org.spout.vanilla.api.inventory.Slot;
+import org.spout.vanilla.plugin.inventory.window.gui.RenderSlot;
 import org.spout.vanilla.plugin.inventory.window.gui.RenderItemStack;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
@@ -57,8 +58,8 @@ public class GridInventoryConverter extends InventoryConverter {
 			int i = iter.next(), x = iter.getX(), y = iter.getY(), size = grid.getSize();
 			slots[i] = (offset + size) - (length * y) - (length - x);
 			if (Spout.getEngine() instanceof Client) {
-				InventorySlot slot = widgets[i].get(InventorySlot.class);
-				slot.setRenderItemStack(new RenderItemStack(new ItemStack(VanillaMaterials.LEATHER_CAP, 1))); // TODO: Handle this in onClick
+				RenderSlot slot = widgets[i].get(RenderSlot.class);
+				slot.setSlot(new Slot(inventory, i));
 				slot.setPosition(pos.add(x * SLOT_WIDTH, y * SLOT_HEIGHT));
 			}
 		}

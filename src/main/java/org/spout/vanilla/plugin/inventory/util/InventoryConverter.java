@@ -35,7 +35,7 @@ import org.spout.api.util.StringUtil;
 
 import org.spout.vanilla.api.inventory.Slot;
 
-import org.spout.vanilla.plugin.inventory.window.gui.InventorySlot;
+import org.spout.vanilla.plugin.inventory.window.gui.RenderSlot;
 
 /**
  * Converts slots sent to the client into the proper Spout format.
@@ -52,12 +52,12 @@ public class InventoryConverter {
 		this.offset = offset;
 		widgets = new Widget[positions.length];
 		for (int i = 0; i < widgets.length; i++) {
-			final InventorySlot slot;
+			final RenderSlot slot;
 			if (Spout.getEngine() instanceof Client) {
 				Widget widget = widgets[i] = ((Client)Spout.getEngine()).getScreenStack().createWidget();
-				slot = widget.add(InventorySlot.class);
+				slot = widget.add(RenderSlot.class);
 			} else {
-				slot = new InventorySlot();
+				slot = new RenderSlot();
 			}
 			slot.setSlot(new Slot(inventory, i));
 			slot.setPosition(positions[i]);

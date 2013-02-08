@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.inventory.window.gui;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +36,9 @@ import org.spout.api.event.player.input.PlayerClickEvent;
 import org.spout.api.event.player.input.PlayerKeyEvent;
 import org.spout.api.gui.component.ControlComponent;
 import org.spout.api.gui.render.RenderPart;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.IntVector2;
+import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.api.inventory.Slot;
@@ -42,39 +46,26 @@ import org.spout.vanilla.api.inventory.window.AbstractWindow;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 
-public class InventorySlot extends ControlComponent {
-	private RenderItemStack item;
+public class RenderSlot extends ControlComponent {
 	private Vector2 pos = Vector2.ZERO;
-	private Slot entry;
+	private Slot slot;
+	private boolean hovered;
 
-	public void setSlot(Slot entry) {
-		this.entry = entry;
+	public void setSlot(Slot slot) {
+		this.slot = slot;
 	}
 
 	public Slot getSlot() {
-		return entry;
-	}
-
-	public void setRenderItemStack(RenderItemStack item) {
-		this.item = item;
-		update();
+		return slot;
 	}
 
 	public void setPosition(Vector2 pos) {
 		this.pos = pos;
-		update();
+		getOwner().setBounds(new Rectangle(pos, RenderItemStack.SPRITE_EXTENTS));
 	}
 
 	public Vector2 getPosition() {
 		return pos;
-	}
-
-	public void update() {
-		if (item != null) {
-			item.setZIndex(0);
-			item.setPosition(pos);
-			getOwner().setHitBox(item.getSprite());
-		}
 	}
 
 	public AbstractWindow getWindow() {
@@ -87,8 +78,22 @@ public class InventorySlot extends ControlComponent {
 	@Override
 	public List<RenderPart> getRenderParts() {
 		List<RenderPart> parts = new ArrayList<RenderPart>();
-		if (item != null && item.getRenderMaterial() != null) {
-			parts.add(item);
+		System.out.println("Getting render parts");
+		if (hovered) {
+			System.out.println("Hovering");
+			RenderPart box = new RenderPart();
+			box.setZIndex(1);
+			box.setColor(Color.RED);
+			box.setSprite(new Rectangle(pos, RenderItemStack.SPRITE_EXTENTS));
+			parts.add(box);
+		}
+		ItemStack item = slot.get();
+		if (item != null) {
+			System.out.println("Item not null");
+			RenderItemStack itemPart = new RenderItemStack(item);
+			itemPart.setZIndex(2);
+			itemPart.setPosition(pos);
+			parts.add(itemPart);
 		}
 		return parts;
 	}
@@ -104,7 +109,11 @@ public class InventorySlot extends ControlComponent {
 	}
 
 	@Override
-	public void onHover() {
-		System.out.println("Hovering over");
+	public void onMouseMoved(IntVector2 prev, IntVector2 pos, boolean hovered) {
+		if (this.hovered != hovered) {
+			System.out.println("Hovering went from " + this.hovered + " to " + hovered);
+			this.hovered = hovered;
+			getOwner().update();
+		}
 	}
 }

@@ -145,7 +145,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	}
 
 	@Override
-	public Vector2 getPosition() {
+	public Vector2 getSpritePosition() {
 		return pos;
 	}
 

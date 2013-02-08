@@ -61,5 +61,5 @@ public interface VanillaMaterial extends MaterialSource {
 
 	public RenderMaterial getRenderMaterial();
 
-	public Vector2 getPosition();
+	public Vector2 getSpritePosition();
 }

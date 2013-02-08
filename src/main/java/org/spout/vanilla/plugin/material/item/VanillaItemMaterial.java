@@ -98,7 +98,7 @@ public class VanillaItemMaterial extends Material implements VanillaMaterial {
 	}
 
 	@Override
-	public Vector2 getPosition() {
+	public Vector2 getSpritePosition() {
 		return pos;
 	}
 

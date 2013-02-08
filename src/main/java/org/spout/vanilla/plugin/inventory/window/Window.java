@@ -53,7 +53,6 @@ import org.spout.vanilla.api.event.inventory.InventoryCanSetEvent;
 import org.spout.vanilla.api.event.window.WindowCloseEvent;
 import org.spout.vanilla.api.event.window.WindowOpenEvent;
 import org.spout.vanilla.api.event.window.WindowPropertyEvent;
-import org.spout.vanilla.api.event.window.WindowSlotEvent;
 import org.spout.vanilla.api.inventory.Slot;
 import org.spout.vanilla.api.inventory.CraftingInventory;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
@@ -66,7 +65,7 @@ import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.plugin.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.plugin.inventory.util.InventoryConverter;
-import org.spout.vanilla.plugin.inventory.window.gui.InventorySlot;
+import org.spout.vanilla.plugin.inventory.window.gui.RenderSlot;
 import org.spout.vanilla.plugin.inventory.window.gui.RenderItemStack;
 import org.spout.vanilla.plugin.VanillaPlugin;
 
@@ -570,7 +569,7 @@ public abstract class Window extends AbstractWindow {
 				}
 				break;
 			case CLIENT:
-				slots.getWidgets()[slot].get(InventorySlot.class).setRenderItemStack(new RenderItemStack(item));
+				slots.getWidgets()[slot].update();
 				break;
 			default:
 				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform());

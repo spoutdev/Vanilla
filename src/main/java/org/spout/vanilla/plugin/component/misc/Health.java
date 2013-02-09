@@ -41,6 +41,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
+import org.spout.api.gui.render.RenderPartPack;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.GenericMath;
@@ -98,27 +99,28 @@ public class Health extends HealthComponent {
 
 			// Health bar
 			final RenderPartsHolderComponent heartsRect = hearts.add(RenderPartsHolderComponent.class);
+			final RenderPartPack hearts_pack = new RenderPartPack(VanillaRenderMaterials.ICONS_MATERIAL);
 			float y = VanillaConfiguration.HARDCORE_MODE.getBoolean() ? 45f / 256f : 0;
 			for (int i = 0; i < 10; i++) {
 				final RenderPart heart = new RenderPart();
-				heart.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
 				heart.setColor(Color.WHITE);
 				heart.setSprite(new Rectangle(x + 0.005f, -0.77f, 0.065f * SCALE, 0.065f));
 				heart.setSource(new Rectangle(53f / 256f, y, 9f / 256f, 9f / 256f));
-				heartsRect.add(heart);
+				hearts_pack.add(heart);
 				x += dx;
 			}
 
 			x = START_X;
 			for (int i = 0; i < 10; i++) {
 				final RenderPart heartBg = new RenderPart();
-				heartBg.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
 				heartBg.setColor(Color.WHITE);
 				heartBg.setSprite(new Rectangle(x, -0.77f, 0.065f * SCALE, 0.065f));
 				heartBg.setSource(new Rectangle(16f / 256f, y, 9f / 256f, 9f / 256f));
-				heartsRect.add(heartBg);
+				hearts_pack.add(heartBg);
 				x += dx;
 			}
+			
+			heartsRect.add(hearts_pack);
 
 			getOwner().get(HUDComponent.class).attachWidget(hearts);
 		}
@@ -148,7 +150,7 @@ public class Health extends HealthComponent {
 				if (!(getOwner() instanceof Player)) {
 					return;
 				}
-				List<RenderPart> heartParts = hearts.get(RenderPartsHolderComponent.class).getRenderParts();
+				List<RenderPart> heartParts = hearts.get(RenderPartsHolderComponent.class).getRenderPartPacks().get(0).getRenderParts();
 				if (animateHearts) {
 					float x = 0;
 					if (heartAnimationTicks == 3) {
@@ -183,7 +185,7 @@ public class Health extends HealthComponent {
 				float dx = 0.06f * SCALE;
 
 				if (getHealth() <= 4) {
-					List<RenderPart> parts = hearts.get(RenderPartsHolderComponent.class).getRenderParts();
+					List<RenderPart> parts = hearts.get(RenderPartsHolderComponent.class).getRenderPartPacks().get(0).getRenderParts();
 					for (int i = 0; i < 10; i++) {
 						RenderPart heart = parts.get(i);
 						RenderPart heartBg = parts.get(i + 10);

@@ -34,12 +34,15 @@ import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.LabelComponent;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
+import org.spout.api.gui.render.RenderPartPack;
 import org.spout.api.math.Rectangle;
 
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.api.data.VanillaRenderMaterials;
 
 public class VanillaExpBar extends ExpBarWidget {
+	private RenderPartPack expPack = new RenderPartPack(VanillaRenderMaterials.ICONS_MATERIAL);
+	
 	@Override
 	public void init(Widget exp, HUDComponent hud) {
 		super.init(exp, hud);
@@ -53,19 +56,19 @@ public class VanillaExpBar extends ExpBarWidget {
 		if (survival) {
 			// Experience bar
 			final RenderPartsHolderComponent expRect = widget.add(RenderPartsHolderComponent.class);
+			expRect.add(expPack);
+			
 			final RenderPart expBgRect = new RenderPart();
-			expBgRect.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
 			expBgRect.setColor(Color.WHITE);
 			expBgRect.setSprite(new Rectangle(START_X, -0.82f, 1.81f * SCALE, 0.04f));
 			expBgRect.setSource(new Rectangle(0, 64f / 256f, 0.91f, 0.019f));
-			expRect.add(expBgRect);
+			expPack.add(expBgRect);
 
 			final RenderPart expBarRect = new RenderPart();
-			expBarRect.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
 			expBarRect.setColor(Color.WHITE);
-			expRect.add(expBarRect);
+			expPack.add(expBarRect);
 			
-			final RenderPart rect = widget.get(RenderPartsHolderComponent.class).get(1);
+			final RenderPart rect = expPack.get(1);
 			rect.setSprite(new Rectangle(START_X, -0.82f, 1.81f * SCALE * 0f, 0.04f));
 			rect.setSource(new Rectangle(0, 69f / 256f, 182f / 256f * 0f, 5f / 256f));
 		}
@@ -76,7 +79,7 @@ public class VanillaExpBar extends ExpBarWidget {
 	@Override
 	public void update() {
 		float percent = hud.getExpPercent();
-		final RenderPart rect = widget.get(RenderPartsHolderComponent.class).get(1);
+		final RenderPart rect = expPack.get(1);
 		rect.setSprite(new Rectangle(START_X, -0.82f, 1.81f * SCALE * percent, 0.04f));
 		rect.setSource(new Rectangle(0, 69f / 256f, 182f / 256f * percent, 5f / 256f));
 		widget.update();

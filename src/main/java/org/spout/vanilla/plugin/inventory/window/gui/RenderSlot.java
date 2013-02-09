@@ -36,12 +36,15 @@ import org.spout.api.event.player.input.PlayerClickEvent;
 import org.spout.api.event.player.input.PlayerKeyEvent;
 import org.spout.api.gui.component.ControlComponent;
 import org.spout.api.gui.render.RenderPart;
+import org.spout.api.gui.render.RenderPartPack;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.IntVector2;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
+import org.spout.api.render.SpoutRenderMaterials;
 
 import org.spout.api.inventory.Slot;
+import org.spout.vanilla.api.data.VanillaRenderMaterials;
 import org.spout.vanilla.api.inventory.window.AbstractWindow;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
@@ -76,24 +79,28 @@ public class RenderSlot extends ControlComponent {
 	}
 
 	@Override
-	public List<RenderPart> getRenderParts() {
-		List<RenderPart> parts = new ArrayList<RenderPart>();
+	public List<RenderPartPack> getRenderPartPacks() {
+		List<RenderPartPack> parts = new ArrayList<RenderPartPack>();
 		System.out.println("Getting render parts");
 		if (hovered) {
 			System.out.println("Hovering");
+			RenderPartPack boxPack = new RenderPartPack(SpoutRenderMaterials.GUI_COLOR);
 			RenderPart box = new RenderPart();
 			box.setZIndex(1);
 			box.setColor(Color.RED);
 			box.setSprite(new Rectangle(pos, RenderItemStack.SPRITE_EXTENTS));
-			parts.add(box);
+			boxPack.add(box);
+			parts.add(boxPack);
 		}
 		ItemStack item = slot.get();
 		if (item != null) {
 			System.out.println("Item not null");
+			RenderPartPack itemPack = new RenderPartPack(VanillaRenderMaterials.ITEMS_MATERIAL);
 			RenderItemStack itemPart = new RenderItemStack(item);
 			itemPart.setZIndex(2);
 			itemPart.setPosition(pos);
-			parts.add(itemPart);
+			itemPack.add(itemPart);
+			parts.add(itemPack);
 		}
 		return parts;
 	}

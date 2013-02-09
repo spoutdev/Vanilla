@@ -31,24 +31,28 @@ import java.awt.Color;
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
+import org.spout.api.gui.render.RenderPartPack;
 import org.spout.api.math.Rectangle;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.api.data.VanillaRenderMaterials;
 
 public class VanillaArmorWidget extends ArmorWidget {
+	
+	private RenderPartPack armorPack = new RenderPartPack(VanillaRenderMaterials.ICONS_MATERIAL);
+	
 	@Override
 	public void init(Widget armor, HUDComponent hud) {
 		super.init(armor, hud);
 		final RenderPartsHolderComponent armorRect = widget.add(RenderPartsHolderComponent.class);
+		armorRect.add(armorPack);
 		float x = START_X;
 		float dx = 0.06f * SCALE;
 		for (int i = 0; i < 10; i++) {
 			final RenderPart armorPart = new RenderPart();
-			armorPart.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
 			armorPart.setColor(Color.WHITE);
 			armorPart.setSprite(new Rectangle(x, -0.7f, 0.06f * SCALE, 0.06f));
 			armorPart.setSource(new Rectangle(52f / 256f, 9f / 256f, 12f / 256f, 12f / 256f));
-			armorRect.add(armorPart);
+			armorPack.add(armorPart);
 			x += dx;
 		}
 		
@@ -57,12 +61,11 @@ public class VanillaArmorWidget extends ArmorWidget {
 
 	@Override
 	public void update() {
-		RenderPartsHolderComponent armorRect = widget.get(RenderPartsHolderComponent.class);
 		
 		int amount = hud.getArmor();
 
 		if (amount == 0) {
-			for (RenderPart armorPart : armorRect.getRenderParts()) {
+			for (RenderPart armorPart : armorPack.getRenderParts()) {
 				armorPart.setSource(new Rectangle(52f / 256f, 9f / 256f, 12f / 256f, 12f / 256f)); // No icon
 			}
 		} else {
@@ -77,7 +80,7 @@ public class VanillaArmorWidget extends ArmorWidget {
 				} else if (amount == 0) {
 					x = 16f; // Empty
 				}
-				armorRect.get(i).setSource(new Rectangle(x / 256f, 9f / 256f, 9f / 256f, 9f / 256f));
+				armorPack.get(i).setSource(new Rectangle(x / 256f, 9f / 256f, 9f / 256f, 9f / 256f));
 			}
 		}
 		widget.update();

@@ -33,6 +33,7 @@ import java.util.Random;
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
+import org.spout.api.gui.render.RenderPartPack;
 import org.spout.api.math.Rectangle;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
@@ -41,31 +42,32 @@ import org.spout.vanilla.api.data.VanillaRenderMaterials;
 public class VanillaHunger extends HungerWidget {
 	private int hungerTicks;
 	private final Random random = new Random();
+	private RenderPartPack hungerPack = new RenderPartPack(VanillaRenderMaterials.ICONS_MATERIAL);
 
 	@Override
 	public void init(Widget widget, HUDComponent hud) {
 		super.init(widget, hud);
 		final RenderPartsHolderComponent hungerRect = widget.add(RenderPartsHolderComponent.class);
+		hungerRect.add(hungerPack);
+		
 		float x = 0.09f * SCALE;
 		float dx = 0.06f * SCALE;
 		for (int i = 0; i < 10; i++) {
 			final RenderPart hunger = new RenderPart();
-			hunger.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
 			hunger.setColor(Color.WHITE);
 			hunger.setSprite(new Rectangle(x, -0.77f, 0.075f * SCALE, 0.07f));
 			hunger.setSource(new Rectangle(52f / 256f, 27f / 256f, 9f / 256f, 9f / 256f));
-			hungerRect.add(hunger);
+			hungerPack.add(hunger);
 			x += dx;
 		}
 
 		x = 0.09f * SCALE;
 		for (int i = 0; i < 10; i++) {
 			final RenderPart hungerBg = new RenderPart();
-			hungerBg.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
 			hungerBg.setColor(Color.WHITE);
 			hungerBg.setSprite(new Rectangle(x, -0.77f, 0.075f * SCALE, 0.07f));
 			hungerBg.setSource(new Rectangle(16f / 256f, 27f / 256f, 9f / 256f, 9f / 256f));
-			hungerRect.add(hungerBg);
+			hungerPack.add(hungerBg);
 			x += dx;
 		}
 		
@@ -87,7 +89,7 @@ public class VanillaHunger extends HungerWidget {
 		float saturation = hunger.getFoodSaturation();
 		
 		if (saturation <= 0) {
-			List<RenderPart> parts = widget.get(RenderPartsHolderComponent.class).getRenderParts();
+			List<RenderPart> parts = hungerPack.getRenderParts();
 			if (hungerTicks == 98) {
 				x = 0.09f * SCALE;
 				y = -0.77f;
@@ -143,16 +145,14 @@ public class VanillaHunger extends HungerWidget {
 		float bx = hungerComp.getBx();
 		//Widget testWidget = getOwner().get(HUDComponent.class).getHungerMeter().getWidget();
 		
-		RenderPartsHolderComponent hungerRect = widget.get(RenderPartsHolderComponent.class);
-		
 		if (hunger == 0) {
 
 			for (int i = 0; i < 10; i++) {
-				hungerRect.get(i).setSource(new Rectangle(142f / 256f, 27f / 256f, 9f / 256f, 9f / 256f)); // Foreground
+				hungerPack.get(i).setSource(new Rectangle(142f / 256f, 27f / 256f, 9f / 256f, 9f / 256f)); // Foreground
 			}
 
 			for (int i = 10; i < 20; i++) {
-				hungerRect.get(i).setSource(new Rectangle(bx / 256f, 27f / 256f, 9f / 256f, 9f / 256f)); // Background
+				hungerPack.get(i).setSource(new Rectangle(bx / 256f, 27f / 256f, 9f / 256f, 9f / 256f)); // Background
 			}
 		} else {
 
@@ -165,11 +165,11 @@ public class VanillaHunger extends HungerWidget {
 				} else {
 					hunger -= 2; // Full
 				}
-				hungerRect.get(i).setSource(new Rectangle(fx / 256f, 27f / 256f, 9f / 256f, 9f / 256f));
+				hungerPack.get(i).setSource(new Rectangle(fx / 256f, 27f / 256f, 9f / 256f, 9f / 256f));
 			}
 
 			for (int i = 19; i >= 10; i--) {
-				hungerRect.get(i).setSource(new Rectangle(bx / 256f, 27f / 256f, 9f / 256f, 9f / 256f));
+				hungerPack.get(i).setSource(new Rectangle(bx / 256f, 27f / 256f, 9f / 256f, 9f / 256f));
 			}
 		}
 

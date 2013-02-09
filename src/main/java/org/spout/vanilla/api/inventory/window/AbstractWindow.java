@@ -30,12 +30,14 @@ import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import java.util.logging.Level;
 
+import org.spout.vanilla.api.event.inventory.InventoryCanSetEvent;
 import org.spout.vanilla.api.event.window.WindowItemsEvent;
 import org.spout.vanilla.api.event.window.WindowPropertyEvent;
 
 import org.spout.api.ServerOnly;
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
+import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
@@ -73,6 +75,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 				break;
 		}
 	}
+
 	/**
 	 * Gets the owner of this window
 	 * @return player
@@ -310,5 +313,20 @@ public abstract class AbstractWindow implements InventoryViewer {
 		if (LOG_INFO_MESSAGES) {
 			debug(Level.INFO, msg);
 		}
+	}
+
+	/**
+	 * Checks whether a certain slot can be set to the item specified<br>
+	 * Fires the {@link InventoryCanSetEvent}
+	 * 
+	 * @param inventory of the slot
+	 * @param index of the slot
+	 * @param item to set to
+	 * @return True if the slot can be set to the item, False if not
+	 */
+	protected boolean canSet(Inventory inventory, int index, ItemStack item) {
+		final boolean canSet = inventory.canSet(index, item);
+		InventoryCanSetEvent event = Spout.getEventManager().callEvent(new InventoryCanSetEvent(inventory, new PlayerCause(getPlayer()), index, item, !canSet));
+		return !event.isCancelled();
 	}
 }

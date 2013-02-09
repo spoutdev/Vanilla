@@ -29,6 +29,7 @@ package org.spout.vanilla.api.inventory.window;
 import org.spout.api.inventory.Inventory;
 
 import org.spout.api.inventory.Slot;
+import org.spout.api.util.StringUtil;
 
 /**
  * Represents the arguments of a click on a
@@ -66,7 +67,16 @@ public class ClickArguments {
 		return shiftClick;
 	}
 
+	/**
+	 * Gets the slot that was clicked, from which the inventory and item index can be obtained
+	 * @return Clicked Slot
+	 */
 	public Slot getSlot() {
 		return slot;
+	}
+
+	@Override
+	public String toString() {
+		return "ClickArguments {Slot=" + slot.getIndex() + ", Button=" + (rightClick ? "Right" : "Left") + ", Shift=" + shiftClick + "}";
 	}
 }

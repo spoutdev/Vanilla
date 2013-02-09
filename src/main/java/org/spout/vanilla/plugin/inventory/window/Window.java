@@ -36,7 +36,6 @@ import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Player;
-import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.gui.Screen;
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.LabelComponent;
@@ -49,7 +48,6 @@ import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.api.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.api.data.VanillaRenderMaterials;
-import org.spout.vanilla.api.event.inventory.InventoryCanSetEvent;
 import org.spout.vanilla.api.event.window.WindowCloseEvent;
 import org.spout.vanilla.api.event.window.WindowOpenEvent;
 import org.spout.vanilla.api.event.window.WindowPropertyEvent;
@@ -230,7 +228,7 @@ public abstract class Window extends AbstractWindow {
 		Slot s = args.getSlot();
 		Inventory inventory = s.getInventory();
 		int slot = s.getIndex();
-		ItemStack clicked = inventory.get(slot);
+		ItemStack clicked = s.get();
 		if (args.isShiftClick()) {
 			debug("[Window] Shift-Clicked slot " + slot);
 			if (clicked != null) {
@@ -247,9 +245,7 @@ public abstract class Window extends AbstractWindow {
 					clicked = cursorItem.clone();
 					clicked.setAmount(1);
 					// Can it be set?
-					boolean canSet = inventory.canSet(slot, clicked);
-					InventoryCanSetEvent event = Spout.getEventManager().callEvent(new InventoryCanSetEvent(inventory, new PlayerCause(getPlayer()), slot, clicked, canSet));
-					if (!event.isCancelled()) {
+					if (canSet(inventory, slot, clicked)) {
 						inventory.set(slot, clicked);
 						// remove from cursor
 						cursorItem.setAmount(cursorItem.getAmount() - 1);
@@ -267,7 +263,7 @@ public abstract class Window extends AbstractWindow {
 						debug("[Window] Stacking");
 						// add one if can fit
 						clicked.setAmount(clicked.getAmount() + 1);
-						if (inventory.canSet(slot, clicked)) {
+						if (canSet(inventory, slot, clicked)) {
 							inventory.set(slot, clicked);
 							cursorItem.setAmount(cursorItem.getAmount() - 1);
 							if (cursorItem.isEmpty()) {
@@ -289,9 +285,7 @@ public abstract class Window extends AbstractWindow {
 					}
 				} else {
 					// Can it be set?
-					boolean canSet = inventory.canSet(slot, cursorItem);
-					InventoryCanSetEvent event = Spout.getEventManager().callEvent(new InventoryCanSetEvent(inventory, new PlayerCause(getPlayer()), slot, clicked, canSet));
-					if (!event.isCancelled()) {
+					if (canSet(inventory, slot, cursorItem)) {
 						debug("[Window] Materials don't match. Swapping stacks.");
 						// materials don't match
 						// swap stacks
@@ -324,9 +318,7 @@ public abstract class Window extends AbstractWindow {
 					// put whole stack down
 					clicked = cursorItem.clone();
 					// Can it be set?
-					boolean canSet = inventory.canSet(slot, clicked);
-					InventoryCanSetEvent event = Spout.getEventManager().callEvent(new InventoryCanSetEvent(inventory, new PlayerCause(getPlayer()), slot, clicked, canSet));
-					if (!event.isCancelled()) {
+					if (canSet(inventory, slot, clicked)) {
 						inventory.set(slot, clicked);
 						cursorItem = null;
 						return true;
@@ -338,7 +330,7 @@ public abstract class Window extends AbstractWindow {
 				if (cursorItem.equalsIgnoreSize(clicked)) {
 					debug("[Window] Stacking");
 					//Try to set items
-					if (inventory.canSet(slot, clicked)) {
+					if (canSet(inventory, slot, clicked)) {
 						clicked.stack(cursorItem);
 						inventory.set(slot, clicked);
 						if (cursorItem.isEmpty()) {
@@ -357,9 +349,7 @@ public abstract class Window extends AbstractWindow {
 					return true;
 				} else {
 					// Can it be set?
-					boolean canSet = inventory.canSet(slot, clicked);
-					InventoryCanSetEvent event = Spout.getEventManager().callEvent(new InventoryCanSetEvent(inventory, new PlayerCause(getPlayer()), slot, clicked, canSet));
-					if (!event.isCancelled()) {
+					if (canSet(inventory, slot, clicked)) {
 						debug("[Window] Materials don't match. Swapping stacks.");
 						// materials don't match
 						// swap stacks
@@ -440,14 +430,14 @@ public abstract class Window extends AbstractWindow {
 	@Override
 	public Slot getSlot(int nativeSlot) {
 		int slot;
-		debug("Getting Slot from: " + nativeSlot);
 		for (InventoryConverter converter : converters) {
 			slot = converter.convert(nativeSlot);
 			if (slot != -1) {
-				debug("Found: " + slot);
+				debug("[MC=" + nativeSlot + "] -> Converted -> [Spout=" + slot + "]");
 				return new Slot(converter.getInventory(), slot);
 			}
 		}
+		debug("[MC=" + nativeSlot + "] -> Converted -> NOT FOUND!");
 		return null;
 	}
 

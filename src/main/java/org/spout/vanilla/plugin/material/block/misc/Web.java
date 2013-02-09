@@ -27,8 +27,8 @@
 package org.spout.vanilla.plugin.material.block.misc;
 
 import org.spout.vanilla.api.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.plugin.data.tool.ToolLevel;
-import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.api.data.tool.ToolLevel;
+import org.spout.vanilla.api.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 

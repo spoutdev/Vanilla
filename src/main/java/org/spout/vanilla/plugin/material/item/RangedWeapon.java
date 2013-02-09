@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.item;
 
-import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.api.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.item.tool.Tool;
 
 public class RangedWeapon extends Tool {

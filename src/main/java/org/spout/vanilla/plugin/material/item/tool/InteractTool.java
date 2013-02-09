@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.item.tool;
 
-import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.api.data.tool.ToolType;
 
 public abstract class InteractTool extends Tool {
 	public InteractTool(String name, int id, short durability, ToolType toolType) {

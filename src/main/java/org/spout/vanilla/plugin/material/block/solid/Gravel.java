@@ -31,7 +31,7 @@ import org.spout.vanilla.api.material.InitializableMaterial;
 import org.spout.vanilla.api.data.Instrument;
 import org.spout.vanilla.api.data.drops.SwitchDrops;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
-import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.api.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.SolidMoving;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;

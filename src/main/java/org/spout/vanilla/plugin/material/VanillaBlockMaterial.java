@@ -70,8 +70,8 @@ import org.spout.vanilla.api.data.drops.flag.DropFlags;
 import org.spout.vanilla.api.data.drops.flag.PlayerFlags;
 import org.spout.vanilla.api.data.drops.type.block.BlockDrops;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
-import org.spout.vanilla.plugin.data.tool.ToolLevel;
-import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.api.data.tool.ToolLevel;
+import org.spout.vanilla.api.data.tool.ToolType;
 import org.spout.vanilla.plugin.render.VanillaEffects;
 
 public abstract class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial, IndirectRedstoneSource {

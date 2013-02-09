@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.plugin.material.item.tool.weapon;
 
-import org.spout.vanilla.plugin.data.tool.ToolLevel;
-import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.api.data.tool.ToolLevel;
+import org.spout.vanilla.api.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.item.tool.MiningTool;
 
 public class Sword extends MiningTool {

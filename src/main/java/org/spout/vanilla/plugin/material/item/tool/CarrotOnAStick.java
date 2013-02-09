@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.material.item.tool;
 
-import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.api.data.tool.ToolType;
 
 public class CarrotOnAStick extends Tool {
 	public CarrotOnAStick(String name, int id, short durability) {

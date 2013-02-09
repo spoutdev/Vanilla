@@ -30,7 +30,7 @@ import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
 
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
-import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.api.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.block.Solid;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 

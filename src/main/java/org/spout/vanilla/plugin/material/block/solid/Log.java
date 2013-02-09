@@ -54,7 +54,7 @@ import org.spout.vanilla.api.material.block.Directional;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.api.data.Instrument;
 import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
-import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.api.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Solid;
 import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;

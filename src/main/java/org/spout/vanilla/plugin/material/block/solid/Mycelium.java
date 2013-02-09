@@ -32,7 +32,7 @@ import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.api.material.InitializableMaterial;
 
-import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.api.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.SpreadingSolid;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;

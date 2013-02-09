@@ -34,8 +34,8 @@ import org.spout.vanilla.api.material.Fuel;
 import org.spout.vanilla.api.material.InitializableMaterial;
 
 import org.spout.vanilla.api.data.Instrument;
-import org.spout.vanilla.plugin.data.tool.ToolLevel;
-import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.api.data.tool.ToolLevel;
+import org.spout.vanilla.api.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Solid;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;

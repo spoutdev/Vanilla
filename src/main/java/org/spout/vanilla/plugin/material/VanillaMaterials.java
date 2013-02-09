@@ -44,8 +44,8 @@ import org.spout.vanilla.api.material.item.FoodEffect;
 import org.spout.vanilla.api.material.item.FoodEffects;
 
 import org.spout.vanilla.plugin.component.substance.object.vehicle.minecart.Minecart;
-import org.spout.vanilla.plugin.data.tool.ToolLevel;
-import org.spout.vanilla.plugin.data.tool.ToolType;
+import org.spout.vanilla.api.data.tool.ToolLevel;
+import org.spout.vanilla.api.data.tool.ToolType;
 import org.spout.vanilla.plugin.material.block.solid.Anvil;
 import org.spout.vanilla.plugin.material.block.component.BeaconBlock;
 import org.spout.vanilla.plugin.material.block.component.BrewingStandBlock;

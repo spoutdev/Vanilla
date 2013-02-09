@@ -33,8 +33,6 @@ import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.api.material.VanillaMaterial;
 
-import org.spout.vanilla.api.data.VanillaRenderMaterials;
-
 public class RenderItemStack extends RenderPart {
 	private static final float SCALE = 0.75f;
 	public static final float WIDTH = 0.0625f;
@@ -49,7 +47,6 @@ public class RenderItemStack extends RenderPart {
 			throw new IllegalArgumentException("ItemStack must have a VanillaMaterial for a Material.");
 		}
 		this.item = item;
-		setRenderMaterial(VanillaRenderMaterials.ITEMS_MATERIAL);
 		setSource(new Rectangle(((VanillaMaterial) item.getMaterial()).getSpritePosition(), SOURCE_EXTENTS));
 	}
 

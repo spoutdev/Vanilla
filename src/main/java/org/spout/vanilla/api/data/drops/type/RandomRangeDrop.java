@@ -24,21 +24,56 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.data.drops.flag;
+package org.spout.vanilla.api.data.drops.type;
 
-import org.spout.api.util.flag.FlagSingle;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
-public class BlockFlags {
-	/**
-	 * The (growing) block is fully grown
-	 */
-	public static final FlagSingle FULLY_GROWN = new FlagSingle();
-	/**
-	 * Whether seeds are dropped
-	 */
-	public static final FlagSingle SEEDS = new FlagSingle();
-	/**
-	 * The block was destroyed because of an explosion
-	 */
-	public static final FlagSingle IGNITED = new FlagSingle();
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
+import org.spout.api.util.flag.Flag;
+
+import org.spout.vanilla.api.data.drops.Drop;
+
+public class RandomRangeDrop extends Drop {
+	private final Material material;
+	private final int min, max;
+
+	public RandomRangeDrop(Material material, int min, int max) {
+		if (min >= max) {
+			throw new IllegalArgumentException("min must be less than max");
+		}
+		this.material = material;
+		this.min = min;
+		this.max = max;
+	}
+
+	public Material getMaterial() {
+		return this.material;
+	}
+
+	public int getMinAmount() {
+		return this.min;
+	}
+
+	public int getMaxAmount() {
+		return this.max;
+	}
+
+	@Override
+	public List<ItemStack> getDrops(Random random, Set<Flag> flags, List<ItemStack> drops) {
+		if (this.canDrop(random, flags)) {
+			int amount = min + random.nextInt(max - min + 1);
+			if (amount > 0) {
+				drops.add(new ItemStack(getMaterial(), amount));
+			}
+		}
+		return drops;
+	}
+
+	@Override
+	public boolean containsDrop(Material material) {
+		return getMaterial().isMaterial(material);
+	}
 }

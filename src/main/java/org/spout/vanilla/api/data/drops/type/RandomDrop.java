@@ -24,7 +24,44 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.data.drops.flag;
+package org.spout.vanilla.api.data.drops.type;
 
-public class HeldItemFlags {
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
+
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
+import org.spout.api.util.flag.Flag;
+
+import org.spout.vanilla.api.data.drops.Drop;
+
+public class RandomDrop extends Drop {
+	private final Material material;
+	private final int[] amounts;
+
+	public RandomDrop(Material material, int... amounts) {
+		this.material = material;
+		this.amounts = amounts;
+	}
+
+	public Material getMaterial() {
+		return this.material;
+	}
+
+	@Override
+	public List<ItemStack> getDrops(Random random, Set<Flag> flags, List<ItemStack> drops) {
+		if (this.canDrop(random, flags)) {
+			int amount = amounts[random.nextInt(amounts.length)];
+			if (amount > 0) {
+				drops.add(new ItemStack(getMaterial(), amount));
+			}
+		}
+		return drops;
+	}
+
+	@Override
+	public boolean containsDrop(Material material) {
+		return getMaterial().isMaterial(material);
+	}
 }

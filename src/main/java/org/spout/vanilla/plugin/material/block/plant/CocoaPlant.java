@@ -46,7 +46,7 @@ import org.spout.vanilla.api.material.block.Growing;
 import org.spout.vanilla.api.material.block.Plant;
 
 import org.spout.vanilla.api.data.VanillaData;
-import org.spout.vanilla.plugin.data.drops.flag.BlockFlags;
+import org.spout.vanilla.api.data.drops.flag.BlockFlags;
 import org.spout.vanilla.plugin.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.plugin.material.block.solid.Log;
 import org.spout.vanilla.plugin.material.item.misc.Dye;

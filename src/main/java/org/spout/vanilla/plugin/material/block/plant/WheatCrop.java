@@ -43,7 +43,7 @@ import org.spout.vanilla.api.material.InitializableMaterial;
 import org.spout.vanilla.api.material.block.Crop;
 import org.spout.vanilla.api.material.block.Growing;
 
-import org.spout.vanilla.plugin.data.drops.flag.BlockFlags;
+import org.spout.vanilla.api.data.drops.flag.BlockFlags;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.attachable.GroundAttachable;

@@ -28,7 +28,7 @@ package org.spout.vanilla.plugin.data.tool;
 
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.api.data.drops.flag.ToolTypeFlags;
 
 public class ToolType {
 	public static final ToolType OTHER = new ToolType(ToolTypeFlags.OTHER);

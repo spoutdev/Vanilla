@@ -29,7 +29,7 @@ package org.spout.vanilla.plugin.material.block.fence;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.api.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.plugin.material.block.PressurePlate;
 import org.spout.vanilla.plugin.material.block.Solid;
 import org.spout.vanilla.plugin.material.block.component.SignBase;

@@ -28,7 +28,7 @@ package org.spout.vanilla.plugin.data.tool;
 
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.plugin.data.drops.flag.ToolLevelFlags;
+import org.spout.vanilla.api.data.drops.flag.ToolLevelFlags;
 
 public class ToolLevel {
 	public static final ToolLevel NONE = new ToolLevel(ToolLevelFlags.NONE, ToolLevelFlags.NONE_UP, 1.0f, 0, 0, 0);

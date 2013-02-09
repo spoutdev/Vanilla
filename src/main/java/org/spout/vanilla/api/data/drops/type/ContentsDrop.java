@@ -24,44 +24,32 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.data.drops.type.block;
+package org.spout.vanilla.api.data.drops.type;
 
-import org.spout.vanilla.plugin.data.drops.Drops;
-import org.spout.vanilla.plugin.data.drops.flag.DropFlags;
-import org.spout.vanilla.plugin.data.drops.flag.PlayerFlags;
-import org.spout.vanilla.plugin.data.drops.flag.ToolEnchantFlags;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
-public class BlockDrops extends Drops {
-	/**
-	 * All the drops spawned when the no creative player is involved
-	 */
-	public final Drops NOT_CREATIVE;
-	/**
-	 * All the drops when broken using a tool enchanted with silk touch
-	 */
-	public final Drops SILK_TOUCH;
-	/**
-	 * All the drops when not broken using a tool enchanted with silk touch
-	 */
-	public final Drops DEFAULT;
-	/**
-	 * All of the drops when destroyed by an explosion
-	 */
-	public final Drops EXPLOSION;
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.Material;
+import org.spout.api.util.flag.Flag;
 
-	public BlockDrops() {
-		this.NOT_CREATIVE = this.forFlags(PlayerFlags.CREATIVE.NOT);
-		this.SILK_TOUCH = this.NOT_CREATIVE.forFlags(ToolEnchantFlags.SILK_TOUCH);
-		this.DEFAULT = this.NOT_CREATIVE.forFlags(ToolEnchantFlags.SILK_TOUCH.NOT);
-		this.EXPLOSION = this.forFlags(DropFlags.EXPLOSION_DROPS);
+import org.spout.vanilla.api.data.drops.Drop;
+import org.spout.vanilla.api.data.drops.flag.DropFlags;
+
+public class ContentsDrop extends Drop {
+	@Override
+	public List<ItemStack> getDrops(Random random, Set<Flag> flags, List<ItemStack> drops) {
+		ItemStack[] contents = DropFlags.CONTENTS.getData(flags);
+		if (contents != null) {
+			drops.addAll(Arrays.asList(contents));
+		}
+		return drops;
 	}
 
 	@Override
-	public BlockDrops clear() {
-		super.clear();
-		add(NOT_CREATIVE).clear();
-		NOT_CREATIVE.add(SILK_TOUCH).clear();
-		NOT_CREATIVE.add(DEFAULT).clear();
-		return this;
+	public boolean containsDrop(Material material) {
+		return false;
 	}
 }

@@ -44,7 +44,7 @@ import org.spout.vanilla.plugin.component.living.hostile.Silverfish;
 import org.spout.vanilla.plugin.component.living.hostile.Skeleton;
 import org.spout.vanilla.plugin.component.living.hostile.Spider;
 import org.spout.vanilla.plugin.component.living.hostile.Zombie;
-import org.spout.vanilla.plugin.data.drops.flag.ToolEnchantFlags;
+import org.spout.vanilla.api.data.drops.flag.ToolEnchantFlags;
 import org.spout.vanilla.plugin.data.tool.ToolType;
 import org.spout.vanilla.plugin.enchantment.VanillaEnchantments;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;

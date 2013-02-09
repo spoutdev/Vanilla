@@ -24,13 +24,53 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.data.drops.flag;
+package org.spout.vanilla.api.data.drops.flag;
 
 import org.spout.api.util.flag.FlagSingle;
 
-public class ToolEnchantFlags {
+public class ToolTypeFlags {
 	/**
-	 * The tool used has the silk touch enchantment
+	 * A tool other than the one displayed here was used
 	 */
-	public static final FlagSingle SILK_TOUCH = new FlagSingle();
+	public static final FlagSingle OTHER = new FlagSingle();
+	/**
+	 * A pickaxe was used
+	 */
+	public static final FlagSingle PICKAXE = new FlagSingle();
+	/**
+	 * An axe was used
+	 */
+	public static final FlagSingle AXE = new FlagSingle();
+	/**
+	 * A spade was used
+	 */
+	public static final FlagSingle SPADE = new FlagSingle();
+	/**
+	 * A hoe was used
+	 */
+	public static final FlagSingle HOE = new FlagSingle();
+	/**
+	 * A sword was used
+	 */
+	public static final FlagSingle SWORD = new FlagSingle();
+	/**
+	 * A bow was used
+	 */
+	public static final FlagSingle BOW = new FlagSingle();
+	/**
+	 * A flint and steel was used
+	 */
+	public static final FlagSingle FLINT_AND_STEEL = new FlagSingle();
+	/**
+	 * Shears were used
+	 */
+	public static final FlagSingle SHEARS = new FlagSingle();
+	/**
+	 * A fishing rod was used
+	 */
+	public static final FlagSingle FISHING_ROD = new FlagSingle();
+	/**
+	 * A carrot on a stick was used
+	 */
+	public static final FlagSingle CARROT_ON_A_STICK = new FlagSingle();
 }

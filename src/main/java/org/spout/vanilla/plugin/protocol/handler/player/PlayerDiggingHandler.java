@@ -58,7 +58,7 @@ import org.spout.vanilla.plugin.component.misc.DiggingComponent;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.component.substance.material.Sign;
 import org.spout.vanilla.api.data.VanillaData;
-import org.spout.vanilla.plugin.data.drops.flag.PlayerFlags;
+import org.spout.vanilla.api.data.drops.flag.PlayerFlags;
 import org.spout.vanilla.plugin.data.effect.store.GeneralEffects;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Liquid;

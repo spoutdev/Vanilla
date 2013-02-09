@@ -29,7 +29,7 @@ package org.spout.vanilla.plugin.material.block.pressureplate;
 import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.plugin.component.substance.object.Item;
-import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.api.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.plugin.material.block.PressurePlate;
 
 public class StonePressurePlate extends PressurePlate {

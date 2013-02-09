@@ -24,42 +24,44 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.data.drops;
+package org.spout.vanilla.api.data.drops.type.block;
 
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import org.spout.vanilla.api.data.drops.Drops;
+import org.spout.vanilla.api.data.drops.flag.DropFlags;
+import org.spout.vanilla.api.data.drops.flag.PlayerFlags;
+import org.spout.vanilla.api.data.drops.flag.ToolEnchantFlags;
 
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.util.flag.Flag;
+public class BlockDrops extends Drops {
+	/**
+	 * All the drops spawned when the no creative player is involved
+	 */
+	public final Drops NOT_CREATIVE;
+	/**
+	 * All the drops when broken using a tool enchanted with silk touch
+	 */
+	public final Drops SILK_TOUCH;
+	/**
+	 * All the drops when not broken using a tool enchanted with silk touch
+	 */
+	public final Drops DEFAULT;
+	/**
+	 * All of the drops when destroyed by an explosion
+	 */
+	public final Drops EXPLOSION;
 
-/**
- * If all flags match, it drops the first segment, else the other<br>
- * If a chance is set, this Chance also defines what mode is used
- */
-public class SwitchDrops extends Drops {
-	public final Drops TRUE = new Drops();
-	public final Drops FALSE = new Drops();
-
-	@Override
-	public List<ItemStack> getDrops(Random random, Set<Flag> flags, List<ItemStack> drops) {
-		if (this.canDrop(random, flags)) {
-			drops = this.TRUE.getDrops(random, flags, drops);
-		} else {
-			drops = this.FALSE.getDrops(random, flags, drops);
-		}
-		return drops;
+	public BlockDrops() {
+		this.NOT_CREATIVE = this.forFlags(PlayerFlags.CREATIVE.NOT);
+		this.SILK_TOUCH = this.NOT_CREATIVE.forFlags(ToolEnchantFlags.SILK_TOUCH);
+		this.DEFAULT = this.NOT_CREATIVE.forFlags(ToolEnchantFlags.SILK_TOUCH.NOT);
+		this.EXPLOSION = this.forFlags(DropFlags.EXPLOSION_DROPS);
 	}
 
 	@Override
-	public SwitchDrops addFlags(Flag... dropFlags) {
-		super.addFlags(dropFlags);
-		return this;
-	}
-
-	@Override
-	public SwitchDrops setChance(double chance) {
-		super.setChance(chance);
+	public BlockDrops clear() {
+		super.clear();
+		add(NOT_CREATIVE).clear();
+		NOT_CREATIVE.add(SILK_TOUCH).clear();
+		NOT_CREATIVE.add(DEFAULT).clear();
 		return this;
 	}
 }

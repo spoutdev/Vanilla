@@ -24,53 +24,28 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.data.drops.flag;
+package org.spout.vanilla.api.data.drops;
 
-import org.spout.api.util.flag.FlagSingle;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
-public class ToolTypeFlags {
-	/**
-	 * A tool other than the one displayed here was used
-	 */
-	public static final FlagSingle OTHER = new FlagSingle();
-	/**
-	 * A pickaxe was used
-	 */
-	public static final FlagSingle PICKAXE = new FlagSingle();
-	/**
-	 * An axe was used
-	 */
-	public static final FlagSingle AXE = new FlagSingle();
-	/**
-	 * A spade was used
-	 */
-	public static final FlagSingle SPADE = new FlagSingle();
-	/**
-	 * A hoe was used
-	 */
-	public static final FlagSingle HOE = new FlagSingle();
-	/**
-	 * A sword was used
-	 */
-	public static final FlagSingle SWORD = new FlagSingle();
-	/**
-	 * A bow was used
-	 */
-	public static final FlagSingle BOW = new FlagSingle();
-	/**
-	 * A flint and steel was used
-	 */
-	public static final FlagSingle FLINT_AND_STEEL = new FlagSingle();
-	/**
-	 * Shears were used
-	 */
-	public static final FlagSingle SHEARS = new FlagSingle();
-	/**
-	 * A fishing rod was used
-	 */
-	public static final FlagSingle FISHING_ROD = new FlagSingle();
-	/**
-	 * A carrot on a stick was used
-	 */
-	public static final FlagSingle CARROT_ON_A_STICK = new FlagSingle();
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.util.flag.Flag;
+
+public class SelectedDrops extends Drops {
+	@Override
+	public List<ItemStack> getDrops(Random random, Set<Flag> flags, List<ItemStack> drops) {
+		if (!this.canDrop(random, flags) || this.isEmpty()) {
+			return drops;
+		} else {
+			return getDrop(random.nextInt(getDropCount())).getDrops(random, flags, drops);
+		}
+	}
+
+	@Override
+	public SelectedDrops addFlags(Flag... dropFlags) {
+		super.addFlags(dropFlags);
+		return this;
+	}
 }

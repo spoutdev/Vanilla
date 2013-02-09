@@ -30,8 +30,8 @@ import org.spout.api.geo.cuboid.Block;
 
 import org.spout.vanilla.api.data.MoveReaction;
 
-import org.spout.vanilla.plugin.data.drops.flag.ToolLevelFlags;
-import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.api.data.drops.flag.ToolLevelFlags;
+import org.spout.vanilla.api.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.plugin.material.block.Solid;
 import org.spout.vanilla.plugin.resources.VanillaMaterialModels;
 

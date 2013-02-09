@@ -50,7 +50,7 @@ import org.spout.vanilla.api.material.block.Plant;
 import org.spout.vanilla.api.material.block.Spreading;
 
 import org.spout.vanilla.api.component.misc.HeadComponent;
-import org.spout.vanilla.plugin.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.api.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.render.VanillaEffects;

@@ -1,4 +1,4 @@
-Shader: shader://Spout/fallbacks/fallback.ssf
+Shader: shader://Spout/shaders/bones2b2a/bones.ssf
 
 MaterialParams:
     Diffuse: texture://Vanilla/entities/zombie/zombie.png

@@ -1,5 +1,6 @@
 Name: "Zombie"
 Components:
+    - org.spout.engine.entity.component.SpoutAnimationComponent
     - org.spout.engine.entity.component.EntityRendererComponent
     - org.spout.vanilla.plugin.component.living.hostile.Zombie
 Data:

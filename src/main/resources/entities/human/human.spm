@@ -1,2 +1,9 @@
 Mesh: mesh://Vanilla/entities/human/human.obj
 Material: material://Vanilla/entities/human/human.smt
+Skeleton: skeleton://Vanilla/entities/human/human.ske
+Animation:
+    sneak_arms: animation://Vanilla/entities/human/human_sneak_arms.sam
+    sneak_interact: animation://Vanilla/entities/human/human_sneak_interact.sam
+    walk_arms: animation://Vanilla/entities/human/human_walk_arms.sam
+    walk_interact: animation://Vanilla/entities/human/human_walk_interact.sam
+    walk_legs: animation://Vanilla/entities/human/human_walk_legs.sam

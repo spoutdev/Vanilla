@@ -1,5 +1,6 @@
 Name: "Human"
 Components:
+    - org.spout.engine.entity.component.SpoutAnimationComponent
     - org.spout.engine.entity.component.EntityRendererComponent
     - org.spout.engine.entity.component.ClientTextModelComponent
     - org.spout.vanilla.plugin.component.living.neutral.Human

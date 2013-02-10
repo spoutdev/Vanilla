@@ -40,6 +40,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
+import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
@@ -67,9 +68,15 @@ public class InputCommandExecutor implements CommandExecutor {
 		} else if (name.equalsIgnoreCase("+break_block")) {
 			InteractComponent hit = ((Player) source).get(InteractComponent.class);
 			if (hit != null) {
-				Block hitting = hit.getTargetBlock();
+				final Block hitting = hit.getTargetBlock();
 				if (hitting != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
-					hitting.setMaterial(VanillaMaterials.AIR);
+					Spout.getScheduler().safeRun(VanillaPlugin.getInstance(), new Runnable() {
+
+						@Override
+						public void run() {
+							hitting.setMaterial(VanillaMaterials.AIR);
+						}
+					});
 					Spout.log("Broke block: " + hitting.toString());
 				}
 			}
@@ -85,15 +92,21 @@ public class InputCommandExecutor implements CommandExecutor {
 		} else if (name.equalsIgnoreCase("+place_block")) {
 			InteractComponent hit = ((Player) source).get(InteractComponent.class);
 			if (hit != null) {
-				Block hitting = hit.getTargetBlock();
+				final Block hitting = hit.getTargetBlock();
 				if (hitting != null && selection != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
-					BlockFace clicked = hit.getTargetFace();
+					final BlockFace clicked = hit.getTargetFace();
 					System.out.println(clicked);
 					if (clicked == null) {
 						return;
 					}
 					Spout.log(clicked.name());
-					hitting.translate(clicked).setMaterial(selection);
+					Spout.getScheduler().safeRun(VanillaPlugin.getInstance(), new Runnable() {
+
+						@Override
+						public void run() {
+							hitting.translate(clicked).setMaterial(selection);
+						}
+					});
 				}
 			}
 		} else if (name.startsWith("+hotbar_")) {

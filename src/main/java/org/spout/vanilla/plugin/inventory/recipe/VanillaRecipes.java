@@ -32,6 +32,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.spout.api.Spout;
 import org.spout.api.inventory.recipe.Recipe;
 
+import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.resources.RecipeYaml;
 
 public class VanillaRecipes {
@@ -41,7 +42,7 @@ public class VanillaRecipes {
 		yamlRecipes.clear();
 		for (String key : RecipeYaml.DEFAULT.getRecipes().keySet()) {
 			Recipe recipe = RecipeYaml.DEFAULT.getRecipes().get(key);
-			Spout.getEngine().getRecipeManager().register(recipe);
+			Spout.getEngine().getRecipeManager().register(recipe, VanillaPlugin.getInstance());
 			yamlRecipes.put(key, recipe);
 		}
 	}

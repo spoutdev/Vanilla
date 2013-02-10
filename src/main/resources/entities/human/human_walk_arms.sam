@@ -1,4 +1,4 @@
-Skeleton: skeleton://Spout/entities/Spouty/spouty.ske
+Skeleton: skeleton://Vanilla/entities/human/human.ske
 frames: 24
 delay: 0.041667
 bones_data:

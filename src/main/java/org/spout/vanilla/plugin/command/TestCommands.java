@@ -589,6 +589,8 @@ public class TestCommands {
 			entity.add(TransformDebugComponent.class);
 		}
 		pos.getWorld().spawnEntity(entity);
+		
+		System.out.println("Spawn a entity : " + entity.getId());
 	}
 
 	@Command(aliases = "fire", usage = "<time> <hurt>", desc = "Set you on fire", min = 2, max = 2)

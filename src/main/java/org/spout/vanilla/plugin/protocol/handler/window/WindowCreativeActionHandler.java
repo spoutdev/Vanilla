@@ -41,11 +41,14 @@ import org.spout.vanilla.plugin.protocol.msg.window.WindowCreativeActionMessage;
 public class WindowCreativeActionHandler extends MessageHandler<WindowCreativeActionMessage> {
 	@Override
 	public void handleServer(Session session, WindowCreativeActionMessage message) {
-		if (!session.hasPlayer() || !session.getPlayer().has(Human.class)) {
+		if (!session.hasPlayer()) {
 			return;
 		}
 		Player holder = session.getPlayer();
 		Human human = holder.get(Human.class);
+		if (human == null) {
+			return;
+		}
 		if (human.isSurvival()) {
 			holder.kick("Attempted to use the creative inventory while on survival.");
 			return;

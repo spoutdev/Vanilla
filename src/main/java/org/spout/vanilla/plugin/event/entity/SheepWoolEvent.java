@@ -43,7 +43,7 @@ public class SheepWoolEvent extends EntityEvent {
 
 	public SheepWoolEvent(Entity e, SheepWoolEventType type) {
 		super(e);
-		if (!e.has(Sheep.class)) {
+		if (e.get(Sheep.class) == null) {
 			throw new InvalidControllerException();
 		}
 		this.type = type;

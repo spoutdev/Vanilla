@@ -123,13 +123,13 @@ public abstract class Tool extends VanillaItemMaterial {
 		// These enchantments conflict with each other, so only one is possible per item
 		int damage = 0;
 		if (Enchantment.hasEnchantment(heldItem, VanillaEnchantments.BANE_OF_ARTHROPODS)) {
-			if (damaged.has(Spider.class) || damaged.has(Silverfish.class)) {
+			if (damaged.get(Spider.class) != null || damaged.get(Silverfish.class) != null) {
 				damage = rand.nextInt(Enchantment.getEnchantmentLevel(heldItem, VanillaEnchantments.BANE_OF_ARTHROPODS) * 4);
 			}
 		} else if (Enchantment.hasEnchantment(heldItem, VanillaEnchantments.SHARPNESS)) {
 			damage = rand.nextInt(Enchantment.getEnchantmentLevel(heldItem, VanillaEnchantments.SHARPNESS) * 3);
 		} else if (Enchantment.hasEnchantment(heldItem, VanillaEnchantments.SMITE)) {
-			if (damaged.has(Skeleton.class) || damaged.has(Zombie.class)) {
+			if (damaged.get(Skeleton.class) != null || damaged.get(Zombie.class) != null) {
 				damage = rand.nextInt(Enchantment.getEnchantmentLevel(heldItem, VanillaEnchantments.SMITE) * 4);
 			}
 		}

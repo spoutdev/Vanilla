@@ -88,9 +88,10 @@ public class Human extends Living {
 		if (getAttachedCount() == 1) {
 			holder.add(Health.class).setSpawnHealth(SPAWN_HEALTH);
 		}
-		if (getOwner().has(TextModelComponent.class)) {
-			getOwner().get(TextModelComponent.class).setSize(0.5f);
-			getOwner().get(TextModelComponent.class).setTranslation(new Vector3(0, 3f, 0));
+		TextModelComponent textModel = getOwner().get(TextModelComponent.class);
+		if (textModel != null) {
+			textModel.setSize(0.5f);
+			textModel.setTranslation(new Vector3(0, 3f, 0));
 		}
 	}
 
@@ -173,8 +174,9 @@ public class Human extends Living {
 
 	public void setName(String name) {
 		getData().put(Data.NAME, name);
-		if (getOwner().has(TextModelComponent.class)) {
-			getOwner().get(TextModelComponent.class).setText(new ChatArguments(name));
+		TextModelComponent textModel = getOwner().get(TextModelComponent.class);
+		if (textModel != null) {
+			textModel.setText(new ChatArguments(name));
 		}
 	}
 
@@ -188,8 +190,9 @@ public class Human extends Living {
 	 */
 	public void dropItem(ItemStack item) {
 		final Transform dropFrom;
-		if (getOwner().has(HeadComponent.class)) {
-			dropFrom = getOwner().get(HeadComponent.class).getHeadTransform();
+		HeadComponent head = getHead();
+		if (head != null) {
+			dropFrom = head.getHeadTransform();
 		} else {
 			dropFrom = getOwner().getScene().getTransform();
 		}
@@ -223,20 +226,18 @@ public class Human extends Living {
 	 * Drops the player's current item.
 	 */
 	public void dropItem() {
-		if (!getOwner().has(PlayerInventory.class)) {
-			return;
+		PlayerInventory inventory = getOwner().get(PlayerInventory.class);
+		if (inventory != null) {
+			Slot selected = inventory.getQuickbar().getSelectedSlot();
+			ItemStack drop = selected.get();
+			if (drop == null) {
+				return;
+			} else {
+				drop = drop.clone().setAmount(1);
+			}
+			selected.addAmount(-1);
+			dropItem(drop);
 		}
-
-		QuickbarInventory quickbar = getOwner().get(PlayerInventory.class).getQuickbar();
-		Slot selected = quickbar.getSelectedSlot();
-		ItemStack drop = selected.get();
-		if (drop == null) {
-			return;
-		} else {
-			drop = drop.clone().setAmount(1);
-		}
-		selected.addAmount(-1);
-		dropItem(drop);
 	}
 
 	// Abilities

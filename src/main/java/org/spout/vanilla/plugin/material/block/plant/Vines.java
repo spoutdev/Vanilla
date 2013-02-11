@@ -163,8 +163,9 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 		if (block.getMaterial().equals(VanillaMaterials.VINES) && cause instanceof EntityCause) {
 			//get block by block tracing from the player view
 			Entity entity = ((EntityCause) cause).getSource();
-			if (entity.has(HeadComponent.class)) {
-				BlockIterator iter = entity.get(HeadComponent.class).getBlockView();
+			HeadComponent head = entity.get(HeadComponent.class);
+			if (head != null) {
+				BlockIterator iter = head.getBlockView();
 				Block next;
 				while (iter.hasNext()) {
 					next = iter.next();

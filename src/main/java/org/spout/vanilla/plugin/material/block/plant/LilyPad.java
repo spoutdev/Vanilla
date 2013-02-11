@@ -65,8 +65,9 @@ public class LilyPad extends GroundAttachable {
 	@Override
 	public void onInteract(Entity entity, Action type) {
 		super.onInteract(entity, type);
-		if (type == Action.RIGHT_CLICK && entity.has(HeadComponent.class)) {
-			BlockIterator iterator = entity.get(HeadComponent.class).getBlockView();
+		HeadComponent head = entity.get(HeadComponent.class);
+		if (type == Action.RIGHT_CLICK && head != null) {
+			BlockIterator iterator = head.getBlockView();
 			if (iterator == null || !iterator.hasNext()) {
 				return;
 			}

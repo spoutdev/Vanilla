@@ -33,23 +33,24 @@ import org.spout.api.protocol.Session;
 import org.spout.api.inventory.Slot;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
-import org.spout.vanilla.plugin.inventory.window.Window;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowSlotMessage;
 
 public class WindowSlotHandler extends MessageHandler<WindowSlotMessage> {
 	@Override
 	public void handleClient(Session session, WindowSlotMessage msg) {
-		if (!session.hasPlayer() || !session.getPlayer().has(WindowHolder.class)) {
+		if (!session.hasPlayer()) {
 			return;
 		}
 
 		Player player = session.getPlayer();
-		Window window = player.get(WindowHolder.class).getActiveWindow();
-		Slot entry = window.getSlot(msg.getSlot());
-		if (entry == null) {
-			return;
-		}
+		WindowHolder holder = player.get(WindowHolder.class);
+		if (holder != null) {
+			Slot entry = holder.getActiveWindow().getSlot(msg.getSlot());
+			if (entry == null) {
+				return;
+			}
 
-		entry.getInventory().set(entry.getIndex(), msg.get());
+			entry.getInventory().set(entry.getIndex(), msg.get());
+		}
 	}
 }

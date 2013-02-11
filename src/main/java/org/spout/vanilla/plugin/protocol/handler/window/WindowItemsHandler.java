@@ -39,12 +39,16 @@ import org.spout.vanilla.plugin.protocol.msg.window.WindowItemsMessage;
 
 public class WindowItemsHandler extends MessageHandler<WindowItemsMessage> {
 	public void handleClient(Session session, WindowItemsMessage msg) {
-		if (!session.hasPlayer() || !session.getPlayer().has(WindowHolder.class)) {
+		if (!session.hasPlayer()) {
 			return;
 		}
 
 		Player player = session.getPlayer();
-		Window window = player.get(WindowHolder.class).getActiveWindow();
+		WindowHolder holder = player.get(WindowHolder.class);
+		if (holder == null) {
+			return;
+		}
+		Window window = holder.getActiveWindow();
 		ItemStack[] slots = msg.getItems();
 		for (int i = 0; i < slots.length; i++) {
 			Slot entry = window.getSlot(i);

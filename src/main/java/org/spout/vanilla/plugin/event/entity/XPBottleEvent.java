@@ -46,7 +46,7 @@ public class XPBottleEvent extends ProjectileHitEvent {
 
 	public XPBottleEvent(Entity e, Cause<?> cause, int experience, boolean showEffect) throws InvalidControllerException {
 		super(e, cause);
-		if (!e.has(XPBottle.class)) {
+		if (e.get(XPBottle.class) == null) {
 			throw new InvalidControllerException();
 		}
 		this.experience = experience;

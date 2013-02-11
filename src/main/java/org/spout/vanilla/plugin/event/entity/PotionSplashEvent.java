@@ -49,7 +49,7 @@ public class PotionSplashEvent extends ProjectileHitEvent {
 
 	public PotionSplashEvent(Entity e, Cause<?> cause, Map<Entity, Double> entitiesAffected) throws InvalidControllerException {
 		super(e, cause);
-		if (!e.has(Potion.class)) {
+		if (e.get(Potion.class) == null) {
 			throw new InvalidControllerException();
 		}
 		this.entitiesAffected = entitiesAffected;

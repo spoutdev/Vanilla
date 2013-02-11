@@ -43,7 +43,7 @@ public class SlimeSplitEvent extends EntityEvent implements Cancellable {
 
 	public SlimeSplitEvent(Entity e) throws InvalidControllerException {
 		super(e);
-		if (!e.has(Slime.class)) {
+		if (e.get(Slime.class) == null) {
 			throw new InvalidControllerException();
 		}
 		amount = 0;

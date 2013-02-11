@@ -75,7 +75,7 @@ public class EntityInteractHandler extends MessageHandler<EntityInteractMessage>
 			holdingMat.onInteract(playerEnt, clickedEntity, Action.LEFT_CLICK);
 			clickedEntity.interact(Action.LEFT_CLICK, playerEnt);
 
-			if (clickedEntity.has(Human.class) && !VanillaConfiguration.PLAYER_PVP_ENABLED.getBoolean()) {
+			if (clickedEntity.get(Human.class) != null && !VanillaConfiguration.PLAYER_PVP_ENABLED.getBoolean()) {
 				return;
 			}
 

@@ -319,8 +319,8 @@ public class Health extends HealthComponent {
 		lastDamageCause = cause;
 
 		// Add exhaustion to damaged
-		if (getOwner().has(HungerComponent.class)) {
-			HungerComponent hungerComponent = getOwner().get(HungerComponent.class);
+		HungerComponent hungerComponent = getOwner().get(HungerComponent.class);
+		if (hungerComponent != null) {
 			hungerComponent.setExhaustion(hungerComponent.getExhaustion() + 0.3f);
 		}
 

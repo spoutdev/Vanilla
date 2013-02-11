@@ -77,9 +77,10 @@ public class PlayerListComponent extends EntityComponent {
 		Player[] online = server.getOnlinePlayers();
 		temp.clear();
 		for (int i = 0; i < online.length; i++) {
-			if (online[i].has(PingComponent.class) && !player.isInvisible(online[i])) {
+			PingComponent pingComponent = online[i].get(PingComponent.class);
+			if (pingComponent != null && !player.isInvisible(online[i])) {
 				String name = online[i].getDisplayName();
-				long ping = (long) (1000.0F * online[i].get(PingComponent.class).getPing());
+				long ping = (long) (1000.0F * pingComponent.getPing());
 				temp.add(name);
 				Long oldPing = players.put(name, ping);
 				if (oldPing == null || !oldPing.equals(ping)) {

@@ -46,10 +46,11 @@ public class PlayerAbilityUpdateEvent extends PlayerEvent implements ProtocolEve
 
 	public PlayerAbilityUpdateEvent(Player player) {
 		super(player);
-		if (!player.has(Human.class)) {
+		Human human = player.get(Human.class);
+		if (human == null) {
 			throw new IllegalStateException("Cannot call PlayerAbilityChangeEvent for players which don't have the Human component");
 		}
-		Human human = player.get(Human.class);
+
 		flyingSpeed = human.getFlyingSpeed();
 		walkingSpeed = human.getWalkingSpeed();
 		godMode = human.getGodMode();

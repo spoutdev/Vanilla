@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.plugin.protocol.handler.player.conn;
 
-import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
@@ -40,9 +39,9 @@ public class PlayerPingHandler extends MessageHandler<PlayerPingMessage> {
 			session.disconnect("Illegal packet!");
 			return;
 		}
-		Player player = session.getPlayer();
-		if (player.has(PingComponent.class)) {
-			player.get(PingComponent.class).response(message.getPingId());
+		PingComponent ping = session.getPlayer().get(PingComponent.class);
+		if (ping != null) {
+			ping.response(message.getPingId());
 		}
 	}
 }

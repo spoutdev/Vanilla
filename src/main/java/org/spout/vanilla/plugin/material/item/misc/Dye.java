@@ -116,14 +116,15 @@ public class Dye extends VanillaItemMaterial implements Placeable {
 	@Override
 	public void onInteract(Entity entity, Entity other, Action action) {
 		if (action == Action.RIGHT_CLICK) {
-			if (!other.has(Sheep.class)) {
+			Sheep sheep = other.get(Sheep.class);
+			if (sheep == null) {
 				return;
 			}
 
 			Slot inv = PlayerUtil.getHeldSlot(entity);
 			if (inv != null && inv.get() != null) {
 				// get color from holding item
-				other.get(Sheep.class).setColor(WoolColor.getById((short) (0xF - inv.get().getData())));
+				sheep.setColor(WoolColor.getById((short) (0xF - inv.get().getData())));
 				if (!PlayerUtil.isCostSuppressed(entity)) {
 					inv.addAmount(-1);
 				}

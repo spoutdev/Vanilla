@@ -41,6 +41,6 @@ public class StonePressurePlate extends PressurePlate {
 
 	@Override
 	public boolean canTrigger(Entity entity) {
-		return !entity.has(Item.class);
+		return entity.get(Item.class) == null;
 	}
 }

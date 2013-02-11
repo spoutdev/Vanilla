@@ -69,8 +69,9 @@ public class PlayerUtil {
 	 * @return The quickbar, or null
 	 */
 	public static QuickbarInventory getQuickbar(Entity entity) {
-		if (entity instanceof Player && entity.has(PlayerInventory.class)) {
-			return entity.get(PlayerInventory.class).getQuickbar();
+		PlayerInventory inventory = entity.get(PlayerInventory.class);
+		if (entity instanceof Player && inventory != null) {
+			return inventory.getQuickbar();
 		} else {
 			return null;
 		}
@@ -108,11 +109,9 @@ public class PlayerUtil {
 	 */
 	public static BlockFace getBlockFacing(Block block, Entity entity) {
 		Point position;
-		if (entity.has(HeadComponent.class)) {
-			position = entity.get(HeadComponent.class).getPosition();
-		} else {
-			position = entity.getScene().getPosition();
-		}
+		HeadComponent head = entity.get(HeadComponent.class);
+		position = head != null ? head.getPosition() : entity.getScene().getPosition();
+
 		Vector3 diff = position.subtract(block.getX(), block.getY(), block.getZ());
 		if (Math.abs(diff.getX()) < 2.0f && Math.abs(diff.getZ()) < 2.0f) {
 			if (diff.getY() > 1.8f) {
@@ -144,11 +143,8 @@ public class PlayerUtil {
 	 * @return yaw
 	 */
 	public static float getYaw(Entity entity) {
-		if (entity.has(HeadComponent.class)) {
-			return entity.get(HeadComponent.class).getRotation().getYaw();
-		} else {
-			return entity.getScene().getRotation().getYaw();
-		}
+		HeadComponent head = entity.get(HeadComponent.class);
+		return head != null ? head.getRotation().getYaw() : entity.getScene().getRotation().getYaw();
 	}
 
 	/**

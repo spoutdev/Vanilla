@@ -43,7 +43,7 @@ public class SkeletonEntityProtocol extends CreatureProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		int data = entity.has(WitherSkeleton.class) ? 1 : 0;
+		int data = entity.get(WitherSkeleton.class) != null ? 1 : 0;
 		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, TYPE_INDEX, data));
 		return parameters;
 	}

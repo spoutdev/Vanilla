@@ -44,7 +44,7 @@ public class PlayerRespawnEvent extends EntitySpawnEvent {
 
 	public PlayerRespawnEvent(Entity e, Point point) {
 		super(e, point);
-		if (!e.has(Human.class)) {
+		if (e.get(Human.class) == null) {
 			throw new InvalidControllerException();
 		}
 		this.point = point;

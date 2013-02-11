@@ -31,17 +31,18 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
-import org.spout.vanilla.plugin.inventory.window.Window;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowPropertyMessage;
 
 public class WindowPropertyHandler extends MessageHandler<WindowPropertyMessage> {
 	@Override
 	public void handleClient(Session session, WindowPropertyMessage msg) {
-		if (!session.hasPlayer() || !session.getPlayer().has(WindowHolder.class)) {
+		if (!session.hasPlayer()) {
 			return;
 		}
 		Player player = session.getPlayer();
-		Window window = player.get(WindowHolder.class).getActiveWindow();
-		window.setProperty(msg.getProgressBar(), msg.getValue());
+		WindowHolder holder = player.get(WindowHolder.class);
+		if (holder != null) {
+			holder.getActiveWindow().setProperty(msg.getProgressBar(), msg.getValue());
+		}
 	}
 }

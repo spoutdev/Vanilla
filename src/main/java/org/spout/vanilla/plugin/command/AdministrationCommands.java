@@ -267,7 +267,7 @@ public class AdministrationCommands {
 			player = (Player) source;
 		}
 
-		if (!player.has(Human.class)) {
+		if (player.get(Human.class) == null) {
 			throw new CommandException("Invalid player!");
 		}
 

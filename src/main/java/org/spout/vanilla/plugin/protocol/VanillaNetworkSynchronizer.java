@@ -582,7 +582,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		int hash = HASH_SEED;
 		hash += (hash << 5) + entityId;
 		hash += (hash << 5) + tickCounter;
-		return (hash & FORCE_MASK) == 0 || (Spout.debugMode() && getPlayer().has(ForceMessagesComponent.class));
+		return (hash & FORCE_MASK) == 0 || (Spout.debugMode() && getPlayer().get(ForceMessagesComponent.class) != null);
 	}
 
 	@Override

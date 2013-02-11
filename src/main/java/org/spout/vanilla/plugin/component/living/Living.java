@@ -92,21 +92,24 @@ public abstract class Living extends LivingComponent {
 	@Override
 	protected byte getCommonMetadata() {
 		byte value = 0;
-		if (getOwner().has(Burn.class)) {
-			value = (byte) (value | ((getOwner().get(Burn.class).isOnFire() ? 1 : 0) << 0));
+		Burn burn = getOwner().get(Burn.class);
+		if (burn != null) {
+			value = (byte) (value | (burn.isOnFire() ? 1 : 0));
 		}
 
 		value = (byte) (value | ((isSneaking() ? 1 : 0) << 1));
 		value = (byte) (value | ((isRiding() ? 1 : 0) << 2));
 
-		if (getOwner().has(Human.class)) {
-			value = (byte) (value | ((getOwner().get(Human.class).isSprinting() ? 1 : 0) << 3));
+		Human human = getOwner().get(Human.class);
+		if (human != null) {
+			value = (byte) (value | ((human.isSprinting() ? 1 : 0) << 3));
 		}
 
 		value = (byte) (value | ((isEatingBlocking() ? 1 : 0) << 4));
 
-		if (getOwner().has(EffectsComponent.class)) {
-			value = (byte) (value | ((getOwner().get(EffectsComponent.class).containsEffect(StatusEffect.INVISIBILITY) ? 1 : 0) << 5));
+		EffectsComponent effects = getOwner().get(EffectsComponent.class);
+		if (effects != null) {
+			value = (byte) (value | ((effects.containsEffect(StatusEffect.INVISIBILITY) ? 1 : 0) << 5));
 		}
 
 		return value;

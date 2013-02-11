@@ -84,6 +84,9 @@ public class Anvil extends Solid implements Directional {
 		if (!(entity instanceof Player)) {
 			return;
 		}
+		if (!Action.RIGHT_CLICK.equals(type)) {
+			return;
+		}
 
 		Player player = (Player) entity;
 		AnvilInventory inventory = new AnvilInventory();

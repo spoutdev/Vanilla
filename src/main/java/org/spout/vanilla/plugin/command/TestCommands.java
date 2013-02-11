@@ -114,12 +114,10 @@ public class TestCommands {
 	// TODO - There needs to be a method that guarantees unique data values on a per-server basis
 	private int mapId = 1;
 
-	@Command(aliases = "map", usage = "", desc = "Creates a map")
+	@Command(aliases = "map", usage = "", desc = "Creates a map", max = 0)
 	@CommandPermissions("vanilla.command.debug")
 	public void map(CommandContext args, CommandSource source) throws CommandException {
-		if (args.length() != 0) {
-			throw new CommandException("This command does not require arguments");
-		} else if (!(source instanceof Player)) {
+		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to get a map.");
 		}
 		Player p = (Player) source;
@@ -127,12 +125,11 @@ public class TestCommands {
 		p.get(PlayerInventory.class).add(i);
 	}
 
-	@Command(aliases = "mapdraw", usage = "<bx> <by> <tx> <ty> <col>", desc = "Draws a rectangle on the current map.  The top nibble for col is the colour and the bottom nibble is the brightness")
+	@Command(aliases = "mapdraw", usage = "<bx> <by> <tx> <ty> <col>", desc = "Draws a rectangle on the current map.  The top nibble for col is the colour and the bottom nibble is the brightness",
+				min = 5, max = 5)
 	@CommandPermissions("vanilla.command.debug")
 	public void mapDraw(CommandContext args, CommandSource source) throws CommandException {
-		if (args.length() != 5) {
-			throw new CommandException("This command requires 5 arguments");
-		} else if (!(source instanceof Player)) {
+		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to hold a map.");
 		}
 		Player p = (Player) source;
@@ -169,12 +166,10 @@ public class TestCommands {
 		}
 	}
 
-	@Command(aliases = "mapflood", usage = "<bx> <by> <tx> <ty> <col>", desc = "Floods the current map with the given color")
+	@Command(aliases = "mapflood", usage = "<bx> <by> <tx> <ty> <col>", desc = "Floods the current map with the given color", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.debug")
 	public void mapFlood(CommandContext args, CommandSource source) throws CommandException {
-		if (args.length() != 1) {
-			throw new CommandException("This command requires 5 arguments");
-		} else if (!(source instanceof Player)) {
+		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to hold a map.");
 		}
 		Player p = (Player) source;
@@ -189,18 +184,16 @@ public class TestCommands {
 		}
 	}
 
-	@Command(aliases = "respawn", usage = "", desc = "Forces the client to respawn")
+	@Command(aliases = "respawn", usage = "", desc = "Forces the client to respawn", max = 0)
 	@CommandPermissions("vanilla.command.debug")
 	public void respawn(CommandContext args, CommandSource source) throws CommandException {
-		if (args.length() != 0) {
-			throw new CommandException("This command does not require arguments");
-		} else if (!(source instanceof Player)) {
+		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player to respawn.");
 		}
 		((Player) source).getNetworkSynchronizer().setRespawned();
 	}
 
-	@Command(aliases = "sun", usage = "<x> <y> <z>", desc = "Sets the sun direction.")
+	@Command(aliases = "sun", usage = "<x> <y> <z>", desc = "Sets the sun direction.", max = 3)
 	@CommandPermissions("vanilla.command.debug")
 	public void setSunDirection(CommandContext args, CommandSource source) throws CommandException {
 		if (args.length() == 0) {
@@ -230,7 +223,7 @@ public class TestCommands {
 		}
 	}
 
-	@Command(aliases = "traceray", desc = "Set all blocks that cross your view to stone.")
+	@Command(aliases = "traceray", desc = "Set all blocks that cross your view to stone.", max = 0)
 	@CommandPermissions("vanilla.command.debug")
 	public void traceray(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
@@ -261,7 +254,7 @@ public class TestCommands {
 	}
 
 	@CommandPermissions("vanilla.command.debug")
-	@Command(aliases = "resetpos", desc = "Resets players position")
+	@Command(aliases = "resetpos", desc = "Resets players position", max = 0)
 	public void resetPosition(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player) && Spout.getPlatform() != Platform.SERVER) {
 			throw new CommandException("You must be a player reset position!");
@@ -270,7 +263,7 @@ public class TestCommands {
 		((VanillaNetworkSynchronizer) player.getNetworkSynchronizer()).sendPosition();
 	}
 
-	@Command(aliases = "torch", desc = "Place a torch.")
+	@Command(aliases = "torch", desc = "Place a torch.", max = 0)
 	@CommandPermissions("vanilla.command.debug")
 	public void torch(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player) && Spout.getPlatform() != Platform.CLIENT) {
@@ -337,7 +330,7 @@ public class TestCommands {
 		}
 	}
 
-	@Command(aliases = "damage", usage = "<amount>", desc = "Damage yourself")
+	@Command(aliases = "damage", usage = "<amount>", desc = "Damage yourself", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.debug")
 	public void damage(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player) && Spout.getPlatform() != Platform.CLIENT) {

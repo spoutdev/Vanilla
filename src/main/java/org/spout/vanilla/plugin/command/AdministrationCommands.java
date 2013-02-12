@@ -392,20 +392,26 @@ public class AdministrationCommands {
 	@Command(aliases = {"kill"}, usage = "[player]", desc = "Kill yourself or another player", min = 0, max = 1)
 	@CommandPermissions("vanilla.command.kill")
 	public void kill(CommandContext args, CommandSource source) throws CommandException {
+		Player player;
 		if (args.length() == 0) {
 			if (!(source instanceof Player)) {
 				throw new CommandException("Don't be silly...you cannot kill yourself as the console.");
 			}
-			((Player) source).get(Health.class).kill(HealthChangeCause.COMMAND);
+			player = (Player) source;
 		} else {
 			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			Player victim = ((Server) Spout.getEngine()).getPlayer(args.getString(0), true);
-			if (victim != null) {
-				victim.get(Health.class).kill(HealthChangeCause.COMMAND);
-			}
+			player = Spout.getEngine().getPlayer(args.getString(0), true);
 		}
+		if (player == null) {
+			throw new CommandException(args.getString(0) + " is not online.");
+		}
+		Health health = player.get(Health.class);
+		if (health == null) {
+			throw new CommandException(player.getDisplayName() + " can not be killed.");
+		}
+		health.kill(HealthChangeCause.COMMAND);
 	}
 
 	@Command(aliases = {"version", "vr"}, usage = "", desc = "Print out the version information for Vanilla", min = 0, max = 0)

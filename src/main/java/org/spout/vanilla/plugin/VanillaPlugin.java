@@ -104,6 +104,10 @@ public class VanillaPlugin extends CommonPlugin {
 	private Engine engine;
 	private VanillaConfiguration config;
 	private RemoteConnectionCore rcon;
+	
+	// Client authentification informations
+	private String username = "";
+	private String sessionId = "";
 
 	@Override
 	public void onDisable() {
@@ -305,6 +309,19 @@ public class VanillaPlugin extends CommonPlugin {
 		}
 	}
 
+	public void setClientAuthInfos(String username, String sessionId) {
+		this.username = username;
+		this.sessionId = sessionId;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+	
+	public String getSessionId() {
+		return sessionId;
+	}
+	
 	/**
 	 * Gets the running instance of VanillaPlugin
 	 * @return the running instance of VanillaPlugin

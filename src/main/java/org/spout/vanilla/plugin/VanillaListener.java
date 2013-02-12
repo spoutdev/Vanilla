@@ -67,6 +67,7 @@ import org.spout.vanilla.plugin.component.player.hud.VanillaHunger;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.input.VanillaInputExecutor;
+import org.spout.vanilla.plugin.protocol.ClientAuthentification;
 import org.spout.vanilla.plugin.protocol.PasteExceptionHandler;
 
 public class VanillaListener implements Listener {
@@ -127,6 +128,12 @@ public class VanillaListener implements Listener {
 		player.add(InteractComponent.class).setRange(5f);
 
 		((Client) Spout.getEngine()).getInputManager().addInputExecutors(new VanillaInputExecutor(player));
+		
+		String username = VanillaConfiguration.USERNAME.getString();
+		String password = VanillaConfiguration.PASSWORD.getString();
+		
+		Thread loginAuth = new Thread(new ClientAuthentification(username, password));
+		loginAuth.start();
 	}
 
 	@EventHandler

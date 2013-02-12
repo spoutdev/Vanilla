@@ -89,6 +89,9 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 	public static final WorldConfiguration WORLDS = new WorldConfiguration(VanillaPlugin.getInstance().getDataFolder());
 	public static final YamlConfiguration BIOMES = new YamlConfiguration(new File(VanillaPlugin.getInstance().getDataFolder(), "biomes.yml"));
 	public static final InputConfiguration INPUT = new InputConfiguration();
+	// Client
+	public static final ConfigurationHolder USERNAME = new ConfigurationHolder("Spouty", "client", "username");
+	public static final ConfigurationHolder PASSWORD = new ConfigurationHolder("supersecretpassword", "client", "password");
 
 	public VanillaConfiguration(File dataFolder) {
 		super(new YamlConfiguration(new File(dataFolder, "config.yml")));

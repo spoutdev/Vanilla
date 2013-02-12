@@ -170,6 +170,11 @@ public class AdministrationCommands {
 
 		String playerName = args.getString(0);
 		OpConfiguration ops = VanillaConfiguration.OPS;
+		if (!ops.isOp(playerName)) {
+			source.sendMessage(plugin.getPrefix(), playerName, ChatStyle.RED, " is not an operaor!");
+			return;
+		}
+
 		ops.setOp(playerName, false);
 		source.sendMessage(plugin.getPrefix(), playerName, ChatStyle.RED, " had their operator status revoked!");
 		Player player = Spout.getEngine().getPlayer(playerName, true);
@@ -187,6 +192,11 @@ public class AdministrationCommands {
 
 		String playerName = args.getString(0);
 		OpConfiguration ops = VanillaConfiguration.OPS;
+		if (ops.isOp(playerName)) {
+			source.sendMessage(plugin.getPrefix(), ChatStyle.RED, playerName, " is already an operator!");
+			return;
+		}
+
 		ops.setOp(playerName, true);
 		source.sendMessage(plugin.getPrefix(), ChatStyle.RED, playerName, " is now an operator!");
 		Player player = Spout.getEngine().getPlayer(playerName, true);
@@ -198,24 +208,19 @@ public class AdministrationCommands {
 	@Command(aliases = {"time"}, usage = "<add|set> <0-24000|day|night|dawn|dusk> [world]", desc = "Set the time of the server", min = 2, max = 3)
 	@CommandPermissions("vanilla.command.time")
 	public void time(CommandContext args, CommandSource source) throws CommandException {
-		long time = 0;
-		boolean relative = false;
-		if (args.getString(0).equalsIgnoreCase("set")) {
-			if (args.isInteger(1)) {
-				time = args.getInteger(1);
-			} else {
-				try {
-					time = Time.get(args.getString(1)).getTime();
-				} catch (Exception e) {
-					throw new CommandException("'" + args.getString(1) + "' is not a valid time.");
-				}
-			}
-		} else if (args.getString(0).equalsIgnoreCase("add")) {
-			relative = true;
-			if (args.isInteger(1)) {
-				time = args.getInteger(1);
-			} else {
+		long time;
+		boolean relative = args.getString(0).equalsIgnoreCase("add");
+
+		if (args.isInteger(1)) {
+			time = args.getInteger(1);
+		} else {
+			if (relative) {
 				throw new CommandException("Argument to 'add' must be an integer.");
+			}
+			try {
+				time = Time.get(args.getString(1)).getTime();
+			} catch (Exception e) {
+				throw new CommandException("'" + args.getString(1) + "' is not a valid time.");
 			}
 		}
 
@@ -267,7 +272,8 @@ public class AdministrationCommands {
 			player = (Player) source;
 		}
 
-		if (player.get(Human.class) == null) {
+		Human human = player.get(Human.class);
+		if (human == null) {
 			throw new CommandException("Invalid player!");
 		}
 
@@ -283,7 +289,7 @@ public class AdministrationCommands {
 			throw new CommandException("A game mode must be either a number between 0 and 2, 'CREATIVE', 'SURVIVAL' or 'ADVENTURE'");
 		}
 
-		player.get(Human.class).setGamemode(mode);
+		human.setGamemode(mode);
 
 		if (!player.equals(source)) {
 			source.sendMessage(plugin.getPrefix(), ChatStyle.WHITE, player.getName(), "'s ", ChatStyle.BRIGHT_GREEN, "gamemode has been changed to ", ChatStyle.WHITE, mode.name(), ChatStyle.BRIGHT_GREEN, ".");

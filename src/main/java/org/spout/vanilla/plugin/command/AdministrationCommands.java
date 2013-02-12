@@ -299,14 +299,11 @@ public class AdministrationCommands {
 	@Command(aliases = "xp", usage = "[player] <amount>", desc = "Give/take experience from a player", min = 1, max = 2)
 	@CommandPermissions("vanilla.command.xp")
 	public void xp(CommandContext args, CommandSource source) throws CommandException {
-		// If source is player
+		int index = 0;
+		Player player;
 		if (args.length() == 1) {
 			if (source instanceof Player) {
-				@SuppressWarnings("unused")
-				Player sender = (Player) source;
-				int amount = args.getInteger(0);
-				source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "You have been given ", ChatStyle.WHITE, amount, ChatStyle.BRIGHT_GREEN, " xp.");
-				// TODO: Give player 'amount' of xp.
+				player = (Player) source;
 			} else {
 				throw new CommandException("You must be a player to give yourself xp.");
 			}
@@ -314,25 +311,30 @@ public class AdministrationCommands {
 			if (Spout.getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			Player player = ((Server) Spout.getEngine()).getPlayer(args.getString(0), true);
-			if (player != null) {
-				short amount = (short) args.getInteger(1);
-				LevelComponent level = player.get(LevelComponent.class);
-
-				if (level == null) {
-					return;
-				}
-
-				if (amount > 0) {
-					level.addExperience(amount);
-				} else {
-					level.removeExperience(amount);
-				}
-				player.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Your experience has been set to ", ChatStyle.WHITE, amount, ChatStyle.BRIGHT_GREEN, ".");
-			} else {
-				throw new CommandException(args.getString(0) + " is not online.");
-			}
+			player = Spout.getEngine().getPlayer(args.getString(index++), true);
 		}
+		if (player == null) {
+			throw new CommandException("That player is not online.");
+		}
+		if (!args.isInteger(index)) {
+			throw new CommandException("Argument 'amount' must be an integer.");
+		}
+
+		short amount = (short) args.getInteger(index);
+		LevelComponent level = player.get(LevelComponent.class);
+		if (level == null) {
+			throw new CommandException(player.getDisplayName() + " does not have experience.");
+		}
+
+		if (amount > 0) {
+			level.addExperience(amount);
+		} else if (amount > 0) {
+			level.removeExperience(amount);
+		} else {
+			throw new CommandException("Argument 'amount' can not be 0.");
+		}
+		player.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Your experience has been set to ", ChatStyle.WHITE, amount, ChatStyle.BRIGHT_GREEN, ".");
+
 	}
 
 	@Command(aliases = "weather", usage = "<0|1|2> (0 = CLEAR, 1 = RAIN/SNOW, 2 = THUNDERSTORM) [world]", desc = "Changes the weather", min = 1, max = 2)

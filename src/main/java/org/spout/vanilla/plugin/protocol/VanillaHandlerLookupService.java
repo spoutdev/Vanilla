@@ -35,6 +35,8 @@ import org.spout.vanilla.plugin.protocol.handler.auth.EncryptionKeyResponseHandl
 import org.spout.vanilla.plugin.protocol.handler.entity.EntityActionHandler;
 import org.spout.vanilla.plugin.protocol.handler.entity.EntityAnimationHandler;
 import org.spout.vanilla.plugin.protocol.handler.entity.EntityEquipmentHandler;
+import org.spout.vanilla.plugin.protocol.handler.entity.EntityItemDataHandler;
+import org.spout.vanilla.plugin.protocol.handler.entity.EntityTileDataHandler;
 import org.spout.vanilla.plugin.protocol.handler.entity.pos.EntityHeadYawHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerAbilityHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerBedHandler;
@@ -49,6 +51,7 @@ import org.spout.vanilla.plugin.protocol.handler.player.PlayerLookHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerPositionHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerPositionLookHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerRespawnHandler;
+import org.spout.vanilla.plugin.protocol.handler.player.PlayerStatisticHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerStatusHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerTabCompleteHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerTimeHandler;
@@ -70,6 +73,8 @@ import org.spout.vanilla.plugin.protocol.msg.auth.EncryptionKeyResponseMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityActionMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityItemDataMessage;
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityTileDataMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityHeadYawMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerAbilityMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerBedMessage;
@@ -80,6 +85,7 @@ import org.spout.vanilla.plugin.protocol.msg.player.PlayerGroundMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerHealthMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerHeldItemChangeMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerLocaleViewDistanceMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.PlayerStatisticMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerStatusMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerTabCompleteMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerTimeMessage;
@@ -124,7 +130,13 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(PlayerBedMessage.class,PlayerBedHandler.class);
 			/* 0x12 */
 			bind(EntityAnimationMessage.class, EntityAnimationHandler.class);
-			
+
+			/* 0x83 */
+			bind(EntityItemDataMessage.class, EntityItemDataHandler.class);
+			/* 0x84 */
+			bind(EntityTileDataMessage.class, EntityTileDataHandler.class);
+			/* 0xC8 */
+			bind(PlayerStatisticMessage.class, PlayerStatisticHandler.class);
 			/* 0xCA */
 			bind(PlayerAbilityMessage.class, PlayerAbilityHandler.class);
 			/* 0xCB */

@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.protocol.msg.entity;
+package org.spout.vanilla.plugin.protocol.msg.player;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -32,13 +32,14 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.proxy.ConnectionInfo;
 import org.spout.api.util.SpoutToStringStyle;
 
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityMessage;
 import org.spout.vanilla.plugin.protocol.proxy.VanillaConnectionInfo;
 
-public final class EntityInteractMessage extends EntityMessage {
+public final class PlayerUseEntityMessage extends EntityMessage {
 	private int target;
 	private final boolean punching;
 
-	public EntityInteractMessage(int id, int target, boolean punching) {
+	public PlayerUseEntityMessage(int id, int target, boolean punching) {
 		super(id);
 		this.target = target;
 		this.punching = punching;
@@ -80,7 +81,7 @@ public final class EntityInteractMessage extends EntityMessage {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final EntityInteractMessage other = (EntityInteractMessage) obj;
+		final PlayerUseEntityMessage other = (PlayerUseEntityMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.getEntityId(), other.getEntityId())
 				.append(this.target, other.target)

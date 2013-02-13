@@ -29,6 +29,7 @@ package org.spout.vanilla.plugin.protocol;
 import org.spout.api.protocol.HandlerLookupService;
 
 import org.spout.vanilla.plugin.protocol.handler.ServerListPingHandler;
+import org.spout.vanilla.plugin.protocol.handler.ServerPluginHandler;
 import org.spout.vanilla.plugin.protocol.handler.auth.EncryptionKeyRequestHandler;
 import org.spout.vanilla.plugin.protocol.handler.auth.EncryptionKeyResponseHandler;
 import org.spout.vanilla.plugin.protocol.handler.entity.EntityActionHandler;
@@ -63,6 +64,7 @@ import org.spout.vanilla.plugin.protocol.handler.window.WindowCreativeActionHand
 import org.spout.vanilla.plugin.protocol.handler.window.WindowEnchantItemHandler;
 import org.spout.vanilla.plugin.protocol.handler.world.block.SignHandler;
 import org.spout.vanilla.plugin.protocol.msg.ServerListPingMessage;
+import org.spout.vanilla.plugin.protocol.msg.ServerPluginMessage;
 import org.spout.vanilla.plugin.protocol.msg.auth.EncryptionKeyRequestMessage;
 import org.spout.vanilla.plugin.protocol.msg.auth.EncryptionKeyResponseMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityActionMessage;
@@ -123,6 +125,14 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			/* 0x12 */
 			bind(EntityAnimationMessage.class, EntityAnimationHandler.class);
 			
+			/* 0xCA */
+			bind(PlayerAbilityMessage.class, PlayerAbilityHandler.class);
+			/* 0xCB */
+			bind(PlayerTabCompleteMessage.class, PlayerTabCompleteHandler.class);
+			/* 0xFA */
+			bind(ServerPluginMessage.class, ServerPluginHandler.class);
+			
+			
 			bind(PlayerHandshakeMessage.class, PlayerHandshakeHandler.class);
 			bind(PlayerLoginRequestMessage.class, PlayerLoginRequestHandler.class);
 			bind(PlayerChatMessage.class, PlayerChatHandler.class);
@@ -140,12 +150,10 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(SignMessage.class, SignHandler.class);
 			bind(PlayerUseEntityMessage.class, PlayerUseEntityHandler.class);
 			bind(EntityHeadYawMessage.class, EntityHeadYawHandler.class);
-			bind(PlayerAbilityMessage.class, PlayerAbilityHandler.class);
 			bind(ServerListPingMessage.class, ServerListPingHandler.class);
 			bind(PlayerStatusMessage.class, PlayerStatusHandler.class);
 			bind(EncryptionKeyResponseMessage.class, EncryptionKeyResponseHandler.class);
 			bind(EncryptionKeyRequestMessage.class, EncryptionKeyRequestHandler.class);
-			bind(PlayerTabCompleteMessage.class, PlayerTabCompleteHandler.class);
 			bind(PlayerLocaleViewDistanceMessage.class, PlayerLocaleViewDistanceHandler.class);
 			bind(WindowEnchantItemMessage.class, WindowEnchantItemHandler.class);
 		} catch (Exception ex) {

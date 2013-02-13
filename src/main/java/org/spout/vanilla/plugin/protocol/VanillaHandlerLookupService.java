@@ -46,6 +46,7 @@ import org.spout.vanilla.plugin.protocol.handler.player.PlayerLocaleViewDistance
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerLookHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerPositionHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerPositionLookHandler;
+import org.spout.vanilla.plugin.protocol.handler.player.PlayerRespawnHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerStatusHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerTabCompleteHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerTimeHandler;
@@ -86,6 +87,7 @@ import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerPingMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerLookMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerPositionLookMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerPositionMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerRespawnMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerSpawnPositionMessage;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowCloseMessage;
@@ -107,6 +109,8 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			
 			/* 0x08 */
 			bind(PlayerHealthMessage.class,PlayerHealthHandler.class);
+			/* 0x09*/
+			bind(PlayerRespawnMessage.class,PlayerRespawnHandler.class);
 			
 			bind(PlayerHandshakeMessage.class, PlayerHandshakeHandler.class);
 			bind(PlayerLoginRequestMessage.class, PlayerLoginRequestHandler.class);

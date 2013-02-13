@@ -34,6 +34,7 @@ import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerAbilityMessage;
 
 public final class PlayerAbilityHandler extends MessageHandler<PlayerAbilityMessage> {
+
 	@Override
 	public void handleServer(Session session, PlayerAbilityMessage message) {
 		if (!session.hasPlayer()) {
@@ -51,4 +52,23 @@ public final class PlayerAbilityHandler extends MessageHandler<PlayerAbilityMess
 			human.setCreativeMode(message.isCreativeMode(), false);
 		}
 	}
+
+	@Override
+	public void handleClient(Session session, PlayerAbilityMessage message) {
+		if (!session.hasPlayer()) {
+			return;
+		}
+		Player player = session.getPlayer();
+		Human human = player.get(Human.class);
+		if (human != null) {
+			// TODO - this should do a permission check and revert if required
+			human.setFlyingSpeed(message.getFlyingSpeed(), false);
+			human.setWalkingSpeed(message.getWalkingSpeed(), false);
+			human.setFlying(message.isFlying(), false);
+			human.setCanFly(message.canFly(), false);
+			human.setGodMode(message.isGodMode(), false);
+			human.setCreativeMode(message.isCreativeMode(), false);
+		}
+	}
+
 }

@@ -28,8 +28,10 @@ package org.spout.vanilla.plugin.protocol;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import org.spout.api.Spout;
 import org.spout.api.scheduler.TaskPriority;
@@ -43,7 +45,16 @@ public class ClientLoginAuth implements Runnable {
 	
 	public ClientLoginAuth(String hash, Runnable runnable) {
 		VanillaPlugin p = VanillaPlugin.getInstance();
-		this.params = "user="+p.getUsername()+"&sessionId="+p.getSessionId()+"&serverId="+hash;
+		String encodedUser = "";
+		String encodedId = "";
+		try {
+			encodedUser = URLEncoder.encode(p.getUsername(), "UTF-8");
+			encodedId = URLEncoder.encode(p.getSessionId(), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		this.params = "user="+encodedUser+"&sessionId="+encodedId+"&serverId="+hash;
+		System.out.println(params);
 		this.runnable = runnable;
 	}
 	

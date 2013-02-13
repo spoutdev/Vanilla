@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.protocol.handler;
+package org.spout.vanilla.plugin.protocol.handler.auth;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

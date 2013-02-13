@@ -28,8 +28,9 @@ package org.spout.vanilla.plugin.protocol;
 
 import org.spout.api.protocol.HandlerLookupService;
 
-import org.spout.vanilla.plugin.protocol.handler.EncryptionKeyResponseHandler;
 import org.spout.vanilla.plugin.protocol.handler.ServerListPingHandler;
+import org.spout.vanilla.plugin.protocol.handler.auth.EncryptionKeyRequestHandler;
+import org.spout.vanilla.plugin.protocol.handler.auth.EncryptionKeyResponseHandler;
 import org.spout.vanilla.plugin.protocol.handler.entity.EntityActionHandler;
 import org.spout.vanilla.plugin.protocol.handler.entity.EntityAnimationHandler;
 import org.spout.vanilla.plugin.protocol.handler.entity.EntityEquipmentHandler;
@@ -50,6 +51,7 @@ import org.spout.vanilla.plugin.protocol.handler.player.PlayerTimeHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerUseEntityHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.conn.PlayerHandshakeHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.conn.PlayerKickHandler;
+import org.spout.vanilla.plugin.protocol.handler.player.conn.PlayerLoginRequestHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.conn.PlayerPingHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.pos.PlayerSpawnPositionHandler;
 import org.spout.vanilla.plugin.protocol.handler.window.WindowClickHandler;
@@ -58,6 +60,7 @@ import org.spout.vanilla.plugin.protocol.handler.window.WindowCreativeActionHand
 import org.spout.vanilla.plugin.protocol.handler.window.WindowEnchantItemHandler;
 import org.spout.vanilla.plugin.protocol.handler.world.block.SignHandler;
 import org.spout.vanilla.plugin.protocol.msg.ServerListPingMessage;
+import org.spout.vanilla.plugin.protocol.msg.auth.EncryptionKeyRequestMessage;
 import org.spout.vanilla.plugin.protocol.msg.auth.EncryptionKeyResponseMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityActionMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityAnimationMessage;
@@ -76,6 +79,7 @@ import org.spout.vanilla.plugin.protocol.msg.player.PlayerTimeMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerUseEntityMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerHandshakeMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerKickMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerLoginRequestMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerPingMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerLookMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerPositionLookMessage;
@@ -100,6 +104,7 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(PlayerSpawnPositionMessage.class, PlayerSpawnPositionHandler.class);
 			
 			bind(PlayerHandshakeMessage.class, PlayerHandshakeHandler.class);
+			bind(PlayerLoginRequestMessage.class, PlayerLoginRequestHandler.class);
 			bind(PlayerChatMessage.class, PlayerChatHandler.class);
 			bind(PlayerGroundMessage.class, PlayerGroundHandler.class);
 			bind(PlayerPositionMessage.class, PlayerPositionHandler.class);
@@ -122,6 +127,7 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(ServerListPingMessage.class, ServerListPingHandler.class);
 			bind(PlayerStatusMessage.class, PlayerStatusHandler.class);
 			bind(EncryptionKeyResponseMessage.class, EncryptionKeyResponseHandler.class);
+			bind(EncryptionKeyRequestMessage.class, EncryptionKeyRequestHandler.class);
 			bind(PlayerTabCompleteMessage.class, PlayerTabCompleteHandler.class);
 			bind(PlayerLocaleViewDistanceMessage.class, PlayerLocaleViewDistanceHandler.class);
 			bind(WindowEnchantItemMessage.class, WindowEnchantItemHandler.class);

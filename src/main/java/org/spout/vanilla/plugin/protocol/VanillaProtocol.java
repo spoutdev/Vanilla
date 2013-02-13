@@ -135,7 +135,7 @@ public class VanillaProtocol extends Protocol {
 
 	@Override
 	public Message getIntroductionMessage(String playerName, InetSocketAddress addr) {
-		return new PlayerHandshakeMessage((byte) VanillaPlugin.MINECRAFT_PROTOCOL_ID, playerName, addr.getHostName(), addr.getPort());
+		return new PlayerHandshakeMessage((byte) VanillaPlugin.MINECRAFT_PROTOCOL_ID, VanillaPlugin.getInstance().getUsername(), addr.getHostName(), addr.getPort());
 	}
 
 	public static MessageCodec<?> getCodec(String name, Protocol activeProtocol) {

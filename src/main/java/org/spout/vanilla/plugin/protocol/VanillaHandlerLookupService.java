@@ -40,6 +40,7 @@ import org.spout.vanilla.plugin.protocol.handler.player.PlayerBlockPlacementHand
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerChatHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerDiggingHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerGroundHandler;
+import org.spout.vanilla.plugin.protocol.handler.player.PlayerHealthHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerHeldItemChangeHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerLocaleViewDistanceHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerLookHandler;
@@ -71,6 +72,7 @@ import org.spout.vanilla.plugin.protocol.msg.player.PlayerBlockPlacementMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerChatMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerDiggingMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerGroundMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.PlayerHealthMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerHeldItemChangeMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerLocaleViewDistanceMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerStatusMessage;
@@ -102,6 +104,9 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(EntityEquipmentMessage.class, EntityEquipmentHandler.class);
 			/* 0x06 */
 			bind(PlayerSpawnPositionMessage.class, PlayerSpawnPositionHandler.class);
+			
+			/* 0x08 */
+			bind(PlayerHealthMessage.class,PlayerHealthHandler.class);
 			
 			bind(PlayerHandshakeMessage.class, PlayerHandshakeHandler.class);
 			bind(PlayerLoginRequestMessage.class, PlayerLoginRequestHandler.class);

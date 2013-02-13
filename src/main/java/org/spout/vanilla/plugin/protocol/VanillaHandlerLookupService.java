@@ -36,6 +36,7 @@ import org.spout.vanilla.plugin.protocol.handler.entity.EntityAnimationHandler;
 import org.spout.vanilla.plugin.protocol.handler.entity.EntityEquipmentHandler;
 import org.spout.vanilla.plugin.protocol.handler.entity.pos.EntityHeadYawHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerAbilityHandler;
+import org.spout.vanilla.plugin.protocol.handler.player.PlayerBedHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerBlockPlacementHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerChatHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerDiggingHandler;
@@ -69,6 +70,7 @@ import org.spout.vanilla.plugin.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityHeadYawMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerAbilityMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.PlayerBedMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerBlockPlacementMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerChatMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerDiggingMessage;
@@ -109,8 +111,17 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			
 			/* 0x08 */
 			bind(PlayerHealthMessage.class,PlayerHealthHandler.class);
-			/* 0x09*/
+			/* 0x09 */
 			bind(PlayerRespawnMessage.class,PlayerRespawnHandler.class);
+			
+			/* 0x0D */
+			bind(PlayerPositionLookMessage.class,PlayerPositionLookHandler.class);
+			/* 0x10 */
+			bind(PlayerHeldItemChangeMessage.class, PlayerHeldItemChangeHandler.class);
+			/* 0x11 */
+			bind(PlayerBedMessage.class,PlayerBedHandler.class);
+			/* 0x12 */
+			bind(EntityAnimationMessage.class, EntityAnimationHandler.class);
 			
 			bind(PlayerHandshakeMessage.class, PlayerHandshakeHandler.class);
 			bind(PlayerLoginRequestMessage.class, PlayerLoginRequestHandler.class);
@@ -118,15 +129,12 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(PlayerGroundMessage.class, PlayerGroundHandler.class);
 			bind(PlayerPositionMessage.class, PlayerPositionHandler.class);
 			bind(PlayerLookMessage.class, PlayerLookHandler.class);
-			bind(PlayerPositionLookMessage.class, PlayerPositionLookHandler.class);
 			bind(PlayerKickMessage.class, PlayerKickHandler.class);
 			bind(PlayerDiggingMessage.class, PlayerDiggingHandler.class);
 			bind(PlayerBlockPlacementMessage.class, PlayerBlockPlacementHandler.class);
 			bind(WindowClickMessage.class, WindowClickHandler.class);
 			bind(WindowCloseMessage.class, WindowCloseHandler.class);
-			bind(PlayerHeldItemChangeMessage.class, PlayerHeldItemChangeHandler.class);
 			bind(EntityActionMessage.class, EntityActionHandler.class);
-			bind(EntityAnimationMessage.class, EntityAnimationHandler.class);
 			bind(PlayerPingMessage.class, PlayerPingHandler.class);
 			bind(WindowCreativeActionMessage.class, WindowCreativeActionHandler.class);
 			bind(SignMessage.class, SignHandler.class);

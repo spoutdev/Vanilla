@@ -36,7 +36,6 @@ import org.spout.vanilla.plugin.protocol.codec.entity.EntityAttachEntityCodec;
 import org.spout.vanilla.plugin.protocol.codec.entity.EntityDestroyCodec;
 import org.spout.vanilla.plugin.protocol.codec.entity.EntityEquipmentCodec;
 import org.spout.vanilla.plugin.protocol.codec.entity.EntityInitializeCodec;
-import org.spout.vanilla.plugin.protocol.codec.entity.EntityInteractCodec;
 import org.spout.vanilla.plugin.protocol.codec.entity.EntityItemDataCodec;
 import org.spout.vanilla.plugin.protocol.codec.entity.EntityMetadataCodec;
 import org.spout.vanilla.plugin.protocol.codec.entity.EntityRelativePositionCodec;
@@ -70,6 +69,7 @@ import org.spout.vanilla.plugin.protocol.codec.player.PlayerStatisticCodec;
 import org.spout.vanilla.plugin.protocol.codec.player.PlayerStatusCodec;
 import org.spout.vanilla.plugin.protocol.codec.player.PlayerTabCompleteCodec;
 import org.spout.vanilla.plugin.protocol.codec.player.PlayerTimeCodec;
+import org.spout.vanilla.plugin.protocol.codec.player.PlayerUseEntityCodec;
 import org.spout.vanilla.plugin.protocol.codec.player.conn.PlayerHandshakeCodec;
 import org.spout.vanilla.plugin.protocol.codec.player.conn.PlayerKickCodec;
 import org.spout.vanilla.plugin.protocol.codec.player.conn.PlayerListCodec;
@@ -122,7 +122,7 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			/* 0x06 */
 			bind(PlayerSpawnPositionCodec.class);
 			/* 0x07 */
-			bind(EntityInteractCodec.class); //TODO rename Use Entity on the minecraft protocol page
+			bind(PlayerUseEntityCodec.class);
 			/* 0x08 */
 			bind(PlayerHealthCodec.class);
 			/* 0x09 */

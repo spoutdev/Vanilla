@@ -24,36 +24,27 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.protocol.codec.entity;
+package org.spout.vanilla.plugin.protocol.handler.player;
 
-import java.io.IOException;
+import org.spout.api.entity.Player;
+import org.spout.api.geo.World;
+import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.Session;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import org.spout.vanilla.plugin.component.world.VanillaSky;
+import org.spout.vanilla.plugin.protocol.msg.player.PlayerTimeMessage;
 
-import org.spout.api.protocol.MessageCodec;
-
-import org.spout.vanilla.plugin.protocol.msg.entity.EntityInteractMessage;
-
-public final class EntityInteractCodec extends MessageCodec<EntityInteractMessage> {
-	public EntityInteractCodec() {
-		super(EntityInteractMessage.class, 0x07);
-	}
-
+public final class PlayerTimeHandler extends MessageHandler<PlayerTimeMessage> {
 	@Override
-	public EntityInteractMessage decode(ChannelBuffer buffer) throws IOException {
-		int id = buffer.readInt();
-		int target = buffer.readInt();
-		boolean punching = buffer.readByte() != 0;
-		return new EntityInteractMessage(id, target, punching);
-	}
+	public void handleClient(Session session, PlayerTimeMessage message) {
+		if (!session.hasPlayer()) {
+			return;
+		}
 
-	@Override
-	public ChannelBuffer encode(EntityInteractMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(9);
-		buffer.writeInt(message.getEntityId());
-		buffer.writeInt(message.getTarget());
-		buffer.writeByte(message.isPunching() ? 1 : 0);
-		return buffer;
+		Player player = session.getPlayer();
+		World world = player.getWorld();
+	
+		VanillaSky sky = world.getComponentHolder().get(VanillaSky.class);
+		sky.setTime(message.getTime());
 	}
 }

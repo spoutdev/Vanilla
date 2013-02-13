@@ -32,6 +32,7 @@ import org.spout.vanilla.plugin.protocol.handler.EncryptionKeyResponseHandler;
 import org.spout.vanilla.plugin.protocol.handler.ServerListPingHandler;
 import org.spout.vanilla.plugin.protocol.handler.entity.EntityActionHandler;
 import org.spout.vanilla.plugin.protocol.handler.entity.EntityAnimationHandler;
+import org.spout.vanilla.plugin.protocol.handler.entity.EntityEquipmentHandler;
 import org.spout.vanilla.plugin.protocol.handler.entity.EntityInteractHandler;
 import org.spout.vanilla.plugin.protocol.handler.entity.pos.EntityHeadYawHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerAbilityHandler;
@@ -46,19 +47,21 @@ import org.spout.vanilla.plugin.protocol.handler.player.PlayerPositionHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerPositionLookHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerStatusHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.PlayerTabCompleteHandler;
+import org.spout.vanilla.plugin.protocol.handler.player.PlayerTimeHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.conn.PlayerHandshakeHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.conn.PlayerKickHandler;
 import org.spout.vanilla.plugin.protocol.handler.player.conn.PlayerPingHandler;
+import org.spout.vanilla.plugin.protocol.handler.player.pos.PlayerSpawnPositionHandler;
 import org.spout.vanilla.plugin.protocol.handler.window.WindowClickHandler;
 import org.spout.vanilla.plugin.protocol.handler.window.WindowCloseHandler;
 import org.spout.vanilla.plugin.protocol.handler.window.WindowCreativeActionHandler;
 import org.spout.vanilla.plugin.protocol.handler.window.WindowEnchantItemHandler;
 import org.spout.vanilla.plugin.protocol.handler.world.block.SignHandler;
 import org.spout.vanilla.plugin.protocol.msg.ServerListPingMessage;
-import org.spout.vanilla.plugin.protocol.msg.ServerPluginMessage;
 import org.spout.vanilla.plugin.protocol.msg.auth.EncryptionKeyResponseMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityActionMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityAnimationMessage;
+import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityInteractMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityHeadYawMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerAbilityMessage;
@@ -70,12 +73,14 @@ import org.spout.vanilla.plugin.protocol.msg.player.PlayerHeldItemChangeMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerLocaleViewDistanceMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerStatusMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerTabCompleteMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.PlayerTimeMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerHandshakeMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerKickMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerPingMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerLookMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerPositionLookMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerPositionMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerSpawnPositionMessage;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowCloseMessage;
 import org.spout.vanilla.plugin.protocol.msg.window.WindowCreativeActionMessage;
@@ -85,6 +90,15 @@ import org.spout.vanilla.plugin.protocol.msg.world.block.SignMessage;
 public class VanillaHandlerLookupService extends HandlerLookupService {
 	public VanillaHandlerLookupService() {
 		try {
+			
+
+			/* 0x04 */
+			bind(PlayerTimeMessage.class, PlayerTimeHandler.class);
+			/* 0x05 */
+			bind(EntityEquipmentMessage.class, EntityEquipmentHandler.class);
+			/* 0x06 */
+			bind(PlayerSpawnPositionMessage.class, PlayerSpawnPositionHandler.class);
+			
 			bind(PlayerHandshakeMessage.class, PlayerHandshakeHandler.class);
 			bind(PlayerChatMessage.class, PlayerChatHandler.class);
 			bind(PlayerGroundMessage.class, PlayerGroundHandler.class);

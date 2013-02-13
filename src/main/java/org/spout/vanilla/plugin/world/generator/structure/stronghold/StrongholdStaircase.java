@@ -83,11 +83,11 @@ public class StrongholdStaircase extends StructureComponent {
 			component = new StrongholdLibrary(parent);
 			component.setPosition(position.add(rotate(-3, -6, 8)));
 		} else if (draw > 0.90) {
-			component = new StrongholdLargeIntersection(parent);
-			component.setPosition(position.add(rotate(-3, -8, 8)));
-		} else if (draw > 0.75) {
 			component = new StrongholdChestCorridor(parent);
 			component.setPosition(position.add(rotate(0, -6, 8)));
+		} else if (draw > 0.75) {
+			component = new StrongholdLargeIntersection(parent);
+			component.setPosition(position.add(rotate(-3, -8, 8)));
 		} else if (draw > 0.60) {
 			component = new StrongholdRoom(parent);
 			component.setPosition(position.add(rotate(-3, -6, 8)));

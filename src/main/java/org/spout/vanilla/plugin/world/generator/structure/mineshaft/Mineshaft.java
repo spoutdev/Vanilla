@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.plugin.world.generator.structure.mineshaft;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -59,7 +59,7 @@ public class Mineshaft extends Structure {
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
 		final Set<BoundingBox> placed = new HashSet<BoundingBox>();
-		final List<StructureComponent> activeBranches = new ArrayList<StructureComponent>();
+		final List<StructureComponent> activeBranches = new LinkedList<StructureComponent>();
 		final MineshaftRoom room = new MineshaftRoom(this);
 		room.setPosition(new Point(w, x, y, z));
 		room.randomize();
@@ -67,7 +67,7 @@ public class Mineshaft extends Structure {
 		byte size = (byte) (random.nextInt(MAX_SIZE_RAND) + MAX_SIZE_BASE);
 		byte count = 0;
 		while (!activeBranches.isEmpty()) {
-			final StructureComponent active = activeBranches.get(0);
+			final StructureComponent active = activeBranches.remove(0);
 			final BoundingBox activeBox = active.getBoundingBox();
 			if (!collides(activeBox, active.getLastComponent(), placed) && active.canPlace()
 					&& active.getPosition().getY() >= 20) {
@@ -82,7 +82,6 @@ public class Mineshaft extends Structure {
 				}
 				activeBranches.addAll(next);
 			}
-			activeBranches.remove(active);
 		}
 	}
 

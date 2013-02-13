@@ -102,8 +102,8 @@ public class StrongholdPrison extends StructureComponent {
 			component = new StrongholdLibrary(parent);
 			component.setPosition(position.add(rotate(-3, 0, 11)));
 		} else if (draw > 0.90) {
-			component = new StrongholdLargeIntersection(parent);
-			component.setPosition(position.add(rotate(-3, -2, 11)));
+			component = new StrongholdChestCorridor(parent);
+			component.setPosition(position.add(rotate(0, 0, 11)));
 		} else if (draw > 0.75) {
 			component = new StrongholdSpiralStaircase(parent);
 			component.setPosition(position.add(rotate(0, 0, 11)));
@@ -111,8 +111,8 @@ public class StrongholdPrison extends StructureComponent {
 			component = new StrongholdRoom(parent);
 			component.setPosition(position.add(rotate(-3, 0, 11)));
 		} else if (draw > 0.45) {
-			component = new StrongholdChestCorridor(parent);
-			component.setPosition(position.add(rotate(0, 0, 11)));
+			component = new StrongholdLargeIntersection(parent);
+			component.setPosition(position.add(rotate(-3, -2, 11)));
 		} else if (draw > 0.30) {
 			component = new StrongholdIntersection(parent);
 			component.setPosition(position.add(rotate(0, 0, 11)));

@@ -89,7 +89,7 @@ public class StrongholdTurn extends StructureComponent {
 		} else if (draw > 0.2) {
 			component = new StrongholdStaircase(parent);
 		} else {
-			component = new StrongholdChestCorridor(parent);
+			component = new StrongholdCorridor(parent);
 		}
 		if (left) {
 			component.setPosition(position.add(rotate(5, 0, 4)));

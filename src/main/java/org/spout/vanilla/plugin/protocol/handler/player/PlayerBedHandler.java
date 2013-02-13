@@ -26,24 +26,31 @@
  */
 package org.spout.vanilla.plugin.protocol.handler.player;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
+import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.plugin.protocol.msg.player.pos.PlayerPositionLookMessage;
+import org.spout.vanilla.plugin.component.misc.SleepComponent;
+import org.spout.vanilla.plugin.protocol.msg.player.PlayerBedMessage;
 
-public final class PlayerPositionLookHandler extends MessageHandler<PlayerPositionLookMessage> {
-	private final PlayerPositionHandler position = new PlayerPositionHandler();
-	private final PlayerLookHandler rotation = new PlayerLookHandler();
-
+public final class PlayerBedHandler extends MessageHandler<PlayerBedMessage> {
 	@Override
-	public void handleServer(Session session, PlayerPositionLookMessage message) {
-		this.position.handleServer(session, message.getPlayerPositionMessage());
-		this.rotation.handleServer(session, message.getPlayerLookMessage());
-	}
-
-	@Override
-	public void handleClient(Session session, PlayerPositionLookMessage message) {
-		this.position.handleClient(session, message.getPlayerPositionMessage());
-		this.rotation.handleClient(session, message.getPlayerLookMessage());
+	public void handleClient(Session session, PlayerBedMessage message) {
+		if (!session.hasPlayer()) {
+			return;
+		}
+		Player player = session.getPlayer();
+		
+		World world = player.getWorld();
+		
+		Entity entity = world.getEntity(message.getEntityId());
+		
+		Block block = world.getBlock(message.getX(), message.getY(), message.getZ());
+		
+		SleepComponent sleep = entity.get(SleepComponent.class);
+		sleep.sleep(block);
 	}
 }

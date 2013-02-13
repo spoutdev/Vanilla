@@ -26,11 +26,15 @@
  */
 package org.spout.vanilla.plugin.protocol.handler.entity;
 
+import org.spout.api.component.impl.AnimationComponent;
+import org.spout.api.component.impl.ModelHolderComponent;
+import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
+import org.spout.api.model.Model;
+import org.spout.api.model.animation.Animation;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.api.data.Animation;
 import org.spout.vanilla.api.event.entity.EntityAnimationEvent;
 
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityAnimationMessage;
@@ -46,7 +50,47 @@ public final class EntityAnimationHandler extends MessageHandler<EntityAnimation
 
 		switch (message.getAnimation()) {
 			case SWING_ARM:
-				player.getNetwork().callProtocolEvent(new EntityAnimationEvent(player, Animation.SWING_ARM), true);
+				player.getNetwork().callProtocolEvent(new EntityAnimationEvent(player, org.spout.vanilla.api.data.Animation.SWING_ARM), true);
+				break;
+			default:
+		}
+	}
+	
+	@Override
+	public void handleClient(Session session, EntityAnimationMessage message) {
+		if (!session.hasPlayer()) {
+			return;
+		}
+
+		Player player = session.getPlayer();
+
+		Entity entity = player.getWorld().getEntity(message.getEntityId());
+		
+		ModelHolderComponent models = entity.get(ModelHolderComponent.class);
+		if(models == null)
+			return;
+		
+		AnimationComponent animations = entity.get(AnimationComponent.class);
+		if(animations == null)
+			return;
+		
+		//This code launch the first animation finded on the first model
+		//TODO : play with animation API
+		
+		switch (message.getAnimation()) {
+			case SWING_ARM:
+				Model model = models.getModels().get(0);//get first model
+				
+				if(model == null)
+					return;
+				
+				if(model.getAnimations() == null || model.getAnimations().isEmpty())
+					return;
+			
+				Animation animation = model.getAnimations().values().iterator().next();
+				
+				animations.playAnimation(model, animation);
+				
 				break;
 			default:
 		}

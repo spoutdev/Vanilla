@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.protocol.handler.entity;
+package org.spout.vanilla.plugin.protocol.handler.player;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -46,12 +46,12 @@ import org.spout.vanilla.plugin.component.misc.EffectsComponent;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.item.tool.Tool;
-import org.spout.vanilla.plugin.protocol.msg.entity.EntityInteractMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.PlayerUseEntityMessage;
 import org.spout.vanilla.plugin.util.PlayerUtil;
 
-public class EntityInteractHandler extends MessageHandler<EntityInteractMessage> {
+public class PlayerUseEntityHandler extends MessageHandler<PlayerUseEntityMessage> {
 	@Override
-	public void handleServer(Session session, EntityInteractMessage message) {
+	public void handleServer(Session session, PlayerUseEntityMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

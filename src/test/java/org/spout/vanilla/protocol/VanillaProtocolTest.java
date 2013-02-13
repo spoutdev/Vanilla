@@ -52,7 +52,6 @@ import org.spout.vanilla.plugin.protocol.msg.entity.EntityAttachEntityMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityDestroyMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityInitializeMessage;
-import org.spout.vanilla.plugin.protocol.msg.entity.EntityInteractMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityItemDataMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityStatusMessage;
@@ -86,6 +85,7 @@ import org.spout.vanilla.plugin.protocol.msg.player.PlayerStatisticMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerStatusMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerTabCompleteMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerTimeMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.PlayerUseEntityMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerHandshakeMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerKickMessage;
 import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerListMessage;
@@ -132,7 +132,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new PlayerTimeMessage(333L, 666L),
 			new EntityEquipmentMessage(234, 3, new ItemStack(VanillaMaterials.PLANK, 3, 55)),
 			new PlayerSpawnPositionMessage(42, 42, 42, NullRepositionManager.getInstance()),
-			new EntityInteractMessage(1123, 4455, true),
+			new PlayerUseEntityMessage(1123, 4455, true),
 			new PlayerHealthMessage((short) 1, (short) 2, 3.4F),
 			new PlayerRespawnMessage(89, (byte) 0, (byte) 1, 128, "VERYFANCY"),
 			new PlayerGroundMessage(true),

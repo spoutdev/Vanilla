@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.protocol.codec.entity;
+package org.spout.vanilla.plugin.protocol.codec.player;
 
 import java.io.IOException;
 
@@ -33,23 +33,23 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.plugin.protocol.msg.entity.EntityInteractMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.PlayerUseEntityMessage;
 
-public final class EntityInteractCodec extends MessageCodec<EntityInteractMessage> {
-	public EntityInteractCodec() {
-		super(EntityInteractMessage.class, 0x07);
+public final class PlayerUseEntityCodec extends MessageCodec<PlayerUseEntityMessage> {
+	public PlayerUseEntityCodec() {
+		super(PlayerUseEntityMessage.class, 0x07);
 	}
 
 	@Override
-	public EntityInteractMessage decode(ChannelBuffer buffer) throws IOException {
+	public PlayerUseEntityMessage decode(ChannelBuffer buffer) throws IOException {
 		int id = buffer.readInt();
 		int target = buffer.readInt();
 		boolean punching = buffer.readByte() != 0;
-		return new EntityInteractMessage(id, target, punching);
+		return new PlayerUseEntityMessage(id, target, punching);
 	}
 
 	@Override
-	public ChannelBuffer encode(EntityInteractMessage message) throws IOException {
+	public ChannelBuffer encode(PlayerUseEntityMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.buffer(9);
 		buffer.writeInt(message.getEntityId());
 		buffer.writeInt(message.getTarget());

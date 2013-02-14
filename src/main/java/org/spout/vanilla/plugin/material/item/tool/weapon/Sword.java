@@ -33,6 +33,6 @@ import org.spout.vanilla.plugin.material.item.tool.MiningTool;
 public class Sword extends MiningTool {
 	public Sword(String name, int id, ToolLevel toolLevel) {
 		super(name, id, toolLevel, ToolType.SWORD);
-		this.setDamage(4 + toolLevel.getDamageBonus()).setEnchantability(toolLevel.getEnchantability());
+		this.setDamage(4 + toolLevel.getDamageBonus());
 	}
 }

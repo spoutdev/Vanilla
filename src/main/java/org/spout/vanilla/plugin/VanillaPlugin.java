@@ -78,6 +78,7 @@ import org.spout.vanilla.plugin.configuration.InputConfiguration;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.configuration.WorldConfigurationNode;
 import org.spout.vanilla.api.data.VanillaData;
+import org.spout.vanilla.plugin.enchantment.VanillaEnchantments;
 import org.spout.vanilla.plugin.inventory.recipe.VanillaRecipes;
 import org.spout.vanilla.plugin.lighting.VanillaLighting;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
@@ -199,6 +200,7 @@ public class VanillaPlugin extends CommonPlugin {
 
 		VanillaMaterials.initialize();
 		VanillaLighting.initialize();
+		VanillaEnchantments.initialize();
 		//MapPalette.DEFAULT = (MapPalette) Spout.getFilesystem().getResource("mappalette://Vanilla/map/mapColorPalette.dat");
 		//RecipeYaml.DEFAULT = (RecipeYaml) Spout.getFilesystem().getResource("recipe://Vanilla/recipes.yml");
 		//VanillaRecipes.initialize();

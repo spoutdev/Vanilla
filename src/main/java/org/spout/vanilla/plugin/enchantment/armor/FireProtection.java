@@ -35,7 +35,7 @@ import org.spout.vanilla.plugin.enchantment.VanillaEnchantments;
 
 public class FireProtection extends ArmorEnchantment {
 	public FireProtection(String name, int id) {
-		super(name, id);
+		super(name, id, 10, 8, 12);
 		setMaximumLevel(4).setWeight(5);
 	}
 

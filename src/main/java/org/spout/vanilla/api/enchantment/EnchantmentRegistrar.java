@@ -75,10 +75,6 @@ public class EnchantmentRegistrar {
 	 */
 	public static Enchantment[] values() {
 		Enchantment[] values = new Enchantment[idLookup.size()];
-		for (int i = 0; i < idLookup.size(); i++) {
-			values[i] = idLookup.get(i);
-		}
-
-		return values;
+		return idLookup.values().toArray(values);
 	}
 }

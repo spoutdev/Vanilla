@@ -34,7 +34,7 @@ import org.spout.vanilla.plugin.enchantment.VanillaEnchantments;
 
 public class Smite extends SwordEnchantment {
 	public Smite(String name, int id) {
-		super(name, id);
+		super(name, id, 5, 8, 20);
 		setMaximumLevel(5).setWeight(5);
 	}
 

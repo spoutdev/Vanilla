@@ -30,7 +30,7 @@ import org.spout.vanilla.api.enchantment.BowEnchantment;
 
 public class Infinity extends BowEnchantment {
 	public Infinity(String name, int id) {
-		super(name, id);
+		super(name, id, 20, 0, 30);
 		setMaximumLevel(1).setWeight(1);
 	}
 }

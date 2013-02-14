@@ -35,7 +35,7 @@ import org.spout.vanilla.plugin.enchantment.VanillaEnchantments;
 
 public class BlastProtection extends ArmorEnchantment {
 	public BlastProtection(String name, int id) {
-		super(name, id);
+		super(name, id, 5, 8, 12);
 		setMaximumLevel(4).setWeight(2);
 	}
 

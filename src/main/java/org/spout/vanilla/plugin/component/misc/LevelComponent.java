@@ -48,15 +48,6 @@ public class LevelComponent extends EntityComponent {
 	}
 
 	/**
-	 * Sets current level, doesn't adjust total exp
-	 * @param level the level
-	 */
-	private void setLevel(short level) {
-		getData().put(VanillaData.EXPERIENCE_LEVEL, level);
-		updateUi();
-	}
-
-	/**
 	 * Gets current experience
 	 * @return the total exp
 	 */
@@ -65,19 +56,17 @@ public class LevelComponent extends EntityComponent {
 	}
 
 	/**
-	 * Sets the total experience, does not add to the current amount.
-	 * @param experience the total exp
+	 * Sets current experience
+	 * @param xp the total xp
+	 * @return false if the experience change event is cancelled
 	 */
-	private void setExperience(short experience) {
-		ExperienceChangeEvent event = new ExperienceChangeEvent(getOwner(), getExperience(), experience);
+	private boolean setExperience(short xp) {
+		ExperienceChangeEvent event = new ExperienceChangeEvent(getOwner(), getExperience(), xp);
 		Spout.getEventManager().callEvent(event);
-
-		if (event.isCancelled()) {
-			return;
-		}
-
-		getData().put(VanillaData.EXPERIENCE_AMOUNT, event.getNewExp());
-		updateUi();
+		if (event.isCancelled())
+			return false;
+		getData().put(VanillaData.EXPERIENCE_AMOUNT, xp);
+		return true;
 	}
 
 	/**
@@ -89,52 +78,82 @@ public class LevelComponent extends EntityComponent {
 	}
 
 	/**
-	 * Sets current progress of the progress bar, this value will be between 0 and 1 (0 = 0%, 1 = 100%)
-	 * @param progress
+	 * Changes the experience points of a player.
+	 * @param amount the amount to add. The player loses experience if amount is negative
 	 */
-	private void setProgress(float progress) {
-		getData().put(VanillaData.EXPERIENCE_BAR_PROGRESS, progress);
+	public void addExperience(int amount) {
+		short newExperience = (short) (getExperience() + amount);
+		if (newExperience < 0)
+			newExperience = 0;
+		if (!setExperience(newExperience))
+			return;
+		float newProgress = getProgress() + ((float) amount / getXpCap(getLevel()));
+		if (newProgress < 0.f || newProgress >= 1.0f) {
+			short newLevel = convertXpToLevel(newExperience);
+			getData().put(VanillaData.EXPERIENCE_LEVEL, newLevel);
+			newProgress = (float) (newExperience - convertLevelToXp(newLevel)) / getXpCap(newLevel);
+		}
+		getData().put(VanillaData.EXPERIENCE_BAR_PROGRESS, newProgress);
 		updateUi();
 	}
 
 	/**
-	 * Add experience points from a player.
-	 * @param amount the amount to add.
+	 * Reduces current level without changing progress Modifies total xp accordingly
+	 * @param reduction number of levels to be removed
 	 */
-	public void addExperience(int amount) {
-		setProgress(getProgress() + ((float) amount / getXpCap()));
-		setExperience((short) (getExperience() + amount));
-		while (getProgress() >= 1.0f) {
-			setLevel((short) (getLevel() + 1));
-			setProgress(getProgress() - 1.0f);
-		}
+	public void removeLevels(int reduction) {
+		short newLevel = (short) (getLevel() - reduction);
+		if (newLevel < 0)
+			newLevel = 0;
+		short newExperience = (short) (convertLevelToXp(newLevel) + getProgress() * getXpCap(newLevel));
+		if (!setExperience(newExperience))
+			return;
+		getData().put(VanillaData.EXPERIENCE_LEVEL, newLevel);
+		updateUi();
 	}
 
 	/**
-	 * Remove experience points from a player
-	 * @param amount The amount to remove.
+	 * Get the XP cap of a given level.
+	 * @param level The experience level
+	 * @return The XP cap
 	 */
-	public void removeExperience(int amount) {
-		setProgress(getProgress() - (amount / getXpCap()));
-		setExperience((short) (getExperience() - amount));
-		while (getProgress() <= 0.0f) {
-			setLevel((short) (getLevel() - 1));
-			setProgress(getProgress() + 1.0f);
-		}
-	}
-
-	/**
-	 * Get the XP cap of the current level.
-	 * @return The XP cap of the current level.
-	 */
-	public int getXpCap() {
-		if (getLevel() >= 30) {
-			return 62 + (this.getLevel() - 30) * 7;
-		} else if (this.getLevel() >= 15) {
-			return 17 + (this.getLevel() - 15) * 3;
+	public static int getXpCap(short level) {
+		if (level >= 30) {
+			return 62 + (level - 30) * 7;
+		} else if (level >= 15) {
+			return 17 + (level - 15) * 3;
 		} else {
 			return 17;
 		}
+	}
+
+	/**
+	 * Determines the experience level of a player with a given total xp
+	 * @param xp The total xp
+	 * @return The experience level
+	 */
+	public static short convertXpToLevel(short xp) {
+		if (xp < 272)
+			return (short) (xp / 17);
+		else if (xp < 887)
+			return (short) ((Math.sqrt(24.f * xp - 5159) + 59) / 6);
+		else
+			return (short) ((Math.sqrt(56.f * xp - 32511) + 303) / 14);
+	}
+
+	/**
+	 * Determines the xp required to reach a given experience level
+	 * @param int The experience level
+	 * @return The total xp
+	 */
+	public static short convertLevelToXp(short level) {
+		int l = (int) level;
+		if (l > 30)
+			return (short) ((7 * l - 86) * (l - 31) / 2 + 887);
+		else if (l > 15)
+			return (short) ((3 * l - 11) * (l - 16) / 2 + 272);
+		else
+			return (short) (17 * l);
 	}
 
 	/**

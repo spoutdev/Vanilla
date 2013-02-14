@@ -36,7 +36,7 @@ import org.spout.vanilla.plugin.enchantment.VanillaEnchantments;
 
 public class Protection extends ArmorEnchantment {
 	public Protection(String name, int id) {
-		super(name, id);
+		super(name, id, 1, 11, 20);
 		setMaximumLevel(4).setWeight(10);
 	}
 

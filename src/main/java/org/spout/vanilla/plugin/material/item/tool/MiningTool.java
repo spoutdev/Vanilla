@@ -45,6 +45,7 @@ public class MiningTool extends Tool {
 		super(name, id, toolLevel.getMaxDurability(), toolType, null);
 		this.toolLevel = toolLevel;
 		this.diggingSpeed = toolLevel.getDiggingSpeed();
+		this.setEnchantability(toolLevel.getEnchantability());
 	}
 
 	@Override

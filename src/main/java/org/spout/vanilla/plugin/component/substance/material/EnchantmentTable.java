@@ -52,19 +52,6 @@ public class EnchantmentTable extends EnchantmentTableComponent {
 	}
 
 	@Override
-	public void onTick(float dt) {
-		EnchantmentTableInventory inventory = getInventory();
-		// Only display enchantment levels if there is an item and it is not enchanted
-		if (inventory.has()) {
-			for (Player player : viewers) {
-				for (int i = 0; i < 3; i++) {
-					player.get(WindowHolder.class).getActiveWindow().setProperty(i, !Enchantment.isEnchanted(inventory.get()) ? inventory.getEnchantmentLevel(i) : 0);
-				}
-			}
-		}
-	}
-
-	@Override
 	public boolean open(Player player) {
 		EnchantmentTableOpenEvent event = Spout.getEventManager().callEvent(new EnchantmentTableOpenEvent(this, player));
 		if (!event.isCancelled()) {
@@ -89,37 +76,28 @@ public class EnchantmentTable extends EnchantmentTableComponent {
 	 */
 	public int getNearbyBookshelves() {
 		Block block = getBlock();
-		int x = block.getX();
-		int y = block.getY();
-		int z = block.getZ();
 
-		// Check for obstructions - if there are any blocks right next to the enchantment table, all nearby bookshelves are nullified
-		for (int xx = x - 1; xx <= x + 1; xx++) {
-			for (int yy = y; yy <= y + 1; yy++) {
-				for (int zz = z - 1; zz <= z + 1; zz++) {
-					if (xx == x && zz == z) {
-						continue; // Ignore the enchantment table itself
-					}
-
-					if (!VanillaMaterials.AIR.equals(block.getWorld().getBlock(xx, yy, zz))) {
-						return 0;
-					}
-				}
-			}
-		}
-
-		// Find bookshelves within the radius
+		// if there are any blocks right next to the enchantment table, bookshelves in that direction are nullified
+		// Note: unlike Mojang's version, a block at (x+1,y+1,z) won't nullify a bookshelf at (x+2,y,z)
 		int bookshelves = 0;
-		mainLoop:
-		for (int xx = x - 2; xx <= x + 2; xx++) {
-			for (int yy = y; yy <= y + 1; yy++) {
-				for (int zz = z - 2; zz <= z + 2; zz++) {
-					if (VanillaMaterials.BOOKSHELF.equals(block.getWorld().getBlock(xx, yy, zz).getMaterial())) {
-						if (++bookshelves >= 15) {
-							break mainLoop;
-						}
+		for (int dx = -1; dx <= 1; dx++) {
+			for (int dz = -1; dz <= 1; dz++) {
+				if (dx == 0 && dz == 0)
+					continue; // Ignore the enchantment table itself
+				for (int dy = 0; dy <= 1; dy++) {
+					if (!VanillaMaterials.AIR.equals(block.translate(dx, dy, dz).getMaterial()))
+						break;
+					if (VanillaMaterials.BOOKSHELF.equals(block.translate(2 * dx, dy, 2 * dz).getMaterial()))
+						++bookshelves;
+					if (dx != 0 && dz != 0) {
+						if (VanillaMaterials.BOOKSHELF.equals(block.translate(dx, dy, 2 * dz).getMaterial()))
+							++bookshelves;
+						if (VanillaMaterials.BOOKSHELF.equals(block.translate(2 * dx, dy, dz).getMaterial()))
+							++bookshelves;
 					}
+
 				}
+
 			}
 		}
 

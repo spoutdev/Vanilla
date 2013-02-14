@@ -26,13 +26,18 @@
  */
 package org.spout.vanilla.plugin.protocol.handler.world.chunk;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.api.protocol.reposition.RepositionManager;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.msg.world.chunk.ChunkDataMessage;
 
-public class ChunkDataHandler extends MessageHandler<ChunkDataMessage>{
+public class ChunkDataHandler extends MessageHandler<ChunkDataMessage> {
 
 	@Override
 	public void handleClient(Session session, ChunkDataMessage message) {
@@ -40,20 +45,44 @@ public class ChunkDataHandler extends MessageHandler<ChunkDataMessage>{
 			return;
 		}
 
-		/*Player player = session.getPlayer();
-		World world = player.getWorld();
-
-		int x = message.getX();
-		int z = message.getZ();
-
-		if(message.isContiguous()){
+		Player player = session.getPlayer();
+		World world = Spout.getEngine().getDefaultWorld();//player.getWorld();
+		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
+		
+		int baseX = message.getX() << Chunk.BLOCKS.BITS;
+		int baseZ = message.getZ() << Chunk.BLOCKS.BITS;
+		
+		final byte[][] data = message.getData();
+		
+		for (int i=0 ; i<16 ; i++) {
+			int baseY = i << Chunk.BLOCKS.BITS;
 			
-		}else{
+			int index = 0;
+			for (int xx=0 ; xx < Chunk.BLOCKS.SIZE ; xx++) {
+				for (int yy=0 ; yy < Chunk.BLOCKS.SIZE ; yy++) {
+					for (int zz=0 ; zz < Chunk.BLOCKS.SIZE ; zz++) {
+						int x = rm.convertX(xx + baseX);
+						int y = rm.convertY(yy + baseY);
+						int z = rm.convertZ(zz + baseZ);
+						
+						short type = data[i][index];
+						byte dat;
+						if (index%2==0) {
+							dat = (byte) (data[i][(index/2)+4096]>>4);
+						} else {
+							dat = (byte) (data[i][(index/2)+4096] & 0xF);
+						}
+						index++;
+						
+						if (type>0) {
+							BlockMaterial material = (BlockMaterial) VanillaMaterials.getMaterial(type, dat);
+							world.getChunkFromBlock(x, y, z).getBlock(x, y, z).setMaterial(material);
+						}
+					}
+				}
+			}
 			
 		}
-		
-		byte [][]data = message.getData();
-		byte []biome = message.getBiomeData();*/
 		
 		//TODO: implement
 		System.out.println(message.toString());

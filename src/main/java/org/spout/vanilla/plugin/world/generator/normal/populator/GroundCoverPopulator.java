@@ -28,10 +28,8 @@ package org.spout.vanilla.plugin.world.generator.normal.populator;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import org.spout.api.generator.GeneratorPopulator;
-import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.material.BlockMaterial;
@@ -42,6 +40,7 @@ import org.spout.api.util.config.ConfigurationNode;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.util.MathHelper;
 import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.plugin.world.generator.normal.biome.NormalBiome;
 
@@ -51,7 +50,6 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 		if (y < 0 || y >= NormalGenerator.HEIGHT) {
 			return;
 		}
-		final Random random = WorldGeneratorUtils.getRandom(seed, x, y, z, 13823);
 		final Vector3 size = blockData.getSize();
 		final int sizeX = size.getFloorX();
 		final int sizeY = GenericMath.clamp(size.getFloorY(), 0, NormalGenerator.HEIGHT);
@@ -72,7 +70,7 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 					}
 					int layerNumber = 0;
 					for (GroundCoverLayer layer : layers) {
-						final int depthY = yy - layer.getDepth(random);
+						final int depthY = yy - layer.getDepth(x + xx, z + zz, (int) seed);
 						final BlockMaterial cover = layer.getMaterial(y + yy < NormalGenerator.SEA_LEVEL);
 						for (; yy > depthY; yy--) {
 							if (yy < 0) {
@@ -115,7 +113,7 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 			this.bellowSea = bellowSea;
 		}
 
-		public abstract byte getDepth(Random random);
+		public abstract byte getDepth(int x, int z, int seed);
 
 		public BlockMaterial getMaterial(boolean isBellowSea) {
 			return isBellowSea ? bellowSea : aboveSea;
@@ -148,8 +146,8 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 	}
 
 	public static class GroundCoverVariableLayer extends GroundCoverLayer {
-		private byte minDepth;
-		private byte maxDepth;
+		private byte min;
+		private byte max;
 
 		static {
 			register("variable", new GroundCoverLayerFactory() {
@@ -169,15 +167,15 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 		}
 
 		public GroundCoverVariableLayer(BlockMaterial aboveSea, BlockMaterial bellowSea,
-										byte minDepth, byte maxDepth) {
+				byte minDepth, byte maxDepth) {
 			super(aboveSea, bellowSea);
-			this.minDepth = minDepth;
-			this.maxDepth = maxDepth;
+			this.min = minDepth;
+			this.max = maxDepth;
 		}
 
 		@Override
-		public byte getDepth(Random random) {
-			return (byte) (random.nextInt(maxDepth - minDepth + 1) + minDepth);
+		public byte getDepth(int x, int z, int seed) {
+			return (byte) (MathHelper.normalizedByte(x, z, seed) * (max - min) + min);
 		}
 
 		@Override
@@ -189,16 +187,16 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 		public void load(ConfigurationNode node) {
 			super.load(node);
 			final ConfigurationNode depthNode = node.getNode("depth");
-			minDepth = depthNode.getNode("min").getByte(minDepth);
-			maxDepth = depthNode.getNode("max").getByte(maxDepth);
+			min = depthNode.getNode("min").getByte(min);
+			max = depthNode.getNode("max").getByte(max);
 		}
 
 		@Override
 		public void save(ConfigurationNode node) {
 			super.save(node);
 			final ConfigurationNode depthNode = node.getNode("depth");
-			depthNode.getNode("min").setValue(minDepth);
-			depthNode.getNode("max").setValue(maxDepth);
+			depthNode.getNode("min").setValue(min);
+			depthNode.getNode("max").setValue(max);
 		}
 	}
 
@@ -221,13 +219,13 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 		}
 
 		public GroundCoverUniformLayer(BlockMaterial aboveSea, BlockMaterial bellowSea,
-									   byte depth) {
+				byte depth) {
 			super(aboveSea, bellowSea);
 			this.depth = depth;
 		}
 
 		@Override
-		public byte getDepth(Random random) {
+		public byte getDepth(int x, int z, int seed) {
 			return depth;
 		}
 

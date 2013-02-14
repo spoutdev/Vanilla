@@ -53,6 +53,7 @@ import org.spout.vanilla.api.data.Climate;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Liquid;
+import org.spout.vanilla.plugin.util.MathHelper;
 import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomeGenerator;
 import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.plugin.world.generator.normal.biome.NormalBiome;
@@ -142,10 +143,9 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		}
 		final Vector3 size = blockData.getSize();
 		final int sizeX = size.getFloorX();
-		final int sizeY = GenericMath.clamp(size.getFloorY(), 0, HEIGHT);
+		final int sizeY = Math.min(size.getFloorY(), HEIGHT);
 		final int sizeZ = size.getFloorZ();
 		PERLIN.setSeed((int) seed);
-		final Random random = WorldGeneratorUtils.getRandom(seed, x, y, z, 6516);
 		final double[][][] noise = WorldGeneratorUtils.fastNoise(NOISE, sizeX, sizeY, sizeZ, 4, x, y, z);
 		final BiomeSelector selector = getSelector();
 		final TIntPairObjectHashMap<NormalBiome> biomeCache = new TIntPairObjectHashMap<NormalBiome>();
@@ -192,7 +192,8 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 					}
 				}
 				if (y == 0) {
-					final byte bedrockDepth = (byte) (random.nextInt(BEDROCK_DEPTH) + 1);
+					final byte bedrockDepth =
+							(byte) (MathHelper.normalizedByte(x + xx, z + zz, (int) seed) * (BEDROCK_DEPTH - 1) + 1);
 					for (byte yy = 0; yy < bedrockDepth; yy++) {
 						blockData.set(x + xx, yy, z + zz, VanillaMaterials.BEDROCK);
 					}

@@ -94,21 +94,21 @@ public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 		PERLIN.setSeed((int) seed * 23);
 		final Vector3 size = blockData.getSize();
 		final int sizeX = size.getFloorX();
-		final int sizeY = GenericMath.clamp(size.getFloorY(), 0, HEIGHT);
+		final int sizeY = Math.min(size.getFloorY(), HEIGHT);
 		final int sizeZ = size.getFloorZ();
 		final double[][][] noise = WorldGeneratorUtils.fastNoise(NOISE, sizeX, sizeY, sizeZ, 4, x, y, z);
 		for (int xx = 0; xx < sizeX; xx++) {
-			for (int yy = 0; yy < sizeY; yy++) {
-				for (int zz = 0; zz < sizeZ; zz++) {
-					final int totalX = x + xx;
+			for (int zz = 0; zz < sizeZ; zz++) {
+				final int totalX = x + xx;
+				final int totalZ = z + zz;
+				final double distance = Math.sqrt(totalX * totalX + totalZ * totalZ);
+				for (int yy = 0; yy < sizeY; yy++) {
 					final int totalY = y + yy;
-					final int totalZ = z + zz;
-					final double distance = Math.sqrt(totalX * totalX + totalZ * totalZ);
 					double density = noise[xx][yy][zz] * 0.5 + 0.5;
-					if (y + yy < ISLAND_SURFACE) {
-						density += 1 / LOWER_SMOOTH_SIZE * (y + yy - LOWER_SMOOTH_START);
-					} else if (y + yy >= ISLAND_SURFACE) {
-						density -= 1 / UPPER_SMOOTH_SIZE * (y + yy - UPPER_SMOOTH_START);
+					if (totalY < ISLAND_SURFACE) {
+						density += 1 / LOWER_SMOOTH_SIZE * (totalY - LOWER_SMOOTH_START);
+					} else if (totalY >= ISLAND_SURFACE) {
+						density -= 1 / UPPER_SMOOTH_SIZE * (totalY - UPPER_SMOOTH_START);
 					}
 					density *= ISLAND_RADIUS / distance;
 					if (density >= 1) {

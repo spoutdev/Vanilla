@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.plugin.world.generator.nether.populator;
 
-import java.util.Random;
-
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
@@ -42,6 +40,7 @@ import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.SolidMoving;
+import org.spout.vanilla.plugin.util.MathHelper;
 import org.spout.vanilla.plugin.world.generator.nether.NetherGenerator;
 
 public class BlockPatchPopulator implements GeneratorPopulator {
@@ -74,8 +73,7 @@ public class BlockPatchPopulator implements GeneratorPopulator {
 		if (y < 0 || y >= NetherGenerator.HEIGHT) {
 			return;
 		}
-		seed = WorldGeneratorUtils.getSeed(seed, 0, 0, 0, material.getId());
-		final Random random = WorldGeneratorUtils.getRandom(seed, x, y, z, 848441);
+		seed = WorldGeneratorUtils.getSeed(seed, 4324337, 234571, 76537, material.getId());
 		elevation.setSeed((int) (seed * 101));
 		shapeBase.setSeed((int) (seed * 313));
 		shape.setSeed((int) (seed * 661));
@@ -94,7 +92,7 @@ public class BlockPatchPopulator implements GeneratorPopulator {
 					if (yy == -1 || blockData.get(x + xx, yy + 1, z + zz) != VanillaMaterials.AIR) {
 						continue;
 					}
-					final int depth = random.nextInt(3) + 3;
+					final int depth = (int) (MathHelper.normalizedByte(x + xx, z + zz, (int) seed) * 2 + 3);
 					int yyy = 0;
 					while (yyy < depth && blockData.get(x + xx, yy - yyy, z + zz).isMaterial(VanillaMaterials.NETHERRACK)) {
 						blockData.set(x + xx, yy - yyy++, z + zz, material);
@@ -106,9 +104,8 @@ public class BlockPatchPopulator implements GeneratorPopulator {
 	}
 
 	private int getHighestWorkableBlock(CuboidBlockMaterialBuffer blockData, int x, int y, int z) {
-		while (blockData.get(x, y, z) != VanillaMaterials.NETHERRACK) {
-			y--;
-			if (y <= blockData.getBase().getFloorY()) {
+		while (!blockData.get(x, y, z).isMaterial(VanillaMaterials.NETHERRACK)) {
+			if (--y <= blockData.getBase().getFloorY()) {
 				return -1;
 			}
 		}

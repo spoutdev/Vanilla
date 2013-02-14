@@ -43,6 +43,7 @@ import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Liquid;
+import org.spout.vanilla.plugin.util.MathHelper;
 import org.spout.vanilla.plugin.world.generator.biome.VanillaSingleBiomeGenerator;
 import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.plugin.world.generator.nether.populator.BlockPatchPopulator;
@@ -100,13 +101,12 @@ public class NetherGenerator extends VanillaSingleBiomeGenerator {
 		PERLIN.setSeed((int) seed * 17);
 		final Vector3 size = blockData.getSize();
 		final int sizeX = size.getFloorX();
-		final int sizeY = GenericMath.clamp(size.getFloorY(), 0, HEIGHT);
+		final int sizeY = Math.min(size.getFloorY(), HEIGHT);
 		final int sizeZ = size.getFloorZ();
 		final double[][][] noise = WorldGeneratorUtils.fastNoise(NOISE, sizeX, sizeY, sizeZ, 4, x, y, z);
-		final Random random = WorldGeneratorUtils.getRandom(seed, x, y, z, 6516);
 		for (int xx = 0; xx < sizeX; xx++) {
-			for (int yy = 0; yy < sizeY; yy++) {
-				for (int zz = 0; zz < sizeZ; zz++) {
+			for (int zz = 0; zz < sizeZ; zz++) {
+				for (int yy = 0; yy < sizeY; yy++) {
 					double value = noise[xx][yy][zz];
 					if (SMOOTH_HEIGHT > 0) {
 						if (yy + y < LOW_SMOOTH_START) {
@@ -125,22 +125,16 @@ public class NetherGenerator extends VanillaSingleBiomeGenerator {
 						}
 					}
 				}
-			}
-		}
-		if (y == 0) {
-			for (int xx = 0; xx < sizeX; xx++) {
-				for (int zz = 0; zz < sizeZ; zz++) {
-					final byte bedrockDepth = (byte) (random.nextInt(BEDROCK_DEPTH) + 1);
+				if (y == 0) {
+					final byte bedrockDepth =
+							(byte) (MathHelper.normalizedByte(x + xx, z + zz, (int) seed) * (BEDROCK_DEPTH - 1) + 1);
 					for (int yy = 0; yy < bedrockDepth; yy++) {
 						blockData.set(x + xx, yy, z + zz, VanillaMaterials.BEDROCK);
 					}
 				}
-			}
-		}
-		if (y == HEIGHT - sizeY) {
-			for (int xx = 0; xx < sizeX; xx++) {
-				for (int zz = 0; zz < sizeZ; zz++) {
-					final byte bedrockDepth = (byte) (random.nextInt(BEDROCK_DEPTH) + 1);
+				if (y == HEIGHT - sizeY) {
+					final byte bedrockDepth =
+							(byte) (MathHelper.normalizedByte(x + xx, z + zz, (int) seed) * (BEDROCK_DEPTH - 1) + 1);
 					for (int yy = HEIGHT - 1; yy >= HEIGHT - bedrockDepth; yy--) {
 						blockData.set(x + xx, yy, z + zz, VanillaMaterials.BEDROCK);
 					}

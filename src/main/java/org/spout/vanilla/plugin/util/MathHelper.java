@@ -37,8 +37,9 @@ import org.spout.api.math.VectorMath;
 public class MathHelper {
 	/**
 	 * Gets the celestial angle at a certain time of the day
+	 *
 	 * @param timeMillis time
-	 * @param timeMillisTune fine runing
+	 * @param timeMillisTune fine tuning
 	 * @return celestial angle
 	 */
 	public static float getCelestialAngle(long timeMillis, float timeMillisTune) {
@@ -58,11 +59,11 @@ public class MathHelper {
 	 * Gets the (real?) celestial angle at a certain time of the day<br>
 	 * The use of this function is unknown...
 	 * @param timeMillis time
-	 * @param timeMillisTune fine runing
+	 * @param timeMillisTune fine tuning
 	 * @return celestial angle, a value from 0 to 1
 	 */
 	public static float getRealCelestialAngle(long timeMillis, float timeMillisTune) {
-		float celestial = MathHelper.getCelestialAngle(timeMillis, timeMillisTune);
+		float celestial = getCelestialAngle(timeMillis, timeMillisTune);
 		celestial *= TrigMath.TWO_PI;
 		celestial = 1.0f - ((float) TrigMath.cos(celestial) * 2.0f + 0.5f);
 		if (celestial < 0) {
@@ -75,6 +76,7 @@ public class MathHelper {
 
 	/**
 	 * Calculates a new random direction
+	 *
 	 * @param maxXZForce of the direction
 	 * @param maxYForce of the direction
 	 * @return a random Vector3 direction
@@ -97,7 +99,7 @@ public class MathHelper {
 			} else {
 				yaw = 90;
 			}
-			yaw -= Math.toDegrees(Math.atan(offset.getZ() / offset.getX()));
+			yaw -= Math.toDegrees(TrigMath.atan(offset.getZ() / offset.getX()));
 		} else if (offset.getZ() < 0) {
 			yaw = 180;
 		}
@@ -105,7 +107,55 @@ public class MathHelper {
 	}
 
 	public static float getLookAtPitch(Vector3 offset) {
-		return (float) -Math.toDegrees(Math.atan(offset.getY() / GenericMath.length(offset.getX(), offset.getZ())));
+		return (float) -Math.toDegrees(TrigMath.atan(offset.getY() / GenericMath.length(offset.getX(), offset.getZ())));
+	}
+
+	/**
+	 * Hashes the coordinate and returns a normalized byte. The value is
+	 * returned as a float of max value 1 and min value 0. The possible values
+	 * are [0, 255] / 255f, where [0, 255] is an integer range. This method is
+	 * useful for obtaining a constant value at a point.
+	 *
+	 * @param x The x coordinate
+	 * @param seed The seed
+	 * @return A value in [0, 255] / 255f
+	 */
+	public static float normalizedByte(int x, int seed) {
+		final int hash = x * 73428767 ^ seed * 457;
+		return (hash * (hash + 456149) >> 16 & 0xff) / 255f;
+	}
+
+	/**
+	 * Hashes the coordinates and returns a normalized byte. The value is
+	 * returned as a float of max value 1 and min value 0. The possible values
+	 * are [0, 255] / 255f, where [0, 255] is an integer range. This method is
+	 * useful for obtaining a constant value at a point.
+	 *
+	 * @param x The x coordinate
+	 * @param y The y coordinate
+	 * @param seed The seed
+	 * @return A value in [0, 255] / 255f
+	 */
+	public static float normalizedByte(int x, int y, int seed) {
+		final int hash = x * 73428767 ^ y * 9122569 ^ seed * 457;
+		return (hash * (hash + 456149) >> 16 & 0xff) / 255f;
+	}
+
+	/**
+	 * Hashes the coordinates and returns a normalized byte. The value is
+	 * returned as a float of max value 1 and min value 0. The possible values
+	 * are [0, 255] / 255f, where [0, 255] is an integer range. This method is
+	 * useful for obtaining a constant value at a point.
+	 *
+	 * @param x The x coordinate
+	 * @param y The y coordinate
+	 * @param z The z coordinate
+	 * @param seed The seed
+	 * @return A value in [0, 255] / 255f
+	 */
+	public static float normalizedByte(int x, int y, int z, int seed) {
+		final int hash = x * 73428767 ^ y * 9122569 ^ z * 4382893 ^ seed * 457;
+		return (hash * (hash + 456149) >> 16 & 0xff) / 255f;
 	}
 
 	/**

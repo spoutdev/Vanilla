@@ -63,4 +63,32 @@ public class SignHandler extends MessageHandler<SignMessage> {
 		Sign sign = (Sign) component;
 		sign.setText(text, new PlayerCause(player));
 	}
+
+	@Override
+	public void handleClient(Session session, SignMessage message) {
+		if (!session.hasPlayer()) {
+			return;
+		}
+
+		Player player = session.getPlayer();
+		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
+
+		int x = rm.convertX(message.getX());
+		int y = rm.convertY(message.getY());
+		int z = rm.convertZ(message.getZ());
+
+		BlockComponent component = player.getWorld().getBlockComponent(x, y, z);
+		if (component == null || !(component instanceof Sign)) {
+			return;
+		}
+
+		String[] text = message.getMessage();
+		if (text.length != 4) {
+			return;
+		}
+
+		Sign sign = (Sign) component;
+		sign.setText(text, new PlayerCause(player));
+	}
+
 }

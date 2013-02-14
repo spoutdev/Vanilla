@@ -26,6 +26,10 @@
  */
 package org.spout.vanilla.plugin.protocol.handler.entity.pos;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
+import org.spout.api.geo.World;
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityRelativePositionMessage;
@@ -38,8 +42,10 @@ public class EntityRelativePositionHandler extends MessageHandler<EntityRelative
 			return;
 		}
 		
-		//TODO: implement
-		System.out.println(message.toString());
+		Player player = session.getPlayer();
+		World world = player.getWorld();
+		Entity entity = world.getEntity(message.getEntityId());
+		entity.getScene().translate(new Vector3(message.getDeltaX(), message.getDeltaY(), message.getDeltaZ()));
 	}
 
 }

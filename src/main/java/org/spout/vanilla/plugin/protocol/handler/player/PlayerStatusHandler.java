@@ -46,7 +46,6 @@ import org.spout.vanilla.plugin.protocol.msg.player.PlayerStatusMessage;
 public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 	@Override
 	public void handleServer(Session session, PlayerStatusMessage message) {
-		System.out.println("stat "+message.getStatus());
 		if (message.getStatus() == PlayerStatusMessage.INITIAL_SPAWN) {
 			if (PlayerConnectEvent.getHandlerList().getRegisteredListeners().length > 0) {
 				Spout.getEventManager().callEvent(new PlayerConnectEvent(session, (String) session.getDataMap().get("username")));

@@ -24,21 +24,22 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.protocol.handler.player.conn;
+package org.spout.vanilla.plugin.protocol.handler.player;
 
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-import org.spout.vanilla.api.data.GameMode;
-import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerLoginRequestMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.PlayerExperienceMessage;
 
-public class PlayerLoginRequestHandler extends MessageHandler<PlayerLoginRequestMessage> {
+public class PlayerExperienceHandler extends MessageHandler<PlayerExperienceMessage>{
+
 	@Override
-	public void handleClient(Session session, PlayerLoginRequestMessage message) {
+	public void handleClient(Session session, PlayerExperienceMessage message) {
+		if (!session.hasPlayer()) {
+			return;
+		}
+		
+		//TODO: implement
 		System.out.println(message.toString());
-		
-		Human human = session.getPlayer().add(Human.class);
-		human.setGamemode(GameMode.get(message.getGameMode()));
-		
 	}
+
 }

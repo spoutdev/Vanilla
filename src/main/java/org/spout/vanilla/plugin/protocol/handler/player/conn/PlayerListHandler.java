@@ -28,17 +28,17 @@ package org.spout.vanilla.plugin.protocol.handler.player.conn;
 
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-import org.spout.vanilla.api.data.GameMode;
-import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerLoginRequestMessage;
+import org.spout.vanilla.plugin.protocol.msg.player.conn.PlayerListMessage;
 
-public class PlayerLoginRequestHandler extends MessageHandler<PlayerLoginRequestMessage> {
+public class PlayerListHandler extends MessageHandler<PlayerListMessage>{
+
 	@Override
-	public void handleClient(Session session, PlayerLoginRequestMessage message) {
+	public void handleClient(Session session, PlayerListMessage message) {
+		if (!session.hasPlayer()) {
+			return;
+		}
+		
+		//TODO: implement
 		System.out.println(message.toString());
-		
-		Human human = session.getPlayer().add(Human.class);
-		human.setGamemode(GameMode.get(message.getGameMode()));
-		
 	}
 }

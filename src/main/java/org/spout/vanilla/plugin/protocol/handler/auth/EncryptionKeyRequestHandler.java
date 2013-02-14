@@ -30,10 +30,15 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 
 import org.bouncycastle.crypto.AsymmetricBlockCipher;
+import org.bouncycastle.crypto.BufferedBlockCipher;
+import org.bouncycastle.crypto.CipherParameters;
 import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
+import org.bouncycastle.crypto.params.KeyParameter;
+import org.bouncycastle.crypto.params.ParametersWithIV;
 import org.bouncycastle.crypto.util.PublicKeyFactory;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.api.security.EncryptionChannelProcessor;
 import org.spout.api.security.SecurityHandler;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.protocol.ClientLoginAuth;
@@ -43,8 +48,6 @@ import org.spout.vanilla.plugin.protocol.msg.auth.EncryptionKeyResponseMessage;
 public class EncryptionKeyRequestHandler extends MessageHandler<EncryptionKeyRequestMessage> {
 	@Override
 	public void handleClient(final Session session, final EncryptionKeyRequestMessage message) {
-		System.out.println(message.toString());
-		
 		final byte[] sharedSecret = SecurityHandler.getInstance().getSymetricKey();
 		
 		Runnable runnable = new Runnable() {
@@ -62,7 +65,20 @@ public class EncryptionKeyRequestHandler extends MessageHandler<EncryptionKeyReq
 					byte[] encodedSecret = cipher.processBlock(sharedSecret, 0, 16);
 					byte[] encodedToken = cipher.processBlock(message.getVerifyTokenArray(), 0, 4);
 					
-					session.send(true, true, new EncryptionKeyResponseMessage(false, encodedSecret, encodedToken));
+					String streamCipher = VanillaConfiguration.ENCRYPT_STREAM_ALGORITHM.getString();
+					String streamWrapper = VanillaConfiguration.ENCRYPT_STREAM_WRAPPER.getString();
+					
+					BufferedBlockCipher toServerCipher = SecurityHandler.getInstance().getSymmetricCipher(streamCipher, streamWrapper);
+					
+					CipherParameters symmetricKey = new ParametersWithIV(new KeyParameter(sharedSecret), sharedSecret);
+
+					toServerCipher.init(SecurityHandler.ENCRYPT_MODE, symmetricKey);
+					EncryptionChannelProcessor toServerProcessor = new EncryptionChannelProcessor(toServerCipher, 32);
+					
+					EncryptionKeyResponseMessage response = new EncryptionKeyResponseMessage(false, encodedSecret, encodedToken);
+					response.setProcessor(toServerProcessor);
+					
+					session.send(true, true, response);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

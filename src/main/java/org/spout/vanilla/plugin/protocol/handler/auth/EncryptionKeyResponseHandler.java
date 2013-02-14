@@ -58,25 +58,18 @@ public class EncryptionKeyResponseHandler extends MessageHandler<EncryptionKeyRe
 		
 		String streamCipher = VanillaConfiguration.ENCRYPT_STREAM_ALGORITHM.getString();
 		String streamWrapper = VanillaConfiguration.ENCRYPT_STREAM_WRAPPER.getString();
-
+		
 		BufferedBlockCipher fromServerCipher = SecurityHandler.getInstance().getSymmetricCipher(streamCipher, streamWrapper);
-		BufferedBlockCipher toServerCipher = SecurityHandler.getInstance().getSymmetricCipher(streamCipher, streamWrapper);
-
+		
 		final byte[] sharedSecret = SecurityHandler.getInstance().getSymetricKey();
 		CipherParameters symmetricKey = new ParametersWithIV(new KeyParameter(sharedSecret), sharedSecret);
-
+		
 		fromServerCipher.init(SecurityHandler.DECRYPT_MODE, symmetricKey);
-		toServerCipher.init(SecurityHandler.ENCRYPT_MODE, symmetricKey);
-
+		
 		EncryptionChannelProcessor fromServerProcessor = new EncryptionChannelProcessor(fromServerCipher, 32);
-		EncryptionChannelProcessor toServerProcessor = new EncryptionChannelProcessor(toServerCipher, 32);
-
-		PlayerStatusMessage msg = new PlayerStatusMessage(PlayerStatusMessage.INITIAL_SPAWN);
-		message.setProcessor(toServerProcessor);
 		message.getProcessorHandler().setProcessor(fromServerProcessor);
 		
-		// TODO: for some reason msg isn't encrypted
-		session.send(true, true, msg); // Ready to login;
+		session.send(true, true, new PlayerStatusMessage(PlayerStatusMessage.INITIAL_SPAWN)); // Ready to login;
 	}
 	
 	@Override
@@ -131,7 +124,7 @@ public class EncryptionKeyResponseHandler extends MessageHandler<EncryptionKeyRe
 					BufferedBlockCipher toClientCipher = SecurityHandler.getInstance().getSymmetricCipher(streamCipher, streamWrapper);
 
 					CipherParameters symmetricKey = new ParametersWithIV(new KeyParameter(initialVector), initialVector);
-
+					
 					fromClientCipher.init(SecurityHandler.DECRYPT_MODE, symmetricKey);
 					toClientCipher.init(SecurityHandler.ENCRYPT_MODE, symmetricKey);
 

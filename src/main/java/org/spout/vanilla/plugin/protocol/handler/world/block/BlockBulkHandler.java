@@ -52,8 +52,8 @@ public class BlockBulkHandler extends MessageHandler<BlockBulkMessage>{
 		
 		for(int i = 0; i < message.getChanges(); i++){
 			int x = rm.convertX(message.getCoordinates()[i * 3] + baseX);
-			int y =	rm.convertX(message.getCoordinates()[i * 3 + 1]);
-			int z =	rm.convertX(message.getCoordinates()[i * 3 + 2] + baseZ);
+			int y =	rm.convertY(message.getCoordinates()[i * 3 + 1]);
+			int z =	rm.convertZ(message.getCoordinates()[i * 3 + 2] + baseZ);
 			
 			short type = message.getTypes()[i];
 			byte data = message.getMetadata()[i];

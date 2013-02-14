@@ -26,10 +26,15 @@
  */
 package org.spout.vanilla.plugin.protocol.handler.world.chunk;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
+import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.api.protocol.reposition.RepositionManager;
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.msg.world.chunk.ChunkBulkMessage;
 
 public class ChunkBulkHandler extends MessageHandler<ChunkBulkMessage>{
@@ -39,19 +44,44 @@ public class ChunkBulkHandler extends MessageHandler<ChunkBulkMessage>{
 		if (!session.hasPlayer()) {
 			return;
 		}
-		
 		Player player = session.getPlayer();
-		World world = player.getWorld();
+		World world = Spout.getEngine().getDefaultWorld();//player.getWorld();
+		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
 		
-		for(int i = 0; i < message.getX().length; i++){
-			int x = message.getX()[i];
-			int z = message.getZ()[i];
+		for (int c=0 ; c<message.getX().length ; c++) {
+			int baseX = message.getX()[c] << Chunk.BLOCKS.BITS;
+			int baseZ = message.getZ()[c] << Chunk.BLOCKS.BITS;
 			
-			byte [][]data = message.getData()[i];
-			byte []biome = message.getBiomeData()[i];
-
+			final byte[][] data = message.getData()[c];
 			
-			
+			for (int i=0 ; i<16 ; i++) {
+				int baseY = i << Chunk.BLOCKS.BITS;
+				
+				int index = 0;
+				for (int xx=0 ; xx < Chunk.BLOCKS.SIZE ; xx++) {
+					for (int yy=0 ; yy < Chunk.BLOCKS.SIZE ; yy++) {
+						for (int zz=0 ; zz < Chunk.BLOCKS.SIZE ; zz++) {
+							int x = rm.convertX(xx + baseX);
+							int y = rm.convertY(yy + baseY);
+							int z = rm.convertZ(zz + baseZ);
+							
+							short type = data[i][index];
+							byte dat;
+							if (index%2==0) {
+								dat = (byte) (data[i][(index/2)+4096]>>4);
+							} else {
+								dat = (byte) (data[i][(index/2)+4096] & 0xF);
+							}
+							index++;
+							
+							if (type>0) {
+								BlockMaterial material = (BlockMaterial) VanillaMaterials.getMaterial(type, dat);
+								world.getChunkFromBlock(x, y, z).getBlock(x, y, z).setMaterial(material);
+							}
+						}
+					}
+				}
+			}
 		}
 		
 		//TODO: implement

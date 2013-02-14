@@ -29,8 +29,6 @@ package org.spout.vanilla.plugin.inventory.block;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.api.inventory.window.prop.EnchantmentTableProperty;
-
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
 
 /**
@@ -40,7 +38,6 @@ public class EnchantmentTableInventory extends Inventory {
 	private static final long serialVersionUID = 1L;
 	public static final int SIZE = 1;
 	public static final int SLOT = 0;
-	private final int[] levels = new int[3];
 
 	public EnchantmentTableInventory() {
 		super(SIZE);
@@ -62,41 +59,7 @@ public class EnchantmentTableInventory extends Inventory {
 		return get(SLOT);
 	}
 
-	/**
-	 * Returns the level of the enchantment in the given slot.
-	 * @param slot Slot to check
-	 * @return Level of the the enchantment
-	 */
-	public int getEnchantmentLevel(int slot) {
-		if (slot < 0 || slot > 2) {
-			throw new IllegalArgumentException("Slot must be between 0 and 2");
-		}
-
-		return levels[slot];
-	}
-
-	/**
-	 * Sets the level of the enchantment in the given {@link EnchantmentTableProperty} slot.
-	 * @param slot Slot to set, null to clear the
-	 * @param level Level of the enchantment
-	 */
-	public void setEnchantmentLevel(EnchantmentTableProperty slot, int level) {
-		setEnchantmentLevel(slot.getId(), level);
-	}
-
-	/**
-	 * Sets the level of the enchantment in the given slot.
-	 * @param slot Slot to set
-	 * @param level Level of the enchantment
-	 */
-	public void setEnchantmentLevel(int slot, int level) {
-		if (slot < 0 || slot > 2) {
-			throw new IllegalArgumentException("Slot must be between 0 and 2");
-		}
-
-		levels[slot] = level;
-	}
-
+	//TODO: Change this to vanilla behaviour (accept any item here, but only 1)
 	@Override
 	public boolean canSet(int i, ItemStack item) {
 		return item.getMaterial() instanceof VanillaItemMaterial && ((VanillaItemMaterial) item.getMaterial()).isEnchantable();

@@ -31,8 +31,8 @@ import org.spout.vanilla.api.material.VanillaMaterial;
 import org.spout.vanilla.plugin.material.item.tool.weapon.Bow;
 
 public abstract class BowEnchantment extends Enchantment {
-	protected BowEnchantment(String name, int id) {
-		super(name, id);
+	protected BowEnchantment(String name, int id, int baseEnchantmentLevel, int deltaEnchantmentLevel, int enchantmentLevelRange) {
+		super(name, id, baseEnchantmentLevel, deltaEnchantmentLevel, enchantmentLevelRange);
 	}
 
 	@Override

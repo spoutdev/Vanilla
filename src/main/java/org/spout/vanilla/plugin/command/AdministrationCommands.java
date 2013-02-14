@@ -326,13 +326,7 @@ public class AdministrationCommands {
 			throw new CommandException(player.getDisplayName() + " does not have experience.");
 		}
 
-		if (amount > 0) {
-			level.addExperience(amount);
-		} else if (amount > 0) {
-			level.removeExperience(amount);
-		} else {
-			throw new CommandException("Argument 'amount' can not be 0.");
-		}
+		level.addExperience(amount);
 		player.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Your experience has been set to ", ChatStyle.WHITE, amount, ChatStyle.BRIGHT_GREEN, ".");
 
 	}

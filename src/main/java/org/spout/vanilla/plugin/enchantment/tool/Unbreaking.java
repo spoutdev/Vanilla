@@ -30,7 +30,7 @@ import org.spout.vanilla.api.enchantment.ToolEnchantment;
 
 public class Unbreaking extends ToolEnchantment {
 	public Unbreaking(String name, int id) {
-		super(name, id);
+		super(name, id, 5, 8, 50);
 		setMaximumLevel(3).setWeight(5);
 	}
 }

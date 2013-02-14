@@ -30,7 +30,7 @@ import org.spout.vanilla.api.enchantment.SwordEnchantment;
 
 public class Looting extends SwordEnchantment {
 	public Looting(String name, int id) {
-		super(name, id);
+		super(name, id, 15, 9, 50);
 		setMaximumLevel(3).setWeight(2);
 	}
 }

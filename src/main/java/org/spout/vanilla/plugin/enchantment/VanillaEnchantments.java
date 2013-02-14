@@ -78,4 +78,9 @@ public class VanillaEnchantments {
 	public static final Punch PUNCH = register(new Punch("Punch", 49));
 	public static final Flame FLAME = register(new Flame("Flame", 50));
 	public static final Infinity INFINITY = register(new Infinity("Infinity", 51));
+	
+	// Needed to force these enchantments to be instantiated 
+	public static void initialize() {
+		
+	}
 }

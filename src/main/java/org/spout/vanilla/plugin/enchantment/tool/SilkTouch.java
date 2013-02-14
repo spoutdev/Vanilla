@@ -34,7 +34,7 @@ import org.spout.vanilla.plugin.enchantment.VanillaEnchantments;
 
 public class SilkTouch extends ToolEnchantment {
 	public SilkTouch(String name, int id) {
-		super(name, id);
+		super(name, id, 15, 0, 50);
 		setMaximumLevel(1).setWeight(1);
 	}
 

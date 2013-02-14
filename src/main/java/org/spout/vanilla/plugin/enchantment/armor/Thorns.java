@@ -32,7 +32,7 @@ import org.spout.vanilla.api.material.item.armor.Chestplate;
 
 public class Thorns extends ArmorEnchantment {
 	public Thorns(String name, int id) {
-		super(name, id);
+		super(name, id, 10, 20, 50);
 		setMaximumLevel(3).setWeight(1);
 	}
 

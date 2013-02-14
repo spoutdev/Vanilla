@@ -26,6 +26,11 @@
  */
 package org.spout.vanilla.plugin.protocol.handler.entity.pos;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
+import org.spout.api.geo.World;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.math.QuaternionMath;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.plugin.protocol.msg.entity.pos.EntityTeleportMessage;
@@ -38,8 +43,11 @@ public class EntityTeleportHandler extends MessageHandler<EntityTeleportMessage>
 			return;
 		}
 		
-		//TODO: implement
-		System.out.println(message.toString());
+		Player player = session.getPlayer();
+		World world = player.getWorld();
+		Entity entity = world.getEntity(message.getEntityId());
+		entity.getScene().setPosition(new Point(world, message.getX(), message.getY(), message.getZ()));
+		entity.getScene().rotate(QuaternionMath.rotation(message.getPitch(), message.getRotation(), 0));
 	}
 
 }

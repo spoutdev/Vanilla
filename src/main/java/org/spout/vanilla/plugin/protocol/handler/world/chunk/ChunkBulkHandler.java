@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.plugin.protocol.handler.world.chunk;
 
+import org.spout.api.entity.Player;
+import org.spout.api.geo.World;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.plugin.protocol.msg.world.chunk.ChunkBulkMessage;
@@ -36,6 +38,20 @@ public class ChunkBulkHandler extends MessageHandler<ChunkBulkMessage>{
 	public void handleClient(Session session, ChunkBulkMessage message) {
 		if (!session.hasPlayer()) {
 			return;
+		}
+		
+		Player player = session.getPlayer();
+		World world = player.getWorld();
+		
+		for(int i = 0; i < message.getX().length; i++){
+			int x = message.getX()[i];
+			int z = message.getZ()[i];
+			
+			byte [][]data = message.getData()[i];
+			byte []biome = message.getBiomeData()[i];
+
+			
+			
 		}
 		
 		//TODO: implement

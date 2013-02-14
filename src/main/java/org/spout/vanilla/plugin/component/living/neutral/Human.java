@@ -31,6 +31,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
+import org.spout.api.component.impl.DatatableComponent;
 import org.spout.api.component.impl.TextModelComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
@@ -48,7 +49,6 @@ import org.spout.vanilla.api.event.entity.HumanAbilityChangeEvent;
 import org.spout.vanilla.api.event.player.PlayerGameModeChangedEvent;
 import org.spout.vanilla.api.event.player.network.PlayerGameStateEvent;
 import org.spout.api.inventory.Slot;
-import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
@@ -259,7 +259,10 @@ public class Human extends Living {
 	}
 
 	public void setFlyingSpeed(byte speed, boolean updateClient) {
-		byte previous = getOwner().getData().put(VanillaData.FLYING_SPEED, speed).byteValue();
+		Number value = getOwner().getData().put(VanillaData.FLYING_SPEED, speed);
+		
+		byte previous = value == null ? VanillaData.FLYING_SPEED.getDefaultValue().byteValue() : value.byteValue();
+		
 		if (callAbilityChangeEvent().isCancelled()) {
 			getOwner().getData().put(VanillaData.FLYING_SPEED, previous);
 			return;

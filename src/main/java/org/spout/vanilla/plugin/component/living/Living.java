@@ -29,11 +29,13 @@ package org.spout.vanilla.plugin.component.living;
 import org.spout.api.ai.goap.GoapAIComponent;
 import org.spout.api.component.impl.NavigationComponent;
 import org.spout.api.entity.Entity;
+import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.api.component.living.LivingComponent;
+import org.spout.vanilla.api.component.VanillaComponent;
 import org.spout.vanilla.api.component.misc.DrowningComponent;
 import org.spout.vanilla.api.component.misc.HeadComponent;
 import org.spout.vanilla.api.component.misc.HealthComponent;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.api.data.effect.StatusEffect;
 
 import org.spout.vanilla.plugin.ai.examiner.VanillaBlockExaminer;
@@ -43,7 +45,7 @@ import org.spout.vanilla.plugin.component.misc.Drowning;
 import org.spout.vanilla.plugin.component.misc.EffectsComponent;
 import org.spout.vanilla.plugin.component.misc.Health;
 
-public abstract class Living extends LivingComponent {
+public abstract class Living extends VanillaComponent {
 	private HeadComponent head;
 	private HealthComponent health;
 	private DrowningComponent drowning;
@@ -64,32 +66,35 @@ public abstract class Living extends LivingComponent {
 		holder.setSavable(true);
 	}
 
-	@Override
+
+	public boolean isOnGround() {
+		return getOwner().getData().get(VanillaData.IS_ON_GROUND);
+	}
+
+	public void setOnGround(boolean onGround) {
+		getOwner().getData().put(VanillaData.IS_ON_GROUND, onGround);
+	}
+
 	public HeadComponent getHead() {
 		return head;
 	}
 
-	@Override
 	public HealthComponent getHealth() {
 		return health;
 	}
 
-	@Override
 	public DrowningComponent getDrowning() {
 		return drowning;
 	}
 
-	@Override
 	public NavigationComponent getNavigation() {
 		return navigation;
 	}
 
-	@Override
 	public GoapAIComponent getAI() {
 		return ai;
 	}
 
-	@Override
 	protected byte getCommonMetadata() {
 		byte value = 0;
 		Burn burn = getOwner().get(Burn.class);
@@ -113,5 +118,37 @@ public abstract class Living extends LivingComponent {
 		}
 
 		return value;
+	}
+
+
+	public boolean isRiding() {
+		return getOwner().getData().get(VanillaData.IS_RIDING);
+	}
+
+	public void setRiding(boolean isRiding) {
+		getOwner().getData().put(VanillaData.IS_RIDING, isRiding);
+		sendMetaData();
+	}
+
+	public boolean isEatingBlocking() {
+		return getOwner().getData().get(VanillaData.IS_EATING_BLOCKING);
+	}
+
+	public void setEatingBlocking(boolean isEatingBlocking) {
+		getOwner().getData().put(VanillaData.IS_EATING_BLOCKING, isEatingBlocking);
+		sendMetaData();
+	}
+
+	public boolean isSneaking() {
+		return getOwner().getData().get(VanillaData.IS_SNEAKING);
+	}
+
+	public void setSneaking(boolean isSneaking) {
+		getOwner().getData().put(VanillaData.IS_SNEAKING, isSneaking);
+		sendMetaData();
+	}
+
+	public void sendMetaData() {
+		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 0, getCommonMetadata()));
 	}
 }

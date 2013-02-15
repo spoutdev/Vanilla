@@ -83,9 +83,6 @@ public class ChunkBulkHandler extends MessageHandler<ChunkBulkMessage>{
 				}
 			}
 		}
-		
-		//TODO: implement
-		System.out.println(message.toString());
 	}
 
 }

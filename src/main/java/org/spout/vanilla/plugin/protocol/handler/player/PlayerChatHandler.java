@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.plugin.protocol.handler.player;
 
+import org.spout.api.Client;
+import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
@@ -35,8 +37,19 @@ import org.spout.vanilla.plugin.chat.VanillaStyleHandler;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerChatMessage;
 
 public final class PlayerChatHandler extends MessageHandler<PlayerChatMessage> {
+	
 	@Override
-	public void handle(boolean upstream, Session session, PlayerChatMessage message) {
+	public void handleClient(Session session, PlayerChatMessage message) {
+		if (!session.hasPlayer()) {
+			return;
+		}
+		
+		ChatArguments text = ChatArguments.fromString(message.getMessage(), VanillaStyleHandler.ID);
+		((Client)Spout.getEngine()).getScreenStack().getConsole().addMessage(text);
+	}
+	
+	@Override
+	public void handleServer(Session session, PlayerChatMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

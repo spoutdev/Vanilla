@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.protocol.handler.player;
+package org.spout.vanilla.plugin.protocol.handler.player.pos;
 
 import gnu.trove.iterator.TDoubleIterator;
 import gnu.trove.iterator.TLongIterator;
@@ -38,6 +38,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import org.spout.api.entity.Player;
+import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -66,6 +67,19 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 			return new PositionTracker();
 		}
 	};
+	
+	@Override
+	public void handleClient(Session session, PlayerPositionMessage message) {
+		if (!session.hasPlayer()) {
+			return;
+		}
+		Player player = session.getPlayer();
+		
+		World world = session.getEngine().getDefaultWorld();
+		player.getScene().setPosition(new Point(world, (float)message.getX(), (float)message.getY(), (float)message.getZ()));
+		// TODO: player position isnt updated
+		System.out.println(message.toString());
+	}
 
 	@Override
 	public void handleServer(Session session, PlayerPositionMessage message) {

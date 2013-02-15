@@ -43,7 +43,7 @@ public final class PlayerChatHandler extends MessageHandler<PlayerChatMessage> {
 		if (!session.hasPlayer()) {
 			return;
 		}
-
+		
 		ChatArguments text = ChatArguments.fromString(message.getMessage(), VanillaStyleHandler.ID);
 		((Client)Spout.getEngine()).getScreenStack().getConsole().addMessage(text);
 	}

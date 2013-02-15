@@ -57,6 +57,10 @@ public class ChunkDataHandler extends MessageHandler<ChunkDataMessage> {
 		for (int i=0 ; i<16 ; i++) {
 			int baseY = i << Chunk.BLOCKS.BITS;
 			
+			if (data[i]==null) {
+				continue;
+			}
+			
 			int index = 0;
 			for (int xx=0 ; xx < Chunk.BLOCKS.SIZE ; xx++) {
 				for (int yy=0 ; yy < Chunk.BLOCKS.SIZE ; yy++) {
@@ -83,8 +87,5 @@ public class ChunkDataHandler extends MessageHandler<ChunkDataMessage> {
 			}
 			
 		}
-		
-		//TODO: implement
-		System.out.println(message.toString());
 	}
 }

@@ -55,5 +55,6 @@ public class PlayerSpawnHandler extends MessageHandler<PlayerSpawnMessage>{
 		entity = humanPrefab.createEntity(pos);
 		
 		w.spawnEntity(entity);
+		System.out.println(message.toString());
 	}
 }

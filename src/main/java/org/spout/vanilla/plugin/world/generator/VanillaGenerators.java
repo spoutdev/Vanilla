@@ -34,6 +34,7 @@ import java.util.Map;
 import org.spout.vanilla.plugin.world.generator.flat.FlatGenerator;
 import org.spout.vanilla.plugin.world.generator.nether.NetherGenerator;
 import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
+import org.spout.vanilla.plugin.world.generator.skylands.SkylandsGenerator;
 import org.spout.vanilla.plugin.world.generator.theend.TheEndGenerator;
 
 public class VanillaGenerators {
@@ -41,6 +42,7 @@ public class VanillaGenerators {
 	public static final NetherGenerator NETHER = new NetherGenerator();
 	public static final FlatGenerator FLAT = new FlatGenerator(64);
 	public static final TheEndGenerator THE_END = new TheEndGenerator();
+	public static final SkylandsGenerator SKYLANDS = new SkylandsGenerator();
 	private static final Map<String, VanillaGenerator> BY_NAME = new HashMap<String, VanillaGenerator>();
 
 	static {

@@ -79,7 +79,6 @@ import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.configuration.WorldConfigurationNode;
 import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.enchantment.VanillaEnchantments;
-import org.spout.vanilla.plugin.inventory.recipe.VanillaRecipes;
 import org.spout.vanilla.plugin.lighting.VanillaLighting;
 import org.spout.vanilla.plugin.material.VanillaBlockMaterial;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
@@ -87,14 +86,13 @@ import org.spout.vanilla.plugin.protocol.LANThread;
 import org.spout.vanilla.plugin.protocol.VanillaProtocol;
 import org.spout.vanilla.plugin.protocol.rcon.RemoteConnectionCore;
 import org.spout.vanilla.plugin.protocol.rcon.RemoteConnectionServer;
-import org.spout.vanilla.plugin.resources.RecipeYaml;
-import org.spout.vanilla.plugin.resources.loader.RecipeLoader;
 import org.spout.vanilla.plugin.service.VanillaProtectionService;
 import org.spout.vanilla.plugin.service.protection.SpawnProtection;
 import org.spout.vanilla.plugin.thread.SpawnLoader;
 import org.spout.vanilla.plugin.world.generator.VanillaGenerator;
 import org.spout.vanilla.plugin.world.generator.VanillaGenerators;
 import org.spout.vanilla.plugin.world.generator.nether.NetherGenerator;
+import org.spout.vanilla.plugin.world.generator.skylands.SkylandsGenerator;
 import org.spout.vanilla.plugin.world.generator.theend.TheEndGenerator;
 
 public class VanillaPlugin extends CommonPlugin {
@@ -305,6 +303,8 @@ public class VanillaPlugin extends CommonPlugin {
 				world.getComponentHolder().add(NetherSky.class).setHasWeather(false);
 			} else if (world.getGenerator() instanceof TheEndGenerator) {
 				world.getComponentHolder().add(TheEndSky.class).setHasWeather(false);
+			} else if (world.getGenerator() instanceof SkylandsGenerator) {
+				world.getComponentHolder().add(NormalSky.class).setHasWeather(false);
 			} else {
 				world.getComponentHolder().add(NormalSky.class);
 			}

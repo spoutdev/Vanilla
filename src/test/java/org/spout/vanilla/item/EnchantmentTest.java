@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.item;
 
-import gnu.trove.map.TObjectIntMap;
-
 import org.junit.Test;
+
+import gnu.trove.map.TObjectIntMap;
 
 import org.spout.api.inventory.ItemStack;
 

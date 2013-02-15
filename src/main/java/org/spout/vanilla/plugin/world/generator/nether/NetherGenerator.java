@@ -37,7 +37,6 @@ import org.spout.api.generator.biome.BiomeManager;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
@@ -163,12 +162,11 @@ public class NetherGenerator extends VanillaSingleBiomeGenerator {
 
 	private int getHighestSolidBlock(World world, int x, int z) {
 		int y = HEIGHT / 2;
-		if (!world.getBlockMaterial(x, y, z).equals(VanillaMaterials.AIR)) {
+		if (!world.getBlockMaterial(x, y, z).isInvisible()) {
 			return -1;
 		}
-		while (world.getBlockMaterial(x, y, z).equals(VanillaMaterials.AIR)) {
-			y--;
-			if (y == 0 || world.getBlockMaterial(x, y, z) instanceof Liquid) {
+		while (world.getBlockMaterial(x, y, z).isInvisible()) {
+			if (--y == 0 || world.getBlockMaterial(x, y, z) instanceof Liquid) {
 				return -1;
 			}
 		}

@@ -88,6 +88,16 @@ public final class WorldConfigurationNode extends ConfigurationHolderConfigurati
 		return this;
 	}
 
+	/**
+	 * Changes the default value for the load key. 
+	 * @param load True if the world should load by default, false if not.
+	 * @return this node
+	 */
+	public WorldConfigurationNode shouldLoad(boolean load) {
+		LOAD.setDefaultValue(load);
+		return this;
+	}
+
 	@Override
 	public void load() throws ConfigurationException {
 		this.setConfiguration(new MapConfiguration(this.getParent().getNode("worlds", this.getWorldName()).getValues()));

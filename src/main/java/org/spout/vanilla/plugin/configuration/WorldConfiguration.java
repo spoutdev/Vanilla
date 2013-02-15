@@ -40,7 +40,8 @@ public class WorldConfiguration extends YamlConfiguration {
 	public static WorldConfigurationNode NORMAL;
 	public static WorldConfigurationNode FLAT;
 	public static WorldConfigurationNode NETHER;
-	public static WorldConfigurationNode END;
+	public static WorldConfigurationNode THE_END;
+	public static WorldConfigurationNode SKYLANDS;
 
 	public WorldConfiguration(File dataFolder) {
 		super(new File(dataFolder, "worlds.yml"));
@@ -48,7 +49,8 @@ public class WorldConfiguration extends YamlConfiguration {
 		NORMAL = get("world").setDefaults("normal", "normal");
 		FLAT = get("world_flat").setDefaults("normal", "flat");
 		NETHER = get("world_nether").setDefaults("nether", "nether");
-		END = get("world_the_end").setDefaults("the_end", "the_end");
+		THE_END = get("world_the_end").setDefaults("the_end", "the_end");
+		SKYLANDS = get("world_skylands").setDefaults("normal", "skylands").shouldLoad(false);
 	}
 
 	public Collection<WorldConfigurationNode> getAll() {
@@ -71,7 +73,7 @@ public class WorldConfiguration extends YamlConfiguration {
 	 * @param worldname of the configuration
 	 * @return the World configuration node
 	 */
-	public WorldConfigurationNode get(String worldname) {
+	public final WorldConfigurationNode get(String worldname) {
 		synchronized (worldNodes) {
 			WorldConfigurationNode node = worldNodes.get(worldname);
 			if (node == null) {

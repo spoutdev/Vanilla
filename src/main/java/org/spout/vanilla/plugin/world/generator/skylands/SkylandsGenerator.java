@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.world.generator.theend;
+package org.spout.vanilla.plugin.world.generator.skylands;
 
 import java.util.Random;
 
@@ -42,19 +42,21 @@ import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Liquid;
-import org.spout.vanilla.plugin.world.generator.biome.VanillaSingleBiomeGenerator;
 import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
+import org.spout.vanilla.plugin.world.generator.biome.VanillaSingleBiomeGenerator;
+import org.spout.vanilla.plugin.world.generator.normal.populator.GroundCoverPopulator;
+import org.spout.vanilla.plugin.world.generator.normal.populator.OrePopulator;
+import org.spout.vanilla.plugin.world.generator.normal.populator.PondPopulator;
 
-public class TheEndGenerator extends VanillaSingleBiomeGenerator {
-	private static final int ISLAND_RADIUS = 52;
-	private static final int ISLAND_BOTTOM = 8;
-	private static final int ISLAND_SURFACE = 58;
-	private static final int ISLAND_TOP = 64;
-	private static final double LOWER_SMOOTH_SIZE = (ISLAND_SURFACE - ISLAND_BOTTOM) / 2d;
-	private static final double UPPER_SMOOTH_SIZE = (ISLAND_TOP - ISLAND_SURFACE) / 2d;
-	private static final double LOWER_SMOOTH_START = ISLAND_BOTTOM + LOWER_SMOOTH_SIZE;
-	private static final double UPPER_SMOOTH_START = ISLAND_SURFACE + UPPER_SMOOTH_SIZE;
-	public static final int HEIGHT = ISLAND_TOP;
+public class SkylandsGenerator extends VanillaSingleBiomeGenerator {
+	private static final int AVERAGE_ELEVATION = 64;
+	private static final int MINIMUM_ELEVATION = 18;
+	private static final int MAXIMUM_ELEVATION = 84;
+	private static final double LOWER_SMOOTH_SIZE = (AVERAGE_ELEVATION - MINIMUM_ELEVATION) / 2d;
+	private static final double UPPER_SMOOTH_SIZE = (MAXIMUM_ELEVATION - AVERAGE_ELEVATION) / 2d;
+	private static final double LOWER_SMOOTH_START = MINIMUM_ELEVATION + LOWER_SMOOTH_SIZE;
+	private static final double UPPER_SMOOTH_START = AVERAGE_ELEVATION + UPPER_SMOOTH_SIZE;
+	public static final int HEIGHT = MAXIMUM_ELEVATION;
 	// noise for generation
 	private static final Perlin PERLIN = new Perlin();
 	private static final ScalePoint NOISE = new ScalePoint();
@@ -67,63 +69,68 @@ public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 		PERLIN.setOctaveCount(16);
 
 		NOISE.SetSourceModule(0, PERLIN);
-		NOISE.setxScale(1);
+		NOISE.setxScale(0.5);
 		NOISE.setyScale(1);
-		NOISE.setzScale(1);
+		NOISE.setzScale(0.5);
 	}
 
-	public TheEndGenerator() {
-		super(VanillaBiomes.ENDSTONE);
+	public SkylandsGenerator() {
+		super(VanillaBiomes.MOUNTAINS);
 		hasVoidBellowZero(true);
 	}
 
 	@Override
 	public void registerBiomes() {
 		super.registerBiomes();
-		register(VanillaBiomes.ENDSTONE);
+		register(VanillaBiomes.MOUNTAINS);
+		addGeneratorPopulators(new GroundCoverPopulator());
+		addPopulators(new PondPopulator());
 	}
 
 	@Override
 	public String getName() {
-		return "VanillaTheEnd";
+		return "VanillaSkylands";
 	}
 
 	@Override
-	protected void generateTerrain(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
-		PERLIN.setSeed((int) seed * 23);
+	protected void generateTerrain(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager manager, long seed) {
+		PERLIN.setSeed((int) seed * 31);
 		final Vector3 size = blockData.getSize();
 		final int sizeX = size.getFloorX();
 		final int sizeY = Math.min(size.getFloorY(), HEIGHT);
 		final int sizeZ = size.getFloorZ();
 		final double[][][] noise = WorldGeneratorUtils.fastNoise(NOISE, sizeX, sizeY, sizeZ, 4, x, y, z);
 		for (int xx = 0; xx < sizeX; xx++) {
-			for (int zz = 0; zz < sizeZ; zz++) {
-				final int totalX = x + xx;
-				final int totalZ = z + zz;
-				final double distance = Math.sqrt(totalX * totalX + totalZ * totalZ);
-				for (int yy = 0; yy < sizeY; yy++) {
-					final int totalY = y + yy;
-					double density = noise[xx][yy][zz] * 0.5 + 0.5;
-					if (totalY < ISLAND_SURFACE) {
-						density += 1 / LOWER_SMOOTH_SIZE * (totalY - LOWER_SMOOTH_START);
-					} else if (totalY >= ISLAND_SURFACE) {
-						density -= 1 / UPPER_SMOOTH_SIZE * (totalY - UPPER_SMOOTH_START);
+			for (int yy = 0; yy < sizeY; yy++) {
+				for (int zz = 0; zz < sizeZ; zz++) {
+					double density = pow(noise[xx][yy][zz], 2);
+					if (y + yy < AVERAGE_ELEVATION) {
+						density += 1 / LOWER_SMOOTH_SIZE * (y + yy - LOWER_SMOOTH_START);
+					} else if (y + yy >= AVERAGE_ELEVATION) {
+						density -= 1 / UPPER_SMOOTH_SIZE * (y + yy - UPPER_SMOOTH_START);
 					}
-					density *= ISLAND_RADIUS / distance;
-					if (density >= 1) {
-						blockData.set(totalX, totalY, totalZ, VanillaMaterials.END_STONE);
+					if (density >= 0.4) {
+						blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.STONE);
 					}
 				}
 			}
 		}
 	}
 
+	private static double pow(double val, int pow) {
+		val = val * 0.5 + 0.5;
+		for (int i = 1; i < pow; i++) {
+			val *= val;
+		}
+		return (val - 0.5) / 0.5;
+	}
+
 	@Override
 	public Point getSafeSpawn(World world) {
 		final Random random = new Random();
 		for (byte attempts = 0; attempts < 10; attempts++) {
-			final int x = random.nextInt(32) - 16;
-			final int z = random.nextInt(32) - 16;
+			final int x = random.nextInt(256) - 127;
+			final int z = random.nextInt(256) - 127;
 			final int y = getHighestSolidBlock(world, x, z);
 			if (y != -1) {
 				return new Point(world, x, y + 0.5f, z);
@@ -143,11 +150,11 @@ public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 	}
 
 	@Override
-	public int[][] getSurfaceHeight(World world, int chunkX, int chunkY) {
+	public int[][] getSurfaceHeight(World world, int chunkX, int chunkZ) {
 		int[][] heights = new int[Chunk.BLOCKS.SIZE][Chunk.BLOCKS.SIZE];
 		for (int x = 0; x < Chunk.BLOCKS.SIZE; x++) {
 			for (int z = 0; z < Chunk.BLOCKS.SIZE; z++) {
-				heights[x][z] = ISLAND_SURFACE;
+				heights[x][z] = AVERAGE_ELEVATION;
 			}
 		}
 		return heights;

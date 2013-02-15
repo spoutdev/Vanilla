@@ -28,6 +28,7 @@ package org.spout.vanilla.plugin.component.world.sky;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
+import org.spout.api.protocol.NetworkSynchronizer;
 
 import org.spout.vanilla.api.data.Weather;
 import org.spout.vanilla.api.event.world.TimeUpdateEvent;
@@ -84,7 +85,10 @@ public class NormalSky extends VanillaSky {
 
 		TimeUpdateEvent event = new TimeUpdateEvent(getWorld(), time);
 		for (Player player : getWorld().getPlayers()) {
-			player.getNetworkSynchronizer().callProtocolEvent(event);
+			final NetworkSynchronizer networkSynchronizer = player.getNetworkSynchronizer();
+			if (networkSynchronizer != null) {
+				networkSynchronizer.callProtocolEvent(event);
+			}
 		}
 	}
 

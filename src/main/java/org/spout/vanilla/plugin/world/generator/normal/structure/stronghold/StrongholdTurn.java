@@ -24,82 +24,96 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.world.generator.structure.mineshaft;
+package org.spout.vanilla.plugin.world.generator.normal.structure.stronghold;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.world.generator.structure.ComponentCuboidPart;
 import org.spout.vanilla.plugin.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.plugin.world.generator.structure.Structure;
 import org.spout.vanilla.plugin.world.generator.structure.StructureComponent;
 
-public class MineshaftStaircase extends StructureComponent {
-	public MineshaftStaircase(Structure parent) {
+public class StrongholdTurn extends StructureComponent {
+	private boolean left = true;
+
+	public StrongholdTurn(Structure parent) {
 		super(parent);
 	}
 
 	@Override
 	public boolean canPlace() {
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
-		box.setMinMax(-1, -6, -1, 3, 3, 9);
+		box.setMinMax(-1, -1, -1, 5, 5, 5);
 		return !box.intersectsLiquids();
 	}
 
 	@Override
 	public void place() {
-		// building objects
+		// Building objects
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
-		final SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
-		box.setPicker(picker);
-		// case
-		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
-		box.setMinMax(0, 0, 0, 2, 2, 1);
-		box.fill(false);
-		box.setMinMax(0, -5, 7, 2, -3, 8);
-		box.fill(false);	
-		// steps
-		for (byte steps = 0; steps < 5; steps++) {
-			box.setMinMax(0, -steps - (steps >= 4 ? 0 : 1), 2 + steps, 2, 2 - steps, 2 + steps);
+		// General shape
+		box.setPicker(new StrongholdBlockMaterialPicker(getRandom()));
+		box.setMinMax(0, 0, 0, 4, 4, 4);
+		box.fill(true);
+		// Place the door
+		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 1, 0);
+		// Place the access way depending on the direction
+		box.setPicker(new SimpleBlockMaterialPicker());
+		if (left) {
+			box.setMinMax(4, 1, 1, 4, 3, 3);
+			box.fill(false);
+		} else {
+			box.setMinMax(0, 1, 1, 0, 3, 3);
 			box.fill(false);
 		}
 	}
 
 	@Override
-	public final void randomize() {
+	public void randomize() {
+		left = getRandom().nextBoolean();
 	}
 
 	@Override
 	public List<StructureComponent> getNextComponents() {
-		final List<StructureComponent> components = new ArrayList<StructureComponent>(1);
 		final StructureComponent component;
 		final float draw = getRandom().nextFloat();
 		if (draw > 0.8) {
-			final MineshaftRoom room = new MineshaftRoom(parent);
-			room.randomize();
-			room.setPosition(position.add(rotate(-room.getLenght() / 2 + 1, -6, 8)));
-			component = room;
+			component = new StrongholdSpiralStaircase(parent);
+		} else if (draw > 0.6) {
+			component = new StrongholdPrison(parent);
 		} else if (draw > 0.4) {
-			component = new MineshaftIntersection(parent);
-			component.setPosition(position.add(rotate(0, -5, 8)));
-			component.randomize();
+			component = new StrongholdIntersection(parent);
+		} else if (draw > 0.2) {
+			component = new StrongholdStaircase(parent);
 		} else {
-			component = new MineshaftCorridor(parent);
-			component.setPosition(position.add(rotate(0, -5, 8)));
-			component.randomize();
+			component = new StrongholdCorridor(parent);
 		}
-		component.setRotation(rotation);
-		components.add(component);
-		return components;
+		if (left) {
+			component.setPosition(position.add(rotate(5, 0, 4)));
+			component.setRotation(rotation.rotate(90, 0, 1, 0));
+		} else {
+			component.setPosition(position.add(rotate(-1, 0, 0)));
+			component.setRotation(rotation.rotate(-90, 0, 1, 0));
+		}
+		component.randomize();
+		return Arrays.asList(component);
 	}
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(0, -5, 0);
-		final Vector3 rotatedMax = transform(2, 2, 8);
+		final Vector3 rotatedMin = transform(0, 0, 0);
+		final Vector3 rotatedMax = transform(4, 4, 4);
 		return new BoundingBox(Vector3.min(rotatedMin, rotatedMax), Vector3.max(rotatedMin, rotatedMax));
+	}
+
+	public void setLeft(boolean left) {
+		this.left = left;
+	}
+
+	public boolean isLeft() {
+		return left;
 	}
 }

@@ -24,29 +24,29 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.world.generator.structure.stronghold;
+package org.spout.vanilla.plugin.world.generator.normal.structure.stronghold;
 
 import java.util.Arrays;
 import java.util.List;
 
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.world.generator.structure.ComponentCuboidPart;
 import org.spout.vanilla.plugin.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.plugin.world.generator.structure.Structure;
 import org.spout.vanilla.plugin.world.generator.structure.StructureComponent;
 
-public class StrongholdTurn extends StructureComponent {
-	private boolean left = true;
-
-	public StrongholdTurn(Structure parent) {
+public class StrongholdPrison extends StructureComponent {
+	public StrongholdPrison(Structure parent) {
 		super(parent);
 	}
 
 	@Override
 	public boolean canPlace() {
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
-		box.setMinMax(-1, -1, -1, 5, 5, 5);
+		box.setMinMax(-1, -1, -1, 9, 5, 11);
 		return !box.intersectsLiquids();
 	}
 
@@ -54,50 +54,76 @@ public class StrongholdTurn extends StructureComponent {
 	public void place() {
 		// Building objects
 		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
+		final StrongholdBlockMaterialPicker stone = new StrongholdBlockMaterialPicker(getRandom());
 		// General shape
-		box.setPicker(new StrongholdBlockMaterialPicker(getRandom()));
-		box.setMinMax(0, 0, 0, 4, 4, 4);
+		box.setPicker(stone);
+		box.setMinMax(0, 0, 0, 8, 4, 10);
 		box.fill(true);
 		// Place the door
 		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 1, 0);
-		// Place the access way depending on the direction
-		box.setPicker(new SimpleBlockMaterialPicker());
-		if (left) {
-			box.setMinMax(4, 1, 1, 4, 3, 3);
-			box.fill(false);
-		} else {
-			box.setMinMax(0, 1, 1, 0, 3, 3);
-			box.fill(false);
-		}
+		//
+		box.setPicker(picker);
+		box.setMinMax(1, 1, 10, 3, 3, 10);
+		box.fill(false);
+		//
+		box.setPicker(stone);
+		box.setMinMax(4, 1, 1, 4, 3, 1);
+		box.fill(false);
+		box.offsetMinMax(0, 0, 2, 0, 0, 2);
+		box.fill(false);
+		box.offsetMinMax(0, 0, 4, 0, 0, 4);
+		box.fill(false);
+		box.offsetMinMax(0, 0, 2, 0, 0, 2);
+		box.fill(false);
+		// Build the cells
+		box.setPicker(picker);
+		picker.setOuterInnerMaterials(VanillaMaterials.IRON_BARS, VanillaMaterials.IRON_BARS);
+		box.setMinMax(4, 1, 4, 4, 3, 6);
+		box.fill(false);
+		box.setMinMax(5, 1, 5, 7, 3, 5);
+		box.fill(false);
+		setBlockMaterial(4, 3, 2, VanillaMaterials.IRON_BARS);
+		setBlockMaterial(4, 3, 8, VanillaMaterials.IRON_BARS);
+		// Add the cell doors
+		placeDoor(4, 1, 2, VanillaMaterials.IRON_DOOR_BLOCK, BlockFace.NORTH);
+		placeDoor(4, 1, 8, VanillaMaterials.IRON_DOOR_BLOCK, BlockFace.NORTH);
 	}
 
 	@Override
 	public void randomize() {
-		left = getRandom().nextBoolean();
 	}
 
 	@Override
 	public List<StructureComponent> getNextComponents() {
 		final StructureComponent component;
 		final float draw = getRandom().nextFloat();
-		if (draw > 0.8) {
+		if (draw > 0.95) {
+			component = new StrongholdLibrary(parent);
+			component.setPosition(position.add(rotate(-3, 0, 11)));
+		} else if (draw > 0.90) {
+			component = new StrongholdChestCorridor(parent);
+			component.setPosition(position.add(rotate(0, 0, 11)));
+		} else if (draw > 0.75) {
 			component = new StrongholdSpiralStaircase(parent);
-		} else if (draw > 0.6) {
-			component = new StrongholdPrison(parent);
-		} else if (draw > 0.4) {
+			component.setPosition(position.add(rotate(0, 0, 11)));
+		} else if (draw > 0.60) {
+			component = new StrongholdRoom(parent);
+			component.setPosition(position.add(rotate(-3, 0, 11)));
+		} else if (draw > 0.45) {
+			component = new StrongholdLargeIntersection(parent);
+			component.setPosition(position.add(rotate(-3, -2, 11)));
+		} else if (draw > 0.30) {
 			component = new StrongholdIntersection(parent);
-		} else if (draw > 0.2) {
+			component.setPosition(position.add(rotate(0, 0, 11)));
+		} else if (draw > 0.15) {
 			component = new StrongholdStaircase(parent);
+			component.setPosition(position.add(rotate(0, 0, 11)));
 		} else {
-			component = new StrongholdCorridor(parent);
+			component = new StrongholdTurn(parent);
+			component.setPosition(position.add(rotate(0, 0, 11)));
 		}
-		if (left) {
-			component.setPosition(position.add(rotate(5, 0, 4)));
-			component.setRotation(rotation.rotate(90, 0, 1, 0));
-		} else {
-			component.setPosition(position.add(rotate(-1, 0, 0)));
-			component.setRotation(rotation.rotate(-90, 0, 1, 0));
-		}
+		component.setRotation(rotation);
 		component.randomize();
 		return Arrays.asList(component);
 	}
@@ -105,15 +131,7 @@ public class StrongholdTurn extends StructureComponent {
 	@Override
 	public BoundingBox getBoundingBox() {
 		final Vector3 rotatedMin = transform(0, 0, 0);
-		final Vector3 rotatedMax = transform(4, 4, 4);
+		final Vector3 rotatedMax = transform(8, 4, 10);
 		return new BoundingBox(Vector3.min(rotatedMin, rotatedMax), Vector3.max(rotatedMin, rotatedMax));
-	}
-
-	public void setLeft(boolean left) {
-		this.left = left;
-	}
-
-	public boolean isLeft() {
-		return left;
 	}
 }

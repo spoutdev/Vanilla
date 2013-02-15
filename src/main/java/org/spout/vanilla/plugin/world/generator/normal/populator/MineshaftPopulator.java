@@ -32,7 +32,7 @@ import org.spout.api.generator.Populator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
-import org.spout.vanilla.plugin.world.generator.structure.mineshaft.Mineshaft;
+import org.spout.vanilla.plugin.world.generator.normal.structure.mineshaft.Mineshaft;
 
 public class MineshaftPopulator extends Populator {
 	private static final int DISTANCE = 256;

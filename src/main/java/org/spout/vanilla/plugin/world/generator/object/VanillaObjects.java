@@ -57,9 +57,9 @@ import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tre
 import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.SpruceTreeObject;
 import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.SwampTreeObject;
 import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.TreeObject.TreeType;
-import org.spout.vanilla.plugin.world.generator.structure.mineshaft.Mineshaft;
-import org.spout.vanilla.plugin.world.generator.structure.stronghold.Stronghold;
-import org.spout.vanilla.plugin.world.generator.structure.temple.Temple;
+import org.spout.vanilla.plugin.world.generator.normal.structure.mineshaft.Mineshaft;
+import org.spout.vanilla.plugin.world.generator.normal.structure.stronghold.Stronghold;
+import org.spout.vanilla.plugin.world.generator.normal.structure.temple.Temple;
 import org.spout.vanilla.plugin.world.generator.theend.object.EndPortalObject;
 import org.spout.vanilla.plugin.world.generator.theend.object.SpireObject;
 

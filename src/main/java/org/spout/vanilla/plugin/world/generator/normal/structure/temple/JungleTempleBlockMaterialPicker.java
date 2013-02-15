@@ -24,38 +24,24 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.world.generator.structure.stronghold;
+package org.spout.vanilla.plugin.world.generator.normal.structure.temple;
 
 import java.util.Random;
 
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.solid.StoneBrick;
 import org.spout.vanilla.plugin.world.generator.structure.BlockMaterialPicker;
 
-public class StrongholdBlockMaterialPicker implements BlockMaterialPicker {
+public class JungleTempleBlockMaterialPicker implements BlockMaterialPicker {
 	private final Random random;
 
-	public StrongholdBlockMaterialPicker(Random random) {
+	public JungleTempleBlockMaterialPicker(Random random) {
 		this.random = random;
 	}
 
 	@Override
 	public BlockMaterial get(boolean outer) {
-		if (!outer) {
-			return VanillaMaterials.AIR;
-		}
-		final float draw = random.nextFloat();
-		if (draw < 0.2) {
-			return StoneBrick.CRACKED_STONE;
-		} else if (draw < 0.5) {
-			return StoneBrick.MOSSY_STONE;
-		} else if (draw < 0.55) {
-			// TODO: should be stone bricks (metadata 2)
-			return VanillaMaterials.SILVERFISH_STONE;
-		} else {
-			return StoneBrick.STONE;
-		}
+		return random.nextFloat() < 0.4 ? VanillaMaterials.COBBLESTONE : VanillaMaterials.MOSS_STONE;
 	}
 }

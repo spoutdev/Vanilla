@@ -34,7 +34,7 @@ import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
-import org.spout.vanilla.plugin.world.generator.structure.stronghold.Stronghold;
+import org.spout.vanilla.plugin.world.generator.normal.structure.stronghold.Stronghold;
 
 public class StrongholdPopulator extends Populator {
 	private static final int DISTANCE = 896;

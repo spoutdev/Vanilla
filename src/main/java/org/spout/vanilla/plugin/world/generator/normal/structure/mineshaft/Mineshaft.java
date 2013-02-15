@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.world.generator.structure.stronghold;
+package org.spout.vanilla.plugin.world.generator.normal.structure.mineshaft;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -35,46 +35,42 @@ import java.util.Set;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.math.Quaternion;
 
 import org.spout.vanilla.plugin.world.generator.structure.Structure;
 import org.spout.vanilla.plugin.world.generator.structure.StructureComponent;
 import org.spout.vanilla.plugin.world.generator.structure.StructureComponent.BoundingBox;
 
-public class Stronghold extends Structure {
-	private static final byte MAX_SIZE_BASE = 101;
-	private static final byte MAX_SIZE_RAND = 100;
+public class Mineshaft extends Structure {
+	private static final byte MAX_SIZE_BASE = 50;
+	private static final byte MAX_SIZE_RAND = 50;
 
-	public Stronghold() {
+	public Mineshaft() {
 	}
 
-	public Stronghold(Random random) {
+	public Mineshaft(Random random) {
 		super(random);
 	}
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		return y >= 10;
+		return y >= 20;
 	}
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
 		final Set<BoundingBox> placed = new HashSet<BoundingBox>();
 		final List<StructureComponent> activeBranches = new LinkedList<StructureComponent>();
-		final StrongholdCorridor corridor = new StrongholdCorridor(this);
-		corridor.setStartOfStronghold(true);
-		corridor.setPosition(new Point(w, x, y, z));
-		corridor.setRotation(new Quaternion(random.nextInt(4) * 90, 0, 1, 0));
-		corridor.randomize();
-		activeBranches.add(corridor);
-		final int size = random.nextInt(MAX_SIZE_RAND) + MAX_SIZE_BASE;
+		final MineshaftRoom room = new MineshaftRoom(this);
+		room.setPosition(new Point(w, x, y, z));
+		room.randomize();
+		activeBranches.add(room);
+		byte size = (byte) (random.nextInt(MAX_SIZE_RAND) + MAX_SIZE_BASE);
 		byte count = 0;
 		while (!activeBranches.isEmpty()) {
 			final StructureComponent active = activeBranches.remove(0);
 			final BoundingBox activeBox = active.getBoundingBox();
-			if (active.getPosition().getY() >= 10
-					&& !collides(activeBox, active.getLastComponent(), placed)
-					&& active.canPlace()) {
+			if (!collides(activeBox, active.getLastComponent(), placed) && active.canPlace()
+					&& active.getPosition().getY() >= 20) {
 				active.place();
 				if (++count > size) {
 					return;

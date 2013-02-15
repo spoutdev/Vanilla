@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.world.generator.structure.stronghold;
+package org.spout.vanilla.plugin.world.generator.normal.structure.stronghold;
 
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +36,7 @@ import org.spout.vanilla.plugin.world.generator.structure.ComponentCuboidPart;
 import org.spout.vanilla.plugin.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.plugin.world.generator.structure.Structure;
 import org.spout.vanilla.plugin.world.generator.structure.StructureComponent;
-import org.spout.vanilla.plugin.world.generator.structure.stronghold.StrongholdDoor.IronFenceDoor;
+import org.spout.vanilla.plugin.world.generator.normal.structure.stronghold.StrongholdDoor.IronFenceDoor;
 import org.spout.vanilla.plugin.world.generator.theend.object.EndPortalObject;
 
 public class StrongholdPortalRoom extends StructureComponent {

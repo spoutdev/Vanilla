@@ -32,7 +32,7 @@ import org.spout.api.generator.Populator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
-import org.spout.vanilla.plugin.world.generator.structure.temple.Temple;
+import org.spout.vanilla.plugin.world.generator.normal.structure.temple.Temple;
 
 public class TemplePopulator extends Populator {
 	private static final short ODD = 800;

@@ -29,12 +29,15 @@ package org.spout.vanilla.api.enchantment;
 import java.util.HashMap;
 import java.util.Map;
 
+import gnu.trove.map.TIntObjectMap;
+import gnu.trove.map.hash.TIntObjectHashMap;
+
 /**
  * Used to register and access enchantments
  */
-public class EnchantmentRegistrar {
-	private static final Map<Integer, Enchantment> idLookup = new HashMap<Integer, Enchantment>();
-	private static final Map<String, Enchantment> nameLookup = new HashMap<String, Enchantment>();
+public class EnchantmentRegistry {
+	private static final TIntObjectMap<Enchantment> BY_ID = new TIntObjectHashMap<Enchantment>();
+	private static final Map<String, Enchantment> BY_NAME = new HashMap<String, Enchantment>();
 
 	/**
 	 * Registers the given enchantment
@@ -42,12 +45,12 @@ public class EnchantmentRegistrar {
 	 * @return Registered enchantment
 	 */
 	public static <T extends Enchantment> T register(T enchantment) {
-		if (idLookup.containsKey(enchantment.getId())) {
+		if (BY_ID.containsKey(enchantment.getId())) {
 			throw new IllegalArgumentException("Enchantment ID '" + enchantment.getId() + "' has already been registered!");
 		}
 
-		idLookup.put(enchantment.getId(), enchantment);
-		nameLookup.put(enchantment.getName().toLowerCase(), enchantment);
+		BY_ID.put(enchantment.getId(), enchantment);
+		BY_NAME.put(enchantment.getName().toLowerCase(), enchantment);
 		return enchantment;
 	}
 
@@ -57,7 +60,7 @@ public class EnchantmentRegistrar {
 	 * @return Enchantment with the given id, or null if not found
 	 */
 	public static Enchantment getById(int id) {
-		return idLookup.get(id);
+		return BY_ID.get(id);
 	}
 
 	/**
@@ -66,7 +69,7 @@ public class EnchantmentRegistrar {
 	 * @return Enchantment with the given name, or null if not found
 	 */
 	public static Enchantment getByName(String name) {
-		return nameLookup.get(name.toLowerCase());
+		return BY_NAME.get(name.toLowerCase());
 	}
 
 	/**
@@ -74,7 +77,6 @@ public class EnchantmentRegistrar {
 	 * @return Array of enchantments
 	 */
 	public static Enchantment[] values() {
-		Enchantment[] values = new Enchantment[idLookup.size()];
-		return idLookup.values().toArray(values);
+		return BY_ID.values(new Enchantment[BY_ID.size()]);
 	}
 }

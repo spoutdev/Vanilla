@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.item;
 
-import java.util.Map;
+import gnu.trove.map.TObjectIntMap;
 
 import org.junit.Test;
 
@@ -34,7 +34,7 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.api.enchantment.Enchantment;
-import org.spout.vanilla.api.enchantment.EnchantmentRegistrar;
+import org.spout.vanilla.api.enchantment.EnchantmentRegistry;
 import org.spout.vanilla.plugin.enchantment.VanillaEnchantments;
 
 import static org.junit.Assert.assertTrue;
@@ -42,10 +42,11 @@ import static org.junit.Assert.assertTrue;
 public class EnchantmentTest {
 	@Test
 	public void testEnchantmentsList() {
-		Enchantment[] list = EnchantmentRegistrar.values();
+		Enchantment[] list = EnchantmentRegistry.values();
 		assertTrue(list.length > 0);
-		for (Enchantment enchantment : list)
+		for (Enchantment enchantment : list) {
 			assertTrue(enchantment != null);
+		}
 	}
 
 	@Test
@@ -54,7 +55,7 @@ public class EnchantmentTest {
 		ItemStack itemStack = new ItemStack(VanillaMaterials.DIAMOND_PICKAXE, 1);
 		Enchantment.addEnchantment(itemStack, VanillaEnchantments.EFFICIENCY, 3, false);
 		Enchantment.addEnchantment(itemStack, VanillaEnchantments.FORTUNE, 2, false);
-		Map<Enchantment, Integer> enchantments = Enchantment.getEnchantments(itemStack);
+		TObjectIntMap<Enchantment> enchantments = Enchantment.getEnchantments(itemStack);
 		assertTrue(enchantments.size() == 2);
 		assertTrue(enchantments.containsKey(VanillaEnchantments.EFFICIENCY));
 		assertTrue(enchantments.get(VanillaEnchantments.EFFICIENCY) == 3);

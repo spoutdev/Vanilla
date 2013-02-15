@@ -27,13 +27,13 @@
 package org.spout.vanilla.api.enchantment;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
-import org.spout.api.Spout;
+import gnu.trove.map.TObjectIntMap;
+import gnu.trove.map.hash.TObjectIntHashMap;
+
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.GenericMath;
 
@@ -92,7 +92,8 @@ public abstract class Enchantment {
 	}
 
 	/**
-	 * Gets the minimum modified enchantment level allowed to produce this enchantment with a given power level
+	 * Gets the minimum modified enchantment level allowed to produce this
+	 * enchantment with a given power level
 	 * @param powerLevel The desired power level of the enchantment
 	 * @return Minimum level
 	 */
@@ -101,7 +102,8 @@ public abstract class Enchantment {
 	}
 
 	/**
-	 * Gets the maximum modified enchantment level allowed to produce this enchantment with a given power level
+	 * Gets the maximum modified enchantment level allowed to produce this
+	 * enchantment with a given power level
 	 * @param powerLevel The desired power level of the enchantment
 	 * @return Maximum level
 	 */
@@ -110,7 +112,8 @@ public abstract class Enchantment {
 	}
 
 	/**
-	 * Gets the weight of this enchantment, enchantments with higher weights have a greater chance of being selected during the enchantment process
+	 * Gets the weight of this enchantment, enchantments with higher weights
+	 * have a greater chance of being selected during the enchantment process
 	 * @return Weight of this enchantment
 	 */
 	public final int getWeight() {
@@ -127,7 +130,8 @@ public abstract class Enchantment {
 	}
 
 	/**
-	 * Whether this enchantment is compatible with the given enchantment while attached to the given material
+	 * Whether this enchantment is compatible with the given enchantment while
+	 * attached to the given material
 	 * @param enchantment Enchantment to check
 	 * @param material Material that this enchantment is attached to
 	 * @return true if this enchantment is compatible with the given enchantment
@@ -199,8 +203,9 @@ public abstract class Enchantment {
 	@SuppressWarnings("unchecked")
 	public static boolean addEnchantment(ItemStack item, Enchantment enchantment, int powerLevel, boolean force) {
 		VanillaMaterial material = (VanillaMaterial) item.getMaterial();
-		if (hasEnchantment(item, enchantment))
+		if (hasEnchantment(item, enchantment)) {
 			return false;
+		}
 
 		if (!force) {
 			if (enchantment.canEnchant(material)) {
@@ -216,11 +221,13 @@ public abstract class Enchantment {
 		}
 
 		CompoundMap nbtData = item.getNBTData();
-		if (nbtData == null)
+		if (nbtData == null) {
 			nbtData = new CompoundMap();
+		}
 		List<CompoundTag> enchantments = new ArrayList<CompoundTag>();
-		if (nbtData.get("ench") instanceof ListTag<?>)
+		if (nbtData.get("ench") instanceof ListTag<?>) {
 			enchantments = new ArrayList<CompoundTag>(((ListTag<CompoundTag>) nbtData.get("ench")).getValue());
+		}
 		CompoundMap map = new CompoundMap();
 		map.put(new ShortTag("id", (short) enchantment.getId()));
 		map.put(new ShortTag("lvl", (short) powerLevel));
@@ -234,11 +241,13 @@ public abstract class Enchantment {
 	 * Returns the power level of the given {@link Enchantment}
 	 * @param item Item containing the enchantment
 	 * @param enchantment Enchantment to check
-	 * @return Power level of the enchantment, or 0 if the item does not contain the enchantment
+	 * @return Power level of the enchantment, or 0 if the item does not contain
+	 * the enchantment
 	 */
 	public static int getEnchantmentLevel(ItemStack item, Enchantment enchantment) {
-		if (!isEnchanted(item))
+		if (!isEnchanted(item)) {
 			return 0;
+		}
 		@SuppressWarnings("unchecked")
 		List<CompoundTag> enchantmentList = ((ListTag<CompoundTag>) item.getNBTData().get("ench")).getValue();
 		for (CompoundTag tag : enchantmentList) {
@@ -256,17 +265,18 @@ public abstract class Enchantment {
 	 * @param item Item to check
 	 * @return Map of the item's enchantments along with their power level
 	 */
-	public static Map<Enchantment, Integer> getEnchantments(ItemStack item) {
-		Map<Enchantment, Integer> enchantments = new HashMap<Enchantment, Integer>();
-		if (!isEnchanted(item))
+	public static TObjectIntMap<Enchantment> getEnchantments(ItemStack item) {
+		TObjectIntMap<Enchantment> enchantments = new TObjectIntHashMap<Enchantment>();
+		if (!isEnchanted(item)) {
 			return enchantments;
+		}
 		@SuppressWarnings("unchecked")
 		List<CompoundTag> enchantmentList = ((ListTag<CompoundTag>) item.getNBTData().get("ench")).getValue();
 		for (CompoundTag tag : enchantmentList) {
 			Tag<?> idTag = tag.getValue().get("id");
 			Tag<?> lvlTag = tag.getValue().get("lvl");
 			if (idTag instanceof ShortTag && lvlTag instanceof ShortTag) {
-				enchantments.put(EnchantmentRegistrar.getById(((ShortTag) idTag).getValue()), (int) ((ShortTag) lvlTag).getValue());
+				enchantments.put(EnchantmentRegistry.getById(((ShortTag) idTag).getValue()), (int) ((ShortTag) lvlTag).getValue());
 			}
 		}
 		return enchantments;
@@ -293,7 +303,8 @@ public abstract class Enchantment {
 	}
 
 	/**
-	 * An object holding both the type of {@link Enchantment} as well as its power level (I, II, III, IV, V)
+	 * An object holding both the type of {@link Enchantment} as well as its
+	 * power level (I, II, III, IV, V)
 	 */
 	private final static class EnchantmentData {
 		public final Enchantment enchantment;
@@ -315,13 +326,14 @@ public abstract class Enchantment {
 	 * @param itemStack The item stack to enchant
 	 * @param level The level of enchantment
 	 * @return Whether enchantments were successfully added
-	 * 
+	 *
 	 */
 	public static boolean addRandomEnchantments(ItemStack itemStack, int level) {
 		VanillaMaterial material = (VanillaMaterial) itemStack.getMaterial();
 		Random random = GenericMath.getRandom();
-		if (!(material instanceof VanillaItemMaterial))
+		if (!(material instanceof VanillaItemMaterial)) {
 			return false;
+		}
 		int enchantibility = ((VanillaItemMaterial) material).getEnchantability();
 		// modify level depending on item enchantibility
 		level += 1 + random.nextInt(enchantibility / 4 + 1) + random.nextInt(enchantibility / 4 + 1);
@@ -330,7 +342,7 @@ public abstract class Enchantment {
 		float multiplier = (random.nextFloat() + random.nextFloat() - 1.0F) * 0.15F + 1.0F;
 		level = Math.max((int) ((float) level * multiplier + 0.5F), 1);
 
-		Map<EnchantmentData, Integer> enchantmentList = makeEnchantmentList(level, material);
+		TObjectIntMap<EnchantmentData> enchantmentList = makeEnchantmentList(level, material);
 		boolean succeeded = false;
 		while (enchantmentList != null && !enchantmentList.isEmpty()) {
 			EnchantmentData enchantmentData = MathHelper.chooseWeightedRandom(random, enchantmentList);
@@ -340,30 +352,35 @@ public abstract class Enchantment {
 				// with the one we just added
 				for (Iterator<EnchantmentData> i = enchantmentList.keySet().iterator(); i.hasNext();) {
 					Enchantment conflict = i.next().enchantment;
-					if (!conflict.compatibleWith(enchantmentData.enchantment, material))
+					if (!conflict.compatibleWith(enchantmentData.enchantment, material)) {
 						i.remove();
+					}
 				}
 			}
 			// Decide whether to add more enchantments
-			if (random.nextInt(50) > level)
+			if (random.nextInt(50) > level) {
 				break;
+			}
 			level /= 2;
 		}
 		return succeeded;
 	}
 
 	/**
-	 * Generates a list of allowed {@link EnchantmentData} for the given item, together with their probability weights
+	 * Generates a list of allowed {@link EnchantmentData} for the given item,
+	 * together with their probability weights
 	 * @param level The modified enchantment level
 	 * @param material The material of the {@link ItemStack} to be enchanted
-	 * @return A map from the allowed {@link EnchantmentData} to their probability weights
+	 * @return A map from the allowed {@link EnchantmentData} to their
+	 * probability weights
 	 */
-	private static Map<EnchantmentData, Integer> makeEnchantmentList(int level, VanillaMaterial material) {
-		Map<EnchantmentData, Integer> output = new HashMap<EnchantmentData, Integer>();
-		Enchantment[] enchantmentList = EnchantmentRegistrar.values();
+	private static TObjectIntMap<EnchantmentData> makeEnchantmentList(int level, VanillaMaterial material) {
+		TObjectIntMap<EnchantmentData> output = new TObjectIntHashMap<EnchantmentData>();
+		Enchantment[] enchantmentList = EnchantmentRegistry.values();
 		for (Enchantment enchantment : enchantmentList) {
-			if (!enchantment.canEnchant(material))
+			if (!enchantment.canEnchant(material)) {
 				continue;
+			}
 			for (int powerLevel = 1; powerLevel <= enchantment.getMaximumPowerLevel(); ++powerLevel) {
 				if (level >= enchantment.getMinimumLevel(powerLevel) && level <= enchantment.getMaximumLevel(powerLevel)) {
 					output.put(new EnchantmentData(enchantment, powerLevel), enchantment.getWeight());

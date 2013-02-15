@@ -26,8 +26,9 @@
  */
 package org.spout.vanilla.plugin.util;
 
-import java.util.Map;
 import java.util.Random;
+
+import gnu.trove.map.TObjectIntMap;
 
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.TrigMath;
@@ -164,17 +165,20 @@ public class MathHelper {
 	 * @param weightMap A map from the items that can be chosen to their respective weights
 	 * @return The randomly chosen item, or null if the total weight is not positive.
 	 */
-	public static <T> T chooseWeightedRandom(Random random, Map<T, Integer> weightMap) {
+	public static <T> T chooseWeightedRandom(Random random, TObjectIntMap<T> weightMap) {
 		int totalWeight = 0;
-		for (Integer i : weightMap.values())
+		for (int i : weightMap.values()) {
 			totalWeight += i;
-		if (totalWeight <= 0)
+		}
+		if (totalWeight <= 0) {
 			return null;
+		}
 		int j = random.nextInt(totalWeight);
 		for (T t : weightMap.keySet()) {
 			j -= weightMap.get(t);
-			if (j < 0)
+			if (j < 0) {
 				return t;
+			}
 		}
 		return null;
 	}

@@ -49,7 +49,7 @@ import org.spout.vanilla.plugin.enchantment.tool.sword.Looting;
 import org.spout.vanilla.plugin.enchantment.tool.sword.Sharpness;
 import org.spout.vanilla.plugin.enchantment.tool.sword.Smite;
 
-import static org.spout.vanilla.api.enchantment.EnchantmentRegistrar.register;
+import static org.spout.vanilla.api.enchantment.EnchantmentRegistry.register;
 
 public class VanillaEnchantments {
 	// ==Armor Enchantments==

@@ -45,7 +45,7 @@ public class EntityTeleportHandler extends MessageHandler<EntityTeleportMessage>
 		
 		Player player = session.getPlayer();
 		World world = player.getWorld();
-		Entity entity = world.getEntity(message.getEntityId());
+		Entity entity = session.getPlayer();//world.getEntity(message.getEntityId());
 		entity.getScene().setPosition(new Point(world, message.getX(), message.getY(), message.getZ()));
 		entity.getScene().rotate(QuaternionMath.rotation(message.getPitch(), message.getRotation(), 0));
 	}

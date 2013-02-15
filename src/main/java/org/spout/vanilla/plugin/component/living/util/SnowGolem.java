@@ -28,12 +28,12 @@ package org.spout.vanilla.plugin.component.living.util;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.api.component.Utility;
+import org.spout.vanilla.plugin.component.Utility;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.EntityDrops;
-import org.spout.vanilla.plugin.component.misc.Health;
+import org.spout.vanilla.plugin.component.misc.EntityDropComponent;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
@@ -46,9 +46,9 @@ public class SnowGolem extends Living implements Utility {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.SNOW_GOLEM));
-		getOwner().add(EntityDrops.class).addDrop(new ItemStack(VanillaMaterials.SNOWBALL, getRandom().nextInt(15)));
+		getOwner().add(EntityDropComponent.class).addDrop(new ItemStack(VanillaMaterials.SNOWBALL, getRandom().nextInt(15)));
 		if (getAttachedCount() == 1) {
-			getOwner().add(Health.class).setSpawnHealth(100);
+			getOwner().add(HealthComponent.class).setSpawnHealth(100);
 		}
 	}
 }

@@ -33,13 +33,13 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 
-import org.spout.vanilla.api.component.Passive;
+import org.spout.vanilla.plugin.component.Passive;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.EntityDrops;
-import org.spout.vanilla.plugin.component.misc.Health;
+import org.spout.vanilla.plugin.component.misc.EntityDropComponent;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
@@ -53,13 +53,13 @@ public class Cow extends Living implements Passive {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.COW));
-		EntityDrops dropComponent = getOwner().add(EntityDrops.class);
+		EntityDropComponent dropComponent = getOwner().add(EntityDropComponent.class);
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.RAW_BEEF, random.nextInt(2) + 1));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.LEATHER, random.nextInt(2)));
 		dropComponent.addXpDrop((short) (getRandom().nextInt(3) + 1));
 		if (getAttachedCount() == 1) {
-			getOwner().add(Health.class).setSpawnHealth(10);
+			getOwner().add(HealthComponent.class).setSpawnHealth(10);
 		}
 	}
 

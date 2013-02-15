@@ -31,19 +31,17 @@ import org.spout.api.component.impl.NavigationComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.api.component.VanillaComponent;
-import org.spout.vanilla.api.component.misc.DrowningComponent;
-import org.spout.vanilla.api.component.misc.HeadComponent;
-import org.spout.vanilla.api.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.component.VanillaComponent;
+import org.spout.vanilla.plugin.component.misc.DrowningComponent;
+import org.spout.vanilla.plugin.component.misc.HeadComponent;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.api.data.effect.StatusEffect;
 
 import org.spout.vanilla.plugin.ai.examiner.VanillaBlockExaminer;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.component.misc.Burn;
-import org.spout.vanilla.plugin.component.misc.Drowning;
+import org.spout.vanilla.plugin.component.misc.BurnComponent;
 import org.spout.vanilla.plugin.component.misc.EffectsComponent;
-import org.spout.vanilla.plugin.component.misc.Health;
 
 public abstract class Living extends VanillaComponent {
 	private HeadComponent head;
@@ -57,12 +55,12 @@ public abstract class Living extends VanillaComponent {
 		super.onAttached();
 		Entity holder = getOwner();
 		head = holder.add(HeadComponent.class);
-		health = holder.add(Health.class);
-		drowning = holder.add(Drowning.class);
+		health = holder.add(HealthComponent.class);
+		drowning = holder.add(DrowningComponent.class);
 		navigation = holder.add(NavigationComponent.class);
 		navigation.setDefaultExaminers(new VanillaBlockExaminer());
 		ai = holder.add(GoapAIComponent.class);
-		holder.add(Burn.class);
+		holder.add(BurnComponent.class);
 		holder.setSavable(true);
 	}
 
@@ -97,7 +95,7 @@ public abstract class Living extends VanillaComponent {
 
 	protected byte getCommonMetadata() {
 		byte value = 0;
-		Burn burn = getOwner().get(Burn.class);
+		BurnComponent burn = getOwner().get(BurnComponent.class);
 		if (burn != null) {
 			value = (byte) (value | (burn.isOnFire() ? 1 : 0));
 		}

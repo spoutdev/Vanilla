@@ -39,7 +39,7 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.api.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.api.event.entity.EntityStatusEvent;
 
-import org.spout.vanilla.plugin.component.misc.EntityDrops;
+import org.spout.vanilla.plugin.component.misc.EntityDropComponent;
 import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.component.substance.object.ObjectEntity;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
@@ -52,7 +52,7 @@ public abstract class MinecartBase extends ObjectEntity {
 	public void onAttached() {
 		super.onAttached();
 		if (getAttachedCount() == 1) {
-			getOwner().add(EntityDrops.class).addDrop(new ItemStack(VanillaMaterials.MINECART, 1));
+			getOwner().add(EntityDropComponent.class).addDrop(new ItemStack(VanillaMaterials.MINECART, 1));
 		}
 		getOwner().setSavable(true);
 	}
@@ -82,7 +82,7 @@ public abstract class MinecartBase extends ObjectEntity {
 	}
 
 	protected void onDestroy() {
-		List<ItemStack> drops = getOwner().get(EntityDrops.class).getDrops();
+		List<ItemStack> drops = getOwner().get(EntityDropComponent.class).getDrops();
 		Point entityPosition = getOwner().getScene().getPosition();
 		for (ItemStack stack : drops) {
 			if (stack != null) {

@@ -28,7 +28,7 @@ package org.spout.vanilla.plugin.component.substance.material.chest;
 
 import org.spout.api.entity.Player;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.inventory.window.block.chest.EnderChestWindow;
 
@@ -38,7 +38,7 @@ import org.spout.vanilla.plugin.inventory.window.block.chest.EnderChestWindow;
 public class EnderChest extends AbstractChest {
 	@Override
 	public boolean open(Player player) {
-		player.get(WindowHolder.class).openWindow(new EnderChestWindow(player, this, player.get(PlayerInventory.class).getEnderChestInventory()));
+		player.get(WindowHolder.class).openWindow(new EnderChestWindow(player, this, player.get(PlayerInventoryComponent.class).getEnderChestInventory()));
 		return super.open(player);
 	}
 }

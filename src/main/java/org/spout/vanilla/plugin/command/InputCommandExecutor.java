@@ -41,7 +41,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.plugin.inventory.window.Window;
@@ -111,25 +111,28 @@ public class InputCommandExecutor implements CommandExecutor {
 			}
 		} else if (name.startsWith("+hotbar_")) {
 			Player player = (Player) source;
-			QuickbarInventory quickbar = player.get(PlayerInventory.class).getQuickbar();
-			HUDComponent hud = player.get(HUDComponent.class);
-			int newSlot = quickbar.getSelectedSlot().getIndex();
-			if (name.endsWith("left")) {
-				newSlot--;
-				if (newSlot < 0) {
-					newSlot = 8;
+			PlayerInventoryComponent inventory = player.get(PlayerInventoryComponent.class);
+			if (inventory != null) {
+				QuickbarInventory quickbar = inventory.getQuickbar();
+				HUDComponent hud = player.get(HUDComponent.class);
+				int newSlot = quickbar.getSelectedSlot().getIndex();
+				if (name.endsWith("left")) {
+					newSlot--;
+					if (newSlot < 0) {
+						newSlot = 8;
+					}
+				} else if (name.endsWith("right")) {
+					newSlot++;
+					if (newSlot > 8) {
+						newSlot = 0;
+					}
+				} else {
+					newSlot = Integer.parseInt(name.substring(name.indexOf('_') + 1)) - 1;
 				}
-			} else if (name.endsWith("right")) {
-				newSlot++;
-				if (newSlot > 8) {
-					newSlot = 0;
-				}
-			} else {
-				newSlot = Integer.parseInt(name.substring(name.indexOf('_') + 1)) - 1;
-			}
 
-			quickbar.setSelectedSlot(newSlot);
-			hud.getHotBar().update();
+				quickbar.setSelectedSlot(newSlot);
+				hud.getHotBar().update();
+			}
 		}
 	}
 }

@@ -33,7 +33,8 @@ import org.spout.api.geo.World;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-import org.spout.vanilla.plugin.component.inventory.VanillaEntityInventory;
+
+import org.spout.vanilla.plugin.component.inventory.EntityInventoryComponent;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
 
 public final class EntityEquipmentHandler extends MessageHandler<EntityEquipmentMessage> {
@@ -54,9 +55,9 @@ public final class EntityEquipmentHandler extends MessageHandler<EntityEquipment
 			return;
 		}
 	
-		VanillaEntityInventory inventory = entity.get(VanillaEntityInventory.class);
+		EntityInventoryComponent inventory = entity.get(EntityInventoryComponent.class);
 		if(inventory == null){
-			Spout.getLogger().warning("EntityEquipmentHandler entity haven't VanillaEntityInventory");
+			Spout.getLogger().warning("EntityEquipmentHandler entity haven't EntityInventoryComponent");
 			return;
 		}
 		

@@ -24,33 +24,12 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.component.misc;
-
-import java.util.List;
-import org.spout.vanilla.plugin.inventory.player.DropInventory;
-
-import org.spout.api.inventory.Inventory;
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.map.DefaultedKey;
-import org.spout.api.map.DefaultedKeyFactory;
-
-import org.spout.vanilla.api.component.misc.EntityDropComponent;
+package org.spout.vanilla.plugin.component;
 
 /**
- * Handle item/XP drop from a entity.
+ * Represents an entity that is used for some kind of utility. A utility entity
+ * will not attack another player even if the player provokes said entity and
+ * an utility entity exists for the benefit of the player.
  */
-public class EntityDrops extends EntityDropComponent {
-	private static final DefaultedKey<DropInventory> DROP_INVENTORY = new DefaultedKeyFactory<DropInventory>("EntityDrops", DropInventory.class);
-
-	@Override
-	public EntityDropComponent addDrop(ItemStack itemstack) {
-		Inventory dropInventory = getOwner().getData().get(DROP_INVENTORY);
-		dropInventory.add(itemstack);
-		return this;
-	}
-
-	@Override
-	public List<ItemStack> getDrops() {
-		return getOwner().getData().get(DROP_INVENTORY);
-	}
+public interface Utility extends Passive {
 }

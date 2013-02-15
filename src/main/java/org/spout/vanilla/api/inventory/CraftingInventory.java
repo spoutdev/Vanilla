@@ -33,7 +33,7 @@ import org.spout.api.inventory.shape.Grid;
 import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.material.Material;
 
-import org.spout.vanilla.api.component.inventory.PlayerInventoryComponent;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
 
 /**
  * Represents an inventory that contains a crafting matrix.

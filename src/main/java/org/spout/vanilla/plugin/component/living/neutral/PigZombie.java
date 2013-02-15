@@ -26,15 +26,15 @@
  */
 package org.spout.vanilla.plugin.component.living.neutral;
 
-import org.spout.vanilla.api.component.Neutral;
+import org.spout.vanilla.plugin.component.Neutral;
 import org.spout.vanilla.api.data.Difficulty;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.inventory.VanillaEntityInventory;
+import org.spout.vanilla.plugin.component.inventory.EntityInventoryComponent;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.api.component.misc.DamageComponent;
+import org.spout.vanilla.plugin.component.misc.DamageComponent;
 import org.spout.vanilla.plugin.component.misc.EntityPickupItemComponent;
-import org.spout.vanilla.plugin.component.misc.Health;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
 
@@ -46,10 +46,10 @@ public class PigZombie extends Living implements Neutral {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.PIG_ZOMBIE));
-		getOwner().add(VanillaEntityInventory.class);
+		getOwner().add(EntityInventoryComponent.class);
 		getOwner().add(EntityPickupItemComponent.class);
 		if (getAttachedCount() == 1) {
-			getOwner().add(Health.class).setSpawnHealth(20);
+			getOwner().add(HealthComponent.class).setSpawnHealth(20);
 		}
 
 		DamageComponent damage = getOwner().add(DamageComponent.class);

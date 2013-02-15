@@ -26,16 +26,16 @@
  */
 package org.spout.vanilla.plugin.component.living.neutral;
 
-import org.spout.vanilla.api.component.Neutral;
+import org.spout.vanilla.plugin.component.Neutral;
 import org.spout.vanilla.api.data.Difficulty;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.api.component.misc.DamageComponent;
-
-import org.spout.vanilla.plugin.component.misc.Health;
+import org.spout.vanilla.plugin.component.misc.DamageComponent;
 
 import org.spout.vanilla.api.data.VanillaData;
+
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.protocol.entity.creature.WolfEntityProtocol;
 
 /**
@@ -49,7 +49,7 @@ public class Wolf extends Living implements Neutral {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new WolfEntityProtocol());
 		if (getAttachedCount() == 1) {
-			getOwner().add(Health.class).setSpawnHealth(8);
+			getOwner().add(HealthComponent.class).setSpawnHealth(8);
 		}
 
 		DamageComponent damage = getOwner().add(DamageComponent.class);
@@ -66,9 +66,9 @@ public class Wolf extends Living implements Neutral {
 	public void setTamed(boolean tamed) {
 		getOwner().getData().put(VanillaData.TAMED, tamed);
 		if (tamed == true) {
-			getOwner().get(Health.class).setMaxHealth(20);
+			getOwner().get(HealthComponent.class).setMaxHealth(20);
 		} else {
-			getOwner().get(Health.class).setMaxHealth(8);
+			getOwner().get(HealthComponent.class).setMaxHealth(8);
 		}
 	}
 

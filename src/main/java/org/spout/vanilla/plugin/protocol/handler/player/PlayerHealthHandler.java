@@ -30,7 +30,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.api.component.misc.HealthComponent;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.api.event.cause.HealthChangeCause;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerHealthMessage;

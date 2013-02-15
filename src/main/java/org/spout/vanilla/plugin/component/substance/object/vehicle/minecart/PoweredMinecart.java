@@ -40,7 +40,7 @@ import org.spout.vanilla.api.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.api.material.Fuel;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.misc.EntityDrops;
+import org.spout.vanilla.plugin.component.misc.EntityDropComponent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.object.ObjectType;
 import org.spout.vanilla.plugin.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
@@ -55,7 +55,7 @@ public class PoweredMinecart extends MinecartBase {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MinecartObjectEntityProtocol(ObjectType.POWERED_MINECART));
 		if (getAttachedCount() == 1) {
-			getOwner().add(EntityDrops.class).addDrop(new ItemStack(VanillaMaterials.FURNACE, 1));
+			getOwner().add(EntityDropComponent.class).addDrop(new ItemStack(VanillaMaterials.FURNACE, 1));
 		}
 	}
 

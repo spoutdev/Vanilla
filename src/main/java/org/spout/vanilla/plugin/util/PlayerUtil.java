@@ -39,8 +39,9 @@ import org.spout.vanilla.api.data.GameMode;
 import org.spout.api.inventory.Slot;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
-import org.spout.vanilla.api.component.misc.HeadComponent;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
+
+import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.api.data.VanillaData;
 
 public class PlayerUtil {
@@ -69,7 +70,7 @@ public class PlayerUtil {
 	 * @return The quickbar, or null
 	 */
 	public static QuickbarInventory getQuickbar(Entity entity) {
-		PlayerInventory inventory = entity.get(PlayerInventory.class);
+		PlayerInventoryComponent inventory = entity.get(PlayerInventoryComponent.class);
 		if (entity instanceof Player && inventory != null) {
 			return inventory.getQuickbar();
 		} else {

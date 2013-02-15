@@ -26,15 +26,12 @@
  */
 package org.spout.vanilla.plugin.component.misc;
 
-import java.util.List;
-
 import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.api.event.entity.EntityCollectItemEvent;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.plugin.component.substance.object.Item;
-import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 
 /**
  * Component that adds a detector to resources.entities to scan for and pickup items.
@@ -47,7 +44,7 @@ public class PlayerPickupItemComponent extends EntityPickupItemComponent {
 			Item item = entity.get(Item.class);
 			if (item != null && item.canBeCollected()) {
 				getOwner().getNetwork().callProtocolEvent(new EntityCollectItemEvent(getOwner(), entity));
-				PlayerInventory inv = getOwner().get(PlayerInventory.class);
+				PlayerInventoryComponent inv = getOwner().get(PlayerInventoryComponent.class);
 				if (inv != null) {
 					inv.add(item.getItemStack());
 				}

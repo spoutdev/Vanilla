@@ -26,27 +26,27 @@
  */
 package org.spout.vanilla.plugin.component.misc;
 
-import org.spout.api.geo.discrete.Point;
-
-import org.spout.vanilla.api.component.misc.BurnComponent;
-import org.spout.vanilla.api.data.VanillaData;
-import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
-import org.spout.vanilla.api.event.cause.NullDamageCause;
-
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
+
+import org.spout.api.component.type.EntityComponent;
+import org.spout.api.geo.discrete.Point;
+
+import org.spout.vanilla.api.data.VanillaData;
+import org.spout.vanilla.api.event.cause.DamageCause;
+import org.spout.vanilla.api.event.cause.NullDamageCause;
 
 /**
  * Component handling a entity being on fire.
  */
-public class Burn extends BurnComponent {
+public class BurnComponent extends EntityComponent {
 	private float internalTimer = 0.0f, rainTimer = 0f;
-	private Health health;
+	private HealthComponent health;
 	private Living living;
 
 	@Override
 	public void onAttached() {
-		health = getOwner().add(Health.class);
+		health = getOwner().add(HealthComponent.class);
 		living = getOwner().get(Living.class);
 	}
 
@@ -75,7 +75,7 @@ public class Burn extends BurnComponent {
 		living.sendMetaData();
 		if (isFireHurting()) {
 			if (internalTimer >= 1.0f) {
-				health.damage(1, new NullDamageCause(DamageType.BURN));
+				health.damage(1, new NullDamageCause(DamageCause.DamageType.BURN));
 				internalTimer = 0;
 			}
 		}
@@ -87,11 +87,34 @@ public class Burn extends BurnComponent {
 	}
 
 	/**
+	 * Retrieve the firetick value. Any value higher than 0 means the entity is on fire.
+	 * @return The firetick value.
+	 */
+	public float getFireTick() {
+		return getOwner().getData().get(VanillaData.FIRE_TICK);
+	}
+
+	/**
+	 * Check if the entity is on fire or not
+	 * @return True if the entity is on fire else false.
+	 */
+	public boolean isOnFire() {
+		return getFireTick() > 0;
+	}
+
+	/**
+	 * Check if the fire hurts or not.
+	 * @return True if the fire hurts and false if it doesn't
+	 */
+	public boolean isFireHurting() {
+		return getOwner().getData().get(VanillaData.FIRE_HURT);
+	}
+
+	/**
 	 * Sets the entity on fire.
 	 * @param time The amount of time in seconds the entity should be on fire.
 	 * @param hurt True if the fire should hurt else false.
 	 */
-	@Override
 	public void setOnFire(float time, boolean hurt) {
 		setFireTick(time);
 		setFireHurting(hurt);

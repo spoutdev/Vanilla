@@ -32,13 +32,13 @@ import org.spout.api.component.impl.SceneComponent;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.api.component.Hostile;
+import org.spout.vanilla.plugin.component.Hostile;
 import org.spout.vanilla.api.data.VanillaData;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.EntityDrops;
-import org.spout.vanilla.plugin.component.misc.Health;
+import org.spout.vanilla.plugin.component.misc.EntityDropComponent;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreeperEntityProtocol;
 
@@ -51,12 +51,12 @@ public class Creeper extends Living implements Hostile {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreeperEntityProtocol());
 		SceneComponent scene = getOwner().getScene();
-		getOwner().add(EntityDrops.class).addDrop(new ItemStack(VanillaMaterials.GUNPOWDER, getRandom().nextInt(2))).addXpDrop((short) 5);
+		getOwner().add(EntityDropComponent.class).addDrop(new ItemStack(VanillaMaterials.GUNPOWDER, getRandom().nextInt(2))).addXpDrop((short) 5);
 		scene.setShape(2f, new BoxShape(1F, 2F, 1F));
 		scene.setFriction(10f);
 		scene.setRestitution(0f);
 		if (getAttachedCount() == 1) {
-			getOwner().add(Health.class).setSpawnHealth(20);
+			getOwner().add(HealthComponent.class).setSpawnHealth(20);
 		}
 
 		//TODO: Does damage according to range.

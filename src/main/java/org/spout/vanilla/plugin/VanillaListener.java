@@ -47,10 +47,10 @@ import org.spout.api.plugin.Platform;
 import org.spout.vanilla.api.event.block.RedstoneChangeEvent;
 import org.spout.vanilla.api.material.block.redstone.RedstoneSource;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.component.misc.Health;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.component.misc.LevelComponent;
 import org.spout.vanilla.plugin.component.misc.PlayerPickupItemComponent;
@@ -89,7 +89,7 @@ public class VanillaListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		player.add(Human.class).setName(player.getName());
-		player.add(PlayerInventory.class);
+		player.add(PlayerInventoryComponent.class);
 		player.add(WindowHolder.class);
 		player.add(PlayerListComponent.class);
 		player.add(PingComponent.class);
@@ -120,10 +120,10 @@ public class VanillaListener implements Listener {
 		HUD.openHUD();
 
 		player.add(Human.class);
-		player.add(PlayerInventory.class);
+		player.add(PlayerInventoryComponent.class);
 		player.add(WindowHolder.class);
 		player.add(CameraComponent.class);
-		player.add(Health.class);
+		player.add(HealthComponent.class);
 		player.add(HungerComponent.class);
 		player.add(InteractComponent.class).setRange(5f);
 

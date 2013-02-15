@@ -33,7 +33,7 @@ import org.spout.vanilla.api.data.effect.StatusEffect;
 import org.spout.vanilla.api.data.effect.StatusEffectContainer;
 import org.spout.api.inventory.Slot;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.plugin.component.misc.EffectsComponent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
@@ -232,6 +232,6 @@ public class Potion extends VanillaItemMaterial {
 		}
 
 		slot.addAmount(-1);
-		entity.get(PlayerInventory.class).getMain().add(new ItemStack(VanillaMaterials.GLASS_BOTTLE, 1));
+		entity.get(PlayerInventoryComponent.class).getMain().add(new ItemStack(VanillaMaterials.GLASS_BOTTLE, 1));
 	}
 }

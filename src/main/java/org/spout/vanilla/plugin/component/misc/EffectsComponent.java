@@ -47,11 +47,11 @@ import org.spout.vanilla.plugin.material.item.potion.Potion;
  */
 public class EffectsComponent extends EntityComponent {
 	private List<StatusEffectContainer> list = new ArrayList<StatusEffectContainer>();
-	private Health health;
+	private HealthComponent health;
 
 	@Override
 	public void onAttached() {
-		this.health = getOwner().add(Health.class);
+		this.health = getOwner().add(HealthComponent.class);
 	}
 
 	@Override

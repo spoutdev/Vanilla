@@ -31,13 +31,13 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.api.component.Passive;
+import org.spout.vanilla.plugin.component.Passive;
 import org.spout.vanilla.api.data.VanillaData;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.EntityDrops;
-import org.spout.vanilla.plugin.component.misc.Health;
+import org.spout.vanilla.plugin.component.misc.EntityDropComponent;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
@@ -56,13 +56,13 @@ public class Chicken extends Living implements Passive {
 		Float nextEgg = (float) (GenericMath.getRandom().nextInt(MINIMUM_EGG_BREEDING_TIME) + MINIMUM_EGG_BREEDING_TIME);
 		getOwner().getData().put(VanillaData.TIME_TILL_EGG, nextEgg);
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.CHICKEN));
-		EntityDrops dropComponent = getOwner().add(EntityDrops.class);
+		EntityDropComponent dropComponent = getOwner().add(EntityDropComponent.class);
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.FEATHER, getRandom().nextInt(2)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.RAW_CHICKEN, 1));
 		dropComponent.addXpDrop((short) (getRandom().nextInt(3) + 1));
 
 		if (getAttachedCount() == 1) {
-			getOwner().add(Health.class).setSpawnHealth(4);
+			getOwner().add(HealthComponent.class).setSpawnHealth(4);
 		}
 	}
 

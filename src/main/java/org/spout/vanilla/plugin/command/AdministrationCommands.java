@@ -55,9 +55,9 @@ import org.spout.vanilla.api.data.Weather;
 import org.spout.vanilla.api.event.cause.HealthChangeCause;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.component.misc.Health;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.component.misc.LevelComponent;
 import org.spout.vanilla.plugin.component.world.VanillaSky;
 import org.spout.vanilla.plugin.configuration.OpConfiguration;
@@ -82,7 +82,7 @@ public class AdministrationCommands {
 			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to clear your own inventory.");
 			}
-			PlayerInventory inv = ((Player) source).get(PlayerInventory.class);
+			PlayerInventoryComponent inv = ((Player) source).get(PlayerInventoryComponent.class);
 			if (inv == null) {
 				source.sendMessage(plugin.getPrefix(), ChatStyle.RED, "You have no inventory!");
 				return;
@@ -95,7 +95,7 @@ public class AdministrationCommands {
 				source.sendMessage(plugin.getPrefix(), ChatStyle.RED, "Player is not online!");
 				return;
 			}
-			PlayerInventory inv = player.get(PlayerInventory.class);
+			PlayerInventoryComponent inv = player.get(PlayerInventoryComponent.class);
 			if (inv == null) {
 				source.sendMessage(plugin.getPrefix(), ChatStyle.RED, "Player has no inventory!");
 				return;
@@ -156,7 +156,7 @@ public class AdministrationCommands {
 		}
 
 		int count = args.getInteger(++index, 1);
-		player.get(PlayerInventory.class).add(new ItemStack(material, count));
+		player.get(PlayerInventoryComponent.class).add(new ItemStack(material, count));
 		source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Gave ", ChatStyle.WHITE, player.getName() + " ", count, ChatStyle.BRIGHT_GREEN, " of ", ChatStyle.WHITE,
 				material.getDisplayName());
 	}
@@ -403,7 +403,7 @@ public class AdministrationCommands {
 		if (player == null) {
 			throw new CommandException(args.getString(0) + " is not online.");
 		}
-		Health health = player.get(Health.class);
+		HealthComponent health = player.get(HealthComponent.class);
 		if (health == null) {
 			throw new CommandException(player.getDisplayName() + " can not be killed.");
 		}

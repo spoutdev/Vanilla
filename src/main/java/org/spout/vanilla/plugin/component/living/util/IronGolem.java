@@ -32,12 +32,12 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.api.data.VanillaData;
-import org.spout.vanilla.api.component.Utility;
+import org.spout.vanilla.plugin.component.Utility;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.EntityDrops;
-import org.spout.vanilla.plugin.component.misc.Health;
+import org.spout.vanilla.plugin.component.misc.EntityDropComponent;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
@@ -50,12 +50,12 @@ public class IronGolem extends Living implements Utility {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.IRON_GOLEM)); //Index 16 (byte): Unknown, example: 1
-		EntityDrops dropComponent = getOwner().add(EntityDrops.class);
+		EntityDropComponent dropComponent = getOwner().add(EntityDropComponent.class);
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.IRON_INGOT, random.nextInt(2) + 3));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.ROSE, random.nextInt(2)));
 		if (getAttachedCount() == 1) {
-			getOwner().add(Health.class).setSpawnHealth(100);
+			getOwner().add(HealthComponent.class).setSpawnHealth(100);
 		}
 	}
 

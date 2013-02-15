@@ -26,14 +26,14 @@
  */
 package org.spout.vanilla.plugin.component.living.hostile;
 
-import org.spout.vanilla.api.component.Hostile;
-import org.spout.vanilla.api.component.misc.DamageComponent;
+import org.spout.vanilla.plugin.component.Hostile;
+import org.spout.vanilla.plugin.component.misc.DamageComponent;
 import org.spout.vanilla.api.data.Difficulty;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.EntityDrops;
-import org.spout.vanilla.plugin.component.misc.Health;
+import org.spout.vanilla.plugin.component.misc.EntityDropComponent;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.protocol.entity.creature.EnderDragonEntityProtocol;
 
 /**
@@ -45,9 +45,9 @@ public class EnderDragon extends Living implements Hostile {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new EnderDragonEntityProtocol());
 		if (getAttachedCount() == 1) {
-			getOwner().add(Health.class).setSpawnHealth(200);
+			getOwner().add(HealthComponent.class).setSpawnHealth(200);
 		}
-		getOwner().add(EntityDrops.class).addXpDrop((short) 20000);
+		getOwner().add(EntityDropComponent.class).addXpDrop((short) 20000);
 		DamageComponent damage = getOwner().add(DamageComponent.class);
 		damage.getDamageLevel(Difficulty.EASY).setAmount(3);
 		damage.getDamageLevel(Difficulty.NORMAL).setAmount(5);

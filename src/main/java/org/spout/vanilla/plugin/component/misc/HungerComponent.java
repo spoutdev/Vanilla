@@ -35,7 +35,6 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Slot;
 
-import org.spout.vanilla.api.component.misc.HealthComponent;
 import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.api.event.cause.HealCause;

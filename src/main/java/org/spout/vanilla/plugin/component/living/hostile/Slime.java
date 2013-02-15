@@ -28,13 +28,14 @@ package org.spout.vanilla.plugin.component.living.hostile;
 
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.api.component.Hostile;
+import org.spout.vanilla.plugin.component.Hostile;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.Health;
 
 import org.spout.vanilla.api.data.VanillaData;
+
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.protocol.entity.creature.SlimeEntityProtocol;
 
 /**
@@ -52,7 +53,7 @@ public class Slime extends Living implements Hostile {
 			} else if (getSize() == 4) {
 				spawnHealth = 16;
 			}
-			getOwner().add(Health.class).setSpawnHealth(spawnHealth);
+			getOwner().add(HealthComponent.class).setSpawnHealth(spawnHealth);
 		}
 
 		//TODO: Damage depends of the size. Not the difficulty.

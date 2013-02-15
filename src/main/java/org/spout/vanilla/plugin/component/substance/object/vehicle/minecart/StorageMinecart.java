@@ -35,7 +35,7 @@ import org.spout.api.map.DefaultedKeyFactory;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
-import org.spout.vanilla.plugin.component.misc.EntityDrops;
+import org.spout.vanilla.plugin.component.misc.EntityDropComponent;
 import org.spout.vanilla.plugin.inventory.block.ChestInventory;
 import org.spout.vanilla.plugin.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
@@ -50,7 +50,7 @@ public class StorageMinecart extends MinecartBase {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MinecartObjectEntityProtocol(ObjectType.STORAGE_MINECART));
 		if (getAttachedCount() == 1) {
-			getOwner().add(EntityDrops.class).addDrop(new ItemStack(VanillaMaterials.CHEST, 1));
+			getOwner().add(EntityDropComponent.class).addDrop(new ItemStack(VanillaMaterials.CHEST, 1));
 		}
 	}
 
@@ -73,7 +73,7 @@ public class StorageMinecart extends MinecartBase {
 	protected void onDestroy() {
 		for (ItemStack stack : (ItemStack[]) getInventory().toArray()) {
 			if (stack != null) {
-				getOwner().get(EntityDrops.class).addDrop(stack);
+				getOwner().get(EntityDropComponent.class).addDrop(stack);
 			}
 		}
 		super.onDestroy();

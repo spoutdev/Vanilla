@@ -30,17 +30,16 @@ import java.util.Random;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.api.component.Hostile;
-import org.spout.vanilla.api.component.misc.DamageComponent;
-import org.spout.vanilla.api.component.misc.EntityDropComponent;
+import org.spout.vanilla.plugin.component.Hostile;
+import org.spout.vanilla.plugin.component.misc.DamageComponent;
+import org.spout.vanilla.plugin.component.misc.EntityDropComponent;
 import org.spout.vanilla.api.data.Difficulty;
 import org.spout.vanilla.api.data.effect.StatusEffect;
 import org.spout.vanilla.api.data.effect.StatusEffectContainer;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.EntityDrops;
-import org.spout.vanilla.plugin.component.misc.Health;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
@@ -53,13 +52,13 @@ public class CaveSpider extends Living implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.CAVE_SPIDER));
-		EntityDropComponent dropComponent = getOwner().add(EntityDrops.class);
+		EntityDropComponent dropComponent = getOwner().add(EntityDropComponent.class);
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.STRING, random.nextInt(2)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.SPIDER_EYE, random.nextInt(1)));
 		dropComponent.addXpDrop((short) 3);
 		if (getAttachedCount() == 1) {
-			getOwner().add(Health.class).setSpawnHealth(12);
+			getOwner().add(HealthComponent.class).setSpawnHealth(12);
 		}
 		DamageComponent damage = getOwner().add(DamageComponent.class);
 		damage.getDamageLevel(Difficulty.EASY).setAmount(2);

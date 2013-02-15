@@ -64,7 +64,7 @@ import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
 import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
-import org.spout.vanilla.api.component.inventory.PlayerInventoryComponent;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.api.component.substance.material.SignComponent;
 import org.spout.vanilla.api.data.Difficulty;
 import org.spout.vanilla.api.data.Dimension;
@@ -99,7 +99,6 @@ import org.spout.vanilla.api.protocol.msg.VanillaBlockDataChannelMessage;
 import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.component.misc.LevelComponent;
@@ -473,7 +472,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			human.updateAbilities();
 		}
 
-		PlayerInventory inv = player.get(PlayerInventory.class);
+		PlayerInventoryComponent inv = player.get(PlayerInventoryComponent.class);
 		if (inv != null) {
 			inv.updateAll();
 		}
@@ -481,7 +480,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		Point pos = world.getSpawnPoint().getPosition();
 		PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());
 		player.getSession().send(false, SPMsg);
-		session.send(false, new PlayerHeldItemChangeMessage(session.getPlayer().add(PlayerInventory.class).getQuickbar().getSelectedSlot().getIndex()));
+		session.send(false, new PlayerHeldItemChangeMessage(session.getPlayer().add(PlayerInventoryComponent.class).getQuickbar().getSelectedSlot().getIndex()));
 
 		VanillaSky.getSky(world).updatePlayer(player);
 	}

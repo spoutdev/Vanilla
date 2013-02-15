@@ -46,7 +46,7 @@ import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 
-import org.spout.vanilla.api.component.inventory.PlayerInventoryComponent;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.api.data.VanillaRenderMaterials;
 import org.spout.vanilla.api.event.window.WindowCloseEvent;
 import org.spout.vanilla.api.event.window.WindowOpenEvent;

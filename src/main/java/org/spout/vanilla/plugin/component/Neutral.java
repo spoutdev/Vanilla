@@ -24,11 +24,11 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.api.component;
+package org.spout.vanilla.plugin.component;
 
 /**
- * Represents a hostile entity. A hostile entity will pursue the player
- * unprovoked and will attack when possible.
+ * Represents a neutral entity. A neutral entity will not attack unless
+ * provoked by another player.
  */
-public interface Hostile {
+public interface Neutral {
 }

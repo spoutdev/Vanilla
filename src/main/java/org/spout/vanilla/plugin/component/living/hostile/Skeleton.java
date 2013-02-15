@@ -33,14 +33,14 @@ import com.bulletphysics.collision.shapes.BoxShape;
 import org.spout.api.component.impl.SceneComponent;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.api.component.Hostile;
+import org.spout.vanilla.plugin.component.Hostile;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.inventory.VanillaEntityInventory;
+import org.spout.vanilla.plugin.component.inventory.EntityInventoryComponent;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.EntityDrops;
+import org.spout.vanilla.plugin.component.misc.EntityDropComponent;
 import org.spout.vanilla.plugin.component.misc.EntityPickupItemComponent;
-import org.spout.vanilla.plugin.component.misc.Health;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.SkeletonEntityProtocol;
 
@@ -53,8 +53,8 @@ public class Skeleton extends Living implements Hostile {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SkeletonEntityProtocol());
 		SceneComponent scene = getOwner().getScene();
-		EntityDrops dropComponent = getOwner().add(EntityDrops.class);
-		getOwner().add(VanillaEntityInventory.class);
+		EntityDropComponent dropComponent = getOwner().add(EntityDropComponent.class);
+		getOwner().add(EntityInventoryComponent.class);
 		getOwner().add(EntityPickupItemComponent.class);
 		Random random = getRandom();
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.ARROW, random.nextInt(2)));
@@ -64,7 +64,7 @@ public class Skeleton extends Living implements Hostile {
 		scene.setFriction(1f);
 		scene.setRestitution(0f);
 		if (getAttachedCount() == 1) {
-			getOwner().add(Health.class).setSpawnHealth(20);
+			getOwner().add(HealthComponent.class).setSpawnHealth(20);
 		}
 
 		//TODO: There's 2 kind of damage for Skele's : Sword & Bow

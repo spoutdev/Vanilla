@@ -35,12 +35,12 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.api.component.VanillaComponent;
+import org.spout.vanilla.plugin.component.VanillaComponent;
 import org.spout.vanilla.api.data.PaintingType;
 import org.spout.vanilla.api.data.VanillaData;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.misc.EntityDrops;
+import org.spout.vanilla.plugin.component.misc.EntityDropComponent;
 import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.object.PaintingEntityProtocol;
@@ -53,7 +53,7 @@ public class Painting extends VanillaComponent {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PaintingEntityProtocol());
 		if (getAttachedCount() == 1) {
-			getOwner().add(EntityDrops.class).addDrop(new ItemStack(VanillaMaterials.PAINTING, 1));
+			getOwner().add(EntityDropComponent.class).addDrop(new ItemStack(VanillaMaterials.PAINTING, 1));
 		}
 		getOwner().setSavable(true);
 	}
@@ -120,7 +120,7 @@ public class Painting extends VanillaComponent {
 	}
 
 	private void destroy() {
-		List<ItemStack> drops = getOwner().get(EntityDrops.class).getDrops();
+		List<ItemStack> drops = getOwner().get(EntityDropComponent.class).getDrops();
 		Point entityPosition = getOwner().getScene().getPosition();
 		for (ItemStack stack : drops) {
 			if (stack != null) {

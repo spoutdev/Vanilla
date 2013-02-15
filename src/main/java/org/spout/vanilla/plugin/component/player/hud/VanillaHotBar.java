@@ -35,7 +35,8 @@ import org.spout.api.gui.render.RenderPartPack;
 import org.spout.api.math.Rectangle;
 
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+
+import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.plugin.component.player.HUDComponent;
 import org.spout.vanilla.api.data.VanillaRenderMaterials;
 
@@ -71,7 +72,11 @@ public class VanillaHotBar extends HotBarWidget {
 	 */
 	@Override
 	public void update() {
-		QuickbarInventory quickbar = hud.getOwner().get(PlayerInventory.class).getQuickbar();
+		PlayerInventoryComponent inventory = hud.getOwner().get(PlayerInventoryComponent.class);
+		if (inventory == null) {
+			return;
+		}
+		QuickbarInventory quickbar = inventory.getQuickbar();
 		if (quickbar == null) {
 			return;
 		}

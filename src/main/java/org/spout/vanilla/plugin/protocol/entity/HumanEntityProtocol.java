@@ -38,7 +38,7 @@ import org.spout.api.util.Parameter;
 import org.spout.api.inventory.Slot;
 import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.inventory.EntityInventoryComponent;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
 import org.spout.vanilla.plugin.protocol.ChannelBufferUtils;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityEquipmentMessage;
@@ -71,7 +71,7 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		messages.add(new PlayerSpawnMessage(id, human.getName(), x, y, z, r, p, item, parameters));
 
 		// Armor
-		PlayerInventory inventory = entity.get(PlayerInventory.class);
+		EntityInventoryComponent inventory = entity.get(EntityInventoryComponent.class);
 		final ItemStack boots, leggings, chestplate, helmet, held;
 		if (inventory == null) {
 			boots = leggings = chestplate = helmet = held = null;

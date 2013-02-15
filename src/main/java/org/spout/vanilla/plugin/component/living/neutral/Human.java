@@ -31,7 +31,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
-import org.spout.api.component.impl.DatatableComponent;
 import org.spout.api.component.impl.TextModelComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
@@ -51,12 +50,12 @@ import org.spout.vanilla.api.event.player.network.PlayerGameStateEvent;
 import org.spout.api.inventory.Slot;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.misc.DiggingComponent;
-import org.spout.vanilla.api.component.misc.HeadComponent;
+import org.spout.vanilla.plugin.component.misc.HeadComponent;
 
-import org.spout.vanilla.plugin.component.misc.Health;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.component.misc.PlayerPickupItemComponent;
 import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
@@ -86,7 +85,7 @@ public class Human extends Living {
 		//			((Player) holder).teleport(holder.getTransform().getPosition().add(0, 1.85F, 0));
 		//		}
 		if (getAttachedCount() == 1) {
-			holder.add(Health.class).setSpawnHealth(SPAWN_HEALTH);
+			holder.add(HealthComponent.class).setSpawnHealth(SPAWN_HEALTH);
 		}
 		TextModelComponent textModel = getOwner().get(TextModelComponent.class);
 		if (textModel != null) {
@@ -226,7 +225,7 @@ public class Human extends Living {
 	 * Drops the player's current item.
 	 */
 	public void dropItem() {
-		PlayerInventory inventory = getOwner().get(PlayerInventory.class);
+		PlayerInventoryComponent inventory = getOwner().get(PlayerInventoryComponent.class);
 		if (inventory != null) {
 			Slot selected = inventory.getQuickbar().getSelectedSlot();
 			ItemStack drop = selected.get();

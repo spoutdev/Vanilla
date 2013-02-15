@@ -28,69 +28,64 @@ package org.spout.vanilla.plugin.component.inventory;
 
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.map.DefaultedKey;
-import org.spout.api.map.DefaultedKeyFactory;
 
-import org.spout.vanilla.api.component.inventory.PlayerInventoryComponent;
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
-import org.spout.vanilla.plugin.inventory.block.ChestInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerArmorInventory;
+import java.util.ArrayList;
+import java.util.List;
+import org.spout.vanilla.plugin.component.inventory.EntityInventoryComponent;
+import org.spout.vanilla.plugin.inventory.entity.EntityArmorInventory;
 import org.spout.vanilla.plugin.inventory.player.PlayerCraftingInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerMainInventory;
-import org.spout.vanilla.plugin.inventory.player.PlayerQuickbar;
 
 /**
- * Represents a players inventory
+ * Represents the inventory of a Player.
  */
-public class PlayerInventory extends PlayerInventoryComponent {
-	private static final DefaultedKey<PlayerMainInventory> MAIN_INVENTORY = new DefaultedKeyFactory<PlayerMainInventory>("main", PlayerMainInventory.class);
-	private static final DefaultedKey<PlayerCraftingInventory> CRAFTING_INVENTORY = new DefaultedKeyFactory<PlayerCraftingInventory>("crafting", PlayerCraftingInventory.class);
-	private static final DefaultedKey<PlayerArmorInventory> PLAYER_ARMOR_INVENTORY = new DefaultedKeyFactory<PlayerArmorInventory>("armor", PlayerArmorInventory.class);
-	private static final DefaultedKey<PlayerQuickbar> QUICKBAR_INVENTORY = new DefaultedKeyFactory<PlayerQuickbar>("quickbar", PlayerQuickbar.class);
-	public static final DefaultedKey<ChestInventory> ENDER_CHEST_INVENTORY = new DefaultedKeyFactory<ChestInventory>("ender_chest_inventory", ChestInventory.class);
+public class PlayerInventoryComponent extends EntityInventoryComponent {
+	/**
+	 * Returns the entity's armor inventory
+	 * @return armor
+	 */
+	public ArmorInventory getArmor() {
+		return getData().get(VanillaData.ARMOR_INVENTORY);
+	}
+
+	/**
+	 * Gets the item inventory of this player inventory
+	 * @return an Inventory with the items
+	 */
+	public Inventory getMain() {
+		return getData().get(VanillaData.MAIN_INVENTORY);
+	}
+
+	/**
+	 * Gets the crafting grid inventory of this player inventory
+	 * @return an inventory with the crafting grid items
+	 */
+	public PlayerCraftingInventory getCraftingGrid() {
+		return getData().get(VanillaData.CRAFTING_INVENTORY);
+	}
+
+	/**
+	 * Gets the enderchest inventory of this player
+	 * @return an inventory for the persistent chest
+	 */
+	public Inventory getEnderChestInventory() {
+		return getData().get(VanillaData.ENDER_CHEST_INVENTORY);
+	}
 
 	@Override
 	public QuickbarInventory getQuickbar() {
-		return getData().get(QUICKBAR_INVENTORY);
+		return getData().get(VanillaData.QUICKBAR_INVENTORY);
 	}
 
-	@Override
-	public Inventory getMain() {
-		return getData().get(MAIN_INVENTORY);
-	}
-
-	@Override
-	public ArmorInventory getArmor() {
-		return getData().get(PLAYER_ARMOR_INVENTORY);
-	}
-
-	@Override
-	public PlayerCraftingInventory getCraftingGrid() {
-		return getData().get(CRAFTING_INVENTORY);
-	}
-
-	@Override
-	public Inventory getEnderChestInventory() {
-		return getData().get(ENDER_CHEST_INVENTORY);
-	}
-
-	@Override
-	public ItemStack getHeldItem() {
-		return getQuickbar().getSelectedItem();
-	}
-
-	@Override
-	public void updateAll() {
-		updateAll(getQuickbar());
-		updateAll(getMain());
-		updateAll(getArmor());
-		updateAll(getCraftingGrid());
-		updateAll(getEnderChestInventory());
-	}
-
-	@Override
+	/**
+	 * Attempts to add the specified item to the quickbar and then the main if
+	 * not all of the item is transferred.
+	 * @param item to add
+	 * @return true if item is completely transferred
+	 */
 	public boolean add(ItemStack item) {
 		getQuickbar().add(item);
 		if (!item.isEmpty()) {
@@ -100,10 +95,29 @@ public class PlayerInventory extends PlayerInventoryComponent {
 	}
 
 	@Override
+	public List<Inventory> getDroppable() {
+		List<Inventory> inventories = new ArrayList<Inventory>(5);
+		inventories.add(getQuickbar());
+		inventories.add(getArmor());
+		inventories.add(getCraftingGrid());
+		inventories.add(getMain());
+		return inventories;
+	}
+
+	@Override
 	public void clear() {
 		getMain().clear();
 		getCraftingGrid().clear();
 		getArmor().clear();
 		getQuickbar().clear();
+	}
+
+	@Override
+	public void updateAll() {
+		updateAll(getQuickbar());
+		updateAll(getMain());
+		updateAll(getArmor());
+		updateAll(getCraftingGrid());
+		updateAll(getEnderChestInventory());
 	}
 }

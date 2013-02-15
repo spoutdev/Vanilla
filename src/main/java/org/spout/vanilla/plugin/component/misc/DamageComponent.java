@@ -24,11 +24,34 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.api.component;
+package org.spout.vanilla.plugin.component.misc;
+
+import java.util.HashMap;
+
+import org.spout.api.component.type.EntityComponent;
+
+import org.spout.vanilla.api.data.Damage;
+import org.spout.vanilla.api.data.Difficulty;
+
 
 /**
- * Represents a neutral entity. A neutral entity will not attack unless
- * provoked by another player.
+ * Component that contains the amount of damage this entity does.
  */
-public interface Neutral {
+public class DamageComponent extends EntityComponent {
+	private HashMap<Difficulty, Damage> damageList = new HashMap<Difficulty, Damage>();
+
+	public DamageComponent() {
+		for (Difficulty difficulty : Difficulty.values()) {
+			damageList.put(difficulty, new Damage());
+		}
+	}
+
+	/**
+	 * Get the damage level depending of the difficulty level.
+	 * @param difficulty The difficulty level
+	 * @return The {@link Damage} associated with the difficulty.
+	 */
+	public Damage getDamageLevel(Difficulty difficulty) {
+		return damageList.get(difficulty);
+	}
 }

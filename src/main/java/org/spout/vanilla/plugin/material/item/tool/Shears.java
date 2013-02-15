@@ -35,7 +35,7 @@ import org.spout.api.math.GenericMath;
 import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.plugin.component.living.passive.Sheep;
 import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.api.data.VanillaData;
@@ -69,7 +69,7 @@ public class Shears extends Tool {
 			item.setItemStack(new ItemStack(VanillaMaterials.WOOL, col, GenericMath.getRandom().nextInt(3) + 1));
 
 			if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-				QuickbarInventory quickbar = entity.get(PlayerInventory.class).getQuickbar();
+				QuickbarInventory quickbar = entity.get(PlayerInventoryComponent.class).getQuickbar();
 				quickbar.getSelectedSlot().addData(1);
 			}
 		}

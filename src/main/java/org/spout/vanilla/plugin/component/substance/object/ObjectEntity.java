@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.component.substance.object;
 
-import org.spout.vanilla.api.component.VanillaComponent;
+import org.spout.vanilla.plugin.component.VanillaComponent;
 
 public abstract class ObjectEntity extends VanillaComponent {
 

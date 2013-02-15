@@ -27,7 +27,8 @@
 package org.spout.vanilla.plugin.component.misc;
 
 import java.util.List;
-import org.spout.vanilla.plugin.component.inventory.VanillaEntityInventory;
+
+import org.spout.vanilla.plugin.component.inventory.EntityInventoryComponent;
 import org.spout.vanilla.plugin.component.substance.object.Item;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.plugin.inventory.entity.EntityQuickbarInventory;
@@ -54,7 +55,7 @@ public class EntityPickupItemComponent extends EntityComponent {
 
 	@Override
 	public boolean canTick() {
-		Health health = getOwner().get(Health.class);
+		HealthComponent health = getOwner().get(HealthComponent.class);
 		if (health != null) {
 			if (!health.isDead() && wait != 0) {
 				wait--;
@@ -76,7 +77,7 @@ public class EntityPickupItemComponent extends EntityComponent {
 			if (item == null) {
 				continue;
 			}
-			VanillaEntityInventory inv = getOwner().get(VanillaEntityInventory.class);
+			EntityInventoryComponent inv = getOwner().get(EntityInventoryComponent.class);
 			ArmorInventory armorInv = inv.getArmor();
 			// Check if this item is equipable armor and has more protection than the currently equipped item
 			boolean equip = false;

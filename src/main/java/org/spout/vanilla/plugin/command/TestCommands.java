@@ -58,8 +58,8 @@ import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.api.component.VanillaComponent;
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
+import org.spout.vanilla.plugin.component.VanillaComponent;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.plugin.component.inventory.WindowHolder;
 import org.spout.vanilla.plugin.component.living.hostile.Creeper;
 import org.spout.vanilla.plugin.component.living.hostile.EnderDragon;
@@ -67,11 +67,11 @@ import org.spout.vanilla.plugin.component.living.hostile.Skeleton;
 import org.spout.vanilla.plugin.component.living.hostile.Zombie;
 import org.spout.vanilla.plugin.component.living.neutral.Enderman;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.component.misc.Burn;
 
-import org.spout.vanilla.api.component.misc.HeadComponent;
+import org.spout.vanilla.plugin.component.misc.HeadComponent;
 
-import org.spout.vanilla.plugin.component.misc.Health;
+import org.spout.vanilla.plugin.component.misc.BurnComponent;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.component.substance.XPOrb;
 import org.spout.vanilla.plugin.component.substance.material.chest.Chest;
@@ -122,7 +122,7 @@ public class TestCommands {
 		}
 		Player p = (Player) source;
 		ItemStack i = new ItemStack(VanillaMaterials.MAP, ++mapId, 1);
-		p.get(PlayerInventory.class).add(i);
+		p.get(PlayerInventoryComponent.class).add(i);
 	}
 
 	@Command(aliases = "mapdraw", usage = "<bx> <by> <tx> <ty> <col>", desc = "Draws a rectangle on the current map.  The top nibble for col is the colour and the bottom nibble is the brightness",
@@ -133,7 +133,11 @@ public class TestCommands {
 			throw new CommandException("You must be a player to hold a map.");
 		}
 		Player p = (Player) source;
-		ItemStack i = p.get(PlayerInventory.class).getQuickbar().getSelectedSlot().get();
+		PlayerInventoryComponent inventory = p.get(PlayerInventoryComponent.class);
+		if (inventory == null) {
+			throw new CommandException("Player has no inventory.");
+		}
+		ItemStack i = inventory.getQuickbar().getSelectedSlot().get();
 		if (i == null || !(i.getMaterial() instanceof Map)) {
 			throw new CommandException("Held item is not a map");
 		}
@@ -173,7 +177,11 @@ public class TestCommands {
 			throw new CommandException("You must be a player to hold a map.");
 		}
 		Player p = (Player) source;
-		ItemStack i = p.get(PlayerInventory.class).getQuickbar().getSelectedSlot().get();
+		PlayerInventoryComponent inventory = p.get(PlayerInventoryComponent.class);
+		if (inventory == null) {
+			throw new CommandException("Player has no inventory.");
+		}
+		ItemStack i = inventory.getQuickbar().getSelectedSlot().get();
 		if (i == null || !(i.getMaterial() instanceof Map)) {
 			throw new CommandException("Held item is not a map");
 		}
@@ -342,7 +350,7 @@ public class TestCommands {
 		} else {
 			player = ((Client) Spout.getEngine()).getActivePlayer();
 		}
-		player.get(Health.class).damage(args.getInteger(0));
+		player.get(HealthComponent.class).damage(args.getInteger(0));
 	}
 
 	@Command(aliases = "hunger", usage = "<amount> <hungry>", desc = "Modify your hunger", min = 2, max = 2)
@@ -589,14 +597,14 @@ public class TestCommands {
 	@Command(aliases = "fire", usage = "<time> <hurt>", desc = "Set you on fire", min = 2, max = 2)
 	@CommandPermissions("vanilla.command.debug")
 	public void fire(CommandContext args, CommandSource source) throws CommandException {
-		Burn fire = null;
+		BurnComponent fire = null;
 		if (Spout.getPlatform() == Platform.CLIENT) {
-			fire = ((Client) Spout.getEngine()).getActivePlayer().add(Burn.class);
+			fire = ((Client) Spout.getEngine()).getActivePlayer().add(BurnComponent.class);
 		} else {
 			if (!(source instanceof Player)) {
-				throw new CommandException("You must be a player to change your hunger!");
+				throw new CommandException("You must be a player to change be burnable!");
 			}
-			fire = ((Player) source).add(Burn.class);
+			fire = ((Player) source).add(BurnComponent.class);
 		}
 
 		fire.setOnFire(args.getFloat(0), Boolean.parseBoolean(args.getString(1)));

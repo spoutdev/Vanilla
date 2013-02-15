@@ -37,7 +37,7 @@ import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 
-import org.spout.vanilla.api.component.inventory.PlayerInventoryComponent;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 import org.spout.vanilla.api.inventory.window.ClickArguments;
 import org.spout.vanilla.api.inventory.window.WindowType;

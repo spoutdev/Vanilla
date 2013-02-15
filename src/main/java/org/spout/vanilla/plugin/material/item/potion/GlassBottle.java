@@ -33,8 +33,10 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.api.util.BlockIterator;
 import org.spout.api.inventory.Slot;
-import org.spout.vanilla.plugin.component.inventory.PlayerInventory;
-import org.spout.vanilla.api.component.misc.HeadComponent;
+
+import org.spout.vanilla.plugin.component.misc.HeadComponent;
+
+import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.liquid.Water;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;
@@ -71,9 +73,9 @@ public class GlassBottle extends VanillaItemMaterial {
 			Slot slot = PlayerUtil.getHeldSlot(entity);
 			if (slot != null) {
 				ItemStack fullbottle = new ItemStack(Potion.WATER_BOTTLE, 1);
-				entity.get(PlayerInventory.class).getQuickbar().add(fullbottle);
+				entity.get(PlayerInventoryComponent.class).getQuickbar().add(fullbottle);
 				if (!fullbottle.isEmpty()) {
-					entity.get(PlayerInventory.class).getMain().add(fullbottle);
+					entity.get(PlayerInventoryComponent.class).getMain().add(fullbottle);
 				}
 				if (fullbottle.isEmpty() && !PlayerUtil.isCostSuppressed(entity)) {
 					slot.addAmount(-1);

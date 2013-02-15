@@ -35,7 +35,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.api.component.misc.HeadComponent;
+import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.component.substance.object.vehicle.Boat;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.item.VanillaItemMaterial;

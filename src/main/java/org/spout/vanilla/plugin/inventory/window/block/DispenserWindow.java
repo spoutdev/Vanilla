@@ -34,7 +34,7 @@ import org.spout.api.inventory.shape.Grid;
 import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 
-import org.spout.vanilla.api.component.inventory.PlayerInventoryComponent;
+import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
 import org.spout.vanilla.plugin.inventory.block.DispenserInventory;

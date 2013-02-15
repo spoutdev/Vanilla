@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.api.component.inventory;
+package org.spout.vanilla.plugin.component.inventory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,35 +33,46 @@ import org.spout.api.component.type.EntityComponent;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.api.inventory.entity.ArmorInventory;
 import org.spout.vanilla.api.inventory.entity.QuickbarInventory;
 
 /**
  * Represents the inventory that an Entity might have.
  */
-public abstract class EntityInventoryComponent extends EntityComponent {
+public class EntityInventoryComponent extends EntityComponent {
+
 	/**
 	 * Returns the entity's armor inventory
 	 * @return armor
 	 */
-	public abstract ArmorInventory getArmor();
+	public ArmorInventory getArmor() {
+		return getData().get(VanillaData.ARMOR_INVENTORY);
+	}
 
 	/**
 	 * Gets the quickbar slots for this entity
 	 * @return quickbar
 	 */
-	public abstract QuickbarInventory getQuickbar();
+	public QuickbarInventory getQuickbar() {
+		return getData().get(VanillaData.ENTITY_HELD_INVENTORY);
+	}
 
 	/**
 	 * Returns the entity's held item
 	 * @return itemstack
 	 */
-	public abstract ItemStack getHeldItem();
+	public ItemStack getHeldItem() {
+		return getQuickbar().getSelectedItem();
+	}
 
 	/**
 	 * Update all inventories attached to this component
 	 */
-	public abstract void updateAll();
+	public void updateAll() {
+		updateAll(getArmor());
+		updateAll(getQuickbar());
+	}
 
 	/**
 	 * Updates all slots of the given inventory
@@ -87,5 +98,8 @@ public abstract class EntityInventoryComponent extends EntityComponent {
 	/**
 	 * Clears all inventory slots
 	 */
-	public abstract void clear();
+	public void clear() {
+		getArmor().clear();
+		getQuickbar().clear();
+	}
 }

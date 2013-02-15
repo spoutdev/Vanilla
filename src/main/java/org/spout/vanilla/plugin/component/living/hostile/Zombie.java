@@ -33,8 +33,8 @@ import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.api.component.Hostile;
-import org.spout.vanilla.api.component.misc.DamageComponent;
+import org.spout.vanilla.plugin.component.Hostile;
+import org.spout.vanilla.plugin.component.misc.DamageComponent;
 import org.spout.vanilla.api.data.Difficulty;
 import org.spout.vanilla.api.data.VanillaData;
 
@@ -42,12 +42,12 @@ import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.ai.action.ActionAttack;
 import org.spout.vanilla.plugin.ai.goal.AttackPlayerGoal;
 import org.spout.vanilla.plugin.ai.sensor.NearbyComponentsSensor;
-import org.spout.vanilla.plugin.component.inventory.VanillaEntityInventory;
+import org.spout.vanilla.plugin.component.inventory.EntityInventoryComponent;
 import org.spout.vanilla.plugin.component.living.Living;
 import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.component.misc.EntityDrops;
+import org.spout.vanilla.plugin.component.misc.EntityDropComponent;
 import org.spout.vanilla.plugin.component.misc.EntityPickupItemComponent;
-import org.spout.vanilla.plugin.component.misc.Health;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.protocol.entity.creature.ZombieEntityProtocol;
 
@@ -59,8 +59,8 @@ public class Zombie extends Living implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ZombieEntityProtocol());
-		getOwner().add(EntityDrops.class).addDrop(new ItemStack(VanillaMaterials.ROTTEN_FLESH, getRandom().nextInt(2))).addXpDrop((short) 5);
-		getOwner().add(VanillaEntityInventory.class);
+		getOwner().add(EntityDropComponent.class).addDrop(new ItemStack(VanillaMaterials.ROTTEN_FLESH, getRandom().nextInt(2))).addXpDrop((short) 5);
+		getOwner().add(EntityInventoryComponent.class);
 		getOwner().add(EntityPickupItemComponent.class);
 		SceneComponent scene = getOwner().getScene();
 		scene.setShape(5f, new BoxShape(1F, 2F, 1F));
@@ -68,7 +68,7 @@ public class Zombie extends Living implements Hostile {
 		scene.setRestitution(0f);
 
 		if (getAttachedCount() == 1) {
-			getOwner().add(Health.class).setSpawnHealth(20);
+			getOwner().add(HealthComponent.class).setSpawnHealth(20);
 		}
 
 		DamageComponent damage = getOwner().add(DamageComponent.class);
@@ -104,6 +104,6 @@ public class Zombie extends Living implements Hostile {
 	@Override
 	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
 		System.out.println("COLLIDED WITH A " + entity);
-		entity.get(Health.class).damage(getOwner().get(DamageComponent.class).getDamageLevel(colliderPoint.getWorld().getDataMap().get(VanillaData.DIFFICULTY)).getAmount());
+		entity.get(HealthComponent.class).damage(getOwner().get(DamageComponent.class).getDamageLevel(colliderPoint.getWorld().getDataMap().get(VanillaData.DIFFICULTY)).getAmount());
 	}
 }

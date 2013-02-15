@@ -24,46 +24,55 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.api.component.misc;
+package org.spout.vanilla.plugin.component.misc;
+
+import java.util.List;
 
 import org.spout.api.component.type.EntityComponent;
+import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.api.data.VanillaData;
 
 /**
- * Component handling a entity being on fire.
+ * Handle item/XP drop from a entity.
  */
-public abstract class BurnComponent extends EntityComponent {
-	private float internalTimer = 0.0f, rainTimer = 0f;
+public class EntityDropComponent extends EntityComponent {
 
 	/**
-	 * Retrieve the firetick value. Any value higher than 0 means the entity is on fire.
-	 * @return The firetick value.
+	 * Add a amount of XP the entity drops.
+	 * @param amount The amount of XP the entity drops.
+	 * @return The current component.
 	 */
-	public float getFireTick() {
-		return getOwner().getData().get(VanillaData.FIRE_TICK);
+	public EntityDropComponent addXpDrop(short amount) {
+		getOwner().getData().put(VanillaData.DROP_EXPERIENCE, amount);
+		return this;
 	}
 
 	/**
-	 * Check if the entity is on fire or not
-	 * @return True if the entity is on fire else false.
+	 * Retrieve the amount of XP the entity drops on death.
+	 * @return the amount of XP.
 	 */
-	public boolean isOnFire() {
-		return getFireTick() > 0;
+	public short getXpDrop() {
+		return getOwner().getData().get(VanillaData.DROP_EXPERIENCE);
 	}
 
 	/**
-	 * Check if the fire hurts or not.
-	 * @return True if the fire hurts and false if it doesn't
+	 * Add a item the entity drops.
+	 * @param itemstack Contains the item to drop.
+	 * @return The current component.
 	 */
-	public boolean isFireHurting() {
-		return getOwner().getData().get(VanillaData.FIRE_HURT);
+	public EntityDropComponent addDrop(ItemStack itemstack) {
+		Inventory dropInventory = getOwner().getData().get(VanillaData.DROP_INVENTORY);
+		dropInventory.add(itemstack);
+		return this;
 	}
 
 	/**
-	 * Sets the entity on fire.
-	 * @param time The amount of time in seconds the entity should be on fire.
-	 * @param hurt True if the fire should hurt else false.
+	 * Retrieve a list of all the item drops this entity does.
+	 * @return A list of all the items this entity drops.
 	 */
-	public abstract void setOnFire(float time, boolean hurt);
+	public List<ItemStack> getDrops() {
+		return getOwner().getData().get(VanillaData.DROP_INVENTORY);
+	}
 }

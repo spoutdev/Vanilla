@@ -24,48 +24,11 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.api.component.misc;
-
-import java.util.List;
-
-import org.spout.api.component.type.EntityComponent;
-import org.spout.api.inventory.ItemStack;
-
-import org.spout.vanilla.api.data.VanillaData;
+package org.spout.vanilla.plugin.component;
 
 /**
- * Handle item/XP drop from a entity.
+ * Represents a passive entity. A passive entity will never attack another
+ * player even if the player provokes said entity.
  */
-public abstract class EntityDropComponent extends EntityComponent {
-
-	/**
-	 * Add a amount of XP the entity drops.
-	 * @param amount The amount of XP the entity drops.
-	 * @return The current component.
-	 */
-	public EntityDropComponent addXpDrop(short amount) {
-		getOwner().getData().put(VanillaData.DROP_EXPERIENCE, amount);
-		return this;
-	}
-
-	/**
-	 * Retrieve the amount of XP the entity drops on death.
-	 * @return the amount of XP.
-	 */
-	public short getXpDrop() {
-		return getOwner().getData().get(VanillaData.DROP_EXPERIENCE);
-	}
-
-	/**
-	 * Add a item the entity drops.
-	 * @param itemstack Contains the item to drop.
-	 * @return The current component.
-	 */
-	public abstract EntityDropComponent addDrop(ItemStack itemstack);
-
-	/**
-	 * Retrieve a list of all the item drops this entity does.
-	 * @return A list of all the items this entity drops.
-	 */
-	public abstract List<ItemStack> getDrops();
+public interface Passive {
 }

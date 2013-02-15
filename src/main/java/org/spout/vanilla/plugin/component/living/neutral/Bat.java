@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.plugin.component.living.neutral;
 
-import org.spout.vanilla.api.component.Neutral;
+import org.spout.vanilla.plugin.component.Neutral;
 
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.Health;
+import org.spout.vanilla.plugin.component.misc.HealthComponent;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.plugin.protocol.entity.creature.CreatureType;
 
@@ -43,7 +43,7 @@ public class Bat extends Living implements Neutral {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.BAT));
 		if (getAttachedCount() == 1) {
-			getOwner().add(Health.class).setSpawnHealth(6);
+			getOwner().add(HealthComponent.class).setSpawnHealth(6);
 		}
 	}
 }

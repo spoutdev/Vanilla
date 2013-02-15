@@ -58,7 +58,7 @@ import org.spout.vanilla.api.event.cause.PlayerPlacementCause;
 import org.spout.api.inventory.Slot;
 
 import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.api.component.misc.HeadComponent;
+import org.spout.vanilla.plugin.component.misc.HeadComponent;
 import org.spout.vanilla.plugin.component.misc.HungerComponent;
 import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.api.data.VanillaData;

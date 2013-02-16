@@ -44,8 +44,8 @@ import org.spout.vanilla.plugin.material.block.Liquid;
 import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 
 public class FallingLiquidPopulator extends Populator {
-	private static final byte WATER_ATTEMPTS = 50;
-	private static final byte LAVA_ATTEMPTS = 20;
+	private int waterAttempts = 50;
+	private int lavaAttempts = 20;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -55,7 +55,7 @@ public class FallingLiquidPopulator extends Populator {
 		final World world = chunk.getWorld();
 		final int height = NormalGenerator.HEIGHT;
 		List<Block> liquids = new ArrayList<Block>();
-		for (byte count = 0; count < WATER_ATTEMPTS; count++) {
+		for (byte count = 0; count < waterAttempts; count++) {
 			final int x = chunk.getBlockX(random);
 			final int y = random.nextInt(height - 8) + 8;
 			final int z = chunk.getBlockZ(random);
@@ -65,7 +65,7 @@ public class FallingLiquidPopulator extends Populator {
 				liquids.add(block);
 			}
 		}
-		for (byte count = 0; count < LAVA_ATTEMPTS; count++) {
+		for (byte count = 0; count < lavaAttempts; count++) {
 			final int x = chunk.getBlockX(random);
 			final int y = random.nextInt(height - 8) + 8;
 			final int z = chunk.getBlockZ(random);
@@ -123,5 +123,13 @@ public class FallingLiquidPopulator extends Populator {
 			}
 		}
 		return adjacentStoneCount == 3 && adjacentAirCount == 1;
+	}
+
+	public void setWaterAttempts(int waterAttempts) {
+		this.waterAttempts = waterAttempts;
+	}
+
+	public void setLavaAttempts(int lavaAttempts) {
+		this.lavaAttempts = lavaAttempts;
 	}
 }

@@ -36,8 +36,10 @@ import org.spout.vanilla.plugin.world.generator.nether.decorator.LavaFallDecorat
 import org.spout.vanilla.plugin.world.generator.nether.decorator.NetherMushroomDecorator;
 
 public class NetherrackBiome extends VanillaBiome {
-	public NetherrackBiome(int id) {
-		super(id, new LavaFallDecorator(), new FireDecorator(), new GlowstoneDecorator(), new NetherMushroomDecorator());
+	public NetherrackBiome(int biomeId) {
+		super(biomeId);
+		addDecorators(new LavaFallDecorator(), new FireDecorator(), new GlowstoneDecorator(),
+				new NetherMushroomDecorator());
 		setGrassColorMultiplier(new Color(191, 183, 85));
 		setFoliageColorMultiplier(new Color(174, 164, 42));
 	}

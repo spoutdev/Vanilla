@@ -28,18 +28,21 @@ package org.spout.vanilla.plugin.world.generator.nether.decorator;
 
 import java.util.Random;
 
-import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.plant.Mushroom;
+import org.spout.vanilla.plugin.world.generator.decorator.VariableAmountDecorator;
 import org.spout.vanilla.plugin.world.generator.nether.NetherGenerator;
 
-public class NetherMushroomDecorator extends Decorator {
-	private final byte odd = 1;
-	private final byte amount = 1;
+public class NetherMushroomDecorator extends VariableAmountDecorator {
+	private int odd = 1;
+
+	public NetherMushroomDecorator() {
+		super(1, 0);
+	}
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -50,6 +53,7 @@ public class NetherMushroomDecorator extends Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
+		final int amount = getAmount(random);
 		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random);
 			final int y = random.nextInt(NetherGenerator.HEIGHT);
@@ -74,5 +78,9 @@ public class NetherMushroomDecorator extends Decorator {
 			}
 		}
 		return ++y;
+	}
+
+	public void setOdd(int odd) {
+		this.odd = odd;
 	}
 }

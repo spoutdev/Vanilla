@@ -24,27 +24,38 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.world.generator.normal.biome.snowy;
+package org.spout.vanilla.plugin.world.generator.decorator;
 
-import java.awt.Color;
+import java.util.Random;
 
-import org.spout.vanilla.plugin.world.generator.normal.decorator.MushroomDecorator;
-import org.spout.vanilla.plugin.world.generator.normal.decorator.SandAndClayDecorator;
-import org.spout.vanilla.plugin.world.generator.normal.decorator.TreeDecorator;
+import org.spout.api.generator.biome.Decorator;
 
-public class TundraBiome extends SnowyBiome {
-	public TundraBiome(int biomeId) {
-		super(biomeId);
-		final TreeDecorator trees = new TreeDecorator();
-		trees.setFactory(new NormalTreeWGOFactory());
-		addDecorators(new SandAndClayDecorator(), trees, new MushroomDecorator());
-		setElevation(63, 79);
-		setGrassColorMultiplier(new Color(128, 180, 151));
-		setFoliageColorMultiplier(new Color(96, 161, 123));
+public abstract class VariableAmountDecorator extends Decorator {
+	private int baseAmount;
+	private int randomAmount;
+
+	public VariableAmountDecorator(int baseAmount, int randomAmount) {
+		this.baseAmount = baseAmount;
+		this.randomAmount = randomAmount;
 	}
 
-	@Override
-	public String getName() {
-		return "Tundra";
+	public int getAmount(Random random) {
+		return random.nextInt(randomAmount + 1) + baseAmount;
+	}
+
+	public final void setBaseAmount(int baseAmount) {
+		this.baseAmount = baseAmount;
+	}
+
+	public final void setRandomAmount(int randomAmount) {
+		this.randomAmount = randomAmount;
+	}
+
+	public int getBaseAmount() {
+		return baseAmount;
+	}
+
+	public int getRandomAmount() {
+		return randomAmount;
 	}
 }

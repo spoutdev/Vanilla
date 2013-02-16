@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.plugin.world.generator.normal.decorator;
 
+import org.spout.vanilla.plugin.world.generator.decorator.VariableAmountDecorator;
 import java.util.Random;
 
-import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
@@ -36,8 +36,10 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.CactusStackObject;
 
-public class CactusDecorator extends Decorator {
-	private static final byte AMOUNT = 2;
+public class CactusDecorator extends VariableAmountDecorator {
+	public CactusDecorator() {
+		super(2, 1);
+	}
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -47,7 +49,8 @@ public class CactusDecorator extends Decorator {
 		final World world = chunk.getWorld();
 		final CactusStackObject cactus = new CactusStackObject();
 		cactus.setRandom(random);
-		for (byte count = 0; count < AMOUNT; count++) {
+		final int amount = getAmount(random);
+		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = getHighestWorkableBlock(world, x, z);

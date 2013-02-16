@@ -58,6 +58,7 @@ import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomeGenerator;
 import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.plugin.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.plugin.world.generator.normal.biome.selector.WhittakerLayer;
+import org.spout.vanilla.plugin.world.generator.normal.object.OreObject.OreTypes;
 import org.spout.vanilla.plugin.world.generator.normal.populator.CavePopulator;
 import org.spout.vanilla.plugin.world.generator.normal.populator.DungeonPopulator;
 import org.spout.vanilla.plugin.world.generator.normal.populator.FallingLiquidPopulator;
@@ -103,9 +104,12 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		addGeneratorPopulators(
 				new GroundCoverPopulator(), new RockyShieldPopulator(),
 				new CavePopulator(), new RavinePopulator());
+		final OrePopulator ores = new OrePopulator();
+		ores.addOreTypes(OreTypes.DIRT, OreTypes.GRAVEL, OreTypes.COAL, OreTypes.IRON,
+				OreTypes.REDSTONE, OreTypes.GOLD, OreTypes.LAPIS_LAZULI, OreTypes.DIAMOND);
 		addPopulators(
 				new MineshaftPopulator(), new StrongholdPopulator(), new TemplePopulator(),
-				new PondPopulator(), new DungeonPopulator(), new OrePopulator(),
+				new PondPopulator(), new DungeonPopulator(), ores,
 				new BiomePopulator(),
 				new FallingLiquidPopulator(), new SnowPopulator());
 		register(VanillaBiomes.OCEAN);

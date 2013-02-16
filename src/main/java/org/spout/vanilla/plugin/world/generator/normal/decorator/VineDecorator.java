@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.plugin.world.generator.normal.decorator;
 
+import org.spout.vanilla.plugin.world.generator.decorator.VariableAmountDecorator;
 import java.util.Random;
 
-import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
@@ -38,15 +38,9 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 
-public class VineDecorator extends Decorator {
-	private final byte amount;
-
+public class VineDecorator extends VariableAmountDecorator {
 	public VineDecorator() {
-		this((byte) 50);
-	}
-
-	public VineDecorator(byte amount) {
-		this.amount = amount;
+		super(50, 0);
 	}
 
 	@Override
@@ -55,6 +49,7 @@ public class VineDecorator extends Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
+		final int amount = getAmount(random);
 		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);

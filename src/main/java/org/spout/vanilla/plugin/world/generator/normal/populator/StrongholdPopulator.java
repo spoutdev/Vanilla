@@ -37,10 +37,10 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.plugin.world.generator.normal.structure.stronghold.Stronghold;
 
 public class StrongholdPopulator extends Populator {
-	private static final int DISTANCE = 896;
-	private static final int VARIATION = 256;
-	private static final int BASE_Y = 35;
-	private static final int RAND_Y = 11;
+	private int distance = 896;
+	private int variation = 256;
+	private int baseElevation = 35;
+	private int randomElevation = 11;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -51,8 +51,8 @@ public class StrongholdPopulator extends Populator {
 		final int blockZ = chunk.getBlockZ();
 		final int absBlockX = Math.abs(blockX);
 		final int absBlockZ = Math.abs(blockZ);
-		if (absBlockX <= DISTANCE || absBlockX > DISTANCE + Chunk.BLOCKS.SIZE
-				|| absBlockZ <= DISTANCE || absBlockZ > DISTANCE + Chunk.BLOCKS.SIZE) {
+		if (absBlockX <= distance || absBlockX > distance + Chunk.BLOCKS.SIZE
+				|| absBlockZ <= distance || absBlockZ > distance + Chunk.BLOCKS.SIZE) {
 			return;
 		}
 		final World world = chunk.getWorld();
@@ -84,14 +84,30 @@ public class StrongholdPopulator extends Populator {
 		random = WorldGeneratorUtils.getRandom(world, blockX / absBlockX, 0,
 				blockZ / absBlockZ, 57845);
 		final Stronghold stronghold = new Stronghold(random);
-		final int x = blockX + random.nextInt(2 * VARIATION + 1) - VARIATION;
-		final int y = random.nextInt(RAND_Y) + BASE_Y;
-		final int z = blockZ + random.nextInt(2 * VARIATION + 1) - VARIATION;
+		final int x = blockX + random.nextInt(2 * variation + 1) - variation;
+		final int y = random.nextInt(randomElevation) + baseElevation;
+		final int z = blockZ + random.nextInt(2 * variation + 1) - variation;
 		if (stronghold.canPlaceObject(world, x, y, z)) {
 			stronghold.placeObject(world, x, y, z);
 			if (Spout.debugMode()) {
 				Spout.log("Placed stronghold at: (" + x + ", " + y + ", " + z + ")");
 			}
 		}
+	}
+
+	public void setDistance(int distance) {
+		this.distance = distance;
+	}
+
+	public void setVariation(int variation) {
+		this.variation = variation;
+	}
+
+	public void setBaseElevation(int baseElevation) {
+		this.baseElevation = baseElevation;
+	}
+
+	public void setRandomElevation(int randomElevation) {
+		this.randomElevation = randomElevation;
 	}
 }

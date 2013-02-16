@@ -36,13 +36,15 @@ import org.spout.vanilla.plugin.world.generator.normal.populator.GroundCoverPopu
 
 public class MushroomBiome extends GrassyBiome {
 	public MushroomBiome(int biomeId) {
-		super(biomeId, new SandAndClayDecorator(), new HugeMushroomDecorator(),
-				new MushroomDecorator((byte) 1, (byte) 1));
+		super(biomeId);
+		final MushroomDecorator mushrooms = new MushroomDecorator();
+		mushrooms.setOdd(1);
+		addDecorators(new SandAndClayDecorator(), new HugeMushroomDecorator(), mushrooms);
 		setElevation(63, 87);
 		setTopCover(new GroundCoverPopulator.GroundCoverLayer[]{
-				new GroundCoverPopulator.GroundCoverUniformLayer(VanillaMaterials.MYCELIUM, VanillaMaterials.DIRT, (byte) 1),
-				new GroundCoverPopulator.GroundCoverVariableLayer(VanillaMaterials.DIRT, VanillaMaterials.DIRT, (byte) 1, (byte) 4)
-		});
+					new GroundCoverPopulator.GroundCoverUniformLayer(VanillaMaterials.MYCELIUM, VanillaMaterials.DIRT, (byte) 1),
+					new GroundCoverPopulator.GroundCoverVariableLayer(VanillaMaterials.DIRT, VanillaMaterials.DIRT, (byte) 1, (byte) 4)
+				});
 		setGrassColorMultiplier(new Color(85, 201, 63));
 		setFoliageColorMultiplier(new Color(43, 187, 15));
 	}

@@ -35,7 +35,7 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.plugin.world.generator.normal.object.DungeonObject;
 
 public class DungeonPopulator extends Populator {
-	private static final byte ATTEMPTS = 8;
+	private int attempts = 8;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -45,7 +45,7 @@ public class DungeonPopulator extends Populator {
 		final DungeonObject dungeon = new DungeonObject();
 		dungeon.setRandom(random);
 		final World world = chunk.getWorld();
-		for (byte count = 0; count < ATTEMPTS; count++) {
+		for (byte count = 0; count < attempts; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = random.nextInt(128);
@@ -54,5 +54,9 @@ public class DungeonPopulator extends Populator {
 				dungeon.placeObject(world, x, y, z);
 			}
 		}
+	}
+
+	public void setAttempts(int attempts) {
+		this.attempts = attempts;
 	}
 }

@@ -24,27 +24,33 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.world.generator.normal.biome.snowy;
+package org.spout.vanilla.plugin.world.generator.skylands.biome;
 
-import java.awt.Color;
+import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
 
-import org.spout.vanilla.plugin.world.generator.normal.decorator.MushroomDecorator;
-import org.spout.vanilla.plugin.world.generator.normal.decorator.SandAndClayDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.biome.NormalBiome.NormalTallGrassFactory;
+import org.spout.vanilla.plugin.world.generator.normal.biome.NormalBiome.NormalTreeWGOFactory;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.EmeraldOreDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.FlowerDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.PumpkinDecorator;
+import org.spout.vanilla.plugin.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.plugin.world.generator.normal.decorator.TreeDecorator;
 
-public class TundraBiome extends SnowyBiome {
-	public TundraBiome(int biomeId) {
+public class SkylandsBiome extends VanillaBiome {
+	public SkylandsBiome(int biomeId) {
 		super(biomeId);
 		final TreeDecorator trees = new TreeDecorator();
 		trees.setFactory(new NormalTreeWGOFactory());
-		addDecorators(new SandAndClayDecorator(), trees, new MushroomDecorator());
-		setElevation(63, 79);
-		setGrassColorMultiplier(new Color(128, 180, 151));
-		setFoliageColorMultiplier(new Color(96, 161, 123));
+		final TallGrassDecorator tallGrass = new TallGrassDecorator();
+		tallGrass.setFactory(new NormalTallGrassFactory());
+		final EmeraldOreDecorator emeraldOre = new EmeraldOreDecorator();
+		emeraldOre.setMinimumElevation(22);
+		emeraldOre.setElevationRandomness(12);
+		addDecorators(trees, new FlowerDecorator(), tallGrass, new PumpkinDecorator(), emeraldOre);
 	}
 
 	@Override
 	public String getName() {
-		return "Tundra";
+		return "Skylands";
 	}
 }

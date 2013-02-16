@@ -34,7 +34,8 @@ import org.spout.vanilla.plugin.world.generator.theend.decorator.SpireDecorator;
 
 public class EndStoneBiome extends VanillaBiome {
 	public EndStoneBiome(int biomeId) {
-		super(biomeId, new SpireDecorator());
+		super(biomeId);
+		addDecorators(new SpireDecorator());
 		setGrassColorMultiplier(new Color(142, 185, 113));
 		setFoliageColorMultiplier(new Color(113, 167, 77));
 	}

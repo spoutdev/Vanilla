@@ -31,13 +31,15 @@ import java.util.Random;
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.vanilla.plugin.world.generator.decorator.VariableAmountDecorator;
 
 import org.spout.vanilla.plugin.world.generator.nether.NetherGenerator;
 import org.spout.vanilla.plugin.world.generator.nether.object.GlowstonePatchObject;
 
-public class GlowstoneDecorator extends Decorator {
-	private static final byte BASE_AMOUNT = 10;
-	private static final byte RAND_AMOUNT = 10;
+public class GlowstoneDecorator extends VariableAmountDecorator {
+	public GlowstoneDecorator() {
+		super(10, 9);
+	}
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -47,7 +49,7 @@ public class GlowstoneDecorator extends Decorator {
 		final World world = chunk.getWorld();
 		final GlowstonePatchObject glowstone = new GlowstonePatchObject();
 		glowstone.setRandom(random);
-		for (byte amount = (byte) (random.nextInt(RAND_AMOUNT) + BASE_AMOUNT); amount > 0; amount--) {
+		for (int amount = getAmount(random); amount > 0; amount--) {
 			final int x = chunk.getBlockX(random);
 			final int y = random.nextInt(NetherGenerator.HEIGHT);
 			final int z = chunk.getBlockZ(random);

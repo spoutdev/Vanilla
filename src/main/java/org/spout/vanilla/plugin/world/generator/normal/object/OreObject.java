@@ -38,16 +38,16 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.world.generator.object.RandomObject;
 
 public class OreObject extends RandomObject {
-	private byte amount;
-	private short maxHeight;
-	private byte clusterSize;
+	private int amount;
+	private int maxHeight;
+	private int clusterSize;
 	private BlockMaterial material;
 
-	public OreObject(BlockMaterial material, byte count, byte clusterSize, short maxHeight) {
+	public OreObject(BlockMaterial material, int count, int clusterSize, int maxHeight) {
 		this(null, material, count, clusterSize, maxHeight);
 	}
 
-	public OreObject(Random random, BlockMaterial material, byte count, byte clusterSize, short maxHeight) {
+	public OreObject(Random random, BlockMaterial material, int count, int clusterSize, int maxHeight) {
 		super(random);
 		this.amount = count;
 		this.material = material;
@@ -65,41 +65,45 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Gets the maximum height this ore should be placed
+	 *
 	 * @return maximum height
 	 */
-	public short getMaxHeight() {
-		return this.maxHeight;
+	public int getMaxHeight() {
+		return maxHeight;
 	}
 
 	/**
 	 * Gets the amount of this ore placed per chunk
+	 *
 	 * @return placement count
 	 */
-	public byte getAmount() {
-		return this.amount;
+	public int getAmount() {
+		return amount;
 	}
 
 	/**
 	 * Gets the size of a cluster of this ore
+	 *
 	 * @return cluster size
 	 */
-	public byte getClusterSize() {
-		return this.clusterSize;
+	public int getClusterSize() {
+		return clusterSize;
 	}
 
 	/**
 	 * Gets the ore material used
+	 *
 	 * @return ore material
 	 */
 	public BlockMaterial getMaterial() {
 		return this.material;
 	}
 
-	public void setClusterSize(byte clusterSize) {
+	public void setClusterSize(int clusterSize) {
 		this.clusterSize = clusterSize;
 	}
 
-	public void setAmount(byte amount) {
+	public void setAmount(int amount) {
 		this.amount = amount;
 	}
 
@@ -107,7 +111,7 @@ public class OreObject extends RandomObject {
 		this.material = material;
 	}
 
-	public void setMaxHeight(short maxHeight) {
+	public void setMaxHeight(int maxHeight) {
 		this.maxHeight = maxHeight;
 	}
 
@@ -118,6 +122,7 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Generates a cluster of this ore at the position using the random given
+	 *
 	 * @param world to place in
 	 * @param originX of the cluster
 	 * @param originY of the cluster
@@ -171,21 +176,27 @@ public class OreObject extends RandomObject {
 		}
 	}
 
-	public static enum OreType {
-		DIRT(VanillaMaterials.DIRT, (byte) 20, (byte) 32, (short) 128),
-		GRAVEL(VanillaMaterials.GRAVEL, (byte) 10, (byte) 32, (short) 128),
-		COAL(VanillaMaterials.COAL_ORE, (byte) 20, (byte) 16, (short) 128),
-		IRON(VanillaMaterials.IRON_ORE, (byte) 20, (byte) 8, (short) 64),
-		REDSTONE(VanillaMaterials.REDSTONE_ORE, (byte) 8, (byte) 7, (short) 16),
-		LAPIS_LAZULI(VanillaMaterials.LAPIS_LAZULI_ORE, (byte) 1, (byte) 6, (short) 32),
-		GOLD(VanillaMaterials.GOLD_ORE, (byte) 2, (byte) 8, (short) 32),
-		DIAMOND(VanillaMaterials.DIAMOND_ORE, (byte) 1, (byte) 7, (short) 16);
-		private final BlockMaterial material;
-		private final byte count;
-		private final byte clusterSize;
-		private final short maxHeight;
+	public static class OreTypes {
+		public static final OreType DIRT = new OreType(VanillaMaterials.DIRT, 20, 32, 128);
+		public static final OreType GRAVEL = new OreType(VanillaMaterials.GRAVEL, 10, 32, 128);
+		public static final OreType COAL = new OreType(VanillaMaterials.COAL_ORE, 20, 16, 128);
+		public static final OreType IRON = new OreType(VanillaMaterials.IRON_ORE, 20, 8, 64);
+		public static final OreType REDSTONE = new OreType(VanillaMaterials.REDSTONE_ORE, 8, 7, 16);
+		public static final OreType LAPIS_LAZULI = new OreType(VanillaMaterials.LAPIS_LAZULI_ORE, 1, 6, 32);
+		public static final OreType GOLD = new OreType(VanillaMaterials.GOLD_ORE, 2, 8, 32);
+		public static final OreType DIAMOND = new OreType(VanillaMaterials.DIAMOND_ORE, 1, 7, 16);
 
-		private OreType(BlockMaterial material, byte count, byte clusterSize, short maxHeight) {
+		private OreTypes() {
+		}
+	}
+
+	public static class OreType {
+		private final BlockMaterial material;
+		private final int count;
+		private final int clusterSize;
+		private final int maxHeight;
+
+		private OreType(BlockMaterial material, int count, int clusterSize, int maxHeight) {
 			this.material = material;
 			this.count = count;
 			this.clusterSize = clusterSize;

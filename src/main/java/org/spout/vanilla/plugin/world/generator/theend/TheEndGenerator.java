@@ -46,14 +46,12 @@ import org.spout.vanilla.plugin.world.generator.biome.VanillaSingleBiomeGenerato
 import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
 
 public class TheEndGenerator extends VanillaSingleBiomeGenerator {
-	private static final int ISLAND_RADIUS = 52;
+	private static final int ISLAND_RADIUS = 128;
 	private static final int ISLAND_BOTTOM = 8;
 	private static final int ISLAND_SURFACE = 58;
 	private static final int ISLAND_TOP = 64;
-	private static final double LOWER_SMOOTH_SIZE = (ISLAND_SURFACE - ISLAND_BOTTOM) / 2d;
-	private static final double UPPER_SMOOTH_SIZE = (ISLAND_TOP - ISLAND_SURFACE) / 2d;
-	private static final double LOWER_SMOOTH_START = ISLAND_BOTTOM + LOWER_SMOOTH_SIZE;
-	private static final double UPPER_SMOOTH_START = ISLAND_SURFACE + UPPER_SMOOTH_SIZE;
+	private static final double LOWER_SMOOTH_SIZE = ISLAND_SURFACE - ISLAND_BOTTOM;
+	private static final double UPPER_SMOOTH_SIZE = ISLAND_TOP - ISLAND_SURFACE;
 	public static final int HEIGHT = ISLAND_TOP;
 	// noise for generation
 	private static final Perlin PERLIN = new Perlin();
@@ -105,9 +103,9 @@ public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 					final int totalY = y + yy;
 					double density = noise[xx][yy][zz] * 0.5 + 0.5;
 					if (totalY < ISLAND_SURFACE) {
-						density += 1 / LOWER_SMOOTH_SIZE * (totalY - LOWER_SMOOTH_START);
+						density -= square(1 / LOWER_SMOOTH_SIZE * (totalY - ISLAND_SURFACE));
 					} else if (totalY >= ISLAND_SURFACE) {
-						density -= 1 / UPPER_SMOOTH_SIZE * (totalY - UPPER_SMOOTH_START);
+						density -= square(1 / UPPER_SMOOTH_SIZE * (totalY - ISLAND_SURFACE));
 					}
 					density *= ISLAND_RADIUS / distance;
 					if (density >= 1) {
@@ -116,6 +114,10 @@ public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 				}
 			}
 		}
+	}
+
+	private static double square(double x) {
+		return x * x;
 	}
 
 	@Override

@@ -44,18 +44,17 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.Liquid;
 import org.spout.vanilla.plugin.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.plugin.world.generator.biome.VanillaSingleBiomeGenerator;
-import org.spout.vanilla.plugin.world.generator.normal.populator.GroundCoverPopulator;
+import org.spout.vanilla.plugin.world.generator.normal.object.OreObject.OreTypes;
 import org.spout.vanilla.plugin.world.generator.normal.populator.OrePopulator;
+import org.spout.vanilla.plugin.world.generator.skylands.populator.SkylandsGroundCoverPopulator;
 import org.spout.vanilla.plugin.world.generator.normal.populator.PondPopulator;
 
 public class SkylandsGenerator extends VanillaSingleBiomeGenerator {
 	private static final int AVERAGE_ELEVATION = 64;
 	private static final int MINIMUM_ELEVATION = 18;
 	private static final int MAXIMUM_ELEVATION = 84;
-	private static final double LOWER_SMOOTH_SIZE = (AVERAGE_ELEVATION - MINIMUM_ELEVATION) / 2d;
-	private static final double UPPER_SMOOTH_SIZE = (MAXIMUM_ELEVATION - AVERAGE_ELEVATION) / 2d;
-	private static final double LOWER_SMOOTH_START = MINIMUM_ELEVATION + LOWER_SMOOTH_SIZE;
-	private static final double UPPER_SMOOTH_START = AVERAGE_ELEVATION + UPPER_SMOOTH_SIZE;
+	private static final double LOWER_SMOOTH_SIZE = AVERAGE_ELEVATION - MINIMUM_ELEVATION;
+	private static final double UPPER_SMOOTH_SIZE = MAXIMUM_ELEVATION - AVERAGE_ELEVATION;
 	public static final int HEIGHT = MAXIMUM_ELEVATION;
 	// noise for generation
 	private static final Perlin PERLIN = new Perlin();
@@ -75,16 +74,19 @@ public class SkylandsGenerator extends VanillaSingleBiomeGenerator {
 	}
 
 	public SkylandsGenerator() {
-		super(VanillaBiomes.MOUNTAINS);
+		super(VanillaBiomes.SKYLANDS);
 		hasVoidBellowZero(true);
 	}
 
 	@Override
 	public void registerBiomes() {
 		super.registerBiomes();
-		register(VanillaBiomes.MOUNTAINS);
-		addGeneratorPopulators(new GroundCoverPopulator());
-		addPopulators(new PondPopulator());
+		register(VanillaBiomes.SKYLANDS);
+		addGeneratorPopulators(new SkylandsGroundCoverPopulator());
+		final OrePopulator ores = new OrePopulator();
+		ores.addOreTypes(OreTypes.DIRT, OreTypes.COAL, OreTypes.IRON, OreTypes.REDSTONE,
+				OreTypes.GOLD, OreTypes.LAPIS_LAZULI, OreTypes.DIAMOND);
+		addPopulators(ores, new PondPopulator());
 	}
 
 	@Override
@@ -103,13 +105,13 @@ public class SkylandsGenerator extends VanillaSingleBiomeGenerator {
 		for (int xx = 0; xx < sizeX; xx++) {
 			for (int yy = 0; yy < sizeY; yy++) {
 				for (int zz = 0; zz < sizeZ; zz++) {
-					double density = pow(noise[xx][yy][zz], 2);
+					double density = pow(noise[xx][yy][zz], 1);
 					if (y + yy < AVERAGE_ELEVATION) {
-						density += 1 / LOWER_SMOOTH_SIZE * (y + yy - LOWER_SMOOTH_START);
+						density -= square(1 / LOWER_SMOOTH_SIZE * (y + yy - AVERAGE_ELEVATION));
 					} else if (y + yy >= AVERAGE_ELEVATION) {
-						density -= 1 / UPPER_SMOOTH_SIZE * (y + yy - UPPER_SMOOTH_START);
+						density -= square(1 / UPPER_SMOOTH_SIZE * (y + yy - AVERAGE_ELEVATION));
 					}
-					if (density >= 0.4) {
+					if (density >= 0) {
 						blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.STONE);
 					}
 				}
@@ -123,6 +125,10 @@ public class SkylandsGenerator extends VanillaSingleBiomeGenerator {
 			val *= val;
 		}
 		return (val - 0.5) / 0.5;
+	}
+
+	private static double square(double x) {
+		return x * x;
 	}
 
 	@Override

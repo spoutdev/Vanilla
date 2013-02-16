@@ -38,11 +38,7 @@ import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tree.TreeObject;
 
 public class TreeDecorator extends Decorator {
-	private final TreeWGOFactory factory;
-
-	public TreeDecorator(TreeWGOFactory factory) {
-		this.factory = factory;
-	}
+	private TreeWGOFactory factory;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -79,6 +75,10 @@ public class TreeDecorator extends Decorator {
 			}
 		}
 		return ++y;
+	}
+
+	public void setFactory(TreeWGOFactory factory) {
+		this.factory = factory;
 	}
 
 	public static interface TreeWGOFactory {

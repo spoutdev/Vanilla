@@ -62,6 +62,7 @@ import org.spout.vanilla.plugin.world.generator.normal.biome.snowy.TaigaBiome;
 import org.spout.vanilla.plugin.world.generator.normal.biome.snowy.TaigaHillsBiome;
 import org.spout.vanilla.plugin.world.generator.normal.biome.snowy.TundraBiome;
 import org.spout.vanilla.plugin.world.generator.normal.biome.snowy.TundraHillsBiome;
+import org.spout.vanilla.plugin.world.generator.skylands.biome.SkylandsBiome;
 import org.spout.vanilla.plugin.world.generator.theend.biome.EndStoneBiome;
 
 public class VanillaBiomes {
@@ -88,6 +89,7 @@ public class VanillaBiomes {
 	public static final JungleHillsBiome JUNGLE_HILLS = new JungleHillsBiome(22);
 	public static final FrozenOceanBiome FROZEN_OCEAN = new FrozenOceanBiome(10);
 	public static final EndStoneBiome ENDSTONE = new EndStoneBiome(22);
+	public static final SkylandsBiome SKYLANDS = new SkylandsBiome(OCEAN.getBiomeId());
 	private static final Map<String, VanillaBiome> BY_NAME = new HashMap<String, VanillaBiome>();
 
 	static {

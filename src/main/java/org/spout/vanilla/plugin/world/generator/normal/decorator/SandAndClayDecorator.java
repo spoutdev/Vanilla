@@ -39,9 +39,9 @@ import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.plugin.world.generator.normal.object.BlockPatchObject;
 
 public class SandAndClayDecorator extends Decorator {
-	private static final byte FIRST_SAND_ROUND = 3;
-	private static final byte SECOND_SAND_ROUND = 1;
-	private static final byte CLAY_ROUND = 1;
+	private int firstSandAmount = 3;
+	private int secondSandAmount = 1;
+	private int clayAmount = 1;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -51,7 +51,7 @@ public class SandAndClayDecorator extends Decorator {
 		final World world = chunk.getWorld();
 		final BlockPatchObject sand = new BlockPatchObject(VanillaMaterials.SAND);
 		sand.setRandom(random);
-		for (byte count = 0; count < FIRST_SAND_ROUND; count++) {
+		for (byte count = 0; count < firstSandAmount; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = getHighestWorkableBlock(world, x, z);
@@ -65,7 +65,7 @@ public class SandAndClayDecorator extends Decorator {
 		clay.getOverridableMaterials().clear();
 		clay.getOverridableMaterials().add(VanillaMaterials.DIRT);
 		clay.setRandom(random);
-		for (byte count = 0; count < CLAY_ROUND; count++) {
+		for (byte count = 0; count < clayAmount; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = getHighestWorkableBlock(world, x, z);
@@ -74,7 +74,7 @@ public class SandAndClayDecorator extends Decorator {
 				clay.placeObject(world, x, y, z);
 			}
 		}
-		for (byte count = 0; count < SECOND_SAND_ROUND; count++) {
+		for (byte count = 0; count < secondSandAmount; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = getHighestWorkableBlock(world, x, z);
@@ -95,5 +95,17 @@ public class SandAndClayDecorator extends Decorator {
 			}
 		}
 		return ++y;
+	}
+
+	public void setFirstSandAmount(int firstSandAmount) {
+		this.firstSandAmount = firstSandAmount;
+	}
+
+	public void setSecondSandAmount(int secondSandAmount) {
+		this.secondSandAmount = secondSandAmount;
+	}
+
+	public void setClayAmount(int clayAmount) {
+		this.clayAmount = clayAmount;
 	}
 }

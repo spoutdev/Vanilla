@@ -36,9 +36,9 @@ import org.spout.vanilla.plugin.world.generator.normal.object.PondObject;
 import org.spout.vanilla.plugin.world.generator.normal.object.PondObject.PondType;
 
 public class PondPopulator extends Populator {
-	private static final byte WATER_ODD = 4;
-	private static final byte LAVA_ODD = 8;
-	private static final byte LAVA_SURFACE_ODD = 10;
+	private int waterOdd = 4;
+	private int lavaOdd = 8;
+	private int lavaSurfaceOdd = 10;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -46,7 +46,7 @@ public class PondPopulator extends Populator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		if (random.nextInt(WATER_ODD) == 0) {
+		if (random.nextInt(waterOdd) == 0) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = random.nextInt(128);
@@ -55,11 +55,11 @@ public class PondPopulator extends Populator {
 				pond.placeObject(world, x, y, z);
 			}
 		}
-		if (random.nextInt(LAVA_ODD) == 0) {
+		if (random.nextInt(lavaOdd) == 0) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = random.nextInt(120) + 8;
-			if (y >= 63 && random.nextInt(LAVA_SURFACE_ODD) != 0) {
+			if (y >= 63 && random.nextInt(lavaSurfaceOdd) != 0) {
 				return;
 			}
 			final PondObject pond = new PondObject(random, PondType.LAVA);
@@ -67,5 +67,17 @@ public class PondPopulator extends Populator {
 				pond.placeObject(world, x, y, z);
 			}
 		}
+	}
+
+	public void setWaterOdd(int waterOdd) {
+		this.waterOdd = waterOdd;
+	}
+
+	public void setLavaOdd(int lavaOdd) {
+		this.lavaOdd = lavaOdd;
+	}
+
+	public void setLavaSurfaceOdd(int lavaSurfaceOdd) {
+		this.lavaSurfaceOdd = lavaSurfaceOdd;
 	}
 }

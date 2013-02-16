@@ -28,16 +28,17 @@ package org.spout.vanilla.plugin.world.generator.nether.decorator;
 
 import java.util.Random;
 
-import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
+import org.spout.vanilla.plugin.world.generator.decorator.VariableAmountDecorator;
 import org.spout.vanilla.plugin.world.generator.nether.NetherGenerator;
 
-public class FireDecorator extends Decorator {
-	private static final byte BASE_AMOUNT = 1;
-	private static final byte RAND_AMOUNT = 2;
+public class FireDecorator extends VariableAmountDecorator {
+	public FireDecorator() {
+		super(1, 1);
+	}
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -45,7 +46,7 @@ public class FireDecorator extends Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		for (byte amount = (byte) (random.nextInt(RAND_AMOUNT) + BASE_AMOUNT); amount > 0; amount--) {
+		for (int amount = getAmount(random); amount > 0; amount--) {
 			final int x = chunk.getBlockX(random);
 			final int y = random.nextInt(NetherGenerator.HEIGHT);
 			final int z = chunk.getBlockZ(random);

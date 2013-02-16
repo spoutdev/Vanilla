@@ -42,8 +42,13 @@ import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tre
 
 public class ForestBiome extends GrassyBiome {
 	public ForestBiome(int biomeId) {
-		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new ForestTreeWGOFactory()),
-				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory(), (byte) 3),
+		super(biomeId);
+		final TreeDecorator trees = new TreeDecorator();
+		trees.setFactory(new ForestTreeWGOFactory());
+		final TallGrassDecorator tallGrass = new TallGrassDecorator();
+		tallGrass.setFactory(new NormalTallGrassFactory());
+		tallGrass.setBaseAmount(3);
+		addDecorators(new SandAndClayDecorator(), trees, new FlowerDecorator(), tallGrass, 
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator());
 		setElevation(63, 81);
 		setGrassColorMultiplier(new Color(121, 192, 90));

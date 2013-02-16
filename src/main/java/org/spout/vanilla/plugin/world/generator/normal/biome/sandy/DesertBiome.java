@@ -37,9 +37,15 @@ import org.spout.vanilla.plugin.world.generator.normal.decorator.WellDecorator;
 
 public class DesertBiome extends SandyBiome {
 	public DesertBiome(int biomeId) {
-		super(biomeId, new SandAndClayDecorator(), new CactusDecorator(),
-				new DeadBushDecorator((byte) 8, (byte) 2), new MushroomDecorator(),
-				new SugarCaneDecorator((byte) 20, (byte) 3), new WellDecorator());
+		super(biomeId);
+		final DeadBushDecorator deadBushes = new DeadBushDecorator();
+		deadBushes.setOdd(8);
+		deadBushes.setBaseAmount(2);
+		final SugarCaneDecorator sugarCane = new SugarCaneDecorator();
+		sugarCane.setClusterPlaceAttempts(20);
+		sugarCane.setNumberOfClusters(3);
+		addDecorators(new SandAndClayDecorator(), new CactusDecorator(), deadBushes,
+				new MushroomDecorator(), sugarCane, new WellDecorator());
 		setElevation(63, 74);
 		setGrassColorMultiplier(new Color(191, 183, 85));
 		setFoliageColorMultiplier(new Color(174, 164, 42));

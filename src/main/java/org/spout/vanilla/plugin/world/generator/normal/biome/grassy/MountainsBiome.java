@@ -39,8 +39,12 @@ import org.spout.vanilla.plugin.world.generator.normal.decorator.TreeDecorator;
 
 public class MountainsBiome extends GrassyBiome {
 	public MountainsBiome(int biomeId) {
-		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new NormalTreeWGOFactory()),
-				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory()),
+		super(biomeId);
+		final TreeDecorator trees = new TreeDecorator();
+		trees.setFactory(new NormalTreeWGOFactory());
+		final TallGrassDecorator tallGrass = new TallGrassDecorator();
+		tallGrass.setFactory(new NormalTallGrassFactory());
+		addDecorators(new SandAndClayDecorator(), trees, new FlowerDecorator(), tallGrass,
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator(),
 				new EmeraldOreDecorator());
 		setElevation(63, 127);

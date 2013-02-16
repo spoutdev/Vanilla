@@ -42,10 +42,18 @@ import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tre
 
 public class SwampBiome extends GrassyBiome {
 	public SwampBiome(int biomeId) {
-		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new SwampTreeWGOFactory()),
-				new TallGrassDecorator(new NormalTallGrassFactory()), new DeadBushDecorator(), new LilyPadDecorator(),
-				new MushroomDecorator((byte) 1, (byte) 3), new SugarCaneDecorator((byte) 15, (byte) 2),
-				new PumpkinDecorator());
+		super(biomeId);
+		final TreeDecorator trees = new TreeDecorator();
+		trees.setFactory(new SwampTreeWGOFactory());
+		final TallGrassDecorator tallGrass = new TallGrassDecorator();
+		tallGrass.setFactory(new NormalTallGrassFactory());
+		final MushroomDecorator mushrooms = new MushroomDecorator();
+		mushrooms.setBaseAmount(3);
+		final SugarCaneDecorator sugarCane = new SugarCaneDecorator();
+		sugarCane.setClusterPlaceAttempts(15);
+		sugarCane.setNumberOfClusters(2);
+		addDecorators(new SandAndClayDecorator(), trees, tallGrass, new DeadBushDecorator(),
+				new LilyPadDecorator(), mushrooms, sugarCane, new PumpkinDecorator());
 		setElevation(56, 66);
 		setGrassColorMultiplier(new Color(92, 105, 78));
 		setFoliageColorMultiplier(new Color(73, 97, 55));

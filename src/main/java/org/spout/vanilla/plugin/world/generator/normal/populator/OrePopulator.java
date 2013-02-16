@@ -26,6 +26,9 @@
  */
 package org.spout.vanilla.plugin.world.generator.normal.populator;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import org.spout.api.generator.Populator;
@@ -36,23 +39,16 @@ import org.spout.vanilla.plugin.world.generator.normal.object.OreObject;
 import org.spout.vanilla.plugin.world.generator.normal.object.OreObject.OreType;
 
 public class OrePopulator extends Populator {
+	private final List<OreType> oreTypes = new ArrayList<OreType>();
+
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {
 			return;
 		}
 		final World world = chunk.getWorld();
-		final OreObject[] ores = new OreObject[]{
-				new OreObject(OreType.DIRT),
-				new OreObject(OreType.GRAVEL),
-				new OreObject(OreType.COAL),
-				new OreObject(OreType.IRON),
-				new OreObject(OreType.REDSTONE),
-				new OreObject(OreType.GOLD),
-				new OreObject(OreType.LAPIS_LAZULI),
-				new OreObject(OreType.DIAMOND)
-		};
-		for (OreObject ore : ores) {
+		for (OreType oreType : oreTypes) {
+			final OreObject ore = new OreObject(oreType);
 			ore.setRandom(random);
 			for (byte i = 0; i < ore.getAmount(); i++) {
 				final int x = chunk.getBlockX(random);
@@ -63,5 +59,26 @@ public class OrePopulator extends Populator {
 				}
 			}
 		}
+	}
+
+	public void clearOreTypes() {
+		oreTypes.clear();
+	}
+
+	public void setOreTypes(OreType... types) {
+		clearOreTypes();
+		addOreTypes(types);
+	}
+
+	public void addOreTypes(OreType... types) {
+		oreTypes.addAll(Arrays.asList(types));
+	}
+
+	public void removeOreTypes(OreType... types) {
+		oreTypes.removeAll(Arrays.asList(types));
+	}
+
+	public List<OreType> getOreTypes() {
+		return oreTypes;
 	}
 }

@@ -42,9 +42,13 @@ import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tre
 
 public class TaigaBiome extends SnowyBiome {
 	public TaigaBiome(int biomeId) {
-		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new TaigaTreeWGOFactory()),
-				new FlowerDecorator(), new TallGrassDecorator(new NormalTallGrassFactory()), new MushroomDecorator(),
-				new SugarCaneDecorator(), new PumpkinDecorator());
+		super(biomeId);
+		final TreeDecorator trees = new TreeDecorator();
+		trees.setFactory(new TaigaTreeWGOFactory());
+		final TallGrassDecorator tallGrass = new TallGrassDecorator();
+		tallGrass.setFactory(new NormalTallGrassFactory());
+		addDecorators(new SandAndClayDecorator(), trees, new FlowerDecorator(), tallGrass,
+				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator());
 		setElevation(63, 83);
 		setGrassColorMultiplier(new Color(130, 181, 147));
 		setFoliageColorMultiplier(new Color(99, 162, 119));

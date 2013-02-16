@@ -36,10 +36,15 @@ import org.spout.vanilla.plugin.world.generator.normal.decorator.SugarCaneDecora
 import org.spout.vanilla.plugin.world.generator.normal.decorator.TallGrassDecorator;
 
 public class PlainBiome extends GrassyBiome {
-	public PlainBiome(int id) {
-		super(id, new SandAndClayDecorator(), new FlowerDecorator((byte) 4),
-				new TallGrassDecorator(new NormalTallGrassFactory(), (byte) 5),
-				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator());
+	public PlainBiome(int biomeId) {
+		super(biomeId);
+		final TallGrassDecorator tallGrass = new TallGrassDecorator();
+		tallGrass.setFactory(new NormalTallGrassFactory());
+		tallGrass.setBaseAmount(5);
+		final FlowerDecorator flowers = new FlowerDecorator();
+		flowers.setBaseAmount(4);
+		addDecorators(new SandAndClayDecorator(), flowers, tallGrass, new MushroomDecorator(),
+				new SugarCaneDecorator(), new PumpkinDecorator());
 		setElevation(63, 74);
 		setGrassColorMultiplier(new Color(145, 189, 89));
 		setFoliageColorMultiplier(new Color(119, 171, 47));

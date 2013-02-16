@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.world.generator.normal.decorator;
 
+import org.spout.vanilla.plugin.world.generator.decorator.VariableAmountDecorator;
 import java.util.Random;
 
 import org.spout.api.generator.biome.Decorator;
@@ -36,15 +37,9 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 
-public class LilyPadDecorator extends Decorator {
-	private final byte amount;
-
+public class LilyPadDecorator extends VariableAmountDecorator {
 	public LilyPadDecorator() {
-		this((byte) 1);
-	}
-
-	public LilyPadDecorator(byte amount) {
-		this.amount = amount;
+		super(1, 0);
 	}
 
 	@Override
@@ -53,6 +48,7 @@ public class LilyPadDecorator extends Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
+		final int amount = getAmount(random);
 		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);

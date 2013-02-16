@@ -40,18 +40,9 @@ import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.Sug
  * Decorator that decorates a biome with sugar canes.
  */
 public class SugarCaneDecorator extends Decorator {
-	private final byte clusterPlaceAttempts;
-	private final byte numberOfClusters;
-	private byte maxClusterSize = 4;
-
-	public SugarCaneDecorator() {
-		this((byte) 10, (byte) 1);
-	}
-
-	public SugarCaneDecorator(byte clusterPlaceAttempts, byte numberOfClusters) {
-		this.clusterPlaceAttempts = clusterPlaceAttempts;
-		this.numberOfClusters = numberOfClusters;
-	}
+	private int clusterPlaceAttempts = 10;
+	private int numberOfClusters = 1;
+	private int maxClusterSize = 4;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -96,11 +87,15 @@ public class SugarCaneDecorator extends Decorator {
 		return ++y;
 	}
 
-	public byte getMaxClusterSize() {
-		return maxClusterSize;
+	public void setClusterPlaceAttempts(int clusterPlaceAttempts) {
+		this.clusterPlaceAttempts = clusterPlaceAttempts;
 	}
 
-	public void setMaxClusterSize(byte maxClusterSize) {
+	public void setNumberOfClusters(int numberOfClusters) {
+		this.numberOfClusters = numberOfClusters;
+	}
+
+	public void setMaxClusterSize(int maxClusterSize) {
 		this.maxClusterSize = maxClusterSize;
 	}
 }

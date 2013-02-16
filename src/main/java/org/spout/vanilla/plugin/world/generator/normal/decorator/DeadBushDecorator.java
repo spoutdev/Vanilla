@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.plugin.world.generator.normal.decorator;
 
+import org.spout.vanilla.plugin.world.generator.decorator.VariableAmountDecorator;
 import java.util.Random;
 
-import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.block.BlockFace;
@@ -36,17 +36,11 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 
-public class DeadBushDecorator extends Decorator {
-	private final byte odd;
-	private final byte amount;
+public class DeadBushDecorator extends VariableAmountDecorator {
+	private int odd = 12;
 
 	public DeadBushDecorator() {
-		this((byte) 12, (byte) 2);
-	}
-
-	public DeadBushDecorator(byte odd, byte amount) {
-		this.odd = odd;
-		this.amount = amount;
+		super(2, 0);
 	}
 
 	@Override
@@ -58,6 +52,7 @@ public class DeadBushDecorator extends Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
+		final int amount = getAmount(random);
 		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random) - 7 + random.nextInt(15);
 			final int z = chunk.getBlockZ(random) - 7 + random.nextInt(15);
@@ -77,5 +72,9 @@ public class DeadBushDecorator extends Decorator {
 			}
 		}
 		return ++y;
+	}
+
+	public void setOdd(int odd) {
+		this.odd = odd;
 	}
 }

@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.plugin.world.generator.normal.decorator;
 
+import org.spout.vanilla.plugin.world.generator.decorator.VariableAmountDecorator;
 import java.util.Random;
 
-import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.block.BlockFace;
@@ -37,17 +37,11 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.plant.Mushroom;
 import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 
-public class MushroomDecorator extends Decorator {
-	private final byte odd;
-	private final byte amount;
+public class MushroomDecorator extends VariableAmountDecorator {
+	private int odd = 64;
 
 	public MushroomDecorator() {
-		this((byte) 64, (byte) 1);
-	}
-
-	public MushroomDecorator(byte odd, byte amount) {
-		this.odd = odd;
-		this.amount = amount;
+		super(1, 0);
 	}
 
 	@Override
@@ -59,6 +53,7 @@ public class MushroomDecorator extends Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
+		final int amount = getAmount(random);
 		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random);
 			final int y = random.nextBoolean() ? NormalGenerator.HEIGHT - 1 : random.nextInt(64);
@@ -83,5 +78,9 @@ public class MushroomDecorator extends Decorator {
 			}
 		}
 		return ++y;
+	}
+
+	public void setOdd(int odd) {
+		this.odd = odd;
 	}
 }

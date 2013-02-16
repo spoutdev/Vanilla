@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.plugin.world.generator.normal.decorator;
 
+import org.spout.vanilla.plugin.world.generator.decorator.VariableAmountDecorator;
 import java.util.Random;
 
-import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
@@ -38,16 +38,11 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 
-public class FlowerDecorator extends Decorator {
-	private static final byte ODD = 10;
-	private final byte amount;
+public class FlowerDecorator extends VariableAmountDecorator {
+	private int odd = 10;
 
 	public FlowerDecorator() {
-		this((byte) 2);
-	}
-
-	public FlowerDecorator(byte amount) {
-		this.amount = amount;
+		super(2, 0);
 	}
 
 	@Override
@@ -55,11 +50,12 @@ public class FlowerDecorator extends Decorator {
 		if (chunk.getY() != 4) {
 			return;
 		}
-		if (random.nextInt(ODD) != 0) {
+		if (random.nextInt(odd) != 0) {
 			return;
 		}
 		BlockMaterial flower = VanillaMaterials.DANDELION;
 		final World world = chunk.getWorld();
+		final int amount = getAmount(random);
 		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
@@ -93,5 +89,9 @@ public class FlowerDecorator extends Decorator {
 			}
 		}
 		return ++y;
+	}
+
+	public void setOdd(int odd) {
+		this.odd = odd;
 	}
 }

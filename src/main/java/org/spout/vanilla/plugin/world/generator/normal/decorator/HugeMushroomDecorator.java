@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.plugin.world.generator.normal.decorator;
 
+import org.spout.vanilla.plugin.world.generator.decorator.VariableAmountDecorator;
 import java.util.Random;
 
-import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
@@ -37,15 +37,9 @@ import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.HugeMushroomObject;
 import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.HugeMushroomObject.HugeMushroomType;
 
-public class HugeMushroomDecorator extends Decorator {
-	private final byte amount;
-
+public class HugeMushroomDecorator extends VariableAmountDecorator {
 	public HugeMushroomDecorator() {
-		this((byte) 1);
-	}
-
-	public HugeMushroomDecorator(byte amount) {
-		this.amount = amount;
+		super(1, 0);
 	}
 
 	@Override
@@ -61,6 +55,7 @@ public class HugeMushroomDecorator extends Decorator {
 			mushroom = new HugeMushroomObject(HugeMushroomType.BROWN);
 		}
 		mushroom.setRandom(random);
+		final int amount = getAmount(random);
 		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);

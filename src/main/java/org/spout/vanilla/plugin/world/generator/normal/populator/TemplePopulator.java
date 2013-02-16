@@ -35,14 +35,14 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.vanilla.plugin.world.generator.normal.structure.temple.Temple;
 
 public class TemplePopulator extends Populator {
-	private static final short ODD = 800;
+	private int odd = 800;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {
 			return;
 		}
-		if (random.nextInt(ODD) != 0) {
+		if (random.nextInt(odd) != 0) {
 			return;
 		}
 		final Temple temple = new Temple();
@@ -53,5 +53,9 @@ public class TemplePopulator extends Populator {
 		if (temple.canPlaceObject(world, x, 0, z)) {
 			temple.placeObject(world, x, 0, z);
 		}
+	}
+
+	public void setOdd(int odd) {
+		this.odd = odd;
 	}
 }

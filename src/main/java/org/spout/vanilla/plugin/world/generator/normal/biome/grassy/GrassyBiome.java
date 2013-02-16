@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.plugin.world.generator.normal.biome.grassy;
 
-import org.spout.api.generator.biome.Decorator;
-
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.plugin.world.generator.normal.populator.GroundCoverPopulator.GroundCoverLayer;
@@ -35,11 +33,11 @@ import org.spout.vanilla.plugin.world.generator.normal.populator.GroundCoverPopu
 import org.spout.vanilla.plugin.world.generator.normal.populator.GroundCoverPopulator.GroundCoverVariableLayer;
 
 public abstract class GrassyBiome extends NormalBiome {
-	public GrassyBiome(int biomeId, Decorator... decorators) {
-		super(biomeId, decorators);
+	public GrassyBiome(int biomeId) {
+		super(biomeId);
 		setTopCover(new GroundCoverLayer[]{
-				new GroundCoverUniformLayer(VanillaMaterials.GRASS, VanillaMaterials.DIRT, (byte) 1),
-				new GroundCoverVariableLayer(VanillaMaterials.DIRT, VanillaMaterials.DIRT, (byte) 1, (byte) 4)
-		});
+					new GroundCoverUniformLayer(VanillaMaterials.GRASS, VanillaMaterials.DIRT, (byte) 1),
+					new GroundCoverVariableLayer(VanillaMaterials.DIRT, VanillaMaterials.DIRT, (byte) 1, (byte) 4)
+				});
 	}
 }

@@ -36,12 +36,12 @@ import org.spout.vanilla.plugin.world.generator.normal.populator.GroundCoverPopu
 import org.spout.vanilla.plugin.world.generator.normal.populator.GroundCoverPopulator.GroundCoverVariableLayer;
 
 public abstract class SandyBiome extends NormalBiome {
-	public SandyBiome(int biomeId, Decorator... decorators) {
-		super(biomeId, decorators);
+	public SandyBiome(int biomeId) {
+		super(biomeId);
 		setClimate(Climate.WARM);
 		setTopCover(new GroundCoverPopulator.GroundCoverLayer[]{
-				new GroundCoverVariableLayer(VanillaMaterials.SAND, VanillaMaterials.SAND, (byte) 3, (byte) 4),
-				new GroundCoverVariableLayer(VanillaMaterials.SANDSTONE, VanillaMaterials.SANDSTONE, (byte) 1, (byte) 3)
-		});
+					new GroundCoverVariableLayer(VanillaMaterials.SAND, VanillaMaterials.SAND, (byte) 3, (byte) 4),
+					new GroundCoverVariableLayer(VanillaMaterials.SANDSTONE, VanillaMaterials.SANDSTONE, (byte) 1, (byte) 3)
+				});
 	}
 }

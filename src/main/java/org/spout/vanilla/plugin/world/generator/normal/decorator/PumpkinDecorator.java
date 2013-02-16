@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.plugin.world.generator.normal.decorator;
 
+import org.spout.vanilla.plugin.world.generator.decorator.VariableAmountDecorator;
 import java.util.Random;
 
-import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
@@ -38,24 +38,25 @@ import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 /**
  * Decorator that decorates a biome with pumpkins.
  */
-public class PumpkinDecorator extends Decorator {
-	private static final byte ODD = 120;
-	// Control how many pumpkins per patch
-	private static final byte BASE_AMOUNT = 1;
-	private static final byte RAND_AMOUNT = 8;
+public class PumpkinDecorator extends VariableAmountDecorator {
+	private int odd = 120;
+
+	public PumpkinDecorator() {
+		super(1, 7);
+	}
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {
 			return;
 		}
-		if (random.nextInt(ODD) != 0) {
+		if (random.nextInt(odd) != 0) {
 			return;
 		}
 		final World world = chunk.getWorld();
 		final int x = chunk.getBlockX(random);
 		final int z = chunk.getBlockZ(random);
-		for (int amount = random.nextInt(RAND_AMOUNT) + BASE_AMOUNT; amount >= 0; amount--) {
+		for (int amount = getAmount(random); amount >= 0; amount--) {
 			final int xx = x - 7 + random.nextInt(15);
 			final int zz = z - 7 + random.nextInt(15);
 			final int yy = getHighestWorkableBlock(world, xx, zz);
@@ -73,5 +74,9 @@ public class PumpkinDecorator extends Decorator {
 			}
 		}
 		return ++y;
+	}
+
+	public void setOdd(int odd) {
+		this.odd = odd;
 	}
 }

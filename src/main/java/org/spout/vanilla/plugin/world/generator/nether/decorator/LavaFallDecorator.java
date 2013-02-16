@@ -44,7 +44,7 @@ import org.spout.vanilla.plugin.material.block.Liquid;
 import org.spout.vanilla.plugin.world.generator.nether.NetherGenerator;
 
 public class LavaFallDecorator extends Decorator {
-	private static final byte LAVA_ATTEMPTS = 8;
+	private int lavaAttempts = 8;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
@@ -53,7 +53,7 @@ public class LavaFallDecorator extends Decorator {
 		}
 		final World world = chunk.getWorld();
 		List<Block> liquids = new ArrayList<Block>();
-		for (byte count = 0; count < LAVA_ATTEMPTS; count++) {
+		for (byte count = 0; count < lavaAttempts; count++) {
 			final int x = chunk.getBlockX(random);
 			final int y = random.nextInt(NetherGenerator.HEIGHT);
 			final int z = chunk.getBlockZ(random);
@@ -110,5 +110,9 @@ public class LavaFallDecorator extends Decorator {
 			}
 		}
 		return adjacentNetherrackCount == 4 && adjacentAirCount == 1;
+	}
+
+	public void setLavaAttempts(int lavaAttempts) {
+		this.lavaAttempts = lavaAttempts;
 	}
 }

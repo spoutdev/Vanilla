@@ -28,7 +28,6 @@ package org.spout.vanilla.plugin.world.generator.normal.biome;
 
 import java.util.Random;
 
-import org.spout.api.generator.biome.Decorator;
 import org.spout.api.util.config.ConfigurationNode;
 import org.spout.api.util.config.annotated.Load;
 import org.spout.api.util.config.annotated.Save;
@@ -53,8 +52,8 @@ public abstract class NormalBiome extends VanillaBiome {
 	// ground cover
 	protected GroundCoverLayer[] groundCover = new GroundCoverLayer[0];
 
-	protected NormalBiome(int biomeId, Decorator... decorators) {
-		super(biomeId, decorators);
+	protected NormalBiome(int biomeId) {
+		super(biomeId);
 	}
 
 	protected void setElevation(float min, float max) {

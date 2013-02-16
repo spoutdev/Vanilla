@@ -47,9 +47,16 @@ import org.spout.vanilla.plugin.world.generator.normal.object.variableheight.tre
 
 public class JungleBiome extends GrassyBiome {
 	public JungleBiome(int biomeId) {
-		super(biomeId, new SandAndClayDecorator(), new TreeDecorator(new JungleTreeWGOFactory()),
-				new FlowerDecorator((byte) 4), new TallGrassDecorator(new JungleTallGrassFactory(), (byte) 15),
-				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator(), new VineDecorator());
+		super(biomeId);
+		final TreeDecorator trees = new TreeDecorator();
+		trees.setFactory(new JungleTreeWGOFactory());
+		final TallGrassDecorator tallGrass = new TallGrassDecorator();
+		tallGrass.setFactory(new JungleTallGrassFactory());
+		tallGrass.setBaseAmount(15);
+		final FlowerDecorator flowers = new FlowerDecorator();
+		flowers.setBaseAmount(4);
+		addDecorators(new SandAndClayDecorator(), trees, flowers, tallGrass, new MushroomDecorator(),
+				new SugarCaneDecorator(), new PumpkinDecorator(), new VineDecorator());
 		setElevation(63, 92);
 		setGrassColorMultiplier(new Color(83, 202, 55));
 		setFoliageColorMultiplier(new Color(41, 188, 5));

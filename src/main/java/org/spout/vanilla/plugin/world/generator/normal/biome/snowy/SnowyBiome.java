@@ -26,15 +26,13 @@
  */
 package org.spout.vanilla.plugin.world.generator.normal.biome.snowy;
 
-import org.spout.api.generator.biome.Decorator;
-
 import org.spout.vanilla.api.data.Climate;
 
 import org.spout.vanilla.plugin.world.generator.normal.biome.grassy.GrassyBiome;
 
 public abstract class SnowyBiome extends GrassyBiome {
-	public SnowyBiome(int biomeId, Decorator... decorators) {
-		super(biomeId, decorators);
+	public SnowyBiome(int biomeId) {
+		super(biomeId);
 		setClimate(Climate.COLD);
 	}
 }

@@ -26,31 +26,46 @@
  */
 package org.spout.vanilla.plugin.world.generator.normal.decorator;
 
+import org.spout.vanilla.plugin.world.generator.decorator.VariableAmountDecorator;
 import java.util.Random;
 
-import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.plugin.material.VanillaMaterials;
 
-public class EmeraldOreDecorator extends Decorator {
+public class EmeraldOreDecorator extends VariableAmountDecorator {
+	private int minimumElevation = 4;
+	private int elevationRandomness = 28;
+
+	public EmeraldOreDecorator() {
+		super(3, 5);
+	}
+
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {
 			return;
 		}
 		final World world = chunk.getWorld();
-		final byte amount = (byte) (random.nextInt(6) + 3);
+		final int amount = getAmount(random);
 		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random);
-			final int y = random.nextInt(28) + 4;
+			final int y = random.nextInt(elevationRandomness) + minimumElevation;
 			final int z = chunk.getBlockZ(random);
 			final Block block = world.getBlock(x, y, z);
 			if (block.isMaterial(VanillaMaterials.STONE)) {
 				block.setMaterial(VanillaMaterials.EMERALD_ORE);
 			}
 		}
+	}
+
+	public void setMinimumElevation(int minimumElevation) {
+		this.minimumElevation = minimumElevation;
+	}
+
+	public void setElevationRandomness(int elevationRandomness) {
+		this.elevationRandomness = elevationRandomness;
 	}
 }

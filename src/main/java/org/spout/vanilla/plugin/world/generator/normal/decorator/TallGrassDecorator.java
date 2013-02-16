@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.plugin.world.generator.normal.decorator;
 
+import org.spout.vanilla.plugin.world.generator.decorator.VariableAmountDecorator;
 import java.util.Random;
 
-import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
@@ -38,18 +38,11 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
 import org.spout.vanilla.plugin.material.block.plant.TallGrass;
 import org.spout.vanilla.plugin.world.generator.normal.NormalGenerator;
 
-public class TallGrassDecorator extends Decorator {
-	private final TallGrassFactory factory;
-	// Control how much grass to place
-	private final byte amount;
+public class TallGrassDecorator extends VariableAmountDecorator {
+	private TallGrassFactory factory;
 
-	public TallGrassDecorator(TallGrassFactory factory) {
-		this(factory, (byte) 1);
-	}
-
-	public TallGrassDecorator(TallGrassFactory factory, byte amount) {
-		this.factory = factory;
-		this.amount = amount;
+	public TallGrassDecorator() {
+		super(1, 0);
 	}
 
 	@Override
@@ -58,6 +51,7 @@ public class TallGrassDecorator extends Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
+		final int amount = getAmount(random);
 		for (byte count = 0; count < amount; count++) {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
@@ -88,6 +82,10 @@ public class TallGrassDecorator extends Decorator {
 			}
 		}
 		return ++y;
+	}
+
+	public void setFactory(TallGrassFactory factory) {
+		this.factory = factory;
 	}
 
 	public static interface TallGrassFactory {

@@ -40,15 +40,14 @@ import org.spout.vanilla.plugin.world.generator.normal.object.WellObject;
  * Decorator that decorates a biome with a well structure.
  */
 public class WellDecorator extends Decorator {
-	// generation odd, 'ODD' chunk per chunk
-	private static final short ODD = 1000;
+	private int odd = 1000;
 
 	@Override
 	public void populate(Chunk chunk, Random random) {
 		if (chunk.getY() != 4) {
 			return;
 		}
-		if (random.nextInt(ODD) != 0) {
+		if (random.nextInt(odd) != 0) {
 			return;
 		}
 		final World world = chunk.getWorld();
@@ -72,5 +71,9 @@ public class WellDecorator extends Decorator {
 			}
 		}
 		return ++y;
+	}
+
+	public void setOdd(int odd) {
+		this.odd = odd;
 	}
 }

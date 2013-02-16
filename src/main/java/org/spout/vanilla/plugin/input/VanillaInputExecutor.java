@@ -46,7 +46,7 @@ public class VanillaInputExecutor implements InputExecutor {
 	}
 
 	@Override
-	public void execute(float dt) {
+	public void execute(float dt, Transform playerTransform) {
 		PlayerInputState inputState = player.input();
 		SceneComponent sc = player.getScene();
 		Transform ts = sc.getTransform(); //TODO: Maybe need getTransformLive?

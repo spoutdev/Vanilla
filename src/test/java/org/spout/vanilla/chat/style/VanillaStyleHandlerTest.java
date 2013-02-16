@@ -30,8 +30,8 @@ import org.junit.Test;
 
 import org.spout.api.chat.style.ChatStyle;
 
-import org.spout.vanilla.plugin.chat.VanillaStyleFormatter;
-import org.spout.vanilla.plugin.chat.VanillaStyleHandler;
+import org.spout.vanilla.util.chat.VanillaStyleFormatter;
+import org.spout.vanilla.util.chat.VanillaStyleHandler;
 
 import static org.junit.Assert.fail;
 

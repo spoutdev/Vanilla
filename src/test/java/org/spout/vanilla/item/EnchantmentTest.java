@@ -32,10 +32,10 @@ import gnu.trove.map.TObjectIntMap;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.api.enchantment.Enchantment;
-import org.spout.vanilla.api.enchantment.EnchantmentRegistry;
-import org.spout.vanilla.plugin.enchantment.VanillaEnchantments;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.enchantment.Enchantment;
+import org.spout.vanilla.material.enchantment.EnchantmentRegistry;
+import org.spout.vanilla.material.enchantment.VanillaEnchantments;
 
 import static org.junit.Assert.assertTrue;
 

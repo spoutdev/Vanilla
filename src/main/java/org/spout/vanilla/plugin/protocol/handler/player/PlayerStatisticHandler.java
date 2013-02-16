@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.protocol.handler.player;
 
+import org.spout.api.Spout;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.plugin.protocol.msg.player.PlayerStatisticMessage;
@@ -37,7 +38,6 @@ public class PlayerStatisticHandler extends MessageHandler<PlayerStatisticMessag
 			return;
 		}
 
-		//TODO Implement Statistic
-		
+		Spout.log("Implement Statistics");
 	}
 }

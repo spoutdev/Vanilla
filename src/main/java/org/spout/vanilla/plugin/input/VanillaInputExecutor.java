@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.plugin.input;
 
-import org.spout.api.component.impl.CameraComponent;
 import org.spout.api.component.impl.SceneComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.entity.state.PlayerInputState;
@@ -37,19 +36,16 @@ import org.spout.api.math.Vector3;
 
 public class VanillaInputExecutor implements InputExecutor {
 	private Player player;
-	private CameraComponent camera;
 	private float speed = 50;
 
 	public VanillaInputExecutor(Player player) {
 		this.player = player;
-		camera = player.get(CameraComponent.class);
 	}
 
 	@Override
-	public void execute(float dt) {
+	public void execute(float dt, Transform ts) {
 		PlayerInputState inputState = player.input();
 		SceneComponent sc = player.getScene();
-		Transform ts = sc.getTransform(); //TODO: Maybe need getTransformLive?
 
 		Vector3 offset = Vector3.ZERO;
 		if (inputState.getForward()) {

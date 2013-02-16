@@ -26,10 +26,12 @@
  */
 package org.spout.vanilla.plugin.protocol.handler.entity;
 
+import org.spout.api.Spout;
 import org.spout.api.component.impl.AnimationComponent;
 import org.spout.api.component.impl.ModelHolderComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
+import org.spout.api.geo.World;
 import org.spout.api.model.Model;
 import org.spout.api.model.animation.Animation;
 import org.spout.api.protocol.MessageHandler;
@@ -63,8 +65,15 @@ public final class EntityAnimationHandler extends MessageHandler<EntityAnimation
 		}
 
 		Player player = session.getPlayer();
+		
+		World world = player.getWorld();
 
-		Entity entity = player.getWorld().getEntity(message.getEntityId());
+		Entity entity = world.getEntity(message.getEntityId());
+		
+		if(entity == null){
+			Spout.getLogger().warning("Entity " + message.getEntityId() + " not found");
+			return;
+		}
 		
 		ModelHolderComponent models = entity.get(ModelHolderComponent.class);
 		if(models == null)

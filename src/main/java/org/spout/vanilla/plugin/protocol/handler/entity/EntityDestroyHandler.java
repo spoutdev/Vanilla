@@ -26,6 +26,10 @@
  */
 package org.spout.vanilla.plugin.protocol.handler.entity;
 
+import org.spout.api.Spout;
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
+import org.spout.api.geo.World;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.vanilla.plugin.protocol.msg.entity.EntityDestroyMessage;
@@ -38,8 +42,17 @@ public class EntityDestroyHandler extends MessageHandler<EntityDestroyMessage>{
 			return;
 		}
 		
-		//TODO: implement
-		System.out.println(message.toString());
+		Player player = session.getPlayer();
+		World world = player.getWorld();
+		
+		for(int id : message.getId()){
+			Entity entity = world.getEntity(id);
+			if(entity == null){
+				Spout.getLogger().warning("Entity " + id + " not found");
+				continue;
+			}
+			entity.remove();
+		}
 	}
 
 }

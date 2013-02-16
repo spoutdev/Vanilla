@@ -31,16 +31,16 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryOpenEvent;
 
-import org.spout.vanilla.api.component.substance.material.DispenserComponent;
+import org.spout.vanilla.plugin.component.substance.material.Dispenser;
 
 /**
  * Event which is fired when a Dispenser is opened.
  */
 public class DispenserOpenEvent extends InventoryOpenEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private final DispenserComponent dispenser;
+	private final Dispenser dispenser;
 
-	public DispenserOpenEvent(DispenserComponent dispenser, Entity entity) {
+	public DispenserOpenEvent(Dispenser dispenser, Entity entity) {
 		super(dispenser.getInventory(), entity);
 		this.dispenser = dispenser;
 	}
@@ -49,7 +49,7 @@ public class DispenserOpenEvent extends InventoryOpenEvent implements Cancellabl
 	 * Returns the dispenser which caused this event.
 	 * @return dispenser
 	 */
-	public DispenserComponent getDispenser() {
+	public Dispenser getDispenser() {
 		return dispenser;
 	}
 

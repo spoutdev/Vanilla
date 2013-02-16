@@ -34,18 +34,18 @@ import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.api.component.substance.material.SignComponent;
+import org.spout.vanilla.plugin.component.substance.material.AbstractSign;
 
 /**
  * Event which is called when the text on a sign changes
  */
 public class SignUpdateEvent extends Event implements ProtocolEvent, Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private final SignComponent sign;
+	private final AbstractSign sign;
 	private final Cause<?> cause;
 	private String[] newLines;
 
-	public SignUpdateEvent(SignComponent sign, String[] newLines, Cause<?> cause) {
+	public SignUpdateEvent(AbstractSign sign, String[] newLines, Cause<?> cause) {
 		if (newLines == null || newLines.length != 4) {
 			throw new IllegalArgumentException("Array size must be 4");
 		}
@@ -70,7 +70,7 @@ public class SignUpdateEvent extends Event implements ProtocolEvent, Cancellable
 	 * Get the SignComponent which text is being changed
 	 * @return sign which is being changed
 	 */
-	public SignComponent getSign() {
+	public AbstractSign getSign() {
 		return sign;
 	}
 

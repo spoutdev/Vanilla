@@ -53,7 +53,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.lang.Locale;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.api.component.substance.material.VanillaBlockComponent;
+import org.spout.vanilla.plugin.component.substance.VanillaBlockComponent;
 import org.spout.vanilla.api.data.GameMode;
 import org.spout.vanilla.plugin.VanillaPlugin;
 import org.spout.vanilla.plugin.component.living.neutral.Human;

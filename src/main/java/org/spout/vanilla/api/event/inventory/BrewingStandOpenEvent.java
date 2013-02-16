@@ -26,12 +26,12 @@
  */
 package org.spout.vanilla.api.event.inventory;
 
+import org.spout.vanilla.plugin.component.substance.material.BrewingStand;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryOpenEvent;
-
-import org.spout.vanilla.api.component.substance.material.BrewingStandComponent;
 
 /**
  * Event which is called when a BrewingStand is opened / looked into.
@@ -39,9 +39,9 @@ import org.spout.vanilla.api.component.substance.material.BrewingStandComponent;
  */
 public class BrewingStandOpenEvent extends InventoryOpenEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private final BrewingStandComponent brewingStand;
+	private final BrewingStand brewingStand;
 
-	public BrewingStandOpenEvent(BrewingStandComponent brewingStand, Entity entity) {
+	public BrewingStandOpenEvent(BrewingStand brewingStand, Entity entity) {
 		super(brewingStand.getInventory(), entity);
 		this.brewingStand = brewingStand;
 	}
@@ -50,7 +50,7 @@ public class BrewingStandOpenEvent extends InventoryOpenEvent implements Cancell
 	 * Returns the brewingStand which caused this event.
 	 * @return brewingStand
 	 */
-	public BrewingStandComponent getBrewingStand() {
+	public BrewingStand getBrewingStand() {
 		return brewingStand;
 	}
 

@@ -32,7 +32,7 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.block.BlockEvent;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.api.component.substance.material.FurnaceComponent;
+import org.spout.vanilla.plugin.component.substance.material.Furnace;
 
 /**
  * Event which is called when an unit of an ItemStack is smelted.
@@ -40,12 +40,12 @@ import org.spout.vanilla.api.component.substance.material.FurnaceComponent;
  */
 public class FurnaceSmeltEvent extends BlockEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private final FurnaceComponent furnace;
+	private final Furnace furnace;
 	private final Cause cause;
 	private final ItemStack source;
 	private ItemStack result;
 
-	public FurnaceSmeltEvent(FurnaceComponent furnace, Cause<?> reason, ItemStack source, ItemStack result) {
+	public FurnaceSmeltEvent(Furnace furnace, Cause<?> reason, ItemStack source, ItemStack result) {
 		super(furnace.getBlock(), reason);
 		this.furnace = furnace;
 		this.cause = reason;
@@ -78,10 +78,10 @@ public class FurnaceSmeltEvent extends BlockEvent implements Cancellable {
 	}
 
 	/**
-	 * Returns the FurnaceComponent in which an item was smelted.
+	 * Returns the Furnace in which an item was smelted.
 	 * @return furnace
 	 */
-	public FurnaceComponent getFurnace() {
+	public Furnace getFurnace() {
 		return furnace;
 	}
 

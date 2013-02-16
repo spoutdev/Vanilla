@@ -31,16 +31,16 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryOpenEvent;
 
-import org.spout.vanilla.api.component.substance.material.EnchantmentTableComponent;
+import org.spout.vanilla.plugin.component.substance.material.EnchantmentTable;
 
 /**
  * Event which is fired when an EnchantmentTable is opened.
  */
 public class EnchantmentTableOpenEvent extends InventoryOpenEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private final EnchantmentTableComponent enchantmentTable;
+	private final EnchantmentTable enchantmentTable;
 
-	public EnchantmentTableOpenEvent(EnchantmentTableComponent enchantmentTable, Entity entity) {
+	public EnchantmentTableOpenEvent(EnchantmentTable enchantmentTable, Entity entity) {
 		super(enchantmentTable.getInventory(), entity);
 		this.enchantmentTable = enchantmentTable;
 	}
@@ -49,7 +49,7 @@ public class EnchantmentTableOpenEvent extends InventoryOpenEvent implements Can
 	 * Returns the enchantmentTable which caused this event.
 	 * @return enchantmentTable
 	 */
-	public EnchantmentTableComponent getEnchantmentTable() {
+	public EnchantmentTable getEnchantmentTable() {
 		return enchantmentTable;
 	}
 

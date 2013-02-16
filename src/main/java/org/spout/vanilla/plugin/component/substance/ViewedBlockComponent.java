@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.api.component.substance.material;
+package org.spout.vanilla.plugin.component.substance;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -33,6 +33,8 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.material.block.BlockFace;
+
+import org.spout.vanilla.plugin.component.substance.VanillaBlockComponent;
 
 public abstract class ViewedBlockComponent extends VanillaBlockComponent {
 	protected final Set<Player> viewers = new HashSet<Player>();

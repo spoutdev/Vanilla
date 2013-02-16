@@ -28,12 +28,10 @@ package org.spout.vanilla.plugin.component.substance.material;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
+import org.spout.api.inventory.Container;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.map.DefaultedKey;
-import org.spout.api.map.DefaultedKeyFactory;
-import org.spout.api.map.DefaultedKeyImpl;
 
-import org.spout.vanilla.api.component.substance.material.FurnaceComponent;
+import org.spout.vanilla.plugin.component.substance.ViewedBlockComponent;
 import org.spout.vanilla.api.event.inventory.FurnaceCloseEvent;
 import org.spout.vanilla.api.event.inventory.FurnaceOpenEvent;
 import org.spout.vanilla.api.inventory.window.prop.FurnaceProperty;
@@ -45,34 +43,43 @@ import org.spout.vanilla.api.data.VanillaData;
 import org.spout.vanilla.plugin.inventory.block.FurnaceInventory;
 import org.spout.vanilla.plugin.inventory.window.block.FurnaceWindow;
 import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.component.FurnaceBlock;
 
 /**
  * Represents a furnace in a world.
  */
-public class Furnace extends FurnaceComponent {
-	private static final DefaultedKey<FurnaceInventory> FURNACE_INVENTORY = new DefaultedKeyFactory<FurnaceInventory>("inventory", FurnaceInventory.class);
-	private static final DefaultedKey<Float> MAX_SMELT_TIME = new DefaultedKeyImpl<Float>("max_smelt_time", FurnaceBlock.SMELT_TIME);
+public class Furnace extends ViewedBlockComponent implements Container {
 
 	public final float MAX_FUEL_INCREMENT = 12.5f;
 	public final float MAX_SMELT_TIME_INCREMENT = 9f;
 
-	@Override
+	/**
+	 * Retrieve the maximum time to smelt something.
+	 * @return The maximum time to smelt.
+	 */
 	public float getMaxSmeltTime() {
-		return getData().get(MAX_SMELT_TIME);
+		return getData().get(VanillaData.MAX_SMELT_TIME);
 	}
 
-	@Override
+	/**
+	 * Sets the maximum amount of time to smelt something.
+	 * @param maxSmeltTime The maximum time to smelt.
+	 */
 	public void setMaxSmeltTime(float maxSmeltTime) {
-		getData().put(MAX_SMELT_TIME, maxSmeltTime);
+		getData().put(VanillaData.MAX_SMELT_TIME, maxSmeltTime);
 	}
 
-	@Override
+	/**
+	 * Retrieve the current smelting time.
+	 * @return The current smelting time.
+	 */
 	public float getSmeltTime() {
 		return getData().get(VanillaData.SMELT_TIME);
 	}
 
-	@Override
+	/**
+	 * Sets the current smelting time.
+	 * @param smeltTime The current smelting time.
+	 */
 	public void setSmeltTime(float smeltTime) {
 		getData().put(VanillaData.SMELT_TIME, smeltTime);
 		for (Player player : viewers) {
@@ -92,22 +99,35 @@ public class Furnace extends FurnaceComponent {
 		}
 	}
 
-	@Override
+	/**
+	 * Retrieve the maximum fuel amount currently set in the furnace.
+	 * @return The max fuel amount.
+	 */
+	//TODO: Better description anyone?
 	public float getMaxFuel() {
 		return getData().get(VanillaData.MAX_FURNACE_FUEL);
 	}
 
-	@Override
+	/**
+	 * Sets the maximum amount of fuel this furnace can hold.
+	 * @param maxFuel The maximum amount of fuel.
+	 */
 	public void setMaxFuel(float maxFuel) {
 		getData().put(VanillaData.MAX_FURNACE_FUEL, maxFuel);
 	}
 
-	@Override
+	/**
+	 * Retrieve the current amount of fuel in this furnace.
+	 * @return The current amount of fuel.
+	 */
 	public float getFuel() {
 		return getData().get(VanillaData.FURNACE_FUEL);
 	}
 
-	@Override
+	/**
+	 * Set the current amount of fuel in this furnace.
+	 * @param fuel The current amount of fuel.
+	 */
 	public void setFuel(float fuel) {
 		getData().put(VanillaData.FURNACE_FUEL, fuel);
 		for (Player player : viewers) {
@@ -133,14 +153,19 @@ public class Furnace extends FurnaceComponent {
 		setSmeltTime(getSmeltTime() - dt);
 	}
 
-	@Override
+	/**
+	 * Check if all the criteria for smelting is met.
+	 * @return True if smelting can happen else false.
+	 */
 	public boolean canSmelt() {
 		FurnaceInventory inventory = getInventory();
 		ItemStack output = inventory.getOutput();
 		return inventory.hasIngredient() && (output == null || output.getMaterial() == ((TimedCraftable) inventory.getIngredient().getMaterial()).getResult().getMaterial());
 	}
 
-	@Override
+	/**
+	 * Activate the smelting process.
+	 */
 	public void smelt() {
 		FurnaceInventory inventory = getInventory();
 		if (!inventory.hasIngredient()) {
@@ -228,7 +253,7 @@ public class Furnace extends FurnaceComponent {
 
 	@Override
 	public FurnaceInventory getInventory() {
-		return getData().get(FURNACE_INVENTORY);
+		return getData().get(VanillaData.FURNACE_INVENTORY);
 	}
 
 	@Override

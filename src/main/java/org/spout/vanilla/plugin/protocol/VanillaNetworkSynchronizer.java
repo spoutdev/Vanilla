@@ -65,7 +65,8 @@ import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
 import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
-import org.spout.vanilla.api.component.substance.material.SignComponent;
+import org.spout.vanilla.plugin.component.substance.material.AbstractSign;
+
 import org.spout.vanilla.api.data.Difficulty;
 import org.spout.vanilla.api.data.Dimension;
 import org.spout.vanilla.api.data.GameMode;
@@ -721,7 +722,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onSignUpdate(SignUpdateEvent event) {
-		SignComponent sign = event.getSign();
+		AbstractSign sign = event.getSign();
 		return new SignMessage(sign.getOwner().getX(), sign.getOwner().getY(), sign.getOwner().getZ(), event.getLines(), getRepositionManager());
 	}
 

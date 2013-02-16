@@ -31,16 +31,16 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryOpenEvent;
 
-import org.spout.vanilla.api.component.substance.material.FurnaceComponent;
+import org.spout.vanilla.plugin.component.substance.material.Furnace;
 
 /**
  * Event which is called when a furnace is opened.
  */
 public class FurnaceOpenEvent extends InventoryOpenEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private final FurnaceComponent furnace;
+	private final Furnace furnace;
 
-	public FurnaceOpenEvent(FurnaceComponent furnace, Entity entity) {
+	public FurnaceOpenEvent(Furnace furnace, Entity entity) {
 		super(furnace.getInventory(), entity);
 		this.furnace = furnace;
 	}
@@ -49,7 +49,7 @@ public class FurnaceOpenEvent extends InventoryOpenEvent implements Cancellable 
 	 * Returns the furnace which caused this event.
 	 * @return furnace
 	 */
-	public FurnaceComponent getFurnace() {
+	public Furnace getFurnace() {
 		return furnace;
 	}
 

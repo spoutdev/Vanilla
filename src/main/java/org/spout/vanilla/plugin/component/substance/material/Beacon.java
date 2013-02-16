@@ -28,9 +28,10 @@ package org.spout.vanilla.plugin.component.substance.material;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
+import org.spout.api.inventory.Container;
 import org.spout.api.inventory.Inventory;
 
-import org.spout.vanilla.api.component.substance.material.BeaconComponent;
+import org.spout.vanilla.plugin.component.substance.ViewedBlockComponent;
 import org.spout.vanilla.api.event.inventory.BeaconCloseEvent;
 import org.spout.vanilla.api.event.inventory.BeaconOpenEvent;
 
@@ -41,7 +42,7 @@ import org.spout.vanilla.plugin.inventory.window.block.BeaconWindow;
 /**
  * Component that represents a Anvil in the world.
  */
-public class Beacon extends BeaconComponent {
+public class Beacon extends ViewedBlockComponent implements Container {
 	private final BeaconInventory inventory = new BeaconInventory();
 
 	@Override

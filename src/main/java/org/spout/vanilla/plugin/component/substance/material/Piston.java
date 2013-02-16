@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.plugin.component.substance.material;
 
-import org.spout.vanilla.api.component.substance.material.VanillaBlockComponent;
+import org.spout.vanilla.plugin.component.substance.VanillaBlockComponent;
 
 /**
  * Component that represents a Piston in the world.

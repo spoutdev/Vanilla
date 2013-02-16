@@ -24,14 +24,16 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.api.component.substance.material;
+package org.spout.vanilla.plugin.component.substance.material;
 
 import org.spout.api.event.Cause;
+
+import org.spout.vanilla.plugin.component.substance.VanillaBlockComponent;
 
 /**
  * Component that represents any kind of Sign.
  */
-public abstract class SignComponent extends VanillaBlockComponent {
+public abstract class AbstractSign extends VanillaBlockComponent {
 	/**
 	 * The maximum number of characters per line
 	 * @return max characters per line

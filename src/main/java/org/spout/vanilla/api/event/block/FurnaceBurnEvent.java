@@ -32,7 +32,7 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.block.BlockEvent;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.api.component.substance.material.FurnaceComponent;
+import org.spout.vanilla.plugin.component.substance.material.Furnace;
 
 /**
  * Event which is called when an unit of an ItemStack is burned as fuel.
@@ -40,13 +40,13 @@ import org.spout.vanilla.api.component.substance.material.FurnaceComponent;
  */
 public class FurnaceBurnEvent extends BlockEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private final FurnaceComponent furnace;
+	private final Furnace furnace;
 	private final Cause cause;
 	private final ItemStack fuel;
 	private float burnTime;
 	private boolean burning;
 
-	public FurnaceBurnEvent(FurnaceComponent furnace, Cause<?> reason, ItemStack fuel, float burnTime) {
+	public FurnaceBurnEvent(Furnace furnace, Cause<?> reason, ItemStack fuel, float burnTime) {
 		super(furnace.getBlock(), reason);
 		this.furnace = furnace;
 		this.cause = reason;
@@ -92,7 +92,7 @@ public class FurnaceBurnEvent extends BlockEvent implements Cancellable {
 	 * Set the burn time of one unit of fuel for the ItemStack.
 	 * Will throw an {@link IllegalArgumentException} if burnTime is <= 0
 	 * @param burnTime the time one unit of the fuel will burn
-	 * @see FurnaceComponent for more information about the BurnTime
+	 * @see Furnace for more information about the BurnTime
 	 */
 	public void setBurnTime(float burnTime) {
 		if (burnTime <= 0) {
@@ -102,10 +102,10 @@ public class FurnaceBurnEvent extends BlockEvent implements Cancellable {
 	}
 
 	/**
-	 * Returns the FurnaceComponent where fuel was burned
+	 * Returns the Furnace where fuel was burned
 	 * @return furnace
 	 */
-	public FurnaceComponent getFurnace() {
+	public Furnace getFurnace() {
 		return furnace;
 	}
 

@@ -26,21 +26,21 @@
  */
 package org.spout.vanilla.api.event.inventory;
 
+import org.spout.vanilla.plugin.component.substance.material.Beacon;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryOpenEvent;
-
-import org.spout.vanilla.api.component.substance.material.BeaconComponent;
 
 /**
  * Event which is fired when a Beacon is opened / looked into.
  */
 public class BeaconOpenEvent extends InventoryOpenEvent implements Cancellable {
 	private static HandlerList handlers = new HandlerList();
-	private final BeaconComponent beacon;
+	private final Beacon beacon;
 
-	public BeaconOpenEvent(BeaconComponent beacon, Entity entity) {
+	public BeaconOpenEvent(Beacon beacon, Entity entity) {
 		super(beacon.getInventory(), entity);
 		this.beacon = beacon;
 	}
@@ -49,7 +49,7 @@ public class BeaconOpenEvent extends InventoryOpenEvent implements Cancellable {
 	 * Returns the beacon which caused this event.
 	 * @return beacon
 	 */
-	public BeaconComponent getBeacon() {
+	public Beacon getBeacon() {
 		return beacon;
 	}
 

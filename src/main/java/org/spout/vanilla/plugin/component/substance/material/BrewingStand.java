@@ -28,11 +28,10 @@ package org.spout.vanilla.plugin.component.substance.material;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
+import org.spout.api.inventory.Container;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.map.DefaultedKey;
-import org.spout.api.map.DefaultedKeyFactory;
 
-import org.spout.vanilla.api.component.substance.material.BrewingStandComponent;
+import org.spout.vanilla.plugin.component.substance.ViewedBlockComponent;
 import org.spout.vanilla.api.event.inventory.BrewingStandCloseEvent;
 import org.spout.vanilla.api.event.inventory.BrewingStandOpenEvent;
 import org.spout.vanilla.api.inventory.window.prop.BrewingStandProperty;
@@ -48,15 +47,14 @@ import org.spout.vanilla.plugin.material.item.potion.Potion;
 /**
  * Component that represents a Brewing Stand in the world.
  */
-public class BrewingStand extends BrewingStandComponent {
-	private static final DefaultedKey<BrewingStandInventory> BREWING_STAND_INVENTORY = new DefaultedKeyFactory<BrewingStandInventory>("brewing_inventory", BrewingStandInventory.class);
+public class BrewingStand extends ViewedBlockComponent implements Container {
 
 	private final float BREW_TIME_INCREMENT = 20f;
 	private ItemStack input;
 
 	@Override
 	public BrewingStandInventory getInventory() {
-		return getData().get(BREWING_STAND_INVENTORY);
+		return getData().get(VanillaData.BREWING_STAND_INVENTORY);
 	}
 
 	@Override

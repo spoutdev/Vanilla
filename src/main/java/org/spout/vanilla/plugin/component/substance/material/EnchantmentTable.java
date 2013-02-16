@@ -29,9 +29,9 @@ package org.spout.vanilla.plugin.component.substance.material;
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.Container;
 
-import org.spout.vanilla.api.component.substance.material.EnchantmentTableComponent;
-import org.spout.vanilla.api.enchantment.Enchantment;
+import org.spout.vanilla.plugin.component.substance.ViewedBlockComponent;
 import org.spout.vanilla.api.event.inventory.EnchantmentTableCloseEvent;
 import org.spout.vanilla.api.event.inventory.EnchantmentTableOpenEvent;
 
@@ -43,7 +43,7 @@ import org.spout.vanilla.plugin.material.VanillaMaterials;
 /**
  * Component that represents a enchantment table in a world.
  */
-public class EnchantmentTable extends EnchantmentTableComponent {
+public class EnchantmentTable extends ViewedBlockComponent implements Container {
 	private final EnchantmentTableInventory inventory = new EnchantmentTableInventory();
 
 	@Override

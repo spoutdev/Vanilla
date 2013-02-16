@@ -31,7 +31,7 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.api.component.substance.material.VanillaBlockComponent;
+import org.spout.vanilla.plugin.component.substance.VanillaBlockComponent;
 
 import org.spout.vanilla.api.data.Instrument;
 import org.spout.vanilla.api.data.VanillaData;

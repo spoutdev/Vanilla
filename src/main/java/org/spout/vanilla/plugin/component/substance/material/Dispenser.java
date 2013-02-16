@@ -28,9 +28,9 @@ package org.spout.vanilla.plugin.component.substance.material;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
-import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.Container;
 
-import org.spout.vanilla.api.component.substance.material.DispenserComponent;
+import org.spout.vanilla.plugin.component.substance.ViewedBlockComponent;
 import org.spout.vanilla.api.event.inventory.DispenserCloseEvent;
 import org.spout.vanilla.api.event.inventory.DispenserOpenEvent;
 
@@ -42,8 +42,7 @@ import org.spout.vanilla.plugin.inventory.window.block.DispenserWindow;
 /**
  * Component that represent a Dispenser in the world.
  */
-public class Dispenser extends DispenserComponent {
-	private final DispenserInventory inventory = new DispenserInventory();
+public class Dispenser extends ViewedBlockComponent implements Container {
 
 	/**
 	 * Retrieve the powered status of the dispenser.
@@ -62,15 +61,15 @@ public class Dispenser extends DispenserComponent {
 	}
 
 	@Override
-	public Inventory getInventory() {
-		return inventory;
+	public DispenserInventory getInventory() {
+		return getData().get(VanillaData.DISPENSER_INVENTORY);
 	}
 
 	@Override
 	public boolean open(Player player) {
 		DispenserOpenEvent event = Spout.getEventManager().callEvent(new DispenserOpenEvent(this, player));
 		if (!event.isCancelled()) {
-			player.get(WindowHolder.class).openWindow(new DispenserWindow(player, inventory));
+			player.get(WindowHolder.class).openWindow(new DispenserWindow(player, getInventory()));
 			return true;
 		}
 		return false;

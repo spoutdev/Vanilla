@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.plugin.protocol.handler.world.block;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
@@ -55,6 +56,12 @@ public class BlockChangeHandler extends MessageHandler<BlockChangeMessage>{
 		int data = message.getMetadata();
 
 		BlockMaterial material = (BlockMaterial)VanillaMaterials.getMaterial(type, (short)data);
+		
+		if(material == null){
+			Spout.log("Fail to find material : " + type + " : " + data);
+			return;
+		}
+		
 		world.getChunkFromBlock(x, y, z).getBlock(x, y, z).setMaterial(material);
 
 	}

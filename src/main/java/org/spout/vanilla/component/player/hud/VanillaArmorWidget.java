@@ -26,13 +26,14 @@
  */
 package org.spout.vanilla.component.player.hud;
 
-import java.awt.Color;
+import java.awt.*;
 
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.gui.render.RenderPartPack;
 import org.spout.api.math.Rectangle;
+
 import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 

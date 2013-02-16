@@ -27,7 +27,6 @@
 package org.spout.vanilla.protocol.msg.world.chunk;
 
 import java.util.Arrays;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.protocol.reposition.RepositionManager;

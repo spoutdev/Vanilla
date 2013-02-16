@@ -27,17 +27,16 @@
 package org.spout.vanilla.component.living.hostile;
 
 import java.util.Random;
-import org.spout.vanilla.component.Hostile;
-import org.spout.vanilla.component.living.Living;
-import org.spout.vanilla.component.misc.EntityDropComponent;
-import org.spout.vanilla.component.misc.HealthComponent;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.data.VanillaData;
-
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.Hostile;
+import org.spout.vanilla.component.living.Living;
+import org.spout.vanilla.component.misc.EntityDropComponent;
+import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.creature.GhastEntityProtocol;
 

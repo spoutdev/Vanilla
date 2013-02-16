@@ -32,10 +32,9 @@ import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
 
 import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.block.redstone.RedstoneTarget;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.RedstoneUtil;
 
 public class RedstoneLamp extends Solid implements InitializableMaterial, RedstoneTarget {

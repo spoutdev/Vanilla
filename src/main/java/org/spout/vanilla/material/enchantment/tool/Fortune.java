@@ -26,10 +26,9 @@
  */
 package org.spout.vanilla.material.enchantment.tool;
 
+import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.enchantment.Enchantment;
 import org.spout.vanilla.material.enchantment.ToolEnchantment;
-import org.spout.vanilla.material.VanillaMaterial;
-
 import org.spout.vanilla.material.enchantment.VanillaEnchantments;
 
 public class Fortune extends ToolEnchantment {

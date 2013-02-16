@@ -27,11 +27,11 @@
 package org.spout.vanilla.world.generator.normal.structure.temple;
 
 import java.util.Random;
-import org.spout.vanilla.world.generator.structure.BlockMaterialPicker;
 
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.structure.BlockMaterialPicker;
 
 public class JungleTempleBlockMaterialPicker implements BlockMaterialPicker {
 	private final Random random;

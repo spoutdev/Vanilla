@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.world.generator.theend.biome;
 
-import java.awt.Color;
-import org.spout.vanilla.world.generator.theend.decorator.SpireDecorator;
+import java.awt.*;
 
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
+import org.spout.vanilla.world.generator.theend.decorator.SpireDecorator;
 
 public class EndStoneBiome extends VanillaBiome {
 	public EndStoneBiome(int biomeId) {

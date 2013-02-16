@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.sandy;
 
-import java.awt.Color;
-import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
+import java.awt.*;
 
 import org.spout.vanilla.world.generator.normal.decorator.CactusDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.DeadBushDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.WellDecorator;

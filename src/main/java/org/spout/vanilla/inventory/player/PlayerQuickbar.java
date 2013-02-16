@@ -31,7 +31,6 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.event.entity.EntityEquipmentEvent;
 import org.spout.vanilla.inventory.entity.QuickbarInventory;
-
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 
 public class PlayerQuickbar extends QuickbarInventory {
@@ -45,6 +44,7 @@ public class PlayerQuickbar extends QuickbarInventory {
 	@Override
 	public void updateHeldItem(Entity entity) {
 		ItemStack item = this.get(this.selected);
+
 		entity.getNetwork().callProtocolEvent(new EntityEquipmentEvent(entity, EntityEquipmentMessage.HELD_SLOT, item), true);
 	}
 }

@@ -35,7 +35,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.data.RailsState;
-
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.util.MinecartTrackLogic;

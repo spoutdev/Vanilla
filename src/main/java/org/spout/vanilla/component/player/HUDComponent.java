@@ -29,7 +29,6 @@ package org.spout.vanilla.component.player;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.logging.Level;
-import org.spout.vanilla.component.player.hud.ArmorWidget;
 
 import org.spout.api.Client;
 import org.spout.api.Spout;
@@ -40,7 +39,7 @@ import org.spout.api.gui.Widget;
 import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.VanillaPlugin;
-
+import org.spout.vanilla.component.player.hud.ArmorWidget;
 import org.spout.vanilla.component.player.hud.CrosshairWidget;
 import org.spout.vanilla.component.player.hud.DrowningWidget;
 import org.spout.vanilla.component.player.hud.ExpBarWidget;

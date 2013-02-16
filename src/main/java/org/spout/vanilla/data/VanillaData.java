@@ -26,6 +26,15 @@
  */
 package org.spout.vanilla.data;
 
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.map.DefaultedKey;
+import org.spout.api.map.DefaultedKeyArray;
+import org.spout.api.map.DefaultedKeyFactory;
+import org.spout.api.map.DefaultedKeyImpl;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.block.DispenserInventory;
@@ -38,15 +47,6 @@ import org.spout.vanilla.inventory.player.PlayerCraftingInventory;
 import org.spout.vanilla.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.block.component.FurnaceBlock;
-
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.map.DefaultedKey;
-import org.spout.api.map.DefaultedKeyArray;
-import org.spout.api.map.DefaultedKeyFactory;
-import org.spout.api.map.DefaultedKeyImpl;
-import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
 
 /**
  * * Common Vanilla-like data mappings that are found in Vanilla.

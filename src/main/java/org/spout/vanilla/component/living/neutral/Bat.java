@@ -26,12 +26,10 @@
  */
 package org.spout.vanilla.component.living.neutral;
 
-import org.spout.vanilla.component.Neutral;
-import org.spout.vanilla.component.misc.HealthComponent;
-
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.Neutral;
 import org.spout.vanilla.component.living.Living;
-
+import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.protocol.entity.creature.CreatureType;
 

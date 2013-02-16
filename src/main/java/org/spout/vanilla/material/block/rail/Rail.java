@@ -32,7 +32,6 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.vanilla.data.RailsState;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
-
 import org.spout.vanilla.util.RedstoneUtil;
 
 public class Rail extends RailBase implements RedstoneTarget {

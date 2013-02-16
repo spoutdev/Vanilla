@@ -36,12 +36,11 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
-import org.spout.vanilla.event.entity.EntityStatusEvent;
-
 import org.spout.vanilla.component.misc.EntityDropComponent;
 import org.spout.vanilla.component.substance.object.Item;
 import org.spout.vanilla.component.substance.object.ObjectEntity;
+import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
+import org.spout.vanilla.event.entity.EntityStatusEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 

@@ -28,9 +28,8 @@ package org.spout.vanilla.component.world.sky;
 
 import org.spout.api.entity.Player;
 
-import org.spout.vanilla.data.Weather;
-
 import org.spout.vanilla.component.world.VanillaSky;
+import org.spout.vanilla.data.Weather;
 
 public class TheEndSky extends VanillaSky {
 	public TheEndSky() {

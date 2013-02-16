@@ -26,14 +26,13 @@
  */
 package org.spout.vanilla.protocol;
 
+import gnu.trove.set.TIntSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
-
-import gnu.trove.set.TIntSet;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -64,14 +63,22 @@ import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
 import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
+import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.component.misc.HungerComponent;
+import org.spout.vanilla.component.misc.LevelComponent;
 import org.spout.vanilla.component.substance.material.AbstractSign;
-
+import org.spout.vanilla.component.test.ForceMessagesComponent;
+import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.data.WorldType;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
+import org.spout.vanilla.data.configuration.WorldConfigurationNode;
 import org.spout.vanilla.event.block.BlockActionEvent;
 import org.spout.vanilla.event.block.BlockControllerDataEvent;
 import org.spout.vanilla.event.block.SignUpdateEvent;
@@ -84,40 +91,29 @@ import org.spout.vanilla.event.entity.EntityStatusEvent;
 import org.spout.vanilla.event.entity.network.EntityEffectEvent;
 import org.spout.vanilla.event.entity.network.EntityRemoveEffectEvent;
 import org.spout.vanilla.event.item.MapItemUpdateEvent;
+import org.spout.vanilla.event.player.network.PlayerAbilityUpdateEvent;
 import org.spout.vanilla.event.player.network.PlayerBedEvent;
 import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
 import org.spout.vanilla.event.player.network.PlayerHealthEvent;
 import org.spout.vanilla.event.player.network.PlayerListEvent;
 import org.spout.vanilla.event.player.network.PlayerPingEvent;
 import org.spout.vanilla.event.player.network.PlayerSelectedSlotChangeEvent;
-import org.spout.vanilla.event.world.PlayExplosionEffectEvent;
-import org.spout.vanilla.event.world.PlayParticleEffectEvent;
-import org.spout.vanilla.event.world.PlaySoundEffectEvent;
-import org.spout.vanilla.event.world.TimeUpdateEvent;
-import org.spout.vanilla.event.world.WeatherChangeEvent;
-import org.spout.vanilla.material.block.component.VanillaComplexMaterial;
-import org.spout.vanilla.protocol.msg.VanillaBlockDataChannelMessage;
-import org.spout.vanilla.world.generator.biome.VanillaBiome;
-
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.misc.HungerComponent;
-import org.spout.vanilla.component.misc.LevelComponent;
-import org.spout.vanilla.component.test.ForceMessagesComponent;
-import org.spout.vanilla.component.world.VanillaSky;
-import org.spout.vanilla.data.configuration.VanillaConfiguration;
-import org.spout.vanilla.data.configuration.WorldConfigurationNode;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.event.player.network.PlayerAbilityUpdateEvent;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowItemsEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
 import org.spout.vanilla.event.window.WindowPropertyEvent;
 import org.spout.vanilla.event.window.WindowSlotEvent;
+import org.spout.vanilla.event.world.PlayExplosionEffectEvent;
+import org.spout.vanilla.event.world.PlayParticleEffectEvent;
+import org.spout.vanilla.event.world.PlaySoundEffectEvent;
+import org.spout.vanilla.event.world.TimeUpdateEvent;
+import org.spout.vanilla.event.world.WeatherChangeEvent;
 import org.spout.vanilla.inventory.window.DefaultWindow;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.component.VanillaComplexMaterial;
 import org.spout.vanilla.protocol.container.VanillaContainer;
 import org.spout.vanilla.protocol.entity.player.ExperienceChangeEvent;
+import org.spout.vanilla.protocol.msg.VanillaBlockDataChannelMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityItemDataMessage;
@@ -154,6 +150,7 @@ import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 import org.spout.vanilla.protocol.reposition.VanillaRepositionManager;
+import org.spout.vanilla.world.generator.biome.VanillaBiome;
 
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;

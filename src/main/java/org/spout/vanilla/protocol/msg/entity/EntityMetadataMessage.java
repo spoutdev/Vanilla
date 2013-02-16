@@ -27,7 +27,6 @@
 package org.spout.vanilla.protocol.msg.entity;
 
 import java.util.List;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.Parameter;

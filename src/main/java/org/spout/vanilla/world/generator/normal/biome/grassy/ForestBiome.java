@@ -26,8 +26,9 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.grassy;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.Random;
+
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
@@ -37,7 +38,6 @@ import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 import org.spout.vanilla.world.generator.normal.object.variableheight.tree.SmallTreeObject;
-
 import org.spout.vanilla.world.generator.normal.object.variableheight.tree.TreeObject;
 import org.spout.vanilla.world.generator.normal.object.variableheight.tree.TreeObject.TreeType;
 

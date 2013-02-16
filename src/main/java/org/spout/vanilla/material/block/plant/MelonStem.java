@@ -26,9 +26,8 @@
  */
 package org.spout.vanilla.material.block.plant;
 
-import org.spout.vanilla.material.VanillaMaterials;
-
 import org.spout.vanilla.material.InitializableMaterial;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class MelonStem extends Stem implements InitializableMaterial {
 	public MelonStem(String name, int id) {

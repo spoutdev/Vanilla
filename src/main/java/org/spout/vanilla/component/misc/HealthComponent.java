@@ -27,14 +27,9 @@
 package org.spout.vanilla.component.misc;
 
 import java.awt.*;
-import java.util.*;
-import org.spout.vanilla.component.inventory.EntityInventoryComponent;
-import org.spout.vanilla.component.living.hostile.EnderDragon;
-import org.spout.vanilla.component.player.HUDComponent;
-import org.spout.vanilla.component.substance.XPOrb;
-import org.spout.vanilla.component.substance.object.Item;
-import org.spout.vanilla.data.configuration.VanillaConfiguration;
-import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.spout.api.Client;
 import org.spout.api.Spout;
@@ -48,15 +43,21 @@ import org.spout.api.gui.render.RenderPart;
 import org.spout.api.gui.render.RenderPartPack;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.*;
+import org.spout.api.math.GenericMath;
+import org.spout.api.math.Vector3;
 import org.spout.api.plugin.Platform;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.component.inventory.EntityInventoryComponent;
+import org.spout.vanilla.component.living.hostile.EnderDragon;
+import org.spout.vanilla.component.player.HUDComponent;
+import org.spout.vanilla.component.substance.XPOrb;
+import org.spout.vanilla.component.substance.object.Item;
 import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.VanillaRenderMaterials;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.cause.DamageCause;
-import org.spout.vanilla.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.event.cause.HealCause;
 import org.spout.vanilla.event.cause.HealthChangeCause;
 import org.spout.vanilla.event.cause.NullDamageCause;
@@ -69,6 +70,7 @@ import org.spout.vanilla.event.entity.EntityStatusEvent;
 import org.spout.vanilla.event.entity.VanillaEntityDeathEvent;
 import org.spout.vanilla.event.player.PlayerDeathEvent;
 import org.spout.vanilla.event.player.network.PlayerHealthEvent;
+import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 
 /**
  * Component that adds a health-like attribute to resources.entities.
@@ -77,7 +79,7 @@ public class HealthComponent extends EntityComponent {
 	protected static final int DEATH_TIME_TICKS = 30;
 
 	// Damage
-	protected DamageCause<?> lastDamageCause = new NullDamageCause(DamageType.UNKNOWN);
+	protected DamageCause<?> lastDamageCause = new NullDamageCause(DamageCause.DamageType.UNKNOWN);
 	protected Object lastDamager;
 
 	protected static final float SCALE = 0.75f; // TODO: Apply directly from engine
@@ -429,7 +431,7 @@ public class HealthComponent extends EntityComponent {
 	 * @param amount amount the entity will be damaged by, can be modified based on armor and enchantments
 	 */
 	public void damage(int amount) {
-		damage(amount, new NullDamageCause(DamageType.UNKNOWN));
+		damage(amount, new NullDamageCause(DamageCause.DamageType.UNKNOWN));
 	}
 
 	/**

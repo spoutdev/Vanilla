@@ -32,11 +32,10 @@ import org.spout.api.material.Material;
 import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.data.Animation;
-import org.spout.vanilla.event.block.network.BlockBreakAnimationEvent;
-import org.spout.vanilla.event.entity.EntityAnimationEvent;
-
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.tool.ToolType;
+import org.spout.vanilla.event.block.network.BlockBreakAnimationEvent;
+import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.tool.MiningTool;
 

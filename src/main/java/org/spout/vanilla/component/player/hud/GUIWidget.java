@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.component.player.hud;
 
-import org.spout.vanilla.component.player.HUDComponent;
-
 import org.spout.api.Client;
 import org.spout.api.Spout;
 import org.spout.api.gui.Widget;
+
+import org.spout.vanilla.component.player.HUDComponent;
 
 /**
  * Basic GUI item used for HUD Widgets

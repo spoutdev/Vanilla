@@ -29,14 +29,14 @@ package org.spout.vanilla.world.generator.normal.structure.stronghold;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
 
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
+import org.spout.vanilla.world.generator.structure.StructureComponent;
 
 public class StrongholdLargeIntersection extends StructureComponent {
 	private boolean nextComponentRightLow = false;

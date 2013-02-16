@@ -30,10 +30,11 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-import org.spout.vanilla.api.data.Difficulty;
-import org.spout.vanilla.api.data.GameMode;
-import org.spout.vanilla.api.data.VanillaData;
-import org.spout.vanilla.plugin.component.living.neutral.Human;
+
+import org.spout.vanilla.data.Difficulty;
+import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerRespawnMessage;
 
 public final class PlayerRespawnHandler extends MessageHandler<PlayerRespawnMessage> {

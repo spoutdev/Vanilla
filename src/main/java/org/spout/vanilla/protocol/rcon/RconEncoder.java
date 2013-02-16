@@ -28,7 +28,6 @@ package org.spout.vanilla.protocol.rcon;
 
 import java.io.IOException;
 import java.nio.ByteOrder;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.Channel;

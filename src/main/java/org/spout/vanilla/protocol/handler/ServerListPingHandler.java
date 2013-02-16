@@ -32,13 +32,12 @@ import org.spout.api.chat.ChatArguments;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.event.game.ServerListPingEvent;
-
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.util.chat.VanillaStyleHandler;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
+import org.spout.vanilla.event.game.ServerListPingEvent;
 import org.spout.vanilla.protocol.msg.ServerListPingMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerKickMessage;
+import org.spout.vanilla.util.chat.VanillaStyleHandler;
 
 public class ServerListPingHandler extends MessageHandler<ServerListPingMessage> {
 	private static String PROTOCOL = null;

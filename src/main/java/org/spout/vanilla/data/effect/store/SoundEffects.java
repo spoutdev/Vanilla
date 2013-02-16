@@ -27,7 +27,6 @@
 package org.spout.vanilla.data.effect.store;
 
 import org.spout.vanilla.data.effect.SoundEffect;
-
 import org.spout.vanilla.data.effect.type.NoSoundEffect;
 import org.spout.vanilla.data.effect.type.NoteSoundEffect;
 

@@ -31,10 +31,9 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.Slot;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
-
-import org.spout.api.inventory.Slot;
 
 import org.spout.vanilla.component.living.hostile.Blaze;
 import org.spout.vanilla.component.living.hostile.CaveSpider;

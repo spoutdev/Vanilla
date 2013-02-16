@@ -31,7 +31,7 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.plugin.component.living.hostile.Slime;
+import org.spout.vanilla.component.living.hostile.Slime;
 
 public class SlimeEntityProtocol extends CreatureProtocol {
 	public final static int SIZE_INDEX = 16; // The MC metadata index for determining the size of the slime.

@@ -53,25 +53,23 @@ import org.spout.api.render.RenderMaterial;
 import org.spout.api.util.flag.Flag;
 import org.spout.api.util.flag.FlagBundle;
 
-import org.spout.vanilla.data.MoveReaction;
-import org.spout.vanilla.data.RedstonePowerMode;
-import org.spout.vanilla.data.effect.SoundEffect;
-import org.spout.vanilla.event.block.BlockActionEvent;
-
-import org.spout.vanilla.material.block.redstone.IndirectRedstoneSource;
-import org.spout.vanilla.material.block.redstone.RedstoneSource;
-
 import org.spout.vanilla.component.substance.object.Item;
 import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.data.MoveReaction;
+import org.spout.vanilla.data.RedstonePowerMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.data.drops.flag.DropFlags;
 import org.spout.vanilla.data.drops.flag.PlayerFlags;
 import org.spout.vanilla.data.drops.type.block.BlockDrops;
+import org.spout.vanilla.data.effect.SoundEffect;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
+import org.spout.vanilla.event.block.BlockActionEvent;
+import org.spout.vanilla.material.block.redstone.IndirectRedstoneSource;
+import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.render.VanillaEffects;
 
 public abstract class VanillaBlockMaterial extends BlockMaterial implements VanillaMaterial, IndirectRedstoneSource {

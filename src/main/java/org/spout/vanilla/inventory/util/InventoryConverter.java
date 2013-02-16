@@ -30,10 +30,9 @@ import org.spout.api.Client;
 import org.spout.api.Spout;
 import org.spout.api.gui.Widget;
 import org.spout.api.inventory.Inventory;
+import org.spout.api.inventory.Slot;
 import org.spout.api.math.Vector2;
 import org.spout.api.util.StringUtil;
-
-import org.spout.api.inventory.Slot;
 
 import org.spout.vanilla.inventory.window.gui.RenderSlot;
 

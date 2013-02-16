@@ -27,9 +27,10 @@
 package org.spout.vanilla.protocol.msg.entity.effect;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 import org.spout.api.util.SpoutToStringStyle;
+
+import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public class EntityRemoveEffectMessage extends EntityMessage {
 	private final byte effect;

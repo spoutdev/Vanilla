@@ -37,12 +37,11 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.RedstonePowerMode;
-import org.spout.vanilla.material.Toggleable;
-
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
-import org.spout.vanilla.material.block.AttachedRedstoneSource;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.Toggleable;
+import org.spout.vanilla.material.block.AttachedRedstoneSource;
 
 public class Lever extends AttachedRedstoneSource implements Toggleable {
 	public Lever(String name, int id) {

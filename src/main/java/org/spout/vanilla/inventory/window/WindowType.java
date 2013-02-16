@@ -48,7 +48,7 @@ public enum WindowType {
 	CHEST(0, VanillaRenderMaterials.CONTAINER_MATERIAL),
 	/**
 	 * The window seen when using a
-	 * {@link org.spout.vanilla.plugin.component.substance.material.CraftingTable}
+	 * {@link org.spout.vanilla.component.substance.material.CraftingTable}
 	 */
 	CRAFTING_TABLE(1, VanillaRenderMaterials.CRAFTING_MATERIAL),
 	/**
@@ -83,7 +83,7 @@ public enum WindowType {
 	BEACON(7, VanillaRenderMaterials.BEACON_MATERIAL),
 	/**
 	 * The window seen when using an
-	 * {@link org.spout.vanilla.plugin.component.substance.material.Anvil}
+	 * {@link org.spout.vanilla.component.substance.material.Anvil}
 	 */
 	ANVIL(8, VanillaRenderMaterials.ANVIL_MATERIAL);
 	private final int id;

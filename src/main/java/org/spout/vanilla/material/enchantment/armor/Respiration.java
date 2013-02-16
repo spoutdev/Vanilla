@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.material.enchantment.armor;
 
-import org.spout.vanilla.material.enchantment.ArmorEnchantment;
 import org.spout.vanilla.material.VanillaMaterial;
+import org.spout.vanilla.material.enchantment.ArmorEnchantment;
 import org.spout.vanilla.material.item.armor.Helmet;
 
 public class Respiration extends ArmorEnchantment {

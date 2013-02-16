@@ -28,7 +28,6 @@ package org.spout.vanilla.material.item.misc;
 
 import org.spout.vanilla.material.block.component.SkullBlock;
 import org.spout.vanilla.material.item.BlockItem;
-
 import org.spout.vanilla.material.item.armor.Helmet;
 
 public class Skull extends BlockItem implements Helmet {

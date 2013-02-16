@@ -32,14 +32,13 @@ import org.spout.api.event.Cause;
 import org.spout.api.event.cause.EntityCause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.Slot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.event.cause.PlayerBreakCause;
-import org.spout.api.inventory.Slot;
-
 import org.spout.vanilla.component.misc.HeadComponent;
+import org.spout.vanilla.event.cause.PlayerBreakCause;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.util.PlayerUtil;

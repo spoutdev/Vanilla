@@ -28,8 +28,9 @@ package org.spout.vanilla.protocol.handler.player.conn;
 
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-import org.spout.vanilla.api.data.GameMode;
-import org.spout.vanilla.plugin.component.living.neutral.Human;
+
+import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerLoginRequestMessage;
 
 public class PlayerLoginRequestHandler extends MessageHandler<PlayerLoginRequestMessage> {

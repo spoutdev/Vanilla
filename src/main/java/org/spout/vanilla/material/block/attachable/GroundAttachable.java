@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.material.block.attachable;
 
-import org.spout.vanilla.material.VanillaBlockMaterial;
-
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
+
+import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class GroundAttachable extends AbstractAttachable {
 	public GroundAttachable(short dataMask, String name, int id, String model) {

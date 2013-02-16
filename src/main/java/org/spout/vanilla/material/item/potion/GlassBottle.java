@@ -30,13 +30,11 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
-
-import org.spout.api.util.BlockIterator;
 import org.spout.api.inventory.Slot;
-
-import org.spout.vanilla.component.misc.HeadComponent;
+import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
+import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.material.item.VanillaItemMaterial;

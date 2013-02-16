@@ -31,15 +31,14 @@ import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.Slot;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
-import org.spout.api.inventory.Slot;
-import org.spout.vanilla.inventory.entity.ArmorInventory;
-
 import org.spout.vanilla.component.inventory.EntityInventoryComponent;
 import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.inventory.entity.ArmorInventory;
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;

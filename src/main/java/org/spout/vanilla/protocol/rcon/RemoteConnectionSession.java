@@ -26,14 +26,12 @@
  */
 package org.spout.vanilla.protocol.rcon;
 
+import com.google.common.base.Preconditions;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
-
-import com.google.common.base.Preconditions;
-
 import org.jboss.netty.channel.Channel;
 
 import org.spout.api.Spout;

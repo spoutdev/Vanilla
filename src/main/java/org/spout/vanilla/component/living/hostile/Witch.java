@@ -30,9 +30,8 @@ import java.util.Random;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.component.Hostile;
-
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.Hostile;
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.misc.EntityDropComponent;
 import org.spout.vanilla.component.misc.HealthComponent;

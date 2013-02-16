@@ -35,11 +35,11 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.data.effect.store.GeneralEffects;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.block.solid.Ice;
 import org.spout.vanilla.render.VanillaEffects;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class Lava extends Liquid {
 	public Lava(String name, int id, boolean flowing) {

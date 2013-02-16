@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.material.block;
 
+import com.bulletphysics.collision.shapes.BoxShape;
+
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
@@ -39,10 +41,7 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.material.range.ListEffectRange;
 
 import org.spout.vanilla.data.RedstonePowerMode;
-
 import org.spout.vanilla.data.effect.store.GeneralEffects;
-
-import com.bulletphysics.collision.shapes.BoxShape;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public abstract class PressurePlate extends AttachedRedstoneSource implements DynamicMaterial {

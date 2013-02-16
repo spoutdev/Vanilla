@@ -37,11 +37,10 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.block.redstone.RedstoneTarget;
-
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Directional;
+import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.util.RedstoneUtil;
 

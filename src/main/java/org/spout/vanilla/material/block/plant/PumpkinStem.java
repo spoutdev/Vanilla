@@ -26,9 +26,8 @@
  */
 package org.spout.vanilla.material.block.plant;
 
-import org.spout.vanilla.material.VanillaMaterials;
-
 import org.spout.vanilla.material.InitializableMaterial;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class PumpkinStem extends Stem implements InitializableMaterial {
 	public PumpkinStem(String name, int id) {

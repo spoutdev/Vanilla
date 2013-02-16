@@ -27,18 +27,15 @@
 package org.spout.vanilla.item;
 
 import org.junit.Test;
-
-import org.spout.api.inventory.ItemStack;
-
 import org.spout.vanilla.EngineFaker;
-
-import org.spout.vanilla.material.enchantment.Enchantment;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.event.cause.NullDamageCause;
-
-import org.spout.vanilla.material.enchantment.VanillaEnchantments;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.enchantment.Enchantment;
+import org.spout.vanilla.material.enchantment.VanillaEnchantments;
 import org.spout.vanilla.material.item.armor.Armor;
+
+import org.spout.api.inventory.ItemStack;
 
 import static org.junit.Assert.assertTrue;
 

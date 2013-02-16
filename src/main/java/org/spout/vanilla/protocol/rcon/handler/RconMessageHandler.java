@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.protocol.rcon.handler;
 
-import org.spout.vanilla.protocol.rcon.RemoteConnectionSession;
 import org.spout.vanilla.protocol.rcon.RemoteConnectionServer;
+import org.spout.vanilla.protocol.rcon.RemoteConnectionSession;
 import org.spout.vanilla.protocol.rcon.msg.RconMessage;
 
 /**

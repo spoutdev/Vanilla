@@ -33,8 +33,8 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.plugin.chat.VanillaStyleHandler;
 import org.spout.vanilla.protocol.msg.player.PlayerChatMessage;
+import org.spout.vanilla.util.chat.VanillaStyleHandler;
 
 public final class PlayerChatHandler extends MessageHandler<PlayerChatMessage> {
 	

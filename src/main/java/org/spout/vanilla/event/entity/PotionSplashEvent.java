@@ -35,8 +35,6 @@ import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
 import org.spout.api.exception.InvalidControllerException;
 
-import org.spout.vanilla.event.entity.ProjectileHitEvent;
-
 import org.spout.vanilla.component.substance.object.projectile.Potion;
 
 /**

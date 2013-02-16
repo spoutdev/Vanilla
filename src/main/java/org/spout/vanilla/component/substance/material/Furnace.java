@@ -26,23 +26,21 @@
  */
 package org.spout.vanilla.component.substance.material;
 
-import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.component.substance.ViewedBlockComponent;
-
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Container;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.component.inventory.WindowHolder;
+import org.spout.vanilla.component.substance.ViewedBlockComponent;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.inventory.FurnaceCloseEvent;
 import org.spout.vanilla.event.inventory.FurnaceOpenEvent;
+import org.spout.vanilla.inventory.block.FurnaceInventory;
+import org.spout.vanilla.inventory.window.block.FurnaceWindow;
 import org.spout.vanilla.inventory.window.prop.FurnaceProperty;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
-
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.inventory.block.FurnaceInventory;
-import org.spout.vanilla.inventory.window.block.FurnaceWindow;
 import org.spout.vanilla.material.VanillaMaterials;
 
 /**

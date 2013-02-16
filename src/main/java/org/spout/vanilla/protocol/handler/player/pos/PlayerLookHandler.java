@@ -31,7 +31,7 @@ import org.spout.api.math.QuaternionMath;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.plugin.component.living.neutral.Human;
+import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerLookMessage;
 

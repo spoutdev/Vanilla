@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.world.generator.biome;
 
-import java.awt.Color;
+import java.awt.*;
 
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.util.config.annotated.Setting;

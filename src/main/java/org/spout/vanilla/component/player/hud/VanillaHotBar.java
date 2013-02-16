@@ -26,9 +26,7 @@
  */
 package org.spout.vanilla.component.player.hud;
 
-import java.awt.Color;
-import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
-import org.spout.vanilla.component.player.HUDComponent;
+import java.awt.*;
 
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
@@ -36,9 +34,10 @@ import org.spout.api.gui.render.RenderPart;
 import org.spout.api.gui.render.RenderPartPack;
 import org.spout.api.math.Rectangle;
 
-import org.spout.vanilla.inventory.entity.QuickbarInventory;
-
+import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
+import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.data.VanillaRenderMaterials;
+import org.spout.vanilla.inventory.entity.QuickbarInventory;
 
 public class VanillaHotBar extends HotBarWidget {
 	
@@ -68,7 +67,6 @@ public class VanillaHotBar extends HotBarWidget {
 
 	/**
 	 * Sets the selected hotbar slot.
-	 * @param slot Index of the slot to set
 	 */
 	@Override
 	public void update() {

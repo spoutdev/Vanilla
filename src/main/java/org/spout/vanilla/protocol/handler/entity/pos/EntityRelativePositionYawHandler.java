@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.handler.entity.pos;
 
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionYawMessage;
 
 public class EntityRelativePositionYawHandler extends MessageHandler<EntityRelativePositionYawMessage>{

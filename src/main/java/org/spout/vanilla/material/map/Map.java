@@ -34,7 +34,6 @@ import org.spout.api.math.Vector2;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.event.item.MapItemUpdateEvent;
-
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class Map extends VanillaItemMaterial {

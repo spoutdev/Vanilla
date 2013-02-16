@@ -26,11 +26,10 @@
  */
 package org.spout.vanilla.component.substance.object.projectile;
 
-import org.spout.vanilla.component.substance.object.ObjectEntity;
-
 import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.substance.object.ObjectEntity;
 import org.spout.vanilla.protocol.entity.object.ArrowObjectEntityProtocol;
 
 public class Arrow extends ObjectEntity implements Projectile {

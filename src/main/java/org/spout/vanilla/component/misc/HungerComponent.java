@@ -26,9 +26,6 @@
  */
 package org.spout.vanilla.component.misc;
 
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.player.HUDComponent;
-
 import org.spout.api.Client;
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -38,12 +35,13 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Slot;
 
+import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.event.cause.HealCause;
 import org.spout.vanilla.event.cause.NullDamageCause;
 import org.spout.vanilla.event.player.network.PlayerHealthEvent;
-
 import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.material.item.Food;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;

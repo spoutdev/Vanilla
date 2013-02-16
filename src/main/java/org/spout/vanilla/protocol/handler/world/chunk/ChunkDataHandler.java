@@ -34,6 +34,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 

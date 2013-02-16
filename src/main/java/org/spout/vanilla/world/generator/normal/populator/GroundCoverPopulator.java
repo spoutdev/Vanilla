@@ -28,8 +28,6 @@ package org.spout.vanilla.world.generator.normal.populator;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.spout.vanilla.world.generator.normal.NormalGenerator;
-import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
 import org.spout.api.generator.GeneratorPopulator;
 import org.spout.api.generator.biome.Biome;
@@ -43,6 +41,8 @@ import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.MathHelper;
+import org.spout.vanilla.world.generator.normal.NormalGenerator;
+import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
 public class GroundCoverPopulator implements GeneratorPopulator {
 	@Override

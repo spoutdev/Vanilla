@@ -33,7 +33,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 
-import org.spout.vanilla.plugin.component.substance.material.Sign;
+import org.spout.vanilla.component.substance.material.Sign;
 import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 
 public class SignHandler extends MessageHandler<SignMessage> {

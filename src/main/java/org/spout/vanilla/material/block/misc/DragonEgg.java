@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.material.block.misc;
 
-import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class DragonEgg extends VanillaBlockMaterial {
 	public DragonEgg(String name, int id) {

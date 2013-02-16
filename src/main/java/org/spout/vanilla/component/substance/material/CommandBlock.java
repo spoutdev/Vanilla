@@ -31,11 +31,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.misc.LevelComponent;
-import org.spout.vanilla.component.substance.VanillaBlockComponent;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -56,10 +52,13 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.lang.Locale;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.data.configuration.VanillaConfiguration;
+import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.component.misc.LevelComponent;
+import org.spout.vanilla.component.substance.VanillaBlockComponent;
+import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
 
 public class CommandBlock extends VanillaBlockComponent implements CommandSource {
 	public static final ChatChannel CHAT_CHANNEL = new PermissionChatChannel("CommandBlock", "vanilla.commandblock.recieve");

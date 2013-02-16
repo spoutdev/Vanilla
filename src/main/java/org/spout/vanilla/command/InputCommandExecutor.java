@@ -38,12 +38,11 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.inventory.entity.QuickbarInventory;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.component.player.HUDComponent;
+import org.spout.vanilla.inventory.entity.QuickbarInventory;
 import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.material.VanillaMaterials;
 

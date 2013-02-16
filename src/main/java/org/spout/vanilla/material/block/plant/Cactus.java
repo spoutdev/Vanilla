@@ -36,13 +36,12 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.GenericMath;
 
-import org.spout.vanilla.material.TimedCraftable;
-
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.component.FurnaceBlock;
 import org.spout.vanilla.material.item.misc.Dye;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class Cactus extends StackGrowingBase implements TimedCraftable {
 	private Set<BlockMaterial> deniedNeighbours = new HashSet<BlockMaterial>();

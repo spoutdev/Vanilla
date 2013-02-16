@@ -27,20 +27,17 @@
 package org.spout.vanilla.component.living.passive;
 
 import java.util.HashMap;
-import org.spout.vanilla.component.living.Living;
-import org.spout.vanilla.component.misc.HealthComponent;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-
-import org.spout.vanilla.component.Passive;
 import org.spout.api.inventory.Container;
 
 import org.spout.vanilla.VanillaPlugin;
-
+import org.spout.vanilla.component.Passive;
+import org.spout.vanilla.component.living.Living;
+import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.inventory.player.CraftingInventory;
-
 import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.protocol.entity.creature.VillagerEntityProtocol;
 

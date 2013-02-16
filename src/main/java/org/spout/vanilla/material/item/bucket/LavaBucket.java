@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.item.bucket;
 
 import org.spout.vanilla.material.Fuel;
-
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class LavaBucket extends FullBucket implements Fuel {

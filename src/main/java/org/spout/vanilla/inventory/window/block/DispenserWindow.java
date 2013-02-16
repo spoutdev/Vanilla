@@ -26,10 +26,6 @@
  */
 package org.spout.vanilla.inventory.window.block;
 
-import org.spout.vanilla.inventory.player.PlayerMainInventory;
-import org.spout.vanilla.inventory.util.GridInventoryConverter;
-import org.spout.vanilla.inventory.util.InventoryConverter;
-
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
@@ -38,10 +34,12 @@ import org.spout.api.inventory.shape.Grid;
 import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
-import org.spout.vanilla.inventory.entity.QuickbarInventory;
-
+import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.inventory.block.DispenserInventory;
+import org.spout.vanilla.inventory.entity.QuickbarInventory;
+import org.spout.vanilla.inventory.player.PlayerMainInventory;
+import org.spout.vanilla.inventory.util.GridInventoryConverter;
+import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.inventory.window.WindowType;
 

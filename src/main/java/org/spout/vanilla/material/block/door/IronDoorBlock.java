@@ -26,12 +26,11 @@
  */
 package org.spout.vanilla.material.block.door;
 
-import org.spout.vanilla.material.InitializableMaterial;
-
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.DoorBlock;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class IronDoorBlock extends DoorBlock implements InitializableMaterial {
 	public IronDoorBlock(String name, int id) {

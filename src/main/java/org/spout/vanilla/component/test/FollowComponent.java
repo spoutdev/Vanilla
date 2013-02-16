@@ -34,7 +34,6 @@ import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.GenericMath;
-import org.spout.api.math.VectorMath;
 
 public class FollowComponent extends EntityComponent {
 	private Entity toFollow;

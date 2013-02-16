@@ -32,13 +32,12 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.data.MoveReaction;
-import org.spout.vanilla.material.Fuel;
-
 import org.spout.vanilla.component.substance.material.Jukebox;
 import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.VanillaMaterials;
 
 public class JukeboxBlock extends ComponentMaterial implements Fuel {
 	public final float BURN_TIME = 15;

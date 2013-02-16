@@ -29,7 +29,6 @@ package org.spout.vanilla.world.generator.nether.decorator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
@@ -42,6 +41,7 @@ import org.spout.api.util.set.TInt21TripleHashSet;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
 public class LavaFallDecorator extends Decorator {
 	private int lavaAttempts = 8;

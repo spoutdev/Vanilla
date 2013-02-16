@@ -32,15 +32,14 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.plugin.Platform;
 
-import org.spout.vanilla.material.Burnable;
-import org.spout.vanilla.material.InitializableMaterial;
-
 import org.spout.vanilla.data.drops.SwitchDrops;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.Burnable;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.render.VanillaEffects;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public final class TallGrass extends GroundAttachable implements Burnable, Plant, InitializableMaterial {
 	public static final TallGrass DEAD_GRASS = new TallGrass("Dead Grass", 31, VanillaMaterialModels.DEADGRASS);

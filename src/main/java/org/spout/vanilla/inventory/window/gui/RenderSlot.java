@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.inventory.window.gui;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,16 +38,15 @@ import org.spout.api.gui.component.ControlComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.gui.render.RenderPartPack;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.Slot;
 import org.spout.api.math.IntVector2;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
 import org.spout.api.render.SpoutRenderMaterials;
 
-import org.spout.api.inventory.Slot;
+import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.inventory.window.AbstractWindow;
-
-import org.spout.vanilla.component.inventory.WindowHolder;
 
 public class RenderSlot extends ControlComponent {
 	private Vector2 pos = Vector2.ZERO;

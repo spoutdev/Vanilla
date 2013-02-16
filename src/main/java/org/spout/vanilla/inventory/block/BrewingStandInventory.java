@@ -30,7 +30,6 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.PotionReagent;
-
 import org.spout.vanilla.material.item.potion.Potion;
 
 /**

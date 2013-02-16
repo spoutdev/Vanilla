@@ -26,18 +26,18 @@
  */
 package org.spout.vanilla.component.player.hud;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.List;
 import java.util.Random;
-import org.spout.vanilla.component.player.HUDComponent;
 
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.gui.render.RenderPartPack;
 import org.spout.api.math.Rectangle;
-import org.spout.vanilla.component.misc.HungerComponent;
 
+import org.spout.vanilla.component.misc.HungerComponent;
+import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 
 public class VanillaHunger extends HungerWidget {

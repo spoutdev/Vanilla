@@ -26,21 +26,19 @@
  */
 package org.spout.vanilla.component.misc;
 
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.player.HUDComponent;
-
-import org.spout.vanilla.material.block.liquid.Water;
-
 import org.spout.api.Spout;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 
+import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.cause.BlockDamageCause;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
+import org.spout.vanilla.material.block.liquid.Water;
 
 /**
  * Component that handles a entity drowning in water.

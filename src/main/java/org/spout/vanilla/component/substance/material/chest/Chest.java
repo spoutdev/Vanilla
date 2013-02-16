@@ -29,11 +29,10 @@ package org.spout.vanilla.component.substance.material.chest;
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.Container;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyFactory;
 import org.spout.api.material.block.BlockFace;
-
-import org.spout.api.inventory.Container;
 
 import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.data.effect.store.SoundEffects;

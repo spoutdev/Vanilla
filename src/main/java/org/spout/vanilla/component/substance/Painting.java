@@ -27,7 +27,6 @@
 package org.spout.vanilla.component.substance;
 
 import java.util.List;
-import org.spout.vanilla.component.misc.EntityDropComponent;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -36,13 +35,12 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.VanillaComponent;
+import org.spout.vanilla.component.misc.EntityDropComponent;
+import org.spout.vanilla.component.substance.object.Item;
 import org.spout.vanilla.data.PaintingType;
 import org.spout.vanilla.data.VanillaData;
-
-import org.spout.vanilla.VanillaPlugin;
-
-import org.spout.vanilla.component.substance.object.Item;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.object.PaintingEntityProtocol;
 

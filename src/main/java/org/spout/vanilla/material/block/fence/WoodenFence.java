@@ -29,13 +29,12 @@ package org.spout.vanilla.material.block.fence;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.Fuel;
-
-import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Fence;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class WoodenFence extends Fence implements Fuel, Burnable {
 	public final float BURN_TIME = 15;

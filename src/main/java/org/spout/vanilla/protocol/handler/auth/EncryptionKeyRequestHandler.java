@@ -28,7 +28,6 @@ package org.spout.vanilla.protocol.handler.auth;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
-
 import org.bouncycastle.crypto.AsymmetricBlockCipher;
 import org.bouncycastle.crypto.BufferedBlockCipher;
 import org.bouncycastle.crypto.CipherParameters;
@@ -36,10 +35,12 @@ import org.bouncycastle.crypto.params.AsymmetricKeyParameter;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithIV;
 import org.bouncycastle.crypto.util.PublicKeyFactory;
+
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.security.EncryptionChannelProcessor;
 import org.spout.api.security.SecurityHandler;
+
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.protocol.ClientLoginAuth;
 import org.spout.vanilla.protocol.msg.auth.EncryptionKeyRequestMessage;

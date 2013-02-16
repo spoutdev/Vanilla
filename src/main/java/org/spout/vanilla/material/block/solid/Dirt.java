@@ -30,9 +30,9 @@ import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class Dirt extends Solid {
 	private static final EffectRange SPREADING_RANGE = new CubicEffectRange(2);

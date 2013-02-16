@@ -50,27 +50,26 @@ import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 import org.spout.api.util.map.TIntPairObjectHashMap;
 
 import org.spout.vanilla.data.Climate;
-import org.spout.vanilla.world.generator.biome.VanillaBiomeGenerator;
-import org.spout.vanilla.world.generator.biome.VanillaBiomes;
-import org.spout.vanilla.world.generator.normal.populator.DungeonPopulator;
-import org.spout.vanilla.world.generator.normal.populator.FallingLiquidPopulator;
-import org.spout.vanilla.world.generator.normal.populator.MineshaftPopulator;
-import org.spout.vanilla.world.generator.normal.populator.OrePopulator;
-import org.spout.vanilla.world.generator.normal.populator.PondPopulator;
-import org.spout.vanilla.world.generator.normal.populator.SnowPopulator;
-import org.spout.vanilla.world.generator.normal.populator.TemplePopulator;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.util.MathHelper;
-
+import org.spout.vanilla.world.generator.biome.VanillaBiomeGenerator;
+import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.normal.biome.selector.WhittakerLayer;
+import org.spout.vanilla.world.generator.normal.object.OreObject.OreTypes;
 import org.spout.vanilla.world.generator.normal.populator.CavePopulator;
+import org.spout.vanilla.world.generator.normal.populator.DungeonPopulator;
+import org.spout.vanilla.world.generator.normal.populator.FallingLiquidPopulator;
 import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator;
+import org.spout.vanilla.world.generator.normal.populator.MineshaftPopulator;
+import org.spout.vanilla.world.generator.normal.populator.OrePopulator;
+import org.spout.vanilla.world.generator.normal.populator.PondPopulator;
 import org.spout.vanilla.world.generator.normal.populator.RavinePopulator;
 import org.spout.vanilla.world.generator.normal.populator.RockyShieldPopulator;
+import org.spout.vanilla.world.generator.normal.populator.SnowPopulator;
 import org.spout.vanilla.world.generator.normal.populator.StrongholdPopulator;
+import org.spout.vanilla.world.generator.normal.populator.TemplePopulator;
 
 public class NormalGenerator extends VanillaBiomeGenerator {
 	// world constants

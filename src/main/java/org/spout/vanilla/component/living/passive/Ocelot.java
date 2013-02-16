@@ -26,14 +26,12 @@
  */
 package org.spout.vanilla.component.living.passive;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.Passive;
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.misc.EntityDropComponent;
 import org.spout.vanilla.component.misc.HealthComponent;
-
 import org.spout.vanilla.data.VanillaData;
-
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.creature.OcelotEntityProtocol;
 
 /**

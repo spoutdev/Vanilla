@@ -28,8 +28,8 @@ package org.spout.vanilla.material.block.fence;
 
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
-import org.spout.vanilla.material.block.Fence;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.block.Fence;
 
 public class NetherBrickFence extends Fence {
 	public NetherBrickFence(String name, int id) {

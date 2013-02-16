@@ -29,13 +29,12 @@ package org.spout.vanilla.material.block.component;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.data.MoveReaction;
-import org.spout.vanilla.material.block.Directional;
-
 import org.spout.vanilla.component.substance.material.EnchantmentTable;
 import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.block.Directional;
 
 public class EnchantmentTableBlock extends ComponentMaterial implements Directional {
 	public EnchantmentTableBlock(String name, int id) {

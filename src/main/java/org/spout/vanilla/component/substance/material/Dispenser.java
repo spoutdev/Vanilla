@@ -30,12 +30,11 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Container;
 
+import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.component.substance.ViewedBlockComponent;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.inventory.DispenserCloseEvent;
 import org.spout.vanilla.event.inventory.DispenserOpenEvent;
-
-import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.block.DispenserInventory;
 import org.spout.vanilla.inventory.window.block.DispenserWindow;
 

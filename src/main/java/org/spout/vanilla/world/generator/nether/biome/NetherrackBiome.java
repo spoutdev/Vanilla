@@ -26,14 +26,13 @@
  */
 package org.spout.vanilla.world.generator.nether.biome;
 
-import java.awt.Color;
-import org.spout.vanilla.world.generator.nether.decorator.NetherMushroomDecorator;
+import java.awt.*;
 
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
-
 import org.spout.vanilla.world.generator.nether.decorator.FireDecorator;
 import org.spout.vanilla.world.generator.nether.decorator.GlowstoneDecorator;
 import org.spout.vanilla.world.generator.nether.decorator.LavaFallDecorator;
+import org.spout.vanilla.world.generator.nether.decorator.NetherMushroomDecorator;
 
 public class NetherrackBiome extends VanillaBiome {
 	public NetherrackBiome(int biomeId) {

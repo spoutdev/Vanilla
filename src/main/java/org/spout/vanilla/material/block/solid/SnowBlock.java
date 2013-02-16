@@ -26,15 +26,14 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import org.spout.vanilla.material.InitializableMaterial;
-
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class SnowBlock extends Solid implements InitializableMaterial {
 	public SnowBlock(String name, int id) {

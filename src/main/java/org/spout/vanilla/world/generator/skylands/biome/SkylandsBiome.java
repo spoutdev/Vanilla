@@ -24,17 +24,16 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.plugin.world.generator.skylands.biome;
+package org.spout.vanilla.world.generator.skylands.biome;
 
-import org.spout.vanilla.api.world.generator.biome.VanillaBiome;
-
-import org.spout.vanilla.plugin.world.generator.normal.biome.NormalBiome.NormalTallGrassFactory;
-import org.spout.vanilla.plugin.world.generator.normal.biome.NormalBiome.NormalTreeWGOFactory;
-import org.spout.vanilla.plugin.world.generator.normal.decorator.EmeraldOreDecorator;
-import org.spout.vanilla.plugin.world.generator.normal.decorator.FlowerDecorator;
-import org.spout.vanilla.plugin.world.generator.normal.decorator.PumpkinDecorator;
-import org.spout.vanilla.plugin.world.generator.normal.decorator.TallGrassDecorator;
-import org.spout.vanilla.plugin.world.generator.normal.decorator.TreeDecorator;
+import org.spout.vanilla.world.generator.biome.VanillaBiome;
+import org.spout.vanilla.world.generator.normal.biome.NormalBiome.NormalTallGrassFactory;
+import org.spout.vanilla.world.generator.normal.biome.NormalBiome.NormalTreeWGOFactory;
+import org.spout.vanilla.world.generator.normal.decorator.EmeraldOreDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 
 public class SkylandsBiome extends VanillaBiome {
 	public SkylandsBiome(int biomeId) {

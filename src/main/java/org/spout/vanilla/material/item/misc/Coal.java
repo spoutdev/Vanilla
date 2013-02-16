@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.item.misc;
 
 import org.spout.vanilla.material.Fuel;
-
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class Coal extends VanillaItemMaterial implements Fuel {

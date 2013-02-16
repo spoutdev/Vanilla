@@ -26,16 +26,16 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.grassy;
 
-import java.awt.Color;
+import java.awt.*;
+
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
-
-import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 
 public class OceanBiome extends GrassyBiome {
 	public OceanBiome(int biomeId) {

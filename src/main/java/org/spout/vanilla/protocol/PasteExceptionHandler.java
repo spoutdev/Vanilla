@@ -33,7 +33,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.logging.Level;
-
 import org.apache.commons.io.IOUtils;
 
 import org.spout.api.Spout;

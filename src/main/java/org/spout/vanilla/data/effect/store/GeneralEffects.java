@@ -31,7 +31,6 @@ import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.ExplosionEffect;
 import org.spout.vanilla.data.effect.GeneralEffect;
 import org.spout.vanilla.data.effect.SoundEffect;
-
 import org.spout.vanilla.data.effect.type.BatchExplosionEffect;
 import org.spout.vanilla.data.effect.type.BreakBlockEffect;
 import org.spout.vanilla.data.effect.type.LavaFizzEffect;

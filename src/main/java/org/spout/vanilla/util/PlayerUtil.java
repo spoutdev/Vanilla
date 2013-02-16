@@ -32,17 +32,15 @@ import org.spout.api.event.Cause;
 import org.spout.api.event.cause.EntityCause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.Slot;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.data.GameMode;
-import org.spout.api.inventory.Slot;
-import org.spout.vanilla.inventory.entity.QuickbarInventory;
-
 import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
-
 import org.spout.vanilla.component.misc.HeadComponent;
+import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.inventory.entity.QuickbarInventory;
 
 public class PlayerUtil {
 	/**

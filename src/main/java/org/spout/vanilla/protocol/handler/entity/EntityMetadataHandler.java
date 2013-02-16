@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.handler.entity;
 
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 
 public class EntityMetadataHandler extends MessageHandler<EntityMetadataMessage>{

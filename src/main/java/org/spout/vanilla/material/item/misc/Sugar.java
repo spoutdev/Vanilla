@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.item.misc;
 
 import org.spout.vanilla.material.PotionReagent;
-
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.material.item.potion.Potion;
 

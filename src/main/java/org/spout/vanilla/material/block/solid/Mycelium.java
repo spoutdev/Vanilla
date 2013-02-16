@@ -30,12 +30,11 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.GenericMath;
 
-import org.spout.vanilla.material.InitializableMaterial;
-
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolType;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.SpreadingSolid;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class Mycelium extends SpreadingSolid implements InitializableMaterial {
 	public Mycelium(String name, int id) {

@@ -27,7 +27,6 @@
 package org.spout.vanilla.component.substance.material;
 
 import org.spout.vanilla.component.substance.VanillaBlockComponent;
-
 import org.spout.vanilla.data.VanillaData;
 
 /**

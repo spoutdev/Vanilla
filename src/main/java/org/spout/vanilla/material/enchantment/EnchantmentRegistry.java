@@ -26,11 +26,10 @@
  */
 package org.spout.vanilla.material.enchantment;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Used to register and access enchantments

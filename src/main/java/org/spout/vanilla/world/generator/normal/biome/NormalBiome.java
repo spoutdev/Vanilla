@@ -27,17 +27,15 @@
 package org.spout.vanilla.world.generator.normal.biome;
 
 import java.util.Random;
-import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
 
 import org.spout.api.util.config.ConfigurationNode;
 import org.spout.api.util.config.annotated.Load;
 import org.spout.api.util.config.annotated.Save;
 import org.spout.api.util.config.annotated.Setting;
 
-import org.spout.vanilla.world.generator.biome.VanillaBiome;
-
 import org.spout.vanilla.material.block.plant.TallGrass;
-
+import org.spout.vanilla.world.generator.biome.VanillaBiome;
+import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator.TreeWGOFactory;
 import org.spout.vanilla.world.generator.normal.object.variableheight.tree.BigTreeObject;
 import org.spout.vanilla.world.generator.normal.object.variableheight.tree.SmallTreeObject;

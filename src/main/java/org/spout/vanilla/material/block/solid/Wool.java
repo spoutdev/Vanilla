@@ -33,12 +33,11 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 
-import org.spout.vanilla.material.Burnable;
-
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class Wool extends Solid implements Burnable {
 	public static final Wool WHITE_WOOL = new Wool("White Wool", VanillaMaterialModels.WOOL_WHITE);

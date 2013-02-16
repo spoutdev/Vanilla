@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.misc;
 
+import com.bulletphysics.collision.shapes.BoxShape;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,13 +40,10 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.flag.Flag;
 
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.InitializableMaterial;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
-
-import com.bulletphysics.collision.shapes.BoxShape;
 
 public class TripWire extends GroundAttachable implements InitializableMaterial {
 	public static final int MAX_DISTANCE = 42;

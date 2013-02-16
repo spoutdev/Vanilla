@@ -26,13 +26,13 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.grassy;
 
-import java.awt.Color;
+import java.awt.*;
+
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.decorator.HugeMushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator;
-
-import org.spout.vanilla.material.VanillaMaterials;
 
 public class MushroomBiome extends GrassyBiome {
 	public MushroomBiome(int biomeId) {

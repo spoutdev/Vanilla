@@ -29,17 +29,16 @@ package org.spout.vanilla.material.block.misc;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.Slot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.api.inventory.Slot;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.InitializableMaterial;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.plant.Sapling;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.util.PlayerUtil;
 
 public class FlowerPotBlock extends GroundAttachable implements InitializableMaterial {

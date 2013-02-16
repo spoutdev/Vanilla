@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.protocol.netcache;
 
+import com.google.common.collect.Sets;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -33,8 +34,6 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
-
-import com.google.common.collect.Sets;
 
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 

@@ -36,10 +36,9 @@ import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.api.event.cause.HealthChangeCause;
-
-import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.event.player.PlayerRespawnEvent;
+import org.spout.vanilla.event.cause.HealthChangeCause;
+import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.event.player.PlayerRespawnEvent;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.msg.player.PlayerStatusMessage;
 

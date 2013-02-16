@@ -27,13 +27,13 @@
 package org.spout.vanilla.world.generator.flat;
 
 import java.util.Random;
-import org.spout.vanilla.world.generator.VanillaGenerator;
 
 import org.spout.api.generator.LayeredWorldGenerator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.VanillaGenerator;
 
 public class FlatGenerator extends LayeredWorldGenerator implements VanillaGenerator {
 	public FlatGenerator(int height) {

@@ -26,16 +26,14 @@
  */
 package org.spout.vanilla.world.generator.normal.structure.temple;
 
-import org.spout.vanilla.world.generator.biome.VanillaBiomes;
-import org.spout.vanilla.world.generator.normal.NormalGenerator;
-
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.Quaternion;
 
 import org.spout.vanilla.material.VanillaMaterials;
-
+import org.spout.vanilla.world.generator.biome.VanillaBiomes;
+import org.spout.vanilla.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructureComponent;
 import org.spout.vanilla.world.generator.structure.StructureComponent.BoundingBox;

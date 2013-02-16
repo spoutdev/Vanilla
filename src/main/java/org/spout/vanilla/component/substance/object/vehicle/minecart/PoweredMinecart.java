@@ -28,7 +28,7 @@ package org.spout.vanilla.component.substance.object.vehicle.minecart;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.spout.vanilla.component.misc.EntityDropComponent;
+
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -37,10 +37,10 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.misc.EntityDropComponent;
 import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.material.Fuel;
-
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 import org.spout.vanilla.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;

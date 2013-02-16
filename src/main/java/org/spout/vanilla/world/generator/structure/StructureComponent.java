@@ -39,12 +39,11 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.VectorMath;
 
-import org.spout.vanilla.material.block.attachable.Attachable;
-import org.spout.vanilla.material.block.Directional;
-
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.DoorBlock;
 import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.material.block.attachable.Attachable;
 
 public abstract class StructureComponent {
 	protected Structure parent;

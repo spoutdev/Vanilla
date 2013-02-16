@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class LockedChest extends VanillaBlockMaterial {
 	public LockedChest(String name, int id) {

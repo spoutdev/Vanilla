@@ -27,8 +27,6 @@
 package org.spout.vanilla.world.generator.normal.decorator;
 
 import java.util.Random;
-import org.spout.vanilla.world.generator.normal.NormalGenerator;
-import org.spout.vanilla.world.generator.normal.object.BlockPatchObject;
 
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
@@ -37,6 +35,8 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.world.generator.normal.NormalGenerator;
+import org.spout.vanilla.world.generator.normal.object.BlockPatchObject;
 
 public class SandAndClayDecorator extends Decorator {
 	private int firstSandAmount = 3;

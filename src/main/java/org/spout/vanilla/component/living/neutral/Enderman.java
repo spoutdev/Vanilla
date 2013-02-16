@@ -27,22 +27,19 @@
 package org.spout.vanilla.component.living.neutral;
 
 import com.bulletphysics.collision.shapes.BoxShape;
-import org.spout.vanilla.component.Neutral;
-import org.spout.vanilla.component.misc.HealthComponent;
 
+import org.spout.api.component.impl.SceneComponent;
 import org.spout.api.material.Material;
 import org.spout.api.util.Parameter;
-import org.spout.api.component.impl.SceneComponent;
-
-import org.spout.vanilla.data.Difficulty;
-import org.spout.vanilla.material.VanillaMaterial;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.Neutral;
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.misc.DamageComponent;
-
+import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.VanillaData;
-
+import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.creature.EndermanEntityProtocol;
 

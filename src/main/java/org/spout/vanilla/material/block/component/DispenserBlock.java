@@ -41,19 +41,18 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.data.MoveReaction;
-import org.spout.vanilla.data.effect.Effect;
-import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.block.redstone.RedstoneTarget;
-
 import org.spout.vanilla.component.substance.material.Dispenser;
 import org.spout.vanilla.component.substance.object.Item;
 import org.spout.vanilla.component.substance.object.projectile.Arrow;
+import org.spout.vanilla.data.MoveReaction;
+import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Directional;
+import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.material.item.misc.SpawnEgg;
 import org.spout.vanilla.material.item.potion.Potion;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.util.RedstoneUtil;
 

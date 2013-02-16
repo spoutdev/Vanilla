@@ -28,13 +28,13 @@ package org.spout.vanilla.world.generator.normal.structure.stronghold;
 
 import java.util.Arrays;
 import java.util.List;
-import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
-import org.spout.vanilla.world.generator.structure.Structure;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
 
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.world.generator.structure.Structure;
+import org.spout.vanilla.world.generator.structure.StructureComponent;
 
 public class StrongholdSpiralStaircase extends StructureComponent {
 	public StrongholdSpiralStaircase(Structure parent) {

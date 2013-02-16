@@ -26,16 +26,20 @@
  */
 package org.spout.vanilla.protocol;
 
-import java.awt.Color;
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.util.CharsetUtil;
+import org.spout.nbt.CompoundMap;
+import org.spout.nbt.CompoundTag;
+import org.spout.nbt.Tag;
+import org.spout.nbt.stream.NBTInputStream;
+import org.spout.nbt.stream.NBTOutputStream;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
@@ -44,12 +48,6 @@ import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.Parameter;
-
-import org.spout.nbt.CompoundMap;
-import org.spout.nbt.CompoundTag;
-import org.spout.nbt.Tag;
-import org.spout.nbt.stream.NBTInputStream;
-import org.spout.nbt.stream.NBTOutputStream;
 
 import org.spout.vanilla.material.VanillaMaterials;
 

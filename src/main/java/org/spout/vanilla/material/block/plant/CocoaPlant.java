@@ -32,6 +32,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.Slot;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -40,12 +41,10 @@ import org.spout.api.math.GenericMath;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.data.GameMode;
-import org.spout.api.inventory.Slot;
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.block.Growing;
-
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.BlockFlags;
+import org.spout.vanilla.material.InitializableMaterial;
+import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.solid.Log;
 import org.spout.vanilla.material.item.misc.Dye;

@@ -26,24 +26,21 @@
  */
 package org.spout.vanilla.component.living;
 
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.misc.BurnComponent;
-import org.spout.vanilla.component.misc.DrowningComponent;
-import org.spout.vanilla.component.misc.EffectsComponent;
-import org.spout.vanilla.component.misc.HealthComponent;
-
 import org.spout.api.ai.goap.GoapAIComponent;
 import org.spout.api.component.impl.NavigationComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.ai.examiner.VanillaBlockExaminer;
 import org.spout.vanilla.component.VanillaComponent;
+import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.component.misc.BurnComponent;
+import org.spout.vanilla.component.misc.DrowningComponent;
+import org.spout.vanilla.component.misc.EffectsComponent;
 import org.spout.vanilla.component.misc.HeadComponent;
-
+import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.effect.StatusEffect;
-
-import org.spout.vanilla.ai.examiner.VanillaBlockExaminer;
 
 public abstract class Living extends VanillaComponent {
 	private HeadComponent head;

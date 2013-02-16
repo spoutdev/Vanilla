@@ -26,17 +26,15 @@
  */
 package org.spout.vanilla.component.substance.material;
 
-import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.component.substance.ViewedBlockComponent;
-
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Container;
 import org.spout.api.inventory.Inventory;
 
+import org.spout.vanilla.component.inventory.WindowHolder;
+import org.spout.vanilla.component.substance.ViewedBlockComponent;
 import org.spout.vanilla.event.inventory.BeaconCloseEvent;
 import org.spout.vanilla.event.inventory.BeaconOpenEvent;
-
 import org.spout.vanilla.inventory.block.BeaconInventory;
 import org.spout.vanilla.inventory.window.block.BeaconWindow;
 

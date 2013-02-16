@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.protocol.rcon.handler;
 
+import org.spout.api.chat.ChatArguments;
+
 import org.spout.vanilla.protocol.rcon.RemoteConnectionSession;
 import org.spout.vanilla.protocol.rcon.msg.CommandMessage;
-
-import org.spout.api.chat.ChatArguments;
 
 /**
  * @author zml2008

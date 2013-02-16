@@ -36,11 +36,10 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.GenericMath;
 
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.InitializableMaterial;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.liquid.Water;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class SugarCaneBlock extends StackGrowingBase implements InitializableMaterial {
 	private final Set<Material> allowedBases = new HashSet<Material>(4);

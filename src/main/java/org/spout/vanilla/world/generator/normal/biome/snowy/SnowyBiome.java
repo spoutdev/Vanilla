@@ -27,7 +27,6 @@
 package org.spout.vanilla.world.generator.normal.biome.snowy;
 
 import org.spout.vanilla.data.Climate;
-
 import org.spout.vanilla.world.generator.normal.biome.grassy.GrassyBiome;
 
 public abstract class SnowyBiome extends GrassyBiome {

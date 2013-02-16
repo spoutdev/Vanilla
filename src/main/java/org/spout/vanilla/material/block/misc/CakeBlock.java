@@ -32,9 +32,9 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class CakeBlock extends Solid {
 	public CakeBlock(String name, int id) {

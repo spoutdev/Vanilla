@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.handler.window;
 
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
 
 public class WindowTransactionHandler extends MessageHandler<WindowTransactionMessage>{

@@ -28,8 +28,8 @@ package org.spout.vanilla.inventory.block;
 
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
-
 import org.spout.api.inventory.Slot;
+
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.TimedCraftable;
 

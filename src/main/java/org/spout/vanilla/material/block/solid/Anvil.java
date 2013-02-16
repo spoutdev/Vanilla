@@ -37,14 +37,14 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.event.inventory.AnvilOpenEvent;
-import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.component.inventory.WindowHolder;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.event.inventory.AnvilOpenEvent;
 import org.spout.vanilla.inventory.block.AnvilInventory;
 import org.spout.vanilla.inventory.window.block.AnvilWindow;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.util.PlayerUtil;
 
 public class Anvil extends Solid implements Directional {

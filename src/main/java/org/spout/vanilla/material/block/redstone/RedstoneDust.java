@@ -26,12 +26,12 @@
  */
 package org.spout.vanilla.material.block.redstone;
 
-import org.spout.vanilla.material.item.BlockItem;
-import org.spout.vanilla.material.item.potion.Potion;
-
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Vector2;
+
 import org.spout.vanilla.material.PotionReagent;
+import org.spout.vanilla.material.item.BlockItem;
+import org.spout.vanilla.material.item.potion.Potion;
 
 public class RedstoneDust extends BlockItem implements PotionReagent {
 	public RedstoneDust(String name, int id, BlockMaterial place, Vector2 pos) {

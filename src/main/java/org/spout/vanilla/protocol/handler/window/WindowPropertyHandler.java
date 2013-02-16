@@ -30,7 +30,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.plugin.component.inventory.WindowHolder;
+import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.protocol.msg.window.WindowPropertyMessage;
 
 public class WindowPropertyHandler extends MessageHandler<WindowPropertyMessage> {

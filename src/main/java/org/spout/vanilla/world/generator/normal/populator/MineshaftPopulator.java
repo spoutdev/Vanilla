@@ -27,11 +27,12 @@
 package org.spout.vanilla.world.generator.normal.populator;
 
 import java.util.Random;
-import org.spout.vanilla.world.generator.normal.structure.mineshaft.Mineshaft;
 
 import org.spout.api.generator.Populator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
+
+import org.spout.vanilla.world.generator.normal.structure.mineshaft.Mineshaft;
 
 public class MineshaftPopulator extends Populator {
 	private static final int DISTANCE = 256;

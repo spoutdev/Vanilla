@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.rcon.handler;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import org.spout.vanilla.protocol.rcon.msg.AuthMessage;
 import org.spout.vanilla.protocol.rcon.msg.CommandMessage;
 import org.spout.vanilla.protocol.rcon.msg.CommandResponseMessage;

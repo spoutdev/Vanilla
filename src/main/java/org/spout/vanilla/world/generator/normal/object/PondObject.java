@@ -27,7 +27,6 @@
 package org.spout.vanilla.world.generator.normal.object;
 
 import java.util.Random;
-import org.spout.vanilla.world.generator.normal.biome.snowy.SnowyBiome;
 
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
@@ -39,6 +38,7 @@ import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.world.generator.normal.biome.grassy.GrassyBiome;
 import org.spout.vanilla.world.generator.normal.biome.sandy.SandyBiome;
+import org.spout.vanilla.world.generator.normal.biome.snowy.SnowyBiome;
 import org.spout.vanilla.world.generator.object.RandomObject;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 

@@ -27,11 +27,12 @@
 package org.spout.vanilla.world.generator.normal.populator;
 
 import java.util.Random;
-import org.spout.vanilla.world.generator.normal.object.PondObject;
 
 import org.spout.api.generator.Populator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
+
+import org.spout.vanilla.world.generator.normal.object.PondObject;
 
 public class PondPopulator extends Populator {
 	private int waterOdd = 4;

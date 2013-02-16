@@ -26,16 +26,15 @@
  */
 package org.spout.vanilla.component.inventory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.entity.ArmorInventory;
 import org.spout.vanilla.inventory.entity.QuickbarInventory;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.spout.vanilla.inventory.player.PlayerCraftingInventory;
 
 /**

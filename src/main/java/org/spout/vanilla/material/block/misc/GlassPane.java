@@ -27,8 +27,8 @@
 package org.spout.vanilla.material.block.misc;
 
 import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class GlassPane extends VanillaBlockMaterial {
 	public GlassPane(String name, int id) {

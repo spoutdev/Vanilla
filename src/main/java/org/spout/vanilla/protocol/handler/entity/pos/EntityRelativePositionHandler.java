@@ -32,6 +32,7 @@ import org.spout.api.geo.World;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionMessage;
 
 public class EntityRelativePositionHandler extends MessageHandler<EntityRelativePositionMessage>{

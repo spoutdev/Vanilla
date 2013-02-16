@@ -34,13 +34,12 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.material.Burnable;
-import org.spout.vanilla.material.block.redstone.RedstoneTarget;
-
 import org.spout.vanilla.component.substance.object.Tnt;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.RedstoneUtil;
 
 public class TntBlock extends Solid implements RedstoneTarget, Burnable {

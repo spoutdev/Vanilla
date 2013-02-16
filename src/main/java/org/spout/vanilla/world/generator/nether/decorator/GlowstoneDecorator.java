@@ -27,14 +27,13 @@
 package org.spout.vanilla.world.generator.nether.decorator;
 
 import java.util.Random;
-import org.spout.vanilla.world.generator.nether.object.GlowstonePatchObject;
 
-import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.vanilla.plugin.world.generator.decorator.VariableAmountDecorator;
+import org.spout.vanilla.world.generator.decorator.VariableAmountDecorator;
 
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
+import org.spout.vanilla.world.generator.nether.object.GlowstonePatchObject;
 
 public class GlowstoneDecorator extends VariableAmountDecorator {
 	public GlowstoneDecorator() {

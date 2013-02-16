@@ -30,15 +30,14 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 
-import org.spout.vanilla.material.Burnable;
-import org.spout.vanilla.material.Fuel;
-
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolType;
+import org.spout.vanilla.material.Burnable;
+import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class Plank extends Solid implements Fuel, Burnable {
 	public static final Plank PLANK = new Plank("Oak Plank", VanillaMaterialModels.PLANK_OAK);

@@ -31,12 +31,11 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 
 import org.spout.vanilla.event.entity.EntityEquipmentEvent;
+import org.spout.vanilla.material.block.solid.Pumpkin;
 import org.spout.vanilla.material.item.armor.Boots;
 import org.spout.vanilla.material.item.armor.Chestplate;
 import org.spout.vanilla.material.item.armor.Helmet;
 import org.spout.vanilla.material.item.armor.Leggings;
-
-import org.spout.vanilla.material.block.solid.Pumpkin;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 
 public class EntityArmorInventory extends ArmorInventory {

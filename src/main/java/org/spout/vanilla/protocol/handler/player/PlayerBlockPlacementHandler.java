@@ -42,6 +42,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.Slot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.Placeable;
@@ -52,23 +53,21 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 
-import org.spout.vanilla.api.data.effect.SoundEffect;
-import org.spout.vanilla.api.event.cause.PlayerClickBlockCause;
-import org.spout.vanilla.api.event.cause.PlayerPlacementCause;
-import org.spout.api.inventory.Slot;
-
-import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.misc.HeadComponent;
-import org.spout.vanilla.plugin.component.misc.HungerComponent;
-import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
-import org.spout.vanilla.api.data.VanillaData;
-import org.spout.vanilla.plugin.data.effect.store.SoundEffects;
+import org.spout.vanilla.component.living.Living;
+import org.spout.vanilla.component.misc.HeadComponent;
+import org.spout.vanilla.component.misc.HungerComponent;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
+import org.spout.vanilla.data.effect.SoundEffect;
+import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.event.cause.PlayerClickBlockCause;
+import org.spout.vanilla.event.cause.PlayerPlacementCause;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.Food;
 import org.spout.vanilla.material.item.tool.weapon.Sword;
 import org.spout.vanilla.protocol.msg.player.PlayerBlockPlacementMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
-import org.spout.vanilla.plugin.util.PlayerUtil;
+import org.spout.vanilla.util.PlayerUtil;
 
 public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBlockPlacementMessage> {
 	private void refreshClient(Player player, Block clickedBlock, BlockFace clickedFace, RepositionManager rm) {

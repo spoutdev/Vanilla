@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.grassy;
 
-import java.awt.Color;
+import java.awt.*;
 
 public class SmallMountainsBiome extends MountainsBiome {
 	public SmallMountainsBiome(int biomeId) {

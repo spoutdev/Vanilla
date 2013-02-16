@@ -26,13 +26,12 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.Fuel;
 import org.spout.vanilla.material.InitializableMaterial;
-
-import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class MushroomBlock extends Solid implements Fuel, InitializableMaterial {
 	public final float BURN_TIME = 15;

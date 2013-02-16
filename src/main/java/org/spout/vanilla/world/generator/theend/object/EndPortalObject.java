@@ -27,7 +27,6 @@
 package org.spout.vanilla.world.generator.theend.object;
 
 import java.util.Random;
-import org.spout.vanilla.world.generator.object.RandomObject;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
@@ -36,6 +35,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.object.RandomObject;
 
 public class EndPortalObject extends RandomObject {
 	private static boolean isEndFrame(Block block, BlockFace facing, boolean withEnderEye) {

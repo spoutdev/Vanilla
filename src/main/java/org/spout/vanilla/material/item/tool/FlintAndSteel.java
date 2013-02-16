@@ -34,10 +34,9 @@ import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.inventory.Slot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-
-import org.spout.api.inventory.Slot;
 
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.VanillaMaterials;

@@ -26,11 +26,10 @@
  */
 package org.spout.vanilla.material.block.ore;
 
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.InitializableMaterial;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class MelonBlock extends Ore implements InitializableMaterial {
 	public MelonBlock(String name, int id) {

@@ -27,13 +27,14 @@
 package org.spout.vanilla.ai.action;
 
 import java.util.List;
-import org.spout.vanilla.ai.sensor.NearbyComponentsSensor;
 
 import org.spout.api.ai.goap.Action;
 import org.spout.api.ai.goap.PlannerAgent;
 import org.spout.api.ai.goap.WorldState;
 import org.spout.api.component.impl.NavigationComponent;
 import org.spout.api.entity.Entity;
+
+import org.spout.vanilla.ai.sensor.NearbyComponentsSensor;
 
 /**
  * Very basic Attack action that directs the Entity to go attack the player that is nearby.

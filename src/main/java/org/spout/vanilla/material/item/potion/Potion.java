@@ -28,13 +28,12 @@ package org.spout.vanilla.material.item.potion;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
-
-import org.spout.vanilla.data.effect.StatusEffect;
-import org.spout.vanilla.data.effect.StatusEffectContainer;
 import org.spout.api.inventory.Slot;
 
 import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.component.misc.EffectsComponent;
+import org.spout.vanilla.data.effect.StatusEffect;
+import org.spout.vanilla.data.effect.StatusEffectContainer;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 

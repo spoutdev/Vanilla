@@ -37,14 +37,13 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.protocol.event.ProtocolEvent;
 
+import org.spout.vanilla.component.substance.material.Sign;
 import org.spout.vanilla.data.MoveReaction;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.event.block.SignUpdateEvent;
 import org.spout.vanilla.material.InitializableMaterial;
-
-import org.spout.vanilla.component.substance.material.Sign;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public abstract class SignBase extends AbstractAttachable implements InitializableMaterial, VanillaComplexMaterial {
 	public SignBase(String name, int id) {

@@ -28,7 +28,6 @@ package org.spout.vanilla.protocol.handler.auth;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
-
 import org.bouncycastle.crypto.AsymmetricBlockCipher;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.BufferedBlockCipher;

@@ -26,14 +26,13 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import org.spout.vanilla.material.Burnable;
-
 import org.spout.vanilla.data.Instrument;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
+import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.misc.Slab;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class DoubleSlab extends Solid implements Burnable {
 	public static final DoubleSlab STONE = new DoubleSlab((short) 0x7, "Stone Double Slab", 43, false, Slab.STONE, VanillaMaterialModels.DOUBLE_SLAB);

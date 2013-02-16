@@ -26,12 +26,11 @@
  */
 package org.spout.vanilla.inventory.player;
 
-import org.spout.vanilla.inventory.entity.EntityArmorInventory;
-import org.spout.vanilla.material.block.solid.Pumpkin;
-
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 
+import org.spout.vanilla.inventory.entity.EntityArmorInventory;
+import org.spout.vanilla.material.block.solid.Pumpkin;
 import org.spout.vanilla.material.item.armor.Boots;
 import org.spout.vanilla.material.item.armor.Chestplate;
 import org.spout.vanilla.material.item.armor.Helmet;

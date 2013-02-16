@@ -32,7 +32,6 @@ import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.data.effect.GeneralEffect;
 import org.spout.vanilla.event.block.BlockActionEvent;
-
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class NoteParticleEffect extends GeneralEffect {

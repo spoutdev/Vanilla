@@ -26,19 +26,17 @@
  */
 package org.spout.vanilla.component.substance.material;
 
-import org.spout.vanilla.component.substance.VanillaBlockComponent;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.Slot;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.MaterialSource;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.data.Music;
-import org.spout.api.inventory.Slot;
-
+import org.spout.vanilla.component.substance.VanillaBlockComponent;
 import org.spout.vanilla.component.substance.object.Item;
+import org.spout.vanilla.data.Music;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.item.misc.MusicDisc;

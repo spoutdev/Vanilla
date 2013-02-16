@@ -30,24 +30,23 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.Slot;
 import org.spout.api.material.Material;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.api.data.effect.StatusEffect;
-import org.spout.vanilla.api.event.cause.DamageCause.DamageType;
-import org.spout.vanilla.api.event.cause.PlayerDamageCause;
-import org.spout.api.inventory.Slot;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
+import org.spout.vanilla.data.effect.StatusEffect;
+import org.spout.vanilla.event.cause.DamageCause.DamageType;
+import org.spout.vanilla.event.cause.PlayerDamageCause;
 import org.spout.vanilla.material.VanillaMaterial;
-
-import org.spout.vanilla.plugin.component.living.Living;
-import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.component.misc.EffectsComponent;
-import org.spout.vanilla.plugin.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.tool.Tool;
+import org.spout.vanilla.component.living.Living;
+import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.component.misc.EffectsComponent;
+import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.protocol.msg.player.PlayerUseEntityMessage;
-import org.spout.vanilla.plugin.util.PlayerUtil;
 
 public class PlayerUseEntityHandler extends MessageHandler<PlayerUseEntityMessage> {
 	@Override

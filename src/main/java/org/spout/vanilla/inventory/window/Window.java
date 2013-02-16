@@ -42,25 +42,24 @@ import org.spout.api.gui.component.LabelComponent;
 import org.spout.api.gui.component.TexturedRectComponent;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.Slot;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
+import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.component.substance.object.Item;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
 import org.spout.vanilla.event.window.WindowPropertyEvent;
-import org.spout.api.inventory.Slot;
-import org.spout.vanilla.inventory.player.CraftingInventory;
 import org.spout.vanilla.inventory.entity.QuickbarInventory;
-
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.substance.object.Item;
+import org.spout.vanilla.inventory.player.CraftingInventory;
 import org.spout.vanilla.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.inventory.util.GridInventoryConverter;
 import org.spout.vanilla.inventory.util.InventoryConverter;
-import org.spout.vanilla.VanillaPlugin;
 
 /**
  * Represents a Window that players can view to display an inventory.

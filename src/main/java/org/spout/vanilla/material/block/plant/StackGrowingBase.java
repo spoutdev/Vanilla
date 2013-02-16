@@ -32,10 +32,9 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 
-import org.spout.vanilla.material.block.Growing;
-
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
 /**

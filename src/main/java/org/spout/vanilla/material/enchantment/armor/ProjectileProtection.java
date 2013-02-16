@@ -26,12 +26,11 @@
  */
 package org.spout.vanilla.material.enchantment.armor;
 
+import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.enchantment.ArmorEnchantment;
 import org.spout.vanilla.material.enchantment.Enchantment;
-import org.spout.vanilla.material.VanillaMaterial;
-import org.spout.vanilla.material.item.armor.Boots;
-
 import org.spout.vanilla.material.enchantment.VanillaEnchantments;
+import org.spout.vanilla.material.item.armor.Boots;
 
 public class ProjectileProtection extends ArmorEnchantment {
 	public ProjectileProtection(String name, int id) {

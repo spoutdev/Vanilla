@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.grassy;
 
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator;
-
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator.GroundCoverUniformLayer;
+import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator.GroundCoverVariableLayer;
 
 public abstract class GrassyBiome extends NormalBiome {
 	public GrassyBiome(int biomeId) {

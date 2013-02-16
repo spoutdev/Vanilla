@@ -30,6 +30,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.protocol.msg.entity.EntityTileDataMessage;
 
 public final class EntityTileDataHandler extends MessageHandler<EntityTileDataMessage> {

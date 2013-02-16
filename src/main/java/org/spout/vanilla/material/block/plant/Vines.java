@@ -45,16 +45,14 @@ import org.spout.api.math.Vector3;
 import org.spout.api.plugin.Platform;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.material.Burnable;
-
-import org.spout.vanilla.material.block.Spreading;
-
 import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Spreading;
 import org.spout.vanilla.render.VanillaEffects;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Burnable, DynamicMaterial {
 	private static final EffectRange VINE_RANGE = new CuboidEffectRange(-4, -1, -4, 4, 1, 4);

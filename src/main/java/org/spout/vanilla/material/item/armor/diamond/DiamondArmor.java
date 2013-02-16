@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.material.item.armor.diamond;
 
-import org.spout.vanilla.material.item.armor.Armor;
-
 import org.spout.api.math.Vector2;
+
+import org.spout.vanilla.material.item.armor.Armor;
 
 public abstract class DiamondArmor extends Armor {
 	protected DiamondArmor(String name, int id, short durability, Vector2 pos) {

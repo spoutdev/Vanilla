@@ -26,11 +26,10 @@
  */
 package org.spout.vanilla.render;
 
-import java.awt.Color;
-import java.util.Map;
-
 import gnu.trove.list.TFloatList;
 import gnu.trove.list.array.TFloatArrayList;
+import java.awt.*;
+import java.util.Map;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.ChunkSnapshotModel;
@@ -39,7 +38,6 @@ import org.spout.api.render.BufferContainer;
 import org.spout.api.render.effect.BufferEffect;
 
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
-
 import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 
 public abstract class BiomeColorBufferEffect implements BufferEffect {

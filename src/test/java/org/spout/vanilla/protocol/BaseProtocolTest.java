@@ -26,19 +26,16 @@
  */
 package org.spout.vanilla.protocol;
 
-import java.io.IOException;
-
 import gnu.trove.set.TIntSet;
 import gnu.trove.set.hash.TIntHashSet;
-
+import java.io.IOException;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.junit.Test;
+import org.spout.vanilla.EngineFaker;
 
 import org.spout.api.protocol.CodecLookupService;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
-
-import org.spout.vanilla.EngineFaker;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

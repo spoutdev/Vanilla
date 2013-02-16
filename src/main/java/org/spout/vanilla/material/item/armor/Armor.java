@@ -29,10 +29,9 @@ package org.spout.vanilla.material.item.armor;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.material.enchantment.Enchantment;
 import org.spout.vanilla.event.cause.DamageCause;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
-
+import org.spout.vanilla.material.enchantment.Enchantment;
 import org.spout.vanilla.material.enchantment.VanillaEnchantments;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 

@@ -28,11 +28,10 @@ package org.spout.vanilla.material.block.solid;
 
 import org.spout.api.geo.cuboid.Block;
 
-import org.spout.vanilla.data.MoveReaction;
-
 import org.spout.vanilla.data.Instrument;
-import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.block.Solid;
 
 public class Bedrock extends Solid {
 	public Bedrock(String name, int id) {

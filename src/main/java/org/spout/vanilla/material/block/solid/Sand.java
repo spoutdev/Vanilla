@@ -28,15 +28,14 @@ package org.spout.vanilla.material.block.solid;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.material.TimedCraftable;
-
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolType;
+import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.SolidMoving;
 import org.spout.vanilla.material.block.component.FurnaceBlock;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class Sand extends SolidMoving implements TimedCraftable {
 	public Sand(String name, int id) {

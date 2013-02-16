@@ -26,13 +26,13 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.material.block.component.SignBase;
-import org.spout.vanilla.material.block.misc.Torch;
-
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+
+import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.block.component.SignBase;
+import org.spout.vanilla.material.block.misc.Torch;
 
 public abstract class Fence extends VanillaBlockMaterial {
 	public Fence(String name, int id, String model) {

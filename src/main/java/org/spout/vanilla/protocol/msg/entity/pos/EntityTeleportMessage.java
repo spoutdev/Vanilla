@@ -27,9 +27,10 @@
 package org.spout.vanilla.protocol.msg.entity.pos;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 import org.spout.api.util.SpoutToStringStyle;
+
+import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class EntityTeleportMessage extends EntityMessage {
 	private final int x, y, z, rotation, pitch;

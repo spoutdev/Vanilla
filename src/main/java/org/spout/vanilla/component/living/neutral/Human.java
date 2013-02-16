@@ -28,8 +28,6 @@ package org.spout.vanilla.component.living.neutral;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
-import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
-import org.spout.vanilla.component.misc.HealthComponent;
 
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
@@ -41,29 +39,28 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.Slot;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.VectorMath;
 
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.event.entity.HumanAbilityChangeEvent;
-import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
-import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
-import org.spout.api.inventory.Slot;
-
 import org.spout.vanilla.VanillaPlugin;
-
+import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.misc.DiggingComponent;
 import org.spout.vanilla.component.misc.HeadComponent;
-
+import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.component.misc.PlayerPickupItemComponent;
 import org.spout.vanilla.component.substance.object.Item;
-import org.spout.vanilla.data.configuration.VanillaConfiguration;
-import org.spout.vanilla.data.configuration.WorldConfigurationNode;
+import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.ViewDistance;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
+import org.spout.vanilla.data.configuration.WorldConfigurationNode;
+import org.spout.vanilla.event.entity.HumanAbilityChangeEvent;
+import org.spout.vanilla.event.player.PlayerGameModeChangedEvent;
 import org.spout.vanilla.event.player.network.PlayerAbilityUpdateEvent;
+import org.spout.vanilla.event.player.network.PlayerGameStateEvent;
 import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.protocol.entity.HumanEntityProtocol;
 import org.spout.vanilla.protocol.msg.player.PlayerGameStateMessage;

@@ -27,6 +27,7 @@
 package org.spout.vanilla.world.generator.structure;
 
 import java.util.Random;
+
 import org.spout.vanilla.world.generator.object.RandomObject;
 
 public abstract class Structure extends RandomObject {

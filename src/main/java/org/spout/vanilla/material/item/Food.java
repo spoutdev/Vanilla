@@ -28,20 +28,19 @@ package org.spout.vanilla.material.item;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.Slot;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector2;
-
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.effect.StatusEffect;
-import org.spout.vanilla.data.effect.StatusEffectContainer;
-import org.spout.api.inventory.Slot;
-import org.spout.vanilla.material.item.food.FoodEffect;
 
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.misc.EffectsComponent;
 import org.spout.vanilla.component.misc.HungerComponent;
+import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.effect.StatusEffect;
+import org.spout.vanilla.data.effect.StatusEffectContainer;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.item.food.FoodEffect;
 
 public class Food extends VanillaItemMaterial {
 	private final FoodEffect[] effects;

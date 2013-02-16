@@ -29,7 +29,6 @@ package org.spout.vanilla.component.world;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
-import org.spout.vanilla.component.misc.SleepComponent;
 
 import org.spout.api.Spout;
 import org.spout.api.component.type.WorldComponent;
@@ -38,10 +37,10 @@ import org.spout.api.geo.World;
 import org.spout.api.model.Model;
 import org.spout.api.plugin.Platform;
 
+import org.spout.vanilla.component.misc.SleepComponent;
 import org.spout.vanilla.data.Time;
-import org.spout.vanilla.data.Weather;
-
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.render.VanillaEffects;
 import org.spout.vanilla.world.WeatherSimulator;
 

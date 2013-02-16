@@ -31,7 +31,7 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.plugin.component.living.hostile.WitherSkeleton;
+import org.spout.vanilla.component.living.hostile.WitherSkeleton;
 
 public class SkeletonEntityProtocol extends CreatureProtocol {
 	public final static int TYPE_INDEX = 13; // The MC metadata index for determining the type of the skeleton

@@ -27,12 +27,9 @@
 package org.spout.vanilla.world.generator.theend;
 
 import java.util.Random;
-
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import net.royawesome.jlibnoise.module.source.Perlin;
-import org.spout.vanilla.world.generator.biome.VanillaBiomes;
-import org.spout.vanilla.world.generator.biome.VanillaSingleBiomeGenerator;
 
 import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.generator.biome.BiomeManager;
@@ -44,6 +41,8 @@ import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.world.generator.biome.VanillaBiomes;
+import org.spout.vanilla.world.generator.biome.VanillaSingleBiomeGenerator;
 
 public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 	private static final int ISLAND_RADIUS = 128;

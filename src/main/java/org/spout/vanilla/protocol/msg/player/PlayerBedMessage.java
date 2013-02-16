@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.protocol.msg.player;
 
-import org.spout.vanilla.protocol.msg.entity.EntityMessage;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.protocol.reposition.RepositionManager;
+
+import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class PlayerBedMessage extends EntityMessage {
 	private final int used, x, y, z;

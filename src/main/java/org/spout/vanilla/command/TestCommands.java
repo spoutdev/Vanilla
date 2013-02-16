@@ -67,10 +67,8 @@ import org.spout.vanilla.component.living.hostile.Skeleton;
 import org.spout.vanilla.component.living.hostile.Zombie;
 import org.spout.vanilla.component.living.neutral.Enderman;
 import org.spout.vanilla.component.living.neutral.Human;
-
-import org.spout.vanilla.component.misc.HeadComponent;
-
 import org.spout.vanilla.component.misc.BurnComponent;
+import org.spout.vanilla.component.misc.HeadComponent;
 import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.component.misc.HungerComponent;
 import org.spout.vanilla.component.substance.XPOrb;

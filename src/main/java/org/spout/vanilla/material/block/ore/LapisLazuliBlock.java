@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.material.block.ore;
 
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class LapisLazuliBlock extends Solid {
 	public LapisLazuliBlock(String name, int id) {

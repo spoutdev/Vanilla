@@ -35,6 +35,7 @@ import java.net.URLEncoder;
 
 import org.spout.api.Spout;
 import org.spout.api.scheduler.TaskPriority;
+
 import org.spout.vanilla.VanillaPlugin;
 
 public class ClientLoginAuth implements Runnable {

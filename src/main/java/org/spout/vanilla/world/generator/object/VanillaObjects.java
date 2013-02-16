@@ -31,11 +31,17 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.spout.api.generator.WorldGeneratorObject;
+
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.nether.object.GlowstonePatchObject;
 import org.spout.vanilla.world.generator.nether.object.NetherPortalObject;
 import org.spout.vanilla.world.generator.normal.object.BlockPatchObject;
 import org.spout.vanilla.world.generator.normal.object.DungeonObject;
+import org.spout.vanilla.world.generator.normal.object.LootChestObject;
 import org.spout.vanilla.world.generator.normal.object.OreObject;
+import org.spout.vanilla.world.generator.normal.object.OreObject.OreTypes;
 import org.spout.vanilla.world.generator.normal.object.PondObject;
 import org.spout.vanilla.world.generator.normal.object.WellObject;
 import org.spout.vanilla.world.generator.normal.object.variableheight.CactusStackObject;
@@ -48,18 +54,12 @@ import org.spout.vanilla.world.generator.normal.object.variableheight.tree.Shrub
 import org.spout.vanilla.world.generator.normal.object.variableheight.tree.SmallTreeObject;
 import org.spout.vanilla.world.generator.normal.object.variableheight.tree.SpruceTreeObject;
 import org.spout.vanilla.world.generator.normal.object.variableheight.tree.SwampTreeObject;
+import org.spout.vanilla.world.generator.normal.object.variableheight.tree.TreeObject.TreeType;
 import org.spout.vanilla.world.generator.normal.structure.mineshaft.Mineshaft;
 import org.spout.vanilla.world.generator.normal.structure.stronghold.Stronghold;
 import org.spout.vanilla.world.generator.normal.structure.temple.Temple;
 import org.spout.vanilla.world.generator.theend.object.EndPortalObject;
 import org.spout.vanilla.world.generator.theend.object.SpireObject;
-
-import org.spout.api.generator.WorldGeneratorObject;
-
-import org.spout.vanilla.material.VanillaMaterials;
-
-import org.spout.vanilla.world.generator.normal.object.LootChestObject;
-import org.spout.vanilla.world.generator.normal.object.variableheight.tree.TreeObject.TreeType;
 
 /**
  * Reference objects. NOT THREAD SAFE.

@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.block;
 
 import java.util.Random;
-import org.spout.vanilla.material.VanillaBlockMaterial;
 
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
@@ -38,6 +37,8 @@ import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.IntVector3;
+
+import org.spout.vanilla.material.VanillaBlockMaterial;
 
 /**
  * A solid material that can spread to other materials nearby

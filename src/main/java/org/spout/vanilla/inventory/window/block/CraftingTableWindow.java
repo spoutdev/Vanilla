@@ -26,16 +26,14 @@
  */
 package org.spout.vanilla.inventory.window.block;
 
-import org.spout.vanilla.inventory.util.InventoryConverter;
-import org.spout.vanilla.inventory.window.Window;
-
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.inventory.block.CraftingTableInventory;
-
+import org.spout.vanilla.inventory.util.InventoryConverter;
+import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class CraftingTableWindow extends Window {

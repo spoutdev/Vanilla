@@ -27,7 +27,6 @@
 package org.spout.vanilla.world.generator.normal.object;
 
 import java.util.Random;
-import org.spout.vanilla.world.generator.object.RandomObject;
 
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
@@ -36,6 +35,7 @@ import org.spout.api.math.Vector2;
 import org.spout.api.math.VectorMath;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.object.RandomObject;
 
 public class OreObject extends RandomObject {
 	private int amount;

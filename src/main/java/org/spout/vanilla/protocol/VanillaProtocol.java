@@ -31,7 +31,6 @@ import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.apache.commons.lang3.tuple.Pair;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
@@ -48,9 +47,6 @@ import org.spout.api.protocol.Session;
 import org.spout.api.util.Named;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.util.chat.VanillaStyleHandler;
-import org.spout.vanilla.protocol.plugin.CommandBlockCodec;
-import org.spout.vanilla.protocol.plugin.CommandBlockHandler;
 import org.spout.vanilla.protocol.msg.ServerPluginMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerChatMessage;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerHandshakeMessage;
@@ -58,11 +54,14 @@ import org.spout.vanilla.protocol.msg.player.conn.PlayerKickMessage;
 import org.spout.vanilla.protocol.netcache.ChunkNetCache;
 import org.spout.vanilla.protocol.netcache.protocol.ChunkCacheCodec;
 import org.spout.vanilla.protocol.netcache.protocol.ChunkCacheHandler;
+import org.spout.vanilla.protocol.plugin.CommandBlockCodec;
+import org.spout.vanilla.protocol.plugin.CommandBlockHandler;
 import org.spout.vanilla.protocol.plugin.RegisterPluginChannelCodec;
 import org.spout.vanilla.protocol.plugin.RegisterPluginChannelMessage;
 import org.spout.vanilla.protocol.plugin.RegisterPluginChannelMessageHandler;
 import org.spout.vanilla.protocol.plugin.UnregisterPluginChannelCodec;
 import org.spout.vanilla.protocol.plugin.UnregisterPluginChannelMessageHandler;
+import org.spout.vanilla.util.chat.VanillaStyleHandler;
 
 public class VanillaProtocol extends Protocol {
 	public final static DefaultedKey<String> SESSION_ID = new DefaultedKeyImpl<String>("sessionid", "0000000000000000");

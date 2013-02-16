@@ -26,12 +26,12 @@
  */
 package org.spout.vanilla.event.inventory;
 
-import org.spout.vanilla.component.substance.material.Beacon;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryCloseEvent;
+
+import org.spout.vanilla.component.substance.material.Beacon;
 
 /**
  * Event which is fired when a Beacon is closed.

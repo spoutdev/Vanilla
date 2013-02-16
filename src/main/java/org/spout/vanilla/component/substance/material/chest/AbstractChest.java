@@ -26,10 +26,9 @@
  */
 package org.spout.vanilla.component.substance.material.chest;
 
-import org.spout.vanilla.component.substance.ViewedBlockComponent;
-
 import org.spout.api.entity.Player;
 
+import org.spout.vanilla.component.substance.ViewedBlockComponent;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 /**

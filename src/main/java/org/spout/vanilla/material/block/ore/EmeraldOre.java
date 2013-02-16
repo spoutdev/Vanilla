@@ -28,15 +28,14 @@ package org.spout.vanilla.material.block.ore;
 
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.material.InitializableMaterial;
-import org.spout.vanilla.material.TimedCraftable;
-
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
+import org.spout.vanilla.material.InitializableMaterial;
+import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Ore;
 import org.spout.vanilla.material.block.component.FurnaceBlock;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class EmeraldOre extends Ore implements InitializableMaterial, TimedCraftable {
 	public EmeraldOre(String name, int id) {

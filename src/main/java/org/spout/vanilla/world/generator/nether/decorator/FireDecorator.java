@@ -32,6 +32,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.decorator.VariableAmountDecorator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
 public class FireDecorator extends VariableAmountDecorator {

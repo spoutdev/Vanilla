@@ -30,9 +30,9 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.plugin.component.misc.HealthComponent;
-import org.spout.vanilla.api.event.cause.HealthChangeCause;
-import org.spout.vanilla.plugin.component.misc.HungerComponent;
+import org.spout.vanilla.event.cause.HealthChangeCause;
+import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.component.misc.HungerComponent;
 import org.spout.vanilla.protocol.msg.player.PlayerHealthMessage;
 
 public class PlayerHealthHandler extends MessageHandler<PlayerHealthMessage> {
@@ -44,10 +44,10 @@ public class PlayerHealthHandler extends MessageHandler<PlayerHealthMessage> {
 
 		Player player = session.getPlayer();
 		
-		HealthComponent health = (HealthComponent) player.get(HealthComponent.class);
+		HealthComponent health = player.get(HealthComponent.class);
 		health.setHealth(message.getHealth(), HealthChangeCause.UNKNOWN);
 		
-		HungerComponent hunger = (HungerComponent) player.get(HungerComponent.class);
+		HungerComponent hunger = player.get(HungerComponent.class);
 		hunger.setHunger(message.getFood());
 		hunger.setFoodSaturation(message.getFoodSaturation());
 	}

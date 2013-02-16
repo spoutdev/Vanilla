@@ -27,7 +27,6 @@
 package org.spout.vanilla.world.generator.normal.object;
 
 import java.util.Random;
-import org.spout.vanilla.world.generator.object.RandomObject;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
@@ -37,7 +36,7 @@ import org.spout.api.material.block.BlockFaces;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.misc.Dye;
-
+import org.spout.vanilla.world.generator.object.RandomObject;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 
 public class DungeonObject extends RandomObject implements RandomizableObject {

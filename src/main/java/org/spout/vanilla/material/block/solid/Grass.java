@@ -32,23 +32,22 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.Slot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.GenericMath;
 import org.spout.api.plugin.Platform;
 
-import org.spout.api.inventory.Slot;
-import org.spout.vanilla.material.InitializableMaterial;
-
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolType;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.SpreadingSolid;
 import org.spout.vanilla.material.block.misc.Snow;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.render.VanillaEffects;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.util.PlayerUtil;
 
 public class Grass extends SpreadingSolid implements DynamicMaterial, InitializableMaterial {

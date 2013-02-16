@@ -31,11 +31,10 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.Container;
 
+import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.component.substance.ViewedBlockComponent;
 import org.spout.vanilla.event.inventory.EnchantmentTableCloseEvent;
 import org.spout.vanilla.event.inventory.EnchantmentTableOpenEvent;
-
-import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.inventory.window.block.EnchantmentTableWindow;
 import org.spout.vanilla.material.VanillaMaterials;

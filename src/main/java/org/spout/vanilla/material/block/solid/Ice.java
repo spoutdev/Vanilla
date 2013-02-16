@@ -35,14 +35,13 @@ import org.spout.api.material.range.CubicEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.GenericMath;
 
+import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.data.Climate;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.event.cause.PlayerBreakCause;
 import org.spout.vanilla.material.InitializableMaterial;
-
-import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.SpreadingSolid;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
 public class Ice extends SpreadingSolid implements InitializableMaterial {

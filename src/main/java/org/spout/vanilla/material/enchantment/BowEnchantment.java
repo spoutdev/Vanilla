@@ -27,7 +27,6 @@
 package org.spout.vanilla.material.enchantment;
 
 import org.spout.vanilla.material.VanillaMaterial;
-
 import org.spout.vanilla.material.item.tool.weapon.Bow;
 
 public abstract class BowEnchantment extends Enchantment {

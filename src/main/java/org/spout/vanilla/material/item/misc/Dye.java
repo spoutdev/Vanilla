@@ -30,17 +30,16 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.inventory.Slot;
 import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
 import org.spout.api.math.Vector3;
 
-import org.spout.api.inventory.Slot;
-
 import org.spout.vanilla.component.living.passive.Sheep;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.material.block.solid.Wool;
+import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.util.PlayerUtil;
 
 public class Dye extends VanillaItemMaterial implements Placeable {

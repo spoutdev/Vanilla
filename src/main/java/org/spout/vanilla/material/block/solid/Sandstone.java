@@ -28,10 +28,10 @@ package org.spout.vanilla.material.block.solid;
 
 import org.spout.api.material.source.DataSource;
 
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class Sandstone extends Solid {
 	public static final Sandstone SANDSTONE = new Sandstone("Sandstone", VanillaMaterialModels.SANDSTONE);

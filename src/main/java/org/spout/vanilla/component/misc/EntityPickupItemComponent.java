@@ -27,22 +27,22 @@
 package org.spout.vanilla.component.misc;
 
 import java.util.List;
-import org.spout.vanilla.component.inventory.EntityInventoryComponent;
-import org.spout.vanilla.component.substance.object.Item;
 
-import org.spout.vanilla.data.configuration.VanillaConfiguration;
-import org.spout.vanilla.inventory.entity.EntityQuickbarInventory;
-import org.spout.vanilla.material.item.VanillaItemMaterial;
-import org.spout.vanilla.material.item.armor.Armor;
-import org.spout.vanilla.material.item.tool.Tool;
+import javax.tools.Tool;
 
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.component.inventory.EntityInventoryComponent;
+import org.spout.vanilla.component.substance.object.Item;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.entity.EntityCollectItemEvent;
 import org.spout.vanilla.inventory.entity.ArmorInventory;
+import org.spout.vanilla.inventory.entity.EntityQuickbarInventory;
+import org.spout.vanilla.material.item.VanillaItemMaterial;
+import org.spout.vanilla.material.item.armor.Armor;
 
 /**
  * Component that adds a detector to resources.entities to scan for and pickup items.

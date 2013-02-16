@@ -28,9 +28,9 @@ package org.spout.vanilla.material.block.solid;
 
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.block.Solid;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class SoulSand extends Solid {
 	public SoulSand(String name, int id) {

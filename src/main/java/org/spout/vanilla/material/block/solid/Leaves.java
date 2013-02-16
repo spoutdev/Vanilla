@@ -33,16 +33,15 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.plugin.Platform;
 
-import org.spout.vanilla.material.Burnable;
-import org.spout.vanilla.material.InitializableMaterial;
-
 import org.spout.vanilla.data.drops.SwitchDrops;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.Burnable;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.component.SignBase;
 import org.spout.vanilla.render.VanillaEffects;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class Leaves extends Solid implements Burnable, InitializableMaterial {
 	public static final Leaves DEFAULT = new Leaves("Leaves", VanillaMaterialModels.LEAVES_OAK);

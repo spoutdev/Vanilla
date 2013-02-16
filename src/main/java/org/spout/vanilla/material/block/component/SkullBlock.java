@@ -33,10 +33,9 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.component.substance.material.Skull;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.block.attachable.Attachable;
-
-import org.spout.vanilla.component.substance.material.Skull;
 import org.spout.vanilla.util.PlayerUtil;
 
 public class SkullBlock extends ComponentMaterial implements Attachable {

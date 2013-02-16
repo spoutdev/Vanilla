@@ -27,7 +27,6 @@
 package org.spout.vanilla.protocol.msg.entity;
 
 import java.util.Arrays;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.protocol.Message;
@@ -36,7 +35,6 @@ import org.spout.api.protocol.proxy.TransformableMessage;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
-
 import org.spout.vanilla.protocol.proxy.VanillaConnectionInfo;
 
 public final class EntityDestroyMessage extends VanillaMainChannelMessage implements TransformableMessage {

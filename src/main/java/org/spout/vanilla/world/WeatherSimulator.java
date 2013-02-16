@@ -35,11 +35,10 @@ import org.spout.api.geo.World;
 import org.spout.api.math.GenericMath;
 import org.spout.api.tickable.BasicTickable;
 
-import org.spout.vanilla.data.Weather;
-import org.spout.vanilla.world.generator.biome.VanillaBiome;
-
 import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.Weather;
+import org.spout.vanilla.world.generator.biome.VanillaBiome;
 
 public class WeatherSimulator extends BasicTickable {
 	private final VanillaSky sky;

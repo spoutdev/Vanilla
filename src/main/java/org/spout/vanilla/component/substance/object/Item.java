@@ -27,7 +27,6 @@
 package org.spout.vanilla.component.substance.object;
 
 import com.bulletphysics.collision.shapes.BoxShape;
-import org.spout.vanilla.component.misc.HealthComponent;
 
 import org.spout.api.component.impl.SceneComponent;
 import org.spout.api.data.Data;
@@ -38,8 +37,9 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.data.configuration.VanillaConfiguration;
+import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.object.ItemEntityProtocol;
 

@@ -27,29 +27,26 @@
 package org.spout.vanilla.component.living.hostile;
 
 import com.bulletphysics.collision.shapes.BoxShape;
-import org.spout.vanilla.component.Hostile;
-import org.spout.vanilla.component.inventory.EntityInventoryComponent;
-import org.spout.vanilla.component.living.Living;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.misc.EntityDropComponent;
-import org.spout.vanilla.component.misc.HealthComponent;
 
 import org.spout.api.component.impl.SceneComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.component.misc.DamageComponent;
-import org.spout.vanilla.data.Difficulty;
-import org.spout.vanilla.data.VanillaData;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.ai.action.ActionAttack;
 import org.spout.vanilla.ai.goal.AttackPlayerGoal;
 import org.spout.vanilla.ai.sensor.NearbyComponentsSensor;
-
+import org.spout.vanilla.component.Hostile;
+import org.spout.vanilla.component.inventory.EntityInventoryComponent;
+import org.spout.vanilla.component.living.Living;
+import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.component.misc.DamageComponent;
+import org.spout.vanilla.component.misc.EntityDropComponent;
 import org.spout.vanilla.component.misc.EntityPickupItemComponent;
-
+import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.data.Difficulty;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.creature.ZombieEntityProtocol;
 

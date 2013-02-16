@@ -32,15 +32,14 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.material.enchantment.Enchantment;
-import org.spout.vanilla.inventory.window.prop.EnchantmentTableProperty;
-
-import org.spout.vanilla.plugin.component.substance.material.EnchantmentTable;
+import org.spout.vanilla.component.substance.material.EnchantmentTable;
 import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.Window;
-import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.inventory.window.WindowType;
+import org.spout.vanilla.inventory.window.prop.EnchantmentTableProperty;
+import org.spout.vanilla.material.enchantment.Enchantment;
+import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class EnchantmentTableWindow extends Window {
 	private final EnchantmentTable enchantmentTable;

@@ -49,19 +49,18 @@ import org.spout.api.material.Material;
 import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.util.concurrent.AtomicFloat;
 
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.Time;
-import org.spout.vanilla.data.Weather;
-import org.spout.vanilla.event.cause.HealthChangeCause;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.component.misc.LevelComponent;
 import org.spout.vanilla.component.world.VanillaSky;
+import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.Time;
+import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.data.configuration.OpConfiguration;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
+import org.spout.vanilla.event.cause.HealthChangeCause;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class AdministrationCommands {

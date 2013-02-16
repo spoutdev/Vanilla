@@ -26,9 +26,8 @@
  */
 package org.spout.vanilla.ai.examiner;
 
-import java.util.Set;
-
 import com.google.common.collect.Sets;
+import java.util.Set;
 
 import org.spout.api.ai.pathfinder.BlockExaminer;
 import org.spout.api.ai.pathfinder.BlockSource;

@@ -40,15 +40,14 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.Hostile;
-import org.spout.vanilla.data.Time;
-import org.spout.vanilla.material.InitializableMaterial;
-
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.misc.SleepComponent;
 import org.spout.vanilla.component.world.VanillaSky;
+import org.spout.vanilla.data.Time;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.util.explosion.ExplosionModel;
 import org.spout.vanilla.util.explosion.ExplosionModelSpherical;

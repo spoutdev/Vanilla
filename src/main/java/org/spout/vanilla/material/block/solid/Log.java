@@ -46,21 +46,20 @@ import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 import org.spout.api.scheduler.TaskPriority;
 
-import org.spout.vanilla.material.Burnable;
-import org.spout.vanilla.material.Fuel;
-import org.spout.vanilla.material.TimedCraftable;
-import org.spout.vanilla.material.block.Directional;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.effect.store.SoundEffects;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolType;
+import org.spout.vanilla.material.Burnable;
+import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.TimedCraftable;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.component.FurnaceBlock;
 import org.spout.vanilla.material.block.plant.Sapling;
 import org.spout.vanilla.material.item.misc.Coal;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable, Burnable, Directional {
 	private static final BlockFaces DIRECTION_OPPOS = new BlockFaces(BlockFace.BOTTOM, BlockFace.NORTH, BlockFace.EAST);

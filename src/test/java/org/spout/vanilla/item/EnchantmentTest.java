@@ -26,16 +26,14 @@
  */
 package org.spout.vanilla.item;
 
-import org.junit.Test;
-
 import gnu.trove.map.TObjectIntMap;
-
-import org.spout.api.inventory.ItemStack;
-
+import org.junit.Test;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.enchantment.Enchantment;
 import org.spout.vanilla.material.enchantment.EnchantmentRegistry;
 import org.spout.vanilla.material.enchantment.VanillaEnchantments;
+
+import org.spout.api.inventory.ItemStack;
 
 import static org.junit.Assert.assertTrue;
 

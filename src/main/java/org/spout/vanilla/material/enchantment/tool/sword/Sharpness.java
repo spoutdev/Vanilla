@@ -26,10 +26,9 @@
  */
 package org.spout.vanilla.material.enchantment.tool.sword;
 
+import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.enchantment.Enchantment;
 import org.spout.vanilla.material.enchantment.SwordEnchantment;
-import org.spout.vanilla.material.VanillaMaterial;
-
 import org.spout.vanilla.material.enchantment.VanillaEnchantments;
 
 public class Sharpness extends SwordEnchantment {

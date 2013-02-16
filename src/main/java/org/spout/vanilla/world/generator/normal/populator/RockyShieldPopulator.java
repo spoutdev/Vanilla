@@ -29,7 +29,6 @@ package org.spout.vanilla.world.generator.normal.populator;
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.modifier.Turbulence;
 import net.royawesome.jlibnoise.module.source.Perlin;
-import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
 import org.spout.api.generator.GeneratorPopulator;
 import org.spout.api.generator.WorldGeneratorUtils;
@@ -40,6 +39,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
 public class RockyShieldPopulator implements GeneratorPopulator {
 	private static final Perlin SHIELD_BASE = new Perlin();

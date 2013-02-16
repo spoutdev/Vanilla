@@ -27,10 +27,10 @@
 package org.spout.vanilla.material.block.misc;
 
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class Web extends VanillaBlockMaterial {
 	public Web(String name, int id) {

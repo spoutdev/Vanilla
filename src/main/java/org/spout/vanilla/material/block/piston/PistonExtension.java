@@ -34,7 +34,6 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.VanillaBlockMaterial;
-
 import org.spout.vanilla.material.block.Directional;
 
 public class PistonExtension extends VanillaBlockMaterial implements Directional {

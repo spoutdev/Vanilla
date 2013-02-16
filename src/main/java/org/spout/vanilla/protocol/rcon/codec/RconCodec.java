@@ -27,13 +27,13 @@
 package org.spout.vanilla.protocol.rcon.codec;
 
 import java.nio.ByteOrder;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.util.CharsetUtil;
-import org.spout.vanilla.protocol.rcon.msg.RconMessage;
 
 import org.spout.api.protocol.MessageCodec;
+
+import org.spout.vanilla.protocol.rcon.msg.RconMessage;
 
 /**
  * Base class for MessageCodecs using rcon

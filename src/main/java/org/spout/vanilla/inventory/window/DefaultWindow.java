@@ -38,12 +38,10 @@ import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
+import org.spout.vanilla.inventory.entity.ArmorInventory;
+import org.spout.vanilla.inventory.entity.EntityArmorInventory;
 import org.spout.vanilla.inventory.player.PlayerCraftingInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
-
-import org.spout.vanilla.inventory.entity.ArmorInventory;
-
-import org.spout.vanilla.inventory.entity.EntityArmorInventory;
 
 public class DefaultWindow extends Window {
 	private boolean opened = false;

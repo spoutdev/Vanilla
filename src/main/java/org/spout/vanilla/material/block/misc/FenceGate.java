@@ -38,14 +38,13 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.material.block.Openable;
-import org.spout.vanilla.material.block.redstone.RedstoneTarget;
-
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
-import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.material.block.Openable;
+import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.util.RedstoneUtil;
 

@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.component.substance.object;
 
+
+
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;

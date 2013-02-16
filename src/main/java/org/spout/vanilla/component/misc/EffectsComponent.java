@@ -33,13 +33,12 @@ import java.util.List;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 
+import org.spout.vanilla.component.living.Living;
+import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.data.effect.StatusEffect;
 import org.spout.vanilla.data.effect.StatusEffectContainer;
 import org.spout.vanilla.event.entity.network.EntityEffectEvent;
 import org.spout.vanilla.event.entity.network.EntityRemoveEffectEvent;
-
-import org.spout.vanilla.component.living.Living;
-import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.material.item.potion.Potion;
 
 /**

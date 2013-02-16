@@ -29,10 +29,9 @@ package org.spout.vanilla.material.block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.Fuel;
-
-import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class WoodenStairs extends Stairs implements Fuel, Burnable {

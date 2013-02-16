@@ -26,20 +26,18 @@
  */
 package org.spout.vanilla.component.living.passive;
 
-import org.spout.vanilla.component.misc.EntityDropComponent;
-import org.spout.vanilla.component.misc.HealthComponent;
-
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.Passive;
-import org.spout.vanilla.data.VanillaData;
-
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.Passive;
 import org.spout.vanilla.component.living.Living;
+import org.spout.vanilla.component.misc.EntityDropComponent;
+import org.spout.vanilla.component.misc.HealthComponent;
 import org.spout.vanilla.component.substance.object.Item;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.protocol.entity.creature.CreatureType;

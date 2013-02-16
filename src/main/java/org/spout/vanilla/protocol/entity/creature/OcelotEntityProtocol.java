@@ -31,7 +31,7 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.plugin.component.living.passive.Ocelot;
+import org.spout.vanilla.component.living.passive.Ocelot;
 
 public class OcelotEntityProtocol extends CreatureProtocol {
 	public final static int SIT_TAME_INDEX = 16; // The MC metadata index for determining whether the ocelot is tamed or sitting.

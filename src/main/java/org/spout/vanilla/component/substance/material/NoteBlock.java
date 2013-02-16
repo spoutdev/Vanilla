@@ -26,13 +26,12 @@
  */
 package org.spout.vanilla.component.substance.material;
 
-import org.spout.vanilla.component.substance.VanillaBlockComponent;
-
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.component.substance.VanillaBlockComponent;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.effect.store.GeneralEffects;

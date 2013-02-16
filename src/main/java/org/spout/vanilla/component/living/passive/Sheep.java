@@ -27,23 +27,22 @@
 package org.spout.vanilla.component.living.passive;
 
 import java.util.Random;
-import org.spout.vanilla.component.misc.HealthComponent;
 
 import org.spout.api.event.cause.EntityCause;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.Passive;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.event.entity.EntityStatusEvent;
-
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.Passive;
 import org.spout.vanilla.component.living.Living;
 import org.spout.vanilla.component.misc.EntityDropComponent;
-
+import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.event.entity.EntityStatusEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.solid.Wool;
+import org.spout.vanilla.material.block.solid.Wool.WoolColor;
 import org.spout.vanilla.protocol.entity.creature.SheepEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 
@@ -95,8 +94,8 @@ public class Sheep extends Living implements Passive {
 	 * Gets the color of the sheep.
 	 * @return color of the sheep.
 	 */
-	public Wool.WoolColor getColor() {
-		return Wool.WoolColor.getById(getOwner().getData().get(VanillaData.WOOL_COLOR).shortValue());
+	public WoolColor getColor() {
+		return WoolColor.getById(getOwner().getData().get(VanillaData.WOOL_COLOR).shortValue());
 	}
 
 	/**

@@ -30,9 +30,8 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
 
-import org.spout.vanilla.event.block.SignUpdateEvent;
-
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.event.block.SignUpdateEvent;
 
 /**
  * Component that represents a Sign in a world.

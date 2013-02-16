@@ -31,7 +31,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.inventory.window.AbstractWindow;
-
 import org.spout.vanilla.inventory.window.WindowType;
 
 

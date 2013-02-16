@@ -31,7 +31,7 @@ import org.spout.api.geo.World;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.plugin.component.world.VanillaSky;
+import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.protocol.msg.player.PlayerTimeMessage;
 
 public final class PlayerTimeHandler extends MessageHandler<PlayerTimeMessage> {

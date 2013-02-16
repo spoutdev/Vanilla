@@ -26,9 +26,8 @@
  */
 package org.spout.vanilla.util;
 
-import java.util.Random;
-
 import gnu.trove.map.TObjectIntMap;
+import java.util.Random;
 
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.TrigMath;

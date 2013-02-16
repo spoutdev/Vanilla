@@ -31,7 +31,7 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.plugin.component.living.hostile.Creeper;
+import org.spout.vanilla.component.living.hostile.Creeper;
 
 public class CreeperEntityProtocol extends CreatureProtocol {
 	public final static int FUSE_INDEX = 16; // The MC metadata index to determine the fuse.

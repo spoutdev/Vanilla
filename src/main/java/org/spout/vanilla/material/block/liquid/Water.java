@@ -39,11 +39,10 @@ import org.spout.api.math.GenericMath;
 import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.data.Climate;
-
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.render.VanillaEffects;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class Water extends Liquid implements DynamicMaterial {
 	public Water(String name, int id, boolean flowing) {

@@ -29,7 +29,6 @@ package org.spout.vanilla.world.generator.normal.object.variableheight.tree;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-import org.spout.vanilla.world.generator.object.VariableHeightObject;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
@@ -37,6 +36,7 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.plant.Sapling;
+import org.spout.vanilla.world.generator.object.VariableHeightObject;
 
 public abstract class TreeObject extends VariableHeightObject {
 	// metadata control

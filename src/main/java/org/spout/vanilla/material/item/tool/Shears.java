@@ -32,14 +32,13 @@ import org.spout.api.geo.LoadOption;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.GenericMath;
 
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.inventory.entity.QuickbarInventory;
-
 import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.component.living.passive.Sheep;
 import org.spout.vanilla.component.substance.object.Item;
+import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.tool.ToolType;
+import org.spout.vanilla.inventory.entity.QuickbarInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Shears extends Tool {

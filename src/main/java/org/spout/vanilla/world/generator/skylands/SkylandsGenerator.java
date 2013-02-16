@@ -27,11 +27,9 @@
 package org.spout.vanilla.world.generator.skylands;
 
 import java.util.Random;
-
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import net.royawesome.jlibnoise.module.source.Perlin;
-import org.spout.vanilla.world.generator.biome.VanillaSingleBiomeGenerator;
 
 import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.generator.biome.BiomeManager;
@@ -44,9 +42,11 @@ import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.biome.VanillaBiomes;
-import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator;
+import org.spout.vanilla.world.generator.biome.VanillaSingleBiomeGenerator;
+import org.spout.vanilla.world.generator.normal.object.OreObject.OreTypes;
+import org.spout.vanilla.world.generator.normal.populator.OrePopulator;
 import org.spout.vanilla.world.generator.normal.populator.PondPopulator;
-import org.spout.vanilla.plugin.world.generator.skylands.populator.SkylandsGroundCoverPopulator;
+import org.spout.vanilla.world.generator.skylands.populator.SkylandsGroundCoverPopulator;
 
 public class SkylandsGenerator extends VanillaSingleBiomeGenerator {
 	private static final int AVERAGE_ELEVATION = 64;

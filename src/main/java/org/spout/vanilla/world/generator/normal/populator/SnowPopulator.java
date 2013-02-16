@@ -27,7 +27,6 @@
 package org.spout.vanilla.world.generator.normal.populator;
 
 import java.util.Random;
-
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.modifier.Clamp;
 import net.royawesome.jlibnoise.module.source.Perlin;
@@ -39,11 +38,10 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.GenericMath;
 
-import org.spout.vanilla.world.generator.biome.VanillaBiome;
-
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.misc.Snow;
+import org.spout.vanilla.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
 public class SnowPopulator extends Populator {

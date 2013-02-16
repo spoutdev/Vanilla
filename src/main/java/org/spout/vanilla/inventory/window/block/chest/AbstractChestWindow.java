@@ -26,12 +26,6 @@
  */
 package org.spout.vanilla.inventory.window.block.chest;
 
-import org.spout.vanilla.inventory.block.ChestInventory;
-import org.spout.vanilla.inventory.player.PlayerMainInventory;
-import org.spout.vanilla.inventory.player.PlayerQuickbar;
-import org.spout.vanilla.inventory.util.InventoryConverter;
-import org.spout.vanilla.inventory.window.Window;
-
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
@@ -39,11 +33,14 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.shape.Grid;
 import org.spout.api.plugin.Platform;
 
-import org.spout.vanilla.plugin.component.inventory.PlayerInventoryComponent;
+import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
+import org.spout.vanilla.component.substance.material.chest.AbstractChest;
+import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.entity.QuickbarInventory;
-
-import org.spout.vanilla.plugin.component.substance.material.chest.AbstractChest;
-
+import org.spout.vanilla.inventory.player.PlayerMainInventory;
+import org.spout.vanilla.inventory.player.PlayerQuickbar;
+import org.spout.vanilla.inventory.util.InventoryConverter;
+import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.inventory.window.WindowType;
 
 public class AbstractChestWindow extends Window {

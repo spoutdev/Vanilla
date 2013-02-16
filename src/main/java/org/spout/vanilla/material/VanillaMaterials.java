@@ -26,10 +26,9 @@
  */
 package org.spout.vanilla.material;
 
+import gnu.trove.map.hash.TShortObjectHashMap;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-
-import gnu.trove.map.hash.TShortObjectHashMap;
 
 import org.spout.api.Spout;
 import org.spout.api.material.BlockMaterial;
@@ -37,18 +36,14 @@ import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
 import org.spout.api.util.map.concurrent.AtomicShortArray;
 
-import org.spout.vanilla.data.Music;
-import org.spout.vanilla.material.item.food.FoodEffect;
-import org.spout.vanilla.material.item.food.FoodEffects;
-
 import org.spout.vanilla.component.substance.object.vehicle.minecart.Minecart;
+import org.spout.vanilla.data.Music;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
-import org.spout.vanilla.material.block.solid.Anvil;
 import org.spout.vanilla.material.block.component.BeaconBlock;
 import org.spout.vanilla.material.block.component.BrewingStandBlock;
 import org.spout.vanilla.material.block.component.CommandBlockBlock;
-import org.spout.vanilla.material.block.solid.CraftingTable;
 import org.spout.vanilla.material.block.component.DispenserBlock;
 import org.spout.vanilla.material.block.component.EnchantmentTableBlock;
 import org.spout.vanilla.material.block.component.FurnaceBlock;
@@ -133,12 +128,14 @@ import org.spout.vanilla.material.block.redstone.RedstoneDust;
 import org.spout.vanilla.material.block.redstone.RedstoneRepeater;
 import org.spout.vanilla.material.block.redstone.RedstoneTorch;
 import org.spout.vanilla.material.block.redstone.RedstoneWire;
+import org.spout.vanilla.material.block.solid.Anvil;
 import org.spout.vanilla.material.block.solid.Bedrock;
 import org.spout.vanilla.material.block.solid.BookShelf;
 import org.spout.vanilla.material.block.solid.Brick;
 import org.spout.vanilla.material.block.solid.CauldronBlock;
 import org.spout.vanilla.material.block.solid.ClayBlock;
 import org.spout.vanilla.material.block.solid.Cobblestone;
+import org.spout.vanilla.material.block.solid.CraftingTable;
 import org.spout.vanilla.material.block.solid.Dirt;
 import org.spout.vanilla.material.block.solid.DoubleSlab;
 import org.spout.vanilla.material.block.solid.Endstone;
@@ -204,6 +201,8 @@ import org.spout.vanilla.material.item.armor.leather.LeatherTunic;
 import org.spout.vanilla.material.item.bucket.EmptyBucket;
 import org.spout.vanilla.material.item.bucket.FullBucket;
 import org.spout.vanilla.material.item.bucket.LavaBucket;
+import org.spout.vanilla.material.item.food.FoodEffect;
+import org.spout.vanilla.material.item.food.FoodEffects;
 import org.spout.vanilla.material.item.food.Potato;
 import org.spout.vanilla.material.item.food.RawBeef;
 import org.spout.vanilla.material.item.food.RawChicken;
@@ -252,7 +251,6 @@ import org.spout.vanilla.material.item.vehicle.minecart.MinecartItem;
 import org.spout.vanilla.material.item.vehicle.minecart.PoweredMinecartItem;
 import org.spout.vanilla.material.item.vehicle.minecart.StorageMinecartItem;
 import org.spout.vanilla.material.map.Map;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public final class VanillaMaterials {
 	public static final BlockMaterial AIR = BlockMaterial.AIR;

@@ -27,7 +27,6 @@
 package org.spout.vanilla.world.generator.theend.decorator;
 
 import java.util.Random;
-import org.spout.vanilla.world.generator.theend.object.SpireObject;
 
 import org.spout.api.generator.biome.Decorator;
 import org.spout.api.geo.World;
@@ -35,6 +34,7 @@ import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.theend.TheEndGenerator;
+import org.spout.vanilla.world.generator.theend.object.SpireObject;
 
 public class SpireDecorator extends Decorator {
 	private int odd = 5;

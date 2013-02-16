@@ -30,10 +30,6 @@ import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 import java.util.logging.Level;
 
-import org.spout.vanilla.event.inventory.InventoryCanSetEvent;
-import org.spout.vanilla.event.window.WindowItemsEvent;
-import org.spout.vanilla.event.window.WindowPropertyEvent;
-
 import org.spout.api.ServerOnly;
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
@@ -41,11 +37,14 @@ import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.Slot;
 import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
-import org.spout.api.inventory.Slot;
+import org.spout.vanilla.event.inventory.InventoryCanSetEvent;
+import org.spout.vanilla.event.window.WindowItemsEvent;
+import org.spout.vanilla.event.window.WindowPropertyEvent;
 import org.spout.vanilla.inventory.window.prop.WindowProperty;
 
 public abstract class AbstractWindow implements InventoryViewer {

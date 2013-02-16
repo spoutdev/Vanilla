@@ -30,7 +30,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.event.entity.EntityEquipmentEvent;
-
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 
 /**

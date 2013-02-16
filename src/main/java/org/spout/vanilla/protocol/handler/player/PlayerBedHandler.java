@@ -33,7 +33,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.plugin.component.misc.SleepComponent;
+import org.spout.vanilla.component.misc.SleepComponent;
 import org.spout.vanilla.protocol.msg.player.PlayerBedMessage;
 
 public final class PlayerBedHandler extends MessageHandler<PlayerBedMessage> {

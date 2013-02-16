@@ -26,13 +26,14 @@
  */
 package org.spout.vanilla.protocol.handler.player.pos;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 import gnu.trove.iterator.TDoubleIterator;
 import gnu.trove.iterator.TLongIterator;
 import gnu.trove.list.TDoubleList;
 import gnu.trove.list.TLongList;
 import gnu.trove.list.linked.TDoubleLinkedList;
 import gnu.trove.list.linked.TLongLinkedList;
-
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -46,14 +47,11 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 
-import org.spout.vanilla.plugin.VanillaPlugin;
-import org.spout.vanilla.plugin.component.living.neutral.Human;
-import org.spout.vanilla.plugin.component.player.PingComponent;
 import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.component.player.PingComponent;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionMessage;
-
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 
 public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMessage> {
 	long last = System.nanoTime();

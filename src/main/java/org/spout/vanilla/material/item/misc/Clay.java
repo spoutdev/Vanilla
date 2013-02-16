@@ -26,13 +26,12 @@
  */
 package org.spout.vanilla.material.item.misc;
 
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.component.FurnaceBlock;
-import org.spout.vanilla.material.item.VanillaItemMaterial;
-
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.TimedCraftable;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.component.FurnaceBlock;
+import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class Clay extends VanillaItemMaterial implements TimedCraftable {
 	public Clay(String name, int id) {

@@ -26,13 +26,11 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.sandy;
 
-import org.spout.api.generator.biome.Decorator;
-
 import org.spout.vanilla.data.Climate;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator;
-
-import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator.GroundCoverVariableLayer;
 
 public abstract class SandyBiome extends NormalBiome {
 	public SandyBiome(int biomeId) {

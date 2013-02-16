@@ -32,14 +32,12 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
 import org.spout.api.math.Vector2;
 
+import org.spout.vanilla.component.substance.material.BrewingStand;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.Window;
-import org.spout.vanilla.material.PotionReagent;
-
-import org.spout.vanilla.plugin.component.substance.material.BrewingStand;
-
 import org.spout.vanilla.inventory.window.WindowType;
+import org.spout.vanilla.material.PotionReagent;
 import org.spout.vanilla.material.item.potion.Potion;
 
 public class BrewingStandWindow extends Window {

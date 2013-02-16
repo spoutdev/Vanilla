@@ -26,12 +26,11 @@
  */
 package org.spout.vanilla.component.misc;
 
-import org.spout.vanilla.component.world.VanillaSky;
-import org.spout.vanilla.component.living.Living;
-
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.geo.discrete.Point;
 
+import org.spout.vanilla.component.living.Living;
+import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.cause.DamageCause;
 import org.spout.vanilla.event.cause.NullDamageCause;

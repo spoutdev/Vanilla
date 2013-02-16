@@ -27,11 +27,12 @@
 package org.spout.vanilla.protocol.entity.object.vehicle;
 
 import java.util.List;
-import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
-import org.spout.vanilla.protocol.entity.object.ObjectType;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
+
+import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.ObjectType;
 
 public class MinecartObjectEntityProtocol extends ObjectEntityProtocol {
 	public MinecartObjectEntityProtocol(ObjectType type) {

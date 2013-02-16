@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.snowy;
 
-import java.awt.Color;
+import java.awt.*;
 import java.util.Random;
 
 import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;

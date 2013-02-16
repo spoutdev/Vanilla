@@ -63,10 +63,6 @@ import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.util.FlatIterator;
 
-import org.spout.vanilla.data.Difficulty;
-import org.spout.vanilla.data.Dimension;
-import org.spout.vanilla.data.GameMode;
-
 import org.spout.vanilla.command.AdministrationCommands;
 import org.spout.vanilla.command.AdministrationCommands.TPSMonitor;
 import org.spout.vanilla.command.InputCommandExecutor;
@@ -74,14 +70,16 @@ import org.spout.vanilla.command.TestCommands;
 import org.spout.vanilla.component.world.sky.NetherSky;
 import org.spout.vanilla.component.world.sky.NormalSky;
 import org.spout.vanilla.component.world.sky.TheEndSky;
+import org.spout.vanilla.data.Difficulty;
+import org.spout.vanilla.data.Dimension;
+import org.spout.vanilla.data.GameMode;
+import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.configuration.InputConfiguration;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.configuration.WorldConfigurationNode;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.material.enchantment.VanillaEnchantments;
-import org.spout.vanilla.world.lighting.VanillaLighting;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.enchantment.VanillaEnchantments;
 import org.spout.vanilla.protocol.LANThread;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.rcon.RemoteConnectionCore;
@@ -94,6 +92,7 @@ import org.spout.vanilla.world.generator.VanillaGenerators;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 import org.spout.vanilla.world.generator.skylands.SkylandsGenerator;
 import org.spout.vanilla.world.generator.theend.TheEndGenerator;
+import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public class VanillaPlugin extends CommonPlugin {
 	private static final int LOADER_THREAD_COUNT = 16;

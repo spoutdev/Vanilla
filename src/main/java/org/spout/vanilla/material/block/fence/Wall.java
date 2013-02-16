@@ -30,11 +30,11 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.block.PressurePlate;
 import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.component.SignBase;
 import org.spout.vanilla.material.block.misc.Torch;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class Wall extends Solid {
 	public static final Wall COBBLESTONE_WALL = new Wall("Cobblestone Wall", VanillaMaterialModels.COBBLESTONE_WALL);

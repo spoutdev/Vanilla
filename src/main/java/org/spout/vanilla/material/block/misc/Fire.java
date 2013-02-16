@@ -40,12 +40,11 @@ import org.spout.api.math.GenericMath;
 import org.spout.api.math.IntVector3;
 
 import org.spout.vanilla.data.Dimension;
-import org.spout.vanilla.material.Burnable;
-
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	private static final EffectRange SPREAD_RANGE = new CuboidEffectRange(-1, -1, -1, 1, 4, 1);

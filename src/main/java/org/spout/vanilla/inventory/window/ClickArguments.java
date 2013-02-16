@@ -27,7 +27,6 @@
 package org.spout.vanilla.inventory.window;
 
 import org.spout.api.inventory.Inventory;
-
 import org.spout.api.inventory.Slot;
 
 /**

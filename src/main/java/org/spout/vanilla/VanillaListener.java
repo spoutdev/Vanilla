@@ -44,9 +44,6 @@ import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.plugin.Platform;
 
-import org.spout.vanilla.event.block.RedstoneChangeEvent;
-import org.spout.vanilla.material.block.redstone.RedstoneSource;
-
 import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.component.living.neutral.Human;
@@ -66,7 +63,9 @@ import org.spout.vanilla.component.player.hud.VanillaHotBar;
 import org.spout.vanilla.component.player.hud.VanillaHunger;
 import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
+import org.spout.vanilla.event.block.RedstoneChangeEvent;
 import org.spout.vanilla.input.VanillaInputExecutor;
+import org.spout.vanilla.material.block.redstone.RedstoneSource;
 import org.spout.vanilla.protocol.ClientAuthentification;
 import org.spout.vanilla.protocol.PasteExceptionHandler;
 

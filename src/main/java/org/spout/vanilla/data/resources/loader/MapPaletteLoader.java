@@ -29,9 +29,10 @@ package org.spout.vanilla.data.resources.loader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
-import org.spout.vanilla.data.resources.MapPalette;
 
 import org.spout.api.resource.BasicResourceLoader;
+
+import org.spout.vanilla.data.resources.MapPalette;
 
 public class MapPaletteLoader extends BasicResourceLoader<MapPalette> {
 	@Override

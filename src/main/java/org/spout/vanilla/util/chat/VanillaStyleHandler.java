@@ -26,11 +26,10 @@
  */
 package org.spout.vanilla.util.chat;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import gnu.trove.map.TCharObjectMap;
 import gnu.trove.map.hash.TCharObjectHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;

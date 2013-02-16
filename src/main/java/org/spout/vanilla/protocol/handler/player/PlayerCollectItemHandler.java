@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.handler.player;
 
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+
 import org.spout.vanilla.protocol.msg.player.PlayerCollectItemMessage;
 
 public class PlayerCollectItemHandler extends MessageHandler<PlayerCollectItemMessage>{

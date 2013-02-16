@@ -26,13 +26,13 @@
  */
 package org.spout.vanilla.component.player.hud;
 
-import java.awt.Color;
-import org.spout.vanilla.component.player.HUDComponent;
+import java.awt.*;
 
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.TexturedRectComponent;
 import org.spout.api.math.Rectangle;
 
+import org.spout.vanilla.component.player.HUDComponent;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 
 public class VanillaCrosshair extends CrosshairWidget {

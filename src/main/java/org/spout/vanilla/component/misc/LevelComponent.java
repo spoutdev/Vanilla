@@ -31,7 +31,6 @@ import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 
 import org.spout.vanilla.data.VanillaData;
-
 import org.spout.vanilla.protocol.entity.player.ExperienceChangeEvent;
 import org.spout.vanilla.protocol.msg.player.PlayerExperienceMessage;
 
@@ -143,7 +142,7 @@ public class LevelComponent extends EntityComponent {
 
 	/**
 	 * Determines the xp required to reach a given experience level
-	 * @param int The experience level
+	 * @param level The experience level
 	 * @return The total xp
 	 */
 	public static short convertLevelToXp(short level) {

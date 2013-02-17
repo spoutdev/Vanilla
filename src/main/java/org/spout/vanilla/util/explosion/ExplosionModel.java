@@ -44,6 +44,7 @@ import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.component.substance.object.Item;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -157,6 +158,11 @@ public abstract class ExplosionModel {
 		if (damage) {
 			size *= 2;
 			for (Entity entity : position.getWorld().getNearbyEntities(position, (int) size)) {
+				if (entity.get(Item.class) != null) {
+					entity.remove();
+					continue;
+				}
+
 				// Check if entity can be damaged
 				HealthComponent health = entity.get(HealthComponent.class);
 				if (health == null) {

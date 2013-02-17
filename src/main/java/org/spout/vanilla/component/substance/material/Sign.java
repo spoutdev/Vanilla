@@ -30,22 +30,29 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
 
+import org.spout.vanilla.component.substance.VanillaBlockComponent;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.block.SignUpdateEvent;
 
 /**
  * Component that represents a Sign in a world.
  */
-public class Sign extends AbstractSign {
+public class Sign extends VanillaBlockComponent {
 	private static final int CHARS_PER_LINE = 16;
 	private static final int MAX_LINES = 4;
 
-	@Override
+	/**
+	 * The maximum number of characters, Vanilla can only handle 16.
+	 * @return max characters per line
+	 */
 	public int getMaxCharsPerLine() {
 		return CHARS_PER_LINE;
 	}
 
-	@Override
+	/**
+	 * The maximum number of lines this sign supports, Vanilla can only handle 4
+	 * @return max lines
+	 */
 	public int getMaxLines() {
 		return MAX_LINES;
 	}
@@ -78,7 +85,8 @@ public class Sign extends AbstractSign {
 	}
 
 	/**
-	 * Sets the text on this sign. The text must be 4 lines, no longer than 16 chars in length
+	 * Sets the text on this sign.<br/>
+	 * For Vanilla compatible signs: The text must be 4 lines, and no longer than 16 chars in length
 	 * @param text to set
 	 * @param cause of the sign change
 	 */

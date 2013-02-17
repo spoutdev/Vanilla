@@ -68,7 +68,7 @@ import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.component.living.neutral.Human;
 import org.spout.vanilla.component.misc.HungerComponent;
 import org.spout.vanilla.component.misc.LevelComponent;
-import org.spout.vanilla.component.substance.material.AbstractSign;
+import org.spout.vanilla.component.substance.material.Sign;
 import org.spout.vanilla.component.test.ForceMessagesComponent;
 import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.data.Difficulty;
@@ -719,7 +719,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onSignUpdate(SignUpdateEvent event) {
-		AbstractSign sign = event.getSign();
+		Sign sign = event.getSign();
 		return new SignMessage(sign.getOwner().getX(), sign.getOwner().getY(), sign.getOwner().getZ(), event.getLines(), getRepositionManager());
 	}
 

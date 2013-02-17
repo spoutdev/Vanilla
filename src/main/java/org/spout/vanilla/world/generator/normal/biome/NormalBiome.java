@@ -35,14 +35,15 @@ import org.spout.api.util.config.annotated.Setting;
 
 import org.spout.vanilla.material.block.plant.TallGrass;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
-import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator.TallGrassFactory;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator.TreeWGOFactory;
-import org.spout.vanilla.world.generator.normal.object.variableheight.tree.BigTreeObject;
-import org.spout.vanilla.world.generator.normal.object.variableheight.tree.SmallTreeObject;
-import org.spout.vanilla.world.generator.normal.object.variableheight.tree.TreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
+import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator.GroundCoverBiome;
 import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator.GroundCoverLayer;
 
-public abstract class NormalBiome extends VanillaBiome {
+public abstract class NormalBiome extends VanillaBiome implements GroundCoverBiome {
 	// elevation values
 	@Setting({"elevation", "min"})
 	private float minElevation;
@@ -72,6 +73,7 @@ public abstract class NormalBiome extends VanillaBiome {
 		this.groundCover = groundCover;
 	}
 
+	@Override
 	public GroundCoverLayer[] getGroundCover() {
 		return groundCover;
 	}
@@ -95,7 +97,7 @@ public abstract class NormalBiome extends VanillaBiome {
 		}
 	}
 
-	public static class NormalTallGrassFactory implements TallGrassDecorator.TallGrassFactory {
+	public static class NormalTallGrassFactory implements TallGrassFactory {
 		@Override
 		public TallGrass make(Random random) {
 			return TallGrass.TALL_GRASS;

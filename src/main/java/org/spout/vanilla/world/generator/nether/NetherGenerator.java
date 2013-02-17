@@ -94,9 +94,6 @@ public class NetherGenerator extends VanillaSingleBiomeGenerator {
 
 	@Override
 	protected void generateTerrain(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager biomeManager, long seed) {
-		if (y >= HEIGHT) {
-			return;
-		}
 		PERLIN.setSeed((int) seed * 17);
 		final Vector3 size = blockData.getSize();
 		final int sizeX = size.getFloorX();

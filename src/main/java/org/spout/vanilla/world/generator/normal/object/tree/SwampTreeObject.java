@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.object.variableheight;
+package org.spout.vanilla.world.generator.normal.object.tree;
 
 import java.util.Random;
 
@@ -32,41 +32,41 @@ import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.object.VariableHeightObject;
+import org.spout.vanilla.material.block.liquid.Water;
 
-public class CactusStackObject extends VariableHeightObject {
-	public CactusStackObject() {
-		this(null);
+public class SwampTreeObject extends SmallTreeObject {
+	public SwampTreeObject(Random random) {
+		super(random);
+		addLeavesVines(true);
+		setLeavesXZRadiusIncrease((byte) 1);
 	}
 
-	public CactusStackObject(Random random) {
-		super(random, (byte) 1, (byte) 3);
-		randomize();
+	public SwampTreeObject() {
+		this(null);
 	}
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		final BlockMaterial below = w.getBlockMaterial(x, y - 1, z);
-		return (below.isMaterial(VanillaMaterials.SAND, VanillaMaterials.CACTUS))
-				&& w.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.AIR)
-				&& w.getBlockMaterial(x - 1, y, z).isMaterial(VanillaMaterials.AIR)
-				&& w.getBlockMaterial(x + 1, y, z).isMaterial(VanillaMaterials.AIR)
-				&& w.getBlockMaterial(x, y, z - 1).isMaterial(VanillaMaterials.AIR)
-				&& w.getBlockMaterial(x, y, z + 1).isMaterial(VanillaMaterials.AIR);
-	}
-
-	@Override
-	public void placeObject(World w, int x, int y, int z) {
-		for (byte yy = 0; yy < totalHeight; yy++) {
-			if (!canPlaceObject(w, x, y + yy, z)) {
-				return;
-			}
-			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.CACTUS, (short) 0, null);
+		if (!w.getBlockMaterial(x, y - 1, z).isMaterial(VanillaMaterials.DIRT, VanillaMaterials.GRASS)) {
+			return false;
 		}
-	}
-
-	@Override
-	public final void randomize() {
-		totalHeight = (byte) (baseHeight + random.nextInt(randomHeight));
+		byte radiusToCheck = radiusIncrease;
+		for (byte yy = 0; yy < totalHeight + 2; yy++) {
+			if (yy == 1 || yy == totalHeight - 1) {
+				radiusToCheck++;
+			}
+			for (byte xx = (byte) -radiusToCheck; xx < radiusToCheck + 1; xx++) {
+				for (byte zz = (byte) -radiusToCheck; zz < radiusToCheck + 1; zz++) {
+					final BlockMaterial material = w.getBlockMaterial(x + xx, y + yy, z + zz);
+					if (!overridable.contains(material)) {
+						if (yy == 0 && material instanceof Water) {
+							continue;
+						}
+						return false;
+					}
+				}
+			}
+		}
+		return true;
 	}
 }

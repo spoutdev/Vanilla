@@ -26,23 +26,25 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.grassy;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Random;
 
 import org.spout.vanilla.material.block.plant.TallGrass;
+import org.spout.vanilla.world.generator.normal.biome.NormalBiome.NormalTreeWGOFactory;
 import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
+import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator.TallGrassFactory;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.VineDecorator;
-import org.spout.vanilla.world.generator.normal.object.variableheight.tree.BigTreeObject;
-import org.spout.vanilla.world.generator.normal.object.variableheight.tree.HugeTreeObject;
-import org.spout.vanilla.world.generator.normal.object.variableheight.tree.ShrubObject;
-import org.spout.vanilla.world.generator.normal.object.variableheight.tree.SmallTreeObject;
-import org.spout.vanilla.world.generator.normal.object.variableheight.tree.TreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.HugeTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.ShrubObject;
+import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 
 public class JungleBiome extends GrassyBiome {
 	public JungleBiome(int biomeId) {
@@ -50,7 +52,7 @@ public class JungleBiome extends GrassyBiome {
 		final TreeDecorator trees = new TreeDecorator();
 		trees.setFactory(new JungleTreeWGOFactory());
 		final TallGrassDecorator tallGrass = new TallGrassDecorator();
-		tallGrass.setFactory(new JungleTallGrassFactory());
+		tallGrass.setFactory(new JungleBiome.JungleTallGrassFactory());
 		tallGrass.setBaseAmount(15);
 		final FlowerDecorator flowers = new FlowerDecorator();
 		flowers.setBaseAmount(4);
@@ -93,7 +95,7 @@ public class JungleBiome extends GrassyBiome {
 		}
 	}
 
-	private static class JungleTallGrassFactory implements TallGrassDecorator.TallGrassFactory {
+	private static class JungleTallGrassFactory implements TallGrassFactory {
 		@Override
 		public TallGrass make(Random random) {
 			if (random.nextInt(4) == 0) {

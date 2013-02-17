@@ -34,7 +34,7 @@ import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
-import org.spout.vanilla.world.generator.normal.object.variableheight.SugarCaneStackObject;
+import org.spout.vanilla.world.generator.normal.object.SugarCaneStackObject;
 
 /**
  * Decorator that decorates a biome with sugar canes.

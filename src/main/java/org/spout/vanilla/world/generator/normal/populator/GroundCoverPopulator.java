@@ -42,7 +42,6 @@ import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.MathHelper;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
-import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 
 public class GroundCoverPopulator implements GeneratorPopulator {
 	@Override
@@ -57,10 +56,10 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 		for (int xx = 0; xx < sizeX; xx++) {
 			for (int zz = 0; zz < sizeZ; zz++) {
 				final Biome biome = biomes.getBiome(xx, 0, zz);
-				if (!(biome instanceof NormalBiome)) {
+				if (!(biome instanceof GroundCoverBiome)) {
 					continue;
 				}
-				final GroundCoverLayer[] layers = ((NormalBiome) biome).getGroundCover();
+				final GroundCoverLayer[] layers = ((GroundCoverBiome) biome).getGroundCover();
 				int yy = sizeY - 1;
 				yIteration:
 				while (yy >= 0) {
@@ -100,6 +99,10 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 			// iterate until we exit the stone column
 		}
 		return yy;
+	}
+
+	public static interface GroundCoverBiome {
+		public GroundCoverLayer[] getGroundCover();
 	}
 
 	public static abstract class GroundCoverLayer {

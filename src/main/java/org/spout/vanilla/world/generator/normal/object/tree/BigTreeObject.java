@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.object.variableheight.tree;
+package org.spout.vanilla.world.generator.normal.object.tree;
 
 import java.util.ArrayList;
 import java.util.List;

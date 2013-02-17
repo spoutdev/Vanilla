@@ -27,6 +27,7 @@
 package org.spout.vanilla.world.generator.skylands;
 
 import java.util.Random;
+
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import net.royawesome.jlibnoise.module.source.Perlin;
@@ -43,24 +44,23 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.world.generator.biome.VanillaSingleBiomeGenerator;
-import org.spout.vanilla.world.generator.normal.object.OreObject.OreTypes;
+import org.spout.vanilla.world.generator.normal.object.OreObject.OreType;
+import org.spout.vanilla.world.generator.normal.populator.GroundCoverPopulator;
 import org.spout.vanilla.world.generator.normal.populator.OrePopulator;
 import org.spout.vanilla.world.generator.normal.populator.PondPopulator;
-import org.spout.vanilla.world.generator.skylands.populator.SkylandsGroundCoverPopulator;
 
 public class SkylandsGenerator extends VanillaSingleBiomeGenerator {
-	private static final int AVERAGE_ELEVATION = 64;
-	private static final int MINIMUM_ELEVATION = 18;
-	private static final int MAXIMUM_ELEVATION = 84;
-	private static final double LOWER_SMOOTH_SIZE = AVERAGE_ELEVATION - MINIMUM_ELEVATION;
-	private static final double UPPER_SMOOTH_SIZE = MAXIMUM_ELEVATION - AVERAGE_ELEVATION;
-	public static final int HEIGHT = MAXIMUM_ELEVATION;
+	private static final int ELEVATION = 128;
+	private static final int LOWER_SIZE = 20;
+	private static final int UPPER_SIZE = 20;
+	public static final int MINIMUM = ELEVATION - LOWER_SIZE;
+	public static final int HEIGHT = ELEVATION + UPPER_SIZE;
 	// noise for generation
 	private static final Perlin PERLIN = new Perlin();
 	private static final ScalePoint NOISE = new ScalePoint();
 
 	static {
-		PERLIN.setFrequency(0.01);
+		PERLIN.setFrequency(0.02);
 		PERLIN.setLacunarity(2);
 		PERLIN.setNoiseQuality(NoiseQuality.BEST);
 		PERLIN.setPersistence(0.5);
@@ -74,17 +74,22 @@ public class SkylandsGenerator extends VanillaSingleBiomeGenerator {
 
 	public SkylandsGenerator() {
 		super(VanillaBiomes.SKYLANDS);
-		hasVoidBellowZero(true);
 	}
 
 	@Override
 	public void registerBiomes() {
 		super.registerBiomes();
 		register(VanillaBiomes.SKYLANDS);
-		addGeneratorPopulators(new SkylandsGroundCoverPopulator());
+		addGeneratorPopulators(new GroundCoverPopulator());
 		final OrePopulator ores = new OrePopulator();
-		ores.addOreTypes(OreTypes.DIRT, OreTypes.COAL, OreTypes.IRON, OreTypes.REDSTONE,
-				OreTypes.GOLD, OreTypes.LAPIS_LAZULI, OreTypes.DIAMOND);
+		ores.addOreTypes(
+				new OreType(VanillaMaterials.DIRT, 20, 32, MINIMUM, MINIMUM + 128),
+				new OreType(VanillaMaterials.COAL_ORE, 20, 16, MINIMUM, MINIMUM + 128),
+				new OreType(VanillaMaterials.IRON_ORE, 20, 8, MINIMUM, MINIMUM + 64),
+				new OreType(VanillaMaterials.REDSTONE_ORE, 8, 7, MINIMUM, MINIMUM + 16),
+				new OreType(VanillaMaterials.GOLD_ORE, 2, 8, MINIMUM, MINIMUM + 32),
+				new OreType(VanillaMaterials.LAPIS_LAZULI_ORE, 1, 6, MINIMUM, MINIMUM + 32),
+				new OreType(VanillaMaterials.DIAMOND_ORE, 1, 7, MINIMUM, MINIMUM + 32));
 		addPopulators(ores, new PondPopulator());
 	}
 
@@ -98,32 +103,24 @@ public class SkylandsGenerator extends VanillaSingleBiomeGenerator {
 		PERLIN.setSeed((int) seed * 31);
 		final Vector3 size = blockData.getSize();
 		final int sizeX = size.getFloorX();
-		final int sizeY = Math.min(size.getFloorY(), HEIGHT);
+		final int sizeY = size.getFloorY();
 		final int sizeZ = size.getFloorZ();
 		final double[][][] noise = WorldGeneratorUtils.fastNoise(NOISE, sizeX, sizeY, sizeZ, 4, x, y, z);
 		for (int xx = 0; xx < sizeX; xx++) {
 			for (int yy = 0; yy < sizeY; yy++) {
 				for (int zz = 0; zz < sizeZ; zz++) {
-					double density = pow(noise[xx][yy][zz], 1);
-					if (y + yy < AVERAGE_ELEVATION) {
-						density -= square(1 / LOWER_SMOOTH_SIZE * (y + yy - AVERAGE_ELEVATION));
-					} else if (y + yy >= AVERAGE_ELEVATION) {
-						density -= square(1 / UPPER_SMOOTH_SIZE * (y + yy - AVERAGE_ELEVATION));
+					double density = noise[xx][yy][zz];
+					if (y + yy < ELEVATION) {
+						density -= square(1d / LOWER_SIZE * (y + yy - ELEVATION));
+					} else if (y + yy >= ELEVATION) {
+						density -= square(1d / UPPER_SIZE * (y + yy - ELEVATION));
 					}
-					if (density >= 0) {
+					if (density >= 0.3) {
 						blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.STONE);
 					}
 				}
 			}
 		}
-	}
-
-	private static double pow(double val, int pow) {
-		val = val * 0.5 + 0.5;
-		for (int i = 1; i < pow; i++) {
-			val *= val;
-		}
-		return (val - 0.5) / 0.5;
 	}
 
 	private static double square(double x) {
@@ -159,7 +156,7 @@ public class SkylandsGenerator extends VanillaSingleBiomeGenerator {
 		int[][] heights = new int[Chunk.BLOCKS.SIZE][Chunk.BLOCKS.SIZE];
 		for (int x = 0; x < Chunk.BLOCKS.SIZE; x++) {
 			for (int z = 0; z < Chunk.BLOCKS.SIZE; z++) {
-				heights[x][z] = AVERAGE_ELEVATION;
+				heights[x][z] = ELEVATION;
 			}
 		}
 		return heights;

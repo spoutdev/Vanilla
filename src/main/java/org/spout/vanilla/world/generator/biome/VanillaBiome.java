@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.world.generator.biome;
 
-import java.awt.*;
+import java.awt.Color;
 
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.util.config.annotated.Setting;
@@ -45,7 +45,6 @@ public abstract class VanillaBiome extends Biome {
 	private Color waterColorMultiplier = new Color(255, 255, 255);
 
 	protected VanillaBiome(int biomeId) {
-		super();
 		this.biomeId = biomeId;
 	}
 

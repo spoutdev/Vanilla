@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.world.generator.normal.decorator;
 
-import org.spout.vanilla.world.generator.decorator.VariableAmountDecorator;
 import java.util.Random;
 
 import org.spout.api.geo.World;
@@ -34,6 +33,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.decorator.VariableAmountDecorator;
 
 public class EmeraldOreDecorator extends VariableAmountDecorator {
 	private int minimumElevation = 4;

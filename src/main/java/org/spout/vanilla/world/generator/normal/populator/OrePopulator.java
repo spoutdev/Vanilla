@@ -50,9 +50,10 @@ public class OrePopulator extends Populator {
 		for (OreType oreType : oreTypes) {
 			final OreObject ore = new OreObject(oreType);
 			ore.setRandom(random);
-			for (byte i = 0; i < ore.getAmount(); i++) {
+			for (byte i = 0; i < oreType.getClusterCount(); i++) {
 				final int x = chunk.getBlockX(random);
-				final int y = random.nextInt(ore.getMaxHeight());
+				final int y = random.nextInt(oreType.getMaxHeight() - oreType.getMinHeight())
+						+ oreType.getMinHeight();
 				final int z = chunk.getBlockZ(random);
 				if (ore.canPlaceObject(world, x, y, z)) {
 					ore.placeObject(world, x, y, z);

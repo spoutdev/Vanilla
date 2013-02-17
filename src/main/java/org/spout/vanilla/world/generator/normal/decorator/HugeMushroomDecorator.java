@@ -26,15 +26,16 @@
  */
 package org.spout.vanilla.world.generator.normal.decorator;
 
-import org.spout.vanilla.world.generator.decorator.VariableAmountDecorator;
 import java.util.Random;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.decorator.VariableAmountDecorator;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
-import org.spout.vanilla.world.generator.normal.object.variableheight.HugeMushroomObject;
+import org.spout.vanilla.world.generator.normal.object.HugeMushroomObject;
+import org.spout.vanilla.world.generator.normal.object.HugeMushroomObject.HugeMushroomType;
 
 public class HugeMushroomDecorator extends VariableAmountDecorator {
 	public HugeMushroomDecorator() {
@@ -49,9 +50,9 @@ public class HugeMushroomDecorator extends VariableAmountDecorator {
 		final World world = chunk.getWorld();
 		final HugeMushroomObject mushroom;
 		if (random.nextBoolean()) {
-			mushroom = new HugeMushroomObject(HugeMushroomObject.HugeMushroomType.RED);
+			mushroom = new HugeMushroomObject(HugeMushroomType.RED);
 		} else {
-			mushroom = new HugeMushroomObject(HugeMushroomObject.HugeMushroomType.BROWN);
+			mushroom = new HugeMushroomObject(HugeMushroomType.BROWN);
 		}
 		mushroom.setRandom(random);
 		final int amount = getAmount(random);

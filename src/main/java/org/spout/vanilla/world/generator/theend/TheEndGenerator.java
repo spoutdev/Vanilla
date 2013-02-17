@@ -27,6 +27,7 @@
 package org.spout.vanilla.world.generator.theend;
 
 import java.util.Random;
+
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import net.royawesome.jlibnoise.module.source.Perlin;
@@ -46,12 +47,11 @@ import org.spout.vanilla.world.generator.biome.VanillaSingleBiomeGenerator;
 
 public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 	private static final int ISLAND_RADIUS = 128;
-	private static final int ISLAND_BOTTOM = 8;
-	private static final int ISLAND_SURFACE = 58;
-	private static final int ISLAND_TOP = 64;
-	private static final double LOWER_SMOOTH_SIZE = ISLAND_SURFACE - ISLAND_BOTTOM;
-	private static final double UPPER_SMOOTH_SIZE = ISLAND_TOP - ISLAND_SURFACE;
-	public static final int HEIGHT = ISLAND_TOP;
+	private static final int ELEVATION = 58;
+	private static final int LOWER_SIZE = 50;
+	private static final int UPPER_SIZE = 6;
+	public static final int MINIMUM = ELEVATION - LOWER_SIZE;
+	public static final int HEIGHT = ELEVATION + UPPER_SIZE;
 	// noise for generation
 	private static final Perlin PERLIN = new Perlin();
 	private static final ScalePoint NOISE = new ScalePoint();
@@ -71,7 +71,6 @@ public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 
 	public TheEndGenerator() {
 		super(VanillaBiomes.ENDSTONE);
-		hasVoidBellowZero(true);
 	}
 
 	@Override
@@ -90,7 +89,7 @@ public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 		PERLIN.setSeed((int) seed * 23);
 		final Vector3 size = blockData.getSize();
 		final int sizeX = size.getFloorX();
-		final int sizeY = Math.min(size.getFloorY(), HEIGHT);
+		final int sizeY = size.getFloorY();
 		final int sizeZ = size.getFloorZ();
 		final double[][][] noise = WorldGeneratorUtils.fastNoise(NOISE, sizeX, sizeY, sizeZ, 4, x, y, z);
 		for (int xx = 0; xx < sizeX; xx++) {
@@ -99,24 +98,19 @@ public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 				final int totalZ = z + zz;
 				final double distance = Math.sqrt(totalX * totalX + totalZ * totalZ);
 				for (int yy = 0; yy < sizeY; yy++) {
-					final int totalY = y + yy;
 					double density = noise[xx][yy][zz] * 0.5 + 0.5;
-					if (totalY < ISLAND_SURFACE) {
-						density -= square(1 / LOWER_SMOOTH_SIZE * (totalY - ISLAND_SURFACE));
-					} else if (totalY >= ISLAND_SURFACE) {
-						density -= square(1 / UPPER_SMOOTH_SIZE * (totalY - ISLAND_SURFACE));
+					if (y + yy < ELEVATION) {
+						density += 1d / LOWER_SIZE * (y + yy - ELEVATION);
+					} else if (y + yy >= ELEVATION) {
+						density -= 1d / UPPER_SIZE * (y + yy - ELEVATION);
 					}
 					density *= ISLAND_RADIUS / distance;
 					if (density >= 1) {
-						blockData.set(totalX, totalY, totalZ, VanillaMaterials.END_STONE);
+						blockData.set(totalX, y + yy, totalZ, VanillaMaterials.END_STONE);
 					}
 				}
 			}
 		}
-	}
-
-	private static double square(double x) {
-		return x * x;
 	}
 
 	@Override
@@ -148,7 +142,7 @@ public class TheEndGenerator extends VanillaSingleBiomeGenerator {
 		int[][] heights = new int[Chunk.BLOCKS.SIZE][Chunk.BLOCKS.SIZE];
 		for (int x = 0; x < Chunk.BLOCKS.SIZE; x++) {
 			for (int z = 0; z < Chunk.BLOCKS.SIZE; z++) {
-				heights[x][z] = ISLAND_SURFACE;
+				heights[x][z] = ELEVATION;
 			}
 		}
 		return heights;

@@ -26,10 +26,9 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.grassy;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Random;
 
-import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.normal.decorator.DeadBushDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.LilyPadDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
@@ -38,8 +37,8 @@ import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
-import org.spout.vanilla.world.generator.normal.object.variableheight.tree.SwampTreeObject;
-import org.spout.vanilla.world.generator.normal.object.variableheight.tree.TreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.SwampTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 
 public class SwampBiome extends GrassyBiome {
 	public SwampBiome(int biomeId) {
@@ -66,7 +65,7 @@ public class SwampBiome extends GrassyBiome {
 		return "Swampland";
 	}
 
-	private static class SwampTreeWGOFactory extends NormalBiome.NormalTreeWGOFactory {
+	private static class SwampTreeWGOFactory extends NormalTreeWGOFactory {
 		@Override
 		public byte amount(Random random) {
 			return (byte) (2 + super.amount(random));

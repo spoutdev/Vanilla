@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.object.variableheight;
+package org.spout.vanilla.world.generator.normal.object.tree;
 
 import java.util.Random;
 
@@ -32,42 +32,54 @@ import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.liquid.Water;
-import org.spout.vanilla.world.generator.object.VariableHeightObject;
+import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.material.block.Solid;
 
-public class SugarCaneStackObject extends VariableHeightObject {
-	public SugarCaneStackObject() {
+public class ShrubObject extends TreeObject {
+	// size control
+	private byte radius = 2;
+
+	public ShrubObject() {
 		this(null);
 	}
 
-	public SugarCaneStackObject(Random random) {
-		super(random, (byte) 2, (byte) 4);
-		randomize();
+	public ShrubObject(Random random) {
+		super(random, (byte) 1, (byte) 1, (short) 3, (short) 0);
+		overridable.add(VanillaMaterials.AIR);
+		overridable.add(VanillaMaterials.LEAVES);
 	}
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		final BlockMaterial below = w.getBlockMaterial(x, y - 1, z);
-		return w.getBlockMaterial(x, y, z).isMaterial(VanillaMaterials.AIR)
-				&& below.isMaterial(VanillaMaterials.DIRT, VanillaMaterials.GRASS, VanillaMaterials.SAND)
-				&& (w.getBlockMaterial(x - 1, y - 1, z) instanceof Water
-				|| w.getBlockMaterial(x + 1, y - 1, z) instanceof Water
-				|| w.getBlockMaterial(x, y - 1, z - 1) instanceof Water
-				|| w.getBlockMaterial(x, y - 1, z + 1) instanceof Water);
+		if (!super.canPlaceObject(w, x, y, z)) {
+			return false;
+		}
+		return !(w.getBlockMaterial(x, y, z) instanceof Liquid
+				|| w.getBlockMaterial(x, y + 1, z) instanceof Liquid);
 	}
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
+		w.setBlockMaterial(x, y - 1, z, VanillaMaterials.DIRT, (short) 0, null);
 		for (byte yy = 0; yy < totalHeight; yy++) {
-			if (!w.getBlockMaterial(x, y + yy, z).isMaterial(VanillaMaterials.AIR)) {
-				return;
+			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.LOG, logMetadata, null);
+		}
+		for (byte yy = radius; yy > -1; yy--) {
+			for (byte xx = (byte) -yy; xx < yy + 1; xx++) {
+				for (byte zz = (byte) -yy; zz < yy + 1; zz++) {
+					if (Math.abs(xx) == yy && Math.abs(zz) == yy && random.nextBoolean()) {
+						continue;
+					}
+					final BlockMaterial material = w.getBlockMaterial(x + xx, y - yy + radius, z + zz);
+					if (!(material instanceof Solid || material instanceof Liquid)) {
+						w.setBlockMaterial(x + xx, y - yy + radius, z + zz, VanillaMaterials.LEAVES, leavesMetadata, null);
+					}
+				}
 			}
-			w.setBlockMaterial(x, y + yy, z, VanillaMaterials.SUGAR_CANE_BLOCK, (short) 0, null);
 		}
 	}
 
-	@Override
-	public final void randomize() {
-		totalHeight = (byte) (baseHeight + random.nextInt(randomHeight));
+	public void setRadius(byte radius) {
+		this.radius = radius;
 	}
 }

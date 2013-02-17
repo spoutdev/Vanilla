@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.grassy;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.Random;
 
-import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
+import org.spout.vanilla.world.generator.normal.biome.NormalBiome.NormalTallGrassFactory;
+import org.spout.vanilla.world.generator.normal.biome.NormalBiome.NormalTreeWGOFactory;
 import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
@@ -37,9 +38,9 @@ import org.spout.vanilla.world.generator.normal.decorator.SandAndClayDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.SugarCaneDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TallGrassDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.TreeDecorator;
-import org.spout.vanilla.world.generator.normal.object.variableheight.tree.SmallTreeObject;
-import org.spout.vanilla.world.generator.normal.object.variableheight.tree.TreeObject;
-import org.spout.vanilla.world.generator.normal.object.variableheight.tree.TreeObject.TreeType;
+import org.spout.vanilla.world.generator.normal.object.tree.SmallTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.TreeObject.TreeType;
 
 public class ForestBiome extends GrassyBiome {
 	public ForestBiome(int biomeId) {
@@ -49,7 +50,7 @@ public class ForestBiome extends GrassyBiome {
 		final TallGrassDecorator tallGrass = new TallGrassDecorator();
 		tallGrass.setFactory(new NormalTallGrassFactory());
 		tallGrass.setBaseAmount(3);
-		addDecorators(new SandAndClayDecorator(), trees, new FlowerDecorator(), tallGrass, 
+		addDecorators(new SandAndClayDecorator(), trees, new FlowerDecorator(), tallGrass,
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator());
 		setElevation(63, 81);
 		setGrassColorMultiplier(new Color(121, 192, 90));
@@ -61,7 +62,7 @@ public class ForestBiome extends GrassyBiome {
 		return "Forest";
 	}
 
-	private static class ForestTreeWGOFactory extends NormalBiome.NormalTreeWGOFactory {
+	private static class ForestTreeWGOFactory extends NormalTreeWGOFactory {
 		@Override
 		public TreeObject make(Random random) {
 			if (random.nextInt(5) == 0) {

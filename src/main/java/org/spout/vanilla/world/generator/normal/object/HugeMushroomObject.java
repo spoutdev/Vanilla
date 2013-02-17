@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.object.variableheight;
+package org.spout.vanilla.world.generator.normal.object;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -39,7 +39,7 @@ import org.spout.vanilla.world.generator.object.VariableHeightObject;
 
 public class HugeMushroomObject extends VariableHeightObject {
 	// shape of the mushroom
-	private HugeMushroomShape shape;
+	private HugeMushroomObject.HugeMushroomShape shape;
 	// materials to use
 	private BlockMaterial capMaterial;
 	private BlockMaterial stemMaterial;
@@ -54,11 +54,11 @@ public class HugeMushroomObject extends VariableHeightObject {
 	// for canPlaceObject check
 	private final Set<BlockMaterial> overridable = new HashSet<BlockMaterial>();
 
-	public HugeMushroomObject(HugeMushroomType type) {
+	public HugeMushroomObject(HugeMushroomObject.HugeMushroomType type) {
 		this(null, type);
 	}
 
-	public HugeMushroomObject(Random random, HugeMushroomType type) {
+	public HugeMushroomObject(Random random, HugeMushroomObject.HugeMushroomType type) {
 		super(random, (byte) 3, (byte) 4);
 		setHugeMushroomType(type);
 		overridable.add(VanillaMaterials.AIR);
@@ -306,7 +306,7 @@ public class HugeMushroomObject extends VariableHeightObject {
 		checkIfUseTextureMetadata();
 	}
 
-	public void setShape(HugeMushroomShape shape) {
+	public void setShape(HugeMushroomObject.HugeMushroomShape shape) {
 		this.shape = shape;
 	}
 
@@ -314,7 +314,7 @@ public class HugeMushroomObject extends VariableHeightObject {
 		return overridable;
 	}
 
-	public final void setHugeMushroomType(HugeMushroomType type) {
+	public final void setHugeMushroomType(HugeMushroomObject.HugeMushroomType type) {
 		shape = type.shape;
 		capMaterial = type.material;
 		stemMaterial = type.material;
@@ -323,15 +323,15 @@ public class HugeMushroomObject extends VariableHeightObject {
 	}
 
 	public static enum HugeMushroomType {
-		RED(HugeMushroomShape.ROUND, VanillaMaterials.HUGE_RED_MUSHROOM, (byte) 2, (byte) 4),
-		BROWN(HugeMushroomShape.FLAT, VanillaMaterials.HUGE_BROWN_MUSHROOM, (byte) 3, (byte) 1);
+		RED(HugeMushroomObject.HugeMushroomShape.ROUND, VanillaMaterials.HUGE_RED_MUSHROOM, (byte) 2, (byte) 4),
+		BROWN(HugeMushroomObject.HugeMushroomShape.FLAT, VanillaMaterials.HUGE_BROWN_MUSHROOM, (byte) 3, (byte) 1);
 		//
-		private final HugeMushroomShape shape;
+		private final HugeMushroomObject.HugeMushroomShape shape;
 		private final BlockMaterial material;
 		private final byte capRadius;
 		private final byte capThickness;
 
-		private HugeMushroomType(HugeMushroomShape shape, BlockMaterial material, byte capRadius, byte capThickness) {
+		private HugeMushroomType(HugeMushroomObject.HugeMushroomShape shape, BlockMaterial material, byte capRadius, byte capThickness) {
 			this.shape = shape;
 			this.material = material;
 			this.capRadius = capRadius;
@@ -346,7 +346,7 @@ public class HugeMushroomObject extends VariableHeightObject {
 			return capThickness;
 		}
 
-		public HugeMushroomShape getShape() {
+		public HugeMushroomObject.HugeMushroomShape getShape() {
 			return shape;
 		}
 

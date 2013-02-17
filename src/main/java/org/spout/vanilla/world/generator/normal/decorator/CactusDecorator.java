@@ -26,15 +26,15 @@
  */
 package org.spout.vanilla.world.generator.normal.decorator;
 
-import org.spout.vanilla.world.generator.decorator.VariableAmountDecorator;
 import java.util.Random;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.decorator.VariableAmountDecorator;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
-import org.spout.vanilla.world.generator.normal.object.variableheight.CactusStackObject;
+import org.spout.vanilla.world.generator.normal.object.CactusStackObject;
 
 public class CactusDecorator extends VariableAmountDecorator {
 	public CactusDecorator() {

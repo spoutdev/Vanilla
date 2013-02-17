@@ -57,7 +57,7 @@ import org.spout.vanilla.world.generator.biome.VanillaBiomeGenerator;
 import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.normal.biome.selector.WhittakerLayer;
-import org.spout.vanilla.world.generator.normal.object.OreObject.OreTypes;
+import org.spout.vanilla.world.generator.normal.object.OreObject.VanillaOreTypes;
 import org.spout.vanilla.world.generator.normal.populator.CavePopulator;
 import org.spout.vanilla.world.generator.normal.populator.DungeonPopulator;
 import org.spout.vanilla.world.generator.normal.populator.FallingLiquidPopulator;
@@ -104,8 +104,8 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 				new GroundCoverPopulator(), new RockyShieldPopulator(),
 				new CavePopulator(), new RavinePopulator());
 		final OrePopulator ores = new OrePopulator();
-		ores.addOreTypes(OreTypes.DIRT, OreTypes.GRAVEL, OreTypes.COAL, OreTypes.IRON,
-				OreTypes.REDSTONE, OreTypes.GOLD, OreTypes.LAPIS_LAZULI, OreTypes.DIAMOND);
+		ores.addOreTypes(VanillaOreTypes.DIRT, VanillaOreTypes.GRAVEL, VanillaOreTypes.COAL, VanillaOreTypes.IRON,
+				VanillaOreTypes.REDSTONE, VanillaOreTypes.GOLD, VanillaOreTypes.LAPIS_LAZULI, VanillaOreTypes.DIAMOND);
 		addPopulators(
 				new MineshaftPopulator(), new StrongholdPopulator(), new TemplePopulator(),
 				new PondPopulator(), new DungeonPopulator(), ores,
@@ -141,14 +141,11 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 
 	@Override
 	protected void generateTerrain(CuboidBlockMaterialBuffer blockData, int x, int y, int z, BiomeManager biomes, long seed) {
-		if (y >= HEIGHT) {
-			return;
-		}
+		PERLIN.setSeed((int) seed);
 		final Vector3 size = blockData.getSize();
 		final int sizeX = size.getFloorX();
-		final int sizeY = Math.min(size.getFloorY(), HEIGHT);
+		final int sizeY = size.getFloorY();
 		final int sizeZ = size.getFloorZ();
-		PERLIN.setSeed((int) seed);
 		final double[][][] noise = WorldGeneratorUtils.fastNoise(NOISE, sizeX, sizeY, sizeZ, 4, x, y, z);
 		final BiomeSelector selector = getSelector();
 		final TIntPairObjectHashMap<NormalBiome> biomeCache = new TIntPairObjectHashMap<NormalBiome>();

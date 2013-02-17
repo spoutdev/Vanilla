@@ -33,7 +33,6 @@ import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.Slot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -41,14 +40,15 @@ import org.spout.api.material.range.CuboidEffectRange;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.IntVector3;
+import org.spout.api.inventory.Slot;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Spreading;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.util.PlayerUtil;
-import org.spout.vanilla.world.generator.normal.object.variableheight.HugeMushroomObject;
-import org.spout.vanilla.world.generator.normal.object.variableheight.HugeMushroomObject.HugeMushroomType;
+import org.spout.vanilla.world.generator.normal.object.HugeMushroomObject;
+import org.spout.vanilla.world.generator.normal.object.HugeMushroomObject.HugeMushroomType;
 import org.spout.vanilla.world.generator.object.VariableHeightObject;
 
 public class Mushroom extends GroundAttachable implements Spreading, Plant, DynamicMaterial {
@@ -127,7 +127,7 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 			}
 			Cause<?> cause = toCause(block);
 			// spread from the source (4 times)
-			Block newShroom = null;
+			Block newShroom;
 			for (int i = 0; i < 4; i++) {
 				newShroom = block.translate(rand.nextInt(3) - 1, rand.nextInt(2) - rand.nextInt(2), rand.nextInt(3) - 1);
 				if (newShroom.isMaterial(VanillaMaterials.AIR) && this.canCreate(newShroom, (short) 0, cause)) {

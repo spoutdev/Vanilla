@@ -29,27 +29,17 @@ package org.spout.vanilla.world.generator.biome;
 import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.geo.World;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
-
 import org.spout.vanilla.material.VanillaMaterials;
+
 import org.spout.vanilla.world.generator.VanillaGenerator;
 
 public abstract class VanillaBiomeGenerator extends BiomeGenerator implements VanillaGenerator {
-	private boolean voidBellowZero = false;
-
 	@Override
 	public void generate(CuboidBlockMaterialBuffer blockData, int chunkX, int chunkY, int chunkZ, World world) {
-		if (chunkY < 0) {
-			if (voidBellowZero) {
-				blockData.flood(VanillaMaterials.AIR);
-			} else {
-				blockData.flood(VanillaMaterials.BEDROCK);
-			}
+		if (chunkY < 0 || chunkY >= 256) {
+			blockData.flood(VanillaMaterials.AIR);
 		} else {
 			super.generate(blockData, chunkX, chunkY, chunkZ, world);
 		}
-	}
-
-	protected void hasVoidBellowZero(boolean voidBellowZero) {
-		this.voidBellowZero = voidBellowZero;
 	}
 }

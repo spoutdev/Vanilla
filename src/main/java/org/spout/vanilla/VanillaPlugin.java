@@ -77,6 +77,9 @@ import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.configuration.InputConfiguration;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.configuration.WorldConfigurationNode;
+import org.spout.vanilla.data.resources.RecipeYaml;
+import org.spout.vanilla.data.resources.loader.RecipeLoader;
+import org.spout.vanilla.inventory.recipe.VanillaRecipes;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.enchantment.VanillaEnchantments;
@@ -192,15 +195,15 @@ public class VanillaPlugin extends CommonPlugin {
 		engine = getEngine();
 		config = new VanillaConfiguration(getDataFolder());
 		//Spout.getFilesystem().registerLoader(new MapPaletteLoader());
-		//Spout.getFilesystem().registerLoader(new RecipeLoader());
+		Spout.getFilesystem().registerLoader(new RecipeLoader());
 		Protocol.registerProtocol(new VanillaProtocol());
 
 		VanillaMaterials.initialize();
 		VanillaLighting.initialize();
 		VanillaEnchantments.initialize();
 		//MapPalette.DEFAULT = (MapPalette) Spout.getFilesystem().getResource("mappalette://Vanilla/map/mapColorPalette.dat");
-		//RecipeYaml.DEFAULT = (RecipeYaml) Spout.getFilesystem().getResource("recipe://Vanilla/recipes.yml");
-		//VanillaRecipes.initialize();
+		RecipeYaml.DEFAULT = (RecipeYaml) Spout.getFilesystem().getResource("recipe://Vanilla/recipes.yml");
+		VanillaRecipes.initialize();
 
 		//Config
 		config.load();

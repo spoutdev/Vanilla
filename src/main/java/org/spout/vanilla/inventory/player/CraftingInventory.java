@@ -26,9 +26,16 @@
  */
 package org.spout.vanilla.inventory.player;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.spout.api.Spout;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.recipe.Recipe;
+import org.spout.api.inventory.recipe.RecipeManager;
 import org.spout.api.inventory.shape.Grid;
 import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.material.Material;
@@ -140,7 +147,40 @@ public abstract class CraftingInventory extends Inventory {
 	 * be crafted to the {@link #outputSlot};
 	 */
 	public void updateOutput() {
-		// TODO: Re-implement
+		GridIterator iterator = grid.iterator();
+		int rowSize = getGrid().getLength();
+		List<List<Material>> materials = new ArrayList<List<Material>>();
+		List<Material> current = new ArrayList<Material>();
+		List<Material> shapeless = new ArrayList<Material>();
+		int cntr = 0;
+		while (iterator.hasNext()) {
+			ItemStack item = get(iterator.next());
+			cntr++;
+			Material mat = null;
+			if (item != null) {
+				mat = item.getMaterial();
+			}
+			current.add(mat);
+			if (mat != null) {
+				shapeless.add(mat);
+			}
+			if (cntr >= rowSize) {
+				materials.add(current);
+				current = new ArrayList<Material>();
+				cntr = 0;
+			}
+		}
+		RecipeManager recipeManager = Spout.getEngine().getRecipeManager();
+		Collections.reverse(materials);
+		Recipe recipe = recipeManager.matchShapedRecipe(materials);
+		if (recipe == null) {
+			recipe = recipeManager.matchShapelessRecipe(shapeless);
+		}
+		if (recipe != null) {
+			updateCraftingSlot(recipe.getResult());
+			return;
+		}
+		updateCraftingSlot(null);
 	}
 
 	private void updateCraftingSlot(ItemStack item) {

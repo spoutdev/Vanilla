@@ -34,6 +34,7 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 import org.spout.api.math.Vector3;
+import org.spout.api.math.VectorMath;
 
 import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
 import org.spout.vanilla.component.misc.EffectsComponent;
@@ -237,15 +238,7 @@ public class PotionItem extends VanillaItemMaterial {
 			Potion item = entity.getWorld().createEntity(entity.getScene().getPosition().add(0, 1.6f, 0), Potion.class).add(Potion.class);
 			SceneComponent scene = item.getOwner().getScene();
 			scene.setShape(6f, new SphereShape(0.1f)); // TODO: Correct this
-
-			double pitchRadians = Math.toRadians(entity.getScene().getRotation().getPitch());
-			double yawRadians = Math.toRadians(entity.getScene().getRotation().getYaw());
-
-			double sinPitch = Math.sin(pitchRadians);
-			double cosPitch = Math.cos(pitchRadians);
-			double sinYaw = Math.sin(yawRadians);
-			double cosYaw = Math.cos(yawRadians);
-			scene.impulse(new Vector3((-cosPitch * sinYaw) * -300, (sinPitch) * -300, (-cosPitch * cosYaw) * -300)); //TODO: Need real parameters
+			scene.impulse(VectorMath.getDirection(entity.getScene().getRotation()).multiply(30)); //TODO: Need real parameters
 			((Projectile) item).setShooter(entity);
 			item.setPotion(this);
 			entity.getWorld().spawnEntity(item.getOwner());

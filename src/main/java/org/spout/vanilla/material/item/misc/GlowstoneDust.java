@@ -28,7 +28,7 @@ package org.spout.vanilla.material.item.misc;
 
 import org.spout.vanilla.material.PotionReagent;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
-import org.spout.vanilla.material.item.potion.Potion;
+import org.spout.vanilla.material.item.potion.PotionItem;
 
 public class GlowstoneDust extends VanillaItemMaterial implements PotionReagent {
 	public GlowstoneDust(String name, int id) {
@@ -36,13 +36,13 @@ public class GlowstoneDust extends VanillaItemMaterial implements PotionReagent 
 	}
 
 	@Override // TODO: finish :p
-	public Potion getResult(Potion original) {
-		if (Potion.REGENERATION.equals(original)) {
-			return Potion.REGENERATION_II;
-		} else if (Potion.REGENERATION_EXTENDED.equals(original)) {
-			return Potion.REGENERATION_II;
-		} else if (Potion.WATER_BOTTLE.equals(original)) {
-			return Potion.THICK;
+	public PotionItem getResult(PotionItem original) {
+		if (PotionItem.REGENERATION.equals(original)) {
+			return PotionItem.REGENERATION_II;
+		} else if (PotionItem.REGENERATION_EXTENDED.equals(original)) {
+			return PotionItem.REGENERATION_II;
+		} else if (PotionItem.WATER_BOTTLE.equals(original)) {
+			return PotionItem.THICK;
 		}
 
 		return null;

@@ -24,18 +24,32 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material;
+package org.spout.vanilla.protocol.entity.object;
 
-import org.spout.vanilla.material.item.potion.PotionItem;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Represents an item that can be used in the process of brewing
- */
-public interface PotionReagent {
-	/**
-	 * Returns the resulting {@link org.spout.vanilla.material.item.potion.PotionItem} after brewing this reagent with the original potion.
-	 * @param original Original potion
-	 * @return Resulting item from brewing this ingredient and the original potion
-	 */
-	public PotionItem getResult(PotionItem original);
+import org.spout.api.entity.Entity;
+import org.spout.api.protocol.Message;
+import org.spout.api.protocol.reposition.RepositionManager;
+
+import org.spout.vanilla.component.substance.object.projectile.Potion;
+import org.spout.vanilla.protocol.entity.BasicEntityProtocol;
+import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
+import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
+
+public class PotionEntityProtocol extends BasicEntityProtocol{
+
+	public PotionEntityProtocol() {
+		super(ObjectType.POTION.getId());
+	}
+
+	@Override
+	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
+		Potion potion = entity.add(Potion.class);
+		List<Message> messages = new ArrayList<Message>();
+		messages.add(new EntityObjectMessage(entity, (byte) typeId, potion.getPotion().getData(), rm));
+		messages.add(new EntityMetadataMessage(entity.getId(), getSpawnParameters(entity)));
+		return messages;
+	}
 }

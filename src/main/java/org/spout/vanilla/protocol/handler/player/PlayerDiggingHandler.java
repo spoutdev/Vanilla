@@ -57,7 +57,7 @@ import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.item.Food;
-import org.spout.vanilla.material.item.potion.Potion;
+import org.spout.vanilla.material.item.potion.PotionItem;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.tool.weapon.Sword;
 import org.spout.vanilla.component.living.neutral.Human;
@@ -262,8 +262,8 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		} else if (state == PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
 			if (heldItem.getMaterial() instanceof Food) {
 				player.add(HungerComponent.class).setEating(false, currentSlot);
-			} else if (heldItem.getMaterial() instanceof Potion) {
-				((Potion) heldItem.getMaterial()).onDrink(player, currentSlot);
+			} else if (heldItem.getMaterial() instanceof PotionItem) {
+				((PotionItem) heldItem.getMaterial()).onDrink(player, currentSlot);
 			} else if (heldItem.getMaterial() instanceof Sword) {
 				human.setEatingBlocking(false);
 			}

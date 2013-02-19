@@ -70,7 +70,7 @@ public class GlassBottle extends VanillaItemMaterial {
 
 			Slot slot = PlayerUtil.getHeldSlot(entity);
 			if (slot != null) {
-				ItemStack fullbottle = new ItemStack(Potion.WATER_BOTTLE, 1);
+				ItemStack fullbottle = new ItemStack(PotionItem.WATER_BOTTLE, 1);
 				entity.get(PlayerInventoryComponent.class).getQuickbar().add(fullbottle);
 				if (!fullbottle.isEmpty()) {
 					entity.get(PlayerInventoryComponent.class).getMain().add(fullbottle);

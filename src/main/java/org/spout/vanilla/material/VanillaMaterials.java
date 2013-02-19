@@ -237,7 +237,7 @@ import org.spout.vanilla.material.item.misc.Stick;
 import org.spout.vanilla.material.item.misc.StringItem;
 import org.spout.vanilla.material.item.misc.Sugar;
 import org.spout.vanilla.material.item.potion.GlassBottle;
-import org.spout.vanilla.material.item.potion.Potion;
+import org.spout.vanilla.material.item.potion.PotionItem;
 import org.spout.vanilla.material.item.tool.CarrotOnAStick;
 import org.spout.vanilla.material.item.tool.FishingRod;
 import org.spout.vanilla.material.item.tool.FlintAndSteel;
@@ -589,7 +589,7 @@ public final class VanillaMaterials {
 	public static final Fireworks FIREWORKS = new Fireworks("Fireworks", 401);
 	public static final BlockItem FIREWORKS_CHARGE = new BlockItem("Fireworks Charge", 402, VanillaMaterials.FIRE, null); //implementation is not certain.
 	public static final EnchantedBook ENCHANTED_BOOK = new EnchantedBook("Enchanted Book", 403);
-	public static final Potion POTION = Potion.WATER_BOTTLE;
+	public static final PotionItem POTION = PotionItem.WATER_BOTTLE;
 	private static boolean initialized = false;
 	private final static AtomicShortArray conversionTable = new AtomicShortArray(Short.MAX_VALUE);
 	private final static TShortObjectHashMap<Material> reverseTable = new TShortObjectHashMap<Material>(500);

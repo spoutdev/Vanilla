@@ -33,7 +33,7 @@ import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.component.inventory.WindowHolder;
 import org.spout.vanilla.component.substance.ViewedBlockComponent;
-import org.spout.vanilla.material.item.potion.PotionItem;
+import org.spout.vanilla.material.item.potion.Potion;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.inventory.BrewingStandCloseEvent;
 import org.spout.vanilla.event.inventory.BrewingStandOpenEvent;
@@ -82,7 +82,7 @@ public class BrewingStand extends ViewedBlockComponent implements Container {
 							continue;
 						}
 
-						if (((PotionReagent) inventory.getInput().getMaterial()).getResult((PotionItem) output.getMaterial()) == null) {
+						if (((PotionReagent) inventory.getInput().getMaterial()).getResult((Potion) output.getMaterial()) == null) {
 							return;
 						}
 					}
@@ -106,7 +106,7 @@ public class BrewingStand extends ViewedBlockComponent implements Container {
 							continue;
 						}
 
-						inventory.set(i, new ItemStack(((PotionReagent) input.getMaterial()).getResult((PotionItem) output.getMaterial()), 1));
+						inventory.set(i, new ItemStack(((PotionReagent) input.getMaterial()).getResult((Potion) output.getMaterial()), 1));
 					}
 				}
 			}

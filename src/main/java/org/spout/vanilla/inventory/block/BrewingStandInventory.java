@@ -30,7 +30,7 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.material.PotionReagent;
-import org.spout.vanilla.material.item.potion.PotionItem;
+import org.spout.vanilla.material.item.potion.Potion;
 
 /**
  * Represents the inventory of a {@link org.spout.vanilla.component.substance.material.BrewingStand}
@@ -105,7 +105,7 @@ public class BrewingStandInventory extends Inventory {
 		for (int outputSlot : OUTPUT_SLOTS) {
 			if (outputSlot == i) {
 				// Slot is an output slot, make sure the item is something that can become a potion
-				if (item != null && item.getMaterial() instanceof PotionItem) {
+				if (item != null && item.getMaterial() instanceof Potion) {
 					return true;
 				}
 			}

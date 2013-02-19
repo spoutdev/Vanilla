@@ -52,7 +52,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.material.item.misc.SpawnEgg;
-import org.spout.vanilla.material.item.potion.PotionItem;
+import org.spout.vanilla.material.item.potion.Potion;
 import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.util.RedstoneUtil;
 
@@ -122,7 +122,7 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 		} else if (material.equals(VanillaMaterials.SNOWBALL)) {
 			shootEffect = GeneralEffects.RANDOM_BOW;
 			//TODO: Spawn
-		} else if (material instanceof PotionItem && ((PotionItem) material).isSplash()) {
+		} else if (material instanceof Potion && ((Potion) material).isSplash()) {
 			shootEffect = GeneralEffects.RANDOM_BOW;
 			//TODO: Spawn
 		} else if (material.equals(VanillaMaterials.BOTTLE_O_ENCHANTING)) {

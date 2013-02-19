@@ -29,7 +29,7 @@ package org.spout.vanilla.material.item.misc;
 import org.spout.vanilla.material.PotionReagent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.BlockItem;
-import org.spout.vanilla.material.item.potion.PotionItem;
+import org.spout.vanilla.material.item.potion.Potion;
 
 public class NetherWartItem extends BlockItem implements PotionReagent {
 	public NetherWartItem(String name, int id) {
@@ -37,9 +37,9 @@ public class NetherWartItem extends BlockItem implements PotionReagent {
 	}
 
 	@Override
-	public PotionItem getResult(PotionItem original) {
-		if (PotionItem.WATER_BOTTLE.equals(original)) {
-			return PotionItem.AWKWARD;
+	public Potion getResult(Potion original) {
+		if (Potion.WATER_BOTTLE.equals(original)) {
+			return Potion.AWKWARD;
 		}
 
 		return null;

@@ -26,16 +26,16 @@
  */
 package org.spout.vanilla.material;
 
-import org.spout.vanilla.material.item.potion.PotionItem;
+import org.spout.vanilla.material.item.potion.Potion;
 
 /**
  * Represents an item that can be used in the process of brewing
  */
 public interface PotionReagent {
 	/**
-	 * Returns the resulting {@link org.spout.vanilla.material.item.potion.PotionItem} after brewing this reagent with the original potion.
+	 * Returns the resulting {@link Potion} after brewing this reagent with the original potion.
 	 * @param original Original potion
 	 * @return Resulting item from brewing this ingredient and the original potion
 	 */
-	public PotionItem getResult(PotionItem original);
+	public Potion getResult(Potion original);
 }

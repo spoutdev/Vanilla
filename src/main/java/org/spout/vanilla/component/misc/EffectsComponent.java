@@ -39,7 +39,7 @@ import org.spout.vanilla.data.effect.StatusEffect;
 import org.spout.vanilla.data.effect.StatusEffectContainer;
 import org.spout.vanilla.event.entity.network.EntityEffectEvent;
 import org.spout.vanilla.event.entity.network.EntityRemoveEffectEvent;
-import org.spout.vanilla.material.item.potion.PotionItem;
+import org.spout.vanilla.material.item.potion.Potion;
 
 /**
  * Component handling status effects. This includes food poisoning, regeneration, etc.
@@ -90,10 +90,10 @@ public class EffectsComponent extends EntityComponent {
 						if (getOwner() instanceof Player && !getOwner().get(Human.class).isSurvival()) {
 							break;
 						}
-						if (effect.getTier() == PotionItem.TIER0 && effect.getTick() >= 1.20f) {
+						if (effect.getTier() == Potion.TIER0 && effect.getTick() >= 1.20f) {
 							health.heal(1);
 							effect.resetTick();
-						} else if (effect.getTier() == PotionItem.TIER2 && effect.getTick() >= 0.55f) {
+						} else if (effect.getTier() == Potion.TIER2 && effect.getTick() >= 0.55f) {
 							health.heal(1);
 							effect.resetTick();
 						}
@@ -102,12 +102,12 @@ public class EffectsComponent extends EntityComponent {
 						if (getOwner() instanceof Player && !getOwner().get(Human.class).isSurvival()) {
 							break;
 						}
-						if (effect.getTier() == PotionItem.TIER0 && effect.getTick() >= 1.25f) {
+						if (effect.getTier() == Potion.TIER0 && effect.getTick() >= 1.25f) {
 							if (health.getHealth() > 1) {
 								health.damage(1);
 							}
 							effect.resetTick();
-						} else if (effect.getTier() == PotionItem.TIER2 && effect.getTick() >= 0.55f) {
+						} else if (effect.getTier() == Potion.TIER2 && effect.getTick() >= 0.55f) {
 							if (health.getHealth() > 1) {
 								health.damage(1);
 							}
@@ -118,10 +118,10 @@ public class EffectsComponent extends EntityComponent {
 						if (getOwner() instanceof Player && !getOwner().get(Human.class).isSurvival()) {
 							break;
 						}
-						if (effect.getTier() == PotionItem.TIER0 && effect.getTick() >= 1.25f) {
+						if (effect.getTier() == Potion.TIER0 && effect.getTick() >= 1.25f) {
 							health.damage(1);
 							effect.resetTick();
-						} else if (effect.getTier() == PotionItem.TIER2 && effect.getTick() >= 0.55f) {
+						} else if (effect.getTier() == Potion.TIER2 && effect.getTick() >= 0.55f) {
 							health.damage(1);
 							effect.resetTick();
 						}
@@ -142,15 +142,15 @@ public class EffectsComponent extends EntityComponent {
 			removeEffect(effect.getEffect());
 		}
 		if (StatusEffect.INSTANT_DAMAGE.equals(effect.getEffect())) {
-			if (effect.getTier() == PotionItem.TIER0) {
+			if (effect.getTier() == Potion.TIER0) {
 				health.damage(6);
-			} else if (effect.getTier() == PotionItem.TIER2) {
+			} else if (effect.getTier() == Potion.TIER2) {
 				health.damage(12);
 			}
 		} else if (StatusEffect.INSTANT_HEALTH.equals(effect.getEffect())) {
-			if (effect.getTier() == PotionItem.TIER0) {
+			if (effect.getTier() == Potion.TIER0) {
 				health.heal(6);
-			} else if (effect.getTier() == PotionItem.TIER2) {
+			} else if (effect.getTier() == Potion.TIER2) {
 				health.heal(12);
 			}
 		} else {

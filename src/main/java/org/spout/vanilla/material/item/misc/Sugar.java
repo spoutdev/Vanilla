@@ -28,7 +28,7 @@ package org.spout.vanilla.material.item.misc;
 
 import org.spout.vanilla.material.PotionReagent;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
-import org.spout.vanilla.material.item.potion.PotionItem;
+import org.spout.vanilla.material.item.potion.Potion;
 
 public class Sugar extends VanillaItemMaterial implements PotionReagent {
 	public Sugar(String name, int id) {
@@ -36,11 +36,11 @@ public class Sugar extends VanillaItemMaterial implements PotionReagent {
 	}
 
 	@Override
-	public PotionItem getResult(PotionItem original) {
-		if (PotionItem.AWKWARD.equals(original)) {
-			return PotionItem.SWIFTNESS;
-		} else if (PotionItem.WATER_BOTTLE.equals(original)) {
-			return PotionItem.MUNDANE;
+	public Potion getResult(Potion original) {
+		if (Potion.AWKWARD.equals(original)) {
+			return Potion.SWIFTNESS;
+		} else if (Potion.WATER_BOTTLE.equals(original)) {
+			return Potion.MUNDANE;
 		}
 
 		return null;

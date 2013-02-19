@@ -44,6 +44,7 @@ import org.spout.vanilla.event.cause.NullDamageCause;
 import org.spout.vanilla.event.player.network.PlayerHealthEvent;
 import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.material.item.Food;
+import org.spout.vanilla.material.item.potion.PotionItem;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 
 /**
@@ -105,8 +106,12 @@ public class HungerComponent extends EntityComponent {
 				if (eatingTimer != 0f) {
 					if (eatingTimer >= 1.5f) {
 						((Player) getOwner()).getSession().send(false, new EntityStatusMessage(getOwner().getId(), EntityStatusMessage.EATING_ACCEPTED));
-						if (foodEating.get() != null && foodEating.get().getMaterial() instanceof Food) {
-							((Food) foodEating.get().getMaterial()).onEat(getOwner(), foodEating);
+						if (foodEating.get() != null) {
+							if (foodEating.get().getMaterial() instanceof Food) {
+								((Food) foodEating.get().getMaterial()).onEat(getOwner(), foodEating);
+							} else if (foodEating.get().getMaterial() instanceof PotionItem) {
+								((PotionItem)foodEating.get().getMaterial()).onDrink(getOwner(),foodEating);
+							}
 						}
 						eatingTimer = 0f;
 						foodEating = null;

@@ -64,6 +64,7 @@ import org.spout.vanilla.event.cause.PlayerClickBlockCause;
 import org.spout.vanilla.event.cause.PlayerPlacementCause;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.item.Food;
+import org.spout.vanilla.material.item.potion.PotionItem;
 import org.spout.vanilla.material.item.tool.weapon.Sword;
 import org.spout.vanilla.protocol.msg.player.PlayerBlockPlacementMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
@@ -107,7 +108,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		 */
 		final BlockFace clickedFace = message.getDirection();
 		HungerComponent hunger = player.add(HungerComponent.class);
-		if ((holdingMat instanceof Food && hunger.getHunger() != VanillaData.HUNGER.getDefaultValue()) || holdingMat instanceof Sword) {
+		if ((holdingMat instanceof Food && hunger.getHunger() != VanillaData.HUNGER.getDefaultValue()) || holdingMat instanceof Sword || holdingMat instanceof PotionItem) {
 			player.get(Living.class).setEatingBlocking(true);
 			hunger.setEating(true, currentSlot);
 			return;

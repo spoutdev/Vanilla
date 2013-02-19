@@ -260,10 +260,8 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				}
 			}
 		} else if (state == PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
-			if (heldItem.getMaterial() instanceof Food) {
+			if (heldItem.getMaterial() instanceof Food || heldItem.getMaterial() instanceof PotionItem) {
 				player.add(HungerComponent.class).setEating(false, currentSlot);
-			} else if (heldItem.getMaterial() instanceof PotionItem) {
-				((PotionItem) heldItem.getMaterial()).onDrink(player, currentSlot);
 			} else if (heldItem.getMaterial() instanceof Sword) {
 				human.setEatingBlocking(false);
 			}

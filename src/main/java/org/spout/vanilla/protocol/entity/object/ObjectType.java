@@ -93,7 +93,7 @@ public enum ObjectType {
 		return idMap.get(id);
 	}
 
-	public static ObjectType get(Class<? extends ObjectType> type) {
+	public static ObjectType get(Class<? extends ObjectEntity> type) {
 		return typeMap.get(type);
 	}
 

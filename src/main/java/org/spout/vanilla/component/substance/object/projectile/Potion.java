@@ -27,9 +27,13 @@
 package org.spout.vanilla.component.substance.object.projectile;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.substance.object.ObjectEntity;
+import org.spout.vanilla.data.effect.GeneralEffect;
+import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.item.potion.PotionItem;
 import org.spout.vanilla.protocol.entity.object.PotionEntityProtocol;
 
@@ -60,4 +64,15 @@ public class Potion extends ObjectEntity implements Projectile {
 		this.potion = potion;
 	}
 
+	@Override
+	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
+		GeneralEffects.SPLASHPOTION.playGlobal(collidedPoint, getPotion().getData());
+		getOwner().remove();
+	}
+
+	@Override
+	public void onCollided(Point colliderPoint, Point collidedPoint, Block block) {
+		GeneralEffects.SPLASHPOTION.playGlobal(collidedPoint, getPotion().getData());
+		getOwner().remove();
+	}
 }

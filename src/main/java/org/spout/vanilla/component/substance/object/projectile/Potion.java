@@ -28,10 +28,19 @@ package org.spout.vanilla.component.substance.object.projectile;
 
 import org.spout.api.entity.Entity;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.substance.object.ObjectEntity;
+import org.spout.vanilla.material.item.potion.PotionItem;
+import org.spout.vanilla.protocol.entity.object.PotionEntityProtocol;
 
 public class Potion extends ObjectEntity implements Projectile {
 	private Entity shooter;
+	private PotionItem potion;
+
+	@Override
+	public void onAttached() {
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PotionEntityProtocol());
+	}
 
 	@Override
 	public Entity getShooter() {
@@ -42,4 +51,13 @@ public class Potion extends ObjectEntity implements Projectile {
 	public void setShooter(Entity shooter) {
 		this.shooter = shooter;
 	}
+
+	public PotionItem getPotion() {
+		return potion;
+	}
+
+	public void setPotion(PotionItem potion) {
+		this.potion = potion;
+	}
+
 }

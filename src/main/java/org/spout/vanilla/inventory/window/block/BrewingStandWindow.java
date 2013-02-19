@@ -38,7 +38,7 @@ import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.inventory.window.WindowType;
 import org.spout.vanilla.material.PotionReagent;
-import org.spout.vanilla.material.item.potion.Potion;
+import org.spout.vanilla.material.item.potion.PotionItem;
 
 public class BrewingStandWindow extends Window {
 	private BrewingStand brewingStand;
@@ -58,7 +58,7 @@ public class BrewingStandWindow extends Window {
 		if (!(from instanceof BrewingStandInventory)) {
 			final BrewingStandInventory inventory = getBrewingStand().getInventory();
 			Material material = item.getMaterial();
-			if (material instanceof Potion) {
+			if (material instanceof PotionItem) {
 				// Put into output slots
 				for (int i = 0; i < 3; i++) {
 					if (inventory.getOutput(i) == null) {

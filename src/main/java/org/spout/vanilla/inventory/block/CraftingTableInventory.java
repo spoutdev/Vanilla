@@ -31,7 +31,7 @@ import org.spout.vanilla.inventory.player.CraftingInventory;
 
 /**
  * Represents the inventory of a
- * {@link org.spout.vanilla.plugin.component.substance.material.CraftingTable}.
+ * {@link org.spout.vanilla.material.block.solid.CraftingTable}.
  */
 public class CraftingTableInventory extends CraftingInventory {
 	public static final int LENGTH = 3, WIDTH = 3, OUTPUT_SLOT = 9;

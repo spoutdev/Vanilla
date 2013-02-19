@@ -69,7 +69,7 @@ public class EntityHealEvent extends EntityHealthChangeEvent {
 
 	/**
 	 * Sets the heal to be applied to the health component.
-	 * @param damage The amount of damage dealt.
+	 * @param amount The amount of health given
 	 */
 	public void setHealAmount(int amount) {
 		setChange(amount);

@@ -165,7 +165,6 @@ public abstract class AbstractAttachable extends VanillaBlockMaterial implements
 	 * This is called in the underlying physics function to check if the block has to be broken<br>
 	 * No checks on the block itself should be performed other than the face it is attached to
 	 * @param block to place at
-	 * @param data to use
 	 * @param attachedFace to use
 	 * @param seekAlternative whether an alternative attached face should be sought
 	 * @return whether placement is possible

@@ -123,7 +123,7 @@ public class VanillaStyleHandler extends StyleHandler {
 	 * Matches the passed String with the stylePattern of the
 	 * VanillaStyleHandler<br>
 	 * and replaces every subsequence with "".
-	 * @returns The striped String.
+	 * @return The striped String.
 	 */
 	public String stripStyle(String formatted) {
 		return stylePattern.matcher(formatted).replaceAll("");
@@ -131,7 +131,7 @@ public class VanillaStyleHandler extends StyleHandler {
 
 	/**
 	 * Extracts the ChatStyles from a String.
-	 * @returns The ChatSyles as ChatArguments.
+	 * @return The ChatSyles as ChatArguments.
 	 */
 	public ChatArguments extractArguments(String str) {
 		ChatArguments args = new ChatArguments();

@@ -44,7 +44,7 @@ public class Arrow extends ObjectEntity implements Projectile {
 
 	@Override
 	public Entity getShooter() {
-		return null;
+		return shooter;
 	}
 
 	@Override

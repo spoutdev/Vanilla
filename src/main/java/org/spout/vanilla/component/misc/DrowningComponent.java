@@ -78,7 +78,7 @@ public class DrowningComponent extends EntityComponent {
 					return;
 				}
 
-				if (getOwner() instanceof Player && !getOwner().get(Human.class).getGameMode().equals(GameMode.SURVIVAL)) {
+				if (owner instanceof Player && !getOwner().get(Human.class).getGameMode().equals(GameMode.SURVIVAL)) {
 					return;
 				}
 
@@ -92,7 +92,7 @@ public class DrowningComponent extends EntityComponent {
 				}
 				break;
 			case CLIENT:
-				if (!(getOwner() instanceof Player)) {
+				if (!(owner instanceof Player)) {
 					return;
 				}
 				// Animate air meter
@@ -121,7 +121,7 @@ public class DrowningComponent extends EntityComponent {
 	 * Hide bubbles in the GUI
 	 */
 	public void hideBubbles() {
-		HUDComponent hud = getOwner().get(HUDComponent.class);
+		HUDComponent hud = owner.get(HUDComponent.class);
 		if (hud != null) {
 			hud.getAirMeter().hide();
 		}
@@ -131,7 +131,7 @@ public class DrowningComponent extends EntityComponent {
 	 * Show bubbles in the GUI
 	 */
 	public void showBubbles() {
-		HUDComponent hud = getOwner().get(HUDComponent.class);
+		HUDComponent hud = owner.get(HUDComponent.class);
 		if (hud != null) {
 			hud.getAirMeter().show();
 		}

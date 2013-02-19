@@ -235,7 +235,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				int totalDamage;
 
 				if (heldItem == null) {
-					damageDone = ((int) diggingTicks * 1);
+					damageDone = ((int) diggingTicks);
 				} else {
 					damageDone = ((int) diggingTicks * ((VanillaMaterial) heldItem.getMaterial()).getDamage());
 				}

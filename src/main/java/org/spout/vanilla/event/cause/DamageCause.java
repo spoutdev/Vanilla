@@ -72,7 +72,7 @@ public interface DamageCause<T> {
 		FIREBALL,
 		/**
 		 * Damage due to getting hit by an
-		 * {@link org.spout.vanilla.plugin.component.substance.Projectile}.
+		 * {@link org.spout.vanilla.component.substance.object.projectile.Projectile}.
 		 */
 		PROJECTILE,
 		/**

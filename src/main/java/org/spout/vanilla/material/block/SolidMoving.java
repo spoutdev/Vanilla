@@ -39,7 +39,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 
 public class SolidMoving extends Solid {
 	public SolidMoving(String name, int id, int data, VanillaBlockMaterial parent) {
-		this(name, id, data, parent, (String) null);
+		this(name, id, data, parent, null);
 	}
 
 	public SolidMoving(String name, int id, int data, VanillaBlockMaterial parent, String model) {

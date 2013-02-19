@@ -65,7 +65,7 @@ public class MathHelper {
 	public static float getRealCelestialAngle(long timeMillis, float timeMillisTune) {
 		float celestial = getCelestialAngle(timeMillis, timeMillisTune);
 		celestial *= TrigMath.TWO_PI;
-		celestial = 1.0f - ((float) TrigMath.cos(celestial) * 2.0f + 0.5f);
+		celestial = 1.0f - (TrigMath.cos(celestial) * 2.0f + 0.5f);
 		if (celestial < 0) {
 			celestial = 0.0f;
 		} else if (celestial > 1) {

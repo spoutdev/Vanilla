@@ -177,7 +177,6 @@ public class HUDComponent extends EntityComponent {
 
 	/**
 	 * Sets the amount of armor to display.
-	 * @param amount Amount of armor to display
 	 * 
 	 * This method will be removed once armor is handled by Vanilla
 	 */
@@ -196,7 +195,6 @@ public class HUDComponent extends EntityComponent {
 	
 	/**
 	 * Modify the advancement of the xp bar.
-	 * @param percent The advancement between 0 and 1
 	 * 
 	 * This method needs to be removed when experience is handled by
 	 * Vanilla code.

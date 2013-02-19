@@ -222,7 +222,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 			// Higher blocks have a lower chance of spreading
 			// Don't spread if it has rain falling nearby
 			if (offset.getY() > 1) {
-				chanceFactor = (int) (offset.getY() * 100);
+				chanceFactor = (offset.getY() * 100);
 			} else {
 				chanceFactor = 100;
 			}

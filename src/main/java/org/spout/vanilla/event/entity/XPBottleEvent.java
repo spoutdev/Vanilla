@@ -85,7 +85,7 @@ public class XPBottleEvent extends ProjectileHitEvent {
 	/**
 	 * Sets whether the particle effect will be shown when this
 	 * Bottle o' Enchanting breaks.
-	 * @param boolean
+	 * @param showEffect
 	 */
 	public void setEffectShown(boolean showEffect) {
 		this.showEffect = showEffect;

@@ -69,7 +69,6 @@ public class EntityCombustEvent extends EntityEvent {
 
 	/**
 	 * Gets the {@link Cause} for this event.
-	 * @param cause
 	 */
 	public Cause<? extends Object> getCombustCause() {
 		return cause;

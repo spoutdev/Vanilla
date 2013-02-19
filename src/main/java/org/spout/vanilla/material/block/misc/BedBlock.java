@@ -116,7 +116,6 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 	/**
 	 * Sets whether or not a bed is occupied by a player
 	 * @param bedBlock to get it of
-	 * @return True if occupied
 	 */
 	public void setOccupied(Block bedBlock, Entity sleeper, boolean occupied) {
 		bedBlock = getCorrectHalf(bedBlock, false);
@@ -148,7 +147,6 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 	 * Note that this does not affect the misc half
 	 * @param bedBlock to set it of
 	 * @param facing to set to
-	 * @return the face
 	 */
 	public void setFacing(Block bedBlock, BlockFace facing) {
 		bedBlock.setDataField(0x3, BlockFaces.WNES.indexOf(facing, 0));

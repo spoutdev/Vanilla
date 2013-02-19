@@ -129,7 +129,7 @@ public class PasteExceptionHandler implements UncaughtExceptionHandler {
 		}
 
 		public String checkResponse(String response) {
-			if (response.substring(0, 15) == "Bad API request") {
+			if (response.substring(0, 15).equals("Bad API request")) {
 				return response.substring(17);
 			}
 			return "";

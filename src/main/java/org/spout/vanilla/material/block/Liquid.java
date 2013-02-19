@@ -44,7 +44,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	private int delay;
 
 	public Liquid(String name, int id, boolean flowing) {
-		this(name, id, flowing, (String) null);
+		this(name, id, flowing, null);
 	}
 
 	public Liquid(String name, int id, boolean flowing, String model) {
@@ -144,8 +144,8 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	/**
 	 * Called when this liquid created a new liquid because it spread
 	 * @param block of the Liquid that got created
+	 * @param newLevel
 	 * @param from where it spread
-	 * @return True to notify spreading was allowed, False to deny
 	 */
 	public void onSpread(Block block, int newLevel, BlockFace from) {
 		block.getMaterial().destroy(block, this.toCause(block));
@@ -176,7 +176,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 
 	/**
 	 * Checks if the material given is either the flowing or stationary type of this Liquid
-	 * @param material to check
+	 * @param materials to check
 	 * @return True if it is this liquid, False if not
 	 */
 	@Override

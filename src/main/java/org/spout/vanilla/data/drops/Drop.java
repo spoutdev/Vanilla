@@ -53,7 +53,7 @@ public abstract class Drop extends FlagContainer {
 	/**
 	 * Tests if a drop is possible
 	 * @param random to use
-	 * @param dropFlags to check against
+	 * @param flags to check against
 	 * @return True if a drop can be performed, False if not
 	 */
 	public boolean canDrop(Random random, Set<Flag> flags) {

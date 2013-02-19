@@ -128,7 +128,6 @@ public class TripWire extends GroundAttachable implements InitializableMaterial 
 	/**
 	 * Gets all the Hooks connected to this Trip Wire
 	 * @param wire block
-	 * @param direction to search at
 	 * @return A list of attached hooks
 	 */
 	public List<Block> getHooks(Block wire) {

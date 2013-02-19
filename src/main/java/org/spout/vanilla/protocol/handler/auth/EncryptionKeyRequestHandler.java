@@ -60,7 +60,7 @@ public class EncryptionKeyRequestHandler extends MessageHandler<EncryptionKeyReq
 				AsymmetricBlockCipher cipher = SecurityHandler.getInstance().getAsymmetricCipher(keyAlgorithm, keyPadding);
 				
 				try {
-					AsymmetricKeyParameter publicKey = (AsymmetricKeyParameter) PublicKeyFactory.createKey(message.getSecretArray());
+					AsymmetricKeyParameter publicKey = PublicKeyFactory.createKey(message.getSecretArray());
 					cipher.init(SecurityHandler.ENCRYPT_MODE, publicKey);
 					
 					byte[] encodedSecret = cipher.processBlock(sharedSecret, 0, 16);

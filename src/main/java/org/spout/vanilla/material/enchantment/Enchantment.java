@@ -54,7 +54,7 @@ public abstract class Enchantment {
 	private int maxPowerLevel;
 	private int weight;
 	/**
-	 * Used to compute {@link getMinimumLevel} and {@link getMaximumLevel}
+	 * Used to compute {@link #getMinimumLevel(int)} and {@link #getMaximumLevel(int)}
 	 */
 	protected final int baseEnchantmentLevel, deltaEnchantmentLevel, enchantmentLevelRange;
 

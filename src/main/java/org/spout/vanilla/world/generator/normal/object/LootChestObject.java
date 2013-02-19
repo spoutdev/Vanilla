@@ -87,7 +87,7 @@ public class LootChestObject extends RandomObject {
 	 * @param minItems minimum items of that material per stack
 	 * @param maxItems maximum items of that material per stack
 	 * @throws IllegalStateException when the total probability is above 1.0
-	 * @returns the instance for chained calls
+	 * @return the instance for chained calls
 	 */
 	public LootChestObject addMaterial(Material mat, double probability, int minItems, int maxItems) throws IllegalStateException {
 		final LootProbability toAdd = new LootProbability(probability, currentPMax, mat, minItems, maxItems);

@@ -42,9 +42,9 @@ public class LiquidRenderEffect implements RenderEffect {
 	@Override
 	public void preRender(SnapshotRender snapshotRender) {
 		float x = (float) (GenericMath.mod(TrigMath.TWO_PI * freqX / 1000.0 * System.currentTimeMillis(), TrigMath.TWO_PI) - TrigMath.PI);
-		x = amplX * (float) (TrigMath.sin(x) + 1.0f);
+		x = amplX * (TrigMath.sin(x) + 1.0f);
 		float y = (float) (GenericMath.mod(TrigMath.TWO_PI * freqY / 1000.0 * System.currentTimeMillis(), TrigMath.TWO_PI) - TrigMath.PI);
-		y = amplY * (float) (TrigMath.sin(y) + 1.0f);
+		y = amplY * (TrigMath.sin(y) + 1.0f);
 		snapshotRender.getMaterial().getShader().setUniform("animation", new Vector2(x * size, y * size));
 	}
 

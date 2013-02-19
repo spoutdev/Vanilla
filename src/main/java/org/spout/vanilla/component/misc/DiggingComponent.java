@@ -61,7 +61,7 @@ public class DiggingComponent extends EntityComponent {
 
 	public void onTick(float dt) {
 		if (timer >= separator) {
-			getOwner().getNetwork().callProtocolEvent(new BlockBreakAnimationEvent(getOwner(), diggingPosition, (byte) amount++), true);
+			getOwner().getNetwork().callProtocolEvent(new BlockBreakAnimationEvent(getOwner(), diggingPosition, amount++), true);
 			timer = 0;
 		}
 		timer += dt;
@@ -100,7 +100,7 @@ public class DiggingComponent extends EntityComponent {
 		} else {
 			multiplicator = 5f;
 		}
-		separator = (float) ((block.getHardness() * multiplicator) / modifier) / maxAmount;
+		separator = ((block.getHardness() * multiplicator) / modifier) / maxAmount;
 		amount = 0;
 		timer = 0;
 

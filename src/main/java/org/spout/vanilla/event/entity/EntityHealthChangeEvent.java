@@ -66,7 +66,7 @@ public class EntityHealthChangeEvent extends EntityEvent implements Cancellable 
 
 	/**
 	 * Sets the change in health.
-	 * @param damage The amount of change.
+	 * @param change The amount of change.
 	 */
 	public void setChange(int change) {
 		this.change = change;

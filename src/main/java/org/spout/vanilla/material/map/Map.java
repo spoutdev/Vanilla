@@ -97,7 +97,7 @@ public class Map extends VanillaItemMaterial {
 	 * @param color to set to
 	 */
 	public void setColor(int x, int y, MapColor color) {
-		this.colors[x + y * this.width] = (byte) color.getId();
+		this.colors[x + y * this.width] = color.getId();
 		this.changed = true;
 	}
 

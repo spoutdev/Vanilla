@@ -155,9 +155,15 @@ public class AdministrationCommands {
 		}
 
 		int count = args.getInteger(++index, 1);
-		player.get(PlayerInventoryComponent.class).add(new ItemStack(material, count));
-		source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Gave ", ChatStyle.WHITE, player.getName() + " ", count, ChatStyle.BRIGHT_GREEN, " of ", ChatStyle.WHITE,
-				material.getDisplayName());
+		PlayerInventoryComponent inventory = player.get(PlayerInventoryComponent.class);
+		if (inventory != null) {
+			inventory.add(new ItemStack(material, count));
+			source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Gave ", ChatStyle.WHITE, player.getName() + " ", count, ChatStyle.BRIGHT_GREEN, " of ", ChatStyle.WHITE,
+					material.getDisplayName());
+		} else {
+			throw new CommandException(player.getName() + " doesn't have a inventory!");
+		}
+
 	}
 
 	@Command(aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)

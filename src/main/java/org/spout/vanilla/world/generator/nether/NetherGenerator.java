@@ -123,14 +123,14 @@ public class NetherGenerator extends VanillaSingleBiomeGenerator {
 				}
 				if (y == 0) {
 					final byte bedrockDepth =
-							(byte) (MathHelper.normalizedByte(x + xx, z + zz, (int) seed) * (BEDROCK_DEPTH - 1) + 1);
+							(byte) (MathHelper.hashToFloat(x + xx, z + zz, (int) seed) * BEDROCK_DEPTH + 1);
 					for (int yy = 0; yy < bedrockDepth; yy++) {
 						blockData.set(x + xx, yy, z + zz, VanillaMaterials.BEDROCK);
 					}
 				}
 				if (y == HEIGHT - sizeY) {
 					final byte bedrockDepth =
-							(byte) (MathHelper.normalizedByte(x + xx, z + zz, (int) seed) * (BEDROCK_DEPTH - 1) + 1);
+							(byte) (MathHelper.hashToFloat(x + xx, z + zz, (int) seed) * BEDROCK_DEPTH + 1);
 					for (int yy = HEIGHT - 1; yy >= HEIGHT - bedrockDepth; yy--) {
 						blockData.set(x + xx, yy, z + zz, VanillaMaterials.BEDROCK);
 					}

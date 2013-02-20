@@ -26,8 +26,9 @@
  */
 package org.spout.vanilla.util;
 
-import gnu.trove.map.TObjectIntMap;
 import java.util.Random;
+
+import gnu.trove.map.TObjectIntMap;
 
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.TrigMath;
@@ -56,8 +57,9 @@ public class MathHelper {
 	}
 
 	/**
-	 * Gets the (real?) celestial angle at a certain time of the day<br>
-	 * The use of this function is unknown...
+	 * Gets the (real?) celestial angle at a certain time of the day<br> The use
+	 * of this function is unknown...
+	 *
 	 * @param timeMillis time
 	 * @param timeMillisTune fine tuning
 	 * @return celestial angle, a value from 0 to 1
@@ -111,58 +113,53 @@ public class MathHelper {
 	}
 
 	/**
-	 * Hashes the coordinate and returns a normalized byte. The value is
-	 * returned as a float of max value 1 and min value 0. The possible values
-	 * are [0, 255] / 255f, where [0, 255] is an integer range. This method is
-	 * useful for obtaining a constant value at a point.
+	 * Hashes the coordinates and returns a float between [0, 1[.
 	 *
 	 * @param x The x coordinate
 	 * @param seed The seed
-	 * @return A value in [0, 255] / 255f
+	 * @return A float for the coordinates
 	 */
-	public static float normalizedByte(int x, int seed) {
+	public static float hashToFloat(int x, int seed) {
 		final int hash = x * 73428767 ^ seed * 457;
-		return (hash * (hash + 456149) >> 16 & 0xff) / 255f;
+		return (hash * (hash + 456149) & 0x00ffffff) / (float) 0x01000000;
 	}
 
 	/**
-	 * Hashes the coordinates and returns a normalized byte. The value is
-	 * returned as a float of max value 1 and min value 0. The possible values
-	 * are [0, 255] / 255f, where [0, 255] is an integer range. This method is
-	 * useful for obtaining a constant value at a point.
+	 * Hashes the coordinates and returns a float between [0, 1[.
 	 *
 	 * @param x The x coordinate
 	 * @param y The y coordinate
 	 * @param seed The seed
-	 * @return A value in [0, 255] / 255f
+	 * @return A float for the coordinates
 	 */
-	public static float normalizedByte(int x, int y, int seed) {
+	public static float hashToFloat(int x, int y, int seed) {
 		final int hash = x * 73428767 ^ y * 9122569 ^ seed * 457;
-		return (hash * (hash + 456149) >> 16 & 0xff) / 255f;
+		return (hash * (hash + 456149) & 0x00ffffff) / (float) 0x01000000;
 	}
 
 	/**
-	 * Hashes the coordinates and returns a normalized byte. The value is
-	 * returned as a float of max value 1 and min value 0. The possible values
-	 * are [0, 255] / 255f, where [0, 255] is an integer range. This method is
-	 * useful for obtaining a constant value at a point.
+	 * Hashes the coordinates and returns a float between [0, 1[.
 	 *
 	 * @param x The x coordinate
 	 * @param y The y coordinate
 	 * @param z The z coordinate
 	 * @param seed The seed
-	 * @return A value in [0, 255] / 255f
+	 * @return A float for the coordinates
 	 */
-	public static float normalizedByte(int x, int y, int z, int seed) {
+	public static float hashToFloat(int x, int y, int z, int seed) {
 		final int hash = x * 73428767 ^ y * 9122569 ^ z * 4382893 ^ seed * 457;
-		return (hash * (hash + 456149) >> 16 & 0xff) / 255f;
+		return (hash * (hash + 456149) & 0x00ffffff) / (float) 0x01000000;
 	}
 
 	/**
-	 * Chooses an item randomly from a list, with the probability of each item proportional to its given weight
+	 * Chooses an item randomly from a list, with the probability of each item
+	 * proportional to its given weight
+	 *
 	 * @param random The random number generator to be used
-	 * @param weightMap A map from the items that can be chosen to their respective weights
-	 * @return The randomly chosen item, or null if the total weight is not positive.
+	 * @param weightMap A map from the items that can be chosen to their
+	 * respective weights
+	 * @return The randomly chosen item, or null if the total weight is not
+	 * positive.
 	 */
 	public static <T> T chooseWeightedRandom(Random random, TObjectIntMap<T> weightMap) {
 		int totalWeight = 0;

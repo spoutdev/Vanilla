@@ -193,7 +193,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 				}
 				if (y == 0) {
 					final byte bedrockDepth =
-							(byte) (MathHelper.normalizedByte(x + xx, z + zz, (int) seed) * (BEDROCK_DEPTH - 1) + 1);
+							(byte) (MathHelper.hashToFloat(x + xx, z + zz, (int) seed) * BEDROCK_DEPTH + 1);
 					for (byte yy = 0; yy < bedrockDepth; yy++) {
 						blockData.set(x + xx, yy, z + zz, VanillaMaterials.BEDROCK);
 					}

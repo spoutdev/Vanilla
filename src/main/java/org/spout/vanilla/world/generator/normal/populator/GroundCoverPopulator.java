@@ -178,7 +178,7 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 
 		@Override
 		public byte getDepth(int x, int z, int seed) {
-			return (byte) (MathHelper.normalizedByte(x, z, seed) * (max - min) + min);
+			return (byte) (MathHelper.hashToFloat(x, z, seed) * (max - min + 1) + min);
 		}
 
 		@Override

@@ -92,7 +92,7 @@ public class BlockPatchPopulator implements GeneratorPopulator {
 					if (yy == -1 || blockData.get(x + xx, yy + 1, z + zz) != VanillaMaterials.AIR) {
 						continue;
 					}
-					final int depth = (int) (MathHelper.normalizedByte(x + xx, z + zz, (int) seed) * 2 + 3);
+					final int depth = (int) (MathHelper.hashToFloat(x + xx, z + zz, (int) seed) * 2 + 4);
 					int yyy = 0;
 					while (yyy < depth && blockData.get(x + xx, yy - yyy, z + zz).isMaterial(VanillaMaterials.NETHERRACK)) {
 						blockData.set(x + xx, yy - yyy++, z + zz, material);

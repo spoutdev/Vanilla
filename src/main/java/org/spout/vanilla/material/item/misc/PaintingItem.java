@@ -37,7 +37,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.GenericMath;
 
-import org.spout.vanilla.component.substance.Painting;
+import org.spout.vanilla.component.entity.substance.Painting;
 import org.spout.vanilla.data.PaintingType;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 

@@ -29,7 +29,7 @@ package org.spout.vanilla.protocol.handler.player.conn;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.component.player.PingComponent;
+import org.spout.vanilla.component.entity.player.Ping;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerPingMessage;
 
 public class PlayerPingHandler extends MessageHandler<PlayerPingMessage> {
@@ -39,7 +39,7 @@ public class PlayerPingHandler extends MessageHandler<PlayerPingMessage> {
 			session.disconnect("Illegal packet!");
 			return;
 		}
-		PingComponent ping = session.getPlayer().get(PingComponent.class);
+		Ping ping = session.getPlayer().get(Ping.class);
 		if (ping != null) {
 			ping.response(message.getPingId());
 		}

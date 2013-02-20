@@ -32,16 +32,15 @@ import org.spout.api.component.impl.SceneComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
-import org.spout.api.math.Vector3;
 import org.spout.api.math.VectorMath;
 
-import org.spout.vanilla.component.substance.object.ObjectEntity;
-import org.spout.vanilla.component.substance.object.projectile.Projectile;
+import org.spout.vanilla.component.entity.substance.object.Substance;
+import org.spout.vanilla.component.entity.substance.object.projectile.Projectile;
 
 public abstract class ThrowItem extends VanillaItemMaterial {
-	private Class<? extends ObjectEntity> itemThrown;
+	private Class<? extends Substance> itemThrown;
 
-	public ThrowItem(String name, int id, Class<? extends ObjectEntity> itemThrown) {
+	public ThrowItem(String name, int id, Class<? extends Substance> itemThrown) {
 		super(name, id, null);
 		this.itemThrown = itemThrown;
 	}
@@ -55,7 +54,7 @@ public abstract class ThrowItem extends VanillaItemMaterial {
 		super.onInteract(entity, type);
 		if (type == Action.RIGHT_CLICK) {
 			World world = entity.getWorld();
-			ObjectEntity item = world.createEntity(entity.getScene().getPosition().add(0, 1.6f, 0), itemThrown).add(itemThrown);
+			Substance item = world.createEntity(entity.getScene().getPosition().add(0, 1.6f, 0), itemThrown).add(itemThrown);
 			SceneComponent scene = item.getOwner().getScene();
 			scene.setShape(mass, new SphereShape(0.1f)); // TODO: Correct this
 			scene.impulse(VectorMath.getDirection(entity.getScene().getRotation()).multiply(30)); //TODO: Need real parameters

@@ -34,7 +34,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.substance.object.Tnt;
+import org.spout.vanilla.component.entity.substance.object.Tnt;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaMaterials;

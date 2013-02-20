@@ -33,8 +33,8 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.shape.Grid;
 import org.spout.api.plugin.Platform;
 
-import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
-import org.spout.vanilla.component.substance.material.chest.AbstractChest;
+import org.spout.vanilla.component.entity.inventory.PlayerInventory;
+import org.spout.vanilla.component.block.material.chest.AbstractChest;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.entity.QuickbarInventory;
 import org.spout.vanilla.inventory.player.PlayerMainInventory;
@@ -64,7 +64,7 @@ public class AbstractChestWindow extends Window {
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			throw new IllegalStateException("Shift click handling is handled server side.");
 		}
-		final PlayerInventoryComponent inventory = getPlayerInventory();
+		final PlayerInventory inventory = getPlayerInventory();
 
 		// From main inventory/quickbar to the chest
 		if (from instanceof PlayerMainInventory || from instanceof PlayerQuickbar) {

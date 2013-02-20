@@ -31,7 +31,7 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 import org.spout.api.exception.InvalidControllerException;
 
-import org.spout.vanilla.component.living.passive.Sheep;
+import org.spout.vanilla.component.entity.living.passive.Sheep;
 
 /**
  * Event which is called when a sheep's wool changes.

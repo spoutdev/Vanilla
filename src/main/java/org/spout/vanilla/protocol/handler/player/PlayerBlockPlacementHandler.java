@@ -53,9 +53,9 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 
-import org.spout.vanilla.component.living.Living;
-import org.spout.vanilla.component.misc.HeadComponent;
-import org.spout.vanilla.component.misc.HungerComponent;
+import org.spout.vanilla.component.entity.living.Living;
+import org.spout.vanilla.component.entity.misc.Head;
+import org.spout.vanilla.component.entity.misc.Hunger;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.effect.SoundEffect;
@@ -107,7 +107,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		 * packet is sent That is how it usually happens. Sometimes it doesn't happen like that. Therefore, a hacky workaround.
 		 */
 		final BlockFace clickedFace = message.getDirection();
-		HungerComponent hunger = player.add(HungerComponent.class);
+		Hunger hunger = player.add(Hunger.class);
 		if ((holdingMat instanceof Food && hunger.getHunger() != VanillaData.HUNGER.getDefaultValue()) || holdingMat instanceof Sword || (holdingMat instanceof PotionItem && !((PotionItem)holdingMat).isSplash())) {
 			player.get(Living.class).setEatingBlocking(true);
 			hunger.setEating(true, currentSlot);
@@ -219,7 +219,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 							refreshClient(player, clickedBlock, clickedFace, rm);
 							return;
 						}
-						HeadComponent head = player.get(HeadComponent.class);
+						Head head = player.get(Head.class);
 						if (head != null && head.getPosition().distance(tpos) < 0.6) {
 							refreshClient(player, clickedBlock, clickedFace, rm);
 							return;

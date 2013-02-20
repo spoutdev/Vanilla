@@ -37,7 +37,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.inventory.WindowHolder;
+import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.event.inventory.AnvilOpenEvent;
 import org.spout.vanilla.inventory.block.AnvilInventory;

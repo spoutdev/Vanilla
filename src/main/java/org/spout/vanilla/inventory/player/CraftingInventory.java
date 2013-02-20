@@ -40,7 +40,7 @@ import org.spout.api.inventory.shape.Grid;
 import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.material.Material;
 
-import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
+import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 
 /**
  * Represents an inventory that contains a crafting matrix.
@@ -99,7 +99,7 @@ public abstract class CraftingInventory extends Inventory {
 	 * @param toInventory
 	 * @return true if the action completed successfully.
 	 */
-	public boolean onShiftClick(int slot, PlayerInventoryComponent toInventory) {
+	public boolean onShiftClick(int slot, PlayerInventory toInventory) {
 		ItemStack result = get(getOutputSlot());
 		Material resultMat = (result != null ? result.getMaterial() : null);
 		if (slot == getOutputSlot() + getOffset() && result != null) {

@@ -30,14 +30,13 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.NetworkSynchronizer;
 
-import org.spout.vanilla.component.world.VanillaSky;
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.event.world.TimeUpdateEvent;
 import org.spout.vanilla.event.world.WeatherChangeEvent;
 import org.spout.vanilla.util.MathHelper;
 import org.spout.vanilla.world.WeatherSimulator;
 
-public class NormalSky extends VanillaSky {
+public class NormalSky extends Sky {
 	public NormalSky() {
 		super();
 		setHasWeather(true);

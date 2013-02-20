@@ -32,7 +32,7 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.inventory.WindowHolder;
+import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.inventory.window.block.CraftingTableWindow;

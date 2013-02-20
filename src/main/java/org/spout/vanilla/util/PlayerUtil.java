@@ -36,8 +36,8 @@ import org.spout.api.inventory.Slot;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
-import org.spout.vanilla.component.misc.HeadComponent;
+import org.spout.vanilla.component.entity.inventory.PlayerInventory;
+import org.spout.vanilla.component.entity.misc.Head;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.inventory.entity.QuickbarInventory;
@@ -68,7 +68,7 @@ public class PlayerUtil {
 	 * @return The quickbar, or null
 	 */
 	public static QuickbarInventory getQuickbar(Entity entity) {
-		PlayerInventoryComponent inventory = entity.get(PlayerInventoryComponent.class);
+		PlayerInventory inventory = entity.get(PlayerInventory.class);
 		if (entity instanceof Player && inventory != null) {
 			return inventory.getQuickbar();
 		} else {
@@ -108,7 +108,7 @@ public class PlayerUtil {
 	 */
 	public static BlockFace getBlockFacing(Block block, Entity entity) {
 		Point position;
-		HeadComponent head = entity.get(HeadComponent.class);
+		Head head = entity.get(Head.class);
 		position = head != null ? head.getPosition() : entity.getScene().getPosition();
 
 		Vector3 diff = position.subtract(block.getX(), block.getY(), block.getZ());
@@ -142,7 +142,7 @@ public class PlayerUtil {
 	 * @return yaw
 	 */
 	public static float getYaw(Entity entity) {
-		HeadComponent head = entity.get(HeadComponent.class);
+		Head head = entity.get(Head.class);
 		return head != null ? head.getRotation().getYaw() : entity.getScene().getRotation().getYaw();
 	}
 

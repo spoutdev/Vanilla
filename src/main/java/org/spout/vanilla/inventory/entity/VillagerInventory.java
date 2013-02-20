@@ -31,7 +31,7 @@ import org.spout.vanilla.inventory.player.CraftingInventory;
 
 /**
  * Represents the inventory of a
- * {@link org.spout.vanilla.component.living.passive.Villager}.
+ * {@link org.spout.vanilla.component.entity.living.passive.Villager}.
  */
 public class VillagerInventory extends CraftingInventory {
 	private static final long serialVersionUID = 1L;

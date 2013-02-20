@@ -34,7 +34,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.component.inventory.EntityInventoryComponent;
+import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 
 public final class EntityEquipmentHandler extends MessageHandler<EntityEquipmentMessage> {
@@ -55,9 +55,9 @@ public final class EntityEquipmentHandler extends MessageHandler<EntityEquipment
 			return;
 		}
 	
-		EntityInventoryComponent inventory = entity.get(EntityInventoryComponent.class);
+		EntityInventory inventory = entity.get(EntityInventory.class);
 		if(inventory == null){
-			Spout.getLogger().warning("EntityEquipmentHandler entity haven't EntityInventoryComponent");
+			Spout.getLogger().warning("EntityEquipmentHandler entity haven't EntityInventory");
 			return;
 		}
 		

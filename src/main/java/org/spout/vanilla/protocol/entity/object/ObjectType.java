@@ -28,27 +28,27 @@ package org.spout.vanilla.protocol.entity.object;
 
 import java.util.HashMap;
 
-import org.spout.vanilla.component.substance.object.EnderCrystal;
-import org.spout.vanilla.component.substance.object.EyeOfEnder;
-import org.spout.vanilla.component.substance.object.FallingBlock;
-import org.spout.vanilla.component.substance.object.FallingDragonEgg;
-import org.spout.vanilla.component.substance.object.FireworksRocket;
-import org.spout.vanilla.component.substance.object.Item;
-import org.spout.vanilla.component.substance.object.ItemFrame;
-import org.spout.vanilla.component.substance.object.ObjectEntity;
-import org.spout.vanilla.component.substance.object.Tnt;
-import org.spout.vanilla.component.substance.object.WitherSkull;
-import org.spout.vanilla.component.substance.object.projectile.Arrow;
-import org.spout.vanilla.component.substance.object.projectile.Egg;
-import org.spout.vanilla.component.substance.object.projectile.EnderPearl;
-import org.spout.vanilla.component.substance.object.projectile.FishingBob;
-import org.spout.vanilla.component.substance.object.projectile.Potion;
-import org.spout.vanilla.component.substance.object.projectile.Snowball;
-import org.spout.vanilla.component.substance.object.projectile.XPBottle;
-import org.spout.vanilla.component.substance.object.vehicle.Boat;
-import org.spout.vanilla.component.substance.object.vehicle.minecart.Minecart;
-import org.spout.vanilla.component.substance.object.vehicle.minecart.PoweredMinecart;
-import org.spout.vanilla.component.substance.object.vehicle.minecart.StorageMinecart;
+import org.spout.vanilla.component.entity.substance.object.EnderCrystal;
+import org.spout.vanilla.component.entity.substance.object.EyeOfEnder;
+import org.spout.vanilla.component.entity.substance.object.FallingBlock;
+import org.spout.vanilla.component.entity.substance.object.FallingDragonEgg;
+import org.spout.vanilla.component.entity.substance.object.FireworksRocket;
+import org.spout.vanilla.component.entity.substance.object.Item;
+import org.spout.vanilla.component.entity.substance.object.ItemFrame;
+import org.spout.vanilla.component.entity.substance.object.Substance;
+import org.spout.vanilla.component.entity.substance.object.Tnt;
+import org.spout.vanilla.component.entity.substance.object.WitherSkull;
+import org.spout.vanilla.component.entity.substance.object.projectile.Arrow;
+import org.spout.vanilla.component.entity.substance.object.projectile.Egg;
+import org.spout.vanilla.component.entity.substance.object.projectile.EnderPearl;
+import org.spout.vanilla.component.entity.substance.object.projectile.FishingBob;
+import org.spout.vanilla.component.entity.substance.object.projectile.Potion;
+import org.spout.vanilla.component.entity.substance.object.projectile.Snowball;
+import org.spout.vanilla.component.entity.substance.object.projectile.XPBottle;
+import org.spout.vanilla.component.entity.substance.object.vehicle.Boat;
+import org.spout.vanilla.component.entity.substance.object.vehicle.minecart.Minecart;
+import org.spout.vanilla.component.entity.substance.object.vehicle.minecart.PoweredMinecart;
+import org.spout.vanilla.component.entity.substance.object.vehicle.minecart.StorageMinecart;
 
 public enum ObjectType {
 	BOAT(1, Boat.class),
@@ -72,11 +72,11 @@ public enum ObjectType {
 	FIREWORKS_ROCKET(76, FireworksRocket.class),
 	FISHING_BOB(90, FishingBob.class);
 	private final int id;
-	private final Class<? extends ObjectEntity> componentType;
+	private final Class<? extends Substance> componentType;
 	private static final HashMap<Integer, ObjectType> idMap = new HashMap<Integer, ObjectType>();
-	private static final HashMap<Class<? extends ObjectEntity>, ObjectType> typeMap = new HashMap<Class<? extends ObjectEntity>, ObjectType>();
+	private static final HashMap<Class<? extends Substance>, ObjectType> typeMap = new HashMap<Class<? extends Substance>, ObjectType>();
 
-	private ObjectType(int id, Class<? extends ObjectEntity> componentType) {
+	private ObjectType(int id, Class<? extends Substance> componentType) {
 		this.id = id;
 		this.componentType = componentType;
 	}
@@ -85,7 +85,7 @@ public enum ObjectType {
 		return id;
 	}
 
-	public Class<? extends ObjectEntity> getComponentType() {
+	public Class<? extends Substance> getComponentType() {
 		return componentType;
 	}
 
@@ -93,7 +93,7 @@ public enum ObjectType {
 		return idMap.get(id);
 	}
 
-	public static ObjectType get(Class<? extends ObjectEntity> type) {
+	public static ObjectType get(Class<? extends Substance> type) {
 		return typeMap.get(type);
 	}
 

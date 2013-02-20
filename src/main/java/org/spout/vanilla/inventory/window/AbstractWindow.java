@@ -41,7 +41,7 @@ import org.spout.api.inventory.Slot;
 import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
+import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.event.inventory.InventoryCanSetEvent;
 import org.spout.vanilla.event.window.WindowItemsEvent;
 import org.spout.vanilla.event.window.WindowPropertyEvent;
@@ -87,8 +87,8 @@ public abstract class AbstractWindow implements InventoryViewer {
 	 * Returns the player inventory.
 	 * @return player inventory
 	 */
-	public PlayerInventoryComponent getPlayerInventory(){
-		return getPlayer().get(PlayerInventoryComponent.class);
+	public PlayerInventory getPlayerInventory(){
+		return getPlayer().get(PlayerInventory.class);
 	}
 
 	/**

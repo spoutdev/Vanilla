@@ -37,7 +37,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.component.substance.material.Sign;
+import org.spout.vanilla.component.block.material.Sign;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.event.block.SignUpdateEvent;

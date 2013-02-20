@@ -58,24 +58,24 @@ import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.VanillaComponent;
-import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
-import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.component.living.hostile.Creeper;
-import org.spout.vanilla.component.living.hostile.EnderDragon;
-import org.spout.vanilla.component.living.hostile.Skeleton;
-import org.spout.vanilla.component.living.hostile.Zombie;
-import org.spout.vanilla.component.living.neutral.Enderman;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.misc.BurnComponent;
-import org.spout.vanilla.component.misc.HeadComponent;
-import org.spout.vanilla.component.misc.HealthComponent;
-import org.spout.vanilla.component.misc.HungerComponent;
-import org.spout.vanilla.component.substance.XPOrb;
-import org.spout.vanilla.component.substance.material.chest.Chest;
-import org.spout.vanilla.component.substance.object.FallingBlock;
-import org.spout.vanilla.component.test.ForceMessagesComponent;
-import org.spout.vanilla.component.test.TransformDebugComponent;
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
+import org.spout.vanilla.component.entity.inventory.PlayerInventory;
+import org.spout.vanilla.component.entity.inventory.WindowHolder;
+import org.spout.vanilla.component.entity.living.hostile.Creeper;
+import org.spout.vanilla.component.entity.living.hostile.EnderDragon;
+import org.spout.vanilla.component.entity.living.hostile.Skeleton;
+import org.spout.vanilla.component.entity.living.hostile.Zombie;
+import org.spout.vanilla.component.entity.living.neutral.Enderman;
+import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.entity.misc.Burn;
+import org.spout.vanilla.component.entity.misc.Head;
+import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.Hunger;
+import org.spout.vanilla.component.entity.substance.XPOrb;
+import org.spout.vanilla.component.block.material.chest.Chest;
+import org.spout.vanilla.component.entity.substance.object.FallingBlock;
+import org.spout.vanilla.component.test.ForceMessages;
+import org.spout.vanilla.component.test.SceneOutput;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
@@ -120,7 +120,7 @@ public class TestCommands {
 		}
 		Player p = (Player) source;
 		ItemStack i = new ItemStack(VanillaMaterials.MAP, ++mapId, 1);
-		p.get(PlayerInventoryComponent.class).add(i);
+		p.get(PlayerInventory.class).add(i);
 	}
 
 	@Command(aliases = "mapdraw", usage = "<bx> <by> <tx> <ty> <col>", desc = "Draws a rectangle on the current map.  The top nibble for col is the colour and the bottom nibble is the brightness",
@@ -131,7 +131,7 @@ public class TestCommands {
 			throw new CommandException("You must be a player to hold a map.");
 		}
 		Player p = (Player) source;
-		PlayerInventoryComponent inventory = p.get(PlayerInventoryComponent.class);
+		PlayerInventory inventory = p.get(PlayerInventory.class);
 		if (inventory == null) {
 			throw new CommandException("Player has no inventory.");
 		}
@@ -175,7 +175,7 @@ public class TestCommands {
 			throw new CommandException("You must be a player to hold a map.");
 		}
 		Player p = (Player) source;
-		PlayerInventoryComponent inventory = p.get(PlayerInventoryComponent.class);
+		PlayerInventory inventory = p.get(PlayerInventory.class);
 		if (inventory == null) {
 			throw new CommandException("Player has no inventory.");
 		}
@@ -244,7 +244,7 @@ public class TestCommands {
 
 		BlockIterator blockIt;
 		if (Spout.getPlatform() != Platform.CLIENT) {
-			blockIt = player.get(HeadComponent.class).getBlockView();
+			blockIt = player.get(Head.class).getBlockView();
 		} else {
 			blockIt = player.get(InteractComponent.class).getAlignedBlocks();
 		}
@@ -348,20 +348,20 @@ public class TestCommands {
 		} else {
 			player = ((Client) Spout.getEngine()).getActivePlayer();
 		}
-		player.get(HealthComponent.class).damage(args.getInteger(0));
+		player.get(Health.class).damage(args.getInteger(0));
 	}
 
 	@Command(aliases = "hunger", usage = "<amount> <hungry>", desc = "Modify your hunger", min = 2, max = 2)
 	@CommandPermissions("vanilla.command.debug")
 	public void hunger(CommandContext args, CommandSource source) throws CommandException {
-		HungerComponent hunger = null;
+		Hunger hunger = null;
 		if (Spout.getPlatform() == Platform.CLIENT) {
-			hunger = ((Client) Spout.getEngine()).getActivePlayer().get(HungerComponent.class);
+			hunger = ((Client) Spout.getEngine()).getActivePlayer().get(Hunger.class);
 		} else {
 			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to change your hunger!");
 			}
-			hunger = ((Player) source).get(HungerComponent.class);
+			hunger = ((Player) source).get(Hunger.class);
 		}
 
 		hunger.setHunger(args.getInteger(0));
@@ -434,12 +434,12 @@ public class TestCommands {
 		List<Entity> entities = world.getAll();
 		int count = 0;
 		for (Entity entity : entities) {
-			if (entity instanceof Player || (entity.get(VanillaComponent.class) == null)) {
+			if (entity instanceof Player || (entity.get(VanillaEntityComponent.class) == null)) {
 				continue;
 			}
 			count++;
 			entity.remove();
-			Spout.log(entity.get(VanillaComponent.class) + " was killed");
+			Spout.log(entity.get(VanillaEntityComponent.class) + " was killed");
 		}
 		if (count > 0) {
 			if (!isConsole) {
@@ -498,7 +498,7 @@ public class TestCommands {
 			}
 			source.sendMessage("Chunk lighting is being initialized");
 		} else if (args.getString(0, "").contains("packets")) {
-			player.add(ForceMessagesComponent.class);
+			player.add(ForceMessages.class);
 		}
 	}
 
@@ -585,7 +585,7 @@ public class TestCommands {
 			}
 		}
 		if (Spout.getPlatform() == Platform.SERVER && Spout.debugMode()) {
-			entity.add(TransformDebugComponent.class);
+			entity.add(SceneOutput.class);
 		}
 		pos.getWorld().spawnEntity(entity);
 		
@@ -595,14 +595,14 @@ public class TestCommands {
 	@Command(aliases = "fire", usage = "<time> <hurt>", desc = "Set you on fire", min = 2, max = 2)
 	@CommandPermissions("vanilla.command.debug")
 	public void fire(CommandContext args, CommandSource source) throws CommandException {
-		BurnComponent fire = null;
+		Burn fire = null;
 		if (Spout.getPlatform() == Platform.CLIENT) {
-			fire = ((Client) Spout.getEngine()).getActivePlayer().add(BurnComponent.class);
+			fire = ((Client) Spout.getEngine()).getActivePlayer().add(Burn.class);
 		} else {
 			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to change be burnable!");
 			}
-			fire = ((Player) source).add(BurnComponent.class);
+			fire = ((Player) source).add(Burn.class);
 		}
 
 		fire.setOnFire(args.getFloat(0), Boolean.parseBoolean(args.getString(1)));

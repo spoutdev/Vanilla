@@ -48,9 +48,9 @@ import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.substance.object.Item;
+import org.spout.vanilla.component.entity.inventory.PlayerInventory;
+import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.entity.substance.object.Item;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
@@ -89,7 +89,7 @@ public abstract class Window extends AbstractWindow {
 	public Window(Player owner, WindowType type, String title, int offset) {
 		super(owner, type, title, offset);
 
-		PlayerInventoryComponent inventory = getPlayerInventory();
+		PlayerInventory inventory = getPlayerInventory();
 		GridInventoryConverter main = new GridInventoryConverter(inventory.getMain(), 9, offset, MAIN_POSITION);
 		addInventoryConverter(main);
 		addInventoryConverter(new GridInventoryConverter(inventory.getQuickbar(), 9, offset + main.getGrid().getSize(), QUICKBAR_POSITION));
@@ -179,7 +179,7 @@ public abstract class Window extends AbstractWindow {
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			throw new IllegalStateException("Shift click handling is handled server side.");
 		}
-		final PlayerInventoryComponent inventory = getPlayerInventory();
+		final PlayerInventory inventory = getPlayerInventory();
 		if (from instanceof CraftingInventory) {
 			if (((CraftingInventory) from).onShiftClick(slot, inventory)) {
 				return true;

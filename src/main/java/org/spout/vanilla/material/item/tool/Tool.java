@@ -38,10 +38,10 @@ import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector2;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.component.living.hostile.Silverfish;
-import org.spout.vanilla.component.living.hostile.Skeleton;
-import org.spout.vanilla.component.living.hostile.Spider;
-import org.spout.vanilla.component.living.hostile.Zombie;
+import org.spout.vanilla.component.entity.living.hostile.Silverfish;
+import org.spout.vanilla.component.entity.living.hostile.Skeleton;
+import org.spout.vanilla.component.entity.living.hostile.Spider;
+import org.spout.vanilla.component.entity.living.hostile.Zombie;
 import org.spout.vanilla.data.drops.flag.ToolEnchantFlags;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.enchantment.Enchantment;

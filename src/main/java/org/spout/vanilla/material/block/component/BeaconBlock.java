@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.block.component;
 
-import org.spout.vanilla.component.substance.material.Beacon;
+import org.spout.vanilla.component.block.material.Beacon;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 
 public class BeaconBlock extends ComponentMaterial {

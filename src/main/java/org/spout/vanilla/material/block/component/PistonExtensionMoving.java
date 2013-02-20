@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.block.component;
 
-import org.spout.vanilla.component.substance.material.Piston;
+import org.spout.vanilla.component.block.material.Piston;
 import org.spout.vanilla.material.block.piston.PistonExtension;
 
 /**

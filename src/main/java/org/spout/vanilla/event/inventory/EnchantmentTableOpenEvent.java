@@ -31,7 +31,7 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryOpenEvent;
 
-import org.spout.vanilla.component.substance.material.EnchantmentTable;
+import org.spout.vanilla.component.block.material.EnchantmentTable;
 
 /**
  * Event which is fired when an EnchantmentTable is opened.

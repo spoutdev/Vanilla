@@ -43,7 +43,7 @@ public enum WindowType {
 	DEFAULT(-1, VanillaRenderMaterials.INVENTORY_MATERIAL),
 	/**
 	 * The window seen when opening a
-	 * {@link org.spout.vanilla.component.substance.material.chest.Chest}
+	 * {@link org.spout.vanilla.component.block.material.chest.Chest}
 	 */
 	CHEST(0, VanillaRenderMaterials.CONTAINER_MATERIAL),
 	/**
@@ -53,32 +53,32 @@ public enum WindowType {
 	CRAFTING_TABLE(1, VanillaRenderMaterials.CRAFTING_MATERIAL),
 	/**
 	 * The window seen when opening a
-	 * {@link org.spout.vanilla.component.substance.material.Furnace}
+	 * {@link org.spout.vanilla.component.block.material.Furnace}
 	 */
 	FURNACE(2, VanillaRenderMaterials.FURNACE_MATERIAL),
 	/**
 	 * The window seen when opening a
-	 * {@link org.spout.vanilla.component.substance.material.Dispenser}
+	 * {@link org.spout.vanilla.component.block.material.Dispenser}
 	 */
 	DISPENSER(3, VanillaRenderMaterials.TRAP_MATERIAL),
 	/**
 	 * The window seen when using an
-	 * {@link org.spout.vanilla.component.substance.material.EnchantmentTable}
+	 * {@link org.spout.vanilla.component.block.material.EnchantmentTable}
 	 */
 	ENCHANTMENT_TABLE(4, VanillaRenderMaterials.ENCHANT_MATERIAL),
 	/**
 	 * The window seen when using a
-	 * {@link org.spout.vanilla.component.substance.material.BrewingStand}
+	 * {@link org.spout.vanilla.component.block.material.BrewingStand}
 	 */
 	BREWING_STAND(5, VanillaRenderMaterials.ALCHEMY_MATERIAL),
 	/**
 	 * The window seen when trading with a
-	 * {@link org.spout.vanilla.component.living.passive.Villager}
+	 * {@link org.spout.vanilla.component.entity.living.passive.Villager}
 	 */
 	VILLAGER(6, VanillaRenderMaterials.VILLAGER_MATERIAL),
 	/**
 	 * The window seen when using a
-	 * {@link org.spout.vanilla.component.substance.material.Beacon}
+	 * {@link org.spout.vanilla.component.block.material.Beacon}
 	 */
 	BEACON(7, VanillaRenderMaterials.BEACON_MATERIAL),
 	/**

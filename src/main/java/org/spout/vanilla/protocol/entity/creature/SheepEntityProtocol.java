@@ -31,7 +31,7 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.living.passive.Sheep;
+import org.spout.vanilla.component.entity.living.passive.Sheep;
 
 public class SheepEntityProtocol extends CreatureProtocol {
 	public static int SHEAR_COLOR_INDEX = 16; // The MC metadata index for determining the color of the sheap and if it's been sheared.

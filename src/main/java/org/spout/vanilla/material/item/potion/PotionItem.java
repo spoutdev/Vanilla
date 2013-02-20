@@ -33,13 +33,11 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
-import org.spout.api.math.Vector3;
 import org.spout.api.math.VectorMath;
 
-import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
-import org.spout.vanilla.component.misc.EffectsComponent;
-import org.spout.vanilla.component.substance.object.projectile.Potion;
-import org.spout.vanilla.component.substance.object.projectile.Projectile;
+import org.spout.vanilla.component.entity.inventory.PlayerInventory;
+import org.spout.vanilla.component.entity.misc.Effects;
+import org.spout.vanilla.component.entity.substance.object.projectile.Potion;
 import org.spout.vanilla.data.effect.StatusEffect;
 import org.spout.vanilla.data.effect.StatusEffectContainer;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -247,10 +245,10 @@ public class PotionItem extends VanillaItemMaterial {
 
 	public void onDrink(Entity entity, Slot slot) {
 		if (this.effect != null) {
-			entity.add(EffectsComponent.class).addEffect(new StatusEffectContainer(effect, this.getTime(), this.getTier()));
+			entity.add(Effects.class).addEffect(new StatusEffectContainer(effect, this.getTime(), this.getTier()));
 		}
 
 		slot.addAmount(-1);
-		entity.get(PlayerInventoryComponent.class).getMain().add(new ItemStack(VanillaMaterials.GLASS_BOTTLE, 1));
+		entity.get(PlayerInventory.class).getMain().add(new ItemStack(VanillaMaterials.GLASS_BOTTLE, 1));
 	}
 }

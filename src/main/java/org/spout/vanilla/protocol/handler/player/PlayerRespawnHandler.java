@@ -34,7 +34,7 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerRespawnMessage;
 
 public final class PlayerRespawnHandler extends MessageHandler<PlayerRespawnMessage> {

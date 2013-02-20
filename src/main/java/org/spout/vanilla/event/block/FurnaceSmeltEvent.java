@@ -32,7 +32,7 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.block.BlockEvent;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.component.substance.material.Furnace;
+import org.spout.vanilla.component.block.material.Furnace;
 
 /**
  * Event which is called when an unit of an ItemStack is smelted.

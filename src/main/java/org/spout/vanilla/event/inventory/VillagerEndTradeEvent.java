@@ -31,7 +31,7 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryCloseEvent;
 
-import org.spout.vanilla.component.living.passive.Villager;
+import org.spout.vanilla.component.entity.living.passive.Villager;
 
 /**
  * Event which is fired when a trade with a villager is ended.

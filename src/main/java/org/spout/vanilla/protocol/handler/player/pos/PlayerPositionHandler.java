@@ -49,8 +49,8 @@ import org.spout.api.protocol.reposition.RepositionManager;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.player.PingComponent;
+import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.entity.player.Ping;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionMessage;
 
 public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMessage> {
@@ -87,7 +87,7 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 		final Player holder = session.getPlayer();
 		final RepositionManager rmInverse = holder.getNetworkSynchronizer().getRepositionManager().getInverse();
 
-		PingComponent ping = holder.get(PingComponent.class);
+		Ping ping = holder.get(Ping.class);
 		if (ping != null) {
 			ping.refresh();
 		}
@@ -180,7 +180,7 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 				System.out.println("    Sneaking: " + human.isSneaking());
 				System.out.println("    Sprinting: " + human.isSprinting());
 				System.out.println("    Swimming: " + human.isInWater());
-				System.out.println("    Ping: " + holder.get(PingComponent.class).getPing());
+				System.out.println("    Ping: " + holder.get(Ping.class).getPing());
 				last = System.nanoTime();
 				*/
 				if (tracker.isFilled()) {

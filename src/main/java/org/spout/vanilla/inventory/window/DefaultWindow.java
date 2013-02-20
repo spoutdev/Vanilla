@@ -37,7 +37,7 @@ import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.math.Vector2;
 import org.spout.api.plugin.Platform;
 
-import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
+import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.inventory.entity.ArmorInventory;
 import org.spout.vanilla.inventory.entity.EntityArmorInventory;
 import org.spout.vanilla.inventory.player.PlayerCraftingInventory;
@@ -48,7 +48,7 @@ public class DefaultWindow extends Window {
 
 	public DefaultWindow(Player owner) {
 		super(owner, WindowType.DEFAULT, "Inventory", 9);
-		PlayerInventoryComponent inventory = getPlayerInventory();
+		PlayerInventory inventory = getPlayerInventory();
 
 		addInventoryConverter(new InventoryConverter(inventory.getArmor(), "8, 7, 6, 5", new Vector2[]{
 				Vector2.ZERO, Vector2.ZERO, Vector2.ZERO, Vector2.ZERO
@@ -61,7 +61,7 @@ public class DefaultWindow extends Window {
 
 	@Override
 	public void close() {
-		PlayerInventoryComponent pInv = getPlayerInventory();
+		PlayerInventory pInv = getPlayerInventory();
 		//Disconnecting
 		if (pInv == null) {
 			return;
@@ -96,7 +96,7 @@ public class DefaultWindow extends Window {
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			throw new IllegalStateException("Shift click handling is handled server side.");
 		}
-		final PlayerInventoryComponent inventory = getPlayerInventory();
+		final PlayerInventory inventory = getPlayerInventory();
 
 		// Transferring to the armor slots
 		if (!(from instanceof EntityArmorInventory)) {

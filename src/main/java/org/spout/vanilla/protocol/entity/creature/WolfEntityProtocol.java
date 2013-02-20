@@ -31,8 +31,8 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.living.neutral.Wolf;
-import org.spout.vanilla.component.misc.HealthComponent;
+import org.spout.vanilla.component.entity.living.neutral.Wolf;
+import org.spout.vanilla.component.entity.misc.Health;
 
 public class WolfEntityProtocol extends CreatureProtocol {
 	public final static int SIT_TAME_RED_EYES_INDEX = 16; // The MC metadata index for determining if the wolf is tamed, has red eyes, or is sitting.
@@ -53,7 +53,7 @@ public class WolfEntityProtocol extends CreatureProtocol {
 		data |= (wolf.isTamed() ? 1 : 0) & 0x04;
 		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, SIT_TAME_RED_EYES_INDEX, data));
 		parameters.add(new Parameter<String>(Parameter.TYPE_STRING, OWNER_INDEX, wolf.getOwnerName()));
-		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, HEALTH_INDEX, wolf.getOwner().get(HealthComponent.class).getHealth()));
+		parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, HEALTH_INDEX, wolf.getOwner().get(Health.class).getHealth()));
 		return parameters;
 	}
 }

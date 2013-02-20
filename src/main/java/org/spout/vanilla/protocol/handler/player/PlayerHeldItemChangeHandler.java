@@ -34,7 +34,7 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.event.player.PlayerHeldItemChangeEvent;
 import org.spout.vanilla.event.player.network.PlayerSelectedSlotChangeEvent;
 import org.spout.vanilla.inventory.entity.QuickbarInventory;
-import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.protocol.msg.player.PlayerHeldItemChangeMessage;
 

@@ -29,7 +29,7 @@ package org.spout.vanilla.material.block.component;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.component.substance.material.NoteBlock;
+import org.spout.vanilla.component.block.material.NoteBlock;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;

@@ -31,7 +31,7 @@ import org.spout.api.geo.World;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.component.world.VanillaSky;
+import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.protocol.msg.player.PlayerTimeMessage;
 
 public final class PlayerTimeHandler extends MessageHandler<PlayerTimeMessage> {
@@ -44,7 +44,7 @@ public final class PlayerTimeHandler extends MessageHandler<PlayerTimeMessage> {
 		Player player = session.getPlayer();
 		World world = player.getWorld();
 	
-		VanillaSky sky = world.getComponentHolder().get(VanillaSky.class);
+		Sky sky = world.getComponentHolder().get(Sky.class);
 		sky.setTime(message.getTime());
 	}
 }

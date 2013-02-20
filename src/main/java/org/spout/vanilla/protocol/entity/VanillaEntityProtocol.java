@@ -39,7 +39,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.misc.HeadComponent;
+import org.spout.vanilla.component.entity.misc.Head;
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityDestroyMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
@@ -112,7 +112,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		}
 
 		// Head movement
-		HeadComponent head = entity.get(HeadComponent.class);
+		Head head = entity.get(Head.class);
 		if (head != null && head.isDirty()) {
 			final int headYawProt = ChannelBufferUtils.protocolifyYaw(head.getRotation().getYaw());
 			messages.add(new EntityHeadYawMessage(entity.getId(), headYawProt));

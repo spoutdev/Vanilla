@@ -31,7 +31,7 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.living.passive.Pig;
+import org.spout.vanilla.component.entity.living.passive.Pig;
 
 public class PigEntityProtocol extends CreatureProtocol {
 	public final static int SADDLE_INDEX = 16; // The MC metadata index for determining if the pig is saddled or not.

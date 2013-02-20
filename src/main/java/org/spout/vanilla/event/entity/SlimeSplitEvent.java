@@ -32,7 +32,7 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityEvent;
 import org.spout.api.exception.InvalidControllerException;
 
-import org.spout.vanilla.component.living.hostile.Slime;
+import org.spout.vanilla.component.entity.living.hostile.Slime;
 
 /**
  * Event which is called when a slime splits

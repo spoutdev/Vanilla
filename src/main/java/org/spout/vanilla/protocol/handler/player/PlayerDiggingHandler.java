@@ -49,6 +49,8 @@ import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.flag.Flag;
 
+import org.spout.vanilla.component.entity.misc.Digging;
+import org.spout.vanilla.component.entity.misc.Hunger;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.PlayerFlags;
@@ -60,10 +62,8 @@ import org.spout.vanilla.material.item.Food;
 import org.spout.vanilla.material.item.potion.PotionItem;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.tool.weapon.Sword;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.misc.DiggingComponent;
-import org.spout.vanilla.component.misc.HungerComponent;
-import org.spout.vanilla.component.substance.material.Sign;
+import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.block.material.Sign;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.protocol.msg.player.PlayerDiggingMessage;
@@ -202,9 +202,9 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				} else if (human.isSurvival() && blockMaterial.getHardness() != 0.0f) {
 					ItemStack currentItem = PlayerUtil.getHeldSlot(player).get();
 					if (currentItem != null) {
-						player.get(DiggingComponent.class).startDigging(new Point(w, x, y, z), currentItem.getMaterial());
+						player.get(Digging.class).startDigging(new Point(w, x, y, z), currentItem.getMaterial());
 					} else {
-						player.get(DiggingComponent.class).startDigging(new Point(w, x, y, z), VanillaMaterials.AIR);
+						player.get(Digging.class).startDigging(new Point(w, x, y, z), VanillaMaterials.AIR);
 					}
 				} else {
 					// insta-break
@@ -214,9 +214,9 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				}
 			}
 		} else if (state == PlayerDiggingMessage.STATE_CANCEL_DIGGING) {
-			player.get(DiggingComponent.class).stopDigging(new Point(w, x, y, z), false);
+			player.get(Digging.class).stopDigging(new Point(w, x, y, z), false);
 		} else if (state == PlayerDiggingMessage.STATE_DONE_DIGGING) {
-			DiggingComponent diggingComponent = player.get(DiggingComponent.class);
+			Digging diggingComponent = player.get(Digging.class);
 
 			if (!diggingComponent.stopDigging(new Point(w, x, y, z), true) || !isInteractable) {
 				if (!diggingComponent.isDigging()) {
@@ -261,7 +261,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 			}
 		} else if (state == PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
 			if (heldItem.getMaterial() instanceof Food || heldItem.getMaterial() instanceof PotionItem) {
-				player.add(HungerComponent.class).setEating(false, currentSlot);
+				player.add(Hunger.class).setEating(false, currentSlot);
 			} else if (heldItem.getMaterial() instanceof Sword) {
 				human.setEatingBlocking(false);
 			}

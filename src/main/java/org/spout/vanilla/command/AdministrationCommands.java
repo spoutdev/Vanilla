@@ -50,11 +50,11 @@ import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.util.concurrent.AtomicFloat;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.misc.HealthComponent;
-import org.spout.vanilla.component.misc.LevelComponent;
-import org.spout.vanilla.component.world.VanillaSky;
+import org.spout.vanilla.component.entity.inventory.PlayerInventory;
+import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.Level;
+import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.Time;
 import org.spout.vanilla.data.Weather;
@@ -81,7 +81,7 @@ public class AdministrationCommands {
 			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to clear your own inventory.");
 			}
-			PlayerInventoryComponent inv = ((Player) source).get(PlayerInventoryComponent.class);
+			PlayerInventory inv = ((Player) source).get(PlayerInventory.class);
 			if (inv == null) {
 				source.sendMessage(plugin.getPrefix(), ChatStyle.RED, "You have no inventory!");
 				return;
@@ -94,7 +94,7 @@ public class AdministrationCommands {
 				source.sendMessage(plugin.getPrefix(), ChatStyle.RED, "Player is not online!");
 				return;
 			}
-			PlayerInventoryComponent inv = player.get(PlayerInventoryComponent.class);
+			PlayerInventory inv = player.get(PlayerInventory.class);
 			if (inv == null) {
 				source.sendMessage(plugin.getPrefix(), ChatStyle.RED, "Player has no inventory!");
 				return;
@@ -155,7 +155,7 @@ public class AdministrationCommands {
 		}
 
 		int count = args.getInteger(++index, 1);
-		PlayerInventoryComponent inventory = player.get(PlayerInventoryComponent.class);
+		PlayerInventory inventory = player.get(PlayerInventory.class);
 		if (inventory != null) {
 			inventory.add(new ItemStack(material, count));
 			source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Gave ", ChatStyle.WHITE, player.getName() + " ", count, ChatStyle.BRIGHT_GREEN, " of ", ChatStyle.WHITE,
@@ -242,7 +242,7 @@ public class AdministrationCommands {
 			throw new CommandException("You must specify a world.");
 		}
 
-		VanillaSky sky = VanillaSky.getSky(world);
+		Sky sky = Sky.getSky(world);
 		if (sky == null) {
 			throw new CommandException("The sky for " + world.getName() + " is not available.");
 		}
@@ -326,7 +326,7 @@ public class AdministrationCommands {
 		}
 
 		short amount = (short) args.getInteger(index);
-		LevelComponent level = player.get(LevelComponent.class);
+		Level level = player.get(Level.class);
 		if (level == null) {
 			throw new CommandException(player.getDisplayName() + " does not have experience.");
 		}
@@ -363,7 +363,7 @@ public class AdministrationCommands {
 			throw new CommandException("Weather must be a mode between 0 and 2, 'CLEAR', 'RAIN', 'SNOW', or 'THUNDERSTORM'");
 		}
 
-		VanillaSky sky = VanillaSky.getSky(world);
+		Sky sky = Sky.getSky(world);
 		if (sky == null) {
 			throw new CommandException("The sky of world '" + world.getName() + "' is not availible.");
 		}
@@ -408,7 +408,7 @@ public class AdministrationCommands {
 		if (player == null) {
 			throw new CommandException(args.getString(0) + " is not online.");
 		}
-		HealthComponent health = player.get(HealthComponent.class);
+		Health health = player.get(Health.class);
 		if (health == null) {
 			throw new CommandException(player.getDisplayName() + " can not be killed.");
 		}

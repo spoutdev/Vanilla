@@ -33,7 +33,7 @@ import org.spout.vanilla.material.PotionReagent;
 import org.spout.vanilla.material.item.potion.PotionItem;
 
 /**
- * Represents the inventory of a {@link org.spout.vanilla.component.substance.material.BrewingStand}
+ * Represents the inventory of a {@link org.spout.vanilla.component.block.material.BrewingStand}
  */
 public class BrewingStandInventory extends Inventory {
 	private static final long serialVersionUID = 1L;

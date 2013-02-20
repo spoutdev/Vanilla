@@ -44,24 +44,24 @@ import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.plugin.Platform;
 
-import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
-import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.misc.HealthComponent;
-import org.spout.vanilla.component.misc.HungerComponent;
-import org.spout.vanilla.component.misc.LevelComponent;
-import org.spout.vanilla.component.misc.PlayerPickupItemComponent;
-import org.spout.vanilla.component.misc.SleepComponent;
-import org.spout.vanilla.component.player.HUDComponent;
-import org.spout.vanilla.component.player.PingComponent;
-import org.spout.vanilla.component.player.PlayerListComponent;
-import org.spout.vanilla.component.player.hud.VanillaArmorWidget;
-import org.spout.vanilla.component.player.hud.VanillaCrosshair;
-import org.spout.vanilla.component.player.hud.VanillaDrowning;
-import org.spout.vanilla.component.player.hud.VanillaExpBar;
-import org.spout.vanilla.component.player.hud.VanillaHotBar;
-import org.spout.vanilla.component.player.hud.VanillaHunger;
-import org.spout.vanilla.component.world.VanillaSky;
+import org.spout.vanilla.component.entity.inventory.PlayerInventory;
+import org.spout.vanilla.component.entity.inventory.WindowHolder;
+import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.misc.Hunger;
+import org.spout.vanilla.component.entity.misc.Level;
+import org.spout.vanilla.component.entity.misc.PlayerItemCollector;
+import org.spout.vanilla.component.entity.misc.SleepComponent;
+import org.spout.vanilla.component.entity.player.HUD;
+import org.spout.vanilla.component.entity.player.Ping;
+import org.spout.vanilla.component.entity.player.PlayerList;
+import org.spout.vanilla.component.entity.player.hud.VanillaArmorWidget;
+import org.spout.vanilla.component.entity.player.hud.VanillaCrosshair;
+import org.spout.vanilla.component.entity.player.hud.VanillaDrowning;
+import org.spout.vanilla.component.entity.player.hud.VanillaExpBar;
+import org.spout.vanilla.component.entity.player.hud.VanillaHotBar;
+import org.spout.vanilla.component.entity.player.hud.VanillaHunger;
+import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.block.RedstoneChangeEvent;
 import org.spout.vanilla.input.VanillaInputExecutor;
@@ -88,16 +88,16 @@ public class VanillaListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		player.add(Human.class).setName(player.getName());
-		player.add(PlayerInventoryComponent.class);
+		player.add(PlayerInventory.class);
 		player.add(WindowHolder.class);
-		player.add(PlayerListComponent.class);
-		player.add(PingComponent.class);
-		player.add(PlayerPickupItemComponent.class);
+		player.add(PlayerList.class);
+		player.add(Ping.class);
+		player.add(PlayerItemCollector.class);
 		player.add(SleepComponent.class);
-		player.add(HungerComponent.class);
-		player.add(LevelComponent.class);
+		player.add(Hunger.class);
+		player.add(Level.class);
 		player.getSession().setUncaughtExceptionHandler(new PasteExceptionHandler(player.getSession()));
-		VanillaSky.getSky(player.getWorld()).updatePlayer(player);
+		Sky.getSky(player.getWorld()).updatePlayer(player);
 	}
 
 	@EventHandler
@@ -108,7 +108,7 @@ public class VanillaListener implements Listener {
 
 		Player player = ((Client) Spout.getEngine()).getActivePlayer();
 
-		HUDComponent HUD = player.add(HUDComponent.class);
+		HUD HUD = player.add(org.spout.vanilla.component.entity.player.HUD.class);
 		HUD.setDefault(VanillaArmorWidget.class);
 		HUD.setDefault(VanillaHotBar.class);
 		HUD.setDefault(VanillaCrosshair.class);
@@ -119,11 +119,11 @@ public class VanillaListener implements Listener {
 		HUD.openHUD();
 
 		player.add(Human.class);
-		player.add(PlayerInventoryComponent.class);
+		player.add(PlayerInventory.class);
 		player.add(WindowHolder.class);
 		player.add(CameraComponent.class);
-		player.add(HealthComponent.class);
-		player.add(HungerComponent.class);
+		player.add(Health.class);
+		player.add(Hunger.class);
 		player.add(InteractComponent.class).setRange(5f);
 
 		((Client) Spout.getEngine()).getInputManager().addInputExecutors(new VanillaInputExecutor(player));
@@ -176,14 +176,14 @@ public class VanillaListener implements Listener {
 	public void onEntityHide(EntityHiddenEvent event) {
 		//TODO maps, sounds, etc.
 		if (event.getEntity() instanceof Player) {
-			event.getHiddenFrom().get(PlayerListComponent.class).force();
+			event.getHiddenFrom().get(PlayerList.class).force();
 		}
 	}
 
 	@EventHandler
 	public void onEntityShow(EntityShownEvent event) {
 		if (event.getEntity() instanceof Player) {
-			event.getHiddenFrom().get(PlayerListComponent.class).force();
+			event.getHiddenFrom().get(PlayerList.class).force();
 		}
 	}
 }

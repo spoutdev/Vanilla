@@ -42,9 +42,9 @@ import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.misc.HealthComponent;
-import org.spout.vanilla.component.substance.object.Item;
+import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.substance.object.Item;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -164,7 +164,7 @@ public abstract class ExplosionModel {
 				}
 
 				// Check if entity can be damaged
-				HealthComponent health = entity.get(HealthComponent.class);
+				Health health = entity.get(Health.class);
 				if (health == null) {
 					continue;
 				}

@@ -31,7 +31,7 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.substance.object.vehicle.minecart.MinecartBase;
+import org.spout.vanilla.component.entity.substance.object.vehicle.minecart.MinecartBase;
 import org.spout.vanilla.material.block.rail.RailBase;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.util.PlayerUtil;

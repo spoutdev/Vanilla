@@ -39,10 +39,10 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.component.Hostile;
-import org.spout.vanilla.component.living.Living;
-import org.spout.vanilla.component.misc.SleepComponent;
-import org.spout.vanilla.component.world.VanillaSky;
+import org.spout.vanilla.component.entity.Hostile;
+import org.spout.vanilla.component.entity.living.Living;
+import org.spout.vanilla.component.entity.misc.SleepComponent;
+import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.data.Time;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.InitializableMaterial;
@@ -78,7 +78,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 
 		final Block head = getCorrectHalf(block, true);
 		final World world = player.getWorld();
-		final VanillaSky sky = world.getComponentHolder().get(VanillaSky.class);
+		final Sky sky = world.getComponentHolder().get(Sky.class);
 
 		for (Entity e : world.getNearbyEntities(player, NEARBY_MONSTER_RANGE)) {
 			if (e.get(Living.class) instanceof Hostile) {

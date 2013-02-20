@@ -29,7 +29,7 @@ package org.spout.vanilla.material.block.component;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 
-import org.spout.vanilla.component.substance.material.CommandBlock;
+import org.spout.vanilla.component.block.material.CommandBlock;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.RedstoneUtil;

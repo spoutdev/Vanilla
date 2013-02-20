@@ -64,13 +64,13 @@ import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
-import org.spout.vanilla.component.living.neutral.Human;
-import org.spout.vanilla.component.misc.HungerComponent;
-import org.spout.vanilla.component.misc.LevelComponent;
-import org.spout.vanilla.component.substance.material.Sign;
-import org.spout.vanilla.component.test.ForceMessagesComponent;
-import org.spout.vanilla.component.world.VanillaSky;
+import org.spout.vanilla.component.entity.inventory.PlayerInventory;
+import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.entity.misc.Hunger;
+import org.spout.vanilla.component.entity.misc.Level;
+import org.spout.vanilla.component.block.material.Sign;
+import org.spout.vanilla.component.test.ForceMessages;
+import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
@@ -470,7 +470,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			human.updateAbilities();
 		}
 
-		PlayerInventoryComponent inv = player.get(PlayerInventoryComponent.class);
+		PlayerInventory inv = player.get(PlayerInventory.class);
 		if (inv != null) {
 			inv.updateAll();
 		}
@@ -478,9 +478,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		Point pos = world.getSpawnPoint().getPosition();
 		PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());
 		player.getSession().send(false, SPMsg);
-		session.send(false, new PlayerHeldItemChangeMessage(session.getPlayer().add(PlayerInventoryComponent.class).getQuickbar().getSelectedSlot().getIndex()));
+		session.send(false, new PlayerHeldItemChangeMessage(session.getPlayer().add(PlayerInventory.class).getQuickbar().getSelectedSlot().getIndex()));
 
-		VanillaSky.getSky(world).updatePlayer(player);
+		Sky.getSky(world).updatePlayer(player);
 	}
 
 	@Override
@@ -579,7 +579,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		int hash = HASH_SEED;
 		hash += (hash << 5) + entityId;
 		hash += (hash << 5) + tickCounter;
-		return (hash & FORCE_MASK) == 0 || (Spout.debugMode() && getPlayer().get(ForceMessagesComponent.class) != null);
+		return (hash & FORCE_MASK) == 0 || (Spout.debugMode() && getPlayer().get(ForceMessages.class) != null);
 	}
 
 	@Override
@@ -620,7 +620,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (event.getWindow() instanceof DefaultWindow) {
 			return null; // no message for the default Window
 		}
-		PlayerInventoryComponent inventory = event.getWindow().getPlayerInventory();
+		PlayerInventory inventory = event.getWindow().getPlayerInventory();
 		int size = event.getWindow().getSize() - (inventory.getMain().size() + inventory.getQuickbar().size());
 		return new WindowOpenMessage(event.getWindow(), size);
 	}
@@ -708,8 +708,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onPlayerUpdateStats(PlayerHealthEvent event) {
-		HungerComponent hungerComponent = player.get(HungerComponent.class);
-		return new PlayerHealthMessage((short) player.get(Human.class).getHealth().getHealth(), (short) hungerComponent.getHunger(), hungerComponent.getFoodSaturation());
+		Hunger hunger = player.get(Hunger.class);
+		return new PlayerHealthMessage((short) player.get(Human.class).getHealth().getHealth(), (short) hunger.getHunger(), hunger.getFoodSaturation());
 	}
 
 	@EventHandler
@@ -772,7 +772,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@EventHandler
 	public Message onExperienceChange(ExperienceChangeEvent event) {
 		Entity entity = event.getEntity();
-		LevelComponent level = entity.get(LevelComponent.class);
+		Level level = entity.get(Level.class);
 
 		if (!(entity instanceof Player)) {
 			return null;

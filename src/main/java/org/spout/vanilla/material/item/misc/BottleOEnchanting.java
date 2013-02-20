@@ -30,7 +30,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.Slot;
 
-import org.spout.vanilla.component.substance.object.projectile.XPBottle;
+import org.spout.vanilla.component.entity.substance.object.projectile.XPBottle;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.ThrowItem;
 import org.spout.vanilla.util.PlayerUtil;

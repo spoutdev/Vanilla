@@ -35,7 +35,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.substance.material.CommandBlock;
+import org.spout.vanilla.component.block.material.CommandBlock;
 
 public class CommandBlockHandler extends MessageHandler<CommandBlockMessage> {
 	@Override

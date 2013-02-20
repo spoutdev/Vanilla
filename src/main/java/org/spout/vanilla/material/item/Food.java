@@ -32,9 +32,9 @@ import org.spout.api.inventory.Slot;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.component.living.Living;
-import org.spout.vanilla.component.misc.EffectsComponent;
-import org.spout.vanilla.component.misc.HungerComponent;
+import org.spout.vanilla.component.entity.living.Living;
+import org.spout.vanilla.component.entity.misc.Effects;
+import org.spout.vanilla.component.entity.misc.Hunger;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.effect.StatusEffect;
@@ -57,18 +57,18 @@ public class Food extends VanillaItemMaterial {
 	public void onEat(Entity entity, Slot slot) {
 		entity.get(Living.class).setEatingBlocking(false);
 		if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-			HungerComponent hunger = entity.get(HungerComponent.class);
+			Hunger hunger = entity.get(Hunger.class);
 			for (FoodEffect effect : getEffectType()) {
 				switch (effect.getEffect()) {
 					case HEALTH_REGENERATION:
-						entity.add(EffectsComponent.class).addEffect(new StatusEffectContainer(StatusEffect.REGENERATION, effect.getChange()));
+						entity.add(Effects.class).addEffect(new StatusEffectContainer(StatusEffect.REGENERATION, effect.getChange()));
 						break;
 					case HUNGER:
 						hunger.setHunger((int) (hunger.getHunger() + effect.getChange()));
 						break;
 					case POISON:
 						if (GenericMath.getRandom().nextInt(101) < effect.getChange()) {
-							entity.add(EffectsComponent.class).addEffect(new StatusEffectContainer(StatusEffect.HUNGER, 30));
+							entity.add(Effects.class).addEffect(new StatusEffectContainer(StatusEffect.HUNGER, 30));
 						}
 						break;
 					case SATURATION:

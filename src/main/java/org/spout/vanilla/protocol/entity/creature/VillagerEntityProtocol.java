@@ -31,7 +31,7 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.living.passive.Villager;
+import org.spout.vanilla.component.entity.living.passive.Villager;
 
 public class VillagerEntityProtocol extends CreatureProtocol {
 	public final static int TYPE_INDEX = 16; // The MC metadata index to determine the type of the villager

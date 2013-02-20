@@ -35,7 +35,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.component.living.neutral.Human;
+import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
 
 public class PlayerSpawnHandler extends MessageHandler<PlayerSpawnMessage>{

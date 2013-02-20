@@ -31,7 +31,7 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryOpenEvent;
 
-import org.spout.vanilla.component.substance.material.BrewingStand;
+import org.spout.vanilla.component.block.material.BrewingStand;
 
 /**
  * Event which is called when a BrewingStand is opened / looked into.

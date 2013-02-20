@@ -31,7 +31,7 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.living.hostile.Blaze;
+import org.spout.vanilla.component.entity.living.hostile.Blaze;
 
 public class BlazeEntityProtocol extends CreatureProtocol {
 	public final static int ATTACK_INDEX = 16; // The MC metadata index to determine if the blaze is attacking

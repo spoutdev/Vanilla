@@ -33,7 +33,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
-import org.spout.vanilla.component.substance.object.FallingBlock;
+import org.spout.vanilla.component.entity.substance.object.FallingBlock;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 

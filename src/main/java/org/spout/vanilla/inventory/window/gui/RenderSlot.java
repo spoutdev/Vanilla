@@ -44,7 +44,7 @@ import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
 import org.spout.api.render.SpoutRenderMaterials;
 
-import org.spout.vanilla.component.inventory.WindowHolder;
+import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.inventory.window.AbstractWindow;
 

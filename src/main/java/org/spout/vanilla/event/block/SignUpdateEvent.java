@@ -34,7 +34,7 @@ import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-import org.spout.vanilla.component.substance.material.Sign;
+import org.spout.vanilla.component.block.material.Sign;
 
 /**
  * Event which is called when the text on a sign changes

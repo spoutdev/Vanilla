@@ -45,7 +45,7 @@ import org.spout.vanilla.inventory.window.block.EnchantmentTableWindow;
 import org.spout.vanilla.inventory.window.block.FurnaceWindow;
 import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.inventory.window.entity.VillagerWindow;
-import org.spout.vanilla.component.inventory.WindowHolder;
+import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
 
 public class WindowOpenHandler extends MessageHandler<WindowOpenMessage> {

@@ -39,9 +39,9 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.inventory.PlayerInventoryComponent;
-import org.spout.vanilla.component.inventory.WindowHolder;
-import org.spout.vanilla.component.player.HUDComponent;
+import org.spout.vanilla.component.entity.inventory.PlayerInventory;
+import org.spout.vanilla.component.entity.inventory.WindowHolder;
+import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.inventory.entity.QuickbarInventory;
 import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -110,10 +110,10 @@ public class InputCommandExecutor implements CommandExecutor {
 			}
 		} else if (name.startsWith("+hotbar_")) {
 			Player player = (Player) source;
-			PlayerInventoryComponent inventory = player.get(PlayerInventoryComponent.class);
+			PlayerInventory inventory = player.get(PlayerInventory.class);
 			if (inventory != null) {
 				QuickbarInventory quickbar = inventory.getQuickbar();
-				HUDComponent hud = player.get(HUDComponent.class);
+				HUD hud = player.get(HUD.class);
 				int newSlot = quickbar.getSelectedSlot().getIndex();
 				if (name.endsWith("left")) {
 					newSlot--;

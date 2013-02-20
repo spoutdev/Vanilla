@@ -36,7 +36,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.ComplexMaterial;
 import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.component.substance.VanillaBlockComponent;
+import org.spout.vanilla.component.block.VanillaBlockComponent;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public class ComponentMaterial extends VanillaBlockMaterial implements ComplexMaterial {

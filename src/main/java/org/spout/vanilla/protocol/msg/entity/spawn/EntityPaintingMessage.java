@@ -32,7 +32,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.component.substance.Painting;
+import org.spout.vanilla.component.entity.substance.Painting;
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class EntityPaintingMessage extends EntityMessage {

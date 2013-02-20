@@ -60,11 +60,11 @@ public class SkylandsGenerator extends VanillaSingleBiomeGenerator {
 	private static final ScalePoint NOISE = new ScalePoint();
 
 	static {
-		PERLIN.setFrequency(0.02);
+		PERLIN.setFrequency(0.04);
 		PERLIN.setLacunarity(2);
 		PERLIN.setNoiseQuality(NoiseQuality.BEST);
 		PERLIN.setPersistence(0.5);
-		PERLIN.setOctaveCount(16);
+		PERLIN.setOctaveCount(4);
 
 		NOISE.SetSourceModule(0, PERLIN);
 		NOISE.setxScale(0.5);

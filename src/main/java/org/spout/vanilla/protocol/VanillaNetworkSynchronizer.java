@@ -478,7 +478,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		Point pos = world.getSpawnPoint().getPosition();
 		PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());
 		player.getSession().send(false, SPMsg);
-		session.send(false, new PlayerHeldItemChangeMessage(player.add(PlayerInventoryComponent.class).getQuickbar().getSelectedSlot().getIndex()));
+		session.send(false, new PlayerHeldItemChangeMessage(player.add(PlayerInventory.class).getQuickbar().getSelectedSlot().getIndex()));
 
 		Sky.getSky(world).updatePlayer(player);
 	}

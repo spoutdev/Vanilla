@@ -1,2 +1,9 @@
-Mesh: mesh://Vanilla/entities/zombie/zombie.obj
+Mesh: mesh://Vanilla/entities/human/human.obj
 Material: material://Vanilla/entities/zombie/zombie.smt
+Skeleton: skeleton://Vanilla/entities/human/human.ske
+Animation:
+    sneak: animation://Vanilla/entities/human/human_sneak.sam
+    walk_arms: animation://Vanilla/entities/human/human_walk_arms.sam
+    interact: animation://Vanilla/entities/human/human_interact.sam
+    walk_legs: animation://Vanilla/entities/human/human_walk_legs.sam
+    zombie: animation://Vanilla/entities/human/human_zombie.sam

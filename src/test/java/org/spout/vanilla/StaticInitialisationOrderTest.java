@@ -28,13 +28,10 @@ package org.spout.vanilla;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-
 import org.junit.Test;
-
-import org.spout.vanilla.api.material.VanillaMaterial;
-
-import org.spout.vanilla.plugin.material.VanillaMaterials;
-import org.spout.vanilla.plugin.material.block.solid.Stone;
+import org.spout.vanilla.material.VanillaMaterial;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.solid.Stone;
 
 import static org.junit.Assert.fail;
 

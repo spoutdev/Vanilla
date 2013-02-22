@@ -527,14 +527,14 @@ public class TestCommands {
 				throw new CommandException(name + " is neither a living or substance entity!");
 			}
 		}
-		if (!player.hasPermission("vanilla.command.spawn." + clazz.getName().toLowerCase())) {
-			throw new CommandException("You do not have permission to spawn a(n) " + clazz.getName().toLowerCase());
-		}
+		//if (!player.hasPermission("vanilla.command.spawn." + clazz.getName().toLowerCase())) {
+		//	throw new CommandException("You do not have permission to spawn a(n) " + clazz.getSimpleName().toLowerCase());
+		//}
 		//TODO ServerEntityPrefab!
 		//How about some client support?
 		final Entity entity;
 		if (Spout.getEngine() instanceof Client) {
-			final EntityPrefab prefab = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/entities/" + clazz.getName().toLowerCase());
+			final EntityPrefab prefab = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/entities/" + clazz.getSimpleName().toLowerCase() + "/" + clazz.getSimpleName().toLowerCase() + ".sep");
 			entity = prefab.createEntity(player.getScene().getPosition());
 		} else {
 			entity = player.getWorld().createEntity(player.getScene().getPosition(), clazz);

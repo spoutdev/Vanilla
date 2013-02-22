@@ -52,8 +52,8 @@ public class Enderman extends Living implements Neutral {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new EndermanEntityProtocol());
 		SceneComponent scene = getOwner().getScene();
-		scene.setShape(7f, new BoxShape(1F, 3F, 1F));
-		scene.setFriction(10f);
+		scene.setShape(7f, new BoxShape(0.3F, 1.5F, 0.3F));
+		scene.setFriction(1f);
 		scene.setRestitution(0f);
 
 		if (getAttachedCount() == 1) {

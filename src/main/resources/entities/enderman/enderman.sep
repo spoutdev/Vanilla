@@ -1,7 +1,7 @@
 Name: "Enderman"
 Components:
     - org.spout.engine.entity.component.EntityRendererComponent
-    - Enderman
+    - org.spout.vanilla.component.entity.living.neutral.Enderman
 Data:
     Health: 20
     Damages: 1

@@ -55,7 +55,7 @@ public class Item extends Substance {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
 		SceneComponent scene = getOwner().getScene();
-		scene.setShape(5f, new BoxShape(0.125F, 0.125F, 0.125F));
+		scene.setShape(5f, new BoxShape(0.1F, 0.1F, 0.1F));
 		scene.setRestitution(0f);
 		getOwner().add(Health.class).setMaxHealth(20);
 	}

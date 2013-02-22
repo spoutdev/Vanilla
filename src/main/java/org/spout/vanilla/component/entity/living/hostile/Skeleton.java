@@ -58,7 +58,7 @@ public class Skeleton extends Living implements Hostile {
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.ARROW, random.nextInt(2)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.BONE, random.nextInt(2)));
 		dropComponent.addXpDrop((short) 5);
-		scene.setShape(5f, new BoxShape(1F, 2F, 1F));
+		scene.setShape(5f, new BoxShape(0.3F, 1.15F, 0.3F));
 		scene.setFriction(1f);
 		scene.setRestitution(0f);
 		if (getAttachedCount() == 1) {

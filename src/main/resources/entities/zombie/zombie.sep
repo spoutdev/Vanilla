@@ -2,7 +2,7 @@ Name: "Zombie"
 Components:
     - org.spout.engine.entity.component.SpoutAnimationComponent
     - org.spout.engine.entity.component.EntityRendererComponent
-    - Zombie
+    - org.spout.vanilla.component.entity.living.hostile.Zombie
 Data:
     Health: 20
     Damages: 1

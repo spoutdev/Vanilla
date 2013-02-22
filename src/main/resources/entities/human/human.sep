@@ -3,7 +3,7 @@ Components:
     - org.spout.engine.entity.component.SpoutAnimationComponent
     - org.spout.engine.entity.component.EntityRendererComponent
     - org.spout.engine.entity.component.ClientTextModelComponent
-    - Human
+    - org.spout.vanilla.component.entity.neutral.Human
 Data:
     Health: 20
     Damages: 1

@@ -62,7 +62,7 @@ public class Zombie extends Living implements Hostile {
 		getOwner().add(EntityInventory.class);
 		getOwner().add(EntityItemCollector.class);
 		SceneComponent scene = getOwner().getScene();
-		scene.setShape(5f, new BoxShape(1F, 2F, 1F));
+		scene.setShape(5f, new BoxShape(0.3F, 1.15F, 0.3F));
 		scene.setFriction(1f);
 		scene.setRestitution(0f);
 

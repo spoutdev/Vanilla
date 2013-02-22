@@ -24,36 +24,38 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.entity.substance.object.vehicle.minecart;
-
-import java.util.ArrayList;
-import java.util.List;
+package org.spout.vanilla.component.entity.substance.vehicle.minecart;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.util.Parameter;
+import org.spout.api.map.DefaultedKey;
+import org.spout.api.map.DefaultedKeyFactory;
 
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
-import org.spout.vanilla.component.entity.substance.object.Item;
-import org.spout.vanilla.component.entity.substance.object.Substance;
-import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
-import org.spout.vanilla.event.entity.EntityStatusEvent;
+import org.spout.vanilla.inventory.block.ChestInventory;
+import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
+import org.spout.vanilla.protocol.entity.object.ObjectType;
+import org.spout.vanilla.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
 
-public abstract class MinecartBase extends Substance {
-	private int wobble = 0;
+public class StorageMinecart extends MinecartBase {
+	public static final DefaultedKey<ChestInventory> CHEST_INVENTORY = new DefaultedKeyFactory<ChestInventory>("chest_inventory", ChestInventory.class);
 
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MinecartObjectEntityProtocol(ObjectType.STORAGE_MINECART));
 		if (getAttachedCount() == 1) {
-			getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.MINECART, 1));
+			getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.CHEST, 1));
 		}
-		getOwner().setSavable(true);
+	}
+
+	public ChestInventory getInventory() {
+		return this.getData().get(CHEST_INVENTORY);
 	}
 
 	@Override
@@ -61,32 +63,19 @@ public abstract class MinecartBase extends Substance {
 		if (!(source instanceof Player)) {
 			return;
 		}
-
-		if (wobble > 0) {
-			wobble--;
+		if (Action.RIGHT_CLICK.equals(action)) {
+			source.add(WindowHolder.class).openWindow(new ChestWindow((Player) source, getInventory(), "Minecart"));
 		}
-		if (Action.LEFT_CLICK.equals(action)) {
-			wobble += 10;
-			List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
-			parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 17, wobble / 5)); // Unknown flag; initialized to 0. (Probably time since last collision)
-			parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 19, wobble));
-			getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), parameters));
-			getOwner().getNetwork().callProtocolEvent(new EntityStatusEvent(getOwner(), EntityStatusMessage.ENTITY_HURT));
-
-			if (wobble > 40) {
-				onDestroy();
-				getOwner().remove();
-			}
-		}
+		super.onInteract(action, source);
 	}
 
+	@Override
 	protected void onDestroy() {
-		List<ItemStack> drops = getOwner().get(DeathDrops.class).getDrops();
-		Point entityPosition = getOwner().getScene().getPosition();
-		for (ItemStack stack : drops) {
+		for (ItemStack stack : (ItemStack[]) getInventory().toArray()) {
 			if (stack != null) {
-				Item.dropNaturally(entityPosition, stack);
+				getOwner().get(DeathDrops.class).addDrop(stack);
 			}
 		}
+		super.onDestroy();
 	}
 }

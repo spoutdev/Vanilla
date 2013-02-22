@@ -24,25 +24,50 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.test;
+package org.spout.vanilla.component.entity.substance.projectile;
 
-import org.spout.api.Spout;
-import org.spout.api.component.type.EntityComponent;
-import org.spout.api.entity.Player;
-import org.spout.api.plugin.Platform;
 
-public class SceneOutput extends EntityComponent {
+
+import org.spout.api.entity.Entity;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
+
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.substance.Substance;
+import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.ObjectType;
+
+public class Snowball extends Substance implements Projectile {
+	private Entity shooter;
+
 	@Override
 	public void onAttached() {
-		if (Spout.getPlatform() != Platform.SERVER || !Spout.debugMode() || getOwner() instanceof Player) {
-			throw new IllegalArgumentException("This is a spammy component meant only for debugging entity translations!");
-		}
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.SNOWBALL));
+		super.onAttached();
 	}
 
 	@Override
-	public void onTick(float dt) {
-		if (getOwner().getScene().isPositionDirty()) {
-			Spout.log(getOwner().toString() + " is translating!");
+	public Entity getShooter() {
+		return shooter;
+	}
+
+	@Override
+	public void setShooter(Entity shooter) {
+		this.shooter = shooter;
+	}
+
+	@Override
+	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
+		Health health = entity.get(Health.class);
+		if (health != null) {
+			health.damage(0);
 		}
+		getOwner().remove();
+	}
+
+	@Override
+	public void onCollided(Point colliderPoint, Point collidedPoint, Block block) {
+		getOwner().remove();
 	}
 }

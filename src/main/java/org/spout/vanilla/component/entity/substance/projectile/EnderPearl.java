@@ -24,25 +24,28 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.entity.substance.object.projectile;
+package org.spout.vanilla.component.entity.substance.projectile;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.substance.object.Substance;
-import org.spout.vanilla.data.effect.store.GeneralEffects;
-import org.spout.vanilla.material.item.potion.PotionItem;
-import org.spout.vanilla.protocol.entity.object.PotionEntityProtocol;
+import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.substance.Substance;
+import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.ObjectType;
+import org.spout.vanilla.util.PlayerUtil;
 
-public class Potion extends Substance implements Projectile {
+public class EnderPearl extends Substance implements Projectile {
 	private Entity shooter;
-	private PotionItem potion;
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new PotionEntityProtocol());
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.ENDER_PEARL));
+		super.onAttached();
 	}
 
 	@Override
@@ -55,23 +58,22 @@ public class Potion extends Substance implements Projectile {
 		this.shooter = shooter;
 	}
 
-	public PotionItem getPotion() {
-		return potion;
-	}
-
-	public void setPotion(PotionItem potion) {
-		this.potion = potion;
-	}
-
-	@Override
-	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
-		GeneralEffects.SPLASHPOTION.playGlobal(collidedPoint, getPotion().getData());
-		getOwner().remove();
-	}
-
-	@Override
+	/**
+	 * Called when the entity collides with a block.
+	 * @param colliderPoint The point where this entity collided with the material
+	 * @param collidedPoint The point where the material was collided with the entity
+	 * @param block The block this entity collided with
+	 */
 	public void onCollided(Point colliderPoint, Point collidedPoint, Block block) {
-		GeneralEffects.SPLASHPOTION.playGlobal(collidedPoint, getPotion().getData());
+		if (getShooter() != null && getShooter() instanceof Player) {
+			Health health = getShooter().get(Health.class);
+			if (health != null && !health.isDead()) {
+				if (!PlayerUtil.isCreativePlayer(getShooter())) {
+					health.damage(5);
+				}
+				((Player) getShooter()).teleport(block.translate(BlockFace.TOP).getPosition());
+			}
+		}
 		getOwner().remove();
 	}
 }

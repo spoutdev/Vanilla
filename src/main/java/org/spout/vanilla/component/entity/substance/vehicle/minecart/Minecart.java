@@ -24,12 +24,16 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.entity.substance.object.projectile;
+package org.spout.vanilla.component.entity.substance.vehicle.minecart;
 
-import org.spout.api.entity.Entity;
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.protocol.entity.object.ObjectType;
+import org.spout.vanilla.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
 
-public interface Projectile {
-	public Entity getShooter();
-
-	public void setShooter(Entity shooter);
+public class Minecart extends MinecartBase {
+	@Override
+	public void onAttached() {
+		super.onAttached();
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new MinecartObjectEntityProtocol(ObjectType.MINECART));
+	}
 }

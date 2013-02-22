@@ -28,7 +28,7 @@ package org.spout.vanilla.material.block.pressureplate;
 
 import org.spout.api.entity.Entity;
 
-import org.spout.vanilla.component.entity.substance.object.Item;
+import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.material.block.PressurePlate;
 

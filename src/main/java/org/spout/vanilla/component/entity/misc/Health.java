@@ -52,7 +52,7 @@ import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.component.entity.living.hostile.EnderDragon;
 import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.component.entity.substance.XPOrb;
-import org.spout.vanilla.component.entity.substance.object.Item;
+import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.VanillaRenderMaterials;

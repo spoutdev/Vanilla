@@ -26,12 +26,10 @@
  */
 package org.spout.vanilla.component.entity.substance;
 
-import org.spout.api.component.type.EntityComponent;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.object.LightningEntityProtocol;
 
-public class Lightning extends EntityComponent {
+public class Lightning extends Substance {
 	private int timeLeft = 20;
 
 	@Override

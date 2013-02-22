@@ -34,7 +34,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.component.block.material.BrewingStand;
-import org.spout.vanilla.component.entity.substance.object.Item;
+import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 

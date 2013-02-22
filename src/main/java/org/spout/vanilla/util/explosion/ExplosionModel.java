@@ -44,7 +44,7 @@ import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.component.entity.misc.Health;
-import org.spout.vanilla.component.entity.substance.object.Item;
+import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;

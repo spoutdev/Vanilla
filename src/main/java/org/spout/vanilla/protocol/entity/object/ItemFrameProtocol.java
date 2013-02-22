@@ -36,7 +36,7 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.component.entity.substance.object.ItemFrame;
+import org.spout.vanilla.component.entity.substance.ItemFrame;
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;

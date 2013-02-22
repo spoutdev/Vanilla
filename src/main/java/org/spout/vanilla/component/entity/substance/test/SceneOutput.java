@@ -24,21 +24,25 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.entity.substance.object;
+package org.spout.vanilla.component.entity.substance.test;
 
+import org.spout.api.Spout;
+import org.spout.api.component.type.EntityComponent;
+import org.spout.api.entity.Player;
+import org.spout.api.plugin.Platform;
 
-
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
-import org.spout.vanilla.protocol.entity.object.ObjectType;
-
-/**
- * A component that identifies the entity as an EnderCrystal.
- */
-public class EnderCrystal extends Substance {
+public class SceneOutput extends EntityComponent {
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.ENDER_CRYSTAL));
-		super.onAttached();
+		if (Spout.getPlatform() != Platform.SERVER || !Spout.debugMode() || getOwner() instanceof Player) {
+			throw new IllegalArgumentException("This is a spammy component meant only for debugging entity translations!");
+		}
+	}
+
+	@Override
+	public void onTick(float dt) {
+		if (getOwner().getScene().isPositionDirty()) {
+			Spout.log(getOwner().toString() + " is translating!");
+		}
 	}
 }

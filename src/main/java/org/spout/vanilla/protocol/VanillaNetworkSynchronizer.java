@@ -69,7 +69,7 @@ import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.component.entity.misc.Hunger;
 import org.spout.vanilla.component.entity.misc.Level;
 import org.spout.vanilla.component.block.material.Sign;
-import org.spout.vanilla.component.test.ForceMessages;
+import org.spout.vanilla.component.entity.substance.test.ForceMessages;
 import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;

@@ -28,27 +28,27 @@ package org.spout.vanilla.protocol.entity.object;
 
 import java.util.HashMap;
 
-import org.spout.vanilla.component.entity.substance.object.EnderCrystal;
-import org.spout.vanilla.component.entity.substance.object.EyeOfEnder;
-import org.spout.vanilla.component.entity.substance.object.FallingBlock;
-import org.spout.vanilla.component.entity.substance.object.FallingDragonEgg;
-import org.spout.vanilla.component.entity.substance.object.FireworksRocket;
-import org.spout.vanilla.component.entity.substance.object.Item;
-import org.spout.vanilla.component.entity.substance.object.ItemFrame;
-import org.spout.vanilla.component.entity.substance.object.Substance;
-import org.spout.vanilla.component.entity.substance.object.Tnt;
-import org.spout.vanilla.component.entity.substance.object.WitherSkull;
-import org.spout.vanilla.component.entity.substance.object.projectile.Arrow;
-import org.spout.vanilla.component.entity.substance.object.projectile.Egg;
-import org.spout.vanilla.component.entity.substance.object.projectile.EnderPearl;
-import org.spout.vanilla.component.entity.substance.object.projectile.FishingBob;
-import org.spout.vanilla.component.entity.substance.object.projectile.Potion;
-import org.spout.vanilla.component.entity.substance.object.projectile.Snowball;
-import org.spout.vanilla.component.entity.substance.object.projectile.XPBottle;
-import org.spout.vanilla.component.entity.substance.object.vehicle.Boat;
-import org.spout.vanilla.component.entity.substance.object.vehicle.minecart.Minecart;
-import org.spout.vanilla.component.entity.substance.object.vehicle.minecart.PoweredMinecart;
-import org.spout.vanilla.component.entity.substance.object.vehicle.minecart.StorageMinecart;
+import org.spout.vanilla.component.entity.substance.EnderCrystal;
+import org.spout.vanilla.component.entity.substance.EyeOfEnder;
+import org.spout.vanilla.component.entity.substance.FallingBlock;
+import org.spout.vanilla.component.entity.substance.FallingDragonEgg;
+import org.spout.vanilla.component.entity.substance.FireworksRocket;
+import org.spout.vanilla.component.entity.substance.Item;
+import org.spout.vanilla.component.entity.substance.ItemFrame;
+import org.spout.vanilla.component.entity.substance.Substance;
+import org.spout.vanilla.component.entity.substance.Tnt;
+import org.spout.vanilla.component.entity.substance.WitherSkull;
+import org.spout.vanilla.component.entity.substance.projectile.Arrow;
+import org.spout.vanilla.component.entity.substance.projectile.Egg;
+import org.spout.vanilla.component.entity.substance.projectile.EnderPearl;
+import org.spout.vanilla.component.entity.substance.projectile.FishingBob;
+import org.spout.vanilla.component.entity.substance.projectile.Potion;
+import org.spout.vanilla.component.entity.substance.projectile.Snowball;
+import org.spout.vanilla.component.entity.substance.projectile.XPBottle;
+import org.spout.vanilla.component.entity.substance.vehicle.Boat;
+import org.spout.vanilla.component.entity.substance.vehicle.minecart.Minecart;
+import org.spout.vanilla.component.entity.substance.vehicle.minecart.PoweredMinecart;
+import org.spout.vanilla.component.entity.substance.vehicle.minecart.StorageMinecart;
 
 public enum ObjectType {
 	BOAT(1, Boat.class),

@@ -53,7 +53,7 @@ import org.spout.api.render.RenderMaterial;
 import org.spout.api.util.flag.Flag;
 import org.spout.api.util.flag.FlagBundle;
 
-import org.spout.vanilla.component.entity.substance.object.Item;
+import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.MoveReaction;

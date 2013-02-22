@@ -24,27 +24,12 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.entity.substance.object;
+package org.spout.vanilla.component.entity.substance.projectile;
 
-import org.spout.vanilla.component.entity.VanillaEntityComponent;
+import org.spout.api.entity.Entity;
 
-public abstract class Substance extends VanillaEntityComponent {
+public interface Projectile {
+	public Entity getShooter();
 
-	@Override
-	public void onAttached() {
-		super.onAttached();
-	}
-
-	//
-	//	@Override
-	//	public void onCollided(Point colliderPoint, Point collidedPoint, Block block) {
-	//		if (getPhysics() == null) {
-	//			return;
-	//		}
-	//		if (block.getMaterial() instanceof Solid) {
-	//			getPhysics().setDamping(1f, 1f);
-	//		} else if (block.getMaterial() instanceof Liquid) {
-	//			getPhysics().setDamping(0.8f, 0.8f);
-	//		}
-	//	}
+	public void setShooter(Entity shooter);
 }

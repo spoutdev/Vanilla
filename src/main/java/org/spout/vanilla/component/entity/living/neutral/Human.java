@@ -51,7 +51,7 @@ import org.spout.vanilla.component.entity.misc.Digging;
 import org.spout.vanilla.component.entity.misc.Head;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.misc.PlayerItemCollector;
-import org.spout.vanilla.component.entity.substance.object.Item;
+import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.ViewDistance;

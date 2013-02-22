@@ -7,7 +7,7 @@ author: ${project.organization.name}
 
 main: ${mainClass}
 load: startup
-platform: BOTH
+platform: ALL
 
 data:
     protocol: ${protocolVersion}

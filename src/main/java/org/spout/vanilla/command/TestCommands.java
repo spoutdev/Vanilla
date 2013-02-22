@@ -39,7 +39,6 @@ import org.spout.api.command.annotated.CommandPermissions;
 import org.spout.api.component.Component;
 import org.spout.api.component.impl.InteractComponent;
 import org.spout.api.entity.Entity;
-import org.spout.api.entity.EntityPrefab;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
 import org.spout.api.generator.WorldGeneratorObject;
@@ -61,21 +60,17 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
-import org.spout.vanilla.component.entity.living.hostile.Creeper;
-import org.spout.vanilla.component.entity.living.hostile.EnderDragon;
-import org.spout.vanilla.component.entity.living.hostile.Skeleton;
-import org.spout.vanilla.component.entity.living.hostile.Zombie;
-import org.spout.vanilla.component.entity.living.neutral.Enderman;
+import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.component.entity.misc.Burn;
 import org.spout.vanilla.component.entity.misc.Head;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.misc.Hunger;
-import org.spout.vanilla.component.entity.substance.XPOrb;
 import org.spout.vanilla.component.block.material.chest.Chest;
-import org.spout.vanilla.component.entity.substance.object.FallingBlock;
-import org.spout.vanilla.component.test.ForceMessages;
-import org.spout.vanilla.component.test.SceneOutput;
+import org.spout.vanilla.component.entity.substance.FallingBlock;
+import org.spout.vanilla.component.entity.substance.Item;
+import org.spout.vanilla.component.entity.substance.Substance;
+import org.spout.vanilla.component.entity.substance.test.ForceMessages;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
@@ -93,8 +88,11 @@ import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.inventory.window.entity.VillagerWindow;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.material.map.Map;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
+import org.spout.vanilla.protocol.entity.object.ObjectType;
 import org.spout.vanilla.render.LightRenderEffect;
 import org.spout.vanilla.render.SkyRenderEffect;
 import org.spout.vanilla.util.explosion.ExplosionModels;
@@ -502,94 +500,68 @@ public class TestCommands {
 		}
 	}
 
-	@Command(aliases = "spawnmob", desc = "Spawns a Living at your location", min = 1, max = 2)
-	@CommandPermissions("vanilla.command.spawnmob")
-	public void spawnmob(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player) && Spout.getPlatform() != Platform.CLIENT) {
-			throw new CommandException("Only a player may spawn a Living!");
-		}
-		Player player;
-		if (Spout.getPlatform() != Platform.CLIENT) {
-			player = (Player) source;
+	@Command(aliases = "spawn", desc = "Spawns a living entity at your location", min = 1, max = 2)
+	public void spawn(CommandContext args, CommandSource source) throws CommandException {
+		final Player player;
+		if (!(source instanceof Player)) {
+			if (Spout.getPlatform() != Platform.CLIENT) {
+				throw new CommandException("Only a player may spawn a Vanilla entity!");
+			} else {
+				player = ((Client) Spout.getEngine()).getActivePlayer();
+			}
 		} else {
-			player = ((Client) Spout.getEngine()).getActivePlayer();
+			player = (Player) source;
 		}
 
-		final Point pos = player.getScene().getPosition();
 		final String name = args.getString(0);
 		Class<? extends Component> clazz;
-		// TODO: Make entity prefabs for all resources.entities
-		if (name.isEmpty()) {
-			throw new CommandException("It appears that you forgot to enter in the name of the Living.");
-		} else if (name.equalsIgnoreCase("enderman")) {
-			clazz = Enderman.class;
-		} else if (name.equalsIgnoreCase("enderdragon")) {
-			clazz = EnderDragon.class;
-		} else if (name.equalsIgnoreCase("movingblock")) {
-			clazz = FallingBlock.class;
-		} else if (name.equalsIgnoreCase("npc")) {
-			clazz = Human.class;
-		} else if (name.equalsIgnoreCase("creeper")) {
-			clazz = Creeper.class;
-		} else if (name.equalsIgnoreCase("zombie")) {
-			clazz = Zombie.class;
-		} else if (name.equalsIgnoreCase("skeleton")) {
-			clazz = Skeleton.class;
-		} else if (name.equalsIgnoreCase("xporb")) {
-			clazz = XPOrb.class;
-		} else {
-			throw new CommandException(name + " was not a valid name for a Living!");
+		//See if it is a living?
+		try {
+			clazz = CreatureType.valueOf(name.toUpperCase()).getComponentType();
+		} catch (Exception e1) {
+			try {
+				//Living failed? Try object
+				clazz = ObjectType.valueOf(name.toUpperCase()).getComponentType();
+			} catch (Exception e2) {
+				throw new CommandException(name + " is neither a living or substance entity!");
+			}
 		}
-		Entity entity = pos.getWorld().createEntity(pos, clazz);
-		entity.setSavable(true);
-		if (clazz.equals(FallingBlock.class)) {
-			if (args.length() == 2) {
-				final String materialName = args.getString(1);
-				final Material mat = MaterialRegistry.get(materialName);
-				if (mat instanceof VanillaBlockMaterial) {
-					entity.add(FallingBlock.class).setMaterial((VanillaBlockMaterial) mat);
+		if (!player.hasPermission("vanilla.command.spawn." + clazz.getName().toLowerCase())) {
+			throw new CommandException("You do not have permission to spawn a(n) " + clazz.getName().toLowerCase());
+		}
+
+		final Entity entity = player.getWorld().createEntity(player.getScene().getPosition(), clazz);
+		//Optional param was provided (ie the block material for a falling block).
+		if (args.length() == 2) {
+			//Now we know its either a living or substance. Lets figure out which.
+			if (Living.class.isAssignableFrom(clazz)) {
+				final Living living = entity.get(Living.class);
+				switch (CreatureType.valueOf(name.toUpperCase())) {
+					case HUMAN:
+						((Human) living).setName(args.getString(1));
+						 break;
 				}
-			} else {
-				entity.add(FallingBlock.class).setMaterial(VanillaMaterials.SAND);
-			}
-			entity.setSavable(false);
-		} else if (clazz.equals(Human.class)) {
-			String npcName = "Steve";
-			if (args.length() == 2) {
-				npcName = args.getString(1);
-			}
-			entity.add(Human.class).setName(npcName);
-			if (Spout.getPlatform() == Platform.CLIENT) {
-				EntityPrefab humanPrefab = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/entities/human/human.sep");
-				entity = humanPrefab.createEntity(pos);
-			}
-		} else if (clazz.equals(Enderman.class)) {
-			if (Spout.getPlatform() == Platform.CLIENT) {
-				EntityPrefab endermanPrefab = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/entities/enderman/enderman.sep");
-				entity = endermanPrefab.createEntity(pos);
-			}
-		} else if (clazz.equals(Creeper.class)) {
-			if (Spout.getPlatform() == Platform.CLIENT) {
-				EntityPrefab creeperPrefab = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/entities/creeper/creeper.sep");
-				entity = creeperPrefab.createEntity(pos);
-			}
-		} else if (clazz.equals(Zombie.class)) {
-			if (Spout.getPlatform() == Platform.CLIENT) {
-				EntityPrefab zombiePrefab = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/entities/zombie/zombie.sep");
-				entity = zombiePrefab.createEntity(pos);
-			}
-		} else if (clazz.equals(Skeleton.class)) {
-			if (Spout.getPlatform() == Platform.CLIENT) {
-				EntityPrefab skeletonPrefab = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/entities/skeleton/skeleton.sep");
-				entity = skeletonPrefab.createEntity(pos);
+			} else if (Substance.class.isAssignableFrom(clazz)) {
+				final Substance substance = entity.get(Substance.class);
+				switch (ObjectType.valueOf(name.toUpperCase())) {
+					case ITEM:
+						Material item = MaterialRegistry.get(args.getString(1));
+						if (item == null || !(item instanceof VanillaItemMaterial)) {
+							throw new CommandException(args.getString(1) + " is not a valid VanillaItemMaterial!");
+						}
+						((Item) substance).setItemStack(new ItemStack(item, 1));
+						break;
+					case FALLING_OBJECT:
+						Material block = MaterialRegistry.get(args.getString(1));
+						if (block == null || !(block instanceof VanillaBlockMaterial)) {
+							throw new CommandException(args.getString(1) + " is not a valid VanillaBlockMaterial!");
+						}
+						((FallingBlock) substance).setMaterial((VanillaBlockMaterial) block);
+						 break;
+				}
 			}
 		}
-		if (Spout.getPlatform() == Platform.SERVER && Spout.debugMode()) {
-			entity.add(SceneOutput.class);
-		}
-		pos.getWorld().spawnEntity(entity);
-		
-		System.out.println("Spawn a entity : " + entity.getId());
+		player.getWorld().spawnEntity(entity);
 	}
 
 	@Command(aliases = "fire", usage = "<time> <hurt>", desc = "Set you on fire", min = 2, max = 2)

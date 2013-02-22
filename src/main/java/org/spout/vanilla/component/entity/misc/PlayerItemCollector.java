@@ -29,7 +29,7 @@ package org.spout.vanilla.component.entity.misc;
 import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
-import org.spout.vanilla.component.entity.substance.object.Item;
+import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.event.entity.EntityCollectItemEvent;
 
 /**

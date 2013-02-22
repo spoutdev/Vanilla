@@ -24,21 +24,26 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.entity.substance.object.projectile;
+package org.spout.vanilla.component.entity.substance.projectile;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.geo.LoadOption;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.substance.object.Substance;
+import org.spout.vanilla.component.entity.living.passive.Chicken;
+import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.component.entity.substance.Substance;
 import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 
-public class FishingBob extends Substance implements Projectile {
+public class Egg extends Substance implements Projectile {
 	private Entity shooter;
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.FISHING_BOB));
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.EGG));
 		super.onAttached();
 	}
 
@@ -50,5 +55,38 @@ public class FishingBob extends Substance implements Projectile {
 	@Override
 	public void setShooter(Entity shooter) {
 		this.shooter = shooter;
+	}
+
+	@Override
+	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
+		Health health = entity.get(Health.class);
+		if (health != null) {
+			health.damage(0);
+		}
+		spawnChickens(colliderPoint);
+		getOwner().remove();
+	}
+
+	/**
+	 * Spawns a chicken by a chance of 1/8.
+	 * If a chicken is spawned, there is an additional chance of 1/32 to spawn four instead of one chicken.
+	 * @param point the point the chicken(s) will spawn at.
+	 */
+	private void spawnChickens(Point point) {
+		if (getRandom().nextInt(8) == 0) {
+			int chickensToSpawn = 1;
+			if (getRandom().nextInt(32) == 0) {
+				chickensToSpawn = 4;
+			}
+			for (int i = 0; i < chickensToSpawn; i++) {
+				point.getWorld().createAndSpawnEntity(point, Chicken.class, LoadOption.NO_LOAD);
+			}
+		}
+	}
+
+	@Override
+	public void onCollided(Point collidedroint, Point collidedPoint, Block block) {
+		spawnChickens(collidedPoint);
+		getOwner().remove();
 	}
 }

@@ -24,31 +24,20 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.material.item.misc;
+package org.spout.vanilla.component.entity.substance;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.inventory.Slot;
 
-import org.spout.vanilla.component.entity.substance.projectile.Snowball;
-import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.item.ThrowItem;
-import org.spout.vanilla.util.PlayerUtil;
 
-public class SnowballItem extends ThrowItem {
-	public SnowballItem(String name, int id) {
-		super(name, id, Snowball.class);
-		this.setMaxStackSize(16);
-	}
+import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
+import org.spout.vanilla.protocol.entity.object.ObjectType;
+
+public class FallingDragonEgg extends Substance {
+	public static final int ID = 74;
 
 	@Override
-	public void onInteract(Entity entity, Action type) {
-		super.onInteract(entity, type);
-		if (type == Action.RIGHT_CLICK) {
-			Slot slot = PlayerUtil.getHeldSlot(entity);
-			if (!PlayerUtil.isCostSuppressed(entity) && slot != null && slot.get() != null && VanillaMaterials.SNOWBALL.equals(slot.get().getMaterial())) {
-				slot.addAmount(-1);
-			}
-		}
+	public void onAttached() {
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.DRAGON_EGG));
+		super.onAttached();
 	}
 }

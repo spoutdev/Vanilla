@@ -24,21 +24,31 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.entity.substance.object;
+package org.spout.vanilla.component.entity.substance.projectile;
 
-
+import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
-import org.spout.vanilla.protocol.entity.object.ObjectType;
+import org.spout.vanilla.component.entity.substance.Substance;
+import org.spout.vanilla.protocol.entity.object.ArrowObjectEntityProtocol;
 
-/**
- * A component that identifies the entity as a Fireworks Rocket.
- */
-public class FireworksRocket extends Substance {
+public class Arrow extends Substance implements Projectile {
+	public static final int ID = 60;
+	private Entity shooter;
+
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.FIREWORKS_ROCKET));
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ArrowObjectEntityProtocol());
 		super.onAttached();
+	}
+
+	@Override
+	public Entity getShooter() {
+		return shooter;
+	}
+
+	@Override
+	public void setShooter(Entity shooter) {
+		this.shooter = shooter;
 	}
 }

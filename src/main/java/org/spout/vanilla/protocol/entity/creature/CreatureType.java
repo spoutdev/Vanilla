@@ -48,6 +48,7 @@ import org.spout.vanilla.component.entity.living.hostile.Wither;
 import org.spout.vanilla.component.entity.living.hostile.Zombie;
 import org.spout.vanilla.component.entity.living.neutral.Bat;
 import org.spout.vanilla.component.entity.living.neutral.Enderman;
+import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.component.entity.living.neutral.PigZombie;
 import org.spout.vanilla.component.entity.living.neutral.Wolf;
 import org.spout.vanilla.component.entity.living.passive.Chicken;
@@ -72,6 +73,7 @@ public enum CreatureType {
 	ENDERMAN(58, Enderman.class),
 	GHAST(56, Ghast.class),
 	GIANT(53, Giant.class),
+	HUMAN(-1, Human.class), //TODO Make sure this is okay!
 	IRON_GOLEM(99, IronGolem.class),
 	MAGMA_CUBE(62, MagmaCube.class),
 	MUSHROOM_COW(96, MooshroomCow.class),

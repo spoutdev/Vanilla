@@ -37,7 +37,7 @@ import org.spout.api.math.VectorMath;
 
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.misc.Effects;
-import org.spout.vanilla.component.entity.substance.object.projectile.Potion;
+import org.spout.vanilla.component.entity.substance.projectile.Potion;
 import org.spout.vanilla.data.effect.StatusEffect;
 import org.spout.vanilla.data.effect.StatusEffectContainer;
 import org.spout.vanilla.material.VanillaMaterials;

@@ -36,15 +36,13 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
-import org.spout.vanilla.component.entity.substance.object.Item;
 import org.spout.vanilla.data.PaintingType;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.object.PaintingEntityProtocol;
 
-public class Painting extends VanillaEntityComponent {
+public class Painting extends Substance {
 	private float timer = 0f;
 
 	@Override

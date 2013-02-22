@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.test;
+package org.spout.vanilla.component.entity.substance.test;
 
 import java.util.List;
 import java.util.Random;

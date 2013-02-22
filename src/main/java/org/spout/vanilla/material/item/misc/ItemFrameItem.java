@@ -35,7 +35,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.component.entity.substance.object.ItemFrame;
+import org.spout.vanilla.component.entity.substance.ItemFrame;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class ItemFrameItem extends VanillaItemMaterial {

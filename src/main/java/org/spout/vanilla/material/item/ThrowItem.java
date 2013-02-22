@@ -34,8 +34,8 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.World;
 import org.spout.api.math.VectorMath;
 
-import org.spout.vanilla.component.entity.substance.object.Substance;
-import org.spout.vanilla.component.entity.substance.object.projectile.Projectile;
+import org.spout.vanilla.component.entity.substance.Substance;
+import org.spout.vanilla.component.entity.substance.projectile.Projectile;
 
 public abstract class ThrowItem extends VanillaItemMaterial {
 	private Class<? extends Substance> itemThrown;

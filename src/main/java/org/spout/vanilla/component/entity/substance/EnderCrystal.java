@@ -24,50 +24,21 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.entity.substance.object.projectile;
+package org.spout.vanilla.component.entity.substance;
 
 
-
-import org.spout.api.entity.Entity;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.misc.Health;
-import org.spout.vanilla.component.entity.substance.object.Substance;
 import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 
-public class Snowball extends Substance implements Projectile {
-	private Entity shooter;
-
+/**
+ * A component that identifies the entity as an EnderCrystal.
+ */
+public class EnderCrystal extends Substance {
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.SNOWBALL));
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.ENDER_CRYSTAL));
 		super.onAttached();
-	}
-
-	@Override
-	public Entity getShooter() {
-		return shooter;
-	}
-
-	@Override
-	public void setShooter(Entity shooter) {
-		this.shooter = shooter;
-	}
-
-	@Override
-	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
-		Health health = entity.get(Health.class);
-		if (health != null) {
-			health.damage(0);
-		}
-		getOwner().remove();
-	}
-
-	@Override
-	public void onCollided(Point colliderPoint, Point collidedPoint, Block block) {
-		getOwner().remove();
 	}
 }

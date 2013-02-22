@@ -24,31 +24,25 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.entity.substance.object.projectile;
+package org.spout.vanilla.component.entity.substance.test;
 
-import org.spout.api.entity.Entity;
+import org.spout.api.component.type.EntityComponent;
+import org.spout.api.entity.Player;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.substance.object.Substance;
-import org.spout.vanilla.protocol.entity.object.ArrowObjectEntityProtocol;
-
-public class Arrow extends Substance implements Projectile {
-	public static final int ID = 60;
-	private Entity shooter;
+public class ForceMessages extends EntityComponent {
+	private float time = 60F;
 
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ArrowObjectEntityProtocol());
-		super.onAttached();
+		((Player) getOwner()).sendMessage("Forcing packet updates for 60 seconds");
 	}
 
 	@Override
-	public Entity getShooter() {
-		return shooter;
-	}
-
-	@Override
-	public void setShooter(Entity shooter) {
-		this.shooter = shooter;
+	public void onTick(float dt) {
+		time -= dt;
+		if (time <= 0) {
+			this.getOwner().detach(ForceMessages.class);
+			((Player) getOwner()).sendMessage("Ending forced packet updates");
+		}
 	}
 }

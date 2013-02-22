@@ -36,7 +36,7 @@ import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
 import org.spout.api.util.map.concurrent.AtomicShortArray;
 
-import org.spout.vanilla.component.entity.substance.object.vehicle.minecart.Minecart;
+import org.spout.vanilla.component.entity.substance.vehicle.minecart.Minecart;
 import org.spout.vanilla.data.Music;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolLevel;

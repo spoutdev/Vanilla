@@ -35,7 +35,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 
-import org.spout.vanilla.component.entity.substance.object.FallingBlock;
+import org.spout.vanilla.component.entity.substance.FallingBlock;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;

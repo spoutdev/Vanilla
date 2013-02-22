@@ -36,7 +36,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
-import org.spout.vanilla.component.entity.substance.object.Item;
+import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.entity.EntityCollectItemEvent;
 import org.spout.vanilla.inventory.entity.ArmorInventory;

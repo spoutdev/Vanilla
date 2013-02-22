@@ -24,18 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.entity.substance.object;
+package org.spout.vanilla.component.entity.substance;
 
-
-
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
-import org.spout.vanilla.protocol.entity.object.ObjectType;
-
-public class EyeOfEnder extends Substance {
-	@Override
-	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.EYE_OF_ENDER));
-		super.onAttached();
-	}
+public class WitherSkull extends Substance {
 }

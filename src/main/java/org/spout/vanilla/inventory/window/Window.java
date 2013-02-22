@@ -50,7 +50,7 @@ import org.spout.api.plugin.Platform;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.living.neutral.Human;
-import org.spout.vanilla.component.entity.substance.object.Item;
+import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;

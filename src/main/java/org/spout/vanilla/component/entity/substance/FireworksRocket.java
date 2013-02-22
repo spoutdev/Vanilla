@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.entity.substance.object;
+package org.spout.vanilla.component.entity.substance;
 
 
 
@@ -32,12 +32,13 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 
-public class FallingDragonEgg extends Substance {
-	public static final int ID = 74;
-
+/**
+ * A component that identifies the entity as a Fireworks Rocket.
+ */
+public class FireworksRocket extends Substance {
 	@Override
 	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.DRAGON_EGG));
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ObjectEntityProtocol(ObjectType.FIREWORKS_ROCKET));
 		super.onAttached();
 	}
 }

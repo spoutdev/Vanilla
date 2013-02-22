@@ -24,25 +24,27 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.test;
+package org.spout.vanilla.component.entity.substance;
 
-import org.spout.api.component.type.EntityComponent;
-import org.spout.api.entity.Player;
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 
-public class ForceMessages extends EntityComponent {
-	private float time = 60F;
+public abstract class Substance extends VanillaEntityComponent {
 
 	@Override
 	public void onAttached() {
-		((Player) getOwner()).sendMessage("Forcing packet updates for 60 seconds");
+		super.onAttached();
 	}
 
-	@Override
-	public void onTick(float dt) {
-		time -= dt;
-		if (time <= 0) {
-			this.getOwner().detach(ForceMessages.class);
-			((Player) getOwner()).sendMessage("Ending forced packet updates");
-		}
-	}
+	//
+	//	@Override
+	//	public void onCollided(Point colliderPoint, Point collidedPoint, Block block) {
+	//		if (getPhysics() == null) {
+	//			return;
+	//		}
+	//		if (block.getMaterial() instanceof Solid) {
+	//			getPhysics().setDamping(1f, 1f);
+	//		} else if (block.getMaterial() instanceof Liquid) {
+	//			getPhysics().setDamping(0.8f, 0.8f);
+	//		}
+	//	}
 }

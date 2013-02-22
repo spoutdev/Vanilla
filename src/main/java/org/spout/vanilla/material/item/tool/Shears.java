@@ -34,7 +34,7 @@ import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.living.passive.Sheep;
-import org.spout.vanilla.component.entity.substance.object.Item;
+import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.tool.ToolType;

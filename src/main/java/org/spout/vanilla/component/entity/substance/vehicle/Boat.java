@@ -24,76 +24,81 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.entity.substance.object;
+package org.spout.vanilla.component.entity.substance.vehicle;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.inventory.Slot;
-import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.entity.substance.Item;
+import org.spout.vanilla.component.entity.substance.Substance;
 import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.entity.object.ItemFrameProtocol;
-import org.spout.vanilla.util.PlayerUtil;
+import org.spout.vanilla.protocol.ChannelBufferUtils;
+import org.spout.vanilla.protocol.entity.object.vehicle.BoatObjectEntityProtocol;
 
-public class ItemFrame extends Substance {
-	private Material material;
-	private BlockFace orientation;
+public class Boat extends Substance {
+	private int timeSinceLastHit = 0;
+	private BlockFace direction = BlockFace.NORTH;
+	private int damageTaken = 0;
 
 	@Override
-	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemFrameProtocol());
+	public void onTick(float dt) {
+		timeSinceLastHit++;
 	}
 
 	@Override
 	public void onInteract(Action action, Entity source) {
-		Entity entity = getOwner();
-		switch (action) {
-			case LEFT_CLICK:
-				Point pos = entity.getScene().getPosition();
-				Item.dropNaturally(pos, new ItemStack(VanillaMaterials.ITEM_FRAME, 1));
-				if(material != null){
-					Item.dropNaturally(pos, new ItemStack(material, 1));
-				}
+		if (action == Action.LEFT_CLICK) {
+			timeSinceLastHit = 0;
+			damage(10);
+			if (damageTaken > 40) {
+				Entity entity = getOwner();
+				Item.dropNaturally(entity.getScene().getPosition(), new ItemStack(VanillaMaterials.BOAT, 1));
 				entity.remove();
-				break;
-			case RIGHT_CLICK:
-				Slot slot = PlayerUtil.getHeldSlot(source);
-				if (slot != null && slot.get() != null) {
-					setMaterial(slot.get().getMaterial());
-					slot.addAmount(-1);
-				}
-				break;
+			}
 		}
 	}
 
-	public void setMaterial(Material material) {
-		this.material = material;
+	@Override
+	public void onAttached() {
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BoatObjectEntityProtocol());
+		super.onAttached();
+	}
+
+	public void setDamageTaken(int damageTaken) {
+		this.damageTaken = damageTaken;
 		List<Parameter<?>> params = new ArrayList<Parameter<?>>();
-		params.add(new Parameter<ItemStack>(Parameter.TYPE_ITEM, 2, material == null ? null : new ItemStack(material, 1)));
+		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 19, damageTaken));
 		getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), params));
 	}
 
-	public Material getMaterial() {
-		return material;
+	public int getDamageTaken() {
+		return damageTaken;
 	}
 
-	public void setOrientation(BlockFace orientation) {
-		if (orientation == BlockFace.BOTTOM || orientation == BlockFace.TOP || orientation == BlockFace.THIS) {
-			throw new IllegalArgumentException("Specified orientation must be NESW");
-		}
-		this.orientation = orientation;
+	public void damage(int amount) {
+		setDamageTaken(getDamageTaken() + amount);
 	}
 
-	public BlockFace getOrientation() {
-		return orientation;
+	public int getTimeSinceLastHit() {
+		return timeSinceLastHit;
+	}
+
+	public BlockFace getForwardDirection() {
+		return direction;
+	}
+
+	public void setForwardDirection(BlockFace direction) {
+		this.direction = direction;
+		List<Parameter<?>> params = new ArrayList<Parameter<?>>();
+		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 18, (int) ChannelBufferUtils.getNativeDirection(direction)));
+		getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), params));
 	}
 }

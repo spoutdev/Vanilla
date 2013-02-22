@@ -39,6 +39,7 @@ import org.spout.api.command.annotated.CommandPermissions;
 import org.spout.api.component.Component;
 import org.spout.api.component.impl.InteractComponent;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.EntityPrefab;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
 import org.spout.api.generator.WorldGeneratorObject;
@@ -529,8 +530,15 @@ public class TestCommands {
 		if (!player.hasPermission("vanilla.command.spawn." + clazz.getName().toLowerCase())) {
 			throw new CommandException("You do not have permission to spawn a(n) " + clazz.getName().toLowerCase());
 		}
-
-		final Entity entity = player.getWorld().createEntity(player.getScene().getPosition(), clazz);
+		//TODO ServerEntityPrefab!
+		//How about some client support?
+		final Entity entity;
+		if (Spout.getEngine() instanceof Client) {
+			final EntityPrefab prefab = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/entities/" + clazz.getName().toLowerCase());
+			entity = prefab.createEntity(player.getScene().getPosition());
+		} else {
+			entity = player.getWorld().createEntity(player.getScene().getPosition(), clazz);
+		}
 		//Optional param was provided (ie the block material for a falling block).
 		if (args.length() == 2) {
 			//Now we know its either a living or substance. Lets figure out which.

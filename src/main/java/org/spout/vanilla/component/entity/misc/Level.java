@@ -59,12 +59,14 @@ public class Level extends EntityComponent {
 	 * @param xp the total xp
 	 * @return false if the experience change event is cancelled
 	 */
-	private boolean setExperience(short xp) {
+	public boolean setExperience(short xp) {
 		ExperienceChangeEvent event = new ExperienceChangeEvent(getOwner(), getExperience(), xp);
 		Spout.getEventManager().callEvent(event);
 		if (event.isCancelled())
 			return false;
 		getData().put(VanillaData.EXPERIENCE_AMOUNT, xp);
+		getData().put(VanillaData.EXPERIENCE_LEVEL, convertXpToLevel(xp));
+		updateUi();
 		return true;
 	}
 
@@ -102,6 +104,21 @@ public class Level extends EntityComponent {
 	 */
 	public void removeLevels(int reduction) {
 		short newLevel = (short) (getLevel() - reduction);
+		if (newLevel < 0)
+			newLevel = 0;
+		short newExperience = (short) (convertLevelToXp(newLevel) + getProgress() * getXpCap(newLevel));
+		if (!setExperience(newExperience))
+			return;
+		getData().put(VanillaData.EXPERIENCE_LEVEL, newLevel);
+		updateUi();
+	}
+
+	/**
+	 * Increase the current level without changing progress. Modifies total xp accordingly.
+	 * @param addition numbers of levels to be added.
+	 */
+	public void addLevel(int addition) {
+		short newLevel = (short) (getLevel() + addition);
 		if (newLevel < 0)
 			newLevel = 0;
 		short newExperience = (short) (convertLevelToXp(newLevel) + getProgress() * getXpCap(newLevel));

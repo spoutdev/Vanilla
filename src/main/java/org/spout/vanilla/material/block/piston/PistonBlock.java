@@ -184,17 +184,19 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 	}
 
 	public boolean retract(Block block) {
-		BlockFace facing = this.getFacing(block);
-		Block next = block.translate(facing);
 		if (this.isSticky()) {
-			Block from = next.translate(facing);
-			if (this.getReaction(from) == MoveReaction.ALLOW) {
-				next.setMaterial(from.getMaterial());
-				next = from;
+			BlockFace facing = this.getFacing(block);
+			Block next = block.translate(facing);
+			if (this.isSticky()) {
+				Block from = next.translate(facing);
+				if (this.getReaction(from) == MoveReaction.ALLOW) {
+					next.setMaterial(from.getMaterial());
+					next = from;
+				}
 			}
+			next.setMaterial(VanillaMaterials.AIR);
 		}
-		next.setMaterial(VanillaMaterials.AIR);
-		playBlockAction(block, (byte) 1, (byte) (block.getData() & 0x7));
+		playBlockAction(block, (byte) 1, (byte) block.getDataField(0x7));
 		return true;
 	}
 
@@ -212,8 +214,9 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 
 	/**
 	 * Gets the amount of blocks this piston material can push
+	 * 
 	 * @param block of the piston
-	 * @return True if it can extend
+	 * @return Pushable block count, -1 if the amount exceeds the limit
 	 */
 	public int getExtendableLength(Block block) {
 		final int maxlength = 13;

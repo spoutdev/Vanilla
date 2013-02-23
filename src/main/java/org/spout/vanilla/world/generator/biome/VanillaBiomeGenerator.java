@@ -29,17 +29,36 @@ package org.spout.vanilla.world.generator.biome;
 import org.spout.api.generator.biome.BiomeGenerator;
 import org.spout.api.geo.World;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
-import org.spout.vanilla.material.VanillaMaterials;
 
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 
 public abstract class VanillaBiomeGenerator extends BiomeGenerator implements VanillaGenerator {
+	private int lowestChunkY = 0;
+	private int highestChunkY = 15;
+
 	@Override
 	public void generate(CuboidBlockMaterialBuffer blockData, int chunkX, int chunkY, int chunkZ, World world) {
-		if (chunkY < 0 || chunkY >= 256) {
+		if (chunkY < lowestChunkY || chunkY > highestChunkY) {
 			blockData.flood(VanillaMaterials.AIR);
 		} else {
 			super.generate(blockData, chunkX, chunkY, chunkZ, world);
 		}
+	}
+
+	public int getLowestChunkY() {
+		return lowestChunkY;
+	}
+
+	public void setLowestChunkY(int lowestChunkY) {
+		this.lowestChunkY = lowestChunkY;
+	}
+
+	public int getHighestChunkY() {
+		return highestChunkY;
+	}
+
+	public void setHighestChunkY(int highestChunkY) {
+		this.highestChunkY = highestChunkY;
 	}
 }

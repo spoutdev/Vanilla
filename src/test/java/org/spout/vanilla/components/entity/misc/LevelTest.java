@@ -27,14 +27,7 @@
 package org.spout.vanilla.components.entity.misc;
 
 import org.junit.Test;
-import org.powermock.api.mockito.PowerMockito;
-
-import org.spout.api.Engine;
-import org.spout.api.component.Component;
-import org.spout.api.component.ComponentOwner;
-import org.spout.api.component.impl.DatatableComponent;
 import org.spout.api.entity.Entity;
-import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.EngineFaker;
 import org.spout.vanilla.EntityMocker;
@@ -42,7 +35,6 @@ import org.spout.vanilla.component.entity.misc.Level;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 public class LevelTest {
 

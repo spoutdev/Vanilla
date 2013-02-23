@@ -52,12 +52,12 @@ import org.spout.api.util.map.TIntPairObjectHashMap;
 import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
-import org.spout.vanilla.util.MathHelper;
 import org.spout.vanilla.world.generator.biome.VanillaBiomeGenerator;
 import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.normal.biome.selector.WhittakerLayer;
 import org.spout.vanilla.world.generator.normal.object.OreObject.VanillaOreTypes;
+import org.spout.vanilla.world.generator.normal.populator.BedrockBoundPopulator;
 import org.spout.vanilla.world.generator.normal.populator.CavePopulator;
 import org.spout.vanilla.world.generator.normal.populator.DungeonPopulator;
 import org.spout.vanilla.world.generator.normal.populator.FallingLiquidPopulator;
@@ -100,8 +100,10 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		// if you want to check out a particular biome, use this!
 		//setSelector(new PerBlockBiomeSelector(VanillaBiomes.TUNDRA));
 		setSelector(new LayeredBiomeSelector(buildSelectorStack(1), VanillaBiomes.OCEAN));
+		final BedrockBoundPopulator bedrock = new BedrockBoundPopulator();
+		bedrock.addBound(0, 1, BEDROCK_DEPTH);
 		addGeneratorPopulators(
-				new GroundCoverPopulator(), new RockyShieldPopulator(),
+				bedrock, new GroundCoverPopulator(), new RockyShieldPopulator(),
 				new CavePopulator(), new RavinePopulator());
 		final OrePopulator ores = new OrePopulator();
 		ores.addOreTypes(VanillaOreTypes.DIRT, VanillaOreTypes.GRAVEL, VanillaOreTypes.COAL, VanillaOreTypes.IRON,
@@ -189,13 +191,6 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 						} else {
 							blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.AIR);
 						}
-					}
-				}
-				if (y == 0) {
-					final byte bedrockDepth =
-							(byte) (MathHelper.hashToFloat(x + xx, z + zz, (int) seed) * BEDROCK_DEPTH + 1);
-					for (byte yy = 0; yy < bedrockDepth; yy++) {
-						blockData.set(x + xx, yy, z + zz, VanillaMaterials.BEDROCK);
 					}
 				}
 			}

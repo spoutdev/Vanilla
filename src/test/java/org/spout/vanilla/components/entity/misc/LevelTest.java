@@ -40,6 +40,8 @@ import org.spout.vanilla.EngineFaker;
 import org.spout.vanilla.EntityMocker;
 import org.spout.vanilla.component.entity.misc.Level;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class LevelTest {
@@ -52,28 +54,17 @@ public class LevelTest {
 	public void testLevelComponent() {
 		Entity entity = EntityMocker.mockEntity();
 		Level levelComponent = entity.add(Level.class);
-		levelComponent.setExperience((short) 500);
-		if (levelComponent.getExperience() != (short) 500) {
-			fail("Wrong experience.");
-		}
-		if (levelComponent.getLevel() != Level.convertXpToLevel(levelComponent.getExperience())) {
-			fail("Wrong level after setting the experience.");
-		}
-
+		assertTrue(levelComponent.setExperience((short) 500));
 		short level = Level.convertXpToLevel((short) 500);
 		short xp = Level.convertLevelToXp(level);
-		if (Level.convertXpToLevel(xp) != level) {
-			fail("convertXpToLevel giving the wrong level!");
-		}
+		assertEquals(500, levelComponent.getExperience());
+		assertEquals(Level.convertXpToLevel(levelComponent.getExperience()), levelComponent.getLevel());
+		assertEquals(level, Level.convertXpToLevel(xp));
 
 		levelComponent.addExperience(30);
-		if (levelComponent.getExperience() != 530) {
-			fail("addExperience fail.");
-		}
+		assertEquals(530, levelComponent.getExperience());
 
 		levelComponent.addExperience(-30);
-		if (levelComponent.getExperience() != 500) {
-			fail("addExperience negative fail.");
-		}
+		assertEquals(500, levelComponent.getExperience());
 	}
 }

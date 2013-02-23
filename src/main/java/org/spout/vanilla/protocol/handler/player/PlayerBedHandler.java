@@ -33,7 +33,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.component.entity.misc.SleepComponent;
+import org.spout.vanilla.component.entity.misc.Sleep;
 import org.spout.vanilla.protocol.msg.player.PlayerBedMessage;
 
 public final class PlayerBedHandler extends MessageHandler<PlayerBedMessage> {
@@ -50,7 +50,7 @@ public final class PlayerBedHandler extends MessageHandler<PlayerBedMessage> {
 		
 		Block block = world.getBlock(message.getX(), message.getY(), message.getZ());
 		
-		SleepComponent sleep = entity.get(SleepComponent.class);
+		Sleep sleep = entity.get(Sleep.class);
 		sleep.sleep(block);
 	}
 }

@@ -39,7 +39,7 @@ import org.spout.vanilla.material.block.misc.BedBlock;
 /**
  * Component that handle the player sleeping on a bed or any similar blocks.
  */
-public class SleepComponent extends EntityComponent {
+public class Sleep extends EntityComponent {
 	private final float sleepSeconds = 5;
 	private float sleepTimer = sleepSeconds;
 	private boolean sleeping, skipNight;

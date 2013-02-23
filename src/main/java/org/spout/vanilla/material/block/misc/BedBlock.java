@@ -41,7 +41,7 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.entity.Hostile;
 import org.spout.vanilla.component.entity.living.Living;
-import org.spout.vanilla.component.entity.misc.SleepComponent;
+import org.spout.vanilla.component.entity.misc.Sleep;
 import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.data.Time;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
@@ -71,7 +71,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 		}
 
 		final Player player = (Player) entity;
-		SleepComponent sleep = player.get(SleepComponent.class);
+		Sleep sleep = player.get(Sleep.class);
 		if (sleep == null) {
 			return;
 		}

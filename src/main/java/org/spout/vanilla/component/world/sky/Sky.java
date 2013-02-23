@@ -36,7 +36,7 @@ import org.spout.api.geo.World;
 import org.spout.api.model.Model;
 import org.spout.api.plugin.Platform;
 
-import org.spout.vanilla.component.entity.misc.SleepComponent;
+import org.spout.vanilla.component.entity.misc.Sleep;
 import org.spout.vanilla.component.world.VanillaWorldComponent;
 import org.spout.vanilla.data.Time;
 import org.spout.vanilla.data.VanillaData;
@@ -110,7 +110,7 @@ public abstract class Sky extends VanillaWorldComponent {
 		// Sleeping players
 		boolean skipNight = false;
 		for (Player player : playerList) {
-			SleepComponent c = player.get(SleepComponent.class);
+			Sleep c = player.get(Sleep.class);
 			if (c == null || c.canSkipNight()) {
 				skipNight = true;
 			} else {
@@ -122,7 +122,7 @@ public abstract class Sky extends VanillaWorldComponent {
 		if (skipNight) {
 			time = Time.DAWN.getTime();
 			for (Player player : playerList) {
-				SleepComponent c = player.get(SleepComponent.class);
+				Sleep c = player.get(Sleep.class);
 				if (c != null && player.isOnline()) {
 					c.wake();
 				}

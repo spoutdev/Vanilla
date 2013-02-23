@@ -51,7 +51,7 @@ import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.misc.Hunger;
 import org.spout.vanilla.component.entity.misc.Level;
 import org.spout.vanilla.component.entity.misc.PlayerItemCollector;
-import org.spout.vanilla.component.entity.misc.SleepComponent;
+import org.spout.vanilla.component.entity.misc.Sleep;
 import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.component.entity.player.Ping;
 import org.spout.vanilla.component.entity.player.PlayerList;
@@ -93,7 +93,7 @@ public class VanillaListener implements Listener {
 		player.add(PlayerList.class);
 		player.add(Ping.class);
 		player.add(PlayerItemCollector.class);
-		player.add(SleepComponent.class);
+		player.add(Sleep.class);
 		player.add(Hunger.class);
 		player.add(Level.class);
 		player.getSession().setUncaughtExceptionHandler(new PasteExceptionHandler(player.getSession()));

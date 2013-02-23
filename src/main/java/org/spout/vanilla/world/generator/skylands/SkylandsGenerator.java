@@ -89,7 +89,7 @@ public class SkylandsGenerator extends VanillaSingleBiomeGenerator {
 				new OreType(VanillaMaterials.REDSTONE_ORE, 8, 7, MINIMUM, MINIMUM + 16),
 				new OreType(VanillaMaterials.GOLD_ORE, 2, 8, MINIMUM, MINIMUM + 32),
 				new OreType(VanillaMaterials.LAPIS_LAZULI_ORE, 1, 6, MINIMUM, MINIMUM + 32),
-				new OreType(VanillaMaterials.DIAMOND_ORE, 1, 7, MINIMUM, MINIMUM + 32));
+				new OreType(VanillaMaterials.DIAMOND_ORE, 1, 7, MINIMUM, MINIMUM + 16));
 		addPopulators(ores, new PondPopulator());
 	}
 

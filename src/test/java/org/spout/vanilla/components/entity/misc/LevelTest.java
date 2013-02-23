@@ -66,5 +66,19 @@ public class LevelTest {
 
 		levelComponent.addExperience(-30);
 		assertEquals(500, levelComponent.getExperience());
+
+		levelComponent.addExperience(-510);
+		assertEquals(0, levelComponent.getExperience());
+
+		levelComponent.addExperience(500);
+		level = levelComponent.getLevel();
+		levelComponent.removeLevels(1);
+		assertEquals(level - 1, levelComponent.getLevel());
+
+		levelComponent.removeLevels(levelComponent.getLevel() + 1);
+		assertEquals(0, levelComponent.getLevel());
+
+		levelComponent.addLevel(5);
+		assertEquals(5, levelComponent.getLevel());
 	}
 }

@@ -26,34 +26,23 @@
  */
 package org.spout.vanilla;
 
-import org.powermock.api.mockito.PowerMockito;
-
+import org.mockito.Mockito;
 import org.spout.api.Engine;
 import org.spout.api.FileSystem;
 import org.spout.api.Spout;
+import org.spout.api.event.EventManager;
 import org.spout.api.plugin.Platform;
 
 public class EngineFaker {
 	private final static Engine engineInstance;
 
 	static {
-		Engine engine = PowerMockito.mock(Engine.class);
-		FileSystem filesystem = PowerMockito.mock(FileSystem.class);
-		try {
-			PowerMockito.when(engine, Engine.class.getMethod("getPlatform", (Class[]) null)).withNoArguments().thenReturn(Platform.SERVER);
-			PowerMockito.when(engine, Engine.class.getMethod("getFilesystem", (Class[]) null)).withNoArguments().thenReturn(filesystem);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		if (engine == null) {
-			throw new NullPointerException("Engine is null");
-		}
-		if (engine.getPlatform() == null) {
-			throw new NullPointerException("Platform is null");
-		}
-		if (engine.getFilesystem() == null) {
-			throw new NullPointerException("FileSystem is null");
-		}
+		Engine engine = Mockito.mock(Engine.class);
+		FileSystem filesystem = Mockito.mock(FileSystem.class);
+		Mockito.when(engine.getPlatform()).thenReturn(Platform.SERVER);
+		Mockito.when(engine.getFilesystem()).thenReturn(filesystem);
+		Mockito.when(engine.getEventManager()).thenReturn(Mockito.mock(EventManager.class));
+
 		Spout.setEngine(engine);
 		engineInstance = engine;
 	}

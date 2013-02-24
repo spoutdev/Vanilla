@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.world.generator.normal;
 
-import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Random;
 

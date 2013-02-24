@@ -42,6 +42,7 @@ import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.world.generator.biome.VanillaSingleBiomeGenerator;
 import org.spout.vanilla.world.generator.nether.populator.BlockPatchPopulator;
@@ -165,7 +166,7 @@ public class NetherGenerator extends VanillaSingleBiomeGenerator {
 
 	@Override
 	public int[][] getSurfaceHeight(World world, int chunkX, int chunkZ) {
-		int height = world.getHeight() - 1;
+		int height = VanillaNetworkSynchronizer.WORLD_HEIGHT - 1;
 		int[][] heights = new int[Chunk.BLOCKS.SIZE][Chunk.BLOCKS.SIZE];
 		for (int x = 0; x < Chunk.BLOCKS.SIZE; x++) {
 			for (int z = 0; z < Chunk.BLOCKS.SIZE; z++) {

@@ -79,7 +79,7 @@ public class Egg extends Substance implements Projectile {
 				chickensToSpawn = 4;
 			}
 			for (int i = 0; i < chickensToSpawn; i++) {
-				point.getWorld().createAndSpawnEntity(point, Chicken.class, LoadOption.NO_LOAD);
+				point.getWorld().createAndSpawnEntity(point, LoadOption.NO_LOAD, Chicken.class);
 			}
 		}
 	}

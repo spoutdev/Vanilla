@@ -244,7 +244,7 @@ public class VanillaPlugin extends CommonPlugin {
 				World world = engine.loadWorld(worldNode.getWorldName(), generator);
 
 				// Apply general settings
-				final DatatableComponent data = world.getComponentHolder().getData();
+				final DatatableComponent data = world.getData();
 				data.put(VanillaData.GAMEMODE, GameMode.get(worldNode.GAMEMODE.getString()));
 				data.put(VanillaData.DIFFICULTY, Difficulty.get(worldNode.DIFFICULTY.getString()));
 				data.put(VanillaData.DIMENSION, Dimension.get(worldNode.SKY_TYPE.getString()));
@@ -284,7 +284,7 @@ public class VanillaPlugin extends CommonPlugin {
 				loader.load(world, cx, cz, effectiveRadius, newWorld);
 
 				if (worldConfig.LOADED_SPAWN.getBoolean()) {
-					Entity e = world.createAndSpawnEntity(point, ObserverComponent.class, LoadOption.LOAD_GEN);
+					Entity e = world.createAndSpawnEntity(point, LoadOption.LOAD_GEN, ObserverComponent.class);
 					e.setObserver(new FlatIterator(cx, 0, cz, 16, effectiveRadius));
 				}
 
@@ -302,13 +302,13 @@ public class VanillaPlugin extends CommonPlugin {
 			}
 
 			if (world.getGenerator() instanceof NetherGenerator) {
-				world.getComponentHolder().add(NetherSky.class).setHasWeather(false);
+				world.add(NetherSky.class).setHasWeather(false);
 			} else if (world.getGenerator() instanceof TheEndGenerator) {
-				world.getComponentHolder().add(TheEndSky.class).setHasWeather(false);
+				world.add(TheEndSky.class).setHasWeather(false);
 			} else if (world.getGenerator() instanceof SkylandsGenerator) {
-				world.getComponentHolder().add(NormalSky.class).setHasWeather(false);
+				world.add(NormalSky.class).setHasWeather(false);
 			} else {
-				world.getComponentHolder().add(NormalSky.class);
+				world.add(NormalSky.class);
 			}
 		}
 	}

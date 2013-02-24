@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.world.sky;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -36,6 +35,7 @@ import org.spout.api.geo.World;
 import org.spout.api.model.Model;
 import org.spout.api.plugin.Platform;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.misc.Sleep;
 import org.spout.vanilla.component.world.VanillaWorldComponent;
 import org.spout.vanilla.data.Time;
@@ -55,25 +55,18 @@ public abstract class Sky extends VanillaWorldComponent {
 	private AtomicLong countdown = new AtomicLong(REFRESH_RATE);
 	private WeatherSimulator weather;
 	private String model;
-	private static final HashMap<World, Sky> skies = new HashMap<World, Sky>();
 
 	@Override
 	public void onAttached() {
-		setSky(getWorld(), this);
 		if (this.model != null && Spout.getPlatform() == Platform.CLIENT) {
 			// Load the model
-			System.out.println("Loading Skydome for " + getClass().getSimpleName());
+			VanillaPlugin.getInstance().getLogger().info("Loading Skydome for " + getClass().getSimpleName());
 			Model m = (Model) Spout.getFilesystem().getResource(this.model);
 			m.getRenderMaterial().addRenderEffect(VanillaEffects.SKY);
-			System.out.println("Loaded Skydome");
+			VanillaPlugin.getInstance().getLogger().info("Loaded Skydome");
 			// Apply model
-			getWorld().getDataMap().put("Skydome", m);
+			getOwner().getData().put("skydome", m);
 		}
-	}
-
-	@Override
-	public void onDetached() {
-		setSky(getWorld(), null);
 	}
 
 	/**
@@ -105,7 +98,7 @@ public abstract class Sky extends VanillaWorldComponent {
 			updateTime((long) time);
 		}
 
-		final List<Player> playerList = getWorld().getPlayers();
+		final List<Player> playerList = getOwner().getPlayers();
 
 		// Sleeping players
 		boolean skipNight = false;
@@ -244,30 +237,6 @@ public abstract class Sky extends VanillaWorldComponent {
 	 */
 	public synchronized Weather getForecast() {
 		return this.weather == null ? Weather.CLEAR : this.weather.getForecast();
-	}
-
-	/**
-	 * Gets the world in which the sky is attached.
-	 * @return world
-	 */
-	public World getWorld() {
-		return getOwner().getWorld();
-	}
-
-	public static void setSky(World world, Sky sky) {
-		synchronized (skies) {
-			if (sky == null) {
-				skies.remove(world);
-			} else {
-				skies.put(world, sky);
-			}
-		}
-	}
-
-	public static Sky getSky(World world) {
-		synchronized (skies) {
-			return skies.get(world);
-		}
 	}
 
 	public abstract void updateTime(long time);

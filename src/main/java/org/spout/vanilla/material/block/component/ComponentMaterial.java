@@ -63,7 +63,7 @@ public class ComponentMaterial extends VanillaBlockMaterial implements ComplexMa
 	}
 
 	public BlockComponent spawn(Point pos) {
-		return pos.getWorld().createAndSpawnEntity(pos, componentType, LoadOption.NO_LOAD).add(componentType);
+		return pos.getWorld().createAndSpawnEntity(pos, LoadOption.NO_LOAD, componentType).get(componentType);
 	}
 
 	@Override

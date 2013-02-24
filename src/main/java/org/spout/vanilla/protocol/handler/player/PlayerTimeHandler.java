@@ -44,7 +44,7 @@ public final class PlayerTimeHandler extends MessageHandler<PlayerTimeMessage> {
 		Player player = session.getPlayer();
 		World world = player.getWorld();
 	
-		Sky sky = world.getComponentHolder().get(Sky.class);
+		Sky sky = world.add(Sky.class);
 		sky.setTime(message.getTime());
 	}
 }

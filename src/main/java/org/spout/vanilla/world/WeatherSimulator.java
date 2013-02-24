@@ -57,7 +57,7 @@ public class WeatherSimulator extends BasicTickable {
 	}
 
 	public World getWorld() {
-		return this.sky.getWorld();
+		return sky.getOwner();
 	}
 
 	public Weather getCurrent() {

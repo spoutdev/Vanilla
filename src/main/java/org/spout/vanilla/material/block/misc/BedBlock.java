@@ -78,7 +78,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 
 		final Block head = getCorrectHalf(block, true);
 		final World world = player.getWorld();
-		final Sky sky = world.getComponentHolder().get(Sky.class);
+		final Sky sky = world.get(Sky.class);
 
 		for (Entity e : world.getNearbyEntities(player, NEARBY_MONSTER_RANGE)) {
 			if (e.get(Living.class) instanceof Hostile) {
@@ -87,7 +87,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 			}
 		}
 
-		if (sky.getTime() < Time.DUSK.getTime()) {
+		if (sky != null && sky.getTime() < Time.DUSK.getTime()) {
 			player.sendMessage(NOT_NIGHT_MESSAGE);
 			return;
 		}

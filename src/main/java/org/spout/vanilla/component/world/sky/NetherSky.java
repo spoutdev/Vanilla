@@ -39,7 +39,7 @@ public class NetherSky extends Sky {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getWorld().setSkyLight(MIN_SKY_LIGHT);
+		getOwner().setSkyLight(MIN_SKY_LIGHT);
 	}
 
 	@Override

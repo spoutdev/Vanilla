@@ -59,7 +59,7 @@ public class BoatItem extends VanillaItemMaterial {
 		}
 
 		World world = b.getWorld();
-		world.createAndSpawnEntity(b.getPosition().add(0, 0.25f, 0), Boat.class, LoadOption.LOAD_ONLY);
+		world.createAndSpawnEntity(b.getPosition().add(0, 0.25f, 0), LoadOption.LOAD_ONLY, Boat.class);
 	}
 
 	@Override

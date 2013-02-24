@@ -46,7 +46,7 @@ public class NormalSky extends Sky {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getWorld().setSkyLight(MAX_SKY_LIGHT);
+		getOwner().setSkyLight(MAX_SKY_LIGHT);
 	}
 
 	@Override
@@ -56,12 +56,12 @@ public class NormalSky extends Sky {
 
 	@Override
 	public void updateWeather(Weather oldWeather, Weather newWeather) {
-		WeatherChangeEvent event = Spout.getEventManager().callEvent(new WeatherChangeEvent(this.getWorld(), oldWeather, newWeather));
+		WeatherChangeEvent event = Spout.getEventManager().callEvent(new WeatherChangeEvent(getOwner(), oldWeather, newWeather));
 		if (event.isCancelled()) {
 			return;
 		}
 		if (oldWeather != newWeather) {
-			for (Player player : this.getWorld().getPlayers()) {
+			for (Player player : getOwner().getPlayers()) {
 				final NetworkSynchronizer networkSynchronizer = player.getNetworkSynchronizer();
 				if (networkSynchronizer != null) {
 					networkSynchronizer.callProtocolEvent(event);
@@ -82,10 +82,10 @@ public class NormalSky extends Sky {
 			celestial = (float) ((double) celestial * (1.0d - (double) (weather.getRainStrength(timeFactor) * 5f) / 16d));
 			celestial = (float) ((double) celestial * (1.0d - (double) (weather.getThunderStrength(timeFactor) * 5f) / 16d));
 		}
-		this.getWorld().setSkyLight((byte) (celestial * (float) SKY_LIGHT_RANGE + MIN_SKY_LIGHT));
+		getOwner().setSkyLight((byte) (celestial * (float) SKY_LIGHT_RANGE + MIN_SKY_LIGHT));
 
-		TimeUpdateEvent event = new TimeUpdateEvent(getWorld(), time);
-		for (Player player : getWorld().getPlayers()) {
+		TimeUpdateEvent event = new TimeUpdateEvent(getOwner(), time);
+		for (Player player : getOwner().getPlayers()) {
 			final NetworkSynchronizer networkSynchronizer = player.getNetworkSynchronizer();
 			if (networkSynchronizer != null) {
 				networkSynchronizer.callProtocolEvent(event);
@@ -95,10 +95,10 @@ public class NormalSky extends Sky {
 
 	@Override
 	public void updatePlayer(Player player) {
-		TimeUpdateEvent event = new TimeUpdateEvent(getWorld(), getTime());
+		TimeUpdateEvent event = new TimeUpdateEvent(getOwner(), getTime());
 		player.getNetworkSynchronizer().callProtocolEvent(event);
 		if (Weather.CLEAR != getWeather()) {
-			WeatherChangeEvent weatherEvent = new WeatherChangeEvent(this.getWorld(), Weather.CLEAR, getWeather());
+			WeatherChangeEvent weatherEvent = new WeatherChangeEvent(getOwner(), Weather.CLEAR, getWeather());
 			player.getNetworkSynchronizer().callProtocolEvent(weatherEvent);
 		}
 	}

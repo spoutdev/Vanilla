@@ -52,6 +52,7 @@ import org.spout.vanilla.material.Burnable;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Spreading;
+import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.render.VanillaEffects;
 
 public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Burnable, DynamicMaterial {
@@ -331,7 +332,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 		int randomData = rand.nextInt(16) & block.getData();
 
 		// Upwards spreading
-		if (spreadDirection == BlockFace.TOP && block.getY() < block.getWorld().getHeight()) {
+		if (spreadDirection == BlockFace.TOP && block.getY() < VanillaNetworkSynchronizer.WORLD_HEIGHT) {
 			Block above = block.translate(BlockFace.TOP);
 			if (above.isMaterial(VanillaMaterials.AIR)) {
 				// spread up

@@ -107,6 +107,6 @@ public class SpawnEgg extends VanillaItemMaterial {
 		if (!PlayerUtil.isCostSuppressed(entity) && slot != null && slot.get() != null && slot.get().getMaterial().isMaterial(VanillaMaterials.SPAWN_EGG)) {
 			slot.addAmount(-1);
 		}
-		block.getWorld().createAndSpawnEntity(block.translate(clickedface).getPosition(), entityComponent, LoadOption.NO_LOAD);
+		block.getWorld().createAndSpawnEntity(block.translate(clickedface).getPosition(), LoadOption.NO_LOAD, entityComponent);
 	}
 }

@@ -60,7 +60,7 @@ public class SolidMoving extends Solid {
 		super.onUpdate(oldMaterial, block);
 		if (!block.translate(BlockFace.BOTTOM).getMaterial().isPlacementObstacle()) {
 			// turn this block into a mobile block
-			Entity e = block.getWorld().createAndSpawnEntity(block.getPosition(), FallingBlock.class, LoadOption.NO_LOAD);
+			Entity e = block.getWorld().createAndSpawnEntity(block.getPosition(), LoadOption.NO_LOAD, FallingBlock.class);
 			e.add(FallingBlock.class).setMaterial(this);
 			block.setMaterial(VanillaMaterials.AIR);
 		}

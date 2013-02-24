@@ -242,7 +242,7 @@ public class AdministrationCommands {
 			throw new CommandException("You must specify a world.");
 		}
 
-		Sky sky = Sky.getSky(world);
+		Sky sky = world.get(Sky.class);
 		if (sky == null) {
 			throw new CommandException("The sky for " + world.getName() + " is not available.");
 		}
@@ -363,7 +363,7 @@ public class AdministrationCommands {
 			throw new CommandException("Weather must be a mode between 0 and 2, 'CLEAR', 'RAIN', 'SNOW', or 'THUNDERSTORM'");
 		}
 
-		Sky sky = Sky.getSky(world);
+		Sky sky = world.get(Sky.class);
 		if (sky == null) {
 			throw new CommandException("The sky of world '" + world.getName() + "' is not availible.");
 		}

@@ -159,7 +159,7 @@ public class LightningSimulator extends Component {
 						}
 						World world = getWorld();
 						Point point = new Point(world, x + adjustX, y + adjustY, z + adjustZ);
-						world.createAndSpawnEntity(point, Lightning.class, LoadOption.NO_LOAD);
+						world.createAndSpawnEntity(point, LoadOption.NO_LOAD, Lightning.class);
 						for (Player p : GeneralEffects.LIGHTNING_THUNDER.getNearbyPlayers(point, null, 600)) {
 							double dist = p.getScene().getPosition().distanceSquared(point);
 							float volume = (float) (10000F - Math.pow(dist, 0.73));

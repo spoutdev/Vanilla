@@ -70,7 +70,10 @@ import org.spout.vanilla.component.entity.misc.Hunger;
 import org.spout.vanilla.component.entity.misc.Level;
 import org.spout.vanilla.component.block.material.Sign;
 import org.spout.vanilla.component.entity.substance.test.ForceMessages;
+import org.spout.vanilla.component.world.sky.NetherSky;
+import org.spout.vanilla.component.world.sky.NormalSky;
 import org.spout.vanilla.component.world.sky.Sky;
+import org.spout.vanilla.component.world.sky.TheEndSky;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
@@ -162,6 +165,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	private static final double STANCE = 1.62001D;
 	private static final int FORCE_MASK = 0xFF; // force an update to be sent every 5 seconds
 	private static final int HASH_SEED = 0xB346D76A;
+	public static final int WORLD_HEIGHT = 256;
 	private boolean first = true;
 	private final TSyncIntPairObjectHashMap<TSyncIntHashSet> initializedChunks = new TSyncIntPairObjectHashMap<TSyncIntHashSet>();
 	private final ConcurrentLinkedQueue<Long> emptyColumns = new ConcurrentLinkedQueue<Long>();
@@ -215,7 +219,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 		int cY = rm.convertChunkY(y);
 
-		if (cY < 0 || cY >= p.getWorld().getHeight() >> Chunk.BLOCKS.BITS) {
+		if (cY < 0 || cY >= WORLD_HEIGHT >> Chunk.BLOCKS.BITS) {
 			return;
 		}
 
@@ -241,7 +245,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 		int cY = rm.convertChunkY(y);
 
-		if (cY < 0 || cY >= p.getWorld().getHeight() >> Chunk.BLOCKS.BITS) {
+		if (cY < 0 || cY >= WORLD_HEIGHT >> Chunk.BLOCKS.BITS) {
 			return;
 		}
 
@@ -348,7 +352,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 		int cY = rm.convertChunkY(y);
 
-		if (cY < 0 || cY >= c.getWorld().getHeight() >> Chunk.BLOCKS.BITS) {
+		if (cY < 0 || cY >= WORLD_HEIGHT >> Chunk.BLOCKS.BITS) {
 			return null;
 		}
 
@@ -430,8 +434,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		highY = minY + stepY;
 		lastY = Integer.MAX_VALUE;
 
-		final DatatableComponent data = world.getComponentHolder().getData();
-		final Human human = player.get(Human.class);
+		final DatatableComponent data = world.getData();
+		final Human human = player.add(Human.class);
 		GameMode gamemode = null;
 		Difficulty difficulty = data.get(VanillaData.DIFFICULTY);
 		Dimension dimension = data.get(VanillaData.DIMENSION);
@@ -479,8 +483,19 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());
 		player.getSession().send(false, SPMsg);
 		session.send(false, new PlayerHeldItemChangeMessage(player.add(PlayerInventory.class).getQuickbar().getSelectedSlot().getIndex()));
+		Sky sky;
 
-		Sky.getSky(world).updatePlayer(player);
+		switch (dimension) {
+			case NETHER:
+				sky = world.add(NetherSky.class);
+				break;
+			case THE_END:
+				sky = world.add(TheEndSky.class);
+				break;
+			default:
+				sky = world.add(NormalSky.class);
+		}
+		sky.updatePlayer(player);
 	}
 
 	@Override
@@ -820,7 +835,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			if (this.sendColumn()) {
 				int x = c.getX();
 				int z = c.getZ();
-				int height = c.getWorld().getHeight() >> Chunk.BLOCKS.BITS;
+				int height = WORLD_HEIGHT >> Chunk.BLOCKS.BITS;
 				List<Chunk> chunks = new ArrayList<Chunk>(height);
 				for (int y = 0; y < height; y++) {
 					chunks.add(c.getWorld().getChunk(x, y, z));

@@ -142,7 +142,7 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 		}
 
 		if (toLaunch != null) {
-			block.getWorld().createAndSpawnEntity(position, toLaunch.getClass(), LoadOption.NO_LOAD);
+			block.getWorld().createAndSpawnEntity(position, LoadOption.NO_LOAD, toLaunch.getClass());
 		}
 		shootEffect.playGlobal(block.getPosition());
 		GeneralEffects.SMOKE.playGlobal(block.getPosition(), direction);

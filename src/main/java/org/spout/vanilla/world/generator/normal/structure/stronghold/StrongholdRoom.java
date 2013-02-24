@@ -34,12 +34,12 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.object.LootChestObject;
-import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
+import org.spout.vanilla.world.generator.structure.StructurePiece;
 
-public class StrongholdRoom extends StructureComponent {
+public class StrongholdRoom extends StructurePiece {
 	private final LootChestObject lootChest = new LootChestObject();
 	private StrongholdRoomType type = null;
 
@@ -50,7 +50,7 @@ public class StrongholdRoom extends StructureComponent {
 
 	@Override
 	public boolean canPlace() {
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setMinMax(-1, -1, -1, 11, 7, 11);
 		return !box.intersectsLiquids();
 	}
@@ -58,20 +58,22 @@ public class StrongholdRoom extends StructureComponent {
 	@Override
 	public void place() {
 		// General shape
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setPicker(new StrongholdBlockMaterialPicker(getRandom()));
 		box.setMinMax(0, 0, 0, 10, 6, 10);
-		box.fill(true);
+		box.toggleIgnoreAir();
+		box.fill();
+		box.toggleIgnoreAir();
 		// Place the door
 		StrongholdDoor.getRandomDoor(this, getRandom()).place(4, 1, 0);
 		// More access ways
 		box.setPicker(new SimpleBlockMaterialPicker());
 		box.setMinMax(4, 1, 10, 6, 3, 10);
-		box.fill(false);
+		box.fill();
 		box.setMinMax(0, 1, 4, 0, 3, 6);
-		box.fill(false);
+		box.fill();
 		box.offsetMinMax(10, 0, 0, 10, 0, 0);
-		box.fill(false);
+		box.fill();
 		// Add the features for the room type
 		if (type == null) {
 			return;
@@ -172,20 +174,20 @@ public class StrongholdRoom extends StructureComponent {
 	}
 
 	@Override
-	public List<StructureComponent> getNextComponents() {
-		final List<StructureComponent> components = new ArrayList<StructureComponent>();
+	public List<StructurePiece> getNextComponents() {
+		final List<StructurePiece> components = new ArrayList<StructurePiece>();
 		final Random random = getRandom();
-		final StructureComponent nextFront = pickComponent(random, true);
+		final StructurePiece nextFront = pickComponent(random, true);
 		nextFront.setPosition(position.add(rotate(3, 0, 11)));
 		nextFront.setRotation(rotation);
 		nextFront.randomize();
 		components.add(nextFront);
-		final StructureComponent nextRight = pickComponent(random, false);
+		final StructurePiece nextRight = pickComponent(random, false);
 		nextRight.setPosition(position.add(rotate(-1, 0, 3)));
 		nextRight.setRotation(rotation.rotate(-90, 0, 1, 0));
 		nextRight.randomize();
 		components.add(nextRight);
-		final StructureComponent nextLeft = pickComponent(random, false);
+		final StructurePiece nextLeft = pickComponent(random, false);
 		nextLeft.setPosition(position.add(rotate(11, 0, 7)));
 		nextLeft.setRotation(rotation.rotate(90, 0, 1, 0));
 		nextLeft.randomize();
@@ -193,7 +195,7 @@ public class StrongholdRoom extends StructureComponent {
 		return components;
 	}
 
-	private StructureComponent pickComponent(Random random, boolean allowLarge) {
+	private StructurePiece pickComponent(Random random, boolean allowLarge) {
 		final float draw = random.nextFloat();
 		if (draw > 0.8) {
 			return new StrongholdChestCorridor(parent);

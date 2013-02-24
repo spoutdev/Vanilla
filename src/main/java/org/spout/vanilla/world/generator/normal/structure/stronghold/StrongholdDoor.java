@@ -31,20 +31,20 @@ import java.util.Random;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
+import org.spout.vanilla.world.generator.structure.StructurePiece;
 
 public abstract class StrongholdDoor {
-	protected StructureComponent parent;
+	protected StructurePiece parent;
 
-	public StrongholdDoor(StructureComponent parent) {
+	public StrongholdDoor(StructurePiece parent) {
 		this.parent = parent;
 	}
 
 	public abstract void place(int xx, int yy, int zz);
 
-	public static StrongholdDoor getRandomDoor(StructureComponent parent, Random random) {
+	public static StrongholdDoor getRandomDoor(StructurePiece parent, Random random) {
 		final byte draw = (byte) random.nextInt(5);
 		switch (draw) {
 			case 0:
@@ -59,21 +59,21 @@ public abstract class StrongholdDoor {
 	}
 
 	public static class EmptyDoorway extends StrongholdDoor {
-		public EmptyDoorway(StructureComponent parent) {
+		public EmptyDoorway(StructurePiece parent) {
 			super(parent);
 		}
 
 		@Override
 		public void place(int xx, int yy, int zz) {
-			final ComponentCuboidPart box = new ComponentCuboidPart(parent);
+			final PieceCuboidBuilder box = new PieceCuboidBuilder(parent);
 			box.setPicker(new SimpleBlockMaterialPicker());
 			box.setMinMax(xx, yy, zz, xx + 2, yy + 2, zz);
-			box.fill(false);
+			box.fill();
 		}
 	}
 
 	public static class IronFenceDoor extends StrongholdDoor {
-		public IronFenceDoor(StructureComponent parent) {
+		public IronFenceDoor(StructurePiece parent) {
 			super(parent);
 		}
 
@@ -92,7 +92,7 @@ public abstract class StrongholdDoor {
 	}
 
 	public static class WoodDoor extends StrongholdDoor {
-		public WoodDoor(StructureComponent parent) {
+		public WoodDoor(StructurePiece parent) {
 			super(parent);
 		}
 
@@ -110,7 +110,7 @@ public abstract class StrongholdDoor {
 	}
 
 	public static class IronDoor extends StrongholdDoor {
-		public IronDoor(StructureComponent parent) {
+		public IronDoor(StructurePiece parent) {
 			super(parent);
 		}
 

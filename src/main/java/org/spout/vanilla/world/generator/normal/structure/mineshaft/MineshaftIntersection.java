@@ -34,12 +34,12 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
+import org.spout.vanilla.world.generator.structure.StructurePiece;
 
-public class MineshaftIntersection extends StructureComponent {
+public class MineshaftIntersection extends StructurePiece {
 	private byte height;
 
 	public MineshaftIntersection(Structure parent) {
@@ -49,7 +49,7 @@ public class MineshaftIntersection extends StructureComponent {
 
 	@Override
 	public boolean canPlace() {
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setMinMax(-2, -1, -1, 4, height + 1, 5);
 		return !box.intersectsLiquids();
 	}
@@ -57,7 +57,7 @@ public class MineshaftIntersection extends StructureComponent {
 	@Override
 	public void place() {
 		// building objects
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		final SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
 		box.setPicker(picker);
 		// hollow out some space
@@ -65,31 +65,31 @@ public class MineshaftIntersection extends StructureComponent {
 		if (hasTwoFloors()) {
 			// for the extra floor
 			box.setMinMax(0, 0, 0, 2, 2, 4);
-			box.fill(false);
+			box.fill();
 			box.offsetMinMax(-1, 0, 1, 1, 0, -1);
-			box.fill(false);
+			box.fill();
 			box.setMinMax(0, height - 2, 0, 2, height, 4);
-			box.fill(false);
+			box.fill();
 			box.offsetMinMax(-1, 0, 1, 1, 0, -1);
-			box.fill(false);
+			box.fill();
 			box.setMinMax(0, 3, 1, 2, 3, 3);
-			box.fill(false);
+			box.fill();
 		} else {
 			box.setMinMax(0, 0, 0, 2, height, 4);
-			box.fill(false);
+			box.fill();
 			box.offsetMinMax(-1, 0, 1, 1, 0, -1);
-			box.fill(false);
+			box.fill();
 		}
 		// wooden pillars
 		picker.setOuterMaterial(VanillaMaterials.PLANK);
 		box.setMinMax(0, 0, 1, 0, height, 1);
-		box.fill(false);
+		box.fill();
 		box.setMinMax(0, 0, 3, 0, height, 3);
-		box.fill(false);
+		box.fill();
 		box.setMinMax(2, 0, 1, 2, height, 1);
-		box.fill(false);
+		box.fill();
 		box.setMinMax(2, 0, 3, 2, height, 3);
-		box.fill(false);
+		box.fill();
 		// bridge gaps
 		for (int xx = -1; xx <= 3; xx++) {
 			for (int zz = 0; zz <= 4; zz++) {
@@ -107,54 +107,54 @@ public class MineshaftIntersection extends StructureComponent {
 	}
 
 	@Override
-	public List<StructureComponent> getNextComponents() {
-		final List<StructureComponent> components = new ArrayList<StructureComponent>(7);
+	public List<StructurePiece> getNextComponents() {
+		final List<StructurePiece> components = new ArrayList<StructurePiece>(7);
 		final boolean twoFloors = hasTwoFloors();
 		final Random random = getRandom();
 		if (random.nextBoolean()) {
-			final StructureComponent bottomFront = pickComponent(random);
+			final StructurePiece bottomFront = pickComponent(random);
 			bottomFront.setPosition(position.add(rotate(0, 0, 5)));
 			bottomFront.setRotation(rotation);
 			bottomFront.randomize();
 			components.add(bottomFront);
 		}
 		if (random.nextBoolean()) {
-			final StructureComponent bottomRight = pickComponent(random);
+			final StructurePiece bottomRight = pickComponent(random);
 			bottomRight.setPosition(position.add(rotate(-1, 0, 1)));
 			bottomRight.setRotation(rotation.rotate(-90, 0, 1, 0));
 			bottomRight.randomize();
 			components.add(bottomRight);
 		}
 		if (random.nextBoolean()) {
-			final StructureComponent bottomLeft = pickComponent(random);
+			final StructurePiece bottomLeft = pickComponent(random);
 			bottomLeft.setPosition(position.add(rotate(4, 0, 3)));
 			bottomLeft.setRotation(rotation.rotate(90, 0, 1, 0));
 			bottomLeft.randomize();
 			components.add(bottomLeft);
 		}
 		if (twoFloors && random.nextBoolean()) {
-			final StructureComponent topFront = pickComponent(random);
+			final StructurePiece topFront = pickComponent(random);
 			topFront.setPosition(position.add(rotate(0, 4, 5)));
 			topFront.setRotation(rotation);
 			topFront.randomize();
 			components.add(topFront);
 		}
 		if (twoFloors && random.nextBoolean()) {
-			final StructureComponent topRight = pickComponent(random);
+			final StructurePiece topRight = pickComponent(random);
 			topRight.setPosition(position.add(rotate(-1, 4, 1)));
 			topRight.setRotation(rotation.rotate(-90, 0, 1, 0));
 			topRight.randomize();
 			components.add(topRight);
 		}
 		if (twoFloors && random.nextBoolean()) {
-			final StructureComponent topLeft = pickComponent(random);
+			final StructurePiece topLeft = pickComponent(random);
 			topLeft.setPosition(position.add(rotate(4, 4, 3)));
 			topLeft.setRotation(rotation.rotate(90, 0, 1, 0));
 			topLeft.randomize();
 			components.add(topLeft);
 		}
 		if (twoFloors && random.nextBoolean()) {
-			final StructureComponent topBack = pickComponent(random);
+			final StructurePiece topBack = pickComponent(random);
 			topBack.setPosition(position.add(rotate(2, 4, 0)));
 			topBack.setRotation(rotation.rotate(180, 0, 1, 0));
 			topBack.randomize();
@@ -163,7 +163,7 @@ public class MineshaftIntersection extends StructureComponent {
 		return components;
 	}
 
-	private StructureComponent pickComponent(Random random) {
+	private StructurePiece pickComponent(Random random) {
 		if (random.nextInt(4) == 0) {
 			return new MineshaftStaircase(parent);
 		} else {

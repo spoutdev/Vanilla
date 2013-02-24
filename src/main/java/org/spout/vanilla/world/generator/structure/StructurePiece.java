@@ -45,14 +45,14 @@ import org.spout.vanilla.material.block.DoorBlock;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.block.attachable.Attachable;
 
-public abstract class StructureComponent {
+public abstract class StructurePiece {
 	protected Structure parent;
-	protected StructureComponent lastComponent = null;
+	protected StructurePiece lastComponent = null;
 	protected Point position = Point.invalid;
 	protected Quaternion rotation = Quaternion.IDENTITY;
 	protected Vector3 rotationPoint = Vector3.ZERO;
 
-	public StructureComponent(Structure parent) {
+	public StructurePiece(Structure parent) {
 		this.parent = parent;
 	}
 
@@ -64,11 +64,11 @@ public abstract class StructureComponent {
 		return parent;
 	}
 
-	public StructureComponent getLastComponent() {
+	public StructurePiece getLastComponent() {
 		return lastComponent;
 	}
 
-	public void setLastComponent(StructureComponent lastComponent) {
+	public void setLastComponent(StructurePiece lastComponent) {
 		this.lastComponent = lastComponent;
 	}
 
@@ -208,7 +208,7 @@ public abstract class StructureComponent {
 
 	public abstract void randomize();
 
-	public abstract List<StructureComponent> getNextComponents();
+	public abstract List<StructurePiece> getNextComponents();
 
 	public abstract BoundingBox getBoundingBox();
 
@@ -229,8 +229,16 @@ public abstract class StructureComponent {
 			return min;
 		}
 
+		public Vector3 getSize() {
+			return max.subtract(min);
+		}
+
 		public float getXSize() {
 			return max.getX() - min.getX();
+		}
+
+		public float getYSize() {
+			return max.getY() - min.getY();
 		}
 
 		public float getZSize() {

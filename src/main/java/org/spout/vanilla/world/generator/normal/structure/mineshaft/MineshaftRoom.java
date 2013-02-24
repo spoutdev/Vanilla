@@ -33,12 +33,12 @@ import java.util.Random;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
+import org.spout.vanilla.world.generator.structure.StructurePiece;
 
-public class MineshaftRoom extends StructureComponent {
+public class MineshaftRoom extends StructurePiece {
 	private byte lenght;
 	private byte height;
 	private byte depth;
@@ -50,7 +50,7 @@ public class MineshaftRoom extends StructureComponent {
 
 	@Override
 	public boolean canPlace() {
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setMinMax(-1, -1, -1, lenght + 1, height + 1, depth + 1);
 		return !box.intersectsLiquids();
 	}
@@ -58,19 +58,21 @@ public class MineshaftRoom extends StructureComponent {
 	@Override
 	public void place() {
 		// building objects
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		final SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
 		box.setPicker(picker);
 		// basic room
 		picker.setOuterInnerMaterials(VanillaMaterials.DIRT, VanillaMaterials.AIR);
 		box.setMinMax(0, 0, 0, lenght, height, depth);
-		box.fill(true);
+		box.toggleIgnoreAir();
+		box.fill();
+		box.toggleIgnoreAir();
 		picker.setOuterMaterial(VanillaMaterials.AIR);
 		box.setMinMax(0, 1, 0, lenght, 3, depth);
-		box.fill(false);
+		box.fill();
 		// some 'decoration'
 		box.setMinMax(0, 4, 0, lenght, height, depth);
-		box.sphericalFill(false);
+		box.sphericalFill();
 	}
 
 	@Override
@@ -82,25 +84,25 @@ public class MineshaftRoom extends StructureComponent {
 	}
 
 	@Override
-	public List<StructureComponent> getNextComponents() {
-		final List<StructureComponent> components = new ArrayList<StructureComponent>(3);
+	public List<StructurePiece> getNextComponents() {
+		final List<StructurePiece> components = new ArrayList<StructurePiece>(3);
 		final Random random = getRandom();
 		if (random.nextBoolean()) {
-			final StructureComponent front = pickComponent(random);
+			final StructurePiece front = pickComponent(random);
 			front.setPosition(position.add(rotate(lenght / 2, 1, depth)));
 			front.setRotation(rotation);
 			front.randomize();
 			components.add(front);
 		}
 		if (random.nextBoolean()) {
-			final StructureComponent right = pickComponent(random);
+			final StructurePiece right = pickComponent(random);
 			right.setPosition(position.add(rotate(0, 1, depth / 2)));
 			right.setRotation(rotation.rotate(-90, 0, 1, 0));
 			right.randomize();
 			components.add(right);
 		}
 		if (random.nextBoolean()) {
-			final StructureComponent left = pickComponent(random);
+			final StructurePiece left = pickComponent(random);
 			left.setPosition(position.add(rotate(lenght, 1, depth / 2)));
 			left.setRotation(rotation.rotate(90, 0, 1, 0));
 			left.randomize();
@@ -109,7 +111,7 @@ public class MineshaftRoom extends StructureComponent {
 		return components;
 	}
 
-	private StructureComponent pickComponent(Random random) {
+	private StructurePiece pickComponent(Random random) {
 		if (random.nextInt(4) == 0) {
 			return new MineshaftStaircase(parent);
 		} else {

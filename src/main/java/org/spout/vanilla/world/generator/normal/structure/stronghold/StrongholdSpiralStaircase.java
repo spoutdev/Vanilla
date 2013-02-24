@@ -32,18 +32,18 @@ import java.util.List;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.Structure;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
+import org.spout.vanilla.world.generator.structure.StructurePiece;
 
-public class StrongholdSpiralStaircase extends StructureComponent {
+public class StrongholdSpiralStaircase extends StructurePiece {
 	public StrongholdSpiralStaircase(Structure parent) {
 		super(parent);
 	}
 
 	@Override
 	public boolean canPlace() {
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setMinMax(-1, -7, -1, 5, 5, 5);
 		return !box.intersectsLiquids();
 	}
@@ -51,10 +51,12 @@ public class StrongholdSpiralStaircase extends StructureComponent {
 	@Override
 	public void place() {
 		// General shape
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setPicker(new StrongholdBlockMaterialPicker(getRandom()));
 		box.setMinMax(0, -6, 0, 4, 4, 4);
-		box.fill(true);
+		box.toggleIgnoreAir();
+		box.fill();
+		box.toggleIgnoreAir();
 		// Place the doors
 		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 1, 0);
 		new StrongholdDoor.EmptyDoorway(this).place(1, -5, 4);
@@ -83,8 +85,8 @@ public class StrongholdSpiralStaircase extends StructureComponent {
 	}
 
 	@Override
-	public List<StructureComponent> getNextComponents() {
-		final StructureComponent component;
+	public List<StructurePiece> getNextComponents() {
+		final StructurePiece component;
 		final float draw = getRandom().nextFloat();
 		if (draw > 0.95) {
 			component = new StrongholdLibrary(parent);

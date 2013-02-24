@@ -34,12 +34,12 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.misc.Slab;
 import org.spout.vanilla.world.generator.normal.object.LootChestObject;
-import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
+import org.spout.vanilla.world.generator.structure.StructurePiece;
 
-public class StrongholdChestCorridor extends StructureComponent {
+public class StrongholdChestCorridor extends StructurePiece {
 	private final LootChestObject lootChest = new LootChestObject();
 
 	public StrongholdChestCorridor(Structure parent) {
@@ -49,7 +49,7 @@ public class StrongholdChestCorridor extends StructureComponent {
 
 	@Override
 	public boolean canPlace() {
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setMinMax(-1, -1, -1, 5, 5, 7);
 		return !box.intersectsLiquids();
 	}
@@ -57,18 +57,20 @@ public class StrongholdChestCorridor extends StructureComponent {
 	@Override
 	public void place() {
 		// Building objects
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		// General shape
 		box.setPicker(new StrongholdBlockMaterialPicker(getRandom()));
 		box.setMinMax(0, 0, 0, 4, 4, 6);
-		box.fill(true);
+		box.toggleIgnoreAir();
+		box.fill();
+		box.toggleIgnoreAir();
 		// Place the doors
 		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 1, 0);
 		new StrongholdDoor.EmptyDoorway(this).place(1, 1, 6);
 		// Place the floor
 		box.setPicker(new SimpleBlockMaterialPicker(VanillaMaterials.STONE_BRICK, VanillaMaterials.STONE_BRICK));
 		box.setMinMax(3, 1, 2, 3, 1, 4);
-		box.fill(false);
+		box.fill();
 		// Build the loot chest pedestal
 		setBlockMaterial(3, 1, 1, Slab.STONE);
 		setBlockMaterial(3, 1, 5, Slab.STONE);
@@ -87,8 +89,8 @@ public class StrongholdChestCorridor extends StructureComponent {
 	}
 
 	@Override
-	public List<StructureComponent> getNextComponents() {
-		final StructureComponent component;
+	public List<StructurePiece> getNextComponents() {
+		final StructurePiece component;
 		final float draw = getRandom().nextFloat();
 		if (draw > 0.95) {
 			component = new StrongholdLibrary(parent);

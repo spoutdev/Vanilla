@@ -37,13 +37,13 @@ import org.spout.vanilla.material.VanillaMaterials;
 /**
  * Draws a plane with the defined block material layout
  */
-public class ComponentLayoutPainterPart extends ComponentPart {
+public class PieceLayoutBuilder extends PieceBuilder {
 	private IntVector3 position = new IntVector3(0, 0, 0);
 	private Quaternion rotation = Quaternion.IDENTITY;
 	private IntVector3 rotationPoint = new IntVector3(0, 0, 0);
 	private BlockMaterialLayout layout = new BlockMaterialLayout("");
 
-	public ComponentLayoutPainterPart(StructureComponent parent) {
+	public PieceLayoutBuilder(StructurePiece parent) {
 		super(parent);
 	}
 
@@ -88,64 +88,30 @@ public class ComponentLayoutPainterPart extends ComponentPart {
 	}
 
 	@Override
-	public void fill(boolean ignoreAir) {
+	public void fill() {
 		for (int xx = 0; xx < layout.getRowLenght(); xx++) {
 			for (int zz = 0; zz < layout.getColumnLenght(xx); zz++) {
-				if (!ignoreAir || !getBlockMaterial(xx, zz).isMaterial(VanillaMaterials.AIR)) {
-					final BlockMaterial material = layout.getBlockMaterial(xx, zz);
-					if (material != null) {
-						setBlockMaterial(xx, zz, material);
-					}
+				final BlockMaterial material = layout.getBlockMaterial(xx, zz);
+				if (material != null) {
+					setBlockMaterial(xx, zz, material);
 				}
 			}
 		}
 	}
 
 	@Override
-	public void randomFill(float odd, boolean ignoreAir) {
+	public void randomFill(float odd) {
 		for (int xx = 0; xx < layout.getRowLenght(); xx++) {
 			for (int zz = 0; zz < layout.getColumnLenght(xx); zz++) {
 				if (parent.getRandom().nextFloat() > odd) {
 					continue;
 				}
-				if (!ignoreAir || !getBlockMaterial(xx, zz).isMaterial(VanillaMaterials.AIR)) {
-					final BlockMaterial material = layout.getBlockMaterial(xx, zz);
-					if (material != null) {
-						setBlockMaterial(xx, zz, material);
-					}
+				final BlockMaterial material = layout.getBlockMaterial(xx, zz);
+				if (material != null) {
+					setBlockMaterial(xx, zz, material);
 				}
 			}
 		}
-	}
-
-	@Override
-	public void sphericalFill(boolean ignoreAir) {
-		final float xScale = layout.getRowLenght() + 1;
-		final float zScale = layout.getColumnLenght(0) + 1;
-		final float xOffset = xScale / 2;
-		final float zOffset = zScale / 2;
-		final int endX = layout.getRowLenght();
-		final int endZ = layout.getColumnLenght(0);
-		for (int xx = 0; xx <= endX; xx++) {
-			final float dx = (xx - xOffset) / (xScale * 0.5f);
-			for (int zz = 0; zz <= endZ; zz++) {
-				final float dz = (zz - zOffset) / (zScale * 0.5f);
-				if (dx * dx + dz * dz <= 1.05) {
-					if (ignoreAir && !getBlockMaterial(xx, zz).isMaterial(VanillaMaterials.AIR)) {
-						continue;
-					}
-					final BlockMaterial material = layout.getBlockMaterial(xx, zz);
-					if (material != null) {
-						setBlockMaterial(xx, zz, material);
-					}
-				}
-			}
-		}
-	}
-
-	private BlockMaterial getBlockMaterial(int xx, int zz) {
-		final Vector3 transformed = transform(xx, zz);
-		return parent.getBlockMaterial(transformed.getFloorX(), transformed.getFloorY(), transformed.getFloorZ());
 	}
 
 	private void setBlockMaterial(int xx, int zz, BlockMaterial material) {

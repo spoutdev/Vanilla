@@ -33,12 +33,12 @@ import java.util.Random;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
+import org.spout.vanilla.world.generator.structure.StructurePiece;
 
-public class StrongholdLargeIntersection extends StructureComponent {
+public class StrongholdLargeIntersection extends StructurePiece {
 	private boolean nextComponentRightLow = false;
 	private boolean nextComponentRightHigh = false;
 	private boolean nextComponentLeftLow = false;
@@ -50,7 +50,7 @@ public class StrongholdLargeIntersection extends StructureComponent {
 
 	@Override
 	public boolean canPlace() {
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setMinMax(-1, -1, -1, 10, 9, 11);
 		return !box.intersectsLiquids();
 	}
@@ -58,68 +58,70 @@ public class StrongholdLargeIntersection extends StructureComponent {
 	@Override
 	public void place() {
 		// Building objects
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		final SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
 		final StrongholdBlockMaterialPicker stone = new StrongholdBlockMaterialPicker(getRandom());
 		// General shape
 		box.setPicker(stone);
 		box.setMinMax(0, 0, 0, 9, 8, 10);
-		box.fill(true);
+		box.toggleIgnoreAir();
+		box.fill();
+		box.toggleIgnoreAir();
 		// Place the door
 		StrongholdDoor.getRandomDoor(this, getRandom()).place(4, 3, 0);
 		// Access to the next components of the intersection
 		box.setPicker(picker);
 		if (nextComponentRightLow) {
 			box.setMinMax(0, 3, 1, 0, 5, 3);
-			box.fill(false);
+			box.fill();
 		}
 		if (nextComponentRightHigh) {
 			box.setMinMax(0, 5, 7, 0, 7, 9);
-			box.fill(false);
+			box.fill();
 		}
 		if (nextComponentLeftLow) {
 			box.setMinMax(9, 3, 1, 9, 5, 3);
-			box.fill(false);
+			box.fill();
 		}
 		if (nextComponentLeftHigh) {
 			box.setMinMax(9, 5, 7, 9, 7, 9);
-			box.fill(false);
+			box.fill();
 		}
 		// The bottom access way
 		box.setMinMax(5, 1, 10, 7, 3, 10);
-		box.fill(false);
+		box.fill();
 		// Finish the interior
 		box.setPicker(stone);
 		box.setMinMax(1, 2, 1, 8, 2, 6);
-		box.fill(false);
+		box.fill();
 		box.setMinMax(4, 1, 5, 4, 4, 9);
-		box.fill(false);
+		box.fill();
 		box.offsetMinMax(4, 0, 0, 4, 0, 0);
-		box.fill(false);
+		box.fill();
 		box.setMinMax(1, 4, 7, 3, 4, 9);
-		box.fill(false);
+		box.fill();
 		box.setMinMax(1, 3, 5, 3, 3, 6);
-		box.fill(false);
+		box.fill();
 		picker.setOuterInnerMaterials(VanillaMaterials.SLAB, VanillaMaterials.SLAB);
 		box.setPicker(picker);
 		box.setMinMax(1, 3, 4, 3, 3, 4);
-		box.fill(false);
+		box.fill();
 		box.offsetMinMax(0, 1, 2, 0, 1, 2);
-		box.fill(false);
+		box.fill();
 		box.setPicker(stone);
 		box.setMinMax(5, 1, 7, 7, 1, 8);
-		box.fill(false);
+		box.fill();
 		box.setPicker(picker);
 		box.offsetMinMax(0, 0, 2, 0, 0, 1);
-		box.fill(false);
+		box.fill();
 		box.offsetMinMax(0, 1, -2, 0, 1, -2);
-		box.fill(false);
+		box.fill();
 		box.setMinMax(4, 5, 7, 4, 5, 9);
-		box.fill(false);
+		box.fill();
 		box.offsetMinMax(4, 0, 0, 4, 0, 0);
-		box.fill(false);
+		box.fill();
 		box.offsetMinMax(-3, 0, 0, -1, 0, 0);
-		box.fill(false);
+		box.fill();
 		// Place a torch
 		attachMaterial(6, 5, 6, VanillaMaterials.TORCH);
 	}
@@ -134,37 +136,37 @@ public class StrongholdLargeIntersection extends StructureComponent {
 	}
 
 	@Override
-	public List<StructureComponent> getNextComponents() {
-		final List<StructureComponent> components = new ArrayList<StructureComponent>();
+	public List<StructurePiece> getNextComponents() {
+		final List<StructurePiece> components = new ArrayList<StructurePiece>();
 		final Random random = getRandom();
-		final StructureComponent component = pickComponent(random, true);
+		final StructurePiece component = pickComponent(random, true);
 		component.setPosition(position.add(rotate(4, 0, 11)));
 		component.setRotation(rotation);
 		component.randomize();
 		components.add(component);
 		if (nextComponentRightLow) {
-			final StructureComponent next = pickComponent(random, false);
+			final StructurePiece next = pickComponent(random, false);
 			next.setPosition(position.add(rotate(-1, 2, 0)));
 			next.setRotation(rotation.rotate(-90, 0, 1, 0));
 			next.randomize();
 			components.add(next);
 		}
 		if (nextComponentRightHigh) {
-			final StructureComponent next = pickComponent(random, true);
+			final StructurePiece next = pickComponent(random, true);
 			next.setPosition(position.add(rotate(-1, 4, 6)));
 			next.setRotation(rotation.rotate(-90, 0, 1, 0));
 			next.randomize();
 			components.add(next);
 		}
 		if (nextComponentLeftLow) {
-			final StructureComponent next = pickComponent(random, false);
+			final StructurePiece next = pickComponent(random, false);
 			next.setPosition(position.add(rotate(10, 2, 4)));
 			next.setRotation(rotation.rotate(90, 0, 1, 0));
 			next.randomize();
 			components.add(next);
 		}
 		if (nextComponentLeftHigh) {
-			final StructureComponent next = pickComponent(random, true);
+			final StructurePiece next = pickComponent(random, true);
 			next.setPosition(position.add(rotate(10, 4, 10)));
 			next.setRotation(rotation.rotate(90, 0, 1, 0));
 			next.randomize();
@@ -173,7 +175,7 @@ public class StrongholdLargeIntersection extends StructureComponent {
 		return components;
 	}
 
-	private StructureComponent pickComponent(Random random, boolean allowLarge) {
+	private StructurePiece pickComponent(Random random, boolean allowLarge) {
 		final float draw = random.nextFloat();
 		if (draw > 0.8) {
 			return new StrongholdChestCorridor(parent);

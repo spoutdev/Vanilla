@@ -32,11 +32,11 @@ import java.util.List;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.Structure;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
+import org.spout.vanilla.world.generator.structure.StructurePiece;
 
-public class StrongholdCorridor extends StructureComponent {
+public class StrongholdCorridor extends StructurePiece {
 	private boolean startOfStronghold = false;
 	private byte length = 4;
 
@@ -46,7 +46,7 @@ public class StrongholdCorridor extends StructureComponent {
 
 	@Override
 	public boolean canPlace() {
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setMinMax(-1, -1, -1, 5, 5, length + 1);
 		return !box.intersectsLiquids();
 	}
@@ -81,16 +81,16 @@ public class StrongholdCorridor extends StructureComponent {
 	}
 
 	@Override
-	public List<StructureComponent> getNextComponents() {
-		final List<StructureComponent> components = new ArrayList<StructureComponent>();
+	public List<StructurePiece> getNextComponents() {
+		final List<StructurePiece> components = new ArrayList<StructurePiece>();
 		if (startOfStronghold) {
-			final StructureComponent component = new StrongholdPortalRoom(parent);
+			final StructurePiece component = new StrongholdPortalRoom(parent);
 			component.setPosition(position.add(rotate(7, 0, -1)));
 			component.setRotation(rotation.rotate(180, 0, 1, 0));
 			component.randomize();
 			components.add(component);
 		}
-		final StructureComponent component;
+		final StructurePiece component;
 		final float draw = getRandom().nextFloat();
 		if (draw > 0.9) {
 			component = new StrongholdLargeIntersection(parent);

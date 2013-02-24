@@ -31,12 +31,12 @@ import java.util.List;
 
 import org.spout.api.math.Vector3;
 
-import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
+import org.spout.vanilla.world.generator.structure.StructurePiece;
 
-public class StrongholdTurn extends StructureComponent {
+public class StrongholdTurn extends StructurePiece {
 	private boolean left = true;
 
 	public StrongholdTurn(Structure parent) {
@@ -45,7 +45,7 @@ public class StrongholdTurn extends StructureComponent {
 
 	@Override
 	public boolean canPlace() {
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setMinMax(-1, -1, -1, 5, 5, 5);
 		return !box.intersectsLiquids();
 	}
@@ -53,21 +53,23 @@ public class StrongholdTurn extends StructureComponent {
 	@Override
 	public void place() {
 		// Building objects
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		// General shape
 		box.setPicker(new StrongholdBlockMaterialPicker(getRandom()));
 		box.setMinMax(0, 0, 0, 4, 4, 4);
-		box.fill(true);
+		box.toggleIgnoreAir();
+		box.fill();
+		box.toggleIgnoreAir();
 		// Place the door
 		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 1, 0);
 		// Place the access way depending on the direction
 		box.setPicker(new SimpleBlockMaterialPicker());
 		if (left) {
 			box.setMinMax(4, 1, 1, 4, 3, 3);
-			box.fill(false);
+			box.fill();
 		} else {
 			box.setMinMax(0, 1, 1, 0, 3, 3);
-			box.fill(false);
+			box.fill();
 		}
 	}
 
@@ -77,8 +79,8 @@ public class StrongholdTurn extends StructureComponent {
 	}
 
 	@Override
-	public List<StructureComponent> getNextComponents() {
-		final StructureComponent component;
+	public List<StructurePiece> getNextComponents() {
+		final StructurePiece component;
 		final float draw = getRandom().nextFloat();
 		if (draw > 0.8) {
 			component = new StrongholdSpiralStaircase(parent);

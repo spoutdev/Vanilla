@@ -31,12 +31,13 @@ import org.spout.api.math.IntVector3;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 
-public class ComponentCuboidPart extends ComponentPart {
+public class PieceCuboidBuilder extends PieceBuilder {
 	protected IntVector3 min = new IntVector3(0, 0, 0);
 	protected IntVector3 max = new IntVector3(0, 0, 0);
 	private BlockMaterialPicker picker = new SimpleBlockMaterialPicker();
+	private boolean ignoreAir = false;
 
-	public ComponentCuboidPart(StructureComponent parent) {
+	public PieceCuboidBuilder(StructurePiece parent) {
 		super(parent);
 	}
 
@@ -96,13 +97,21 @@ public class ComponentCuboidPart extends ComponentPart {
 		this.picker = picker;
 	}
 
+	public void setIgnoreAir(boolean ignoreAir) {
+		this.ignoreAir = ignoreAir;
+	}
+	
+	public void toggleIgnoreAir() {
+		ignoreAir ^= true;
+	}
+
 	protected boolean isOuter(int xx, int yy, int zz) {
 		return xx == min.getX() || yy == min.getY() || zz == min.getZ()
 				|| xx == max.getX() || yy == max.getY() || zz == max.getZ();
 	}
 
 	@Override
-	public void fill(boolean ignoreAir) {
+	public void fill() {
 		final int endX = max.getX();
 		final int endY = max.getY();
 		final int endZ = max.getZ();
@@ -118,7 +127,7 @@ public class ComponentCuboidPart extends ComponentPart {
 	}
 
 	@Override
-	public void randomFill(float odd, boolean ignoreAir) {
+	public void randomFill(float odd) {
 		final int endX = max.getX();
 		final int endY = max.getY();
 		final int endZ = max.getZ();
@@ -136,8 +145,7 @@ public class ComponentCuboidPart extends ComponentPart {
 		}
 	}
 
-	@Override
-	public void sphericalFill(boolean ignoreAir) {
+	public void sphericalFill() {
 		final float xScale = max.getX() - min.getX() + 1;
 		final float yScale = max.getY() - min.getY() + 1;
 		final float zScale = max.getZ() - min.getZ() + 1;

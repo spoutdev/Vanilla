@@ -32,13 +32,13 @@ import java.util.List;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
+import org.spout.vanilla.world.generator.structure.StructurePiece;
 import org.spout.vanilla.world.generator.theend.object.EndPortalObject;
 
-public class StrongholdPortalRoom extends StructureComponent {
+public class StrongholdPortalRoom extends StructurePiece {
 	public StrongholdPortalRoom(Structure parent) {
 		super(parent);
 	}
@@ -51,63 +51,63 @@ public class StrongholdPortalRoom extends StructureComponent {
 	@Override
 	public void place() {
 		// Building objects
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		final SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
 		final StrongholdBlockMaterialPicker stone = new StrongholdBlockMaterialPicker(getRandom());
 		// General shape
 		box.setPicker(stone);
 		box.setMinMax(0, 0, 0, 10, 7, 15);
-		box.fill(false);
+		box.fill();
 		// Place the door
 		new StrongholdDoor.IronFenceDoor(this).place(4, 1, 0);
 		// Some stone for the side lava pools and ceiling
 		box.setMinMax(1, 6, 1, 1, 6, 14);
-		box.fill(false);
+		box.fill();
 		box.offsetMinMax(8, 0, 0, 8, 0, 0);
-		box.fill(false);
+		box.fill();
 		box.setMinMax(2, 6, 1, 8, 6, 2);
-		box.fill(false);
+		box.fill();
 		box.offsetMinMax(0, 0, 13, 0, 0, 12);
-		box.fill(false);
+		box.fill();
 		box.setMinMax(1, 1, 1, 2, 1, 4);
-		box.fill(false);
+		box.fill();
 		box.offsetMinMax(7, 0, 0, 7, 0, 0);
-		box.fill(false);
+		box.fill();
 		// Fill the side lava pools
 		box.setPicker(picker);
 		picker.setOuterInnerMaterials(VanillaMaterials.STATIONARY_LAVA, VanillaMaterials.STATIONARY_LAVA);
 		box.setMinMax(1, 1, 1, 1, 1, 3);
-		box.fill(false);
+		box.fill();
 		box.offsetMinMax(8, 0, 0, 8, 0, 0);
-		box.fill(false);
+		box.fill();
 		// Place the stone for the portal lava pool
 		box.setPicker(stone);
 		box.setMinMax(3, 1, 8, 7, 1, 12);
-		box.fill(false);
+		box.fill();
 		// Place the lava for the portal lava pool
 		box.setPicker(picker);
 		box.offsetMinMax(1, 0, 1, -1, 0, -1);
-		box.fill(false);
+		box.fill();
 		// Add iron bars to decorate the walls
 		picker.setOuterInnerMaterials(VanillaMaterials.IRON_BARS, VanillaMaterials.IRON_BARS);
 		for (int i = 3; i < 14; i += 2) {
 			box.setMinMax(0, 3, i, 0, 4, i);
-			box.fill(false);
+			box.fill();
 			box.offsetMinMax(10, 0, 0, 10, 0, 0);
-			box.fill(false);
+			box.fill();
 		}
 		for (int i = 2; i < 9; i += 2) {
 			box.setMinMax(i, 3, 15, i, 4, 15);
-			box.fill(false);
+			box.fill();
 		}
 		// Some stone for the stairs
 		box.setPicker(stone);
 		box.setMinMax(4, 1, 5, 6, 1, 7);
-		box.fill(false);
+		box.fill();
 		box.offsetMinMax(0, 1, 1, 0, 1, 0);
-		box.fill(false);
+		box.fill();
 		box.offsetMinMax(0, 1, 1, 0, 1, 0);
-		box.fill(false);
+		box.fill();
 		// Place the stairs
 		for (int i = 4; i <= 6; i++) {
 			setBlockMaterial(i, 1, 4, VanillaMaterials.STAIRS_STONE_BRICK, (short) 2);
@@ -125,7 +125,7 @@ public class StrongholdPortalRoom extends StructureComponent {
 	}
 
 	@Override
-	public List<StructureComponent> getNextComponents() {
+	public List<StructurePiece> getNextComponents() {
 		return Collections.emptyList();
 	}
 

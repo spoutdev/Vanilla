@@ -33,12 +33,12 @@ import java.util.Random;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
+import org.spout.vanilla.world.generator.structure.StructurePiece;
 
-public class StrongholdIntersection extends StructureComponent {
+public class StrongholdIntersection extends StructurePiece {
 	private boolean nextComponentRight = false;
 	private boolean nextComponentLeft = false;
 
@@ -48,7 +48,7 @@ public class StrongholdIntersection extends StructureComponent {
 
 	@Override
 	public boolean canPlace() {
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setMinMax(-1, -1, -1, 5, 5, 7);
 		return !box.intersectsLiquids();
 	}
@@ -56,10 +56,12 @@ public class StrongholdIntersection extends StructureComponent {
 	@Override
 	public void place() {
 		// General shape
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setPicker(new StrongholdBlockMaterialPicker(getRandom()));
 		box.setMinMax(0, 0, 0, 4, 4, 6);
-		box.fill(true);
+		box.toggleIgnoreAir();
+		box.fill();
+		box.toggleIgnoreAir();
 		// Place the doors
 		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 1, 0);
 		new StrongholdDoor.EmptyDoorway(this).place(1, 1, 6);
@@ -72,11 +74,11 @@ public class StrongholdIntersection extends StructureComponent {
 		box.setPicker(new SimpleBlockMaterialPicker());
 		if (nextComponentRight) {
 			box.setMinMax(0, 1, 2, 0, 3, 4);
-			box.fill(false);
+			box.fill();
 		}
 		if (nextComponentLeft) {
 			box.setMinMax(4, 1, 2, 4, 3, 4);
-			box.fill(false);
+			box.fill();
 		}
 	}
 
@@ -88,23 +90,23 @@ public class StrongholdIntersection extends StructureComponent {
 	}
 
 	@Override
-	public List<StructureComponent> getNextComponents() {
-		final List<StructureComponent> components = new ArrayList<StructureComponent>();
+	public List<StructurePiece> getNextComponents() {
+		final List<StructurePiece> components = new ArrayList<StructurePiece>();
 		final Random random = getRandom();
-		final StructureComponent component = pickComponent(random, true);
+		final StructurePiece component = pickComponent(random, true);
 		component.setPosition(position.add(rotate(0, 0, 7)));
 		component.setRotation(rotation);
 		component.randomize();
 		components.add(component);
 		if (nextComponentRight) {
-			final StructureComponent next = pickComponent(random, false);
+			final StructurePiece next = pickComponent(random, false);
 			next.setPosition(position.add(rotate(-1, 0, 1)));
 			next.setRotation(rotation.rotate(-90, 0, 1, 0));
 			next.randomize();
 			components.add(next);
 		}
 		if (nextComponentLeft) {
-			final StructureComponent next = pickComponent(random, false);
+			final StructurePiece next = pickComponent(random, false);
 			next.setPosition(position.add(rotate(5, 0, 5)));
 			next.setRotation(rotation.rotate(90, 0, 1, 0));
 			next.randomize();
@@ -113,7 +115,7 @@ public class StrongholdIntersection extends StructureComponent {
 		return components;
 	}
 
-	private StructureComponent pickComponent(Random random, boolean allowLarge) {
+	private StructurePiece pickComponent(Random random, boolean allowLarge) {
 		final float draw = random.nextFloat();
 		if (draw > 0.8) {
 			return new StrongholdChestCorridor(parent);

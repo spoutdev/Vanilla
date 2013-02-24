@@ -35,8 +35,8 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.world.generator.structure.Structure;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
-import org.spout.vanilla.world.generator.structure.StructureComponent.BoundingBox;
+import org.spout.vanilla.world.generator.structure.StructurePiece;
+import org.spout.vanilla.world.generator.structure.StructurePiece.BoundingBox;
 
 public class Temple extends Structure {
 	@Override
@@ -46,7 +46,7 @@ public class Temple extends Structure {
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
-		final StructureComponent temple = getTemple(w.getBiome(x, y, z));
+		final StructurePiece temple = getTemple(w.getBiome(x, y, z));
 		if (temple == null) {
 			return;
 		}
@@ -59,8 +59,8 @@ public class Temple extends Structure {
 		}
 	}
 
-	private StructureComponent getTemple(Biome biome) {
-		final StructureComponent temple;
+	private StructurePiece getTemple(Biome biome) {
+		final StructurePiece temple;
 		if (biome == VanillaBiomes.DESERT || biome == VanillaBiomes.DESERT_HILLS) {
 			temple = new DesertTemple(this);
 		} else if (biome == VanillaBiomes.JUNGLE || biome == VanillaBiomes.JUNGLE_HILLS) {

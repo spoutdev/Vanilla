@@ -32,19 +32,19 @@ import java.util.List;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
+import org.spout.vanilla.world.generator.structure.StructurePiece;
 
-public class MineshaftStaircase extends StructureComponent {
+public class MineshaftStaircase extends StructurePiece {
 	public MineshaftStaircase(Structure parent) {
 		super(parent);
 	}
 
 	@Override
 	public boolean canPlace() {
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setMinMax(-1, -6, -1, 3, 3, 9);
 		return !box.intersectsLiquids();
 	}
@@ -52,19 +52,19 @@ public class MineshaftStaircase extends StructureComponent {
 	@Override
 	public void place() {
 		// building objects
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		final SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
 		box.setPicker(picker);
 		// case
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
 		box.setMinMax(0, 0, 0, 2, 2, 1);
-		box.fill(false);
+		box.fill();
 		box.setMinMax(0, -5, 7, 2, -3, 8);
-		box.fill(false);	
+		box.fill();	
 		// steps
 		for (byte steps = 0; steps < 5; steps++) {
 			box.setMinMax(0, -steps - (steps >= 4 ? 0 : 1), 2 + steps, 2, 2 - steps, 2 + steps);
-			box.fill(false);
+			box.fill();
 		}
 	}
 
@@ -73,9 +73,9 @@ public class MineshaftStaircase extends StructureComponent {
 	}
 
 	@Override
-	public List<StructureComponent> getNextComponents() {
-		final List<StructureComponent> components = new ArrayList<StructureComponent>(1);
-		final StructureComponent component;
+	public List<StructurePiece> getNextComponents() {
+		final List<StructurePiece> components = new ArrayList<StructurePiece>(1);
+		final StructurePiece component;
 		final float draw = getRandom().nextFloat();
 		if (draw > 0.8) {
 			final MineshaftRoom room = new MineshaftRoom(parent);

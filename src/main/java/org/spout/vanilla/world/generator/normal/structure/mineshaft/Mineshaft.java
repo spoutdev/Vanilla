@@ -30,6 +30,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
 
@@ -37,8 +38,8 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.world.generator.structure.Structure;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
-import org.spout.vanilla.world.generator.structure.StructureComponent.BoundingBox;
+import org.spout.vanilla.world.generator.structure.StructurePiece;
+import org.spout.vanilla.world.generator.structure.StructurePiece.BoundingBox;
 
 public class Mineshaft extends Structure {
 	private static final byte MAX_SIZE_BASE = 50;
@@ -59,7 +60,7 @@ public class Mineshaft extends Structure {
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
 		final Set<BoundingBox> placed = new HashSet<BoundingBox>();
-		final List<StructureComponent> activeBranches = new LinkedList<StructureComponent>();
+		final Queue<StructurePiece> activeBranches = new LinkedList<StructurePiece>();
 		final MineshaftRoom room = new MineshaftRoom(this);
 		room.setPosition(new Point(w, x, y, z));
 		room.randomize();
@@ -67,7 +68,7 @@ public class Mineshaft extends Structure {
 		byte size = (byte) (random.nextInt(MAX_SIZE_RAND) + MAX_SIZE_BASE);
 		byte count = 0;
 		while (!activeBranches.isEmpty()) {
-			final StructureComponent active = activeBranches.remove(0);
+			final StructurePiece active = activeBranches.poll();
 			final BoundingBox activeBox = active.getBoundingBox();
 			if (!collides(activeBox, active.getLastComponent(), placed) && active.canPlace()
 					&& active.getPosition().getY() >= 20) {
@@ -76,8 +77,8 @@ public class Mineshaft extends Structure {
 					return;
 				}
 				placed.add(activeBox);
-				final List<StructureComponent> next = active.getNextComponents();
-				for (StructureComponent component : next) {
+				final List<StructurePiece> next = active.getNextComponents();
+				for (StructurePiece component : next) {
 					component.setLastComponent(active);
 				}
 				activeBranches.addAll(next);
@@ -85,7 +86,7 @@ public class Mineshaft extends Structure {
 		}
 	}
 
-	private boolean collides(BoundingBox box, StructureComponent lastComponent, Collection<BoundingBox> boxes) {
+	private boolean collides(BoundingBox box, StructurePiece lastComponent, Collection<BoundingBox> boxes) {
 		final BoundingBox last;
 		if (lastComponent == null) {
 			last = null;

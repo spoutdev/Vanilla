@@ -26,20 +26,21 @@
  */
 package org.spout.vanilla.world.generator.structure;
 
-public abstract class ComponentPart {
-	protected StructureComponent parent;
-
-	public ComponentPart(StructureComponent parent) {
-		this.parent = parent;
+public class PiecePlaneBuilder extends PieceCuboidBuilder {
+	public PiecePlaneBuilder(StructurePiece parent) {
+		super(parent);
 	}
 
-	public abstract void fill(boolean ignoreAir);
-
-	public abstract void randomFill(float odd, boolean ignoreAir);
-
-	public abstract void sphericalFill(boolean ignoreAir);
-
-	public StructureComponent getParent() {
-		return parent;
+	@Override
+	protected boolean isOuter(int xx, int yy, int zz) {
+		if (min.getX() == max.getX()) {
+			return yy == min.getY() || zz == min.getZ() || yy == max.getY() || zz == max.getZ();
+		} else if (min.getY() == max.getY()) {
+			return xx == min.getX() || zz == min.getZ() || xx == max.getX() || zz == max.getZ();
+		} else if (min.getZ() == max.getZ()) {
+			return yy == min.getY() || xx == min.getX() || yy == max.getY() || xx == max.getX();
+		} else {
+			return super.isOuter(xx, yy, zz);
+		}
 	}
 }

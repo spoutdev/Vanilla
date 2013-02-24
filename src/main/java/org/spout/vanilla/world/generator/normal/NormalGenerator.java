@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.world.generator.normal;
 
-import java.util.Arrays;
 import java.util.Random;
 
 import net.royawesome.jlibnoise.NoiseQuality;

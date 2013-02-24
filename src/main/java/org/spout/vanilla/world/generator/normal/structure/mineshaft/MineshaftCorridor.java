@@ -35,12 +35,12 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.object.LootChestObject;
-import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
+import org.spout.vanilla.world.generator.structure.StructurePiece;
 
-public class MineshaftCorridor extends StructureComponent {
+public class MineshaftCorridor extends StructurePiece {
 	private byte sections = 5;
 	private boolean hasRails = false;
 	private boolean caveSpiders = false;
@@ -53,7 +53,7 @@ public class MineshaftCorridor extends StructureComponent {
 
 	@Override
 	public boolean canPlace() {
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setMinMax(-1, -1, -1, 3, 3, sections * 5);
 		return !box.intersectsLiquids();
 	}
@@ -65,20 +65,20 @@ public class MineshaftCorridor extends StructureComponent {
 		// properties
 		final short lenght = (short) (sections * 5 - 1);
 		// building objects
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		final SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
 		box.setPicker(picker);
 		// the basic tunnel
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
 		box.setMinMax(0, 0, 0, 2, 1, lenght);
-		box.fill(false);
+		box.fill();
 		box.offsetMinMax(0, 2, 0, 0, 1, 0);
-		box.randomFill(0.8f, false);
+		box.randomFill(0.8f);
 		// spider webs for spawner
 		if (caveSpiders) {
 			picker.setOuterMaterial(VanillaMaterials.WEB);
 			box.setMinMax(0, 0, 0, 2, 1, lenght);
-			box.randomFill(0.6f, false);
+			box.randomFill(0.6f);
 		}
 		// decorate sections
 		for (byte section = 0; section < sections; section++) {
@@ -86,19 +86,19 @@ public class MineshaftCorridor extends StructureComponent {
 			// fences
 			picker.setOuterMaterial(VanillaMaterials.WOODEN_FENCE);
 			box.setMinMax(0, 0, sectionZ, 0, 1, sectionZ);
-			box.fill(false);
+			box.fill();
 			box.offsetMinMax(2, 0, 0, 2, 0, 0);
-			box.fill(false);
+			box.fill();
 			// ceiling planks
 			picker.setOuterMaterial(VanillaMaterials.PLANK);
 			if (random.nextInt(4) != 0) {
 				box.setMinMax(0, 2, sectionZ, 2, 2, sectionZ);
-				box.fill(false);
+				box.fill();
 			} else {
 				box.setMinMax(0, 2, sectionZ, 0, 2, sectionZ);
-				box.fill(false);
+				box.fill();
 				box.offsetMinMax(2, 0, 0, 2, 0, 0);
-				box.fill(false);
+				box.fill();
 			}
 			// webs and torches
 			setBlockMaterial(0.9f, 0, 2, sectionZ - 1, VanillaMaterials.WEB);
@@ -157,9 +157,9 @@ public class MineshaftCorridor extends StructureComponent {
 	}
 
 	@Override
-	public List<StructureComponent> getNextComponents() {
-		final List<StructureComponent> components = new ArrayList<StructureComponent>(1);
-		final StructureComponent component;
+	public List<StructurePiece> getNextComponents() {
+		final List<StructurePiece> components = new ArrayList<StructurePiece>(1);
+		final StructurePiece component;
 		final float draw = getRandom().nextFloat();
 		if (draw > 0.8) {
 			final MineshaftRoom room = new MineshaftRoom(parent);

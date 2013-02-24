@@ -33,19 +33,19 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.world.generator.structure.ComponentCuboidPart;
+import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
-import org.spout.vanilla.world.generator.structure.StructureComponent;
+import org.spout.vanilla.world.generator.structure.StructurePiece;
 
-public class StrongholdPrison extends StructureComponent {
+public class StrongholdPrison extends StructurePiece {
 	public StrongholdPrison(Structure parent) {
 		super(parent);
 	}
 
 	@Override
 	public boolean canPlace() {
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setMinMax(-1, -1, -1, 9, 5, 11);
 		return !box.intersectsLiquids();
 	}
@@ -53,36 +53,38 @@ public class StrongholdPrison extends StructureComponent {
 	@Override
 	public void place() {
 		// Building objects
-		final ComponentCuboidPart box = new ComponentCuboidPart(this);
+		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		final SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
 		final StrongholdBlockMaterialPicker stone = new StrongholdBlockMaterialPicker(getRandom());
 		// General shape
 		box.setPicker(stone);
 		box.setMinMax(0, 0, 0, 8, 4, 10);
-		box.fill(true);
+		box.toggleIgnoreAir();
+		box.fill();
+		box.toggleIgnoreAir();
 		// Place the door
 		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 1, 0);
 		//
 		box.setPicker(picker);
 		box.setMinMax(1, 1, 10, 3, 3, 10);
-		box.fill(false);
+		box.fill();
 		//
 		box.setPicker(stone);
 		box.setMinMax(4, 1, 1, 4, 3, 1);
-		box.fill(false);
+		box.fill();
 		box.offsetMinMax(0, 0, 2, 0, 0, 2);
-		box.fill(false);
+		box.fill();
 		box.offsetMinMax(0, 0, 4, 0, 0, 4);
-		box.fill(false);
+		box.fill();
 		box.offsetMinMax(0, 0, 2, 0, 0, 2);
-		box.fill(false);
+		box.fill();
 		// Build the cells
 		box.setPicker(picker);
 		picker.setOuterInnerMaterials(VanillaMaterials.IRON_BARS, VanillaMaterials.IRON_BARS);
 		box.setMinMax(4, 1, 4, 4, 3, 6);
-		box.fill(false);
+		box.fill();
 		box.setMinMax(5, 1, 5, 7, 3, 5);
-		box.fill(false);
+		box.fill();
 		setBlockMaterial(4, 3, 2, VanillaMaterials.IRON_BARS);
 		setBlockMaterial(4, 3, 8, VanillaMaterials.IRON_BARS);
 		// Add the cell doors
@@ -95,8 +97,8 @@ public class StrongholdPrison extends StructureComponent {
 	}
 
 	@Override
-	public List<StructureComponent> getNextComponents() {
-		final StructureComponent component;
+	public List<StructurePiece> getNextComponents() {
+		final StructurePiece component;
 		final float draw = getRandom().nextFloat();
 		if (draw > 0.95) {
 			component = new StrongholdLibrary(parent);

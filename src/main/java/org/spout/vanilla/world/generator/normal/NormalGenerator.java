@@ -275,12 +275,12 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		// hills
 		final PerlinRangeLayer hills =
 				new PerlinRangeLayer(1).
-				setOctaveCount(2).
+				setOctaveCount(3).
 				setFrequency(0.004 / scale);
 		// frozen oceans
 		final PerlinRangeLayer frozenOceans =
 				new PerlinRangeLayer(3).
-				setOctaveCount(2).
+				setOctaveCount(3).
 				setFrequency(0.004 / scale);
 		//
 		// LAND LAYERS
@@ -361,7 +361,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		// mushroom
 		final BiomeSelectorLayer mushroom =
 				new PerlinRangeLayer(11).
-				setOctaveCount(2).
+				setOctaveCount(3).
 				setFrequency(0.004 / scale).
 				addElement(VanillaBiomes.OCEAN, -1, 0.75f).
 				addElement(VanillaBiomes.MUSHROOM_SHORE, 0.75f, 0.85f).
@@ -374,17 +374,17 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		// land
 		final BiomeSelectorLayer land =
 				new WhittakerLayer(7).
-				setHumidityOctaveCount(2).
-				setHumidityFrequency(0.002 / scale).
-				setTemperatureOctaveCount(2).
+				setHumidityOctaveCount(4).
+				setHumidityFrequency(0.001 / scale).
+				setTemperatureOctaveCount(4).
 				setTemperatureFrequency(0.001 / scale).
 				addElement(desert, 20, 50).
-				addElement(forest, 15, 200).
-				addElement(jungle, 20, 300).
-				addElement(plains, 10, 50).
+				addElement(plains, 10, 150).
+				addElement(forest, 15, 250).
+				addElement(jungle, 20, 350).
 				addElement(swamp, 10, 300).
-				addElement(taiga, 0, 50).
-				addElement(tundra, -5, 50);
+				addElement(taiga, -5, 200).
+				addElement(tundra, -10, 150);
 		// small mountains
 		final BiomeSelectorLayer smallMountains =
 				rivers.clone().
@@ -401,7 +401,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		// start
 		final BiomeSelectorLayer start =
 				new PerlinRangeLayer(5).
-				setOctaveCount(2).
+				setOctaveCount(3).
 				setFrequency(0.0028 / scale).
 				addElement(mushroom, -1, -0.5f).
 				addElement(VanillaBiomes.OCEAN, -0.5f, -0.05f).

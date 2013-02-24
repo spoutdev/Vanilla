@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.world.generator.normal;
 
+import java.text.NumberFormat;
+import java.util.Arrays;
 import java.util.Random;
 
 import net.royawesome.jlibnoise.NoiseQuality;
@@ -81,6 +83,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 	private static final ScalePoint NOISE = new ScalePoint();
 	// smoothing stuff
 	private static final int SMOOTH_SIZE = 4;
+	private static final double[][] GAUSSIAN_KERNEL;
 
 	static {
 		PERLIN.setFrequency(0.01);
@@ -93,6 +96,17 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		NOISE.setxScale(1);
 		NOISE.setyScale(1);
 		NOISE.setzScale(1);
+
+		final int kernelSize = SMOOTH_SIZE * 2 + 1;
+		GAUSSIAN_KERNEL = new double[kernelSize][kernelSize];
+		final double bellSize = 1d / SMOOTH_SIZE;
+		for (int sx = -SMOOTH_SIZE; sx <= SMOOTH_SIZE; sx++) {
+			for (int sz = -SMOOTH_SIZE; sz <= SMOOTH_SIZE; sz++) {
+				final double bx = bellSize * sx;
+				final double bz = bellSize * sz;
+				GAUSSIAN_KERNEL[sx + SMOOTH_SIZE][sz + SMOOTH_SIZE] = 1.5 * Math.exp(-(bx * bx + bz * bz) / 2);
+			}
+		}
 	}
 
 	@Override
@@ -170,8 +184,9 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 						} else {
 							adjacent = (NormalBiome) biomes.getBiome(xx + sx, y, zz + sz);
 						}
-						minSum += adjacent.getMinElevation();
-						maxSum += adjacent.getMaxElevation();
+						final double weight = GAUSSIAN_KERNEL[sx + SMOOTH_SIZE][sz + SMOOTH_SIZE];
+						minSum += adjacent.getMinElevation() * weight;
+						maxSum += adjacent.getMaxElevation() * weight;
 						count++;
 					}
 				}

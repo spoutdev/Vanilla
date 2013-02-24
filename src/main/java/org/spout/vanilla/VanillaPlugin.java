@@ -137,10 +137,10 @@ public class VanillaPlugin extends CommonPlugin {
 				input.bind(Mouse.MOUSE_BUTTON0, "break_block");
 				input.bind(Mouse.MOUSE_BUTTON1, "place_block");
 				input.bind(Mouse.MOUSE_BUTTON2, "select_block");
-				input.bind(Mouse.MOUSE_SCROLLUP, "hotbar_left");
-				input.bind(Mouse.MOUSE_SCROLLDOWN, "hotbar_right");
+				input.bind(Mouse.MOUSE_SCROLLUP, "quickbar_left");
+				input.bind(Mouse.MOUSE_SCROLLDOWN, "quickbar_right");
 				for (int i = 1; i < 10; i++) {
-					input.bind(Keyboard.valueOf("KEY_" + i), "hotbar_" + i);
+					input.bind(Keyboard.valueOf("KEY_" + i), "quickbar_" + i);
 				}
 
 				final InputCommandExecutor exe = new InputCommandExecutor();
@@ -152,12 +152,12 @@ public class VanillaPlugin extends CommonPlugin {
 						.setExecutor(Platform.CLIENT, exe);
 				root.addSubCommand(this, "+place_block").setArgBounds(0, 0).setHelp("Places a block!")
 						.setExecutor(Platform.CLIENT, exe);
-				root.addSubCommand(this, "+hotbar_left").setArgBounds(0, 0).setHelp("Changes hotbar slot!")
+				root.addSubCommand(this, "+quickbar_left").setArgBounds(0, 0).setHelp("Changes quickbar slot!")
 						.setExecutor(Platform.CLIENT, exe);
-				root.addSubCommand(this, "+hotbar_right").setArgBounds(0, 0).setHelp("Changes hotbar slot!")
+				root.addSubCommand(this, "+quickbar_right").setArgBounds(0, 0).setHelp("Changes quickbar slot!")
 						.setExecutor(Platform.CLIENT, exe);
 				for (int i = 1; i < 10; i++) {
-					root.addSubCommand(this, "+hotbar_" + i).setArgBounds(0, 0).setHelp("Changes hotbar slot!")
+					root.addSubCommand(this, "+quickbar_" + i).setArgBounds(0, 0).setHelp("Changes quickbar slot!")
 							.setExecutor(Platform.CLIENT, exe);
 				}
 

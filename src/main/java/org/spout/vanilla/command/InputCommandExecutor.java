@@ -108,7 +108,7 @@ public class InputCommandExecutor implements CommandExecutor {
 					});
 				}
 			}
-		} else if (name.startsWith("+hotbar_")) {
+		} else if (name.startsWith("+quickbar_")) {
 			Player player = (Player) source;
 			PlayerInventory inventory = player.get(PlayerInventory.class);
 			if (inventory != null) {
@@ -116,21 +116,21 @@ public class InputCommandExecutor implements CommandExecutor {
 				HUD hud = player.get(HUD.class);
 				int newSlot = quickbar.getSelectedSlot().getIndex();
 				if (name.endsWith("left")) {
-					newSlot--;
-					if (newSlot < 0) {
-						newSlot = 8;
-					}
-				} else if (name.endsWith("right")) {
 					newSlot++;
 					if (newSlot > 8) {
 						newSlot = 0;
+					}
+				} else if (name.endsWith("right")) {
+					newSlot--;
+					if (newSlot < 0) {
+						newSlot = 8;
 					}
 				} else {
 					newSlot = Integer.parseInt(name.substring(name.indexOf('_') + 1)) - 1;
 				}
 
 				quickbar.setSelectedSlot(newSlot);
-				hud.getHotBar().update();
+				hud.getQuickbar().update();
 			}
 		}
 	}

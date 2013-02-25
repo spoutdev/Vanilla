@@ -39,34 +39,34 @@ import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.inventory.entity.QuickbarInventory;
 
-public class VanillaHotBar extends HotBarWidget {
+public class VanillaQuickbar extends QuickbarWidget {
 	
-	private RenderPartPack hotbarPack = new RenderPartPack(VanillaRenderMaterials.HOTBAR_MATERIAL);
+	private RenderPartPack quickbarPack = new RenderPartPack(VanillaRenderMaterials.QUICKBAR_MATERIAL);
 	
 	@Override
-	public void init(Widget hotbar, HUD hud) {
-		super.init(hotbar, hud);
-		// Setup the hotbar
-		final RenderPartsHolderComponent hotbarRect = widget.add(RenderPartsHolderComponent.class);
-		hotbarRect.add(hotbarPack);
+	public void init(Widget quickbar, HUD hud) {
+		super.init(quickbar, hud);
+		// Setup the quickbar
+		final RenderPartsHolderComponent quickbarRect = widget.add(RenderPartsHolderComponent.class);
+		quickbarRect.add(quickbarPack);
 		
-		final RenderPart hotbarBgRect = new RenderPart();
-		hotbarBgRect.setColor(Color.WHITE);
-		hotbarBgRect.setSprite(new Rectangle(START_X, -1f, 1.42f * SCALE, 0.17f));
-		hotbarBgRect.setSource(new Rectangle(0, 0, 0.71f, 0.085f));
-		hotbarPack.add(hotbarBgRect, 1);
+		final RenderPart quickbarBgRect = new RenderPart();
+		quickbarBgRect.setColor(Color.WHITE);
+		quickbarBgRect.setSprite(new Rectangle(START_X, -1f, 1.42f * SCALE, 0.17f));
+		quickbarBgRect.setSource(new Rectangle(0, 0, 0.71f, 0.085f));
+		quickbarPack.add(quickbarBgRect, 1);
 
-		final RenderPart hotbarSlotRect = new RenderPart();
-		hotbarSlotRect.setColor(Color.WHITE);
-		hotbarSlotRect.setSource(new Rectangle(0, 22f / 256f, 30f / 256f, 24f / 256f));
-		hotbarSlotRect.setSprite(new Rectangle(-0.72f * SCALE + (0 * .1175f), -1.005f, 0.24f * SCALE, 0.24f * SCALE));
-		hotbarPack.add(hotbarSlotRect, 0);
+		final RenderPart quickbarSlotRect = new RenderPart();
+		quickbarSlotRect.setColor(Color.WHITE);
+		quickbarSlotRect.setSource(new Rectangle(0, 22f / 256f, 30f / 256f, 24f / 256f));
+		quickbarSlotRect.setSprite(new Rectangle(-0.72f * SCALE + (0 * .1175f), -1.005f, 0.24f * SCALE, 0.24f * SCALE));
+		quickbarPack.add(quickbarSlotRect, 0);
 		
 		attach();
 	}
 
 	/**
-	 * Sets the selected hotbar slot.
+	 * Sets the selected quickbar slot.
 	 */
 	@Override
 	public void update() {
@@ -84,7 +84,7 @@ public class VanillaHotBar extends HotBarWidget {
 			throw new IllegalArgumentException("Slot must be between 0 and 8");
 		}
 
-		final RenderPart rect = hotbarPack.get(1);
+		final RenderPart rect = quickbarPack.get(1);
 		rect.setSprite(new Rectangle(-0.72f * SCALE + (slot * .1175f), -1.005f, 0.24f * SCALE, 0.24f * SCALE));
 		widget.update();
 	}

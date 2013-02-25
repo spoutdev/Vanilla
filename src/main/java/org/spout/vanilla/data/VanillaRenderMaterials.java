@@ -35,7 +35,7 @@ import org.spout.api.render.RenderMaterial;
 public final class VanillaRenderMaterials {
 	private static final FileSystem fileSystem = Spout.getFilesystem();
 	public static final Font FONT;
-	public static final RenderMaterial HOTBAR_MATERIAL;
+	public static final RenderMaterial QUICKBAR_MATERIAL;
 	public static final RenderMaterial ICONS_MATERIAL;
 	public static final RenderMaterial INVENTORY_MATERIAL;
 	public static final RenderMaterial CONTAINER_MATERIAL;
@@ -54,7 +54,7 @@ public final class VanillaRenderMaterials {
 	static {
 		if (Spout.getPlatform() == Platform.CLIENT) {
 			FONT = (Font) fileSystem.getResource("font://Spout/fonts/ubuntu/Ubuntu-M.ttf");
-			HOTBAR_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/HotbarGUIMaterial.smt");
+			QUICKBAR_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/QuickbarGUIMaterial.smt");
 			ICONS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/IconsGUIMaterial.smt");
 			INVENTORY_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/InventoryGUIMaterial.smt");
 			CONTAINER_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/ContainerGUIMaterial.smt");
@@ -67,7 +67,7 @@ public final class VanillaRenderMaterials {
 			BLOCKS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/materials/terrain.smt");
 		} else {
 			FONT = null;
-			HOTBAR_MATERIAL = null;
+			QUICKBAR_MATERIAL = null;
 			ICONS_MATERIAL = null;
 			INVENTORY_MATERIAL = null;
 			CONTAINER_MATERIAL = null;

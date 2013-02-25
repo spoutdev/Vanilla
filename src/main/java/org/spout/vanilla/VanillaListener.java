@@ -59,7 +59,7 @@ import org.spout.vanilla.component.entity.player.hud.VanillaArmorWidget;
 import org.spout.vanilla.component.entity.player.hud.VanillaCrosshair;
 import org.spout.vanilla.component.entity.player.hud.VanillaDrowning;
 import org.spout.vanilla.component.entity.player.hud.VanillaExpBar;
-import org.spout.vanilla.component.entity.player.hud.VanillaHotBar;
+import org.spout.vanilla.component.entity.player.hud.VanillaQuickbar;
 import org.spout.vanilla.component.entity.player.hud.VanillaHunger;
 import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
@@ -113,7 +113,7 @@ public class VanillaListener implements Listener {
 
 		HUD HUD = player.add(org.spout.vanilla.component.entity.player.HUD.class);
 		HUD.setDefault(VanillaArmorWidget.class);
-		HUD.setDefault(VanillaHotBar.class);
+		HUD.setDefault(VanillaQuickbar.class);
 		HUD.setDefault(VanillaCrosshair.class);
 		HUD.setDefault(VanillaExpBar.class);
 		HUD.setDefault(VanillaDrowning.class);

@@ -44,7 +44,7 @@ import org.spout.vanilla.component.entity.player.hud.CrosshairWidget;
 import org.spout.vanilla.component.entity.player.hud.DrowningWidget;
 import org.spout.vanilla.component.entity.player.hud.ExpBarWidget;
 import org.spout.vanilla.component.entity.player.hud.GUIWidget;
-import org.spout.vanilla.component.entity.player.hud.HotBarWidget;
+import org.spout.vanilla.component.entity.player.hud.QuickbarWidget;
 import org.spout.vanilla.component.entity.player.hud.HungerWidget;
 
 /**
@@ -56,7 +56,7 @@ public class HUD extends EntityComponent {
 	// The main hud screen
 	private final Screen hud = new Screen();
 	// The core elements of the main hud
-	private HotBarWidget hotBar = null;
+	private QuickbarWidget quickbarWidget = null;
 	private ArmorWidget armorWidget = null;
 	private ExpBarWidget expBar = null;
 	private CrosshairWidget crosshairWidget = null;
@@ -105,12 +105,12 @@ public class HUD extends EntityComponent {
 			Spout.getLogger().log(Level.SEVERE, null, ex);
 		}
 		
-		if (widget instanceof HotBarWidget) {
+		if (widget instanceof QuickbarWidget) {
 			// There has to be a better way to do this.
-			if (hotBar != null && force == false) {
-				return (T)hotBar;
+			if (quickbarWidget != null && force == false) {
+				return (T)quickbarWidget;
 			}
-			hotBar = (HotBarWidget) widget;
+			quickbarWidget = (QuickbarWidget) widget;
 		} else if (widget instanceof ArmorWidget) {
 			if (armorWidget != null && force == false) {
 				return (T)armorWidget;
@@ -212,11 +212,11 @@ public class HUD extends EntityComponent {
 	}
 
 	/**
-	 * Returns the CORE GUI Widget (HotBar)
+	 * Returns the CORE GUI Widget (Quickbar)
 	 * @return 
 	 */
-	public HotBarWidget getHotBar() {
-		return hotBar;
+	public QuickbarWidget getQuickbar() {
+		return quickbarWidget;
 	}
 
 	/**
@@ -254,7 +254,7 @@ public class HUD extends EntityComponent {
 	public void setupHUD() {
 		initHUD();
 		setArmor();
-		//setHotbarSlot();
+		//setQuickbarSlot();
 		setExp();
 	}
 
@@ -271,7 +271,7 @@ public class HUD extends EntityComponent {
 
 		// Setup all CORE Vanilla HUD Widgets
 		crosshairWidget.init(crosshairWidget.getWidget(), this);
-		hotBar.init(hotBar.getWidget(), this);
+		quickbarWidget.init(quickbarWidget.getWidget(), this);
 		expBar.init(expBar.getWidget(), this);
 		armorWidget.init(armorWidget.getWidget(), this);
 		drowningWidget.init(drowningWidget.getWidget(), this);

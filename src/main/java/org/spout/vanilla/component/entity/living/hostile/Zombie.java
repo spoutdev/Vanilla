@@ -102,7 +102,10 @@ public class Zombie extends Living implements Hostile {
 
 	@Override
 	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
-		System.out.println("COLLIDED WITH A " + entity);
-		entity.get(Health.class).damage(getOwner().get(Damage.class).getDamageLevel(colliderPoint.getWorld().getData().get(VanillaData.DIFFICULTY)).getAmount());
+		Health health = entity.get(Health.class);
+		if (health != null) {
+			health.damage(getOwner().get(Damage.class).getDamageLevel(colliderPoint.getWorld().getData().get(VanillaData.DIFFICULTY)).getAmount());
+
+		}
 	}
 }

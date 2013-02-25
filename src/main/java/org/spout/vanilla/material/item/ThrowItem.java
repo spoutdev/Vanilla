@@ -47,7 +47,7 @@ public abstract class ThrowItem extends VanillaItemMaterial {
 
 	@Override
 	public void onInteract(Entity entity, Action type) {
-		onInteract(entity, type, 5f);
+		onInteract(entity, type, 10f);
 	}
 
 	public void onInteract(Entity entity, Action type, float mass) {
@@ -57,7 +57,7 @@ public abstract class ThrowItem extends VanillaItemMaterial {
 			Substance item = world.createEntity(entity.getScene().getPosition().add(0, 1.6f, 0), itemThrown).add(itemThrown);
 			SceneComponent scene = item.getOwner().getScene();
 			scene.setShape(mass, new SphereShape(0.1f)); // TODO: Correct this
-			scene.impulse(VectorMath.getDirection(entity.getScene().getRotation()).multiply(30)); //TODO: Need real parameters
+			scene.impulse(VectorMath.getDirection(entity.getScene().getRotation()).multiply(250)); //TODO: Need real parameters
 			if (item instanceof Projectile) {
 				((Projectile) item).setShooter(entity);
 			}

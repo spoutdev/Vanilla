@@ -26,13 +26,12 @@
  */
 package org.spout.vanilla.component.entity.substance.projectile;
 
-
-
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.substance.Substance;
 import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;

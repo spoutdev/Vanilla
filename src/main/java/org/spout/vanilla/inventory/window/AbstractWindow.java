@@ -104,12 +104,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 	/**
 	 * Reloads the window's items
 	 */
-	@ServerOnly
 	public final void reload() {
-		if (Spout.getPlatform() == Platform.CLIENT) {
-			throw new IllegalStateException("Cannot reload window in client mode.");
-		}
-
 		ItemStack[] items = new ItemStack[getSize()];
 		for (int i = 0; i < items.length; i++) {
 			Slot entry = getSlot(i);
@@ -128,7 +123,6 @@ public abstract class AbstractWindow implements InventoryViewer {
 	 * @param from inventory with item
 	 * @return true if successful
 	 */
-	@ServerOnly
 	public abstract boolean onShiftClick(ItemStack stack, int slot, Inventory from);
 
 	/**

@@ -173,12 +173,8 @@ public abstract class Window extends AbstractWindow {
 		}
 	}
 
-	@ServerOnly
 	@Override
 	public boolean onShiftClick(ItemStack stack, int slot, Inventory from) {
-		if (Spout.getPlatform() == Platform.CLIENT) {
-			throw new IllegalStateException("Shift click handling is handled server side.");
-		}
 		final PlayerInventory inventory = getPlayerInventory();
 		if (from instanceof CraftingInventory) {
 			if (((CraftingInventory) from).onShiftClick(slot, inventory)) {

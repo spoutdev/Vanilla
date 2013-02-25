@@ -55,7 +55,7 @@ public class DefaultWindow extends Window {
 		}));
 
 		addInventoryConverter(new InventoryConverter(inventory.getCraftingGrid(), "3-4, 1-2, 0", new Vector2[]{
-				Vector2.ZERO, Vector2.ZERO, Vector2.ZERO, Vector2.ZERO
+				Vector2.ZERO, Vector2.ZERO, Vector2.ZERO, Vector2.ZERO, Vector2.ZERO
 		}));
 	}
 

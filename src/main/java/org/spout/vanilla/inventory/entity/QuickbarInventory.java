@@ -50,7 +50,7 @@ public abstract class QuickbarInventory extends Inventory {
 	}
 
 	/**
-	 * returns the slot that is currently selected on the hotbar
+	 * returns the slot that is currently selected on the quickbar
 	 * @return slot selected
 	 */
 	public Slot getSelectedSlot() {

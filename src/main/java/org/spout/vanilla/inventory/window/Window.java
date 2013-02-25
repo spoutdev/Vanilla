@@ -124,7 +124,6 @@ public abstract class Window extends AbstractWindow {
 						popup.attachWidget(plugin, widget);
 					}
 				}
-
 				break;
 			default:
 				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform().toString());
@@ -135,7 +134,6 @@ public abstract class Window extends AbstractWindow {
 		this(owner, type, title, 0);
 	}
 
-	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void open() {
 		opened = true;
@@ -149,6 +147,8 @@ public abstract class Window extends AbstractWindow {
 			case CLIENT:
 				((Client) Spout.getEngine()).getScreenStack().openScreen(popup);
 				break;
+			default:
+				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform().toString());
 		}
 	}
 
@@ -524,13 +524,6 @@ public abstract class Window extends AbstractWindow {
 			default:
 				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform());
 		}
-	}
-
-	public boolean canTick() {
-		return false;
-	}
-
-	public void onTick(float dt) {
 	}
 
 	@Override

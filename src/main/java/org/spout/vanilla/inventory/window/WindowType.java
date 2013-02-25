@@ -86,6 +86,7 @@ public enum WindowType {
 	 * {@link org.spout.vanilla.material.block.solid.Anvil}
 	 */
 	ANVIL(8, VanillaRenderMaterials.ANVIL_MATERIAL);
+
 	private final int id;
 	private final RenderMaterial material;
 	private static final TIntObjectMap<WindowType> idMap = new TIntObjectHashMap<WindowType>();

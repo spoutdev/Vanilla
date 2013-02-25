@@ -66,19 +66,20 @@ public class DefaultWindow extends Window {
 		if (pInv == null) {
 			return;
 		}
+
 		PlayerCraftingInventory inventory = getPlayerInventory().getCraftingGrid();
-		GridIterator iterator = inventory.getGrid().iterator();
-		while (iterator.hasNext()) {
-			ItemStack item = inventory.get(iterator.next());
+		for (ItemStack item : inventory) {
 			if (item != null) {
 				getHuman().dropItem(item);
 			}
 		}
 		inventory.clear();
+
 		//Do not call super-close, DefaultWindow only pseudo-closes
 		if (!(Spout.getEngine() instanceof Server)) {
 			super.close();
 		}
+
 		opened = false;
 	}
 

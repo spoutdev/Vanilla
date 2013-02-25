@@ -79,14 +79,4 @@ public class WindowHolder extends EntityComponent {
 	public void onDetached() {
 		activeWindow.close();
 	}
-
-	@Override
-	public boolean canTick() {
-		return activeWindow.canTick();
-	}
-
-	@Override
-	public void onTick(float dt) {
-		activeWindow.onTick(dt);
-	}
 }

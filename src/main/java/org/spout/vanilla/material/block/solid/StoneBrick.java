@@ -35,7 +35,8 @@ public class StoneBrick extends Solid {
 	public static final StoneBrick STONE = new StoneBrick("Stone Brick", VanillaMaterialModels.STONE_BRICK);
 	public static final StoneBrick MOSSY_STONE = new StoneBrick("Mossy Stone Brick", 1, STONE, VanillaMaterialModels.STONE_BRICK_MOSSY);
 	public static final StoneBrick CRACKED_STONE = new StoneBrick("Cracked Stone Brick", 2, STONE, VanillaMaterialModels.STONE_BRICK_CRACKED);
-
+	public static final StoneBrick CHISELED_STONE = new StoneBrick("Chiseled Stone Brick", 3, STONE, VanillaMaterialModels.STONE_BRICK_CHISELED);
+        
 	private StoneBrick(String name, String model) {
 		super((short) 0x0003, name, 98, model);
 		this.setHardness(1.5F).setResistance(10.0F);

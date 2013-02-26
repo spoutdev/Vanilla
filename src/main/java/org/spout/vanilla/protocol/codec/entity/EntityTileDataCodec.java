@@ -47,7 +47,7 @@ public class EntityTileDataCodec extends MessageCodec<EntityTileDataMessage> {
 		int x = buffer.readInt();
 		int y = buffer.readShort();
 		int z = buffer.readInt();
-		int action = buffer.readByte();
+		byte action = buffer.readByte();
 		CompoundMap data = ChannelBufferUtils.readCompound(buffer);
 		return new EntityTileDataMessage(x, y, z, action, data, NullRepositionManager.getInstance());
 	}

@@ -114,6 +114,8 @@ import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 import org.spout.api.util.Parameter;
 
+import org.spout.nbt.CompoundMap;
+
 import static org.spout.vanilla.protocol.ChannelBufferUtilsTest.TEST_PARAMS;
 
 public class VanillaProtocolTest extends BaseProtocolTest {
@@ -186,7 +188,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new WindowEnchantItemMessage(2, 3),
 			new SignMessage(1, 2, 3, new String[]{"This", "is", "a", "sign"}, NullRepositionManager.getInstance()),
 			new EntityItemDataMessage((short) 1, (short) 2, new byte[]{2, 3, 8, 127, 123}),
-			new EntityTileDataMessage(23, 45, 903, 1, 0, 0, 0, NullRepositionManager.getInstance()),
+			new EntityTileDataMessage(23, 45, 903, (byte) 1, new CompoundMap(), NullRepositionManager.getInstance()),
 			new PlayerStatisticMessage(1, (byte) 5),
 			new EncryptionKeyResponseMessage(false, new byte[]{(byte) 7, (byte) 4, (byte) 1, (byte) 122}, new byte[]{(byte) 6, (byte) 3, (byte) 4, (byte) 122}),
 			new EncryptionKeyRequestMessage("This is a server", false, new byte[]{(byte) 1, (byte) 2, (byte) 3, (byte) 10}, new byte[]{(byte) 12, (byte) 54, (byte) 4, (byte) 122}),

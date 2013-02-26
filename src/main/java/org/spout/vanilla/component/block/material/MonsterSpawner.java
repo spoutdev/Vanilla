@@ -26,10 +26,290 @@
  */
 package org.spout.vanilla.component.block.material;
 
+import java.util.Random;
+
+import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
+import org.spout.api.geo.LoadOption;
+import org.spout.api.geo.discrete.Point;
+import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.component.block.VanillaBlockComponent;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 /**
  * Component that represents a Monster Spawner in the world.
  */
 public class MonsterSpawner extends VanillaBlockComponent {
+	private final Random random = new Random();
+
+	@Override
+	public void onAttached() {
+		resetSpawnDelay();
+		sendData();
+	}
+
+	@Override
+	public void onTick(float dt) {
+		if (isActive()) {
+			float spawnDelay = pulseSpawnDelay(dt);
+			if (spawnDelay <= 0) {
+				doSpawn();
+			}
+		} else {
+			resetSpawnDelay();
+		}
+	}
+
+	@Override
+	public boolean canTick() {
+		return true;
+	}
+
+	/**
+	 * Sets the minimum amount of seconds that the spawner can spawn within.
+	 *
+	 * @param delay in seconds
+	 */
+	public void setMinSpawnDelay(int delay) {
+		getData().put(VanillaData.MIN_SPAWN_DELAY, delay);
+	}
+
+	/**
+	 * Returns the minimum amount of seconds that the spawner can spawn within.
+	 *
+	 * @return delay in seconds
+	 */
+	public int getMinSpawnDelay() {
+		return getData().get(VanillaData.MIN_SPAWN_DELAY);
+	}
+
+	/**
+	 * Sets the maximum amount of seconds that a spawner can spawn within.
+	 *
+	 * @param delay in seconds
+	 */
+	public void setMaxSpawnDelay(int delay) {
+		getData().put(VanillaData.MAX_SPAWN_DELAY, delay);
+	}
+
+	/**
+	 * Returns the maximum amount of seconds that a spawner can spawn within.
+	 *
+	 * @return delay in seconds
+	 */
+	public int getMaxSpawnDelay() {
+		return getData().get(VanillaData.MAX_SPAWN_DELAY);
+	}
+
+	/**
+	 * Sets the amount of creatures that can be within the bounds specified by
+	 * {@link #getCreatureSearchBounds()}.
+	 *
+	 * @param maxCreatures maximum amount of creatures that can spawn
+	 */
+	public void setMaxCreatures(int maxCreatures) {
+		getData().put(VanillaData.MAX_CREATURES, maxCreatures);
+	}
+
+	/**
+	 * Returns the amount of creatures that can be within the bounds specified
+	 * by {@link #getCreatureSearchBounds()}.
+	 *
+	 * @return maximum amount of creatures that can spawn
+	 */
+	public int getMaxCreatures() {
+		return getData().get(VanillaData.MAX_CREATURES);
+	}
+
+	/**
+	 * Sets the bounds in which to search for creatures in.
+	 *
+	 * @param bounds to search for creatures in
+	 */
+	public void setCreatureSearchBounds(Vector3 bounds) {
+		getData().put(VanillaData.CREATURE_SEARCH_BOUNDS, bounds);
+	}
+
+	/**
+	 * Returns the bounds in which to search for creatures in.
+	 *
+	 * @return bounds to search for creatures in
+	 */
+	public Vector3 getCreatureSearchBounds() {
+		return getData().get(VanillaData.CREATURE_SEARCH_BOUNDS);
+	}
+
+	/**
+	 * Sets the range in which entities can spawn from the spawner.
+	 *
+	 * @param spawnRange of spawner
+	 */
+	public void setSpawnRange(float spawnRange) {
+		getData().put(VanillaData.SPAWN_RANGE, spawnRange);
+	}
+
+	/**
+	 * Returns the range in which entities can spawn from the spawner.
+	 *
+	 * @return range from the spawner
+	 */
+	public float getSpawnRange() {
+		return getData().get(VanillaData.SPAWN_RANGE);
+	}
+
+	/**
+	 * Sets the amount of entities the spawner should attempt to spawn on every
+	 * {@link #doSpawn()}.
+	 *
+	 * @param spawnCount how many entities to try and spawn
+	 */
+	public void setSpawnCount(int spawnCount) {
+		getData().put(VanillaData.SPAWN_COUNT, spawnCount);
+	}
+
+	/**
+	 * Returns the amount of entities the spawner should attempt to spawn on
+	 * every {@link #doSpawn()}.
+	 *
+	 * @return how many entities to spawn
+	 */
+	public int getSpawnCount() {
+		return getData().get(VanillaData.SPAWN_COUNT);
+	}
+
+	/**
+	 * Attempts to spawn the amount of entities specified by
+	 * {@link #getSpawnCount()} within the range specified by
+	 * {@link #getSpawnRange()} and resets the spawn delay.
+	 */
+	public void doSpawn() {
+		Point pos = getPosition();
+		resetSpawnDelay();
+		if (!canSpawn()) {
+			System.out.println("Cannot spawn more");
+			return;
+		}
+		for (int i = 0; i < getSpawnCount(); i++) {
+			float range = getSpawnRange();
+			float x = pos.getX() + (random.nextFloat() - random.nextFloat()) * range;
+			float y = pos.getY() + random.nextInt(3) - 1;
+			float z = pos.getZ() + (random.nextFloat() - random.nextFloat()) * range;
+			Point p = new Point(pos.getWorld(), x, y, z);
+			if (p.getBlock().getMaterial().isMaterial(VanillaMaterials.AIR)) {
+				System.out.println("Spawning: " + getCreatureType().getComponentType());
+				p.getWorld().createAndSpawnEntity(p, LoadOption.LOAD_ONLY, getCreatureType().getComponentType());
+			}
+		}
+	}
+
+	/**
+	 * Whether the spawner should spawn more creatures.
+	 *
+	 * @return true if the spawner is able to spawn more
+	 */
+	public boolean canSpawn() {
+		int count = 0;
+		Point bp = getPosition();
+		Vector3 bounds = getCreatureSearchBounds();
+		for (Entity e : getOwner().getChunk().getObservers()) {
+			if (e instanceof Player) {
+				continue;
+			}
+			Point ep = e.getScene().getPosition();
+			if (Math.abs(bp.getX() - ep.getX()) < bounds.getX() && Math.abs(bp.getY() - ep.getY()) < bounds.getY() && Math.abs(bp.getZ() - ep.getZ()) < bounds.getZ()) {
+				count++;
+			}
+		}
+		return count <= getMaxCreatures();
+	}
+
+	/**
+	 * Sets the {@link CreatureType} spawned.
+	 *
+	 * @param type to spawn
+	 */
+	public void setCreatureType(CreatureType type) {
+		getData().put(VanillaData.CREATURE_TYPE, type.getId());
+		sendData();
+	}
+
+	/**
+	 * Returns the {@link CreatureType} to spawn.
+	 *
+	 * @return creature to spawn
+	 */
+	public CreatureType getCreatureType() {
+		return CreatureType.get(getData().get(VanillaData.CREATURE_TYPE));
+	}
+
+	/**
+	 * Sets the radius in which the spawner requires at least one
+	 * {@link Player} to be within.
+	 *
+	 * @param radius to search for players in
+	 */
+	public void setRadius(int radius) {
+		getData().put(VanillaData.RADIUS, radius);
+	}
+
+	/**
+	 * Returns the radius in which the spawner requires at least one
+	 * {@link Player} to be within.
+	 *
+	 * @return radius to search for players in
+	 */
+	public int getRadius() {
+		return getData().get(VanillaData.RADIUS);
+	}
+
+	/**
+	 * Returns true if a {@link Player} is within the radius specified by
+	 * {@link #getRadius()}.
+	 *
+	 * @return true if there is a player within the radius
+	 */
+	public boolean isActive() {
+		return !getOwner().getChunk().getWorld().getNearbyEntities(getPosition(), getRadius()).isEmpty();
+	}
+
+	/**
+	 * Returns the amount of time, in seconds, there is until the next
+	 * {@link #doSpawn()} call.
+	 *
+	 * @return time, in seconds, until next spawn
+	 */
+	public float getSpawnDelay() {
+		return getData().get(VanillaData.SPAWN_DELAY);
+	}
+
+	/**
+	 * Sets the amount of time, in seconds, there is until the next
+	 * {@link #doSpawn()} call.
+	 *
+	 * @param spawnDelay in seconds
+	 */
+	public void setSpawnDelay(float spawnDelay) {
+		getData().put(VanillaData.SPAWN_DELAY, spawnDelay);
+	}
+
+	/**
+	 * Resets the spawn delay to an amount between 10 and 40 seconds.
+	 */
+	public void resetSpawnDelay() {
+		int max = getMaxSpawnDelay(), min = getMinSpawnDelay();
+		setSpawnDelay(random.nextInt(max - min) + min);
+	}
+
+	private float pulseSpawnDelay(float dt) {
+		float delay = getSpawnDelay() - dt;
+		setSpawnDelay(delay);
+		return delay;
+	}
+
+	private void sendData() {
+		// TODO: Update the client
+	}
 }

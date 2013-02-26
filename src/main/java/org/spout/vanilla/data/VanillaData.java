@@ -47,6 +47,7 @@ import org.spout.vanilla.inventory.player.PlayerCraftingInventory;
 import org.spout.vanilla.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.block.component.FurnaceBlock;
+import org.spout.vanilla.protocol.entity.creature.CreatureType;
 
 /**
  * * Common Vanilla-like data mappings that are found in Vanilla.
@@ -176,6 +177,16 @@ public class VanillaData {
 	// Cmd block
 	public static final DefaultedKey<String> COMMAND = new DefaultedKeyImpl<String>("command", null);
 	public static final DefaultedKey<String> CHAT_CHANNEL = new DefaultedKeyImpl<String>("chat_channel", "CommandBlock");
+	// Monster spawner
+	public static final DefaultedKey<Integer> RADIUS = new DefaultedKeyImpl<Integer>("radius", 16);
+	public static final DefaultedKey<Integer> CREATURE_TYPE = new DefaultedKeyImpl<Integer>("creature", CreatureType.PIG.getId());
+	public static final DefaultedKey<Float> SPAWN_DELAY = new DefaultedKeyImpl<Float>("spawn_delay", 0f);
+	public static final DefaultedKey<Integer> SPAWN_COUNT = new DefaultedKeyImpl<Integer>("spawn_count", 4);
+	public static final DefaultedKey<Float> SPAWN_RANGE = new DefaultedKeyImpl<Float>("spawn_range", 4f);
+	public static final DefaultedKey<Integer> MAX_CREATURES = new DefaultedKeyImpl<Integer>("max_creatures", 6);
+	public static final DefaultedKey<Vector3> CREATURE_SEARCH_BOUNDS = new DefaultedKeyImpl<Vector3>("creature_search_bounds", new Vector3(17, 9, 17));
+	public static final DefaultedKey<Integer> MIN_SPAWN_DELAY = new DefaultedKeyImpl<Integer>("min_spawn_delay", 10);
+	public static final DefaultedKey<Integer> MAX_SPAWN_DELAY = new DefaultedKeyImpl<Integer>("max_spawn_delay", 40);
 	// Inventory
 	public static final DefaultedKey<EntityArmorInventory> ARMOR_INVENTORY = new DefaultedKeyFactory<EntityArmorInventory>("armor", EntityArmorInventory.class);
 	public static final DefaultedKey<EntityQuickbarInventory> ENTITY_HELD_INVENTORY = new DefaultedKeyFactory<EntityQuickbarInventory>("held", EntityQuickbarInventory.class);

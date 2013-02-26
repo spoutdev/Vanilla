@@ -24,18 +24,21 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.block;
+package org.spout.vanilla.event.block.network;
 
 import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.protocol.event.ProtocolEvent;
 
-public class BlockControllerDataEvent extends Event implements ProtocolEvent {
+import org.spout.nbt.CompoundMap;
+
+public class EntityTileDataEvent extends Event implements ProtocolEvent {
+	public static final byte SET_MONSTER_SPAWNER_CREATURE = 1;
 	private static HandlerList handlers = new HandlerList();
 	private final Block block;
-	private int action;
-	private int[] data;
+	private byte action;
+	private CompoundMap data;
 
 	/**
 	 * Constructs a new Data event for the block specified
@@ -43,10 +46,7 @@ public class BlockControllerDataEvent extends Event implements ProtocolEvent {
 	 * @param action to perform
 	 * @param data to use, max 3 elements
 	 */
-	public BlockControllerDataEvent(Block block, int action, int... data) {
-		if (data.length > 3) {
-			throw new IllegalArgumentException("Too many data values: " + data.length + " (maximum is 3)");
-		}
+	public EntityTileDataEvent(Block block, byte action, CompoundMap data) {
 		this.block = block;
 		this.action = action;
 		this.data = data;
@@ -64,7 +64,7 @@ public class BlockControllerDataEvent extends Event implements ProtocolEvent {
 	 * Gets the action to perform
 	 * @return action Id
 	 */
-	public int getAction() {
+	public byte getAction() {
 		return this.action;
 	}
 
@@ -72,7 +72,7 @@ public class BlockControllerDataEvent extends Event implements ProtocolEvent {
 	 * Gets the data to use
 	 * @return data array
 	 */
-	public int[] getData() {
+	public CompoundMap getData() {
 		return this.data;
 	}
 

@@ -544,10 +544,8 @@ public class TestCommands {
 			//Now we know its either a living or substance. Lets figure out which.
 			if (Living.class.isAssignableFrom(clazz)) {
 				final Living living = entity.get(Living.class);
-				switch (CreatureType.valueOf(name.toUpperCase())) {
-					case HUMAN:
-						((Human) living).setName(args.getString(1));
-						 break;
+				if (name.equalsIgnoreCase("human")) {
+					((Human) living).setName(args.getString(1));
 				}
 			} else if (Substance.class.isAssignableFrom(clazz)) {
 				final Substance substance = entity.get(Substance.class);

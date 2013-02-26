@@ -49,6 +49,7 @@ import org.spout.api.geo.discrete.Transform;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.NetworkSynchronizer;
@@ -83,7 +84,7 @@ import org.spout.vanilla.data.WorldType;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.configuration.WorldConfigurationNode;
 import org.spout.vanilla.event.block.BlockActionEvent;
-import org.spout.vanilla.event.block.BlockControllerDataEvent;
+import org.spout.vanilla.event.block.network.EntityTileDataEvent;
 import org.spout.vanilla.event.block.SignUpdateEvent;
 import org.spout.vanilla.event.block.network.BlockBreakAnimationEvent;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
@@ -616,6 +617,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 
 	@EventHandler
+	public Message onEntityTileData(EntityTileDataEvent event) {
+		Block b = event.getBlock();
+		return new EntityTileDataMessage(b.getX(), b.getY(), b.getZ(), event.getAction(), event.getData(), getRepositionManager());
+	}
+
+	@EventHandler
 	public Message onMapItemUpdate(MapItemUpdateEvent event) {
 		return new EntityItemDataMessage(VanillaMaterials.MAP, (short) event.getItemData(), event.getData());
 	}
@@ -776,12 +783,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@EventHandler
 	public Message onEntityEffect(EntityEffectEvent event) {
 		return new EntityEffectMessage(event.getEntity().getId(), event.getEffect().getEffect().getStatusID(), (byte) 0, (short) (event.getEffect().getTimer() * 20));
-	}
-
-	@EventHandler
-	public Message onBlockControllerData(BlockControllerDataEvent event) {
-		Block b = event.getBlock();
-		return new EntityTileDataMessage(b.getX(), b.getY(), b.getZ(), event.getAction(), event.getData(), getRepositionManager());
 	}
 
 	@EventHandler

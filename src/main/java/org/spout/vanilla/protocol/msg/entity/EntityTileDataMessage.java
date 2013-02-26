@@ -27,6 +27,8 @@
 package org.spout.vanilla.protocol.msg.entity;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import org.spout.nbt.ByteArrayTag;
 import org.spout.nbt.CompoundMap;
 
 import org.spout.api.protocol.reposition.RepositionManager;
@@ -36,31 +38,14 @@ import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public class EntityTileDataMessage extends VanillaMainChannelMessage {
 	private final int x;
-	private final int y;
+	private final short y;
 	private final int z;
-	private final int action;
-	private int custom1;
-	private int custom2;
-	private int custom3;
-	private CompoundMap data;
+	private final byte action;
+	private CompoundMap data = new CompoundMap();
 
-	public EntityTileDataMessage(int x, int y, int z, int action, int[] data, RepositionManager rm) {
-		this(x, y, z, action, data.length >= 1 ? data[0] : -1, data.length >= 2 ? data[1] : -1, data.length >= 3 ? data[2] : -1, rm);
-	}
-
-	public EntityTileDataMessage(int x, int y, int z, int action, int custom1, int custom2, int custom3, RepositionManager rm) {
+	public EntityTileDataMessage(int x, int y, int z, byte action, CompoundMap data, RepositionManager rm) {
 		this.x = rm.convertX(x);
-		this.y = rm.convertY(y);
-		this.z = rm.convertZ(z);
-		this.action = action;
-		this.custom1 = custom1;
-		this.custom2 = custom2;
-		this.custom3 = custom3;
-	}
-
-	public EntityTileDataMessage(int x, int y, int z, int action, CompoundMap data, RepositionManager rm) {
-		this.x = rm.convertX(x);
-		this.y = rm.convertY(y);
+		this.y = (short) rm.convertY(y);
 		this.z = rm.convertZ(z);
 		this.action = action;
 		this.data = data;
@@ -82,18 +67,6 @@ public class EntityTileDataMessage extends VanillaMainChannelMessage {
 		return action;
 	}
 
-	public int getCustom1() {
-		return custom1;
-	}
-
-	public int getCustom2() {
-		return custom2;
-	}
-
-	public int getCustom3() {
-		return custom3;
-	}
-
 	public CompoundMap getData() {
 		return data;
 	}
@@ -105,9 +78,7 @@ public class EntityTileDataMessage extends VanillaMainChannelMessage {
 				.append("y", y)
 				.append("z", z)
 				.append("action", action)
-				.append("custom1", custom1)
-				.append("custom2", custom2)
-				.append("custom3", custom3)
+				.append("data", data)
 				.toString();
 	}
 
@@ -125,9 +96,7 @@ public class EntityTileDataMessage extends VanillaMainChannelMessage {
 				.append(this.y, other.y)
 				.append(this.z, other.z)
 				.append(this.action, other.action)
-				.append(this.custom1, other.custom1)
-				.append(this.custom2, other.custom2)
-				.append(this.custom3, other.custom3)
+				.append(this.data, other.data)
 				.isEquals();
 	}
 }

@@ -126,6 +126,7 @@ public class VanillaMaterialModels {
 	public static final String STONE_BRICK = "model://Vanilla/materials/block/solid/stonebrick/stonebrick.spm";
 	public static final String STONE_BRICK_MOSSY = "model://Vanilla/materials/block/solid/mossystonebrick/mossystonebrick.spm";
 	public static final String STONE_BRICK_CRACKED = "model://Vanilla/materials/block/solid/crackedstonebrick/crackedstonebrick.spm";
+	public static final String STONE_BRICK_CHISELED = "model://Vanilla/materials/block/solid/chiseledstonebrick/chiseledstonebrick.spm";
 	// Sandstone
 	public static final String SANDSTONE = "model://Vanilla/materials/block/solid/sandstone/sandstone.spm";
 	public static final String SANDSTONE_DECORATIVE = "model://Vanilla/materials/block/solid/cheseledsandstone/cheseledsandstone.spm";

@@ -64,10 +64,12 @@ public class Burn extends EntityComponent {
 			} else {
 				rainTimer = 0f;
 			}
-			if (rainTimer >= 2.0f) {
+			if (rainTimer >= 2.0f || point.getBlock().getMaterial() == VanillaMaterials.WATER || health.isDead()) {
 				setFireTick(0f);
 				setFireHurting(false);
-				rainTimer = 0f;
+				if (rainTimer >= 2.0f) {
+					rainTimer = 0f;
+				}
 			}
 		}
 

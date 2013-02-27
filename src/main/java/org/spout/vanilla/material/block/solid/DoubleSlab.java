@@ -45,6 +45,7 @@ public class DoubleSlab extends Solid implements Burnable {
 	public static final DoubleSlab SPRUCE_WOOD = new DoubleSlab("Spruce Wooden Double Slab", 0x1, OAK_WOOD, Slab.SPRUCE_WOOD, VanillaMaterialModels.DOUBLE_SLAB);
 	public static final DoubleSlab BIRCH_WOOD = new DoubleSlab("Birch Wooden Double Slab", 0x2, OAK_WOOD, Slab.BIRCH_WOOD, VanillaMaterialModels.DOUBLE_SLAB);
 	public static final DoubleSlab JUNGLE_WOOD = new DoubleSlab("Jungle Wooden Double Slab", 0x3, OAK_WOOD, Slab.JUNGLE_WOOD, VanillaMaterialModels.DOUBLE_SLAB);
+	public static final DoubleSlab NETHER_BRICK = new DoubleSlab("Nether Brick Double Slab", 0x6, STONE, Slab.NETHER_BRICK, VanillaMaterialModels.DOUBLE_SLAB);
 	private Slab singletype;
 	private final boolean wood;
 

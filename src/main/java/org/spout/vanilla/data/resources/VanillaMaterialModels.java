@@ -163,6 +163,16 @@ public class VanillaMaterialModels {
 	public static final String GLOWSTONE = "model://Vanilla/materials/block/solid/glowstone/glowstone.spm";
 	// Double Slabs //TODO: Separate models per material
 	public static final String DOUBLE_SLAB = "model://Vanilla/materials/block/solid/doubleslabs/doubleslabs.spm";
+	public static final String DOUBLE_SLAB_BIRCH_WOOD = "model://Vanilla/materials/block/solid/birchwooddoubleslab/birchwooddoubleslab.spm";
+	public static final String DOUBLE_SLAB_BRICK = "model://Vanilla/materials/block/solid/brickdoubleslab/brickdoubleslab.spm";
+	public static final String DOUBLE_SLAB_COBBLESTONE = "model://Vanilla/materials/block/solid/cobblestonedoubleslab/cobblestonedoubleslab.spm";
+	public static final String DOUBLE_SLAB_JUNGLE_WOOD = "model://Vanilla/materials/block/solid/junglewooddoubleslab/junglewooddoubleslab.spm";
+	public static final String DOUBLE_SLAB_NETHER_BRICK = "model://Vanilla/materials/block/solid/netherbrickdoubleslab/netherbrickdoubleslab.spm";
+	public static final String DOUBLE_SLAB_OAK_WOOD = "model://Vanilla/materials/block/solid/oakwooddoubleslab/oakwooddoubleslab.spm";
+	public static final String DOUBLE_SLAB_SANDSTONE = "model://Vanilla/materials/block/solid/sandstonedoubleslab/sandstonedoubleslab.spm";
+	public static final String DOUBLE_SLAB_SPRUCE_WOOD = "model://Vanilla/materials/block/solid/sprucewooddoubleslab/sprucewooddoubleslab.spm";
+	public static final String DOUBLE_SLAB_STONE_BRICK = "model://Vanilla/materials/block/solid/stonebrickdoubleslab/stonebrickdoubleslab.spm";
+	public static final String DOUBLE_SLAB_STONE_WOOD = "model://Vanilla/materials/block/solid/stonewooddoubleslab/stonewooddoubleslab.spm";
 	// Slabs
 	public static final String SLAB_STONE = null;
 	public static final String SLAB_SANDSTONE = null;

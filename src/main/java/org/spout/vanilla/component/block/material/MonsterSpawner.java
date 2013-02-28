@@ -188,18 +188,13 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	public void doSpawn() {
 		Point pos = getPosition();
 		resetSpawnDelay();
-		if (!canSpawn()) {
-			System.out.println("Cannot spawn more");
-			return;
-		}
 		for (int i = 0; i < getSpawnCount(); i++) {
 			float range = getSpawnRange();
 			float x = pos.getX() + (random.nextFloat() - random.nextFloat()) * range;
 			float y = pos.getY() + random.nextInt(3) - 1;
 			float z = pos.getZ() + (random.nextFloat() - random.nextFloat()) * range;
 			Point p = new Point(pos.getWorld(), x, y, z);
-			if (p.getBlock().getMaterial().isMaterial(VanillaMaterials.AIR)) {
-				System.out.println("Spawning: " + getCreatureType().getComponentType());
+			if (p.getBlock().getMaterial().isMaterial(VanillaMaterials.AIR) && canSpawn()) {
 				p.getWorld().createAndSpawnEntity(p, LoadOption.LOAD_ONLY, getCreatureType().getComponentType());
 			}
 		}

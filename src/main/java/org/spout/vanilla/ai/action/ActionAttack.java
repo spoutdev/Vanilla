@@ -80,7 +80,7 @@ public class ActionAttack implements Action {
 
 	@Override
 	public boolean isComplete() {
-		final NavigationComponent navi = agent.getEntity().get(NavigationComponent.class); //You will always be in our hearts Navi...
+		final NavigationComponent navi = agent.getEntity().add(NavigationComponent.class); //You will always be in our hearts Navi...
 		return target == null || target.isRemoved() || !agent.getSensor(NearbyComponentsSensor.class).hasFoundEntity() || (navi != null && !navi.isNavigating());
 	}
 

@@ -150,8 +150,10 @@ public class VanillaData {
 	// Iron Golem Specific
 	public static final DefaultedKey<Boolean> NATURALLY_SPAWNED = new DefaultedKeyImpl<Boolean>("spawned_naturally", true);
 	// Creeper
-	public static final DefaultedKey<Byte> CREEPER_FUSE = new DefaultedKeyImpl<Byte>("fuse", (byte) -1);
+	public static final DefaultedKey<Byte> STATE = new DefaultedKeyImpl<Byte>("state", (byte) -1);
+	public static final DefaultedKey<Float> CREEPER_FUSE = new DefaultedKeyImpl<Float>("fuse", 1.5f);
 	public static final DefaultedKey<Boolean> CHARGED = new DefaultedKeyImpl<Boolean>("charged", false);
+	public static final DefaultedKey<Float> EXPLOSION_RADIUS = new DefaultedKeyImpl<Float>("explosion_radius", 3f);
 	// Spider
 	public static final DefaultedKey<Boolean> AGGRESSIVE = new DefaultedKeyImpl<Boolean>("aggressive", false);
 	// Ghast

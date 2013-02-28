@@ -29,15 +29,21 @@ package org.spout.vanilla.component.entity.living.hostile;
 import com.bulletphysics.collision.shapes.BoxShape;
 
 import org.spout.api.component.impl.SceneComponent;
+import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.ai.action.ActionAttack;
+import org.spout.vanilla.ai.goal.AttackPlayerGoal;
+import org.spout.vanilla.ai.sensor.NearbyComponentsSensor;
 import org.spout.vanilla.component.entity.Hostile;
 import org.spout.vanilla.component.entity.living.Living;
+import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.creature.CreeperEntityProtocol;
 
@@ -58,16 +64,41 @@ public class Creeper extends Living implements Hostile {
 			getOwner().add(Health.class).setSpawnHealth(20);
 		}
 
-		//TODO: Does damage according to range.
+		NearbyComponentsSensor humanSensor = new NearbyComponentsSensor(getAI(), Human.class);
+		humanSensor.setSensorRadius(16);
+		getAI().registerSensor(humanSensor);
+		getAI().registerGoal(new AttackPlayerGoal(getAI()));
+		getAI().registerAction(new ActionAttack(getAI()));
 	}
 
-	public byte getFuse() {
+	@Override
+	public void onTick(float dt) {
+		super.onTick(dt);
+	}
+
+	public float getFuse() {
 		return getData().get(VanillaData.CREEPER_FUSE);
 	}
 
-	public void setFuse(byte fuse) {
+	public void setFuse(float fuse) {
 		getData().put(VanillaData.CREEPER_FUSE, fuse);
-		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, fuse));
+	}
+
+	public float getExplosionRadius() {
+		return getData().get(VanillaData.EXPLOSION_RADIUS);
+	}
+
+	public void setExplosionRadius(float radius) {
+		getData().put(VanillaData.EXPLOSION_RADIUS, radius);
+	}
+
+	public byte getState() {
+		return getData().get(VanillaData.STATE);
+	}
+
+	public void setState(byte state) {
+		getData().put(VanillaData.STATE, state);
+		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, state));
 	}
 
 	public boolean isCharged() {

@@ -34,7 +34,7 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.component.entity.living.hostile.Creeper;
 
 public class CreeperEntityProtocol extends CreatureProtocol {
-	public final static int FUSE_INDEX = 16; // The MC metadata index to determine the fuse.
+	public final static int STATE_INDEX = 16; // The MC metadata index to determine the fuse.
 	public final static int CHARGE_INDEX = 17; // The MC metadata index to determine if the creeper is charged.
 
 	public CreeperEntityProtocol() {
@@ -44,7 +44,7 @@ public class CreeperEntityProtocol extends CreatureProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
-		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, FUSE_INDEX, entity.add(Creeper.class).getFuse()));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, STATE_INDEX, entity.add(Creeper.class).getState()));
 		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, CHARGE_INDEX, (byte) (entity.add(Creeper.class).isCharged() ? 1 : 0)));
 		return parameters;
 	}

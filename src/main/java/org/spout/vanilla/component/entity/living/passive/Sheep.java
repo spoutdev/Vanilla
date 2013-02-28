@@ -35,6 +35,7 @@ import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.Passive;
+import org.spout.vanilla.component.entity.living.Animal;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
@@ -49,7 +50,7 @@ import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 /**
  * A component that identifies the entity as a Sheep.
  */
-public class Sheep extends Living implements Passive {
+public class Sheep extends Animal implements Passive {
 	private static final int TICKS_UNTIL_ADULT = 24000;
 	private static final int GRASS_GROWTH_TICK_BONUS = 1200;
 	private static final int GRASS_CHANCE_AS_ADULT = 1000;

@@ -35,6 +35,7 @@ import org.spout.api.inventory.Slot;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.Passive;
+import org.spout.vanilla.component.entity.living.Animal;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
@@ -47,7 +48,7 @@ import org.spout.vanilla.util.PlayerUtil;
 /**
  * A component that identifies the entity as a Cow.
  */
-public class Cow extends Living implements Passive {
+public class Cow extends Animal implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();

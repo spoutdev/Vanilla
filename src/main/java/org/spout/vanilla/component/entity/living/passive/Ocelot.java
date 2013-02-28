@@ -28,6 +28,7 @@ package org.spout.vanilla.component.entity.living.passive;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.Passive;
+import org.spout.vanilla.component.entity.living.Animal;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
@@ -37,7 +38,7 @@ import org.spout.vanilla.protocol.entity.creature.OcelotEntityProtocol;
 /**
  * A component that identifies the entity as a Ocelot.
  */
-public class Ocelot extends Living implements Passive {
+public class Ocelot extends Animal implements Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();

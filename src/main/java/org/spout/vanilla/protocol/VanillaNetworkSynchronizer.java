@@ -49,7 +49,6 @@ import org.spout.api.geo.discrete.Transform;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.NetworkSynchronizer;

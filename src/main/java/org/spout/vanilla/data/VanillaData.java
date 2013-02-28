@@ -74,6 +74,8 @@ public class VanillaData {
 	public static final DefaultedKey<Float> FOOD_SATURATION = new DefaultedKeyImpl<Float>("food_saturation", 5f);
 	public static final DefaultedKey<Float> EXHAUSTION = new DefaultedKeyImpl<Float>("exhaustion", 0f);
 	public static final DefaultedKey<Boolean> POISONED = new DefaultedKeyImpl<Boolean>("poisoned", false);
+	public static final DefaultedKey<Float> AGE = new DefaultedKeyImpl<Float>("age", 0f);
+	public static final DefaultedKey<Boolean> IN_LOVE = new DefaultedKeyImpl<Boolean>("in_love", false);
 	// Brewing stand
 	public static final DefaultedKey<Float> BREW_TIME = new DefaultedKeyImpl<Float>("brew_time", -1f);
 	// Furnace

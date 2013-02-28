@@ -61,6 +61,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
+import org.spout.vanilla.component.entity.living.Animal;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.component.entity.misc.Burn;
@@ -516,9 +517,13 @@ public class TestCommands {
 
 		final String name = args.getString(0);
 		Class<? extends Component> clazz;
+		boolean child = false;
 		//See if it is a living?
 		try {
 			clazz = CreatureType.valueOf(name.toUpperCase()).getComponentType();
+			if (Animal.class.isAssignableFrom(clazz) && args.length() >= 2 && args.getString(1).equalsIgnoreCase("child")) {
+				child = true;
+			}
 		} catch (Exception e1) {
 			try {
 				//Living failed? Try object
@@ -568,6 +573,9 @@ public class TestCommands {
 			}
 		}
 		player.getWorld().spawnEntity(entity);
+		if (child) {
+			entity.get(Animal.class).setAge(Animal.MIN_AGE);
+		}
 	}
 
 	@Command(aliases = "fire", usage = "<time> <hurt>", desc = "Set you on fire", min = 2, max = 2)

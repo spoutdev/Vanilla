@@ -30,15 +30,15 @@ import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 
 public class ForceMessages extends EntityComponent {
+	private boolean first = true;
 	private float time = 60F;
 
 	@Override
-	public void onAttached() {
-		((Player) getOwner()).sendMessage("Forcing packet updates for 60 seconds");
-	}
-
-	@Override
 	public void onTick(float dt) {
+		if (first) {
+			((Player) getOwner()).sendMessage("Forcing packet updates for 60 seconds");
+			first = false;
+		}
 		time -= dt;
 		if (time <= 0) {
 			this.getOwner().detach(ForceMessages.class);

@@ -38,4 +38,9 @@ public class VanillaSkylightLightingManager extends VanillaBlocklightLightingMan
 	public void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int[] hx, int[] hz, int[] oldHy, int[] newHy, int changedColumns) {
 		//Spout.getLogger().info(getClass().getSimpleName() + ":" + changedColumns + " columns changed");
 	}
+	
+	@Override
+	protected int getEmittedLight(ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z) {
+		return 0;
+	}
 }

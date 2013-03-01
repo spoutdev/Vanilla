@@ -26,8 +26,12 @@
  */
 package org.spout.vanilla.world.lighting;
 
+import org.spout.api.Spout;
+import org.spout.api.material.BlockMaterial;
+import org.spout.api.math.Vector3;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
+import org.spout.api.util.set.TInt10TripleSet;
 
 public class VanillaBlocklightLightingManager extends VanillaLightingManager {
 	public VanillaBlocklightLightingManager(String name) {
@@ -36,14 +40,27 @@ public class VanillaBlocklightLightingManager extends VanillaLightingManager {
 
 	@Override
 	public void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int[] x, int[] y, int[] z, int changedBlocks) {
-		/*if (changedBlocks > 0) {
-			Spout.getLogger().info(getClass().getSimpleName() + ":" + changedBlocks + " blocks changed");
-			Spout.getLogger().info("Material (" + x[0] + ", " + y[0] + ", " + z[0] + ") changed to: " + material.get(x[0], y[0], z[0]));
-		}*/
+		TInt10TripleSet[] dirtySets = new TInt10TripleSet[16];
+		for (int i = 0; i < dirtySets.length; i++) {
+			Vector3 base = light.getBase();
+			dirtySets[i] = new TInt10TripleSet(base.getFloorX(), base.getFloorY(), base.getFloorZ());
+		}
+		//Spout.getLogger().info("Adding blocks from change list, " + changedBlocks + " " + getClass().getSimpleName());
+		for (int i = 0; i < changedBlocks; i++) {
+			checkAndAddDirty(dirtySets, light, material, x[i], y[i], z[i], false);
+		}
+		resolveHigher(dirtySets, light, material);
 	}
 
 	@Override
 	public void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int[] bx, int[] by, int[] bz, int[] tx, int[] ty, int[] tz, int changedCuboids) {
 		//Spout.getLogger().info(getClass().getSimpleName() + ":" + changedCuboids + " cuboids changed");
+	}
+
+	@Override
+	protected int getEmittedLight(ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z) {
+		BlockMaterial m = material.get(x, y, z);
+		short data = material.getData(x, y, z);
+		return m.getLightLevel(data);
 	}
 }

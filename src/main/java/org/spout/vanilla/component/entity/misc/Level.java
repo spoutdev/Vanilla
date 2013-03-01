@@ -99,18 +99,11 @@ public class Level extends EntityComponent {
 	}
 
 	/**
-	 * Reduces current level without changing progress Modifies total xp accordingly
+	 * Reduces current level without changing progress. Modifies total xp accordingly
 	 * @param reduction number of levels to be removed
 	 */
 	public void removeLevels(int reduction) {
-		short newLevel = (short) (getLevel() - reduction);
-		if (newLevel < 0)
-			newLevel = 0;
-		short newExperience = (short) (convertLevelToXp(newLevel) + getProgress() * getXpCap(newLevel));
-		if (!setExperience(newExperience))
-			return;
-		getData().put(VanillaData.EXPERIENCE_LEVEL, newLevel);
-		updateUi();
+		addLevel(-reduction);
 	}
 
 	/**
@@ -122,10 +115,7 @@ public class Level extends EntityComponent {
 		if (newLevel < 0)
 			newLevel = 0;
 		short newExperience = (short) (convertLevelToXp(newLevel) + getProgress() * getXpCap(newLevel));
-		if (!setExperience(newExperience))
-			return;
-		getData().put(VanillaData.EXPERIENCE_LEVEL, newLevel);
-		updateUi();
+		setExperience(newExperience);
 	}
 
 	/**

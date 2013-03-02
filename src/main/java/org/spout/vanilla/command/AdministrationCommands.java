@@ -46,6 +46,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
+import org.spout.api.plugin.Platform;
 import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.util.concurrent.AtomicFloat;
 
@@ -166,13 +167,9 @@ public class AdministrationCommands {
 
 	}
 
-	@Command(aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)
+	@Command(platform = Platform.SERVER, aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.deop")
 	public void deop(CommandContext args, CommandSource source) throws CommandException {
-		if (Spout.getEngine() instanceof Client) {
-			throw new CommandException("You cannot search for players unless you are in server mode.");
-		}
-
 		String playerName = args.getString(0);
 		OpConfiguration ops = VanillaConfiguration.OPS;
 		if (!ops.isOp(playerName)) {
@@ -188,13 +185,9 @@ public class AdministrationCommands {
 		}
 	}
 
-	@Command(aliases = {"op"}, usage = "<player>", desc = "Make a player an operator", min = 1, max = 1)
+	@Command(platform = Platform.SERVER, aliases = {"op"}, usage = "<player>", desc = "Make a player an operator", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.op")
 	public void op(CommandContext args, CommandSource source) throws CommandException {
-		if (Spout.getEngine() instanceof Client) {
-			throw new CommandException("You cannot search for players unless you are in server mode.");
-		}
-
 		String playerName = args.getString(0);
 		OpConfiguration ops = VanillaConfiguration.OPS;
 		if (ops.isOp(playerName)) {

@@ -260,9 +260,9 @@ public class TestCommands {
 	}
 
 	@CommandPermissions("vanilla.command.debug")
-	@Command(aliases = "resetpos", desc = "Resets players position", max = 0)
+	@Command(platform = Platform.SERVER, aliases = "resetpos", desc = "Resets players position", max = 0)
 	public void resetPosition(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player) && Spout.getPlatform() != Platform.SERVER) {
+		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player reset position!");
 		}
 		Player player = (Player) source;

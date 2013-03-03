@@ -64,7 +64,7 @@ import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.entity.living.Ageable;
 import org.spout.vanilla.component.entity.living.Living;
-import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.misc.Burn;
 import org.spout.vanilla.component.entity.misc.Head;
 import org.spout.vanilla.component.entity.misc.Health;

@@ -67,7 +67,7 @@ import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.material.Sign;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
-import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.misc.Hunger;
 import org.spout.vanilla.component.entity.misc.Level;
 import org.spout.vanilla.component.entity.substance.test.ForceMessages;

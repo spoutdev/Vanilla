@@ -27,7 +27,7 @@
 package org.spout.vanilla.component.entity.living.passive;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.Passive;
+import org.spout.vanilla.component.entity.living.Passive;
 import org.spout.vanilla.component.entity.living.Animal;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;

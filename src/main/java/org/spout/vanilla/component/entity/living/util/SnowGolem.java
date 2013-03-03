@@ -29,7 +29,7 @@ package org.spout.vanilla.component.entity.living.util;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.Utility;
+import org.spout.vanilla.component.entity.living.Utility;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;

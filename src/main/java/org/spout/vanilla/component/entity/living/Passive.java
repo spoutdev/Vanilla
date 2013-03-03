@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.entity;
+package org.spout.vanilla.component.entity.living;
 
 /**
  * Represents a passive entity. A passive entity will never attack another

@@ -32,7 +32,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
-import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.inventory.window.ClickArguments;
 import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.protocol.msg.window.WindowCreativeActionMessage;

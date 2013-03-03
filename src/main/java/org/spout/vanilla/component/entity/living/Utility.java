@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.entity;
+package org.spout.vanilla.component.entity.living;
 
 /**
  * Represents an entity that is used for some kind of utility. A utility entity

@@ -32,7 +32,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 
-import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;

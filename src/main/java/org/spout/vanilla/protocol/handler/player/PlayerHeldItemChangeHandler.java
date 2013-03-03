@@ -31,7 +31,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.event.player.PlayerHeldItemChangeEvent;
 import org.spout.vanilla.event.player.network.PlayerSelectedSlotChangeEvent;
 import org.spout.vanilla.inventory.entity.QuickbarInventory;

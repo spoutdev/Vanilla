@@ -54,7 +54,7 @@ import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.VanillaBlockComponent;
-import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.misc.Level;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;

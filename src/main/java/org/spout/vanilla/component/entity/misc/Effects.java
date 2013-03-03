@@ -34,7 +34,7 @@ import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 
 import org.spout.vanilla.component.entity.living.Living;
-import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.data.effect.StatusEffect;
 import org.spout.vanilla.data.effect.StatusEffectContainer;
 import org.spout.vanilla.event.entity.network.EntityEffectEvent;

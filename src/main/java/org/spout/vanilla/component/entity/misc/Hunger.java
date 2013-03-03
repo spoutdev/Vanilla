@@ -35,7 +35,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Slot;
 
-import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;

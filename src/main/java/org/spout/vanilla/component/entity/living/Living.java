@@ -33,7 +33,6 @@ import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.ai.examiner.VanillaBlockExaminer;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
-import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.component.entity.misc.Burn;
 import org.spout.vanilla.component.entity.misc.Drowning;
 import org.spout.vanilla.component.entity.misc.Effects;

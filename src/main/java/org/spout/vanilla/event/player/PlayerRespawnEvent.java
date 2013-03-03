@@ -33,7 +33,7 @@ import org.spout.api.event.entity.EntitySpawnEvent;
 import org.spout.api.exception.InvalidControllerException;
 import org.spout.api.geo.discrete.Point;
 
-import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.entity.living.Human;
 
 /**
  * Event which is called when a player respawns

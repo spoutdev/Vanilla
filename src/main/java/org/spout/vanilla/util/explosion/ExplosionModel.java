@@ -42,7 +42,7 @@ import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.effect.store.GeneralEffects;

@@ -31,7 +31,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
-import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.misc.Level;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.inventory.block.EnchantmentTableInventory;

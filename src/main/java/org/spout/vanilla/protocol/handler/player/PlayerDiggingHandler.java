@@ -50,7 +50,7 @@ import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.flag.Flag;
 
 import org.spout.vanilla.component.block.material.Sign;
-import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.misc.Digging;
 import org.spout.vanilla.component.entity.misc.Hunger;
 import org.spout.vanilla.data.GameMode;

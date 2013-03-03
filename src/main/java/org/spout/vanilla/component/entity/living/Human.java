@@ -24,7 +24,7 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.entity.living.neutral;
+package org.spout.vanilla.component.entity.living;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;

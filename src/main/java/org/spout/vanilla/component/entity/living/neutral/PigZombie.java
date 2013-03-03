@@ -27,7 +27,7 @@
 package org.spout.vanilla.component.entity.living.neutral;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.Neutral;
+import org.spout.vanilla.component.entity.living.Neutral;
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.Damage;

@@ -30,7 +30,7 @@ import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.data.VanillaData;
 
-public class Ageable extends Living {
+public abstract class Ageable extends Living {
 	public static final float MIN_AGE = -1200;
 	public static final float MAX_AGE = 300f;
 

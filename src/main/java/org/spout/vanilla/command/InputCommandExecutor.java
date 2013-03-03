@@ -54,9 +54,12 @@ public class InputCommandExecutor implements CommandExecutor {
 		if (!(source instanceof Player)) {
 			throw new CommandException("Only players may open inventory windows.");
 		}
+		if (!args.getString(0).equalsIgnoreCase("+")) {
+			return;
+		}
 
 		String name = command.getPreferredName();
-		if (name.equalsIgnoreCase("+toggle_inventory")) {
+		if (name.equalsIgnoreCase("toggle_inventory")) {
 			WindowHolder holder = ((Player) source).get(WindowHolder.class);
 			Window window = holder.getActiveWindow();
 			if (window.isOpened()) {
@@ -64,7 +67,7 @@ public class InputCommandExecutor implements CommandExecutor {
 			} else {
 				holder.openWindow(holder.getDefaultWindow());
 			}
-		} else if (name.equalsIgnoreCase("+break_block")) {
+		} else if (name.equalsIgnoreCase("break_block")) {
 			InteractComponent hit = ((Player) source).get(InteractComponent.class);
 			if (hit != null) {
 				final Block hitting = hit.getTargetBlock();
@@ -78,7 +81,7 @@ public class InputCommandExecutor implements CommandExecutor {
 					Spout.log("Broke block: " + hitting.toString());
 				}
 			}
-		} else if (name.equalsIgnoreCase("+select_block")) {
+		} else if (name.equalsIgnoreCase("select_block")) {
 			InteractComponent hit = ((Player) source).get(InteractComponent.class);
 			if (hit != null) {
 				Block hitting = hit.getTargetBlock(true);
@@ -87,7 +90,7 @@ public class InputCommandExecutor implements CommandExecutor {
 					selection = hitting.getMaterial();
 				}
 			}
-		} else if (name.equalsIgnoreCase("+place_block")) {
+		} else if (name.equalsIgnoreCase("place_block")) {
 			InteractComponent hit = ((Player) source).get(InteractComponent.class);
 			if (hit != null) {
 				final Block hitting = hit.getTargetBlock();
@@ -106,7 +109,7 @@ public class InputCommandExecutor implements CommandExecutor {
 					});
 				}
 			}
-		} else if (name.startsWith("+quickbar_")) {
+		} else if (name.startsWith("quickbar_")) {
 			Player player = (Player) source;
 			PlayerInventory inventory = player.get(PlayerInventory.class);
 			if (inventory != null) {

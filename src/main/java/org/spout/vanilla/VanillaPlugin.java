@@ -142,22 +142,23 @@ public class VanillaPlugin extends CommonPlugin {
 					input.bind(Keyboard.valueOf("KEY_" + i), "quickbar_" + i);
 				}
 
+				System.out.println("Registering input commands...");
 				final InputCommandExecutor exe = new InputCommandExecutor();
-				root.addSubCommand(this, "+toggle_inventory").setArgBounds(0, 0).setHelp("Opens or closes the player's inventory.")
-						.setExecutor(Platform.CLIENT, exe);
-				root.addSubCommand(this, "+break_block").setArgBounds(0, 0).setHelp("Breaks a block!")
-						.setExecutor(Platform.CLIENT, exe);
-				root.addSubCommand(this, "+select_block").setArgBounds(0, 0).setHelp("Selects a block!")
-						.setExecutor(Platform.CLIENT, exe);
-				root.addSubCommand(this, "+place_block").setArgBounds(0, 0).setHelp("Places a block!")
-						.setExecutor(Platform.CLIENT, exe);
-				root.addSubCommand(this, "+quickbar_left").setArgBounds(0, 0).setHelp("Changes quickbar slot!")
-						.setExecutor(Platform.CLIENT, exe);
-				root.addSubCommand(this, "+quickbar_right").setArgBounds(0, 0).setHelp("Changes quickbar slot!")
-						.setExecutor(Platform.CLIENT, exe);
+				root.addSubCommand(this, "toggle_inventory").setHelp("Opens or closes the player's inventory.")
+						.setExecutor(Platform.CLIENT, exe).setArgBounds(1, 1);
+				root.addSubCommand(this, "break_block").setHelp("Breaks a block!")
+						.setExecutor(Platform.CLIENT, exe).setArgBounds(1, 1);
+				root.addSubCommand(this, "select_block").setHelp("Selects a block!")
+						.setExecutor(Platform.CLIENT, exe).setArgBounds(1, 1);
+				root.addSubCommand(this, "place_block").setHelp("Places a block!")
+						.setExecutor(Platform.CLIENT, exe).setArgBounds(1, 1);
+				root.addSubCommand(this, "quickbar_left").setHelp("Changes quickbar slot!")
+						.setExecutor(Platform.CLIENT, exe).setArgBounds(1, 1);
+				root.addSubCommand(this, "quickbar_right").setHelp("Changes quickbar slot!")
+						.setExecutor(Platform.CLIENT, exe).setArgBounds(1, 1);
 				for (int i = 1; i < 10; i++) {
-					root.addSubCommand(this, "+quickbar_" + i).setArgBounds(0, 0).setHelp("Changes quickbar slot!")
-							.setExecutor(Platform.CLIENT, exe);
+					root.addSubCommand(this, "quickbar_" + i).setHelp("Changes quickbar slot!")
+							.setExecutor(Platform.CLIENT, exe).setArgBounds(1, 1);
 				}
 
 				if (Spout.debugMode()) {

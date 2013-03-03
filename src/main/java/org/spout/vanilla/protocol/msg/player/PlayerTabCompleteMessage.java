@@ -33,7 +33,7 @@ import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public class PlayerTabCompleteMessage extends VanillaMainChannelMessage {
-	private String text;
+	private final String text;
 
 	public PlayerTabCompleteMessage(String text) {
 		this.text = text;

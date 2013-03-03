@@ -35,8 +35,9 @@ import org.spout.api.event.player.PlayerEvent;
  * Event which is called when a player changes the level
  */
 public class PlayerLevelChangeEvent extends PlayerEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
-	private int previousLevel, newLevel;
+	private static final HandlerList handlers = new HandlerList();
+	private final int previousLevel;
+	private int newLevel;
 	private LevelChangeReason reason;
 
 	public PlayerLevelChangeEvent(Player p, int previousLevel, int newLevel, LevelChangeReason reason) {

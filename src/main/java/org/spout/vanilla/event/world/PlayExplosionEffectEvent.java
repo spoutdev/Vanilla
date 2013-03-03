@@ -34,10 +34,10 @@ import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.vanilla.data.effect.ExplosionEffect;
 
 public class PlayExplosionEffectEvent extends Event implements ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
-	private Point position;
-	private ExplosionEffect effect;
-	private float size;
+	private static final HandlerList handlers = new HandlerList();
+	private final Point position;
+	private final ExplosionEffect effect;
+	private final float size;
 
 	public PlayExplosionEffectEvent(Point position, ExplosionEffect effect, float size) {
 		this.position = position;

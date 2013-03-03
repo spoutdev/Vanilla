@@ -59,7 +59,7 @@ public class MapItemUpdateEvent extends Event implements ProtocolEvent {
 		return data;
 	}
 
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 
 	@Override
 	public HandlerList getHandlers() {

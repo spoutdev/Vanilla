@@ -33,10 +33,10 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.inventory.window.AbstractWindow;
 
 public class WindowSlotEvent extends WindowEvent {
-	private static HandlerList handlers = new HandlerList();
-	private int slot;
-	private ItemStack item;
-	private Inventory inventory;
+	private static final HandlerList handlers = new HandlerList();
+	private final int slot;
+	private final ItemStack item;
+	private final Inventory inventory;
 
 	public WindowSlotEvent(AbstractWindow window, Inventory inventory, int slot, ItemStack item) {
 		super(window);

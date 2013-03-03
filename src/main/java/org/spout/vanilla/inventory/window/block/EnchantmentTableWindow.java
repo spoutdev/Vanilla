@@ -62,13 +62,15 @@ public class EnchantmentTableWindow extends Window {
 	@Override
 	public void onSlotSet(Inventory inventory, int slot, ItemStack item, ItemStack previous) {
 		super.onSlotSet(inventory, slot, item, previous);
-		if (!(inventory instanceof EnchantmentTableInventory) || slot != 0)
+		if (!(inventory instanceof EnchantmentTableInventory) || slot != 0) {
 			return;
+		}
 		if (item != null && item.getMaterial() instanceof VanillaItemMaterial && ((VanillaItemMaterial) item.getMaterial()).isEnchantable() && !Enchantment.isEnchanted(item)) {
 			// Ensures that the third slot is always the maximum amount of possible levels based on nearby bookshelves
 			int bookshelves = getEnchantmentTable().getNearbyBookshelves();
-			if (bookshelves > 15)
+			if (bookshelves > 15) {
 				bookshelves = 15;
+			}
 
 			debug("Calculating enchantment levels with " + bookshelves + " bookshelves.");
 
@@ -77,8 +79,9 @@ public class EnchantmentTableWindow extends Window {
 			setEnchantmentLevel(EnchantmentTableProperty.SLOT_2, (base * 2) / 3 + 1);
 			setEnchantmentLevel(EnchantmentTableProperty.SLOT_3, GenericMath.max((byte) base, (byte) (bookshelves * 2))); // Maximum level
 		} else {
-			for (int i = 0; i < 2; ++i)
+			for (int i = 0; i < 2; ++i) {
 				setEnchantmentLevel(i, 0);
+			}
 		}
 	}
 

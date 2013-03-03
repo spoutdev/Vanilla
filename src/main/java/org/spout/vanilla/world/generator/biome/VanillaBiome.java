@@ -54,7 +54,6 @@ public abstract class VanillaBiome extends Biome {
 
 	/**
 	 * Gets the Climate of this Biome
-	 *
 	 * @return the climate
 	 */
 	public Climate getClimate() {
@@ -63,7 +62,6 @@ public abstract class VanillaBiome extends Biome {
 
 	/**
 	 * Sets the Climate for this Biome
-	 *
 	 * @param climate to set to
 	 */
 	public void setClimate(Climate climate) {

@@ -28,14 +28,12 @@ package org.spout.vanilla.component.entity.living;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.LoadOption;
-import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.data.VanillaData;
 
 public abstract class Animal extends Ageable {
 	/**
 	 * Returns true if the animal is in 'love mode'
-	 *
 	 * @return true if animal is in love mode
 	 */
 	public boolean isInLove() {
@@ -44,7 +42,6 @@ public abstract class Animal extends Ageable {
 
 	/**
 	 * Sets whether the animal is in 'love mode'
-	 *
 	 * @param inLove if the animal is in love mode
 	 */
 	public void setInLove(boolean inLove) {
@@ -55,7 +52,6 @@ public abstract class Animal extends Ageable {
 	 * Returns true if the specified animal can breed with this animal.
 	 * Specified animal must not be this, must be of the same class, and must
 	 * both be in 'love mode' specified by {@link #isInLove()}.
-	 *
 	 * @param animal to breed with
 	 * @return whether the animal is in love
 	 */
@@ -66,7 +62,6 @@ public abstract class Animal extends Ageable {
 	/**
 	 * Creates a child with this and the specified animal as the parents. If
 	 * allowed by {@link #canBreedWith(Animal)}.
-	 *
 	 * @param animal to breed with
 	 */
 	@SuppressWarnings("unchecked")

@@ -41,8 +41,6 @@ import org.spout.vanilla.material.block.Solid;
 import org.spout.vanilla.material.block.plant.Sapling;
 
 public class SmallTreeObject extends TreeObject {
-	//size control
-	private byte leavesHeight = 3;
 	protected byte radiusIncrease = 0;
 	// extras
 	private boolean addLeavesVines = false;
@@ -86,6 +84,7 @@ public class SmallTreeObject extends TreeObject {
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
 		w.setBlockMaterial(x, y - 1, z, VanillaMaterials.DIRT, (short) 0, null);
+		byte leavesHeight = 3;
 		for (byte yy = (byte) (totalHeight - leavesHeight); yy < totalHeight + 1; yy++) {
 			final byte yRadius = (byte) (yy - totalHeight);
 			final byte xzRadius = (byte) ((radiusIncrease + 1) - yRadius / 2);

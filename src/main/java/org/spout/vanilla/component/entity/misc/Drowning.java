@@ -113,7 +113,7 @@ public class Drowning extends EntityComponent {
 	public float getNbBubExact() {
 		final float maxSecsBubbles = VanillaData.AIR_SECS.getDefaultValue();
 		final float secsBubbles = getData().get(VanillaData.AIR_SECS);
-		
+
 		return secsBubbles / maxSecsBubbles * 10f;
 	}
 

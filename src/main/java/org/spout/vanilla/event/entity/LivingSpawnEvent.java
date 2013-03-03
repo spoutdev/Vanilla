@@ -37,7 +37,7 @@ import org.spout.vanilla.event.cause.LivingSpawnCause;
  * Called when a living entity is spawned.
  */
 public class LivingSpawnEvent extends EntitySpawnEvent {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final LivingSpawnCause cause;
 
 	public LivingSpawnEvent(Entity e, Point point) {

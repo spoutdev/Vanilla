@@ -35,8 +35,8 @@ import org.spout.vanilla.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.event.cause.NullDamageCause;
 
 public class EntityCombustEvent extends EntityEvent {
-	private static HandlerList handlers = new HandlerList();
-	private final Cause<? extends Object> cause;
+	private static final HandlerList handlers = new HandlerList();
+	private final Cause<?> cause;
 	private int duration;
 
 	public EntityCombustEvent(Entity e, int duration) {
@@ -70,7 +70,7 @@ public class EntityCombustEvent extends EntityEvent {
 	/**
 	 * Gets the {@link Cause} for this event.
 	 */
-	public Cause<? extends Object> getCombustCause() {
+	public Cause<?> getCombustCause() {
 		return cause;
 	}
 

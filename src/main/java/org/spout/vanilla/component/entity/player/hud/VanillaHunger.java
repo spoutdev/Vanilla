@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.component.entity.player.hud;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.List;
 import java.util.Random;
 
@@ -43,14 +43,14 @@ import org.spout.vanilla.data.VanillaRenderMaterials;
 public class VanillaHunger extends HungerWidget {
 	private int hungerTicks;
 	private final Random random = new Random();
-	private RenderPartPack hungerPack = new RenderPartPack(VanillaRenderMaterials.ICONS_MATERIAL);
+	private final RenderPartPack hungerPack = new RenderPartPack(VanillaRenderMaterials.ICONS_MATERIAL);
 
 	@Override
 	public void init(Widget widget, HUD hud) {
 		super.init(widget, hud);
 		final RenderPartsHolderComponent hungerRect = widget.add(RenderPartsHolderComponent.class);
 		hungerRect.add(hungerPack);
-		
+
 		float x = 0.09f * SCALE;
 		float dx = 0.06f * SCALE;
 		for (int i = 0; i < 10; i++) {
@@ -71,7 +71,7 @@ public class VanillaHunger extends HungerWidget {
 			hungerPack.add(hungerBg);
 			x += dx;
 		}
-		
+
 		attach();
 	}
 
@@ -81,14 +81,14 @@ public class VanillaHunger extends HungerWidget {
 		if (hunger == null) {
 			return;
 		}
-		
+
 		float x;
 		float y;
 		float dx = 0.06f * SCALE;
 
 		// Animate hunger bar
 		float saturation = hunger.getFoodSaturation();
-		
+
 		if (saturation <= 0) {
 			List<RenderPart> parts = hungerPack.getRenderParts();
 			if (hungerTicks == 98) {
@@ -136,16 +136,16 @@ public class VanillaHunger extends HungerWidget {
 	public void hide() {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
-	
+
 	@Override
 	public void update() {
 		Hunger hungerComp = hud.getOwner().get(Hunger.class);
 		int hunger = hungerComp.getHunger();
-		
+
 		float fx = hungerComp.getFx();
 		float bx = hungerComp.getBx();
 		//Widget testWidget = getOwner().get(HUD.class).getHungerMeter().getWidget();
-		
+
 		if (hunger == 0) {
 
 			for (int i = 0; i < 10; i++) {

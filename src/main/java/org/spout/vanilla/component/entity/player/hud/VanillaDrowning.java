@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.component.entity.player.hud;
 
-import java.awt.*;
+import java.awt.Color;
 
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
@@ -39,16 +39,15 @@ import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 
 public class VanillaDrowning extends DrowningWidget {
-	
-	private RenderPartPack bubblePack = new RenderPartPack(VanillaRenderMaterials.ICONS_MATERIAL);
-	
+	private final RenderPartPack bubblePack = new RenderPartPack(VanillaRenderMaterials.ICONS_MATERIAL);
+
 	@Override
 	public void init(Widget drowning, HUD hud) {
 		super.init(drowning, hud);
 
 		final RenderPartsHolderComponent bubblesRect = widget.add(RenderPartsHolderComponent.class);
 		bubblesRect.add(bubblePack);
-		
+
 		float x = 0.09f * SCALE;
 		float dx = 0.06f * SCALE;
 		for (int i = 0; i < 10; i++) {
@@ -59,7 +58,7 @@ public class VanillaDrowning extends DrowningWidget {
 			bubblePack.add(bubble);
 			x += dx;
 		}
-		
+
 		attach();
 	}
 

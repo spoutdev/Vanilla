@@ -46,7 +46,6 @@ public class VanillaContainer implements BlockContainer, LightContainer, BlockCo
 	private boolean evenLight;
 	private final byte[] fullChunkData;
 	private BlockMaterial material1;
-	private BlockMaterial material2;
 	private short nibbleStore;
 	private BlockComponent[] components;
 	private int[] componentX;
@@ -71,7 +70,7 @@ public class VanillaContainer implements BlockContainer, LightContainer, BlockCo
 			material1 = BlockMaterial.get(id, data);
 			nibbleStore = getMinecraftData(material1, data);
 		} else {
-			material2 = BlockMaterial.get(id, data);
+			BlockMaterial material2 = BlockMaterial.get(id, data);
 			nibbleStore |= getMinecraftData(material2, data) << 4;
 			fullChunkData[index - 1] = (byte) (getMinecraftId(material1) & 0xFF);
 			fullChunkData[index] = (byte) (getMinecraftId(material2) & 0xFF);

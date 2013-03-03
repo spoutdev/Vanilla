@@ -45,7 +45,7 @@ import org.spout.vanilla.material.item.potion.PotionItem;
  * Component handling status effects. This includes food poisoning, regeneration, etc.
  */
 public class Effects extends EntityComponent {
-	private List<StatusEffectContainer> list = new ArrayList<StatusEffectContainer>();
+	private final List<StatusEffectContainer> list = new ArrayList<StatusEffectContainer>();
 	private Health health;
 
 	@Override

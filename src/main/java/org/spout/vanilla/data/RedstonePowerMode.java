@@ -34,5 +34,5 @@ public enum RedstonePowerMode {
 	/**
 	 * Power of all Redstone sources except wire
 	 */
-	ALLEXCEPTWIRE;
+	ALLEXCEPTWIRE
 }

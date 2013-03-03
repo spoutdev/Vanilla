@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.util;
 
-import java.awt.*;
+import java.awt.Color;
 
 import org.spout.api.util.config.serialization.GenericType;
 import org.spout.api.util.config.serialization.Serializer;

@@ -60,7 +60,7 @@ public class BlockDisappearEvent extends BlockChangeEvent implements Cancellable
 		DECAY,
 	}
 
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final DisappearCause disappearCause;
 
 	public BlockDisappearEvent(Block block, BlockSnapshot newState, Cause<?> reason, DisappearCause disappearCause) {

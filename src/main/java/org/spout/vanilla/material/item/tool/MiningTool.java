@@ -39,7 +39,7 @@ import org.spout.vanilla.data.tool.ToolType;
  */
 public class MiningTool extends Tool {
 	private float diggingSpeed;
-	private ToolLevel toolLevel;
+	private final ToolLevel toolLevel;
 
 	public MiningTool(String name, int id, ToolLevel toolLevel, ToolType toolType) {
 		super(name, id, toolLevel.getMaxDurability(), toolType, null);

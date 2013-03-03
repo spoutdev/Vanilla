@@ -37,7 +37,7 @@ import org.spout.vanilla.component.block.material.chest.Chest;
  * Event which is fired when a Chest is opened.
  */
 public class ChestOpenEvent extends InventoryOpenEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final Chest chest;
 
 	public ChestOpenEvent(Chest chest, Entity entity) {

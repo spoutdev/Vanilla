@@ -41,13 +41,13 @@ import org.spout.vanilla.material.block.rail.Rail;
 import org.spout.vanilla.material.block.rail.RailBase;
 
 public class MinecartTrackLogic {
-	public Block block;
-	public RailBase rails;
+	public final Block block;
+	public final RailBase rails;
 	public boolean isPowered;
 	public BlockFace direction;
 	public boolean changed = false;
 	public MinecartTrackLogic parent = null;
-	public List<MinecartTrackLogic> neighbours = new ArrayList<MinecartTrackLogic>();
+	public final List<MinecartTrackLogic> neighbours = new ArrayList<MinecartTrackLogic>();
 
 	private MinecartTrackLogic(Block block, RailBase material) {
 		this.block = block;

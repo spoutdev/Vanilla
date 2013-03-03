@@ -36,7 +36,7 @@ import org.spout.api.event.player.PlayerEvent;
  * Event which is called when a player fishes
  */
 public class PlayerFishEvent extends PlayerEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private Entity caught = null;
 	private FishingStatus status;
 

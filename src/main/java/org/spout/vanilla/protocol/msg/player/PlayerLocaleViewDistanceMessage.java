@@ -33,10 +33,13 @@ import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public class PlayerLocaleViewDistanceMessage extends VanillaMainChannelMessage {
-	public static byte VIEW_FAR = 0, VIEW_NORMAL = 1, VIEW_SHORT = 2, VIEW_TINY = 3;
+	public static byte VIEW_FAR = 0;
+	public static final byte VIEW_NORMAL = 1;
+	public static byte VIEW_SHORT = 2;
+	public static byte VIEW_TINY = 3;
 	private String locale;
 	private byte viewDistance, chatFlags, difficulty;
-	private boolean showCape;
+	private final boolean showCape;
 
 	public PlayerLocaleViewDistanceMessage(String locale, byte viewDistance, byte chatFlags, byte difficulty, boolean showCape) {
 		this.locale = locale;

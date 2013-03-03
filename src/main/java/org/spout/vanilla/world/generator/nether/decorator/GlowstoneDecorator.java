@@ -30,8 +30,8 @@ import java.util.Random;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.vanilla.world.generator.decorator.VariableAmountDecorator;
 
+import org.spout.vanilla.world.generator.decorator.VariableAmountDecorator;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
 import org.spout.vanilla.world.generator.nether.object.GlowstonePatchObject;
 

@@ -38,8 +38,7 @@ import org.spout.vanilla.protocol.entity.BasicEntityProtocol;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
 
-public class PotionEntityProtocol extends BasicEntityProtocol{
-
+public class PotionEntityProtocol extends BasicEntityProtocol {
 	public PotionEntityProtocol() {
 		super(ObjectType.POTION.getId());
 	}

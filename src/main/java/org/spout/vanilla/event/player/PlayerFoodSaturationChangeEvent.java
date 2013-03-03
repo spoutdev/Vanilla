@@ -32,7 +32,7 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.player.PlayerEvent;
 
 public class PlayerFoodSaturationChangeEvent extends PlayerEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private float foodSaturation;
 
 	public PlayerFoodSaturationChangeEvent(Player p, float foodSaturation) {

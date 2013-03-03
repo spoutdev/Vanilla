@@ -26,9 +26,8 @@
  */
 package org.spout.vanilla.component.entity.misc;
 
-import java.util.List;
-
 import javax.tools.Tool;
+import java.util.List;
 
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
@@ -50,7 +49,6 @@ import org.spout.vanilla.material.item.armor.Armor;
 public class EntityItemCollector extends EntityComponent {
 	private final int DISTANCE = VanillaConfiguration.ITEM_PICKUP_RANGE.getInt();
 	private List<Entity> nearbyEntities;
-	private final int WAIT_RESET = 30;
 	private int wait = 0;
 
 	@Override
@@ -62,6 +60,7 @@ public class EntityItemCollector extends EntityComponent {
 				return false;
 			}
 			if (health.isDead()) {
+				int WAIT_RESET = 30;
 				wait = WAIT_RESET;
 				return false;
 			}
@@ -86,9 +85,7 @@ public class EntityItemCollector extends EntityComponent {
 				for (int i = 0; i < armorInv.size(); i++) {
 					if (armorInv.canSet(i, item.getItemStack())) {
 						ItemStack slot = armorInv.get(i);
-						if (slot != null && !(slot.getMaterial() instanceof Armor)) {
-							continue;
-						} else if (slot == null || ((Armor) slot.getMaterial()).getBaseProtection() < armor.getBaseProtection()) {
+						if (slot == null || (slot.getMaterial() instanceof Armor && ((Armor) slot.getMaterial()).getBaseProtection() < armor.getBaseProtection())) {
 							getOwner().getNetwork().callProtocolEvent(new EntityCollectItemEvent(getOwner(), entity));
 							if (slot != null) {
 								Item.drop(getOwner().getScene().getPosition(), slot, Vector3.ZERO);

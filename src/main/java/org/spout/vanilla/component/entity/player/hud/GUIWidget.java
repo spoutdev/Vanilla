@@ -38,14 +38,14 @@ import org.spout.vanilla.component.entity.player.HUD;
 public abstract class GUIWidget {
 	protected float SCALE;
 	protected float START_X;
-	protected Widget widget = ((Client)Spout.getEngine()).getScreenStack().createWidget();
+	protected Widget widget = ((Client) Spout.getEngine()).getScreenStack().createWidget();
 	protected HUD hud;
-	
+
 	/**
 	 * Initial code for a Widget, this method needs to be called as super
 	 * from init in Widget main code.
 	 * @param widget
-	 * @param hud 
+	 * @param hud
 	 */
 	public void init(Widget widget, HUD hud) {
 		SCALE = hud.getScale();
@@ -53,7 +53,7 @@ public abstract class GUIWidget {
 		this.widget = widget;
 		this.hud = hud;
 	}
-	
+
 	/**
 	 * Update code for a widget, should be used to update the
 	 * widget after any data has changed.
@@ -65,25 +65,25 @@ public abstract class GUIWidget {
 	 * not been updated but animates.
 	 */
 	public abstract void animate();
-	
+
 	/**
 	 * Code to show/maximize the view of the widget.
 	 */
 	public abstract void show();
-	
+
 	/**
 	 * Code to hide/minimize the view of the widget.
 	 */
 	public abstract void hide();
-	
+
 	/**
 	 * Returns the widget
-	 * @return widget 
+	 * @return widget
 	 */
 	public Widget getWidget() {
 		return widget;
 	}
-	
+
 	/**
 	 * Attaches the widget to the main hud.
 	 */

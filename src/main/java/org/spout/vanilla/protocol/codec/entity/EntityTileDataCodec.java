@@ -27,12 +27,14 @@
 package org.spout.vanilla.protocol.codec.entity;
 
 import java.io.IOException;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
-import org.spout.nbt.CompoundMap;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
+
+import org.spout.nbt.CompoundMap;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityTileDataMessage;

@@ -35,7 +35,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.plugin.services.ProtectionService;
 
 public class VanillaProtectionService extends ProtectionService {
-	ArrayList<Protection> protections = new ArrayList<Protection>();
+	final ArrayList<Protection> protections = new ArrayList<Protection>();
 
 	/**
 	 * Returns the protection registered that matches the name provided

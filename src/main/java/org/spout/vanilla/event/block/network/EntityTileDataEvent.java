@@ -35,10 +35,10 @@ import org.spout.nbt.CompoundMap;
 
 public class EntityTileDataEvent extends Event implements ProtocolEvent {
 	public static final byte SET_MONSTER_SPAWNER_CREATURE = 1;
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final Block block;
-	private byte action;
-	private CompoundMap data;
+	private final byte action;
+	private final CompoundMap data;
 
 	/**
 	 * Constructs a new Data event for the block specified

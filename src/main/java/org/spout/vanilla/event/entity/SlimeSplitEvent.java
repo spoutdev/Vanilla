@@ -38,7 +38,7 @@ import org.spout.vanilla.component.entity.living.hostile.Slime;
  * Event which is called when a slime splits
  */
 public class SlimeSplitEvent extends EntityEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private int amount, size;
 
 	public SlimeSplitEvent(Entity e) throws InvalidControllerException {

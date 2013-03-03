@@ -29,7 +29,6 @@ package org.spout.vanilla.component.entity.substance;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 
 public abstract class Substance extends VanillaEntityComponent {
-
 	@Override
 	public void onAttached() {
 		super.onAttached();

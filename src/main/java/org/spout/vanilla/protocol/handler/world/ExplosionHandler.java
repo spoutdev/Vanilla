@@ -31,16 +31,14 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.protocol.msg.world.ExplosionMessage;
 
-public class ExplosionHandler extends MessageHandler<ExplosionMessage>{
-
+public class ExplosionHandler extends MessageHandler<ExplosionMessage> {
 	@Override
 	public void handleClient(Session session, ExplosionMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		//TODO: implement
 		System.out.println(message.toString());
 	}
-
 }

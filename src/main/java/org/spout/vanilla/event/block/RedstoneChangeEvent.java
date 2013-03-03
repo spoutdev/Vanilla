@@ -36,7 +36,7 @@ import org.spout.api.geo.cuboid.Block;
  * Fired when the redstone power at a block changes
  */
 public class RedstoneChangeEvent extends BlockEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final int prev;
 	private int current;
 

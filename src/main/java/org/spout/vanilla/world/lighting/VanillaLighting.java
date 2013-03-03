@@ -29,14 +29,13 @@ package org.spout.vanilla.world.lighting;
 import org.spout.api.Spout;
 
 public class VanillaLighting {
-	public static VanillaSkylightLightingManager SKY_LIGHT = new VanillaSkylightLightingManager("skylight");
-	public static VanillaBlocklightLightingManager BLOCK_LIGHT = new VanillaBlocklightLightingManager("block");
-	private static boolean initialized = false;
+	public static final VanillaSkylightLightingManager SKY_LIGHT = new VanillaSkylightLightingManager("skylight");
+	public static final VanillaBlocklightLightingManager BLOCK_LIGHT = new VanillaBlocklightLightingManager("block");
 
 	public static void initialize() {
+		boolean initialized = false;
 		if (initialized) {
 			Spout.getLogger().info("Vanilla lighting initialized more than once");
-			return;
 		}
 	}
 }

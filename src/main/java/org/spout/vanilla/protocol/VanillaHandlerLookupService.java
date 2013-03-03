@@ -197,9 +197,9 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			/* 0x07 */
 			bind(PlayerUseEntityMessage.class, PlayerUseEntityHandler.class);
 			/* 0x08 */
-			bind(PlayerHealthMessage.class,PlayerHealthHandler.class);
+			bind(PlayerHealthMessage.class, PlayerHealthHandler.class);
 			/* 0x09 */
-			bind(PlayerRespawnMessage.class,PlayerRespawnHandler.class);
+			bind(PlayerRespawnMessage.class, PlayerRespawnHandler.class);
 			/* 0x0A */
 			bind(PlayerGroundMessage.class, PlayerGroundHandler.class);
 			/* 0x0B */
@@ -207,7 +207,7 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			/* 0x0C */
 			bind(PlayerLookMessage.class, PlayerLookHandler.class);
 			/* 0x0D */
-			bind(PlayerPositionLookMessage.class,PlayerPositionLookHandler.class);
+			bind(PlayerPositionLookMessage.class, PlayerPositionLookHandler.class);
 			/* 0x0E */
 			bind(PlayerDiggingMessage.class, PlayerDiggingHandler.class);
 			/* 0x0F */
@@ -215,7 +215,7 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			/* 0x10 */
 			bind(PlayerHeldItemChangeMessage.class, PlayerHeldItemChangeHandler.class);
 			/* 0x11 */
-			bind(PlayerBedMessage.class,PlayerBedHandler.class);
+			bind(PlayerBedMessage.class, PlayerBedHandler.class);
 			/* 0x12 */
 			bind(EntityAnimationMessage.class, EntityAnimationHandler.class);
 			/* 0x13 */

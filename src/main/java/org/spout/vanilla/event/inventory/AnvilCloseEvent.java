@@ -37,7 +37,7 @@ import org.spout.api.inventory.Inventory;
  * Event which is fired when an Anvil is closed.
  */
 public class AnvilCloseEvent extends InventoryCloseEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final Block anvil;
 
 	public AnvilCloseEvent(Block anvil, Inventory inventory, Entity entity) {

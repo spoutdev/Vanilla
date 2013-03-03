@@ -31,16 +31,14 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 
-public class EntityMetadataHandler extends MessageHandler<EntityMetadataMessage>{
-
+public class EntityMetadataHandler extends MessageHandler<EntityMetadataMessage> {
 	@Override
 	public void handleClient(Session session, EntityMetadataMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		//TODO: implement
 		System.out.println(message.toString());
 	}
-
 }

@@ -33,8 +33,6 @@ import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.inventory.window.AbstractWindow;
 import org.spout.vanilla.inventory.window.WindowType;
 
-
-
 public final class WindowOpenMessage extends WindowMessage {
 	private final int slots;
 	private final String title;

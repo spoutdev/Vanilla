@@ -26,9 +26,10 @@
  */
 package org.spout.vanilla.material;
 
-import gnu.trove.map.hash.TShortObjectHashMap;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+
+import gnu.trove.map.hash.TShortObjectHashMap;
 
 import org.spout.api.Spout;
 import org.spout.api.material.BlockMaterial;

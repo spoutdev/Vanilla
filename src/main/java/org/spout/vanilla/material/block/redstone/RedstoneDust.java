@@ -44,79 +44,62 @@ public class RedstoneDust extends BlockItem implements PotionReagent {
 			return PotionItem.REGENERATION_EXTENDED;
 		} else if (PotionItem.REGENERATION_II.equals(original)) {
 			return PotionItem.REGENERATION_EXTENDED;
-		}
-		else if (PotionItem.SPLASH_REGENERATION.equals(original)) {
+		} else if (PotionItem.SPLASH_REGENERATION.equals(original)) {
 			return PotionItem.SPLASH_REGENERATION_EXTENDED;
 		} else if (PotionItem.SPLASH_REGENERATION_II.equals(original)) {
 			return PotionItem.SPLASH_REGENERATION_EXTENDED;
-		}
-		else if (PotionItem.SWIFTNESS.equals(original)) {
+		} else if (PotionItem.SWIFTNESS.equals(original)) {
 			return PotionItem.SWIFTNESS_EXTENDED;
 		} else if (PotionItem.SWIFTNESS_II.equals(original)) {
 			return PotionItem.SWIFTNESS_EXTENDED;
-		}
-		else if (PotionItem.SPLASH_SWIFTNESS.equals(original)) {
+		} else if (PotionItem.SPLASH_SWIFTNESS.equals(original)) {
 			return PotionItem.SPLASH_SWIFTNESS_EXTENDED;
 		} else if (PotionItem.SPLASH_SWIFTNESS_II.equals(original)) {
 			return PotionItem.SPLASH_SWIFTNESS_EXTENDED;
-		}
-		else if (PotionItem.FIRE.equals(original)) {
+		} else if (PotionItem.FIRE.equals(original)) {
 			return PotionItem.FIRE_EXTENDED;
 		} else if (PotionItem.SPLASH_FIRE.equals(original)) {
 			return PotionItem.SPLASH_FIRE_EXTENDED;
-		}
-		else if (PotionItem.POISON.equals(original)) {
+		} else if (PotionItem.POISON.equals(original)) {
 			return PotionItem.POISON_EXTENDED;
 		} else if (PotionItem.POISON_II.equals(original)) {
 			return PotionItem.POISON_EXTENDED;
-		}
-		else if (PotionItem.SPLASH_POISON.equals(original)) {
+		} else if (PotionItem.SPLASH_POISON.equals(original)) {
 			return PotionItem.SPLASH_POISON_EXTENDED;
 		} else if (PotionItem.SPLASH_POISON_II.equals(original)) {
 			return PotionItem.SPLASH_POISON_EXTENDED;
-		}
-		else if (PotionItem.HEALING_II.equals(original)) {
+		} else if (PotionItem.HEALING_II.equals(original)) {
 			return PotionItem.HEALING;
 		} else if (PotionItem.SPLASH_HEALING_II.equals(original)) {
 			return PotionItem.SPLASH_HEALING;
-		}
-		else if (PotionItem.NIGHT_VISION.equals(original)) {
+		} else if (PotionItem.NIGHT_VISION.equals(original)) {
 			return PotionItem.NIGHT_VISION_EXTENDED;
-		}
-		else if (PotionItem.WEAKNESS.equals(original)) {
+		} else if (PotionItem.WEAKNESS.equals(original)) {
 			return PotionItem.WEAKNESS_EXTENDED;
 		} else if (PotionItem.SPLASH_WEAKNESS.equals(original)) {
 			return PotionItem.SPLASH_WEAKNESS_EXTENDED;
-		}
-		else if (PotionItem.STRENGTH.equals(original)) {
+		} else if (PotionItem.STRENGTH.equals(original)) {
 			return PotionItem.STRENGTH_EXTENDED;
 		} else if (PotionItem.STRENGTH_II.equals(original)) {
 			return PotionItem.STRENGTH_EXTENDED;
-		}
-		else if (PotionItem.SPLASH_STRENGTH.equals(original)) {
+		} else if (PotionItem.SPLASH_STRENGTH.equals(original)) {
 			return PotionItem.SPLASH_STRENGTH_EXTENDED;
 		} else if (PotionItem.SPLASH_STRENGTH_II.equals(original)) {
 			return PotionItem.SPLASH_STRENGTH_EXTENDED;
-		}
-		else if (PotionItem.SLOWNESS.equals(original)) {
+		} else if (PotionItem.SLOWNESS.equals(original)) {
 			return PotionItem.SLOWNESS_EXTENDED;
 		} else if (PotionItem.SPLASH_SLOWNESS.equals(original)) {
 			return PotionItem.SPLASH_SLOWNESS_EXTENDED;
-		}
-		else if (PotionItem.HARMING_II.equals(original)) {
+		} else if (PotionItem.HARMING_II.equals(original)) {
 			return PotionItem.HARMING;
 		} else if (PotionItem.SPLASH_HARMING_II.equals(original)) {
 			return PotionItem.SPLASH_HARMING;
-		}
-		else if (PotionItem.INVISIBILITY.equals(original)) {
+		} else if (PotionItem.INVISIBILITY.equals(original)) {
 			return PotionItem.INVISIBILITY_EXTENDED;
-		}
-		else if (PotionItem.WATER_BOTTLE.equals(original)) {
+		} else if (PotionItem.WATER_BOTTLE.equals(original)) {
 			return PotionItem.MUNDANE_EXTENDED;
 		}
-		
+
 		return null;
 	}
-
-
 }

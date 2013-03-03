@@ -51,14 +51,14 @@ public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 
 		Player holder = session.getPlayer();
 
-		holder.getScene().setRotation(QuaternionMath.rotation(message.getPitch(),message.getYaw(),0));
+		holder.getScene().setRotation(QuaternionMath.rotation(message.getPitch(), message.getYaw(), 0));
 		Human human = holder.get(Human.class);
 		if (human != null) {
 			human.setOnGround(message.isOnGround());
 			human.getHead().setRotation(message.getRotation());
 		}
 	}
-	
+
 	@Override
 	public void handleClient(Session session, PlayerLookMessage message) {
 		if (!session.hasPlayer()) {
@@ -67,7 +67,7 @@ public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 
 		Player holder = session.getPlayer();
 
-		holder.getScene().setRotation(QuaternionMath.rotation(message.getPitch(),message.getYaw(),0));
+		holder.getScene().setRotation(QuaternionMath.rotation(message.getPitch(), message.getYaw(), 0));
 		Human human = holder.get(Human.class);
 		if (human != null) {
 			human.setOnGround(message.isOnGround());

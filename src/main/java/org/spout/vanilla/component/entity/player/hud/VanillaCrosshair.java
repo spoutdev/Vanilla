@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.component.entity.player.hud;
 
-import java.awt.*;
+import java.awt.Color;
 
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.TexturedRectComponent;
@@ -44,7 +44,7 @@ public class VanillaCrosshair extends CrosshairWidget {
 		crosshairRect.setColor(Color.WHITE);
 		crosshairRect.setSprite(new Rectangle(-0.0625f * SCALE, -0.0625f, 0.125f * SCALE, 0.125f));
 		crosshairRect.setSource(new Rectangle(0f / 256f, 0f / 256f, 16f / 256f, 16f / 256f));
-		
+
 		attach();
 	}
 

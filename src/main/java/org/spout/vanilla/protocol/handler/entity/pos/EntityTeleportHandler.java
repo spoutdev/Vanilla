@@ -36,19 +36,17 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.protocol.msg.entity.pos.EntityTeleportMessage;
 
-public class EntityTeleportHandler extends MessageHandler<EntityTeleportMessage>{
-
+public class EntityTeleportHandler extends MessageHandler<EntityTeleportMessage> {
 	@Override
 	public void handleClient(Session session, EntityTeleportMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		Player player = session.getPlayer();
 		World world = player.getWorld();
 		Entity entity = session.getPlayer();//world.getEntity(message.getEntityId());
 		entity.getScene().setPosition(new Point(world, message.getX(), message.getY(), message.getZ()));
 		entity.getScene().rotate(QuaternionMath.rotation(message.getPitch(), message.getRotation(), 0));
 	}
-
 }

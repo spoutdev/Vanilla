@@ -31,8 +31,8 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.Container;
 
-import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.block.ViewedBlockComponent;
+import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.event.inventory.EnchantmentTableCloseEvent;
 import org.spout.vanilla.event.inventory.EnchantmentTableOpenEvent;
 import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
@@ -81,22 +81,25 @@ public class EnchantmentTable extends ViewedBlockComponent implements Container 
 		int bookshelves = 0;
 		for (int dx = -1; dx <= 1; dx++) {
 			for (int dz = -1; dz <= 1; dz++) {
-				if (dx == 0 && dz == 0)
+				if (dx == 0 && dz == 0) {
 					continue; // Ignore the enchantment table itself
-				for (int dy = 0; dy <= 1; dy++) {
-					if (!VanillaMaterials.AIR.equals(block.translate(dx, dy, dz).getMaterial()))
-						break;
-					if (VanillaMaterials.BOOKSHELF.equals(block.translate(2 * dx, dy, 2 * dz).getMaterial()))
-						++bookshelves;
-					if (dx != 0 && dz != 0) {
-						if (VanillaMaterials.BOOKSHELF.equals(block.translate(dx, dy, 2 * dz).getMaterial()))
-							++bookshelves;
-						if (VanillaMaterials.BOOKSHELF.equals(block.translate(2 * dx, dy, dz).getMaterial()))
-							++bookshelves;
-					}
-
 				}
-
+				for (int dy = 0; dy <= 1; dy++) {
+					if (!VanillaMaterials.AIR.equals(block.translate(dx, dy, dz).getMaterial())) {
+						break;
+					}
+					if (VanillaMaterials.BOOKSHELF.equals(block.translate(2 * dx, dy, 2 * dz).getMaterial())) {
+						++bookshelves;
+					}
+					if (dx != 0 && dz != 0) {
+						if (VanillaMaterials.BOOKSHELF.equals(block.translate(dx, dy, 2 * dz).getMaterial())) {
+							++bookshelves;
+						}
+						if (VanillaMaterials.BOOKSHELF.equals(block.translate(2 * dx, dy, dz).getMaterial())) {
+							++bookshelves;
+						}
+					}
+				}
 			}
 		}
 

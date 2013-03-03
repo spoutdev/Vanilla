@@ -49,7 +49,6 @@ public class Ageable extends Living {
 	 * How many seconds the animal has until it can procreate again if
 	 * positive or how many seconds until the animal is fully grown if
 	 * negative.
-	 *
 	 * @return age identifier
 	 */
 	public float getAge() {
@@ -59,7 +58,6 @@ public class Ageable extends Living {
 	/**
 	 * Sets the age of the animal. Zero denotes a fully grown animal that is
 	 * able to procreate, anything under 0 denotes the animal is a child.
-	 *
 	 * @param age of animal
 	 */
 	public void setAge(float age) {

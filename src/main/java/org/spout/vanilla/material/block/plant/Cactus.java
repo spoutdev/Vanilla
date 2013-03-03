@@ -44,7 +44,7 @@ import org.spout.vanilla.material.block.component.FurnaceBlock;
 import org.spout.vanilla.material.item.misc.Dye;
 
 public class Cactus extends StackGrowingBase implements TimedCraftable {
-	private Set<BlockMaterial> deniedNeighbours = new HashSet<BlockMaterial>();
+	private final Set<BlockMaterial> deniedNeighbours = new HashSet<BlockMaterial>();
 
 	public Cactus(String name, int id) {
 		super(name, id, VanillaMaterialModels.CACTUS);

@@ -50,9 +50,9 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public abstract class ExplosionModel {
-	private List<ExplosionBlockSlot> blockList = new ArrayList<ExplosionBlockSlot>();
-	private Map<Vector3, ExplosionBlockSlot> blocks = new HashMap<Vector3, ExplosionBlockSlot>();
-	public List<Block> blocksToDestroy = new ArrayList<Block>(100);
+	private final List<ExplosionBlockSlot> blockList = new ArrayList<ExplosionBlockSlot>();
+	private final Map<Vector3, ExplosionBlockSlot> blocks = new HashMap<Vector3, ExplosionBlockSlot>();
+	public final List<Block> blocksToDestroy = new ArrayList<Block>(100);
 
 	public synchronized ExplosionBlockSlot getBlock(Vector3 position) {
 		ExplosionBlockSlot block = this.blocks.get(position);
@@ -92,7 +92,7 @@ public abstract class ExplosionModel {
 		double di = p.distance(o);
 		int amt = 0, solid = 0;
 		BlockIterator iterator = new BlockIterator(o, p);
-		while(iterator.hasNext()) {
+		while (iterator.hasNext()) {
 			amt++;
 			BlockMaterial next = iterator.next().getMaterial();
 			if (next.isSolid()) {
@@ -103,7 +103,7 @@ public abstract class ExplosionModel {
 		if (amt == 0) {
 			density = 1;
 		} else {
-			density = (double)(amt - solid) / (double)amt;
+			density = (double) (amt - solid) / (double) amt;
 		}
 		double i = (1 - di / s) * density;
 		return (int) ((i * i + i) / 2 * 8 * s + 1);

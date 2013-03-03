@@ -40,7 +40,7 @@ public final class PlayerGameStateMessage extends VanillaMainChannelMessage {
 	public static final byte CHANGE_GAME_MODE = 3;
 	public static final byte ENTER_CREDITS = 4;
 	private final byte reason;
-	private GameMode gameMode;
+	private final GameMode gameMode;
 
 	public PlayerGameStateMessage(byte reason, GameMode gameMode) {
 		this.reason = reason;

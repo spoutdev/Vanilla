@@ -34,7 +34,7 @@ import org.spout.vanilla.ai.sensor.NearbyComponentsSensor;
 
 public class AttackPlayerGoal implements Goal {
 	private final PlannerAgent agent;
-	private static WorldState GOAL = WorldState.create("hasNearbyEntities", false);
+	private static final WorldState GOAL = WorldState.create("hasNearbyEntities", false);
 
 	public AttackPlayerGoal(PlannerAgent agent) {
 		this.agent = agent;
@@ -47,7 +47,7 @@ public class AttackPlayerGoal implements Goal {
 
 	@Override
 	public int getPriority() {
-		return agent.getSensor(NearbyComponentsSensor.class).hasFoundEntity() == true ? 1 : 0;
+		return agent.getSensor(NearbyComponentsSensor.class).hasFoundEntity() ? 1 : 0;
 	}
 
 	@Override

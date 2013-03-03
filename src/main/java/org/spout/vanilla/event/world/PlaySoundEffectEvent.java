@@ -34,10 +34,11 @@ import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.vanilla.data.effect.SoundEffect;
 
 public class PlaySoundEffectEvent extends Event implements ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
-	private Point position;
-	private SoundEffect sound;
-	private float pitch, volume;
+	private static final HandlerList handlers = new HandlerList();
+	private final Point position;
+	private final SoundEffect sound;
+	private final float pitch;
+	private final float volume;
 
 	public PlaySoundEffectEvent(Point position, SoundEffect sound, float volume, float pitch) {
 		this.position = position;

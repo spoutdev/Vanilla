@@ -32,12 +32,11 @@ import org.spout.api.component.type.EntityComponent;
 
 import org.spout.vanilla.data.Difficulty;
 
-
 /**
  * Component that contains the amount of damage this entity does.
  */
 public class Damage extends EntityComponent {
-	private HashMap<Difficulty, org.spout.vanilla.data.Damage> damageList = new HashMap<Difficulty, org.spout.vanilla.data.Damage>();
+	private final HashMap<Difficulty, org.spout.vanilla.data.Damage> damageList = new HashMap<Difficulty, org.spout.vanilla.data.Damage>();
 
 	public Damage() {
 		for (Difficulty difficulty : Difficulty.values()) {

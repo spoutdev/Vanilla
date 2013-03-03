@@ -27,6 +27,7 @@
 package org.spout.vanilla;
 
 import org.mockito.Mockito;
+
 import org.spout.api.Engine;
 import org.spout.api.FileSystem;
 import org.spout.api.Spout;

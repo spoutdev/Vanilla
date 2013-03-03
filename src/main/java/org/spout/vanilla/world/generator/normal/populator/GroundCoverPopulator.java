@@ -65,7 +65,7 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 				while (yy >= 0) {
 					yy = getNextStone(blockData, x + xx, y, z + zz, yy);
 					if (yy < 0) {
-						break yIteration;
+						break;
 					}
 					int layerNumber = 0;
 					for (GroundCoverLayer layer : layers) {
@@ -170,7 +170,7 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 		}
 
 		public GroundCoverVariableLayer(BlockMaterial aboveSea, BlockMaterial bellowSea,
-				byte minDepth, byte maxDepth) {
+										byte minDepth, byte maxDepth) {
 			super(aboveSea, bellowSea);
 			this.min = minDepth;
 			this.max = maxDepth;
@@ -222,7 +222,7 @@ public class GroundCoverPopulator implements GeneratorPopulator {
 		}
 
 		public GroundCoverUniformLayer(BlockMaterial aboveSea, BlockMaterial bellowSea,
-				byte depth) {
+									   byte depth) {
 			super(aboveSea, bellowSea);
 			this.depth = depth;
 		}

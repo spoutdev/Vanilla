@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.plugin;
 
 import java.util.Arrays;
 import java.util.Iterator;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.util.CharsetUtil;

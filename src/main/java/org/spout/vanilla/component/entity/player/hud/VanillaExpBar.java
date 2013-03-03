@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.component.entity.player.hud;
 
-import java.awt.*;
+import java.awt.Color;
 
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;
@@ -41,8 +41,8 @@ import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 
 public class VanillaExpBar extends ExpBarWidget {
-	private RenderPartPack expPack = new RenderPartPack(VanillaRenderMaterials.ICONS_MATERIAL);
-	
+	private final RenderPartPack expPack = new RenderPartPack(VanillaRenderMaterials.ICONS_MATERIAL);
+
 	@Override
 	public void init(Widget exp, HUD hud) {
 		super.init(exp, hud);
@@ -57,7 +57,7 @@ public class VanillaExpBar extends ExpBarWidget {
 			// Experience bar
 			final RenderPartsHolderComponent expRect = widget.add(RenderPartsHolderComponent.class);
 			expRect.add(expPack);
-			
+
 			final RenderPart expBgRect = new RenderPart();
 			expBgRect.setColor(Color.WHITE);
 			expBgRect.setSprite(new Rectangle(START_X, -0.82f, 1.81f * SCALE, 0.04f));
@@ -67,12 +67,12 @@ public class VanillaExpBar extends ExpBarWidget {
 			final RenderPart expBarRect = new RenderPart();
 			expBarRect.setColor(Color.WHITE);
 			expPack.add(expBarRect);
-			
+
 			final RenderPart rect = expPack.get(1);
 			rect.setSprite(new Rectangle(START_X, -0.82f, 1.81f * SCALE * 0f, 0.04f));
 			rect.setSource(new Rectangle(0, 69f / 256f, 182f / 256f * 0f, 5f / 256f));
 		}
-		
+
 		attach();
 	}
 

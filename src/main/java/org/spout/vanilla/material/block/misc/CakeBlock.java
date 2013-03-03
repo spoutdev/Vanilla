@@ -83,7 +83,7 @@ public class CakeBlock extends Solid {
 		THREE_PIECES(0x3),
 		TWO_PIECES(0x4),
 		ONE_PIECE(0x5);
-		private short data;
+		private final short data;
 
 		private CakeSize(int data) {
 			this.data = (short) data;

@@ -31,14 +31,13 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
 
-public class EntityObjectHandler extends MessageHandler<EntityObjectMessage>{
-
+public class EntityObjectHandler extends MessageHandler<EntityObjectMessage> {
 	@Override
 	public void handleClient(Session session, EntityObjectMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		//TODO: implement
 		System.out.println(message.toString());
 	}

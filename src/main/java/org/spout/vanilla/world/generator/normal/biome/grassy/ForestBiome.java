@@ -29,8 +29,6 @@ package org.spout.vanilla.world.generator.normal.biome.grassy;
 import java.awt.Color;
 import java.util.Random;
 
-import org.spout.vanilla.world.generator.normal.biome.NormalBiome.NormalTallGrassFactory;
-import org.spout.vanilla.world.generator.normal.biome.NormalBiome.NormalTreeWGOFactory;
 import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;

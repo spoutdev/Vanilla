@@ -41,7 +41,7 @@ public final class PlayerSpawnPositionHandler extends MessageHandler<PlayerSpawn
 			return;
 		}
 		Player player = session.getPlayer();
-		
+
 		World world = player.getWorld();
 		player.getScene().setPosition(new Point(world, message.getX(), message.getY(), message.getZ()));
 		System.out.println(message.toString());

@@ -31,16 +31,14 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityThunderboltMessage;
 
-public class EntityThunderboltHandler extends MessageHandler<EntityThunderboltMessage>{
-
+public class EntityThunderboltHandler extends MessageHandler<EntityThunderboltMessage> {
 	@Override
 	public void handleClient(Session session, EntityThunderboltMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		//TODO: implement
 		System.out.println(message.toString());
 	}
-
 }

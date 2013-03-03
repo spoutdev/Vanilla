@@ -35,8 +35,9 @@ import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.vanilla.data.Weather;
 
 public class WeatherChangeEvent extends WorldEvent implements Cancellable, ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
-	private Weather current, weather;
+	private static final HandlerList handlers = new HandlerList();
+	private final Weather current;
+	private Weather weather;
 
 	public WeatherChangeEvent(World world, Weather current, Weather weather) {
 		super(world);

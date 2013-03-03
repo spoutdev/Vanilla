@@ -41,7 +41,7 @@ import org.spout.vanilla.event.cause.NullDamageCause;
  * Implements {@link Cancellable}. Canceling this prevents the Entity from taking damage.
  */
 public class EntityDamageEvent extends EntityHealthChangeEvent {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private boolean hasSendHurtMessage = true;
 	private final Cause<?> cause;
 

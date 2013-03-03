@@ -38,7 +38,6 @@ import org.spout.vanilla.data.VanillaData;
  * Handle item/XP drop from a entity.
  */
 public class DeathDrops extends EntityComponent {
-
 	/**
 	 * Add a amount of XP the entity drops.
 	 * @param amount The amount of XP the entity drops.

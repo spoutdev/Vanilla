@@ -70,7 +70,6 @@ public class InputCommandExecutor implements CommandExecutor {
 				final Block hitting = hit.getTargetBlock();
 				if (hitting != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
 					Spout.getScheduler().safeRun(VanillaPlugin.getInstance(), new Runnable() {
-
 						@Override
 						public void run() {
 							hitting.setMaterial(VanillaMaterials.AIR);
@@ -100,7 +99,6 @@ public class InputCommandExecutor implements CommandExecutor {
 					}
 					Spout.log(clicked.name());
 					Spout.getScheduler().safeRun(VanillaPlugin.getInstance(), new Runnable() {
-
 						@Override
 						public void run() {
 							hitting.translate(clicked).setMaterial(selection);

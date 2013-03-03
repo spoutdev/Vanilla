@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.msg.entity;
 
 import java.util.List;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.util.Parameter;
@@ -58,7 +59,7 @@ public final class EntityMetadataMessage extends EntityMessage {
 		META_BABYANIMALSTAGE(12, -23999),
 		META_PARENTANIMALSTAGE(12, 6000),
 		META_BREEDANIMALSTAGE(12, 0);
-		private Parameter<?> parameter;
+		private final Parameter<?> parameter;
 
 		private Parameters(int index, int value) {
 			this.parameter = new Parameter<Integer>(Parameter.TYPE_INT, index, value);

@@ -31,8 +31,8 @@ import org.spout.api.entity.Player;
 import org.spout.api.inventory.Container;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.block.ViewedBlockComponent;
+import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.inventory.FurnaceCloseEvent;
 import org.spout.vanilla.event.inventory.FurnaceOpenEvent;
@@ -47,7 +47,6 @@ import org.spout.vanilla.material.VanillaMaterials;
  * Represents a furnace in a world.
  */
 public class Furnace extends ViewedBlockComponent implements Container {
-
 	public final float MAX_FUEL_INCREMENT = 12.5f;
 	public final float MAX_SMELT_TIME_INCREMENT = 9f;
 

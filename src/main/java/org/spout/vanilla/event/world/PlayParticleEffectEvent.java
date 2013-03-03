@@ -34,10 +34,10 @@ import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.vanilla.data.effect.GeneralEffect;
 
 public class PlayParticleEffectEvent extends Event implements ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
-	private Point position;
-	private GeneralEffect effect;
-	private int data;
+	private static final HandlerList handlers = new HandlerList();
+	private final Point position;
+	private final GeneralEffect effect;
+	private final int data;
 
 	public PlayParticleEffectEvent(Point position, GeneralEffect effect, int data) {
 		this.position = position;

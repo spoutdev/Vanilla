@@ -59,7 +59,6 @@ public class Hunger extends EntityComponent {
 	private static final float TIMER_START = 4;
 	private float timer = TIMER_START;
 	private Point lastPos;
-	
 	private float fx;
 	private float bx;
 
@@ -110,7 +109,7 @@ public class Hunger extends EntityComponent {
 							if (foodEating.get().getMaterial() instanceof Food) {
 								((Food) foodEating.get().getMaterial()).onEat(getOwner(), foodEating);
 							} else if (foodEating.get().getMaterial() instanceof PotionItem) {
-								((PotionItem)foodEating.get().getMaterial()).onDrink(getOwner(),foodEating);
+								((PotionItem) foodEating.get().getMaterial()).onDrink(getOwner(), foodEating);
 							}
 						}
 						eatingTimer = 0f;
@@ -222,11 +221,11 @@ public class Hunger extends EntityComponent {
 	public float getFx() {
 		return fx;
 	}
-	
+
 	public float getBx() {
 		return bx;
 	}
-	
+
 	/**
 	 * Sets the hunger level of the entity.
 	 * The maximum is 20.
@@ -297,7 +296,7 @@ public class Hunger extends EntityComponent {
 				bx = 133;
 			} else {
 				fx = 52;
-				bx = 16;	
+				bx = 16;
 			}
 			getOwner().get(HUD.class).getHungerMeter().update();
 		}

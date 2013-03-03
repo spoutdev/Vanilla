@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.grassy;
 
-import java.awt.*;
+import java.awt.Color;
 
 import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;

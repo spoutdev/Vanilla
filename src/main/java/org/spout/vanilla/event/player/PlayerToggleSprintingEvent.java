@@ -35,8 +35,8 @@ import org.spout.api.event.player.PlayerEvent;
  * Event which is called when a player toggles sprinting
  */
 public class PlayerToggleSprintingEvent extends PlayerEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
-	private boolean isSprinting;
+	private static final HandlerList handlers = new HandlerList();
+	private final boolean isSprinting;
 
 	public PlayerToggleSprintingEvent(Player p, boolean isSprinting) {
 		super(p);

@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.component.entity.player.hud;
 
-import java.awt.*;
+import java.awt.Color;
 
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
@@ -40,16 +40,15 @@ import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.inventory.entity.QuickbarInventory;
 
 public class VanillaQuickbar extends QuickbarWidget {
-	
-	private RenderPartPack quickbarPack = new RenderPartPack(VanillaRenderMaterials.QUICKBAR_MATERIAL);
-	
+	private final RenderPartPack quickbarPack = new RenderPartPack(VanillaRenderMaterials.QUICKBAR_MATERIAL);
+
 	@Override
 	public void init(Widget quickbar, HUD hud) {
 		super.init(quickbar, hud);
 		// Setup the quickbar
 		final RenderPartsHolderComponent quickbarRect = widget.add(RenderPartsHolderComponent.class);
 		quickbarRect.add(quickbarPack);
-		
+
 		final RenderPart quickbarBgRect = new RenderPart();
 		quickbarBgRect.setColor(Color.WHITE);
 		quickbarBgRect.setSprite(new Rectangle(START_X, -1f, 1.42f * SCALE, 0.17f));
@@ -61,7 +60,7 @@ public class VanillaQuickbar extends QuickbarWidget {
 		quickbarSlotRect.setSource(new Rectangle(0, 22f / 256f, 30f / 256f, 24f / 256f));
 		quickbarSlotRect.setSprite(new Rectangle(-0.72f * SCALE + (0 * .1175f), -1.005f, 0.24f * SCALE, 0.24f * SCALE));
 		quickbarPack.add(quickbarSlotRect, 0);
-		
+
 		attach();
 	}
 
@@ -79,7 +78,7 @@ public class VanillaQuickbar extends QuickbarWidget {
 			return;
 		}
 		int slot = quickbar.getSelectedSlot().getIndex();
-		
+
 		if (slot < 0 || slot > 8) {
 			throw new IllegalArgumentException("Slot must be between 0 and 8");
 		}
@@ -88,7 +87,6 @@ public class VanillaQuickbar extends QuickbarWidget {
 		rect.setSprite(new Rectangle(-0.72f * SCALE + (slot * .1175f), -1.005f, 0.24f * SCALE, 0.24f * SCALE));
 		widget.update();
 	}
-
 
 	@Override
 	public void animate() {

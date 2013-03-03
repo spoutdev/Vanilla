@@ -60,7 +60,7 @@ public class ItemFrame extends Substance {
 			case LEFT_CLICK:
 				Point pos = entity.getScene().getPosition();
 				Item.dropNaturally(pos, new ItemStack(VanillaMaterials.ITEM_FRAME, 1));
-				if(material != null){
+				if (material != null) {
 					Item.dropNaturally(pos, new ItemStack(material, 1));
 				}
 				entity.remove();

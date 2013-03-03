@@ -42,10 +42,8 @@ import org.spout.api.math.Vector2;
 
 public class WhittakerLayer implements BiomeSelectorLayer {
 	private final Perlin temperaturePerlin = new Perlin();
-	private final Clamp temperatureClamp = new Clamp();
 	private final ScaleBias temperature = new ScaleBias();
 	private final Perlin humidityPerlin = new Perlin();
-	private final Clamp humidityClamp = new Clamp();
 	private final ScaleBias humidity = new ScaleBias();
 	private double minTemperature = -20;
 	private double maxTemperature = 30;
@@ -56,12 +54,14 @@ public class WhittakerLayer implements BiomeSelectorLayer {
 
 	public WhittakerLayer(int uniquenessValue) {
 		this.uniquenessValue = uniquenessValue;
+		Clamp temperatureClamp = new Clamp();
 		temperatureClamp.SetSourceModule(0, temperaturePerlin);
 		temperatureClamp.setLowerBound(-1);
 		temperatureClamp.setUpperBound(1);
 		temperature.SetSourceModule(0, temperatureClamp);
 		temperature.setScale(0.5);
 		temperature.setBias(0.5);
+		Clamp humidityClamp = new Clamp();
 		humidityClamp.SetSourceModule(0, humidityPerlin);
 		humidityClamp.setLowerBound(-1);
 		humidityClamp.setUpperBound(1);

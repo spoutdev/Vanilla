@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.material.block.misc;
 
-import com.bulletphysics.collision.shapes.BoxShape;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+
+import com.bulletphysics.collision.shapes.BoxShape;
 
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;

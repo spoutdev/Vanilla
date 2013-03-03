@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.component.entity.player.hud;
 
-import java.awt.*;
+import java.awt.Color;
 
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.RenderPartsHolderComponent;
@@ -38,9 +38,8 @@ import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 
 public class VanillaArmorWidget extends ArmorWidget {
-	
-	private RenderPartPack armorPack = new RenderPartPack(VanillaRenderMaterials.ICONS_MATERIAL);
-	
+	private final RenderPartPack armorPack = new RenderPartPack(VanillaRenderMaterials.ICONS_MATERIAL);
+
 	@Override
 	public void init(Widget armor, HUD hud) {
 		super.init(armor, hud);
@@ -56,13 +55,13 @@ public class VanillaArmorWidget extends ArmorWidget {
 			armorPack.add(armorPart);
 			x += dx;
 		}
-		
+
 		attach();
 	}
 
 	@Override
 	public void update() {
-		
+
 		int amount = hud.getArmor();
 
 		if (amount == 0) {

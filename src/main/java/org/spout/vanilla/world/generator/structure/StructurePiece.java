@@ -46,7 +46,7 @@ import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.block.attachable.Attachable;
 
 public abstract class StructurePiece {
-	protected Structure parent;
+	protected final Structure parent;
 	protected StructurePiece lastComponent = null;
 	protected Point position = Point.invalid;
 	protected Quaternion rotation = Quaternion.IDENTITY;
@@ -253,12 +253,9 @@ public abstract class StructurePiece {
 				return false;
 			}
 			final Vector3 rMin = box.getMin();
-			if (rMin.getX() > max.getX()
+			return !(rMin.getX() > max.getX()
 					|| rMin.getY() > max.getY()
-					|| rMin.getZ() > max.getZ()) {
-				return false;
-			}
-			return true;
+					|| rMin.getZ() > max.getZ());
 		}
 
 		@Override

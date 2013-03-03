@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.component.entity.misc;
 
-import java.awt.*;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -51,8 +51,8 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.component.entity.living.hostile.EnderDragon;
 import org.spout.vanilla.component.entity.player.HUD;
-import org.spout.vanilla.component.entity.substance.XPOrb;
 import org.spout.vanilla.component.entity.substance.Item;
+import org.spout.vanilla.component.entity.substance.XPOrb;
 import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.VanillaRenderMaterials;
@@ -77,22 +77,19 @@ import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
  */
 public class Health extends EntityComponent {
 	protected static final int DEATH_TIME_TICKS = 30;
-
 	// Damage
 	protected DamageCause<?> lastDamageCause = new NullDamageCause(DamageCause.DamageType.UNKNOWN);
 	protected Object lastDamager;
-
 	protected static final float SCALE = 0.75f; // TODO: Apply directly from engine
 	private static final float START_X = -0.71f * SCALE;
-
 	// Client only
 	private Widget hearts;
 	private boolean animateHearts;
 	private int heartAnimationTicks;
 
 	public Health() {
-		if (Spout.getPlatform()== Platform.CLIENT) {
-			hearts = ((Client)Spout.getEngine()).getScreenStack().createWidget();
+		if (Spout.getPlatform() == Platform.CLIENT) {
+			hearts = ((Client) Spout.getEngine()).getScreenStack().createWidget();
 		}
 	}
 

@@ -81,7 +81,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	private boolean liquidObstacle = true;
 	private SoundEffect stepSound = SoundEffects.STEP_STONE;
 	private final BlockDrops drops = new BlockDrops();
-	private Set<ToolType> miningTypes = new HashSet<ToolType>();
+	private final Set<ToolType> miningTypes = new HashSet<ToolType>();
 	private ToolLevel miningLevel = ToolLevel.NONE;
 	private final Vector2 pos = null; // TODO: Block item rendering
 

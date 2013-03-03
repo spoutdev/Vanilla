@@ -30,8 +30,8 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.data.ViewDistance;
 import org.spout.vanilla.component.entity.living.neutral.Human;
+import org.spout.vanilla.data.ViewDistance;
 import org.spout.vanilla.protocol.msg.player.PlayerLocaleViewDistanceMessage;
 
 public class PlayerLocaleViewDistanceHandler extends MessageHandler<PlayerLocaleViewDistanceMessage> {

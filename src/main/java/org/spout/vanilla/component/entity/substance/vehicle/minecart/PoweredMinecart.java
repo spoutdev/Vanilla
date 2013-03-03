@@ -29,7 +29,6 @@ package org.spout.vanilla.component.entity.substance.vehicle.minecart;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -47,8 +46,8 @@ import org.spout.vanilla.protocol.entity.object.vehicle.MinecartObjectEntityProt
 import org.spout.vanilla.util.PlayerUtil;
 
 public class PoweredMinecart extends MinecartBase {
-	private boolean isFueled = false;
 	private float fuel = 0f;
+	private boolean fueled = false;
 
 	@Override
 	public void onAttached() {
@@ -69,7 +68,7 @@ public class PoweredMinecart extends MinecartBase {
 	}
 
 	public boolean isFueled() {
-		return isFueled;
+		return fueled;
 	}
 
 	@Override

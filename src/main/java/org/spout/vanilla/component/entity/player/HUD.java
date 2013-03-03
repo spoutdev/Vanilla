@@ -44,8 +44,8 @@ import org.spout.vanilla.component.entity.player.hud.CrosshairWidget;
 import org.spout.vanilla.component.entity.player.hud.DrowningWidget;
 import org.spout.vanilla.component.entity.player.hud.ExpBarWidget;
 import org.spout.vanilla.component.entity.player.hud.GUIWidget;
-import org.spout.vanilla.component.entity.player.hud.QuickbarWidget;
 import org.spout.vanilla.component.entity.player.hud.HungerWidget;
+import org.spout.vanilla.component.entity.player.hud.QuickbarWidget;
 
 /**
  * Component attached to clients-only that updates the Heads Up Display.
@@ -62,9 +62,8 @@ public class HUD extends EntityComponent {
 	private CrosshairWidget crosshairWidget = null;
 	private DrowningWidget drowningWidget = null;
 	private HungerWidget hungerWidget = null;
-	
-	private ConcurrentMap<Class<? extends GUIWidget>, GUIWidget> widgets = new ConcurrentHashMap<Class<? extends GUIWidget>, GUIWidget>();
-	
+	private final ConcurrentMap<Class<? extends GUIWidget>, GUIWidget> widgets = new ConcurrentHashMap<Class<? extends GUIWidget>, GUIWidget>();
+
 	@Override
 	public void onAttached() {
 		if (!(getOwner() instanceof Player)) {
@@ -104,69 +103,68 @@ public class HUD extends EntityComponent {
 		} catch (IllegalAccessException ex) {
 			Spout.getLogger().log(Level.SEVERE, null, ex);
 		}
-		
+
 		if (widget instanceof QuickbarWidget) {
 			// There has to be a better way to do this.
-			if (quickbarWidget != null && force == false) {
-				return (T)quickbarWidget;
+			if (quickbarWidget != null && !force) {
+				return (T) quickbarWidget;
 			}
 			quickbarWidget = (QuickbarWidget) widget;
 		} else if (widget instanceof ArmorWidget) {
-			if (armorWidget != null && force == false) {
-				return (T)armorWidget;
+			if (armorWidget != null && !force) {
+				return (T) armorWidget;
 			}
 			armorWidget = (ArmorWidget) widget;
 		} else if (widget instanceof ExpBarWidget) {
-			if (expBar != null && force == false) {
-				return (T)expBar;
+			if (expBar != null && !force) {
+				return (T) expBar;
 			}
 			expBar = (ExpBarWidget) widget;
 		} else if (widget instanceof CrosshairWidget) {
-			if (crosshairWidget != null && force == false) {
-				return (T)crosshairWidget;
+			if (crosshairWidget != null && !force) {
+				return (T) crosshairWidget;
 			}
 			crosshairWidget = (CrosshairWidget) widget;
 		} else if (widget instanceof DrowningWidget) {
-			if (drowningWidget != null && force == false) {
-				return (T)drowningWidget;
+			if (drowningWidget != null && !force) {
+				return (T) drowningWidget;
 			}
 			drowningWidget = (DrowningWidget) widget;
 		} else if (widget instanceof HungerWidget) {
-			if (hungerWidget != null && force == false) {
-				return (T)hungerWidget;
+			if (hungerWidget != null && !force) {
+				return (T) hungerWidget;
 			}
 			hungerWidget = (HungerWidget) widget;
 		} else if (widget instanceof GUIWidget) {
 			// Not a CORE GUI add to other attachments and initialize
-			if (force == false) {
+			if (!force) {
 				GUIWidget wid = widgets.putIfAbsent(clazz, widget);
 				if (wid != null) {
 					widget = wid;
 				}
 			} else {
-				widgets.put(clazz, widget);	
+				widgets.put(clazz, widget);
 			}
 			widget.init(widget.getWidget(), this);
 		}
-		
-		return (T)widget;
+
+		return (T) widget;
 	}
-	
+
 	/**
 	 * Will retrieve a non core Widget that is attached to hud.
 	 * Will return null if class is not found.
-	 * 
 	 * @param <T>
 	 * @param clazz
 	 * @return Widget class or NULL if not found
 	 */
 	public <T extends GUIWidget> T getWidget(Class<T> clazz) {
 		if (widgets.containsKey(clazz)) {
-			return (T)widgets.get(clazz);
+			return (T) widgets.get(clazz);
 		}
 		return null;
 	}
-	
+
 	public void attachWidget(Widget widget) {
 		hud.attachWidget(VanillaPlugin.getInstance(), widget);
 	}
@@ -177,7 +175,7 @@ public class HUD extends EntityComponent {
 
 	/**
 	 * Sets the amount of armor to display.
-	 * 
+	 * <p/>
 	 * This method will be removed once armor is handled by Vanilla
 	 */
 	public void setArmor() {
@@ -188,14 +186,15 @@ public class HUD extends EntityComponent {
 	public int getArmor() {
 		return 15;
 	}
+
 	// Needs to be moved to ExperienceComponent if one ever exists.
 	public float getExpPercent() {
 		return 0f;
 	}
-	
+
 	/**
 	 * Modify the advancement of the xp bar.
-	 * 
+	 * <p/>
 	 * This method needs to be removed when experience is handled by
 	 * Vanilla code.
 	 */
@@ -205,7 +204,7 @@ public class HUD extends EntityComponent {
 
 	/**
 	 * Returns the CORE GUI Widget (AirMeter)
-	 * @return 
+	 * @return
 	 */
 	public DrowningWidget getAirMeter() {
 		return drowningWidget;
@@ -213,7 +212,7 @@ public class HUD extends EntityComponent {
 
 	/**
 	 * Returns the CORE GUI Widget (Quickbar)
-	 * @return 
+	 * @return
 	 */
 	public QuickbarWidget getQuickbar() {
 		return quickbarWidget;
@@ -221,7 +220,7 @@ public class HUD extends EntityComponent {
 
 	/**
 	 * Returns the CORE GUI Widget (ExpMeter)
-	 * @return 
+	 * @return
 	 */
 	public ExpBarWidget getExpMeter() {
 		return expBar;
@@ -229,7 +228,7 @@ public class HUD extends EntityComponent {
 
 	/**
 	 * Returns the CORE GUI Widget (ArmorMeter)
-	 * @return 
+	 * @return
 	 */
 	public ArmorWidget getArmorMeter() {
 		return armorWidget;
@@ -237,15 +236,15 @@ public class HUD extends EntityComponent {
 
 	/**
 	 * Returns the CORE GUI Widget (Cross hair)
-	 * @return 
+	 * @return
 	 */
 	public CrosshairWidget getCrosshair() {
 		return crosshairWidget;
 	}
-	
+
 	/**
 	 * Returns the CORE GUI Widget (HungerMeter)
-	 * @return 
+	 * @return
 	 */
 	public HungerWidget getHungerMeter() {
 		return hungerWidget;
@@ -261,11 +260,11 @@ public class HUD extends EntityComponent {
 	public Float getScale() {
 		return SCALE;
 	}
-	
+
 	public Float getStartX() {
 		return START_X;
 	}
-	
+
 	private void initHUD() {
 		hud.setTakesInput(false);
 

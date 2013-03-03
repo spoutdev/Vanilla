@@ -31,14 +31,13 @@ import org.spout.api.geo.World;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerRespawnMessage;
 
 public final class PlayerRespawnHandler extends MessageHandler<PlayerRespawnMessage> {
-
 	@Override
 	public void handleClient(Session session, PlayerRespawnMessage message) {
 		if (!session.hasPlayer()) {
@@ -46,14 +45,14 @@ public final class PlayerRespawnHandler extends MessageHandler<PlayerRespawnMess
 		}
 
 		Player player = session.getPlayer();
-		
+
 		//TODO : Take Dimension ? : message.getDimension()
 		//TODO : Take World height ? : message.getWorldHeight()
 		//TODO : Take Level tpye ? : message.getWorldType()
 
 		World world = player.getWorld();
-		world.getData().put(VanillaData.DIFFICULTY,Difficulty.get(message.getDifficulty()));
-		
+		world.getData().put(VanillaData.DIFFICULTY, Difficulty.get(message.getDifficulty()));
+
 		Human human = player.add(Human.class);
 		human.setGamemode(GameMode.get(message.getGameMode()));
 	}

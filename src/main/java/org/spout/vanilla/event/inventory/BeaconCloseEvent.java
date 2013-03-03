@@ -37,7 +37,7 @@ import org.spout.vanilla.component.block.material.Beacon;
  * Event which is fired when a Beacon is closed.
  */
 public class BeaconCloseEvent extends InventoryCloseEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final Beacon beacon;
 
 	public BeaconCloseEvent(Beacon beacon, Entity entity) {

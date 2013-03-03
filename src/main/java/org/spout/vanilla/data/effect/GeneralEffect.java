@@ -36,7 +36,7 @@ import org.spout.vanilla.event.world.PlayParticleEffectEvent;
 public class GeneralEffect extends Effect {
 	private static final int PARTICLE_RANGE = 32;
 	private final int id;
-	private int data;
+	private final int data;
 
 	public GeneralEffect(int id) {
 		this(id, 0);

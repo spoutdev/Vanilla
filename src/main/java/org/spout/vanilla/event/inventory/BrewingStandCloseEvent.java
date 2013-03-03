@@ -37,7 +37,7 @@ import org.spout.vanilla.component.block.material.BrewingStand;
  * Event which is called when a BrewingStand is closed.
  */
 public class BrewingStandCloseEvent extends InventoryCloseEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final BrewingStand brewingStand;
 
 	public BrewingStandCloseEvent(BrewingStand brewingStand, Entity entity) {

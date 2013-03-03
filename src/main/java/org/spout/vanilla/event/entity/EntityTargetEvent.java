@@ -35,7 +35,7 @@ import org.spout.api.event.entity.EntityEvent;
  * Event which is called when an Entity targets something
  */
 public class EntityTargetEvent extends EntityEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private TargetCause cause;
 	private Entity target = null;
 
@@ -116,7 +116,7 @@ public class EntityTargetEvent extends EntityEvent implements Cancellable {
 		RANDOM_TARGET(true),
 		CUSTOM_TARGET(true),
 		CUSTOM_UNTARGET(false);
-		private boolean target;
+		private final boolean target;
 
 		private TargetCause(boolean target) {
 			this.target = target;

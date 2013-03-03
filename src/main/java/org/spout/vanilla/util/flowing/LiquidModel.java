@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.util.flowing;
 
-import gnu.trove.map.hash.TIntObjectHashMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import gnu.trove.map.hash.TIntObjectHashMap;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
@@ -51,7 +52,7 @@ import org.spout.vanilla.material.block.Liquid;
  */
 public class LiquidModel {
 	public static enum State {
-		BLOCKED, OPEN, HOLE;
+		BLOCKED, OPEN, HOLE
 	}
 
 	public static class Element {

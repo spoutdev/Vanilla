@@ -26,20 +26,22 @@
  */
 package org.spout.vanilla.material.enchantment;
 
-import gnu.trove.map.TObjectIntMap;
-import gnu.trove.map.hash.TObjectIntHashMap;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+
+import gnu.trove.map.TObjectIntMap;
+import gnu.trove.map.hash.TObjectIntHashMap;
+
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.math.GenericMath;
+
 import org.spout.nbt.CompoundMap;
 import org.spout.nbt.CompoundTag;
 import org.spout.nbt.ListTag;
 import org.spout.nbt.ShortTag;
 import org.spout.nbt.Tag;
-
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
@@ -240,7 +242,7 @@ public abstract class Enchantment {
 	 * @param item Item containing the enchantment
 	 * @param enchantment Enchantment to check
 	 * @return Power level of the enchantment, or 0 if the item does not contain
-	 * the enchantment
+	 *         the enchantment
 	 */
 	public static int getEnchantmentLevel(ItemStack item, Enchantment enchantment) {
 		if (!isEnchanted(item)) {
@@ -324,7 +326,6 @@ public abstract class Enchantment {
 	 * @param itemStack The item stack to enchant
 	 * @param level The level of enchantment
 	 * @return Whether enchantments were successfully added
-	 *
 	 */
 	public static boolean addRandomEnchantments(ItemStack itemStack, int level) {
 		VanillaMaterial material = (VanillaMaterial) itemStack.getMaterial();
@@ -348,7 +349,7 @@ public abstract class Enchantment {
 				succeeded |= addEnchantment(itemStack, enchantmentData.enchantment, enchantmentData.powerLevel, false);
 				// remove any enchantments from the list which aren't compatible
 				// with the one we just added
-				for (Iterator<EnchantmentData> i = enchantmentList.keySet().iterator(); i.hasNext();) {
+				for (Iterator<EnchantmentData> i = enchantmentList.keySet().iterator(); i.hasNext(); ) {
 					Enchantment conflict = i.next().enchantment;
 					if (!conflict.compatibleWith(enchantmentData.enchantment, material)) {
 						i.remove();
@@ -370,7 +371,7 @@ public abstract class Enchantment {
 	 * @param level The modified enchantment level
 	 * @param material The material of the {@link ItemStack} to be enchanted
 	 * @return A map from the allowed {@link EnchantmentData} to their
-	 * probability weights
+	 *         probability weights
 	 */
 	private static TObjectIntMap<EnchantmentData> makeEnchantmentList(int level, VanillaMaterial material) {
 		TObjectIntMap<EnchantmentData> output = new TObjectIntHashMap<EnchantmentData>();

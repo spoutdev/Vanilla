@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.render;
 
+import java.awt.Color;
+import java.util.Map;
+
 import gnu.trove.list.TFloatList;
 import gnu.trove.list.array.TFloatArrayList;
-import java.awt.*;
-import java.util.Map;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.ChunkSnapshotModel;

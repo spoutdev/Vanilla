@@ -31,10 +31,10 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 public class PlayerListEvent extends Event implements ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
-	private long ping;
-	private boolean online;
-	private String playerDisplayName;
+	private static final HandlerList handlers = new HandlerList();
+	private final long ping;
+	private final boolean online;
+	private final String playerDisplayName;
 
 	public PlayerListEvent(String playerDisplayName, long pingDelayMS, boolean online) {
 		this.ping = pingDelayMS;

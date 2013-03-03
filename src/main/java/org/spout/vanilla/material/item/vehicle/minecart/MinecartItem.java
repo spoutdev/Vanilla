@@ -37,7 +37,7 @@ import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.util.PlayerUtil;
 
 public class MinecartItem extends VanillaItemMaterial {
-	private Class<? extends MinecartBase> spawnedEntity;
+	private final Class<? extends MinecartBase> spawnedEntity;
 
 	public MinecartItem(String name, int id, Class<? extends MinecartBase> spawnedEntity) {
 		super(name, id, null);

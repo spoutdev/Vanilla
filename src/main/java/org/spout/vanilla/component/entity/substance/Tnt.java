@@ -28,7 +28,6 @@ package org.spout.vanilla.component.entity.substance;
 
 import com.bulletphysics.collision.shapes.BoxShape;
 
-
 import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.VanillaPlugin;

@@ -62,8 +62,9 @@ public class Level extends EntityComponent {
 	public boolean setExperience(short xp) {
 		ExperienceChangeEvent event = new ExperienceChangeEvent(getOwner(), getExperience(), xp);
 		Spout.getEventManager().callEvent(event);
-		if (event.isCancelled())
+		if (event.isCancelled()) {
 			return false;
+		}
 		getData().put(VanillaData.EXPERIENCE_AMOUNT, xp);
 		getData().put(VanillaData.EXPERIENCE_LEVEL, convertXpToLevel(xp));
 		updateUi();
@@ -84,10 +85,12 @@ public class Level extends EntityComponent {
 	 */
 	public void addExperience(int amount) {
 		short newExperience = (short) (getExperience() + amount);
-		if (newExperience < 0)
+		if (newExperience < 0) {
 			newExperience = 0;
-		if (!setExperience(newExperience))
+		}
+		if (!setExperience(newExperience)) {
 			return;
+		}
 		float newProgress = getProgress() + ((float) amount / getXpCap(getLevel()));
 		if (newProgress < 0.f || newProgress >= 1.0f) {
 			short newLevel = convertXpToLevel(newExperience);
@@ -112,8 +115,9 @@ public class Level extends EntityComponent {
 	 */
 	public void addLevel(int addition) {
 		short newLevel = (short) (getLevel() + addition);
-		if (newLevel < 0)
+		if (newLevel < 0) {
 			newLevel = 0;
+		}
 		short newExperience = (short) (convertLevelToXp(newLevel) + getProgress() * getXpCap(newLevel));
 		setExperience(newExperience);
 	}
@@ -139,12 +143,13 @@ public class Level extends EntityComponent {
 	 * @return The experience level
 	 */
 	public static short convertXpToLevel(short xp) {
-		if (xp < 272)
+		if (xp < 272) {
 			return (short) (xp / 17);
-		else if (xp < 887)
+		} else if (xp < 887) {
 			return (short) ((Math.sqrt(24.f * xp - 5159) + 59) / 6);
-		else
+		} else {
 			return (short) ((Math.sqrt(56.f * xp - 32511) + 303) / 14);
+		}
 	}
 
 	/**
@@ -154,12 +159,13 @@ public class Level extends EntityComponent {
 	 */
 	public static short convertLevelToXp(short level) {
 		int l = (int) level;
-		if (l > 30)
+		if (l > 30) {
 			return (short) ((7 * l - 86) * (l - 31) / 2 + 887);
-		else if (l > 15)
+		} else if (l > 15) {
 			return (short) ((3 * l - 11) * (l - 16) / 2 + 272);
-		else
+		} else {
 			return (short) (17 * l);
+		}
 	}
 
 	/**

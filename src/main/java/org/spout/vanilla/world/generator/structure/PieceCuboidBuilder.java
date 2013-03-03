@@ -32,8 +32,8 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 
 public class PieceCuboidBuilder extends PieceBuilder {
-	protected IntVector3 min = new IntVector3(0, 0, 0);
-	protected IntVector3 max = new IntVector3(0, 0, 0);
+	protected final IntVector3 min = new IntVector3(0, 0, 0);
+	protected final IntVector3 max = new IntVector3(0, 0, 0);
 	private BlockMaterialPicker picker = new SimpleBlockMaterialPicker();
 	private boolean ignoreAir = false;
 
@@ -100,7 +100,7 @@ public class PieceCuboidBuilder extends PieceBuilder {
 	public void setIgnoreAir(boolean ignoreAir) {
 		this.ignoreAir = ignoreAir;
 	}
-	
+
 	public void toggleIgnoreAir() {
 		ignoreAir ^= true;
 	}

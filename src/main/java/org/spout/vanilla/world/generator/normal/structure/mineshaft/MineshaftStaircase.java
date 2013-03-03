@@ -60,7 +60,7 @@ public class MineshaftStaircase extends StructurePiece {
 		box.setMinMax(0, 0, 0, 2, 2, 1);
 		box.fill();
 		box.setMinMax(0, -5, 7, 2, -3, 8);
-		box.fill();	
+		box.fill();
 		// steps
 		for (byte steps = 0; steps < 5; steps++) {
 			box.setMinMax(0, -steps - (steps >= 4 ? 0 : 1), 2 + steps, 2, 2 - steps, 2 + steps);

@@ -43,10 +43,10 @@ public class PlayerHealthHandler extends MessageHandler<PlayerHealthMessage> {
 		}
 
 		Player player = session.getPlayer();
-		
+
 		Health health = player.get(Health.class);
 		health.setHealth(message.getHealth(), HealthChangeCause.UNKNOWN);
-		
+
 		Hunger hunger = player.get(Hunger.class);
 		hunger.setHunger(message.getFood());
 		hunger.setFoodSaturation(message.getFoodSaturation());

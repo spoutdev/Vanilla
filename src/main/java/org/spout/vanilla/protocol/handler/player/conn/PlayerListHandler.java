@@ -31,14 +31,13 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.protocol.msg.player.conn.PlayerListMessage;
 
-public class PlayerListHandler extends MessageHandler<PlayerListMessage>{
-
+public class PlayerListHandler extends MessageHandler<PlayerListMessage> {
 	@Override
 	public void handleClient(Session session, PlayerListMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		//TODO: implement
 		System.out.println(message.toString());
 	}

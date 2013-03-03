@@ -214,7 +214,6 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 
 	/**
 	 * Gets the amount of blocks this piston material can push
-	 * 
 	 * @param block of the piston
 	 * @return Pushable block count, -1 if the amount exceeds the limit
 	 */

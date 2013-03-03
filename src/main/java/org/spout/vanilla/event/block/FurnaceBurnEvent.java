@@ -39,7 +39,7 @@ import org.spout.vanilla.component.block.material.Furnace;
  * todo implement calling of this event
  */
 public class FurnaceBurnEvent extends BlockEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final Furnace furnace;
 	private final Cause cause;
 	private final ItemStack fuel;

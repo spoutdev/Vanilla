@@ -57,7 +57,7 @@ public class BlockFormEvent extends BlockChangeEvent implements Cancellable {
 		FORMING,
 	}
 
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final FormCause formCause;
 
 	public BlockFormEvent(Block block, BlockSnapshot newState, Cause<?> reason, FormCause formCause) {

@@ -29,7 +29,6 @@ package org.spout.vanilla.component.entity.living.neutral;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.Neutral;
 import org.spout.vanilla.component.entity.living.Animal;
-import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.Damage;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.data.Difficulty;
@@ -63,7 +62,7 @@ public class Wolf extends Animal implements Neutral {
 
 	public void setTamed(boolean tamed) {
 		getOwner().getData().put(VanillaData.TAMED, tamed);
-		if (tamed == true) {
+		if (tamed) {
 			getOwner().get(Health.class).setMaxHealth(20);
 		} else {
 			getOwner().get(Health.class).setMaxHealth(8);

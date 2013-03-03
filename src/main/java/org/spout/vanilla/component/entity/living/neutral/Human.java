@@ -257,9 +257,9 @@ public class Human extends Living {
 
 	public void setFlyingSpeed(byte speed, boolean updateClient) {
 		Number value = getOwner().getData().put(VanillaData.FLYING_SPEED, speed);
-		
+
 		byte previous = value == null ? VanillaData.FLYING_SPEED.getDefaultValue().byteValue() : value.byteValue();
-		
+
 		if (callAbilityChangeEvent().isCancelled()) {
 			getOwner().getData().put(VanillaData.FLYING_SPEED, previous);
 			return;
@@ -389,6 +389,7 @@ public class Human extends Living {
 	}
 
 	private final AtomicReference<Point> livePosition = new AtomicReference<Point>(null);
+
 	@Override
 	public boolean canTick() {
 		return true;

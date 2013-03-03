@@ -38,7 +38,7 @@ import org.spout.api.material.block.BlockFace;
  * Event which is called when a player fills or empties a bucket
  */
 public class PlayerBucketEvent extends PlayerEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private ItemStack bucket;
 	private Block blockClicked;
 	private BlockFace blockFace;

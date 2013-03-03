@@ -44,7 +44,7 @@ public class GlassBottle extends VanillaItemMaterial {
 	public GlassBottle(String name, int id) {
 		super(name, id, null);
 	}
-	
+
 	// TODO: handle cauldron
 	@Override
 	public void onInteract(Entity entity, Action action) {

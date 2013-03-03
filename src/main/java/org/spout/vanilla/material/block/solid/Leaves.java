@@ -82,11 +82,7 @@ public class Leaves extends Solid implements Burnable, InitializableMaterial {
 
 	@Override
 	public boolean canSupport(BlockMaterial mat, BlockFace face) {
-		if (mat.isMaterial(VanillaMaterials.FIRE, VanillaMaterials.SNOW, VanillaMaterials.VINES) || mat instanceof SignBase) {
-			return true;
-		} else {
-			return false;
-		}
+		return mat.isMaterial(VanillaMaterials.FIRE, VanillaMaterials.SNOW, VanillaMaterials.VINES) || mat instanceof SignBase;
 	}
 
 	@Override

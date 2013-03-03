@@ -38,7 +38,7 @@ import org.spout.vanilla.inventory.block.AnvilInventory;
  * Event which is fired when an Anvil is opened.
  */
 public class AnvilOpenEvent extends InventoryOpenEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final Block anvil;
 
 	public AnvilOpenEvent(Block anvil, AnvilInventory inventory, Entity entity) {

@@ -43,6 +43,7 @@ import org.spout.api.material.MaterialRegistry;
 import org.spout.api.resource.BasicResourceLoader;
 import org.spout.api.util.config.ConfigurationNode;
 import org.spout.api.util.config.yaml.YamlConfiguration;
+
 import org.spout.vanilla.data.resources.RecipeYaml;
 
 public class RecipeLoader extends BasicResourceLoader<RecipeYaml> {
@@ -64,7 +65,7 @@ public class RecipeLoader extends BasicResourceLoader<RecipeYaml> {
 		for (String key : recipesNode.getKeys(false)) {
 			ConfigurationNode recipe = recipesNode.getNode(key);
 			RecipeBuilder builder = new RecipeBuilder();
-			builder.setIncludeData(recipe.getNode("includedata") != null && recipe.getNode("includedata").getBoolean() == true);
+			builder.setIncludeData(recipe.getNode("includedata") != null && recipe.getNode("includedata").getBoolean());
 			String[] resultString = recipe.getNode("result").getString().split(",");
 			Material matched = MaterialRegistry.get(resultString[0]);
 			if (matched == null) {

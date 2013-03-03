@@ -26,8 +26,9 @@
  */
 package org.spout.vanilla.component.entity.living.hostile;
 
-import com.bulletphysics.collision.shapes.BoxShape;
 import java.util.Random;
+
+import com.bulletphysics.collision.shapes.BoxShape;
 
 import org.spout.api.component.impl.SceneComponent;
 import org.spout.api.inventory.ItemStack;

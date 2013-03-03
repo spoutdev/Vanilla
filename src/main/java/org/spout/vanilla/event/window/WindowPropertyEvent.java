@@ -31,9 +31,9 @@ import org.spout.api.event.HandlerList;
 import org.spout.vanilla.inventory.window.AbstractWindow;
 
 public class WindowPropertyEvent extends WindowEvent {
-	private static HandlerList handlers = new HandlerList();
-	private int id;
-	private int value;
+	private static final HandlerList handlers = new HandlerList();
+	private final int id;
+	private final int value;
 
 	public WindowPropertyEvent(AbstractWindow window, int id, int value) {
 		super(window);

@@ -39,7 +39,6 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 
 public class ChunkDataHandler extends MessageHandler<ChunkDataMessage> {
-
 	@Override
 	public void handleClient(Session session, ChunkDataMessage message) {
 		if (!session.hasPlayer()) {
@@ -49,44 +48,43 @@ public class ChunkDataHandler extends MessageHandler<ChunkDataMessage> {
 		Player player = session.getPlayer();
 		World world = Spout.getEngine().getDefaultWorld();//player.getWorld();
 		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
-		
+
 		int baseX = message.getX() << Chunk.BLOCKS.BITS;
 		int baseZ = message.getZ() << Chunk.BLOCKS.BITS;
-		
+
 		final byte[][] data = message.getData();
-		
-		for (int i=0 ; i<16 ; i++) {
+
+		for (int i = 0; i < 16; i++) {
 			int baseY = i << Chunk.BLOCKS.BITS;
-			
-			if (data[i]==null) {
+
+			if (data[i] == null) {
 				continue;
 			}
-			
+
 			int index = 0;
-			for (int xx=0 ; xx < Chunk.BLOCKS.SIZE ; xx++) {
-				for (int yy=0 ; yy < Chunk.BLOCKS.SIZE ; yy++) {
-					for (int zz=0 ; zz < Chunk.BLOCKS.SIZE ; zz++) {
+			for (int xx = 0; xx < Chunk.BLOCKS.SIZE; xx++) {
+				for (int yy = 0; yy < Chunk.BLOCKS.SIZE; yy++) {
+					for (int zz = 0; zz < Chunk.BLOCKS.SIZE; zz++) {
 						int x = rm.convertX(xx + baseX);
 						int y = rm.convertY(yy + baseY);
 						int z = rm.convertZ(zz + baseZ);
-						
+
 						short type = data[i][index];
 						byte dat;
-						if (index%2==0) {
-							dat = (byte) (data[i][(index/2)+4096]>>4);
+						if (index % 2 == 0) {
+							dat = (byte) (data[i][(index / 2) + 4096] >> 4);
 						} else {
-							dat = (byte) (data[i][(index/2)+4096] & 0xF);
+							dat = (byte) (data[i][(index / 2) + 4096] & 0xF);
 						}
 						index++;
-						
-						if (type>0) {
+
+						if (type > 0) {
 							BlockMaterial material = (BlockMaterial) VanillaMaterials.getMaterial(type, dat);
 							world.getChunkFromBlock(x, y, z).getBlock(x, y, z).setMaterial(material);
 						}
 					}
 				}
 			}
-			
 		}
 	}
 }

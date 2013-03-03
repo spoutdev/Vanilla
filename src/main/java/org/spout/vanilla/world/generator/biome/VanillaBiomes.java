@@ -60,8 +60,8 @@ import org.spout.vanilla.world.generator.normal.biome.snowy.TaigaBiome;
 import org.spout.vanilla.world.generator.normal.biome.snowy.TaigaHillsBiome;
 import org.spout.vanilla.world.generator.normal.biome.snowy.TundraBiome;
 import org.spout.vanilla.world.generator.normal.biome.snowy.TundraHillsBiome;
-import org.spout.vanilla.world.generator.theend.biome.EndStoneBiome;
 import org.spout.vanilla.world.generator.skylands.biome.SkylandsBiome;
+import org.spout.vanilla.world.generator.theend.biome.EndStoneBiome;
 
 public class VanillaBiomes {
 	public static final OceanBiome OCEAN = new OceanBiome(0);

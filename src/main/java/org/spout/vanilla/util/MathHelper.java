@@ -38,7 +38,6 @@ import org.spout.api.math.VectorMath;
 public class MathHelper {
 	/**
 	 * Gets the celestial angle at a certain time of the day
-	 *
 	 * @param timeMillis time
 	 * @param timeMillisTune fine tuning
 	 * @return celestial angle
@@ -59,7 +58,6 @@ public class MathHelper {
 	/**
 	 * Gets the (real?) celestial angle at a certain time of the day<br> The use
 	 * of this function is unknown...
-	 *
 	 * @param timeMillis time
 	 * @param timeMillisTune fine tuning
 	 * @return celestial angle, a value from 0 to 1
@@ -78,7 +76,6 @@ public class MathHelper {
 
 	/**
 	 * Calculates a new random direction
-	 *
 	 * @param maxXZForce of the direction
 	 * @param maxYForce of the direction
 	 * @return a random Vector3 direction
@@ -114,7 +111,6 @@ public class MathHelper {
 
 	/**
 	 * Hashes the coordinates and returns a float between [0, 1[.
-	 *
 	 * @param x The x coordinate
 	 * @param seed The seed
 	 * @return A float for the coordinates
@@ -126,7 +122,6 @@ public class MathHelper {
 
 	/**
 	 * Hashes the coordinates and returns a float between [0, 1[.
-	 *
 	 * @param x The x coordinate
 	 * @param y The y coordinate
 	 * @param seed The seed
@@ -139,7 +134,6 @@ public class MathHelper {
 
 	/**
 	 * Hashes the coordinates and returns a float between [0, 1[.
-	 *
 	 * @param x The x coordinate
 	 * @param y The y coordinate
 	 * @param z The z coordinate
@@ -154,12 +148,11 @@ public class MathHelper {
 	/**
 	 * Chooses an item randomly from a list, with the probability of each item
 	 * proportional to its given weight
-	 *
 	 * @param random The random number generator to be used
 	 * @param weightMap A map from the items that can be chosen to their
 	 * respective weights
 	 * @return The randomly chosen item, or null if the total weight is not
-	 * positive.
+	 *         positive.
 	 */
 	public static <T> T chooseWeightedRandom(Random random, TObjectIntMap<T> weightMap) {
 		int totalWeight = 0;

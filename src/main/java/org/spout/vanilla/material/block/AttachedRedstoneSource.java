@@ -40,7 +40,7 @@ import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 import org.spout.vanilla.material.block.redstone.RedstoneSource;
 
 public abstract class AttachedRedstoneSource extends AbstractAttachable implements RedstoneSource {
-	private static EnumMap<BlockFace, EffectRange> physicsRanges = new EnumMap<BlockFace, EffectRange>(BlockFace.class);
+	private static final EnumMap<BlockFace, EffectRange> physicsRanges = new EnumMap<BlockFace, EffectRange>(BlockFace.class);
 
 	static {
 		for (BlockFace face : BlockFaces.NESWBT) {

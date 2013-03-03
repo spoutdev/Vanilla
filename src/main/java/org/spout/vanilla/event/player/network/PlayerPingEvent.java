@@ -31,8 +31,8 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 public class PlayerPingEvent extends Event implements ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
-	private int hash;
+	private static final HandlerList handlers = new HandlerList();
+	private final int hash;
 
 	public PlayerPingEvent(int hash) {
 		this.hash = hash;

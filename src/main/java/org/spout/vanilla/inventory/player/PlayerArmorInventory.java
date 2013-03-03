@@ -37,7 +37,6 @@ import org.spout.vanilla.material.item.armor.Helmet;
 import org.spout.vanilla.material.item.armor.Leggings;
 
 public class PlayerArmorInventory extends EntityArmorInventory {
-
 	@Override
 	public boolean canSet(int slot, ItemStack item) {
 		if (item != null) {

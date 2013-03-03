@@ -32,7 +32,7 @@ import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.vanilla.inventory.window.AbstractWindow;
 
 public abstract class WindowEvent extends Event implements ProtocolEvent {
-	private AbstractWindow window;
+	private final AbstractWindow window;
 
 	public WindowEvent(AbstractWindow window) {
 		this.window = window;

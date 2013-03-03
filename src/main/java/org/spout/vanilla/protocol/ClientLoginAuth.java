@@ -43,7 +43,7 @@ public class ClientLoginAuth implements Runnable {
 	private static final String authString = "OK";
 	private final String params;
 	private final Runnable runnable;
-	
+
 	public ClientLoginAuth(String hash, Runnable runnable) {
 		VanillaPlugin p = VanillaPlugin.getInstance();
 		String encodedUser = "";
@@ -54,37 +54,37 @@ public class ClientLoginAuth implements Runnable {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		this.params = "user="+encodedUser+"&sessionId="+encodedId+"&serverId="+hash;
+		this.params = "user=" + encodedUser + "&sessionId=" + encodedId + "&serverId=" + hash;
 		System.out.println(params);
 		this.runnable = runnable;
 	}
-	
+
 	@Override
 	public void run() {
 		HttpURLConnection connection = null;
 		try {
-			URL url = new URL(baseURL+params);
+			URL url = new URL(baseURL + params);
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setConnectTimeout(30000);
 			connection.setReadTimeout(30000);
 			connection.connect();
-			
+
 			BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			String reply = in.readLine();
-			
+
 			if (Spout.getEngine().debugMode()) {
-				Spout.getLogger().info("Logging in "+reply);
+				Spout.getLogger().info("Logging in " + reply);
 			}
-			
+
 			if (reply.equals(authString)) {
 				Spout.getEngine().getScheduler().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), runnable, TaskPriority.CRITICAL);
 			} else {
-				Spout.getLogger().info("Error while logging in "+reply);
+				Spout.getLogger().info("Error while logging in " + reply);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (connection!=null) {
+			if (connection != null) {
 				connection.disconnect();
 			}
 		}

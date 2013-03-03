@@ -43,13 +43,13 @@ public final class PlayerBedHandler extends MessageHandler<PlayerBedMessage> {
 			return;
 		}
 		Player player = session.getPlayer();
-		
+
 		World world = player.getWorld();
-		
+
 		Entity entity = world.getEntity(message.getEntityId());
-		
+
 		Block block = world.getBlock(message.getX(), message.getY(), message.getZ());
-		
+
 		Sleep sleep = entity.get(Sleep.class);
 		sleep.sleep(block);
 	}

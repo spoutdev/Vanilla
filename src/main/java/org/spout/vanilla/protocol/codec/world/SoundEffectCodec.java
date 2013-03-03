@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.codec.world;
 
 import java.io.IOException;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 

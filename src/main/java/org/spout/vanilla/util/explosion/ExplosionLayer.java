@@ -72,7 +72,7 @@ public class ExplosionLayer {
 
 	private final int index;
 	public ExplosionSlot[] slots;
-	private Map<Vector3, ExplosionSlot> tmpSlotMap = new HashMap<Vector3, ExplosionSlot>();
+	private final Map<Vector3, ExplosionSlot> tmpSlotMap = new HashMap<Vector3, ExplosionSlot>();
 	private final ExplosionModelSpherical model;
 
 	/**

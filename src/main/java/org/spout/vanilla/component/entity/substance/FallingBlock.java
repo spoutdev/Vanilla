@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.component.entity.substance;
 
-
-
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
@@ -43,8 +41,6 @@ import org.spout.vanilla.protocol.entity.object.FallingBlockProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 
 public class FallingBlock extends Substance {
-	private static float FALL_INCREMENT = -0.04F;
-	private static float FALL_MULTIPLIER = 0.98F;
 	private VanillaBlockMaterial material;
 	private float fallSpeed = 0F;
 
@@ -86,8 +82,10 @@ public class FallingBlock extends Substance {
 			}
 		}
 		if (!this.getOwner().isRemoved()) {
+			float FALL_INCREMENT = -0.04F;
 			fallSpeed += (FALL_INCREMENT * dt * 20);
 			this.getOwner().getScene().translate(new Vector3(0, fallSpeed, 0F));
+			float FALL_MULTIPLIER = 0.98F;
 			fallSpeed *= FALL_MULTIPLIER;
 		}
 	}

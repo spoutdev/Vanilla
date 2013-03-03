@@ -31,7 +31,6 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
-import org.spout.api.geo.World;
 import org.spout.api.model.Model;
 import org.spout.api.plugin.Platform;
 
@@ -52,7 +51,7 @@ public abstract class Sky extends VanillaWorldComponent {
 	public static final byte MAX_SKY_LIGHT = 15;
 	public static final byte SKY_LIGHT_RANGE = MAX_SKY_LIGHT - MIN_SKY_LIGHT;
 	private static final long REFRESH_RATE = 600;
-	private AtomicLong countdown = new AtomicLong(REFRESH_RATE);
+	private final AtomicLong countdown = new AtomicLong(REFRESH_RATE);
 	private WeatherSimulator weather;
 	private String model;
 

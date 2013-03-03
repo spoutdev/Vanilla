@@ -32,12 +32,11 @@ import org.spout.api.protocol.Session;
 import org.spout.vanilla.protocol.msg.ServerPluginMessage;
 
 public class ServerPluginHandler extends MessageHandler<ServerPluginMessage> {
-
 	@Override
 	public void handleServer(Session session, ServerPluginMessage message) {
 		//TODO
 	}
-	
+
 	@Override
 	public void handleClient(Session session, ServerPluginMessage message) {
 		//TODO

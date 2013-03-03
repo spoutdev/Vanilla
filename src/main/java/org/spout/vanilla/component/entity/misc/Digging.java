@@ -48,10 +48,10 @@ public class Digging extends EntityComponent {
 	protected long diggingStartTime;
 	protected int miningDamagePosition = 0;
 	protected long previousDiggingTime = 0;
-	protected int miningDamageAllowance = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_ALLOWANCE.getInt(), miningDamagePeriod = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_PERIOD.getInt();
+	protected final int miningDamageAllowance = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_ALLOWANCE.getInt();
+	protected final int miningDamagePeriod = VanillaConfiguration.PLAYER_SPEEDMINING_PREVENTION_PERIOD.getInt();
 	protected int[] miningDamage;
 	private byte amount = 0;
-	private final byte maxAmount = 8;
 	private int blockBroken = 0;
 	private float timer = 0f, separator = 0f;
 
@@ -100,6 +100,7 @@ public class Digging extends EntityComponent {
 		} else {
 			multiplicator = 5f;
 		}
+		byte maxAmount = 8;
 		separator = ((block.getHardness() * multiplicator) / modifier) / maxAmount;
 		amount = 0;
 		timer = 0;
@@ -126,10 +127,7 @@ public class Digging extends EntityComponent {
 		getOwner().getNetwork().callProtocolEvent(new BlockBreakAnimationEvent(getOwner(), diggingPosition, (byte) -1));
 
 		getOwner().getNetwork().callProtocolEvent(new EntityAnimationEvent(getOwner(), Animation.NONE));
-		if (!position.equals(diggingPosition)) {
-			return false;
-		}
-		return true;
+		return position.equals(diggingPosition);
 	}
 
 	/**
@@ -177,10 +175,7 @@ public class Digging extends EntityComponent {
 	 * @return false if player is cheating
 	 */
 	public boolean checkMiningSpeed() {
-		if (GenericMath.mean(miningDamage) > miningDamageAllowance) { // TODO: Make this configurable?
-			return false;
-		}
-		return true;
+		return GenericMath.mean(miningDamage) <= miningDamageAllowance;
 	}
 
 	public int getBlockBroken() {

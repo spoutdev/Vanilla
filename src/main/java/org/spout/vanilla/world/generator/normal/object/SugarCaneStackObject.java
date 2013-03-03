@@ -30,9 +30,9 @@ import java.util.Random;
 
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
+
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.liquid.Water;
-
 import org.spout.vanilla.world.generator.object.VariableHeightObject;
 
 public class SugarCaneStackObject extends VariableHeightObject {

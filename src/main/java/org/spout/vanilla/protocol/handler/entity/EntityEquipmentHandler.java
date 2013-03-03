@@ -46,24 +46,24 @@ public final class EntityEquipmentHandler extends MessageHandler<EntityEquipment
 
 		Player player = session.getPlayer();
 		World world = player.getWorld();
-		
+
 		int entityId = message.getEntityId();
-		
+
 		Entity entity = world.getEntity(entityId);
-		if(entity == null){
+		if (entity == null) {
 			Spout.getLogger().warning("EntityEquipmentHandler entity don't exist");
 			return;
 		}
-	
+
 		EntityInventory inventory = entity.get(EntityInventory.class);
-		if(inventory == null){
+		if (inventory == null) {
 			Spout.getLogger().warning("EntityEquipmentHandler entity haven't EntityInventory");
 			return;
 		}
-		
+
 		ItemStack item = message.get();
-		
-		switch(message.getSlot()){
+
+		switch (message.getSlot()) {
 			case 0:
 				inventory.getHeldItem().setMaterial(item.getMaterial());
 				inventory.getHeldItem().setAmount(item.getAmount());
@@ -86,7 +86,6 @@ public final class EntityEquipmentHandler extends MessageHandler<EntityEquipment
 				return;
 			default:
 				Spout.getLogger().warning("EntityEquipmentHandler slot bad value");
-				return;
 		}
 	}
 }

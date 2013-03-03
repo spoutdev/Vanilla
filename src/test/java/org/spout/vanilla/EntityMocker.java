@@ -32,14 +32,13 @@ import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.spout.api.Engine;
+
 import org.spout.api.component.BaseComponentHolder;
 import org.spout.api.component.Component;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 
 public class EntityMocker {
-
 	public static Entity mockEntity() {
 		EngineFaker.setupEngine();
 
@@ -59,16 +58,17 @@ public class EntityMocker {
 		//Set up event manager
 		return entity;
 	}
-	
+
 	private static class EntityTickAnswer implements Answer<Object> {
 		private final Entity entity;
+
 		EntityTickAnswer(Entity entity) {
 			this.entity = entity;
 		}
 
 		@Override
 		public Object answer(InvocationOnMock invocation) throws Throwable {
-			float dt = (Float)invocation.getArguments()[0];
+			float dt = (Float) invocation.getArguments()[0];
 			for (Component c : entity.values()) {
 				c.tick(dt);
 			}
@@ -78,12 +78,13 @@ public class EntityMocker {
 
 	private static class EntityComponentAnswer extends BaseComponentHolder implements Answer<Component> {
 		private final Entity entity;
+
 		EntityComponentAnswer(Entity entity) {
 			this.entity = entity;
 		}
 
 		@Override
-		protected void attachComponent(Class<? extends Component> key, Component component, boolean attach) throws Exception{
+		protected void attachComponent(Class<? extends Component> key, Component component, boolean attach) throws Exception {
 			if (component.attachTo(entity)) {
 				components.put(key, component);
 				if (attach) {
@@ -117,22 +118,22 @@ public class EntityMocker {
 	}
 
 	private static class ClassOrSubclassMatcher<T> extends BaseMatcher<Class<T>> {
-	    private final Class<T> targetClass;
+		private final Class<T> targetClass;
 
-	    public ClassOrSubclassMatcher(Class<T> targetClass) {
-	        this.targetClass = targetClass;
-	    }
+		public ClassOrSubclassMatcher(Class<T> targetClass) {
+			this.targetClass = targetClass;
+		}
 
-	    @SuppressWarnings("unchecked")
-	    public boolean matches(Object obj) {
-            if (obj instanceof Class) {
-                return targetClass.isAssignableFrom((Class<T>) obj);
-            }
-	        return false;
-	    }
+		@SuppressWarnings("unchecked")
+		public boolean matches(Object obj) {
+			if (obj instanceof Class) {
+				return targetClass.isAssignableFrom((Class<T>) obj);
+			}
+			return false;
+		}
 
-	    public void describeTo(Description desc) {
-	        desc.appendText("Matches a class or subclass");
-	    }       
+		public void describeTo(Description desc) {
+			desc.appendText("Matches a class or subclass");
+		}
 	}
 }

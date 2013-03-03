@@ -37,7 +37,7 @@ import org.spout.vanilla.component.block.material.Furnace;
  * Event which is fired when a furnace is closed.
  */
 public class FurnaceCloseEvent extends InventoryCloseEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final Furnace furnace;
 
 	public FurnaceCloseEvent(Furnace furnace, Entity entity) {

@@ -31,16 +31,14 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityPaintingMessage;
 
-public class EntityPaintingHandler extends MessageHandler<EntityPaintingMessage>{
-
+public class EntityPaintingHandler extends MessageHandler<EntityPaintingMessage> {
 	@Override
 	public void handleClient(Session session, EntityPaintingMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		//TODO: implement
 		System.out.println(message.toString());
 	}
-
 }

@@ -47,8 +47,8 @@ import org.spout.vanilla.world.generator.skylands.SkylandsGenerator;
 
 public class SkylandsBiome extends VanillaBiome implements GroundCoverBiome {
 	private GroundCoverLayer[] groundCover = new GroundCoverLayer[]{
-		new GroundCoverUniformLayer(VanillaMaterials.GRASS, VanillaMaterials.GRASS, (byte) 1),
-		new GroundCoverVariableLayer(VanillaMaterials.DIRT, VanillaMaterials.DIRT, (byte) 1, (byte) 4)
+			new GroundCoverUniformLayer(VanillaMaterials.GRASS, VanillaMaterials.GRASS, (byte) 1),
+			new GroundCoverVariableLayer(VanillaMaterials.DIRT, VanillaMaterials.DIRT, (byte) 1, (byte) 4)
 	};
 
 	public SkylandsBiome(int biomeId) {

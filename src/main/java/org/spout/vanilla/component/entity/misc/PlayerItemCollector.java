@@ -36,7 +36,6 @@ import org.spout.vanilla.event.entity.EntityCollectItemEvent;
  * Component that adds a detector to resources.entities to scan for and pickup items.
  */
 public class PlayerItemCollector extends EntityItemCollector {
-
 	@Override
 	public void onTick(float dt) {
 		for (Entity entity : getNearbyEntities()) {

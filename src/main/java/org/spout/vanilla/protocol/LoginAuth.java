@@ -55,7 +55,7 @@ public class LoginAuth implements Runnable {
 		this.session = session;
 		this.name = name;
 		this.runnable = runnable;
-		System.out.println("name: "+name+" id: "+session.getDataMap().get(VanillaProtocol.SESSION_ID));
+		System.out.println("name: " + name + " id: " + session.getDataMap().get(VanillaProtocol.SESSION_ID));
 	}
 
 	public void run() {

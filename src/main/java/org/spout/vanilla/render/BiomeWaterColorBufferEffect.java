@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.render;
 
-import java.awt.*;
+import java.awt.Color;
 
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
 

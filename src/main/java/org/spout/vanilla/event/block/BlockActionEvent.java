@@ -33,10 +33,11 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 public class BlockActionEvent extends Event implements ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
-	private Block block;
-	private BlockMaterial material;
-	private byte data1, data2;
+	private static final HandlerList handlers = new HandlerList();
+	private final Block block;
+	private final BlockMaterial material;
+	private final byte data1;
+	private final byte data2;
 
 	public BlockActionEvent(Block block, BlockMaterial material, byte data1, byte data2) {
 		this.block = block;

@@ -39,7 +39,6 @@ import org.spout.vanilla.event.player.network.PlayerPingEvent;
 public class Ping extends EntityComponent {
 	private Player player;
 	private final float timeout = 30;
-	private final float longTimeout = 120;
 	private final int repeatRate = 8;
 	private final long[] pingTime = new long[repeatRate];
 	private final int[] pingHash = new int[repeatRate];
@@ -70,6 +69,7 @@ public class Ping extends EntityComponent {
 		if (kickTimer > timeout) {
 			player.kick(ChatStyle.RED, "Connection timed out!");
 		}
+		float longTimeout = 120;
 		if (longKickTimer > longTimeout) {
 			player.kick(ChatStyle.RED, "Connection timed out due to no ping response!");
 		}

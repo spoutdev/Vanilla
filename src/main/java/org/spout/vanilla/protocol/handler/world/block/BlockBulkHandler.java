@@ -37,34 +37,32 @@ import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.world.block.BlockBulkMessage;
 
-public class BlockBulkHandler extends MessageHandler<BlockBulkMessage>{
-
+public class BlockBulkHandler extends MessageHandler<BlockBulkMessage> {
 	@Override
 	public void handleClient(Session session, BlockBulkMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		Player player = session.getPlayer();
 		World world = player.getWorld();
 		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
 		int baseX = message.getChunkX() << Chunk.BLOCKS.BITS;
 		int baseZ = message.getChunkZ() << Chunk.BLOCKS.BITS;
-		
-		for(int i = 0; i < message.getChanges(); i++){
+
+		for (int i = 0; i < message.getChanges(); i++) {
 			int x = rm.convertX(message.getCoordinates()[i * 3] + baseX);
-			int y =	rm.convertY(message.getCoordinates()[i * 3 + 1]);
-			int z =	rm.convertZ(message.getCoordinates()[i * 3 + 2] + baseZ);
-			
+			int y = rm.convertY(message.getCoordinates()[i * 3 + 1]);
+			int z = rm.convertZ(message.getCoordinates()[i * 3 + 2] + baseZ);
+
 			short type = message.getTypes()[i];
 			byte data = message.getMetadata()[i];
-			
-			BlockMaterial material = (BlockMaterial)VanillaMaterials.getMaterial(type, data);
+
+			BlockMaterial material = (BlockMaterial) VanillaMaterials.getMaterial(type, data);
 			world.getChunkFromBlock(x, y, z).getBlock(x, y, z).setMaterial(material);
 		}
-		
+
 		//TODO: implement
 		System.out.println(message.toString());
 	}
-
 }

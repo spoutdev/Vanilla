@@ -80,7 +80,7 @@ import org.spout.api.event.player.PlayerEvent;
  * Event which is called when a player changes the held item
  */
 public class PlayerHeldItemChangeEvent extends PlayerEvent {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final int oldSlot;
 	private int newSlot;
 

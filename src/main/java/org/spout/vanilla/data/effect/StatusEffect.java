@@ -49,8 +49,8 @@ public enum StatusEffect {
 	POISON(19, 4),
 	WITHER(20, 0),
 	NONE(0, 0);
-	private byte statusID;
-	private int potionID;
+	private final byte statusID;
+	private final int potionID;
 
 	private StatusEffect(int statusID, int potionID) {
 		this.statusID = (byte) statusID;

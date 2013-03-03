@@ -37,7 +37,7 @@ import org.spout.vanilla.component.block.material.EnchantmentTable;
  * Event which is fired when an EnchantmentTable is closed.
  */
 public class EnchantmentTableCloseEvent extends InventoryCloseEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final EnchantmentTable enchantmentTable;
 
 	public EnchantmentTableCloseEvent(EnchantmentTable enchantmentTable, Entity entity) {

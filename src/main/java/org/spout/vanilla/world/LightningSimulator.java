@@ -45,7 +45,7 @@ import org.spout.vanilla.data.effect.store.GeneralEffects;
 
 public class LightningSimulator extends Component {
 	private static final int MAX_LIGHTNING_BRANCHES = 5;
-	private static Random ra = new Random();
+	private static final Random ra = new Random();
 	final WeatherSimulator weather;
 	final HashMap<Player, Integer> playerCountdown = new HashMap<Player, Integer>();
 

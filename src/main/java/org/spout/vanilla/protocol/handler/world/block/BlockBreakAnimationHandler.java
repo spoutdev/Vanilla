@@ -31,16 +31,14 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.protocol.msg.world.block.BlockBreakAnimationMessage;
 
-public class BlockBreakAnimationHandler extends MessageHandler<BlockBreakAnimationMessage>{
-
+public class BlockBreakAnimationHandler extends MessageHandler<BlockBreakAnimationMessage> {
 	@Override
 	public void handleClient(Session session, BlockBreakAnimationMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		//TODO: implement
 		System.out.println(message.toString());
 	}
-
 }

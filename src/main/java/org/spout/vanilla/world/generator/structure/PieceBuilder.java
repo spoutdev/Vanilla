@@ -27,7 +27,7 @@
 package org.spout.vanilla.world.generator.structure;
 
 public abstract class PieceBuilder {
-	protected StructurePiece parent;
+	protected final StructurePiece parent;
 
 	public PieceBuilder(StructurePiece parent) {
 		this.parent = parent;

@@ -26,9 +26,8 @@
  */
 package org.spout.vanilla.world.generator.normal.biome.grassy;
 
-import java.awt.*;
+import java.awt.Color;
 
-import org.spout.vanilla.world.generator.normal.biome.NormalBiome;
 import org.spout.vanilla.world.generator.normal.decorator.FlowerDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.MushroomDecorator;
 import org.spout.vanilla.world.generator.normal.decorator.PumpkinDecorator;
@@ -44,7 +43,7 @@ public class OceanBiome extends GrassyBiome {
 		trees.setFactory(new NormalTreeWGOFactory());
 		final TallGrassDecorator tallGrass = new TallGrassDecorator();
 		tallGrass.setFactory(new NormalTallGrassFactory());
-		addDecorators(new SandAndClayDecorator(), trees, new FlowerDecorator(), tallGrass, 
+		addDecorators(new SandAndClayDecorator(), trees, new FlowerDecorator(), tallGrass,
 				new MushroomDecorator(), new SugarCaneDecorator(), new PumpkinDecorator());
 		setElevation(40, 58);
 		setGrassColorMultiplier(new Color(142, 185, 113));

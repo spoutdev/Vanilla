@@ -47,7 +47,7 @@ public class RedstoneTorch extends Torch implements RedstoneSource, RedstoneTarg
 	private static final EffectRange physicsRange = new ListEffectRange(
 			new ListEffectRange(BlockFaces.NESWT).translate(BlockFace.TOP),
 			new ListEffectRange(BlockFaces.NESWB));
-	private boolean powered;
+	private final boolean powered;
 
 	public RedstoneTorch(String name, int id, boolean powered) {
 		super((short) 0, name, id, null);

@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.handler.auth;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
+
 import org.bouncycastle.crypto.AsymmetricBlockCipher;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.BufferedBlockCipher;
@@ -50,27 +51,26 @@ import org.spout.vanilla.protocol.msg.auth.EncryptionKeyResponseMessage;
 import org.spout.vanilla.protocol.msg.player.PlayerStatusMessage;
 
 public class EncryptionKeyResponseHandler extends MessageHandler<EncryptionKeyResponseMessage> {
-	
 	@Override
 	public void handleClient(final Session session, final EncryptionKeyResponseMessage message) {
-		System.out.println("Response: "+message.toString());
-		
+		System.out.println("Response: " + message.toString());
+
 		String streamCipher = VanillaConfiguration.ENCRYPT_STREAM_ALGORITHM.getString();
 		String streamWrapper = VanillaConfiguration.ENCRYPT_STREAM_WRAPPER.getString();
-		
+
 		BufferedBlockCipher fromServerCipher = SecurityHandler.getInstance().getSymmetricCipher(streamCipher, streamWrapper);
-		
+
 		final byte[] sharedSecret = SecurityHandler.getInstance().getSymetricKey();
 		CipherParameters symmetricKey = new ParametersWithIV(new KeyParameter(sharedSecret), sharedSecret);
-		
+
 		fromServerCipher.init(SecurityHandler.DECRYPT_MODE, symmetricKey);
-		
+
 		EncryptionChannelProcessor fromServerProcessor = new EncryptionChannelProcessor(fromServerCipher, 32);
 		message.getProcessorHandler().setProcessor(fromServerProcessor);
-		
+
 		session.send(true, true, new PlayerStatusMessage(PlayerStatusMessage.INITIAL_SPAWN)); // Ready to login;
 	}
-	
+
 	@Override
 	public void handleServer(final Session session, final EncryptionKeyResponseMessage message) {
 		Session.State state = session.getState();
@@ -123,7 +123,7 @@ public class EncryptionKeyResponseHandler extends MessageHandler<EncryptionKeyRe
 					BufferedBlockCipher toClientCipher = SecurityHandler.getInstance().getSymmetricCipher(streamCipher, streamWrapper);
 
 					CipherParameters symmetricKey = new ParametersWithIV(new KeyParameter(initialVector), initialVector);
-					
+
 					fromClientCipher.init(SecurityHandler.DECRYPT_MODE, symmetricKey);
 					toClientCipher.init(SecurityHandler.ENCRYPT_MODE, symmetricKey);
 

@@ -32,8 +32,6 @@ import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.VectorMath;
 
-import org.spout.vanilla.material.VanillaMaterials;
-
 /**
  * Draws a plane with the defined block material layout
  */

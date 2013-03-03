@@ -36,28 +36,25 @@ import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 
-public class BlockChangeHandler extends MessageHandler<BlockChangeMessage>{
-
+public class BlockChangeHandler extends MessageHandler<BlockChangeMessage> {
 	@Override
 	public void handleClient(Session session, BlockChangeMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		Player player = session.getPlayer();
 		World world = player.getWorld();
 		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
 
 		int x = rm.convertX(message.getX());
-		int y =	rm.convertY(message.getY());
-		int z =	rm.convertZ(message.getZ());
+		int y = rm.convertY(message.getY());
+		int z = rm.convertZ(message.getZ());
 
 		short type = message.getType();
 		int data = message.getMetadata();
 
-		BlockMaterial material = (BlockMaterial)VanillaMaterials.getMaterial(type, (short)data);
+		BlockMaterial material = (BlockMaterial) VanillaMaterials.getMaterial(type, (short) data);
 		world.getChunkFromBlock(x, y, z).getBlock(x, y, z).setMaterial(material);
-
 	}
-
 }

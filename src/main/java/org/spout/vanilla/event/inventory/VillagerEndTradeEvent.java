@@ -37,7 +37,7 @@ import org.spout.vanilla.component.entity.living.passive.Villager;
  * Event which is fired when a trade with a villager is ended.
  */
 public class VillagerEndTradeEvent extends InventoryCloseEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final Villager villager;
 
 	public VillagerEndTradeEvent(Villager villager, Entity entity) {

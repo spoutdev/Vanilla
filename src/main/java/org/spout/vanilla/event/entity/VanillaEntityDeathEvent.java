@@ -34,7 +34,7 @@ import org.spout.api.event.entity.EntityDeathEvent;
  * Event which is called when a Living dies
  */
 public class VanillaEntityDeathEvent extends EntityDeathEvent {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private int dropExp;
 
 	public VanillaEntityDeathEvent(Entity e) {

@@ -37,7 +37,7 @@ import org.spout.vanilla.component.block.material.Dispenser;
  * Event which is fired when a Dispenser is closed.
  */
 public class DispenserCloseEvent extends InventoryCloseEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final Dispenser dispenser;
 
 	public DispenserCloseEvent(Dispenser dispenser, Entity entity) {

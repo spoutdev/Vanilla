@@ -39,7 +39,7 @@ import org.spout.vanilla.component.entity.living.neutral.Human;
  * Event which is called when a player respawns
  */
 public class PlayerRespawnEvent extends EntitySpawnEvent {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private Point point;
 
 	public PlayerRespawnEvent(Entity e, Point point) {

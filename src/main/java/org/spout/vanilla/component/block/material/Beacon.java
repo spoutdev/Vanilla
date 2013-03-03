@@ -31,8 +31,8 @@ import org.spout.api.entity.Player;
 import org.spout.api.inventory.Container;
 import org.spout.api.inventory.Inventory;
 
-import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.block.ViewedBlockComponent;
+import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.event.inventory.BeaconCloseEvent;
 import org.spout.vanilla.event.inventory.BeaconOpenEvent;
 import org.spout.vanilla.inventory.block.BeaconInventory;

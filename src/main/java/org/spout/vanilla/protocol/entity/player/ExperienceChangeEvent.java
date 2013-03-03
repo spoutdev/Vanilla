@@ -32,7 +32,7 @@ import org.spout.api.event.entity.EntityEvent;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 public class ExperienceChangeEvent extends EntityEvent implements ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final short oldExp;
 	private short newExp;
 

@@ -50,8 +50,8 @@ import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public abstract class Tool extends VanillaItemMaterial {
 	private short durability;
-	private Map<BlockMaterial, Float> strengthModifiers = new HashMap<BlockMaterial, Float>();
-	private ToolType toolType;
+	private final Map<BlockMaterial, Float> strengthModifiers = new HashMap<BlockMaterial, Float>();
+	private final ToolType toolType;
 
 	public Tool(String name, int id, short durability, ToolType toolType, Vector2 pos) {
 		super(name, id, pos);

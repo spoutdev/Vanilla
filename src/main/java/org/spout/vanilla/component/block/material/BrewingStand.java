@@ -31,9 +31,8 @@ import org.spout.api.entity.Player;
 import org.spout.api.inventory.Container;
 import org.spout.api.inventory.ItemStack;
 
-import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.block.ViewedBlockComponent;
-import org.spout.vanilla.material.item.potion.PotionItem;
+import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.inventory.BrewingStandCloseEvent;
 import org.spout.vanilla.event.inventory.BrewingStandOpenEvent;
@@ -42,12 +41,12 @@ import org.spout.vanilla.inventory.window.block.BrewingStandWindow;
 import org.spout.vanilla.inventory.window.prop.BrewingStandProperty;
 import org.spout.vanilla.material.PotionReagent;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.item.potion.PotionItem;
 
 /**
  * Component that represents a Brewing Stand in the world.
  */
 public class BrewingStand extends ViewedBlockComponent implements Container {
-
 	private final float BREW_TIME_INCREMENT = 20f;
 	private ItemStack input;
 

@@ -58,6 +58,7 @@ import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.block.material.chest.Chest;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
@@ -68,7 +69,6 @@ import org.spout.vanilla.component.entity.misc.Burn;
 import org.spout.vanilla.component.entity.misc.Head;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.misc.Hunger;
-import org.spout.vanilla.component.block.material.chest.Chest;
 import org.spout.vanilla.component.entity.substance.FallingBlock;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.component.entity.substance.Substance;
@@ -102,11 +102,7 @@ import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class TestCommands {
-	@SuppressWarnings("unused")
-	private final VanillaPlugin plugin;
-
 	public TestCommands(VanillaPlugin instance) {
-		plugin = instance;
 	}
 
 	// TODO - There needs to be a method that guarantees unique data values on a per-server basis
@@ -124,7 +120,7 @@ public class TestCommands {
 	}
 
 	@Command(aliases = "mapdraw", usage = "<bx> <by> <tx> <ty> <col>", desc = "Draws a rectangle on the current map.  The top nibble for col is the colour and the bottom nibble is the brightness",
-				min = 5, max = 5)
+			min = 5, max = 5)
 	@CommandPermissions("vanilla.command.debug")
 	public void mapDraw(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
@@ -568,7 +564,7 @@ public class TestCommands {
 							throw new CommandException(args.getString(1) + " is not a valid VanillaBlockMaterial!");
 						}
 						((FallingBlock) substance).setMaterial((VanillaBlockMaterial) block);
-						 break;
+						break;
 				}
 			}
 		}

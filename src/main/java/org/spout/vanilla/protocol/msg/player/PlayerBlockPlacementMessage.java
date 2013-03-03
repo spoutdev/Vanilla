@@ -38,9 +38,9 @@ import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public final class PlayerBlockPlacementMessage extends VanillaMainChannelMessage {
 	private final int x, y, z;
-	private Vector3 face;
-	private BlockFace direction;
-	private ItemStack heldItem;
+	private final Vector3 face;
+	private final BlockFace direction;
+	private final ItemStack heldItem;
 
 	public PlayerBlockPlacementMessage(int x, int y, int z, BlockFace direction, Vector3 face, RepositionManager rm) {
 		this(x, y, z, direction, face, null, rm);

@@ -34,7 +34,6 @@ import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.protocol.msg.player.PlayerAbilityMessage;
 
 public final class PlayerAbilityHandler extends MessageHandler<PlayerAbilityMessage> {
-
 	@Override
 	public void handleServer(Session session, PlayerAbilityMessage message) {
 		if (!session.hasPlayer()) {
@@ -70,5 +69,4 @@ public final class PlayerAbilityHandler extends MessageHandler<PlayerAbilityMess
 			human.setCreativeMode(message.isCreativeMode(), false);
 		}
 	}
-
 }

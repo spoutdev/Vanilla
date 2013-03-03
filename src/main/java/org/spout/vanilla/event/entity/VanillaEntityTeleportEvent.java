@@ -35,7 +35,7 @@ import org.spout.api.geo.discrete.Point;
  * Event which is called when a Living gets teleported
  */
 public class VanillaEntityTeleportEvent extends EntityTeleportEvent {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private TeleportReason reason;
 
 	public VanillaEntityTeleportEvent(Entity e, Point from, Point to, TeleportReason reason) {

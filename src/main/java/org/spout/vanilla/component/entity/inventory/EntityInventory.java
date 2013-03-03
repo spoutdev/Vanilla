@@ -41,7 +41,6 @@ import org.spout.vanilla.inventory.entity.QuickbarInventory;
  * Represents the inventory that an Entity might have.
  */
 public class EntityInventory extends EntityComponent {
-
 	/**
 	 * Returns the entity's armor inventory
 	 * @return armor

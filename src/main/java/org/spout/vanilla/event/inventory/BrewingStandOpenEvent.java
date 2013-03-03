@@ -38,7 +38,7 @@ import org.spout.vanilla.component.block.material.BrewingStand;
  * todo implement calling of this event
  */
 public class BrewingStandOpenEvent extends InventoryOpenEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final BrewingStand brewingStand;
 
 	public BrewingStandOpenEvent(BrewingStand brewingStand, Entity entity) {

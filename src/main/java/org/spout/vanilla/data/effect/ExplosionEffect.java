@@ -36,7 +36,7 @@ import org.spout.vanilla.event.world.PlayExplosionEffectEvent;
 public class ExplosionEffect extends Effect {
 	private static final int EXPLOSION_RANGE = 64;
 	private static final float DEFAULT_SIZE = 5.0f;
-	private float size;
+	private final float size;
 
 	public ExplosionEffect() {
 		this(EXPLOSION_RANGE, DEFAULT_SIZE);

@@ -89,7 +89,7 @@ public final class WorldConfigurationNode extends ConfigurationHolderConfigurati
 	}
 
 	/**
-	 * Changes the default value for the load key. 
+	 * Changes the default value for the load key.
 	 * @param load True if the world should load by default, false if not.
 	 * @return this node
 	 */

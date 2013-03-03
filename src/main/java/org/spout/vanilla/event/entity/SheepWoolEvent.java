@@ -37,7 +37,7 @@ import org.spout.vanilla.component.entity.living.passive.Sheep;
  * Event which is called when a sheep's wool changes.
  */
 public class SheepWoolEvent extends EntityEvent {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final SheepWoolEventType type;
 	private int data = 15; // default to white wool
 
@@ -92,6 +92,6 @@ public class SheepWoolEvent extends EntityEvent {
 
 	public enum SheepWoolEventType {
 		DYE,
-		REGROW;
+		REGROW
 	}
 }

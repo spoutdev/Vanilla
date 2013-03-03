@@ -43,8 +43,8 @@ public class ExplosionModelSpherical extends ExplosionModel {
 		this.root = this.layers.get(0).slots[0];
 	}
 
-	private List<ExplosionLayer> layers = new ArrayList<ExplosionLayer>();
-	private ExplosionSlot root;
+	private final List<ExplosionLayer> layers = new ArrayList<ExplosionLayer>();
+	private final ExplosionSlot root;
 
 	public synchronized ExplosionLayer getLastLayer() {
 		return this.layers.get(this.layers.size() - 1);

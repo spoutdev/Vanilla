@@ -34,9 +34,9 @@ import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.vanilla.data.GameMode;
 
 public class PlayerGameStateEvent extends PlayerEvent implements ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
-	private byte reason;
-	private GameMode gameMode;
+	private static final HandlerList handlers = new HandlerList();
+	private final byte reason;
+	private final GameMode gameMode;
 
 	public PlayerGameStateEvent(Player p, byte reason, GameMode gameMode) {
 		super(p);

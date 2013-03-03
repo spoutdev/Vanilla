@@ -31,16 +31,14 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.protocol.msg.world.SoundEffectMessage;
 
-public class SoundEffectHandler extends MessageHandler<SoundEffectMessage>{
-
+public class SoundEffectHandler extends MessageHandler<SoundEffectMessage> {
 	@Override
 	public void handleClient(Session session, SoundEffectMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		//TODO: implement
 		System.out.println(message.toString());
 	}
-
 }

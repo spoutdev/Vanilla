@@ -63,7 +63,6 @@ public abstract class Living extends VanillaEntityComponent {
 		holder.setSavable(true);
 	}
 
-
 	public boolean isOnGround() {
 		return getOwner().getData().get(VanillaData.IS_ON_GROUND);
 	}
@@ -116,7 +115,6 @@ public abstract class Living extends VanillaEntityComponent {
 
 		return value;
 	}
-
 
 	public boolean isRiding() {
 		return getOwner().getData().get(VanillaData.IS_RIDING);

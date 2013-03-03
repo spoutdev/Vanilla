@@ -32,8 +32,8 @@ import org.spout.api.event.Event;
 import org.spout.api.event.HandlerList;
 
 public class ServerListPingEvent extends Event {
-	private static HandlerList handlers = new HandlerList();
-	private InetAddress address;
+	private static final HandlerList handlers = new HandlerList();
+	private final InetAddress address;
 	private String motd;
 	private int numPlayers, maxPlayers;
 

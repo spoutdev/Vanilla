@@ -32,7 +32,6 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.Passive;
 import org.spout.vanilla.component.entity.living.Animal;
-import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.data.VanillaData;
@@ -54,7 +53,6 @@ public class Pig extends Animal implements Passive {
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(10);
 		}
-
 	}
 
 	public boolean isSaddled() {

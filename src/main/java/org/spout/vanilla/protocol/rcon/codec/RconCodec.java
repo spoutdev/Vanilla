@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.rcon.codec;
 
 import java.nio.ByteOrder;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.util.CharsetUtil;

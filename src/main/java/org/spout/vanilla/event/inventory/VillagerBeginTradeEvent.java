@@ -37,7 +37,7 @@ import org.spout.vanilla.component.entity.living.passive.Villager;
  * Event which is fired when a villager is started trading with.
  */
 public class VillagerBeginTradeEvent extends InventoryOpenEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final Villager villager;
 
 	public VillagerBeginTradeEvent(Villager villager, Entity entity) {

@@ -108,7 +108,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		 */
 		final BlockFace clickedFace = message.getDirection();
 		Hunger hunger = player.add(Hunger.class);
-		if ((holdingMat instanceof Food && hunger.getHunger() != VanillaData.HUNGER.getDefaultValue()) || holdingMat instanceof Sword || (holdingMat instanceof PotionItem && !((PotionItem)holdingMat).isSplash())) {
+		if ((holdingMat instanceof Food && hunger.getHunger() != VanillaData.HUNGER.getDefaultValue()) || holdingMat instanceof Sword || (holdingMat instanceof PotionItem && !((PotionItem) holdingMat).isSplash())) {
 			player.get(Living.class).setEatingBlocking(true);
 			hunger.setEating(true, currentSlot);
 			return;

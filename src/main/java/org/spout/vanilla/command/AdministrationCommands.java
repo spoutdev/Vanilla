@@ -164,12 +164,11 @@ public class AdministrationCommands {
 		} else {
 			throw new CommandException(player.getName() + " doesn't have a inventory!");
 		}
-
 	}
 
 	@Command(platform = Platform.SERVER, aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.deop")
-	public void deop(CommandContext args, CommandSource source) throws CommandException {
+	public void deop(CommandContext args, CommandSource source) {
 		String playerName = args.getString(0);
 		OpConfiguration ops = VanillaConfiguration.OPS;
 		if (!ops.isOp(playerName)) {
@@ -187,7 +186,7 @@ public class AdministrationCommands {
 
 	@Command(platform = Platform.SERVER, aliases = {"op"}, usage = "<player>", desc = "Make a player an operator", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.op")
-	public void op(CommandContext args, CommandSource source) throws CommandException {
+	public void op(CommandContext args, CommandSource source) {
 		String playerName = args.getString(0);
 		OpConfiguration ops = VanillaConfiguration.OPS;
 		if (ops.isOp(playerName)) {
@@ -326,7 +325,6 @@ public class AdministrationCommands {
 
 		level.addExperience(amount);
 		player.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Your experience has been set to ", ChatStyle.WHITE, amount, ChatStyle.BRIGHT_GREEN, ".");
-
 	}
 
 	@Command(aliases = "weather", usage = "<0|1|2> (0 = CLEAR, 1 = RAIN/SNOW, 2 = THUNDERSTORM) [world]", desc = "Changes the weather", min = 1, max = 2)
@@ -432,14 +430,14 @@ public class AdministrationCommands {
 
 	@Command(aliases = {"tps"}, usage = "", desc = "Print out the current engine ticks per second", min = 0, max = 0)
 	@CommandPermissions("vanilla.command.tps")
-	public void getTPS(CommandContext args, CommandSource source) throws CommandException {
+	public void getTPS(CommandContext args, CommandSource source) {
 		source.sendMessage("TPS: " + tpsMonitor.getTPS());
 		source.sendMessage("Average TPS: " + tpsMonitor.getAvgTPS());
 	}
 
 	private static class TicksPerSecondMonitor implements Runnable, TPSMonitor {
 		private static final int MAX_MEASUREMENTS = 20 * 60;
-		private TLongLinkedList timings = new TLongLinkedList();
+		private final TLongLinkedList timings = new TLongLinkedList();
 		private long lastTime = System.currentTimeMillis();
 		private final AtomicFloat ticksPerSecond = new AtomicFloat(20);
 		private final AtomicFloat avgTicksPerSecond = new AtomicFloat(20);
@@ -482,6 +480,7 @@ public class AdministrationCommands {
 
 	public static interface TPSMonitor {
 		public float getTPS();
+
 		public float getAvgTPS();
 	}
 }

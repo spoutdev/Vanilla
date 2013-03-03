@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.inventory.entity;
 
-
 import org.spout.vanilla.inventory.player.CraftingInventory;
 
 /**

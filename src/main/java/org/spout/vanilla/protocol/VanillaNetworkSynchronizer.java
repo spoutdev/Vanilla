@@ -26,13 +26,14 @@
  */
 package org.spout.vanilla.protocol;
 
-import gnu.trove.set.TIntSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
+import gnu.trove.set.TIntSet;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -64,11 +65,11 @@ import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.block.material.Sign;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.component.entity.misc.Hunger;
 import org.spout.vanilla.component.entity.misc.Level;
-import org.spout.vanilla.component.block.material.Sign;
 import org.spout.vanilla.component.entity.substance.test.ForceMessages;
 import org.spout.vanilla.component.world.sky.NetherSky;
 import org.spout.vanilla.component.world.sky.NormalSky;
@@ -83,9 +84,9 @@ import org.spout.vanilla.data.WorldType;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.configuration.WorldConfigurationNode;
 import org.spout.vanilla.event.block.BlockActionEvent;
-import org.spout.vanilla.event.block.network.EntityTileDataEvent;
 import org.spout.vanilla.event.block.SignUpdateEvent;
 import org.spout.vanilla.event.block.network.BlockBreakAnimationEvent;
+import org.spout.vanilla.event.block.network.EntityTileDataEvent;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.event.entity.EntityCollectItemEvent;
 import org.spout.vanilla.event.entity.EntityEquipmentEvent;
@@ -169,13 +170,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	private boolean first = true;
 	private final TSyncIntPairObjectHashMap<TSyncIntHashSet> initializedChunks = new TSyncIntPairObjectHashMap<TSyncIntHashSet>();
 	private final ConcurrentLinkedQueue<Long> emptyColumns = new ConcurrentLinkedQueue<Long>();
-	private TSyncIntPairHashSet activeChunks = new TSyncIntPairHashSet();
-	private Object initChunkLock = new Object();
+	private final TSyncIntPairHashSet activeChunks = new TSyncIntPairHashSet();
+	private final Object initChunkLock = new Object();
 	private final ChunkInit chunkInit;
 	private int minY = 0;
 	private int maxY = 256;
-	private int lowY = 32;
-	private int highY = 224;
 	private int stepY = 160;
 	private int offsetY = 0;
 	private final VanillaRepositionManager vpm = new VanillaRepositionManager();
@@ -288,8 +287,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		return heights;
 	}
 
-	private static byte[] emptySkyChunkData;
-	private static byte[] emptyGroundChunkData;
+	private static final byte[] emptySkyChunkData;
+	private static final byte[] emptyGroundChunkData;
 
 	static {
 		emptySkyChunkData = new byte[Chunk.BLOCKS.HALF_VOLUME * 5];
@@ -430,8 +429,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		maxY = node.MAX_Y.getInt() & (~Chunk.BLOCKS.MASK);
 		minY = node.MIN_Y.getInt() & (~Chunk.BLOCKS.MASK);
 		stepY = node.STEP_Y.getInt() & (~Chunk.BLOCKS.MASK);
-		lowY = maxY - stepY;
-		highY = minY + stepY;
+		int lowY = maxY - stepY;
+		int highY = minY + stepY;
 		lastY = Integer.MAX_VALUE;
 
 		final DatatableComponent data = world.getData();

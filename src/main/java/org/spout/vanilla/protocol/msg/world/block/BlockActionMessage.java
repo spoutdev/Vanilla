@@ -37,7 +37,7 @@ import org.spout.vanilla.protocol.msg.VanillaBlockDataChannelMessage;
 public final class BlockActionMessage extends VanillaBlockDataChannelMessage {
 	private final int x, y, z;
 	private final byte firstByte, secondByte;
-	private short blockId;
+	private final short blockId;
 
 	public BlockActionMessage(Block block, short blockId, byte firstByte, byte secondByte, RepositionManager rm) {
 		this(block.getX(), block.getY(), block.getZ(), blockId, firstByte, secondByte, rm);

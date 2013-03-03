@@ -54,8 +54,8 @@ public abstract class PressurePlate extends AttachedRedstoneSource implements Dy
 		this.setCollision(CollisionStrategy.SOLID);
 		this.setCollisionShape(new BoxShape(1.0f, 0.03125f, 1.0f));
 		//TODO: Create the box model and different up/down collision shapes
-	    // UP height = 0.0625F
-	    // DOWN height = 0.03125F
+		// UP height = 0.0625F
+		// DOWN height = 0.03125F
 	}
 
 	/**

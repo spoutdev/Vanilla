@@ -39,7 +39,6 @@ import org.spout.vanilla.material.item.armor.Leggings;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 
 public class EntityArmorInventory extends ArmorInventory {
-
 	@Override
 	public boolean canSet(int slot, ItemStack item) {
 		if (item != null) {

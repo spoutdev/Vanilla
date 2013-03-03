@@ -37,17 +37,16 @@ import org.spout.vanilla.protocol.msg.player.PlayerChatMessage;
 import org.spout.vanilla.util.chat.VanillaStyleHandler;
 
 public final class PlayerChatHandler extends MessageHandler<PlayerChatMessage> {
-	
 	@Override
 	public void handleClient(Session session, PlayerChatMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		ChatArguments text = ChatArguments.fromString(message.getMessage(), VanillaStyleHandler.ID);
-		((Client)Spout.getEngine()).getScreenStack().getConsole().addMessage(text);
+		((Client) Spout.getEngine()).getScreenStack().getConsole().addMessage(text);
 	}
-	
+
 	@Override
 	public void handleServer(Session session, PlayerChatMessage message) {
 		if (!session.hasPlayer()) {

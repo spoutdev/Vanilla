@@ -59,8 +59,8 @@ import org.spout.vanilla.component.entity.player.hud.VanillaArmorWidget;
 import org.spout.vanilla.component.entity.player.hud.VanillaCrosshair;
 import org.spout.vanilla.component.entity.player.hud.VanillaDrowning;
 import org.spout.vanilla.component.entity.player.hud.VanillaExpBar;
-import org.spout.vanilla.component.entity.player.hud.VanillaQuickbar;
 import org.spout.vanilla.component.entity.player.hud.VanillaHunger;
+import org.spout.vanilla.component.entity.player.hud.VanillaQuickbar;
 import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.event.block.RedstoneChangeEvent;
@@ -70,11 +70,7 @@ import org.spout.vanilla.protocol.ClientAuthentification;
 import org.spout.vanilla.protocol.PasteExceptionHandler;
 
 public class VanillaListener implements Listener {
-	@SuppressWarnings("unused")
-	private final VanillaPlugin plugin;
-
 	public VanillaListener(VanillaPlugin plugin) {
-		this.plugin = plugin;
 	}
 
 	@EventHandler(order = Order.EARLIEST)
@@ -130,10 +126,10 @@ public class VanillaListener implements Listener {
 		player.add(InteractComponent.class).setRange(5f);
 
 		((Client) Spout.getEngine()).getInputManager().addInputExecutors(new VanillaInputExecutor(player));
-		
+
 		String username = VanillaConfiguration.USERNAME.getString();
 		String password = VanillaConfiguration.PASSWORD.getString();
-		
+
 		Thread loginAuth = new Thread(new ClientAuthentification(username, password));
 		loginAuth.start();
 	}

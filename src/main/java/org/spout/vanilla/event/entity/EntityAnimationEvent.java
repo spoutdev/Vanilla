@@ -34,7 +34,7 @@ import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.vanilla.data.Animation;
 
 public class EntityAnimationEvent extends EntityEvent implements ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private Animation animation;
 
 	public EntityAnimationEvent(Entity e, Animation animation) {

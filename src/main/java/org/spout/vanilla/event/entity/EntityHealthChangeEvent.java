@@ -38,7 +38,7 @@ import org.spout.vanilla.event.cause.HealthChangeCause;
  * Implements {@link Cancellable}. Canceling this prevents the Entity's health from changing.
  */
 public class EntityHealthChangeEvent extends EntityEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private int change;
 	private final HealthChangeCause cause;
 

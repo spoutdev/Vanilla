@@ -26,12 +26,14 @@
  */
 package org.spout.vanilla.protocol.rcon;
 
-import com.google.common.base.Preconditions;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+
+import com.google.common.base.Preconditions;
+
 import org.jboss.netty.channel.Channel;
 
 import org.spout.api.Spout;
@@ -56,7 +58,7 @@ public class RemoteConnectionSession implements Console, CommandSource {
 	private final AtomicInteger requestId = new AtomicInteger(-1);
 	private final AtomicReference<Channel> channel = new AtomicReference<Channel>();
 	private State state = State.AUTH;
-	private AtomicReference<ChatChannel> activeChannel = new AtomicReference<ChatChannel>();
+	private final AtomicReference<ChatChannel> activeChannel = new AtomicReference<ChatChannel>();
 	private DateFormat format = new SimpleDateFormat("hh:mm:ss");
 
 	@Override
@@ -176,7 +178,6 @@ public class RemoteConnectionSession implements Console, CommandSource {
 			addMessage(arguments);
 		} else {
 			// Throw exception?
-			return;
 		}
 	}
 

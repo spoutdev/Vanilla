@@ -64,7 +64,7 @@ public class BlockIgniteEvent extends BlockChangeEvent implements Cancellable {
 		FIREBALL,
 	}
 
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final IgniteCause igniteCause;
 
 	public BlockIgniteEvent(Block block, BlockSnapshot newState, Cause<?> reason, IgniteCause igniteCause) {

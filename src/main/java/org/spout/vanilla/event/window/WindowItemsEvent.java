@@ -32,8 +32,8 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.inventory.window.AbstractWindow;
 
 public class WindowItemsEvent extends WindowEvent {
-	private static HandlerList handlers = new HandlerList();
-	private ItemStack[] items;
+	private static final HandlerList handlers = new HandlerList();
+	private final ItemStack[] items;
 
 	public WindowItemsEvent(AbstractWindow window, ItemStack[] items) {
 		super(window);

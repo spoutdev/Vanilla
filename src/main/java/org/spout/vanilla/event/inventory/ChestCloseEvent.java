@@ -37,7 +37,7 @@ import org.spout.vanilla.component.block.material.chest.Chest;
  * Event which is fired when a Chest is closed.
  */
 public class ChestCloseEvent extends InventoryCloseEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final Chest chest;
 
 	public ChestCloseEvent(Chest chest, Entity entity) {

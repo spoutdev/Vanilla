@@ -35,18 +35,16 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionMessage;
 
-public class EntityRelativePositionHandler extends MessageHandler<EntityRelativePositionMessage>{
-
+public class EntityRelativePositionHandler extends MessageHandler<EntityRelativePositionMessage> {
 	@Override
-	public void handleClient(Session session,EntityRelativePositionMessage message) {
+	public void handleClient(Session session, EntityRelativePositionMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
-		
+
 		Player player = session.getPlayer();
 		World world = player.getWorld();
 		Entity entity = world.getEntity(message.getEntityId());
 		entity.getScene().translate(new Vector3(message.getDeltaX(), message.getDeltaY(), message.getDeltaZ()));
 	}
-
 }

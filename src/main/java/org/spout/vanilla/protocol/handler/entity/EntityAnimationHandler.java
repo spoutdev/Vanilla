@@ -54,7 +54,7 @@ public final class EntityAnimationHandler extends MessageHandler<EntityAnimation
 			default:
 		}
 	}
-	
+
 	@Override
 	public void handleClient(Session session, EntityAnimationMessage message) {
 		if (!session.hasPlayer()) {
@@ -64,32 +64,36 @@ public final class EntityAnimationHandler extends MessageHandler<EntityAnimation
 		Player player = session.getPlayer();
 
 		Entity entity = player.getWorld().getEntity(message.getEntityId());
-		
+
 		ModelHolderComponent models = entity.get(ModelHolderComponent.class);
-		if(models == null)
+		if (models == null) {
 			return;
-		
+		}
+
 		AnimationComponent animations = entity.get(AnimationComponent.class);
-		if(animations == null)
+		if (animations == null) {
 			return;
-		
+		}
+
 		//This code launch the first animation finded on the first model
 		//TODO : play with animation API
-		
+
 		switch (message.getAnimation()) {
 			case SWING_ARM:
 				Model model = models.getModels().get(0);//get first model
-				
-				if(model == null)
+
+				if (model == null) {
 					return;
-				
-				if(model.getAnimations() == null || model.getAnimations().isEmpty())
+				}
+
+				if (model.getAnimations() == null || model.getAnimations().isEmpty()) {
 					return;
-			
+				}
+
 				Animation animation = model.getAnimations().values().iterator().next();
-				
+
 				animations.playAnimation(model, animation);
-				
+
 				break;
 			default:
 		}

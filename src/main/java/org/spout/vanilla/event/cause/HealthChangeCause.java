@@ -55,5 +55,5 @@ public enum HealthChangeCause {
 	/**
 	 * Health changed due to some unknown reason.
 	 */
-	UNKNOWN;
+	UNKNOWN
 }

@@ -28,6 +28,16 @@ package org.spout.vanilla.protocol;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.block.BlockFace;
+import org.spout.api.math.Vector3;
+import org.spout.api.protocol.Message;
+import org.spout.api.protocol.reposition.NullRepositionManager;
+import org.spout.api.util.Parameter;
+
+import org.spout.nbt.CompoundMap;
+
 import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.inventory.window.WindowType;
@@ -107,23 +117,14 @@ import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkBulkMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 
-import org.spout.api.inventory.ItemStack;
-import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector3;
-import org.spout.api.protocol.Message;
-import org.spout.api.protocol.reposition.NullRepositionManager;
-import org.spout.api.util.Parameter;
-
-import org.spout.nbt.CompoundMap;
-
 import static org.spout.vanilla.protocol.ChannelBufferUtilsTest.TEST_PARAMS;
 
 public class VanillaProtocolTest extends BaseProtocolTest {
 	private static final VanillaCodecLookupService CODEC_LOOKUP = new VanillaCodecLookupService();
-	static boolean[] allFalse = new boolean[16];
-	static byte[][] columnData = new byte[16][10240];
-	static byte[] biomeData1 = new byte[256];
-	static byte[] biomeData2 = new byte[256];
+	static final boolean[] allFalse = new boolean[16];
+	static final byte[][] columnData = new byte[16][10240];
+	static final byte[] biomeData1 = new byte[256];
+	static final byte[] biomeData2 = new byte[256];
 	private static final Message[] TEST_MESSAGES = new Message[]{
 			new PlayerPingMessage(42),
 			new WindowCreativeActionMessage((short) 0, new ItemStack(VanillaMaterials.BED, 10, 20)),

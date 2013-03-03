@@ -47,5 +47,4 @@ public class GlowstoneDust extends VanillaItemMaterial implements PotionReagent 
 
 		return null;
 	}
-
 }

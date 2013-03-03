@@ -26,8 +26,9 @@
  */
 package org.spout.vanilla.ai.examiner;
 
-import com.google.common.collect.Sets;
 import java.util.Set;
+
+import com.google.common.collect.Sets;
 
 import org.spout.api.ai.pathfinder.BlockExaminer;
 import org.spout.api.ai.pathfinder.BlockSource;
@@ -90,10 +91,7 @@ public class VanillaBlockExaminer implements BlockExaminer {
 		if (!(below instanceof BlockMaterial) || !canStandOn(below)) {
 			return false;
 		}
-		if (!canStandIn(above) || !canStandIn(in)) {
-			return false;
-		}
-		return true;
+		return !(!canStandIn(above) || !canStandIn(in));
 	}
 
 	private static final Vector3 DOWN = new Vector3(0, -1, 0);

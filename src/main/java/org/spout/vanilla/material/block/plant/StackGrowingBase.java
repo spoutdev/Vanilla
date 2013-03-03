@@ -41,7 +41,7 @@ import org.spout.vanilla.material.block.attachable.GroundAttachable;
  * A base class for plants that grow upwards by placing multiple blocks on one another
  */
 public abstract class StackGrowingBase extends GroundAttachable implements Plant, Growing, DynamicMaterial {
-	private static EffectRange dynamicRange = new CuboidEffectRange(0, 0, 0, 0, 1, 0);
+	private static final EffectRange dynamicRange = new CuboidEffectRange(0, 0, 0, 0, 1, 0);
 
 	public StackGrowingBase(short dataMask, String name, int id, String model) {
 		super(dataMask, name, id, model);

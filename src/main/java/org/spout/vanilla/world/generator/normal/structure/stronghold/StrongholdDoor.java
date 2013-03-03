@@ -36,7 +36,7 @@ import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
 
 public abstract class StrongholdDoor {
-	protected StructurePiece parent;
+	protected final StructurePiece parent;
 
 	public StrongholdDoor(StructurePiece parent) {
 		this.parent = parent;

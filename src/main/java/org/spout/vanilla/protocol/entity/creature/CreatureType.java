@@ -48,7 +48,6 @@ import org.spout.vanilla.component.entity.living.hostile.Wither;
 import org.spout.vanilla.component.entity.living.hostile.Zombie;
 import org.spout.vanilla.component.entity.living.neutral.Bat;
 import org.spout.vanilla.component.entity.living.neutral.Enderman;
-import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.component.entity.living.neutral.PigZombie;
 import org.spout.vanilla.component.entity.living.neutral.Wolf;
 import org.spout.vanilla.component.entity.living.passive.Chicken;

@@ -26,20 +26,16 @@
  */
 package org.spout.vanilla.protocol;
 
-import java.awt.*;
+import java.awt.Color;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.util.CharsetUtil;
-import org.spout.nbt.CompoundMap;
-import org.spout.nbt.CompoundTag;
-import org.spout.nbt.Tag;
-import org.spout.nbt.stream.NBTInputStream;
-import org.spout.nbt.stream.NBTOutputStream;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
@@ -48,6 +44,12 @@ import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.Parameter;
+
+import org.spout.nbt.CompoundMap;
+import org.spout.nbt.CompoundTag;
+import org.spout.nbt.Tag;
+import org.spout.nbt.stream.NBTInputStream;
+import org.spout.nbt.stream.NBTOutputStream;
 
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -155,7 +157,7 @@ public final class ChannelBufferUtils {
 	 * @throws UnsupportedEncodingException if the encoding isn't supported.
 	 * @throws IllegalArgumentException if the string is too long <em>after</em> it is encoded.
 	 */
-	public static void writeUtf8String(ChannelBuffer buf, String str) throws UnsupportedEncodingException {
+	public static void writeUtf8String(ChannelBuffer buf, String str) {
 		byte[] bytes = str.getBytes(CharsetUtil.UTF_8);
 		if (bytes.length >= 65536) {
 			throw new IllegalArgumentException("Encoded UTF-8 string too long.");
@@ -187,7 +189,7 @@ public final class ChannelBufferUtils {
 	 * @return The string.
 	 * @throws UnsupportedEncodingException if the encoding isn't supported.
 	 */
-	public static String readUtf8String(ChannelBuffer buf) throws UnsupportedEncodingException {
+	public static String readUtf8String(ChannelBuffer buf) {
 		int len = buf.readUnsignedShort();
 
 		byte[] bytes = new byte[len];
@@ -262,7 +264,7 @@ public final class ChannelBufferUtils {
 		}
 	}
 
-	public static void writeItemStack(ChannelBuffer buffer, ItemStack item) throws IOException {
+	public static void writeItemStack(ChannelBuffer buffer, ItemStack item) {
 		short id = item == null ? (short) -1 : VanillaMaterials.getMinecraftId(item.getMaterial());
 		buffer.writeShort(id);
 		if (id != -1) {

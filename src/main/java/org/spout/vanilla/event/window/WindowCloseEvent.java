@@ -31,7 +31,7 @@ import org.spout.api.event.HandlerList;
 import org.spout.vanilla.inventory.window.AbstractWindow;
 
 public class WindowCloseEvent extends WindowEvent {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 
 	public WindowCloseEvent(AbstractWindow window) {
 		super(window);

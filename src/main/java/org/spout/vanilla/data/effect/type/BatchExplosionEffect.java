@@ -33,7 +33,7 @@ import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.ExplosionEffect;
 
 public class BatchExplosionEffect extends ExplosionEffect {
-	private Effect[] effects;
+	private final Effect[] effects;
 
 	public BatchExplosionEffect(Effect... effects) {
 		this.effects = effects;

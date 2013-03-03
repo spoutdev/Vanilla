@@ -27,6 +27,7 @@
 package org.spout.vanilla.world.generator.normal.populator;
 
 import java.util.Random;
+
 import net.royawesome.jlibnoise.NoiseQuality;
 import net.royawesome.jlibnoise.module.modifier.Clamp;
 import net.royawesome.jlibnoise.module.source.Perlin;

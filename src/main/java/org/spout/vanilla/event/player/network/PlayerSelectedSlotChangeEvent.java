@@ -32,7 +32,7 @@ import org.spout.api.event.player.PlayerEvent;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 public class PlayerSelectedSlotChangeEvent extends PlayerEvent implements ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final int slot;
 
 	public PlayerSelectedSlotChangeEvent(Player p, int slot) {

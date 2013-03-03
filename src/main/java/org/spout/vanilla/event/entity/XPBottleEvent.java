@@ -38,7 +38,7 @@ import org.spout.vanilla.component.entity.substance.projectile.XPBottle;
  * releases experience orbs.
  */
 public class XPBottleEvent extends ProjectileHitEvent {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private int experience;
 	private boolean showEffect;
 

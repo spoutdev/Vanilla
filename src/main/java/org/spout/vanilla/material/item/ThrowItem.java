@@ -38,7 +38,7 @@ import org.spout.vanilla.component.entity.substance.Substance;
 import org.spout.vanilla.component.entity.substance.projectile.Projectile;
 
 public abstract class ThrowItem extends VanillaItemMaterial {
-	private Class<? extends Substance> itemThrown;
+	private final Class<? extends Substance> itemThrown;
 
 	public ThrowItem(String name, int id, Class<? extends Substance> itemThrown) {
 		super(name, id, null);

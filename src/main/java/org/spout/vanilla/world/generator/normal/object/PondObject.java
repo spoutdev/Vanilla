@@ -195,10 +195,8 @@ public class PondObject extends RandomObject implements RandomizableObject {
 			return true;
 		} else if (z > 0 && y <= blocks[16 * x + z - 1]) { //is a fluid block on x, y, z - 1
 			return true;
-		} else if (y > 1 && y <= blocks[16 * x + z] + 1) { //is a fluid block on x, y - 1, z
-			return true;
 		} else {
-			return false;
+			return y > 1 && y <= blocks[16 * x + z] + 1;
 		}
 	}
 

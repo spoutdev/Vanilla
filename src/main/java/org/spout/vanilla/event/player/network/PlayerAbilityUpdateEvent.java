@@ -35,7 +35,7 @@ import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.data.GameMode;
 
 public class PlayerAbilityUpdateEvent extends PlayerEvent implements ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final byte flyingSpeed;
 	private final byte walkingSpeed;
 	private final boolean godMode;

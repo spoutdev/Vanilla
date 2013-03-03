@@ -30,13 +30,13 @@ import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
+import org.spout.vanilla.component.entity.inventory.WindowHolder;
+import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.component.entity.misc.Level;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.inventory.window.block.EnchantmentTableWindow;
 import org.spout.vanilla.material.enchantment.Enchantment;
-import org.spout.vanilla.component.entity.inventory.WindowHolder;
-import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.protocol.msg.window.WindowEnchantItemMessage;
 
 public class WindowEnchantItemHandler extends MessageHandler<WindowEnchantItemMessage> {
@@ -54,14 +54,18 @@ public class WindowEnchantItemHandler extends MessageHandler<WindowEnchantItemMe
 		Human human = player.get(Human.class);
 		Level level = player.get(Level.class);
 
-		if (human == null || level == null)
+		if (human == null || level == null) {
 			return;
-		if (human.getGameMode() != GameMode.CREATIVE && level.getLevel() < enchantLevel)
+		}
+		if (human.getGameMode() != GameMode.CREATIVE && level.getLevel() < enchantLevel) {
 			return;
-		if (!Enchantment.addRandomEnchantments(inv.get(), enchantLevel))
+		}
+		if (!Enchantment.addRandomEnchantments(inv.get(), enchantLevel)) {
 			return;
+		}
 		inv.update(EnchantmentTableInventory.SLOT, inv.get());
-		if (human.getGameMode() != GameMode.CREATIVE)
+		if (human.getGameMode() != GameMode.CREATIVE) {
 			level.removeLevels(enchantLevel);
+		}
 	}
 }

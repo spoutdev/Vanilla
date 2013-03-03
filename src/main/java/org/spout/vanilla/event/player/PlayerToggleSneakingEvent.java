@@ -35,8 +35,8 @@ import org.spout.api.event.player.PlayerEvent;
  * Event which is called when a player toggles sneaking
  */
 public class PlayerToggleSneakingEvent extends PlayerEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
-	private boolean isSneaking;
+	private static final HandlerList handlers = new HandlerList();
+	private final boolean isSneaking;
 
 	public PlayerToggleSneakingEvent(Player p, boolean isSneaking) {
 		super(p);

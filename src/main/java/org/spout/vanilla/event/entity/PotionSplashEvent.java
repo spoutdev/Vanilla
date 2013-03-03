@@ -41,7 +41,7 @@ import org.spout.vanilla.component.entity.substance.projectile.Potion;
  * Event which is called when a potion splashes
  */
 public class PotionSplashEvent extends ProjectileHitEvent {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final Map<Entity, Double> entitiesAffected;
 	private Potion potion;
 

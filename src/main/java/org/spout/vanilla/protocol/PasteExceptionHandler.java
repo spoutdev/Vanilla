@@ -33,6 +33,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.logging.Level;
+
 import org.apache.commons.io.IOUtils;
 
 import org.spout.api.Spout;
@@ -122,7 +123,7 @@ public class PasteExceptionHandler implements UncaughtExceptionHandler {
 	private static class PasteBinAPI {
 		private final static String pasteURL = "http://www.pastebin.com/api/api_post.php";
 		private String token;
-		private String devkey;
+		private final String devkey;
 
 		public PasteBinAPI(String devkey) {
 			this.devkey = devkey;

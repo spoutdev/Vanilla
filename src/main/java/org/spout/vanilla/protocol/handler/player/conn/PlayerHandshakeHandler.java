@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.handler.player.conn;
 
 import java.security.SecureRandom;
+
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 
 import org.spout.api.protocol.MessageHandler;
@@ -84,7 +85,7 @@ public class PlayerHandshakeHandler extends MessageHandler<PlayerHandshakeMessag
 		}
 	}
 
-	private final String getSessionId() {
+	private String getSessionId() {
 		long sessionId;
 		synchronized (random) {
 			sessionId = random.nextLong();

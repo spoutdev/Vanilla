@@ -49,11 +49,14 @@ import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.flag.Flag;
 
+import org.spout.vanilla.component.block.material.Sign;
+import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.component.entity.misc.Digging;
 import org.spout.vanilla.component.entity.misc.Hunger;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.PlayerFlags;
+import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.event.cause.PlayerBreakCause;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -62,13 +65,10 @@ import org.spout.vanilla.material.item.Food;
 import org.spout.vanilla.material.item.potion.PotionItem;
 import org.spout.vanilla.material.item.tool.Tool;
 import org.spout.vanilla.material.item.tool.weapon.Sword;
-import org.spout.vanilla.component.entity.living.neutral.Human;
-import org.spout.vanilla.component.block.material.Sign;
-import org.spout.vanilla.data.effect.store.GeneralEffects;
-import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.protocol.msg.player.PlayerDiggingMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.world.block.SignMessage;
+import org.spout.vanilla.util.PlayerUtil;
 
 public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMessage> {
 	private boolean breakBlock(BlockMaterial blockMaterial, Block block, Human human, Session session) {

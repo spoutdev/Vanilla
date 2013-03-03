@@ -33,12 +33,12 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.TrigMath;
 import org.spout.api.math.Vector2;
 import org.spout.api.math.VectorMath;
-import org.spout.vanilla.material.VanillaMaterials;
 
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.object.RandomObject;
 
 public class OreObject extends RandomObject {
-	private OreType type;
+	private final OreType type;
 
 	public OreObject(Random random, OreType type) {
 		super(random);
@@ -60,7 +60,6 @@ public class OreObject extends RandomObject {
 
 	/**
 	 * Generates a cluster of this ore at the position using the random given
-	 *
 	 * @param world to place in
 	 * @param originX of the cluster
 	 * @param originY of the cluster
@@ -137,7 +136,7 @@ public class OreObject extends RandomObject {
 		private final int minHeight;
 
 		public OreType(BlockMaterial material, int clusterCount, int clusterSize,
-				int minHeight, int maxHeight) {
+					   int minHeight, int maxHeight) {
 			this.material = material;
 			this.clusterCount = clusterCount;
 			this.clusterSize = clusterSize;

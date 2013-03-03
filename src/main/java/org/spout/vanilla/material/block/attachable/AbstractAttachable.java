@@ -37,7 +37,7 @@ import org.spout.api.util.bytebit.ByteBitSet;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public abstract class AbstractAttachable extends VanillaBlockMaterial implements Attachable {
-	private ByteBitSet attachableFaces = new ByteBitSet(BlockFaces.NONE);
+	private final ByteBitSet attachableFaces = new ByteBitSet(BlockFaces.NONE);
 
 	protected AbstractAttachable(short dataMask, String name, int id, String model) {
 		super(dataMask, name, id, model);

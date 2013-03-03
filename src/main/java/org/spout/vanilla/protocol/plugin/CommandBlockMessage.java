@@ -30,7 +30,7 @@ import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public class CommandBlockMessage extends VanillaMainChannelMessage {
 	private final int x, y, z;
-	private String cmd;
+	private final String cmd;
 
 	public CommandBlockMessage(int x, int y, int z, String cmd) {
 		this.x = x;

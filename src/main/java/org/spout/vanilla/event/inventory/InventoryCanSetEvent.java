@@ -39,7 +39,7 @@ import org.spout.api.inventory.ItemStack;
  * This event is <b>NOT</b> thrown when a player clicks to add items onto a slot that already has the item, or when a player clicks on a crafting slot which already has an item.
  */
 public class InventoryCanSetEvent extends InventoryEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final int slot;
 	private final ItemStack item;
 	private boolean cancelled;

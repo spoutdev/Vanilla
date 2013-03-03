@@ -44,13 +44,13 @@ import org.spout.vanilla.VanillaPlugin;
 public class ClientAuthentification implements Runnable {
 	private static final String URL = "https://login.minecraft.net/";
 	private String urlParameters;
-	
+
 	public ClientAuthentification(String username, String password) {
 		try {
 			urlParameters = (new StringBuilder("user="))
-							.append(URLEncoder.encode(username, "UTF-8"))
-							.append("&password=").append(URLEncoder.encode(password, "UTF-8"))
-							.append("&version=").append(12).toString();
+					.append(URLEncoder.encode(username, "UTF-8"))
+					.append("&password=").append(URLEncoder.encode(password, "UTF-8"))
+					.append("&version=").append(12).toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -65,34 +65,34 @@ public class ClientAuthentification implements Runnable {
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
 			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            connection.setRequestProperty("Content-Length", Integer.toString(urlParameters.getBytes().length));
-            connection.setRequestProperty("Content-Language", "en-US");
-            connection.setUseCaches(false);
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-            
-            DataOutputStream e = new DataOutputStream(connection.getOutputStream());
-            e.writeBytes(urlParameters);
-            e.flush();
-            e.close();
-            InputStream is = connection.getInputStream();
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-            StringBuffer responseBuffer = new StringBuffer();
-            String line;
-            while((line = rd.readLine()) != null) {
-                    responseBuffer.append(line);
-                    responseBuffer.append('\r');
-            }
-            rd.close();
-            response = responseBuffer.toString();
+			connection.setRequestProperty("Content-Length", Integer.toString(urlParameters.getBytes().length));
+			connection.setRequestProperty("Content-Language", "en-US");
+			connection.setUseCaches(false);
+			connection.setDoInput(true);
+			connection.setDoOutput(true);
+
+			DataOutputStream e = new DataOutputStream(connection.getOutputStream());
+			e.writeBytes(urlParameters);
+			e.flush();
+			e.close();
+			InputStream is = connection.getInputStream();
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+			StringBuffer responseBuffer = new StringBuffer();
+			String line;
+			while ((line = rd.readLine()) != null) {
+				responseBuffer.append(line);
+				responseBuffer.append('\r');
+			}
+			rd.close();
+			response = responseBuffer.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (connection!=null) {
+			if (connection != null) {
 				connection.disconnect();
 			}
 		}
-		
+
 		if (Spout.getEngine().debugMode()) {
 			Spout.getLogger().info("Authentification: " + response);
 		}
@@ -100,7 +100,7 @@ public class ClientAuthentification implements Runnable {
 			String[] infos = response.split(":");
 			VanillaPlugin.getInstance().setClientAuthInfos(infos[2], infos[3]);
 		} else {
-			Spout.getLogger().info("Authentification failed: "+response);
+			Spout.getLogger().info("Authentification failed: " + response);
 		}
 	}
 }

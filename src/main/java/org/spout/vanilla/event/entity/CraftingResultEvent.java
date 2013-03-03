@@ -37,9 +37,9 @@ import org.spout.api.inventory.ItemStack;
  * TODO implement event in CraftingInventory
  */
 public class CraftingResultEvent extends EntityEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
-	private Player player;
-	private ItemStack result;
+	private static final HandlerList handlers = new HandlerList();
+	private final Player player;
+	private final ItemStack result;
 
 	public CraftingResultEvent(Player player, ItemStack result) {
 		super(player);

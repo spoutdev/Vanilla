@@ -90,5 +90,4 @@ public class SignHandler extends MessageHandler<SignMessage> {
 		Sign sign = (Sign) component;
 		sign.setText(text, new PlayerCause(player));
 	}
-
 }

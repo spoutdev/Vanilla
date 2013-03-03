@@ -32,7 +32,7 @@ import org.spout.api.geo.World;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 public class TimeUpdateEvent extends WorldEvent implements ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final long newTime;
 
 	public TimeUpdateEvent(World world, long newTime) {

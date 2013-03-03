@@ -27,5 +27,5 @@
 package org.spout.vanilla.util.explosion;
 
 public class ExplosionModels {
-	public static ExplosionModelSpherical SPHERICAL = new ExplosionModelSpherical();
+	public static final ExplosionModelSpherical SPHERICAL = new ExplosionModelSpherical();
 }

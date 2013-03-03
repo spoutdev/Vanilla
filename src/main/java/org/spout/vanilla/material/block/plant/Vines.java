@@ -211,15 +211,9 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 			}
 
 			// check below block
-			if (!this.canAttachTo(block.translate(BlockFace.TOP), BlockFace.BOTTOM)) {
-				return false;
-			}
-
-			return true;
-		} else if (this.canAttachTo(block.translate(face), face.getOpposite()) && !this.isAttachedTo(block, face)) {
-			return true;
+			return this.canAttachTo(block.translate(BlockFace.TOP), BlockFace.BOTTOM);
 		} else {
-			return false;
+			return this.canAttachTo(block.translate(face), face.getOpposite()) && !this.isAttachedTo(block, face);
 		}
 	}
 

@@ -28,6 +28,7 @@ package org.spout.vanilla.protocol.handler.auth;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
+
 import org.bouncycastle.crypto.AsymmetricBlockCipher;
 import org.bouncycastle.crypto.BufferedBlockCipher;
 import org.bouncycastle.crypto.CipherParameters;
@@ -50,48 +51,48 @@ public class EncryptionKeyRequestHandler extends MessageHandler<EncryptionKeyReq
 	@Override
 	public void handleClient(final Session session, final EncryptionKeyRequestMessage message) {
 		final byte[] sharedSecret = SecurityHandler.getInstance().getSymetricKey();
-		
+
 		Runnable runnable = new Runnable() {
 			@Override
 			public void run() {
 				String keyAlgorithm = VanillaConfiguration.ENCRYPT_KEY_ALGORITHM.getString();
 				String keyPadding = VanillaConfiguration.ENCRYPT_KEY_PADDING.getString();
-				
+
 				AsymmetricBlockCipher cipher = SecurityHandler.getInstance().getAsymmetricCipher(keyAlgorithm, keyPadding);
-				
+
 				try {
 					AsymmetricKeyParameter publicKey = PublicKeyFactory.createKey(message.getSecretArray());
 					cipher.init(SecurityHandler.ENCRYPT_MODE, publicKey);
-					
+
 					byte[] encodedSecret = cipher.processBlock(sharedSecret, 0, 16);
 					byte[] encodedToken = cipher.processBlock(message.getVerifyTokenArray(), 0, 4);
-					
+
 					String streamCipher = VanillaConfiguration.ENCRYPT_STREAM_ALGORITHM.getString();
 					String streamWrapper = VanillaConfiguration.ENCRYPT_STREAM_WRAPPER.getString();
-					
+
 					BufferedBlockCipher toServerCipher = SecurityHandler.getInstance().getSymmetricCipher(streamCipher, streamWrapper);
-					
+
 					CipherParameters symmetricKey = new ParametersWithIV(new KeyParameter(sharedSecret), sharedSecret);
 
 					toServerCipher.init(SecurityHandler.ENCRYPT_MODE, symmetricKey);
 					EncryptionChannelProcessor toServerProcessor = new EncryptionChannelProcessor(toServerCipher, 32);
-					
+
 					EncryptionKeyResponseMessage response = new EncryptionKeyResponseMessage(false, encodedSecret, encodedToken);
 					response.setProcessor(toServerProcessor);
-					
+
 					session.send(true, true, response);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		};
-		
+
 		String hash = sha1Hash(new Object[]{message.getSessionId(), sharedSecret, message.getSecretArray()});
-			
+
 		Thread loginAuth = new Thread(new ClientLoginAuth(hash, runnable));
 		loginAuth.start();
 	}
-	
+
 	private static String sha1Hash(Object[] input) {
 		try {
 			MessageDigest md = MessageDigest.getInstance("SHA-1");

@@ -40,7 +40,7 @@ import org.spout.vanilla.component.block.material.Sign;
  * Event which is called when the text on a sign changes
  */
 public class SignUpdateEvent extends Event implements ProtocolEvent, Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final Sign sign;
 	private final Cause<?> cause;
 	private String[] newLines;

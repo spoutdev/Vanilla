@@ -127,8 +127,8 @@ public final class ChunkDataMessage extends VanillaBlockDataChannelMessage {
 				.append(this.unload, other.unload)
 				.isEquals();
 	}
-	
-	private final static int hash(byte[][] arr) {
+
+	private static int hash(byte[][] arr) {
 		if (arr == null) {
 			return 0;
 		}
@@ -138,8 +138,8 @@ public final class ChunkDataMessage extends VanillaBlockDataChannelMessage {
 		}
 		return hash;
 	}
-	
-	private final static int hash(byte[] arr) {
+
+	private static int hash(byte[] arr) {
 		if (arr == null) {
 			return 0;
 		}

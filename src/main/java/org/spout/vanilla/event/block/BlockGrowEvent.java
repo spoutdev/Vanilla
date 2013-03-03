@@ -39,7 +39,7 @@ import org.spout.api.material.block.BlockSnapshot;
  * todo implement calling of this event
  */
 public class BlockGrowEvent extends BlockChangeEvent implements Cancellable {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 
 	public BlockGrowEvent(Block block, BlockSnapshot newState, Cause<?> reason) {
 		super(block, newState, reason);

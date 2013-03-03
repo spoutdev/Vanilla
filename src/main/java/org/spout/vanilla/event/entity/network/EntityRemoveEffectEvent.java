@@ -34,7 +34,7 @@ import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.vanilla.data.effect.StatusEffect;
 
 public class EntityRemoveEffectEvent extends EntityEvent implements ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final StatusEffect effect;
 
 	public EntityRemoveEffectEvent(Entity e, StatusEffect effect) {

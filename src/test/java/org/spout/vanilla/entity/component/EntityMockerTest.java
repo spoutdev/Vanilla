@@ -26,15 +26,16 @@
  */
 package org.spout.vanilla.entity.component;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
+
 import org.spout.api.entity.Entity;
+
 import org.spout.vanilla.EntityMocker;
 import org.spout.vanilla.component.entity.misc.Level;
 
-public class EntityMockerTest {
+import static org.junit.Assert.assertTrue;
 
+public class EntityMockerTest {
 	@Test
 	public void test() {
 		Entity entity = EntityMocker.mockEntity();
@@ -42,8 +43,7 @@ public class EntityMockerTest {
 		assertTrue("Level is null!", level != null);
 		Level sameLevel = entity.get(Level.class);
 		assertTrue("Level does not match!", level == sameLevel);
-		
+
 		assertTrue("Level data is null!", level.getData() != null);
 	}
-
 }

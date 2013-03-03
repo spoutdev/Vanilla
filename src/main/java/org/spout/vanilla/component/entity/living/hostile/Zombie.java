@@ -105,7 +105,6 @@ public class Zombie extends Living implements Hostile {
 		Health health = entity.get(Health.class);
 		if (health != null) {
 			health.damage(getOwner().get(Damage.class).getDamageLevel(colliderPoint.getWorld().getData().get(VanillaData.DIFFICULTY)).getAmount());
-
 		}
 	}
 }

@@ -31,12 +31,10 @@ import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionYawMessage;
 
-public class EntityRelativePositionYawHandler extends MessageHandler<EntityRelativePositionYawMessage>{
-
+public class EntityRelativePositionYawHandler extends MessageHandler<EntityRelativePositionYawMessage> {
 	@Override
 	public void handleClient(Session session, EntityRelativePositionYawMessage message) {
 		if (!session.hasPlayer()) {
-			return;
 		}
 		
 		/*Player player = session.getPlayer();
@@ -45,5 +43,4 @@ public class EntityRelativePositionYawHandler extends MessageHandler<EntityRelat
 		entity.getScene().translate(new Vector3(message.getDeltaX(), message.getDeltaY(), message.getDeltaZ()));
 		entity.getScene().rotate(QuaternionMath.rotation(message.getPitch(), message.getRotation(), 0));*/
 	}
-
 }

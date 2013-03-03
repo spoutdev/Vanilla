@@ -30,8 +30,8 @@ import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Container;
 
-import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.block.ViewedBlockComponent;
+import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.inventory.DispenserCloseEvent;
 import org.spout.vanilla.event.inventory.DispenserOpenEvent;
@@ -42,7 +42,6 @@ import org.spout.vanilla.inventory.window.block.DispenserWindow;
  * Component that represent a Dispenser in the world.
  */
 public class Dispenser extends ViewedBlockComponent implements Container {
-
 	/**
 	 * Retrieve the powered status of the dispenser.
 	 * @return True if the dispenser is powered. Else false.

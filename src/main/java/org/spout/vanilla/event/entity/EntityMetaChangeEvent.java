@@ -38,8 +38,8 @@ import org.spout.api.util.Parameter;
  * Event which is called when an Entity changes meta-data
  */
 public class EntityMetaChangeEvent extends EntityEvent implements ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
-	private List<Parameter<?>> parameters;
+	private static final HandlerList handlers = new HandlerList();
+	private final List<Parameter<?>> parameters;
 
 	public EntityMetaChangeEvent(Entity e, List<Parameter<?>> parameters) {
 		super(e);

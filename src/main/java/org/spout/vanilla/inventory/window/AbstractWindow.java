@@ -26,9 +26,10 @@
  */
 package org.spout.vanilla.inventory.window;
 
+import java.util.logging.Level;
+
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
-import java.util.logging.Level;
 
 import org.spout.api.ServerOnly;
 import org.spout.api.Spout;
@@ -87,7 +88,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 	 * Returns the player inventory.
 	 * @return player inventory
 	 */
-	public PlayerInventory getPlayerInventory(){
+	public PlayerInventory getPlayerInventory() {
 		return getPlayer().get(PlayerInventory.class);
 	}
 
@@ -171,7 +172,6 @@ public abstract class AbstractWindow implements InventoryViewer {
 	 * @return inventory entry at slot
 	 */
 	public abstract Slot getSlot(int nativeSlot);
-
 
 	/**
 	 * Arguments to handle
@@ -311,7 +311,6 @@ public abstract class AbstractWindow implements InventoryViewer {
 	/**
 	 * Checks whether a certain slot can be set to the item specified<br>
 	 * Fires the {@link InventoryCanSetEvent}
-	 * 
 	 * @param inventory of the slot
 	 * @param index of the slot
 	 * @param item to set to

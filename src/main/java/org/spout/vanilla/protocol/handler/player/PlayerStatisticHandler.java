@@ -35,10 +35,9 @@ public class PlayerStatisticHandler extends MessageHandler<PlayerStatisticMessag
 	@Override
 	public void handleClient(Session session, PlayerStatisticMessage message) {
 		if (!session.hasPlayer()) {
-			return;
 		}
 
 		//TODO Implement Statistic
-		
+
 	}
 }

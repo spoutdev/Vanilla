@@ -37,7 +37,7 @@ import org.spout.api.protocol.event.ProtocolEvent;
  * Event which is called when a player enters or leaves a bed
  */
 public class PlayerBedEvent extends PlayerEvent implements Cancellable, ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
+	private static final HandlerList handlers = new HandlerList();
 	private final Block bed;
 	private boolean entered;
 

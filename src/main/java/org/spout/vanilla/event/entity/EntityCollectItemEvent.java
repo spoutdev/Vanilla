@@ -35,8 +35,8 @@ import org.spout.api.protocol.event.ProtocolEvent;
  * Event which is called when an Entity collects an Item/Entity
  */
 public class EntityCollectItemEvent extends EntityEvent implements ProtocolEvent {
-	private static HandlerList handlers = new HandlerList();
-	private Entity collected;
+	private static final HandlerList handlers = new HandlerList();
+	private final Entity collected;
 
 	public EntityCollectItemEvent(Entity e, Entity collected) {
 		super(e);

@@ -40,7 +40,6 @@ import org.spout.api.util.bytebit.ByteBitSet;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 import org.spout.api.util.set.TInt10TripleSet;
-import org.spout.vanilla.world.lighting.ResolveProcedure.ResolveHigherProcedure;
 
 public abstract class VanillaLightingManager extends LightingManager<VanillaCuboidLightBuffer> {
 	private final static BlockFace[] allFaces = BlockFaces.NESWBT.toArray();

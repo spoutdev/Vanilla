@@ -26,32 +26,39 @@
  */
 package org.spout.vanilla.world.lighting;
 
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.IntVector3;
-import org.spout.api.util.IntVector3Array;
+import org.spout.api.Spout;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
+import org.spout.api.util.set.TInt10Procedure;
 
-public class VanillaBlocklightLightingManager extends VanillaLightingManager {
-	public VanillaBlocklightLightingManager(String name) {
-		super(name);
+public class ClearLightProcedure extends TInt10Procedure {
+	
+	private int currentLevel;
+	private final ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light;
+	private final ImmutableCuboidBlockMaterialBuffer material;
+	private final VanillaLightingManager manager;
+	
+	public ClearLightProcedure(VanillaLightingManager manager, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material) {
+		this.light = light;
+		this.material = material;
+		this.manager = manager;
 	}
-
+	
+	public void setCurrentLevel(int level) {
+		this.currentLevel = level;
+	}
+	
 	@Override
-	public void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int[] x, int[] y, int[] z, int changedBlocks) {
-		Iterable<IntVector3> coords = new IntVector3Array(x, y, z, changedBlocks);
-		super.resolve(light, material, coords);
+	public boolean execute(int x, int y, int z) {
+		int lightLevel = manager.getLightLevel(light, x, y, z);
+		int computedLevel = manager.computeLightLevel(light, material, x, y, z);
+		if (computedLevel < lightLevel) {
+			if (lightLevel != currentLevel) {
+				throw new IllegalStateException("Light dirty block added to wrong set, light level " + lightLevel + ", expected level " + currentLevel);
+			}
+			manager.setLightLevel(light, x, y, z, 0);
+		}
+		return true;
 	}
 
-	@Override
-	public void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int[] bx, int[] by, int[] bz, int[] tx, int[] ty, int[] tz, int changedCuboids) {
-		
-	}
-
-	@Override
-	protected int getEmittedLight(ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z) {
-		BlockMaterial m = material.get(x, y, z);
-		short data = material.getData(x, y, z);
-		return m.getLightLevel(data);
-	}
 }

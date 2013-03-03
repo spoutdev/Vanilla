@@ -34,15 +34,16 @@ import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 import org.spout.api.util.set.TInt10Procedure;
 import org.spout.api.util.set.TInt10TripleSet;
 
-public class ResolveProcedure extends TInt10Procedure {
+public class ResolveHigherProcedure extends TInt10Procedure {
+	
 	private final static BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
 	private final TInt10TripleSet[] dirtySets;
 	private int currentLevel;
 	private final ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light;
 	private final ImmutableCuboidBlockMaterialBuffer material;
 	private final VanillaLightingManager manager;
-
-	public ResolveProcedure(VanillaLightingManager manager, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, TInt10TripleSet[] dirtySets) {
+	
+	public ResolveHigherProcedure(VanillaLightingManager manager, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, TInt10TripleSet[] dirtySets) {
 		this.dirtySets = dirtySets;
 		this.light = light;
 		this.material = material;
@@ -67,7 +68,7 @@ public class ResolveProcedure extends TInt10Procedure {
 				int nx = x + offset.getFloorX();
 				int ny = y + offset.getFloorY();
 				int nz = z + offset.getFloorZ();
-				manager.checkAndAddDirty(dirtySets, light, material, nx, ny, nz, false);
+				manager.checkAndAddDirtyRising(dirtySets, light, material, nx, ny, nz);
 			}
 		}
 		return true;

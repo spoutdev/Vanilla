@@ -35,6 +35,7 @@ import org.spout.api.inventory.Container;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.Passive;
+import org.spout.vanilla.component.entity.living.Ageable;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.inventory.player.CraftingInventory;
@@ -44,7 +45,7 @@ import org.spout.vanilla.protocol.entity.creature.VillagerEntityProtocol;
 /**
  * A component that identifies the entity as a Villager.
  */
-public class Villager extends Living implements Container, Passive {
+public class Villager extends Ageable implements Container, Passive {
 	@Override
 	public void onAttached() {
 		super.onAttached();

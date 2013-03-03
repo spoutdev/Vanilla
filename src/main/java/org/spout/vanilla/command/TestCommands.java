@@ -61,7 +61,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
-import org.spout.vanilla.component.entity.living.Animal;
+import org.spout.vanilla.component.entity.living.Ageable;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.living.neutral.Human;
 import org.spout.vanilla.component.entity.misc.Burn;
@@ -521,7 +521,7 @@ public class TestCommands {
 		//See if it is a living?
 		try {
 			clazz = CreatureType.valueOf(name.toUpperCase()).getComponentType();
-			if (Animal.class.isAssignableFrom(clazz) && args.length() >= 2 && args.getString(1).equalsIgnoreCase("child")) {
+			if (Ageable.class.isAssignableFrom(clazz) && args.length() >= 2 && args.getString(1).equalsIgnoreCase("child")) {
 				child = true;
 			}
 		} catch (Exception e1) {
@@ -574,7 +574,7 @@ public class TestCommands {
 		}
 		player.getWorld().spawnEntity(entity);
 		if (child) {
-			entity.get(Animal.class).setAge(Animal.MIN_AGE);
+			entity.get(Ageable.class).setAge(Ageable.MIN_AGE);
 		}
 	}
 

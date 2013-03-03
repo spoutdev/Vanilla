@@ -32,44 +32,7 @@ import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.data.VanillaData;
 
-public abstract class Animal extends Living {
-	public static final float MIN_AGE = -1200;
-	public static final float MAX_AGE = 300f;
-
-	@Override
-	public void onTick(float dt) {
-		super.onTick(dt);
-		float age = getAge();
-		if (age < 0) {
-			setAge(age + dt);
-		} else if (age > 0) {
-			setAge(age - dt);
-		}
-	}
-
-	/**
-	 * How many seconds the animal has until it can procreate again if
-	 * positive or how many seconds until the animal is fully grown if
-	 * negative.
-	 *
-	 * @return age identifier
-	 */
-	public float getAge() {
-		return getData().get(VanillaData.AGE);
-	}
-
-	/**
-	 * Sets the age of the animal. Zero denotes a fully grown animal that is
-	 * able to procreate, anything under 0 denotes the animal is a child.
-	 *
-	 * @param age of animal
-	 */
-	public void setAge(float age) {
-		System.out.println("Age: " + age);
-		getData().put(VanillaData.AGE, Math.max(MIN_AGE, Math.min(age, MAX_AGE)));
-		setMetadata(new Parameter<Integer>(Parameter.TYPE_INT, 12, (int) (age * 20)));
-	}
-
+public abstract class Animal extends Ageable {
 	/**
 	 * Returns true if the animal is in 'love mode'
 	 *
@@ -106,6 +69,7 @@ public abstract class Animal extends Living {
 	 *
 	 * @param animal to breed with
 	 */
+	@SuppressWarnings("unchecked")
 	public void breed(Animal animal) {
 		Entity owner = getOwner();
 		if (canBreedWith(animal)) {

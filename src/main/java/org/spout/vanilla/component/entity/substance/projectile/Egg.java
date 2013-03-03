@@ -72,6 +72,7 @@ public class Egg extends Substance implements Projectile {
 	 * If a chicken is spawned, there is an additional chance of 1/32 to spawn four instead of one chicken.
 	 * @param point the point the chicken(s) will spawn at.
 	 */
+	@SuppressWarnings("unchecked")
 	private void spawnChickens(Point point) {
 		if (getRandom().nextInt(8) == 0) {
 			int chickensToSpawn = 1;

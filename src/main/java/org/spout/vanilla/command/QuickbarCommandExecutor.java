@@ -26,29 +26,18 @@
  */
 package org.spout.vanilla.command;
 
-import org.spout.api.Spout;
 import org.spout.api.command.Command;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandExecutor;
 import org.spout.api.command.CommandSource;
-import org.spout.api.component.impl.InteractComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.block.BlockFace;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
-import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.inventory.entity.QuickbarInventory;
-import org.spout.vanilla.inventory.window.Window;
-import org.spout.vanilla.material.VanillaMaterials;
 
-public class InputCommandExecutor implements CommandExecutor {
-	private BlockMaterial selection;
-
+public class QuickbarCommandExecutor implements CommandExecutor {
 	@Override
 	public void processCommand(CommandSource source, Command command, CommandContext args) throws CommandException {
 		if (!(source instanceof Player)) {
@@ -59,57 +48,7 @@ public class InputCommandExecutor implements CommandExecutor {
 		}
 
 		String name = command.getPreferredName();
-		if (name.equalsIgnoreCase("toggle_inventory")) {
-			WindowHolder holder = ((Player) source).get(WindowHolder.class);
-			Window window = holder.getActiveWindow();
-			if (window.isOpened()) {
-				holder.closeWindow();
-			} else {
-				holder.openWindow(holder.getDefaultWindow());
-			}
-		} else if (name.equalsIgnoreCase("break_block")) {
-			InteractComponent hit = ((Player) source).get(InteractComponent.class);
-			if (hit != null) {
-				final Block hitting = hit.getTargetBlock();
-				if (hitting != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
-					Spout.getScheduler().safeRun(VanillaPlugin.getInstance(), new Runnable() {
-						@Override
-						public void run() {
-							hitting.setMaterial(VanillaMaterials.AIR);
-						}
-					});
-					Spout.log("Broke block: " + hitting.toString());
-				}
-			}
-		} else if (name.equalsIgnoreCase("select_block")) {
-			InteractComponent hit = ((Player) source).get(InteractComponent.class);
-			if (hit != null) {
-				Block hitting = hit.getTargetBlock(true);
-				if (hitting != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
-					Spout.log(hitting.getMaterial().getName());
-					selection = hitting.getMaterial();
-				}
-			}
-		} else if (name.equalsIgnoreCase("place_block")) {
-			InteractComponent hit = ((Player) source).get(InteractComponent.class);
-			if (hit != null) {
-				final Block hitting = hit.getTargetBlock();
-				if (hitting != null && selection != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
-					final BlockFace clicked = hit.getTargetFace();
-					System.out.println(clicked);
-					if (clicked == null) {
-						return;
-					}
-					Spout.log(clicked.name());
-					Spout.getScheduler().safeRun(VanillaPlugin.getInstance(), new Runnable() {
-						@Override
-						public void run() {
-							hitting.translate(clicked).setMaterial(selection);
-						}
-					});
-				}
-			}
-		} else if (name.startsWith("quickbar_")) {
+		if (name.startsWith("quickbar_")) {
 			Player player = (Player) source;
 			PlayerInventory inventory = player.get(PlayerInventory.class);
 			if (inventory != null) {

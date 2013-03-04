@@ -125,7 +125,7 @@ public class VanillaListener implements Listener {
 		player.add(Hunger.class);
 		player.add(InteractComponent.class).setRange(5f);
 
-		((Client) Spout.getEngine()).getInputManager().addInputExecutors(new VanillaInputExecutor(player));
+		((Client) Spout.getEngine()).getInputManager().addInputExecutor(new VanillaInputExecutor(player));
 
 		String username = VanillaConfiguration.USERNAME.getString();
 		String password = VanillaConfiguration.PASSWORD.getString();

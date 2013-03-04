@@ -50,6 +50,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
+import org.spout.api.input.Binding;
 import org.spout.api.input.InputManager;
 import org.spout.api.input.Keyboard;
 import org.spout.api.input.Mouse;
@@ -130,16 +131,15 @@ public class VanillaPlugin extends CommonPlugin {
 
 		switch (Spout.getPlatform()) {
 			case CLIENT:
+
 				final Client client = (Client) engine;
 				//Setup client input
 				final InputManager input = client.getInputManager();
-				input.bind(Mouse.MOUSE_SCROLLUP, "quickbar_left");
-				input.bind(Mouse.MOUSE_SCROLLDOWN, "quickbar_right");
+				input.bind(new Binding("quickbar_left", Mouse.MOUSE_SCROLLUP));
+				input.bind(new Binding("quickbar_right", Mouse.MOUSE_SCROLLDOWN));
 				for (int i = 1; i < 10; i++) {
-					input.bind(Keyboard.valueOf("KEY_" + i), "quickbar_" + i);
+					input.bind(new Binding("quickbar_" + i, Keyboard.valueOf("KEY_" + i)));
 				}
-
-				root.addSubCommands(this, InputCommands.class, commandRegFactory);
 
 				final QuickbarCommandExecutor exe = new QuickbarCommandExecutor();
 				root.addSubCommand(this, "quickbar_left").setHelp("Changes quickbar slot!")
@@ -150,6 +150,8 @@ public class VanillaPlugin extends CommonPlugin {
 					root.addSubCommand(this, "quickbar_" + i).setHelp("Changes quickbar slot!")
 							.setExecutor(Platform.CLIENT, exe).setArgBounds(1, 1);
 				}
+
+				root.addSubCommands(this, InputCommands.class, commandRegFactory);
 
 				if (Spout.debugMode()) {
 					setupWorlds();

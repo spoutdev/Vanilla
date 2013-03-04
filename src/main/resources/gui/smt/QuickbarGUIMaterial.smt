@@ -32,5 +32,5 @@ RenderState:
 # Names match up to the name in the shader.
 
 MaterialParams:
-    Diffuse: texture://Vanilla/gui/quickbar.png
+    Diffuse: texture://Vanilla/gui/gui.png
     BlendColor: color(1,1,1,1)

@@ -55,7 +55,7 @@ public class Grass extends SpreadingSolid implements DynamicMaterial, Initializa
 		super(name, id, VanillaMaterialModels.GRASS);
 		this.setHardness(0.6F).setResistance(0.8F).setStepSound(SoundEffects.STEP_GRASS);
 		this.addMiningType(ToolType.SPADE);
-		if (VanillaPlugin.getInstance().getEngine().getPlatform() == Platform.CLIENT) {
+		if (getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_GRASS_COLOR)) {
 				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.BIOME_GRASS_COLOR);
 			}

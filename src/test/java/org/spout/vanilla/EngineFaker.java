@@ -26,13 +26,20 @@
  */
 package org.spout.vanilla;
 
-import org.mockito.Mockito;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Logger;
 
+import org.mockito.Mockito;
 import org.spout.api.Engine;
 import org.spout.api.FileSystem;
 import org.spout.api.Platform;
 import org.spout.api.Spout;
 import org.spout.api.event.EventManager;
+import org.spout.api.generator.WorldGenerator;
+import org.spout.api.lang.PluginDictionary;
+import org.spout.api.plugin.PluginDescriptionFile;
 
 @SuppressWarnings("deprecation")
 public class EngineFaker {
@@ -44,6 +51,11 @@ public class EngineFaker {
 		Mockito.when(engine.getPlatform()).thenReturn(Platform.SERVER);
 		Mockito.when(engine.getFilesystem()).thenReturn(filesystem);
 		Mockito.when(engine.getEventManager()).thenReturn(Mockito.mock(EventManager.class));
+		Mockito.when(engine.getLogger()).thenReturn(Mockito.mock(Logger.class));
+
+		VanillaPlugin plugin = new VanillaTestPlugin();
+		plugin.initialize(null, engine, new PluginDescriptionFile("Vanilla", "dev", "org.spout.vanilla.VanillaPlugin", "all"), null, null, null);
+		VanillaPlugin.instance = plugin;
 
 		Spout.setEngine(engine);
 		engineInstance = engine;
@@ -51,5 +63,45 @@ public class EngineFaker {
 
 	public static Engine setupEngine() {
 		return engineInstance;
+	}
+	
+	public static void main(String[] args) {
+		
+	}
+	private static class VanillaTestPlugin extends VanillaPlugin {
+		@Override
+		public void onEnable() {
+		}
+
+		@Override
+		public void onDisable() {
+		}
+
+		@Override
+		public void onReload() {
+		}
+
+		@Override
+		public void onLoad() {
+		}
+
+		@Override
+		public WorldGenerator getWorldGenerator(String world, String generator) {
+			return null;
+		}
+
+		@Override
+		public InputStream getResource(String path) {
+			return null;
+		}
+
+		@Override
+		public void extractResource(String path, File destination) throws IOException {
+		}
+
+		@Override
+		public PluginDictionary getDictionary() {
+			return null;
+		}
 	}
 }

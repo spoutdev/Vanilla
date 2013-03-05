@@ -32,8 +32,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import org.spout.api.Engine;
 import org.spout.api.Platform;
-import org.spout.api.Spout;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
@@ -53,6 +53,7 @@ import org.spout.api.render.RenderMaterial;
 import org.spout.api.util.flag.Flag;
 import org.spout.api.util.flag.FlagBundle;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.data.Instrument;
@@ -87,7 +88,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 
 	public VanillaBlockMaterial(String name, int id, String model) {
 		this((short) 0, name, id, model);
-		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
+		if (getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getRenderEffects().contains(VanillaEffects.SKY_TIME)) {
 				getModel().getRenderMaterial().addRenderEffect(VanillaEffects.SKY_TIME);
 				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.LIGHTING);
@@ -103,7 +104,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
 		this.getDrops().EXPLOSION.add(this);
-		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
+		if (getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getRenderEffects().contains(VanillaEffects.SKY_TIME)) {
 				getModel().getRenderMaterial().addRenderEffect(VanillaEffects.SKY_TIME);
 				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.LIGHTING);
@@ -119,12 +120,16 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
 		this.getDrops().EXPLOSION.add(this);
-		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
+		if (getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getRenderEffects().contains(VanillaEffects.SKY_TIME)) {
 				getModel().getRenderMaterial().addRenderEffect(VanillaEffects.SKY_TIME);
 				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.LIGHTING);
 			}
 		}
+	}
+
+	public final Engine getEngine() {
+		return VanillaPlugin.getInstance().getEngine();
 	}
 
 	@Override

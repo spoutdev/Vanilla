@@ -33,25 +33,29 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 
-import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.block.solid.Ice;
 import org.spout.vanilla.render.VanillaEffects;
 
-public class Lava extends Liquid {
+public class Lava extends Liquid implements InitializableMaterial {
 	public Lava(String name, int id, boolean flowing) {
 		super(name, id, flowing, VanillaMaterialModels.LAVA);
 		this.setFlowDelay(1500);
-		if (VanillaPlugin.getInstance().getEngine().getPlatform() == Platform.CLIENT) {
+		if (getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getRenderEffects().contains(VanillaEffects.LIQUID)) {
 				getModel().getRenderMaterial().addRenderEffect(VanillaEffects.LIQUID);
 			}
 		}
-		//TODO: Allow this to get past the tests
-		//this.setFlowDelay(VanillaConfiguration.LAVA_DELAY.getInt());
+	}
+
+	@Override
+	public void initialize() {
+		this.setFlowDelay(VanillaConfiguration.LAVA_DELAY.getInt());
 	}
 
 	@Override

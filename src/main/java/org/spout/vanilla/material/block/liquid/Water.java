@@ -29,7 +29,6 @@ package org.spout.vanilla.material.block.liquid;
 import java.util.Random;
 
 import org.spout.api.Platform;
-import org.spout.api.Spout;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.Material;
@@ -39,16 +38,18 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.data.Climate;
+import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.render.VanillaEffects;
 
-public class Water extends Liquid implements DynamicMaterial {
+public class Water extends Liquid implements DynamicMaterial, InitializableMaterial {
 	public Water(String name, int id, boolean flowing) {
 		super(name, id, flowing, VanillaMaterialModels.WATER);
 		this.setFlowDelay(250);
-		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
+		if (getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_WATER_COLOR)) {
 				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.BIOME_WATER_COLOR);
 			}
@@ -56,8 +57,11 @@ public class Water extends Liquid implements DynamicMaterial {
 				getModel().getRenderMaterial().addRenderEffect(VanillaEffects.LIQUID);
 			}
 		}
-		//TODO: Allow this to get past the tests
-		//this.setFlowDelay(VanillaConfiguration.WATER_DELAY.getInt());
+	}
+
+	@Override
+	public void initialize() {
+		this.setFlowDelay(VanillaConfiguration.WATER_DELAY.getInt());
 	}
 
 	@Override

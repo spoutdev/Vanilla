@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.solid;
 
 import java.util.Random;
 
+import org.spout.api.Platform;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
@@ -36,7 +37,6 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.GenericMath;
-import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.effect.store.SoundEffects;

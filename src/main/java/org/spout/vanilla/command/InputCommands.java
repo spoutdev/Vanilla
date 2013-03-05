@@ -26,8 +26,7 @@
  */
 package org.spout.vanilla.command;
 
-import java.util.logging.Level;
-
+import org.spout.api.Client;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Binding;
@@ -40,7 +39,6 @@ import org.spout.api.input.Keyboard;
 import org.spout.api.input.Mouse;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
@@ -48,12 +46,14 @@ import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class InputCommands {
+	private final Client client;
 	private BlockMaterial selection;
 
-	public InputCommands(VanillaPlugin plugin) {
+	public InputCommands(Client client) {
+		this.client = client;
 	}
 
-	@Command(platform = Platform.CLIENT, aliases = "toggle_inventory", desc = "Opens and closes your inventory.", min = 1, max = 1)
+	@Command(aliases = "toggle_inventory", desc = "Opens and closes your inventory.", min = 1, max = 1)
 	@Binding(keys = Keyboard.KEY_E)
 	public void toggleInventory(CommandContext args, CommandSource source) throws CommandException {
 		checkPlayer(source);
@@ -69,7 +69,7 @@ public class InputCommands {
 		}
 	}
 
-	@Command(platform = Platform.CLIENT, aliases = "break_block", desc = "Breaks a block.", min = 1, max = 1)
+	@Command(aliases = "break_block", desc = "Breaks a block.", min = 1, max = 1)
 	@Binding(mouse = Mouse.MOUSE_BUTTON0)
 	public void breakBlock(CommandContext args, CommandSource source) throws CommandException {
 		checkPlayer(source);
@@ -80,18 +80,18 @@ public class InputCommands {
 		if (hit != null) {
 			final Block hitting = hit.getTargetBlock();
 			if (hitting != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
-				VanillaPlugin.getInstance().getEngine().getScheduler().safeRun(VanillaPlugin.getInstance(), new Runnable() {
+				client.getScheduler().safeRun(VanillaPlugin.getInstance(), new Runnable() {
 					@Override
 					public void run() {
 						hitting.setMaterial(VanillaMaterials.AIR);
 					}
 				});
-				VanillaPlugin.getInstance().getLogger().info("Broke block: " + hitting.toString());
+				client.getLogger().info("Broke block: " + hitting.toString());
 			}
 		}
 	}
 
-	@Command(platform = Platform.CLIENT, aliases = "select_block", desc = "Selects a block to place", min = 1, max = 1)
+	@Command(aliases = "select_block", desc = "Selects a block to place", min = 1, max = 1)
 	@Binding(mouse = Mouse.MOUSE_BUTTON2)
 	public void selectBlock(CommandContext args, CommandSource source) throws CommandException {
 		checkPlayer(source);
@@ -102,13 +102,13 @@ public class InputCommands {
 		if (hit != null) {
 			Block hitting = hit.getTargetBlock(true);
 			if (hitting != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
-				VanillaPlugin.getInstance().getLogger().info(hitting.getMaterial().getName());
+				client.getLogger().info(hitting.getMaterial().getName());
 				selection = hitting.getMaterial();
 			}
 		}
 	}
 
-	@Command(platform = Platform.CLIENT, aliases = "place_block", desc = "Places a block.", min = 1, max = 1)
+	@Command(aliases = "place_block", desc = "Places a block.", min = 1, max = 1)
 	@Binding(mouse = Mouse.MOUSE_BUTTON1)
 	public void placeBlock(CommandContext args, CommandSource source) throws CommandException {
 		checkPlayer(source);
@@ -124,8 +124,8 @@ public class InputCommands {
 				if (clicked == null) {
 					return;
 				}
-				VanillaPlugin.getInstance().getLogger().info(clicked.name());
-				VanillaPlugin.getInstance().getEngine().getScheduler().safeRun(VanillaPlugin.getInstance(), new Runnable() {
+				client.getLogger().info(clicked.name());
+				client.getScheduler().safeRun(VanillaPlugin.getInstance(), new Runnable() {
 					@Override
 					public void run() {
 						hitting.translate(clicked).setMaterial(selection);

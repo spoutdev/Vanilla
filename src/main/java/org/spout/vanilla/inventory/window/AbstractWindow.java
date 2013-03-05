@@ -31,6 +31,7 @@ import java.util.logging.Level;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 
+import org.spout.api.Platform;
 import org.spout.api.ServerOnly;
 import org.spout.api.entity.Player;
 import org.spout.api.event.cause.PlayerCause;
@@ -38,7 +39,6 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
-import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;

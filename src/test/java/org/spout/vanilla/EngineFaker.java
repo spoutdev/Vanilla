@@ -30,10 +30,11 @@ import org.mockito.Mockito;
 
 import org.spout.api.Engine;
 import org.spout.api.FileSystem;
+import org.spout.api.Platform;
 import org.spout.api.Spout;
 import org.spout.api.event.EventManager;
-import org.spout.api.plugin.Platform;
 
+@SuppressWarnings("deprecation")
 public class EngineFaker {
 	private final static Engine engineInstance;
 

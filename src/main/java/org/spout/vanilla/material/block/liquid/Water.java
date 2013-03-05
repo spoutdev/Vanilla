@@ -28,6 +28,7 @@ package org.spout.vanilla.material.block.liquid;
 
 import java.util.Random;
 
+import org.spout.api.Platform;
 import org.spout.api.Spout;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
@@ -36,7 +37,6 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectIterator;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.GenericMath;
-import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.data.Climate;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;

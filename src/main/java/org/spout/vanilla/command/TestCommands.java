@@ -30,7 +30,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.spout.api.Client;
-import org.spout.api.Spout;
+import org.spout.api.Engine;
+import org.spout.api.Platform;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
@@ -52,7 +53,6 @@ import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
-import org.spout.api.plugin.Platform;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.util.BlockIterator;
@@ -102,7 +102,14 @@ import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
 
 public class TestCommands {
-	public TestCommands(VanillaPlugin instance) {
+	private final VanillaPlugin plugin;
+
+	public TestCommands(VanillaPlugin plugin) {
+		this.plugin = plugin;
+	}
+
+	private Engine getEngine() {
+		return plugin.getEngine();
 	}
 
 	// TODO - There needs to be a method that guarantees unique data values on a per-server basis
@@ -232,14 +239,14 @@ public class TestCommands {
 			throw new CommandException("You must be a player to trace a ray!");
 		}
 		Player player;
-		if (Spout.getPlatform() != Platform.CLIENT) {
+		if (getEngine().getPlatform() != Platform.CLIENT) {
 			player = (Player) source;
 		} else {
-			player = ((Client) Spout.getEngine()).getActivePlayer();
+			player = ((Client) getEngine()).getActivePlayer();
 		}
 
 		BlockIterator blockIt;
-		if (Spout.getPlatform() != Platform.CLIENT) {
+		if (getEngine().getPlatform() != Platform.CLIENT) {
 			blockIt = player.get(Head.class).getBlockView();
 		} else {
 			blockIt = player.get(InteractComponent.class).getAlignedBlocks();
@@ -256,7 +263,7 @@ public class TestCommands {
 	}
 
 	@CommandPermissions("vanilla.command.debug")
-	@Command(platform = Platform.SERVER, aliases = "resetpos", desc = "Resets players position", max = 0)
+	@Command(aliases = "resetpos", desc = "Resets players position", max = 0)
 	public void resetPosition(CommandContext args, CommandSource source) throws CommandException {
 		if (!(source instanceof Player)) {
 			throw new CommandException("You must be a player reset position!");
@@ -268,14 +275,14 @@ public class TestCommands {
 	@Command(aliases = "torch", desc = "Place a torch.", max = 0)
 	@CommandPermissions("vanilla.command.debug")
 	public void torch(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player) && Spout.getPlatform() != Platform.CLIENT) {
+		if (!(source instanceof Player) && getEngine().getPlatform() != Platform.CLIENT) {
 			throw new CommandException("You must be a player to trace a ray!");
 		}
 		Player player;
-		if (Spout.getPlatform() != Platform.CLIENT) {
+		if (getEngine().getPlatform() != Platform.CLIENT) {
 			player = (Player) source;
 		} else {
-			player = ((Client) Spout.getEngine()).getActivePlayer();
+			player = ((Client) getEngine()).getActivePlayer();
 		}
 
 		BlockIterator blockIt = player.get(InteractComponent.class).getAlignedBlocks();
@@ -335,14 +342,14 @@ public class TestCommands {
 	@Command(aliases = "damage", usage = "<amount>", desc = "Damage yourself", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.debug")
 	public void damage(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player) && Spout.getPlatform() != Platform.CLIENT) {
+		if (!(source instanceof Player) && getEngine().getPlatform() != Platform.CLIENT) {
 			throw new CommandException("You must be a player to damage yourself!");
 		}
 		Player player;
-		if (Spout.getPlatform() != Platform.CLIENT) {
+		if (getEngine().getPlatform() != Platform.CLIENT) {
 			player = (Player) source;
 		} else {
-			player = ((Client) Spout.getEngine()).getActivePlayer();
+			player = ((Client) getEngine()).getActivePlayer();
 		}
 		player.get(Health.class).damage(args.getInteger(0));
 	}
@@ -351,8 +358,8 @@ public class TestCommands {
 	@CommandPermissions("vanilla.command.debug")
 	public void hunger(CommandContext args, CommandSource source) throws CommandException {
 		Hunger hunger = null;
-		if (Spout.getPlatform() == Platform.CLIENT) {
-			hunger = ((Client) Spout.getEngine()).getActivePlayer().get(Hunger.class);
+		if (getEngine().getPlatform() == Platform.CLIENT) {
+			hunger = ((Client) getEngine()).getActivePlayer().get(Hunger.class);
 		} else {
 			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to change your hunger!");
@@ -418,7 +425,7 @@ public class TestCommands {
 				throw new CommandException("Need to provide a world when executing from the console");
 			}
 			String name = args.getString(0);
-			world = Spout.getEngine().getWorld(name);
+			world = getEngine().getWorld(name);
 			isConsole = true;
 		}
 		if (world == null && isConsole) {
@@ -435,7 +442,7 @@ public class TestCommands {
 			}
 			count++;
 			entity.remove();
-			Spout.log(entity.get(VanillaEntityComponent.class) + " was killed");
+			getEngine().getLogger().info(entity.get(VanillaEntityComponent.class) + " was killed");
 		}
 		if (count > 0) {
 			if (!isConsole) {
@@ -457,10 +464,10 @@ public class TestCommands {
 		if (source instanceof Player) {
 			player = (Player) source;
 		} else {
-			if (Spout.getEngine() instanceof Client) {
+			if (getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			player = Spout.getEngine().getPlayer(args.getString(1, ""), true);
+			player = getEngine().getPlayer(args.getString(1, ""), true);
 			if (player == null) {
 				source.sendMessage("Must be a player or send player name in arguments");
 				return;
@@ -502,10 +509,10 @@ public class TestCommands {
 	public void spawn(CommandContext args, CommandSource source) throws CommandException {
 		final Player player;
 		if (!(source instanceof Player)) {
-			if (Spout.getPlatform() != Platform.CLIENT) {
+			if (getEngine().getPlatform() != Platform.CLIENT) {
 				throw new CommandException("Only a player may spawn a Vanilla entity!");
 			} else {
-				player = ((Client) Spout.getEngine()).getActivePlayer();
+				player = ((Client) getEngine()).getActivePlayer();
 			}
 		} else {
 			player = (Player) source;
@@ -534,8 +541,8 @@ public class TestCommands {
 		//TODO ServerEntityPrefab!
 		//How about some client support?
 		final Entity entity;
-		if (Spout.getEngine() instanceof Client) {
-			final EntityPrefab prefab = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/entities/" + clazz.getSimpleName().toLowerCase() + "/" + clazz.getSimpleName().toLowerCase() + ".sep");
+		if (getEngine() instanceof Client) {
+			final EntityPrefab prefab = (EntityPrefab) getEngine().getFilesystem().getResource("entity://Vanilla/entities/" + clazz.getSimpleName().toLowerCase() + "/" + clazz.getSimpleName().toLowerCase() + ".sep");
 			entity = prefab.createEntity(player.getScene().getPosition());
 		} else {
 			entity = player.getWorld().createEntity(player.getScene().getPosition(), clazz);
@@ -578,8 +585,8 @@ public class TestCommands {
 	@CommandPermissions("vanilla.command.debug")
 	public void fire(CommandContext args, CommandSource source) throws CommandException {
 		Burn fire = null;
-		if (Spout.getPlatform() == Platform.CLIENT) {
-			fire = ((Client) Spout.getEngine()).getActivePlayer().add(Burn.class);
+		if (getEngine().getPlatform() == Platform.CLIENT) {
+			fire = ((Client) getEngine()).getActivePlayer().add(Burn.class);
 		} else {
 			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to change be burnable!");

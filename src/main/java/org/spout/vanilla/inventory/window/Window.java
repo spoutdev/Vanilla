@@ -31,6 +31,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.spout.api.Client;
+import org.spout.api.Platform;
 import org.spout.api.ServerOnly;
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
@@ -45,7 +46,6 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
-import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;

@@ -26,12 +26,13 @@
  */
 package org.spout.vanilla.inventory.window.block;
 
+import org.spout.api.Platform;
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.shape.Grid;
 import org.spout.api.math.Vector2;
-import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.inventory.block.DispenserInventory;

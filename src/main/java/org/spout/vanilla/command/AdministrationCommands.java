@@ -30,6 +30,7 @@ import gnu.trove.iterator.TLongIterator;
 import gnu.trove.list.linked.TLongLinkedList;
 
 import org.spout.api.Client;
+import org.spout.api.Engine;
 import org.spout.api.Server;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;
@@ -45,7 +46,6 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.Material;
-import org.spout.api.plugin.Platform;
 import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.util.concurrent.AtomicFloat;
 
@@ -74,6 +74,10 @@ public class AdministrationCommands {
 		plugin.getEngine().getScheduler().scheduleSyncRepeatingTask(plugin, tpsMonitor, 0, 50, TaskPriority.CRITICAL);
 	}
 
+	private Engine getEngine() {
+		return plugin.getEngine();
+	}
+
 	@Command(aliases = "clear", usage = "[player]", desc = "Clears your inventory", min = 0, max = 1)
 	@CommandPermissions("vanilla.command.clear")
 	public void clear(CommandContext args, CommandSource source) throws CommandException {
@@ -89,7 +93,7 @@ public class AdministrationCommands {
 			inv.clear();
 		}
 		if (args.length() == 1) {
-			Player player = args.getPlayer(0, false);
+			Player player = getEngine().getPlayer(args.getString(0), false);
 			if (player == null) {
 				source.sendMessage(plugin.getPrefix(), ChatStyle.RED, "Player is not online!");
 				return;
@@ -114,10 +118,10 @@ public class AdministrationCommands {
 		Player player = null;
 
 		if (args.length() != 1) {
-			if (plugin.getEngine() instanceof Client) {
+			if (getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			player = plugin.getEngine().getPlayer(args.getString(index++), true);
+			player = getEngine().getPlayer(args.getString(index++), true);
 		}
 
 		if (player == null) {
@@ -165,7 +169,7 @@ public class AdministrationCommands {
 		}
 	}
 
-	@Command(platform = Platform.SERVER, aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)
+	@Command(aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.deop")
 	public void deop(CommandContext args, CommandSource source) {
 		String playerName = args.getString(0);
@@ -177,13 +181,13 @@ public class AdministrationCommands {
 
 		ops.setOp(playerName, false);
 		source.sendMessage(plugin.getPrefix(), playerName, ChatStyle.RED, " had their operator status revoked!");
-		Player player = plugin.getEngine().getPlayer(playerName, true);
+		Player player = getEngine().getPlayer(playerName, true);
 		if (player != null && !source.equals(player)) {
 			player.sendMessage(plugin.getPrefix(), ChatStyle.RED, "You had your operator status revoked!");
 		}
 	}
 
-	@Command(platform = Platform.SERVER, aliases = {"op"}, usage = "<player>", desc = "Make a player an operator", min = 1, max = 1)
+	@Command(aliases = {"op"}, usage = "<player>", desc = "Make a player an operator", min = 1, max = 1)
 	@CommandPermissions("vanilla.command.op")
 	public void op(CommandContext args, CommandSource source) {
 		String playerName = args.getString(0);
@@ -195,7 +199,7 @@ public class AdministrationCommands {
 
 		ops.setOp(playerName, true);
 		source.sendMessage(plugin.getPrefix(), ChatStyle.RED, playerName, " is now an operator!");
-		Player player = plugin.getEngine().getPlayer(playerName, true);
+		Player player = getEngine().getPlayer(playerName, true);
 		if (player != null && !source.equals(player)) {
 			player.sendMessage(plugin.getPrefix(), ChatStyle.YELLOW, "You are now an operator!");
 		}
@@ -239,11 +243,11 @@ public class AdministrationCommands {
 		}
 
 		sky.setTime(relative ? (sky.getTime() + time) : time);
-		if (plugin.getEngine() instanceof Client) {
+		if (getEngine() instanceof Client) {
 			source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "You set ", ChatStyle.WHITE, world.getName(), ChatStyle.BRIGHT_GREEN, " to time: ", ChatStyle.WHITE,
 					sky.getTime());
 		} else {
-			((Server) plugin.getEngine()).broadcastMessage(plugin.getPrefix(), ChatStyle.WHITE, world.getName(), ChatStyle.BRIGHT_GREEN, " set to: ", ChatStyle.WHITE, sky.getTime());
+			((Server) getEngine()).broadcastMessage(plugin.getPrefix(), ChatStyle.WHITE, world.getName(), ChatStyle.BRIGHT_GREEN, " set to: ", ChatStyle.WHITE, sky.getTime());
 		}
 	}
 
@@ -253,10 +257,10 @@ public class AdministrationCommands {
 		int index = 0;
 		Player player;
 		if (args.length() == 2) {
-			if (plugin.getEngine() instanceof Client) {
+			if (getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			player = plugin.getEngine().getPlayer(args.getString(index++), true);
+			player = getEngine().getPlayer(args.getString(index++), true);
 			if (player == null) {
 				throw new CommandException(args.getString(0) + " is not online.");
 			}
@@ -304,10 +308,10 @@ public class AdministrationCommands {
 				throw new CommandException("You must be a player to give yourself xp.");
 			}
 		} else {
-			if (plugin.getEngine() instanceof Client) {
+			if (getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			player = plugin.getEngine().getPlayer(args.getString(index++), true);
+			player = getEngine().getPlayer(args.getString(index++), true);
 		}
 		if (player == null) {
 			throw new CommandException("That player is not online.");
@@ -369,10 +373,10 @@ public class AdministrationCommands {
 				message = new ChatArguments(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Weather set to ", ChatStyle.WHITE, weather.name(), ChatStyle.BRIGHT_GREEN, ".");
 				break;
 		}
-		if (plugin.getEngine() instanceof Client) {
+		if (getEngine() instanceof Client) {
 			source.sendMessage(message);
 		} else {
-			for (Player player : ((Server) plugin.getEngine()).getOnlinePlayers()) {
+			for (Player player : ((Server) getEngine()).getOnlinePlayers()) {
 				if (player.getWorld().equals(world)) {
 					player.sendMessage(message);
 				}
@@ -390,10 +394,10 @@ public class AdministrationCommands {
 			}
 			player = (Player) source;
 		} else {
-			if (plugin.getEngine() instanceof Client) {
+			if (getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			player = plugin.getEngine().getPlayer(args.getString(0), true);
+			player = getEngine().getPlayer(args.getString(0), true);
 		}
 		if (player == null) {
 			throw new CommandException(args.getString(0) + " is not online.");
@@ -409,7 +413,7 @@ public class AdministrationCommands {
 	@CommandPermissions("vanilla.command.version")
 	public void getVersion(CommandContext args, CommandSource source) {
 		source.sendMessage("Vanilla ", plugin.getDescription().getVersion(), " (Implementing Minecraft protocol v", plugin.getDescription().getData("protocol"), ")");
-		source.sendMessage("Powered by Spout " + plugin.getEngine().getVersion(), " (Implementing SpoutAPI ", plugin.getEngine().getAPIVersion(), ")");
+		source.sendMessage("Powered by Spout " + getEngine().getVersion(), " (Implementing SpoutAPI ", getEngine().getAPIVersion(), ")");
 	}
 
 	@Command(aliases = {"biome"}, usage = "", desc = "Print out the name of the biome at the current location", min = 0, max = 0)

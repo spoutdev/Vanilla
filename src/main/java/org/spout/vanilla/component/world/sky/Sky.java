@@ -29,10 +29,10 @@ package org.spout.vanilla.component.world.sky;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.spout.api.Platform;
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.model.Model;
-import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.misc.Sleep;

@@ -31,9 +31,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 
 import org.spout.api.Client;
-import org.spout.api.Engine;
+import org.spout.api.Platform;
 import org.spout.api.Server;
-import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.command.CommandRegistrationsFactory;
@@ -57,7 +56,6 @@ import org.spout.api.input.Mouse;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.plugin.CommonPlugin;
-import org.spout.api.plugin.Platform;
 import org.spout.api.plugin.PluginLogger;
 import org.spout.api.plugin.ServiceManager;
 import org.spout.api.plugin.services.ProtectionService;
@@ -76,7 +74,6 @@ import org.spout.vanilla.data.Difficulty;
 import org.spout.vanilla.data.Dimension;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.data.configuration.InputConfiguration;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.configuration.WorldConfigurationNode;
 import org.spout.vanilla.data.resources.RecipeYaml;
@@ -100,11 +97,9 @@ import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public class VanillaPlugin extends CommonPlugin {
-	private static final int LOADER_THREAD_COUNT = 16;
 	public static final int MINECRAFT_PROTOCOL_ID = 51;
 	public static final int VANILLA_PROTOCOL_ID = NetworkComponent.getProtocolId("org.spout.vanilla.plugin.protocol");
 	private static VanillaPlugin instance;
-	private Engine engine;
 	private VanillaConfiguration config;
 	private RemoteConnectionCore rcon;
 	// Client authentification informations
@@ -120,19 +115,19 @@ public class VanillaPlugin extends CommonPlugin {
 	@Override
 	public void onEnable() {
 		//Commands
-		final CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
-		final RootCommand root = engine.getRootCommand();
+		final CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(getEngine(), new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
+		final RootCommand root = getEngine().getRootCommand();
 		root.addSubCommands(this, AdministrationCommands.class, commandRegFactory);
 
-		if (engine.debugMode()) {
-			engine.getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
+		if (getEngine().debugMode()) {
+			getEngine().getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
 		}
-		engine.getEventManager().registerEvents(new VanillaListener(this), this);
+		getEngine().getEventManager().registerEvents(new VanillaListener(this), this);
 
-		switch (Spout.getPlatform()) {
+		switch (getEngine().getPlatform()) {
 			case CLIENT:
 
-				final Client client = (Client) engine;
+				final Client client = (Client) getEngine();
 				//Setup client input
 				final InputManager input = client.getInputManager();
 				input.bind(new Binding("quickbar_left", Mouse.MOUSE_SCROLLUP));
@@ -142,18 +137,15 @@ public class VanillaPlugin extends CommonPlugin {
 				}
 
 				final QuickbarCommandExecutor exe = new QuickbarCommandExecutor();
-				root.addSubCommand(this, "quickbar_left").setHelp("Changes quickbar slot!")
-						.setExecutor(Platform.CLIENT, exe).setArgBounds(1, 1);
-				root.addSubCommand(this, "quickbar_right").setHelp("Changes quickbar slot!")
-						.setExecutor(Platform.CLIENT, exe).setArgBounds(1, 1);
+				root.addSubCommand(this, "quickbar_left").setHelp("Changes quickbar slot!").setExecutor(exe).setArgBounds(1, 1);
+				root.addSubCommand(this, "quickbar_right").setHelp("Changes quickbar slot!").setExecutor(exe).setArgBounds(1, 1);
 				for (int i = 1; i < 10; i++) {
-					root.addSubCommand(this, "quickbar_" + i).setHelp("Changes quickbar slot!")
-							.setExecutor(Platform.CLIENT, exe).setArgBounds(1, 1);
+					root.addSubCommand(this, "quickbar_" + i).setHelp("Changes quickbar slot!").setExecutor(exe).setArgBounds(1, 1);
 				}
 
 				root.addSubCommands(this, InputCommands.class, commandRegFactory);
 
-				if (Spout.debugMode()) {
+				if (getEngine().debugMode()) {
 					setupWorlds();
 				}
 				break;
@@ -164,6 +156,8 @@ public class VanillaPlugin extends CommonPlugin {
 					lanThread.start();
 				}
 				break;
+			default:
+				break;
 		}
 
 		//Configuration
@@ -171,9 +165,9 @@ public class VanillaPlugin extends CommonPlugin {
 		VanillaBlockMaterial.REDSTONE_POWER_MIN = (short) VanillaConfiguration.REDSTONE_MIN_RANGE.getInt();
 
 		//TODO: Remove this check when the null world bug is fixed
-		for (World world : Spout.getEngine().getWorlds()) {
+		for (World world : getEngine().getWorlds()) {
 			if (world == null) {
-				Spout.getLogger().log(Level.SEVERE, "A World element in Engine.getWorlds() is null!");
+				getLogger().log(Level.SEVERE, "A World element in Engine.getWorlds() is null!");
 			}
 		}
 
@@ -184,17 +178,16 @@ public class VanillaPlugin extends CommonPlugin {
 	public void onLoad() {
 		instance = this;
 		((PluginLogger) getLogger()).setTag(new ChatArguments(ChatStyle.RESET, "[", ChatStyle.GOLD, "Vanilla", ChatStyle.RESET, "] "));
-		engine = getEngine();
 		config = new VanillaConfiguration(getDataFolder());
 		//Spout.getFilesystem().registerLoader(new MapPaletteLoader());
-		Spout.getFilesystem().registerLoader(new RecipeLoader());
+		getEngine().getFilesystem().registerLoader(new RecipeLoader());
 		Protocol.registerProtocol(new VanillaProtocol());
 
 		VanillaMaterials.initialize();
 		VanillaLighting.initialize();
 		VanillaEnchantments.initialize();
 		//MapPalette.DEFAULT = (MapPalette) Spout.getFilesystem().getResource("mappalette://Vanilla/map/mapColorPalette.dat");
-		RecipeYaml.DEFAULT = (RecipeYaml) Spout.getFilesystem().getResource("recipe://Vanilla/recipes.yml");
+		RecipeYaml.DEFAULT = (RecipeYaml) getEngine().getFilesystem().getResource("recipe://Vanilla/recipes.yml");
 		VanillaRecipes.initialize();
 
 		//Config
@@ -204,7 +197,7 @@ public class VanillaPlugin extends CommonPlugin {
 	}
 
 	private void setupRcon() {
-		if (engine.getPlatform() == Platform.SERVER) {
+		if (getEngine().getPlatform() == Platform.SERVER) {
 			RemoteConnectionServer server = new RemoteConnectionServer(getLogger(), getDataFolder());
 			server.bindDefaultPorts((Server) getEngine());
 			rcon = server;
@@ -233,7 +226,7 @@ public class VanillaPlugin extends CommonPlugin {
 				if (generator == null) {
 					throw new IllegalArgumentException("Invalid generator name for world '" + worldNode.getWorldName() + "': " + generatorName);
 				}
-				World world = engine.loadWorld(worldNode.getWorldName(), generator);
+				World world = getEngine().loadWorld(worldNode.getWorldName(), generator);
 
 				// Apply general settings
 				final DatatableComponent data = world.getData();
@@ -257,7 +250,7 @@ public class VanillaPlugin extends CommonPlugin {
 			return;
 		}
 		//Register protection service used for spawn protection.
-		engine.getServiceManager().register(ProtectionService.class, new VanillaProtectionService(), this, ServiceManager.ServicePriority.Highest);
+		getEngine().getServiceManager().register(ProtectionService.class, new VanillaProtectionService(), this, ServiceManager.ServicePriority.Highest);
 
 		for (World world : worlds) {
 			// Keep spawn loaded
@@ -269,7 +262,7 @@ public class VanillaPlugin extends CommonPlugin {
 				int cx = point.getBlockX() >> Chunk.BLOCKS.BITS;
 				int cz = point.getBlockZ() >> Chunk.BLOCKS.BITS;
 
-				((VanillaProtectionService) engine.getServiceManager().getRegistration(ProtectionService.class).getProvider()).addProtection(new SpawnProtection(world.getName() + " Spawn Protection", world, point, protectionRadius));
+				((VanillaProtectionService) getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider()).addProtection(new SpawnProtection(world.getName() + " Spawn Protection", world, point, protectionRadius));
 
 				// Load or generate spawn area
 				int effectiveRadius = newWorld ? (2 * radius) : radius;

@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import org.spout.api.Platform;
 import org.spout.api.Spout;
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Player;
@@ -48,7 +49,6 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Vector2;
-import org.spout.api.plugin.Platform;
 import org.spout.api.render.RenderMaterial;
 import org.spout.api.util.flag.Flag;
 import org.spout.api.util.flag.FlagBundle;

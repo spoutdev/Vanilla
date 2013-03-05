@@ -27,13 +27,13 @@
 package org.spout.vanilla.inventory.window;
 
 import org.spout.api.Client;
+import org.spout.api.Platform;
 import org.spout.api.Server;
 import org.spout.api.ServerOnly;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector2;
-import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.inventory.entity.ArmorInventory;

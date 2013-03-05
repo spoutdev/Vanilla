@@ -33,6 +33,7 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
+import org.spout.api.Engine;
 import org.spout.api.component.BaseComponentHolder;
 import org.spout.api.component.Component;
 import org.spout.api.component.type.EntityComponent;
@@ -40,7 +41,7 @@ import org.spout.api.entity.Entity;
 
 public class EntityMocker {
 	public static Entity mockEntity() {
-		EngineFaker.setupEngine();
+		Engine engine = EngineFaker.setupEngine();
 
 		final Entity entity = Mockito.mock(Entity.class);
 		final EntityComponentAnswer componentHolder = new EntityComponentAnswer(entity);
@@ -51,6 +52,7 @@ public class EntityMocker {
 		Mockito.when(entity.getExact(Matchers.argThat(new ClassOrSubclassMatcher<EntityComponent>(EntityComponent.class)))).thenAnswer(componentHolder);
 		Mockito.when(entity.detach(Matchers.argThat(new ClassOrSubclassMatcher<EntityComponent>(EntityComponent.class)))).thenAnswer(componentHolder);
 		Mockito.when(entity.getData()).thenAnswer(componentHolder);
+		Mockito.when(entity.getEngine()).thenAnswer(new EntityEngineAnswer(engine));
 
 		//Set up entity tick
 		Mockito.doAnswer(new EntityTickAnswer(entity)).when(entity).onTick(Mockito.anyFloat());
@@ -59,6 +61,18 @@ public class EntityMocker {
 		return entity;
 	}
 
+	private static class EntityEngineAnswer implements Answer<Engine> {
+		private final Engine engine;
+		EntityEngineAnswer(Engine engine) {
+			this.engine = engine;
+		}
+
+		@Override
+		public Engine answer(InvocationOnMock invocation) throws Throwable {
+			return engine;
+		}
+		
+	}
 	private static class EntityTickAnswer implements Answer<Object> {
 		private final Entity entity;
 

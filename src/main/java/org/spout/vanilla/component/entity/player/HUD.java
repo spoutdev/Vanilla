@@ -31,11 +31,11 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.logging.Level;
 
 import org.spout.api.Client;
+import org.spout.api.Platform;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.gui.Screen;
 import org.spout.api.gui.Widget;
-import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.player.hud.ArmorWidget;

@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.component.entity.substance.test;
 
+import org.spout.api.Platform;
 import org.spout.api.Spout;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
-import org.spout.api.plugin.Platform;
 
 public class SceneOutput extends EntityComponent {
 	@Override

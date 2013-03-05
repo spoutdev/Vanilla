@@ -32,6 +32,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.Client;
+import org.spout.api.Platform;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -44,7 +45,6 @@ import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
-import org.spout.api.plugin.Platform;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.entity.inventory.EntityInventory;

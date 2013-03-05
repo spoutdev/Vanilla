@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.material.block.plant;
 
+import org.spout.api.Platform;
 import org.spout.api.Spout;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.plugin.Platform;
 
 import org.spout.vanilla.data.drops.SwitchDrops;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;

@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.block.material.chest;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.Container;
@@ -92,7 +91,7 @@ public class Chest extends AbstractChest implements Container {
 
 	@Override
 	public boolean open(Player player) {
-		ChestOpenEvent event = Spout.getEventManager().callEvent(new ChestOpenEvent(this, player));
+		ChestOpenEvent event = player.getEngine().getEventManager().callEvent(new ChestOpenEvent(this, player));
 		if (!event.isCancelled()) {
 			// Finally open the window
 			player.get(WindowHolder.class).openWindow(new ChestWindow(player, this));
@@ -105,7 +104,7 @@ public class Chest extends AbstractChest implements Container {
 
 	@Override
 	public boolean close(Player player) {
-		ChestCloseEvent event = Spout.getEventManager().callEvent(new ChestCloseEvent(this, player));
+		ChestCloseEvent event = player.getEngine().getEventManager().callEvent(new ChestCloseEvent(this, player));
 		if (!event.isCancelled()) {
 			return super.close(player);
 		}

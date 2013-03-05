@@ -31,7 +31,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import org.spout.api.Server;
-import org.spout.api.Spout;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 
@@ -53,10 +52,10 @@ public class PlayerList extends EntityComponent {
 		if (!(getOwner() instanceof Player)) {
 			throw new IllegalStateException("PlayerList may only be attached to a player.");
 		}
-		if (!(Spout.getEngine() instanceof Server)) {
+		if (!(getOwner().getEngine() instanceof Server)) {
 			throw new IllegalStateException("Player list components may only be attached server side");
 		}
-		server = (Server) Spout.getEngine();
+		server = (Server) getOwner().getEngine();
 		player = (Player) getOwner();
 	}
 

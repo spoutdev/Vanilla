@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.protocol.handler.player.pos;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityPrefab;
 import org.spout.api.geo.World;
@@ -44,13 +43,13 @@ public class PlayerSpawnHandler extends MessageHandler<PlayerSpawnMessage> {
 			return;
 		}
 
-		World w = Spout.getEngine().getDefaultWorld();
+		World w = session.getEngine().getDefaultWorld();
 		final Point pos = new Point(w, message.getX(), message.getY(), message.getZ());
 
 		Entity entity = w.createEntity(pos, Human.class);
 		entity.setSavable(true);
 		entity.add(Human.class).setName(message.getName());
-		EntityPrefab humanPrefab = (EntityPrefab) Spout.getFilesystem().getResource("entity://Vanilla/entities/human/human.sep");
+		EntityPrefab humanPrefab = (EntityPrefab) session.getEngine().getFilesystem().getResource("entity://Vanilla/entities/human/human.sep");
 		entity = humanPrefab.createEntity(pos);
 
 		w.spawnEntity(entity);

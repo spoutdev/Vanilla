@@ -29,7 +29,6 @@ package org.spout.vanilla.protocol.handler.player;
 import java.util.Collection;
 import java.util.logging.Level;
 
-import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
@@ -53,6 +52,7 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.Head;
 import org.spout.vanilla.component.entity.misc.Hunger;
@@ -95,7 +95,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		World world = player.getWorld();
 		Slot currentSlot = PlayerUtil.getHeldSlot(player);
 		if (currentSlot == null) {
-			Spout.getLogger().log(Level.WARNING, "Block placement failed for " + player.getName() + ": Missing player inventory");
+			VanillaPlugin.getInstance().getLogger().log(Level.WARNING, "Block placement failed for " + player.getName() + ": Missing player inventory");
 			return;
 		}
 		ItemStack holding = currentSlot.get();
@@ -228,7 +228,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				}
 
 				// Check if the player can place the block.
-				Collection<Protection> protections = Spout.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(placedBlock.getPosition());
+				Collection<Protection> protections = VanillaPlugin.getInstance().getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(placedBlock.getPosition());
 				for (Protection p : protections) {
 					if (p.contains(placedBlock.getPosition()) && !VanillaConfiguration.OPS.isOp(player.getName())) {
 						refreshClient(player, clickedBlock, clickedFace, rm);

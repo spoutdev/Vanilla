@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.entity.misc;
 
-import org.spout.api.Spout;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 
@@ -61,7 +60,7 @@ public class Level extends EntityComponent {
 	 */
 	public boolean setExperience(short xp) {
 		ExperienceChangeEvent event = new ExperienceChangeEvent(getOwner(), getExperience(), xp);
-		Spout.getEventManager().callEvent(event);
+		getOwner().getEngine().getEventManager().callEvent(event);
 		if (event.isCancelled()) {
 			return false;
 		}

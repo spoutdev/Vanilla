@@ -26,7 +26,8 @@
  */
 package org.spout.vanilla.command;
 
-import org.spout.api.Spout;
+import java.util.logging.Level;
+
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Binding;
@@ -79,13 +80,13 @@ public class InputCommands {
 		if (hit != null) {
 			final Block hitting = hit.getTargetBlock();
 			if (hitting != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
-				Spout.getScheduler().safeRun(VanillaPlugin.getInstance(), new Runnable() {
+				VanillaPlugin.getInstance().getEngine().getScheduler().safeRun(VanillaPlugin.getInstance(), new Runnable() {
 					@Override
 					public void run() {
 						hitting.setMaterial(VanillaMaterials.AIR);
 					}
 				});
-				Spout.log("Broke block: " + hitting.toString());
+				VanillaPlugin.getInstance().getLogger().info("Broke block: " + hitting.toString());
 			}
 		}
 	}
@@ -101,7 +102,7 @@ public class InputCommands {
 		if (hit != null) {
 			Block hitting = hit.getTargetBlock(true);
 			if (hitting != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
-				Spout.log(hitting.getMaterial().getName());
+				VanillaPlugin.getInstance().getLogger().info(hitting.getMaterial().getName());
 				selection = hitting.getMaterial();
 			}
 		}
@@ -123,8 +124,8 @@ public class InputCommands {
 				if (clicked == null) {
 					return;
 				}
-				Spout.log(clicked.name());
-				Spout.getScheduler().safeRun(VanillaPlugin.getInstance(), new Runnable() {
+				VanillaPlugin.getInstance().getLogger().info(clicked.name());
+				VanillaPlugin.getInstance().getEngine().getScheduler().safeRun(VanillaPlugin.getInstance(), new Runnable() {
 					@Override
 					public void run() {
 						hitting.translate(clicked).setMaterial(selection);

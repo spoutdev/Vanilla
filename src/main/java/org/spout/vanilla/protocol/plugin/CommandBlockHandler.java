@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.protocol.plugin;
 
-import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.component.type.BlockComponent;
 import org.spout.api.entity.Player;
@@ -42,11 +41,11 @@ public class CommandBlockHandler extends MessageHandler<CommandBlockMessage> {
 	public void handleServer(Session session, CommandBlockMessage msg) {
 		int x = msg.getX(), y = msg.getY(), z = msg.getZ();
 		String text = msg.getCommand();
-		BlockComponent c = Spout.getEngine().getDefaultWorld().getBlock(x, y, z).getComponent();
+		BlockComponent c = VanillaPlugin.getInstance().getEngine().getDefaultWorld().getBlock(x, y, z).getComponent();
 		Player player = session.getPlayer();
 		ChatArguments prefix = VanillaPlugin.getInstance().getPrefix();
 		if (c == null || !(c instanceof CommandBlock)) {
-			Spout.getLogger().warning("CommandBlock information received, but there is no CommandBlock at {" + x + "," + y + "," + z + "}.");
+			player.getEngine().getLogger().warning("CommandBlock information received, but there is no CommandBlock at {" + x + "," + y + "," + z + "}.");
 			return;
 		}
 		((CommandBlock) c).setCommand(text, new PlayerCause(player));

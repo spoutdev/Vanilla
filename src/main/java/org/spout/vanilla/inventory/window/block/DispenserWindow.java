@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.inventory.window.block;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
@@ -55,7 +54,7 @@ public class DispenserWindow extends Window {
 
 	@Override
 	public boolean onShiftClick(ItemStack stack, int slot, Inventory from) {
-		if (Spout.getPlatform() == Platform.CLIENT) {
+		if (getPlayer().getEngine().getPlatform() == Platform.CLIENT) {
 			throw new IllegalStateException("Shift click handling is handled server side.");
 		}
 		final PlayerInventory inventory = getPlayerInventory();

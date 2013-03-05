@@ -90,7 +90,7 @@ public class Anvil extends Solid implements Directional {
 
 		Player player = (Player) entity;
 		AnvilInventory inventory = new AnvilInventory();
-		AnvilOpenEvent event = Spout.getEventManager().callEvent(new AnvilOpenEvent(block, inventory, player));
+		AnvilOpenEvent event = player.getEngine().getEventManager().callEvent(new AnvilOpenEvent(block, inventory, player));
 		if (!event.isCancelled()) {
 			player.get(WindowHolder.class).openWindow(new AnvilWindow(player, new AnvilInventory(), block));
 		}

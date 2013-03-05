@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.protocol.handler.world.chunk;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
@@ -45,7 +44,7 @@ public class ChunkBulkHandler extends MessageHandler<ChunkBulkMessage> {
 			return;
 		}
 		Player player = session.getPlayer();
-		World world = Spout.getEngine().getDefaultWorld();//player.getWorld();
+		World world = player.getEngine().getDefaultWorld();//player.getWorld();
 		RepositionManager rm = player.getNetworkSynchronizer().getRepositionManager();
 
 		for (int c = 0; c < message.getX().length; c++) {

@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.protocol.handler.entity;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
@@ -51,13 +50,13 @@ public final class EntityEquipmentHandler extends MessageHandler<EntityEquipment
 
 		Entity entity = world.getEntity(entityId);
 		if (entity == null) {
-			Spout.getLogger().warning("EntityEquipmentHandler entity don't exist");
+			player.getEngine().getLogger().warning("EntityEquipmentHandler entity don't exist");
 			return;
 		}
 
 		EntityInventory inventory = entity.get(EntityInventory.class);
 		if (inventory == null) {
-			Spout.getLogger().warning("EntityEquipmentHandler entity haven't EntityInventory");
+			player.getEngine().getLogger().warning("EntityEquipmentHandler entity haven't EntityInventory");
 			return;
 		}
 
@@ -85,7 +84,7 @@ public final class EntityEquipmentHandler extends MessageHandler<EntityEquipment
 				inventory.getArmor().getBoots().setAmount(item.getAmount());
 				return;
 			default:
-				Spout.getLogger().warning("EntityEquipmentHandler slot bad value");
+				player.getEngine().getLogger().warning("EntityEquipmentHandler slot bad value");
 		}
 	}
 }

@@ -27,13 +27,13 @@
 package org.spout.vanilla.inventory.util;
 
 import org.spout.api.Client;
-import org.spout.api.Spout;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.Slot;
 import org.spout.api.inventory.shape.Grid;
 import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.math.Vector2;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.inventory.window.gui.RenderSlot;
 
 /**
@@ -54,7 +54,7 @@ public class GridInventoryConverter extends InventoryConverter {
 		while (iter.hasNext()) {
 			int i = iter.next(), x = iter.getX(), y = iter.getY(), size = grid.getSize();
 			slots[i] = (offset + size) - (length * y) - (length - x);
-			if (Spout.getEngine() instanceof Client) {
+			if (VanillaPlugin.getInstance().getEngine() instanceof Client) {
 				RenderSlot slot = widgets[i].get(RenderSlot.class);
 				slot.setSlot(new Slot(inventory, i));
 				slot.setPosition(pos.add(x * SLOT_WIDTH, y * SLOT_HEIGHT));

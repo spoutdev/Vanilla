@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.block.material;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.Container;
@@ -52,7 +51,7 @@ public class EnchantmentTable extends ViewedBlockComponent implements Container 
 
 	@Override
 	public boolean open(Player player) {
-		EnchantmentTableOpenEvent event = Spout.getEventManager().callEvent(new EnchantmentTableOpenEvent(this, player));
+		EnchantmentTableOpenEvent event = player.getEngine().getEventManager().callEvent(new EnchantmentTableOpenEvent(this, player));
 		if (!event.isCancelled()) {
 			player.get(WindowHolder.class).openWindow(new EnchantmentTableWindow(player, this, inventory));
 			return true;
@@ -62,7 +61,7 @@ public class EnchantmentTable extends ViewedBlockComponent implements Container 
 
 	@Override
 	public boolean close(Player player) {
-		EnchantmentTableCloseEvent event = Spout.getEventManager().callEvent(new EnchantmentTableCloseEvent(this, player));
+		EnchantmentTableCloseEvent event = player.getEngine().getEventManager().callEvent(new EnchantmentTableCloseEvent(this, player));
 		if (!event.isCancelled()) {
 			return super.close(player);
 		}

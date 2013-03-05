@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.block.material;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Container;
 import org.spout.api.inventory.ItemStack;
@@ -256,7 +255,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	@Override
 	public boolean open(Player player) {
-		FurnaceOpenEvent event = Spout.getEventManager().callEvent(new FurnaceOpenEvent(this, player));
+		FurnaceOpenEvent event = player.getEngine().getEventManager().callEvent(new FurnaceOpenEvent(this, player));
 		if (!event.isCancelled()) {
 			WindowHolder window = player.get(WindowHolder.class);
 			if (window != null) {
@@ -271,7 +270,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	@Override
 	public boolean close(Player player) {
-		FurnaceCloseEvent event = Spout.getEventManager().callEvent(new FurnaceCloseEvent(this, player));
+		FurnaceCloseEvent event = player.getEngine().getEventManager().callEvent(new FurnaceCloseEvent(this, player));
 		if (!event.isCancelled()) {
 			return super.close(player);
 		}

@@ -29,7 +29,6 @@ package org.spout.vanilla.inventory.window;
 import org.spout.api.Client;
 import org.spout.api.Server;
 import org.spout.api.ServerOnly;
-import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
@@ -75,7 +74,7 @@ public class DefaultWindow extends Window {
 		inventory.clear();
 
 		//Do not call super-close, DefaultWindow only pseudo-closes
-		if (!(Spout.getEngine() instanceof Server)) {
+		if (!(getPlayer().getEngine() instanceof Server)) {
 			super.close();
 		}
 
@@ -93,7 +92,7 @@ public class DefaultWindow extends Window {
 	@Override
 	@ServerOnly
 	public boolean onShiftClick(ItemStack stack, int slot, Inventory from) {
-		if (Spout.getPlatform() == Platform.CLIENT) {
+		if (getPlayer().getEngine().getPlatform() == Platform.CLIENT) {
 			throw new IllegalStateException("Shift click handling is handled server side.");
 		}
 		final PlayerInventory inventory = getPlayerInventory();
@@ -127,7 +126,7 @@ public class DefaultWindow extends Window {
 
 	@Override
 	public boolean isOpened() {
-		if (Spout.getEngine() instanceof Client) {
+		if (getPlayer().getEngine() instanceof Client) {
 			return super.isOpened();
 		}
 		return opened;
@@ -136,7 +135,7 @@ public class DefaultWindow extends Window {
 	@Override
 	public void open() {
 		opened = true;
-		if (Spout.getEngine() instanceof Client) {
+		if (getPlayer().getEngine() instanceof Client) {
 			super.open();
 		}
 	}

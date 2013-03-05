@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.spout.api.Spout;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.InventoryViewer;
 import org.spout.api.inventory.ItemStack;
@@ -40,6 +39,7 @@ import org.spout.api.inventory.shape.Grid;
 import org.spout.api.inventory.util.GridIterator;
 import org.spout.api.material.Material;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 
 /**
@@ -170,7 +170,7 @@ public abstract class CraftingInventory extends Inventory {
 				cntr = 0;
 			}
 		}
-		RecipeManager recipeManager = Spout.getEngine().getRecipeManager();
+		RecipeManager recipeManager = VanillaPlugin.getInstance().getEngine().getRecipeManager();
 		Collections.reverse(materials);
 		Recipe recipe = recipeManager.matchShapedRecipe(materials);
 		if (recipe == null) {

@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.protocol.handler.player;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -58,7 +57,7 @@ public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeld
 			return;
 		}
 		PlayerHeldItemChangeEvent event = new PlayerHeldItemChangeEvent(player, quickbar.getSelectedSlot().getIndex(), newSlot);
-		if (Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
+		if (player.getEngine().getEventManager().callEvent(event).isCancelled()) {
 			// Reset
 			player.getNetworkSynchronizer().callProtocolEvent(new PlayerSelectedSlotChangeEvent(session.getPlayer(), event.getPreviousSlot()));
 		} else {

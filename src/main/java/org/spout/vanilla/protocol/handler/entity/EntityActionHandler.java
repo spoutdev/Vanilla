@@ -29,7 +29,6 @@ package org.spout.vanilla.protocol.handler.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -56,14 +55,14 @@ public final class EntityActionHandler extends MessageHandler<EntityActionMessag
 			case EntityActionMessage.ACTION_CROUCH:
 
 				if (human != null) {
-					if (!Spout.getEventManager().callEvent(new PlayerToggleSneakingEvent(player, true)).isCancelled()) {
+					if (!player.getEngine().getEventManager().callEvent(new PlayerToggleSneakingEvent(player, true)).isCancelled()) {
 						human.setSneaking(true);
 					}
 				}
 				break;
 			case EntityActionMessage.ACTION_UNCROUCH:
 				if (human != null) {
-					if (!Spout.getEventManager().callEvent(new PlayerToggleSneakingEvent(player, false)).isCancelled()) {
+					if (!player.getEngine().getEventManager().callEvent(new PlayerToggleSneakingEvent(player, false)).isCancelled()) {
 						human.setSneaking(false);
 					}
 				}
@@ -73,14 +72,14 @@ public final class EntityActionHandler extends MessageHandler<EntityActionMessag
 				break;
 			case EntityActionMessage.ACTION_START_SPRINTING:
 				if (human != null) {
-					if (!Spout.getEventManager().callEvent(new PlayerToggleSprintingEvent(player, true)).isCancelled()) {
+					if (!player.getEngine().getEventManager().callEvent(new PlayerToggleSprintingEvent(player, true)).isCancelled()) {
 						human.setSprinting(true);
 					}
 				}
 				break;
 			case EntityActionMessage.ACTION_STOP_SPRINTING:
 				if (human != null) {
-					if (!Spout.getEventManager().callEvent(new PlayerToggleSprintingEvent(player, false)).isCancelled()) {
+					if (!player.getEngine().getEventManager().callEvent(new PlayerToggleSprintingEvent(player, false)).isCancelled()) {
 						human.setSprinting(false);
 					}
 				}

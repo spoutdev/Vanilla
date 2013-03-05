@@ -28,7 +28,6 @@ package org.spout.vanilla.material.block.solid;
 
 import java.util.Random;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
@@ -39,6 +38,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.GenericMath;
 import org.spout.api.plugin.Platform;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolType;
@@ -55,7 +55,7 @@ public class Grass extends SpreadingSolid implements DynamicMaterial, Initializa
 		super(name, id, VanillaMaterialModels.GRASS);
 		this.setHardness(0.6F).setResistance(0.8F).setStepSound(SoundEffects.STEP_GRASS);
 		this.addMiningType(ToolType.SPADE);
-		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
+		if (VanillaPlugin.getInstance().getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_GRASS_COLOR)) {
 				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.BIOME_GRASS_COLOR);
 			}

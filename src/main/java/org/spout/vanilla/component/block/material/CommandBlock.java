@@ -34,7 +34,6 @@ import java.util.List;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.Server;
-import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.channel.ChatChannel;
 import org.spout.api.chat.channel.PermissionChatChannel;
@@ -118,7 +117,7 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 	}
 
 	public void execute() {
-		if (!(Spout.getEngine() instanceof Server)) {
+		if (!(VanillaPlugin.getInstance().getEngine() instanceof Server)) {
 			throw new IllegalStateException("CommandBlocks are run from the server.");
 		}
 
@@ -146,13 +145,13 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 			try {
 				filter.init();
 			} catch (IllegalArgumentException e) {
-				Spout.getLogger().log(java.util.logging.Level.WARNING, "Could not execute CommandBlock at "
+				VanillaPlugin.getInstance().getLogger().log(java.util.logging.Level.WARNING, "Could not execute CommandBlock at "
 						+ getBlock().getPosition().toString() + " because of illegal syntax.", e);
 			}
 
 			final Point center = new Point(getBlock().getWorld(), filter.x, filter.y, filter.z);
 			final char target = statement.charAt(1);
-			final List<Player> allPlayers = Arrays.asList(((Server) Spout.getEngine()).getOnlinePlayers());
+			final List<Player> allPlayers = Arrays.asList(((Server) VanillaPlugin.getInstance().getEngine()).getOnlinePlayers());
 
 			switch (target) {
 
@@ -408,26 +407,26 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 
 	@Override
 	public void processCommand(String command, ChatArguments arguments) {
-		PreCommandEvent event = Spout.getEventManager().callEvent(new PreCommandEvent(this, command, arguments));
+		PreCommandEvent event = VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new PreCommandEvent(this, command, arguments));
 		if (event.isCancelled()) {
 			return;
 		}
 		command = event.getCommand();
 		arguments = event.getArguments();
 
-		final RootCommand rootCmd = Spout.getEngine().getRootCommand();
+		final RootCommand rootCmd = VanillaPlugin.getInstance().getEngine().getRootCommand();
 		Command cmd = rootCmd.getChild(command);
 		if (cmd != null) {
 			cmd.process(this, command, arguments, false);
 		} else {
-			Spout.getLogger().warning("CommandBlock tried to process unknown command: " + command);
+			VanillaPlugin.getInstance().getLogger().warning("CommandBlock tried to process unknown command: " + command);
 		}
 	}
 
 	@Override
 	public boolean sendMessage(ChatArguments message) {
 		if (VanillaConfiguration.COMMAND_BLOCK_VERBOSE.getBoolean()) {
-			Spout.getLogger().info("[ " + getName() + "] " + message.getPlainString());
+			VanillaPlugin.getInstance().getLogger().info("[ " + getName() + "] " + message.getPlainString());
 			return true;
 		}
 		return false;

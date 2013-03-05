@@ -69,7 +69,7 @@ public class Drowning extends EntityComponent {
 	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void onTick(float dt) {
-		switch (Spout.getPlatform()) {
+		switch (getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
 				World world = head.getPosition().getWorld();

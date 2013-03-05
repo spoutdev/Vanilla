@@ -36,7 +36,6 @@ import java.util.logging.Level;
 
 import org.apache.commons.io.IOUtils;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageHandler;
@@ -57,7 +56,7 @@ public class PasteExceptionHandler implements UncaughtExceptionHandler {
 	@Override
 	public void uncaughtException(Message message, MessageHandler<?> handle, Exception ex) {
 		Player player = session.getPlayer();
-		Spout.getEngine().getLogger().log(Level.SEVERE, "Message handler for " + message.getClass().getSimpleName() + " threw exception for player " + (session.getPlayer() != null ? session.getPlayer().getName() : "null"));
+		player.getEngine().getLogger().log(Level.SEVERE, "Message handler for " + message.getClass().getSimpleName() + " threw exception for player " + (session.getPlayer() != null ? session.getPlayer().getName() : "null"));
 		ex.printStackTrace();
 		if (player != null && player.hasPermission("vanilla.exception.paste")) {
 			StringBuilder builder = new StringBuilder("Vanilla Error Report:\n");
@@ -68,7 +67,7 @@ public class PasteExceptionHandler implements UncaughtExceptionHandler {
 			builder.append("    Exception: ").append(ex.getClass().getSimpleName()).append("\n");
 			logTrace(builder, ex);
 			Runnable task = new PasteRunnable(session, builder.toString(), "Message handler exception for " + message.getClass().getSimpleName());
-			Spout.getEngine().getScheduler().scheduleAsyncDelayedTask(VanillaPlugin.getInstance(), task, 0, TaskPriority.CRITICAL);
+			player.getEngine().getScheduler().scheduleAsyncDelayedTask(VanillaPlugin.getInstance(), task, 0, TaskPriority.CRITICAL);
 		} else {
 			session.disconnect(false, new Object[]{"Message handler exception for ", message.getClass().getSimpleName()});
 		}

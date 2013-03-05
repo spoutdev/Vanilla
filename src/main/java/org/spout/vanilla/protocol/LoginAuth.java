@@ -36,7 +36,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
-import org.spout.api.Spout;
 import org.spout.api.protocol.Session;
 import org.spout.api.scheduler.TaskPriority;
 
@@ -110,7 +109,7 @@ public class LoginAuth implements Runnable {
 			String reply = in.readLine();
 			if (authString.equals(reply)) {
 				if (runnable != null) {
-					Spout.getEngine().getScheduler().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), runnable, TaskPriority.CRITICAL);
+					VanillaPlugin.getInstance().getEngine().getScheduler().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), runnable, TaskPriority.CRITICAL);
 				}
 			} else {
 				failed("Auth server refused authentication");
@@ -130,13 +129,13 @@ public class LoginAuth implements Runnable {
 				httpConnection.disconnect();
 			}
 		}
-		if (Spout.getEngine().debugMode()) {
-			Spout.getLogger().info("Authing took " + (System.currentTimeMillis() - start) + "ms");
+		if (VanillaPlugin.getInstance().getEngine().debugMode()) {
+			VanillaPlugin.getInstance().getLogger().info("Authing took " + (System.currentTimeMillis() - start) + "ms");
 		}
 	}
 
 	private void failed(String message) {
-		Spout.getLogger().info("Kicking " + name + " due to problem authenticating {" + message + "}");
+		VanillaPlugin.getInstance().getLogger().info("Kicking " + name + " due to problem authenticating {" + message + "}");
 		session.disconnect(message);
 	}
 }

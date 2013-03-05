@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.block.material;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Container;
 import org.spout.api.inventory.ItemStack;
@@ -115,7 +114,7 @@ public class BrewingStand extends ViewedBlockComponent implements Container {
 
 	@Override
 	public boolean open(Player player) {
-		BrewingStandOpenEvent event = Spout.getEventManager().callEvent(new BrewingStandOpenEvent(this, player));
+		BrewingStandOpenEvent event = player.getEngine().getEventManager().callEvent(new BrewingStandOpenEvent(this, player));
 		if (!event.isCancelled()) {
 			player.get(WindowHolder.class).openWindow(new BrewingStandWindow(player, this, getInventory()));
 			return true;
@@ -125,7 +124,7 @@ public class BrewingStand extends ViewedBlockComponent implements Container {
 
 	@Override
 	public boolean close(Player player) {
-		BrewingStandCloseEvent event = Spout.getEventManager().callEvent(new BrewingStandCloseEvent(this, player));
+		BrewingStandCloseEvent event = player.getEngine().getEventManager().callEvent(new BrewingStandCloseEvent(this, player));
 		if (!event.isCancelled()) {
 			return super.close(player);
 		}

@@ -29,7 +29,6 @@ package org.spout.vanilla.component.entity.living;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.component.impl.TextModelComponent;
 import org.spout.api.data.Data;
@@ -46,7 +45,6 @@ import org.spout.api.math.VectorMath;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
-import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.Digging;
 import org.spout.vanilla.component.entity.misc.Head;
 import org.spout.vanilla.component.entity.misc.Health;
@@ -342,7 +340,7 @@ public class Human extends Living {
 		boolean changeToFromCreative = getGameMode() == GameMode.CREATIVE;
 		Entity holder = getOwner();
 		if (holder instanceof Player) {
-			PlayerGameModeChangedEvent event = Spout.getEventManager().callEvent(new PlayerGameModeChangedEvent((Player) getOwner(), mode));
+			PlayerGameModeChangedEvent event = holder.getEngine().getEventManager().callEvent(new PlayerGameModeChangedEvent((Player) getOwner(), mode));
 			if (event.isCancelled()) {
 				return;
 			}
@@ -373,7 +371,7 @@ public class Human extends Living {
 	}
 
 	public HumanAbilityChangeEvent callAbilityChangeEvent() {
-		return Spout.getEventManager().callEvent(new HumanAbilityChangeEvent(this));
+		return getOwner().getEngine().getEventManager().callEvent(new HumanAbilityChangeEvent(this));
 	}
 
 	// This is here to eliminate repetitive code above

@@ -26,13 +26,13 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import org.spout.api.Spout;
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.plugin.Platform;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.drops.SwitchDrops;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
@@ -52,7 +52,7 @@ public class Leaves extends Solid implements Burnable, InitializableMaterial {
 	private Leaves(String name, String model) {
 		super((short) 0x0003, name, 18, model);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
-		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
+		if (VanillaPlugin.getInstance().getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_FOLIAGE_COLOR)) {
 				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.BIOME_FOLIAGE_COLOR);
 			}
@@ -62,7 +62,7 @@ public class Leaves extends Solid implements Burnable, InitializableMaterial {
 	private Leaves(String name, int data, Leaves parent, String model) {
 		super(name, 18, data, parent, model);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
-		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
+		if (VanillaPlugin.getInstance().getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_FOLIAGE_COLOR)) {
 				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.BIOME_FOLIAGE_COLOR);
 			}

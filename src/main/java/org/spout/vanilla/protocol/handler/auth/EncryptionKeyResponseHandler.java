@@ -36,7 +36,6 @@ import org.bouncycastle.crypto.CipherParameters;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithIV;
 
-import org.spout.api.Spout;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.scheduler.TaskPriority;
@@ -143,7 +142,7 @@ public class EncryptionKeyResponseHandler extends MessageHandler<EncryptionKeyRe
 				Thread loginAuth = new Thread(new LoginAuth(session, finalName, runnable));
 				loginAuth.start();
 			} else {
-				Spout.getEngine().getScheduler().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), runnable, TaskPriority.CRITICAL);
+				VanillaPlugin.getInstance().getEngine().getScheduler().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), runnable, TaskPriority.CRITICAL);
 			}
 		}
 	}

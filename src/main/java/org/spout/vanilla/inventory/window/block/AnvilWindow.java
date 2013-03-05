@@ -51,7 +51,7 @@ public class AnvilWindow extends Window {
 
 	@Override
 	public void close() {
-		AnvilCloseEvent event = Spout.getEventManager().callEvent(new AnvilCloseEvent(block, inventory, getPlayer()));
+		AnvilCloseEvent event = getPlayer().getEngine().getEventManager().callEvent(new AnvilCloseEvent(block, inventory, getPlayer()));
 		if (event.isCancelled()) {
 			return;
 		}

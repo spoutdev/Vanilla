@@ -31,7 +31,6 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.logging.Level;
 
 import org.spout.api.Client;
-import org.spout.api.Spout;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.gui.Screen;
@@ -69,7 +68,7 @@ public class HUD extends EntityComponent {
 		if (!(getOwner() instanceof Player)) {
 			throw new IllegalStateException("May only attach this component to players!");
 		}
-		if (Spout.getPlatform() != Platform.CLIENT) {
+		if (VanillaPlugin.getInstance().getEngine().getPlatform() != Platform.CLIENT) {
 			throw new IllegalStateException("This component is only attached to clients!");
 		}
 	}
@@ -99,9 +98,9 @@ public class HUD extends EntityComponent {
 		try {
 			widget = clazz.newInstance();
 		} catch (InstantiationException ex) {
-			Spout.getLogger().log(Level.SEVERE, null, ex);
+			VanillaPlugin.getInstance().getLogger().log(Level.SEVERE, null, ex);
 		} catch (IllegalAccessException ex) {
-			Spout.getLogger().log(Level.SEVERE, null, ex);
+			VanillaPlugin.getInstance().getLogger().log(Level.SEVERE, null, ex);
 		}
 
 		if (widget instanceof QuickbarWidget) {
@@ -170,7 +169,7 @@ public class HUD extends EntityComponent {
 	}
 
 	public void openHUD() {
-		((Client) Spout.getEngine()).getScreenStack().openScreen(hud);
+		((Client) getOwner().getEngine()).getScreenStack().openScreen(hud);
 	}
 
 	/**

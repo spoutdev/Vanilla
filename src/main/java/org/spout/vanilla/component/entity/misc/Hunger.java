@@ -28,7 +28,6 @@ package org.spout.vanilla.component.entity.misc;
 
 import org.spout.api.Client;
 import org.spout.api.Server;
-import org.spout.api.Spout;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
@@ -94,7 +93,7 @@ public class Hunger extends EntityComponent {
 		 * Attacking or being attacked - 0.3 Food poisoning - 15 total over entire duration
 		 */
 
-		switch (Spout.getPlatform()) {
+		switch (getOwner().getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
 				final Health healthComponent = human.getHealth();
@@ -234,7 +233,7 @@ public class Hunger extends EntityComponent {
 	public void setHunger(int hunger) {
 		getData().put(VanillaData.HUNGER, Math.min(hunger, 20));
 		reload();
-		if (Spout.getEngine() instanceof Client) {
+		if (getOwner().getEngine() instanceof Client) {
 			//render(52, 16);
 			fx = 52;
 			bx = 16;
@@ -290,7 +289,7 @@ public class Hunger extends EntityComponent {
 	 */
 	public void setPoisoned(boolean poisoned) {
 		getData().put(VanillaData.POISONED, poisoned);
-		if (Spout.getEngine() instanceof Client) {
+		if (getOwner().getEngine() instanceof Client) {
 			if (poisoned) {
 				fx = 88;
 				bx = 133;
@@ -307,7 +306,7 @@ public class Hunger extends EntityComponent {
 	}
 
 	public void reload() {
-		if (Spout.getEngine() instanceof Server) {
+		if (getOwner().getEngine() instanceof Server) {
 			getPlayer().getNetworkSynchronizer().callProtocolEvent(new PlayerHealthEvent(getPlayer()));
 		}
 	}

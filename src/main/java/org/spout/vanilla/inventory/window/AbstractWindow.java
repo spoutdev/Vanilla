@@ -32,7 +32,6 @@ import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 
 import org.spout.api.ServerOnly;
-import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.inventory.Inventory;
@@ -67,7 +66,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 		this.title = title;
 		this.offset = offset;
 
-		switch (Spout.getPlatform()) {
+		switch (owner.getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
 				// Initialize the window id on the server
@@ -189,7 +188,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 	 */
 	public void setProperty(int id, int value) {
 		properties.put(id, value);
-		switch (Spout.getPlatform()) {
+		switch (owner.getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
 				callProtocolEvent(new WindowPropertyEvent(this, id, value));
@@ -198,7 +197,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 				// TODO: Window properties
 				break;
 			default:
-				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform());
+				throw new IllegalStateException("Unknown platform: " + owner.getEngine().getPlatform());
 		}
 	}
 
@@ -266,7 +265,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 	 */
 	public void setCursorItem(ItemStack cursorItem) {
 		this.cursorItem = cursorItem;
-		if (Spout.getPlatform() == Platform.CLIENT) {
+		if (owner.getEngine().getPlatform() == Platform.CLIENT) {
 			// TODO: Attach item to cursor
 		}
 	}
@@ -297,8 +296,8 @@ public abstract class AbstractWindow implements InventoryViewer {
 	}
 
 	protected void debug(Level level, String msg) {
-		if (Spout.debugMode()) {
-			Spout.getLogger().log(level, msg);
+		if (owner.getEngine().debugMode()) {
+			owner.getEngine().getLogger().log(level, msg);
 		}
 	}
 
@@ -318,7 +317,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 	 */
 	protected boolean canSet(Inventory inventory, int index, ItemStack item) {
 		final boolean canSet = inventory.canSet(index, item);
-		InventoryCanSetEvent event = Spout.getEventManager().callEvent(new InventoryCanSetEvent(inventory, new PlayerCause(getPlayer()), index, item, !canSet));
+		InventoryCanSetEvent event = owner.getEngine().getEventManager().callEvent(new InventoryCanSetEvent(inventory, new PlayerCause(getPlayer()), index, item, !canSet));
 		return !event.isCancelled();
 	}
 }

@@ -27,13 +27,13 @@
 package org.spout.vanilla.inventory.util;
 
 import org.spout.api.Client;
-import org.spout.api.Spout;
 import org.spout.api.gui.Widget;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.Slot;
 import org.spout.api.math.Vector2;
 import org.spout.api.util.StringUtil;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.inventory.window.gui.RenderSlot;
 
 /**
@@ -52,8 +52,8 @@ public class InventoryConverter {
 		widgets = new Widget[positions.length];
 		for (int i = 0; i < widgets.length; i++) {
 			final RenderSlot slot;
-			if (Spout.getEngine() instanceof Client) {
-				Widget widget = widgets[i] = ((Client) Spout.getEngine()).getScreenStack().createWidget();
+			if (VanillaPlugin.getInstance().getEngine() instanceof Client) {
+				Widget widget = widgets[i] = ((Client) VanillaPlugin.getInstance().getEngine()).getScreenStack().createWidget();
 				slot = widget.add(RenderSlot.class);
 				slot.setPosition(positions[i]);
 			} else {

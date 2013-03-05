@@ -29,7 +29,6 @@ package org.spout.vanilla.protocol.handler.player;
 import java.util.Collection;
 import java.util.HashSet;
 
-import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Result;
@@ -128,7 +127,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 
 		// Don't block protections if dropping an item, silly Notch...
 		if (state != PlayerDiggingMessage.STATE_DROP_ITEM && state != PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
-			Collection<Protection> protections = Spout.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(point);
+			Collection<Protection> protections = player.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(point);
 			for (Protection p : protections) {
 				if (p.contains(point) && !human.isOp()) {
 					player.getSession().send(false, new BlockChangeMessage(x, y, z, minecraftID, block.getData() & 0xF, rm));
@@ -150,7 +149,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		}
 		if (state == PlayerDiggingMessage.STATE_START_DIGGING) {
 			PlayerInteractEvent event = new PlayerInteractEvent(player, block.getPosition(), heldItem, Action.LEFT_CLICK, isInteractable, clickedFace);
-			if (Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
+			if (player.getEngine().getEventManager().callEvent(event).isCancelled()) {
 				if (human.isCreative() || blockMaterial.getHardness() == 0.0f) {
 					session.send(false, new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
 					if (block.getComponent() instanceof Sign) {

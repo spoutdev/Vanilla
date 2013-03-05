@@ -36,9 +36,9 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 
 import org.spout.api.Server;
-import org.spout.api.Spout;
 import org.spout.api.protocol.PortBinding;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 
 public class LANThread extends Thread {
@@ -58,7 +58,7 @@ public class LANThread extends Thread {
 	}
 
 	private InetSocketAddress getVanillaPort() {
-		for (PortBinding binding : ((Server) Spout.getEngine()).getBoundAddresses()) {
+		for (PortBinding binding : ((Server) VanillaPlugin.getInstance().getEngine()).getBoundAddresses()) {
 			if (binding.getProtocol() instanceof VanillaProtocol && binding.getAddress() instanceof InetSocketAddress) {
 				return ((InetSocketAddress) binding.getAddress());
 			}

@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.world.sky;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.NetworkSynchronizer;
 
@@ -56,7 +55,7 @@ public class NormalSky extends Sky {
 
 	@Override
 	public void updateWeather(Weather oldWeather, Weather newWeather) {
-		WeatherChangeEvent event = Spout.getEventManager().callEvent(new WeatherChangeEvent(getOwner(), oldWeather, newWeather));
+		WeatherChangeEvent event = getOwner().getEngine().getEventManager().callEvent(new WeatherChangeEvent(getOwner(), oldWeather, newWeather));
 		if (event.isCancelled()) {
 			return;
 		}

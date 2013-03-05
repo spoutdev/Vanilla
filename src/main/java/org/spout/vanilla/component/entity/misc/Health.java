@@ -32,7 +32,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.Client;
-import org.spout.api.Spout;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -88,8 +87,8 @@ public class Health extends EntityComponent {
 	private int heartAnimationTicks;
 
 	public Health() {
-		if (Spout.getPlatform() == Platform.CLIENT) {
-			hearts = ((Client) Spout.getEngine()).getScreenStack().createWidget();
+		if (getEngine().getPlatform() == Platform.CLIENT) {
+			hearts = ((Client) getEngine()).getScreenStack().createWidget();
 		}
 	}
 
@@ -100,7 +99,7 @@ public class Health extends EntityComponent {
 
 	@Override
 	public void onAttached() {
-		if (Spout.getEngine() instanceof Client && getOwner() instanceof Player) {
+		if (getEngine() instanceof Client && getOwner() instanceof Player) {
 			float x = START_X;
 			float dx = 0.06f * SCALE;
 
@@ -136,7 +135,7 @@ public class Health extends EntityComponent {
 	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void onTick(float dt) {
-		switch (Spout.getPlatform()) {
+		switch (getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
 				if (isDying()) {
@@ -225,7 +224,7 @@ public class Health extends EntityComponent {
 		} else {
 			event = new VanillaEntityDeathEvent(owner);
 		}
-		if (!Spout.getEngine().getEventManager().callEvent(event).isCancelled()) {
+		if (!getEngine().getEventManager().callEvent(event).isCancelled()) {
 			if (!(owner instanceof Player)) {
 				owner.remove();
 			}
@@ -341,7 +340,7 @@ public class Health extends EntityComponent {
 	 */
 	public void setHealth(int health, HealthChangeCause cause) {
 		EntityHealthChangeEvent event = new EntityHealthChangeEvent(getOwner(), cause, health - getHealth());
-		Spout.getEngine().getEventManager().callEvent(event);
+		getEngine().getEventManager().callEvent(event);
 		if (!event.isCancelled()) {
 			if (getHealth() + event.getChange() > getMaxHealth()) {
 				getData().put(VanillaData.HEALTH, getMaxHealth());
@@ -376,7 +375,7 @@ public class Health extends EntityComponent {
 	 */
 	public void heal(int amount, HealCause cause) {
 		EntityHealEvent event = new EntityHealEvent(getOwner(), amount, cause);
-		EntityHealEvent healEvent = Spout.getEngine().getEventManager().callEvent(event);
+		EntityHealEvent healEvent = getOwner().getEngine().getEventManager().callEvent(event);
 		if (!healEvent.isCancelled()) {
 			setHealth(getHealth() + event.getHealAmount(), HealthChangeCause.HEAL);
 		}
@@ -454,7 +453,7 @@ public class Health extends EntityComponent {
 			eventCause = new NullDamageCause(cause.getType());
 		}
 		// TODO take potion effects into account
-		EntityDamageEvent event = Spout.getEngine().getEventManager().callEvent(new EntityDamageEvent(getOwner(), amount, eventCause, sendHurtMessage));
+		EntityDamageEvent event = getEngine().getEventManager().callEvent(new EntityDamageEvent(getOwner(), amount, eventCause, sendHurtMessage));
 		if (event.isCancelled()) {
 			return;
 		}

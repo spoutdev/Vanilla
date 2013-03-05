@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.liquid;
 
+import org.spout.api.Platform;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;

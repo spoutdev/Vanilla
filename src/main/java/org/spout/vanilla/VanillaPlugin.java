@@ -102,7 +102,8 @@ public class VanillaPlugin extends CommonPlugin {
 	protected static VanillaPlugin instance;
 	private VanillaConfiguration config;
 	private RemoteConnectionCore rcon;
-	// Client authentification informations
+	//Client only
+	//TODO Remove, seriously not secure.
 	private String username = "";
 	private String sessionId = "";
 
@@ -177,8 +178,11 @@ public class VanillaPlugin extends CommonPlugin {
 	@Override
 	public void onLoad() {
 		instance = this;
-		((PluginLogger) getLogger()).setTag(new ChatArguments(ChatStyle.RESET, "[", ChatStyle.GOLD, "Vanilla", ChatStyle.RESET, "] "));
+		//Config
 		config = new VanillaConfiguration(getDataFolder());
+		config.load();
+		//Logger
+		((PluginLogger) getLogger()).setTag(new ChatArguments(ChatStyle.RESET, "[", ChatStyle.GOLD, "Vanilla", ChatStyle.RESET, "] "));
 		//Spout.getFilesystem().registerLoader(new MapPaletteLoader());
 		getEngine().getFilesystem().registerLoader(new RecipeLoader());
 		Protocol.registerProtocol(new VanillaProtocol());
@@ -189,9 +193,6 @@ public class VanillaPlugin extends CommonPlugin {
 		//MapPalette.DEFAULT = (MapPalette) Spout.getFilesystem().getResource("mappalette://Vanilla/map/mapColorPalette.dat");
 		RecipeYaml.DEFAULT = (RecipeYaml) getEngine().getFilesystem().getResource("recipe://Vanilla/recipes.yml");
 		VanillaRecipes.initialize();
-
-		//Config
-		config.load();
 
 		getLogger().info("loaded");
 	}

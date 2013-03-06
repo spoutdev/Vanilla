@@ -32,7 +32,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.Client;
-import org.spout.api.Platform;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -86,12 +85,6 @@ public class Health extends EntityComponent {
 	private boolean animateHearts;
 	private int heartAnimationTicks;
 
-	public Health() {
-		if (getEngine().getPlatform() == Platform.CLIENT) {
-			hearts = ((Client) getEngine()).getScreenStack().createWidget();
-		}
-	}
-
 	@Override
 	public boolean canTick() {
 		return true;
@@ -100,6 +93,7 @@ public class Health extends EntityComponent {
 	@Override
 	public void onAttached() {
 		if (getEngine() instanceof Client && getOwner() instanceof Player) {
+			hearts = ((Client) getEngine()).getScreenStack().createWidget();
 			float x = START_X;
 			float dx = 0.06f * SCALE;
 

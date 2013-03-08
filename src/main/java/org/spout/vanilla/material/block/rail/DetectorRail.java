@@ -29,6 +29,7 @@ package org.spout.vanilla.material.block.rail;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.api.material.block.BlockSnapshot;
 import org.spout.api.material.range.EffectRange;
 
 import org.spout.vanilla.data.RailsState;
@@ -121,7 +122,7 @@ public class DetectorRail extends RailBase implements RedstoneSource, DynamicMat
 	}
 
 	@Override
-	public short getRedstonePowerStrength(short data) {
-		return ((data & 0x8) == 1) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
+	public short getRedstonePowerStrength(BlockSnapshot state) {
+		return ((state.getData() & 0x8) == 1) ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;
 	}
 }

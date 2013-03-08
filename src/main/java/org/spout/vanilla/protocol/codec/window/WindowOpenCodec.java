@@ -51,7 +51,8 @@ public final class WindowOpenCodec extends MessageCodec<WindowOpenMessage> {
 		}
 		String title = ChannelBufferUtils.readString(buffer);
 		int slots = buffer.readUnsignedByte();
-		return new WindowOpenMessage(id, type, title, slots);
+		boolean useTitle = buffer.readUnsignedByte() != 0;
+		return new WindowOpenMessage(id, type, title, slots, useTitle);
 	}
 
 	@Override
@@ -61,6 +62,7 @@ public final class WindowOpenCodec extends MessageCodec<WindowOpenMessage> {
 		buffer.writeByte(message.getType().getId());
 		ChannelBufferUtils.writeString(buffer, message.getTitle());
 		buffer.writeByte(message.getSlots());
+		buffer.writeByte(message.isUsingTitle() ? 1 : 0);
 		return buffer;
 	}
 }

@@ -57,6 +57,8 @@ import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.util.RedstoneUtil;
 
 public class DispenserBlock extends ComponentMaterial implements Directional, RedstoneTarget {
+	public static final BlockFaces BTEWNS = new BlockFaces(BlockFace.BOTTOM, BlockFace.TOP, BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH);
+
 	public DispenserBlock(String name, int id) {
 		super(name, id, Dispenser.class, VanillaMaterialModels.DISPENSER);
 		this.setHardness(3.5F).setResistance(5.8F);
@@ -71,6 +73,9 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
 		Dispenser dispenser = (Dispenser) block.getComponent();
+		if (!dispenser.isPowered() && this.isReceivingPower(block)) {
+			//TODO: shoot stuff if we have inventory.
+		}
 		dispenser.setPowered(this.isReceivingPower(block));
 	}
 
@@ -81,7 +86,12 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 
 	@Override
 	public BlockFace getFacing(Block block) {
-		return BlockFaces.EWNS.get(block.getData() - 2);
+		return BTEWNS.get(block.getData() & 0x7);
+	}
+
+	@Override
+	public void setFacing(Block block, BlockFace facing) {
+		block.setData(BTEWNS.indexOf(facing, 1));
 	}
 
 	/**
@@ -111,7 +121,8 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 		Material material = item.getMaterial();
 		//TODO: Implement the following 'special' shoot cases:
 		// - eggs, arrows, fireballs and snowballs
-		// - potions, exp. bottles and monster eggs
+		// - potions, exp. bottles, monster eggs
+		// - armor,
 
 		if (material.equals(VanillaMaterials.ARROW)) {
 			shootEffect = GeneralEffects.RANDOM_BOW;
@@ -147,11 +158,6 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 		shootEffect.playGlobal(block.getPosition());
 		GeneralEffects.SMOKE.playGlobal(block.getPosition(), direction);
 		return true;
-	}
-
-	@Override
-	public void setFacing(Block block, BlockFace facing) {
-		block.setData((short) (BlockFaces.EWNS.indexOf(facing, 0) + 2));
 	}
 
 	@Override

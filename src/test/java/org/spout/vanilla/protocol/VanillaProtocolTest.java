@@ -118,6 +118,10 @@ import org.spout.vanilla.protocol.msg.world.chunk.ChunkBulkMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 
 import static org.spout.vanilla.protocol.ChannelBufferUtilsTest.TEST_PARAMS;
+import org.spout.vanilla.protocol.msg.scoreboard.CreateScoreboardMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.DisplayScoreboardMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.TeamMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.UpdateScoreboardMessage;
 
 public class VanillaProtocolTest extends BaseProtocolTest {
 	private static final VanillaCodecLookupService CODEC_LOOKUP = new VanillaCodecLookupService();
@@ -179,7 +183,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new EffectMessage(34566, 1, 2, 34, 5, NullRepositionManager.getInstance()),
 			new PlayerGameStateMessage(PlayerGameStateMessage.CHANGE_GAME_MODE, GameMode.CREATIVE),
 			new EntityThunderboltMessage(34, 1, 23, 45, 55, NullRepositionManager.getInstance()),
-			new WindowOpenMessage(1, WindowType.FURNACE, "container.furnace", 42),
+			new WindowOpenMessage(1, WindowType.FURNACE, "container.furnace", 42, true),
 			new WindowCloseMessage(23),
 			new WindowClickMessage(1, 2, false, 34, true, new ItemStack(VanillaMaterials.PLANK, 1, 1)),
 			new WindowSlotMessage(1, 2, new ItemStack(VanillaMaterials.PLANK, 1, 2)),
@@ -199,6 +203,10 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new PlayerKickMessage("This is a test"),
 			new PlayerAbilityMessage(true, true, true, true, (byte) 0, (byte) 5),
 			new PlayerStatusMessage((byte) 0),
+			new CreateScoreboardMessage("name", "displayName", false),
+			new UpdateScoreboardMessage("item", false, "boardName", 5),
+			new DisplayScoreboardMessage((byte) 1, "name"),
+			new TeamMessage("teamName", (byte) 0, "displayName", "prefix", "suffix", false, null),
 			new BlockBreakAnimationMessage(1, 1, 1, 1, (byte) 2, NullRepositionManager.getInstance())
 	};
 

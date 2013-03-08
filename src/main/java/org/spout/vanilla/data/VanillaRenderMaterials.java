@@ -46,6 +46,8 @@ public final class VanillaRenderMaterials {
 	public static final RenderMaterial ALCHEMY_MATERIAL;
 	public static final RenderMaterial ITEMS_MATERIAL;
 	public static final RenderMaterial BLOCKS_MATERIAL;
+	public static final RenderMaterial HOPPER_MATERIAL;
+	public static final RenderMaterial DROPPER_MATERIAL;
 	// TODO: Missing textures
 	public static final RenderMaterial VILLAGER_MATERIAL = null;
 	public static final RenderMaterial BEACON_MATERIAL = null;
@@ -65,6 +67,8 @@ public final class VanillaRenderMaterials {
 			ALCHEMY_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/InventoryGUIMaterial.smt");
 			ITEMS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/ItemsGUIMaterial.smt");
 			BLOCKS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/materials/terrain.smt");
+			HOPPER_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/materials.InventoryGUIMaterial.smt");
+			DROPPER_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/materials.InventoryGUIMaterial.smt");
 		} else {
 			FONT = null;
 			QUICKBAR_MATERIAL = null;
@@ -78,6 +82,8 @@ public final class VanillaRenderMaterials {
 			ALCHEMY_MATERIAL = null;
 			ITEMS_MATERIAL = null;
 			BLOCKS_MATERIAL = null;
+			HOPPER_MATERIAL = null;
+			DROPPER_MATERIAL = null;
 		}
 	}
 

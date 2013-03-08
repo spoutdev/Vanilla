@@ -85,7 +85,17 @@ public enum WindowType {
 	 * The window seen when using an
 	 * {@link org.spout.vanilla.material.block.solid.Anvil}
 	 */
-	ANVIL(8, VanillaRenderMaterials.ANVIL_MATERIAL);
+	ANVIL(8, VanillaRenderMaterials.ANVIL_MATERIAL),
+	/**
+	 * The window seen when using an
+	 * {@link org.spout.vanilla.component.block.material.Hopper}
+	 */
+	HOPPER(9, VanillaRenderMaterials.HOPPER_MATERIAL), //TODO: double-check inventory ID sent to client
+	/**
+	 * The window seen when using an
+	 * {@link org.spout.vanilla.component.block.material.Dropper}
+	 */
+	DROPPER(10, VanillaRenderMaterials.DROPPER_MATERIAL);
 	private final int id;
 	private final RenderMaterial material;
 	private static final TIntObjectMap<WindowType> idMap = new TIntObjectHashMap<WindowType>();

@@ -102,6 +102,10 @@ import org.spout.vanilla.protocol.codec.world.block.BlockChangeCodec;
 import org.spout.vanilla.protocol.codec.world.block.SignCodec;
 import org.spout.vanilla.protocol.codec.world.chunk.ChunkBulkCodec;
 import org.spout.vanilla.protocol.codec.world.chunk.ChunkDataCodec;
+import org.spout.vanilla.protocol.codec.server.CreateScoreboardCodec;
+import org.spout.vanilla.protocol.codec.server.DisplayScoreboardCodec;
+import org.spout.vanilla.protocol.codec.server.TeamCodec;
+import org.spout.vanilla.protocol.codec.server.UpdateScoreboardCodec;
 
 public class VanillaCodecLookupService extends CodecLookupService {
 	public VanillaCodecLookupService() {
@@ -247,6 +251,14 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			bind(PlayerLocaleViewDistanceCodec.class);
 			/* 0xCD */
 			bind(PlayerStatusCodec.class);
+			/* 0xCE */
+			bind(CreateScoreboardCodec.class);
+			/* 0xCF */
+			bind(UpdateScoreboardCodec.class);
+			/* 0xD0 */
+			bind(DisplayScoreboardCodec.class);
+			/* 0xD1 */
+			bind(TeamCodec.class);
 			/* 0xFA */
 			bind(ServerPluginCodec.class);
 			/* 0xFC */

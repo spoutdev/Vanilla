@@ -33,12 +33,14 @@ public class VanillaMaterialModels {
 	public static final String BEACON = null;
 	public static final String ANVIL = null;
 	public static final String DISPENSER = "model://Vanilla/materials/block/solid/dispenser/dispenser.spm";
+	public static final String DROPPER = null;
 	public static final String FURNACE = "model://Vanilla/materials/block/solid/furnace/furnace.spm";
 	public static final String JUKEBOX = "model://Vanilla/materials/block/solid/jukebox/jukebox.spm";
 	public static final String MONSTER_SPAWNER = "model://Vanilla/materials/block/solid/mobspawner/mobspawner.spm";
 	public static final String NOTE_BLOCK = "model://Vanilla/materials/block/solid/noteblock/noteblock.spm";
 	public static final String SIGN = null;
 	public static final String CHEST = null;
+	public static final String TRAPPED_CHEST = null;
 	public static final String ENDER_CHEST = null;
 	public static final String IRON_DOOR = "model://Vanilla/materials/block/animated/door/iron_bot_close.spm";
 	public static final String WOODEN_DOOR = "model://Vanilla/materials/block/animated/door/wooden_bot_close.spm";
@@ -105,6 +107,7 @@ public class VanillaMaterialModels {
 	public static final String SOUL_SAND = "model://Vanilla/materials/block/solid/soulsand/soulsand.spm";
 	public static final String SPONGE = "model://Vanilla/materials/block/solid/sponge/sponge.spm";
 	public static final String STONE = "model://Vanilla/materials/block/solid/stone/stone.spm";
+	public static final String HOPPER = null;
 	// Wool
 	public static final String WOOL_WHITE = "model://Vanilla/materials/block/solid/whitewool/whitewool.spm";
 	public static final String WOOL_ORANGE = "model://Vanilla/materials/block/solid/orangewool/orangewool.spm";
@@ -131,6 +134,11 @@ public class VanillaMaterialModels {
 	public static final String SANDSTONE = "model://Vanilla/materials/block/solid/sandstone/sandstone.spm";
 	public static final String SANDSTONE_DECORATIVE = "model://Vanilla/materials/block/solid/cheseledsandstone/cheseledsandstone.spm";
 	public static final String SANDSTONE_SMOOTH = "model://Vanilla/materials/block/solid/smoothsandstone/smoothsandstone.spm";
+	// Quartz
+	public static final String QUARTZ = null;
+	public static final String CHISELED_QUARTZ = null;
+	public static final String PILLAR_QUARTZ = null;
+
 	// Planks
 	public static final String PLANK_OAK = "model://Vanilla/materials/block/solid/oakplanks/oakplanks.spm";
 	public static final String PLANK_PINE = "model://Vanilla/materials/block/solid/spruceplanks/spruceplanks.spm";
@@ -159,8 +167,11 @@ public class VanillaMaterialModels {
 	public static final String LAPIS_LAZULI_BLOCK = "model://Vanilla/materials/block/solid/lapislazuliblock/lapislazuliblock.spm";
 	public static final String LAPIS_LAZULI_ORE = "model://Vanilla/materials/block/solid/lapislazuliore/lapislazuliore.spm";
 	public static final String REDSTONE_ORE = "model://Vanilla/materials/block/solid/redstoneore/redstoneore.spm";
+	public static final String REDSTONE_BLOCK = null;
 	public static final String MELON_BLOCK = "model://Vanilla/materials/block/solid/melon/melon.spm";
 	public static final String GLOWSTONE = "model://Vanilla/materials/block/solid/glowstone/glowstone.spm";
+	public static final String NETHER_QUARTZ_ORE = null;
+
 	// Double Slabs //TODO: Separate models per material
 	public static final String DOUBLE_SLAB = "model://Vanilla/materials/block/solid/doubleslabs/doubleslabs.spm";
 	public static final String DOUBLE_SLAB_BIRCH_WOOD = "model://Vanilla/materials/block/solid/birchwooddoubleslab/birchwooddoubleslab.spm";
@@ -180,11 +191,12 @@ public class VanillaMaterialModels {
 	public static final String SLAB_COBBLESTONE = null;
 	public static final String SLAB_BRICK = null;
 	public static final String SLAB_STONE_BRICK = null;
+	public static final String SLAB_NETHER_BRICK = null;
+	public static final String SLAB_QUARTZ = null;
 	public static final String SLAB_OAK_WOOD = null;
 	public static final String SLAB_SPRUCE_WOOD = null;
 	public static final String SLAB_BIRCH_WOOD = null;
 	public static final String SLAB_JUNGLE_WOOD = null;
-	public static final String SLAB_NETHER_BRICK = null;
 	// Snow
 	public static final String SNOW_1 = "model://Vanilla/materials/block/nonsolid/snow/snow_1.spm";
 	public static final String SNOW_2 = "model://Vanilla/materials/block/nonsolid/snow/snow_2.spm";

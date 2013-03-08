@@ -54,8 +54,6 @@ public enum ObjectType {
 	BOAT(1, Boat.class),
 	ITEM(2, Item.class),
 	MINECART(10, Minecart.class),
-	STORAGE_MINECART(11, StorageMinecart.class),
-	POWERED_MINECART(12, PoweredMinecart.class),
 	PRIMED_TNT(50, Tnt.class),
 	ENDER_CRYSTAL(51, EnderCrystal.class),
 	ARROW(60, Arrow.class),

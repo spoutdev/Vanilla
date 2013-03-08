@@ -31,6 +31,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.data.RailsState;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.RedstoneUtil;
 
@@ -47,7 +48,7 @@ public class PoweredRail extends RailBase implements RedstoneTarget {
 	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
-		if (block.getMaterial().equals(this)) {
+		if (block.getMaterial().equals(this) || block.getMaterial().equals(VanillaMaterials.RAIL_POWERED)) {
 			boolean powered = this.isReceivingPower(block);
 			if (powered != this.isPowered(block)) {
 				this.setPowered(block, powered);

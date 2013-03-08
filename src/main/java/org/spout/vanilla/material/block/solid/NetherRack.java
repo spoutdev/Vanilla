@@ -26,14 +26,29 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.TimedCraftable;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Solid;
+import org.spout.vanilla.material.block.component.FurnaceBlock;
 
-public class NetherRack extends Solid {
+public class NetherRack extends Solid implements TimedCraftable {
 	public NetherRack(String name, int id) {
 		super(name, id, VanillaMaterialModels.NETHER_RACK);
 		this.setHardness(0.6F).setResistance(0.6F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
+	}
+
+	@Override
+	public ItemStack getResult() {
+		return new ItemStack(VanillaMaterials.NETHER_BRICK, 1);
+	}
+
+	@Override
+	public float getCraftTime() {
+		return FurnaceBlock.SMELT_TIME;
 	}
 }

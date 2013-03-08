@@ -43,6 +43,7 @@ import org.spout.api.event.entity.EntityShownEvent;
 import org.spout.api.event.player.PlayerJoinEvent;
 import org.spout.api.event.server.permissions.PermissionNodeEvent;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.block.BlockSnapshot;
 
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
@@ -143,8 +144,7 @@ public class VanillaListener implements Listener {
 		//Redstone event
 		BlockMaterial oldMat = event.getBlock().getMaterial();
 		BlockMaterial newMat = event.getSnapshot().getMaterial();
-		short prevData = event.getBlock().getData();
-		short newData = event.getSnapshot().getData();
+		BlockSnapshot initialState = new BlockSnapshot(event.getBlock());
 		//RedstoneChangeEvent
 		//Three possibilities here:
 		//1.) Redstone source material was placed, generating power
@@ -154,13 +154,13 @@ public class VanillaListener implements Listener {
 		short newPower = -1;
 		if (!(oldMat instanceof RedstoneSource) && newMat instanceof RedstoneSource) {
 			prevPower = 0;
-			newPower = ((RedstoneSource) newMat).getRedstonePowerStrength(newData);
+			newPower = ((RedstoneSource) newMat).getRedstonePowerStrength(event.getSnapshot());
 		} else if (!(newMat instanceof RedstoneSource) && oldMat instanceof RedstoneSource) {
-			prevPower = ((RedstoneSource) oldMat).getRedstonePowerStrength(prevData);
+			prevPower = ((RedstoneSource) oldMat).getRedstonePowerStrength(initialState);
 			newPower = 0;
 		} else if (newMat == oldMat && oldMat instanceof RedstoneSource) {
-			prevPower = ((RedstoneSource) oldMat).getRedstonePowerStrength(prevData);
-			newPower = ((RedstoneSource) newMat).getRedstonePowerStrength(newData);
+			prevPower = ((RedstoneSource) oldMat).getRedstonePowerStrength(initialState);
+			newPower = ((RedstoneSource) newMat).getRedstonePowerStrength(event.getSnapshot());
 		}
 		if (prevPower != -1) {
 			RedstoneChangeEvent redstoneEvent = new RedstoneChangeEvent(event.getBlock(), event.getCause(), prevPower, newPower);

@@ -37,16 +37,18 @@ public final class WindowOpenMessage extends WindowMessage {
 	private final int slots;
 	private final String title;
 	private final WindowType type;
+	private final boolean useTitle;
 
 	public WindowOpenMessage(AbstractWindow window, int slots) {
-		this(window.getId(), window.getType(), window.getTitle(), slots);
+		this(window.getId(), window.getType(), window.getTitle(), slots, false);
 	}
 
-	public WindowOpenMessage(int windowInstanceId, WindowType type, String title, int slots) {
+	public WindowOpenMessage(int windowInstanceId, WindowType type, String title, int slots, boolean useTitle) {
 		super(windowInstanceId);
 		this.type = type;
 		this.title = title;
 		this.slots = slots;
+		this.useTitle = useTitle;
 	}
 
 	public WindowType getType() {
@@ -61,6 +63,10 @@ public final class WindowOpenMessage extends WindowMessage {
 		return title;
 	}
 
+	public boolean isUsingTitle() {
+		return useTitle;
+	}
+
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
@@ -68,6 +74,7 @@ public final class WindowOpenMessage extends WindowMessage {
 				.append("type", type)
 				.append("slots", slots)
 				.append("title", title)
+				.append("usingTitle", useTitle)
 				.toString();
 	}
 
@@ -85,6 +92,7 @@ public final class WindowOpenMessage extends WindowMessage {
 				.append(this.type, other.type)
 				.append(this.slots, other.slots)
 				.append(this.title, other.title)
+				.append(this.useTitle, other.useTitle)
 				.isEquals();
 	}
 }

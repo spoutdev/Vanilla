@@ -51,11 +51,13 @@ public class Slab extends VanillaBlockMaterial implements Burnable {
 	public static final Slab COBBLESTONE = new Slab("Cobblestone Slab", 3, STONE, VanillaMaterialModels.SLAB_COBBLESTONE);
 	public static final Slab BRICK = new Slab("Brick Slab", 4, STONE, VanillaMaterialModels.SLAB_BRICK);
 	public static final Slab STONE_BRICK = new Slab("Stone Brick Slab", 5, STONE, VanillaMaterialModels.SLAB_STONE_BRICK);
+	public static final Slab NETHER_BRICK = new Slab("Nether Brick Slab", 6, STONE, VanillaMaterialModels.SLAB_NETHER_BRICK);
+	public static final Slab QUARTZ = new Slab("Quartz Slab", 7, STONE, VanillaMaterialModels.SLAB_QUARTZ);
 	public static final Slab OAK_WOOD = new Slab((short) 0x3, "Oak Wooden Slab", 126, true, VanillaMaterialModels.SLAB_OAK_WOOD);
 	public static final Slab SPRUCE_WOOD = new Slab("Spruce Wooden Slab", 0x1, OAK_WOOD, VanillaMaterialModels.SLAB_SPRUCE_WOOD);
 	public static final Slab BIRCH_WOOD = new Slab("Birch Wooden Slab", 0x2, OAK_WOOD, VanillaMaterialModels.SLAB_BIRCH_WOOD);
 	public static final Slab JUNGLE_WOOD = new Slab("Jungle Wooden Slab", 0x3, OAK_WOOD, VanillaMaterialModels.SLAB_JUNGLE_WOOD);
-	public static final Slab NETHER_BRICK = new Slab("Nether Brick Slab", 0x6, STONE, VanillaMaterialModels.SLAB_NETHER_BRICK);
+
 	private DoubleSlab doubletype;
 	private final boolean wood;
 	private final ByteBitSet occlusionTop = new ByteBitSet(BlockFace.TOP);

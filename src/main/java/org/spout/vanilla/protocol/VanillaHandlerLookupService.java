@@ -83,6 +83,10 @@ import org.spout.vanilla.protocol.handler.player.pos.PlayerPositionHandler;
 import org.spout.vanilla.protocol.handler.player.pos.PlayerPositionLookHandler;
 import org.spout.vanilla.protocol.handler.player.pos.PlayerSpawnHandler;
 import org.spout.vanilla.protocol.handler.player.pos.PlayerSpawnPositionHandler;
+import org.spout.vanilla.protocol.handler.server.CreateScoreboardHandler;
+import org.spout.vanilla.protocol.handler.server.DisplayScoreboardHandler;
+import org.spout.vanilla.protocol.handler.server.TeamHandler;
+import org.spout.vanilla.protocol.handler.server.UpdateScoreboardHandler;
 import org.spout.vanilla.protocol.handler.window.WindowClickHandler;
 import org.spout.vanilla.protocol.handler.window.WindowCloseHandler;
 import org.spout.vanilla.protocol.handler.window.WindowCreativeActionHandler;
@@ -176,6 +180,10 @@ import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkBulkMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.CreateScoreboardMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.DisplayScoreboardMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.TeamMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.UpdateScoreboardMessage;
 
 public class VanillaHandlerLookupService extends HandlerLookupService {
 	public VanillaHandlerLookupService() {
@@ -320,6 +328,14 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(PlayerLocaleViewDistanceMessage.class, PlayerLocaleViewDistanceHandler.class);
 			/* 0xCD */
 			bind(PlayerStatusMessage.class, PlayerStatusHandler.class);
+			/* 0xCE */
+			bind(CreateScoreboardMessage.class, CreateScoreboardHandler.class);
+			/* 0xCF */
+			bind(UpdateScoreboardMessage.class, UpdateScoreboardHandler.class);
+			/* 0xD0 */
+			bind(DisplayScoreboardMessage.class, DisplayScoreboardHandler.class);
+			/* 0xD1 */
+			bind(TeamMessage.class, TeamHandler.class);
 			/* 0xFA */
 			bind(ServerPluginMessage.class, ServerPluginHandler.class);
 			/* 0xFC */

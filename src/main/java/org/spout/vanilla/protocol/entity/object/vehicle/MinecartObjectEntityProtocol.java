@@ -31,23 +31,34 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.component.entity.substance.vehicle.minecart.MinecartBase;
+import org.spout.vanilla.component.entity.substance.vehicle.minecart.SpawnerMinecart;
+import org.spout.vanilla.component.entity.substance.vehicle.minecart.StorageMinecart;
+import org.spout.vanilla.component.entity.substance.vehicle.minecart.TNTMinecart;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 
 public class MinecartObjectEntityProtocol extends ObjectEntityProtocol {
 	public MinecartObjectEntityProtocol(ObjectType type) {
 		super(type);
-		if (!ObjectType.MINECART.equals(type) && !ObjectType.POWERED_MINECART.equals(type) && !ObjectType.STORAGE_MINECART.equals(type)) {
+		if (!ObjectType.MINECART.equals(type)) {
 			throw new IllegalStateException("Invalid minecart type!");
 		}
 	}
 
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> params = super.getSpawnParameters(entity);
+		MinecartBase base = entity.get(MinecartBase.class);
+		int block = base.getMinecraftBlockID();
+
 		params.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) 0)); // Powered flag
 		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 17, 0)); // Unknown flag; initialized to 0. (Probably time since last collision)
 		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 18, 1)); // Unknown flag; initialized to 1. (Probably acceleration)
 		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 19, 0)); // Damage taken; breaks at 40.
+		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 20, block)); // Block ID to display in the minecart
+		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 21, 6)); // Display Data, where to display the block, 6 is default.
+		params.add(new Parameter<Integer>(Parameter.TYPE_BYTE, 22, block != 0 ? 1 : 0)); // 0 == Block Display off, 1 == Block Display on
 		return params;
 	}
 }

@@ -1441,3 +1441,60 @@ recipes:
     result: CACTUS_GREEN,1
     ingredients: [CACTUS]
     includedata: true
+
+  # 1.5 blocks
+  Comparator:
+    type: Shaped
+    result: REDSTONE_COMPARATOR,1
+    ingredients:
+      A: NETHER_QUARTZ
+      B: REDSTONE_TORCH
+      C: STONE
+    rows: [' B ', 'BAB', 'CCC']
+
+  Daylight Sensor:
+    type: Shaped
+    result: DAYLIGHT_SENSOR,1
+    ingredients:
+      A: GLASS
+      B: NETHER_QUARTZ
+      C: WOODEN_SLAB
+    rows: ['AAA', 'BBB', 'CCC']
+
+  Block of Quartz:
+    type: Shaped
+    result: BLOCK_OF_QUARTZ,1
+    ingredients:
+      A: NETHER_QUARTZ
+    rows: ['AA', 'AA']
+
+  Pillar Quartz:
+    type: Shaped
+    result: PILLAR_QUARTZ_BLOCK,2
+    ingredients:
+      A: BLOCK_OF_QUARTZ
+    rows: ['A', 'A']
+    includedata: false
+
+  Quartz Stairs:
+    type: Shaped
+    result: QUARTZ_STAIRS,4
+    ingredients:
+      A: BLOCK_OF_QUARTZ
+    rows: ['  A', ' AA', 'AAA']
+    includedata: false
+
+  Quartz Slab:
+    type: Shaped
+    result: QUARTZ_SLAB,6
+    ingredients:
+      A: BLOCK_OF_QUARTZ
+    rows: ['AAA']
+    includedata: false
+
+  Chiseled Quartz:
+    type: Shaped
+    result: CHISELED_QUARTZ_BLOCK,1
+    ingredients:
+      A: QUARTZ_SLAB
+    rows: ['A', 'A']

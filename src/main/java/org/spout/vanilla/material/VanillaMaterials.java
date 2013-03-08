@@ -517,7 +517,7 @@ public final class VanillaMaterials {
 	public static final VanillaItemMaterial EMERALD = new VanillaItemMaterial("Emerald", 388, null);
 	public static final VanillaItemMaterial IRON_INGOT = new VanillaItemMaterial("Iron Ingot", 265, null);
 	public static final VanillaItemMaterial GOLD_INGOT = new VanillaItemMaterial("Gold Ingot", 266, null);
-	public static final VanillaItemMaterial NETHER_QUARTZ = new VanillaItemMaterial("Quartz", 406, null);
+	public static final VanillaItemMaterial NETHER_QUARTZ = new VanillaItemMaterial("Nether Quartz", 406, null);
 	public static final Stick STICK = new Stick("Stick", 280);
 	public static final VanillaItemMaterial BOWL = new VanillaItemMaterial("Bowl", 281, null);
 	public static final StringItem STRING = new StringItem("String", 287, TRIPWIRE);

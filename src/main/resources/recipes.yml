@@ -1442,6 +1442,15 @@ recipes:
     ingredients: [CACTUS]
     includedata: true
 
+  Tripwire Hook:
+    type: Shaped
+    result: TRIPWIRE_HOOK,2
+    ingredients:
+      A: IRON_INGOT
+      B: STICK
+      C: OAK_PLANK
+    rows: ['A', 'B', 'C']
+
   # 1.5 blocks
   Comparator:
     type: Shaped
@@ -1498,3 +1507,40 @@ recipes:
     ingredients:
       A: QUARTZ_SLAB
     rows: ['A', 'A']
+
+  Hopper:
+    type: Shaped
+    result: HOPPER,1
+    ingredients:
+      A: IRON_INGOT
+      B: CHEST
+    rows: ['A A', 'ABA', ' A']
+
+  Dropper:
+    type: Shaped
+    result: DROPPER,1
+    ingredients:
+      A: COBBLESTONE
+      C: REDSTONE_WIRE
+    rows: ['AAA', 'A A', 'ACA']
+
+  Minecart with Hopper:
+    type: Shaped
+    result: MINECART_WITH_HOPPER,1
+    ingredients:
+      A: MINECART
+      B: HOPPER
+    rows: ['B', 'A']
+
+  Minecart with TNT:
+    type: Shaped
+    result: MINECART_WITH_TNT,1
+    ingredients:
+      A: MINECART
+      B: TNT
+    rows: ['B', 'A']
+
+  Trapped Chest:
+    type: Shapeless
+    result: TRAPPED_CHEST,1
+    ingredients: [TRIPWIRE_HOOK, CHEST]

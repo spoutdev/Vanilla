@@ -421,7 +421,7 @@ public final class VanillaMaterials {
 	public static final DragonEgg DRAGON_EGG = new DragonEgg("Dragon Egg", 122);
 	public static final RedstoneLamp REDSTONE_LAMP_OFF = new RedstoneLamp("Redstone Lamp", 123, false, VanillaMaterialModels.REDSTONE_LAMP_OFF);
 	public static final RedstoneLamp REDSTONE_LAMP_ON = new RedstoneLamp("Redstone Lamp (On)", 124, true, VanillaMaterialModels.REDSTONE_LAMP_ON);
-	public static final TripWireHook TRIPWIRE_HOOK = new TripWireHook("Trip Wire Hook", 131);
+	public static final TripWireHook TRIPWIRE_HOOK = new TripWireHook("Tripwire Hook", 131);
 	public static final TripWire TRIPWIRE = new TripWire("Trip Wire", 132);
 	public static final CocoaPlant COCOA_PLANT = new CocoaPlant("Cocoa Plant", 127);
 	public static final CommandBlockBlock COMMAND_BLOCK = new CommandBlockBlock("Command Block", 137);

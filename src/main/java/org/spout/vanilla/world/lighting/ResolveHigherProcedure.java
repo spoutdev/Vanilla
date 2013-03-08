@@ -56,10 +56,14 @@ public class ResolveHigherProcedure extends TInt10Procedure {
 
 	@Override
 	public boolean execute(int x, int y, int z) {
+		return execute(x, y, z, true);
+	}
+	
+	public boolean execute(int x, int y, int z, boolean levelCheck) {
 		int lightLevel = manager.getLightLevel(light, x, y, z);
 		int computedLevel = manager.computeLightLevel(light, material, x, y, z);
-		if (computedLevel > lightLevel) {
-			if (computedLevel != currentLevel) {
+		if (computedLevel >= lightLevel) {
+			if (levelCheck && computedLevel != currentLevel) {
 				throw new IllegalStateException("Light dirty block added to wrong set, computed level " + computedLevel + ", actual level " + currentLevel);
 			}
 			manager.setLightLevel(light, x, y, z, computedLevel);
@@ -73,4 +77,5 @@ public class ResolveHigherProcedure extends TInt10Procedure {
 		}
 		return true;
 	}
+
 }

@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.world.lighting;
 
-import org.spout.api.Spout;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 import org.spout.api.util.set.TInt10Procedure;

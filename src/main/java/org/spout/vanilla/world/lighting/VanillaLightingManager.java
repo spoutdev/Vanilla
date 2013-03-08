@@ -65,19 +65,21 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			dirtySets[i] = new TInt10TripleSet(base.getFloorX(), base.getFloorY(), base.getFloorZ());
 			regenSets[i] = new TInt10TripleSet(base.getFloorX(), base.getFloorY(), base.getFloorZ());
 		}
+		ResolveHigherProcedure procHigher = new ResolveHigherProcedure(this, light, material, dirtySets);
 		Iterator<IntVector3> itr = coords.iterator();
 		while (itr.hasNext()) {
 			IntVector3 v = itr.next();
-			checkAndAddDirtyRising(dirtySets, light, material, v.getX(), v.getY(), v.getZ());
+			procHigher.execute(v.getX(), v.getY(), v.getZ(), false);
 		}
 		resolveHigher(dirtySets, light, material);
 		for (int i = 0; i < dirtySets.length; i++) {
 			dirtySets[i].clear();
 		}
+		ResolveLowerProcedure procLower = new ResolveLowerProcedure(this, light, material, dirtySets, regenSets);
 		itr = coords.iterator();
 		while (itr.hasNext()) {
 			IntVector3 v = itr.next();
-			checkAndAddDirtyFalling(dirtySets, null, light, material, v.getX(), v.getY(), v.getZ(), false);
+			procLower.execute(v.getX(), v.getY(), v.getZ());
 		}
 		resolveLower(dirtySets, regenSets, light, material);
 		resolveHigher(regenSets, light, material);
@@ -152,6 +154,22 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			buffer.set(x, y, z, (byte) level);
 		} else {
 			Spout.getLogger().info("No light buffer to write to");
+		}
+	}
+	
+	protected void processRootHigher(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z) {
+		int actualLevel = getLightLevel(light, x, y, z);
+		int calculatedLevel = computeLightLevel(light, material, x, y, z);
+		if (calculatedLevel > actualLevel) {
+			setLightLevel(light, x, y, z, calculatedLevel);
+		}
+	}
+	
+	protected void processRootLower(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z) {
+		int actualLevel = getLightLevel(light, x, y, z);
+		int calculatedLevel = computeLightLevel(light, material, x, y, z);
+		if (calculatedLevel < actualLevel) {
+			setLightLevel(light, x, y, z, 0);
 		}
 	}
 

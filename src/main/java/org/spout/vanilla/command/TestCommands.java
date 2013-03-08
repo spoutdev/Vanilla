@@ -49,22 +49,25 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.lighting.LightingManager;
+import org.spout.api.lighting.LightingRegistry;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
+import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.util.BlockIterator;
-
+import org.spout.api.util.OutwardIterator;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.material.chest.Chest;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.entity.living.Ageable;
-import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.living.Human;
+import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.Burn;
 import org.spout.vanilla.component.entity.misc.Head;
 import org.spout.vanilla.component.entity.misc.Health;
@@ -100,6 +103,7 @@ import org.spout.vanilla.render.SkyRenderEffect;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
+import org.spout.vanilla.world.lighting.VanillaCuboidLightBuffer;
 
 public class TestCommands {
 	private final VanillaPlugin plugin;
@@ -111,6 +115,32 @@ public class TestCommands {
 	private Engine getEngine() {
 		return plugin.getEngine();
 	}
+	
+	@Command(aliases = "lightcheck", usage = "", desc = "Checks nearby light values", max = 0)
+	@CommandPermissions("vanilla.command.debug")
+	public void light(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to get a map.");
+		}
+		Player p = (Player) source;
+		Point pos = p.getScene().getPosition();
+		World w = pos.getWorld();
+		LightingManager<?> manager = LightingRegistry.getContains("blocklight");
+		if (manager == null) {
+			p.sendMessage("Block light manager not registered");
+			return;
+		}
+		short id = manager.getId();
+		OutwardIterator i = new OutwardIterator(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ(), 8);
+		while (i.hasNext()) {
+			IntVector3 v = i.next();
+			Chunk c = w.getChunkFromBlock(v.getX(), v.getY(), v.getZ());
+			byte lightOriginal = c.getBlockLight(v.getX(), v.getY(), v.getZ());
+			VanillaCuboidLightBuffer buffer = (VanillaCuboidLightBuffer) c.getLightBuffer(id);
+			int lightNew = buffer.get(v.getX(), v.getY(), v.getZ());
+		}
+	}
+
 
 	// TODO - There needs to be a method that guarantees unique data values on a per-server basis
 	private int mapId = 1;

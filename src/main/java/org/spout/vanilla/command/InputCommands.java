@@ -46,11 +46,13 @@ import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class InputCommands {
+	private final VanillaPlugin plugin;
 	private final Client client;
 	private BlockMaterial selection;
 
-	public InputCommands(Client client) {
-		this.client = client;
+	public InputCommands(VanillaPlugin plugin) {
+		this.plugin = plugin;
+		client = (Client) plugin.getEngine();  // TODO: This needs to be changed. This is unsafe. Although for now it works.
 	}
 
 	@Command(aliases = "toggle_inventory", desc = "Opens and closes your inventory.", min = 1, max = 1)

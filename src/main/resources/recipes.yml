@@ -1544,3 +1544,40 @@ recipes:
     type: Shapeless
     result: TRAPPED_CHEST,1
     ingredients: [TRIPWIRE_HOOK, CHEST]
+
+  Nether Brick:
+    type: Shaped
+    result: NETHER_BRICK,1
+    ingredients:
+      A: NETHER_BRICK_(ITEM)
+    rows: ['AA', 'AA']
+
+  Block of Redstone:
+    type: Shaped
+    result: BLOCK_OF_REDSTONE,1
+    ingredients:
+      A: REDSTONE_WIRE
+    rows: ['AAA', 'AAA', 'AAA']
+
+  Light Pressure Plate:
+    type: Shaped
+    result: WEIGHTED_PRESSURE_PLATE_(LIGHT),1
+    ingredients:
+      A: GOLD_INGOT
+    rows: ['AA']
+
+  Heavy Pressure Plate:
+    type: Shaped
+    result: WEIGHTED_PRESSURE_PLATE_(HEAVY),1
+    ingredients:
+      A: IRON_INGOT
+    rows: ['AA']
+
+  Activator Rail:
+    type: Shaped
+    result: ACTIVATOR_RAIL,6
+    ingredients:
+      A: IRON_INGOT
+      B: STICK
+      C: REDSTONE_TORCH
+    rows: ['ABA', 'ACA', 'ABA']

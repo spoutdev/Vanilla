@@ -124,6 +124,8 @@ import org.spout.vanilla.material.block.plant.Vines;
 import org.spout.vanilla.material.block.plant.WheatCrop;
 import org.spout.vanilla.material.block.portal.EndPortal;
 import org.spout.vanilla.material.block.portal.NetherPortal;
+import org.spout.vanilla.material.block.pressureplate.HeavyWeightedPressurePlate;
+import org.spout.vanilla.material.block.pressureplate.LightWeightedPressurePlate;
 import org.spout.vanilla.material.block.pressureplate.StonePressurePlate;
 import org.spout.vanilla.material.block.pressureplate.WoodenPressurePlate;
 import org.spout.vanilla.material.block.rail.DetectorRail;
@@ -430,6 +432,8 @@ public final class VanillaMaterials {
 	public static final FlowerPotBlock FLOWER_POT_BLOCK = FlowerPotBlock.EMPTY;
 	public static final SkullBlock SKELETON_SKULL_BLOCK = SkullBlock.SKELETON_SKULL;
 	public static final Anvil ANVIL = new Anvil("Anvil", 145); // Anvil actually has 3 states, handled by data.
+	public static final LightWeightedPressurePlate LIGHT_PRESSURE_PLATE = new LightWeightedPressurePlate("Weighted Pressure Plate (Light)", 147);
+	public static final HeavyWeightedPressurePlate HEAVY_PRESSURE_PLATE = new HeavyWeightedPressurePlate("Weighted Pressure Plate (Heavy)", 148);
 	public static final DaylightSensor DAYLIGHT_SENSOR = new DaylightSensor("Daylight Sensor", 151);
 	public static final RedstoneBlock REDSTONE_BLOCK = new RedstoneBlock("Block of Redstone", 152);
 	public static final HopperBlock HOPPER = new HopperBlock("Hopper", 154);
@@ -618,7 +622,7 @@ public final class VanillaMaterials {
 	public static final Fireworks FIREWORKS = new Fireworks("Fireworks", 401);
 	public static final BlockItem FIREWORKS_CHARGE = new BlockItem("Fireworks Charge", 402, VanillaMaterials.FIRE, null); //implementation is not certain.
 	public static final EnchantedBook ENCHANTED_BOOK = new EnchantedBook("Enchanted Book", 403);
-	public static final VanillaItemMaterial NETHER_BRICK_ITEM = new VanillaItemMaterial("Nether Brick", 405, null);
+	public static final VanillaItemMaterial NETHER_BRICK_ITEM = new VanillaItemMaterial("Nether Brick (Item)", 405, null);
 	public static final PotionItem POTION = PotionItem.WATER_BOTTLE;
 	private static boolean initialized = false;
 	private final static AtomicShortArray conversionTable = new AtomicShortArray(Short.MAX_VALUE);

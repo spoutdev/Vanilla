@@ -98,6 +98,7 @@ import org.spout.vanilla.protocol.handler.window.WindowSlotHandler;
 import org.spout.vanilla.protocol.handler.window.WindowTransactionHandler;
 import org.spout.vanilla.protocol.handler.world.EffectHandler;
 import org.spout.vanilla.protocol.handler.world.ExplosionHandler;
+import org.spout.vanilla.protocol.handler.world.ParticleEffectHandler;
 import org.spout.vanilla.protocol.handler.world.SoundEffectHandler;
 import org.spout.vanilla.protocol.handler.world.block.BlockActionHandler;
 import org.spout.vanilla.protocol.handler.world.block.BlockBreakAnimationHandler;
@@ -172,6 +173,7 @@ import org.spout.vanilla.protocol.msg.window.WindowSlotMessage;
 import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
 import org.spout.vanilla.protocol.msg.world.EffectMessage;
 import org.spout.vanilla.protocol.msg.world.ExplosionMessage;
+import org.spout.vanilla.protocol.msg.world.ParticleEffectMessage;
 import org.spout.vanilla.protocol.msg.world.SoundEffectMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockBreakAnimationMessage;
@@ -288,6 +290,8 @@ public class VanillaHandlerLookupService extends HandlerLookupService {
 			bind(EffectMessage.class, EffectHandler.class);
 			/* 0x3E */
 			bind(SoundEffectMessage.class, SoundEffectHandler.class);
+			/* 0x3F */
+			bind(ParticleEffectMessage.class, ParticleEffectHandler.class);
 			/* 0x46 */
 			bind(PlayerGameStateMessage.class, PlayerGameStateHandler.class);
 			/* 0x47 */

@@ -108,6 +108,7 @@ import org.spout.vanilla.protocol.msg.window.WindowSlotMessage;
 import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
 import org.spout.vanilla.protocol.msg.world.EffectMessage;
 import org.spout.vanilla.protocol.msg.world.ExplosionMessage;
+import org.spout.vanilla.protocol.msg.world.ParticleEffectMessage;
 import org.spout.vanilla.protocol.msg.world.SoundEffectMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockActionMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockBreakAnimationMessage;
@@ -180,6 +181,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new BlockActionMessage(1, 2, 3, (byte) 4, (byte) 5, (byte) 29, NullRepositionManager.getInstance()),
 			new ChunkBulkMessage(new int[]{0, 1}, new int[]{3, 4}, new boolean[][]{allFalse, allFalse}, new byte[][][]{columnData, columnData}, new byte[][]{biomeData1, biomeData2}, NullRepositionManager.getInstance()),
 			new ExplosionMessage(3, 4, 5, 24, new byte[]{1, 2, 3, 1, 1, 2, 1, 1, 1}, NullRepositionManager.getInstance()),
+			new ParticleEffectMessage("hugeexplosion", 3.0f, 4.0f, 5.0f, 2.0f, 2.0f, 2.0f, 3.0f, 5, NullRepositionManager.getInstance()),
 			new EffectMessage(34566, 1, 2, 34, 5, NullRepositionManager.getInstance()),
 			new PlayerGameStateMessage(PlayerGameStateMessage.CHANGE_GAME_MODE, GameMode.CREATIVE),
 			new EntityThunderboltMessage(34, 1, 23, 45, 55, NullRepositionManager.getInstance()),

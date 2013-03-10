@@ -94,6 +94,7 @@ import org.spout.vanilla.protocol.codec.window.WindowSlotCodec;
 import org.spout.vanilla.protocol.codec.window.WindowTransactionCodec;
 import org.spout.vanilla.protocol.codec.world.EffectCodec;
 import org.spout.vanilla.protocol.codec.world.ExplosionCodec;
+import org.spout.vanilla.protocol.codec.world.ParticleEffectCodec;
 import org.spout.vanilla.protocol.codec.world.SoundEffectCodec;
 import org.spout.vanilla.protocol.codec.world.block.BlockActionCodec;
 import org.spout.vanilla.protocol.codec.world.block.BlockBreakAnimationCodec;
@@ -211,6 +212,8 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			bind(EffectCodec.class);
 			/* 0x3E */
 			bind(SoundEffectCodec.class);
+			/* 0x3F */
+			bind(ParticleEffectCodec.class);
 			/* 0x46 */
 			bind(PlayerGameStateCodec.class);
 			/* 0x47 */

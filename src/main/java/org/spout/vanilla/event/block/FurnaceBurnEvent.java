@@ -30,30 +30,25 @@ import org.spout.api.event.Cancellable;
 import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.block.BlockEvent;
+import org.spout.api.event.cause.MaterialCause;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.component.block.material.Furnace;
 
 /**
  * Event which is called when an unit of an ItemStack is burned as fuel.
- * todo implement calling of this event
  */
 public class FurnaceBurnEvent extends BlockEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private final Furnace furnace;
-	private final Cause cause;
 	private final ItemStack fuel;
 	private float burnTime;
-	private boolean burning;
 
-	public FurnaceBurnEvent(Furnace furnace, Cause<?> reason, ItemStack fuel, float burnTime) {
-		super(furnace.getBlock(), reason);
+	public FurnaceBurnEvent(Furnace furnace, ItemStack fuel, float burnTime) {
+		super(furnace.getBlock(), new MaterialCause(fuel.getMaterial(), furnace.getBlock()));
 		this.furnace = furnace;
-		this.cause = reason;
 		this.fuel = fuel;
 		this.burnTime = burnTime;
-		// TODO will need to check if that is really necessary here
-		this.burning = true;
 	}
 
 	/**
@@ -62,22 +57,6 @@ public class FurnaceBurnEvent extends BlockEvent implements Cancellable {
 	 */
 	public ItemStack getFuel() {
 		return fuel.clone();
-	}
-
-	/**
-	 * Returns if the Furnace is burning at the moment
-	 * @return true if isBurning
-	 */
-	public boolean isBurning() {
-		return burning;
-	}
-
-	/**
-	 * Sets the burning state of the furnace.
-	 * @param burning
-	 */
-	public void setBurning(boolean burning) {
-		this.burning = burning;
 	}
 
 	/**
@@ -107,14 +86,6 @@ public class FurnaceBurnEvent extends BlockEvent implements Cancellable {
 	 */
 	public Furnace getFurnace() {
 		return furnace;
-	}
-
-	/**
-	 * Returns the cause which caused the FurnaceBurnEvent
-	 * @return cause
-	 */
-	public Cause<?> getCause() {
-		return cause;
 	}
 
 	@Override

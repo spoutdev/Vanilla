@@ -35,18 +35,15 @@ import org.spout.vanilla.component.block.material.Furnace;
 
 /**
  * Event which is called when a furnace is toggled on or off.
- * todo implement calling of this event
  */
 public class FurnaceActionEvent extends BlockEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private final Furnace furnace;
-	private final Cause cause;
 	private final boolean switchON;
 
 	public FurnaceActionEvent(Furnace furnace, Cause<?> reason, boolean switchON) {
 		super(furnace.getBlock(), reason);
 		this.furnace = furnace;
-		this.cause = reason;
 		this.switchON = switchON;
 	}
 
@@ -64,14 +61,6 @@ public class FurnaceActionEvent extends BlockEvent implements Cancellable {
 	 */
 	public boolean isSwitchON() {
 		return switchON;
-	}
-
-	/**
-	 * Returns the Cause which caused the FurnaceActionEvent
-	 * @return cause
-	 */
-	public Cause<?> getCause() {
-		return cause;
 	}
 
 	@Override

@@ -27,12 +27,16 @@
 package org.spout.vanilla.component.block.material;
 
 import org.spout.api.entity.Player;
+import org.spout.api.event.cause.MaterialCause;
 import org.spout.api.inventory.Container;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.ViewedBlockComponent;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.event.block.FurnaceBurnEvent;
+import org.spout.vanilla.event.block.FurnaceSmeltEvent;
 import org.spout.vanilla.event.inventory.FurnaceCloseEvent;
 import org.spout.vanilla.event.inventory.FurnaceOpenEvent;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
@@ -170,13 +174,21 @@ public class Furnace extends ViewedBlockComponent implements Container {
 		}
 
 		ItemStack ingredient = inventory.getIngredient();
-		ItemStack output = inventory.getOutput();
-		if (output == null) {
-			inventory.setOutput(((TimedCraftable) ingredient.getMaterial()).getResult());
-		} else {
-			inventory.addAmount(FurnaceInventory.OUTPUT_SLOT, 1);
+		ItemStack result = ((TimedCraftable) ingredient).getResult(); //TODO: unsafe.
+		FurnaceSmeltEvent event = VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new FurnaceSmeltEvent(this, new MaterialCause(ingredient.getMaterial(), this.getBlock()), ingredient, result));
+		if (!event.isCancelled()) {
+			if (inventory.getOutput() == null) {
+				inventory.setOutput(event.getResult());
+			} else {
+				result = event.getResult();
+				if (inventory.getOutput().getMaterial().getId() != result.getMaterial().getId()) {
+					throw new UnsupportedOperationException("Smelt result must be the same material as the output slot.");
+				}
+				inventory.addAmount(FurnaceInventory.OUTPUT_SLOT, result.getAmount());
+			}
+			inventory.addAmount(FurnaceInventory.INGREDIENT_SLOT, -1);
 		}
-		inventory.addAmount(FurnaceInventory.INGREDIENT_SLOT, -1);
+
 		setMaxSmeltTime(-1);
 		setSmeltTime(-1);
 	}
@@ -197,6 +209,12 @@ public class Furnace extends ViewedBlockComponent implements Container {
 			// Try to light the furnace
 			if (inventory.hasFuel() && inventory.hasIngredient()) {
 				float newFuel = ((Fuel) inventory.getFuel().getMaterial()).getFuelTime();
+				FurnaceBurnEvent event = VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new FurnaceBurnEvent(this, inventory.getFuel(), newFuel));
+
+				if (event.isCancelled()) {
+					return;
+				}
+				newFuel = event.getBurnTime();
 				setMaxFuel(newFuel);
 				setFuel(newFuel);
 				inventory.addAmount(FurnaceInventory.FUEL_SLOT, -1);

@@ -35,20 +35,17 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.vanilla.component.block.material.Furnace;
 
 /**
- * Event which is called when an unit of an ItemStack is smelted.
- * todo implement calling of this event
+ * Event which is called when an unit of an ItemStack has finished smelting.
  */
 public class FurnaceSmeltEvent extends BlockEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private final Furnace furnace;
-	private final Cause cause;
 	private final ItemStack source;
 	private ItemStack result;
 
 	public FurnaceSmeltEvent(Furnace furnace, Cause<?> reason, ItemStack source, ItemStack result) {
 		super(furnace.getBlock(), reason);
 		this.furnace = furnace;
-		this.cause = reason;
 		this.source = source;
 		this.result = result;
 	}
@@ -62,7 +59,8 @@ public class FurnaceSmeltEvent extends BlockEvent implements Cancellable {
 	}
 
 	/**
-	 * Gets the result of the smelting process for this furnace
+	 * Gets the result of the smelting process for this furnace, as a clone.
+	 * Changes to this itemstack will not be reflected on event completion.
 	 * @return the result ItemStack
 	 */
 	public ItemStack getResult() {
@@ -83,14 +81,6 @@ public class FurnaceSmeltEvent extends BlockEvent implements Cancellable {
 	 */
 	public Furnace getFurnace() {
 		return furnace;
-	}
-
-	/**
-	 * Returns the cause which caused the FurnaceSmeltEvent
-	 * @return cause
-	 */
-	public Cause<?> getCause() {
-		return cause;
 	}
 
 	@Override

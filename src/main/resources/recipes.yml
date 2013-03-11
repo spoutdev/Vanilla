@@ -162,6 +162,13 @@ recipes:
       A: STONE_BRICK
     rows: ['AAA']
 
+  Nether Brick Slabs:
+    type: Shaped
+    result: NETHER_BRICK_SLAB,6
+    ingredients:
+      A: NETHER_BRICK
+    rows: ['AAA']
+
   Oak Wood Stairs:
     type: Shaped
     result: OAK_WOOD_STAIRS,4

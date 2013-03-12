@@ -34,6 +34,7 @@ import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.cause.DamageCause;
 import org.spout.vanilla.event.cause.NullDamageCause;
+import org.spout.vanilla.material.block.liquid.Water;
 
 /**
  * Component handling a entity being on fire.
@@ -57,8 +58,8 @@ public class Burn extends EntityComponent {
 	@Override
 	public void onTick(float dt) {
 		Sky sky = getOwner().getWorld().get(Sky.class);
+		Point point = getOwner().getScene().getPosition();
 		if (sky != null && sky.hasWeather()) {
-			Point point = getOwner().getScene().getPosition();
 			if (sky.getWeatherSimulator().isRainingAt((int) point.getX(), (int) point.getY(), (int) point.getZ(), false)) {
 				rainTimer += dt;
 			} else {
@@ -70,7 +71,10 @@ public class Burn extends EntityComponent {
 				rainTimer = 0f;
 			}
 		}
-
+		if (point.getBlock().getMaterial() instanceof Water || health.isDead()) {
+			setFireTick(0f);
+			setFireHurting(false);
+		}
 		living.sendMetaData();
 		if (isFireHurting()) {
 			if (internalTimer >= 1.0f) {

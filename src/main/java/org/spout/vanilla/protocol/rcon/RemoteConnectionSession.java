@@ -39,7 +39,6 @@ import org.jboss.netty.channel.Channel;
 import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.channel.ChatChannel;
-import org.spout.api.chat.console.Console;
 import org.spout.api.command.Command;
 import org.spout.api.command.CommandSource;
 import org.spout.api.data.ValueHolder;
@@ -53,7 +52,7 @@ import org.spout.vanilla.protocol.rcon.msg.RconMessage;
 /**
  * Session for a remote connection
  */
-public class RemoteConnectionSession implements Console, CommandSource {
+public class RemoteConnectionSession implements CommandSource {
 	private final RemoteConnectionCore core;
 	private final AtomicInteger requestId = new AtomicInteger(-1);
 	private final AtomicReference<Channel> channel = new AtomicReference<Channel>();

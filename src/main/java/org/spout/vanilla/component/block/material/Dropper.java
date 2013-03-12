@@ -26,12 +26,12 @@
  */
 package org.spout.vanilla.component.block.material;
 
-import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Container;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyFactory;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.ViewedBlockComponent;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.VanillaData;
@@ -67,7 +67,7 @@ public class Dropper extends ViewedBlockComponent implements Container {
 
 	@Override
 	public boolean open(Player player) {
-		DropperOpenEvent event = Spout.getEventManager().callEvent(new DropperOpenEvent(this, player));
+		DropperOpenEvent event = VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new DropperOpenEvent(this, player));
 		if (!event.isCancelled()) {
 			player.get(WindowHolder.class).openWindow(new DropperWindow(player, getInventory()));
 			return true;
@@ -77,7 +77,7 @@ public class Dropper extends ViewedBlockComponent implements Container {
 
 	@Override
 	public boolean close(Player player) {
-		DropperCloseEvent event = Spout.getEventManager().callEvent(new DropperCloseEvent(this, player));
+		DropperCloseEvent event = VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new DropperCloseEvent(this, player));
 		if (!event.isCancelled()) {
 			return super.close(player);
 		}

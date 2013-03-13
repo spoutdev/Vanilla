@@ -48,6 +48,7 @@ import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.component.entity.living.hostile.EnderDragon;
+import org.spout.vanilla.component.entity.living.hostile.Wither;
 import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.component.entity.substance.XPOrb;
@@ -347,7 +348,7 @@ public class Health extends EntityComponent {
 		Entity owner = getOwner();
 		if (owner instanceof Player) {
 			owner.getNetwork().callProtocolEvent(new PlayerHealthEvent(((Player) getOwner())));
-		} else if (owner instanceof EnderDragon) {
+		} else if (owner instanceof EnderDragon || owner instanceof Wither) {
 			java.util.List<Parameter<?>> params = new ArrayList<Parameter<?>>(1);
 			params.add(new Parameter<Short>(Parameter.TYPE_SHORT, 16, (short) health));
 			owner.getNetwork().callProtocolEvent(new EntityMetaChangeEvent(owner, params));

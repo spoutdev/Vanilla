@@ -36,10 +36,16 @@ import org.spout.api.Engine;
 import org.spout.api.FileSystem;
 import org.spout.api.Platform;
 import org.spout.api.Spout;
+import org.spout.api.event.Event;
+import org.spout.api.event.EventExecutor;
 import org.spout.api.event.EventManager;
+import org.spout.api.event.Listener;
+import org.spout.api.event.Order;
 import org.spout.api.generator.WorldGenerator;
 import org.spout.api.lang.PluginDictionary;
 import org.spout.api.plugin.PluginDescriptionFile;
+
+import org.spout.vanilla.event.entity.EntityDamageEvent;
 
 @SuppressWarnings("deprecation")
 public class EngineFaker {
@@ -50,7 +56,7 @@ public class EngineFaker {
 		FileSystem filesystem = Mockito.mock(FileSystem.class);
 		Mockito.when(engine.getPlatform()).thenReturn(Platform.SERVER);
 		Mockito.when(engine.getFilesystem()).thenReturn(filesystem);
-		Mockito.when(engine.getEventManager()).thenReturn(Mockito.mock(EventManager.class));
+		Mockito.when(engine.getEventManager()).thenReturn(new TestEventManager());
 		Mockito.when(engine.getLogger()).thenReturn(Mockito.mock(Logger.class));
 
 		VanillaPlugin plugin = new VanillaTestPlugin();
@@ -102,6 +108,31 @@ public class EngineFaker {
 		@Override
 		public PluginDictionary getDictionary() {
 			return null;
+		}
+	}
+
+	private static class TestEventManager implements EventManager {
+		@Override
+		public <T extends Event> T callEvent(T event) {
+			if (event instanceof EntityDamageEvent) {
+				((EntityDamageEvent) event).setSendHurtMessage(false);
+			}
+			return event;
+		}
+
+		@Override
+		public <T extends Event> void callDelayedEvent(T event) {
+
+		}
+
+		@Override
+		public void registerEvents(Listener listener, Object owner) {
+
+		}
+
+		@Override
+		public void registerEvent(Class<? extends Event> event, Order priority, EventExecutor executor, Object owner) {
+
 		}
 	}
 }

@@ -386,29 +386,31 @@ public class Health extends EntityComponent {
 
 	/**
 	 * Returns true if the entity is equal to or less than zero health remaining
-	 * @return dead
+	 * @return True if the entity is dead (Health less than 0) else false.
 	 */
 	public boolean isDead() {
-		return getHealth() <= 0;
+		return getHealth() == 0;
 	}
 
 	/**
 	 * Returns true if the entity is currently dying, death ticks is greater than 0.
-	 * @return true if the entity is dyring
+	 * @return true if the entity is dying
 	 */
 	public boolean isDying() {
 		return getDeathTicks() > 0;
 	}
 
 	/**
-	 * @return
+	 * Retrieve the death ticks of this entity
+	 * @return The death ticks amount
 	 */
 	public int getDeathTicks() {
 		return getData().get(VanillaData.DEATH_TICKS);
 	}
 
 	/**
-	 * @param deathTicks
+	 * Set the death ticks of this entity
+	 * @param deathTicks the amount of death ticks.
 	 */
 	public void setDeathTicks(int deathTicks) {
 		if (deathTicks > DEATH_TIME_TICKS) {

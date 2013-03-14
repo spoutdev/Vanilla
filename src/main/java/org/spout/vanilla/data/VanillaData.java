@@ -35,6 +35,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.data.effect.EntityEffectType;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.block.DispenserInventory;
@@ -94,6 +95,12 @@ public class VanillaData {
 	public static final DefaultedKey<Float> FUSE = new DefaultedKeyImpl<Float>("fuse", 5F);
 	public static final DefaultedKey<Float> EXPLOSION_SIZE = new DefaultedKeyImpl<Float>("explosion_size", 4f);
 	public static final DefaultedKey<Boolean> MAKES_FIRE = new DefaultedKeyImpl<Boolean>("makes_fire", false);
+	// Beacon
+	public static final DefaultedKey<EntityEffectType> PRIMARY_EFFECT = new DefaultedKeyImpl<EntityEffectType>("primary_effect", EntityEffectType.NONE);
+	public static final DefaultedKey<EntityEffectType> SECONDARY_EFFECT = new DefaultedKeyImpl<EntityEffectType>("secondary_effect", EntityEffectType.NONE);
+	public static final DefaultedKey<Float> UPDATE_DELAY = new DefaultedKeyImpl<Float>("update_delay", 4f);
+	public static final DefaultedKey<Float> MAX_UPDATE_DELAY = new DefaultedKeyImpl<Float>("max_update_delay", 4f);
+	public static final DefaultedKey<Float> EFFECT_DURATION = new DefaultedKeyImpl<Float>("effect_duration", 9f);
 	//Entity data
 	public static final DefaultedKey<Integer> ATTACHED_COUNT = new DefaultedKeyImpl<Integer>("attached_count", 0);
 	public static final DefaultedKey<Boolean> IS_FALLING = new DefaultedKeyImpl<Boolean>("is_falling", false);

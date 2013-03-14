@@ -24,45 +24,23 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.data.effect;
+package org.spout.vanilla.protocol.plugin;
 
-public enum StatusEffect {
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-	SPEED(1, 2),
-	SLOWNESS(2, 10),
-	HASTE(3, 0),
-	MINING_FATIGUE(4, 0),
-	STRENGTH(5, 9),
-	INSTANT_HEALTH(6, 5),
-	INSTANT_DAMAGE(7, 12),
-	JUMP_BOOST(8, 0),
-	NAUSEA(9, 0),
-	REGENERATION(10, 1),
-	RESISTANCE(11, 0),
-	FIRE_RESISTANCE(12, 3),
-	WATER_BREATHING(13, 0),
-	INVISIBILITY(14, 14),
-	BLINDNESS(15, 0),
-	NIGHT_VISION(16, 6),
-	HUNGER(17, 0),
-	WEAKNESS(18, 8),
-	POISON(19, 4),
-	WITHER(20, 0),
-	NONE(0, 0);
-	private final byte statusID;
-	private final int potionID;
+public class BeaconMessage extends VanillaMainChannelMessage {
+	private final int primary, secondary;
 
-	private StatusEffect(int statusID, int potionID) {
-		this.statusID = (byte) statusID;
-		this.potionID = potionID;
+	public BeaconMessage(int primary, int secondary) {
+		this.primary = primary;
+		this.secondary = secondary;
 	}
 
-	public byte getStatusID() {
-		return statusID;
+	public int getPrimaryEffect() {
+		return primary;
 	}
 
-	public int getPotionID() {
-		return potionID;
+	public int getSecondaryEffect() {
+		return secondary;
 	}
-
 }

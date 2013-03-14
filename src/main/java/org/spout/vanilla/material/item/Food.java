@@ -37,8 +37,8 @@ import org.spout.vanilla.component.entity.misc.Effects;
 import org.spout.vanilla.component.entity.misc.Hunger;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.data.effect.StatusEffect;
-import org.spout.vanilla.data.effect.StatusEffectContainer;
+import org.spout.vanilla.data.effect.EntityEffect;
+import org.spout.vanilla.data.effect.EntityEffectType;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.food.FoodEffect;
 
@@ -61,14 +61,14 @@ public class Food extends VanillaItemMaterial {
 			for (FoodEffect effect : getEffectType()) {
 				switch (effect.getEffect()) {
 					case HEALTH_REGENERATION:
-						entity.add(Effects.class).addEffect(new StatusEffectContainer(StatusEffect.REGENERATION, effect.getChange()));
+						entity.add(Effects.class).addEffect(new EntityEffect(EntityEffectType.REGENERATION, effect.getChange()));
 						break;
 					case HUNGER:
 						hunger.setHunger((int) (hunger.getHunger() + effect.getChange()));
 						break;
 					case POISON:
 						if (GenericMath.getRandom().nextInt(101) < effect.getChange()) {
-							entity.add(Effects.class).addEffect(new StatusEffectContainer(StatusEffect.HUNGER, 30));
+							entity.add(Effects.class).addEffect(new EntityEffect(EntityEffectType.HUNGER, 30));
 						}
 						break;
 					case SATURATION:

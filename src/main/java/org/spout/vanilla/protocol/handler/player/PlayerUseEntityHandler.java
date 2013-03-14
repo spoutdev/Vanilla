@@ -39,7 +39,7 @@ import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.misc.Effects;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
-import org.spout.vanilla.data.effect.StatusEffect;
+import org.spout.vanilla.data.effect.EntityEffectType;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
 import org.spout.vanilla.event.cause.PlayerDamageCause;
 import org.spout.vanilla.material.VanillaMaterial;
@@ -95,10 +95,10 @@ public class PlayerUseEntityHandler extends MessageHandler<PlayerUseEntityMessag
 				//Potion modification
 				if (holdingMat.equals(VanillaMaterials.AIR)) {
 					Effects effect = playerEnt.add(Effects.class);
-					if (effect.containsEffect(StatusEffect.STRENGTH)) {
+					if (effect.containsEffect(EntityEffectType.STRENGTH)) {
 						damage += 3;
 					}
-					if (effect.containsEffect(StatusEffect.WEAKNESS)) {
+					if (effect.containsEffect(EntityEffectType.WEAKNESS)) {
 						damage -= 2;
 					}
 				}

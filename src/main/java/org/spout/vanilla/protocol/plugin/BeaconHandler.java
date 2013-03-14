@@ -24,33 +24,33 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.components.entity.misc;
+package org.spout.vanilla.protocol.plugin;
 
-import org.junit.Test;
+import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.Session;
 
-import org.spout.api.entity.Entity;
-
-import org.spout.vanilla.EntityMocker;
-import org.spout.vanilla.component.entity.misc.Damage;
-import org.spout.vanilla.data.Difficulty;
-import org.spout.vanilla.data.effect.EntityEffect;
+import org.spout.vanilla.component.block.material.Beacon;
+import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.effect.EntityEffectType;
+import org.spout.vanilla.inventory.block.BeaconInventory;
+import org.spout.vanilla.inventory.util.InventoryConverter;
+import org.spout.vanilla.inventory.window.Window;
+import org.spout.vanilla.inventory.window.block.BeaconWindow;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
-public class DamageTest {
-	@Test
-	public void testLevelComponent() {
-		Entity entity = EntityMocker.mockEntity();
-		Damage damageComponent = entity.add(Damage.class);
-		damageComponent.getDamageLevel(Difficulty.EASY).setAmount(40);
-		assertEquals(40, damageComponent.getDamageLevel(Difficulty.EASY).getAmount());
-		assertNull(damageComponent.getDamageLevel(null));
-		assertEquals(0, damageComponent.getDamageLevel(Difficulty.HARD).getAmount());
-		EntityEffect container = new EntityEffect(EntityEffectType.HASTE, 4);
-		damageComponent.getDamageLevel(Difficulty.EASY).setEffect(container);
-		assertEquals(container, damageComponent.getDamageLevel(Difficulty.EASY).getEffect());
-		assertEquals(null, damageComponent.getDamageLevel(Difficulty.HARD).getEffect());
+public class BeaconHandler extends MessageHandler<BeaconMessage> {
+	@Override
+	public void handleServer(Session session, BeaconMessage msg) {
+		Window window = session.getPlayer().get(WindowHolder.class).getActiveWindow();
+		if (!(window instanceof BeaconWindow)) {
+			throw new IllegalStateException("Player tried to change Beacon but does not have an opened Beacon.");
+		}
+		Beacon beacon = ((BeaconWindow) window).getBeacon();
+		beacon.setPrimaryEffect(EntityEffectType.get(msg.getPrimaryEffect()));
+		beacon.setSecondaryEffect(EntityEffectType.get(msg.getSecondaryEffect()));
+		for (InventoryConverter converter : window.getInventoryConverters()) {
+			if (converter.getInventory() instanceof BeaconInventory) {
+				converter.getInventory().clear();
+			}
+		}
 	}
 }

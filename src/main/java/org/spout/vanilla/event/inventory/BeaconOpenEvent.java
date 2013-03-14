@@ -41,7 +41,7 @@ public class BeaconOpenEvent extends InventoryOpenEvent implements Cancellable {
 	private final Beacon beacon;
 
 	public BeaconOpenEvent(Beacon beacon, Entity entity) {
-		super(beacon.getInventory(), entity);
+		super(null, entity);
 		this.beacon = beacon;
 	}
 

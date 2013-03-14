@@ -24,39 +24,21 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.entity.network;
+package org.spout.vanilla.inventory.window.prop;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
-import org.spout.api.protocol.event.ProtocolEvent;
+public enum BeaconProperty implements WindowProperty {
+	LEVELS(0),
+	PRIMARY_EFFECT(1),
+	SECONDARY_EFFECT(2);
 
-import org.spout.vanilla.data.effect.EntityEffect;
+	private final int id;
 
-public class EntityEffectEvent extends EntityEvent implements ProtocolEvent {
-	private static final HandlerList handlers = new HandlerList();
-	private final EntityEffect effect;
-
-	public EntityEffectEvent(Entity e, EntityEffect effect) {
-		super(e);
-		this.effect = effect;
+	private BeaconProperty(int id) {
+		this.id = id;
 	}
 
 	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
-	}
-
-	public EntityEffect getEffect() {
-		return effect;
-	}
-
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
-
-	public static HandlerList getHandlerList() {
-		return handlers;
+	public int getId() {
+		return id;
 	}
 }

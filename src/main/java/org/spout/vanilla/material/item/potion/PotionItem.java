@@ -38,8 +38,8 @@ import org.spout.api.math.VectorMath;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.misc.Effects;
 import org.spout.vanilla.component.entity.substance.projectile.Potion;
-import org.spout.vanilla.data.effect.StatusEffect;
-import org.spout.vanilla.data.effect.StatusEffectContainer;
+import org.spout.vanilla.data.effect.EntityEffect;
+import org.spout.vanilla.data.effect.EntityEffectType;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 
@@ -70,11 +70,11 @@ public class PotionItem extends VanillaItemMaterial {
 	private static final short ACTION_USE = 8192;
 	private static final short ACTION_SPLASH = 16384;
 	public static final PotionItem WATER_BOTTLE = new PotionItem("Water Bottle");
-	public static final PotionItem AWKWARD = new PotionItem("Awkward Potion", StatusEffect.NONE, TIER1, DURATION_NORMAL, ACTION_NONE, WATER_BOTTLE);
-	public static final PotionItem SPLASH_AWKWARD = new PotionItem("Splash Awkward Potion", StatusEffect.NONE, TIER0, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
-	public static final PotionItem THICK = new PotionItem("Thick Potion", StatusEffect.NONE, TIER2, DURATION_NORMAL, ACTION_NONE, WATER_BOTTLE);
-	public static final PotionItem MUNDANE = new PotionItem("Mundane Potion", StatusEffect.NONE, TIER0, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
-	public static final PotionItem MUNDANE_EXTENDED = new PotionItem("Mundane Potion (Extended)", StatusEffect.NONE, TIER0, DURATION_EXTENDED, ACTION_NONE, WATER_BOTTLE);
+	public static final PotionItem AWKWARD = new PotionItem("Awkward Potion", EntityEffectType.NONE, TIER1, DURATION_NORMAL, ACTION_NONE, WATER_BOTTLE);
+	public static final PotionItem SPLASH_AWKWARD = new PotionItem("Splash Awkward Potion", EntityEffectType.NONE, TIER0, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
+	public static final PotionItem THICK = new PotionItem("Thick Potion", EntityEffectType.NONE, TIER2, DURATION_NORMAL, ACTION_NONE, WATER_BOTTLE);
+	public static final PotionItem MUNDANE = new PotionItem("Mundane Potion", EntityEffectType.NONE, TIER0, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
+	public static final PotionItem MUNDANE_EXTENDED = new PotionItem("Mundane Potion (Extended)", EntityEffectType.NONE, TIER0, DURATION_EXTENDED, ACTION_NONE, WATER_BOTTLE);
 	/*
 	 * Unused but available
 	 */
@@ -106,71 +106,71 @@ public class PotionItem extends VanillaItemMaterial {
 	/*
 	 * Use and splash potions
 	 */
-	public static final PotionItem REGENERATION = new PotionItem("Potion of Regeneration", StatusEffect.REGENERATION, TIER0, DURATION_NORMAL, ACTION_USE, 45, WATER_BOTTLE);
-	public static final PotionItem REGENERATION_II = new PotionItem("Potion of Regeneration II", StatusEffect.REGENERATION, TIER2, DURATION_NORMAL, ACTION_USE, 120, WATER_BOTTLE);
-	public static final PotionItem REGENERATION_EXTENDED = new PotionItem("Potion of Regeneration (Extended)", StatusEffect.REGENERATION, TIER0, DURATION_EXTENDED, ACTION_USE, 22.5f, WATER_BOTTLE);
-	public static final PotionItem SPLASH_REGENERATION_EXTENDED = new PotionItem("Splash Potion of Regeneration (Extended)", StatusEffect.REGENERATION, TIER0, DURATION_EXTENDED, ACTION_SPLASH, 22.5f,
+	public static final PotionItem REGENERATION = new PotionItem("Potion of Regeneration", EntityEffectType.REGENERATION, TIER0, DURATION_NORMAL, ACTION_USE, 45, WATER_BOTTLE);
+	public static final PotionItem REGENERATION_II = new PotionItem("Potion of Regeneration II", EntityEffectType.REGENERATION, TIER2, DURATION_NORMAL, ACTION_USE, 120, WATER_BOTTLE);
+	public static final PotionItem REGENERATION_EXTENDED = new PotionItem("Potion of Regeneration (Extended)", EntityEffectType.REGENERATION, TIER0, DURATION_EXTENDED, ACTION_USE, 22.5f, WATER_BOTTLE);
+	public static final PotionItem SPLASH_REGENERATION_EXTENDED = new PotionItem("Splash Potion of Regeneration (Extended)", EntityEffectType.REGENERATION, TIER0, DURATION_EXTENDED, ACTION_SPLASH, 22.5f,
 			WATER_BOTTLE);
-	public static final PotionItem SPLASH_REGENERATION = new PotionItem("Splash Potion of Regeneration", StatusEffect.REGENERATION, TIER0, DURATION_NORMAL, ACTION_SPLASH, 45, WATER_BOTTLE);
-	public static final PotionItem SPLASH_REGENERATION_II = new PotionItem("Splash Potion of Regeneration II", StatusEffect.REGENERATION, TIER2, DURATION_NORMAL, ACTION_SPLASH, 120, WATER_BOTTLE);
-	public static final PotionItem SWIFTNESS = new PotionItem("Potion of Swiftness", StatusEffect.SPEED, TIER0, DURATION_NORMAL, ACTION_USE, 180, WATER_BOTTLE);
-	public static final PotionItem SWIFTNESS_EXTENDED = new PotionItem("Potion of Swiftness (Extended)", StatusEffect.SPEED, TIER0, DURATION_EXTENDED, ACTION_USE, 480, WATER_BOTTLE);
-	public static final PotionItem SPLASH_SWIFTNESS_EXTENDED = new PotionItem("Splash Potion of Swiftness (Extended)", StatusEffect.SPEED, TIER0, DURATION_EXTENDED, ACTION_SPLASH, 480, WATER_BOTTLE);
-	public static final PotionItem SPLASH_SWIFTNESS = new PotionItem("Splash Potion of Swiftness", StatusEffect.SPEED, TIER0, DURATION_NORMAL, ACTION_SPLASH, 180, WATER_BOTTLE);
-	public static final PotionItem SWIFTNESS_II = new PotionItem("Potion of Swiftness II", StatusEffect.SPEED, TIER2, DURATION_EXTENDED, ACTION_USE, 90, WATER_BOTTLE);
-	public static final PotionItem SPLASH_SWIFTNESS_II = new PotionItem("Splash Potion of Swiftness II", StatusEffect.SPEED, TIER2, DURATION_EXTENDED, ACTION_SPLASH, 90, WATER_BOTTLE);
-	public static final PotionItem FIRE_EXTENDED = new PotionItem("Potion of Fire Resistance (Extended)", StatusEffect.FIRE_RESISTANCE, TIER0, DURATION_EXTENDED, ACTION_USE, 480, WATER_BOTTLE);
-	public static final PotionItem SPLASH_FIRE_EXTENDED = new PotionItem("Splash Potion of Fire Resistance (Extended)", StatusEffect.FIRE_RESISTANCE, TIER0, DURATION_EXTENDED, ACTION_SPLASH, 480,
+	public static final PotionItem SPLASH_REGENERATION = new PotionItem("Splash Potion of Regeneration", EntityEffectType.REGENERATION, TIER0, DURATION_NORMAL, ACTION_SPLASH, 45, WATER_BOTTLE);
+	public static final PotionItem SPLASH_REGENERATION_II = new PotionItem("Splash Potion of Regeneration II", EntityEffectType.REGENERATION, TIER2, DURATION_NORMAL, ACTION_SPLASH, 120, WATER_BOTTLE);
+	public static final PotionItem SWIFTNESS = new PotionItem("Potion of Swiftness", EntityEffectType.SPEED, TIER0, DURATION_NORMAL, ACTION_USE, 180, WATER_BOTTLE);
+	public static final PotionItem SWIFTNESS_EXTENDED = new PotionItem("Potion of Swiftness (Extended)", EntityEffectType.SPEED, TIER0, DURATION_EXTENDED, ACTION_USE, 480, WATER_BOTTLE);
+	public static final PotionItem SPLASH_SWIFTNESS_EXTENDED = new PotionItem("Splash Potion of Swiftness (Extended)", EntityEffectType.SPEED, TIER0, DURATION_EXTENDED, ACTION_SPLASH, 480, WATER_BOTTLE);
+	public static final PotionItem SPLASH_SWIFTNESS = new PotionItem("Splash Potion of Swiftness", EntityEffectType.SPEED, TIER0, DURATION_NORMAL, ACTION_SPLASH, 180, WATER_BOTTLE);
+	public static final PotionItem SWIFTNESS_II = new PotionItem("Potion of Swiftness II", EntityEffectType.SPEED, TIER2, DURATION_EXTENDED, ACTION_USE, 90, WATER_BOTTLE);
+	public static final PotionItem SPLASH_SWIFTNESS_II = new PotionItem("Splash Potion of Swiftness II", EntityEffectType.SPEED, TIER2, DURATION_EXTENDED, ACTION_SPLASH, 90, WATER_BOTTLE);
+	public static final PotionItem FIRE_EXTENDED = new PotionItem("Potion of Fire Resistance (Extended)", EntityEffectType.FIRE_RESISTANCE, TIER0, DURATION_EXTENDED, ACTION_USE, 480, WATER_BOTTLE);
+	public static final PotionItem SPLASH_FIRE_EXTENDED = new PotionItem("Splash Potion of Fire Resistance (Extended)", EntityEffectType.FIRE_RESISTANCE, TIER0, DURATION_EXTENDED, ACTION_SPLASH, 480,
 			WATER_BOTTLE);
-	public static final PotionItem FIRE = new PotionItem("Potion of Fire Resistance", StatusEffect.FIRE_RESISTANCE, TIER0, DURATION_NORMAL, ACTION_USE, 180, WATER_BOTTLE);
-	public static final PotionItem SPLASH_FIRE = new PotionItem("Splash Potion of Fire Resistance", StatusEffect.FIRE_RESISTANCE, TIER0, DURATION_NORMAL, ACTION_SPLASH, 180, WATER_BOTTLE);
-	public static final PotionItem FIRE_REVERTED = new PotionItem("Potion of Fire Resistance", StatusEffect.FIRE_RESISTANCE, TIER2, DURATION_NORMAL, ACTION_USE, 480, WATER_BOTTLE);
-	public static final PotionItem SPLASH_FIRE_REVERTED = new PotionItem("Splash Potion of Fire Resistance", StatusEffect.FIRE_RESISTANCE, TIER2, DURATION_NORMAL, ACTION_SPLASH, 180, WATER_BOTTLE);
-	public static final PotionItem POISON = new PotionItem("Potion of Poison", StatusEffect.POISON, TIER0, DURATION_NORMAL, ACTION_USE, 45, WATER_BOTTLE);
-	public static final PotionItem SPLASH_POISON = new PotionItem("Splash Potion of Poison", StatusEffect.POISON, TIER0, DURATION_NORMAL, ACTION_SPLASH, 45, WATER_BOTTLE);
-	public static final PotionItem POISON_EXTENDED = new PotionItem("Potion of Poison", StatusEffect.POISON, TIER0, DURATION_EXTENDED, ACTION_USE, 120, WATER_BOTTLE);
-	public static final PotionItem SPLASH_POISON_EXTENDED = new PotionItem("Splash Potion of Poison", StatusEffect.POISON, TIER0, DURATION_EXTENDED, ACTION_SPLASH, 120, WATER_BOTTLE);
-	public static final PotionItem POISON_II = new PotionItem("Potion of Poison II", StatusEffect.POISON, TIER2, DURATION_NORMAL, ACTION_USE, 22.5f, WATER_BOTTLE);
-	public static final PotionItem SPLASH_POISON_II = new PotionItem("Splash Potion of Poison II", StatusEffect.POISON, TIER2, DURATION_NORMAL, ACTION_SPLASH, 22.5f, WATER_BOTTLE);
-	public static final PotionItem HEALING = new PotionItem("Potion of Healing", StatusEffect.INSTANT_HEALTH, TIER0, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
-	public static final PotionItem SPLASH_HEALING = new PotionItem("Splash Potion of Healing", StatusEffect.INSTANT_HEALTH, TIER0, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
-	public static final PotionItem HEALING_REVERTED = new PotionItem("Potion of Healing", StatusEffect.INSTANT_HEALTH, TIER0, DURATION_EXTENDED, ACTION_USE, WATER_BOTTLE);
-	public static final PotionItem SPLASH_HEALING_REVERTED = new PotionItem("Splash Potion of Healing", StatusEffect.INSTANT_HEALTH, TIER0, DURATION_EXTENDED, ACTION_SPLASH, WATER_BOTTLE);
-	public static final PotionItem HEALING_II = new PotionItem("Potion of Healing II", StatusEffect.INSTANT_HEALTH, TIER2, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
-	public static final PotionItem SPLASH_HEALING_II = new PotionItem("Splash Potion of Healing II", StatusEffect.INSTANT_HEALTH, TIER2, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
-	public static final PotionItem WEAKNESS = new PotionItem("Potion of Weakness", StatusEffect.WEAKNESS, TIER0, DURATION_NORMAL, ACTION_USE, 90, WATER_BOTTLE);
-	public static final PotionItem SPLASH_WEAKNESS = new PotionItem("Splash Potion of Weakness", StatusEffect.WEAKNESS, TIER0, DURATION_NORMAL, ACTION_SPLASH, 90, WATER_BOTTLE);
-	public static final PotionItem WEAKNESS_EXTENDED = new PotionItem("Potion of Weakness (Extended)", StatusEffect.WEAKNESS, TIER0, DURATION_EXTENDED, ACTION_USE, 240, WATER_BOTTLE);
-	public static final PotionItem SPLASH_WEAKNESS_EXTENDED = new PotionItem("Splash Potion of Weakness (Extended)", StatusEffect.WEAKNESS, TIER0, DURATION_EXTENDED, ACTION_SPLASH, 240, WATER_BOTTLE);
-	public static final PotionItem WEAKNESS_REVERTED = new PotionItem("Potion of Weakness", StatusEffect.WEAKNESS, TIER2, DURATION_NORMAL, ACTION_USE, 90, WATER_BOTTLE);
-	public static final PotionItem SPLASH_WEAKNESS_REVERTED = new PotionItem("Splash Potion of Weakness", StatusEffect.WEAKNESS, TIER2, DURATION_NORMAL, ACTION_SPLASH, 90, WATER_BOTTLE);
-	public static final PotionItem STRENGTH = new PotionItem("Potion of Strength", StatusEffect.STRENGTH, TIER0, DURATION_NORMAL, ACTION_USE, 180, WATER_BOTTLE);
-	public static final PotionItem SPLASH_STRENGTH = new PotionItem("Splash Potion of Strength", StatusEffect.STRENGTH, TIER0, DURATION_NORMAL, ACTION_SPLASH, 180, WATER_BOTTLE);
-	public static final PotionItem STRENGTH_EXTENDED = new PotionItem("Potion of Strength (Extended)", StatusEffect.STRENGTH, TIER0, DURATION_EXTENDED, ACTION_USE, 480, WATER_BOTTLE);
-	public static final PotionItem SPLASH_STRENGTH_EXTENDED = new PotionItem("Spash Potion of Strength (Extended)", StatusEffect.STRENGTH, TIER0, DURATION_EXTENDED, ACTION_SPLASH, 480, WATER_BOTTLE);
-	public static final PotionItem STRENGTH_II = new PotionItem("Potion of Strength II", StatusEffect.STRENGTH, TIER2, DURATION_NORMAL, ACTION_USE, 90, WATER_BOTTLE);
-	public static final PotionItem SPLASH_STRENGTH_II = new PotionItem("Splash Potion of Strength II", StatusEffect.STRENGTH, TIER2, DURATION_NORMAL, ACTION_SPLASH, 90, WATER_BOTTLE);
-	public static final PotionItem SLOWNESS = new PotionItem("Potion of Slowness", StatusEffect.SLOWNESS, TIER0, DURATION_NORMAL, ACTION_USE, 90, WATER_BOTTLE);
-	public static final PotionItem SPLASH_SLOWNESS = new PotionItem("Splash Potion of Slowness", StatusEffect.SLOWNESS, TIER0, DURATION_NORMAL, ACTION_SPLASH, 90, WATER_BOTTLE);
-	public static final PotionItem SLOWNESS_EXTENDED = new PotionItem("Potion of Slowness (Extended)", StatusEffect.SLOWNESS, TIER0, DURATION_EXTENDED, ACTION_USE, 240, WATER_BOTTLE);
-	public static final PotionItem SPLASH_SLOWNESS_EXTENDED = new PotionItem("Splash Potion of Slowness (Extended)", StatusEffect.SLOWNESS, TIER0, DURATION_EXTENDED, ACTION_SPLASH, 240, WATER_BOTTLE);
-	public static final PotionItem SLOWNESS_REVERTED = new PotionItem("Potion of Slowness", StatusEffect.SLOWNESS, TIER2, DURATION_NORMAL, ACTION_USE, 90, WATER_BOTTLE);
-	public static final PotionItem SPLASH_SLOWNESS_REVERTED = new PotionItem("Splash Potion of Slowness", StatusEffect.SLOWNESS, TIER2, DURATION_NORMAL, ACTION_SPLASH, 90, WATER_BOTTLE);
-	public static final PotionItem HARMING = new PotionItem("Potion of Harming", StatusEffect.INSTANT_DAMAGE, TIER0, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
-	public static final PotionItem SPLASH_HARMING = new PotionItem("Splash Potion of Harming", StatusEffect.INSTANT_DAMAGE, TIER0, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
-	public static final PotionItem HARMING_REVERTED = new PotionItem("Potion of Harming", StatusEffect.INSTANT_DAMAGE, TIER0, DURATION_EXTENDED, ACTION_USE, WATER_BOTTLE);
-	public static final PotionItem SPLASH_HARMING_REVERTED = new PotionItem("Splash Potion of Harming", StatusEffect.INSTANT_DAMAGE, TIER0, DURATION_EXTENDED, ACTION_SPLASH, WATER_BOTTLE);
-	public static final PotionItem HARMING_II = new PotionItem("Potion of Harming II", StatusEffect.INSTANT_DAMAGE, TIER2, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
-	public static final PotionItem SPLASH_HARMING_II = new PotionItem("Splash Potion of Harming", StatusEffect.INSTANT_DAMAGE, TIER2, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
-	public static final PotionItem NIGHT_VISION = new PotionItem("Potion of Night Vision", StatusEffect.NIGHT_VISION, TIER0, DURATION_NORMAL, ACTION_USE, 180, WATER_BOTTLE);
-	public static final PotionItem NIGHT_VISION_EXTENDED = new PotionItem("Potion of Night Vision (Extended)", StatusEffect.NIGHT_VISION, TIER0, DURATION_EXTENDED, ACTION_USE, 480, WATER_BOTTLE);
-	public static final PotionItem INVISIBILITY = new PotionItem("Potion of Invisibility", StatusEffect.INVISIBILITY, TIER0, DURATION_NORMAL, ACTION_USE, 180, WATER_BOTTLE);
-	public static final PotionItem INVISIBILITY_EXTENDED = new PotionItem("Potion of Invisibility (Extended)", StatusEffect.INVISIBILITY, TIER0, DURATION_EXTENDED, ACTION_USE, 480, WATER_BOTTLE);
+	public static final PotionItem FIRE = new PotionItem("Potion of Fire Resistance", EntityEffectType.FIRE_RESISTANCE, TIER0, DURATION_NORMAL, ACTION_USE, 180, WATER_BOTTLE);
+	public static final PotionItem SPLASH_FIRE = new PotionItem("Splash Potion of Fire Resistance", EntityEffectType.FIRE_RESISTANCE, TIER0, DURATION_NORMAL, ACTION_SPLASH, 180, WATER_BOTTLE);
+	public static final PotionItem FIRE_REVERTED = new PotionItem("Potion of Fire Resistance", EntityEffectType.FIRE_RESISTANCE, TIER2, DURATION_NORMAL, ACTION_USE, 480, WATER_BOTTLE);
+	public static final PotionItem SPLASH_FIRE_REVERTED = new PotionItem("Splash Potion of Fire Resistance", EntityEffectType.FIRE_RESISTANCE, TIER2, DURATION_NORMAL, ACTION_SPLASH, 180, WATER_BOTTLE);
+	public static final PotionItem POISON = new PotionItem("Potion of Poison", EntityEffectType.POISON, TIER0, DURATION_NORMAL, ACTION_USE, 45, WATER_BOTTLE);
+	public static final PotionItem SPLASH_POISON = new PotionItem("Splash Potion of Poison", EntityEffectType.POISON, TIER0, DURATION_NORMAL, ACTION_SPLASH, 45, WATER_BOTTLE);
+	public static final PotionItem POISON_EXTENDED = new PotionItem("Potion of Poison", EntityEffectType.POISON, TIER0, DURATION_EXTENDED, ACTION_USE, 120, WATER_BOTTLE);
+	public static final PotionItem SPLASH_POISON_EXTENDED = new PotionItem("Splash Potion of Poison", EntityEffectType.POISON, TIER0, DURATION_EXTENDED, ACTION_SPLASH, 120, WATER_BOTTLE);
+	public static final PotionItem POISON_II = new PotionItem("Potion of Poison II", EntityEffectType.POISON, TIER2, DURATION_NORMAL, ACTION_USE, 22.5f, WATER_BOTTLE);
+	public static final PotionItem SPLASH_POISON_II = new PotionItem("Splash Potion of Poison II", EntityEffectType.POISON, TIER2, DURATION_NORMAL, ACTION_SPLASH, 22.5f, WATER_BOTTLE);
+	public static final PotionItem HEALING = new PotionItem("Potion of Healing", EntityEffectType.INSTANT_HEALTH, TIER0, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
+	public static final PotionItem SPLASH_HEALING = new PotionItem("Splash Potion of Healing", EntityEffectType.INSTANT_HEALTH, TIER0, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
+	public static final PotionItem HEALING_REVERTED = new PotionItem("Potion of Healing", EntityEffectType.INSTANT_HEALTH, TIER0, DURATION_EXTENDED, ACTION_USE, WATER_BOTTLE);
+	public static final PotionItem SPLASH_HEALING_REVERTED = new PotionItem("Splash Potion of Healing", EntityEffectType.INSTANT_HEALTH, TIER0, DURATION_EXTENDED, ACTION_SPLASH, WATER_BOTTLE);
+	public static final PotionItem HEALING_II = new PotionItem("Potion of Healing II", EntityEffectType.INSTANT_HEALTH, TIER2, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
+	public static final PotionItem SPLASH_HEALING_II = new PotionItem("Splash Potion of Healing II", EntityEffectType.INSTANT_HEALTH, TIER2, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
+	public static final PotionItem WEAKNESS = new PotionItem("Potion of Weakness", EntityEffectType.WEAKNESS, TIER0, DURATION_NORMAL, ACTION_USE, 90, WATER_BOTTLE);
+	public static final PotionItem SPLASH_WEAKNESS = new PotionItem("Splash Potion of Weakness", EntityEffectType.WEAKNESS, TIER0, DURATION_NORMAL, ACTION_SPLASH, 90, WATER_BOTTLE);
+	public static final PotionItem WEAKNESS_EXTENDED = new PotionItem("Potion of Weakness (Extended)", EntityEffectType.WEAKNESS, TIER0, DURATION_EXTENDED, ACTION_USE, 240, WATER_BOTTLE);
+	public static final PotionItem SPLASH_WEAKNESS_EXTENDED = new PotionItem("Splash Potion of Weakness (Extended)", EntityEffectType.WEAKNESS, TIER0, DURATION_EXTENDED, ACTION_SPLASH, 240, WATER_BOTTLE);
+	public static final PotionItem WEAKNESS_REVERTED = new PotionItem("Potion of Weakness", EntityEffectType.WEAKNESS, TIER2, DURATION_NORMAL, ACTION_USE, 90, WATER_BOTTLE);
+	public static final PotionItem SPLASH_WEAKNESS_REVERTED = new PotionItem("Splash Potion of Weakness", EntityEffectType.WEAKNESS, TIER2, DURATION_NORMAL, ACTION_SPLASH, 90, WATER_BOTTLE);
+	public static final PotionItem STRENGTH = new PotionItem("Potion of Strength", EntityEffectType.STRENGTH, TIER0, DURATION_NORMAL, ACTION_USE, 180, WATER_BOTTLE);
+	public static final PotionItem SPLASH_STRENGTH = new PotionItem("Splash Potion of Strength", EntityEffectType.STRENGTH, TIER0, DURATION_NORMAL, ACTION_SPLASH, 180, WATER_BOTTLE);
+	public static final PotionItem STRENGTH_EXTENDED = new PotionItem("Potion of Strength (Extended)", EntityEffectType.STRENGTH, TIER0, DURATION_EXTENDED, ACTION_USE, 480, WATER_BOTTLE);
+	public static final PotionItem SPLASH_STRENGTH_EXTENDED = new PotionItem("Spash Potion of Strength (Extended)", EntityEffectType.STRENGTH, TIER0, DURATION_EXTENDED, ACTION_SPLASH, 480, WATER_BOTTLE);
+	public static final PotionItem STRENGTH_II = new PotionItem("Potion of Strength II", EntityEffectType.STRENGTH, TIER2, DURATION_NORMAL, ACTION_USE, 90, WATER_BOTTLE);
+	public static final PotionItem SPLASH_STRENGTH_II = new PotionItem("Splash Potion of Strength II", EntityEffectType.STRENGTH, TIER2, DURATION_NORMAL, ACTION_SPLASH, 90, WATER_BOTTLE);
+	public static final PotionItem SLOWNESS = new PotionItem("Potion of Slowness", EntityEffectType.SLOWNESS, TIER0, DURATION_NORMAL, ACTION_USE, 90, WATER_BOTTLE);
+	public static final PotionItem SPLASH_SLOWNESS = new PotionItem("Splash Potion of Slowness", EntityEffectType.SLOWNESS, TIER0, DURATION_NORMAL, ACTION_SPLASH, 90, WATER_BOTTLE);
+	public static final PotionItem SLOWNESS_EXTENDED = new PotionItem("Potion of Slowness (Extended)", EntityEffectType.SLOWNESS, TIER0, DURATION_EXTENDED, ACTION_USE, 240, WATER_BOTTLE);
+	public static final PotionItem SPLASH_SLOWNESS_EXTENDED = new PotionItem("Splash Potion of Slowness (Extended)", EntityEffectType.SLOWNESS, TIER0, DURATION_EXTENDED, ACTION_SPLASH, 240, WATER_BOTTLE);
+	public static final PotionItem SLOWNESS_REVERTED = new PotionItem("Potion of Slowness", EntityEffectType.SLOWNESS, TIER2, DURATION_NORMAL, ACTION_USE, 90, WATER_BOTTLE);
+	public static final PotionItem SPLASH_SLOWNESS_REVERTED = new PotionItem("Splash Potion of Slowness", EntityEffectType.SLOWNESS, TIER2, DURATION_NORMAL, ACTION_SPLASH, 90, WATER_BOTTLE);
+	public static final PotionItem HARMING = new PotionItem("Potion of Harming", EntityEffectType.INSTANT_DAMAGE, TIER0, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
+	public static final PotionItem SPLASH_HARMING = new PotionItem("Splash Potion of Harming", EntityEffectType.INSTANT_DAMAGE, TIER0, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
+	public static final PotionItem HARMING_REVERTED = new PotionItem("Potion of Harming", EntityEffectType.INSTANT_DAMAGE, TIER0, DURATION_EXTENDED, ACTION_USE, WATER_BOTTLE);
+	public static final PotionItem SPLASH_HARMING_REVERTED = new PotionItem("Splash Potion of Harming", EntityEffectType.INSTANT_DAMAGE, TIER0, DURATION_EXTENDED, ACTION_SPLASH, WATER_BOTTLE);
+	public static final PotionItem HARMING_II = new PotionItem("Potion of Harming II", EntityEffectType.INSTANT_DAMAGE, TIER2, DURATION_NORMAL, ACTION_USE, WATER_BOTTLE);
+	public static final PotionItem SPLASH_HARMING_II = new PotionItem("Splash Potion of Harming", EntityEffectType.INSTANT_DAMAGE, TIER2, DURATION_NORMAL, ACTION_SPLASH, WATER_BOTTLE);
+	public static final PotionItem NIGHT_VISION = new PotionItem("Potion of Night Vision", EntityEffectType.NIGHT_VISION, TIER0, DURATION_NORMAL, ACTION_USE, 180, WATER_BOTTLE);
+	public static final PotionItem NIGHT_VISION_EXTENDED = new PotionItem("Potion of Night Vision (Extended)", EntityEffectType.NIGHT_VISION, TIER0, DURATION_EXTENDED, ACTION_USE, 480, WATER_BOTTLE);
+	public static final PotionItem INVISIBILITY = new PotionItem("Potion of Invisibility", EntityEffectType.INVISIBILITY, TIER0, DURATION_NORMAL, ACTION_USE, 180, WATER_BOTTLE);
+	public static final PotionItem INVISIBILITY_EXTENDED = new PotionItem("Potion of Invisibility (Extended)", EntityEffectType.INVISIBILITY, TIER0, DURATION_EXTENDED, ACTION_USE, 480, WATER_BOTTLE);
 	/**
 	 * Contains the amount of time this potion have.
 	 */
 	private float time;
-	private StatusEffect effect;
+	private EntityEffectType effect;
 
 	private PotionItem(String name) {
 		super((short) 0x7FFF, name, 373, null);
@@ -182,7 +182,7 @@ public class PotionItem extends VanillaItemMaterial {
 		this(name, effect, tier, duration, splash, 0, parent);
 	}
 
-	private PotionItem(String name, StatusEffect effect, short tier, short duration, short splash, PotionItem parent) {
+	private PotionItem(String name, EntityEffectType effect, short tier, short duration, short splash, PotionItem parent) {
 		this(name, effect, tier, duration, splash, 0, parent);
 	}
 
@@ -197,8 +197,8 @@ public class PotionItem extends VanillaItemMaterial {
 		setMaxStackSize(1);
 	}
 
-	public PotionItem(String name, StatusEffect effect, short tier, short duration, short splash, float time, PotionItem parent) {
-		this(name, effect.getPotionID(), tier, duration, splash, time, parent);
+	public PotionItem(String name, EntityEffectType effect, short tier, short duration, short splash, float time, PotionItem parent) {
+		this(name, effect.getPotionId(), tier, duration, splash, time, parent);
 		this.effect = effect;
 	}
 
@@ -214,7 +214,7 @@ public class PotionItem extends VanillaItemMaterial {
 		return (this.getData() & TIER_MASK);
 	}
 
-	public StatusEffect getEffect() {
+	public EntityEffectType getEffect() {
 		return this.effect;
 	}
 
@@ -245,7 +245,7 @@ public class PotionItem extends VanillaItemMaterial {
 
 	public void onDrink(Entity entity, Slot slot) {
 		if (this.effect != null) {
-			entity.add(Effects.class).addEffect(new StatusEffectContainer(effect, this.getTime(), this.getTier()));
+			entity.add(Effects.class).addEffect(new EntityEffect(effect, this.getTime(), this.getTier()));
 		}
 
 		slot.addAmount(-1);

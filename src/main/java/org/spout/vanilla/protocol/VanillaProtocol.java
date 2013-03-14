@@ -55,6 +55,8 @@ import org.spout.vanilla.protocol.msg.player.conn.PlayerKickMessage;
 import org.spout.vanilla.protocol.netcache.ChunkNetCache;
 import org.spout.vanilla.protocol.netcache.protocol.ChunkCacheCodec;
 import org.spout.vanilla.protocol.netcache.protocol.ChunkCacheHandler;
+import org.spout.vanilla.protocol.plugin.BeaconCodec;
+import org.spout.vanilla.protocol.plugin.BeaconHandler;
 import org.spout.vanilla.protocol.plugin.CommandBlockCodec;
 import org.spout.vanilla.protocol.plugin.CommandBlockHandler;
 import org.spout.vanilla.protocol.plugin.RegisterPluginChannelCodec;
@@ -89,6 +91,7 @@ public class VanillaProtocol extends Protocol {
 		registerPacket(UnregisterPluginChannelCodec.class, new UnregisterPluginChannelMessageHandler());
 		registerPacket(ChunkCacheCodec.class, new ChunkCacheHandler());
 		registerPacket(CommandBlockCodec.class, new CommandBlockHandler());
+		registerPacket(BeaconCodec.class, new BeaconHandler());
 	}
 
 	@Override

@@ -24,39 +24,58 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.entity.network;
+package org.spout.vanilla.data.effect;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
-import org.spout.api.protocol.event.ProtocolEvent;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.spout.vanilla.data.effect.EntityEffect;
+public enum EntityEffectType {
+	SPEED(1, 2),
+	SLOWNESS(2, 10),
+	HASTE(3, 0),
+	MINING_FATIGUE(4, 0),
+	STRENGTH(5, 9),
+	INSTANT_HEALTH(6, 5),
+	INSTANT_DAMAGE(7, 12),
+	JUMP_BOOST(8, 0),
+	NAUSEA(9, 0),
+	REGENERATION(10, 1),
+	RESISTANCE(11, 0),
+	FIRE_RESISTANCE(12, 3),
+	WATER_BREATHING(13, 0),
+	INVISIBILITY(14, 14),
+	BLINDNESS(15, 0),
+	NIGHT_VISION(16, 6),
+	HUNGER(17, 0),
+	WEAKNESS(18, 8),
+	POISON(19, 4),
+	WITHER(20, 0),
+	NONE(0, 0);
+	private final int id;
+	private final int potionId;
+	private static final Map<Integer, EntityEffectType> idMap = new HashMap<Integer, EntityEffectType>();
 
-public class EntityEffectEvent extends EntityEvent implements ProtocolEvent {
-	private static final HandlerList handlers = new HandlerList();
-	private final EntityEffect effect;
-
-	public EntityEffectEvent(Entity e, EntityEffect effect) {
-		super(e);
-		this.effect = effect;
+	static {
+		for (EntityEffectType type : EntityEffectType.values()) {
+			idMap.put(type.getId(), type);
+		}
 	}
 
-	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
+	private EntityEffectType(int id, int potionId) {
+		this.id = id;
+		this.potionId= potionId;
 	}
 
-	public EntityEffect getEffect() {
-		return effect;
+	public static EntityEffectType get(int id) {
+		return idMap.get(id);
 	}
 
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
+	public int getId() {
+		return id;
 	}
 
-	public static HandlerList getHandlerList() {
-		return handlers;
+	public int getPotionId() {
+		return potionId;
 	}
+
 }

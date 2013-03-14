@@ -35,8 +35,8 @@ import org.spout.vanilla.component.entity.misc.Damage;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.data.Difficulty;
-import org.spout.vanilla.data.effect.StatusEffect;
-import org.spout.vanilla.data.effect.StatusEffectContainer;
+import org.spout.vanilla.data.effect.EntityEffect;
+import org.spout.vanilla.data.effect.EntityEffectType;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.creature.WitherEntityProtocol;
 
@@ -56,8 +56,8 @@ public class Wither extends Living implements Hostile {
 		Damage damage = getOwner().add(Damage.class);
 		damage.getDamageLevel(Difficulty.EASY).setAmount(3);
 		//TODO: Check the values
-		damage.getDamageLevel(Difficulty.NORMAL).setEffect(new StatusEffectContainer(StatusEffect.WITHER, 5));
-		damage.getDamageLevel(Difficulty.HARD).setEffect(new StatusEffectContainer(StatusEffect.WITHER, 7));
+		damage.getDamageLevel(Difficulty.NORMAL).setEffect(new EntityEffect(EntityEffectType.WITHER, 5));
+		damage.getDamageLevel(Difficulty.HARD).setEffect(new EntityEffect(EntityEffectType.WITHER, 7));
 		damage.getDamageLevel(Difficulty.HARDCORE).setEffect(damage.getDamageLevel(Difficulty.HARD).getEffect());
 	}
 }

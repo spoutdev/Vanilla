@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.data;
 
-import org.spout.vanilla.data.effect.StatusEffectContainer;
+import org.spout.vanilla.data.effect.EntityEffect;
 
 public class Damage {
 	private int amount;
-	private StatusEffectContainer effect;
+	private EntityEffect effect;
 
 	public Damage() {
 		setAmount(0);
@@ -42,7 +42,7 @@ public class Damage {
 		this.setEffect(null);
 	}
 
-	public Damage(int amount, StatusEffectContainer effect) {
+	public Damage(int amount, EntityEffect effect) {
 		this.setAmount(amount);
 		this.setEffect(effect);
 	}
@@ -56,11 +56,11 @@ public class Damage {
 		return this;
 	}
 
-	public StatusEffectContainer getEffect() {
+	public EntityEffect getEffect() {
 		return effect;
 	}
 
-	public Damage setEffect(StatusEffectContainer effect) {
+	public Damage setEffect(EntityEffect effect) {
 		this.effect = effect;
 		return this;
 	}

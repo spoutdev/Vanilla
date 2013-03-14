@@ -27,32 +27,230 @@
 package org.spout.vanilla.component.block.material;
 
 import org.spout.api.entity.Player;
+import org.spout.api.geo.cuboid.Block;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Container;
 import org.spout.api.inventory.Inventory;
+import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.component.block.ViewedBlockComponent;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
+import org.spout.vanilla.component.entity.misc.Effects;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.effect.EntityEffect;
+import org.spout.vanilla.data.effect.EntityEffectType;
 import org.spout.vanilla.event.inventory.BeaconCloseEvent;
 import org.spout.vanilla.event.inventory.BeaconOpenEvent;
 import org.spout.vanilla.inventory.block.BeaconInventory;
 import org.spout.vanilla.inventory.window.block.BeaconWindow;
+import org.spout.vanilla.material.VanillaMaterials;
 
 /**
  * Component that represents a Anvil in the world.
  */
-public class Beacon extends ViewedBlockComponent implements Container {
-	private final BeaconInventory inventory = new BeaconInventory();
+public class Beacon extends ViewedBlockComponent {
+	/**
+	 * Returns the amount of levels on the pyramid below this Beacon, this
+	 * will only account for up to a 4-level pyramid.
+	 *
+	 * @return levels on pyramid
+	 */
+	public int getLevels() {
+		Block block = getBlock();
+		for (int lvl = 1; lvl <= 4; lvl++) {
+			for (int dx = -lvl; dx <= lvl; dx++) {
+				for (int dz = -lvl; dz <= lvl; dz++) {
+					if (!isPyramidMaterial(block.translate(dx, -lvl, dz).getMaterial())) {
+						return lvl - 1;
+					}
+				}
+			}
+		}
+		return 4;
+	}
+
+	/**
+	 * Returns the range in which players are effected by this Beacon
+	 * determined by an arbitrary algorithm.
+	 *
+	 * @return range of effects
+	 */
+	public float getEffectRange() {
+		return getLevels() * 10 + 10;
+	}
+
+	/**
+	 * Returns the amount of time (in seconds) until the Beacon will update the
+	 * players in the vicinity specified by {@link #getEffectRange()}.
+	 *
+	 * @return time (in seconds) until beacon sends an update
+	 */
+	public float getUpdateDelay() {
+		return getData().get(VanillaData.UPDATE_DELAY);
+	}
+
+	/**
+	 * Sets the amount of time (in seconds) until the Beacon will update the
+	 * players in the vicinity specified by {@link #getEffectRange()}.
+	 *
+	 * @param delay (in seconds) until beacon should send an update
+	 */
+	public void setUpdateDelay(float delay) {
+		getData().put(VanillaData.UPDATE_DELAY, delay);
+	}
+
+	/**
+	 * Returns the time that the update delay should be set to upon reaching
+	 * zero.
+	 *
+	 * @return delay to update to when delay reaches zero
+	 */
+	public float getMaxUpdateDelay() {
+		return getData().get(VanillaData.MAX_UPDATE_DELAY);
+	}
+
+	/**
+	 * Sets the time that the delay will be reset to upon reaching zero.
+	 *
+	 * @param delay to reset to
+	 */
+	public void setMaxUpdateDelay(float delay) {
+		getData().put(VanillaData.MAX_UPDATE_DELAY, delay);
+	}
+
+	/**
+	 * Returns the primary effect of this Beacon.
+	 *
+	 * @return primary effect of beacon
+	 */
+	public EntityEffectType getPrimaryEffect() {
+		return getData().get(VanillaData.PRIMARY_EFFECT);
+	}
+
+	/**
+	 * Sets the primary effect of this Beacon.
+	 *
+	 * @param type of effect to use
+	 */
+	public void setPrimaryEffect(EntityEffectType type) {
+		getData().put(VanillaData.PRIMARY_EFFECT, type);
+	}
+
+	/**
+	 * Returns the secondary effect of this Beacon.
+	 *
+	 * @return type of effect to use
+	 */
+	public EntityEffectType getSecondaryEffect() {
+		return getData().get(VanillaData.SECONDARY_EFFECT);
+	}
+
+	/**
+	 * Sets the secondary effect of this Beacon.
+	 *
+	 * @param type of effect to use
+	 */
+	public void setSecondaryEffect(EntityEffectType type) {
+		getData().put(VanillaData.SECONDARY_EFFECT, type);
+	}
+
+	/**
+	 * Returns the duration of the effects applied by this Beacon.
+	 *
+	 * @return duration of effects that are applied
+	 */
+	public float getEffectDuration() {
+		return getData().get(VanillaData.EFFECT_DURATION);
+	}
+
+	/**
+	 * Sets the duration of the effects applied by this Beacon.
+	 *
+	 * @param duration of effects
+	 */
+	public void setEffectDuration(float duration) {
+		getData().put(VanillaData.EFFECT_DURATION, duration);
+	}
+
+	/**
+	 * Returns true if the specified {@link BlockMaterial} is a valid material
+	 * to use in the construction of a Beacon's power pyramid.
+	 *
+	 * @param mat to check
+	 * @return true if material is valid
+	 */
+	public boolean isPyramidMaterial(BlockMaterial mat) {
+		return mat.isMaterial(VanillaMaterials.IRON_BLOCK, VanillaMaterials.GOLD_BLOCK, VanillaMaterials.DIAMOND_BLOCK, VanillaMaterials.EMERALD_BLOCK);
+	}
+
+	/**
+	 * Returns the amplifier on the primary effect. This returns one if this
+	 * Beacon has four levels, and it's primary effect is the same as it's
+	 * secondary effect.
+	 *
+	 * @return amplifier of primary effect
+	 */
+	public int getPrimaryAmplifier() {
+		return getLevels() == 4 && getPrimaryEffect() == getSecondaryEffect() ? 1 : 0;
+	}
+
+	/**
+	 * Performs an update on the Players in the vicinity specified by
+	 * {@link #getEffectRange()}. This method applies the primary effect to
+	 * each player with the duration specified by
+	 * {@link #getEffectDuration()} and the amplifier specified by
+	 * {@link #getPrimaryAmplifier()}. The Beacon will apply the secondary
+	 * effect if it is set, the Beacon's pyramid contains four levels, and the
+	 * primary effect is not the same as the secondary effect. Note that in
+	 * order for the secondary effect to be applied it must differ from the
+	 * primary effect otherwise a buff will just be applied to the primary
+	 * effect.
+	 */
+	public void doUpdate() {
+		resetUpdateDelay();
+		Point pos = getPosition();
+		EntityEffectType primary = getPrimaryEffect();
+		EntityEffectType secondary = getSecondaryEffect();
+		if (primary == null || primary == EntityEffectType.NONE) {
+			return;
+		}
+
+		for (Player player : pos.getWorld().getNearbyPlayers(pos, (int) getEffectRange())) {
+			System.out.println("For: " + player.getName());
+			Effects effects = player.add(Effects.class);
+			effects.addEffect(new EntityEffect(primary, getEffectDuration(), getPrimaryAmplifier()));
+			if (secondary != null && secondary != EntityEffectType.NONE && getLevels() == 4 && primary != secondary) {
+				effects.addEffect(new EntityEffect(secondary, getEffectDuration()));
+			}
+		}
+	}
+
+	/**
+	 * Resets the update delay specified by {@link #getMaxUpdateDelay()}.
+	 */
+	public void resetUpdateDelay() {
+		setUpdateDelay(getMaxUpdateDelay());
+	}
+
+	private float pulseUpdateDelay(float dt) {
+		float delay = getUpdateDelay() - dt;
+		setUpdateDelay(delay);
+		return delay;
+	}
 
 	@Override
-	public Inventory getInventory() {
-		return inventory;
+	public void onTick(float dt) {
+		if (pulseUpdateDelay(dt) <= 0) {
+			System.out.println("Performing update...");
+			doUpdate();
+		}
 	}
 
 	@Override
 	public boolean open(Player player) {
 		BeaconOpenEvent event = player.getEngine().getEventManager().callEvent(new BeaconOpenEvent(this, player));
 		if (!event.isCancelled()) {
-			player.get(WindowHolder.class).openWindow(new BeaconWindow(player, inventory));
+			player.get(WindowHolder.class).openWindow(new BeaconWindow(player, this, new BeaconInventory()));
 			return true;
 		}
 		return false;

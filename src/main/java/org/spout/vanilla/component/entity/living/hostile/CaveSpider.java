@@ -37,8 +37,8 @@ import org.spout.vanilla.component.entity.misc.Damage;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.data.Difficulty;
-import org.spout.vanilla.data.effect.StatusEffect;
-import org.spout.vanilla.data.effect.StatusEffectContainer;
+import org.spout.vanilla.data.effect.EntityEffect;
+import org.spout.vanilla.data.effect.EntityEffectType;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
 import org.spout.vanilla.protocol.entity.creature.CreatureType;
@@ -61,8 +61,8 @@ public class CaveSpider extends Living implements Hostile {
 		}
 		Damage damage = getOwner().add(Damage.class);
 		damage.getDamageLevel(Difficulty.EASY).setAmount(2);
-		damage.getDamageLevel(Difficulty.NORMAL).setAmount(2).setEffect(new StatusEffectContainer(StatusEffect.POISON, 7));
-		damage.getDamageLevel(Difficulty.HARD).setAmount(3).setEffect(new StatusEffectContainer(StatusEffect.POISON, 15));
+		damage.getDamageLevel(Difficulty.NORMAL).setAmount(2).setEffect(new EntityEffect(EntityEffectType.POISON, 7));
+		damage.getDamageLevel(Difficulty.HARD).setAmount(3).setEffect(new EntityEffect(EntityEffectType.POISON, 15));
 		damage.getDamageLevel(Difficulty.HARDCORE).setAmount(damage.getDamageLevel(Difficulty.HARD).getAmount()).setEffect(damage.getDamageLevel(Difficulty.HARD).getEffect());
 	}
 }

@@ -35,8 +35,8 @@ import org.spout.api.entity.Player;
 
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.living.Human;
-import org.spout.vanilla.data.effect.StatusEffect;
-import org.spout.vanilla.data.effect.StatusEffectContainer;
+import org.spout.vanilla.data.effect.EntityEffect;
+import org.spout.vanilla.data.effect.EntityEffectType;
 import org.spout.vanilla.event.entity.network.EntityEffectEvent;
 import org.spout.vanilla.event.entity.network.EntityRemoveEffectEvent;
 import org.spout.vanilla.material.item.potion.PotionItem;
@@ -45,7 +45,7 @@ import org.spout.vanilla.material.item.potion.PotionItem;
  * Component handling status effects. This includes food poisoning, regeneration, etc.
  */
 public class Effects extends EntityComponent {
-	private final List<StatusEffectContainer> list = new ArrayList<StatusEffectContainer>();
+	private final List<EntityEffect> list = new ArrayList<EntityEffect>();
 	private Health health;
 
 	@Override
@@ -60,21 +60,20 @@ public class Effects extends EntityComponent {
 
 	@Override
 	public void onTick(float dt) {
-		Iterator<StatusEffectContainer> iterator = list.iterator();
+		Iterator<EntityEffect> iterator = list.iterator();
 		boolean removed = false;
 		while (iterator.hasNext()) {
 			removed = false;
-			StatusEffectContainer effect = iterator.next();
+			EntityEffect effect = iterator.next();
 			effect.setTimer(effect.getTimer() - dt);
 			effect.addTick(dt);
 
 			//TODO: Probably spammy. Need to find a better way.
-			if (StatusEffect.INVISIBILITY.equals(effect.getEffect())) {
+			if (EntityEffectType.INVISIBILITY.equals(effect.getEffect())) {
 				getOwner().get(Living.class).sendMetaData();
 			}
 			if (effect.getTimer() <= 0) {
 				iterator.remove();
-				getOwner().getNetwork().callProtocolEvent(new EntityRemoveEffectEvent(getOwner(), effect.getEffect()));
 				removed = true;
 			}
 
@@ -137,17 +136,14 @@ public class Effects extends EntityComponent {
 	 * Add a effect to the entity.
 	 * @param effect The effect to add.
 	 */
-	public void addEffect(StatusEffectContainer effect) {
-		if (containsEffect(effect.getEffect())) {
-			removeEffect(effect.getEffect());
-		}
-		if (StatusEffect.INSTANT_DAMAGE.equals(effect.getEffect())) {
+	public void addEffect(EntityEffect effect) {
+		if (EntityEffectType.INSTANT_DAMAGE.equals(effect.getEffect())) {
 			if (effect.getTier() == PotionItem.TIER0) {
 				health.damage(6);
 			} else if (effect.getTier() == PotionItem.TIER2) {
 				health.damage(12);
 			}
-		} else if (StatusEffect.INSTANT_HEALTH.equals(effect.getEffect())) {
+		} else if (EntityEffectType.INSTANT_HEALTH.equals(effect.getEffect())) {
 			if (effect.getTier() == PotionItem.TIER0) {
 				health.heal(6);
 			} else if (effect.getTier() == PotionItem.TIER2) {
@@ -163,7 +159,7 @@ public class Effects extends EntityComponent {
 	 * Remove a effect from the entity.
 	 * @param effect The effect to remove.
 	 */
-	public void removeEffect(StatusEffect effect) {
+	public void removeEffect(EntityEffectType effect) {
 		if (containsEffect(effect)) {
 			getOwner().getNetwork().callProtocolEvent(new EntityRemoveEffectEvent(getOwner(), effect));
 			list.remove(effect);
@@ -175,9 +171,9 @@ public class Effects extends EntityComponent {
 	 * @param effect The effect to verify.
 	 * @return True if the effect is currently enabled, else false.
 	 */
-	public boolean containsEffect(StatusEffect effect) {
+	public boolean containsEffect(EntityEffectType effect) {
 		boolean result = false;
-		for (StatusEffectContainer effectContainer : list) {
+		for (EntityEffect effectContainer : list) {
 			result = effectContainer.equals(effect);
 			if (result) {
 				break;

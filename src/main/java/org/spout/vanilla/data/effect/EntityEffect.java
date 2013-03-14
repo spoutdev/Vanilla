@@ -26,19 +26,19 @@
  */
 package org.spout.vanilla.data.effect;
 
-public class StatusEffectContainer {
-	private final StatusEffect effect;
+public class EntityEffect {
+	private final EntityEffectType effect;
 	private final int tier;
 	private float timer;
 	private float tick = 0;
 
-	public StatusEffectContainer(StatusEffect effect, float timer, int tier) {
+	public EntityEffect(EntityEffectType effect, float timer, int tier) {
 		this.effect = effect;
 		this.timer = timer;
 		this.tier = tier;
 	}
 
-	public StatusEffectContainer(StatusEffect effect, float timer) {
+	public EntityEffect(EntityEffectType effect, float timer) {
 		this.effect = effect;
 		this.timer = timer;
 		this.tier = 1;
@@ -52,7 +52,7 @@ public class StatusEffectContainer {
 		this.timer = timer;
 	}
 
-	public StatusEffect getEffect() {
+	public EntityEffectType getEffect() {
 		return effect;
 	}
 
@@ -80,9 +80,9 @@ public class StatusEffectContainer {
 	public boolean equals(Object e) {
 		boolean result = false;
 		if (e != null) {
-			if (e instanceof StatusEffectContainer) {
-				result = ((StatusEffectContainer) e).getEffect().equals(this.effect);
-			} else if (e instanceof StatusEffect) {
+			if (e instanceof EntityEffect) {
+				result = ((EntityEffect) e).getEffect().equals(this.effect);
+			} else if (e instanceof EntityEffectType) {
 				result = this.effect.equals(e);
 			}
 		}

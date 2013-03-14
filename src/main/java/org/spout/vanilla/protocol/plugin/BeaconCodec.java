@@ -24,39 +24,40 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.event.entity.network;
+package org.spout.vanilla.protocol.plugin;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityEvent;
-import org.spout.api.protocol.event.ProtocolEvent;
+import java.io.IOException;
 
-import org.spout.vanilla.data.effect.EntityEffect;
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
 
-public class EntityEffectEvent extends EntityEvent implements ProtocolEvent {
-	private static final HandlerList handlers = new HandlerList();
-	private final EntityEffect effect;
+import org.spout.api.protocol.MessageCodec;
+import org.spout.api.util.Named;
 
-	public EntityEffectEvent(Entity e, EntityEffect effect) {
-		super(e);
-		this.effect = effect;
+public class BeaconCodec extends MessageCodec<BeaconMessage> implements Named {
+	public static final String CHANNEL = "MC|Beacon";
+
+	public BeaconCodec(int opcode) {
+		super(BeaconMessage.class, opcode);
 	}
 
 	@Override
-	public void setCancelled(boolean cancelled) {
-		super.setCancelled(cancelled);
-	}
-
-	public EntityEffect getEffect() {
-		return effect;
+	public String getName() {
+		return CHANNEL;
 	}
 
 	@Override
-	public HandlerList getHandlers() {
-		return handlers;
+	public BeaconMessage decode(ChannelBuffer buffer) throws IOException {
+		int primary = buffer.readInt();
+		int secondary = buffer.readInt();
+		return new BeaconMessage(primary, secondary);
 	}
 
-	public static HandlerList getHandlerList() {
-		return handlers;
+	@Override
+	public ChannelBuffer encode(BeaconMessage msg) throws IOException {
+		ChannelBuffer buffer = ChannelBuffers.buffer(8);
+		buffer.writeInt(msg.getPrimaryEffect());
+		buffer.writeInt(msg.getSecondaryEffect());
+		return buffer;
 	}
 }

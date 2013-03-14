@@ -48,7 +48,6 @@ import org.spout.vanilla.event.window.WindowPropertyEvent;
 import org.spout.vanilla.inventory.window.prop.WindowProperty;
 
 public abstract class AbstractWindow implements InventoryViewer {
-	private static final boolean LOG_INFO_MESSAGES = false; // Debug - enable to log all the window information messages
 	private final Player owner;
 	protected final int offset;
 	protected final String title;
@@ -302,7 +301,7 @@ public abstract class AbstractWindow implements InventoryViewer {
 	}
 
 	protected void debug(String msg) {
-		if (LOG_INFO_MESSAGES) {
+		if (owner.getEngine().debugMode()) {
 			debug(Level.INFO, msg);
 		}
 	}

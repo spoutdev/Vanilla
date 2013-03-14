@@ -770,7 +770,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onEntityRemoveEffect(EntityRemoveEffectEvent event) {
-		return new EntityRemoveEffectMessage(event.getEntity().getId(), event.getEffect().getStatusID());
+		System.out.println("Removing effect");
+		return new EntityRemoveEffectMessage(event.getEntity().getId(), (byte) event.getEffect().getId());
 	}
 
 	@EventHandler
@@ -780,7 +781,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onEntityEffect(EntityEffectEvent event) {
-		return new EntityEffectMessage(event.getEntity().getId(), event.getEffect().getEffect().getStatusID(), (byte) 0, (short) (event.getEffect().getTimer() * 20));
+		return new EntityEffectMessage(event.getEntity().getId(), (byte) event.getEffect().getEffect().getId(), (byte) 0, (short) (event.getEffect().getTimer() * 20));
 	}
 
 	@EventHandler

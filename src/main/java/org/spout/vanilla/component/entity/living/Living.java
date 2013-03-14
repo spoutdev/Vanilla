@@ -39,7 +39,7 @@ import org.spout.vanilla.component.entity.misc.Effects;
 import org.spout.vanilla.component.entity.misc.Head;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.data.effect.StatusEffect;
+import org.spout.vanilla.data.effect.EntityEffectType;
 
 public abstract class Living extends VanillaEntityComponent {
 	private Head head;
@@ -109,7 +109,7 @@ public abstract class Living extends VanillaEntityComponent {
 
 		Effects effects = getOwner().get(Effects.class);
 		if (effects != null) {
-			value = (byte) (value | ((effects.containsEffect(StatusEffect.INVISIBILITY) ? 1 : 0) << 5));
+			value = (byte) (value | ((effects.containsEffect(EntityEffectType.INVISIBILITY) ? 1 : 0) << 5));
 		}
 
 		return value;

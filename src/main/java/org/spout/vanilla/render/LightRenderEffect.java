@@ -110,7 +110,7 @@ public class LightRenderEffect implements RenderEffect {
 
 		Vector4 sunDir = new Vector4(x * size, y * size, z * size, 1.0f);
 
-		//Spout.getLogger().info("f = " + f + " rads = " + rads + " vector " + sunDir);
+		//VanillaPlugin.getInstance().getEngine().getLogger().info("f = " + f + " rads = " + rads + " vector " + sunDir);
 
 		snapshotRender.getMaterial().getShader().setUniform("sunDir", sunDir);
 	}

@@ -33,7 +33,7 @@ import java.util.List;
 import org.spout.api.Client;
 import org.spout.api.Platform;
 import org.spout.api.ServerOnly;
-import org.spout.api.Spout;
+
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Player;
@@ -94,14 +94,14 @@ public abstract class Window extends AbstractWindow {
 		addInventoryConverter(main);
 		addInventoryConverter(new GridInventoryConverter(inventory.getQuickbar(), 9, offset + main.getGrid().getSize(), QUICKBAR_POSITION));
 
-		switch (Spout.getPlatform()) {
+		switch (VanillaPlugin.getInstance().getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
 				background = label = null;
 				break;
 			case CLIENT:
-				background = ((Client) Spout.getEngine()).getScreenStack().createWidget();
-				label = ((Client) Spout.getEngine()).getScreenStack().createWidget();
+				background = ((Client)  VanillaPlugin.getInstance().getEngine()).getScreenStack().createWidget();
+				label = ((Client)  VanillaPlugin.getInstance().getEngine()).getScreenStack().createWidget();
 				VanillaPlugin plugin = VanillaPlugin.getInstance();
 				popup.setGrabsMouse(false);
 
@@ -126,7 +126,7 @@ public abstract class Window extends AbstractWindow {
 				}
 				break;
 			default:
-				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform().toString());
+				throw new IllegalStateException("Unknown platform: " + VanillaPlugin.getInstance().getEngine().getPlatform().toString());
 		}
 	}
 
@@ -138,17 +138,17 @@ public abstract class Window extends AbstractWindow {
 	public void open() {
 		opened = true;
 		System.out.println("OPEN");
-		switch (Spout.getPlatform()) {
+		switch (VanillaPlugin.getInstance().getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
 				callProtocolEvent(new WindowOpenEvent(this));
 				reload();
 				break;
 			case CLIENT:
-				((Client) Spout.getEngine()).getScreenStack().openScreen(popup);
+				((Client)  VanillaPlugin.getInstance().getEngine()).getScreenStack().openScreen(popup);
 				break;
 			default:
-				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform().toString());
+				throw new IllegalStateException("Unknown platform: " + VanillaPlugin.getInstance().getEngine().getPlatform().toString());
 		}
 	}
 
@@ -156,7 +156,7 @@ public abstract class Window extends AbstractWindow {
 	public void close() {
 		removeAllInventoryConverters();
 		opened = false;
-		switch (Spout.getPlatform()) {
+		switch (VanillaPlugin.getInstance().getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
 				if (getHuman() == null || getHuman().isSurvival()) {
@@ -165,11 +165,11 @@ public abstract class Window extends AbstractWindow {
 				callProtocolEvent(new WindowCloseEvent(this));
 				break;
 			case CLIENT:
-				((Client) Spout.getEngine()).getScreenStack().closeScreen(popup);
+				((Client)  VanillaPlugin.getInstance().getEngine()).getScreenStack().closeScreen(popup);
 				// TODO: Send close packet
 				break;
 			default:
-				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform().toString());
+				throw new IllegalStateException("Unknown platform: " + VanillaPlugin.getInstance().getEngine().getPlatform().toString());
 		}
 	}
 
@@ -363,7 +363,7 @@ public abstract class Window extends AbstractWindow {
 
 	@Override
 	public void onCreativeClick(Inventory inventory, int clickedSlot, ItemStack item) {
-		switch (Spout.getPlatform()) {
+		switch (VanillaPlugin.getInstance().getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
 				cursorItem = null;
@@ -373,13 +373,13 @@ public abstract class Window extends AbstractWindow {
 				// TODO: Creative handling
 				break;
 			default:
-				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform().toString());
+				throw new IllegalStateException("Unknown platform: " + VanillaPlugin.getInstance().getEngine().getPlatform().toString());
 		}
 	}
 
 	@Override
 	public boolean onOutsideClick() {
-		switch (Spout.getPlatform()) {
+		switch (VanillaPlugin.getInstance().getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
 				dropCursorItem();
@@ -388,14 +388,14 @@ public abstract class Window extends AbstractWindow {
 				// TODO: Client handling
 				return false;
 			default:
-				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform().toString());
+				throw new IllegalStateException("Unknown platform: " + VanillaPlugin.getInstance().getEngine().getPlatform().toString());
 		}
 	}
 
 	@ServerOnly
 	@Override
 	public void dropCursorItem() {
-		if (Spout.getPlatform() == Platform.CLIENT) {
+		if (VanillaPlugin.getInstance().getEngine().getPlatform() == Platform.CLIENT) {
 			throw new IllegalStateException("Cannot drop cursor item from client.");
 		}
 
@@ -509,7 +509,7 @@ public abstract class Window extends AbstractWindow {
 	 */
 	public void setProperty(int id, int value) {
 		properties.put(id, value);
-		switch (Spout.getPlatform()) {
+		switch (VanillaPlugin.getInstance().getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
 				callProtocolEvent(new WindowPropertyEvent(this, id, value));
@@ -518,7 +518,7 @@ public abstract class Window extends AbstractWindow {
 				// TODO: Window properties
 				break;
 			default:
-				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform());
+				throw new IllegalStateException("Unknown platform: " + VanillaPlugin.getInstance().getEngine().getPlatform());
 		}
 	}
 
@@ -529,7 +529,7 @@ public abstract class Window extends AbstractWindow {
 			return;
 		}
 
-		switch (Spout.getPlatform()) {
+		switch (VanillaPlugin.getInstance().getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
 				QuickbarInventory quickbar = getPlayerInventory().getQuickbar();
@@ -545,7 +545,7 @@ public abstract class Window extends AbstractWindow {
 				slots.getWidgets()[slot].update();
 				break;
 			default:
-				throw new IllegalStateException("Unknown platform: " + Spout.getPlatform());
+				throw new IllegalStateException("Unknown platform: " + VanillaPlugin.getInstance().getEngine().getPlatform());
 		}
 	}
 }

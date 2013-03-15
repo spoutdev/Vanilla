@@ -26,9 +26,10 @@
  */
 package org.spout.vanilla.component.block.material;
 
-import org.spout.api.Spout;
+
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
+import org.spout.vanilla.VanillaPlugin;
 
 import org.spout.vanilla.component.block.VanillaBlockComponent;
 import org.spout.vanilla.data.VanillaData;
@@ -104,7 +105,7 @@ public class Sign extends VanillaBlockComponent {
 		}
 		SignUpdateEvent event = new SignUpdateEvent(this, text, cause);
 		//Call event to plugins, allow them to alter it
-		Spout.getEventManager().callEvent(event);
+		VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(event);
 		//Send event to protocol
 		if (!event.isCancelled()) {
 			for (Player p : this.getOwner().getChunk().getObservingPlayers()) {

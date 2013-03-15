@@ -36,7 +36,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import gnu.trove.set.TIntSet;
 
 import org.spout.api.Server;
-import org.spout.api.Spout;
+
 import org.spout.api.component.impl.DatatableComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -593,7 +593,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		int hash = HASH_SEED;
 		hash += (hash << 5) + entityId;
 		hash += (hash << 5) + tickCounter;
-		return (hash & FORCE_MASK) == 0 || (Spout.debugMode() && getPlayer().get(ForceMessages.class) != null);
+		return (hash & FORCE_MASK) == 0 || (VanillaPlugin.getInstance().getEngine().debugMode() && getPlayer().get(ForceMessages.class) != null);
 	}
 
 	@Override
@@ -820,12 +820,12 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			} else if (isEqual(init, "heightmap", "height_map")) {
 				return HEIGHTMAP;
 			} else {
-				Spout.getLogger().info("Invalid chunk init setting, " + init + ", using default setting auto");
-				Spout.getLogger().info("Valid settings are:");
-				Spout.getLogger().info("client_sel Allows client selection, defaults to full columns");
-				Spout.getLogger().info("fullcol    Sends full columns");
-				Spout.getLogger().info("heightmap  Sends a heightmap including the topmost block");
-				Spout.getLogger().info("empty      Sends empty columns");
+				VanillaPlugin.getInstance().getEngine().getLogger().info("Invalid chunk init setting, " + init + ", using default setting auto");
+				VanillaPlugin.getInstance().getEngine().getLogger().info("Valid settings are:");
+				VanillaPlugin.getInstance().getEngine().getLogger().info("client_sel Allows client selection, defaults to full columns");
+				VanillaPlugin.getInstance().getEngine().getLogger().info("fullcol    Sends full columns");
+				VanillaPlugin.getInstance().getEngine().getLogger().info("heightmap  Sends a heightmap including the topmost block");
+				VanillaPlugin.getInstance().getEngine().getLogger().info("empty      Sends empty columns");
 
 				return CLIENT_SEL;
 			}

@@ -27,10 +27,11 @@
 package org.spout.vanilla.material.block.plant;
 
 import org.spout.api.Platform;
-import org.spout.api.Spout;
+
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
+import org.spout.vanilla.VanillaPlugin;
 
 import org.spout.vanilla.data.drops.SwitchDrops;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
@@ -52,7 +53,7 @@ public final class TallGrass extends GroundAttachable implements Burnable, Plant
 
 	private TallGrass(String name, int data, TallGrass parent, String model) {
 		super(name, parent.getMinecraftId(), data, parent, model);
-		if (Spout.getEngine().getPlatform() == Platform.CLIENT && data == 1) {
+		if ( VanillaPlugin.getInstance().getEngine().getPlatform() == Platform.CLIENT && data == 1) {
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_GRASS_COLOR)) {
 				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.BIOME_GRASS_COLOR);
 			}

@@ -26,15 +26,18 @@
  */
 package org.spout.vanilla.component.entity.substance.test;
 
+import java.util.logging.Level;
 import org.spout.api.Platform;
-import org.spout.api.Spout;
+
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
+import org.spout.vanilla.VanillaPlugin;
 
 public class SceneOutput extends EntityComponent {
 	@Override
 	public void onAttached() {
-		if (Spout.getPlatform() != Platform.SERVER || !Spout.debugMode() || getOwner() instanceof Player) {
+		VanillaPlugin plugin = VanillaPlugin.getInstance();
+		if (plugin.getEngine().getPlatform() != Platform.SERVER || !plugin.getEngine().debugMode() || getOwner() instanceof Player) {
 			throw new IllegalArgumentException("This is a spammy component meant only for debugging entity translations!");
 		}
 	}
@@ -42,7 +45,7 @@ public class SceneOutput extends EntityComponent {
 	@Override
 	public void onTick(float dt) {
 		if (getOwner().getScene().isPositionDirty()) {
-			Spout.log(getOwner().toString() + " is translating!");
+			 VanillaPlugin.getInstance().getEngine().getLogger().log(Level.FINE, getOwner().toString() + " is translating!");
 		}
 	}
 }

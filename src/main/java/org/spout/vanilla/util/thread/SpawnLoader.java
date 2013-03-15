@@ -26,12 +26,13 @@
  */
 package org.spout.vanilla.util.thread;
 
-import org.spout.api.Spout;
+
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.math.IntVector3;
 import org.spout.api.util.FlatIterator;
 import org.spout.api.util.thread.MultiTasker;
+import org.spout.vanilla.VanillaPlugin;
 
 /**
  * Loads a chunk area around a central chunk using multiple threads<br>
@@ -51,7 +52,7 @@ public class SpawnLoader extends MultiTasker<IntVector3> {
 	@Override
 	protected void handle(IntVector3 task, int remaining) {
 		if (remaining % this.step == 0) {
-			Spout.getLogger().info(this.loadingName + " [" + this.world.getName() + "], " + (((this.startAmount - remaining) * 100) / this.startAmount) + "% complete");
+			VanillaPlugin.getInstance().getEngine().getLogger().info(this.loadingName + " [" + this.world.getName() + "], " + (((this.startAmount - remaining) * 100) / this.startAmount) + "% complete");
 		}
 		this.world.getChunk(task.getX(), task.getY(), task.getZ(), LoadOption.LOAD_GEN);
 	}
@@ -70,7 +71,7 @@ public class SpawnLoader extends MultiTasker<IntVector3> {
 		try {
 			join();
 		} catch (InterruptedException e) {
-			Spout.getLogger().info("Interrupted when waiting for spawn area to load");
+			VanillaPlugin.getInstance().getEngine().getLogger().info("Interrupted when waiting for spawn area to load");
 		}
 	}
 }

@@ -27,7 +27,7 @@
 package org.spout.vanilla.world.lighting;
 
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
-import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
+import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;;
 
 public class VanillaSkylightLightingManager extends VanillaBlocklightLightingManager {
 	public VanillaSkylightLightingManager(String name) {
@@ -36,9 +36,8 @@ public class VanillaSkylightLightingManager extends VanillaBlocklightLightingMan
 
 	@Override
 	public void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int[] hx, int[] hz, int[] oldHy, int[] newHy, int changedColumns) {
-		//Spout.getLogger().info(getClass().getSimpleName() + ":" + changedColumns + " columns changed");
+		//VanillaPlugin.getInstance().getEngine().getLogger().info(getClass().getSimpleName() + ":" + changedColumns + " columns changed");
 	}
-
 	@Override
 	protected int getEmittedLight(ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z) {
 		return 0;

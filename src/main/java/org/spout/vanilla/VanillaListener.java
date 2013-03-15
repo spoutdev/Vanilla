@@ -28,7 +28,7 @@ package org.spout.vanilla;
 
 import org.spout.api.Client;
 import org.spout.api.Platform;
-
+import org.spout.api.Spout;
 import org.spout.api.component.impl.CameraComponent;
 import org.spout.api.component.impl.InteractComponent;
 import org.spout.api.entity.Player;
@@ -71,9 +71,7 @@ import org.spout.vanilla.protocol.ClientAuthentification;
 import org.spout.vanilla.protocol.PasteExceptionHandler;
 
 public class VanillaListener implements Listener {
-	private VanillaPlugin instance;
 	public VanillaListener(VanillaPlugin plugin) {
-		instance = plugin;
 	}
 
 	@EventHandler(order = Order.EARLIEST)
@@ -104,11 +102,11 @@ public class VanillaListener implements Listener {
 
 	@EventHandler
 	public void onGameStart(EngineStartEvent event) {
-		if (instance.getEngine() instanceof Client) {
+		if (Spout.getPlatform() != Platform.CLIENT) {
 			return;
 		}
 
-		Player player = ((Client) instance.getEngine()).getActivePlayer();
+		Player player = ((Client) Spout.getEngine()).getActivePlayer();
 
 		HUD HUD = player.add(org.spout.vanilla.component.entity.player.HUD.class);
 		HUD.setDefault(VanillaArmorWidget.class);
@@ -128,7 +126,7 @@ public class VanillaListener implements Listener {
 		player.add(Hunger.class);
 		player.add(InteractComponent.class).setRange(5f);
 
-		((Client) instance.getEngine()).getInputManager().addInputExecutor(new VanillaInputExecutor(player));
+		((Client) Spout.getEngine()).getInputManager().addInputExecutor(new VanillaInputExecutor(player));
 
 		String username = VanillaConfiguration.USERNAME.getString();
 		String password = VanillaConfiguration.PASSWORD.getString();
@@ -166,7 +164,7 @@ public class VanillaListener implements Listener {
 		}
 		if (prevPower != -1) {
 			RedstoneChangeEvent redstoneEvent = new RedstoneChangeEvent(event.getBlock(), event.getCause(), prevPower, newPower);
-			instance.getEngine().getEventManager().callEvent(redstoneEvent);
+			Spout.getEventManager().callEvent(redstoneEvent);
 			if (redstoneEvent.isCancelled()) {
 				event.setCancelled(true);
 			}

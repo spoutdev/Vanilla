@@ -36,7 +36,6 @@ import org.spout.api.Engine;
 import org.spout.api.FileSystem;
 import org.spout.api.Platform;
 import org.spout.api.Spout;
-
 import org.spout.api.event.Event;
 import org.spout.api.event.EventExecutor;
 import org.spout.api.event.EventManager;
@@ -64,7 +63,7 @@ public class EngineFaker {
 		plugin.initialize(null, engine, new PluginDescriptionFile("Vanilla", "dev", "org.spout.vanilla.VanillaPlugin", "all"), null, null, null);
 		VanillaPlugin.instance = plugin;
 
-		Spout.setEngine(engine); //Need alternative way of doing this.
+		Spout.setEngine(engine);
 		engineInstance = engine;
 	}
 

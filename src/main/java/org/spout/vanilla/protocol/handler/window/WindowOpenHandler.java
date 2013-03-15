@@ -27,11 +27,10 @@
 package org.spout.vanilla.protocol.handler.window;
 
 import org.spout.api.Client;
-
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-import org.spout.vanilla.VanillaPlugin;
 
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
@@ -52,7 +51,7 @@ import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
 public class WindowOpenHandler extends MessageHandler<WindowOpenMessage> {
 	@Override
 	public void handleClient(Session session, WindowOpenMessage message) {
-		Player player = ((Client)  VanillaPlugin.getInstance().getEngine()).getActivePlayer();
+		Player player = ((Client) Spout.getEngine()).getActivePlayer();
 		String title = message.getTitle();
 		switch (message.getType()) {
 			case DEFAULT:

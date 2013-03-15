@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.inventory.window.block;
 
-
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;

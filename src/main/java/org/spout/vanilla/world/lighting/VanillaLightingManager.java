@@ -28,7 +28,7 @@ package org.spout.vanilla.world.lighting;
 
 import java.util.Iterator;
 
-
+import org.spout.api.Spout;
 import org.spout.api.lighting.LightingManager;
 import org.spout.api.lighting.Modifiable;
 import org.spout.api.material.BlockMaterial;
@@ -40,7 +40,6 @@ import org.spout.api.util.bytebit.ByteBitSet;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 import org.spout.api.util.set.TInt10TripleSet;
-import org.spout.vanilla.VanillaPlugin;
 
 public abstract class VanillaLightingManager extends LightingManager<VanillaCuboidLightBuffer> {
 	private final static BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
@@ -154,7 +153,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		if (buffer != null) {
 			buffer.set(x, y, z, (byte) level);
 		} else {
-			VanillaPlugin.getInstance().getEngine().getLogger().info("No light buffer to write to");
+			Spout.getLogger().info("No light buffer to write to");
 		}
 	}
 	

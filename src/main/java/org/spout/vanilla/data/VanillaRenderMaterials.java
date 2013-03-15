@@ -28,13 +28,12 @@ package org.spout.vanilla.data;
 
 import org.spout.api.FileSystem;
 import org.spout.api.Platform;
-
+import org.spout.api.Spout;
 import org.spout.api.render.Font;
 import org.spout.api.render.RenderMaterial;
-import org.spout.vanilla.VanillaPlugin;
 
 public final class VanillaRenderMaterials {
-	private static final FileSystem fileSystem = VanillaPlugin.getInstance().getEngine().getFilesystem();
+	private static final FileSystem fileSystem = Spout.getFilesystem();
 	public static final Font FONT;
 	public static final RenderMaterial QUICKBAR_MATERIAL;
 	public static final RenderMaterial ICONS_MATERIAL;
@@ -55,7 +54,7 @@ public final class VanillaRenderMaterials {
 	public static final RenderMaterial ANVIL_MATERIAL = null;
 
 	static {
-		if (VanillaPlugin.getInstance().getEngine().getPlatform() == Platform.CLIENT) {
+		if (Spout.getPlatform() == Platform.CLIENT) {
 			FONT = (Font) fileSystem.getResource("font://Spout/fonts/ubuntu/Ubuntu-M.ttf");
 			QUICKBAR_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/QuickbarGUIMaterial.smt");
 			ICONS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/IconsGUIMaterial.smt");

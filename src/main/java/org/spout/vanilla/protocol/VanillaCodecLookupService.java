@@ -81,8 +81,12 @@ import org.spout.vanilla.protocol.codec.player.pos.PlayerPositionLookCodec;
 import org.spout.vanilla.protocol.codec.player.pos.PlayerRespawnCodec;
 import org.spout.vanilla.protocol.codec.player.pos.PlayerSpawnCodec;
 import org.spout.vanilla.protocol.codec.player.pos.PlayerSpawnPositionCodec;
+import org.spout.vanilla.protocol.codec.server.CreateScoreboardCodec;
+import org.spout.vanilla.protocol.codec.server.DisplayScoreboardCodec;
 import org.spout.vanilla.protocol.codec.server.ServerListPingCodec;
 import org.spout.vanilla.protocol.codec.server.ServerPluginCodec;
+import org.spout.vanilla.protocol.codec.server.TeamCodec;
+import org.spout.vanilla.protocol.codec.server.UpdateScoreboardCodec;
 import org.spout.vanilla.protocol.codec.window.WindowClickCodec;
 import org.spout.vanilla.protocol.codec.window.WindowCloseCodec;
 import org.spout.vanilla.protocol.codec.window.WindowCreativeActionCodec;
@@ -103,10 +107,6 @@ import org.spout.vanilla.protocol.codec.world.block.BlockChangeCodec;
 import org.spout.vanilla.protocol.codec.world.block.SignCodec;
 import org.spout.vanilla.protocol.codec.world.chunk.ChunkBulkCodec;
 import org.spout.vanilla.protocol.codec.world.chunk.ChunkDataCodec;
-import org.spout.vanilla.protocol.codec.server.CreateScoreboardCodec;
-import org.spout.vanilla.protocol.codec.server.DisplayScoreboardCodec;
-import org.spout.vanilla.protocol.codec.server.TeamCodec;
-import org.spout.vanilla.protocol.codec.server.UpdateScoreboardCodec;
 
 public class VanillaCodecLookupService extends CodecLookupService {
 	public VanillaCodecLookupService() {

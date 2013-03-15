@@ -31,8 +31,8 @@ import java.util.Random;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.living.Passive;
 import org.spout.vanilla.component.entity.living.Living;
+import org.spout.vanilla.component.entity.living.Passive;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.material.VanillaMaterials;

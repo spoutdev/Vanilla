@@ -115,6 +115,7 @@ public class ParticleEffectMessage extends VanillaMainChannelMessage {
 	public float getVelocity() {
 		return velocity;
 	}
+
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)

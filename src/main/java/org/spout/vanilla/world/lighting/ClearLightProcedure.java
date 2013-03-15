@@ -31,22 +31,21 @@ import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 import org.spout.api.util.set.TInt10Procedure;
 
 public class ClearLightProcedure extends TInt10Procedure {
-	
 	private int currentLevel;
 	private final ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light;
 	private final ImmutableCuboidBlockMaterialBuffer material;
 	private final VanillaLightingManager manager;
-	
+
 	public ClearLightProcedure(VanillaLightingManager manager, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material) {
 		this.light = light;
 		this.material = material;
 		this.manager = manager;
 	}
-	
+
 	public void setCurrentLevel(int level) {
 		this.currentLevel = level;
 	}
-	
+
 	@Override
 	public boolean execute(int x, int y, int z) {
 		int lightLevel = manager.getLightLevel(light, x, y, z);
@@ -59,5 +58,4 @@ public class ClearLightProcedure extends TInt10Procedure {
 		}
 		return true;
 	}
-
 }

@@ -60,6 +60,7 @@ import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.util.BlockIterator;
 import org.spout.api.util.OutwardIterator;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.material.chest.Chest;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
@@ -115,7 +116,7 @@ public class TestCommands {
 	private Engine getEngine() {
 		return plugin.getEngine();
 	}
-	
+
 	@Command(aliases = "lightcheck", usage = "", desc = "Checks nearby light values", max = 0)
 	@CommandPermissions("vanilla.command.debug")
 	public void light(CommandContext args, CommandSource source) throws CommandException {
@@ -140,7 +141,6 @@ public class TestCommands {
 			int lightNew = buffer.get(v.getX(), v.getY(), v.getZ());
 		}
 	}
-
 
 	// TODO - There needs to be a method that guarantees unique data values on a per-server basis
 	private int mapId = 1;

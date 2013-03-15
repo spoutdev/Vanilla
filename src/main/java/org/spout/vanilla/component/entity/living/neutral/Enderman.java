@@ -33,8 +33,8 @@ import org.spout.api.material.Material;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.living.Neutral;
 import org.spout.vanilla.component.entity.living.Living;
+import org.spout.vanilla.component.entity.living.Neutral;
 import org.spout.vanilla.component.entity.misc.Damage;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.data.Difficulty;

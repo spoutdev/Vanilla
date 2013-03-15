@@ -26,17 +26,14 @@
  */
 package org.spout.vanilla.protocol.handler.server;
 
-
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.protocol.msg.scoreboard.UpdateScoreboardMessage;
 
 public class UpdateScoreboardHandler extends MessageHandler<UpdateScoreboardMessage> {
-
 	@Override
 	public void handleClient(final Session session, final UpdateScoreboardMessage message) {
 		// Handle scoreboard updates
 	}
-
 }

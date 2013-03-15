@@ -33,7 +33,6 @@ import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public class UpdateScoreboardMessage extends VanillaMainChannelMessage {
-
 	private final String item, scoreboard;
 	private final boolean remove;
 	private final int value;
@@ -53,6 +52,7 @@ public class UpdateScoreboardMessage extends VanillaMainChannelMessage {
 	public boolean isRemove() {
 		return remove;
 	}
+
 	public String getItem() {
 		return item;
 	}

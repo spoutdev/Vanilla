@@ -32,11 +32,11 @@ import java.io.InputStream;
 import java.util.logging.Logger;
 
 import org.mockito.Mockito;
+
 import org.spout.api.Engine;
 import org.spout.api.FileSystem;
 import org.spout.api.Platform;
 import org.spout.api.Spout;
-
 import org.spout.api.event.Event;
 import org.spout.api.event.EventExecutor;
 import org.spout.api.event.EventManager;
@@ -71,10 +71,11 @@ public class EngineFaker {
 	public static Engine setupEngine() {
 		return engineInstance;
 	}
-	
+
 	public static void main(String[] args) {
-		
+
 	}
+
 	private static class VanillaTestPlugin extends VanillaPlugin {
 		@Override
 		public void onEnable() {

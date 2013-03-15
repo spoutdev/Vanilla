@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.world.lighting;
 
-
 import org.spout.vanilla.VanillaPlugin;
 
 public class VanillaLighting {

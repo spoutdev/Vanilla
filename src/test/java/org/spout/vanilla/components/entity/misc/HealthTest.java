@@ -39,7 +39,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class HealthTest {
-
 	@Test
 	public void testHealthComponent() {
 		Entity entity = EntityMocker.mockEntity();
@@ -70,6 +69,5 @@ public class HealthTest {
 
 		health.setHealth(-1, HealthChangeCause.UNKNOWN);
 		assertTrue(health.hasInfiniteHealth());
-
 	}
 }

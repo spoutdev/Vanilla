@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.codec.server;
 
 import java.io.IOException;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
@@ -36,7 +37,6 @@ import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.scoreboard.CreateScoreboardMessage;
 
 public class CreateScoreboardCodec extends MessageCodec<CreateScoreboardMessage> {
-
 	public CreateScoreboardCodec() {
 		super(CreateScoreboardMessage.class, 0xCE);
 	}

@@ -37,7 +37,6 @@ import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.inventory.DropperCloseEvent;
 import org.spout.vanilla.event.inventory.DropperOpenEvent;
-
 import org.spout.vanilla.inventory.block.DropperInventory;
 import org.spout.vanilla.inventory.window.block.DropperWindow;
 

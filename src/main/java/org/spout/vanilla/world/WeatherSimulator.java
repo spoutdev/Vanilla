@@ -29,13 +29,12 @@ package org.spout.vanilla.world;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-
 import org.spout.api.generator.biome.Biome;
 import org.spout.api.geo.World;
 import org.spout.api.math.GenericMath;
 import org.spout.api.tickable.BasicTickable;
-import org.spout.vanilla.VanillaPlugin;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.Weather;

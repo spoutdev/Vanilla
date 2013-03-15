@@ -33,7 +33,6 @@ import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public class TeamMessage extends VanillaMainChannelMessage {
-
 	private final String name, displayName, prefix, suffix;
 	private final boolean friendlyFire;
 	private final byte mode;

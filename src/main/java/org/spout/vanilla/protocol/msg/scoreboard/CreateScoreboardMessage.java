@@ -33,7 +33,6 @@ import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public class CreateScoreboardMessage extends VanillaMainChannelMessage {
-
 	private final String name, display;
 	private final boolean remove;
 

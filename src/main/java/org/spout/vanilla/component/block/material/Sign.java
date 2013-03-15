@@ -26,11 +26,10 @@
  */
 package org.spout.vanilla.component.block.material;
 
-
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
-import org.spout.vanilla.VanillaPlugin;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.VanillaBlockComponent;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.block.SignUpdateEvent;

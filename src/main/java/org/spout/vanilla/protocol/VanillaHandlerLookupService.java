@@ -162,6 +162,10 @@ import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerRespawnMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnPositionMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.CreateScoreboardMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.DisplayScoreboardMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.TeamMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.UpdateScoreboardMessage;
 import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 import org.spout.vanilla.protocol.msg.window.WindowCreativeActionMessage;
@@ -182,10 +186,6 @@ import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkBulkMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
-import org.spout.vanilla.protocol.msg.scoreboard.CreateScoreboardMessage;
-import org.spout.vanilla.protocol.msg.scoreboard.DisplayScoreboardMessage;
-import org.spout.vanilla.protocol.msg.scoreboard.TeamMessage;
-import org.spout.vanilla.protocol.msg.scoreboard.UpdateScoreboardMessage;
 
 public class VanillaHandlerLookupService extends HandlerLookupService {
 	public VanillaHandlerLookupService() {

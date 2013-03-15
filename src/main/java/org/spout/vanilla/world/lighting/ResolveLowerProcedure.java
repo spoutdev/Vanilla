@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.world.lighting;
 
-
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
@@ -36,16 +35,14 @@ import org.spout.api.util.set.TInt10Procedure;
 import org.spout.api.util.set.TInt10TripleSet;
 
 public class ResolveLowerProcedure extends TInt10Procedure {
-	
 	private final static BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
-
 	private final TInt10TripleSet[] dirtySets;
 	private final TInt10TripleSet[] regenSets;
 	private final ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light;
 	private int currentLevel;
 	private final ImmutableCuboidBlockMaterialBuffer material;
 	private final VanillaLightingManager manager;
-	
+
 	public ResolveLowerProcedure(VanillaLightingManager manager, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, TInt10TripleSet[] dirtySets, TInt10TripleSet[] regenSets) {
 		this.dirtySets = dirtySets;
 		this.regenSets = regenSets;
@@ -53,11 +50,11 @@ public class ResolveLowerProcedure extends TInt10Procedure {
 		this.material = material;
 		this.manager = manager;
 	}
-	
+
 	public void setCurrentLevel(int level) {
 		this.currentLevel = level;
 	}
-	
+
 	@Override
 	public boolean execute(int x, int y, int z) {
 		int lightLevel = manager.getLightLevel(light, x, y, z);
@@ -72,5 +69,4 @@ public class ResolveLowerProcedure extends TInt10Procedure {
 		}
 		return true;
 	}
-
 }

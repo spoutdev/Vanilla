@@ -34,8 +34,8 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.living.Passive;
 import org.spout.vanilla.component.entity.living.Animal;
+import org.spout.vanilla.component.entity.living.Passive;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.inventory.entity.QuickbarInventory;

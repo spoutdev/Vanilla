@@ -63,6 +63,7 @@ public class EntityMocker {
 
 	private static class EntityEngineAnswer implements Answer<Engine> {
 		private final Engine engine;
+
 		EntityEngineAnswer(Engine engine) {
 			this.engine = engine;
 		}
@@ -71,8 +72,8 @@ public class EntityMocker {
 		public Engine answer(InvocationOnMock invocation) throws Throwable {
 			return engine;
 		}
-		
 	}
+
 	private static class EntityTickAnswer implements Answer<Object> {
 		private final Entity entity;
 

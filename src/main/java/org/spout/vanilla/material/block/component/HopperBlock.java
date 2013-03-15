@@ -77,7 +77,9 @@ public class HopperBlock extends ComponentMaterial implements RedstoneTarget {
 	 * @param item
 	 */
 	public void dropItem(Block block, ItemStack item) {
-		if (isReceivingPower(block)) return;
+		if (isReceivingPower(block)) {
+			return;
+		}
 	}
 
 	/**
@@ -86,6 +88,8 @@ public class HopperBlock extends ComponentMaterial implements RedstoneTarget {
 	 * @param item
 	 */
 	public void pullItem(Block block, ItemStack item) {
-		if (isReceivingPower(block)) return;
+		if (isReceivingPower(block)) {
+			return;
+		}
 	}
 }

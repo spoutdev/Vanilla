@@ -26,17 +26,14 @@
  */
 package org.spout.vanilla.protocol.handler.server;
 
-
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.protocol.msg.scoreboard.TeamMessage;
 
 public class TeamHandler extends MessageHandler<TeamMessage> {
-
 	@Override
 	public void handleClient(final Session session, final TeamMessage message) {
 		// Handle team creation/updates
 	}
-
 }

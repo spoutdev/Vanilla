@@ -38,7 +38,6 @@ import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.block.Solid;
 
 public class DaylightSensor extends Solid implements RedstoneSource {
-
 	public DaylightSensor(String name, int id) {
 		super(name, id, VanillaMaterialModels.REDSTONE_BLOCK);
 		this.setHardness(3.0F).setResistance(5.0F).addMiningType(ToolType.AXE).setMiningLevel(ToolLevel.WOOD);

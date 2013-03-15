@@ -183,14 +183,14 @@ public class VanillaPlugin extends CommonPlugin {
 		config.load();
 		//Logger
 		((PluginLogger) getLogger()).setTag(new ChatArguments(ChatStyle.RESET, "[", ChatStyle.GOLD, "Vanilla", ChatStyle.RESET, "] "));
-		//Spout.getFilesystem().registerLoader(new MapPaletteLoader());
+		//getEngine().getFilesystem().registerLoader(new MapPaletteLoader());
 		getEngine().getFilesystem().registerLoader(new RecipeLoader());
 		Protocol.registerProtocol(new VanillaProtocol());
 
 		VanillaMaterials.initialize();
 		VanillaLighting.initialize();
 		VanillaEnchantments.initialize();
-		//MapPalette.DEFAULT = (MapPalette) Spout.getFilesystem().getResource("mappalette://Vanilla/map/mapColorPalette.dat");
+		//MapPalette.DEFAULT = (MapPalette) getEngine().getFilesystem().getResource("mappalette://Vanilla/map/mapColorPalette.dat");
 		RecipeYaml.DEFAULT = (RecipeYaml) getEngine().getFilesystem().getResource("recipe://Vanilla/recipes.yml");
 		VanillaRecipes.initialize();
 

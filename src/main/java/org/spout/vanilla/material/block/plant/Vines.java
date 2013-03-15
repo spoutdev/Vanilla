@@ -29,7 +29,7 @@ package org.spout.vanilla.material.block.plant;
 import java.util.Random;
 
 import org.spout.api.Platform;
-import org.spout.api.Spout;
+
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.event.cause.EntityCause;
@@ -44,6 +44,7 @@ import org.spout.api.math.GenericMath;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
+import org.spout.vanilla.VanillaPlugin;
 
 import org.spout.vanilla.component.entity.misc.Head;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
@@ -64,7 +65,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 		this.setLiquidObstacle(false);
 		this.setHardness(0.2F).setResistance(0.3F).setTransparent();
 		this.getDrops().DEFAULT.clear().add(this).addFlags(ToolTypeFlags.SHEARS);
-		if (Spout.getEngine().getPlatform() == Platform.CLIENT) {
+		if ( VanillaPlugin.getInstance().getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_FOLIAGE_COLOR)) {
 				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.BIOME_FOLIAGE_COLOR);
 			}

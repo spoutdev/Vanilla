@@ -211,7 +211,7 @@ public class Beacon extends ViewedBlockComponent {
 		Point pos = getPosition();
 		EntityEffectType primary = getPrimaryEffect();
 		EntityEffectType secondary = getSecondaryEffect();
-		if (primary == null || primary == EntityEffectType.NONE) {
+		if (getLevels() < 1 || primary == null || primary == EntityEffectType.NONE) {
 			return;
 		}
 

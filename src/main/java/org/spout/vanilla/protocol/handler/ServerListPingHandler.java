@@ -27,7 +27,7 @@
 package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.Server;
-import org.spout.api.Spout;
+
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -46,14 +46,14 @@ public class ServerListPingHandler extends MessageHandler<ServerListPingMessage>
 
 	@Override
 	public void handleServer(Session session, ServerListPingMessage message) {
-		Server server = (Server) Spout.getEngine();
+		Server server = (Server)  VanillaPlugin.getInstance().getEngine();
 		//Cache values for speed
 		if (PROTOCOL == null) {
 			PROTOCOL = VanillaPlugin.getInstance().getDescription().getData("protocol");
 			MC_VERSION = VanillaPlugin.getInstance().getDescription().getVersion().trim().split(" ")[0];
 			MOTD = VanillaStyleHandler.INSTANCE.extractArguments(VanillaConfiguration.MOTD.getString());
 		}
-		ServerListPingEvent event = Spout.getEventManager().callEvent(new ServerListPingEvent(session.getAddress().getAddress(), MOTD.asString(VanillaStyleHandler.ID), server.getOnlinePlayers().length, server.getMaxPlayers()));
+		ServerListPingEvent event = VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new ServerListPingEvent(session.getAddress().getAddress(), MOTD.asString(VanillaStyleHandler.ID), server.getOnlinePlayers().length, server.getMaxPlayers()));
 		session.send(false, true, new PlayerKickMessage('\u00A7' + "1" + '\u0000' + PROTOCOL + '\u0000' + MC_VERSION + '\u0000' + event.getMessage()));
 	}
 }

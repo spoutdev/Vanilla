@@ -27,9 +27,10 @@
 package org.spout.vanilla.protocol.handler.window;
 
 import org.spout.api.Client;
-import org.spout.api.Spout;
+
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.vanilla.VanillaPlugin;
 
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.effect.store.SoundEffects;
@@ -53,6 +54,6 @@ public final class WindowCloseHandler extends MessageHandler<WindowCloseMessage>
 
 	@Override
 	public void handleClient(Session session, WindowCloseMessage message) {
-		((Client) Spout.getEngine()).getScreenStack().closeTopScreen();
+		((Client)  VanillaPlugin.getInstance().getEngine()).getScreenStack().closeTopScreen();
 	}
 }

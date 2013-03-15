@@ -34,8 +34,8 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.Container;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.living.Ageable;
 import org.spout.vanilla.component.entity.living.Passive;
+import org.spout.vanilla.component.entity.living.Ageable;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.inventory.player.CraftingInventory;
 import org.spout.vanilla.inventory.window.Window;

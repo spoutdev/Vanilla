@@ -27,6 +27,7 @@
 package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.Server;
+
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -45,7 +46,7 @@ public class ServerListPingHandler extends MessageHandler<ServerListPingMessage>
 
 	@Override
 	public void handleServer(Session session, ServerListPingMessage message) {
-		Server server = (Server) VanillaPlugin.getInstance().getEngine();
+		Server server = (Server)  VanillaPlugin.getInstance().getEngine();
 		//Cache values for speed
 		if (PROTOCOL == null) {
 			PROTOCOL = VanillaPlugin.getInstance().getDescription().getData("protocol");

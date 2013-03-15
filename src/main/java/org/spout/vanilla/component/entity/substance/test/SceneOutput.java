@@ -27,11 +27,10 @@
 package org.spout.vanilla.component.entity.substance.test;
 
 import java.util.logging.Level;
-
 import org.spout.api.Platform;
+
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
-
 import org.spout.vanilla.VanillaPlugin;
 
 public class SceneOutput extends EntityComponent {
@@ -46,7 +45,7 @@ public class SceneOutput extends EntityComponent {
 	@Override
 	public void onTick(float dt) {
 		if (getOwner().getScene().isPositionDirty()) {
-			VanillaPlugin.getInstance().getEngine().getLogger().log(Level.FINE, getOwner().toString() + " is translating!");
+			 VanillaPlugin.getInstance().getEngine().getLogger().log(Level.FINE, getOwner().toString() + " is translating!");
 		}
 	}
 }

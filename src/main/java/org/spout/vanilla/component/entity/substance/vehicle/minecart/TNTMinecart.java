@@ -35,6 +35,7 @@ import org.spout.vanilla.protocol.entity.object.ObjectType;
 import org.spout.vanilla.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
 
 public class TNTMinecart extends Minecart {
+	
 	@Override
 	public void onAttached() {
 		super.onAttached();

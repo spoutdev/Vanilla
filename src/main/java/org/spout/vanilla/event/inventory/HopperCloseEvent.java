@@ -47,6 +47,7 @@ public class HopperCloseEvent extends InventoryCloseEvent implements Cancellable
 
 	/**
 	 * Returns the hopper which caused this event.
+	 *
 	 * @return hopper
 	 */
 	public Hopper getHopper() {

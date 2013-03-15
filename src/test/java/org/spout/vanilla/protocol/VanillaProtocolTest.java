@@ -37,6 +37,7 @@ import org.spout.api.protocol.reposition.NullRepositionManager;
 import org.spout.api.util.Parameter;
 
 import org.spout.nbt.CompoundMap;
+
 import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.inventory.window.WindowType;
@@ -96,10 +97,6 @@ import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerRespawnMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnPositionMessage;
-import org.spout.vanilla.protocol.msg.scoreboard.CreateScoreboardMessage;
-import org.spout.vanilla.protocol.msg.scoreboard.DisplayScoreboardMessage;
-import org.spout.vanilla.protocol.msg.scoreboard.TeamMessage;
-import org.spout.vanilla.protocol.msg.scoreboard.UpdateScoreboardMessage;
 import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 import org.spout.vanilla.protocol.msg.window.WindowCreativeActionMessage;
@@ -122,6 +119,10 @@ import org.spout.vanilla.protocol.msg.world.chunk.ChunkBulkMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 
 import static org.spout.vanilla.protocol.ChannelBufferUtilsTest.TEST_PARAMS;
+import org.spout.vanilla.protocol.msg.scoreboard.CreateScoreboardMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.DisplayScoreboardMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.TeamMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.UpdateScoreboardMessage;
 
 public class VanillaProtocolTest extends BaseProtocolTest {
 	private static final VanillaCodecLookupService CODEC_LOOKUP = new VanillaCodecLookupService();

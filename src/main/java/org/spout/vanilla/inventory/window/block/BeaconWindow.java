@@ -32,6 +32,7 @@ import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.component.block.material.Beacon;
 import org.spout.vanilla.component.entity.substance.Item;
+import org.spout.vanilla.data.effect.EntityEffectType;
 import org.spout.vanilla.inventory.block.BeaconInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.Window;

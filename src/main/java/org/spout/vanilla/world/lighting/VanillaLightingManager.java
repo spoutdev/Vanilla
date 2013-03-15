@@ -28,6 +28,7 @@ package org.spout.vanilla.world.lighting;
 
 import java.util.Iterator;
 
+
 import org.spout.api.lighting.LightingManager;
 import org.spout.api.lighting.Modifiable;
 import org.spout.api.material.BlockMaterial;
@@ -39,7 +40,6 @@ import org.spout.api.util.bytebit.ByteBitSet;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 import org.spout.api.util.set.TInt10TripleSet;
-
 import org.spout.vanilla.VanillaPlugin;
 
 public abstract class VanillaLightingManager extends LightingManager<VanillaCuboidLightBuffer> {
@@ -57,7 +57,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	@Override
 	public void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int[] hx, int[] hz, int[] oldHy, int[] newHy, int changedColumns) {
 	}
-
+	
 	protected void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, Iterable<IntVector3> coords) {
 		TInt10TripleSet[] dirtySets = new TInt10TripleSet[16];
 		TInt10TripleSet[] regenSets = new TInt10TripleSet[16];
@@ -86,6 +86,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		resolveHigher(regenSets, light, material);
 	}
 
+	
 	// TODO - needs surface height data
 	protected abstract int getEmittedLight(ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z);
 
@@ -156,7 +157,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			VanillaPlugin.getInstance().getEngine().getLogger().info("No light buffer to write to");
 		}
 	}
-
+	
 	protected void processRootHigher(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z) {
 		int actualLevel = getLightLevel(light, x, y, z);
 		int calculatedLevel = computeLightLevel(light, material, x, y, z);
@@ -164,7 +165,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			setLightLevel(light, x, y, z, calculatedLevel);
 		}
 	}
-
+	
 	protected void processRootLower(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z) {
 		int actualLevel = getLightLevel(light, x, y, z);
 		int calculatedLevel = computeLightLevel(light, material, x, y, z);
@@ -183,7 +184,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			regenSets[actualLevel].add(x, y, z);
 		}
 	}
-
+	
 	protected void checkAndAddDirtyRising(TInt10TripleSet[] dirtySets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z) {
 		int actualLevel = getLightLevel(light, x, y, z);
 		int calculatedLevel = computeLightLevel(light, material, x, y, z);
@@ -194,7 +195,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 
 	protected void resolveHigher(TInt10TripleSet[] dirtySets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material) {
 		ResolveHigherProcedure proc = new ResolveHigherProcedure(this, light, material, dirtySets);
-		for (int i = dirtySets.length - 1; i >= 0; i--) {
+		for (int i = dirtySets.length - 1; i >= 0 ; i--) {
 			proc.setCurrentLevel(i);
 			dirtySets[i].forEach(proc);
 		}
@@ -203,11 +204,13 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	protected void resolveLower(TInt10TripleSet[] dirtySets, TInt10TripleSet[] regenSets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material) {
 		ClearLightProcedure clearProc = new ClearLightProcedure(this, light, material);
 		ResolveLowerProcedure lowerProc = new ResolveLowerProcedure(this, light, material, dirtySets, regenSets);
-		for (int i = dirtySets.length - 1; i >= 0; i--) {
+		for (int i = dirtySets.length - 1; i >= 0 ; i--) {
 			clearProc.setCurrentLevel(i);
 			dirtySets[i].forEach(clearProc);
 			lowerProc.setCurrentLevel(i);
 			dirtySets[i].forEach(lowerProc);
 		}
 	}
+
+	
 }

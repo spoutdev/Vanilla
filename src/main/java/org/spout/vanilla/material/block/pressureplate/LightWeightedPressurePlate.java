@@ -34,6 +34,7 @@ import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.material.block.PressurePlate;
 
 public class LightWeightedPressurePlate extends PressurePlate {
+
 	public LightWeightedPressurePlate(String name, int id) {
 		super(name, id, null);
 		this.setHardness(0.5F).setResistance(0.8F).setOpacity((byte) 0);

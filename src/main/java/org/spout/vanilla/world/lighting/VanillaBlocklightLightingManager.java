@@ -45,7 +45,7 @@ public class VanillaBlocklightLightingManager extends VanillaLightingManager {
 
 	@Override
 	public void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int[] bx, int[] by, int[] bz, int[] tx, int[] ty, int[] tz, int changedCuboids) {
-
+		
 	}
 
 	@Override

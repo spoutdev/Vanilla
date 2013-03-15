@@ -33,6 +33,7 @@ import org.spout.api.util.SpoutToStringStyle;
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
 public class DisplayScoreboardMessage extends VanillaMainChannelMessage {
+
 	private final String name;
 	private final byte position;
 

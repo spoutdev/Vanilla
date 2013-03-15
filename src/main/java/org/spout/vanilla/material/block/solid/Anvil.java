@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.solid;
 
+
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;

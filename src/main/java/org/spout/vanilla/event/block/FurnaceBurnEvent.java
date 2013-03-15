@@ -27,6 +27,7 @@
 package org.spout.vanilla.event.block;
 
 import org.spout.api.event.Cancellable;
+import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.block.BlockEvent;
 import org.spout.api.event.cause.MaterialCause;

@@ -138,6 +138,7 @@ public class VanillaMaterialModels {
 	public static final String QUARTZ = null;
 	public static final String CHISELED_QUARTZ = null;
 	public static final String PILLAR_QUARTZ = null;
+
 	// Planks
 	public static final String PLANK_OAK = "model://Vanilla/materials/block/solid/oakplanks/oakplanks.spm";
 	public static final String PLANK_PINE = "model://Vanilla/materials/block/solid/spruceplanks/spruceplanks.spm";
@@ -170,6 +171,7 @@ public class VanillaMaterialModels {
 	public static final String MELON_BLOCK = "model://Vanilla/materials/block/solid/melon/melon.spm";
 	public static final String GLOWSTONE = "model://Vanilla/materials/block/solid/glowstone/glowstone.spm";
 	public static final String NETHER_QUARTZ_ORE = null;
+
 	// Double Slabs //TODO: Separate models per material
 	public static final String DOUBLE_SLAB = "model://Vanilla/materials/block/solid/doubleslabs/doubleslabs.spm";
 	public static final String DOUBLE_SLAB_BIRCH_WOOD = "model://Vanilla/materials/block/solid/birchwooddoubleslab/birchwooddoubleslab.spm";

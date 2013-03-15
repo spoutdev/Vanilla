@@ -27,7 +27,6 @@
 package org.spout.vanilla.protocol.codec.server;
 
 import java.io.IOException;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
@@ -37,6 +36,7 @@ import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.scoreboard.TeamMessage;
 
 public class TeamCodec extends MessageCodec<TeamMessage> {
+
 	public TeamCodec() {
 		super(TeamMessage.class, 0xD1);
 	}

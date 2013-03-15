@@ -27,8 +27,8 @@
 package org.spout.vanilla.component.entity.living.neutral;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.living.Animal;
 import org.spout.vanilla.component.entity.living.Neutral;
+import org.spout.vanilla.component.entity.living.Animal;
 import org.spout.vanilla.component.entity.misc.Damage;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.data.Difficulty;

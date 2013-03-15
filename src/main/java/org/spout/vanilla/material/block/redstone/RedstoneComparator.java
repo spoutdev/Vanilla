@@ -69,7 +69,7 @@ public class RedstoneComparator extends GroundAttachable implements Directional,
 		for (int i = 0; i < PHYSIC_RANGES.length; i++) {
 			PHYSIC_RANGES[i] = new ListEffectRange(BlockFaces.ESWN.get(i));
 		}
-		inputs = new Material[]{VanillaMaterials.HOPPER, VanillaMaterials.CHEST, VanillaMaterials.TRAPPED_CHEST_BLOCK, VanillaMaterials.DISPENSER, VanillaMaterials.BREWING_STAND_BLOCK, VanillaMaterials.FURNACE, VanillaMaterials.FURNACE_BURNING};
+		inputs = new Material[] { VanillaMaterials.HOPPER, VanillaMaterials.CHEST, VanillaMaterials.TRAPPED_CHEST_BLOCK, VanillaMaterials.DISPENSER, VanillaMaterials.BREWING_STAND_BLOCK, VanillaMaterials.FURNACE, VanillaMaterials.FURNACE_BURNING};
 	}
 
 	public RedstoneComparator(String name, int id, boolean powered) {
@@ -128,9 +128,7 @@ public class RedstoneComparator extends GroundAttachable implements Directional,
 					cViewer = (ComparableViewer) viewer;
 				}
 			}
-			if (cViewer != null) {
-				cViewer.removeViewer(block);
-			}
+			if (cViewer != null) cViewer.removeViewer(block);
 		}
 		return super.onDestroy(block, cause);
 	}
@@ -232,9 +230,7 @@ public class RedstoneComparator extends GroundAttachable implements Directional,
 			Inventory inv = ((Container) block.getComponent()).getInventory();
 			ComparableViewer view = null;
 			for (InventoryViewer viewer : inv.getViewers()) {
-				if (viewer instanceof ComparableViewer) {
-					view = (ComparableViewer) viewer;
-				}
+				if (viewer instanceof ComparableViewer) view = (ComparableViewer) viewer;
 			}
 			if (view != null) {
 				return view.getRedstonePower();
@@ -270,6 +266,7 @@ public class RedstoneComparator extends GroundAttachable implements Directional,
 	public class ComparableViewer implements InventoryViewer {
 		private final Set<Block> viewingBlocks = new HashSet<Block>(1);
 		private final Inventory viewed;
+
 		private final double MAX_ITEM_VALUE;
 		private int currentValue = 0;
 		private short redstonePower = 0;

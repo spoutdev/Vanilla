@@ -57,6 +57,7 @@ public class Slab extends VanillaBlockMaterial implements Burnable {
 	public static final Slab SPRUCE_WOOD = new Slab("Spruce Wooden Slab", 0x1, OAK_WOOD, VanillaMaterialModels.SLAB_SPRUCE_WOOD);
 	public static final Slab BIRCH_WOOD = new Slab("Birch Wooden Slab", 0x2, OAK_WOOD, VanillaMaterialModels.SLAB_BIRCH_WOOD);
 	public static final Slab JUNGLE_WOOD = new Slab("Jungle Wooden Slab", 0x3, OAK_WOOD, VanillaMaterialModels.SLAB_JUNGLE_WOOD);
+
 	private DoubleSlab doubletype;
 	private final boolean wood;
 	private final ByteBitSet occlusionTop = new ByteBitSet(BlockFace.TOP);

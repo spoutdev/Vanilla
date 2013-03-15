@@ -27,7 +27,6 @@
 package org.spout.vanilla.protocol.codec.world;
 
 import java.io.IOException;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
@@ -38,6 +37,7 @@ import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.world.ParticleEffectMessage;
 
 public class ParticleEffectCodec extends MessageCodec<ParticleEffectMessage> {
+
 	public ParticleEffectCodec() {
 		super(ParticleEffectMessage.class, 0x3F);
 	}

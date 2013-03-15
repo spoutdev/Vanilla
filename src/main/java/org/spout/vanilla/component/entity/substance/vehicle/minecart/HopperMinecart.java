@@ -36,9 +36,9 @@ import org.spout.api.map.DefaultedKeyFactory;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.inventory.block.HopperInventory;
 import org.spout.vanilla.inventory.window.block.HopperWindow;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 import org.spout.vanilla.protocol.entity.object.vehicle.MinecartObjectEntityProtocol;
 

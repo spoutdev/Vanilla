@@ -27,6 +27,8 @@
 package org.spout.vanilla;
 
 import org.spout.api.Client;
+import org.spout.api.Platform;
+
 import org.spout.api.component.impl.CameraComponent;
 import org.spout.api.component.impl.InteractComponent;
 import org.spout.api.entity.Player;
@@ -70,7 +72,6 @@ import org.spout.vanilla.protocol.PasteExceptionHandler;
 
 public class VanillaListener implements Listener {
 	private VanillaPlugin instance;
-
 	public VanillaListener(VanillaPlugin plugin) {
 		instance = plugin;
 	}

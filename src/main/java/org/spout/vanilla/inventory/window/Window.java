@@ -33,6 +33,7 @@ import java.util.List;
 import org.spout.api.Client;
 import org.spout.api.Platform;
 import org.spout.api.ServerOnly;
+
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Player;
@@ -99,8 +100,8 @@ public abstract class Window extends AbstractWindow {
 				background = label = null;
 				break;
 			case CLIENT:
-				background = ((Client) VanillaPlugin.getInstance().getEngine()).getScreenStack().createWidget();
-				label = ((Client) VanillaPlugin.getInstance().getEngine()).getScreenStack().createWidget();
+				background = ((Client)  VanillaPlugin.getInstance().getEngine()).getScreenStack().createWidget();
+				label = ((Client)  VanillaPlugin.getInstance().getEngine()).getScreenStack().createWidget();
 				VanillaPlugin plugin = VanillaPlugin.getInstance();
 				popup.setGrabsMouse(false);
 
@@ -144,7 +145,7 @@ public abstract class Window extends AbstractWindow {
 				reload();
 				break;
 			case CLIENT:
-				((Client) VanillaPlugin.getInstance().getEngine()).getScreenStack().openScreen(popup);
+				((Client)  VanillaPlugin.getInstance().getEngine()).getScreenStack().openScreen(popup);
 				break;
 			default:
 				throw new IllegalStateException("Unknown platform: " + VanillaPlugin.getInstance().getEngine().getPlatform().toString());
@@ -164,7 +165,7 @@ public abstract class Window extends AbstractWindow {
 				callProtocolEvent(new WindowCloseEvent(this));
 				break;
 			case CLIENT:
-				((Client) VanillaPlugin.getInstance().getEngine()).getScreenStack().closeScreen(popup);
+				((Client)  VanillaPlugin.getInstance().getEngine()).getScreenStack().closeScreen(popup);
 				// TODO: Send close packet
 				break;
 			default:

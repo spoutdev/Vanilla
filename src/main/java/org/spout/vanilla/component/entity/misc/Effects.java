@@ -33,8 +33,8 @@ import java.util.List;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 
-import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.living.Living;
+import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.data.effect.EntityEffect;
 import org.spout.vanilla.data.effect.EntityEffectType;
 import org.spout.vanilla.event.entity.network.EntityEffectEvent;

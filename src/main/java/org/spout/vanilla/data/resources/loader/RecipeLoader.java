@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
+
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.inventory.recipe.Recipe;
 import org.spout.api.inventory.recipe.RecipeBuilder;
@@ -42,8 +43,8 @@ import org.spout.api.material.MaterialRegistry;
 import org.spout.api.resource.BasicResourceLoader;
 import org.spout.api.util.config.ConfigurationNode;
 import org.spout.api.util.config.yaml.YamlConfiguration;
-
 import org.spout.vanilla.VanillaPlugin;
+
 import org.spout.vanilla.data.resources.RecipeYaml;
 
 public class RecipeLoader extends BasicResourceLoader<RecipeYaml> {
@@ -135,7 +136,7 @@ public class RecipeLoader extends BasicResourceLoader<RecipeYaml> {
 				}
 			} else {
 				if (VanillaPlugin.getInstance().getEngine().debugMode()) {
-					VanillaPlugin.getInstance().getEngine().getLogger().log(Level.WARNING, "Unknown type " + recipe.getNode("type") + " when loading recipe from recipes.yml");
+					 VanillaPlugin.getInstance().getEngine().getLogger().log(Level.WARNING, "Unknown type " + recipe.getNode("type") + " when loading recipe from recipes.yml");
 				}
 			}
 		}

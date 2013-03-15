@@ -32,8 +32,8 @@ import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.living.Animal;
 import org.spout.vanilla.component.entity.living.Passive;
+import org.spout.vanilla.component.entity.living.Animal;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.substance.Item;

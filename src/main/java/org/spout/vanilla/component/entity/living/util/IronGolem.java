@@ -32,8 +32,8 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.living.Utility;
+import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.data.VanillaData;

@@ -35,13 +35,14 @@ import org.spout.api.util.set.TInt10Procedure;
 import org.spout.api.util.set.TInt10TripleSet;
 
 public class ResolveHigherProcedure extends TInt10Procedure {
+	
 	private final static BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
 	private final TInt10TripleSet[] dirtySets;
 	private int currentLevel;
 	private final ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light;
 	private final ImmutableCuboidBlockMaterialBuffer material;
 	private final VanillaLightingManager manager;
-
+	
 	public ResolveHigherProcedure(VanillaLightingManager manager, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, TInt10TripleSet[] dirtySets) {
 		this.dirtySets = dirtySets;
 		this.light = light;
@@ -57,7 +58,7 @@ public class ResolveHigherProcedure extends TInt10Procedure {
 	public boolean execute(int x, int y, int z) {
 		return execute(x, y, z, true);
 	}
-
+	
 	public boolean execute(int x, int y, int z, boolean levelCheck) {
 		int lightLevel = manager.getLightLevel(light, x, y, z);
 		int computedLevel = manager.computeLightLevel(light, material, x, y, z);
@@ -76,4 +77,5 @@ public class ResolveHigherProcedure extends TInt10Procedure {
 		}
 		return true;
 	}
+
 }

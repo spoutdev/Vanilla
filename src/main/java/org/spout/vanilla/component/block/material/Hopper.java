@@ -37,6 +37,7 @@ import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.inventory.HopperCloseEvent;
 import org.spout.vanilla.event.inventory.HopperOpenEvent;
+
 import org.spout.vanilla.inventory.block.HopperInventory;
 import org.spout.vanilla.inventory.window.block.HopperWindow;
 

@@ -39,7 +39,9 @@ import org.spout.vanilla.data.effect.EntityEffectType;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.inventory.block.DispenserInventory;
+import org.spout.vanilla.inventory.block.DropperInventory;
 import org.spout.vanilla.inventory.block.FurnaceInventory;
+import org.spout.vanilla.inventory.block.HopperInventory;
 import org.spout.vanilla.inventory.entity.EntityArmorInventory;
 import org.spout.vanilla.inventory.entity.EntityQuickbarInventory;
 import org.spout.vanilla.inventory.player.DropInventory;
@@ -208,4 +210,6 @@ public class VanillaData {
 	public static final DefaultedKey<DropInventory> DROP_INVENTORY = new DefaultedKeyFactory<DropInventory>("drops", DropInventory.class);
 	public static final DefaultedKey<BrewingStandInventory> BREWING_STAND_INVENTORY = new DefaultedKeyFactory<BrewingStandInventory>("brewing_inventory", BrewingStandInventory.class);
 	public static final DefaultedKey<DispenserInventory> DISPENSER_INVENTORY = new DefaultedKeyFactory<DispenserInventory>("dispenser_inventory", DispenserInventory.class);
+	public static final DefaultedKey<HopperInventory> HOPPER_INVENTORY = new DefaultedKeyFactory<HopperInventory>("hopper_inventory", HopperInventory.class);
+	public static final DefaultedKey<DropperInventory> DROPPER_INVENTORY = new DefaultedKeyFactory<DropperInventory>("dropper_inventory", DropperInventory.class);
 }

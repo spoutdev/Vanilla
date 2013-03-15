@@ -28,8 +28,6 @@ package org.spout.vanilla.component.block.material;
 
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Container;
-import org.spout.api.map.DefaultedKey;
-import org.spout.api.map.DefaultedKeyFactory;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.ViewedBlockComponent;
@@ -42,7 +40,6 @@ import org.spout.vanilla.inventory.block.DropperInventory;
 import org.spout.vanilla.inventory.window.block.DropperWindow;
 
 public class Dropper extends ViewedBlockComponent implements Container {
-	private static final DefaultedKey<DropperInventory> DROPPER_INVENTORY = new DefaultedKeyFactory<DropperInventory>("dropper_inventory", DropperInventory.class);
 
 	/**
 	 * Returns true if the block this component is attached to is currently powered
@@ -62,7 +59,7 @@ public class Dropper extends ViewedBlockComponent implements Container {
 
 	@Override
 	public DropperInventory getInventory() {
-		return getData().get(DROPPER_INVENTORY);
+		return getData().get(VanillaData.DROPPER_INVENTORY);
 	}
 
 	@Override

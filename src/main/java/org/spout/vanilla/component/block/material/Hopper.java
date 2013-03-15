@@ -28,8 +28,6 @@ package org.spout.vanilla.component.block.material;
 
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Container;
-import org.spout.api.map.DefaultedKey;
-import org.spout.api.map.DefaultedKeyFactory;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.ViewedBlockComponent;
@@ -45,7 +43,6 @@ import org.spout.vanilla.inventory.window.block.HopperWindow;
  * Component that represents any kind of Hopper.
  */
 public class Hopper extends ViewedBlockComponent implements Container {
-	private static final DefaultedKey<HopperInventory> HOPPER_INVENTORY = new DefaultedKeyFactory<HopperInventory>("hopper_inventory", HopperInventory.class);
 
 	/**
 	 * Returns true if the block this component is attached to is currently powered
@@ -65,7 +62,7 @@ public class Hopper extends ViewedBlockComponent implements Container {
 
 	@Override
 	public HopperInventory getInventory() {
-		return getData().get(HOPPER_INVENTORY);
+		return getData().get(VanillaData.HOPPER_INVENTORY);
 	}
 
 	@Override

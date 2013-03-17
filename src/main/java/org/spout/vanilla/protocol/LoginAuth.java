@@ -36,6 +36,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 
+import org.spout.api.Spout;
 import org.spout.api.protocol.Session;
 import org.spout.api.scheduler.TaskPriority;
 
@@ -130,12 +131,12 @@ public class LoginAuth implements Runnable {
 			}
 		}
 		if (VanillaPlugin.getInstance().getEngine().debugMode()) {
-			VanillaPlugin.getInstance().getLogger().info("Authing took " + (System.currentTimeMillis() - start) + "ms");
+			Spout.getLogger().info("Authing took " + (System.currentTimeMillis() - start) + "ms");
 		}
 	}
 
 	private void failed(String message) {
-		VanillaPlugin.getInstance().getLogger().info("Kicking " + name + " due to problem authenticating {" + message + "}");
+		Spout.getLogger().info("Kicking " + name + " due to problem authenticating {" + message + "}");
 		session.disconnect(message);
 	}
 }

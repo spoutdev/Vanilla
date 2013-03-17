@@ -30,6 +30,7 @@ import java.util.Random;
 import java.util.logging.Level;
 
 
+import org.spout.api.Spout;
 import org.spout.api.generator.Populator;
 import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.geo.World;
@@ -92,7 +93,7 @@ public class StrongholdPopulator extends Populator {
 		if (stronghold.canPlaceObject(world, x, y, z)) {
 			stronghold.placeObject(world, x, y, z);
 			if (VanillaPlugin.getInstance().getEngine().debugMode()) {
-				VanillaPlugin.getInstance().getEngine().getLogger().log(Level.INFO, "Placed stronghold at: (" + x + ", " + y + ", " + z + ")");
+				Spout.getLogger().log(Level.INFO, "Placed stronghold at: (" + x + ", " + y + ", " + z + ")");
 			}
 		}
 	}

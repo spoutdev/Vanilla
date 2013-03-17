@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.world.lighting;
 
+import org.spout.api.Spout;
 import org.spout.vanilla.VanillaPlugin;
 
 
@@ -37,7 +38,7 @@ public class VanillaLighting {
 	public static void initialize() {
 		boolean initialized = false;
 		if (initialized) {
-			VanillaPlugin.getInstance().getEngine().getLogger().info("Vanilla lighting initialized more than once");
+			Spout.getLogger().info("Vanilla lighting initialized more than once");
 		}
 	}
 }

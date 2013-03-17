@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.spout.api.Platform;
+import org.spout.api.Spout;
 
 import org.spout.api.entity.Player;
 import org.spout.api.model.Model;
@@ -59,10 +60,10 @@ public abstract class Sky extends VanillaWorldComponent {
 	public void onAttached() {
 		if (this.model != null && getOwner().getEngine().getPlatform() == Platform.CLIENT) {
 			// Load the model
-			VanillaPlugin.getInstance().getLogger().info("Loading Skydome for " + getClass().getSimpleName());
+			Spout.getLogger().info("Loading Skydome for " + getClass().getSimpleName());
 			Model m = (Model) getOwner().getEngine().getFilesystem().getResource(this.model);
 			m.getRenderMaterial().addRenderEffect(VanillaEffects.SKY);
-			VanillaPlugin.getInstance().getLogger().info("Loaded Skydome");
+			Spout.getLogger().info("Loaded Skydome");
 			// Apply model
 			getOwner().getData().put("skydome", m);
 		}

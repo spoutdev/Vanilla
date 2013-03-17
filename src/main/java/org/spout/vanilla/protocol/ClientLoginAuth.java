@@ -33,6 +33,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import org.spout.api.Spout;
 import org.spout.api.scheduler.TaskPriority;
 
 import org.spout.vanilla.VanillaPlugin;
@@ -72,13 +73,13 @@ public class ClientLoginAuth implements Runnable {
 			String reply = in.readLine();
 
 			if (VanillaPlugin.getInstance().getEngine().debugMode()) {
-				VanillaPlugin.getInstance().getLogger().info("Logging in " + reply);
+				Spout.getLogger().info("Logging in " + reply);
 			}
 
 			if (reply.equals(authString)) {
 				VanillaPlugin.getInstance().getEngine().getScheduler().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), runnable, TaskPriority.CRITICAL);
 			} else {
-				VanillaPlugin.getInstance().getLogger().info("Error while logging in " + reply);
+				Spout.getLogger().info("Error while logging in " + reply);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

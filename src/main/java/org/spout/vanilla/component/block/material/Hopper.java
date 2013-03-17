@@ -67,7 +67,7 @@ public class Hopper extends ViewedBlockComponent implements Container {
 
 	@Override
 	public boolean open(Player player) {
-		HopperOpenEvent event = VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new HopperOpenEvent(this, player));
+		HopperOpenEvent event = player.getEngine().getEventManager().callEvent(new HopperOpenEvent(this, player));
 		if (!event.isCancelled()) {
 			player.get(WindowHolder.class).openWindow(new HopperWindow(player, getInventory()));
 		}
@@ -76,7 +76,7 @@ public class Hopper extends ViewedBlockComponent implements Container {
 
 	@Override
 	public boolean close(Player player) {
-		HopperCloseEvent event = VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new HopperCloseEvent(this, player));
+		HopperCloseEvent event = player.getEngine().getEventManager().callEvent(new HopperCloseEvent(this, player));
 		if (!event.isCancelled()) {
 			return super.close(player);
 		}

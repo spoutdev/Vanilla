@@ -29,6 +29,7 @@ package org.spout.vanilla.data.configuration;
 import java.io.File;
 import java.util.logging.Level;
 
+import org.spout.api.Spout;
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.util.config.ConfigurationHolder;
 import org.spout.api.util.config.ConfigurationHolderConfiguration;
@@ -111,7 +112,7 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 			super.load();
 			super.save();
 		} catch (ConfigurationException e) {
-			VanillaPlugin.getInstance().getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
+			Spout.getLogger().log(Level.WARNING, "Error loading Vanilla configuration: ", e);
 		}
 	}
 
@@ -124,7 +125,7 @@ public class VanillaConfiguration extends ConfigurationHolderConfiguration {
 			INPUT.save();
 			super.save();
 		} catch (ConfigurationException e) {
-			VanillaPlugin.getInstance().getLogger().log(Level.WARNING, "Error saving Vanilla configuration: ", e);
+			Spout.getLogger().log(Level.WARNING, "Error saving Vanilla configuration: ", e);
 		}
 	}
 }

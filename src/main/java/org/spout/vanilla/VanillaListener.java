@@ -70,7 +70,9 @@ import org.spout.vanilla.protocol.ClientAuthentification;
 import org.spout.vanilla.protocol.PasteExceptionHandler;
 
 public class VanillaListener implements Listener {
+	private final VanillaPlugin plugin;
 	public VanillaListener(VanillaPlugin plugin) {
+		this.plugin = plugin;
 	}
 
 	@EventHandler(order = Order.EARLIEST)
@@ -101,11 +103,11 @@ public class VanillaListener implements Listener {
 
 	@EventHandler
 	public void onGameStart(EngineStartEvent event) {
-		if (VanillaPlugin.getInstance().getEngine().getPlatform() != Platform.CLIENT) {
+		if (plugin.getEngine().getPlatform() != Platform.CLIENT) {
 			return;
 		}
 
-		Player player = ((Client) VanillaPlugin.getInstance().getEngine()).getActivePlayer();
+		Player player = ((Client) plugin.getEngine()).getActivePlayer();
 
 		HUD HUD = player.add(org.spout.vanilla.component.entity.player.HUD.class);
 		HUD.setDefault(VanillaArmorWidget.class);
@@ -163,7 +165,7 @@ public class VanillaListener implements Listener {
 		}
 		if (prevPower != -1) {
 			RedstoneChangeEvent redstoneEvent = new RedstoneChangeEvent(event.getBlock(), event.getCause(), prevPower, newPower);
-			VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(redstoneEvent);
+			plugin.getEngine().getEventManager().callEvent(redstoneEvent);
 			if (redstoneEvent.isCancelled()) {
 				event.setCancelled(true);
 			}

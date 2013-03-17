@@ -31,6 +31,7 @@ import java.util.logging.Level;
 import gnu.trove.map.TObjectIntMap;
 import gnu.trove.map.hash.TObjectIntHashMap;
 
+import org.spout.api.Engine;
 import org.spout.api.Platform;
 import org.spout.api.ServerOnly;
 import org.spout.api.entity.Player;
@@ -71,6 +72,8 @@ public abstract class AbstractWindow implements InventoryViewer {
 				// Initialize the window id on the server
 				id = windowId++;
 				break;
+			default:
+				break;
 		}
 	}
 
@@ -80,6 +83,10 @@ public abstract class AbstractWindow implements InventoryViewer {
 	 */
 	public final Player getPlayer() {
 		return owner;
+	}
+
+	public final Engine getEngine() {
+		return owner.getEngine();
 	}
 
 	/**

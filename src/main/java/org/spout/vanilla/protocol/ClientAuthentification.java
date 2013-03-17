@@ -34,6 +34,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
+import org.spout.api.Spout;
 import org.spout.vanilla.VanillaPlugin;
 
 /**
@@ -92,13 +93,13 @@ public class ClientAuthentification implements Runnable {
 		}
 
 		if (VanillaPlugin.getInstance().getEngine().debugMode()) {
-			VanillaPlugin.getInstance().getLogger().info("Authentification: " + response);
+			Spout.getLogger().info("Authentification: " + response);
 		}
 		if (response.contains(":")) {
 			String[] infos = response.split(":");
 			VanillaPlugin.getInstance().setClientAuthInfos(infos[2], infos[3]);
 		} else {
-			VanillaPlugin.getInstance().getLogger().info("Authentification failed: " + response);
+			Spout.getLogger().info("Authentification failed: " + response);
 		}
 	}
 }

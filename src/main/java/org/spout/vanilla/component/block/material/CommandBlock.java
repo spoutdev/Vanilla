@@ -34,6 +34,7 @@ import java.util.List;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.Server;
+import org.spout.api.Spout;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.channel.ChatChannel;
 import org.spout.api.chat.channel.PermissionChatChannel;
@@ -145,7 +146,7 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 			try {
 				filter.init();
 			} catch (IllegalArgumentException e) {
-				VanillaPlugin.getInstance().getLogger().log(java.util.logging.Level.WARNING, "Could not execute CommandBlock at "
+				Spout.getLogger().log(java.util.logging.Level.WARNING, "Could not execute CommandBlock at "
 						+ getBlock().getPosition().toString() + " because of illegal syntax.", e);
 			}
 
@@ -419,14 +420,14 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 		if (cmd != null) {
 			cmd.process(this, command, arguments, false);
 		} else {
-			VanillaPlugin.getInstance().getLogger().warning("CommandBlock tried to process unknown command: " + command);
+			Spout.getLogger().warning("CommandBlock tried to process unknown command: " + command);
 		}
 	}
 
 	@Override
 	public boolean sendMessage(ChatArguments message) {
 		if (VanillaConfiguration.COMMAND_BLOCK_VERBOSE.getBoolean()) {
-			VanillaPlugin.getInstance().getLogger().info("[ " + getName() + "] " + message.getPlainString());
+			Spout.getLogger().info("[ " + getName() + "] " + message.getPlainString());
 			return true;
 		}
 		return false;

@@ -29,6 +29,7 @@ package org.spout.vanilla.protocol.handler.player;
 import java.util.Collection;
 import java.util.logging.Level;
 
+import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
@@ -95,7 +96,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		World world = player.getWorld();
 		Slot currentSlot = PlayerUtil.getHeldSlot(player);
 		if (currentSlot == null) {
-			VanillaPlugin.getInstance().getLogger().log(Level.WARNING, "Block placement failed for " + player.getName() + ": Missing player inventory");
+			Spout.getLogger().log(Level.WARNING, "Block placement failed for " + player.getName() + ": Missing player inventory");
 			return;
 		}
 		ItemStack holding = currentSlot.get();

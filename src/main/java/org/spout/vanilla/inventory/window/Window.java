@@ -156,7 +156,7 @@ public abstract class Window extends AbstractWindow {
 	public void close() {
 		removeAllInventoryConverters();
 		opened = false;
-		switch (VanillaPlugin.getInstance().getEngine().getPlatform()) {
+		switch (getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
 				if (getHuman() == null || getHuman().isSurvival()) {
@@ -395,7 +395,7 @@ public abstract class Window extends AbstractWindow {
 	@ServerOnly
 	@Override
 	public void dropCursorItem() {
-		if (VanillaPlugin.getInstance().getEngine().getPlatform() == Platform.CLIENT) {
+		if (getEngine().getPlatform() == Platform.CLIENT) {
 			throw new IllegalStateException("Cannot drop cursor item from client.");
 		}
 

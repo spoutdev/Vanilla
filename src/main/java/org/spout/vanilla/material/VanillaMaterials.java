@@ -32,6 +32,7 @@ import java.lang.reflect.Modifier;
 import gnu.trove.map.hash.TShortObjectHashMap;
 
 
+import org.spout.api.Spout;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
@@ -722,7 +723,7 @@ public final class VanillaMaterials {
 				}
 				VanillaMaterial material = (VanillaMaterial) field.get(null);
 				if (material == null) {
-					VanillaPlugin.getInstance().getEngine().getLogger().severe("Vanilla Material field '" + field.getName() + "' is not yet initialized");
+					Spout.getLogger().severe("Vanilla Material field '" + field.getName() + "' is not yet initialized");
 					continue;
 				}
 				if (material instanceof InitializableMaterial) {
@@ -735,7 +736,7 @@ public final class VanillaMaterials {
 					}
 				}
 			} catch (Throwable t) {
-				VanillaPlugin.getInstance().getEngine().getLogger().severe("An exception occurred while reading Vanilla Material field '" + field.getName() + "':");
+				Spout.getLogger().severe("An exception occurred while reading Vanilla Material field '" + field.getName() + "':");
 				t.printStackTrace();
 			}
 		}

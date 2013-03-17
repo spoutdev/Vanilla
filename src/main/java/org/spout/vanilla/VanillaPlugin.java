@@ -197,6 +197,7 @@ public class VanillaPlugin extends CommonPlugin {
 		getLogger().info("loaded");
 	}
 
+	@SuppressWarnings("unused")
 	private void setupRcon() {
 		if (getEngine().getPlatform() == Platform.SERVER) {
 			RemoteConnectionServer server = new RemoteConnectionServer(getLogger(), getDataFolder());
@@ -205,6 +206,7 @@ public class VanillaPlugin extends CommonPlugin {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private void closeRcon() {
 		getEngine().getLogger().info("Shutting down rcon connections");
 		if (rcon != null) {
@@ -270,6 +272,7 @@ public class VanillaPlugin extends CommonPlugin {
 				loader.load(world, cx, cz, effectiveRadius, newWorld);
 
 				if (worldConfig.LOADED_SPAWN.getBoolean()) {
+					@SuppressWarnings("unchecked")
 					Entity e = world.createAndSpawnEntity(point, LoadOption.LOAD_GEN, ObserverComponent.class);
 					e.setObserver(new FlatIterator(cx, 0, cz, 16, effectiveRadius));
 				}

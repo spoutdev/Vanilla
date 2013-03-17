@@ -32,6 +32,7 @@ import java.util.logging.Level;
 
 import org.spout.api.Client;
 import org.spout.api.Platform;
+import org.spout.api.Spout;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.gui.Screen;
@@ -98,9 +99,9 @@ public class HUD extends EntityComponent {
 		try {
 			widget = clazz.newInstance();
 		} catch (InstantiationException ex) {
-			VanillaPlugin.getInstance().getLogger().log(Level.SEVERE, null, ex);
+			Spout.getLogger().log(Level.SEVERE, null, ex);
 		} catch (IllegalAccessException ex) {
-			VanillaPlugin.getInstance().getLogger().log(Level.SEVERE, null, ex);
+			Spout.getLogger().log(Level.SEVERE, null, ex);
 		}
 
 		if (widget instanceof QuickbarWidget) {

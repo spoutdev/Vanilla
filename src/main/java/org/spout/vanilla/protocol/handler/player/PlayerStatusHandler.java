@@ -29,6 +29,7 @@ package org.spout.vanilla.protocol.handler.player;
 import java.util.Set;
 
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.geo.discrete.Point;
@@ -51,7 +52,7 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 				VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new PlayerConnectEvent(session, (String) session.getDataMap().get("username")));
 			}
 			if (VanillaPlugin.getInstance().getEngine().debugMode()) {
-				VanillaPlugin.getInstance().getEngine().getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
+				Spout.getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
 			}
 		} else if (message.getStatus() == PlayerStatusMessage.RESPAWN) {
 			if (!session.hasPlayer()) {

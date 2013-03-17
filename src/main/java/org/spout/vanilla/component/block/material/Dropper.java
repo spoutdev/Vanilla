@@ -64,7 +64,7 @@ public class Dropper extends ViewedBlockComponent implements Container {
 
 	@Override
 	public boolean open(Player player) {
-		DropperOpenEvent event = VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new DropperOpenEvent(this, player));
+		DropperOpenEvent event = player.getEngine().getEventManager().callEvent(new DropperOpenEvent(this, player));
 		if (!event.isCancelled()) {
 			player.get(WindowHolder.class).openWindow(new DropperWindow(player, getInventory()));
 			return true;
@@ -74,7 +74,7 @@ public class Dropper extends ViewedBlockComponent implements Container {
 
 	@Override
 	public boolean close(Player player) {
-		DropperCloseEvent event = VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new DropperCloseEvent(this, player));
+		DropperCloseEvent event = player.getEngine().getEventManager().callEvent(new DropperCloseEvent(this, player));
 		if (!event.isCancelled()) {
 			return super.close(player);
 		}

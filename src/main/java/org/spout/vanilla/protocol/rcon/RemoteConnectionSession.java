@@ -36,7 +36,7 @@ import com.google.common.base.Preconditions;
 
 import org.jboss.netty.channel.Channel;
 
-import org.spout.api.Spout;
+
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.channel.ChatChannel;
 import org.spout.api.command.Command;
@@ -45,6 +45,7 @@ import org.spout.api.data.ValueHolder;
 import org.spout.api.data.ValueHolderBase;
 import org.spout.api.geo.World;
 import org.spout.api.lang.Locale;
+import org.spout.vanilla.VanillaPlugin;
 
 import org.spout.vanilla.protocol.rcon.msg.CommandResponseMessage;
 import org.spout.vanilla.protocol.rcon.msg.RconMessage;
@@ -92,7 +93,7 @@ public class RemoteConnectionSession implements CommandSource {
 
 	public RemoteConnectionSession(RemoteConnectionCore core) {
 		this.core = core;
-		activeChannel.set(Spout.getEngine().getChatChannelFactory().create(this));
+		activeChannel.set(VanillaPlugin.getInstance().getEngine().getChatChannelFactory().create(this));
 		//requestId.set(new Random().nextInt()); // TODO: Find place to allocate request id, might want to have client do this
 	}
 
@@ -181,7 +182,7 @@ public class RemoteConnectionSession implements CommandSource {
 	}
 
 	public void processCommand(String command, ChatArguments arguments) {
-		Command cmd = Spout.getEngine().getRootCommand().getChild(command);
+		Command cmd = VanillaPlugin.getInstance().getEngine().getRootCommand().getChild(command);
 		if (cmd == null) {
 			sendMessage(ChatArguments.fromString("No such command: " + command));
 		} else {

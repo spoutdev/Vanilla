@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.world.lighting;
 
-import org.spout.api.Spout;
+
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;

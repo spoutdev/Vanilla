@@ -28,13 +28,14 @@ package org.spout.vanilla.protocol.handler.player;
 
 import java.util.Set;
 
-import org.spout.api.Spout;
+
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
+import org.spout.vanilla.VanillaPlugin;
 
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.event.cause.HealthChangeCause;
@@ -47,10 +48,10 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 	public void handleServer(Session session, PlayerStatusMessage message) {
 		if (message.getStatus() == PlayerStatusMessage.INITIAL_SPAWN) {
 			if (PlayerConnectEvent.getHandlerList().getRegisteredListeners().length > 0) {
-				Spout.getEventManager().callEvent(new PlayerConnectEvent(session, (String) session.getDataMap().get("username")));
+				VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new PlayerConnectEvent(session, (String) session.getDataMap().get("username")));
 			}
-			if (Spout.getEngine().debugMode()) {
-				Spout.getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
+			if (VanillaPlugin.getInstance().getEngine().debugMode()) {
+				VanillaPlugin.getInstance().getEngine().getLogger().info("Login took " + (System.currentTimeMillis() - session.getDataMap().get(VanillaProtocol.LOGIN_TIME)) + " ms");
 			}
 		} else if (message.getStatus() == PlayerStatusMessage.RESPAWN) {
 			if (!session.hasPlayer()) {
@@ -59,7 +60,7 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 			Player player = session.getPlayer();
 			Point point = player.getWorld().getSpawnPoint().getPosition();
 			if (PlayerRespawnEvent.getHandlerList().getRegisteredListeners().length > 0) {
-				PlayerRespawnEvent event = Spout.getEventManager().callEvent(new PlayerRespawnEvent(player, point));
+				PlayerRespawnEvent event = VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new PlayerRespawnEvent(player, point));
 
 				if (event.isCancelled()) {
 					return;

@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.world.lighting;
 
-import org.spout.api.Spout;
+import org.spout.vanilla.VanillaPlugin;
+
+
 
 public class VanillaLighting {
 	public static final VanillaSkylightLightingManager SKY_LIGHT = new VanillaSkylightLightingManager("skylight");
@@ -35,7 +37,7 @@ public class VanillaLighting {
 	public static void initialize() {
 		boolean initialized = false;
 		if (initialized) {
-			Spout.getLogger().info("Vanilla lighting initialized more than once");
+			VanillaPlugin.getInstance().getEngine().getLogger().info("Vanilla lighting initialized more than once");
 		}
 	}
 }

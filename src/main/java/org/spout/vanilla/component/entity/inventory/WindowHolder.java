@@ -28,9 +28,10 @@ package org.spout.vanilla.component.entity.inventory;
 
 import java.util.logging.Level;
 
-import org.spout.api.Spout;
+
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
+import org.spout.vanilla.VanillaPlugin;
 
 import org.spout.vanilla.inventory.window.DefaultWindow;
 import org.spout.vanilla.inventory.window.Window;
@@ -61,8 +62,8 @@ public class WindowHolder extends EntityComponent {
 	}
 
 	private void debug(String msg) {
-		if (Spout.debugMode()) {
-			Spout.getLogger().log(Level.INFO, msg);
+		if (getOwner().getEngine().debugMode()) {
+			getOwner().getEngine().getLogger().log(Level.INFO, msg);
 		}
 	}
 

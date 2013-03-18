@@ -28,10 +28,12 @@ package org.spout.vanilla.component.entity.living.passive;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
-
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.living.Passive;
+import org.spout.vanilla.ai.action.FollowMaterialHolderAction;
+import org.spout.vanilla.ai.goal.FollowMaterialHolderGoal;
+import org.spout.vanilla.ai.sensor.NearbyMaterialHolderSensor;
 import org.spout.vanilla.component.entity.living.Animal;
+import org.spout.vanilla.component.entity.living.Passive;
 import org.spout.vanilla.component.entity.misc.DeathDrops;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.data.VanillaData;
@@ -53,6 +55,11 @@ public class Pig extends Animal implements Passive {
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(10);
 		}
+		NearbyMaterialHolderSensor materialHolderSensor = new NearbyMaterialHolderSensor(getAI(), VanillaMaterials.CARROT);
+		materialHolderSensor.setSensorRadius(16);
+		getAI().registerSensor(materialHolderSensor);
+		getAI().registerGoal(new FollowMaterialHolderGoal(getAI()));
+		getAI().registerAction(new FollowMaterialHolderAction(getAI()));
 	}
 
 	public boolean isSaddled() {

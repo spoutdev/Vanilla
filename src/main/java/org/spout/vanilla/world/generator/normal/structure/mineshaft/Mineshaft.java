@@ -65,7 +65,7 @@ public class Mineshaft extends Structure {
 		room.setPosition(new Point(w, x, y, z));
 		room.randomize();
 		activeBranches.add(room);
-		byte size = (byte) (random.nextInt(MAX_SIZE_RAND) + MAX_SIZE_BASE);
+		final byte size = (byte) (random.nextInt(MAX_SIZE_RAND) + MAX_SIZE_BASE);
 		byte count = 0;
 		while (!activeBranches.isEmpty()) {
 			final StructurePiece active = activeBranches.poll();

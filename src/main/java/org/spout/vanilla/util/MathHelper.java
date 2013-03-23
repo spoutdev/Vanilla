@@ -152,7 +152,7 @@ public class MathHelper {
 	 * @param weightMap A map from the items that can be chosen to their
 	 * respective weights
 	 * @return The randomly chosen item, or null if the total weight is not
-	 *         positive.
+	 * positive.
 	 */
 	public static <T> T chooseWeightedRandom(Random random, TObjectIntMap<T> weightMap) {
 		int totalWeight = 0;

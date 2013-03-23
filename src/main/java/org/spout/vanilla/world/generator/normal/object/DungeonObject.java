@@ -63,21 +63,21 @@ public class DungeonObject extends RandomObject implements RandomizableObject {
 	public DungeonObject(Random random) {
 		super(random);
 		randomize();
-		final double oneOnEleven = 1.0 / 11.0;
-		chestObject = new LootChestObject(random);
+		chestObject = new LootChestObject();
+		chestObject.setMinNumberOfStacks(0);
 		chestObject.setMaxNumberOfStacks(8);
-		chestObject.addMaterial(VanillaMaterials.SADDLE, oneOnEleven, 1, 1)
-				.addMaterial(VanillaMaterials.IRON_INGOT, oneOnEleven, 1, 4)
-				.addMaterial(VanillaMaterials.BREAD, oneOnEleven, 1, 2)
-				.addMaterial(VanillaMaterials.WHEAT, oneOnEleven, 1, 4)
-				.addMaterial(VanillaMaterials.GUNPOWDER, oneOnEleven, 1, 4)
-				.addMaterial(VanillaMaterials.STRING, oneOnEleven, 1, 4)
-				.addMaterial(VanillaMaterials.BUCKET, oneOnEleven, 1, 1)
-				.addMaterial(Dye.COCOA_BEANS, oneOnEleven, 1, 3)
-				.addMaterial(VanillaMaterials.REDSTONE_DUST, oneOnEleven / 2.0, 1, 4)
-				.addMaterial(VanillaMaterials.MUSIC_DISK_13, oneOnEleven / 10.0, 1, 1)
-				.addMaterial(VanillaMaterials.MUSIC_DISK_CAT, oneOnEleven / 10.0, 1, 1)
-				.addMaterial(VanillaMaterials.GOLDEN_APPLE, oneOnEleven / 100.0, 1, 1);
+		chestObject.addMaterial(VanillaMaterials.SADDLE, 100, 1, 1)
+				.addMaterial(VanillaMaterials.IRON_INGOT, 100, 1, 4)
+				.addMaterial(VanillaMaterials.BREAD, 100, 1, 2)
+				.addMaterial(VanillaMaterials.WHEAT, 100, 1, 4)
+				.addMaterial(VanillaMaterials.GUNPOWDER, 100, 1, 4)
+				.addMaterial(VanillaMaterials.STRING, 100, 1, 4)
+				.addMaterial(VanillaMaterials.BUCKET, 100, 1, 1)
+				.addMaterial(Dye.COCOA_BEANS, 100, 1, 3)
+				.addMaterial(VanillaMaterials.REDSTONE_DUST, 50, 1, 4)
+				.addMaterial(VanillaMaterials.MUSIC_DISK_13, 10, 1, 1)
+				.addMaterial(VanillaMaterials.MUSIC_DISK_CAT, 10, 1, 1)
+				.addMaterial(VanillaMaterials.GOLDEN_APPLE, 1, 1, 1);
 	}
 
 	@Override

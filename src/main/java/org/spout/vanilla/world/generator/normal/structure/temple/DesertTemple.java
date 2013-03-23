@@ -51,7 +51,7 @@ public class DesertTemple extends StructurePiece {
 	private static final BlockMaterialLayout CENTER_CROSS;
 	private static final BlockMaterialLayout TOWER;
 	private static final BlockMaterialLayout DOOR;
-	private final LootChestObject lootChest = new LootChestObject();
+	private final LootChestObject chestObject;
 
 	static {
 		CENTER_CROSS = new BlockMaterialLayout(""
@@ -84,8 +84,15 @@ public class DesertTemple extends StructurePiece {
 
 	public DesertTemple(Structure parent) {
 		super(parent);
-		//TODO Investigate how the materials are distributed
-		lootChest.addMaterial(VanillaMaterials.IRON_BARS, 0.1, 1, 3);
+		chestObject = new LootChestObject(getRandom());
+		chestObject.setMinNumberOfStacks(2);
+		chestObject.setMaxNumberOfStacks(6);
+		chestObject.addMaterial(VanillaMaterials.DIAMOND, 3, 1, 3)
+				.addMaterial(VanillaMaterials.IRON_INGOT, 10, 1, 5)
+				.addMaterial(VanillaMaterials.GOLD_INGOT, 15, 2, 7)
+				.addMaterial(VanillaMaterials.EMERALD, 2, 1, 3)
+				.addMaterial(VanillaMaterials.BONE, 20, 4, 6)
+				.addMaterial(VanillaMaterials.ROTTEN_FLESH, 16, 3, 7);
 	}
 
 	@Override
@@ -295,11 +302,10 @@ public class DesertTemple extends StructurePiece {
 		setBlockMaterial(10, -10, 13, Sandstone.DECORATIVE);
 		setBlockMaterial(10, -11, 13, Sandstone.SMOOTH);
 		// Place the loot chests
-		// TODO: Fix loot chest, and fix loot items for temples and mineshafts
-		lootChest.setRandom(getRandom());
+		chestObject.setRandom(getRandom());
 		for (BlockFace face : BlockFaces.NSEW) {
 			final Vector3 chestPos = face.getOffset().multiply(2).add(10, -11, 10);
-			placeObject(chestPos.getFloorX(), chestPos.getFloorY(), chestPos.getFloorZ(), lootChest);
+			placeObject(chestPos.getFloorX(), chestPos.getFloorY(), chestPos.getFloorZ(), chestObject);
 		}
 	}
 

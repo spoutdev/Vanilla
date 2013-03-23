@@ -34,6 +34,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.world.generator.normal.object.LootChestObject;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
@@ -45,10 +46,25 @@ public class MineshaftCorridor extends StructurePiece {
 	private boolean hasRails = false;
 	private boolean caveSpiders = false;
 	private boolean hasSpawner = false;
+	private final LootChestObject chestObject;
 
 	public MineshaftCorridor(Structure parent) {
 		super(parent);
 		randomize();
+		chestObject = new LootChestObject(getRandom());
+		chestObject.setMinNumberOfStacks(3);
+		chestObject.setMaxNumberOfStacks(6);
+		chestObject.addMaterial(VanillaMaterials.IRON_INGOT, 10, 1, 5)
+				.addMaterial(VanillaMaterials.GOLD_INGOT, 5, 1, 3)
+				.addMaterial(VanillaMaterials.REDSTONE_DUST, 5, 4, 9)
+				.addMaterial(Dye.LAPIS_LAZULI, 5, 4, 9)
+				.addMaterial(VanillaMaterials.DIAMOND, 3, 1, 2)
+				.addMaterial(VanillaMaterials.COAL, 10, 3, 8)
+				.addMaterial(VanillaMaterials.BREAD, 15, 1, 3)
+				.addMaterial(VanillaMaterials.IRON_PICKAXE, 1, 1, 1)
+				.addMaterial(VanillaMaterials.RAIL, 1, 4, 8)
+				.addMaterial(VanillaMaterials.MELON_SEEDS, 10, 2, 4)
+				.addMaterial(VanillaMaterials.PUMPKIN_SEEDS, 10, 2, 4);
 	}
 
 	@Override
@@ -112,15 +128,12 @@ public class MineshaftCorridor extends StructurePiece {
 			attachMaterial(0.95f, 1, 2, sectionZ - 1, VanillaMaterials.TORCH);
 			attachMaterial(0.95f, 1, 2, sectionZ + 1, VanillaMaterials.TORCH);
 			// loot
+			chestObject.setRandom(random);
 			if (random.nextInt(100) == 0) {
-				final LootChestObject chest = new LootChestObject(getRandom());
-				//TODO: give them proper loot
-				placeObject(2, 0, sectionZ - 1, chest);
+				placeObject(2, 0, sectionZ - 1, chestObject);
 			}
 			if (random.nextInt(100) == 0) {
-				final LootChestObject chest = new LootChestObject(getRandom());
-				//TODO: give them proper loot
-				placeObject(0, 0, sectionZ + 1, chest);
+				placeObject(0, 0, sectionZ + 1, chestObject);
 			}
 			// spawner
 			if (!caveSpiders || hasSpawner) {

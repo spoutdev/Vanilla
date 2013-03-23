@@ -40,11 +40,27 @@ import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
 
 public class StrongholdChestCorridor extends StructurePiece {
-	private final LootChestObject lootChest = new LootChestObject();
+	private final LootChestObject chestObject;
 
 	public StrongholdChestCorridor(Structure parent) {
 		super(parent);
-		lootChest.addMaterial(VanillaMaterials.IRON_BARS, 0.1, 1, 3);// TODO: get the proper contents
+		chestObject = new LootChestObject(getRandom());
+		chestObject.setMinNumberOfStacks(2);
+		chestObject.setMaxNumberOfStacks(3);
+		chestObject.addMaterial(VanillaMaterials.ENDER_PEARL, 10, 1, 1)
+				.addMaterial(VanillaMaterials.DIAMOND, 3, 1, 3)
+				.addMaterial(VanillaMaterials.IRON_INGOT, 10, 1, 5)
+				.addMaterial(VanillaMaterials.GOLD_INGOT, 5, 1, 3)
+				.addMaterial(VanillaMaterials.REDSTONE_DUST, 5, 4, 9)
+				.addMaterial(VanillaMaterials.BREAD, 15, 1, 3)
+				.addMaterial(VanillaMaterials.RED_APPLE, 15, 1, 3)
+				.addMaterial(VanillaMaterials.IRON_PICKAXE, 5, 1, 1)
+				.addMaterial(VanillaMaterials.IRON_SWORD, 5, 1, 1)
+				.addMaterial(VanillaMaterials.IRON_CHESTPLATE, 5, 1, 1)
+				.addMaterial(VanillaMaterials.IRON_HELMET, 5, 1, 1)
+				.addMaterial(VanillaMaterials.IRON_LEGGINGS, 5, 1, 1)
+				.addMaterial(VanillaMaterials.IRON_BOOTS, 5, 1, 1)
+				.addMaterial(VanillaMaterials.GOLDEN_APPLE, 1, 1, 1);
 	}
 
 	@Override
@@ -80,8 +96,8 @@ public class StrongholdChestCorridor extends StructurePiece {
 			setBlockMaterial(2, 1, i, Slab.STONE);
 		}
 		// Place the loot chest
-		lootChest.setRandom(getRandom());
-		placeObject(3, 2, 3, lootChest);
+		chestObject.setRandom(getRandom());
+		placeObject(3, 2, 3, chestObject);
 	}
 
 	@Override

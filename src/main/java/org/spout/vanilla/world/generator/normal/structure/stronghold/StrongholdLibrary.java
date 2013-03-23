@@ -40,12 +40,18 @@ import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
 
 public class StrongholdLibrary extends StructurePiece {
-	private final LootChestObject lootChest = new LootChestObject();
+	private final LootChestObject chestObject;
 	private byte height = 11;
 
 	public StrongholdLibrary(Structure parent) {
 		super(parent);
-		lootChest.addMaterial(VanillaMaterials.IRON_BARS, 0.1, 1, 3);// TODO: get the proper contents
+		chestObject = new LootChestObject(getRandom());
+		chestObject.setMinNumberOfStacks(1);
+		chestObject.setMaxNumberOfStacks(4);
+		chestObject.addMaterial(VanillaMaterials.BOOK, 20, 1, 3)
+				.addMaterial(VanillaMaterials.PAPER, 20, 2, 7)
+				.addMaterial(VanillaMaterials.MAP, 1, 1, 1)
+				.addMaterial(VanillaMaterials.COMPASS, 1, 1, 1);
 	}
 
 	@Override
@@ -158,12 +164,12 @@ public class StrongholdLibrary extends StructurePiece {
 			attachMaterial(7, 8, 8, VanillaMaterials.TORCH);
 		}
 		// Place the loot chest
-		lootChest.setRandom(getRandom());
-		placeObject(3, 3, 5, lootChest);
+		chestObject.setRandom(getRandom());
+		placeObject(3, 3, 5, chestObject);
 		// An extra chest for large libraries
 		if (isLargeRoom()) {
 			setBlockMaterial(12, 9, 1, VanillaMaterials.AIR);
-			placeObject(12, 8, 1, lootChest);
+			placeObject(12, 8, 1, chestObject);
 		}
 	}
 

@@ -26,9 +26,10 @@
  */
 package org.spout.vanilla.world.generator.normal.object;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
+
+import gnu.trove.map.TObjectIntMap;
+import gnu.trove.map.hash.TObjectIntHashMap;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
@@ -38,12 +39,13 @@ import org.spout.api.material.Material;
 import org.spout.vanilla.component.block.material.chest.Chest;
 import org.spout.vanilla.inventory.block.ChestInventory;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.util.MathHelper;
 import org.spout.vanilla.world.generator.object.RandomObject;
 
 public class LootChestObject extends RandomObject {
+	private int minNumberOfStacks = 0;
 	private int maxNumberOfStacks = 8;
-	private final List<LootProbability> loot = new ArrayList<LootProbability>();
-	private double currentPMax = 0.0;
+	private final TObjectIntMap<LootItem> loot = new TObjectIntHashMap<LootItem>();
 
 	public LootChestObject() {
 		this(null);
@@ -62,88 +64,60 @@ public class LootChestObject extends RandomObject {
 	public void placeObject(World w, int x, int y, int z) {
 		final Block block = w.getBlock(x, y, z);
 		VanillaMaterials.CHEST.onPlacement(block, (short) 0, null, null, false, null);
-		final Chest chest = (Chest) block.getComponent();
-		final ChestInventory inv = chest.getInventory();
-		for (int i = 0; i < getMaxNumberOfStacks(); i++) {
-			final int slot = random.nextInt(inv.size());
-			inv.set(slot, getNextStack());
+		final ChestInventory inventory = ((Chest) block.getComponent()).getInventory();
+		final int numberOfStack = random.nextInt(maxNumberOfStacks - minNumberOfStacks + 1) + minNumberOfStacks;
+		final int size = inventory.size();
+		for (int i = 0; i < numberOfStack; i++) {
+			inventory.set(random.nextInt(size), MathHelper.chooseWeightedRandom(random, loot).getRandomStack(random));
 		}
-	}
-
-	public ItemStack getNextStack() {
-		final double t = random.nextDouble();
-		for (LootProbability p : loot) {
-			if (t >= p.getpStart() && t < p.getpEnd()) {
-				return p.getRandomStack(random);
-			}
-		}
-		return new ItemStack(VanillaMaterials.AIR, 0);
 	}
 
 	/**
 	 * Adds a new material to the loot
+	 *
 	 * @param mat the material to add
 	 * @param probability the probability that it is selected
 	 * @param minItems minimum items of that material per stack
 	 * @param maxItems maximum items of that material per stack
 	 * @return the instance for chained calls
-	 * @throws IllegalStateException when the total probability is above 1.0
 	 */
-	public LootChestObject addMaterial(Material mat, double probability, int minItems, int maxItems) throws IllegalStateException {
-		final LootProbability toAdd = new LootProbability(probability, currentPMax, mat, minItems, maxItems);
-		currentPMax += probability;
-		if (currentPMax > 1.0) {
-			throw new IllegalStateException("P_total(" + currentPMax + ") is above the allowed threshold of 1.0");
-		}
-		loot.add(toAdd);
+	public LootChestObject addMaterial(Material mat, int probability, int minItems, int maxItems) {
+		loot.put(new LootItem(mat, minItems, maxItems), probability);
 		return this;
 	}
 
-	public double getTotalProbability() {
-		return currentPMax;
+	public int getMinNumberOfStacks() {
+		return minNumberOfStacks;
 	}
 
-	public void setMaxNumberOfStacks(int maxNumberOfStacks) {
-		this.maxNumberOfStacks = maxNumberOfStacks;
+	public void setMinNumberOfStacks(int minNumberOfStacks) {
+		this.minNumberOfStacks = minNumberOfStacks;
 	}
 
 	public int getMaxNumberOfStacks() {
 		return maxNumberOfStacks;
 	}
 
-	private class LootProbability {
-		private final double pStart, pEnd;
-		private final Material loot;
-		private final int min, max;
+	public void setMaxNumberOfStacks(int maxNumberOfStacks) {
+		this.maxNumberOfStacks = maxNumberOfStacks;
+	}
 
-		private LootProbability(double probability, double pStart, Material loot, int min, int max) {
-			this.pStart = pStart;
-			this.pEnd = pStart + probability;
+	private static class LootItem {
+		private final Material loot;
+		private final int min;
+		private final int max;
+
+		private LootItem(Material loot, int min, int max) {
+			if (max < min) {
+				throw new IllegalArgumentException("Max amout cannot be smaller than min amount");
+			}
 			this.loot = loot;
 			this.min = min;
 			this.max = max;
 		}
 
-		private Material getLoot() {
-			return loot;
-		}
-
-		private double getpStart() {
-			return pStart;
-		}
-
-		private double getpEnd() {
-			return pEnd;
-		}
-
 		private ItemStack getRandomStack(Random random) {
-			int amount;
-			if (max == min) {
-				amount = min;
-			} else {
-				amount = random.nextInt(max - min + 1) + min;
-			}
-			return new ItemStack(getLoot(), amount);
+			return new ItemStack(loot, random.nextInt(max - min + 1) + min);
 		}
 	}
 }

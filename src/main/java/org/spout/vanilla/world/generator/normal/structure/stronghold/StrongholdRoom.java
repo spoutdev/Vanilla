@@ -40,12 +40,21 @@ import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
 
 public class StrongholdRoom extends StructurePiece {
-	private final LootChestObject lootChest = new LootChestObject();
+	private final LootChestObject chestObject;
 	private StrongholdRoomType type = null;
 
 	public StrongholdRoom(Structure parent) {
 		super(parent);
-		lootChest.addMaterial(VanillaMaterials.IRON_BARS, 0.1, 1, 3);// TODO: get the proper contents
+		chestObject = new LootChestObject(getRandom());
+		chestObject.setMinNumberOfStacks(1);
+		chestObject.setMaxNumberOfStacks(4);
+		chestObject.addMaterial(VanillaMaterials.IRON_INGOT, 10, 1, 5)
+				.addMaterial(VanillaMaterials.GOLD_INGOT, 5, 1, 3)
+				.addMaterial(VanillaMaterials.REDSTONE_DUST, 5, 4, 9)
+				.addMaterial(VanillaMaterials.COAL, 10, 3, 8)
+				.addMaterial(VanillaMaterials.BREAD, 15, 1, 3)
+				.addMaterial(VanillaMaterials.RED_APPLE, 15, 1, 3)
+				.addMaterial(VanillaMaterials.IRON_PICKAXE, 1, 1, 1);
 	}
 
 	@Override
@@ -157,8 +166,8 @@ public class StrongholdRoom extends StructurePiece {
 				setBlockMaterial(9, 2, 3, VanillaMaterials.LADDER, (short) 4);
 				setBlockMaterial(9, 3, 3, VanillaMaterials.LADDER, (short) 4);
 				// Place the loot chest
-				lootChest.setRandom(getRandom());
-				placeObject(3, 4, 8, lootChest);
+				chestObject.setRandom(getRandom());
+				placeObject(3, 4, 8, chestObject);
 				break;
 		}
 	}

@@ -28,8 +28,12 @@ package org.spout.vanilla.world.generator.normal.structure.temple;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+import org.spout.api.inventory.ItemStack;
 
 import org.spout.api.math.Vector3;
+import org.spout.vanilla.component.block.material.Dispenser;
+import org.spout.vanilla.inventory.block.DispenserInventory;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.object.LootChestObject;
@@ -39,12 +43,19 @@ import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
 
 public class JungleTemple extends StructurePiece {
-	private final LootChestObject lootChest = new LootChestObject();
+	private final LootChestObject chestObject;
 
 	public JungleTemple(Structure parent) {
 		super(parent);
-		//TODO Investigate how the materials are distributed
-		lootChest.addMaterial(VanillaMaterials.IRON_BARS, 0.1, 1, 3);
+		chestObject = new LootChestObject(getRandom());
+		chestObject.setMinNumberOfStacks(2);
+		chestObject.setMaxNumberOfStacks(6);
+		chestObject.addMaterial(VanillaMaterials.DIAMOND, 3, 1, 3)
+				.addMaterial(VanillaMaterials.IRON_INGOT, 10, 1, 5)
+				.addMaterial(VanillaMaterials.GOLD_INGOT, 15, 2, 7)
+				.addMaterial(VanillaMaterials.EMERALD, 2, 1, 3)
+				.addMaterial(VanillaMaterials.BONE, 20, 4, 6)
+				.addMaterial(VanillaMaterials.ROTTEN_FLESH, 16, 3, 7);
 	}
 
 	@Override
@@ -223,8 +234,8 @@ public class JungleTemple extends StructurePiece {
 		setBlockMaterial(5, -3, 1, VanillaMaterials.REDSTONE_WIRE);
 		setBlockMaterial(4, -3, 1, VanillaMaterials.REDSTONE_WIRE);
 		setBlockMaterial(3, -3, 1, VanillaMaterials.MOSS_STONE);
-		// TODO: fill the dispenser
 		setBlockMaterial(3, -2, 1, VanillaMaterials.DISPENSER, (short) 3);
+		fillDispenser(3, -2, 1);
 		setBlockMaterial(3, -2, 2, VanillaMaterials.VINES, (short) 15);
 		// Another tripwire and arrow dispenser trap
 		setBlockMaterial(7, -3, 1, VanillaMaterials.TRIPWIRE_HOOK, (short) 4);
@@ -237,13 +248,13 @@ public class JungleTemple extends StructurePiece {
 		setBlockMaterial(9, -3, 5, VanillaMaterials.REDSTONE_WIRE);
 		setBlockMaterial(9, -3, 4, VanillaMaterials.MOSS_STONE);
 		setBlockMaterial(9, -2, 4, VanillaMaterials.REDSTONE_WIRE);
-		// TODO: fill the dispenser
 		setBlockMaterial(9, -2, 3, VanillaMaterials.DISPENSER, (short) 4);
+		fillDispenser(9, -2, 3);
 		setBlockMaterial(8, -1, 3, VanillaMaterials.VINES, (short) 15);
 		setBlockMaterial(8, -2, 3, VanillaMaterials.VINES, (short) 15);
 		// Place the loot chest
-		lootChest.setRandom(getRandom());
-		placeObject(8, -3, 3, lootChest);
+		chestObject.setRandom(getRandom());
+		placeObject(8, -3, 3, chestObject);
 		// Setup the lever puzzle
 		setBlockMaterial(9, -3, 2, VanillaMaterials.MOSS_STONE);
 		setBlockMaterial(8, -3, 1, VanillaMaterials.MOSS_STONE);
@@ -279,8 +290,13 @@ public class JungleTemple extends StructurePiece {
 		setBlockMaterial(10, -1, 8, VanillaMaterials.PISTON_STICKY_BASE, (short) 4);
 		setBlockMaterial(10, -2, 10, VanillaMaterials.REDSTONE_REPEATER_OFF, (short) 0);
 		// Place another loot chest
-		lootChest.setRandom(getRandom());
-		placeObject(9, -3, 10, lootChest);
+		placeObject(9, -3, 10, chestObject);
+	}
+
+	private void fillDispenser(int xx, int yy, int zz) {
+		final DispenserInventory inventory = ((Dispenser) getBlock(xx, yy, zz).getComponent()).getInventory();
+		final Random random = getRandom();
+		inventory.add(random.nextInt(inventory.size()), new ItemStack(VanillaMaterials.ARROW, random.nextInt(8) + 2));
 	}
 
 	@Override

@@ -35,8 +35,6 @@ public abstract class PieceBuilder {
 
 	public abstract void fill();
 
-	public abstract void randomFill(float odd);
-
 	public StructurePiece getParent() {
 		return parent;
 	}

@@ -126,7 +126,6 @@ public class PieceCuboidBuilder extends PieceBuilder {
 		}
 	}
 
-	@Override
 	public void randomFill(float odd) {
 		final int endX = max.getX();
 		final int endY = max.getY();

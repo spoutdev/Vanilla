@@ -36,9 +36,9 @@ import org.spout.api.math.VectorMath;
  * Draws a plane with the defined block material layout
  */
 public class PieceLayoutBuilder extends PieceBuilder {
-	private IntVector3 position = new IntVector3(0, 0, 0);
+	private final IntVector3 position = new IntVector3(0, 0, 0);
 	private Quaternion rotation = Quaternion.IDENTITY;
-	private IntVector3 rotationPoint = new IntVector3(0, 0, 0);
+	private final IntVector3 rotationPoint = new IntVector3(0, 0, 0);
 	private BlockMaterialLayout layout = new BlockMaterialLayout("");
 
 	public PieceLayoutBuilder(StructurePiece parent) {
@@ -54,7 +54,7 @@ public class PieceLayoutBuilder extends PieceBuilder {
 	}
 
 	public void setPosition(IntVector3 position) {
-		this.position = position;
+		this.position.set(position);
 	}
 
 	public void offsetPosition(int xOff, int yOff, int zOff) {
@@ -74,7 +74,7 @@ public class PieceLayoutBuilder extends PieceBuilder {
 	}
 
 	public void setRotationPoint(IntVector3 rotationPoint) {
-		this.rotationPoint = rotationPoint;
+		this.rotationPoint.set(position);
 	}
 
 	public void offsetRotationPoint(int xOff, int yOff, int zOff) {
@@ -89,21 +89,6 @@ public class PieceLayoutBuilder extends PieceBuilder {
 	public void fill() {
 		for (int xx = 0; xx < layout.getRowLenght(); xx++) {
 			for (int zz = 0; zz < layout.getColumnLenght(xx); zz++) {
-				final BlockMaterial material = layout.getBlockMaterial(xx, zz);
-				if (material != null) {
-					setBlockMaterial(xx, zz, material);
-				}
-			}
-		}
-	}
-
-	@Override
-	public void randomFill(float odd) {
-		for (int xx = 0; xx < layout.getRowLenght(); xx++) {
-			for (int zz = 0; zz < layout.getColumnLenght(xx); zz++) {
-				if (parent.getRandom().nextFloat() > odd) {
-					continue;
-				}
 				final BlockMaterial material = layout.getBlockMaterial(xx, zz);
 				if (material != null) {
 					setBlockMaterial(xx, zz, material);

@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.spout.api.generator.WorldGeneratorObject;
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
@@ -135,11 +136,11 @@ public abstract class StructurePiece {
 		}
 	}
 
-	public void fillDownwards(int xx, int yy, int zz, short limit, BlockMaterial material) {
+	public void fillDownwards(int xx, int yy, int zz, int limit, BlockMaterial material) {
 		fillDownwards(xx, yy, zz, limit, material, material.getData());
 	}
 
-	public void fillDownwards(int xx, int yy, int zz, short limit, BlockMaterial material, short data) {
+	public void fillDownwards(int xx, int yy, int zz, int limit, BlockMaterial material, short data) {
 		short counter = 0;
 		Block block;
 		while (((block = getBlock(xx, yy, zz)).getMaterial().isMaterial(VanillaMaterials.AIR)

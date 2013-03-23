@@ -37,6 +37,7 @@ import org.spout.api.generator.WorldGeneratorObject;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.nether.object.GlowstonePatchObject;
 import org.spout.vanilla.world.generator.nether.object.NetherPortalObject;
+import org.spout.vanilla.world.generator.nether.structure.fortress.Fortress;
 import org.spout.vanilla.world.generator.normal.object.BlockPatchObject;
 import org.spout.vanilla.world.generator.normal.object.CactusStackObject;
 import org.spout.vanilla.world.generator.normal.object.DungeonObject;
@@ -100,6 +101,7 @@ public class VanillaObjects {
 	public static final Mineshaft MINESHAFT = new Mineshaft();
 	public static final Temple TEMPLE = new Temple();
 	public static final Stronghold STRONGHOLD = new Stronghold();
+	public static final Fortress FORTRESS = new Fortress();
 	private static final Map<String, WorldGeneratorObject> BY_NAME = new HashMap<String, WorldGeneratorObject>();
 
 	static {

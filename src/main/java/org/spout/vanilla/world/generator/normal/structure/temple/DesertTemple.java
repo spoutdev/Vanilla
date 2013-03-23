@@ -122,7 +122,7 @@ public class DesertTemple extends StructurePiece {
 		// Fill the land under
 		for (byte xx = 0; xx < 21; xx++) {
 			for (byte zz = 0; zz < 21; zz++) {
-				fillDownwards(xx, -5, zz, (short) 50, VanillaMaterials.SANDSTONE);
+				fillDownwards(xx, -5, zz, 50, VanillaMaterials.SANDSTONE);
 			}
 		}
 		// Tower bodies

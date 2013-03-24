@@ -41,68 +41,83 @@ public class PieceCuboidBuilder extends PieceBuilder {
 		super(parent);
 	}
 
-	public void setMax(IntVector3 max) {
+	public PieceCuboidBuilder setMax(IntVector3 max) {
 		this.max.set(max);
+		return this;
 	}
 
-	public void setMin(IntVector3 min) {
+	public PieceCuboidBuilder setMin(IntVector3 min) {
 		this.min.set(min);
+		return this;
 	}
 
-	public void setMax(int x, int y, int z) {
+	public PieceCuboidBuilder setMax(int x, int y, int z) {
 		max.set(x, y, z);
+		return this;
 	}
 
-	public void setMin(int x, int y, int z) {
+	public PieceCuboidBuilder setMin(int x, int y, int z) {
 		min.set(x, y, z);
+		return this;
 	}
 
-	public void setMinMax(IntVector3 min, IntVector3 max) {
+	public PieceCuboidBuilder setMinMax(IntVector3 min, IntVector3 max) {
 		setMin(min);
 		setMax(max);
+		return this;
 	}
 
-	public void setMinMax(int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
+	public PieceCuboidBuilder setMinMax(int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
 		setMin(minX, minY, minZ);
 		setMax(maxX, maxY, maxZ);
+		return this;
 	}
 
-	public void offsetMin(IntVector3 offset) {
+	public PieceCuboidBuilder offsetMin(IntVector3 offset) {
 		min.add(offset);
+		return this;
 	}
 
-	public void offsetMax(IntVector3 offset) {
+	public PieceCuboidBuilder offsetMax(IntVector3 offset) {
 		max.add(offset);
+		return this;
 	}
 
-	public void offsetMinMax(IntVector3 minOffset, IntVector3 maxOffset) {
+	public PieceCuboidBuilder offsetMinMax(IntVector3 minOffset, IntVector3 maxOffset) {
 		offsetMin(minOffset);
 		offsetMax(maxOffset);
+		return this;
 	}
 
-	public void offsetMin(int x, int y, int z) {
+	public PieceCuboidBuilder offsetMin(int x, int y, int z) {
 		offsetMin(new IntVector3(x, y, z));
+		return this;
 	}
 
-	public void offsetMax(int x, int y, int z) {
+	public PieceCuboidBuilder offsetMax(int x, int y, int z) {
 		offsetMax(new IntVector3(x, y, z));
+		return this;
 	}
 
-	public void offsetMinMax(int minXOff, int minYOff, int minZOff, int maxXOff, int maxYOff, int maxZOff) {
+	public PieceCuboidBuilder offsetMinMax(int minXOff, int minYOff, int minZOff, int maxXOff, int maxYOff, int maxZOff) {
 		offsetMin(minXOff, minYOff, minZOff);
 		offsetMax(maxXOff, maxYOff, maxZOff);
+		return this;
 	}
 
-	public void setPicker(BlockMaterialPicker picker) {
+	public PieceCuboidBuilder setPicker(BlockMaterialPicker picker) {
 		this.picker = picker;
+		return this;
 	}
 
-	public void setIgnoreAir(boolean ignoreAir) {
+	public PieceCuboidBuilder setIgnoreAir(boolean ignoreAir) {
 		this.ignoreAir = ignoreAir;
+		return this;
 	}
 
-	public void toggleIgnoreAir() {
+	public PieceCuboidBuilder toggleIgnoreAir() {
 		ignoreAir ^= true;
+		return this;
 	}
 
 	protected boolean isOuter(int xx, int yy, int zz) {

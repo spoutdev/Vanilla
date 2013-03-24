@@ -33,6 +33,7 @@ import java.util.Random;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.normal.structure.stronghold.StrongholdDoor.EmptyDoorway;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
@@ -58,13 +59,11 @@ public class StrongholdIntersection extends StructurePiece {
 		// General shape
 		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setPicker(new StrongholdBlockMaterialPicker(getRandom()));
-		box.setMinMax(0, 0, 0, 4, 4, 6);
-		box.toggleIgnoreAir();
-		box.fill();
+		box.setMinMax(0, 0, 0, 4, 4, 6).toggleIgnoreAir().fill();
 		box.toggleIgnoreAir();
 		// Place the doors
 		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 1, 0);
-		new StrongholdDoor.EmptyDoorway(this).place(1, 1, 6);
+		new EmptyDoorway(this).place(1, 1, 6);
 		// Place random torches
 		attachMaterial(0.1f, 1, 2, 1, VanillaMaterials.TORCH);
 		attachMaterial(0.1f, 3, 2, 1, VanillaMaterials.TORCH);
@@ -73,12 +72,10 @@ public class StrongholdIntersection extends StructurePiece {
 		// Access for the next components
 		box.setPicker(new SimpleBlockMaterialPicker());
 		if (nextComponentRight) {
-			box.setMinMax(0, 1, 2, 0, 3, 4);
-			box.fill();
+			box.setMinMax(0, 1, 2, 0, 3, 4).fill();
 		}
 		if (nextComponentLeft) {
-			box.setMinMax(4, 1, 2, 4, 3, 4);
-			box.fill();
+			box.setMinMax(4, 1, 2, 4, 3, 4).fill();
 		}
 	}
 

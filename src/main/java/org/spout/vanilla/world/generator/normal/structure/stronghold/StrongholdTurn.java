@@ -56,20 +56,16 @@ public class StrongholdTurn extends StructurePiece {
 		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		// General shape
 		box.setPicker(new StrongholdBlockMaterialPicker(getRandom()));
-		box.setMinMax(0, 0, 0, 4, 4, 4);
-		box.toggleIgnoreAir();
-		box.fill();
+		box.setMinMax(0, 0, 0, 4, 4, 4).toggleIgnoreAir().fill();
 		box.toggleIgnoreAir();
 		// Place the door
 		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 1, 0);
 		// Place the access way depending on the direction
 		box.setPicker(new SimpleBlockMaterialPicker());
 		if (left) {
-			box.setMinMax(4, 1, 1, 4, 3, 3);
-			box.fill();
+			box.setMinMax(4, 1, 1, 4, 3, 3).fill();
 		} else {
-			box.setMinMax(0, 1, 1, 0, 3, 3);
-			box.fill();
+			box.setMinMax(0, 1, 1, 0, 3, 3).fill();
 		}
 	}
 

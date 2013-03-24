@@ -63,65 +63,45 @@ public class StrongholdLargeIntersection extends StructurePiece {
 		final StrongholdBlockMaterialPicker stone = new StrongholdBlockMaterialPicker(getRandom());
 		// General shape
 		box.setPicker(stone);
-		box.setMinMax(0, 0, 0, 9, 8, 10);
-		box.toggleIgnoreAir();
-		box.fill();
+		box.setMinMax(0, 0, 0, 9, 8, 10).toggleIgnoreAir().fill();
 		box.toggleIgnoreAir();
 		// Place the door
 		StrongholdDoor.getRandomDoor(this, getRandom()).place(4, 3, 0);
 		// Access to the next components of the intersection
 		box.setPicker(picker);
 		if (nextComponentRightLow) {
-			box.setMinMax(0, 3, 1, 0, 5, 3);
-			box.fill();
+			box.setMinMax(0, 3, 1, 0, 5, 3).fill();
 		}
 		if (nextComponentRightHigh) {
-			box.setMinMax(0, 5, 7, 0, 7, 9);
-			box.fill();
+			box.setMinMax(0, 5, 7, 0, 7, 9).fill();
 		}
 		if (nextComponentLeftLow) {
-			box.setMinMax(9, 3, 1, 9, 5, 3);
-			box.fill();
+			box.setMinMax(9, 3, 1, 9, 5, 3).fill();
 		}
 		if (nextComponentLeftHigh) {
-			box.setMinMax(9, 5, 7, 9, 7, 9);
-			box.fill();
+			box.setMinMax(9, 5, 7, 9, 7, 9).fill();
 		}
 		// The bottom access way
-		box.setMinMax(5, 1, 10, 7, 3, 10);
-		box.fill();
+		box.setMinMax(5, 1, 10, 7, 3, 10).fill();
 		// Finish the interior
 		box.setPicker(stone);
-		box.setMinMax(1, 2, 1, 8, 2, 6);
-		box.fill();
-		box.setMinMax(4, 1, 5, 4, 4, 9);
-		box.fill();
-		box.offsetMinMax(4, 0, 0, 4, 0, 0);
-		box.fill();
-		box.setMinMax(1, 4, 7, 3, 4, 9);
-		box.fill();
-		box.setMinMax(1, 3, 5, 3, 3, 6);
-		box.fill();
+		box.setMinMax(1, 2, 1, 8, 2, 6).fill();
+		box.setMinMax(4, 1, 5, 4, 4, 9).fill();
+		box.offsetMinMax(4, 0, 0, 4, 0, 0).fill();
+		box.setMinMax(1, 4, 7, 3, 4, 9).fill();
+		box.setMinMax(1, 3, 5, 3, 3, 6).fill();
 		picker.setOuterInnerMaterials(VanillaMaterials.SLAB, VanillaMaterials.SLAB);
 		box.setPicker(picker);
-		box.setMinMax(1, 3, 4, 3, 3, 4);
-		box.fill();
-		box.offsetMinMax(0, 1, 2, 0, 1, 2);
-		box.fill();
+		box.setMinMax(1, 3, 4, 3, 3, 4).fill();
+		box.offsetMinMax(0, 1, 2, 0, 1, 2).fill();
 		box.setPicker(stone);
-		box.setMinMax(5, 1, 7, 7, 1, 8);
-		box.fill();
+		box.setMinMax(5, 1, 7, 7, 1, 8).fill();
 		box.setPicker(picker);
-		box.offsetMinMax(0, 0, 2, 0, 0, 1);
-		box.fill();
-		box.offsetMinMax(0, 1, -2, 0, 1, -2);
-		box.fill();
-		box.setMinMax(4, 5, 7, 4, 5, 9);
-		box.fill();
-		box.offsetMinMax(4, 0, 0, 4, 0, 0);
-		box.fill();
-		box.offsetMinMax(-3, 0, 0, -1, 0, 0);
-		box.fill();
+		box.offsetMinMax(0, 0, 2, 0, 0, 1).fill();
+		box.offsetMinMax(0, 1, -2, 0, 1, -2).fill();
+		box.setMinMax(4, 5, 7, 4, 5, 9).fill();
+		box.offsetMinMax(4, 0, 0, 4, 0, 0).fill();
+		box.offsetMinMax(-3, 0, 0, -1, 0, 0).fill();
 		// Place a torch
 		attachMaterial(6, 5, 6, VanillaMaterials.TORCH);
 	}

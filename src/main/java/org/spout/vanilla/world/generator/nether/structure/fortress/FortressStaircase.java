@@ -60,11 +60,9 @@ public class FortressStaircase extends StructurePiece {
 			final int eyy = GenericMath.clamp(syy + 5, 14 - zz, 13);
 			// Basic outline
 			picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-			box.setMinMax(0, 0, zz, 4, syy, zz);
-			box.fill();
+			box.setMinMax(0, 0, zz, 4, syy, zz).fill();
 			picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
-			box.setMinMax(1, syy + 1, zz, 3, eyy - 1, zz);
-			box.fill();
+			box.setMinMax(1, syy + 1, zz, 3, eyy - 1, zz).fill();
 			// Add some stairs
 			if (zz <= 6) {
 				setBlockMaterial(1, syy + 1, zz, VanillaMaterials.STAIRS_NETHER_BRICK, (short) 3);
@@ -73,19 +71,14 @@ public class FortressStaircase extends StructurePiece {
 			}
 			// Precise outline for the section 
 			picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-			box.setMinMax(0, eyy, zz, 4, eyy, zz);
-			box.fill();
-			box.setMinMax(0, syy + 1, zz, 0, eyy - 1, zz);
-			box.fill();
-			box.offsetMinMax(4, 0, 0, 4, 0, 0);
-			box.fill();
+			box.setMinMax(0, eyy, zz, 4, eyy, zz).fill();
+			box.setMinMax(0, syy + 1, zz, 0, eyy - 1, zz).fill();
+			box.offsetMinMax(4, 0, 0, 4, 0, 0).fill();
 			// Windows on the right and left with odd spacing
 			if (zz % 2 != 0) {
 				picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.NETHER_BRICK_FENCE);
-				box.setMinMax(0, syy + 2, zz, 0, syy + 3, zz);
-				box.fill();
-				box.offsetMinMax(4, 0, 0, 4, 0, 0);
-				box.fill();
+				box.setMinMax(0, syy + 2, zz, 0, syy + 3, zz).fill();
+				box.offsetMinMax(4, 0, 0, 4, 0, 0).fill();
 			}
 			// Fill down to the ground
 			for (int xx = 0; xx <= 4; xx++) {

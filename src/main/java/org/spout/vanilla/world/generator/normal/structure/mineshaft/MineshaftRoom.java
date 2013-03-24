@@ -63,16 +63,12 @@ public class MineshaftRoom extends StructurePiece {
 		box.setPicker(picker);
 		// basic room
 		picker.setOuterInnerMaterials(VanillaMaterials.DIRT, VanillaMaterials.AIR);
-		box.setMinMax(0, 0, 0, lenght, height, depth);
-		box.toggleIgnoreAir();
-		box.fill();
+		box.setMinMax(0, 0, 0, lenght, height, depth).toggleIgnoreAir().fill();
 		box.toggleIgnoreAir();
 		picker.setOuterMaterial(VanillaMaterials.AIR);
-		box.setMinMax(0, 1, 0, lenght, 3, depth);
-		box.fill();
+		box.setMinMax(0, 1, 0, lenght, 3, depth).fill();
 		// some 'decoration'
-		box.setMinMax(0, 4, 0, lenght, height, depth);
-		box.sphericalFill();
+		box.setMinMax(0, 4, 0, lenght, height, depth).sphericalFill();
 	}
 
 	@Override

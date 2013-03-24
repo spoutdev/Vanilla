@@ -67,8 +67,7 @@ public abstract class StrongholdDoor {
 		public void place(int xx, int yy, int zz) {
 			final PieceCuboidBuilder box = new PieceCuboidBuilder(parent);
 			box.setPicker(new SimpleBlockMaterialPicker());
-			box.setMinMax(xx, yy, zz, xx + 2, yy + 2, zz);
-			box.fill();
+			box.setMinMax(xx, yy, zz, xx + 2, yy + 2, zz).fill();
 		}
 	}
 

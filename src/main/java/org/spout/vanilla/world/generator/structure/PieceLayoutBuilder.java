@@ -45,44 +45,54 @@ public class PieceLayoutBuilder extends PieceBuilder {
 		super(parent);
 	}
 
-	public void setLayout(BlockMaterialLayout layout) {
+	public PieceLayoutBuilder setLayout(BlockMaterialLayout layout) {
 		this.layout = layout;
+		return this;
 	}
 
-	public void setPosition(int x, int y, int z) {
+	public PieceLayoutBuilder setPosition(int x, int y, int z) {
 		setPosition(new IntVector3(x, y, z));
+		return this;
 	}
 
-	public void setPosition(IntVector3 position) {
+	public PieceLayoutBuilder setPosition(IntVector3 position) {
 		this.position.set(position);
+		return this;
 	}
 
-	public void offsetPosition(int xOff, int yOff, int zOff) {
+	public PieceLayoutBuilder offsetPosition(int xOff, int yOff, int zOff) {
 		offsetPosition(new IntVector3(xOff, yOff, zOff));
+		return this;
 	}
 
-	public void offsetPosition(IntVector3 offset) {
+	public PieceLayoutBuilder offsetPosition(IntVector3 offset) {
 		position.add(offset);
+		return this;
 	}
 
-	public void setRotation(Quaternion rotation) {
+	public PieceLayoutBuilder setRotation(Quaternion rotation) {
 		this.rotation = rotation;
+		return this;
 	}
 
-	public void setRotationPoint(int x, int y, int z) {
+	public PieceLayoutBuilder setRotationPoint(int x, int y, int z) {
 		setRotationPoint(new IntVector3(x, y, z));
+		return this;
 	}
 
-	public void setRotationPoint(IntVector3 rotationPoint) {
+	public PieceLayoutBuilder setRotationPoint(IntVector3 rotationPoint) {
 		this.rotationPoint.set(position);
+		return this;
 	}
 
-	public void offsetRotationPoint(int xOff, int yOff, int zOff) {
+	public PieceLayoutBuilder offsetRotationPoint(int xOff, int yOff, int zOff) {
 		offsetRotationPoint(new IntVector3(xOff, yOff, zOff));
+		return this;
 	}
 
-	public void offsetRotationPoint(IntVector3 offset) {
+	public PieceLayoutBuilder offsetRotationPoint(IntVector3 offset) {
 		rotationPoint.add(offset);
+		return this;
 	}
 
 	@Override

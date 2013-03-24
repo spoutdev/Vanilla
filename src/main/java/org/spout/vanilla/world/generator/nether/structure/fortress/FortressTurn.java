@@ -56,12 +56,10 @@ public class FortressTurn extends StructurePiece {
 		box.setPicker(picker);
 		// Floor
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(0, 0, 0, 4, 1, 4);
-		box.fill();
+		box.setMinMax(0, 0, 0, 4, 1, 4).fill();
 		// Interior space
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
-		box.offsetMinMax(0, 2, 0, 0, 4, 0);
-		box.fill();
+		box.offsetMinMax(0, 2, 0, 0, 4, 0).fill();
 		// First wall
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
 		if (left) {
@@ -78,31 +76,23 @@ public class FortressTurn extends StructurePiece {
 			box.setMinMax(4, 3, 1, 4, 4, 1);
 		}
 		box.fill();
-		box.offsetMinMax(0, 0, 2, 0, 0, 2);
-		box.fill();
+		box.offsetMinMax(0, 0, 2, 0, 0, 2).fill();
 		// Second wall
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
 		if (left) {
-			box.setMinMax(4, 2, 0, 4, 5, 0);
-			box.fill();
-			box.offsetMinMax(-3, 0, 4, 0, 0, 4);
-			box.fill();
+			box.setMinMax(4, 2, 0, 4, 5, 0).fill();
+			box.offsetMinMax(-3, 0, 4, 0, 0, 4).fill();
 		} else {
-			box.setMinMax(0, 2, 0, 0, 5, 0);
-			box.fill();
-			box.offsetMinMax(0, 0, 4, 3, 0, 4);
-			box.fill();
+			box.setMinMax(0, 2, 0, 0, 5, 0).fill();
+			box.offsetMinMax(0, 0, 4, 3, 0, 4).fill();
 		}
 		// Windows for the second wall
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.NETHER_BRICK_FENCE);
-		box.setMinMax(1, 3, 4, 1, 4, 4);
-		box.fill();
-		box.offsetMinMax(2, 0, 0, 2, 0, 0);
-		box.fill();
+		box.setMinMax(1, 3, 4, 1, 4, 4).fill();
+		box.offsetMinMax(2, 0, 0, 2, 0, 0).fill();
 		// Roof
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(0, 6, 0, 4, 6, 4);
-		box.fill();
+		box.setMinMax(0, 6, 0, 4, 6, 4).fill();
 		// Fill down to the ground
 		for (int xx = 0; xx <= 4; xx++) {
 			for (int zz = 0; zz <= 4; zz++) {

@@ -32,6 +32,7 @@ import java.util.List;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.world.generator.normal.structure.stronghold.StrongholdDoor.EmptyDoorway;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
@@ -53,13 +54,11 @@ public class StrongholdStaircase extends StructurePiece {
 		// General shape
 		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setPicker(new StrongholdBlockMaterialPicker(getRandom()));
-		box.setMinMax(0, -6, 0, 4, 4, 7);
-		box.toggleIgnoreAir();
-		box.fill();
+		box.setMinMax(0, -6, 0, 4, 4, 7).toggleIgnoreAir().fill();
 		box.toggleIgnoreAir();
 		// Place the doors
 		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 1, 0);
-		new StrongholdDoor.EmptyDoorway(this).place(1, -5, 7);
+		new EmptyDoorway(this).place(1, -5, 7);
 		// Place the steps
 		for (int i = 0; i < 6; i++) {
 			setBlockMaterial(1, -i, 1 + i, VanillaMaterials.STAIRS_STONE_BRICK, (short) 3);

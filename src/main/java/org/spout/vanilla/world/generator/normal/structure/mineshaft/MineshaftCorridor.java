@@ -86,35 +86,27 @@ public class MineshaftCorridor extends StructurePiece {
 		box.setPicker(picker);
 		// the basic tunnel
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
-		box.setMinMax(0, 0, 0, 2, 1, lenght);
-		box.fill();
-		box.offsetMinMax(0, 2, 0, 0, 1, 0);
-		box.randomFill(0.8f);
+		box.setMinMax(0, 0, 0, 2, 1, lenght).fill();
+		box.offsetMinMax(0, 2, 0, 0, 1, 0).randomFill(0.8f);
 		// spider webs for spawner
 		if (caveSpiders) {
 			picker.setOuterMaterial(VanillaMaterials.WEB);
-			box.setMinMax(0, 0, 0, 2, 1, lenght);
-			box.randomFill(0.6f);
+			box.setMinMax(0, 0, 0, 2, 1, lenght).randomFill(0.6f);
 		}
 		// decorate sections
 		for (byte section = 0; section < sections; section++) {
 			final short sectionZ = (short) (section * 5 + 2);
 			// fences
 			picker.setOuterMaterial(VanillaMaterials.WOODEN_FENCE);
-			box.setMinMax(0, 0, sectionZ, 0, 1, sectionZ);
-			box.fill();
-			box.offsetMinMax(2, 0, 0, 2, 0, 0);
-			box.fill();
+			box.setMinMax(0, 0, sectionZ, 0, 1, sectionZ).fill();
+			box.offsetMinMax(2, 0, 0, 2, 0, 0).fill();
 			// ceiling planks
 			picker.setOuterMaterial(VanillaMaterials.PLANK);
 			if (random.nextInt(4) != 0) {
-				box.setMinMax(0, 2, sectionZ, 2, 2, sectionZ);
-				box.fill();
+				box.setMinMax(0, 2, sectionZ, 2, 2, sectionZ).fill();
 			} else {
-				box.setMinMax(0, 2, sectionZ, 0, 2, sectionZ);
-				box.fill();
-				box.offsetMinMax(2, 0, 0, 2, 0, 0);
-				box.fill();
+				box.setMinMax(0, 2, sectionZ, 0, 2, sectionZ).fill();
+				box.offsetMinMax(2, 0, 0, 2, 0, 0).fill();
 			}
 			// webs and torches
 			setBlockMaterial(0.9f, 0, 2, sectionZ - 1, VanillaMaterials.WEB);

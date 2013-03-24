@@ -69,20 +69,15 @@ public class StrongholdRoom extends StructurePiece {
 		// General shape
 		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setPicker(new StrongholdBlockMaterialPicker(getRandom()));
-		box.setMinMax(0, 0, 0, 10, 6, 10);
-		box.toggleIgnoreAir();
-		box.fill();
+		box.setMinMax(0, 0, 0, 10, 6, 10).toggleIgnoreAir().fill();
 		box.toggleIgnoreAir();
 		// Place the door
 		StrongholdDoor.getRandomDoor(this, getRandom()).place(4, 1, 0);
 		// More access ways
 		box.setPicker(new SimpleBlockMaterialPicker());
-		box.setMinMax(4, 1, 10, 6, 3, 10);
-		box.fill();
-		box.setMinMax(0, 1, 4, 0, 3, 6);
-		box.fill();
-		box.offsetMinMax(10, 0, 0, 10, 0, 0);
-		box.fill();
+		box.setMinMax(4, 1, 10, 6, 3, 10).fill();
+		box.setMinMax(0, 1, 4, 0, 3, 6).fill();
+		box.offsetMinMax(10, 0, 0, 10, 0, 0).fill();
 		// Add the features for the room type
 		if (type == null) {
 			return;

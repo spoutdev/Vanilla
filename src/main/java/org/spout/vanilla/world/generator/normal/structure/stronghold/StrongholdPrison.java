@@ -58,33 +58,24 @@ public class StrongholdPrison extends StructurePiece {
 		final StrongholdBlockMaterialPicker stone = new StrongholdBlockMaterialPicker(getRandom());
 		// General shape
 		box.setPicker(stone);
-		box.setMinMax(0, 0, 0, 8, 4, 10);
-		box.toggleIgnoreAir();
-		box.fill();
+		box.setMinMax(0, 0, 0, 8, 4, 10).toggleIgnoreAir().fill();
 		box.toggleIgnoreAir();
 		// Place the door
 		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 1, 0);
-		//
+		// Make some room
 		box.setPicker(picker);
-		box.setMinMax(1, 1, 10, 3, 3, 10);
-		box.fill();
-		//
+		box.setMinMax(1, 1, 10, 3, 3, 10).fill();
+		// Cell walls
 		box.setPicker(stone);
-		box.setMinMax(4, 1, 1, 4, 3, 1);
-		box.fill();
-		box.offsetMinMax(0, 0, 2, 0, 0, 2);
-		box.fill();
-		box.offsetMinMax(0, 0, 4, 0, 0, 4);
-		box.fill();
-		box.offsetMinMax(0, 0, 2, 0, 0, 2);
-		box.fill();
+		box.setMinMax(4, 1, 1, 4, 3, 1).fill();
+		box.offsetMinMax(0, 0, 2, 0, 0, 2).fill();
+		box.offsetMinMax(0, 0, 4, 0, 0, 4).fill();
+		box.offsetMinMax(0, 0, 2, 0, 0, 2).fill();
 		// Build the cells
 		box.setPicker(picker);
 		picker.setOuterInnerMaterials(VanillaMaterials.IRON_BARS, VanillaMaterials.IRON_BARS);
-		box.setMinMax(4, 1, 4, 4, 3, 6);
-		box.fill();
-		box.setMinMax(5, 1, 5, 7, 3, 5);
-		box.fill();
+		box.setMinMax(4, 1, 4, 4, 3, 6).fill();
+		box.setMinMax(5, 1, 5, 7, 3, 5).fill();
 		setBlockMaterial(4, 3, 2, VanillaMaterials.IRON_BARS);
 		setBlockMaterial(4, 3, 8, VanillaMaterials.IRON_BARS);
 		// Add the cell doors

@@ -36,8 +36,8 @@ import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
 
-public class FortressRightTurn extends StructurePiece {
-	public FortressRightTurn(Structure parent) {
+public class FortressBalconyIntersection extends StructurePiece {
+	public FortressBalconyIntersection(Structure parent) {
 		super(parent);
 	}
 
@@ -54,41 +54,64 @@ public class FortressRightTurn extends StructurePiece {
 		box.setPicker(picker);
 		// Floor
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(0, 0, 0, 4, 1, 4);
+		box.setMinMax(0, 0, 0, 8, 1, 8);
 		box.fill();
 		// Interior space
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
 		box.offsetMinMax(0, 2, 0, 0, 4, 0);
 		box.fill();
-		// First wall
+		// Roof
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.offsetMinMax(4, 0, 0, 0, 0, 0);
+		box.setMinMax(0, 6, 0, 8, 6, 5);
+		box.fill();
+		// First wall
+		box.setMinMax(0, 2, 0, 2, 5, 0);
+		box.fill();
+		box.offsetMinMax(6, 0, 0, 6, 0, 0);
 		box.fill();
 		// Windows for the first wall
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.NETHER_BRICK_FENCE);
-		box.setMinMax(4, 3, 1, 4, 4, 1);
+		box.setMinMax(1, 3, 0, 1, 4, 0);
 		box.fill();
-		box.offsetMinMax(0, 0, 2, 0, 0, 2);
+		box.offsetMinMax(6, 0, 0, 6, 0, 0);
 		box.fill();
-		// Second wall
+		// Balcony floor
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(0, 2, 0, 0, 5, 0);
+		box.setMinMax(0, 2, 4, 8, 2, 8);
 		box.fill();
-		box.offsetMinMax(0, 0, 4, 3, 0, 4);
+		// Air spaces next to the balcony entrance
+		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
+		box.setMinMax(1, 1, 4, 2, 2, 4);
 		box.fill();
-		// Windows for the second wall
+		box.offsetMinMax(5, 0, 0, 5, 0, 0);
+		box.fill();
+		// Fences for the balcony
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.NETHER_BRICK_FENCE);
-		box.setMinMax(1, 3, 4, 1, 4, 4);
+		box.setMinMax(0, 3, 8, 8, 3, 8);
 		box.fill();
-		box.offsetMinMax(2, 0, 0, 2, 0, 0);
+		box.setMinMax(0, 3, 6, 0, 3, 7);
 		box.fill();
-		// Roof
+		box.offsetMinMax(8, 0, 0, 8, 0, 0);
+		box.fill();
+		// Wall separating the room and balcony
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(0, 6, 0, 4, 6, 4);
+		box.setMinMax(0, 3, 4, 0, 5, 5);
+		box.fill();
+		box.offsetMinMax(8, 0, 0, 8, 0, 0);
+		box.fill();
+		box.setMinMax(1, 3, 5, 2, 5, 5);
+		box.fill();
+		box.offsetMinMax(5, 0, 0, 5, 0, 0);
+		box.fill();
+		// Windows for that wall
+		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.NETHER_BRICK_FENCE);
+		box.setMinMax(1, 4, 5, 1, 5, 5);
+		box.fill();
+		box.offsetMinMax(6, 0, 0, 6, 0, 0);
 		box.fill();
 		// Fill down to the ground
-		for (int xx = 0; xx <= 4; xx++) {
-			for (int zz = 0; zz <= 4; zz++) {
+		for (int xx = 0; xx <= 8; xx++) {
+			for (int zz = 0; zz <= 5; zz++) {
 				fillDownwards(xx, -1, zz, 50, VanillaMaterials.NETHER_BRICK);
 			}
 		}
@@ -106,7 +129,7 @@ public class FortressRightTurn extends StructurePiece {
 	@Override
 	public BoundingBox getBoundingBox() {
 		final Vector3 rotatedMin = transform(0, 0, 0);
-		final Vector3 rotatedMax = transform(4, 6, 4);
+		final Vector3 rotatedMax = transform(8, 6, 8);
 		return new BoundingBox(Vector3.min(rotatedMin, rotatedMax), Vector3.max(rotatedMin, rotatedMax));
 	}
 }

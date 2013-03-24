@@ -43,7 +43,7 @@ public class Fortress extends Structure {
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
-		final FortressRightTurn test = new FortressRightTurn(this);
+		final FortressCorridor test = new FortressCorridor(this);
 		test.setPosition(new Point(w, x, y, z));
 		test.setRotation(new Quaternion(random.nextInt(4) * 90, 0, 1, 0));
 		test.randomize();

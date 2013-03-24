@@ -24,52 +24,90 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.world.generator.normal.structure.stronghold;
+package org.spout.vanilla.world.generator.nether.structure.fortress;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
 
-public class StrongholdTurn extends StructurePiece {
+public class FortressTurn extends StructurePiece {
 	private boolean left = false;
 
-	public StrongholdTurn(Structure parent) {
+	public FortressTurn(Structure parent) {
 		super(parent);
 	}
 
 	@Override
 	public boolean canPlace() {
-		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
-		box.setMinMax(-1, -1, -1, 5, 5, 5);
-		return !box.intersectsLiquids();
+		return true;
 	}
 
 	@Override
 	public void place() {
 		// Building objects
 		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
-		// General shape
-		box.setPicker(new StrongholdBlockMaterialPicker(getRandom()));
-		box.setMinMax(0, 0, 0, 4, 4, 4);
-		box.toggleIgnoreAir();
+		final SimpleBlockMaterialPicker picker = new SimpleBlockMaterialPicker();
+		box.setPicker(picker);
+		// Floor
+		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
+		box.setMinMax(0, 0, 0, 4, 1, 4);
 		box.fill();
-		box.toggleIgnoreAir();
-		// Place the door
-		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 1, 0);
-		// Place the access way depending on the direction
-		box.setPicker(new SimpleBlockMaterialPicker());
+		// Interior space
+		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
+		box.offsetMinMax(0, 2, 0, 0, 4, 0);
+		box.fill();
+		// First wall
+		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
 		if (left) {
-			box.setMinMax(4, 1, 1, 4, 3, 3);
+			box.offsetMinMax(0, 0, 0, -4, 0, 0);
+		} else {
+			box.offsetMinMax(4, 0, 0, 0, 0, 0);
+		}
+		box.fill();
+		// Windows for the first wall
+		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.NETHER_BRICK_FENCE);
+		if (left) {
+			box.setMinMax(0, 3, 1, 0, 4, 1);
+		} else {
+			box.setMinMax(4, 3, 1, 4, 4, 1);
+		}
+		box.fill();
+		box.offsetMinMax(0, 0, 2, 0, 0, 2);
+		box.fill();
+		// Second wall
+		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
+		if (left) {
+			box.setMinMax(4, 2, 0, 4, 5, 0);
+			box.fill();
+			box.offsetMinMax(-3, 0, 4, 0, 0, 4);
 			box.fill();
 		} else {
-			box.setMinMax(0, 1, 1, 0, 3, 3);
+			box.setMinMax(0, 2, 0, 0, 5, 0);
 			box.fill();
+			box.offsetMinMax(0, 0, 4, 3, 0, 4);
+			box.fill();
+		}
+		// Windows for the second wall
+		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.NETHER_BRICK_FENCE);
+		box.setMinMax(1, 3, 4, 1, 4, 4);
+		box.fill();
+		box.offsetMinMax(2, 0, 0, 2, 0, 0);
+		box.fill();
+		// Roof
+		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
+		box.setMinMax(0, 6, 0, 4, 6, 4);
+		box.fill();
+		// Fill down to the ground
+		for (int xx = 0; xx <= 4; xx++) {
+			for (int zz = 0; zz <= 4; zz++) {
+				fillDownwards(xx, -1, zz, 50, VanillaMaterials.NETHER_BRICK);
+			}
 		}
 	}
 
@@ -80,42 +118,13 @@ public class StrongholdTurn extends StructurePiece {
 
 	@Override
 	public List<StructurePiece> getNextComponents() {
-		final StructurePiece component;
-		final float draw = getRandom().nextFloat();
-		if (draw > 0.8) {
-			component = new StrongholdSpiralStaircase(parent);
-		} else if (draw > 0.6) {
-			component = new StrongholdPrison(parent);
-		} else if (draw > 0.4) {
-			component = new StrongholdIntersection(parent);
-		} else if (draw > 0.2) {
-			component = new StrongholdStaircase(parent);
-		} else {
-			component = new StrongholdCorridor(parent);
-		}
-		if (left) {
-			component.setPosition(position.add(rotate(5, 0, 4)));
-			component.setRotation(rotation.rotate(90, 0, 1, 0));
-		} else {
-			component.setPosition(position.add(rotate(-1, 0, 0)));
-			component.setRotation(rotation.rotate(-90, 0, 1, 0));
-		}
-		component.randomize();
-		return Arrays.asList(component);
+		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
 	@Override
 	public BoundingBox getBoundingBox() {
 		final Vector3 rotatedMin = transform(0, 0, 0);
-		final Vector3 rotatedMax = transform(4, 4, 4);
+		final Vector3 rotatedMax = transform(4, 6, 4);
 		return new BoundingBox(Vector3.min(rotatedMin, rotatedMax), Vector3.max(rotatedMin, rotatedMax));
-	}
-
-	public void setLeft(boolean left) {
-		this.left = left;
-	}
-
-	public boolean isLeft() {
-		return left;
 	}
 }

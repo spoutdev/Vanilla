@@ -116,4 +116,12 @@ public class Sleep extends EntityComponent {
 			skipNight = true;
 		}
 	}
+
+	/**
+	 * Whether the player is currently sleeping or not.
+	 * @return sleeping status
+	 */
+	public boolean isSleeping() {
+		return sleeping;
+	}
 }

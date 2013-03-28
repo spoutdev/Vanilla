@@ -38,7 +38,6 @@ import org.spout.api.material.DynamicMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.GenericMath;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolType;
@@ -97,10 +96,9 @@ public class Grass extends SpreadingSolid implements DynamicMaterial, Initializa
 		Slot inv = PlayerUtil.getHeldSlot(entity);
 
 		if (inv != null && inv.get() != null && inv.get().isMaterial(Dye.BONE_MEAL) && type.equals(Action.RIGHT_CLICK)) {
-			// This flag is used to determine if we should remove a Bone Meal if at least one block
-			// gets a Tall Grass attached to the top of it, then we should remove a bone meal.
-			boolean shouldConsume = false;
-
+			if (!PlayerUtil.isCostSuppressed(entity)) {
+				inv.addAmount(-1);
+			}
 			final Random random = GenericMath.getRandom();
 			// Minecraft does grass growing by Bone Meal as follows. Keep in mind the radius is 8.
 			// - Tall Grass is placed 9/10 times.
@@ -139,25 +137,18 @@ public class Grass extends SpreadingSolid implements DynamicMaterial, Initializa
 						if (random.nextInt(10) != 0) {
 							if (VanillaMaterials.TALL_GRASS.canAttachTo(around, BlockFace.TOP)) {
 								aboveAround.setMaterial(VanillaMaterials.TALL_GRASS);
-								shouldConsume = true;
 							}
 						} else if (random.nextInt(3) != 0) {
 							if (VanillaMaterials.DANDELION.canAttachTo(around, BlockFace.TOP)) {
 								aboveAround.setMaterial(VanillaMaterials.DANDELION);
-								shouldConsume = true;
 							}
 						} else {
 							if (VanillaMaterials.ROSE.canAttachTo(around, BlockFace.TOP)) {
 								aboveAround.setMaterial(VanillaMaterials.ROSE);
-								shouldConsume = true;
 							}
 						}
 					}
 				}
-			}
-
-			if (!PlayerUtil.isCostSuppressed(entity) && shouldConsume) {
-				inv.addAmount(-1);
 			}
 		}
 	}

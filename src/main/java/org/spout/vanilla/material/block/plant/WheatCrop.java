@@ -108,7 +108,7 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
 		Slot inv = PlayerUtil.getHeldSlot(entity);
-		if (inv != null && inv.get() != null && inv.get().isMaterial(Dye.BONE_MEAL)) {
+		if (inv != null && inv.get() != null && inv.get().isMaterial(Dye.BONE_MEAL) && type.equals(Action.RIGHT_CLICK)) {
 			int stage = this.getGrowthStage(block);
 			if (stage != 0x7) {
 				if (!PlayerUtil.isCostSuppressed(entity)) {

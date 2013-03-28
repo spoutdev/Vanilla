@@ -96,7 +96,15 @@ public class Sapling extends GroundAttachable implements Spreading, Plant, Fuel,
 			if (!PlayerUtil.isCostSuppressed(entity)) {
 				inv.addAmount(-1);
 			}
-			this.growTree(block);
+
+			if (GenericMath.getRandom().nextDouble() < 0.45D) {
+				short data = block.getData();
+				if ((data & 8) == 0) {
+					block.setData(data | 8);
+				} else {
+					this.growTree(block);
+				}
+			}
 		}
 	}
 

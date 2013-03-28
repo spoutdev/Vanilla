@@ -72,19 +72,21 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 			if (!PlayerUtil.isCostSuppressed(entity)) {
 				inv.addAmount(-1);
 			}
-			final BlockMaterial mushroomType = block.getMaterial();
-			final VariableHeightObject mushroom;
-			if (mushroomType == VanillaMaterials.RED_MUSHROOM) {
-				mushroom = new HugeMushroomObject(HugeMushroomType.RED);
-			} else {
-				mushroom = new HugeMushroomObject(HugeMushroomType.BROWN);
-			}
-			final World world = block.getWorld();
-			final int x = block.getX();
-			final int y = block.getY();
-			final int z = block.getZ();
-			if (mushroom.canPlaceObject(world, x, y, z)) {
-				mushroom.placeObject(world, x, y, z);
+			if (GenericMath.getRandom().nextDouble() < 0.4D) {
+				final BlockMaterial mushroomType = block.getMaterial();
+				final VariableHeightObject mushroom;
+				if (mushroomType == VanillaMaterials.RED_MUSHROOM) {
+					mushroom = new HugeMushroomObject(HugeMushroomType.RED);
+				} else {
+					mushroom = new HugeMushroomObject(HugeMushroomType.BROWN);
+				}
+				final World world = block.getWorld();
+				final int x = block.getX();
+				final int y = block.getY();
+				final int z = block.getZ();
+				if (mushroom.canPlaceObject(world, x, y, z)) {
+					mushroom.placeObject(world, x, y, z);
+				}
 			}
 		}
 	}

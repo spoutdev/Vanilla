@@ -40,8 +40,6 @@ import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.GenericMath;
 import org.spout.api.util.flag.Flag;
 
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.drops.flag.BlockFlags;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.block.Growing;
@@ -149,12 +147,12 @@ public class CocoaPlant extends AbstractAttachable implements Plant, Growing, Dy
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		Slot inv = PlayerUtil.getHeldSlot(entity);
-		if (inv != null && inv.get() != null && inv.get().isMaterial(Dye.BONE_MEAL) && type == Action.RIGHT_CLICK) {
+		if (inv != null && inv.get() != null && inv.get().isMaterial(Dye.BONE_MEAL) && type.equals(Action.RIGHT_CLICK)) {
 			if (!isFullyGrown(block)) {
-				if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
+				if (!PlayerUtil.isCostSuppressed(entity)) {
 					inv.addAmount(-1);
 				}
-				setGrowthStage(block, 2);
+				setGrowthStage(block, getGrowthStage(block) + 1);
 			}
 		}
 	}

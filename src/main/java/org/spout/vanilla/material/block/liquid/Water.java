@@ -43,6 +43,7 @@ import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.render.VanillaEffects;
 
 public class Water extends Liquid implements DynamicMaterial, InitializableMaterial {
@@ -113,6 +114,11 @@ public class Water extends Liquid implements DynamicMaterial, InitializableMater
 	@Override
 	public Liquid getStationaryMaterial() {
 		return VanillaMaterials.STATIONARY_WATER;
+	}
+
+	@Override
+	public VanillaItemMaterial getContainerMaterial() {
+		return VanillaMaterials.WATER_BUCKET;
 	}
 
 	@Override

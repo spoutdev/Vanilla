@@ -40,6 +40,7 @@ import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.block.solid.Ice;
+import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.render.VanillaEffects;
 
 public class Lava extends Liquid implements InitializableMaterial {
@@ -147,5 +148,10 @@ public class Lava extends Liquid implements InitializableMaterial {
 	@Override
 	public Liquid getStationaryMaterial() {
 		return VanillaMaterials.STATIONARY_LAVA;
+	}
+
+	@Override
+	public VanillaItemMaterial getContainerMaterial() {
+		return VanillaMaterials.LAVA_BUCKET;
 	}
 }

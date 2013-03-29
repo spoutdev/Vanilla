@@ -26,11 +26,10 @@
  */
 package org.spout.vanilla.material.block;
 
+import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import com.google.common.collect.Lists;
 
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
@@ -44,6 +43,7 @@ import org.spout.api.util.set.TInt21TripleHashSet;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.solid.Ice;
+import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.util.flowing.LiquidModel;
 
 public abstract class Liquid extends VanillaBlockMaterial implements DynamicMaterial {
@@ -170,16 +170,22 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	public abstract int getMaxLevel();
 
 	/**
-	 * Gets the liquid type to use for flowing liquids
+	 * Gets the {@link Liquid} type to use for flowing liquids
 	 * @return the flowing material
 	 */
 	public abstract Liquid getFlowingMaterial();
 
 	/**
-	 * Gets the liquid type to use for stationary liquids
+	 * Gets the {@link Liquid} type to use for stationary liquids
 	 * @return the stationary material
 	 */
 	public abstract Liquid getStationaryMaterial();
+
+	/**
+	 * Gets the {@link VanillaItemMaterial} that holds this type of liquid
+	 * @return the item materials
+	 */
+	public abstract VanillaItemMaterial getContainerMaterial();
 
 	/**
 	 * Checks if the material given is either the flowing or stationary type of this Liquid

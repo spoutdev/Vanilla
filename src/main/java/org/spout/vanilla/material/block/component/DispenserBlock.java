@@ -55,6 +55,7 @@ import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
+import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.material.item.bucket.FullBucket;
 import org.spout.vanilla.material.item.misc.SpawnEgg;
@@ -114,7 +115,7 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 		if (item.getMaterial().equals(VanillaMaterials.TNT)) {
 			//Place Activated TNT entity at direction of Dispenser
 			Block toPlace = block.translate(this.getFacing(block));
-			if (toPlace.getMaterial().equals(VanillaMaterials.AIR)) {
+			if (!toPlace.getMaterial().isSolid()) {
 				World world = toPlace.getWorld();
 				Tnt tnt = world.createEntity(toPlace.getPosition(), Tnt.class).add(Tnt.class);
 				tnt.getOwner().getScene().impulse(new Vector3(0.5D, 0.5D, 0.5D));
@@ -125,7 +126,7 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 			return false;
 		} else if (item.getMaterial() instanceof SpawnEgg) {
 			Block toPlace = block.translate(this.getFacing(block));
-			if (toPlace.getMaterial().equals(VanillaMaterials.AIR)) {
+			if (!toPlace.getMaterial().isSolid()) {
 				Entity entity = toPlace.getWorld().createEntity(toPlace.getPosition(), ((SpawnEgg) item.getMaterial()).getEntityComponent());
 				entity.getScene().translate(new Vector3(0.5D, 0.5D, 0.5D));
 				toPlace.getWorld().spawnEntity(entity);
@@ -136,7 +137,7 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 		} else if (item.getMaterial() instanceof FullBucket) {
 			//Attempt to place any FullBucket with it's placement material
 			Block toPlace = block.translate(this.getFacing(block));
-			if (toPlace.getMaterial().equals(VanillaMaterials.AIR)) {
+			if (!toPlace.getMaterial().isSolid()) {
 				toPlace.setMaterial(((FullBucket) item.getMaterial()).getPlacedMaterial());
 				item.setMaterial(VanillaMaterials.BUCKET);
 				//TODO: update physics properly after block has been changed to the liquid
@@ -155,6 +156,18 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 				if (VanillaMaterials.FIRE.canCreate(toPlace, (short) 0, new BlockCause(block))) {
 					VanillaMaterials.FIRE.onCreate(toPlace, (short) 0, new BlockCause(block));
 					slot.addData(1);
+					return true;
+				}
+			}
+			return false;
+		} else if (item.getMaterial().equals(VanillaMaterials.BUCKET)) {
+			Block toPlace = block.translate(this.getFacing(block));
+			if (toPlace.getMaterial() instanceof Liquid) {
+				Liquid liquid = (Liquid) toPlace.getMaterial();
+				if (liquid.isSource(toPlace)) {
+					item.setMaterial(liquid.getContainerMaterial());
+					toPlace.setMaterial(VanillaMaterials.AIR);
+					//TODO: physics update necessary here
 					return true;
 				}
 			}

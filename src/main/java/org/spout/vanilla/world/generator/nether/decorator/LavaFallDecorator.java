@@ -37,7 +37,6 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
-import org.spout.api.util.set.TInt21TripleHashSet;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Liquid;
@@ -52,7 +51,7 @@ public class LavaFallDecorator extends Decorator {
 			return;
 		}
 		final World world = chunk.getWorld();
-		List<Block> liquids = new ArrayList<Block>();
+		final List<Block> liquids = new ArrayList<Block>();
 		for (byte count = 0; count < lavaAttempts; count++) {
 			final int x = chunk.getBlockX(random);
 			final int y = random.nextInt(NetherGenerator.HEIGHT);
@@ -63,35 +62,7 @@ public class LavaFallDecorator extends Decorator {
 				liquids.add(block);
 			}
 		}
-		// Perform instant physics
-		if (liquids.isEmpty()) {
-			return;
-		}
-		TInt21TripleHashSet ignoredBlocks = new TInt21TripleHashSet();
-		List<Block> tmpBlocks = new ArrayList<Block>();
-		BlockMaterial material;
-		while (!liquids.isEmpty()) {
-			for (Block liquid : liquids) {
-				material = liquid.getMaterial();
-				if (!ignoredBlocks.add(liquid.getX(), liquid.getY(), liquid.getZ())) {
-					continue;
-				}
-				if (!(material instanceof Liquid)) {
-					continue;
-				}
-				// First only flow down to generate a possible liquid below
-				// Then do a regular flow just in case flowing outwards is/was needed
-				if (((Liquid) material).onFlow(liquid, BlockFace.BOTTOM) | ((Liquid) material).onFlow(liquid)) {
-					for (BlockFace face : BlockFaces.NESWB) {
-						tmpBlocks.add(liquid.translate(face));
-					}
-				}
-			}
-			// reset liquids
-			liquids.clear();
-			liquids.addAll(tmpBlocks);
-			tmpBlocks.clear();
-		}
+		Liquid.performInstantFlow(liquids);
 	}
 
 	private boolean isValidSourcePoint(Block block) {

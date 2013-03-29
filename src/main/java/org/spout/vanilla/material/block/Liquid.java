@@ -26,6 +26,12 @@
  */
 package org.spout.vanilla.material.block;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
@@ -34,6 +40,7 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
+import org.spout.api.util.set.TInt21TripleHashSet;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.solid.Ice;
@@ -335,5 +342,51 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	@Override
 	public boolean isFaceRendered(BlockFace face, BlockMaterial neighbor) {
 		return !(neighbor instanceof Liquid) && !(neighbor instanceof Ice) && !neighbor.isOpaque();
+	}
+
+	/**
+	 * Instantly flows the liquid at the block position.
+	 *
+	 * @param liquid The liquid to flow as a block
+	 */
+	public static void performInstantFlow(Block liquid) {
+		performInstantFlow(Lists.newArrayList(liquid));
+	}
+
+	/**
+	 * Instantly flows the liquids at the block positions.
+	 *
+	 * @param liquids The liquids to flow as a collection of blocks
+	 */
+	public static void performInstantFlow(Collection<Block> liquids) {
+		// Perform instant physics
+		if (liquids.isEmpty()) {
+			return;
+		}
+		final TInt21TripleHashSet ignoredBlocks = new TInt21TripleHashSet();
+		final List<Block> tmpBlocks = new ArrayList<Block>();
+		BlockMaterial material;
+		while (!liquids.isEmpty()) {
+			for (Block liquid : liquids) {
+				material = liquid.getMaterial();
+				if (!ignoredBlocks.add(liquid.getX(), liquid.getY(), liquid.getZ())) {
+					continue;
+				}
+				if (!(material instanceof Liquid)) {
+					continue;
+				}
+				// First only flow down to generate a possible liquid below
+				// Then do a regular flow just in case flowing outwards is/was needed
+				if (((Liquid) material).onFlow(liquid, BlockFace.BOTTOM) | ((Liquid) material).onFlow(liquid)) {
+					for (BlockFace face : BlockFaces.NESWB) {
+						tmpBlocks.add(liquid.translate(face));
+					}
+				}
+			}
+			// reset liquids
+			liquids.clear();
+			liquids.addAll(tmpBlocks);
+			tmpBlocks.clear();
+		}
 	}
 }

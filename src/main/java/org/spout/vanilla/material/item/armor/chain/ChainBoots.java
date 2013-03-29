@@ -26,11 +26,17 @@
  */
 package org.spout.vanilla.material.item.armor.chain;
 
+import org.spout.vanilla.inventory.entity.ArmorInventory;
 import org.spout.vanilla.material.item.armor.Boots;
 
 public class ChainBoots extends ChainArmor implements Boots {
 	public ChainBoots(String name, int id, short durability) {
 		super(name, id, durability, null);
 		this.setBaseProtection(1);
+	}
+
+	@Override
+	public int getEquipableSlot() {
+		return ArmorInventory.BOOT_SLOT;
 	}
 }

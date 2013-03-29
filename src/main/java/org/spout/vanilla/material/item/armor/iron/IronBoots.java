@@ -26,11 +26,17 @@
  */
 package org.spout.vanilla.material.item.armor.iron;
 
+import org.spout.vanilla.inventory.entity.ArmorInventory;
 import org.spout.vanilla.material.item.armor.Boots;
 
 public class IronBoots extends IronArmor implements Boots {
 	public IronBoots(String name, int id, short durability) {
 		super(name, id, durability, null);
 		this.setBaseProtection(2);
+	}
+
+	@Override
+	public int getEquipableSlot() {
+		return ArmorInventory.BOOT_SLOT;
 	}
 }

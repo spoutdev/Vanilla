@@ -26,11 +26,17 @@
  */
 package org.spout.vanilla.material.item.armor.gold;
 
+import org.spout.vanilla.inventory.entity.ArmorInventory;
 import org.spout.vanilla.material.item.armor.Leggings;
 
 public class GoldLeggings extends GoldArmor implements Leggings {
 	public GoldLeggings(String name, int id, short durability) {
 		super(name, id, durability, null);
 		this.setBaseProtection(3);
+	}
+
+	@Override
+	public int getEquipableSlot() {
+		return ArmorInventory.LEGGINGS_SLOT;
 	}
 }

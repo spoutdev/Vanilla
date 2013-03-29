@@ -26,11 +26,17 @@
  */
 package org.spout.vanilla.material.item.armor.diamond;
 
+import org.spout.vanilla.inventory.entity.ArmorInventory;
 import org.spout.vanilla.material.item.armor.Chestplate;
 
 public class DiamondChestplate extends DiamondArmor implements Chestplate {
 	public DiamondChestplate(String name, int id, short durability) {
 		super(name, id, durability, null);
 		this.setBaseProtection(8);
+	}
+
+	@Override
+	public int getEquipableSlot() {
+		return ArmorInventory.CHEST_PLATE_SLOT;
 	}
 }

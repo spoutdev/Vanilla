@@ -26,11 +26,17 @@
  */
 package org.spout.vanilla.material.item.armor.iron;
 
+import org.spout.vanilla.inventory.entity.ArmorInventory;
 import org.spout.vanilla.material.item.armor.Leggings;
 
 public class IronLeggings extends IronArmor implements Leggings {
 	public IronLeggings(String name, int id, short durability) {
 		super(name, id, durability, null);
 		this.setBaseProtection(5);
+	}
+
+	@Override
+	public int getEquipableSlot() {
+		return ArmorInventory.LEGGINGS_SLOT;
 	}
 }

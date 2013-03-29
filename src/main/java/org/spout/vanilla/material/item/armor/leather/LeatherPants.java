@@ -26,11 +26,17 @@
  */
 package org.spout.vanilla.material.item.armor.leather;
 
+import org.spout.vanilla.inventory.entity.ArmorInventory;
 import org.spout.vanilla.material.item.armor.Leggings;
 
 public class LeatherPants extends LeatherArmor implements Leggings {
 	public LeatherPants(String name, int id, short durability) {
 		super(name, id, durability, null);
 		this.setBaseProtection(2);
+	}
+
+	@Override
+	public int getEquipableSlot() {
+		return ArmorInventory.LEGGINGS_SLOT;
 	}
 }

@@ -30,6 +30,7 @@ import java.util.Random;
 
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
+import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
 import org.spout.api.event.cause.BlockCause;
 import org.spout.api.geo.LoadOption;
@@ -46,6 +47,7 @@ import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.block.material.Dispenser;
+import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.component.entity.substance.Tnt;
 import org.spout.vanilla.component.entity.substance.projectile.Arrow;
@@ -53,10 +55,12 @@ import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.event.inventory.InventoryCanSetEvent;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Liquid;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.material.item.armor.Armor;
 import org.spout.vanilla.material.item.bucket.FullBucket;
 import org.spout.vanilla.material.item.misc.SpawnEgg;
 import org.spout.vanilla.material.item.potion.PotionItem;
@@ -168,6 +172,26 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 					item.setMaterial(liquid.getContainerMaterial());
 					toPlace.setMaterial(VanillaMaterials.AIR);
 					//TODO: physics update necessary here
+					return true;
+				}
+			}
+			return false;
+		} else if (item.getMaterial() instanceof Armor) {
+			Block toCheck = block.translate(this.getFacing(block));
+			for (Player player : block.getWorld().getNearbyPlayers(block.getPosition(), 2)) {
+				if (player.getScene().getPosition().getBlock().equals(toCheck)) {
+					PlayerInventory inv = player.get(PlayerInventory.class);
+					int armorSlot = ((Armor) item.getMaterial()).getEquipableSlot();
+					if (inv.getArmor().get(armorSlot) != null) {
+						return false;
+					}
+					boolean canSet = inv.getArmor().canSet(armorSlot, item);
+					InventoryCanSetEvent event = player.getEngine().getEventManager().callEvent(new InventoryCanSetEvent(inv.getArmor(), new BlockCause(block), armorSlot, item, !canSet));
+					if (event.isCancelled()) {
+						return false;
+					}
+					inv.getArmor().set(armorSlot, item, true);
+					slot.addAmount(-1);
 					return true;
 				}
 			}

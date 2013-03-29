@@ -26,11 +26,17 @@
  */
 package org.spout.vanilla.material.item.armor.gold;
 
+import org.spout.vanilla.inventory.entity.ArmorInventory;
 import org.spout.vanilla.material.item.armor.Boots;
 
 public class GoldBoots extends GoldArmor implements Boots {
 	public GoldBoots(String name, int id, short durability) {
 		super(name, id, durability, null);
 		this.setBaseProtection(1);
+	}
+
+	@Override
+	public int getEquipableSlot() {
+		return ArmorInventory.BOOT_SLOT;
 	}
 }

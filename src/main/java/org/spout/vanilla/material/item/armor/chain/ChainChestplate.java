@@ -26,11 +26,17 @@
  */
 package org.spout.vanilla.material.item.armor.chain;
 
+import org.spout.vanilla.inventory.entity.ArmorInventory;
 import org.spout.vanilla.material.item.armor.Chestplate;
 
 public class ChainChestplate extends ChainArmor implements Chestplate {
 	public ChainChestplate(String name, int id, short durability) {
 		super(name, id, durability, null);
 		this.setBaseProtection(5);
+	}
+
+	@Override
+	public int getEquipableSlot() {
+		return ArmorInventory.CHEST_PLATE_SLOT;
 	}
 }

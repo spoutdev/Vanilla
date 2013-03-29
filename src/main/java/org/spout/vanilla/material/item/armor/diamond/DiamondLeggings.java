@@ -26,11 +26,17 @@
  */
 package org.spout.vanilla.material.item.armor.diamond;
 
+import org.spout.vanilla.inventory.entity.ArmorInventory;
 import org.spout.vanilla.material.item.armor.Leggings;
 
 public class DiamondLeggings extends DiamondArmor implements Leggings {
 	public DiamondLeggings(String name, int id, short durability) {
 		super(name, id, durability, null);
 		this.setBaseProtection(6);
+	}
+
+	@Override
+	public int getEquipableSlot() {
+		return ArmorInventory.LEGGINGS_SLOT;
 	}
 }

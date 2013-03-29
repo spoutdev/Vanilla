@@ -91,4 +91,9 @@ public class SugarCaneBlock extends StackGrowingBase implements InitializableMat
 			allowedBases.add(mat);
 		}
 	}
+
+	@Override
+	public boolean grow(Block block, Material material) {
+		return false;
+	}
 }

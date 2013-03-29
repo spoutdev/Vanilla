@@ -27,6 +27,7 @@
 package org.spout.vanilla.material.block;
 
 import org.spout.api.geo.cuboid.Block;
+import org.spout.api.material.Material;
 
 /**
  * A material that can grow over time. Growing could happen using multiple blocks. If that is the case, <br>
@@ -65,4 +66,12 @@ public interface Growing {
 	 * @return True if fully grown, False if not
 	 */
 	public boolean isFullyGrown(Block block);
+
+	/**
+	 * Attempts to grow the block with the given {@link Material}
+	 * @param block
+	 * @param material
+	 * @return true if the block grew to a new stage
+	 */
+	public boolean grow(Block block, Material material);
 }

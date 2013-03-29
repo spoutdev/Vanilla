@@ -35,6 +35,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.Slot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.DynamicMaterial;
+import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
@@ -104,20 +105,25 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 	}
 
 	@Override
+	public boolean grow(Block block, Material material) {
+		int stage = this.getGrowthStage(block);
+		if (!isFullyGrown(block) && material.isMaterial(Dye.BONE_MEAL) && stage != 0x7) {
+			stage += GenericMath.getRandom().nextInt(3) + 2;
+			if (stage > 0x7) {
+				stage = 0x7;
+			}
+			this.setGrowthStage(block, stage);
+			return true;
+		}
+		return false;
+	}
+	@Override
 	public void onInteractBy(Entity entity, Block block, PlayerInteractEvent.Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
 		Slot inv = PlayerUtil.getHeldSlot(entity);
-		if (inv != null && inv.get() != null && inv.get().isMaterial(Dye.BONE_MEAL) && type.equals(Action.RIGHT_CLICK)) {
-			int stage = this.getGrowthStage(block);
-			if (stage != 0x7) {
-				if (!PlayerUtil.isCostSuppressed(entity)) {
-					inv.addAmount(-1);
-				}
-				stage += GenericMath.getRandom().nextInt(3) + 2;
-				if (stage > 0x7) {
-					stage = 0x7;
-				}
-				this.setGrowthStage(block, stage);
+		if (inv != null && inv.get() != null && type.equals(Action.RIGHT_CLICK)) {
+			if(grow(block, inv.get().getMaterial()) && !PlayerUtil.isCostSuppressed(entity)) {
+				inv.addAmount(-1);
 			}
 		}
 	}

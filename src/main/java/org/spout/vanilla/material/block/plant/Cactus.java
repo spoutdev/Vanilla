@@ -32,6 +32,7 @@ import java.util.Set;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
+import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.GenericMath;
@@ -107,5 +108,10 @@ public class Cactus extends StackGrowingBase implements TimedCraftable {
 	@Override
 	public float getCraftTime() {
 		return FurnaceBlock.SMELT_TIME;
+	}
+
+	@Override
+	public boolean grow(Block block, Material material) {
+		return false; //Cannot grow cactus with any materials
 	}
 }

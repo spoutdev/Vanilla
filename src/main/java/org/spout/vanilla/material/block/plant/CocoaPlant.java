@@ -34,6 +34,7 @@ import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.Slot;
 import org.spout.api.material.DynamicMaterial;
+import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.material.range.EffectRange;
@@ -145,14 +146,20 @@ public class CocoaPlant extends AbstractAttachable implements Plant, Growing, Dy
 	}
 
 	@Override
+	public boolean grow(Block block, Material material) {
+		if (!isFullyGrown(block) && material.isMaterial(Dye.BONE_MEAL)) {
+			setGrowthStage(block, getGrowthStage(block) + 1);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		Slot inv = PlayerUtil.getHeldSlot(entity);
-		if (inv != null && inv.get() != null && inv.get().isMaterial(Dye.BONE_MEAL) && type.equals(Action.RIGHT_CLICK)) {
-			if (!isFullyGrown(block)) {
-				if (!PlayerUtil.isCostSuppressed(entity)) {
-					inv.addAmount(-1);
-				}
-				setGrowthStage(block, getGrowthStage(block) + 1);
+		if (inv != null && inv.get() != null && type.equals(Action.RIGHT_CLICK)) {
+			if (grow(block, inv.get().getMaterial()) && !PlayerUtil.isCostSuppressed(entity)) {
+				inv.addAmount(-1);
 			}
 		}
 	}

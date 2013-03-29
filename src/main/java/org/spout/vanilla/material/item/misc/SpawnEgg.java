@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.item.misc;
 
-import org.spout.api.component.Component;
+import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.geo.LoadOption;
@@ -87,13 +87,13 @@ public class SpawnEgg extends VanillaItemMaterial {
 	public static final SpawnEgg WITCH = new SpawnEgg("Spawn Witch", 66, Witch.class, PARENT);
 	public static final SpawnEgg VILLAGER = new SpawnEgg("Spawn Villager", 120, Villager.class, PARENT);
 	public static final SpawnEgg OCELOT = new SpawnEgg("Spawn Ocelot", 98, Ocelot.class, PARENT);
-	private Class<? extends Component> entityComponent;
+	private Class<? extends EntityComponent> entityComponent;
 
 	private SpawnEgg(String name) {
 		super((short) 0x007F, name, 383, null);
 	}
 
-	private SpawnEgg(String name, int data, Class<? extends Component> entityComponent, Material parent) {
+	private SpawnEgg(String name, int data, Class<? extends EntityComponent> entityComponent, Material parent) {
 		super(name, 383, data, parent, null);
 		this.entityComponent = entityComponent;
 	}
@@ -108,5 +108,9 @@ public class SpawnEgg extends VanillaItemMaterial {
 			slot.addAmount(-1);
 		}
 		block.getWorld().createAndSpawnEntity(block.translate(clickedface).getPosition(), LoadOption.NO_LOAD, entityComponent);
+	}
+
+	public Class getEntityComponent() {
+		return entityComponent;
 	}
 }

@@ -29,11 +29,15 @@ package org.spout.vanilla.material.block.component;
 import java.util.Random;
 
 import org.spout.api.component.type.EntityComponent;
+import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
+import org.spout.api.event.cause.BlockCause;
 import org.spout.api.geo.LoadOption;
+import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.Slot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
@@ -43,6 +47,7 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.block.material.Dispenser;
 import org.spout.vanilla.component.entity.substance.Item;
+import org.spout.vanilla.component.entity.substance.Tnt;
 import org.spout.vanilla.component.entity.substance.projectile.Arrow;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.effect.Effect;
@@ -51,6 +56,7 @@ import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
+import org.spout.vanilla.material.item.bucket.FullBucket;
 import org.spout.vanilla.material.item.misc.SpawnEgg;
 import org.spout.vanilla.material.item.potion.PotionItem;
 import org.spout.vanilla.util.PlayerUtil;
@@ -74,7 +80,7 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 		super.onUpdate(oldMaterial, block);
 		Dispenser dispenser = (Dispenser) block.getComponent();
 		if (!dispenser.isPowered() && this.isReceivingPower(block)) {
-			//TODO: shoot stuff if we have inventory.
+			shootItem(block, dispenser.getInventory().getFirstUsedSlot());
 		}
 		dispenser.setPowered(this.isReceivingPower(block));
 	}
@@ -97,11 +103,61 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 	/**
 	 * Shoots an item from this Dispenser
 	 * @param block of the Dispenser
-	 * @param item to shoot
+	 * @param slot to shoot
 	 */
-	public boolean shootItem(Block block, ItemStack item) {
-		if (item == null) {
+	public boolean shootItem(Block block, Slot slot) {
+		if (slot == null) {
 			GeneralEffects.RANDOM_CLICK2.playGlobal(block.getPosition());
+			return false;
+		}
+		ItemStack item = slot.get();
+		if (item.getMaterial().equals(VanillaMaterials.TNT)) {
+			//Place Activated TNT entity at direction of Dispenser
+			Block toPlace = block.translate(this.getFacing(block));
+			if (toPlace.getMaterial().equals(VanillaMaterials.AIR)) {
+				World world = toPlace.getWorld();
+				Tnt tnt = world.createEntity(toPlace.getPosition(), Tnt.class).add(Tnt.class);
+				tnt.getOwner().getScene().impulse(new Vector3(0.5D, 0.5D, 0.5D));
+				world.spawnEntity(tnt.getOwner());
+				slot.addAmount(-1);
+				return true;
+			}
+			return false;
+		} else if (item.getMaterial() instanceof SpawnEgg) {
+			Block toPlace = block.translate(this.getFacing(block));
+			if (toPlace.getMaterial().equals(VanillaMaterials.AIR)) {
+				Entity entity = toPlace.getWorld().createEntity(toPlace.getPosition(), ((SpawnEgg) item.getMaterial()).getEntityComponent());
+				entity.getScene().translate(new Vector3(0.5D, 0.5D, 0.5D));
+				toPlace.getWorld().spawnEntity(entity);
+				slot.addAmount(-1);
+				return true;
+			}
+			return false;
+		} else if (item.getMaterial() instanceof FullBucket) {
+			//Attempt to place any FullBucket with it's placement material
+			Block toPlace = block.translate(this.getFacing(block));
+			if (toPlace.getMaterial().equals(VanillaMaterials.AIR)) {
+				toPlace.setMaterial(((FullBucket) item.getMaterial()).getPlacedMaterial());
+				item.setMaterial(VanillaMaterials.BUCKET);
+				//TODO: update physics properly after block has been changed to the liquid
+				return true;
+			}
+			return false;
+		} else if (item.getMaterial().equals(VanillaMaterials.FLINT_AND_STEEL)) {
+			Block toPlace = block.translate(this.getFacing(block));
+			if (toPlace.getMaterial().equals(VanillaMaterials.TNT)) {
+				// Detonate TntBlock
+				VanillaMaterials.TNT.onIgnite(block, new BlockCause(block));
+				slot.addData(1);
+				return true;
+			} else {
+				// Default fire placement
+				if (VanillaMaterials.FIRE.canCreate(toPlace, (short) 0, new BlockCause(block))) {
+					VanillaMaterials.FIRE.onCreate(toPlace, (short) 0, new BlockCause(block));
+					slot.addData(1);
+					return true;
+				}
+			}
 			return false;
 		}
 		final Random rand = GenericMath.getRandom();

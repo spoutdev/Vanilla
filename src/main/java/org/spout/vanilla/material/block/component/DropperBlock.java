@@ -27,11 +27,13 @@
 package org.spout.vanilla.material.block.component;
 
 import java.util.Random;
+
 import org.spout.api.event.Cause;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.inventory.Slot;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
@@ -68,7 +70,7 @@ public class DropperBlock extends ComponentMaterial implements Directional, Reds
 		super.onUpdate(oldMaterial, block);
 		Dropper dropper = (Dropper) block.getComponent();
 		if (!dropper.isPowered() && this.isReceivingPower(block)) {
-			//TODO: shoot an item
+				shootItem(block, dropper.getInventory().getFirstUsedSlot());
 		}
 		dropper.setPowered(this.isReceivingPower(block));
 	}
@@ -89,15 +91,17 @@ public class DropperBlock extends ComponentMaterial implements Directional, Reds
 	}
 
 	/**
-	 * Shoots an item from this Dispenser
-	 * @param block of the Dispenser
-	 * @param item to shoot
+	 * Shoots an item from the inventory slot of the Dropper
+	 * @param block of the Dropper
+	 * @param slot to fire
 	 */
-	public boolean shootItem(Block block, ItemStack item) {
-		if (item == null) {
+	public boolean shootItem(Block block, Slot slot) {
+		if (slot == null) {
 			GeneralEffects.RANDOM_CLICK2.playGlobal(block.getPosition());
 			return false;
 		}
+		ItemStack item = slot.get();
+
 		Random rand = new Random(block.getWorld().getAge());
 		Vector3 direction = this.getFacing(block).getOffset();
 

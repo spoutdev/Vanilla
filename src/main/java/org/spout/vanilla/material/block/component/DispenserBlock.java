@@ -51,6 +51,7 @@ import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.component.entity.substance.Tnt;
 import org.spout.vanilla.component.entity.substance.projectile.Arrow;
+import org.spout.vanilla.component.entity.substance.vehicle.Boat;
 import org.spout.vanilla.component.entity.substance.vehicle.minecart.MinecartBase;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.effect.Effect;
@@ -61,6 +62,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.Liquid;
+import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.material.block.rail.RailBase;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.material.item.armor.Armor;
@@ -203,6 +205,19 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 				slot.addAmount(-1);
 				return true;
 			}
+		} else if (item.getMaterial().equals(VanillaMaterials.BOAT)) {
+			Point placePos;
+			if (facingBlock.getMaterial() instanceof Water) {
+				placePos = facingBlock.getPosition().add(.5f, 1f, .5f);
+			} else if (facingBlock.getMaterial().equals(VanillaMaterials.AIR) && facingBlock.translate(BlockFace.BOTTOM).getMaterial() instanceof Water) {
+				placePos = facingBlock.getPosition().add(.5f, 0f, .5f);
+			} else {
+				return false;
+			}
+			Boat boat = block.getWorld().createEntity(placePos, Boat.class).add(Boat.class);
+			block.getWorld().spawnEntity(boat.getOwner());
+			slot.addAmount(-1);
+			return true;
 		} else {
 			// Try to shoot the item selected if we can't do anything else with it
 			final Random rand = GenericMath.getRandom();

@@ -27,6 +27,7 @@
 package org.spout.vanilla.world.lighting;
 
 
+import org.spout.api.Spout;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
@@ -52,6 +53,7 @@ public class ResolveLowerProcedure extends TInt10Procedure {
 		this.light = light;
 		this.material = material;
 		this.manager = manager;
+		this.currentLevel = 16;
 	}
 	
 	public void setCurrentLevel(int level) {
@@ -61,13 +63,15 @@ public class ResolveLowerProcedure extends TInt10Procedure {
 	@Override
 	public boolean execute(int x, int y, int z) {
 		int lightLevel = manager.getLightLevel(light, x, y, z);
+		//Spout.getLogger().info("Checking lower " + x + ", " + y + ", " + z + " actual " + lightLevel);
 		if (lightLevel == 0) {
+			manager.setLightLevel(light, x, y, z, 0);
 			for (BlockFace face : allFaces) {
 				Vector3 offset = face.getOffset();
 				int nx = x + offset.getFloorX();
 				int ny = y + offset.getFloorY();
 				int nz = z + offset.getFloorZ();
-				manager.checkAndAddDirtyFalling(dirtySets, regenSets, light, material, nx, ny, nz, true);
+				manager.checkAndAddDirtyFalling(dirtySets, regenSets, light, material, nx, ny, nz, currentLevel);
 			}
 		}
 		return true;

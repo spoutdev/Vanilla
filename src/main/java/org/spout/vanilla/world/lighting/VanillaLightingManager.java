@@ -67,24 +67,42 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			dirtySets[i] = new TInt10TripleSet(base.getFloorX(), base.getFloorY(), base.getFloorZ());
 			regenSets[i] = new TInt10TripleSet(base.getFloorX(), base.getFloorY(), base.getFloorZ());
 		}
-		ResolveHigherProcedure procHigher = new ResolveHigherProcedure(this, light, material, dirtySets);
+		ResolveHigherProcedure procHigher = new ResolveHigherProcedure(this, light, material, dirtySets, false);
+		//Spout.getLogger().info("Buffer type: " + getClass().getSimpleName());
+		//Spout.getLogger().info("About to process higher direct");
 		Iterator<IntVector3> itr = coords.iterator();
 		while (itr.hasNext()) {
 			IntVector3 v = itr.next();
-			procHigher.execute(v.getX(), v.getY(), v.getZ(), false);
+			procHigher.execute(v.getX(), v.getY(), v.getZ(), true, false);
 		}
-		resolveHigher(dirtySets, light, material);
+		itr = coords.iterator();
+		while (itr.hasNext()) {
+			IntVector3 v = itr.next();
+			procHigher.execute(v.getX(), v.getY(), v.getZ(), false, true);
+		}
+		//Spout.getLogger().info("About to process higher from sets");
+		resolveHigher(dirtySets, light, material, false);
 		for (int i = 0; i < dirtySets.length; i++) {
 			dirtySets[i].clear();
 		}
+		ClearLightProcedure procClear = new ClearLightProcedure(this, light, material);
 		ResolveLowerProcedure procLower = new ResolveLowerProcedure(this, light, material, dirtySets, regenSets);
+		//Spout.getLogger().info("About to process lower direct");
+		itr = coords.iterator();
+		while (itr.hasNext()) {
+			IntVector3 v = itr.next();
+			procClear.execute(v.getX(), v.getY(), v.getZ(), true);
+		}
 		itr = coords.iterator();
 		while (itr.hasNext()) {
 			IntVector3 v = itr.next();
 			procLower.execute(v.getX(), v.getY(), v.getZ());
 		}
+		//Spout.getLogger().info("About to process lower from sets");
 		resolveLower(dirtySets, regenSets, light, material);
-		resolveHigher(regenSets, light, material);
+		//Spout.getLogger().info("About to process higher (lower regen)");
+		resolveHigher(regenSets, light, material, true);
+		//Spout.getLogger().info("Done processing regen");
 	}
 
 	
@@ -153,6 +171,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	public void setLightLevel(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, int x, int y, int z, int level) {
 		VanillaCuboidLightBuffer buffer = light.getLightBuffer(x, y, z);
 		if (buffer != null) {
+			//Spout.getLogger().info("Setting " + x + ", " + y + ", " + z + " " + buffer.get(x, y, z) + "->" + level);
 			buffer.set(x, y, z, (byte) level);
 		} else {
 			Spout.getLogger().info("No light buffer to write to");
@@ -175,13 +194,14 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		}
 	}
 
-	protected void checkAndAddDirtyFalling(TInt10TripleSet[] dirtySets, TInt10TripleSet[] regenSets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z, boolean regen) {
+	protected void checkAndAddDirtyFalling(TInt10TripleSet[] dirtySets, TInt10TripleSet[] regenSets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z, int currentLevel) {
 		int actualLevel = getLightLevel(light, x, y, z);
 		int calculatedLevel = computeLightLevel(light, material, x, y, z);
+		//Spout.getLogger().info("-- Checking falling " + x + ", " + y + ", " + z + " actual " + actualLevel + " computed" + calculatedLevel);
 
-		if (calculatedLevel < actualLevel) {
+		if (actualLevel < currentLevel && calculatedLevel < actualLevel) {
 			dirtySets[actualLevel].add(x, y, z);
-		} else if (regen && actualLevel > 0) {
+		} else if (actualLevel > 0) {
 			regenSets[actualLevel].add(x, y, z);
 		}
 	}
@@ -189,13 +209,14 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	protected void checkAndAddDirtyRising(TInt10TripleSet[] dirtySets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z) {
 		int actualLevel = getLightLevel(light, x, y, z);
 		int calculatedLevel = computeLightLevel(light, material, x, y, z);
+		//Spout.getLogger().info("-- Checking rising " + x + ", " + y + ", " + z + " actual " + actualLevel + " computed" + calculatedLevel);
 		if (calculatedLevel > actualLevel) {
 			dirtySets[calculatedLevel].add(x, y, z);
 		}
 	}
 
-	protected void resolveHigher(TInt10TripleSet[] dirtySets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material) {
-		ResolveHigherProcedure proc = new ResolveHigherProcedure(this, light, material, dirtySets);
+	protected void resolveHigher(TInt10TripleSet[] dirtySets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, boolean checkAll) {
+		ResolveHigherProcedure proc = new ResolveHigherProcedure(this, light, material, dirtySets, checkAll);
 		for (int i = dirtySets.length - 1; i >= 0 ; i--) {
 			proc.setCurrentLevel(i);
 			dirtySets[i].forEach(proc);

@@ -32,6 +32,7 @@ import java.util.Set;
 import org.spout.api.Client;
 import org.spout.api.Engine;
 import org.spout.api.Platform;
+import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.command.CommandContext;
 import org.spout.api.command.CommandSource;
@@ -138,6 +139,9 @@ public class TestCommands {
 			byte lightOriginal = c.getBlockLight(v.getX(), v.getY(), v.getZ());
 			VanillaCuboidLightBuffer buffer = (VanillaCuboidLightBuffer) c.getLightBuffer(id);
 			int lightNew = buffer.get(v.getX(), v.getY(), v.getZ());
+			if (lightNew != lightOriginal) {
+				Spout.getLogger().info(v.getX() + ", " + v.getY() + ", " + v.getZ() + " old=" + lightOriginal + " new=" + lightNew);
+			}
 		}
 	}
 

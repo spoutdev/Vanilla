@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.world.lighting;
 
+import org.spout.api.Spout;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 import org.spout.api.util.set.TInt10Procedure;
@@ -41,6 +42,7 @@ public class ClearLightProcedure extends TInt10Procedure {
 		this.light = light;
 		this.material = material;
 		this.manager = manager;
+		this.currentLevel = 16;
 	}
 	
 	public void setCurrentLevel(int level) {
@@ -49,10 +51,15 @@ public class ClearLightProcedure extends TInt10Procedure {
 	
 	@Override
 	public boolean execute(int x, int y, int z) {
+		return execute(x, y, z, false);
+	}
+	
+	public boolean execute(int x, int y, int z, boolean root) {
 		int lightLevel = manager.getLightLevel(light, x, y, z);
 		int computedLevel = manager.computeLightLevel(light, material, x, y, z);
+		//Spout.getLogger().info("Clearing lower " + x + ", " + y + ", " + z + " actual " + lightLevel + " computed " + computedLevel);
 		if (computedLevel < lightLevel) {
-			if (lightLevel != currentLevel) {
+			if (!root && lightLevel != currentLevel) {
 				throw new IllegalStateException("Light dirty block added to wrong set, light level " + lightLevel + ", expected level " + currentLevel);
 			}
 			manager.setLightLevel(light, x, y, z, 0);

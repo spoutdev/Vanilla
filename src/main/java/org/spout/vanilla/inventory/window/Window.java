@@ -137,7 +137,6 @@ public abstract class Window extends AbstractWindow {
 	@Override
 	public void open() {
 		opened = true;
-		System.out.println("OPEN");
 		switch (VanillaPlugin.getInstance().getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
@@ -425,7 +424,6 @@ public abstract class Window extends AbstractWindow {
 		for (InventoryConverter converter : converters) {
 			slot = converter.convert(nativeSlot);
 			if (slot != -1) {
-				debug("[MC=" + nativeSlot + "] -> Converted -> [Spout=" + slot + "]");
 				return new Slot(converter.getInventory(), slot);
 			}
 		}

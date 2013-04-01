@@ -40,6 +40,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.util.bytebit.ByteBitSet;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
+import org.spout.api.util.cuboid.ImmutableHeightMapBuffer;
 import org.spout.api.util.set.TInt10TripleSet;
 import org.spout.vanilla.VanillaPlugin;
 
@@ -56,10 +57,10 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	}
 
 	@Override
-	public void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int[] hx, int[] hz, int[] oldHy, int[] newHy, int changedColumns) {
+	public void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int[] hx, int[] hz, int[] oldHy, int[] newHy, int changedColumns) {
 	}
 	
-	protected void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, Iterable<IntVector3> coords) {
+	protected void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, Iterable<IntVector3> coords) {
 		TInt10TripleSet[] dirtySets = new TInt10TripleSet[16];
 		TInt10TripleSet[] regenSets = new TInt10TripleSet[16];
 		Vector3 base = light.getBase();

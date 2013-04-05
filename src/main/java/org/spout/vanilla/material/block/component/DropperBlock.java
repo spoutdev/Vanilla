@@ -26,16 +26,10 @@
  */
 package org.spout.vanilla.material.block.component;
 
-import java.util.Random;
-
 import org.spout.api.event.Cause;
-import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
@@ -43,7 +37,6 @@ import org.spout.api.math.Vector3;
 import org.spout.vanilla.component.block.material.Dropper;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.MoveReaction;
-import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -100,35 +93,19 @@ public class DropperBlock extends ComponentMaterial implements Directional, Reds
 			GeneralEffects.RANDOM_CLICK2.playGlobal(block.getPosition());
 			return false;
 		}
-		ItemStack item = slot.get();
+		Block facingBlock = block.translate(this.getFacing(block));
+		if (!facingBlock.getMaterial().isSolid()) {
+			Item item = facingBlock.getWorld().createEntity(facingBlock.getPosition(), Item.class).add(Item.class);
+			item.setItemStack(slot.get().clone());
+			item.getItemStack().setAmount(1);
+			facingBlock.getWorld().spawnEntity(item.getOwner());
 
-		Random rand = new Random(block.getWorld().getAge());
-		Vector3 direction = this.getFacing(block).getOffset();
-
-		//TODO: make sure velocity setting is correct
-		// Calculate position to shoot from
-		Point position = block.getPosition().add(direction.multiply(0.6));
-		Item toLaunch = new Item();
-
-		// Calculate shooting velocity using facing direction
-		Vector3 velocity = direction.multiply(rand.nextDouble() * 0.1 + 0.2);
-		// Set velocity y to above (0.2)
-		velocity = velocity.multiply(1.0, 0.0, 1.0).add(0.0, 0.2, 0.0);
-		velocity = velocity.add(0.045 * rand.nextGaussian(), 0.045 * rand.nextGaussian(), 0.045 * rand.nextGaussian());
-
-		// Unlike dispenser, dropper shoots all items the same.
-		Effect shootEffect;
-		Material material = item.getMaterial();
-		shootEffect = GeneralEffects.RANDOM_CLICK1;
-		position = position.subtract(0.0, 0.3, 0.0);
-		toLaunch.setItemStack(item);
-
-		if (toLaunch != null) {
-			block.getWorld().createAndSpawnEntity(position, LoadOption.NO_LOAD, toLaunch.getClass());
+			GeneralEffects.RANDOM_CLICK1.playGlobal(block.getPosition());
+			GeneralEffects.SMOKE.playGlobal(facingBlock.getPosition());
+			slot.addAmount(-1);
+			return true;
 		}
-		shootEffect.playGlobal(block.getPosition());
-		GeneralEffects.SMOKE.playGlobal(block.getPosition(), direction);
-		return true;
+		return false;
 	}
 
 	@Override

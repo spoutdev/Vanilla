@@ -68,44 +68,58 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			dirtySets[i] = new TInt10TripleSet(base.getFloorX(), base.getFloorY(), base.getFloorZ());
 			regenSets[i] = new TInt10TripleSet(base.getFloorX(), base.getFloorY(), base.getFloorZ());
 		}
-		ResolveHigherProcedure procHigher = new ResolveHigherProcedure(this, light, material, dirtySets, false);
-		//Spout.getLogger().info("Buffer type: " + getClass().getSimpleName());
-		//Spout.getLogger().info("About to process higher direct");
+		// Spout.getLogger().info("Buffer type: " + getClass().getSimpleName());
+		// Spout.getLogger().info("About to process higher emit");
+		
+		// Scan all root blocks and increase to emitted level, if emitted light > actual light
 		Iterator<IntVector3> itr = coords.iterator();
 		while (itr.hasNext()) {
 			IntVector3 v = itr.next();
-			procHigher.execute(v.getX(), v.getY(), v.getZ(), true, false);
+			raiseToEmittedLight(v, dirtySets, light, material);
 		}
+		
+		// Spout.getLogger().info("About to scan higher root");
+		// Scan all root blocks and neighbours and see if any need to be made brighter
+		// Adds blocks to dirty set corresponding corresponding to required level
+		ResolveHigherProcedure procHigher = new ResolveHigherProcedure(this, light, material, dirtySets);
 		itr = coords.iterator();
 		while (itr.hasNext()) {
 			IntVector3 v = itr.next();
-			procHigher.execute(v.getX(), v.getY(), v.getZ(), false, true);
+			procHigher.execute(v.getX(), v.getY(), v.getZ());
 		}
-		//Spout.getLogger().info("About to process higher from sets");
-		resolveHigher(dirtySets, light, material, false);
+		// Spout.getLogger().info("About to process higher from sets");
+		
+		// Loop to resolve and propagate brightening of blocks
+		// Updates are limited to blocks that could have been affected by the modified blocks
+		resolveHigher(dirtySets, light, material);
+		
+		// Reset dirty sets for darkening pass
 		for (int i = 0; i < dirtySets.length; i++) {
 			dirtySets[i].clear();
 		}
-		ClearLightProcedure procClear = new ClearLightProcedure(this, light, material);
+		
 		ResolveLowerProcedure procLower = new ResolveLowerProcedure(this, light, material, dirtySets, regenSets);
-		//Spout.getLogger().info("About to process lower direct");
+		// Spout.getLogger().info("About to process lower root");
 		itr = coords.iterator();
 		while (itr.hasNext()) {
 			IntVector3 v = itr.next();
-			procClear.execute(v.getX(), v.getY(), v.getZ(), true);
+			procLower.execute(v.getX(), v.getY(), v.getZ(), false);
 		}
-		itr = coords.iterator();
-		while (itr.hasNext()) {
-			IntVector3 v = itr.next();
-			procLower.execute(v.getX(), v.getY(), v.getZ());
-		}
-		//Spout.getLogger().info("About to process lower from sets");
+		// Spout.getLogger().info("About to process lower from sets");
 		resolveLower(dirtySets, regenSets, light, material);
-		//Spout.getLogger().info("About to process higher (lower regen)");
-		resolveHigher(regenSets, light, material, true);
-		//Spout.getLogger().info("Done processing regen");
+		// Spout.getLogger().info("About to process higher (lower regen)");
+		resolveHigher(regenSets, light, material);
+		// Spout.getLogger().info("Done processing regen");
 	}
 
+	public static int sizeSets(TInt10TripleSet[] sets) {
+		int count = 0;
+		for (int i = 0; i < sets.length; i++) {
+			count += sets[i].size();
+		}
+		return count;
+	}
+	
 	
 	// TODO - needs surface height data
 	protected abstract int getEmittedLight(ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z);
@@ -195,14 +209,19 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		}
 	}
 
-	protected void checkAndAddDirtyFalling(TInt10TripleSet[] dirtySets, TInt10TripleSet[] regenSets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z, int currentLevel) {
+	protected void checkAndAddDirtyFalling(TInt10TripleSet[] dirtySets, TInt10TripleSet[] regenSets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z) {
 		int actualLevel = getLightLevel(light, x, y, z);
+		if (actualLevel <= 0) {
+			return;
+		}
 		int calculatedLevel = computeLightLevel(light, material, x, y, z);
 		//Spout.getLogger().info("-- Checking falling " + x + ", " + y + ", " + z + " actual " + actualLevel + " computed" + calculatedLevel);
 
-		if (actualLevel < currentLevel && calculatedLevel < actualLevel) {
+		if (calculatedLevel < actualLevel) {
+			// Spout.getLogger().info("Dirty: Adding " + x + ", " + y + ", " + z + " to " + actualLevel);
 			dirtySets[actualLevel].add(x, y, z);
-		} else if (actualLevel > 0) {
+		} else {
+			// Spout.getLogger().info("Regen: Adding " + x + ", " + y + ", " + z + " to " + actualLevel);
 			regenSets[actualLevel].add(x, y, z);
 		}
 	}
@@ -216,21 +235,67 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		}
 	}
 
-	protected void resolveHigher(TInt10TripleSet[] dirtySets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, boolean checkAll) {
-		ResolveHigherProcedure proc = new ResolveHigherProcedure(this, light, material, dirtySets, checkAll);
+	/**
+	 * Resolves block changes that cause blocks to become brighter.  This method never causes the light level
+	 * for blocks to be reduced.
+	 * 
+	 * @param dirtySets
+	 * @param light
+	 * @param material
+	 */
+	protected void resolveHigher(TInt10TripleSet[] dirtySets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material) {
+		ResolveHigherProcedure resolveProc = new ResolveHigherProcedure(this, light, material, dirtySets);
+		IncreaseLightProcedure increaseProc = new IncreaseLightProcedure(this, light);
+
+		// Each dirty set contains block updates for blocks that need to be set to a particular level.
+		// Since brighter blocks cannot be made brighter due to darker blocks, blocks are processed 
+		// from brightest to darkest.  If the resolve step adds new blocks, it always adds to the
+		// darker dirty sets.  The update procedure will never cause a block to be made darker.  This
+		// handles the case where a block is set updated due to 2 different sources.  The source which
+		// gives the brightest result will be the one that is used.
 		for (int i = dirtySets.length - 1; i >= 0 ; i--) {
-			proc.setCurrentLevel(i);
-			dirtySets[i].forEach(proc);
+			// Updates light levels for blocks that need to be set to a light level of i
+			increaseProc.setTargetLevel(i);
+			dirtySets[i].forEach(increaseProc);
+			
+			// Scan all updated blocks and neighbours and add to dirty sets
+			dirtySets[i].forEach(resolveProc);
+		}
+	}
+	
+	protected void raiseToEmittedLight(IntVector3 v, TInt10TripleSet[] dirtySets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material) {
+		int x = v.getX();
+		int y = v.getY();
+		int z = v.getZ();
+		int emittedLight = this.getEmittedLight(material, x, y, z);
+		int actualLight = this.getLightLevel(light, x, y, z);
+		if (emittedLight > actualLight) {
+			this.setLightLevel(light, x, y, z, emittedLight);
 		}
 	}
 
 	protected void resolveLower(TInt10TripleSet[] dirtySets, TInt10TripleSet[] regenSets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material) {
-		ClearLightProcedure clearProc = new ClearLightProcedure(this, light, material);
+		ClearLightProcedure clearProc = new ClearLightProcedure(this, light);
 		ResolveLowerProcedure lowerProc = new ResolveLowerProcedure(this, light, material, dirtySets, regenSets);
+		
+		// All blocks in dirty sets need to be set to zero.  They are stored in the dirty set
+		// index matching what level they had when determined to require setting to zero
+		// Each block is set to zero and then the block and neighbours are scanned to see if any more
+		// blocks need to be set to zero.
+		//
+		// When a light source is removed, darkness expands from that point until either light
+		// level 0 blocks are reached, or blocks that are receiving light are reached.
+		// 
+		// Blocks which are not set to zero are added to the regen set.  These blocks are the source points
+		// for propagating light back into the dark region
+		//
+		// Since darker blocks can't cause brighter blocks to go darker, blocks are processed based
+		// on their level before they were marked as needing to be set to zero.  This also acts as a
+		// limit on the distance processing can occur due to a block modification.
+		//
+		// This method does not handle the light regeneration step
 		for (int i = dirtySets.length - 1; i >= 0 ; i--) {
-			clearProc.setCurrentLevel(i);
 			dirtySets[i].forEach(clearProc);
-			lowerProc.setCurrentLevel(i);
 			dirtySets[i].forEach(lowerProc);
 		}
 	}

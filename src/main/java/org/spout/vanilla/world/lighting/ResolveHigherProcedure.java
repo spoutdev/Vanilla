@@ -38,49 +38,30 @@ public class ResolveHigherProcedure extends TInt10Procedure {
 	
 	private final static BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
 	private final TInt10TripleSet[] dirtySets;
-	private int currentLevel;
 	private final ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light;
 	private final ImmutableCuboidBlockMaterialBuffer material;
 	private final VanillaLightingManager manager;
-	private final boolean checkAll;
 	
-	public ResolveHigherProcedure(VanillaLightingManager manager, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, TInt10TripleSet[] dirtySets, boolean checkAll) {
+	public ResolveHigherProcedure(VanillaLightingManager manager, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, TInt10TripleSet[] dirtySets) {
 		this.dirtySets = dirtySets;
 		this.light = light;
 		this.material = material;
 		this.manager = manager;
-		this.currentLevel = 16;
-		this.checkAll = checkAll;
-	}
-
-	public void setCurrentLevel(int level) {
-		this.currentLevel = level;
 	}
 
 	@Override
 	public boolean execute(int x, int y, int z) {
-		return execute(x, y, z, false, false);
-	}
-	
-	public boolean execute(int x, int y, int z, boolean root, boolean root2) {
-		int lightLevel = manager.getLightLevel(light, x, y, z);
-		int computedLevel = manager.computeLightLevel(light, material, x, y, z);
-		//Spout.getLogger().info("Checking higher " + x + ", " + y + ", " + z + " actual " + lightLevel + " computed" + computedLevel + " root " + root);
-		if (root2 ? (computedLevel >= lightLevel) : (checkAll || computedLevel > lightLevel)) {
-			if (!root && !root2 && computedLevel != currentLevel) {
-				throw new IllegalStateException("Light dirty block added to wrong set, computed level " + computedLevel + ", actual level " + currentLevel);
-			}
-			manager.setLightLevel(light, x, y, z, computedLevel);
-			if (!root) {
-				for (BlockFace face : allFaces) {
-					Vector3 offset = face.getOffset();
-					int nx = x + offset.getFloorX();
-					int ny = y + offset.getFloorY();
-					int nz = z + offset.getFloorZ();
-					manager.checkAndAddDirtyRising(dirtySets, light, material, nx, ny, nz);
-				}
-			}
+		// Spout.getLogger().info("Checking higher " + x + ", " + y + ", " + z);
+		manager.checkAndAddDirtyRising(dirtySets, light, material, x, y, z);
+		
+		for (BlockFace face : allFaces) {
+			Vector3 offset = face.getOffset();
+			int nx = x + offset.getFloorX();
+			int ny = y + offset.getFloorY();
+			int nz = z + offset.getFloorZ();
+			manager.checkAndAddDirtyRising(dirtySets, light, material, nx, ny, nz);
 		}
+
 		return true;
 	}
 

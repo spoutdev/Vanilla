@@ -41,6 +41,7 @@ public final class EntityMetadataMessage extends EntityMessage {
 		META_MOBRIDER(0, (byte) 0x04),
 		META_SPRINTING(0, (byte) 0x08),
 		META_RIGHTCLICKACTION(0, (byte) 0x10),
+		META_INVISIBLE(0, (byte) 0x20),
 		/**
 		 * Drowning counter for resources.entities. This should be sent when an entity spawns and be decremented
 		 * per tick. If the value hits -19, send a 0x26 and reset this to 0
@@ -48,6 +49,11 @@ public final class EntityMetadataMessage extends EntityMessage {
 		META_FULLDROWNINGCOUNTER(1, (short) 300),
 		META_DROWNINGCOUNTEDDEPLETED(1, (short) -19),
 		META_STARTDROWNING(1, (short) 0),
+		/**
+		 * Set whether to show or hide the name of the entity on the nameplate.
+		 */
+		META_HIDENAME(6, (byte) 0),
+		META_SHOWNAME(6, (byte) 1),
 		/**
 		 * Potion color for effect. The value is composed of RRGGBB (in that order).
 		 */

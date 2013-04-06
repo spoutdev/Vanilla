@@ -32,10 +32,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.entity.substance.vehicle.minecart.MinecartBase;
-import org.spout.vanilla.component.entity.substance.vehicle.minecart.SpawnerMinecart;
-import org.spout.vanilla.component.entity.substance.vehicle.minecart.StorageMinecart;
-import org.spout.vanilla.component.entity.substance.vehicle.minecart.TNTMinecart;
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 
@@ -58,7 +54,7 @@ public class MinecartObjectEntityProtocol extends ObjectEntityProtocol {
 		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 19, 0)); // Damage taken; breaks at 40.
 		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 20, block)); // Block ID to display in the minecart
 		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 21, 6)); // Display Data, where to display the block, 6 is default.
-		params.add(new Parameter<Integer>(Parameter.TYPE_BYTE, 22, block != 0 ? 1 : 0)); // 0 == Block Display off, 1 == Block Display on
+		params.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 22, (byte) (block != 0 ? 1 : 0))); // 0 == Block Display off, 1 == Block Display on
 		return params;
 	}
 }

@@ -81,11 +81,11 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 	private static final Perlin PERLIN = new Perlin();
 	private static final ScalePoint NOISE = new ScalePoint();
 	// smoothing stuff
-	private static final int SMOOTH_SIZE = 4;
+	private static final int SMOOTH_SIZE = 2;
 	private static final double[][] GAUSSIAN_KERNEL;
 
 	static {
-		PERLIN.setFrequency(0.02);
+		PERLIN.setFrequency(0.015);
 		PERLIN.setLacunarity(2);
 		PERLIN.setNoiseQuality(NoiseQuality.BEST);
 		PERLIN.setPersistence(0.5);
@@ -98,12 +98,13 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 
 		final int kernelSize = SMOOTH_SIZE * 2 + 1;
 		GAUSSIAN_KERNEL = new double[kernelSize][kernelSize];
-		final double bellSize = 1d / SMOOTH_SIZE;
+		final double bellSize = 1d / SMOOTH_SIZE / 2;
+		final double bellHeight = 2 * SMOOTH_SIZE;
 		for (int sx = -SMOOTH_SIZE; sx <= SMOOTH_SIZE; sx++) {
 			for (int sz = -SMOOTH_SIZE; sz <= SMOOTH_SIZE; sz++) {
 				final double bx = bellSize * sx;
 				final double bz = bellSize * sz;
-				GAUSSIAN_KERNEL[sx + SMOOTH_SIZE][sz + SMOOTH_SIZE] = 1.5 * Math.exp(-(bx * bx + bz * bz) / 2);
+				GAUSSIAN_KERNEL[sx + SMOOTH_SIZE][sz + SMOOTH_SIZE] = bellHeight * Math.exp(-(bx * bx + bz * bz) / 2);
 			}
 		}
 	}
@@ -183,7 +184,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 			for (int zz = 0; zz < sizeZ; zz++) {
 				double maxSum = 0;
 				double minSum = 0;
-				int count = 0;
+				double weightSum = 0;
 				for (int sx = -SMOOTH_SIZE; sx <= SMOOTH_SIZE; sx++) {
 					for (int sz = -SMOOTH_SIZE; sz <= SMOOTH_SIZE; sz++) {
 						final NormalBiome adjacent;
@@ -201,11 +202,11 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 						final double weight = GAUSSIAN_KERNEL[sx + SMOOTH_SIZE][sz + SMOOTH_SIZE];
 						minSum += adjacent.getMinElevation() * weight;
 						maxSum += adjacent.getMaxElevation() * weight;
-						count++;
+						weightSum += weight;
 					}
 				}
-				final double minElevation = minSum / count;
-				final double smoothHeight = (maxSum / count - minElevation) / 2;
+				final double minElevation = minSum / weightSum;
+				final double smoothHeight = (maxSum / weightSum - minElevation) / 2;
 				for (int yy = 0; yy < sizeY; yy++) {
 					final double noiseValue = pow(noise[xx][yy][zz], 2) - 1 / smoothHeight * (y + yy - smoothHeight - minElevation);
 					if (noiseValue >= 0) {

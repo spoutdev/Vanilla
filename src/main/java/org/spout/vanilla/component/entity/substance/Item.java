@@ -26,8 +26,7 @@
  */
 package org.spout.vanilla.component.entity.substance;
 
-import com.bulletphysics.collision.shapes.BoxShape;
-
+import org.spout.api.collision.BoundingBox;
 import org.spout.api.component.impl.SceneComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
@@ -55,7 +54,7 @@ public class Item extends Substance {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
 		SceneComponent scene = getOwner().getScene();
-		scene.setShape(5f, new BoxShape(0.1F, 0.1F, 0.1F));
+		scene.activate(new BoundingBox(-0.05F, -0.05F, -0.05F, 0.05F, 0.05F, 0.05F), 1);
 		scene.setRestitution(0f);
 		getOwner().add(Health.class).setMaxHealth(20);
 	}

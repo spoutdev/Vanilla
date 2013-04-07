@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.item;
 
-import com.bulletphysics.collision.shapes.SphereShape;
-
 import org.spout.api.component.impl.SceneComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -56,7 +54,7 @@ public abstract class ThrowItem extends VanillaItemMaterial {
 			World world = entity.getWorld();
 			Substance item = world.createEntity(entity.getScene().getPosition().add(0, 1.6f, 0), itemThrown).add(itemThrown);
 			SceneComponent scene = item.getOwner().getScene();
-			scene.setShape(mass, new SphereShape(0.1f)); // TODO: Correct this
+			//scene.setShape(mass, new SphereShape(0.1f)); // TODO: Correct this
 			scene.impulse(VectorMath.getDirection(entity.getScene().getRotation()).multiply(250)); //TODO: Need real parameters
 			if (item instanceof Projectile) {
 				((Projectile) item).setShooter(entity);

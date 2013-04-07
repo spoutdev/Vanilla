@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.component.entity.living.hostile;
 
-import com.bulletphysics.collision.shapes.BoxShape;
-
 import org.spout.api.component.impl.SceneComponent;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
@@ -55,7 +53,7 @@ public class Creeper extends Living implements Hostile {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreeperEntityProtocol());
 		SceneComponent scene = getOwner().getScene();
 		getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.GUNPOWDER, getRandom().nextInt(2))).addXpDrop((short) 5);
-		scene.setShape(2f, new BoxShape(1F, 2F, 1F));
+		//scene.setShape(2f, new BoxShape(1F, 2F, 1F));
 		scene.setFriction(10f);
 		scene.setRestitution(0f);
 		if (getAttachedCount() == 1) {

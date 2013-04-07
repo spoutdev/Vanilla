@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.component.entity.living.hostile;
 
-import com.bulletphysics.collision.shapes.BoxShape;
-
 import org.spout.api.component.impl.SceneComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
@@ -62,7 +60,7 @@ public class Zombie extends Living implements Hostile {
 		getOwner().add(EntityInventory.class);
 		getOwner().add(EntityItemCollector.class);
 		SceneComponent scene = getOwner().getScene();
-		scene.setShape(5f, new BoxShape(0.3F, 1.15F, 0.3F));
+		//scene.setShape(5f, new BoxShape(0.3F, 1.15F, 0.3F));
 		scene.setFriction(1f);
 		scene.setRestitution(0f);
 

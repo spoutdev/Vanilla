@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.item.potion;
 
-import com.bulletphysics.collision.shapes.SphereShape;
-
 import org.spout.api.component.impl.SceneComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -235,7 +233,7 @@ public class PotionItem extends VanillaItemMaterial {
 		if (this.isSplash()) {
 			Potion item = entity.getWorld().createEntity(entity.getScene().getPosition().add(0, 1.6f, 0), Potion.class).add(Potion.class);
 			SceneComponent scene = item.getOwner().getScene();
-			scene.setShape(6f, new SphereShape(0.3f)); // TODO: Correct this
+			//cene.setShape(6f, new SphereShape(0.3f)); // TODO: Correct this
 			scene.impulse(VectorMath.getDirection(entity.getScene().getRotation()).multiply(55)); //TODO: Need real parameters
 			item.setShooter(entity);
 			item.setPotion(this);

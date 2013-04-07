@@ -103,7 +103,7 @@ public class FallingBlock extends Substance {
 		if (material == BlockMaterial.AIR) {
 			return false;
 		}
-		if (material.getCollisionModel().getStrategy() != CollisionStrategy.SOLID) {
+		if (material.getVolume().getStrategy() != CollisionStrategy.SOLID) {
 			return false;
 		}
 		if (material instanceof VanillaBlockMaterial) {

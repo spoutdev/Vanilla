@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.component.entity.substance;
 
-import com.bulletphysics.collision.shapes.BoxShape;
-
 import org.spout.api.entity.Entity;
 
 import org.spout.vanilla.VanillaPlugin;
@@ -75,7 +73,7 @@ public class Tnt extends Substance {
 		holder = getOwner();
 		super.onAttached();
 		//TODO: Correct mass
-		getOwner().getScene().setShape(5f, new BoxShape(1, 1, 1));
+		//getOwner().getScene().setShape(5f, new BoxShape(1, 1, 1));
 	}
 
 	@Override

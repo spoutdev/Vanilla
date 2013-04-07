@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.block;
 
-import com.bulletphysics.collision.shapes.BoxShape;
-
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
@@ -53,7 +51,7 @@ public abstract class PressurePlate extends AttachedRedstoneSource implements Dy
 		super(name, id, model);
 		this.setAttachable(BlockFace.BOTTOM).setHardness(0.5F).setResistance(0.8F).setTransparent();
 		this.setCollision(CollisionStrategy.SOLID);
-		this.setCollisionShape(new BoxShape(1.0f, 0.03125f, 1.0f));
+		//this.setCollisionShape(new BoxShape(1.0f, 0.03125f, 1.0f));
 		//TODO: Create the box model and different up/down collision shapes
 		// UP height = 0.0625F
 		// DOWN height = 0.03125F

@@ -31,8 +31,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import com.bulletphysics.collision.shapes.BoxShape;
-
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.cuboid.Block;
@@ -54,7 +52,7 @@ public class TripWire extends GroundAttachable implements InitializableMaterial 
 		super(name, id, VanillaMaterialModels.TRIP_WIRE);
 		this.setHardness(0.0f).setResistance(0.0f).setTransparent();
 		this.setCollision(CollisionStrategy.SOLID);
-		this.setCollisionShape(new BoxShape(1f, 1f, 1f));
+		//this.setCollisionShape(new BoxShape(1f, 1f, 1f));
 	}
 
 	@Override

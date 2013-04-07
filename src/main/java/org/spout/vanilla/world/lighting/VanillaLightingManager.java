@@ -161,7 +161,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		int ny = y + nOffset.getFloorY();
 		int nz = z + nOffset.getFloorZ();
 		BlockMaterial m = material.get(nx, ny, nz);
-		if (m == BlockMaterial.UNGENENERATED) {
+		if (m == BlockMaterial.UNGENERATED) {
 			return 0;
 		}
 		short data = material.getData(nx, ny, nz);
@@ -210,10 +210,16 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	}
 
 	protected void checkAndAddDirtyFalling(TInt10TripleSet[] dirtySets, TInt10TripleSet[] regenSets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z) {
+		BlockMaterial m = material.get(x, y, z);
+		if (BlockMaterial.UNGENERATED.equals(m)) {
+			return;
+		}
+		
 		int actualLevel = getLightLevel(light, x, y, z);
 		if (actualLevel <= 0) {
 			return;
 		}
+
 		int calculatedLevel = computeLightLevel(light, material, x, y, z);
 		//Spout.getLogger().info("-- Checking falling " + x + ", " + y + ", " + z + " actual " + actualLevel + " computed" + calculatedLevel);
 
@@ -227,6 +233,10 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	}
 	
 	protected void checkAndAddDirtyRising(TInt10TripleSet[] dirtySets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z) {
+		BlockMaterial m = material.get(x, y, z);
+		if (BlockMaterial.UNGENERATED.equals(m)) {
+			return;
+		}
 		int actualLevel = getLightLevel(light, x, y, z);
 		int calculatedLevel = computeLightLevel(light, material, x, y, z);
 		//Spout.getLogger().info("-- Checking rising " + x + ", " + y + ", " + z + " actual " + actualLevel + " computed" + calculatedLevel);

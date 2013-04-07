@@ -97,6 +97,10 @@ import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerRespawnMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnPositionMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardDisplayMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardObjectiveMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardScoreMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardTeamMessage;
 import org.spout.vanilla.protocol.msg.window.WindowClickMessage;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 import org.spout.vanilla.protocol.msg.window.WindowCreativeActionMessage;
@@ -119,10 +123,6 @@ import org.spout.vanilla.protocol.msg.world.chunk.ChunkBulkMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 
 import static org.spout.vanilla.protocol.ChannelBufferUtilsTest.TEST_PARAMS;
-import org.spout.vanilla.protocol.msg.scoreboard.CreateScoreboardMessage;
-import org.spout.vanilla.protocol.msg.scoreboard.DisplayScoreboardMessage;
-import org.spout.vanilla.protocol.msg.scoreboard.TeamMessage;
-import org.spout.vanilla.protocol.msg.scoreboard.UpdateScoreboardMessage;
 
 public class VanillaProtocolTest extends BaseProtocolTest {
 	private static final VanillaCodecLookupService CODEC_LOOKUP = new VanillaCodecLookupService();
@@ -205,10 +205,10 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new PlayerKickMessage("This is a test"),
 			new PlayerAbilityMessage(true, true, true, true, (byte) 0, (byte) 5),
 			new PlayerStatusMessage((byte) 0),
-			new CreateScoreboardMessage("name", "displayName", false),
-			new UpdateScoreboardMessage("item", false, "boardName", 5),
-			new DisplayScoreboardMessage((byte) 1, "name"),
-			new TeamMessage("teamName", (byte) 0, "displayName", "prefix", "suffix", false, null),
+			new ScoreboardObjectiveMessage("name", "displayName", ScoreboardObjectiveMessage.ACTION_CREATE),
+			new ScoreboardScoreMessage("item", false, "boardName", 5),
+			new ScoreboardDisplayMessage((byte) 1, "name"),
+			new ScoreboardTeamMessage("teamName", (byte) 0, "displayName", "prefix", "suffix", false, null),
 			new BlockBreakAnimationMessage(1, 1, 1, 1, (byte) 2, NullRepositionManager.getInstance())
 	};
 

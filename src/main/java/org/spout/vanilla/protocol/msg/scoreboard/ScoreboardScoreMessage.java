@@ -32,15 +32,16 @@ import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public class CreateScoreboardMessage extends VanillaMainChannelMessage {
-
-	private final String name, display;
+public class ScoreboardScoreMessage extends VanillaMainChannelMessage {
+	private final String item, scoreboard;
 	private final boolean remove;
+	private final int value;
 
-	public CreateScoreboardMessage(String name, String display, boolean remove) {
-		this.name = name;
-		this.display = display;
+	public ScoreboardScoreMessage(String item, boolean remove, String scoreboard, int value) {
+		this.item = item;
 		this.remove = remove;
+		this.scoreboard = scoreboard;
+		this.value = value;
 	}
 
 	@Override
@@ -48,16 +49,20 @@ public class CreateScoreboardMessage extends VanillaMainChannelMessage {
 		return true;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public String getDisplay() {
-		return display;
-	}
-
 	public boolean isRemove() {
 		return remove;
+	}
+
+	public String getItem() {
+		return item;
+	}
+
+	public String getScoreboard() {
+		return scoreboard;
+	}
+
+	public int getValue() {
+		return value;
 	}
 
 	@Override
@@ -68,20 +73,22 @@ public class CreateScoreboardMessage extends VanillaMainChannelMessage {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final CreateScoreboardMessage other = (CreateScoreboardMessage) obj;
+		final ScoreboardScoreMessage other = (ScoreboardScoreMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.name, other.name)
-				.append(this.display, other.display)
+				.append(this.item, other.item)
 				.append(this.remove, other.remove)
+				.append(this.scoreboard, other.scoreboard)
+				.append(this.value, other.value)
 				.isEquals();
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("name", name)
-				.append("display", display)
+				.append("item", item)
 				.append("remove", remove)
+				.append("scoreboard", scoreboard)
+				.append("value", value)
 				.toString();
 	}
 }

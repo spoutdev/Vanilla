@@ -24,57 +24,35 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.msg.scoreboard;
+package org.spout.vanilla.protocol.codec.scoreboard;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import java.io.IOException;
 
-import org.spout.api.util.SpoutToStringStyle;
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.buffer.ChannelBuffers;
 
-import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
+import org.spout.api.protocol.MessageCodec;
 
-public class DisplayScoreboardMessage extends VanillaMainChannelMessage {
+import org.spout.vanilla.protocol.ChannelBufferUtils;
+import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardDisplayMessage;
 
-	private final String name;
-	private final byte position;
-
-	public DisplayScoreboardMessage(byte position, String name) {
-		this.position = position;
-		this.name = name;
+public class ScoreboardDisplayCodec extends MessageCodec<ScoreboardDisplayMessage> {
+	public ScoreboardDisplayCodec() {
+		super(ScoreboardDisplayMessage.class, 0xD0);
 	}
 
 	@Override
-	public boolean isAsync() {
-		return true;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public byte getPosition() {
-		return position;
+	public ScoreboardDisplayMessage decode(ChannelBuffer buffer) throws IOException {
+		byte position = buffer.readByte();
+		String name = ChannelBufferUtils.readString(buffer);
+		return new ScoreboardDisplayMessage(position, name);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final DisplayScoreboardMessage other = (DisplayScoreboardMessage) obj;
-		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.position, other.position)
-				.append(this.name, other.name)
-				.isEquals();
-	}
-
-	@Override
-	public String toString() {
-		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("position", position)
-				.append("name", name)
-				.toString();
+	public ChannelBuffer encode(ScoreboardDisplayMessage message) throws IOException {
+		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+		buffer.writeByte(message.getPosition());
+		ChannelBufferUtils.writeString(buffer, message.getName());
+		return buffer;
 	}
 }

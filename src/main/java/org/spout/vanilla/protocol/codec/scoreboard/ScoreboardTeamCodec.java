@@ -24,25 +24,25 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.codec.server;
+package org.spout.vanilla.protocol.codec.scoreboard;
 
 import java.io.IOException;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.scoreboard.TeamMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardTeamMessage;
 
-public class TeamCodec extends MessageCodec<TeamMessage> {
-
-	public TeamCodec() {
-		super(TeamMessage.class, 0xD1);
+public class ScoreboardTeamCodec extends MessageCodec<ScoreboardTeamMessage> {
+	public ScoreboardTeamCodec() {
+		super(ScoreboardTeamMessage.class, 0xD1);
 	}
 
 	@Override
-	public TeamMessage decode(ChannelBuffer buffer) throws IOException {
+	public ScoreboardTeamMessage decode(ChannelBuffer buffer) throws IOException {
 		String name = ChannelBufferUtils.readString(buffer);
 		String displayName, prefix, suffix;
 		boolean friendlyFire = false;
@@ -70,15 +70,15 @@ public class TeamCodec extends MessageCodec<TeamMessage> {
 				break;
 		}
 
-		return new TeamMessage(name, mode, displayName, prefix, suffix, friendlyFire, players);
+		return new ScoreboardTeamMessage(name, mode, displayName, prefix, suffix, friendlyFire, players);
 	}
 
 	@Override
-	public ChannelBuffer encode(TeamMessage message) throws IOException {
+	public ChannelBuffer encode(ScoreboardTeamMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		ChannelBufferUtils.writeString(buffer, message.getName());
-		buffer.writeByte(message.getMode());
-		switch (message.getMode()) {
+		buffer.writeByte(message.getAction());
+		switch (message.getAction()) {
 			case 0:
 			case 2:
 				ChannelBufferUtils.writeString(buffer, message.getDisplayName());

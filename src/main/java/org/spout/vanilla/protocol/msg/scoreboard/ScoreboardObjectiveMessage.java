@@ -32,21 +32,17 @@ import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public class TeamMessage extends VanillaMainChannelMessage {
+public class ScoreboardObjectiveMessage extends VanillaMainChannelMessage {
+	public static final byte ACTION_CREATE = 0;
+	public static final byte ACTION_REMOVE = 1;
+	public static final byte ACTION_UPDATE = 2;
+	private final String name, display;
+	private final byte action;
 
-	private final String name, displayName, prefix, suffix;
-	private final boolean friendlyFire;
-	private final byte mode;
-	private final String[] players;
-
-	public TeamMessage(String name, byte mode, String displayName, String prefix, String suffix, boolean friendlyFire, String[] players) {
+	public ScoreboardObjectiveMessage(String name, String display, byte action) {
 		this.name = name;
-		this.mode = mode;
-		this.displayName = displayName;
-		this.prefix = prefix;
-		this.suffix = suffix;
-		this.friendlyFire = friendlyFire;
-		this.players = players;
+		this.display = display;
+		this.action = action;
 	}
 
 	@Override
@@ -58,28 +54,12 @@ public class TeamMessage extends VanillaMainChannelMessage {
 		return name;
 	}
 
-	public String getDisplayName() {
-		return displayName;
+	public String getDisplay() {
+		return display;
 	}
 
-	public String getPrefix() {
-		return prefix;
-	}
-
-	public String getSuffix() {
-		return suffix;
-	}
-
-	public boolean isFriendlyFire() {
-		return friendlyFire;
-	}
-
-	public byte getMode() {
-		return mode;
-	}
-
-	public String[] getPlayers() {
-		return players;
+	public byte getAction() {
+		return action;
 	}
 
 	@Override
@@ -90,15 +70,11 @@ public class TeamMessage extends VanillaMainChannelMessage {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final TeamMessage other = (TeamMessage) obj;
+		final ScoreboardObjectiveMessage other = (ScoreboardObjectiveMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.name, other.name)
-				.append(this.mode, other.mode)
-				.append(this.displayName, other.displayName)
-				.append(this.prefix, other.prefix)
-				.append(this.suffix, other.suffix)
-				.append(this.friendlyFire, other.friendlyFire)
-				.append(this.players, other.players)
+				.append(this.display, other.display)
+				.append(this.action, other.action)
 				.isEquals();
 	}
 
@@ -106,12 +82,8 @@ public class TeamMessage extends VanillaMainChannelMessage {
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
 				.append("name", name)
-				.append("mode", mode)
-				.append("displayName", displayName)
-				.append("prefix", prefix)
-				.append("suffix", suffix)
-				.append("friendlyFire", friendlyFire)
-				.append("players", players)
+				.append("display", display)
+				.append("action", action)
 				.toString();
 	}
 }

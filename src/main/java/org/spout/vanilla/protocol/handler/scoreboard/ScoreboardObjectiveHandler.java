@@ -24,35 +24,16 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.codec.server;
+package org.spout.vanilla.protocol.handler.scoreboard;
 
-import java.io.IOException;
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
+import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.Session;
 
-import org.spout.api.protocol.MessageCodec;
+import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardObjectiveMessage;
 
-import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.scoreboard.DisplayScoreboardMessage;
-
-public class DisplayScoreboardCodec extends MessageCodec<DisplayScoreboardMessage> {
-
-	public DisplayScoreboardCodec() {
-		super(DisplayScoreboardMessage.class, 0xD0);
-	}
-
+public class ScoreboardObjectiveHandler extends MessageHandler<ScoreboardObjectiveMessage> {
 	@Override
-	public DisplayScoreboardMessage decode(ChannelBuffer buffer) throws IOException {
-		byte position = buffer.readByte();
-		String name = ChannelBufferUtils.readString(buffer);
-		return new DisplayScoreboardMessage(position, name);
-	}
-
-	@Override
-	public ChannelBuffer encode(DisplayScoreboardMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		buffer.writeByte(message.getPosition());
-		ChannelBufferUtils.writeString(buffer, message.getName());
-		return buffer;
+	public void handleClient(final Session session, final ScoreboardObjectiveMessage message) {
+		// Handle scoreboard creation
 	}
 }

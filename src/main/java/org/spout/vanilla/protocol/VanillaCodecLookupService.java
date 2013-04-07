@@ -83,6 +83,10 @@ import org.spout.vanilla.protocol.codec.player.pos.PlayerSpawnCodec;
 import org.spout.vanilla.protocol.codec.player.pos.PlayerSpawnPositionCodec;
 import org.spout.vanilla.protocol.codec.server.ServerListPingCodec;
 import org.spout.vanilla.protocol.codec.server.ServerPluginCodec;
+import org.spout.vanilla.protocol.codec.scoreboard.ScoreboardDisplayCodec;
+import org.spout.vanilla.protocol.codec.scoreboard.ScoreboardObjectiveCodec;
+import org.spout.vanilla.protocol.codec.scoreboard.ScoreboardScoreCodec;
+import org.spout.vanilla.protocol.codec.scoreboard.ScoreboardTeamCodec;
 import org.spout.vanilla.protocol.codec.window.WindowClickCodec;
 import org.spout.vanilla.protocol.codec.window.WindowCloseCodec;
 import org.spout.vanilla.protocol.codec.window.WindowCreativeActionCodec;
@@ -103,10 +107,6 @@ import org.spout.vanilla.protocol.codec.world.block.BlockChangeCodec;
 import org.spout.vanilla.protocol.codec.world.block.SignCodec;
 import org.spout.vanilla.protocol.codec.world.chunk.ChunkBulkCodec;
 import org.spout.vanilla.protocol.codec.world.chunk.ChunkDataCodec;
-import org.spout.vanilla.protocol.codec.server.CreateScoreboardCodec;
-import org.spout.vanilla.protocol.codec.server.DisplayScoreboardCodec;
-import org.spout.vanilla.protocol.codec.server.TeamCodec;
-import org.spout.vanilla.protocol.codec.server.UpdateScoreboardCodec;
 
 public class VanillaCodecLookupService extends CodecLookupService {
 	public VanillaCodecLookupService() {
@@ -255,13 +255,13 @@ public class VanillaCodecLookupService extends CodecLookupService {
 			/* 0xCD */
 			bind(PlayerStatusCodec.class);
 			/* 0xCE */
-			bind(CreateScoreboardCodec.class);
+			bind(ScoreboardObjectiveCodec.class);
 			/* 0xCF */
-			bind(UpdateScoreboardCodec.class);
+			bind(ScoreboardScoreCodec.class);
 			/* 0xD0 */
-			bind(DisplayScoreboardCodec.class);
+			bind(ScoreboardDisplayCodec.class);
 			/* 0xD1 */
-			bind(TeamCodec.class);
+			bind(ScoreboardTeamCodec.class);
 			/* 0xFA */
 			bind(ServerPluginCodec.class);
 			/* 0xFC */

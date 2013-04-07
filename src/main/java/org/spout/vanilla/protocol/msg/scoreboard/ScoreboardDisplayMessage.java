@@ -24,19 +24,56 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.handler.server;
+package org.spout.vanilla.protocol.msg.scoreboard;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.msg.scoreboard.DisplayScoreboardMessage;
+import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public class DisplayScoreboardHandler extends MessageHandler<DisplayScoreboardMessage> {
+public class ScoreboardDisplayMessage extends VanillaMainChannelMessage {
+	private final String name;
+	private final byte position;
 
-	@Override
-	public void handleClient(final Session session, final DisplayScoreboardMessage message) {
-		// Handle scoreboard display update
+	public ScoreboardDisplayMessage(byte position, String name) {
+		this.position = position;
+		this.name = name;
 	}
 
+	@Override
+	public boolean isAsync() {
+		return true;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public byte getPosition() {
+		return position;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final ScoreboardDisplayMessage other = (ScoreboardDisplayMessage) obj;
+		return new org.apache.commons.lang3.builder.EqualsBuilder()
+				.append(this.position, other.position)
+				.append(this.name, other.name)
+				.isEquals();
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
+				.append("position", position)
+				.append("name", name)
+				.toString();
+	}
 }

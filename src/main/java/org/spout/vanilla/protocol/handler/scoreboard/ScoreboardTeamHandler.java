@@ -24,19 +24,16 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.handler.server;
-
+package org.spout.vanilla.protocol.handler.scoreboard;
 
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
-import org.spout.vanilla.protocol.msg.scoreboard.TeamMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardTeamMessage;
 
-public class TeamHandler extends MessageHandler<TeamMessage> {
-
+public class ScoreboardTeamHandler extends MessageHandler<ScoreboardTeamMessage> {
 	@Override
-	public void handleClient(final Session session, final TeamMessage message) {
+	public void handleClient(final Session session, final ScoreboardTeamMessage message) {
 		// Handle team creation/updates
 	}
-
 }

@@ -24,25 +24,25 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.codec.server;
+package org.spout.vanilla.protocol.codec.scoreboard;
 
 import java.io.IOException;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.scoreboard.UpdateScoreboardMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardScoreMessage;
 
-public class UpdateScoreboardCodec extends MessageCodec<UpdateScoreboardMessage> {
-
-	public UpdateScoreboardCodec() {
-		super(UpdateScoreboardMessage.class, 0xCF);
+public class ScoreboardScoreCodec extends MessageCodec<ScoreboardScoreMessage> {
+	public ScoreboardScoreCodec() {
+		super(ScoreboardScoreMessage.class, 0xCF);
 	}
 
 	@Override
-	public UpdateScoreboardMessage decode(ChannelBuffer buffer) throws IOException {
+	public ScoreboardScoreMessage decode(ChannelBuffer buffer) throws IOException {
 		String item = ChannelBufferUtils.readString(buffer);
 		boolean remove = buffer.readByte() == 1;
 		String name = null;
@@ -51,11 +51,11 @@ public class UpdateScoreboardCodec extends MessageCodec<UpdateScoreboardMessage>
 			name = ChannelBufferUtils.readString(buffer);
 			value = buffer.readInt();
 		}
-		return new UpdateScoreboardMessage(item, remove, name, value);
+		return new ScoreboardScoreMessage(item, remove, name, value);
 	}
 
 	@Override
-	public ChannelBuffer encode(UpdateScoreboardMessage message) throws IOException {
+	public ChannelBuffer encode(ScoreboardScoreMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		ChannelBufferUtils.writeString(buffer, message.getItem());
 		buffer.writeByte(message.isRemove() ? 1 : 0);

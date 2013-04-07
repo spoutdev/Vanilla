@@ -32,17 +32,25 @@ import org.spout.api.util.SpoutToStringStyle;
 
 import org.spout.vanilla.protocol.msg.VanillaMainChannelMessage;
 
-public class UpdateScoreboardMessage extends VanillaMainChannelMessage {
+public class ScoreboardTeamMessage extends VanillaMainChannelMessage {
+	public static final byte ACTION_CREATE = 0;
+	public static final byte ACTION_REMOVE = 1;
+	public static final byte ACTION_UPDATE = 2;
+	public static final byte ADD_PLAYERS = 3;
+	public static final byte REMOVE_PLAYERS = 4;
+	private final String name, displayName, prefix, suffix;
+	private final boolean friendlyFire;
+	private final byte action;
+	private final String[] players;
 
-	private final String item, scoreboard;
-	private final boolean remove;
-	private final int value;
-
-	public UpdateScoreboardMessage(String item, boolean remove, String scoreboard, int value) {
-		this.item = item;
-		this.remove = remove;
-		this.scoreboard = scoreboard;
-		this.value = value;
+	public ScoreboardTeamMessage(String name, byte action, String displayName, String prefix, String suffix, boolean friendlyFire, String[] players) {
+		this.name = name;
+		this.action = action;
+		this.displayName = displayName;
+		this.prefix = prefix;
+		this.suffix = suffix;
+		this.friendlyFire = friendlyFire;
+		this.players = players;
 	}
 
 	@Override
@@ -50,19 +58,32 @@ public class UpdateScoreboardMessage extends VanillaMainChannelMessage {
 		return true;
 	}
 
-	public boolean isRemove() {
-		return remove;
-	}
-	public String getItem() {
-		return item;
+	public String getName() {
+		return name;
 	}
 
-	public String getScoreboard() {
-		return scoreboard;
+	public String getDisplayName() {
+		return displayName;
 	}
 
-	public int getValue() {
-		return value;
+	public String getPrefix() {
+		return prefix;
+	}
+
+	public String getSuffix() {
+		return suffix;
+	}
+
+	public boolean isFriendlyFire() {
+		return friendlyFire;
+	}
+
+	public byte getAction() {
+		return action;
+	}
+
+	public String[] getPlayers() {
+		return players;
 	}
 
 	@Override
@@ -73,22 +94,28 @@ public class UpdateScoreboardMessage extends VanillaMainChannelMessage {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final UpdateScoreboardMessage other = (UpdateScoreboardMessage) obj;
+		final ScoreboardTeamMessage other = (ScoreboardTeamMessage) obj;
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
-				.append(this.item, other.item)
-				.append(this.remove, other.remove)
-				.append(this.scoreboard, other.scoreboard)
-				.append(this.value, other.value)
+				.append(this.name, other.name)
+				.append(this.action, other.action)
+				.append(this.displayName, other.displayName)
+				.append(this.prefix, other.prefix)
+				.append(this.suffix, other.suffix)
+				.append(this.friendlyFire, other.friendlyFire)
+				.append(this.players, other.players)
 				.isEquals();
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, SpoutToStringStyle.INSTANCE)
-				.append("item", item)
-				.append("remove", remove)
-				.append("scoreboard", scoreboard)
-				.append("value", value)
+				.append("name", name)
+				.append("action", action)
+				.append("displayName", displayName)
+				.append("prefix", prefix)
+				.append("suffix", suffix)
+				.append("friendlyFire", friendlyFire)
+				.append("players", players)
 				.toString();
 	}
 }

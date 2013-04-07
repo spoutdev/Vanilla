@@ -24,37 +24,37 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.codec.server;
+package org.spout.vanilla.protocol.codec.scoreboard;
 
 import java.io.IOException;
+
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
 import org.spout.vanilla.protocol.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.scoreboard.CreateScoreboardMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardObjectiveMessage;
 
-public class CreateScoreboardCodec extends MessageCodec<CreateScoreboardMessage> {
-
-	public CreateScoreboardCodec() {
-		super(CreateScoreboardMessage.class, 0xCE);
+public class ScoreboardObjectiveCodec extends MessageCodec<ScoreboardObjectiveMessage> {
+	public ScoreboardObjectiveCodec() {
+		super(ScoreboardObjectiveMessage.class, 0xCE);
 	}
 
 	@Override
-	public CreateScoreboardMessage decode(ChannelBuffer buffer) throws IOException {
+	public ScoreboardObjectiveMessage decode(ChannelBuffer buffer) throws IOException {
 		String name = ChannelBufferUtils.readString(buffer);
 		String display = ChannelBufferUtils.readString(buffer);
-		boolean remove = buffer.readByte() == 1;
-		return new CreateScoreboardMessage(name, display, remove);
+		byte action = buffer.readByte();
+		return new ScoreboardObjectiveMessage(name, display, action);
 	}
 
 	@Override
-	public ChannelBuffer encode(CreateScoreboardMessage message) throws IOException {
+	public ChannelBuffer encode(ScoreboardObjectiveMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		ChannelBufferUtils.writeString(buffer, message.getName());
 		ChannelBufferUtils.writeString(buffer, message.getDisplay());
-		buffer.writeByte(message.isRemove() ? 1 : 0);
+		buffer.writeByte(message.getAction());
 		return buffer;
 	}
 }

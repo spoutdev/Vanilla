@@ -49,25 +49,13 @@ public class Scoreboard extends EntityComponent {
 	 * Creates a new objective with the specified name and display name.
 	 *
 	 * @param name of objective
-	 * @param displayName to display for objective
 	 * @return newly created objective
 	 */
-	public Objective createObjective(String name, ChatArguments displayName) {
-		Objective obj = new Objective(this, name, displayName);
+	public Objective createObjective(String name) {
+		Objective obj = new Objective(this, name);
 		objectives.add(obj);
 		player.getNetworkSynchronizer().callProtocolEvent(new ObjectiveActionEvent(obj, ScoreboardObjectiveMessage.ACTION_CREATE));
 		return obj;
-	}
-
-	/**
-	 * Creates a new objective with the specified name and display name.
-	 *
-	 * @param name of objective
-	 * @param displayName to display for objective
-	 * @return newly created objective
-	 */
-	public Objective createObjective(String name, Object... displayName) {
-		return createObjective(name, new ChatArguments(displayName));
 	}
 
 	/**
@@ -114,18 +102,16 @@ public class Scoreboard extends EntityComponent {
 	 *
 	 * @param criteria to check for
 	 * @param key to find
-	 * @param amount of points to add
+	 * @param value of points to add
 	 */
-	public void evaluateCriteria(String criteria, String key, int amount, boolean add) {
+	public void evaluateCriteria(String key, int value, boolean add, String... criteria) {
 		for (Objective obj : objectives) {
-			if (obj.getCriteria().equals(criteria)) {
-				for (String k : obj.getScoreMap().keySet()) {
-					if (k.equals(key)) {
-						if (add) {
-							obj.addScore(key, amount);
-						} else {
-							obj.setScore(key, amount);
-						}
+			for (String c : criteria) {
+				if (obj.getCriteria().equals(c) && obj.getScoreMap().containsKey(key)) {
+					if (add) {
+						obj.addScore(key, value);
+					} else {
+						obj.setScore(key, value);
 					}
 				}
 			}

@@ -132,14 +132,16 @@ public class TestCommands {
 		player.sendMessage(ChatStyle.BRIGHT_GREEN, "Displaying scoreboard...");
 
 		Scoreboard scoreboard = player.add(Scoreboard.class);
-		scoreboard.createObjective("test_obj_1", ChatStyle.BRIGHT_GREEN, "Test Objective 1")
+		scoreboard.createObjective("test_obj_1")
+				.setDisplayName(ChatStyle.BRIGHT_GREEN, "Test Objective 1")
 				.setScore(name, 9001)
 				.setCriteria(Objective.CRITERIA_HEALTH)
 				.setSlot(ObjectiveSlot.SIDEBAR);
 
-		scoreboard.createObjective("test_obj_2", ChatStyle.DARK_CYAN, "Test Objective 2")
+		scoreboard.createObjective("test_obj_2")
+				.setDisplayName(ChatStyle.DARK_CYAN, "Test Objective 2")
 				.setScore(name, 0)
-				.setCriteria(Objective.CRITERIA_DEATH_COUNT)
+				.setCriteria(Objective.CRITERIA_TOTAL_KILL_COUNT)
 				.setSlot(ObjectiveSlot.LIST);
 	}
 	

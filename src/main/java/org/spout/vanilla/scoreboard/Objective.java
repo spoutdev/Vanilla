@@ -69,15 +69,14 @@ public class Objective implements Named {
 	public static final String CRITERIA_HEALTH = "health";
 	private final Scoreboard scoreboard;
 	private final String name;
-	private ChatArguments displayName;
+	private ChatArguments displayName = new ChatArguments("");
 	private final Map<String, Integer> score = new HashMap<String, Integer>();
 	private ObjectiveSlot slot;
 	private String criteria = CRITERIA_DUMMY;
 
-	protected Objective(Scoreboard scoreboard, String name, ChatArguments displayName) {
+	protected Objective(Scoreboard scoreboard, String name) {
 		this.scoreboard = scoreboard;
 		this.name = name;
-		this.displayName = displayName;
 	}
 
 	/**

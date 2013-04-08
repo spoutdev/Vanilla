@@ -215,9 +215,9 @@ public class Health extends EntityComponent {
 		VanillaEntityDeathEvent event;
 		Entity owner = getOwner();
 		if (owner instanceof Player) {
-			event = new PlayerDeathEvent((Player) owner);
+			event = new PlayerDeathEvent((Player) owner, lastDamageCause, lastDamager);
 		} else {
-			event = new VanillaEntityDeathEvent(owner);
+			event = new VanillaEntityDeathEvent(owner, lastDamageCause, lastDamager);
 		}
 		if (!getEngine().getEventManager().callEvent(event).isCancelled()) {
 			if (!(owner instanceof Player)) {
@@ -347,7 +347,7 @@ public class Health extends EntityComponent {
 		// Special cases
 		Entity owner = getOwner();
 		if (owner instanceof Player) {
-			owner.getNetwork().callProtocolEvent(new PlayerHealthEvent(((Player) getOwner())));
+			owner.getNetwork().callProtocolEvent(new PlayerHealthEvent((Player) getOwner()));
 		} else if (owner instanceof EnderDragon || owner instanceof Wither) {
 			java.util.List<Parameter<?>> params = new ArrayList<Parameter<?>>(1);
 			params.add(new Parameter<Short>(Parameter.TYPE_SHORT, 16, (short) health));

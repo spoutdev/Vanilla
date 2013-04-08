@@ -29,6 +29,7 @@ package org.spout.vanilla.event.player;
 import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
 
+import org.spout.vanilla.event.cause.DamageCause;
 import org.spout.vanilla.event.entity.VanillaEntityDeathEvent;
 
 /**
@@ -39,6 +40,10 @@ public class PlayerDeathEvent extends VanillaEntityDeathEvent {
 
 	public PlayerDeathEvent(Player player) {
 		super(player);
+	}
+
+	public PlayerDeathEvent(Player player, DamageCause<?> lastDamageCause, Object lastDamager) {
+		super(player, lastDamageCause, lastDamager);
 	}
 
 	/**

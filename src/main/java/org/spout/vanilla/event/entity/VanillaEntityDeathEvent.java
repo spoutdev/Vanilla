@@ -29,6 +29,7 @@ package org.spout.vanilla.event.entity;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityDeathEvent;
+import org.spout.vanilla.event.cause.DamageCause;
 
 /**
  * Event which is called when a Living dies
@@ -36,9 +37,49 @@ import org.spout.api.event.entity.EntityDeathEvent;
 public class VanillaEntityDeathEvent extends EntityDeathEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private int dropExp;
+	private DamageCause<?> lastDamageCause;
+	private Object lastDamager;
 
 	public VanillaEntityDeathEvent(Entity e) {
 		super(e);
+	}
+
+	public VanillaEntityDeathEvent(Entity e, DamageCause<?> lastDamageCause, Object lastDamager) {
+		super(e);
+		this.lastDamageCause = lastDamageCause;
+		this.lastDamager = lastDamager;
+	}
+
+	/**
+	 * Gets the last damage cause.
+	 * @return The last damage cause.
+	 */
+	public DamageCause<?> getLastDamageCause() {
+		return lastDamageCause;
+	}
+
+	/**
+	 * Sets the last damage cause.
+	 * @param lastDamageCause The last damage cause to set.
+	 */
+	public void setLastDamageCause(DamageCause<?> lastDamageCause) {
+		this.lastDamageCause = lastDamageCause;
+	}
+
+	/**
+	 * Gets the last damager.
+	 * @return the last damager.
+	 */
+	public Object getLastDamager() {
+		return lastDamager;
+	}
+
+	/**
+	 * Sets the last damager.
+	 * @param lastDamager the last damager to set.
+	 */
+	public void setLastDamager(Object lastDamager) {
+		this.lastDamager = lastDamager;
 	}
 
 	/**
@@ -70,4 +111,5 @@ public class VanillaEntityDeathEvent extends EntityDeathEvent {
 	public static HandlerList getHandlerList() {
 		return handlers;
 	}
+
 }

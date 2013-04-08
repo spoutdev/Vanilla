@@ -59,20 +59,16 @@ public class ScoreboardListener implements Listener {
 
 	@EventHandler(order = Order.LATEST)
 	public void entityHealth(EntityHealthChangeEvent event) {
-		System.out.println("Entity health changed");
 		Entity entity = event.getEntity();
 		Engine engine = Spout.getEngine();
 		if (!(entity instanceof Player) || !(engine instanceof Server)) {
 			return;
 		}
 
-		System.out.println("DEBUG");
 		Player player = (Player) entity;
 		for (Player p : ((Server) engine).getOnlinePlayers()) {
-			System.out.println("Updating: " + p.getName());
 			Scoreboard scoreboard = p.get(Scoreboard.class);
 			if (scoreboard != null) {
-				System.out.println("Has scoreboard.");
 				scoreboard.evaluateCriteria(Objective.CRITERIA_HEALTH, player.getName(), player.get(Health.class).getHealth() + event.getChange(), false);
 			}
 		}

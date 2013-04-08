@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.scoreboard;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -117,6 +118,15 @@ public class Objective implements Named {
 	 */
 	public Objective setDisplayName(Object... displayName) {
 		return setDisplayName(new ChatArguments(displayName));
+	}
+
+	/**
+	 * Returns the score mapping.
+	 *
+	 * @return score mapping
+	 */
+	public Map<String, Integer> getScoreMap() {
+		return Collections.unmodifiableMap(score);
 	}
 
 	/**
@@ -289,9 +299,11 @@ public class Objective implements Named {
 	 * Sets the criteria for this objective.
 	 *
 	 * @param criteria to set
+	 * @return this objective
 	 */
-	public void setCriteria(String criteria) {
+	public Objective setCriteria(String criteria) {
 		this.criteria = criteria;
+		return this;
 	}
 
 	@Override

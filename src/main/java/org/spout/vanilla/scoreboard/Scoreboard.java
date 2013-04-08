@@ -109,6 +109,30 @@ public class Scoreboard extends EntityComponent {
 	}
 
 	/**
+	 * Updates the score of the specified key for every objective with the
+	 * specified criteria to the specified value.
+	 *
+	 * @param criteria to check for
+	 * @param key to find
+	 * @param amount of points to add
+	 */
+	public void evaluateCriteria(String criteria, String key, int amount, boolean add) {
+		for (Objective obj : objectives) {
+			if (obj.getCriteria().equals(criteria)) {
+				for (String k : obj.getScoreMap().keySet()) {
+					if (k.equals(key)) {
+						if (add) {
+							obj.addScore(key, amount);
+						} else {
+							obj.setScore(key, amount);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	/**
 	 * Returns the player associated with this scoreboard.
 	 *
 	 * @return player

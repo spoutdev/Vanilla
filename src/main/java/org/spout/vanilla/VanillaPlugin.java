@@ -44,6 +44,7 @@ import org.spout.api.component.impl.DatatableComponent;
 import org.spout.api.component.impl.NetworkComponent;
 import org.spout.api.component.impl.ObserverComponent;
 import org.spout.api.entity.Entity;
+import org.spout.api.event.EventManager;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
@@ -86,6 +87,7 @@ import org.spout.vanilla.protocol.LANThread;
 import org.spout.vanilla.protocol.VanillaProtocol;
 import org.spout.vanilla.protocol.rcon.RemoteConnectionCore;
 import org.spout.vanilla.protocol.rcon.RemoteConnectionServer;
+import org.spout.vanilla.scoreboard.ScoreboardListener;
 import org.spout.vanilla.service.VanillaProtectionService;
 import org.spout.vanilla.service.protection.SpawnProtection;
 import org.spout.vanilla.util.thread.SpawnLoader;
@@ -123,7 +125,10 @@ public class VanillaPlugin extends CommonPlugin {
 		if (getEngine().debugMode()) {
 			getEngine().getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
 		}
-		getEngine().getEventManager().registerEvents(new VanillaListener(this), this);
+
+		EventManager em = getEngine().getEventManager();
+		em.registerEvents(new VanillaListener(this), this);
+		em.registerEvents(new ScoreboardListener(), this);
 
 		switch (getEngine().getPlatform()) {
 			case CLIENT:

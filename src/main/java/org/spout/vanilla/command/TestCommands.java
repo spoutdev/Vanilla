@@ -101,6 +101,9 @@ import org.spout.vanilla.protocol.entity.creature.CreatureType;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 import org.spout.vanilla.render.LightRenderEffect;
 import org.spout.vanilla.render.SkyRenderEffect;
+import org.spout.vanilla.scoreboard.Objective;
+import org.spout.vanilla.scoreboard.ObjectiveSlot;
+import org.spout.vanilla.scoreboard.Scoreboard;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
@@ -115,6 +118,29 @@ public class TestCommands {
 
 	private Engine getEngine() {
 		return plugin.getEngine();
+	}
+
+	@Command(aliases = {"testscoreboard", "tsb"}, desc = "Not to be confused with '/scoreboard'")
+	@CommandPermissions("vanilla.command.debug")
+	public void scoreboard(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to display the scoreboard.");
+		}
+
+		Player player = (Player) source;
+		String name = player.getName();
+		player.sendMessage(ChatStyle.BRIGHT_GREEN, "Displaying scoreboard...");
+
+		Scoreboard scoreboard = player.add(Scoreboard.class);
+		scoreboard.createObjective("test_obj_1", ChatStyle.BRIGHT_GREEN, "Test Objective 1")
+				.setScore(name, 9001)
+				.setCriteria(Objective.CRITERIA_HEALTH)
+				.setSlot(ObjectiveSlot.SIDEBAR);
+
+		scoreboard.createObjective("test_obj_2", ChatStyle.DARK_CYAN, "Test Objective 2")
+				.setScore(name, 0)
+				.setCriteria(Objective.CRITERIA_DEATH_COUNT)
+				.setSlot(ObjectiveSlot.LIST);
 	}
 	
 	@Command(aliases = "lightcheck", usage = "", desc = "Checks nearby light values", max = 0)

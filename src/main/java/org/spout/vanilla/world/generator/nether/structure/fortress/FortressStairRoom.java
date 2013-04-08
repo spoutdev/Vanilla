@@ -54,42 +54,42 @@ public class FortressStairRoom extends StructurePiece {
 		box.setPicker(picker);
 		// Floor
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(0, 0, 0, 6, 1, 6).fill();
+		box.setMinMax(-1, 0, 0, 5, 1, 6).fill();
 		// Interior space
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
 		box.offsetMinMax(0, 2, 0, 0, 9, 0).fill();
 		// Walls
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(0, 2, 0, 1, 8, 0).fill();
+		box.setMinMax(-1, 2, 0, 0, 8, 0).fill();
 		box.offsetMinMax(5, 0, 0, 5, 0, 0).fill();
-		box.setMinMax(0, 2, 1, 0, 8, 6).fill();
+		box.setMinMax(-1, 2, 1, -1, 8, 6).fill();
 		box.offsetMinMax(6, 0, 0, 6, 0, 0).fill();
-		box.setMinMax(1, 2, 6, 5, 8, 6).fill();
+		box.setMinMax(0, 2, 6, 4, 8, 6).fill();
 		// Windows
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.NETHER_BRICK_FENCE);
-		box.setMinMax(0, 3, 2, 0, 5, 4).fill();
+		box.setMinMax(-1, 3, 2, -1, 5, 4).fill();
 		box.offsetMinMax(6, 0, 0, 6, 0, -2).fill();
 		box.offsetMinMax(0, 0, 2, 0, 0, 2).fill();
 		// Stairs to the roof
-		setBlockMaterial(5, 2, 5, VanillaMaterials.NETHER_BRICK);
+		setBlockMaterial(4, 2, 5, VanillaMaterials.NETHER_BRICK);
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(4, 2, 5, 4, 3, 5).fill();
+		box.setMinMax(3, 2, 5, 3, 3, 5).fill();
 		box.offsetMinMax(-1, 0, 0, -1, 1, 0).fill();
 		box.offsetMinMax(-1, 0, 0, -1, 1, 0).fill();
 		box.offsetMinMax(-1, 0, 0, -1, 1, 0).fill();
 		// Roof
-		box.setMinMax(1, 7, 1, 5, 7, 4).fill();
+		box.setMinMax(0, 7, 1, 4, 7, 4).fill();
 		// Remove part of the side wall on the roof to make an entrance
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
-		box.setMinMax(6, 8, 2, 6, 8, 4).fill();
+		box.setMinMax(5, 8, 2, 5, 8, 4).fill();
 		// Material above the lower entrance to make shorter
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(2, 6, 0, 4, 8, 0).fill();
+		box.setMinMax(1, 6, 0, 3, 8, 0).fill();
 		// Fences above the lower entrance to make a gateway
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.NETHER_BRICK_FENCE);
-		box.setMinMax(2, 5, 0, 4, 5, 0).fill();
+		box.setMinMax(1, 5, 0, 3, 5, 0).fill();
 		// Fill down to the ground
-		for (int xx = 0; xx <= 6; xx++) {
+		for (int xx = -1; xx <= 5; xx++) {
 			for (int zz = 0; zz <= 6; zz++) {
 				fillDownwards(xx, -1, zz, 50, VanillaMaterials.NETHER_BRICK);
 			}

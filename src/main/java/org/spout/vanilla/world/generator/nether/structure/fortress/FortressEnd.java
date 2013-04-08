@@ -57,20 +57,20 @@ public class FortressEnd extends StructurePiece {
 		// Partially built higher part of the bridge
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
 		for (int xx = 0; xx <= 4; xx++) {
-			for (int yy = 3; yy <= 4; yy++) {
+			for (int yy = 0; yy <= 1; yy++) {
 				box.setMinMax(xx, yy, 0, xx, yy, random.nextInt(8)).fill();
 			}
 		}
 		// Partially built side walls of the bridge
-		box.setMinMax(0, 5, 0, 0, 5, random.nextInt(8)).fill();
-		box.setMinMax(4, 5, 0, 4, 5, random.nextInt(8)).fill();
+		box.setMinMax(0, 2, 0, 0, 2, random.nextInt(8)).fill();
+		box.setMinMax(4, 2, 0, 4, 2, random.nextInt(8)).fill();
 		// Partially built middle part of the bridge
 		for (int xx = 0; xx <= 4; xx++) {
-			box.setMinMax(xx, 2, 0, xx, 2, random.nextInt(5)).fill();
+			box.setMinMax(xx, -1, 0, xx, -1, random.nextInt(5)).fill();
 		}
 		// Partially built lower part of the bridge
 		for (int xx = 0; xx <= 4; xx++) {
-			for (int yy = 0; yy <= 1; yy++) {
+			for (int yy = -3; yy <= -2; yy++) {
 				box.setMinMax(xx, yy, 0, xx, yy, random.nextInt(3)).fill();
 			}
 		}

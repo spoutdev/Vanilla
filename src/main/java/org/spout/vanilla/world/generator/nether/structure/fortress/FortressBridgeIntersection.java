@@ -54,15 +54,15 @@ public class FortressBridgeIntersection extends StructurePiece {
 		box.setPicker(picker);
 		// Floors for both bridges
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(7, 3, 0, 11, 4, 18).fill();
+		box.setMinMax(0, 0, 0, 4, 1, 18).fill();
 		box.offsetMinMax(-7, 0, 7, 7, 0, -7).fill();
 		// Clear some space
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
-		box.setMinMax(8, 5, 0, 10, 7, 18).fill();
+		box.setMinMax(1, 2, 0, 3, 4, 18).fill();
 		box.offsetMinMax(-8, 0, 8, 8, 0, -8).fill();
 		// Side walls for the bridges
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(7, 5, 0, 7, 5, 7).fill();
+		box.setMinMax(0, 2, 0, 0, 2, 7).fill();
 		box.offsetMinMax(0, 0, 11, 0, 0, 11).fill();
 		box.offsetMinMax(4, 0, -11, 4, 0, -11).fill();
 		box.offsetMinMax(0, 0, 11, 0, 0, 11).fill();
@@ -71,27 +71,27 @@ public class FortressBridgeIntersection extends StructurePiece {
 		box.offsetMinMax(-11, 0, 4, -11, 0, 4).fill();
 		box.offsetMinMax(11, 0, 0, 11, 0, 0).fill();
 		// Add material under the first bridge to make an arch
-		box.setMinMax(7, 2, 0, 11, 2, 5).fill();
+		box.setMinMax(0, -1, 0, 4, -1, 5).fill();
 		box.offsetMinMax(0, 0, 13, 0, 0, 13).fill();
-		box.setMinMax(7, 0, 0, 11, 1, 3).fill();
+		box.setMinMax(0, -3, 0, 4, -2, 3).fill();
 		box.offsetMinMax(0, 0, 15, 0, 0, 15).fill();
 		// Build the pillars of the first bridge
-		for (int xx = 7; xx <= 11; xx++) {
+		for (int xx = 0; xx <= 4; xx++) {
 			for (int zz = 0; zz <= 2; zz++) {
-				fillDownwards(xx, -1, zz, 50, VanillaMaterials.NETHER_BRICK);
-				fillDownwards(xx, -1, 18 - zz, 50, VanillaMaterials.NETHER_BRICK);
+				fillDownwards(xx, -4, zz, 50, VanillaMaterials.NETHER_BRICK);
+				fillDownwards(xx, -4, 18 - zz, 50, VanillaMaterials.NETHER_BRICK);
 			}
 		}
 		// Add material under the second bridge to make an arch
-		box.setMinMax(0, 2, 7, 5, 2, 11).fill();
+		box.setMinMax(-7, -1, 7, -2, -1, 11).fill();
 		box.offsetMinMax(13, 0, 0, 13, 0, 0).fill();
-		box.setMinMax(0, 0, 7, 3, 1, 11).fill();
+		box.setMinMax(-7, -3, 7, -4, -2, 11).fill();
 		box.offsetMinMax(15, 0, 0, 15, 0, 0).fill();
 		// Build the pillars of the second bridge
-		for (int xx = 0; xx <= 2; xx++) {
+		for (int xx = -7; xx <= -5; xx++) {
 			for (int zz = 7; zz <= 11; zz++) {
-				fillDownwards(xx, -1, zz, 50, VanillaMaterials.NETHER_BRICK);
-				fillDownwards(18 - xx, -1, zz, 50, VanillaMaterials.NETHER_BRICK);
+				fillDownwards(xx, -4, zz, 50, VanillaMaterials.NETHER_BRICK);
+				fillDownwards(18 - xx, -4, zz, 50, VanillaMaterials.NETHER_BRICK);
 			}
 		}
 	}

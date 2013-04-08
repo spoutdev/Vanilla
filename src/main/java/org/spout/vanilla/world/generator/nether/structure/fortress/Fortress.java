@@ -26,16 +26,27 @@
  */
 package org.spout.vanilla.world.generator.nether.structure.fortress;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+import java.util.Set;
+
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.Quaternion;
-import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.material.VanillaMaterials;
+
 import org.spout.vanilla.world.generator.structure.Structure;
+import org.spout.vanilla.world.generator.structure.StructurePiece;
 import org.spout.vanilla.world.generator.structure.StructurePiece.BoundingBox;
 
 public class Fortress extends Structure {
+	private static final byte MAX_SIZE_BASE = 76;
+	private static final byte MAX_SIZE_RAND = 75;
+
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
 		return true;
@@ -43,34 +54,53 @@ public class Fortress extends Structure {
 
 	@Override
 	public void placeObject(World w, int x, int y, int z) {
-		final FortressBlazeBalcony test = new FortressBlazeBalcony(this);
-		test.setPosition(new Point(w, x, y, z));
-		test.setRotation(new Quaternion(random.nextInt(4) * 90, 0, 1, 0));
-		test.randomize();
-		fillBoundingBox(w, test.getBoundingBox());
-		test.place();
-	}
-
-	/**
-	 * Test method for displaying bounding boxes. TODO: remove when done.
-	 *
-	 * @param world World to fill in
-	 */
-	private void fillBoundingBox(World world, BoundingBox box) {
-		final Vector3 min = box.getMin();
-		final Vector3 max = box.getMax();
-		final int sx = min.getFloorX();
-		final int sy = min.getFloorY();
-		final int sz = min.getFloorZ();
-		final int ex = max.getFloorX();
-		final int ey = max.getFloorY();
-		final int ez = max.getFloorZ();
-		for (int x = sx; x <= ex; x++) {
-			for (int y = sy; y <= ey; y++) {
-				for (int z = sz; z <= ez; z++) {
-					world.setBlockMaterial(x, y, z, VanillaMaterials.GLASS, (short) 0, null);
+		final Set<BoundingBox> placed = new HashSet<BoundingBox>();
+		final Queue<StructurePiece> activeBranches = new LinkedList<StructurePiece>();
+		final StructurePiece corridor = new FortressTurn(this);
+		corridor.setPosition(new Point(w, x, y, z));
+		//corridor.setRotation(new Quaternion(random.nextInt(4) * 90, 0, 1, 0));
+		corridor.randomize();
+		activeBranches.add(corridor);
+		final int size = random.nextInt(MAX_SIZE_RAND) + MAX_SIZE_BASE;
+		byte count = 0;
+		while (!activeBranches.isEmpty()) {
+			final StructurePiece active = activeBranches.poll();
+			final BoundingBox activeBox = active.getBoundingBox();
+			if (active.getPosition().getY() >= 10
+					&& !collides(activeBox, active.getLastComponent(), placed)
+					&& active.canPlace()) {
+				active.place();
+				active.setBlockMaterial(0, 0, 0, VanillaMaterials.GOLD_BLOCK);
+				// remove when done /\
+				if (++count > size) {
+					return;
+				}
+				placed.add(activeBox);
+				try {
+					final List<StructurePiece> next = active.getNextComponents();
+					for (StructurePiece component : next) {
+						component.setLastComponent(active);
+					}
+					activeBranches.addAll(next);
+				} catch (UnsupportedOperationException ex) {
+					// remove when done /\
 				}
 			}
 		}
+	}
+
+	private boolean collides(BoundingBox box, StructurePiece lastComponent, Collection<BoundingBox> boxes) {
+		final BoundingBox last;
+		if (lastComponent == null) {
+			last = null;
+		} else {
+			last = lastComponent.getBoundingBox();
+		}
+		for (BoundingBox other : boxes) {
+			if (!other.equals(last) && other.intersects(box)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

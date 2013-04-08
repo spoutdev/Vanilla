@@ -26,7 +26,9 @@
  */
 package org.spout.vanilla.world.generator.nether.structure.fortress;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.spout.api.math.Vector3;
 
@@ -54,44 +56,44 @@ public class FortressBalconyIntersection extends StructurePiece {
 		box.setPicker(picker);
 		// Floor
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(0, 0, 0, 8, 1, 8).fill();
+		box.setMinMax(-2, 0, 0, 6, 1, 8).fill();
 		// Interior space
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
 		box.offsetMinMax(0, 2, 0, 0, 4, 0).fill();
 		// Roof
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(0, 6, 0, 8, 6, 5).fill();
+		box.setMinMax(-2, 6, 0, 6, 6, 5).fill();
 		// First wall
-		box.setMinMax(0, 2, 0, 2, 5, 0).fill();
+		box.setMinMax(-2, 2, 0, 0, 5, 0).fill();
 		box.offsetMinMax(6, 0, 0, 6, 0, 0).fill();
 		// Windows for the first wall
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.NETHER_BRICK_FENCE);
-		box.setMinMax(1, 3, 0, 1, 4, 0).fill();
+		box.setMinMax(-1, 3, 0, -1, 4, 0).fill();
 		box.offsetMinMax(6, 0, 0, 6, 0, 0).fill();
 		// Balcony floor
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(0, 2, 4, 8, 2, 8).fill();
+		box.setMinMax(-2, 2, 4, 6, 2, 8).fill();
 		// Air spaces next to the balcony entrance
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
-		box.setMinMax(1, 1, 4, 2, 2, 4).fill();
+		box.setMinMax(-1, 1, 4, 0, 2, 4).fill();
 		box.offsetMinMax(5, 0, 0, 5, 0, 0).fill();
 		// Fences for the balcony
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.NETHER_BRICK_FENCE);
-		box.setMinMax(0, 3, 8, 8, 3, 8).fill();
-		box.setMinMax(0, 3, 6, 0, 3, 7).fill();
+		box.setMinMax(-2, 3, 8, 6, 3, 8).fill();
+		box.setMinMax(-2, 3, 6, -2, 3, 7).fill();
 		box.offsetMinMax(8, 0, 0, 8, 0, 0).fill();
 		// Wall separating the room and balcony
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(0, 3, 4, 0, 5, 5).fill();
+		box.setMinMax(-2, 3, 4, -2, 5, 5).fill();
 		box.offsetMinMax(8, 0, 0, 8, 0, 0).fill();
-		box.setMinMax(1, 3, 5, 2, 5, 5).fill();
+		box.setMinMax(-1, 3, 5, 0, 5, 5).fill();
 		box.offsetMinMax(5, 0, 0, 5, 0, 0).fill();
 		// Windows for that wall
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.NETHER_BRICK_FENCE);
-		box.setMinMax(1, 4, 5, 1, 5, 5).fill();
+		box.setMinMax(-1, 4, 5, -1, 5, 5).fill();
 		box.offsetMinMax(6, 0, 0, 6, 0, 0).fill();
 		// Fill down to the ground
-		for (int xx = 0; xx <= 8; xx++) {
+		for (int xx = -2; xx <= 6; xx++) {
 			for (int zz = 0; zz <= 5; zz++) {
 				fillDownwards(xx, -1, zz, 50, VanillaMaterials.NETHER_BRICK);
 			}
@@ -104,7 +106,34 @@ public class FortressBalconyIntersection extends StructurePiece {
 
 	@Override
 	public List<StructurePiece> getNextComponents() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		final List<StructurePiece> components = new ArrayList<StructurePiece>();
+//		final Random random = getRandom();
+//		final StructurePiece right = pickComponent(random);
+//		right.setPosition(position.add(rotate(-5, 0, 5)));
+//		right.setRotation(rotation.rotate(-90, 0, 1, 0));
+//		right.randomize();
+//		components.add(right);
+//		final StructurePiece left = pickComponent(random);
+//		left.setPosition(position.add(rotate(5, 0, 5)));
+//		left.setRotation(rotation.rotate(90, 0, 1, 0));
+//		left.randomize();
+//		components.add(left);
+		return components;
+	}
+
+	private StructurePiece pickComponent(Random random) {
+		final float draw = random.nextFloat();
+		if (draw > 0.8) {
+			return new FortressTurn(parent);
+		} else if (draw > 0.6) {
+			return new FortressEnd(parent);
+		} else if (draw > 0.4) {
+			return new FortressCorridor(parent);
+		} else if (draw > 0.2) {
+			return new FortressBridgeIntersection(parent);
+		} else {
+			return new FortressBridge(parent);
+		}
 	}
 
 	@Override

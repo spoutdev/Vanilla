@@ -54,34 +54,34 @@ public class FortressBlazeBalcony extends StructurePiece {
 		box.setPicker(picker);
 		// Clear some space
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
-		box.setMinMax(0, 2, 0, 6, 7, 7).fill();
+		box.setMinMax(-1, 2, 0, 5, 7, 7).fill();
 		// Base of the balcony
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(1, 0, 0, 5, 1, 7).fill();
+		box.setMinMax(0, 0, 0, 4, 1, 7).fill();
 		// Stairs to the balcony
-		box.setMinMax(1, 2, 1, 5, 2, 7).fill();
+		box.setMinMax(0, 2, 1, 4, 2, 7).fill();
 		box.offsetMinMax(0, 1, 1, 0, 1, 0).fill();
 		box.offsetMinMax(0, 1, 1, 0, 1, 0).fill();
 		// Walls on the sides of the stairs
-		box.setMinMax(1, 2, 0, 1, 4, 2).fill();
+		box.setMinMax(0, 2, 0, 0, 4, 2).fill();
 		box.offsetMinMax(4, 0, 0, 4, 0, 0).fill();
-		box.setMinMax(1, 5, 2, 1, 5, 3).fill();
+		box.setMinMax(0, 5, 2, 0, 5, 3).fill();
 		box.offsetMinMax(4, 0, 0, 4, 0, 0).fill();
 		// Side walls of the balcony
-		box.setMinMax(0, 5, 3, 0, 5, 8).fill();
+		box.setMinMax(-1, 5, 3, -1, 5, 8).fill();
 		box.offsetMinMax(6, 0, 0, 6, 0, 0).fill();
-		box.setMinMax(1, 5, 8, 5, 5, 8).fill();
+		box.setMinMax(0, 5, 8, 4, 5, 8).fill();
 		// Fences above the side walls of the balcony
-		setBlockMaterial(1, 6, 3, VanillaMaterials.NETHER_BRICK_FENCE);
-		setBlockMaterial(5, 6, 3, VanillaMaterials.NETHER_BRICK_FENCE);
+		setBlockMaterial(0, 6, 3, VanillaMaterials.NETHER_BRICK_FENCE);
+		setBlockMaterial(4, 6, 3, VanillaMaterials.NETHER_BRICK_FENCE);
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.NETHER_BRICK_FENCE);
-		box.setMinMax(0, 6, 3, 0, 6, 8).fill();
+		box.setMinMax(-1, 6, 3, -1, 6, 8).fill();
 		box.offsetMinMax(6, 0, 0, 6, 0, 0).fill();
-		box.setMinMax(1, 6, 8, 5, 7, 8).fill();
-		box.setMinMax(2, 8, 8, 4, 8, 8).fill();
-		setBlockMaterial(3, 5, 5, VanillaMaterials.MONSTER_SPAWNER);
+		box.setMinMax(0, 6, 8, 4, 7, 8).fill();
+		box.setMinMax(1, 8, 8, -3, 8, 8).fill();
+		setBlockMaterial(2, 5, 5, VanillaMaterials.MONSTER_SPAWNER);
 		// Fill down to the ground
-		for (int xx = 0; xx <= 6; xx++) {
+		for (int xx = -1; xx <= 5; xx++) {
 			for (int zz = 0; zz <= 6; zz++) {
 				fillDownwards(xx, -1, zz, 50, VanillaMaterials.NETHER_BRICK);
 			}

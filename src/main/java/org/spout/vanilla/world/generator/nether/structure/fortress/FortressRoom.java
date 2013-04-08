@@ -56,80 +56,80 @@ public class FortressRoom extends StructurePiece {
 		box.setPicker(picker);
 		// Floor
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(0, 3, 0, 12, 4, 12).fill();
+		box.setMinMax(-4, 0, 0, 8, 1, 12).fill();
 		// Interior space
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
 		box.offsetMinMax(0, 2, 0, 0, 9, 0).fill();
 		// The too walls without entrances
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(0, 5, 0, 1, 12, 12).fill();
+		box.setMinMax(-4, 2, 0, -3, 9, 12).fill();
 		box.offsetMinMax(11, 0, 0, 11, 0, 0).fill();
-		box.setMinMax(2, 5, 11, 4, 12, 12).fill();
+		box.setMinMax(-2, 2, 11, 0, 9, 12).fill();
 		box.offsetMinMax(6, 0, 0, 6, 0, 0).fill();
 		// The two other walls
-		box.setMinMax(5, 9, 0, 7, 12, 1).fill();
+		box.setMinMax(1, 6, 0, 3, 9, 1).fill();
 		box.offsetMinMax(0, 0, 11, 0, 0, 11).fill();
-		box.setMinMax(2, 5, 0, 4, 12, 1).fill();
+		box.setMinMax(-2, 2, 0, 0, 9, 1).fill();
 		box.offsetMinMax(6, 0, 0, 6, 0, 0).fill();
 		// Roof
-		box.setMinMax(2, 11, 2, 10, 12, 10).fill();
+		box.setMinMax(-2, 8, 2, 6, 9, 10).fill();
 		// Fences to create a get out of one of the entrances
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.NETHER_BRICK_FENCE);
-		box.setMinMax(5, 8, 0, 7, 8, 0).fill();
+		box.setMinMax(1, 5, 0, 3, 5, 0).fill();
 		// Decorate the outside
 		for (int xxzz = 1; xxzz <= 11; xxzz += 2) {
 			// Fences on the outside walls
-			box.setMinMax(xxzz, 10, 0, xxzz, 11, 0).fill();
+			box.setMinMax(xxzz - 4, 7, 0, xxzz - 4, 8, 0).fill();
 			box.offsetMinMax(0, 0, 12, 0, 0, 12).fill();
-			box.setMinMax(0, 10, xxzz, 0, 11, xxzz).fill();
+			box.setMinMax(-4, 7, xxzz, -4, 8, xxzz).fill();
 			box.offsetMinMax(12, 0, 0, 12, 0, 0).fill();
 			// Fences and brick on the roof
-			setBlockMaterial(xxzz, 13, 0, VanillaMaterials.NETHER_BRICK);
-			setBlockMaterial(xxzz, 13, 12, VanillaMaterials.NETHER_BRICK);
-			setBlockMaterial(0, 13, xxzz, VanillaMaterials.NETHER_BRICK);
-			setBlockMaterial(12, 13, xxzz, VanillaMaterials.NETHER_BRICK);
-			setBlockMaterial(xxzz + 1, 13, 0, VanillaMaterials.NETHER_BRICK_FENCE);
-			setBlockMaterial(xxzz + 1, 13, 12, VanillaMaterials.NETHER_BRICK_FENCE);
-			setBlockMaterial(0, 13, xxzz + 1, VanillaMaterials.NETHER_BRICK_FENCE);
-			setBlockMaterial(12, 13, xxzz + 1, VanillaMaterials.NETHER_BRICK_FENCE);
+			setBlockMaterial(xxzz - 4, 10, 0, VanillaMaterials.NETHER_BRICK);
+			setBlockMaterial(xxzz - 4, 10, 12, VanillaMaterials.NETHER_BRICK);
+			setBlockMaterial(-4, 10, xxzz, VanillaMaterials.NETHER_BRICK);
+			setBlockMaterial(8, 10, xxzz, VanillaMaterials.NETHER_BRICK);
+			setBlockMaterial(xxzz - 3, 10, 0, VanillaMaterials.NETHER_BRICK_FENCE);
+			setBlockMaterial(xxzz - 3, 10, 12, VanillaMaterials.NETHER_BRICK_FENCE);
+			setBlockMaterial(-4, 10, xxzz + 1, VanillaMaterials.NETHER_BRICK_FENCE);
+			setBlockMaterial(8, 10, xxzz + 1, VanillaMaterials.NETHER_BRICK_FENCE);
 		}
 		// Corner fences for the roof
-		setBlockMaterial(0, 13, 0, VanillaMaterials.NETHER_BRICK_FENCE);
-		setBlockMaterial(0, 13, 12, VanillaMaterials.NETHER_BRICK_FENCE);
-		setBlockMaterial(0, 13, 0, VanillaMaterials.NETHER_BRICK_FENCE);
-		setBlockMaterial(12, 13, 0, VanillaMaterials.NETHER_BRICK_FENCE);
+		setBlockMaterial(-4, 10, 0, VanillaMaterials.NETHER_BRICK_FENCE);
+		setBlockMaterial(-4, 10, 12, VanillaMaterials.NETHER_BRICK_FENCE);
+		setBlockMaterial(-4, 10, 0, VanillaMaterials.NETHER_BRICK_FENCE);
+		setBlockMaterial(8, 10, 0, VanillaMaterials.NETHER_BRICK_FENCE);
 		// Fences on the inside
 		for (int zz = 3; zz <= 9; zz += 2) {
-			box.setMinMax(1, 7, zz, 1, 8, zz).fill();
+			box.setMinMax(-3, 4, zz, -3, 5, zz).fill();
 			box.offsetMinMax(10, 0, 0, 10, 0, 0).fill();
 		}
 		// Material just above the pillar to create some arch shape
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(4, 2, 0, 8, 2, 12).fill();
+		box.setMinMax(0, -1, 0, 4, -1, 12).fill();
 		box.offsetMinMax(-4, 0, 4, 4, 0, -4).fill();
-		box.setMinMax(4, 0, 0, 8, 1, 3).fill();
+		box.setMinMax(0, -3, 0, 4, -2, 3).fill();
 		box.offsetMinMax(0, 0, 9, 0, 0, 9).fill();
-		box.setMinMax(0, 0, 4, 3, 1, 8).fill();
+		box.setMinMax(-4, -3, 4, -1, -2, 8).fill();
 		box.offsetMinMax(9, 0, 0, 9, 0, 0).fill();
 		// Build the four pillars down to the gound
-		for (int xx = 4; xx <= 8; xx++) {
+		for (int xx = 0; xx <= 4; xx++) {
 			for (int zz = 0; zz <= 2; zz++) {
-				fillDownwards(xx, -1, zz, 50, VanillaMaterials.NETHER_BRICK);
-				fillDownwards(xx, -1, 12 - zz, 50, VanillaMaterials.NETHER_BRICK);
+				fillDownwards(xx, -4, zz, 50, VanillaMaterials.NETHER_BRICK);
+				fillDownwards(xx, -4, 12 - zz, 50, VanillaMaterials.NETHER_BRICK);
 			}
 		}
-		for (int xx = 0; xx <= 2; xx++) {
+		for (int xx = -4; xx <= -2; xx++) {
 			for (int zz = 4; zz <= 8; zz++) {
-				fillDownwards(xx, -1, zz, 50, VanillaMaterials.NETHER_BRICK);
-				fillDownwards(12 - xx, -1, zz, 50, VanillaMaterials.NETHER_BRICK);
+				fillDownwards(xx, -4, zz, 50, VanillaMaterials.NETHER_BRICK);
+				fillDownwards(4 - xx, -4, zz, 50, VanillaMaterials.NETHER_BRICK);
 			}
 		}
 		// Lava in the middle of the room falling bellow
-		box.setMinMax(5, 5, 5, 7, 5, 7).fill();
+		box.setMinMax(1, 2, 5, 3, 2, 7).fill();
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
-		box.setMinMax(6, 1, 6, 6, 4, 6).fill();
-		setBlockMaterial(0, 6, 0, 6, VanillaMaterials.NETHER_BRICK);
-		final Block lava = getBlock(6, 5, 6);
+		box.setMinMax(2, -2, 6, 2, 1, 6).fill();
+		setBlockMaterial(2, -3, 6, VanillaMaterials.NETHER_BRICK);
+		final Block lava = getBlock(2, 2, 6);
 		lava.setMaterial(VanillaMaterials.LAVA);
 		Liquid.performInstantFlow(lava);
 	}

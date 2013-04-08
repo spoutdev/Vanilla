@@ -56,11 +56,11 @@ public class FortressStaircase extends StructurePiece {
 		// Built section by section
 		for (int zz = 0; zz <= 9; zz++) {
 			// Starting and ending yy for the section
-			final int syy = Math.max(1, 7 - zz);
-			final int eyy = GenericMath.clamp(syy + 5, 14 - zz, 13);
+			final int syy = Math.max(1, 7 - zz) - 7;
+			final int eyy = GenericMath.clamp(syy + 5, 14 - zz, 13) - 7;
 			// Basic outline
 			picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-			box.setMinMax(0, 0, zz, 4, syy, zz).fill();
+			box.setMinMax(0, -7, zz, 4, syy, zz).fill();
 			picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
 			box.setMinMax(1, syy + 1, zz, 3, eyy - 1, zz).fill();
 			// Add some stairs
@@ -82,7 +82,7 @@ public class FortressStaircase extends StructurePiece {
 			}
 			// Fill down to the ground
 			for (int xx = 0; xx <= 4; xx++) {
-				fillDownwards(xx, -1, zz, 50, VanillaMaterials.NETHER_BRICK);
+				fillDownwards(xx, -8, zz, 50, VanillaMaterials.NETHER_BRICK);
 			}
 		}
 	}

@@ -54,22 +54,22 @@ public class FortressGateIntersection extends StructurePiece {
 		box.setPicker(picker);
 		// Floor
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(0, 0, 0, 6, 1, 6).fill();
+		box.setMinMax(-1, 0, 0, 5, 1, 6).fill();
 		// Interior space
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
 		box.offsetMinMax(0, 2, 0, 0, 6, 0).fill();
 		// The four corner columns
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(0, 2, 0, 1, 6, 0).fill();
+		box.setMinMax(-1, 2, 0, 0, 6, 0).fill();
 		box.offsetMinMax(0, 0, 6, 0, 0, 6).fill();
 		box.offsetMinMax(5, 0, -6, 5, 0, -6).fill();
 		box.offsetMinMax(0, 0, 6, 0, 0, 6).fill();
-		box.setMinMax(0, 2, 0, 0, 6, 1).fill();
+		box.setMinMax(-1, 2, 0, -1, 6, 1).fill();
 		box.offsetMinMax(0, 0, 5, 0, 0, 5).fill();
 		box.offsetMinMax(6, 0, -5, 6, 0, -5).fill();
 		box.offsetMinMax(0, 0, 5, 0, 0, 5).fill();
 		// Connect the corner columns horizontally at the ceiling to create gateways
-		box.setMinMax(2, 6, 0, 4, 6, 0).fill();
+		box.setMinMax(1, 6, 0, 3, 6, 0).fill();
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.NETHER_BRICK_FENCE);
 		box.offsetMinMax(0, -1, 0, 0, -1, 0).fill();
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
@@ -77,7 +77,7 @@ public class FortressGateIntersection extends StructurePiece {
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.NETHER_BRICK_FENCE);
 		box.offsetMinMax(0, -1, 0, 0, -1, 0).fill();
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(0, 6, 2, 0, 6, 4).fill();
+		box.setMinMax(-1, 6, 2, -1, 6, 4).fill();
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.NETHER_BRICK_FENCE);
 		box.offsetMinMax(0, -1, 0, 0, -1, 0).fill();
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
@@ -85,7 +85,7 @@ public class FortressGateIntersection extends StructurePiece {
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.NETHER_BRICK_FENCE);
 		box.offsetMinMax(0, -1, 0, 0, -1, 0).fill();
 		// Fill down to the ground
-		for (int xx = 0; xx <= 6; xx++) {
+		for (int xx = -1; xx <= 5; xx++) {
 			for (int zz = 0; zz <= 6; zz++) {
 				fillDownwards(xx, -1, zz, 50, VanillaMaterials.NETHER_BRICK);
 			}

@@ -54,35 +54,35 @@ public class FortressBridge extends StructurePiece {
 		box.setPicker(picker);
 		// Floor
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(0, 3, 0, 4, 4, 18).fill();
+		box.setMinMax(0, 0, 0, 4, 1, 18).fill();
 		// Clear some space
 		picker.setOuterInnerMaterials(VanillaMaterials.AIR, VanillaMaterials.AIR);
-		box.setMinMax(1, 5, 0, 3, 7, 18).fill();
+		box.setMinMax(1, 2, 0, 3, 4, 18).fill();
 		// Side walls
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK, VanillaMaterials.NETHER_BRICK);
-		box.setMinMax(0, 5, 0, 0, 5, 18).fill();
+		box.setMinMax(0, 2, 0, 0, 2, 18).fill();
 		box.offsetMinMax(4, 0, 0, 4, 0, 0).fill();
 		// Add material under the bridge to make an arch
-		box.setMinMax(0, 2, 0, 4, 2, 5).fill();
+		box.setMinMax(0, -1, 0, 4, -1, 5).fill();
 		box.offsetMinMax(0, 0, 13, 0, 0, 13).fill();
-		box.setMinMax(0, 0, 0, 4, 1, 3).fill();
+		box.setMinMax(0, -3, 0, 4, -2, 3).fill();
 		box.offsetMinMax(0, 0, 15, 0, 0, 15).fill();
 		// Build the pillars on the both ends downwards
 		for (int xx = 0; xx <= 4; xx++) {
 			for (int zz = 0; zz <= 2; zz++) {
-				fillDownwards(xx, -1, zz, 50, VanillaMaterials.NETHER_BRICK);
-				fillDownwards(xx, -1, 18 - zz, 50, VanillaMaterials.NETHER_BRICK);
+				fillDownwards(xx, -4, zz, 50, VanillaMaterials.NETHER_BRICK);
+				fillDownwards(xx, -4, 18 - zz, 50, VanillaMaterials.NETHER_BRICK);
 			}
 		}
 		// Decoration fences on the side of the bridge
 		picker.setOuterInnerMaterials(VanillaMaterials.NETHER_BRICK_FENCE, VanillaMaterials.NETHER_BRICK_FENCE);
-		box.setMinMax(0, 3, 4, 0, 4, 4).fill();
+		box.setMinMax(0, 0, 4, 0, 1, 4).fill();
 		box.offsetMinMax(0, 0, 10, 0, 0, 10).fill();
-		box.setMinMax(4, 3, 4, 4, 4, 4).fill();
+		box.setMinMax(4, 0, 4, 4, 1, 4).fill();
 		box.offsetMinMax(0, 0, 10, 0, 0, 10).fill();
-		box.setMinMax(0, 1, 1, 0, 4, 1).fill();
+		box.setMinMax(0, -2, 1, 0, 1, 1).fill();
 		box.offsetMinMax(0, 0, 16, 0, 0, 16).fill();
-		box.setMinMax(4, 1, 1, 4, 4, 1).fill();
+		box.setMinMax(4, -2, 1, 4, 1, 1).fill();
 		box.offsetMinMax(0, 0, 16, 0, 0, 16).fill();
 	}
 

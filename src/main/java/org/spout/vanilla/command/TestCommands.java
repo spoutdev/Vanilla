@@ -144,6 +144,28 @@ public class TestCommands {
 				.setCriteria(Objective.CRITERIA_TOTAL_KILL_COUNT)
 				.setSlot(ObjectiveSlot.LIST);
 	}
+
+	@Command(aliases = {"testteams", "tt"}, desc = "Tests teams functionality.")
+	@CommandPermissions("vanilla.command.debug")
+	public void teams(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to test teams.");
+		}
+
+		Player player = (Player) source;
+		String name = player.getName();
+		player.sendMessage("Creating team...");
+
+		Scoreboard scoreboard = player.get(Scoreboard.class);
+		if (scoreboard == null) {
+			throw new CommandException("You do not have an active scoreboard.");
+		}
+
+		scoreboard.createTeam("spoutdev")
+				.setDisplayName(ChatStyle.DARK_CYAN, "Spout")
+				.setPrefix(ChatStyle.BRIGHT_GREEN)
+				.addPlayerName(name);
+	}
 	
 	@Command(aliases = "lightcheck", usage = "", desc = "Checks nearby light values", max = 0)
 	@CommandPermissions("vanilla.command.debug")

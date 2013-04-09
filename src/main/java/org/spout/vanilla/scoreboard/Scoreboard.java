@@ -30,13 +30,15 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.spout.api.chat.ChatArguments;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
+import org.spout.api.protocol.event.ProtocolEvent;
 
 import org.spout.vanilla.event.scoreboard.ObjectiveActionEvent;
+import org.spout.vanilla.event.scoreboard.TeamActionEvent;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardObjectiveMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardTeamMessage;
 
 /**
  * Represents a collection of objective attached to a player.
@@ -44,6 +46,7 @@ import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardObjectiveMessage;
 public class Scoreboard extends EntityComponent {
 	private Player player;
 	private final Set<Objective> objectives = new HashSet<Objective>();
+	private final Set<Team> teams = new HashSet<Team>();
 
 	/**
 	 * Creates a new objective with the specified name and display name.
@@ -54,7 +57,7 @@ public class Scoreboard extends EntityComponent {
 	public Objective createObjective(String name) {
 		Objective obj = new Objective(this, name);
 		objectives.add(obj);
-		player.getNetworkSynchronizer().callProtocolEvent(new ObjectiveActionEvent(obj, ScoreboardObjectiveMessage.ACTION_CREATE));
+		callProtocolEvent(new ObjectiveActionEvent(obj, ScoreboardObjectiveMessage.ACTION_CREATE));
 		return obj;
 	}
 
@@ -69,7 +72,7 @@ public class Scoreboard extends EntityComponent {
 			throw new IllegalArgumentException("Specified objective name does not exist on this scoreboard.");
 		}
 		objectives.remove(obj);
-		player.getNetworkSynchronizer().callProtocolEvent(new ObjectiveActionEvent(obj, ScoreboardObjectiveMessage.ACTION_REMOVE));
+		callProtocolEvent(new ObjectiveActionEvent(obj, ScoreboardObjectiveMessage.ACTION_REMOVE));
 	}
 
 	/**
@@ -94,6 +97,57 @@ public class Scoreboard extends EntityComponent {
 	 */
 	public Set<Objective> getObjectives() {
 		return Collections.unmodifiableSet(objectives);
+	}
+
+	/**
+	 * Creates a new team on this scoreboard.
+	 *
+	 * @param name of new team
+	 * @return newly created team
+	 */
+	public Team createTeam(String name) {
+		Team team = new Team(this, name);
+		teams.add(team);
+		callProtocolEvent(new TeamActionEvent(team, ScoreboardTeamMessage.ACTION_CREATE));
+		return team;
+	}
+
+	/**
+	 * Removes team with specified name.
+	 *
+	 * @param name of team to remove
+	 */
+	public void removeTeam(String name) {
+		Team team = getTeam(name);
+		if (team == null) {
+			throw new IllegalArgumentException("Specified team does not exist on this scoreboard.");
+		}
+		teams.remove(team);
+		callProtocolEvent(new TeamActionEvent(team, ScoreboardTeamMessage.ACTION_REMOVE));
+	}
+
+	/**
+	 * Returns the team with the specified name.
+	 *
+	 * @param name of team to get
+	 * @return team with specified name
+	 */
+	public Team getTeam(String name) {
+		for (Team team : teams) {
+			if (team.getName().equals(name)) {
+				return team;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Returns a set of all teams on this scoreboard.
+	 *
+	 * @return set of all teams
+	 */
+	public Set<Team> getTeams() {
+		return Collections.unmodifiableSet(teams);
 	}
 
 	/**
@@ -125,6 +179,10 @@ public class Scoreboard extends EntityComponent {
 	 */
 	public Player getPlayer() {
 		return player;
+	}
+
+	protected void callProtocolEvent(ProtocolEvent event) {
+		player.getNetworkSynchronizer().callProtocolEvent(event);
 	}
 
 	@Override

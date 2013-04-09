@@ -105,7 +105,7 @@ public class Objective implements Named {
 	 */
 	public Objective setDisplayName(ChatArguments displayName) {
 		this.displayName = displayName;
-		scoreboard.getPlayer().getNetworkSynchronizer().callProtocolEvent(new ObjectiveActionEvent(this, ScoreboardObjectiveMessage.ACTION_UPDATE));
+		scoreboard.callProtocolEvent(new ObjectiveActionEvent(this, ScoreboardObjectiveMessage.ACTION_UPDATE));
 		return this;
 	}
 
@@ -167,7 +167,7 @@ public class Objective implements Named {
 	 */
 	public Objective setScore(String key, int value) {
 		score.put(key, value);
-		scoreboard.getPlayer().getNetworkSynchronizer().callProtocolEvent(new ScoreUpdateEvent(key, value, name, false));
+		scoreboard.callProtocolEvent(new ScoreUpdateEvent(key, value, name, false));
 		return this;
 	}
 
@@ -240,7 +240,7 @@ public class Objective implements Named {
 	 */
 	public Objective removeScore(String key) {
 		score.remove(key);
-		scoreboard.getPlayer().getNetworkSynchronizer().callProtocolEvent(new ScoreUpdateEvent(key, 0, name, true));
+		scoreboard.callProtocolEvent(new ScoreUpdateEvent(key, 0, name, true));
 		return this;
 	}
 
@@ -281,7 +281,7 @@ public class Objective implements Named {
 	 */
 	public Objective setSlot(ObjectiveSlot slot) {
 		this.slot = slot;
-		scoreboard.getPlayer().getNetworkSynchronizer().callProtocolEvent(new ObjectiveDisplayEvent(name, slot));
+		scoreboard.callProtocolEvent(new ObjectiveDisplayEvent(name, slot));
 		return this;
 	}
 

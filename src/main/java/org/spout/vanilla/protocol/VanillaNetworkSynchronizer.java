@@ -106,6 +106,7 @@ import org.spout.vanilla.event.player.network.PlayerSelectedSlotChangeEvent;
 import org.spout.vanilla.event.scoreboard.ObjectiveActionEvent;
 import org.spout.vanilla.event.scoreboard.ObjectiveDisplayEvent;
 import org.spout.vanilla.event.scoreboard.ScoreUpdateEvent;
+import org.spout.vanilla.event.scoreboard.TeamActionEvent;
 import org.spout.vanilla.event.window.WindowCloseEvent;
 import org.spout.vanilla.event.window.WindowItemsEvent;
 import org.spout.vanilla.event.window.WindowOpenEvent;
@@ -147,6 +148,7 @@ import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnPositionMessage;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardDisplayMessage;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardObjectiveMessage;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardScoreMessage;
+import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardTeamMessage;
 import org.spout.vanilla.protocol.msg.window.WindowCloseMessage;
 import org.spout.vanilla.protocol.msg.window.WindowItemsMessage;
 import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
@@ -162,6 +164,7 @@ import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 import org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage;
 import org.spout.vanilla.protocol.reposition.VanillaRepositionManager;
 import org.spout.vanilla.scoreboard.Objective;
+import org.spout.vanilla.scoreboard.Team;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
 
 import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
@@ -827,6 +830,17 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	@EventHandler
 	public Message onScoreUpdate(ScoreUpdateEvent event) {
 		return new ScoreboardScoreMessage(event.getKey(), event.isRemove(), event.getObjectiveName(), event.getValue());
+	}
+
+	@EventHandler
+	public Message onTeamAction(TeamActionEvent event) {
+		Team team = event.getTeam();
+		return new ScoreboardTeamMessage(
+				team.getName(), event.getAction(),
+				team.getDisplayName().asString(),
+				team.getPrefix().asString(), team.getSuffix().asString(),
+				team.isFriendlyFire(), event.getPlayers()
+		);
 	}
 
 	public enum ChunkInit {

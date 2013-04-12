@@ -32,12 +32,14 @@ import org.spout.api.geo.LoadOption;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.GenericMath;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.living.passive.Sheep;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.tool.ToolType;
+import org.spout.vanilla.event.entity.SheepShearedEvent;
 import org.spout.vanilla.inventory.entity.QuickbarInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -59,18 +61,18 @@ public class Shears extends Tool {
 				//TODO: Also return if this is a baby sheep
 				return;
 			}
+			short col = sheep.getColor().getData();
+			ItemStack itemStack = new ItemStack(VanillaMaterials.WOOL, col, GenericMath.getRandom().nextInt(3) + 1);
+
+			SheepShearedEvent event = VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new SheepShearedEvent(other, entity, itemStack));
+
+			if (event.isCancelled()) {
+				return;
+			}
 
 			sheep.setSheared(true);
-			short col = sheep.getColor().getData();
 
-			other.getWorld().createAndSpawnEntity(other.getScene().getPosition(), LoadOption.NO_LOAD, Item.class);
-			Item item = entity.add(Item.class);
-			item.setItemStack(new ItemStack(VanillaMaterials.WOOL, col, GenericMath.getRandom().nextInt(3) + 1));
-
-			if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-				QuickbarInventory quickbar = entity.get(PlayerInventory.class).getQuickbar();
-				quickbar.getSelectedSlot().addData(1);
-			}
+			Item.dropNaturally(other.getScene().getPosition(), event.getItemStack());
 		}
 	}
 }

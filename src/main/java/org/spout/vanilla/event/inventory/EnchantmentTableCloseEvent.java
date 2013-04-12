@@ -32,6 +32,7 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryCloseEvent;
 
 import org.spout.vanilla.component.block.material.EnchantmentTable;
+import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
 
 /**
  * Event which is fired when an EnchantmentTable is closed.
@@ -40,8 +41,8 @@ public class EnchantmentTableCloseEvent extends InventoryCloseEvent implements C
 	private static final HandlerList handlers = new HandlerList();
 	private final EnchantmentTable enchantmentTable;
 
-	public EnchantmentTableCloseEvent(EnchantmentTable enchantmentTable, Entity entity) {
-		super(enchantmentTable.getInventory(), entity);
+	public EnchantmentTableCloseEvent(EnchantmentTable enchantmentTable,EnchantmentTableInventory inventory, Entity entity) {
+		super(inventory, entity);
 		this.enchantmentTable = enchantmentTable;
 	}
 

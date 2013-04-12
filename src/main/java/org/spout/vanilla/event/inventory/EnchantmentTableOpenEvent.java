@@ -32,6 +32,7 @@ import org.spout.api.event.HandlerList;
 import org.spout.api.event.inventory.InventoryOpenEvent;
 
 import org.spout.vanilla.component.block.material.EnchantmentTable;
+import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
 
 /**
  * Event which is fired when an EnchantmentTable is opened.
@@ -40,8 +41,8 @@ public class EnchantmentTableOpenEvent extends InventoryOpenEvent implements Can
 	private static final HandlerList handlers = new HandlerList();
 	private final EnchantmentTable enchantmentTable;
 
-	public EnchantmentTableOpenEvent(EnchantmentTable enchantmentTable, Entity entity) {
-		super(enchantmentTable.getInventory(), entity);
+	public EnchantmentTableOpenEvent(EnchantmentTable enchantmentTable, EnchantmentTableInventory inventory, Entity entity) {
+		super(inventory, entity);
 		this.enchantmentTable = enchantmentTable;
 	}
 

@@ -44,9 +44,10 @@ import org.spout.vanilla.material.VanillaMaterials;
 public class EnchantmentTable extends ViewedBlockComponent {
 	@Override
 	public boolean open(Player player) {
-		EnchantmentTableOpenEvent event = player.getEngine().getEventManager().callEvent(new EnchantmentTableOpenEvent(this, player));
+		EnchantmentTableInventory inventory = new EnchantmentTableInventory();
+		EnchantmentTableOpenEvent event = player.getEngine().getEventManager().callEvent(new EnchantmentTableOpenEvent(this, inventory, player));
 		if (!event.isCancelled()) {
-			player.get(WindowHolder.class).openWindow(new EnchantmentTableWindow(player, this, new EnchantmentTableInventory()));
+			player.get(WindowHolder.class).openWindow(new EnchantmentTableWindow(player, this, inventory));
 			return true;
 		}
 		return false;
@@ -54,7 +55,7 @@ public class EnchantmentTable extends ViewedBlockComponent {
 
 	@Override
 	public boolean close(Player player) {
-		EnchantmentTableCloseEvent event = player.getEngine().getEventManager().callEvent(new EnchantmentTableCloseEvent(this, player));
+		EnchantmentTableCloseEvent event = player.getEngine().getEventManager().callEvent(new EnchantmentTableCloseEvent(this, null, player));
 		if (!event.isCancelled()) {
 			return super.close(player);
 		}

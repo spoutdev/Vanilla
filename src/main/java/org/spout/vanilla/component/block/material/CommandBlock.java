@@ -206,11 +206,11 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 		}
 	}
 
-	private boolean isTarget(char c) {
+	private static boolean isTarget(char c) {
 		return c == NEAREST_PLAYER_CHAR || c == RANDOM_PLAYER_CHAR || c == ALL_PLAYERS_CHAR;
 	}
 
-	private String getStatement(String cmd, int index) {
+	private static String getStatement(String cmd, int index) {
 		cmd = cmd.substring(index);
 		if (cmd.length() > 6 && cmd.charAt(2) == '[' && cmd.contains("]")) {
 			return cmd.substring(0, cmd.indexOf("]") + 1);
@@ -289,8 +289,7 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 					}
 				}
 
-				for (int i = 0; i < args.length; i++) {
-					String arg = args[i];
+				for (String arg : args) {
 					if (arg == null || !arg.contains("=")) {
 						continue;
 					}
@@ -335,7 +334,7 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 
 		public Player findPlayer(List<Player> players, boolean ignoreDistance) {
 			for (Player p : players) {
-				if (accept(p)) {
+				if (accept(p, ignoreDistance)) {
 					return p;
 				}
 			}

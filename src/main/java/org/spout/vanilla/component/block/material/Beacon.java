@@ -29,8 +29,6 @@ package org.spout.vanilla.component.block.material;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.inventory.Container;
-import org.spout.api.inventory.Inventory;
 import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.component.block.ViewedBlockComponent;
@@ -173,17 +171,6 @@ public class Beacon extends ViewedBlockComponent {
 	}
 
 	/**
-	 * Returns true if the specified {@link BlockMaterial} is a valid material
-	 * to use in the construction of a Beacon's power pyramid.
-	 *
-	 * @param mat to check
-	 * @return true if material is valid
-	 */
-	public boolean isPyramidMaterial(BlockMaterial mat) {
-		return mat.isMaterial(VanillaMaterials.IRON_BLOCK, VanillaMaterials.GOLD_BLOCK, VanillaMaterials.DIAMOND_BLOCK, VanillaMaterials.EMERALD_BLOCK);
-	}
-
-	/**
 	 * Returns the amplifier on the primary effect. This returns one if this
 	 * Beacon has four levels, and it's primary effect is the same as it's
 	 * secondary effect.
@@ -216,7 +203,6 @@ public class Beacon extends ViewedBlockComponent {
 		}
 
 		for (Player player : pos.getWorld().getNearbyPlayers(pos, (int) getEffectRange())) {
-			System.out.println("For: " + player.getName());
 			Effects effects = player.add(Effects.class);
 			effects.addEffect(new EntityEffect(primary, getEffectDuration(), getPrimaryAmplifier()));
 			if (secondary != null && secondary != EntityEffectType.NONE && getLevels() == 4 && primary != secondary) {
@@ -232,6 +218,17 @@ public class Beacon extends ViewedBlockComponent {
 		setUpdateDelay(getMaxUpdateDelay());
 	}
 
+	/**
+	 * Returns true if the specified {@link BlockMaterial} is a valid material
+	 * to use in the construction of a Beacon's power pyramid.
+	 *
+	 * @param mat to check
+	 * @return true if material is valid
+	 */
+	public static boolean isPyramidMaterial(BlockMaterial mat) {
+		return mat.isMaterial(VanillaMaterials.IRON_BLOCK, VanillaMaterials.GOLD_BLOCK, VanillaMaterials.DIAMOND_BLOCK, VanillaMaterials.EMERALD_BLOCK);
+	}
+
 	private float pulseUpdateDelay(float dt) {
 		float delay = getUpdateDelay() - dt;
 		setUpdateDelay(delay);
@@ -241,7 +238,6 @@ public class Beacon extends ViewedBlockComponent {
 	@Override
 	public void onTick(float dt) {
 		if (pulseUpdateDelay(dt) <= 0) {
-			System.out.println("Performing update...");
 			doUpdate();
 		}
 	}

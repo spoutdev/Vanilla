@@ -33,6 +33,7 @@ import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.component.block.material.EnchantmentTable;
+import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.Window;
@@ -43,10 +44,12 @@ import org.spout.vanilla.material.item.VanillaItemMaterial;
 
 public class EnchantmentTableWindow extends Window {
 	private final EnchantmentTable enchantmentTable;
+	private final EnchantmentTableInventory inventory;
 	private final int[] levels = new int[3];
 
 	public EnchantmentTableWindow(Player owner, EnchantmentTable enchantmentTable, EnchantmentTableInventory inventory, String title) {
 		super(owner, WindowType.ENCHANTMENT_TABLE, title, 1);
+		this.inventory = inventory;
 		addInventoryConverter(new InventoryConverter(inventory, "0", new Vector2[0]));
 		this.enchantmentTable = enchantmentTable;
 	}
@@ -57,32 +60,6 @@ public class EnchantmentTableWindow extends Window {
 
 	public EnchantmentTableWindow(Player owner, EnchantmentTableInventory inventory, String title) {
 		this(owner, null, inventory, title);
-	}
-
-	@Override
-	public void onSlotSet(Inventory inventory, int slot, ItemStack item, ItemStack previous) {
-		super.onSlotSet(inventory, slot, item, previous);
-		if (!(inventory instanceof EnchantmentTableInventory) || slot != 0) {
-			return;
-		}
-		if (item != null && item.getMaterial() instanceof VanillaItemMaterial && ((VanillaItemMaterial) item.getMaterial()).isEnchantable() && !Enchantment.isEnchanted(item)) {
-			// Ensures that the third slot is always the maximum amount of possible levels based on nearby bookshelves
-			int bookshelves = getEnchantmentTable().getNearbyBookshelves();
-			if (bookshelves > 15) {
-				bookshelves = 15;
-			}
-
-			debug("Calculating enchantment levels with " + bookshelves + " bookshelves.");
-
-			int base = (GenericMath.getRandom().nextInt(8) + 1) + GenericMath.floor(bookshelves / 2) + GenericMath.getRandom().nextInt(bookshelves + 1);
-			setEnchantmentLevel(EnchantmentTableProperty.SLOT_1, GenericMath.max((byte) (base / 3), (byte) 1)); // Minimum level
-			setEnchantmentLevel(EnchantmentTableProperty.SLOT_2, (base * 2) / 3 + 1);
-			setEnchantmentLevel(EnchantmentTableProperty.SLOT_3, GenericMath.max((byte) base, (byte) (bookshelves * 2))); // Maximum level
-		} else {
-			for (int i = 0; i < 2; ++i) {
-				setEnchantmentLevel(i, 0);
-			}
-		}
 	}
 
 	public EnchantmentTable getEnchantmentTable() {
@@ -122,5 +99,43 @@ public class EnchantmentTableWindow extends Window {
 		}
 		levels[slot] = level;
 		setProperty(slot, level);
+	}
+
+	@Override
+	public void close() {
+		for (ItemStack item : inventory) {
+			if (item == null) {
+				continue;
+			}
+			getHuman().dropItem(item);
+		}
+		inventory.clear();
+		super.close();
+	}
+
+	@Override
+	public void onSlotSet(Inventory inventory, int slot, ItemStack item, ItemStack previous) {
+		super.onSlotSet(inventory, slot, item, previous);
+		if (!(inventory instanceof EnchantmentTableInventory) || slot != 0) {
+			return;
+		}
+		if (item != null && item.getMaterial() instanceof VanillaItemMaterial && ((VanillaItemMaterial) item.getMaterial()).isEnchantable() && !Enchantment.isEnchanted(item)) {
+			// Ensures that the third slot is always the maximum amount of possible levels based on nearby bookshelves
+			int bookshelves = getEnchantmentTable().getNearbyBookshelves();
+			if (bookshelves > 15) {
+				bookshelves = 15;
+			}
+
+			debug("Calculating enchantment levels with " + bookshelves + " bookshelves.");
+
+			int base = (GenericMath.getRandom().nextInt(8) + 1) + GenericMath.floor(bookshelves / 2) + GenericMath.getRandom().nextInt(bookshelves + 1);
+			setEnchantmentLevel(EnchantmentTableProperty.SLOT_1, GenericMath.max((byte) (base / 3), (byte) 1)); // Minimum level
+			setEnchantmentLevel(EnchantmentTableProperty.SLOT_2, (base * 2) / 3 + 1);
+			setEnchantmentLevel(EnchantmentTableProperty.SLOT_3, GenericMath.max((byte) base, (byte) (bookshelves * 2))); // Maximum level
+		} else {
+			for (int i = 0; i < 2; ++i) {
+				setEnchantmentLevel(i, 0);
+			}
+		}
 	}
 }

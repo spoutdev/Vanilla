@@ -41,19 +41,12 @@ import org.spout.vanilla.material.VanillaMaterials;
 /**
  * Component that represents a enchantment table in a world.
  */
-public class EnchantmentTable extends ViewedBlockComponent implements Container {
-	private final EnchantmentTableInventory inventory = new EnchantmentTableInventory();
-
-	@Override
-	public EnchantmentTableInventory getInventory() {
-		return inventory;
-	}
-
+public class EnchantmentTable extends ViewedBlockComponent {
 	@Override
 	public boolean open(Player player) {
 		EnchantmentTableOpenEvent event = player.getEngine().getEventManager().callEvent(new EnchantmentTableOpenEvent(this, player));
 		if (!event.isCancelled()) {
-			player.get(WindowHolder.class).openWindow(new EnchantmentTableWindow(player, this, inventory));
+			player.get(WindowHolder.class).openWindow(new EnchantmentTableWindow(player, this, new EnchantmentTableInventory()));
 			return true;
 		}
 		return false;

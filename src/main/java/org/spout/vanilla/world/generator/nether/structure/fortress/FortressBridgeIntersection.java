@@ -91,7 +91,7 @@ public class FortressBridgeIntersection extends StructurePiece {
 		for (int xx = -7; xx <= -5; xx++) {
 			for (int zz = 7; zz <= 11; zz++) {
 				fillDownwards(xx, -4, zz, 50, VanillaMaterials.NETHER_BRICK);
-				fillDownwards(18 - xx, -4, zz, 50, VanillaMaterials.NETHER_BRICK);
+				fillDownwards(4 - xx, -4, zz, 50, VanillaMaterials.NETHER_BRICK);
 			}
 		}
 	}

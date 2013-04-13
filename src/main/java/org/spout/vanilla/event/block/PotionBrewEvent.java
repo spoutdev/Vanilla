@@ -55,7 +55,7 @@ public class PotionBrewEvent extends BlockEvent implements Cancellable {
 	public BrewingStand getBrewingStand() {
 		return brewingStand;
 	}
-	
+
 	/**
 	 * Get the ingredient used in the brewing process
 	 * @return ingredient
@@ -79,7 +79,7 @@ public class PotionBrewEvent extends BlockEvent implements Cancellable {
 	public ItemStack getResult() {
 		return result;
 	}
-	
+
 	/**
 	 * Set the result ItemStack
 	 * @param result

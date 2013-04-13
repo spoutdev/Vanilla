@@ -26,8 +26,9 @@
  */
 package org.spout.vanilla.world.generator.normal.structure.mineshaft;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 
 import org.spout.api.math.Vector3;
 
@@ -71,26 +72,19 @@ public class MineshaftStaircase extends StructurePiece {
 
 	@Override
 	public List<StructurePiece> getNextComponents() {
-		final List<StructurePiece> components = new ArrayList<StructurePiece>(1);
 		final StructurePiece component;
 		final float draw = getRandom().nextFloat();
 		if (draw > 0.8) {
-			final MineshaftRoom room = new MineshaftRoom(parent);
-			room.randomize();
-			room.setPosition(position.add(rotate(-room.getLenght() / 2 + 1, -6, 8)));
-			component = room;
+			component = new MineshaftRoom(parent);
 		} else if (draw > 0.4) {
 			component = new MineshaftIntersection(parent);
-			component.setPosition(position.add(rotate(0, -5, 8)));
-			component.randomize();
 		} else {
 			component = new MineshaftCorridor(parent);
-			component.setPosition(position.add(rotate(0, -5, 8)));
-			component.randomize();
 		}
+		component.setPosition(position.add(rotate(0, -5, 8)));
 		component.setRotation(rotation);
-		components.add(component);
-		return components;
+		component.randomize();
+		return Lists.newArrayList(component);
 	}
 
 	@Override

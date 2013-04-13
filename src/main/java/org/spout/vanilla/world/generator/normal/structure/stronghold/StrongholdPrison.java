@@ -26,8 +26,9 @@
  */
 package org.spout.vanilla.world.generator.normal.structure.stronghold;
 
-import java.util.Arrays;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
@@ -93,32 +94,25 @@ public class StrongholdPrison extends StructurePiece {
 		final float draw = getRandom().nextFloat();
 		if (draw > 0.95) {
 			component = new StrongholdLibrary(parent);
-			component.setPosition(position.add(rotate(-3, 0, 11)));
 		} else if (draw > 0.90) {
 			component = new StrongholdChestCorridor(parent);
-			component.setPosition(position.add(rotate(0, 0, 11)));
 		} else if (draw > 0.75) {
 			component = new StrongholdSpiralStaircase(parent);
-			component.setPosition(position.add(rotate(0, 0, 11)));
 		} else if (draw > 0.60) {
 			component = new StrongholdRoom(parent);
-			component.setPosition(position.add(rotate(-3, 0, 11)));
 		} else if (draw > 0.45) {
 			component = new StrongholdLargeIntersection(parent);
-			component.setPosition(position.add(rotate(-3, -2, 11)));
 		} else if (draw > 0.30) {
 			component = new StrongholdIntersection(parent);
-			component.setPosition(position.add(rotate(0, 0, 11)));
 		} else if (draw > 0.15) {
 			component = new StrongholdStaircase(parent);
-			component.setPosition(position.add(rotate(0, 0, 11)));
 		} else {
 			component = new StrongholdTurn(parent);
-			component.setPosition(position.add(rotate(0, 0, 11)));
 		}
+		component.setPosition(position.add(rotate(0, 0, 11)));
 		component.setRotation(rotation);
 		component.randomize();
-		return Arrays.asList(component);
+		return Lists.newArrayList(component);
 	}
 
 	@Override

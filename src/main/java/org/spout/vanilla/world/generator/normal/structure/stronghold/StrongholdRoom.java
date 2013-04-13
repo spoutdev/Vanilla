@@ -60,7 +60,7 @@ public class StrongholdRoom extends StructurePiece {
 	@Override
 	public boolean canPlace() {
 		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
-		box.setMinMax(-1, -1, -1, 11, 7, 11);
+		box.setMinMax(-4, -1, -1, 8, 7, 11);
 		return !box.intersectsLiquids();
 	}
 
@@ -69,14 +69,14 @@ public class StrongholdRoom extends StructurePiece {
 		// General shape
 		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setPicker(new StrongholdBlockMaterialPicker(getRandom()));
-		box.setMinMax(0, 0, 0, 10, 6, 10).toggleIgnoreAir().fill();
+		box.setMinMax(-3, 0, 0, 7, 6, 10).toggleIgnoreAir().fill();
 		box.toggleIgnoreAir();
 		// Place the door
-		StrongholdDoor.getRandomDoor(this, getRandom()).place(4, 1, 0);
+		StrongholdDoor.getRandomDoor(this, getRandom()).place(1, 1, 0);
 		// More access ways
 		box.setPicker(new SimpleBlockMaterialPicker());
-		box.setMinMax(4, 1, 10, 6, 3, 10).fill();
-		box.setMinMax(0, 1, 4, 0, 3, 6).fill();
+		box.setMinMax(1, 1, 10, 3, 3, 10).fill();
+		box.setMinMax(-3, 1, 4, -3, 3, 6).fill();
 		box.offsetMinMax(10, 0, 0, 10, 0, 0).fill();
 		// Add the features for the room type
 		if (type == null) {
@@ -85,84 +85,84 @@ public class StrongholdRoom extends StructurePiece {
 		switch (type) {
 			case CENTRAL_PILLAR:
 				// The pillar
-				setBlockMaterial(5, 1, 5, VanillaMaterials.STONE_BRICK);
-				setBlockMaterial(5, 2, 5, VanillaMaterials.STONE_BRICK);
-				setBlockMaterial(5, 3, 5, VanillaMaterials.STONE_BRICK);
+				setBlockMaterial(2, 1, 5, VanillaMaterials.STONE_BRICK);
+				setBlockMaterial(2, 2, 5, VanillaMaterials.STONE_BRICK);
+				setBlockMaterial(2, 3, 5, VanillaMaterials.STONE_BRICK);
 				// Torches on the pillar
-				attachMaterial(4, 3, 5, VanillaMaterials.TORCH);
-				attachMaterial(6, 3, 5, VanillaMaterials.TORCH);
-				attachMaterial(5, 3, 4, VanillaMaterials.TORCH);
-				attachMaterial(5, 3, 6, VanillaMaterials.TORCH);
+				attachMaterial(1, 3, 5, VanillaMaterials.TORCH);
+				attachMaterial(3, 3, 5, VanillaMaterials.TORCH);
+				attachMaterial(2, 3, 4, VanillaMaterials.TORCH);
+				attachMaterial(2, 3, 6, VanillaMaterials.TORCH);
 				// Slabs all around
-				setBlockMaterial(4, 1, 4, VanillaMaterials.SLAB);
-				setBlockMaterial(4, 1, 5, VanillaMaterials.SLAB);
-				setBlockMaterial(4, 1, 6, VanillaMaterials.SLAB);
-				setBlockMaterial(6, 1, 4, VanillaMaterials.SLAB);
-				setBlockMaterial(6, 1, 5, VanillaMaterials.SLAB);
-				setBlockMaterial(6, 1, 6, VanillaMaterials.SLAB);
-				setBlockMaterial(5, 1, 4, VanillaMaterials.SLAB);
-				setBlockMaterial(5, 1, 6, VanillaMaterials.SLAB);
+				setBlockMaterial(1, 1, 4, VanillaMaterials.SLAB);
+				setBlockMaterial(1, 1, 5, VanillaMaterials.SLAB);
+				setBlockMaterial(1, 1, 6, VanillaMaterials.SLAB);
+				setBlockMaterial(3, 1, 4, VanillaMaterials.SLAB);
+				setBlockMaterial(3, 1, 5, VanillaMaterials.SLAB);
+				setBlockMaterial(3, 1, 6, VanillaMaterials.SLAB);
+				setBlockMaterial(2, 1, 4, VanillaMaterials.SLAB);
+				setBlockMaterial(2, 1, 6, VanillaMaterials.SLAB);
 				break;
 			case FOUNTAIN:
 				// The pool
 				for (int i = 0; i < 5; i++) {
-					setBlockMaterial(3, 1, 3 + i, VanillaMaterials.STONE_BRICK);
-					setBlockMaterial(7, 1, 3 + i, VanillaMaterials.STONE_BRICK);
-					setBlockMaterial(3 + i, 1, 3, VanillaMaterials.STONE_BRICK);
-					setBlockMaterial(3 + i, 1, 7, VanillaMaterials.STONE_BRICK);
+					setBlockMaterial(0, 1, 3 + i, VanillaMaterials.STONE_BRICK);
+					setBlockMaterial(4, 1, 3 + i, VanillaMaterials.STONE_BRICK);
+					setBlockMaterial(i, 1, 3, VanillaMaterials.STONE_BRICK);
+					setBlockMaterial(i, 1, 7, VanillaMaterials.STONE_BRICK);
 				}
 				// Pillar at the center of the fountain
-				setBlockMaterial(5, 1, 5, VanillaMaterials.STONE_BRICK);
-				setBlockMaterial(5, 2, 5, VanillaMaterials.STONE_BRICK);
-				setBlockMaterial(5, 3, 5, VanillaMaterials.STONE_BRICK);
+				setBlockMaterial(2, 1, 5, VanillaMaterials.STONE_BRICK);
+				setBlockMaterial(2, 2, 5, VanillaMaterials.STONE_BRICK);
+				setBlockMaterial(2, 3, 5, VanillaMaterials.STONE_BRICK);
 				// The water source
-				setBlockMaterial(5, 4, 5, VanillaMaterials.WATER);
+				setBlockMaterial(2, 4, 5, VanillaMaterials.WATER);
 				break;
 			case TWO_FLOORS:
 				// Cobblestone ring for the upper floor
 				for (int i = 1; i <= 9; i++) {
-					setBlockMaterial(1, 3, i, VanillaMaterials.COBBLESTONE);
-					setBlockMaterial(9, 3, i, VanillaMaterials.COBBLESTONE);
-					setBlockMaterial(i, 3, 1, VanillaMaterials.COBBLESTONE);
-					setBlockMaterial(i, 3, 9, VanillaMaterials.COBBLESTONE);
+					setBlockMaterial(-2, 3, i, VanillaMaterials.COBBLESTONE);
+					setBlockMaterial(6, 3, i, VanillaMaterials.COBBLESTONE);
+					setBlockMaterial(i - 3, 3, 1, VanillaMaterials.COBBLESTONE);
+					setBlockMaterial(i - 3, 3, 9, VanillaMaterials.COBBLESTONE);
 				}
 				// Second and third cobblestone rings on the bottom and upper floors
-				setBlockMaterial(5, 1, 4, VanillaMaterials.COBBLESTONE);
-				setBlockMaterial(5, 1, 6, VanillaMaterials.COBBLESTONE);
-				setBlockMaterial(5, 3, 4, VanillaMaterials.COBBLESTONE);
-				setBlockMaterial(5, 3, 6, VanillaMaterials.COBBLESTONE);
-				setBlockMaterial(4, 1, 5, VanillaMaterials.COBBLESTONE);
-				setBlockMaterial(6, 1, 5, VanillaMaterials.COBBLESTONE);
-				setBlockMaterial(4, 3, 5, VanillaMaterials.COBBLESTONE);
-				setBlockMaterial(6, 3, 5, VanillaMaterials.COBBLESTONE);
+				setBlockMaterial(2, 1, 4, VanillaMaterials.COBBLESTONE);
+				setBlockMaterial(2, 1, 6, VanillaMaterials.COBBLESTONE);
+				setBlockMaterial(2, 3, 4, VanillaMaterials.COBBLESTONE);
+				setBlockMaterial(2, 3, 6, VanillaMaterials.COBBLESTONE);
+				setBlockMaterial(1, 1, 5, VanillaMaterials.COBBLESTONE);
+				setBlockMaterial(3, 1, 5, VanillaMaterials.COBBLESTONE);
+				setBlockMaterial(1, 3, 5, VanillaMaterials.COBBLESTONE);
+				setBlockMaterial(3, 3, 5, VanillaMaterials.COBBLESTONE);
 				// Cobblestone pillars to the upper floor in the middle
 				for (int i = 1; i <= 3; i++) {
-					setBlockMaterial(4, i, 4, VanillaMaterials.COBBLESTONE);
-					setBlockMaterial(6, i, 4, VanillaMaterials.COBBLESTONE);
-					setBlockMaterial(4, i, 6, VanillaMaterials.COBBLESTONE);
-					setBlockMaterial(6, i, 6, VanillaMaterials.COBBLESTONE);
+					setBlockMaterial(1, i, 4, VanillaMaterials.COBBLESTONE);
+					setBlockMaterial(3, i, 4, VanillaMaterials.COBBLESTONE);
+					setBlockMaterial(1, i, 6, VanillaMaterials.COBBLESTONE);
+					setBlockMaterial(3, i, 6, VanillaMaterials.COBBLESTONE);
 				}
 				// A torch in the middle
-				attachMaterial(5, 3, 5, VanillaMaterials.TORCH);
+				attachMaterial(2, 3, 5, VanillaMaterials.TORCH);
 				// A wood ring to complete the upper floor
 				for (int i = 2; i <= 8; ++i) {
-					setBlockMaterial(2, 3, i, VanillaMaterials.PLANK);
-					setBlockMaterial(3, 3, i, VanillaMaterials.PLANK);
+					setBlockMaterial(-1, 3, i, VanillaMaterials.PLANK);
+					setBlockMaterial(0, 3, i, VanillaMaterials.PLANK);
 					if (i <= 3 || i >= 7) {
-						setBlockMaterial(4, 3, i, VanillaMaterials.PLANK);
-						setBlockMaterial(5, 3, i, VanillaMaterials.PLANK);
-						setBlockMaterial(6, 3, i, VanillaMaterials.PLANK);
+						setBlockMaterial(1, 3, i, VanillaMaterials.PLANK);
+						setBlockMaterial(2, 3, i, VanillaMaterials.PLANK);
+						setBlockMaterial(3, 3, i, VanillaMaterials.PLANK);
 					}
-					setBlockMaterial(7, 3, i, VanillaMaterials.PLANK);
-					setBlockMaterial(8, 3, i, VanillaMaterials.PLANK);
+					setBlockMaterial(4, 3, i, VanillaMaterials.PLANK);
+					setBlockMaterial(5, 3, i, VanillaMaterials.PLANK);
 				}
 				// A ladder to the upper floor
-				setBlockMaterial(9, 1, 3, VanillaMaterials.LADDER, (short) 4);
-				setBlockMaterial(9, 2, 3, VanillaMaterials.LADDER, (short) 4);
-				setBlockMaterial(9, 3, 3, VanillaMaterials.LADDER, (short) 4);
+				setBlockMaterial(6, 1, 3, VanillaMaterials.LADDER, (short) 4);
+				setBlockMaterial(6, 2, 3, VanillaMaterials.LADDER, (short) 4);
+				setBlockMaterial(6, 3, 3, VanillaMaterials.LADDER, (short) 4);
 				// Place the loot chest
 				chestObject.setRandom(getRandom());
-				placeObject(3, 4, 8, chestObject);
+				placeObject(0, 4, 8, chestObject);
 				break;
 		}
 	}
@@ -182,17 +182,17 @@ public class StrongholdRoom extends StructurePiece {
 		final List<StructurePiece> components = new ArrayList<StructurePiece>();
 		final Random random = getRandom();
 		final StructurePiece nextFront = pickComponent(random, true);
-		nextFront.setPosition(position.add(rotate(3, 0, 11)));
+		nextFront.setPosition(position.add(rotate(0, 0, 11)));
 		nextFront.setRotation(rotation);
 		nextFront.randomize();
 		components.add(nextFront);
 		final StructurePiece nextRight = pickComponent(random, false);
-		nextRight.setPosition(position.add(rotate(-1, 0, 3)));
+		nextRight.setPosition(position.add(rotate(-4, 0, 3)));
 		nextRight.setRotation(rotation.rotate(-90, 0, 1, 0));
 		nextRight.randomize();
 		components.add(nextRight);
 		final StructurePiece nextLeft = pickComponent(random, false);
-		nextLeft.setPosition(position.add(rotate(11, 0, 7)));
+		nextLeft.setPosition(position.add(rotate(8, 0, 7)));
 		nextLeft.setRotation(rotation.rotate(90, 0, 1, 0));
 		nextLeft.randomize();
 		components.add(nextLeft);
@@ -216,8 +216,8 @@ public class StrongholdRoom extends StructurePiece {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(0, 0, 0);
-		final Vector3 rotatedMax = transform(10, 6, 10);
+		final Vector3 rotatedMin = transform(-3, 0, 0);
+		final Vector3 rotatedMax = transform(7, 6, 10);
 		return new BoundingBox(Vector3.min(rotatedMin, rotatedMax), Vector3.max(rotatedMin, rotatedMax));
 	}
 

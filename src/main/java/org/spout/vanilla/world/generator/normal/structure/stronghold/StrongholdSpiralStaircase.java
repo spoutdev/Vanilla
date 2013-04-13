@@ -26,8 +26,9 @@
  */
 package org.spout.vanilla.world.generator.normal.structure.stronghold;
 
-import java.util.Arrays;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 
 import org.spout.api.math.Vector3;
 
@@ -89,32 +90,25 @@ public class StrongholdSpiralStaircase extends StructurePiece {
 		final float draw = getRandom().nextFloat();
 		if (draw > 0.95) {
 			component = new StrongholdLibrary(parent);
-			component.setPosition(position.add(rotate(-3, -6, 5)));
 		} else if (draw > 0.90) {
 			component = new StrongholdChestCorridor(parent);
-			component.setPosition(position.add(rotate(0, -6, 5)));
 		} else if (draw > 0.75) {
 			component = new StrongholdLargeIntersection(parent);
-			component.setPosition(position.add(rotate(-3, -8, 5)));
 		} else if (draw > 0.60) {
 			component = new StrongholdRoom(parent);
-			component.setPosition(position.add(rotate(-3, -6, 5)));
 		} else if (draw > 0.45) {
 			component = new StrongholdPrison(parent);
-			component.setPosition(position.add(rotate(0, -6, 5)));
 		} else if (draw > 0.30) {
 			component = new StrongholdIntersection(parent);
-			component.setPosition(position.add(rotate(0, -6, 5)));
 		} else if (draw > 0.15) {
 			component = new StrongholdCorridor(parent);
-			component.setPosition(position.add(rotate(0, -6, 5)));
 		} else {
 			component = new StrongholdTurn(parent);
-			component.setPosition(position.add(rotate(0, -6, 5)));
 		}
+		component.setPosition(position.add(rotate(0, -6, 5)));
 		component.setRotation(rotation);
 		component.randomize();
-		return Arrays.asList(component);
+		return Lists.newArrayList(component);
 	}
 
 	@Override

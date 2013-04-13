@@ -85,7 +85,7 @@ public class StrongholdCorridor extends StructurePiece {
 		final List<StructurePiece> components = new ArrayList<StructurePiece>();
 		if (startOfStronghold) {
 			final StructurePiece component = new StrongholdPortalRoom(parent);
-			component.setPosition(position.add(rotate(7, 0, -1)));
+			component.setPosition(position.add(rotate(4, 0, -1)));
 			component.setRotation(rotation.rotate(180, 0, 1, 0));
 			component.randomize();
 			components.add(component);
@@ -94,26 +94,20 @@ public class StrongholdCorridor extends StructurePiece {
 		final float draw = getRandom().nextFloat();
 		if (draw > 0.9) {
 			component = new StrongholdLargeIntersection(parent);
-			component.setPosition(position.add(rotate(-3, -2, length)));
 		} else if (draw > 0.8) {
 			component = new StrongholdIntersection(parent);
-			component.setPosition(position.add(rotate(0, 0, length)));
 		} else if (draw > 0.7) {
 			component = new StrongholdRoom(parent);
-			component.setPosition(position.add(rotate(-3, 0, length)));
 		} else if (draw > 0.6) {
 			component = new StrongholdSpiralStaircase(parent);
-			component.setPosition(position.add(rotate(0, 0, length)));
 		} else if (draw > 0.4) {
 			component = new StrongholdPrison(parent);
-			component.setPosition(position.add(rotate(0, 0, length)));
 		} else if (draw > 0.2) {
 			component = new StrongholdTurn(parent);
-			component.setPosition(position.add(rotate(0, 0, length)));
 		} else {
 			component = new StrongholdStaircase(parent);
-			component.setPosition(position.add(rotate(0, 0, length)));
 		}
+		component.setPosition(position.add(rotate(0, 0, length)));
 		component.setRotation(rotation);
 		component.randomize();
 		components.add(component);

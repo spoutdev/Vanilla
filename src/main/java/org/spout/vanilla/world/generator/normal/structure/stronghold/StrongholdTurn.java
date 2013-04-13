@@ -26,8 +26,9 @@
  */
 package org.spout.vanilla.world.generator.normal.structure.stronghold;
 
-import java.util.Arrays;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 
 import org.spout.api.math.Vector3;
 
@@ -97,7 +98,7 @@ public class StrongholdTurn extends StructurePiece {
 			component.setRotation(rotation.rotate(-90, 0, 1, 0));
 		}
 		component.randomize();
-		return Arrays.asList(component);
+		return Lists.newArrayList(component);
 	}
 
 	@Override

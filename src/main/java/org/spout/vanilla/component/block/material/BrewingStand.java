@@ -27,12 +27,15 @@
 package org.spout.vanilla.component.block.material;
 
 import org.spout.api.entity.Player;
+import org.spout.api.event.cause.MaterialCause;
 import org.spout.api.inventory.Container;
 import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.VanillaPlugin;
 
 import org.spout.vanilla.component.block.ViewedBlockComponent;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.event.block.PotionBrewEvent;
 import org.spout.vanilla.event.inventory.BrewingStandCloseEvent;
 import org.spout.vanilla.event.inventory.BrewingStandOpenEvent;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
@@ -72,22 +75,19 @@ public class BrewingStand extends ViewedBlockComponent implements Container {
 		if (getBrewTime() <= 0) {
 			// Try to start brewing
 			if (inventory.hasInput() && inventory.hasOutput()) {
-				if (inventory.hasOutput()) {
-					// Ensure the input is able to brew the three output items
-					for (int i = 0; i < 3; i++) {
-						ItemStack output = inventory.getOutput(i);
-						if (output == null) {
-							continue;
-						}
-
-						if (((PotionReagent) inventory.getInput().getMaterial()).getResult((PotionItem) output.getMaterial()) == null) {
-							return;
-						}
+				// Ensure the input is able to brew the three output items
+				for (int i = 0; i < 3; i++) {
+					ItemStack output = inventory.getOutput(i);
+					if (output == null) {
+						continue;
 					}
-					input = inventory.getInput(); // Store input just in case it is later removed during the brewing process
-					setBrewTime(1);
-					inventory.addAmount(BrewingStandInventory.INPUT_SLOT, -1);
+					if (((PotionReagent) inventory.getInput().getMaterial()).getResult((PotionItem) output.getMaterial()) == null) {
+						return;
+					}
 				}
+				input = inventory.getInput(); // Store input just in case it is later removed during the brewing process
+				setBrewTime(1);
+				inventory.addAmount(BrewingStandInventory.INPUT_SLOT, -1);
 			}
 		} else {
 			// Continue brewing
@@ -103,8 +103,15 @@ public class BrewingStand extends ViewedBlockComponent implements Container {
 						if (output == null) {
 							continue;
 						}
+						ItemStack result = new ItemStack(((PotionReagent) input.getMaterial()).getResult((PotionItem) output.getMaterial()), 1);
 
-						inventory.set(i, new ItemStack(((PotionReagent) input.getMaterial()).getResult((PotionItem) output.getMaterial()), 1));
+						PotionBrewEvent event = new PotionBrewEvent(this, new MaterialCause(output.getMaterial(), this.getBlock()), input, output, result);
+
+						VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(event);
+
+						if (!event.isCancelled()) {
+							inventory.set(i, event.getResult());
+						}
 					}
 				}
 			}

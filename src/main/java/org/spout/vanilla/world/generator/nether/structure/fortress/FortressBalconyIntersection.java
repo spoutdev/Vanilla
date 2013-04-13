@@ -138,8 +138,8 @@ public class FortressBalconyIntersection extends StructurePiece {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(0, 0, 0);
-		final Vector3 rotatedMax = transform(8, 6, 8);
+		final Vector3 rotatedMin = transform(-2, 0, 0);
+		final Vector3 rotatedMax = transform(6, 6, 8);
 		return new BoundingBox(Vector3.min(rotatedMin, rotatedMax), Vector3.max(rotatedMin, rotatedMax));
 	}
 }

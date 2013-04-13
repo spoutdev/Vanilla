@@ -65,7 +65,7 @@ public class FortressNetherWartStairs extends StructurePiece {
 		box.setMinMax(-2, 2, 11, 0, 9, 12).fill();
 		box.offsetMinMax(6, 0, 0, 6, 0, 0).fill();
 		// The two other walls
-		box.setMinMax(-1, 6, 0, 3, 9, 1).fill();
+		box.setMinMax(1, 6, 0, 3, 9, 1).fill();
 		box.offsetMinMax(0, 0, 11, 0, 0, 11).fill();
 		box.setMinMax(-2, 2, 0, 0, 9, 1).fill();
 		box.offsetMinMax(6, 0, 0, 6, 0, 0).fill();
@@ -185,8 +185,8 @@ public class FortressNetherWartStairs extends StructurePiece {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(0, 0, 0);
-		final Vector3 rotatedMax = transform(12, 15, 12);
+		final Vector3 rotatedMin = transform(-4, -3, 0);
+		final Vector3 rotatedMax = transform(8, 12, 12);
 		return new BoundingBox(Vector3.min(rotatedMin, rotatedMax), Vector3.max(rotatedMin, rotatedMax));
 	}
 }

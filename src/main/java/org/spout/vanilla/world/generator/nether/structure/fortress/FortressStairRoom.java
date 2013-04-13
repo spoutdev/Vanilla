@@ -107,8 +107,8 @@ public class FortressStairRoom extends StructurePiece {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(0, 0, 0);
-		final Vector3 rotatedMax = transform(6, 10, 6);
+		final Vector3 rotatedMin = transform(-1, 0, 0);
+		final Vector3 rotatedMax = transform(5, 10, 6);
 		return new BoundingBox(Vector3.min(rotatedMin, rotatedMax), Vector3.max(rotatedMin, rotatedMax));
 	}
 }

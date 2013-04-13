@@ -145,8 +145,8 @@ public class FortressRoom extends StructurePiece {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(0, 0, 0);
-		final Vector3 rotatedMax = transform(12, 15, 12);
+		final Vector3 rotatedMin = transform(-4, -3, 0);
+		final Vector3 rotatedMax = transform(8, 12, 12);
 		return new BoundingBox(Vector3.min(rotatedMin, rotatedMax), Vector3.max(rotatedMin, rotatedMax));
 	}
 }

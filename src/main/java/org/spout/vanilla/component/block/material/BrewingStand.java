@@ -105,12 +105,12 @@ public class BrewingStand extends ViewedBlockComponent implements Container {
 						}
 						ItemStack result = new ItemStack(((PotionReagent) input.getMaterial()).getResult((PotionItem) output.getMaterial()), 1);
 
-						PotionBrewEvent event = new PotionBrewEvent(this, new MaterialCause(input.getMaterial(), this.getBlock()), input, result);
+						PotionBrewEvent event = new PotionBrewEvent(this, new MaterialCause(output.getMaterial(), this.getBlock()), input, output, result);
 
 						VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(event);
 
 						if (!event.isCancelled()) {
-							inventory.set(i, result);
+							inventory.set(i, event.getResult());
 						}
 					}
 				}

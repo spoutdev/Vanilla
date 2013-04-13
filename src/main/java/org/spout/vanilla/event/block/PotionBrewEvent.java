@@ -36,38 +36,56 @@ import org.spout.vanilla.component.block.material.BrewingStand;
 public class PotionBrewEvent extends BlockEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private BrewingStand brewingStand;
-	private ItemStack source;
+	private ItemStack ingredient;
+	private ItemStack original;
 	private ItemStack result;
 
-	public PotionBrewEvent(BrewingStand brewingStand, Cause<?> reason, ItemStack source, ItemStack result) {
+	public PotionBrewEvent(BrewingStand brewingStand, Cause<?> reason, ItemStack ingredient, ItemStack original, ItemStack result) {
 		super(brewingStand.getBlock(), reason);
 		this.brewingStand = brewingStand;
-		this.source = source;
+		this.ingredient = ingredient;
+		this.original = original;
 		this.result = result;
 	}
 
 	/**
-	 * Get the brewing stand which brewed the potion
-	 * @return 
+	 * Get the brewing stand in which the potion was brewed
+	 * @return brewingStand
 	 */
 	public BrewingStand getBrewingStand() {
 		return brewingStand;
 	}
-
+	
 	/**
-	 * Get the source potion
-	 * @return 
+	 * Get the ingredient used in the brewing process
+	 * @return ingredient
 	 */
-	public ItemStack getSource() {
-		return source;
+	public ItemStack getIngredient() {
+		return ingredient;
 	}
 
 	/**
-	 * Get the result potion
-	 * @return 
+	 * Get the original potion
+	 * @return original
+	 */
+	public ItemStack getOriginal() {
+		return original;
+	}
+
+	/**
+	 * Get the result of the brewing process
+	 * @return result
 	 */
 	public ItemStack getResult() {
 		return result;
+	}
+	
+	/**
+	 * Set the result ItemStack
+	 * @param result
+	 */
+	public void setResult(ItemStack result) {
+		this.result = result;
 	}
 
 	@Override

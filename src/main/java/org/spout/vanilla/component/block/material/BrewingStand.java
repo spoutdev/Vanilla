@@ -27,12 +27,15 @@
 package org.spout.vanilla.component.block.material;
 
 import org.spout.api.entity.Player;
+import org.spout.api.event.cause.MaterialCause;
 import org.spout.api.inventory.Container;
 import org.spout.api.inventory.ItemStack;
+import org.spout.vanilla.VanillaPlugin;
 
 import org.spout.vanilla.component.block.ViewedBlockComponent;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.event.block.PotionBrewEvent;
 import org.spout.vanilla.event.inventory.BrewingStandCloseEvent;
 import org.spout.vanilla.event.inventory.BrewingStandOpenEvent;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
@@ -46,107 +49,112 @@ import org.spout.vanilla.material.item.potion.PotionItem;
  * Component that represents a Brewing Stand in the world.
  */
 public class BrewingStand extends ViewedBlockComponent implements Container {
-	private final float BREW_TIME_INCREMENT = 20f;
-	private ItemStack input;
 
-	@Override
-	public BrewingStandInventory getInventory() {
-		return getData().get(VanillaData.BREWING_STAND_INVENTORY);
-	}
+    private final float BREW_TIME_INCREMENT = 20f;
+    private ItemStack input;
 
-	@Override
-	public void onTick(float dt) {
-		BrewingStandInventory inventory = getInventory();
+    @Override
+    public BrewingStandInventory getInventory() {
+        return getData().get(VanillaData.BREWING_STAND_INVENTORY);
+    }
 
-		// Update brewing stand display with number of output slots filled
-		int filledSlots = 0;
-		if (inventory.hasOutput()) {
-			for (int i = 0; i < 3; i++) {
-				if (inventory.getOutput(i) != null) {
-					filledSlots++;
-				}
-			}
-		}
-		VanillaMaterials.BREWING_STAND_BLOCK.setFilledPotionSlots(getBlock(), filledSlots);
+    @Override
+    public void onTick(float dt) {
+        BrewingStandInventory inventory = getInventory();
 
-		if (getBrewTime() <= 0) {
-			// Try to start brewing
-			if (inventory.hasInput() && inventory.hasOutput()) {
-				if (inventory.hasOutput()) {
-					// Ensure the input is able to brew the three output items
-					for (int i = 0; i < 3; i++) {
-						ItemStack output = inventory.getOutput(i);
-						if (output == null) {
-							continue;
-						}
+        // Update brewing stand display with number of output slots filled
+        int filledSlots = 0;
+        if (inventory.hasOutput()) {
+            for (int i = 0; i < 3; i++) {
+                if (inventory.getOutput(i) != null) {
+                    filledSlots++;
+                }
+            }
+        }
+        VanillaMaterials.BREWING_STAND_BLOCK.setFilledPotionSlots(getBlock(), filledSlots);
 
-						if (((PotionReagent) inventory.getInput().getMaterial()).getResult((PotionItem) output.getMaterial()) == null) {
-							return;
-						}
-					}
-					input = inventory.getInput(); // Store input just in case it is later removed during the brewing process
-					setBrewTime(1);
-					inventory.addAmount(BrewingStandInventory.INPUT_SLOT, -1);
-				}
-			}
-		} else {
-			// Continue brewing
-			float newBrewTime = getBrewTime() + dt;
-			if (newBrewTime > BREW_TIME_INCREMENT) {
-				// Brewing has finished
-				newBrewTime = -1;
+        if (getBrewTime() <= 0) {
+            // Try to start brewing
+            if (inventory.hasInput() && inventory.hasOutput()) {
+                // Ensure the input is able to brew the three output items
+                for (int i = 0; i < 3; i++) {
+                    ItemStack output = inventory.getOutput(i);
+                    if (output == null) {
+                        continue;
+                    }
+                    if (((PotionReagent) inventory.getInput().getMaterial()).getResult((PotionItem) output.getMaterial()) == null) {
+                        return;
+                    }
+                }
+                input = inventory.getInput(); // Store input just in case it is later removed during the brewing process
+                setBrewTime(1);
+                inventory.addAmount(BrewingStandInventory.INPUT_SLOT, -1);
+            }
+        } else {
+            // Continue brewing
+            float newBrewTime = getBrewTime() + dt;
+            if (newBrewTime > BREW_TIME_INCREMENT) {
+                // Brewing has finished
+                newBrewTime = -1;
 
-				// Set output
-				if (inventory.hasOutput()) {
-					for (int i = 0; i < 3; i++) {
-						ItemStack output = inventory.getOutput(i);
-						if (output == null) {
-							continue;
-						}
+                // Set output
+                if (inventory.hasOutput()) {
+                    for (int i = 0; i < 3; i++) {
+                        ItemStack output = inventory.getOutput(i);
+                        if (output == null) {
+                            continue;
+                        }
+                        ItemStack result = new ItemStack(((PotionReagent) input.getMaterial()).getResult((PotionItem) output.getMaterial()), 1);
+                        
+                        PotionBrewEvent event = new PotionBrewEvent(this, new MaterialCause(input.getMaterial(), this.getBlock()), input, result);
+                        
+                        VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(event);
+                        
+                        if (!event.isCancelled()) {
+                            inventory.set(i, result);
+                        }
+                    }
+                }
+            }
+            setBrewTime(newBrewTime);
+        }
+    }
 
-						inventory.set(i, new ItemStack(((PotionReagent) input.getMaterial()).getResult((PotionItem) output.getMaterial()), 1));
-					}
-				}
-			}
-			setBrewTime(newBrewTime);
-		}
-	}
+    @Override
+    public boolean open(Player player) {
+        BrewingStandOpenEvent event = player.getEngine().getEventManager().callEvent(new BrewingStandOpenEvent(this, player));
+        if (!event.isCancelled()) {
+            player.get(WindowHolder.class).openWindow(new BrewingStandWindow(player, this, getInventory()));
+            return true;
+        }
+        return false;
+    }
 
-	@Override
-	public boolean open(Player player) {
-		BrewingStandOpenEvent event = player.getEngine().getEventManager().callEvent(new BrewingStandOpenEvent(this, player));
-		if (!event.isCancelled()) {
-			player.get(WindowHolder.class).openWindow(new BrewingStandWindow(player, this, getInventory()));
-			return true;
-		}
-		return false;
-	}
+    @Override
+    public boolean close(Player player) {
+        BrewingStandCloseEvent event = player.getEngine().getEventManager().callEvent(new BrewingStandCloseEvent(this, player));
+        if (!event.isCancelled()) {
+            return super.close(player);
+        }
+        return false;
+    }
 
-	@Override
-	public boolean close(Player player) {
-		BrewingStandCloseEvent event = player.getEngine().getEventManager().callEvent(new BrewingStandCloseEvent(this, player));
-		if (!event.isCancelled()) {
-			return super.close(player);
-		}
-		return false;
-	}
+    public float getBrewTime() {
+        return getData().get(VanillaData.BREW_TIME);
+    }
 
-	public float getBrewTime() {
-		return getData().get(VanillaData.BREW_TIME);
-	}
+    public void setBrewTime(float brewTime) {
+        getData().put(VanillaData.BREW_TIME, brewTime);
+        for (Player player : viewers) {
+            updateProgressArrow(player);
+        }
+    }
 
-	public void setBrewTime(float brewTime) {
-		getData().put(VanillaData.BREW_TIME, brewTime);
-		for (Player player : viewers) {
-			updateProgressArrow(player);
-		}
-	}
-
-	private void updateProgressArrow(Player player) {
-		float increment = 0;
-		if (getBrewTime() >= 0) {
-			increment = (BREW_TIME_INCREMENT - getBrewTime()) * 20;
-		}
-		player.get(WindowHolder.class).getActiveWindow().setProperty(BrewingStandProperty.PROGRESS_ARROW, (int) increment);
-	}
+    private void updateProgressArrow(Player player) {
+        float increment = 0;
+        if (getBrewTime() >= 0) {
+            increment = (BREW_TIME_INCREMENT - getBrewTime()) * 20;
+        }
+        player.get(WindowHolder.class).getActiveWindow().setProperty(BrewingStandProperty.PROGRESS_ARROW, (int) increment);
+    }
 }

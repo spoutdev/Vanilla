@@ -28,19 +28,14 @@ package org.spout.vanilla.material.item.tool;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.LoadOption;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.living.passive.Sheep;
 import org.spout.vanilla.component.entity.substance.Item;
-import org.spout.vanilla.data.GameMode;
-import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.event.entity.SheepShearedEvent;
-import org.spout.vanilla.inventory.entity.QuickbarInventory;
 import org.spout.vanilla.material.VanillaMaterials;
 
 public class Shears extends Tool {

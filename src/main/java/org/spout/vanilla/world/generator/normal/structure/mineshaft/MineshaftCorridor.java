@@ -208,8 +208,6 @@ public class MineshaftCorridor extends StructurePiece {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(0, 0, 0);
-		final Vector3 rotatedMax = transform(2, 2, sections * 5 - 1);
-		return new BoundingBox(Vector3.min(rotatedMin, rotatedMax), Vector3.max(rotatedMin, rotatedMax));
+		return new BoundingBox(transform(0, 0, 0), transform(2, 2, sections * 5 - 1));
 	}
 }

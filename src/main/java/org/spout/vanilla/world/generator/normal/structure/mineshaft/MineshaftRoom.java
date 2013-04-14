@@ -144,8 +144,6 @@ public class MineshaftRoom extends StructurePiece {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(xStart, -1, 0);
-		final Vector3 rotatedMax = transform(xEnd, height - 1, depth);
-		return new BoundingBox(Vector3.min(rotatedMin, rotatedMax), Vector3.max(rotatedMin, rotatedMax));
+		return new BoundingBox(transform(xStart, -1, 0), transform(xEnd, height - 1, depth));
 	}
 }

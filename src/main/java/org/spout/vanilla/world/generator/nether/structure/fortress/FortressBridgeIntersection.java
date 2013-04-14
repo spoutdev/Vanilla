@@ -107,8 +107,6 @@ public class FortressBridgeIntersection extends StructurePiece {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(-7, -3, 0);
-		final Vector3 rotatedMax = transform(11, 4, 18);
-		return new BoundingBox(Vector3.min(rotatedMin, rotatedMax), Vector3.max(rotatedMin, rotatedMax));
+		return new BoundingBox(transform(-7, -3, 0), transform(11, 4, 18));
 	}
 }

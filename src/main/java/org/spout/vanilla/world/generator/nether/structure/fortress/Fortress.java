@@ -27,24 +27,24 @@
 package org.spout.vanilla.world.generator.nether.structure.fortress;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
-import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.Quaternion;
-import org.spout.vanilla.material.VanillaMaterials;
 
+import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
 import org.spout.vanilla.world.generator.structure.StructurePiece.BoundingBox;
 
 public class Fortress extends Structure {
-	private static final byte MAX_SIZE_BASE = 76;
+	private static final byte MAX_SIZE_BASE = 75;
 	private static final byte MAX_SIZE_RAND = 75;
 
 	@Override
@@ -56,19 +56,19 @@ public class Fortress extends Structure {
 	public void placeObject(World w, int x, int y, int z) {
 		final Set<BoundingBox> placed = new HashSet<BoundingBox>();
 		final Queue<StructurePiece> activeBranches = new LinkedList<StructurePiece>();
-		final StructurePiece corridor = new FortressTurn(this);
+		final Map<StructurePiece, BoundingBox> lastBoxes = new HashMap<StructurePiece, BoundingBox>();
+		final StructurePiece corridor = new FortressBalconyIntersection(this);
 		corridor.setPosition(new Point(w, x, y, z));
 		//corridor.setRotation(new Quaternion(random.nextInt(4) * 90, 0, 1, 0));
 		corridor.randomize();
 		activeBranches.add(corridor);
-		final int size = random.nextInt(MAX_SIZE_RAND) + MAX_SIZE_BASE;
+		final int size = random.nextInt(MAX_SIZE_RAND + 1) + MAX_SIZE_BASE;
 		byte count = 0;
 		while (!activeBranches.isEmpty()) {
 			final StructurePiece active = activeBranches.poll();
 			final BoundingBox activeBox = active.getBoundingBox();
-			if (active.getPosition().getY() >= 10
-					&& !collides(activeBox, active.getLastComponent(), placed)
-					&& active.canPlace()) {
+			if (!collides(activeBox, lastBoxes.remove(active), placed) && active.canPlace()
+					&& active.getPosition().getY() >= 10) {
 				active.place();
 				active.setBlockMaterial(0, 0, 0, VanillaMaterials.GOLD_BLOCK);
 				// remove when done /\
@@ -79,7 +79,7 @@ public class Fortress extends Structure {
 				try {
 					final List<StructurePiece> next = active.getNextComponents();
 					for (StructurePiece component : next) {
-						component.setLastComponent(active);
+						lastBoxes.put(component, activeBox);
 					}
 					activeBranches.addAll(next);
 				} catch (UnsupportedOperationException ex) {
@@ -89,13 +89,7 @@ public class Fortress extends Structure {
 		}
 	}
 
-	private boolean collides(BoundingBox box, StructurePiece lastComponent, Collection<BoundingBox> boxes) {
-		final BoundingBox last;
-		if (lastComponent == null) {
-			last = null;
-		} else {
-			last = lastComponent.getBoundingBox();
-		}
+	private boolean collides(BoundingBox box, BoundingBox last, Collection<BoundingBox> boxes) {
 		for (BoundingBox other : boxes) {
 			if (!other.equals(last) && other.intersects(box)) {
 				return true;

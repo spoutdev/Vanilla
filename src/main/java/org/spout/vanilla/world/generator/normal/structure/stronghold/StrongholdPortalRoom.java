@@ -115,8 +115,6 @@ public class StrongholdPortalRoom extends StructurePiece {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(-3, 0, 0);
-		final Vector3 rotatedMax = transform(7, 7, 15);
-		return new BoundingBox(Vector3.min(rotatedMin, rotatedMax), Vector3.max(rotatedMin, rotatedMax));
+		return new BoundingBox(transform(-3, 0, 0), transform(7, 7, 15));
 	}
 }

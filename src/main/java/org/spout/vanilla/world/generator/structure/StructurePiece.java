@@ -47,7 +47,6 @@ import org.spout.vanilla.material.block.attachable.Attachable;
 
 public abstract class StructurePiece {
 	protected final Structure parent;
-	protected StructurePiece lastComponent = null;
 	protected Point position = Point.invalid;
 	protected Quaternion rotation = Quaternion.IDENTITY;
 	protected Vector3 rotationPoint = Vector3.ZERO;
@@ -62,14 +61,6 @@ public abstract class StructurePiece {
 
 	public Structure getParent() {
 		return parent;
-	}
-
-	public StructurePiece getLastComponent() {
-		return lastComponent;
-	}
-
-	public void setLastComponent(StructurePiece lastComponent) {
-		this.lastComponent = lastComponent;
 	}
 
 	public Block getBlock(int xx, int yy, int zz) {
@@ -216,9 +207,13 @@ public abstract class StructurePiece {
 		private final Vector3 min;
 		private final Vector3 max;
 
-		public BoundingBox(Vector3 min, Vector3 max) {
-			this.min = min;
-			this.max = max;
+		public BoundingBox(float xA, float yA, float zA, float xB, float yB, float zB) {
+			this(new Vector3(xA, yA, zA), new Vector3(xB, yB, zB));
+		}
+
+		public BoundingBox(Vector3 cornerA, Vector3 cornerB) {
+			this.min = cornerA.min(cornerB);
+			this.max = cornerA.max(cornerB);
 		}
 
 		public Vector3 getMax() {
@@ -260,9 +255,6 @@ public abstract class StructurePiece {
 
 		@Override
 		public boolean equals(Object o) {
-			if (o == null) {
-				return false;
-			}
 			if (!(o instanceof BoundingBox)) {
 				return false;
 			}

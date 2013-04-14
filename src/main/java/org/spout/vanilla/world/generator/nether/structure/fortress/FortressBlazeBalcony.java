@@ -99,8 +99,6 @@ public class FortressBlazeBalcony extends StructurePiece {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(-1, 0, 0);
-		final Vector3 rotatedMax = transform(5, 8, 8);
-		return new BoundingBox(Vector3.min(rotatedMin, rotatedMax), Vector3.max(rotatedMin, rotatedMax));
+		return new BoundingBox(transform(-1, 0, 0), transform(5, 8, 8));
 	}
 }

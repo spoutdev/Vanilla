@@ -107,17 +107,17 @@ public class FortressBalconyIntersection extends StructurePiece {
 	@Override
 	public List<StructurePiece> getNextComponents() {
 		final List<StructurePiece> components = new ArrayList<StructurePiece>();
-//		final Random random = getRandom();
-//		final StructurePiece right = pickComponent(random);
-//		right.setPosition(position.add(rotate(-5, 0, 5)));
-//		right.setRotation(rotation.rotate(-90, 0, 1, 0));
-//		right.randomize();
-//		components.add(right);
-//		final StructurePiece left = pickComponent(random);
-//		left.setPosition(position.add(rotate(5, 0, 5)));
-//		left.setRotation(rotation.rotate(90, 0, 1, 0));
-//		left.randomize();
-//		components.add(left);
+		final Random random = getRandom();
+		final StructurePiece right = pickComponent(random);
+		right.setPosition(position.add(rotate(-2, 0, 0)));
+		right.setRotation(rotation.rotate(-90, 0, 1, 0));
+		right.randomize();
+		components.add(right);
+		final StructurePiece left = pickComponent(random);
+		left.setPosition(position.add(rotate(7, 0, 4)));
+		left.setRotation(rotation.rotate(90, 0, 1, 0));
+		left.randomize();
+		components.add(left);
 		return components;
 	}
 
@@ -138,8 +138,6 @@ public class FortressBalconyIntersection extends StructurePiece {
 
 	@Override
 	public BoundingBox getBoundingBox() {
-		final Vector3 rotatedMin = transform(-2, 0, 0);
-		final Vector3 rotatedMax = transform(6, 6, 8);
-		return new BoundingBox(Vector3.min(rotatedMin, rotatedMax), Vector3.max(rotatedMin, rotatedMax));
+		return new BoundingBox(transform(-2, 0, 0), transform(6, 6, 8));
 	}
 }

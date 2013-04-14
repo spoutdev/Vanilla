@@ -199,7 +199,7 @@ public class VanillaData {
 	public static final DefaultedKey<Integer> SPAWN_COUNT = new DefaultedKeyImpl<Integer>("spawn_count", 4);
 	public static final DefaultedKey<Float> SPAWN_RANGE = new DefaultedKeyImpl<Float>("spawn_range", 4f);
 	public static final DefaultedKey<Integer> MAX_CREATURES = new DefaultedKeyImpl<Integer>("max_creatures", 6);
-	public static final DefaultedKey<Vector3> CREATURE_SEARCH_BOUNDS = new DefaultedKeyImpl<Vector3>("creature_search_bounds", new Vector3(17, 9, 17));
+	public static final DefaultedKey<Integer> CREATURE_SEARCH_RANGE = new DefaultedKeyImpl<Integer>("creature_search_range", 17);
 	public static final DefaultedKey<Integer> MIN_SPAWN_DELAY = new DefaultedKeyImpl<Integer>("min_spawn_delay", 10);
 	public static final DefaultedKey<Integer> MAX_SPAWN_DELAY = new DefaultedKeyImpl<Integer>("max_spawn_delay", 40);
 	// Inventory

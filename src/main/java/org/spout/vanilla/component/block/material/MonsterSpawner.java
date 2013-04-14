@@ -102,7 +102,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 
 	/**
 	 * Sets the amount of creatures that can be within the bounds specified by
-	 * {@link #getCreatureSearchBounds()}.
+	 * {@link #getCreatureSearchRange()}.
 	 * @param maxCreatures maximum amount of creatures that can spawn
 	 */
 	public void setMaxCreatures(int maxCreatures) {
@@ -111,7 +111,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 
 	/**
 	 * Returns the amount of creatures that can be within the bounds specified
-	 * by {@link #getCreatureSearchBounds()}.
+	 * by {@link #getCreatureSearchRange()}.
 	 * @return maximum amount of creatures that can spawn
 	 */
 	public int getMaxCreatures() {
@@ -119,19 +119,19 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	}
 
 	/**
-	 * Sets the bounds in which to search for creatures in.
-	 * @param bounds to search for creatures in
+	 * Sets the range in which to search for creatures in.
+	 * @param range to search for creatures in
 	 */
-	public void setCreatureSearchBounds(Vector3 bounds) {
-		getData().put(VanillaData.CREATURE_SEARCH_BOUNDS, bounds);
+	public void setCreatureSearchRange(int range) {
+		getData().put(VanillaData.CREATURE_SEARCH_RANGE, range);
 	}
 
 	/**
-	 * Returns the bounds in which to search for creatures in.
-	 * @return bounds to search for creatures in
+	 * Returns the range in which to search for creatures in.
+	 * @return range to search for creatures in
 	 */
-	public Vector3 getCreatureSearchBounds() {
-		return getData().get(VanillaData.CREATURE_SEARCH_BOUNDS);
+	public int getCreatureSearchRange() {
+		return getData().get(VanillaData.CREATURE_SEARCH_RANGE);
 	}
 
 	/**
@@ -194,18 +194,14 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 */
 	public boolean canSpawn() {
 		int count = 0;
-		Point bp = getPosition();
-		Vector3 bounds = getCreatureSearchBounds();
-		for (Entity e : getOwner().getChunk().getObservers()) {
+		int range = getCreatureSearchRange();
+		for (Entity e : getOwner().getChunk().getWorld().getNearbyEntities(getPosition(), range)) {
 			if (e instanceof Player) {
 				continue;
 			}
-			Point ep = e.getScene().getPosition();
-			if (Math.abs(bp.getX() - ep.getX()) < bounds.getX() && Math.abs(bp.getY() - ep.getY()) < bounds.getY() && Math.abs(bp.getZ() - ep.getZ()) < bounds.getZ()) {
-				count++;
-			}
+			count++;
 		}
-		return count <= getMaxCreatures();
+		return count < getMaxCreatures();
 	}
 
 	/**
@@ -249,7 +245,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @return true if there is a player within the radius
 	 */
 	public boolean isActive() {
-		return !getOwner().getChunk().getWorld().getNearbyEntities(getPosition(), getRadius()).isEmpty();
+		return !getOwner().getChunk().getWorld().getNearbyPlayers(getPosition(), getRadius()).isEmpty();
 	}
 
 	/**

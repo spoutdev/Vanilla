@@ -29,7 +29,9 @@ package org.spout.vanilla.component.block.material;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -59,6 +61,9 @@ import org.spout.vanilla.component.entity.misc.Level;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
+import org.spout.vanilla.scoreboard.Objective;
+import org.spout.vanilla.scoreboard.Scoreboard;
+import org.spout.vanilla.scoreboard.Team;
 
 public class CommandBlock extends VanillaBlockComponent implements CommandSource {
 	public static final ChatChannel CHAT_CHANNEL = new PermissionChatChannel("CommandBlock", "vanilla.commandblock.recieve");
@@ -71,10 +76,21 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 	public static final String ALL_PLAYERS = "" + TARGET_CHAR + ALL_PLAYERS_CHAR;
 	private String name = "" + TARGET_CHAR;
 
+	/**
+	 * Sets the name displayed when a command is executed.
+	 *
+	 * @param name to display
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Sets the command executed when {@link #execute()} is called.
+	 *
+	 * @param cmd to execute
+	 * @param cause of command, can be null
+	 */
 	public void setCommand(String cmd, Cause<?> cause) {
 		if (cause != null && cause.getSource() instanceof CommandSource) {
 			CommandSource cmdSource = (CommandSource) cause.getSource();
@@ -88,22 +104,40 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 
 		if (!cmd.startsWith("/")) {
 			cmd = "say " + cmd;
-			// TODO: Add support for '/say' for non-players
 		} else {
 			cmd = cmd.replaceFirst("/", "");
+		}
+
+		if (Spout.debugMode()) {
+			Spout.getLogger().info("CommandBlock at " + getPosition().toString() + " command set to " + cmd);
 		}
 
 		getData().put(VanillaData.COMMAND, cmd);
 	}
 
+	/**
+	 * Sets the command to be executed on {@link #execute()}.
+	 *
+	 * @param cmd to execute
+	 */
 	public void setCommand(String cmd) {
 		setCommand(cmd, null);
 	}
 
+	/**
+	 * Returns the command to execute.
+	 *
+	 * @return command to execute
+	 */
 	public String getCommand() {
 		return getData().get(VanillaData.COMMAND);
 	}
 
+	/**
+	 * Sets whether the command block is powered.
+	 *
+	 * @param powered if this command block is powered
+	 */
 	public void setPowered(boolean powered) {
 		if (isPowered() != powered) {
 			getData().put(VanillaData.IS_POWERED, powered);
@@ -113,13 +147,25 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 		}
 	}
 
+	/**
+	 * Returns true if this command block is powered.
+	 *
+	 * @return true if powered
+	 */
 	public boolean isPowered() {
 		return getData().get(VanillaData.IS_POWERED);
 	}
 
+	/**
+	 * Executes the command specified by {@link #getCommand()}.
+	 */
 	public void execute() {
 		if (!(VanillaPlugin.getInstance().getEngine() instanceof Server)) {
 			throw new IllegalStateException("CommandBlocks are run from the server.");
+		}
+
+		if (Spout.debugMode()) {
+			Spout.getLogger().info("Executing CommandBlock at: " + getPosition().toString());
 		}
 
 		String cmd = getCommand();
@@ -150,9 +196,14 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 						+ getBlock().getPosition().toString() + " because of illegal syntax.", e);
 			}
 
+			if (Spout.debugMode()) {
+				Spout.getLogger().info("Statement: " + statement);
+				Spout.getLogger().info("Corresponding Filter: " + filter);
+			}
+
 			final Point center = new Point(getBlock().getWorld(), filter.x, filter.y, filter.z);
 			final char target = statement.charAt(1);
-			final List<Player> allPlayers = Arrays.asList(((Server) VanillaPlugin.getInstance().getEngine()).getOnlinePlayers());
+			final List<Player> allPlayers = Arrays.asList(((Server) Spout.getEngine()).getOnlinePlayers());
 
 			switch (target) {
 
@@ -169,7 +220,7 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 				case RANDOM_PLAYER_CHAR:
 					// find a random but suitable player in any location
 					Collections.shuffle(allPlayers);
-					Player player = filter.findPlayer(allPlayers, true);
+					Player player = filter.findPlayer(allPlayers);
 					if (player == null) {
 						return;
 					}
@@ -178,7 +229,7 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 
 				case ALL_PLAYERS_CHAR:
 					// use all players, but filter out any players that are not suitable
-					for (Player p : filter.filter(allPlayers, true)) {
+					for (Player p : filter.filter(allPlayers)) {
 						cmds.add(cmd.replace(statement, p.getName()));
 					}
 					break;
@@ -200,8 +251,6 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 					}
 				}
 			}
-			// TODO: Argument handling doesn't seem to be working... am I doing it wrong?
-			sendMessage("Processing command: " + c);
 			processCommand(root, new ChatArguments(arguments));
 		}
 	}
@@ -224,16 +273,19 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 		private int x = block.getX();
 		private int y = block.getY();
 		private int z = block.getZ();
-		private int maxRadius = 40;
-		private int minRadius = 0;
+		private int maxRadius = -1;
+		private int minRadius = -1;
 		private GameMode mode = null;
 		private int playerListSize = 0;
 		private boolean reversedList = false;
-		private int maxExpLevel = 0;
-		private int minExpLevel = 1;
-		private String objective; // TODO: Implement
-		private int maxScore = -1;
-		private int minScore = 0;
+		private int maxExpLevel = -1;
+		private int minExpLevel = -1;
+		private String playerName = null;
+		private boolean playerNameInverted = false;
+		private String teamName = null;
+		private boolean teamNameInverted = false;
+		private final Map<String, Integer> minScores = new HashMap<String, Integer>();
+		private final Map<String, Integer> maxScores = new HashMap<String, Integer>();
 
 		public PlayerFilter(String statement) {
 			this.statement = statement;
@@ -318,8 +370,21 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 						maxExpLevel = parseInt(v);
 					} else if (a.equalsIgnoreCase("lm")) {
 						minExpLevel = parseInt(v);
+					} else if (a.equals("name")) {
+						playerNameInverted = v.startsWith("!");
+						playerName = playerNameInverted ? v.substring(1) : v;
+					} else if (a.equals("team")) {
+						teamNameInverted = v.startsWith("!");
+						teamName = teamNameInverted ? v.substring(1) : v;
+					} else if (a.startsWith("score_")) {
+						int value = parseInt(v);
+						String obj = a.replace("score_", "");
+						if (a.endsWith("_min")) {
+							minScores.put(obj.replace("_min", ""), value);
+						} else {
+							maxScores.put(obj, value);
+						}
 					}
-					// TODO: Implement scoring
 				}
 			}
 		}
@@ -332,27 +397,23 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 			}
 		}
 
-		public Player findPlayer(List<Player> players, boolean ignoreDistance) {
+		public Player findPlayer(List<Player> players) {
 			for (Player p : players) {
-				if (accept(p, ignoreDistance)) {
+				if (accept(p)) {
 					return p;
 				}
 			}
 			return null;
 		}
 
-		public Player findPlayer(List<Player> players) {
-			return findPlayer(players, false);
-		}
-
-		public List<Player> filter(List<Player> players, boolean ignoreDistance) {
+		public List<Player> filter(List<Player> players) {
 			if (reversedList) {
 				Collections.reverse(players);
 			}
 			List<Player> filteredPlayers = new ArrayList<Player>();
 			int entries = 0;
 			for (Player player : players) {
-				if (accept(player, ignoreDistance) && (playerListSize == 0 || entries < playerListSize)) {
+				if (accept(player) && (playerListSize == 0 || entries < playerListSize)) {
 					entries++;
 					filteredPlayers.add(player);
 				}
@@ -360,21 +421,92 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 			return filteredPlayers;
 		}
 
-		public List<Player> filter(List<Player> players) {
-			return filter(players, false);
-		}
-
-		public boolean accept(Player p, boolean ignoreDistance) {
-			Point center = new Point(block.getWorld(), x, y, z);
-			int lvl = p.add(Level.class).getLevel();
-			int distance = (int) p.getScene().getPosition().distance(center);
-			return ((distance >= minRadius && distance <= maxRadius) || ignoreDistance)
-					&& (mode == null || mode == p.add(Human.class).getGameMode())
-					&& lvl >= minExpLevel && (maxExpLevel == 0 || lvl <= maxExpLevel);
-		}
-
 		public boolean accept(Player p) {
-			return accept(p, false);
+			Point center = new Point(block.getWorld(), x, y, z);
+			int distance = Math.round((float) p.getScene().getPosition().distance(center)); // the distance from the cmd block
+
+			// get various principles (these all default to true if not specified)
+			boolean closeEnough = (minRadius == -1 || distance >= minRadius) && (maxRadius == -1 || distance <= maxRadius);
+			boolean correctMode = mode == null || mode.equals(p.get(Human.class).getGameMode());
+			int lvl = p.get(Level.class).getLevel();
+			boolean enoughExp = (minExpLevel == -1 || lvl >= minExpLevel) && (maxExpLevel == -1 || lvl <= maxExpLevel);
+
+			// check if the name is correct if specified
+			boolean correctName = playerName == null; // default to whether the player name is set
+			if (playerName != null) {
+				if (playerNameInverted) {
+					// make sure the player does not have the specified name
+					correctName = !p.getName().equalsIgnoreCase(playerName);
+				} else {
+					// make sure the player does have the specified name
+					correctName = p.getName().equals(playerName);
+				}
+			}
+
+			// check if the team is correct if specified
+			Scoreboard board = p.get(Scoreboard.class);
+			boolean correctTeam = teamName == null; // default to whether the team name is set
+			if (teamName != null && board != null) {
+				Team team = board.getTeam(teamName);
+				if (team != null) {
+					if (teamNameInverted) {
+						// make sure the player is not on the specified team
+						correctTeam = !team.getPlayerNames().contains(p.getName());
+					} else {
+						// make sure the player is on the specified team
+						correctTeam = team.getPlayerNames().contains(p.getName());
+					}
+				}
+			}
+
+			// make sure the player has the right amount of points for the specified objectives
+			boolean enoughPoints = minScores.isEmpty() && maxScores.isEmpty(); // default to whether there are any objectives set
+			if (board != null) {
+				// first make sure the player has the minimum requirements
+				for (Map.Entry<String, Integer> e : minScores.entrySet()) {
+					Objective obj = board.getObjective(e.getKey());
+					if (obj == null) {
+						continue;
+					}
+
+					int score = obj.getScore(p.getName()); // player's score for specified objective
+					int minScore = e.getValue(); // specified minimum score
+					enoughPoints = score >= minScore;
+					if (!enoughPoints) {
+						// not enough? break.
+						break;
+					}
+				}
+
+				// next make sure the player isn't over the maximums
+				for (Map.Entry<String, Integer> e : maxScores.entrySet()) {
+					Objective obj = board.getObjective(e.getKey());
+					if (obj == null) {
+						continue;
+					}
+
+					int score = obj.getScore(p.getName()); // player's score for specified objective
+					int maxScore = e.getValue(); // specified maximum score
+					enoughPoints = score <= maxScore;
+					if (!enoughPoints) {
+						// too many points? break.
+						break;
+					}
+				}
+			}
+
+			if (Spout.debugMode()) {
+				Spout.log("Trying to accept: " + p.getName());
+				Spout.log("\tDistance From Origin: " + distance);
+				Spout.log("\tClose Enough: " + closeEnough);
+				Spout.log("\tCorrect Mode: " + correctMode);
+				Spout.log("\tEnough Exp: " + enoughExp);
+				Spout.log("\tCorrect Name: " + correctName);
+				Spout.log("\tCorrect Team: " + correctTeam);
+				Spout.log("\tEnough Points: " + enoughPoints);
+			}
+
+			return closeEnough && correctMode && enoughExp && correctName && correctTeam && enoughPoints;
 		}
 
 		@Override
@@ -390,9 +522,13 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 					.append("reversed_list", reversedList)
 					.append("max_exp_lvl", maxExpLevel)
 					.append("min_exp_lvl", minExpLevel)
-					.append("objective", objective)
-					.append("max_score", maxScore)
-					.append("min_score", minScore).build();
+					.append("player_name", playerName)
+					.append("player_name_inverted", playerNameInverted)
+					.append("team_name", teamName)
+					.append("team_name_inverted", teamNameInverted)
+					.append("min_scores", minScores)
+					.append("max_scores", maxScores)
+					.toString();
 		}
 	}
 
@@ -413,6 +549,10 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 		}
 		command = event.getCommand();
 		arguments = event.getArguments();
+
+		if (Spout.debugMode()) {
+			Spout.getLogger().info("Executing: " + command + " " + arguments);
+		}
 
 		final RootCommand rootCmd = VanillaPlugin.getInstance().getEngine().getRootCommand();
 		Command cmd = rootCmd.getChild(command);

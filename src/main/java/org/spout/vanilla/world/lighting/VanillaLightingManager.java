@@ -27,9 +27,10 @@
 package org.spout.vanilla.world.lighting;
 
 import java.util.Iterator;
-
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.spout.api.Spout;
+import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.lighting.LightingManager;
 import org.spout.api.lighting.Modifiable;
 import org.spout.api.material.BlockMaterial;
@@ -42,11 +43,10 @@ import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 import org.spout.api.util.cuboid.ImmutableHeightMapBuffer;
 import org.spout.api.util.set.TInt10TripleSet;
-import org.spout.vanilla.VanillaPlugin;
 
 public abstract class VanillaLightingManager extends LightingManager<VanillaCuboidLightBuffer> {
 	private final static BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
-
+	
 	public VanillaLightingManager(String name) {
 		super(name);
 	}
@@ -174,8 +174,48 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		return getLightLevel(light, nx, ny, nz);
 	}
 
+	// TODO - this method might not really be required
+	private boolean isLightFlowPossible(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, int x, int y, int z, boolean inward) {
+
+		int lightLevel = getLightLevel(light, x, y, z);
+		
+		int mask = Chunk.BLOCKS.MASK;
+		int xoff = x & mask;
+		int yoff = y & mask;
+		int zoff = z & mask;;
+		
+		int neighborLight = 0;
+		
+		if (xoff == 0 || xoff == mask || yoff == 0 || yoff == mask || zoff == 0 || zoff == mask) {
+			for (int i = 0; i < 6; i++) {
+				BlockFace face = allFaces[i];
+				IntVector3 v = face.getIntOffset();
+				int faceLight = getLightLevel(light, x + v.getX(), y + v.getY(), z + v.getZ(), true);
+				neighborLight = Math.max(neighborLight, faceLight);
+			}
+		} else {
+			VanillaCuboidLightBuffer buffer = light.getLightBuffer(x, y, z);
+			if (buffer == null) {
+				return false;
+			}
+			
+			for (int i = 0; i < 6; i++) {
+				BlockFace face = allFaces[i];
+				IntVector3 v = face.getIntOffset();
+				int faceLight = getLightLevel(light, x + v.getX(), y + v.getY(), z + v.getZ(), true);
+				neighborLight = Math.max(neighborLight, faceLight);
+			}
+		}
+		
+		return neighborLight > lightLevel;
+	}
+	
 	public int getLightLevel(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, int x, int y, int z) {
-		VanillaCuboidLightBuffer buffer = light.getLightBuffer(x, y, z);
+		return getLightLevel(light, x, y, z, false);
+	}
+	
+	public int getLightLevel(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, int x, int y, int z, boolean allowNull) {
+		VanillaCuboidLightBuffer buffer = light.getLightBuffer(x, y, z, allowNull);
 		int level = 0;
 		if (buffer != null) {
 			level = buffer.get(x, y, z);
@@ -235,6 +275,9 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	protected void checkAndAddDirtyRising(TInt10TripleSet[] dirtySets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z) {
 		BlockMaterial m = material.get(x, y, z);
 		if (BlockMaterial.UNGENERATED.equals(m)) {
+			return;
+		}
+		if (!isLightFlowPossible(light, x, y, z, true)) {
 			return;
 		}
 		int actualLevel = getLightLevel(light, x, y, z);

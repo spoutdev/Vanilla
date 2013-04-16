@@ -26,66 +26,84 @@
  */
 package org.spout.vanilla.data.effect;
 
-public class EntityEffect {
-	private final EntityEffectType effect;
-	private final int tier;
-	private float timer;
-	private float tick = 0;
+import org.spout.api.tickable.BasicTickable;
 
-	public EntityEffect(EntityEffectType effect, float timer, int tier) {
-		this.effect = effect;
-		this.timer = timer;
-		this.tier = tier;
+/**
+ * Represents a status effect on an entity.
+ */
+public class EntityEffect extends BasicTickable {
+	private final EntityEffectType type;
+	private final int amp;
+	private float duration; // no setter because change in duration isn't actually staged on the client
+	private int ticks;
+
+	public EntityEffect(EntityEffectType type, int amp, float duration) {
+		this.type = type;
+		this.amp = amp;
+		this.duration = duration;
 	}
 
-	public EntityEffect(EntityEffectType effect, float timer) {
-		this.effect = effect;
-		this.timer = timer;
-		this.tier = 1;
-	}
-
-	public float getTimer() {
-		return timer;
-	}
-
-	public void setTimer(float timer) {
-		this.timer = timer;
-	}
-
-	public EntityEffectType getEffect() {
-		return effect;
+	public EntityEffect(EntityEffectType type, float duration) {
+		this(type, 0, duration);
 	}
 
 	/**
-	 * The tier of this effect. Used to know how much effective the effect is.
-	 * @return The tier of the effect
+	 * Returns the {@link EntityEffectType} of the effect.
+	 *
+	 * @return type of effect
 	 */
-	public int getTier() {
-		return tier;
+	public EntityEffectType getType() {
+		return type;
 	}
 
-	public float getTick() {
-		return tick;
+	/**
+	 * Returns the amplifier for the effect.
+	 *
+	 * @return amplifier
+	 */
+	public int getAmplifier() {
+		return amp;
 	}
 
-	public void addTick(float tick) {
-		this.tick += tick;
+	/**
+	 * Returns the duration left in this effect.
+	 *
+	 * @return duration left
+	 */
+	public float getDuration() {
+		return duration;
 	}
 
-	public void resetTick() {
-		this.tick = 0;
+	/**
+	 * Returns the amount of ticks this effect has been active since
+	 * {@link #resetTicks()} was called.
+	 *
+	 * @return amount of ticks that have passed
+	 */
+	public int getTicks() {
+		return ticks;
+	}
+
+	/**
+	 * Resets the tick counter to zero.
+	 */
+	public void resetTicks() {
+		ticks = 0;
 	}
 
 	@Override
-	public boolean equals(Object e) {
-		boolean result = false;
-		if (e != null) {
-			if (e instanceof EntityEffect) {
-				result = ((EntityEffect) e).getEffect().equals(this.effect);
-			} else if (e instanceof EntityEffectType) {
-				result = this.effect.equals(e);
-			}
-		}
-		return result;
+	public void onTick(float dt) {
+		ticks++;
+		duration -= dt;
+	}
+
+	@Override
+	public boolean canTick() {
+		return true;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return obj instanceof EntityEffect && ((EntityEffect) obj).type == type;
 	}
 }

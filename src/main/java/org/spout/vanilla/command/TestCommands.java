@@ -70,6 +70,7 @@ import org.spout.vanilla.component.entity.living.Ageable;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.Burn;
+import org.spout.vanilla.component.entity.misc.Effects;
 import org.spout.vanilla.component.entity.misc.Head;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.misc.Hunger;
@@ -78,6 +79,8 @@ import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.component.entity.substance.Substance;
 import org.spout.vanilla.component.entity.substance.test.ForceMessages;
 import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.data.effect.EntityEffect;
+import org.spout.vanilla.data.effect.EntityEffectType;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.inventory.block.BrewingStandInventory;
 import org.spout.vanilla.inventory.block.DispenserInventory;
@@ -118,6 +121,27 @@ public class TestCommands {
 
 	private Engine getEngine() {
 		return plugin.getEngine();
+	}
+
+	@Command(aliases = {"effect", "fx"}, usage = "<type> <duration> [amp]", desc = "Applies an effect.", min = 2, max = 3)
+	@CommandPermissions("vanilla.command.debug")
+	public void effect(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to apply effects.");
+		}
+
+		Player player = (Player) source;
+		EntityEffectType type;
+		try {
+			type = EntityEffectType.valueOf(args.getString(0).toUpperCase());
+		} catch (IllegalArgumentException e) {
+			throw new CommandException(e);
+		}
+		float duration = args.getFloat(1);
+		int amp = args.length() == 2 ? 0 : args.getInteger(2);
+
+		player.add(Effects.class).add(new EntityEffect(type, amp, duration));
+		player.sendMessage(ChatStyle.BRIGHT_GREEN, "Applied effect '" + type + "' with amplitude '" + amp + "' for '" + duration + "' seconds.");
 	}
 
 	@Command(aliases = {"testscoreboard", "tsb"}, desc = "Not to be confused with '/scoreboard'")

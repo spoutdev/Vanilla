@@ -792,7 +792,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 	@EventHandler
 	public Message onEntityEffect(EntityEffectEvent event) {
-		return new EntityEffectMessage(event.getEntity().getId(), (byte) event.getEffect().getEffect().getId(), (byte) 0, (short) (event.getEffect().getTimer() * 20));
+		return new EntityEffectMessage(event.getEntity().getId(), (byte) event.getEffect().getType().getId(), (byte) 0, (short) (event.getEffect().getDuration() * 20));
 	}
 
 	@EventHandler

@@ -245,7 +245,7 @@ public class PotionItem extends VanillaItemMaterial {
 
 	public void onDrink(Entity entity, Slot slot) {
 		if (this.effect != null) {
-			entity.add(Effects.class).addEffect(new EntityEffect(effect, this.getTime(), this.getTier()));
+			entity.add(Effects.class).add(new EntityEffect(effect, this.getTier(), this.getTime()));
 		}
 
 		slot.addAmount(-1);

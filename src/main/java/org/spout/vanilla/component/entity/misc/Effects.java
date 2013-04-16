@@ -26,159 +26,153 @@
  */
 package org.spout.vanilla.component.entity.misc;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
 
 import org.spout.api.component.type.EntityComponent;
+import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 
-import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.data.effect.EntityEffect;
 import org.spout.vanilla.data.effect.EntityEffectType;
 import org.spout.vanilla.event.entity.network.EntityEffectEvent;
 import org.spout.vanilla.event.entity.network.EntityRemoveEffectEvent;
-import org.spout.vanilla.material.item.potion.PotionItem;
 
 /**
  * Component handling status effects. This includes food poisoning, regeneration, etc.
  */
 public class Effects extends EntityComponent {
-	private final List<EntityEffect> list = new ArrayList<EntityEffect>();
-	private Health health;
+	private final Set<EntityEffect> effects = new HashSet<EntityEffect>();
+	private Player player;
+
+	/**
+	 * Returns the player associated with this component.
+	 *
+	 * @return player attached to this component
+	 */
+	public Player getPlayer() {
+		return player;
+	}
+
+	/**
+	 * Applies an effect on the player.
+	 *
+	 * @param effect to apply
+	 */
+	public void add(EntityEffect effect) {
+		int amount = 6 << effect.getAmplifier();
+		Health health = player.add(Health.class);
+		switch (effect.getType()) {
+			// don't send these to the client
+			case INSTANT_DAMAGE:
+				health.damage(amount);
+				return;
+			case INSTANT_HEALTH:
+				health.heal(amount);
+				return;
+		}
+		player.getNetworkSynchronizer().callProtocolEvent(new EntityEffectEvent(player, effect));
+		effects.add(effect);
+	}
+
+	/**
+	 * Removes a player's effect.
+	 *
+	 * @param type type of effect to remove
+	 */
+	public void remove(EntityEffectType type) {
+		if (!contains(type)) {
+			return;
+		}
+
+		// send the update
+		player.getNetworkSynchronizer().callProtocolEvent(new EntityRemoveEffectEvent(player, type));
+
+		// look up the effect with this type and remove it
+		Iterator<EntityEffect> i = effects.iterator();
+		while (i.hasNext()) {
+			if (i.next().getType() == type) {
+				i.remove();
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Returns true if the player has the specified effect type applied.
+	 *
+	 * @param type to check for
+	 * @return true if effect is applied
+	 */
+	public boolean contains(EntityEffectType type) {
+		for (EntityEffect effect : effects) {
+			if (effect.getType() == type) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	@Override
 	public void onAttached() {
-		this.health = getOwner().add(Health.class);
+		Entity owner = getOwner();
+		if (!(owner instanceof Player)) {
+			throw new IllegalStateException("Effects component may only be attached to players.");
+		}
+		player = (Player) owner;
 	}
 
 	@Override
 	public boolean canTick() {
-		return list.size() > 0;
+		return effects.size() > 0;
 	}
 
 	@Override
 	public void onTick(float dt) {
-		Iterator<EntityEffect> iterator = list.iterator();
-		boolean removed = false;
-		while (iterator.hasNext()) {
-			removed = false;
-			EntityEffect effect = iterator.next();
-			effect.setTimer(effect.getTimer() - dt);
-			effect.addTick(dt);
-
-			//TODO: Probably spammy. Need to find a better way.
-			if (EntityEffectType.INVISIBILITY.equals(effect.getEffect())) {
-				getOwner().get(Living.class).sendMetaData();
-			}
-			if (effect.getTimer() <= 0) {
-				iterator.remove();
-				removed = true;
+		for (EntityEffect effect : effects) {
+			effect.tick(dt);
+			// time ran out, remove effect
+			if (effect.getDuration() <= 0) {
+				remove(effect.getType());
+				continue;
 			}
 
-			if (!removed) {
-				switch (effect.getEffect()) {
-					case HUNGER:
-						if (getOwner() instanceof Player && !getOwner().get(Human.class).isSurvival()) {
-							Hunger hunger = getOwner().add(Hunger.class);
-							hunger.setExhaustion(hunger.getExhaustion() + 0.025f);
-						}
-						break;
-					case REGENERATION:
-						if (getOwner() instanceof Player && !getOwner().get(Human.class).isSurvival()) {
-							break;
-						}
-						if (effect.getTier() == PotionItem.TIER0 && effect.getTick() >= 1.20f) {
-							health.heal(1);
-							effect.resetTick();
-						} else if (effect.getTier() == PotionItem.TIER2 && effect.getTick() >= 0.55f) {
-							health.heal(1);
-							effect.resetTick();
-						}
-						break;
-					case POISON:
-						if (getOwner() instanceof Player && !getOwner().get(Human.class).isSurvival()) {
-							break;
-						}
-						if (effect.getTier() == PotionItem.TIER0 && effect.getTick() >= 1.25f) {
-							if (health.getHealth() > 1) {
-								health.damage(1);
-							}
-							effect.resetTick();
-						} else if (effect.getTier() == PotionItem.TIER2 && effect.getTick() >= 0.55f) {
-							if (health.getHealth() > 1) {
-								health.damage(1);
-							}
-							effect.resetTick();
-						}
-						break;
-					case WITHER:
-						if (getOwner() instanceof Player && !getOwner().get(Human.class).isSurvival()) {
-							break;
-						}
-						if (effect.getTier() == PotionItem.TIER0 && effect.getTick() >= 1.25f) {
-							health.damage(1);
-							effect.resetTick();
-						} else if (effect.getTier() == PotionItem.TIER2 && effect.getTick() >= 0.55f) {
-							health.damage(1);
-							effect.resetTick();
-						}
-						break;
-					default:
-						break;
-				}
+			if (!player.add(Human.class).isSurvival()) {
+				continue;
 			}
+
+			// apply server side effects
+			int ticks = effect.getTicks();
+			Health health = player.add(Health.class);
+			switch (effect.getType()) {
+				case HUNGER:
+					Hunger hunger = player.add(Hunger.class);
+					hunger.setExhaustion(hunger.getExhaustion() + 0.025f);
+					break;
+				case REGENERATION:
+					// heal one every 25 ticks
+					if (ticks >= 25) {
+						effect.resetTicks();
+						health.heal(1);
+					}
+					break;
+				case POISON:
+					// damage 1 every 25 ticks, but don't kill the player
+					if (ticks >= 25 && health.getHealth() > 1) {
+						effect.resetTicks();
+						health.damage(1);
+					}
+					break;
+				case WITHER:
+					// damage 1 every 40 ticks, can kill the player
+					if (ticks >= 40) {
+						health.damage(1);
+					}
+					break;
+			}
+
 		}
-	}
-
-	/**
-	 * Add a effect to the entity.
-	 * @param effect The effect to add.
-	 */
-	public void addEffect(EntityEffect effect) {
-		if (EntityEffectType.INSTANT_DAMAGE.equals(effect.getEffect())) {
-			if (effect.getTier() == PotionItem.TIER0) {
-				health.damage(6);
-			} else if (effect.getTier() == PotionItem.TIER2) {
-				health.damage(12);
-			}
-		} else if (EntityEffectType.INSTANT_HEALTH.equals(effect.getEffect())) {
-			if (effect.getTier() == PotionItem.TIER0) {
-				health.heal(6);
-			} else if (effect.getTier() == PotionItem.TIER2) {
-				health.heal(12);
-			}
-		} else {
-			getOwner().getNetwork().callProtocolEvent(new EntityEffectEvent(getOwner(), effect));
-			list.add(effect);
-		}
-	}
-
-	/**
-	 * Remove a effect from the entity.
-	 * @param effect The effect to remove.
-	 */
-	public void removeEffect(EntityEffectType effect) {
-		if (containsEffect(effect)) {
-			getOwner().getNetwork().callProtocolEvent(new EntityRemoveEffectEvent(getOwner(), effect));
-			list.remove(effect);
-		}
-	}
-
-	/**
-	 * Checks if a effect is currently enabled on the entity.
-	 * @param effect The effect to verify.
-	 * @return True if the effect is currently enabled, else false.
-	 */
-	public boolean containsEffect(EntityEffectType effect) {
-		boolean result = false;
-		for (EntityEffect effectContainer : list) {
-			result = effectContainer.equals(effect);
-			if (result) {
-				break;
-			}
-		}
-		return result;
 	}
 }

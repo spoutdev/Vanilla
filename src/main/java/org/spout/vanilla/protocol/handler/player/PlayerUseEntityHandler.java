@@ -95,10 +95,10 @@ public class PlayerUseEntityHandler extends MessageHandler<PlayerUseEntityMessag
 				//Potion modification
 				if (holdingMat.equals(VanillaMaterials.AIR)) {
 					Effects effect = playerEnt.add(Effects.class);
-					if (effect.containsEffect(EntityEffectType.STRENGTH)) {
+					if (effect.contains(EntityEffectType.STRENGTH)) {
 						damage += 3;
 					}
-					if (effect.containsEffect(EntityEffectType.WEAKNESS)) {
+					if (effect.contains(EntityEffectType.WEAKNESS)) {
 						damage -= 2;
 					}
 				}

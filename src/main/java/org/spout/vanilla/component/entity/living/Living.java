@@ -109,7 +109,7 @@ public abstract class Living extends VanillaEntityComponent {
 
 		Effects effects = getOwner().get(Effects.class);
 		if (effects != null) {
-			value = (byte) (value | ((effects.containsEffect(EntityEffectType.INVISIBILITY) ? 1 : 0) << 5));
+			value = (byte) (value | ((effects.contains(EntityEffectType.INVISIBILITY) ? 1 : 0) << 5));
 		}
 
 		return value;

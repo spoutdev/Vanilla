@@ -61,14 +61,14 @@ public class Food extends VanillaItemMaterial {
 			for (FoodEffect effect : getEffectType()) {
 				switch (effect.getEffect()) {
 					case HEALTH_REGENERATION:
-						entity.add(Effects.class).addEffect(new EntityEffect(EntityEffectType.REGENERATION, effect.getChange()));
+						entity.add(Effects.class).add(new EntityEffect(EntityEffectType.REGENERATION, effect.getChange()));
 						break;
 					case HUNGER:
 						hunger.setHunger((int) (hunger.getHunger() + effect.getChange()));
 						break;
 					case POISON:
 						if (GenericMath.getRandom().nextInt(101) < effect.getChange()) {
-							entity.add(Effects.class).addEffect(new EntityEffect(EntityEffectType.HUNGER, 30));
+							entity.add(Effects.class).add(new EntityEffect(EntityEffectType.HUNGER, 30));
 						}
 						break;
 					case SATURATION:

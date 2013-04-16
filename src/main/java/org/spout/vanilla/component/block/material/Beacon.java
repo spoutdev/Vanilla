@@ -204,9 +204,9 @@ public class Beacon extends ViewedBlockComponent {
 
 		for (Player player : pos.getWorld().getNearbyPlayers(pos, (int) getEffectRange())) {
 			Effects effects = player.add(Effects.class);
-			effects.addEffect(new EntityEffect(primary, getEffectDuration(), getPrimaryAmplifier()));
+			effects.add(new EntityEffect(primary, getPrimaryAmplifier(), getEffectDuration()));
 			if (secondary != null && secondary != EntityEffectType.NONE && getLevels() == 4 && primary != secondary) {
-				effects.addEffect(new EntityEffect(secondary, getEffectDuration()));
+				effects.add(new EntityEffect(secondary, getEffectDuration()));
 			}
 		}
 	}

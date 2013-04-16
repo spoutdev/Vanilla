@@ -28,6 +28,7 @@ package org.spout.vanilla.util;
 
 import java.util.Random;
 
+import gnu.trove.iterator.TObjectIntIterator;
 import gnu.trove.map.TObjectIntMap;
 
 import org.spout.api.math.GenericMath;
@@ -163,10 +164,12 @@ public class MathHelper {
 			return null;
 		}
 		int j = random.nextInt(totalWeight);
-		for (T t : weightMap.keySet()) {
-			j -= weightMap.get(t);
+		final TObjectIntIterator<T> iterator = weightMap.iterator();
+		while (iterator.hasNext()) {
+			iterator.advance();
+			j -= iterator.value();
 			if (j < 0) {
-				return t;
+				return iterator.key();
 			}
 		}
 		return null;

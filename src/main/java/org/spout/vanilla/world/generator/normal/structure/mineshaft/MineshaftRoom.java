@@ -31,22 +31,25 @@ import java.util.List;
 import java.util.Random;
 
 import org.spout.api.math.GenericMath;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
+import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
-public class MineshaftRoom extends StructurePiece {
+public class MineshaftRoom extends WeightedNextStructurePiece {
+	private static final WeightedNextPiecesDefaults DEFAULT_NEXT = new WeightedNextPiecesDefaults().
+			addDefault(MineshaftCorridor.class, 4).
+			addDefault(MineshaftStaircase.class, 1);
 	private int height;
 	private int depth;
 	private int xStart;
 	private int xEnd;
 
 	public MineshaftRoom(Structure parent) {
-		super(parent);
+		super(parent, DEFAULT_NEXT);
 		randomize();
 	}
 
@@ -82,39 +85,31 @@ public class MineshaftRoom extends StructurePiece {
 	}
 
 	@Override
-	public List<StructurePiece> getNextComponents() {
-		final List<StructurePiece> components = new ArrayList<StructurePiece>(3);
+	public List<StructurePiece> getNextPieces() {
+		final List<StructurePiece> pieces = new ArrayList<StructurePiece>(3);
 		final Random random = getRandom();
 		if (random.nextBoolean()) {
-			final StructurePiece front = pickComponent(random);
+			final StructurePiece front = getNextPiece();
 			front.setPosition(position.add(rotate(0, 0, depth)));
 			front.setRotation(rotation);
 			front.randomize();
-			components.add(front);
+			pieces.add(front);
 		}
 		if (random.nextBoolean()) {
-			final StructurePiece right = pickComponent(random);
+			final StructurePiece right = getNextPiece();
 			right.setPosition(position.add(rotate(xStart, 0, depth / 2)));
 			right.setRotation(rotation.rotate(-90, 0, 1, 0));
 			right.randomize();
-			components.add(right);
+			pieces.add(right);
 		}
 		if (random.nextBoolean()) {
-			final StructurePiece left = pickComponent(random);
+			final StructurePiece left = getNextPiece();
 			left.setPosition(position.add(rotate(xEnd, 0, depth / 2)));
 			left.setRotation(rotation.rotate(90, 0, 1, 0));
 			left.randomize();
-			components.add(left);
+			pieces.add(left);
 		}
-		return components;
-	}
-
-	private StructurePiece pickComponent(Random random) {
-		if (random.nextInt(4) == 0) {
-			return new MineshaftStaircase(parent);
-		} else {
-			return new MineshaftCorridor(parent);
-		}
+		return pieces;
 	}
 
 	public int getDepth() {

@@ -31,19 +31,22 @@ import java.util.List;
 import java.util.Random;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
+import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
-public class MineshaftIntersection extends StructurePiece {
+public class MineshaftIntersection extends WeightedNextStructurePiece {
+	private static final WeightedNextPiecesDefaults DEFAULT_NEXT = new WeightedNextPiecesDefaults().
+			addDefault(MineshaftCorridor.class, 4).
+			addDefault(MineshaftStaircase.class, 1);
 	private byte height;
 
 	public MineshaftIntersection(Structure parent) {
-		super(parent);
+		super(parent, DEFAULT_NEXT);
 		randomize();
 	}
 
@@ -96,68 +99,60 @@ public class MineshaftIntersection extends StructurePiece {
 	}
 
 	@Override
-	public List<StructurePiece> getNextComponents() {
-		final List<StructurePiece> components = new ArrayList<StructurePiece>(7);
+	public List<StructurePiece> getNextPieces() {
+		final List<StructurePiece> pieces = new ArrayList<StructurePiece>(3);
 		final boolean twoFloors = hasTwoFloors();
 		final Random random = getRandom();
 		if (random.nextBoolean()) {
-			final StructurePiece bottomFront = pickComponent(random);
+			final StructurePiece bottomFront = getNextPiece();
 			bottomFront.setPosition(position.add(rotate(0, 0, 5)));
 			bottomFront.setRotation(rotation);
 			bottomFront.randomize();
-			components.add(bottomFront);
+			pieces.add(bottomFront);
 		}
 		if (random.nextBoolean()) {
-			final StructurePiece bottomRight = pickComponent(random);
+			final StructurePiece bottomRight = getNextPiece();
 			bottomRight.setPosition(position.add(rotate(-1, 0, 1)));
 			bottomRight.setRotation(rotation.rotate(-90, 0, 1, 0));
 			bottomRight.randomize();
-			components.add(bottomRight);
+			pieces.add(bottomRight);
 		}
 		if (random.nextBoolean()) {
-			final StructurePiece bottomLeft = pickComponent(random);
+			final StructurePiece bottomLeft = getNextPiece();
 			bottomLeft.setPosition(position.add(rotate(4, 0, 3)));
 			bottomLeft.setRotation(rotation.rotate(90, 0, 1, 0));
 			bottomLeft.randomize();
-			components.add(bottomLeft);
+			pieces.add(bottomLeft);
 		}
 		if (twoFloors && random.nextBoolean()) {
-			final StructurePiece topFront = pickComponent(random);
+			final StructurePiece topFront = getNextPiece();
 			topFront.setPosition(position.add(rotate(0, 4, 5)));
 			topFront.setRotation(rotation);
 			topFront.randomize();
-			components.add(topFront);
+			pieces.add(topFront);
 		}
 		if (twoFloors && random.nextBoolean()) {
-			final StructurePiece topRight = pickComponent(random);
+			final StructurePiece topRight = getNextPiece();
 			topRight.setPosition(position.add(rotate(-1, 4, 1)));
 			topRight.setRotation(rotation.rotate(-90, 0, 1, 0));
 			topRight.randomize();
-			components.add(topRight);
+			pieces.add(topRight);
 		}
 		if (twoFloors && random.nextBoolean()) {
-			final StructurePiece topLeft = pickComponent(random);
+			final StructurePiece topLeft = getNextPiece();
 			topLeft.setPosition(position.add(rotate(4, 4, 3)));
 			topLeft.setRotation(rotation.rotate(90, 0, 1, 0));
 			topLeft.randomize();
-			components.add(topLeft);
+			pieces.add(topLeft);
 		}
 		if (twoFloors && random.nextBoolean()) {
-			final StructurePiece topBack = pickComponent(random);
+			final StructurePiece topBack = getNextPiece();
 			topBack.setPosition(position.add(rotate(2, 4, 0)));
 			topBack.setRotation(rotation.rotate(180, 0, 1, 0));
 			topBack.randomize();
-			components.add(topBack);
+			pieces.add(topBack);
 		}
-		return components;
-	}
-
-	private StructurePiece pickComponent(Random random) {
-		if (random.nextInt(4) == 0) {
-			return new MineshaftStaircase(parent);
-		} else {
-			return new MineshaftCorridor(parent);
-		}
+		return pieces;
 	}
 
 	public boolean hasTwoFloors() {

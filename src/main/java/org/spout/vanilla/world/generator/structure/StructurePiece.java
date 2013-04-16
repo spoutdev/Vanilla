@@ -199,7 +199,7 @@ public abstract class StructurePiece {
 
 	public abstract void randomize();
 
-	public abstract List<StructurePiece> getNextComponents();
+	public abstract List<StructurePiece> getNextPieces();
 
 	public abstract BoundingBox getBoundingBox();
 

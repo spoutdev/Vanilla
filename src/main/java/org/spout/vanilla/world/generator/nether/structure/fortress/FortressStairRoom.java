@@ -101,7 +101,7 @@ public class FortressStairRoom extends StructurePiece {
 	}
 
 	@Override
-	public List<StructurePiece> getNextComponents() {
+	public List<StructurePiece> getNextPieces() {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 

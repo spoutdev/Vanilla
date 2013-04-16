@@ -30,17 +30,21 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
+import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
-public class MineshaftStaircase extends StructurePiece {
+public class MineshaftStaircase extends WeightedNextStructurePiece {
+	private static final WeightedNextPiecesDefaults DEFAULT_NEXT = new WeightedNextPiecesDefaults().
+			addDefault(MineshaftIntersection.class, 4).
+			addDefault(MineshaftRoom.class, 2).
+			addDefault(MineshaftCorridor.class, 4);
+
 	public MineshaftStaircase(Structure parent) {
-		super(parent);
+		super(parent, DEFAULT_NEXT);
 	}
 
 	@Override
@@ -71,20 +75,12 @@ public class MineshaftStaircase extends StructurePiece {
 	}
 
 	@Override
-	public List<StructurePiece> getNextComponents() {
-		final StructurePiece component;
-		final float draw = getRandom().nextFloat();
-		if (draw > 0.8) {
-			component = new MineshaftRoom(parent);
-		} else if (draw > 0.4) {
-			component = new MineshaftIntersection(parent);
-		} else {
-			component = new MineshaftCorridor(parent);
-		}
-		component.setPosition(position.add(rotate(0, -5, 8)));
-		component.setRotation(rotation);
-		component.randomize();
-		return Lists.newArrayList(component);
+	public List<StructurePiece> getNextPieces() {
+		final StructurePiece piece = getNextPiece();
+		piece.setPosition(position.add(rotate(0, -5, 8)));
+		piece.setRotation(rotation);
+		piece.randomize();
+		return Lists.newArrayList(piece);
 	}
 
 	@Override

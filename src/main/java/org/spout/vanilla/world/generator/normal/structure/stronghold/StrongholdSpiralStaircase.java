@@ -85,7 +85,7 @@ public class StrongholdSpiralStaircase extends StructurePiece {
 	}
 
 	@Override
-	public List<StructurePiece> getNextComponents() {
+	public List<StructurePiece> getNextPieces() {
 		final StructurePiece component;
 		final float draw = getRandom().nextFloat();
 		if (draw > 0.95) {

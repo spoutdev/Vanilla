@@ -33,7 +33,6 @@ import java.util.Random;
 import com.google.common.collect.Lists;
 
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.misc.Dye;
@@ -42,8 +41,13 @@ import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
+import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
-public class MineshaftCorridor extends StructurePiece {
+public class MineshaftCorridor extends WeightedNextStructurePiece {
+	private static final WeightedNextPiecesDefaults DEFAULT_NEXT = new WeightedNextPiecesDefaults().
+			addDefault(MineshaftIntersection.class, 5).
+			addDefault(MineshaftRoom.class, 2).
+			addDefault(MineshaftStaircase.class, 2);
 	private byte sections = 5;
 	private boolean hasRails = false;
 	private boolean caveSpiders = false;
@@ -51,7 +55,7 @@ public class MineshaftCorridor extends StructurePiece {
 	private final LootChestObject chestObject;
 
 	public MineshaftCorridor(Structure parent) {
-		super(parent);
+		super(parent, DEFAULT_NEXT);
 		randomize();
 		chestObject = new LootChestObject(getRandom());
 		chestObject.setMinNumberOfStacks(3);
@@ -164,22 +168,15 @@ public class MineshaftCorridor extends StructurePiece {
 	}
 
 	@Override
-	public List<StructurePiece> getNextComponents() {
-		final StructurePiece component;
-		final float draw = getRandom().nextFloat();
-		if (draw > 0.8) {
-			component = new MineshaftRoom(parent);
-		} else if (draw > 0.6) {
-			component = new MineshaftStaircase(parent);
-		} else if (draw > 0.1) {
-			component = new MineshaftIntersection(parent);
-		} else {
+	public List<StructurePiece> getNextPieces() {
+		if (getRandom().nextFloat() <= 0.1) {
 			return Collections.emptyList();
 		}
-		component.setPosition(position.add(rotate(0, 0, sections * 5)));
-		component.setRotation(rotation);
-		component.randomize();
-		return Lists.newArrayList(component);
+		final StructurePiece piece = getNextPiece();
+		piece.setPosition(position.add(rotate(0, 0, sections * 5)));
+		piece.setRotation(rotation);
+		piece.randomize();
+		return Lists.newArrayList(piece);
 	}
 
 	public boolean hasCaveSpiders() {

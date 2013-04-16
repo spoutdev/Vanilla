@@ -116,7 +116,7 @@ public class StrongholdLargeIntersection extends StructurePiece {
 	}
 
 	@Override
-	public List<StructurePiece> getNextComponents() {
+	public List<StructurePiece> getNextPieces() {
 		final List<StructurePiece> components = new ArrayList<StructurePiece>();
 		final Random random = getRandom();
 		final StructurePiece component = pickComponent(random, true);

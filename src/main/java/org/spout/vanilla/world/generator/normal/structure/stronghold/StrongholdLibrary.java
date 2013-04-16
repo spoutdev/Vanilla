@@ -161,7 +161,7 @@ public class StrongholdLibrary extends StructurePiece {
 	}
 
 	@Override
-	public List<StructurePiece> getNextComponents() {
+	public List<StructurePiece> getNextPieces() {
 		return Collections.emptyList();
 	}
 

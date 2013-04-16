@@ -81,7 +81,7 @@ public class StrongholdCorridor extends StructurePiece {
 	}
 
 	@Override
-	public List<StructurePiece> getNextComponents() {
+	public List<StructurePiece> getNextPieces() {
 		final List<StructurePiece> components = new ArrayList<StructurePiece>();
 		if (startOfStronghold) {
 			final StructurePiece component = new StrongholdPortalRoom(parent);

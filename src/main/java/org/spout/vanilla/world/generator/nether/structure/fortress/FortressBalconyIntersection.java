@@ -105,7 +105,7 @@ public class FortressBalconyIntersection extends StructurePiece {
 	}
 
 	@Override
-	public List<StructurePiece> getNextComponents() {
+	public List<StructurePiece> getNextPieces() {
 		final List<StructurePiece> components = new ArrayList<StructurePiece>();
 		final Random random = getRandom();
 		final StructurePiece right = pickComponent(random);

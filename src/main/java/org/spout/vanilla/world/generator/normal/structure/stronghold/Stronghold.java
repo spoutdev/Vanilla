@@ -83,9 +83,9 @@ public class Stronghold extends Structure {
 					return;
 				}
 				placed.add(activeBox);
-				final List<StructurePiece> next = active.getNextComponents();
-				for (StructurePiece component : next) {
-					lastBoxes.put(component, activeBox);
+				final List<StructurePiece> next = active.getNextPieces();
+				for (StructurePiece piece : next) {
+					lastBoxes.put(piece, activeBox);
 				}
 				activeBranches.addAll(next);
 			}

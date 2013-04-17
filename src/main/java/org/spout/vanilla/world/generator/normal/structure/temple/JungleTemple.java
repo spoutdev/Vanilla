@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.Random;
 
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.block.material.Dispenser;
 import org.spout.vanilla.inventory.block.DispenserInventory;

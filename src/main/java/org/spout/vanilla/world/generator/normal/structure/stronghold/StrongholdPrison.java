@@ -31,17 +31,27 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
+import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
-public class StrongholdPrison extends StructurePiece {
+public class StrongholdPrison extends WeightedNextStructurePiece {
+	private static final WeightedNextPiecesDefaults DEFAULT_NEXT = new WeightedNextPiecesDefaults().
+			addDefault(StrongholdLibrary.class, 5).
+			addDefault(StrongholdLargeIntersection.class, 5).
+			addDefault(StrongholdSpiralStaircase.class, 15).
+			addDefault(StrongholdRoom.class, 15).
+			addDefault(StrongholdPrison.class, 15).
+			addDefault(StrongholdIntersection.class, 15).
+			addDefault(StrongholdStaircase.class, 15).
+			addDefault(StrongholdTurn.class, 15);
+
 	public StrongholdPrison(Structure parent) {
-		super(parent);
+		super(parent, DEFAULT_NEXT);
 	}
 
 	@Override
@@ -90,29 +100,11 @@ public class StrongholdPrison extends StructurePiece {
 
 	@Override
 	public List<StructurePiece> getNextPieces() {
-		final StructurePiece component;
-		final float draw = getRandom().nextFloat();
-		if (draw > 0.95) {
-			component = new StrongholdLibrary(parent);
-		} else if (draw > 0.90) {
-			component = new StrongholdChestCorridor(parent);
-		} else if (draw > 0.75) {
-			component = new StrongholdSpiralStaircase(parent);
-		} else if (draw > 0.60) {
-			component = new StrongholdRoom(parent);
-		} else if (draw > 0.45) {
-			component = new StrongholdLargeIntersection(parent);
-		} else if (draw > 0.30) {
-			component = new StrongholdIntersection(parent);
-		} else if (draw > 0.15) {
-			component = new StrongholdStaircase(parent);
-		} else {
-			component = new StrongholdTurn(parent);
-		}
-		component.setPosition(position.add(rotate(0, 0, 11)));
-		component.setRotation(rotation);
-		component.randomize();
-		return Lists.newArrayList(component);
+		final StructurePiece piece = getNextPiece();
+		piece.setPosition(position.add(rotate(0, 0, 11)));
+		piece.setRotation(rotation);
+		piece.randomize();
+		return Lists.newArrayList(piece);
 	}
 
 	@Override

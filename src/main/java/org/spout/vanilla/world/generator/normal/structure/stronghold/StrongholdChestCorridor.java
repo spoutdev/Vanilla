@@ -30,8 +30,6 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.misc.Slab;
 import org.spout.vanilla.world.generator.normal.object.LootChestObject;
@@ -40,12 +38,23 @@ import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
+import org.spout.vanilla.world.generator.structure.StructurePiece.BoundingBox;
+import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
-public class StrongholdChestCorridor extends StructurePiece {
+public class StrongholdChestCorridor extends WeightedNextStructurePiece {
+	private static final WeightedNextPiecesDefaults DEFAULT_NEXT = new WeightedNextPiecesDefaults().
+			addDefault(StrongholdLibrary.class, 5).
+			addDefault(StrongholdLargeIntersection.class, 5).
+			addDefault(StrongholdSpiralStaircase.class, 15).
+			addDefault(StrongholdRoom.class, 15).
+			addDefault(StrongholdPrison.class, 15).
+			addDefault(StrongholdIntersection.class, 15).
+			addDefault(StrongholdStaircase.class, 15).
+			addDefault(StrongholdTurn.class, 15);
 	private final LootChestObject chestObject;
-
+	
 	public StrongholdChestCorridor(Structure parent) {
-		super(parent);
+		super(parent, DEFAULT_NEXT);
 		chestObject = new LootChestObject(getRandom());
 		chestObject.setMinNumberOfStacks(2);
 		chestObject.setMaxNumberOfStacks(3);
@@ -64,14 +73,14 @@ public class StrongholdChestCorridor extends StructurePiece {
 				.addMaterial(VanillaMaterials.IRON_BOOTS, 5, 1, 1)
 				.addMaterial(VanillaMaterials.GOLDEN_APPLE, 1, 1, 1);
 	}
-
+	
 	@Override
 	public boolean canPlace() {
 		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setMinMax(-1, -1, -1, 5, 5, 7);
 		return !box.intersectsLiquids();
 	}
-
+	
 	@Override
 	public void place() {
 		// Building objects
@@ -98,38 +107,20 @@ public class StrongholdChestCorridor extends StructurePiece {
 		chestObject.setRandom(getRandom());
 		placeObject(3, 2, 3, chestObject);
 	}
-
+	
 	@Override
 	public void randomize() {
 	}
-
+	
 	@Override
 	public List<StructurePiece> getNextPieces() {
-		final StructurePiece component;
-		final float draw = getRandom().nextFloat();
-		if (draw > 0.95) {
-			component = new StrongholdLibrary(parent);
-		} else if (draw > 0.90) {
-			component = new StrongholdLargeIntersection(parent);
-		} else if (draw > 0.75) {
-			component = new StrongholdSpiralStaircase(parent);
-		} else if (draw > 0.60) {
-			component = new StrongholdRoom(parent);
-		} else if (draw > 0.45) {
-			component = new StrongholdPrison(parent);
-		} else if (draw > 0.30) {
-			component = new StrongholdIntersection(parent);
-		} else if (draw > 0.15) {
-			component = new StrongholdStaircase(parent);
-		} else {
-			component = new StrongholdTurn(parent);
-		}
-		component.setPosition(position.add(rotate(0, 0, 7)));
-		component.setRotation(rotation);
-		component.randomize();
-		return Lists.newArrayList(component);
+		final StructurePiece piece = getNextPiece();
+		piece.setPosition(position.add(rotate(0, 0, 7)));
+		piece.setRotation(rotation);
+		piece.randomize();
+		return Lists.newArrayList(piece);
 	}
-
+	
 	@Override
 	public BoundingBox getBoundingBox() {
 		return new BoundingBox(transform(0, 0, 0), transform(4, 4, 6));

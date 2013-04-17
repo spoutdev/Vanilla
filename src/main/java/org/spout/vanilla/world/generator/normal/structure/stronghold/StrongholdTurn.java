@@ -30,18 +30,24 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
+import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
-public class StrongholdTurn extends StructurePiece {
+public class StrongholdTurn extends WeightedNextStructurePiece {
+	private static final WeightedNextPiecesDefaults DEFAULT_NEXT = new WeightedNextPiecesDefaults().
+			addDefault(StrongholdChestCorridor.class, 1).
+			addDefault(StrongholdPrison.class, 2).
+			addDefault(StrongholdCorridor.class, 2).
+			addDefault(StrongholdSpiralStaircase.class, 2).
+			addDefault(StrongholdStaircase.class, 2).
+			addDefault(StrongholdIntersection.class, 2);
 	private boolean left = false;
 
 	public StrongholdTurn(Structure parent) {
-		super(parent);
+		super(parent, DEFAULT_NEXT);
 	}
 
 	@Override
@@ -77,28 +83,16 @@ public class StrongholdTurn extends StructurePiece {
 
 	@Override
 	public List<StructurePiece> getNextPieces() {
-		final StructurePiece component;
-		final float draw = getRandom().nextFloat();
-		if (draw > 0.8) {
-			component = new StrongholdSpiralStaircase(parent);
-		} else if (draw > 0.6) {
-			component = new StrongholdPrison(parent);
-		} else if (draw > 0.4) {
-			component = new StrongholdIntersection(parent);
-		} else if (draw > 0.2) {
-			component = new StrongholdStaircase(parent);
-		} else {
-			component = new StrongholdCorridor(parent);
-		}
+		final StructurePiece piece = getNextPiece();
 		if (left) {
-			component.setPosition(position.add(rotate(5, 0, 4)));
-			component.setRotation(rotation.rotate(90, 0, 1, 0));
+			piece.setPosition(position.add(rotate(5, 0, 4)));
+			piece.setRotation(rotation.rotate(90, 0, 1, 0));
 		} else {
-			component.setPosition(position.add(rotate(-1, 0, 0)));
-			component.setRotation(rotation.rotate(-90, 0, 1, 0));
+			piece.setPosition(position.add(rotate(-1, 0, 0)));
+			piece.setRotation(rotation.rotate(-90, 0, 1, 0));
 		}
-		component.randomize();
-		return Lists.newArrayList(component);
+		piece.randomize();
+		return Lists.newArrayList(piece);
 	}
 
 	@Override

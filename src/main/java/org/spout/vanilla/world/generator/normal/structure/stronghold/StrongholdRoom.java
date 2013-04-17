@@ -30,21 +30,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.object.LootChestObject;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
+import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
-public class StrongholdRoom extends StructurePiece {
+public class StrongholdRoom extends WeightedNextStructurePiece {
+	private static final WeightedNextPiecesDefaults DEFAULT_NEXT = new WeightedNextPiecesDefaults().
+			addDefault(StrongholdChestCorridor.class, 1).
+			addDefault(StrongholdPrison.class, 2).
+			addDefault(StrongholdCorridor.class, 2).
+			addDefault(StrongholdSpiralStaircase.class, 2).
+			addDefault(StrongholdStaircase.class, 2);
 	private final LootChestObject chestObject;
 	private StrongholdRoomType type = null;
 
 	public StrongholdRoom(Structure parent) {
-		super(parent);
+		super(parent, DEFAULT_NEXT);
 		chestObject = new LootChestObject(getRandom());
 		chestObject.setMinNumberOfStacks(1);
 		chestObject.setMaxNumberOfStacks(4);
@@ -179,39 +184,23 @@ public class StrongholdRoom extends StructurePiece {
 
 	@Override
 	public List<StructurePiece> getNextPieces() {
-		final List<StructurePiece> components = new ArrayList<StructurePiece>();
-		final Random random = getRandom();
-		final StructurePiece nextFront = pickComponent(random, true);
+		final List<StructurePiece> pieces = new ArrayList<StructurePiece>();
+		final StructurePiece nextFront = getNextPiece();
 		nextFront.setPosition(position.add(rotate(0, 0, 11)));
 		nextFront.setRotation(rotation);
 		nextFront.randomize();
-		components.add(nextFront);
-		final StructurePiece nextRight = pickComponent(random, false);
+		pieces.add(nextFront);
+		final StructurePiece nextRight = getNextPiece();
 		nextRight.setPosition(position.add(rotate(-4, 0, 3)));
 		nextRight.setRotation(rotation.rotate(-90, 0, 1, 0));
 		nextRight.randomize();
-		components.add(nextRight);
-		final StructurePiece nextLeft = pickComponent(random, false);
+		pieces.add(nextRight);
+		final StructurePiece nextLeft = getNextPiece();
 		nextLeft.setPosition(position.add(rotate(8, 0, 7)));
 		nextLeft.setRotation(rotation.rotate(90, 0, 1, 0));
 		nextLeft.randomize();
-		components.add(nextLeft);
-		return components;
-	}
-
-	private StructurePiece pickComponent(Random random, boolean allowLarge) {
-		final float draw = random.nextFloat();
-		if (draw > 0.8) {
-			return new StrongholdChestCorridor(parent);
-		} else if (allowLarge && draw > 0.6) {
-			return new StrongholdPrison(parent);
-		} else if (draw > 0.4) {
-			return new StrongholdCorridor(parent);
-		} else if (draw > 0.2) {
-			return new StrongholdSpiralStaircase(parent);
-		} else {
-			return new StrongholdStaircase(parent);
-		}
+		pieces.add(nextLeft);
+		return pieces;
 	}
 
 	@Override

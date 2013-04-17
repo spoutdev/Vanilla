@@ -30,7 +30,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.object.LootChestObject;

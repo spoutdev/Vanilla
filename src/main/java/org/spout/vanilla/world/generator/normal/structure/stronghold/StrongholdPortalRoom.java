@@ -29,8 +29,6 @@ package org.spout.vanilla.world.generator.normal.structure.stronghold;
 import java.util.Collections;
 import java.util.List;
 
-import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.normal.structure.stronghold.StrongholdDoor.IronFenceDoor;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;

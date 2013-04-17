@@ -30,22 +30,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.spout.api.math.Vector3;
-
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
+import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
-public class StrongholdLargeIntersection extends StructurePiece {
+public class StrongholdLargeIntersection extends WeightedNextStructurePiece {
+	private static final WeightedNextPiecesDefaults DEFAULT_NEXT = new WeightedNextPiecesDefaults().
+			addDefault(StrongholdChestCorridor.class, 1).
+			addDefault(StrongholdPrison.class, 2).
+			addDefault(StrongholdCorridor.class, 2).
+			addDefault(StrongholdSpiralStaircase.class, 2).
+			addDefault(StrongholdStaircase.class, 2);
 	private boolean nextComponentRightLow = false;
 	private boolean nextComponentRightHigh = false;
 	private boolean nextComponentLeftLow = false;
 	private boolean nextComponentLeftHigh = false;
 
 	public StrongholdLargeIntersection(Structure parent) {
-		super(parent);
+		super(parent, DEFAULT_NEXT);
 	}
 
 	@Override
@@ -117,57 +122,41 @@ public class StrongholdLargeIntersection extends StructurePiece {
 
 	@Override
 	public List<StructurePiece> getNextPieces() {
-		final List<StructurePiece> components = new ArrayList<StructurePiece>();
-		final Random random = getRandom();
-		final StructurePiece component = pickComponent(random, true);
-		component.setPosition(position.add(rotate(1, -2, 11)));
-		component.setRotation(rotation);
-		component.randomize();
-		components.add(component);
+		final List<StructurePiece> pieces = new ArrayList<StructurePiece>();
+		final StructurePiece piece = getNextPiece();
+		piece.setPosition(position.add(rotate(1, -2, 11)));
+		piece.setRotation(rotation);
+		piece.randomize();
+		pieces.add(piece);
 		if (nextComponentRightLow) {
-			final StructurePiece next = pickComponent(random, false);
+			final StructurePiece next = getNextPiece();
 			next.setPosition(position.add(rotate(-4, 0, 0)));
 			next.setRotation(rotation.rotate(-90, 0, 1, 0));
 			next.randomize();
-			components.add(next);
+			pieces.add(next);
 		}
 		if (nextComponentRightHigh) {
-			final StructurePiece next = pickComponent(random, true);
+			final StructurePiece next = getNextPiece();
 			next.setPosition(position.add(rotate(-4, 2, 6)));
 			next.setRotation(rotation.rotate(-90, 0, 1, 0));
 			next.randomize();
-			components.add(next);
+			pieces.add(next);
 		}
 		if (nextComponentLeftLow) {
-			final StructurePiece next = pickComponent(random, false);
+			final StructurePiece next = getNextPiece();
 			next.setPosition(position.add(rotate(7, 0, 4)));
 			next.setRotation(rotation.rotate(90, 0, 1, 0));
 			next.randomize();
-			components.add(next);
+			pieces.add(next);
 		}
 		if (nextComponentLeftHigh) {
-			final StructurePiece next = pickComponent(random, true);
+			final StructurePiece next = getNextPiece();
 			next.setPosition(position.add(rotate(7, 2, 10)));
 			next.setRotation(rotation.rotate(90, 0, 1, 0));
 			next.randomize();
-			components.add(next);
+			pieces.add(next);
 		}
-		return components;
-	}
-
-	private StructurePiece pickComponent(Random random, boolean allowLarge) {
-		final float draw = random.nextFloat();
-		if (draw > 0.8) {
-			return new StrongholdChestCorridor(parent);
-		} else if (allowLarge && draw > 0.6) {
-			return new StrongholdPrison(parent);
-		} else if (draw > 0.4) {
-			return new StrongholdCorridor(parent);
-		} else if (draw > 0.2) {
-			return new StrongholdSpiralStaircase(parent);
-		} else {
-			return new StrongholdStaircase(parent);
-		}
+		return pieces;
 	}
 
 	@Override

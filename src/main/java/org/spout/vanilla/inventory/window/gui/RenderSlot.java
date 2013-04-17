@@ -106,7 +106,7 @@ public class RenderSlot extends ControlComponent {
 	}
 
 	@Override
-	public void onClicked(PlayerClickEvent event) {
+	public void onClick(PlayerClickEvent event) {
 		System.out.println("Slot clicked!");
 	}
 

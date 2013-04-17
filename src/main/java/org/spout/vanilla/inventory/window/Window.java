@@ -40,7 +40,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.gui.Screen;
 import org.spout.api.gui.Widget;
 import org.spout.api.gui.component.LabelComponent;
-import org.spout.api.gui.component.TexturedRectComponent;
+import org.spout.api.gui.component.TextureComponent;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
@@ -106,7 +106,7 @@ public abstract class Window extends AbstractWindow {
 				popup.setGrabsMouse(false);
 
 				// Setup the window to render
-				TexturedRectComponent backgroundRect = background.add(TexturedRectComponent.class);
+				TextureComponent backgroundRect = background.add(TextureComponent.class);
 				backgroundRect.setRenderMaterial(type.getRenderMaterial());
 				backgroundRect.setSprite(new Rectangle(-WIDTH * SCALE, -WIDTH, HEIGHT * 2 * SCALE, HEIGHT * 2));
 				backgroundRect.setSource(new Rectangle(0, 0, WIDTH, HEIGHT));

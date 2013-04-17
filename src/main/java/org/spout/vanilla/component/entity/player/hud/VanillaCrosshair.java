@@ -29,7 +29,7 @@ package org.spout.vanilla.component.entity.player.hud;
 import java.awt.Color;
 
 import org.spout.api.gui.Widget;
-import org.spout.api.gui.component.TexturedRectComponent;
+import org.spout.api.gui.component.TextureComponent;
 import org.spout.api.math.Rectangle;
 
 import org.spout.vanilla.component.entity.player.HUD;
@@ -39,7 +39,7 @@ public class VanillaCrosshair extends CrosshairWidget {
 	@Override
 	public void init(Widget crosshair, HUD hud) {
 		super.init(crosshair, hud);
-		final TexturedRectComponent crosshairRect = widget.add(TexturedRectComponent.class);
+		final TextureComponent crosshairRect = widget.add(TextureComponent.class);
 		crosshairRect.setRenderMaterial(VanillaRenderMaterials.ICONS_MATERIAL);
 		crosshairRect.setColor(Color.WHITE);
 		crosshairRect.setSprite(new Rectangle(-0.0625f * SCALE, -0.0625f, 0.125f * SCALE, 0.125f));

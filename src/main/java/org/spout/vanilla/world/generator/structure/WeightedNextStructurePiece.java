@@ -45,9 +45,9 @@ public abstract class WeightedNextStructurePiece extends StructurePiece {
 		super(parent);
 	}
 
-	public WeightedNextStructurePiece(Structure parent, WeightedNextPiecesDefaults defaults) {
+	public WeightedNextStructurePiece(Structure parent, WeightedNextPieceCache defaults) {
 		this(parent);
-		this.weightedPieces.putAll(defaults.getDefaults());
+		addNextPieces(defaults);
 	}
 
 	public void addNextPieces(Map<Class<? extends StructurePiece>, Integer> weightedPieces) {
@@ -62,6 +62,10 @@ public abstract class WeightedNextStructurePiece extends StructurePiece {
 			iterator.advance();
 			addNextPiece(iterator.key(), iterator.value());
 		}
+	}
+
+	public final void addNextPieces(WeightedNextPieceCache cache) {
+		this.weightedPieces.putAll(cache.getContents());
 	}
 
 	public void addNextPiece(Class<? extends StructurePiece> piece, int weight) {
@@ -128,20 +132,34 @@ public abstract class WeightedNextStructurePiece extends StructurePiece {
 		}
 	}
 
-	public static class WeightedNextPiecesDefaults {
+	public static class WeightedNextPieceCache {
 		private final TObjectIntMap<Constructor<? extends StructurePiece>> weightedPieces =
 				new TObjectIntHashMap<Constructor<? extends StructurePiece>>();
 
-		private TObjectIntMap<Constructor<? extends StructurePiece>> getDefaults() {
+		private TObjectIntMap<Constructor<? extends StructurePiece>> getContents() {
 			return weightedPieces;
 		}
 
-		public WeightedNextPiecesDefaults addDefault(Class<? extends StructurePiece> piece, int weight) {
+		public WeightedNextPieceCache addAll(TObjectIntMap<Class<? extends StructurePiece>> weightedPieces) {
+			final TObjectIntIterator<Class<? extends StructurePiece>> iterator = weightedPieces.iterator();
+			while (iterator.hasNext()) {
+				iterator.advance();
+				add(iterator.key(), iterator.value());
+			}
+			return this;
+		}
+
+		public WeightedNextPieceCache add(Class<? extends StructurePiece> piece, int weight) {
 			try {
 				weightedPieces.put(piece.getConstructor(Structure.class), weight);
 			} catch (Exception ex) {
 				throw new IllegalArgumentException("Couldn't get the parent constructor: " + ex.getMessage());
 			}
+			return this;
+		}
+
+		public WeightedNextPieceCache clear() {
+			weightedPieces.clear();
 			return this;
 		}
 	}

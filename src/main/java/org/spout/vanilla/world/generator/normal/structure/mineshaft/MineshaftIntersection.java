@@ -40,9 +40,9 @@ import org.spout.vanilla.world.generator.structure.StructurePiece;
 import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
 public class MineshaftIntersection extends WeightedNextStructurePiece {
-	private static final WeightedNextPiecesDefaults DEFAULT_NEXT = new WeightedNextPiecesDefaults().
-			addDefault(MineshaftCorridor.class, 4).
-			addDefault(MineshaftStaircase.class, 1);
+	private static final WeightedNextPieceCache DEFAULT_NEXT = new WeightedNextPieceCache().
+			add(MineshaftCorridor.class, 4).
+			add(MineshaftStaircase.class, 1);
 	private byte height;
 
 	public MineshaftIntersection(Structure parent) {

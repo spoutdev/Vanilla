@@ -36,14 +36,14 @@ import org.spout.vanilla.world.generator.structure.StructurePiece;
 import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
 public class StrongholdCorridor extends WeightedNextStructurePiece {
-	private static final WeightedNextPiecesDefaults DEFAULT_NEXT = new WeightedNextPiecesDefaults().
-			addDefault(StrongholdLargeIntersection.class, 1).
-			addDefault(StrongholdIntersection.class, 1).
-			addDefault(StrongholdRoom.class, 1).
-			addDefault(StrongholdSpiralStaircase.class, 1).
-			addDefault(StrongholdPrison.class, 2).
-			addDefault(StrongholdTurn.class, 2).
-			addDefault(StrongholdStaircase.class, 2);
+	private static final WeightedNextPieceCache DEFAULT_NEXT = new WeightedNextPieceCache().
+			add(StrongholdLargeIntersection.class, 1).
+			add(StrongholdIntersection.class, 1).
+			add(StrongholdRoom.class, 1).
+			add(StrongholdSpiralStaircase.class, 1).
+			add(StrongholdPrison.class, 2).
+			add(StrongholdTurn.class, 2).
+			add(StrongholdStaircase.class, 2);
 	private boolean startOfStronghold = false;
 	private byte length = 4;
 

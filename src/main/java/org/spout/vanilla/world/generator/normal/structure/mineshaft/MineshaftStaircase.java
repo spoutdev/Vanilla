@@ -38,10 +38,10 @@ import org.spout.vanilla.world.generator.structure.StructurePiece;
 import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
 public class MineshaftStaircase extends WeightedNextStructurePiece {
-	private static final WeightedNextPiecesDefaults DEFAULT_NEXT = new WeightedNextPiecesDefaults().
-			addDefault(MineshaftIntersection.class, 4).
-			addDefault(MineshaftRoom.class, 2).
-			addDefault(MineshaftCorridor.class, 4);
+	private static final WeightedNextPieceCache DEFAULT_NEXT = new WeightedNextPieceCache().
+			add(MineshaftIntersection.class, 4).
+			add(MineshaftRoom.class, 2).
+			add(MineshaftCorridor.class, 4);
 
 	public MineshaftStaircase(Structure parent) {
 		super(parent, DEFAULT_NEXT);

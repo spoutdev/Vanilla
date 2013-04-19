@@ -42,17 +42,17 @@ import org.spout.vanilla.world.generator.structure.StructurePiece.BoundingBox;
 import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
 public class StrongholdChestCorridor extends WeightedNextStructurePiece {
-	private static final WeightedNextPiecesDefaults DEFAULT_NEXT = new WeightedNextPiecesDefaults().
-			addDefault(StrongholdLibrary.class, 5).
-			addDefault(StrongholdLargeIntersection.class, 5).
-			addDefault(StrongholdSpiralStaircase.class, 15).
-			addDefault(StrongholdRoom.class, 15).
-			addDefault(StrongholdPrison.class, 15).
-			addDefault(StrongholdIntersection.class, 15).
-			addDefault(StrongholdStaircase.class, 15).
-			addDefault(StrongholdTurn.class, 15);
+	private static final WeightedNextPieceCache DEFAULT_NEXT = new WeightedNextPieceCache().
+			add(StrongholdLibrary.class, 5).
+			add(StrongholdLargeIntersection.class, 5).
+			add(StrongholdSpiralStaircase.class, 15).
+			add(StrongholdRoom.class, 15).
+			add(StrongholdPrison.class, 15).
+			add(StrongholdIntersection.class, 15).
+			add(StrongholdStaircase.class, 15).
+			add(StrongholdTurn.class, 15);
 	private final LootChestObject chestObject;
-	
+
 	public StrongholdChestCorridor(Structure parent) {
 		super(parent, DEFAULT_NEXT);
 		chestObject = new LootChestObject(getRandom());
@@ -73,14 +73,14 @@ public class StrongholdChestCorridor extends WeightedNextStructurePiece {
 				.addMaterial(VanillaMaterials.IRON_BOOTS, 5, 1, 1)
 				.addMaterial(VanillaMaterials.GOLDEN_APPLE, 1, 1, 1);
 	}
-	
+
 	@Override
 	public boolean canPlace() {
 		final PieceCuboidBuilder box = new PieceCuboidBuilder(this);
 		box.setMinMax(-1, -1, -1, 5, 5, 7);
 		return !box.intersectsLiquids();
 	}
-	
+
 	@Override
 	public void place() {
 		// Building objects
@@ -107,11 +107,11 @@ public class StrongholdChestCorridor extends WeightedNextStructurePiece {
 		chestObject.setRandom(getRandom());
 		placeObject(3, 2, 3, chestObject);
 	}
-	
+
 	@Override
 	public void randomize() {
 	}
-	
+
 	@Override
 	public List<StructurePiece> getNextPieces() {
 		final StructurePiece piece = getNextPiece();
@@ -120,7 +120,7 @@ public class StrongholdChestCorridor extends WeightedNextStructurePiece {
 		piece.randomize();
 		return Lists.newArrayList(piece);
 	}
-	
+
 	@Override
 	public BoundingBox getBoundingBox() {
 		return new BoundingBox(transform(0, 0, 0), transform(4, 4, 6));

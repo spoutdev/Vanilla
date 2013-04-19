@@ -38,15 +38,15 @@ import org.spout.vanilla.world.generator.structure.StructurePiece;
 import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
 public class StrongholdStaircase extends WeightedNextStructurePiece {
-	private static final WeightedNextPiecesDefaults DEFAULT_NEXT = new WeightedNextPiecesDefaults().
-			addDefault(StrongholdLibrary.class, 5).
-			addDefault(StrongholdLargeIntersection.class, 5).
-			addDefault(StrongholdSpiralStaircase.class, 15).
-			addDefault(StrongholdRoom.class, 15).
-			addDefault(StrongholdPrison.class, 15).
-			addDefault(StrongholdIntersection.class, 15).
-			addDefault(StrongholdStaircase.class, 15).
-			addDefault(StrongholdTurn.class, 15);
+	private static final WeightedNextPieceCache DEFAULT_NEXT = new WeightedNextPieceCache().
+			add(StrongholdLibrary.class, 5).
+			add(StrongholdLargeIntersection.class, 5).
+			add(StrongholdSpiralStaircase.class, 15).
+			add(StrongholdRoom.class, 15).
+			add(StrongholdPrison.class, 15).
+			add(StrongholdIntersection.class, 15).
+			add(StrongholdStaircase.class, 15).
+			add(StrongholdTurn.class, 15);
 
 	public StrongholdStaircase(Structure parent) {
 		super(parent, DEFAULT_NEXT);

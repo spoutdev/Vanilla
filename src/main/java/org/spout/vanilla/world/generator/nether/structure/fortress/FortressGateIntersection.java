@@ -26,19 +26,32 @@
  */
 package org.spout.vanilla.world.generator.nether.structure.fortress;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import org.spout.api.math.Vector3;
+import java.util.Random;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
+import org.spout.vanilla.world.generator.structure.StructurePiece.BoundingBox;
+import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
-public class FortressGateIntersection extends StructurePiece {
+public class FortressGateIntersection extends WeightedNextStructurePiece {
+	private static final WeightedNextPieceCache DEFAULT_NEXT = new WeightedNextPieceCache().
+			add(FortressBlazeBalcony.class, 1).
+			add(FortressBridge.class, 7).
+			add(FortressBridgeIntersection.class, 7).
+			add(FortressCorridor.class, 12).
+			add(FortressNetherWartStairs.class, 2).
+			add(FortressRoom.class, 3).
+			add(FortressStairRoom.class, 5).
+			add(FortressStaircase.class, 5).
+			add(FortressTurn.class, 10);
+
 	public FortressGateIntersection(Structure parent) {
-		super(parent);
+		super(parent, DEFAULT_NEXT);
 	}
 
 	@Override
@@ -98,7 +111,23 @@ public class FortressGateIntersection extends StructurePiece {
 
 	@Override
 	public List<StructurePiece> getNextPieces() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		final List<StructurePiece> pieces = new ArrayList<StructurePiece>(3);
+		final StructurePiece front = getNextPiece();
+		front.setPosition(position.add(rotate(0, 0, 7)));
+		front.setRotation(rotation);
+		front.randomize();
+		pieces.add(front);
+		final StructurePiece right = getNextPiece();
+		right.setPosition(position.add(rotate(-2, 0, 1)));
+		right.setRotation(rotation.rotate(-90, 0, 1, 0));
+		right.randomize();
+		pieces.add(right);
+		final StructurePiece left = getNextPiece();
+		left.setPosition(position.add(rotate(6, 0, 5)));
+		left.setRotation(rotation.rotate(90, 0, 1, 0));
+		left.randomize();
+		pieces.add(left);
+		return pieces;
 	}
 
 	@Override

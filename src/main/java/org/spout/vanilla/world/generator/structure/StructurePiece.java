@@ -207,7 +207,8 @@ public abstract class StructurePiece {
 		private final Vector3 min;
 		private final Vector3 max;
 
-		public BoundingBox(float xA, float yA, float zA, float xB, float yB, float zB) {
+		public BoundingBox(float xA, float yA, float zA,
+				float xB, float yB, float zB) {
 			this(new Vector3(xA, yA, zA), new Vector3(xB, yB, zB));
 		}
 

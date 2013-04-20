@@ -26,10 +26,9 @@
  */
 package org.spout.vanilla.world.generator.nether.structure.fortress;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
@@ -82,7 +81,7 @@ public class FortressEnd extends StructurePiece {
 
 	@Override
 	public List<StructurePiece> getNextPieces() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		return Collections.emptyList();
 	}
 
 	@Override

@@ -28,19 +28,29 @@ package org.spout.vanilla.world.generator.nether.structure.fortress;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
-import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
+import org.spout.vanilla.world.generator.structure.StructurePiece.BoundingBox;
+import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
-public class FortressBalconyIntersection extends StructurePiece {
+public class FortressBalconyIntersection extends WeightedNextStructurePiece {
+	private static final WeightedNextPieceCache DEFAULT_NEXT = new WeightedNextPieceCache().
+			add(FortressBlazeBalcony.class, 1).
+			add(FortressBridge.class, 7).
+			add(FortressBridgeIntersection.class, 5).
+			add(FortressCorridor.class, 12).
+			add(FortressNetherWartStairs.class, 2).
+			add(FortressRoom.class, 3).
+			add(FortressStairRoom.class, 5).
+			add(FortressStaircase.class, 5).
+			add(FortressTurn.class, 10);
+
 	public FortressBalconyIntersection(Structure parent) {
-		super(parent);
+		super(parent, DEFAULT_NEXT);
 	}
 
 	@Override
@@ -106,34 +116,18 @@ public class FortressBalconyIntersection extends StructurePiece {
 
 	@Override
 	public List<StructurePiece> getNextPieces() {
-		final List<StructurePiece> components = new ArrayList<StructurePiece>();
-		final Random random = getRandom();
-		final StructurePiece right = pickComponent(random);
+		final List<StructurePiece> pieces = new ArrayList<StructurePiece>(2);
+		final StructurePiece right = getNextPiece();
 		right.setPosition(position.add(rotate(-2, 0, 0)));
 		right.setRotation(rotation.rotate(-90, 0, 1, 0));
 		right.randomize();
-		components.add(right);
-		final StructurePiece left = pickComponent(random);
+		pieces.add(right);
+		final StructurePiece left = getNextPiece();
 		left.setPosition(position.add(rotate(7, 0, 4)));
 		left.setRotation(rotation.rotate(90, 0, 1, 0));
 		left.randomize();
-		components.add(left);
-		return components;
-	}
-
-	private StructurePiece pickComponent(Random random) {
-		final float draw = random.nextFloat();
-		if (draw > 0.8) {
-			return new FortressTurn(parent);
-		} else if (draw > 0.6) {
-			return new FortressEnd(parent);
-		} else if (draw > 0.4) {
-			return new FortressCorridor(parent);
-		} else if (draw > 0.2) {
-			return new FortressBridgeIntersection(parent);
-		} else {
-			return new FortressBridge(parent);
-		}
+		pieces.add(left);
+		return pieces;
 	}
 
 	@Override

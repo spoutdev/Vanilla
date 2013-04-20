@@ -28,17 +28,29 @@ package org.spout.vanilla.world.generator.nether.structure.fortress;
 
 import java.util.List;
 
-import org.spout.api.math.Vector3;
+import com.google.common.collect.Lists;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
+import org.spout.vanilla.world.generator.structure.StructurePiece.BoundingBox;
+import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
-public class FortressStairRoom extends StructurePiece {
+public class FortressStairRoom extends WeightedNextStructurePiece {
+	private static final WeightedNextPieceCache DEFAULT_NEXT = new WeightedNextPieceCache().
+			add(FortressBlazeBalcony.class, 1).
+			add(FortressBalconyIntersection.class, 4).
+			add(FortressBridge.class, 7).
+			add(FortressBridgeIntersection.class, 7).
+			add(FortressCorridor.class, 12).
+			add(FortressGateIntersection.class, 8).
+			add(FortressStaircase.class, 5).
+			add(FortressTurn.class, 10);
+
 	public FortressStairRoom(Structure parent) {
-		super(parent);
+		super(parent, DEFAULT_NEXT);
 	}
 
 	@Override
@@ -102,7 +114,11 @@ public class FortressStairRoom extends StructurePiece {
 
 	@Override
 	public List<StructurePiece> getNextPieces() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		final StructurePiece piece = getNextPiece();
+		piece.setPosition(position.add(rotate(6, 6, 5)));
+		piece.setRotation(rotation.rotate(90, 0, 1, 0));
+		piece.randomize();
+		return Lists.newArrayList(piece);
 	}
 
 	@Override

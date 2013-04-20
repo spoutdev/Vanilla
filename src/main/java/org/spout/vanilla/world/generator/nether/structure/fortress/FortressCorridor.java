@@ -28,17 +28,34 @@ package org.spout.vanilla.world.generator.nether.structure.fortress;
 
 import java.util.List;
 
-import org.spout.api.math.Vector3;
+import java.util.ArrayList;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
+import org.spout.vanilla.world.generator.structure.StructurePiece.BoundingBox;
+import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
-public class FortressCorridor extends StructurePiece {
+public class FortressCorridor extends WeightedNextStructurePiece {
+	private static final WeightedNextPieceCache DEFAULT_NEXT = new WeightedNextPieceCache().
+			add(FortressBlazeBalcony.class, 1).
+			add(FortressBalconyIntersection.class, 4).
+			add(FortressBridge.class, 7).
+			add(FortressBridgeIntersection.class, 7).
+			add(FortressCorridor.class, 12).
+			add(FortressGateIntersection.class, 10).
+			add(FortressIntersection.class, 9).
+			add(FortressNetherWartStairs.class, 2).
+			add(FortressRoom.class, 3).
+			add(FortressStairRoom.class, 5).
+			add(FortressStaircase.class, 5).
+			add(FortressTurn.class, 10);
+	private boolean startOfFortress = false;
+
 	public FortressCorridor(Structure parent) {
-		super(parent);
+		super(parent, DEFAULT_NEXT);
 	}
 
 	@Override
@@ -85,11 +102,32 @@ public class FortressCorridor extends StructurePiece {
 
 	@Override
 	public List<StructurePiece> getNextPieces() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		final List<StructurePiece> pieces = new ArrayList<StructurePiece>();
+		if (startOfFortress) {
+			final StructurePiece piece = new FortressEnd(parent);
+			piece.setPosition(position.add(rotate(4, 0, -1)));
+			piece.setRotation(rotation.rotate(180, 0, 1, 0));
+			piece.randomize();
+			pieces.add(piece);
+		}
+		final StructurePiece piece = getNextPiece();
+		piece.setPosition(position.add(rotate(0, 0, 5)));
+		piece.setRotation(rotation);
+		piece.randomize();
+		pieces.add(piece);
+		return pieces;
 	}
 
 	@Override
 	public BoundingBox getBoundingBox() {
 		return new BoundingBox(transform(0, 0, 0), transform(4, 6, 4));
+	}
+
+	public boolean isStartOfFortress() {
+		return startOfFortress;
+	}
+
+	public void setStartOfFortress(boolean startOfFortress) {
+		this.startOfFortress = startOfFortress;
 	}
 }

@@ -26,9 +26,11 @@
  */
 package org.spout.vanilla.world.generator.nether.structure.fortress;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +39,8 @@ import java.util.Set;
 
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.math.Quaternion;
 
-import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
 import org.spout.vanilla.world.generator.structure.StructurePiece.BoundingBox;
@@ -57,9 +59,10 @@ public class Fortress extends Structure {
 		final Set<BoundingBox> placed = new HashSet<BoundingBox>();
 		final Queue<StructurePiece> activeBranches = new LinkedList<StructurePiece>();
 		final Map<StructurePiece, BoundingBox> lastBoxes = new HashMap<StructurePiece, BoundingBox>();
-		final StructurePiece corridor = new FortressBalconyIntersection(this);
+		final FortressCorridor corridor = new FortressCorridor(this);
+		corridor.setStartOfFortress(true);
 		corridor.setPosition(new Point(w, x, y, z));
-		//corridor.setRotation(new Quaternion(random.nextInt(4) * 90, 0, 1, 0));
+		corridor.setRotation(new Quaternion(random.nextInt(4) * 90, 0, 1, 0));
 		corridor.randomize();
 		activeBranches.add(corridor);
 		final int size = random.nextInt(MAX_SIZE_RAND + 1) + MAX_SIZE_BASE;
@@ -70,21 +73,25 @@ public class Fortress extends Structure {
 			if (!collides(activeBox, lastBoxes.remove(active), placed) && active.canPlace()
 					&& active.getPosition().getY() >= 10) {
 				active.place();
-				active.setBlockMaterial(0, 0, 0, VanillaMaterials.GOLD_BLOCK);
-				// remove when done /\
 				if (++count > size) {
-					return;
+					final List<StructurePiece> ends = new ArrayList<StructurePiece>();
+					final Iterator<StructurePiece> iterator = activeBranches.iterator();
+					while (iterator.hasNext()) {
+						final StructurePiece stop = iterator.next();
+						final StructurePiece end = new FortressEnd(this);
+						end.setPosition(stop.getPosition());
+						end.setRotation(stop.getRotation());
+						ends.add(end);
+						iterator.remove();
+					}
+					activeBranches.addAll(ends);
 				}
 				placed.add(activeBox);
-				try {
-					final List<StructurePiece> next = active.getNextPieces();
-					for (StructurePiece piece : next) {
-						lastBoxes.put(piece, activeBox);
-					}
-					activeBranches.addAll(next);
-				} catch (UnsupportedOperationException ex) {
-					// remove when done /\
+				final List<StructurePiece> next = active.getNextPieces();
+				for (StructurePiece piece : next) {
+					lastBoxes.put(piece, activeBox);
 				}
+				activeBranches.addAll(next);
 			}
 		}
 	}

@@ -28,19 +28,33 @@ package org.spout.vanilla.world.generator.nether.structure.fortress;
 
 import java.util.List;
 
-import org.spout.api.math.Vector3;
+import com.google.common.collect.Lists;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
+import org.spout.vanilla.world.generator.structure.StructurePiece.BoundingBox;
+import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
-public class FortressTurn extends StructurePiece {
+public class FortressTurn extends WeightedNextStructurePiece {
+	private static final WeightedNextPieceCache DEFAULT_NEXT = new WeightedNextPieceCache().
+			add(FortressBlazeBalcony.class, 1).
+			add(FortressBalconyIntersection.class, 4).
+			add(FortressBridge.class, 7).
+			add(FortressBridgeIntersection.class, 7).
+			add(FortressCorridor.class, 12).
+			add(FortressGateIntersection.class, 10).
+			add(FortressIntersection.class, 9).
+			add(FortressNetherWartStairs.class, 2).
+			add(FortressRoom.class, 3).
+			add(FortressStairRoom.class, 5).
+			add(FortressStaircase.class, 5);
 	private boolean left = false;
 
 	public FortressTurn(Structure parent) {
-		super(parent);
+		super(parent, DEFAULT_NEXT);
 	}
 
 	@Override
@@ -108,7 +122,16 @@ public class FortressTurn extends StructurePiece {
 
 	@Override
 	public List<StructurePiece> getNextPieces() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		final StructurePiece piece = getNextPiece();
+		if (left) {
+			piece.setPosition(position.add(rotate(5, 0, 4)));
+			piece.setRotation(rotation.rotate(90, 0, 1, 0));
+		} else {
+			piece.setPosition(position.add(rotate(-1, 0, 0)));
+			piece.setRotation(rotation.rotate(-90, 0, 1, 0));
+		}
+		piece.randomize();
+		return Lists.newArrayList(piece);
 	}
 
 	@Override

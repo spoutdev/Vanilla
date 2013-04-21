@@ -34,6 +34,7 @@ import net.royawesome.jlibnoise.module.source.Perlin;
 
 import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.generator.biome.BiomeManager;
+import org.spout.api.generator.biome.BiomePopulator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
@@ -46,6 +47,7 @@ import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.world.generator.biome.VanillaSingleBiomeGenerator;
 import org.spout.vanilla.world.generator.nether.populator.BlockPatchPopulator;
+import org.spout.vanilla.world.generator.nether.populator.FortressPopulator;
 import org.spout.vanilla.world.generator.nether.populator.NetherCavePopulator;
 import org.spout.vanilla.world.generator.normal.populator.BedrockBoundPopulator;
 import org.spout.vanilla.world.generator.normal.populator.BedrockBoundPopulator.BedrockBound;
@@ -93,6 +95,9 @@ public class NetherGenerator extends VanillaSingleBiomeGenerator {
 				bedrock,
 				new NetherCavePopulator(),
 				new BlockPatchPopulator(VanillaMaterials.SOUL_SAND), new BlockPatchPopulator(VanillaMaterials.GRAVEL));
+		addPopulators(
+				new FortressPopulator(),
+				new BiomePopulator());
 	}
 
 	@Override

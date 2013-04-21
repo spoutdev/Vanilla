@@ -41,17 +41,15 @@ import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 public class FortressCorridor extends WeightedNextStructurePiece {
 	private static final WeightedNextPieceCache DEFAULT_NEXT = new WeightedNextPieceCache().
 			add(FortressBlazeBalcony.class, 1).
-			add(FortressBalconyIntersection.class, 4).
-			add(FortressBridge.class, 7).
-			add(FortressBridgeIntersection.class, 7).
-			add(FortressCorridor.class, 12).
-			add(FortressGateIntersection.class, 10).
-			add(FortressIntersection.class, 9).
-			add(FortressNetherWartStairs.class, 2).
+			add(FortressNetherWartStairs.class, 1).
+			add(FortressStaircase.class, 3).
 			add(FortressRoom.class, 3).
-			add(FortressStairRoom.class, 5).
-			add(FortressStaircase.class, 5).
-			add(FortressTurn.class, 10);
+			add(FortressStairRoom.class, 4).
+			add(FortressBalconyIntersection.class, 4).
+			add(FortressGateIntersection.class, 4).
+			add(FortressTurn.class, 7).
+			add(FortressIntersection.class, 7).
+			add(FortressCorridor.class, 12);
 	private boolean startOfFortress = false;
 
 	public FortressCorridor(Structure parent) {

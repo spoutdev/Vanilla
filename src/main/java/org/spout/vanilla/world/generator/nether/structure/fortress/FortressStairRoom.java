@@ -42,12 +42,10 @@ public class FortressStairRoom extends WeightedNextStructurePiece {
 	private static final WeightedNextPieceCache DEFAULT_NEXT = new WeightedNextPieceCache().
 			add(FortressBlazeBalcony.class, 1).
 			add(FortressBalconyIntersection.class, 4).
-			add(FortressBridge.class, 7).
-			add(FortressBridgeIntersection.class, 7).
-			add(FortressCorridor.class, 12).
-			add(FortressGateIntersection.class, 8).
-			add(FortressStaircase.class, 5).
-			add(FortressTurn.class, 10);
+			add(FortressGateIntersection.class, 4).
+			add(FortressTurn.class, 6).
+			add(FortressBridge.class, 8).
+			add(FortressCorridor.class, 10);
 
 	public FortressStairRoom(Structure parent) {
 		super(parent, DEFAULT_NEXT);

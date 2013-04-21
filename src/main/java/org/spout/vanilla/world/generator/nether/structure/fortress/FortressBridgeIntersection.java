@@ -28,7 +28,6 @@ package org.spout.vanilla.world.generator.nether.structure.fortress;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
@@ -40,16 +39,12 @@ import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 public class FortressBridgeIntersection extends WeightedNextStructurePiece {
 	private static final WeightedNextPieceCache DEFAULT_NEXT = new WeightedNextPieceCache().
 			add(FortressBlazeBalcony.class, 1).
-			add(FortressBalconyIntersection.class, 4).
-			add(FortressBridge.class, 12).
-			add(FortressCorridor.class, 7).
-			add(FortressGateIntersection.class, 7).
-			add(FortressIntersection.class, 7).
-			add(FortressNetherWartStairs.class, 2).
+			add(FortressNetherWartStairs.class, 1).
 			add(FortressRoom.class, 3).
-			add(FortressStairRoom.class, 5).
-			add(FortressStaircase.class, 5).
-			add(FortressTurn.class, 7);
+			add(FortressStairRoom.class, 4).
+			add(FortressBalconyIntersection.class, 4).
+			add(FortressGateIntersection.class, 4).
+			add(FortressBridge.class, 8);
 
 	public FortressBridgeIntersection(Structure parent) {
 		super(parent, DEFAULT_NEXT);

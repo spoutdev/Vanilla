@@ -35,6 +35,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Random;
 import java.util.Set;
 
 import org.spout.api.geo.World;
@@ -48,6 +49,13 @@ import org.spout.vanilla.world.generator.structure.StructurePiece.BoundingBox;
 public class Fortress extends Structure {
 	private static final byte MAX_SIZE_BASE = 75;
 	private static final byte MAX_SIZE_RAND = 75;
+
+	public Fortress() {
+	}
+
+	public Fortress(Random random) {
+		super(random);
+	}
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {

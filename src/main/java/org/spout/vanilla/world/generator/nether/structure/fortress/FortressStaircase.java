@@ -43,16 +43,14 @@ import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 public class FortressStaircase extends WeightedNextStructurePiece {
 	private static final WeightedNextPieceCache DEFAULT_NEXT = new WeightedNextPieceCache().
 			add(FortressBlazeBalcony.class, 1).
-			add(FortressBalconyIntersection.class, 4).
-			add(FortressBridge.class, 7).
-			add(FortressBridgeIntersection.class, 7).
-			add(FortressCorridor.class, 10).
-			add(FortressGateIntersection.class, 8).
-			add(FortressIntersection.class, 9).
-			add(FortressNetherWartStairs.class, 2).
+			add(FortressNetherWartStairs.class, 1).
 			add(FortressRoom.class, 3).
-			add(FortressStairRoom.class, 5).
-			add(FortressTurn.class, 8);
+			add(FortressStairRoom.class, 4).
+			add(FortressBalconyIntersection.class, 4).
+			add(FortressGateIntersection.class, 4).
+			add(FortressIntersection.class, 6).
+			add(FortressTurn.class, 6).
+			add(FortressCorridor.class, 10);
 
 	public FortressStaircase(Structure parent) {
 		super(parent, DEFAULT_NEXT);

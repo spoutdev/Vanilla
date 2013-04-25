@@ -49,6 +49,15 @@ public class VanillaBlocklightLightingManager extends VanillaLightingManager {
 	//	Iterable<IntVector3> coords = new IntVector3CuboidArray(bx, by, bz, tx, ty, tz, changedCuboids);
 	//	super.resolve(light, material, height, coords);
 	}
+	
+	@Override
+	protected void initChunks(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int[] bx, int[] by, int[] bz, int initializedChunks) {
+		// Scan for new chunks needs to check
+		// - light emitting blocks
+		// - boundary of entire volume
+		// this.getBoundary(light.getBase(), bx, by, bz, initializedChunks);
+		super.initChunks(light, material, height, bx, by, bz, initializedChunks);
+	}
 
 	@Override
 	protected int getEmittedLight(ImmutableCuboidBlockMaterialBuffer material, int x, int y, int z) {

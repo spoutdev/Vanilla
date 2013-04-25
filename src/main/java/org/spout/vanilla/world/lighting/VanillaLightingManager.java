@@ -27,7 +27,6 @@
 package org.spout.vanilla.world.lighting;
 
 import java.util.Iterator;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.spout.api.Spout;
 import org.spout.api.geo.cuboid.Chunk;
@@ -38,6 +37,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Vector3;
+import org.spout.api.util.IntVector3Array;
 import org.spout.api.util.bytebit.ByteBitSet;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
@@ -351,6 +351,74 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			dirtySets[i].forEach(clearProc);
 			dirtySets[i].forEach(lowerProc);
 		}
+	}
+	
+	protected Iterable<IntVector3> getBoundary(Vector3 base, int[] bx, int[] by, int[] bz, int changedCuboids) {
+		
+		TInt10TripleSet chunkSet = new TInt10TripleSet(base.getFloorX(), base.getFloorY(), base.getFloorZ(), changedCuboids);
+		for (int i = 0; i < changedCuboids; i++) {
+			chunkSet.add(bx[i], by[i], bz[i]);
+		}
+		int blocks = 0;
+		for (int i = 0; i < changedCuboids; i++) {
+			int x = bx[i];
+			int y = by[i];
+			int z = bz[i];
+			
+			int shift = Chunk.BLOCKS.BITS;
+			int face = 1 << (Chunk.BLOCKS.BITS << 1);
+			for (int j = 0; j < allFaces.length; j++) {
+				IntVector3 offset = allFaces[j].getIntOffset();
+				if (!chunkSet.contains(x + (offset.getX() << shift), y + (offset.getY() << shift), z + (offset.getZ() << shift))) {
+					blocks += face;
+				}
+			}
+			chunkSet.add(bx[i], by[i], bz[i]);
+		}
+
+		int[] xArray = new int[blocks];
+		int[] yArray = new int[blocks];
+		int[] zArray = new int[blocks];
+		
+		int count = 0;
+		
+		TInt10TripleSet blockSet = new TInt10TripleSet(base.getFloorX(), base.getFloorY(), base.getFloorZ(), blocks);
+		
+		for (int i = 0; i < changedCuboids; i++) {
+			int x = bx[i];
+			int y = by[i];
+			int z = bz[i];
+			
+			int shift = Chunk.BLOCKS.BITS;
+			int size = Chunk.BLOCKS.SIZE;
+			for (int j = 0; j < allFaces.length; j++) {
+				IntVector3 offset = allFaces[j].getIntOffset();
+				if (!chunkSet.contains(x + (offset.getX() << shift), y + (offset.getY() << shift), z + (offset.getZ() << shift))) {
+					int startX = offset.getX() <= 0 ? x : (x + size - 1);
+					int endX = offset.getX() >= 0 ? (x + size - 1) : x;
+					
+					int startY = offset.getY() <= 0 ? y : (y + size - 1);
+					int endY = offset.getY() >= 0 ? (y + size - 1) : y;
+					
+					int startZ = offset.getZ() <= 0 ? z : (z + size - 1);
+					int endZ = offset.getZ() >= 0 ? (z + size - 1) : z;
+					
+					for (int xx = startX; xx <= endX; xx++) {
+						for (int yy = startY; yy <= endY; yy++) {
+							for (int zz = startZ; zz <= endZ; zz++) {
+								if (blockSet.add(xx, yy, zz)) {
+									xArray[count] = xx;
+									yArray[count] = yy;
+									zArray[count] = zz;
+									count++;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return new IntVector3Array(xArray, yArray, zArray, count);
 	}
 
 	

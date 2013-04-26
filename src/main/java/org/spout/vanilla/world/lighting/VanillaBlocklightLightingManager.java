@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.world.lighting;
 
+import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.IntVector3;
 import org.spout.api.util.IntVector3Array;
@@ -55,7 +56,16 @@ public class VanillaBlocklightLightingManager extends VanillaLightingManager {
 		// Scan for new chunks needs to check
 		// - light emitting blocks
 		// - boundary of entire volume
-		// this.getBoundary(light.getBase(), bx, by, bz, initializedChunks);
+		
+		/*@SuppressWarnings("unchecked")
+		Iterable<IntVector3>[] emitters = new Iterable[initializedChunks];
+		
+		for (int i = 0; i < initializedChunks; i++) {
+			emitters[i] = this.scanChunk(light, material, height, bx[i], by[i], bz[i]);
+		}
+		
+		Iterable<IntVector3> boundary = this.getBoundary(material, bx, by, bz, initializedChunks);*/
+		
 		super.initChunks(light, material, height, bx, by, bz, initializedChunks);
 	}
 
@@ -64,5 +74,54 @@ public class VanillaBlocklightLightingManager extends VanillaLightingManager {
 		BlockMaterial m = material.get(x, y, z);
 		short data = material.getData(x, y, z);
 		return m.getLightLevel(data);
+	}
+	
+	public Iterable<IntVector3> scanChunk(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
+
+		int maxLight = 0;
+		int minLight = 15;
+		
+		int emittingBlocks = 0;
+		
+		for (int xx = x; xx < x + Chunk.BLOCKS.SIZE; xx++) {
+			for (int yy = y; yy < y + Chunk.BLOCKS.SIZE; yy++) {
+				for (int zz = z; zz < z + Chunk.BLOCKS.SIZE; zz++) {
+					int emitted = this.getEmittedLight(material, xx, yy, zz);
+					if (emitted > 0) {
+						this.setLightLevel(light, xx, yy, zz, emitted);
+						emittingBlocks++;
+					}
+					if (emitted > maxLight) {
+						maxLight = emitted;
+					}
+					if (emitted < minLight) {
+						minLight = emitted;
+					}
+				}
+			}
+		}
+
+		if (maxLight != minLight) {
+			int xArray[] = new int[emittingBlocks];
+			int yArray[] = new int[emittingBlocks];
+			int zArray[] = new int[emittingBlocks];
+			int count = 0;
+			for (int xx = x; xx < x + Chunk.BLOCKS.SIZE; xx++) {
+				for (int yy = y; yy < y + Chunk.BLOCKS.SIZE; yy++) {
+					for (int zz = z; zz < z + Chunk.BLOCKS.SIZE; zz++) {
+						int emitted = this.getEmittedLight(material, xx, yy, zz);
+						if (emitted > 0) {
+							xArray[count] = xx;
+							yArray[count] = yy;
+							zArray[count] = zz;
+							count++;
+						}
+					}
+				}
+			}
+			return new IntVector3Array(xArray, yArray, zArray, count);
+		} else {
+			return null;
+		}
 	}
 }

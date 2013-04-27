@@ -218,6 +218,34 @@ public class TestCommands {
 			}
 		}
 	}
+	
+	@Command(aliases = "skylightcheck", usage = "", desc = "Checks nearby sky light values", max = 0)
+	@CommandPermissions("vanilla.command.debug")
+	public void skyLight(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to get a map.");
+		}
+		Player p = (Player) source;
+		Point pos = p.getScene().getPosition();
+		World w = pos.getWorld();
+		LightingManager<?> manager = LightingRegistry.getContains("skylight");
+		if (manager == null) {
+			p.sendMessage("Sky light manager not registered");
+			return;
+		}
+		short id = manager.getId();
+		OutwardIterator i = new OutwardIterator(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ(), 8);
+		while (i.hasNext()) {
+			IntVector3 v = i.next();
+			Chunk c = w.getChunkFromBlock(v.getX(), v.getY(), v.getZ());
+			byte lightOriginal = c.getBlockLight(v.getX(), v.getY(), v.getZ());
+			VanillaCuboidLightBuffer buffer = (VanillaCuboidLightBuffer) c.getLightBuffer(id);
+			int lightNew = buffer.get(v.getX(), v.getY(), v.getZ());
+			if (lightNew != lightOriginal) {
+				Spout.getLogger().info(v.getX() + ", " + v.getY() + ", " + v.getZ() + " old=" + lightOriginal + " new=" + lightNew);
+			}
+		}
+	}
 
 
 	// TODO - There needs to be a method that guarantees unique data values on a per-server basis

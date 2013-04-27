@@ -32,6 +32,7 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
+import org.spout.api.util.cuboid.ImmutableHeightMapBuffer;
 import org.spout.api.util.set.TInt10Procedure;
 import org.spout.api.util.set.TInt10TripleSet;
 
@@ -45,13 +46,15 @@ public class ResolveLowerProcedure extends TInt10Procedure {
 
 	private final ImmutableCuboidBlockMaterialBuffer material;
 	private final VanillaLightingManager manager;
+	private final ImmutableHeightMapBuffer height;
 	
-	public ResolveLowerProcedure(VanillaLightingManager manager, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, TInt10TripleSet[] dirtySets, TInt10TripleSet[] regenSets) {
+	public ResolveLowerProcedure(VanillaLightingManager manager, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, TInt10TripleSet[] dirtySets, TInt10TripleSet[] regenSets) {
 		this.dirtySets = dirtySets;
 		this.regenSets = regenSets;
 		this.light = light;
 		this.material = material;
 		this.manager = manager;
+		this.height = height;
 	}
 
 	@Override
@@ -61,7 +64,7 @@ public class ResolveLowerProcedure extends TInt10Procedure {
 	
 	public boolean execute(int x, int y, int z, boolean neighbours) {
 		// Spout.getLogger().info("Checking lower " + x + ", " + y + ", " + z);
-		manager.checkAndAddDirtyFalling(dirtySets, regenSets, light, material, x, y, z);
+		manager.checkAndAddDirtyFalling(dirtySets, regenSets, light, material, height, x, y, z);
 
 		if (neighbours) {
 			for (BlockFace face : allFaces) {
@@ -69,7 +72,7 @@ public class ResolveLowerProcedure extends TInt10Procedure {
 				int nx = x + offset.getFloorX();
 				int ny = y + offset.getFloorY();
 				int nz = z + offset.getFloorZ();
-				manager.checkAndAddDirtyFalling(dirtySets, regenSets, light, material, nx, ny, nz);
+				manager.checkAndAddDirtyFalling(dirtySets, regenSets, light, material, height, nx, ny, nz);
 			}
 		}
 		return true;

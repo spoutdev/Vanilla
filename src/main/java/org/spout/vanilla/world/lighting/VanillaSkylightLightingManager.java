@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.world.lighting;
 
+import org.spout.api.Spout;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
@@ -53,17 +54,16 @@ public class VanillaSkylightLightingManager extends VanillaBlocklightLightingMan
 		
 		int emittingBlocks = 0;
 		
-		int bh = light.getBase().getFloorY();
-		int th = bh + Chunk.BLOCKS.SIZE;
+		int th = y + Chunk.BLOCKS.SIZE;
 		
 		for (int xx = x; xx < x + Chunk.BLOCKS.SIZE; xx++) {
 			for (int zz = z; zz < z + Chunk.BLOCKS.SIZE; zz++) {
 				int h = height.get(xx, zz);
 				if (h < th - 1) {
-					if (h >= bh) {
+					if (h >= y) {
 						minLight = 0;
 					}
-					for (int yy = Math.max(bh, h + 1); yy < th; yy++) {
+					for (int yy = Math.max(y, h + 1); yy < th; yy++) {
 						emittingBlocks++;
 						this.setLightLevel(light, xx, yy, zz, 15);
 						maxLight = 15;

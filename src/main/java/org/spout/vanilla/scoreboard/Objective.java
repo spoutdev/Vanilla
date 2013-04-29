@@ -30,7 +30,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.spout.api.chat.ChatArguments;
 import org.spout.api.util.Named;
 
 import org.spout.vanilla.event.scoreboard.ObjectiveActionEvent;
@@ -69,7 +68,7 @@ public class Objective implements Named {
 	public static final String CRITERIA_HEALTH = "health";
 	private final Scoreboard scoreboard;
 	private final String name;
-	private ChatArguments displayName = new ChatArguments("");
+	private String displayName = "";
 	private final Map<String, Integer> score = new HashMap<String, Integer>();
 	private ObjectiveSlot slot;
 	private String criteria = CRITERIA_DUMMY;
@@ -91,7 +90,7 @@ public class Objective implements Named {
 	 * Returns the name displayed on the scoreboard for this objective.
 	 * @return display name
 	 */
-	public ChatArguments getDisplayName() {
+	public String getDisplayName() {
 		return displayName;
 	}
 
@@ -100,19 +99,10 @@ public class Objective implements Named {
 	 * @param displayName to set
 	 * @return this objective
 	 */
-	public Objective setDisplayName(ChatArguments displayName) {
+	public Objective setDisplayName(String displayName) {
 		this.displayName = displayName;
 		scoreboard.callProtocolEvent(new ObjectiveActionEvent(this, ScoreboardObjectiveMessage.ACTION_UPDATE));
 		return this;
-	}
-
-	/**
-	 * Sets the name displayed on the scoreboard for this objective.
-	 * @param displayName to set
-	 * @return this objective
-	 */
-	public Objective setDisplayName(Object... displayName) {
-		return setDisplayName(new ChatArguments(displayName));
 	}
 
 	/**
@@ -133,24 +123,6 @@ public class Objective implements Named {
 	}
 
 	/**
-	 * Returns the score of the specified name.
-	 * @param name to get score of
-	 * @return score of specified name
-	 */
-	public int getScore(ChatArguments name) {
-		return getScore(name.asString());
-	}
-
-	/**
-	 * Returns the score of the specified name.
-	 * @param name to get score of
-	 * @return score of specified name
-	 */
-	public int getScore(Object... name) {
-		return getScore(new ChatArguments(name));
-	}
-
-	/**
 	 * Sets the score for the specified key at the specified integer value.
 	 * @param key to set score for
 	 * @param value of score
@@ -160,26 +132,6 @@ public class Objective implements Named {
 		score.put(key, value);
 		scoreboard.callProtocolEvent(new ScoreUpdateEvent(key, value, name, false));
 		return this;
-	}
-
-	/**
-	 * Sets the score for the specified key at the specified integer value.
-	 * @param key to set score for
-	 * @param value of score
-	 * @return this objective
-	 */
-	public Objective setScore(ChatArguments key, int value) {
-		return setScore(key.asString(), value);
-	}
-
-	/**
-	 * Sets the score for the specified key at the specified integer value.
-	 * @param key to set score for
-	 * @param value of score
-	 * @return this objective
-	 */
-	public Objective setScore(int value, Object... key) {
-		return setScore(new ChatArguments(key), value);
 	}
 
 	/**
@@ -195,30 +147,6 @@ public class Objective implements Named {
 	}
 
 	/**
-	 * Adds to the current score of the specified name with the specified
-	 * value.
-	 * @param key to add score to
-	 * @param value how much to add
-	 * @return
-	 */
-	public Objective addScore(ChatArguments key, int value) {
-		addScore(key.asString(), value);
-		return this;
-	}
-
-	/**
-	 * Adds to the current score of the specified name with the specified
-	 * value.
-	 * @param key to add score to
-	 * @param value how much to add
-	 * @return
-	 */
-	public Objective addScore(int value, Object... key) {
-		addScore(new ChatArguments(key), value);
-		return this;
-	}
-
-	/**
 	 * Removes a score entry of the specified name.
 	 * @param key to remove entry
 	 * @return this objective
@@ -227,24 +155,6 @@ public class Objective implements Named {
 		score.remove(key);
 		scoreboard.callProtocolEvent(new ScoreUpdateEvent(key, 0, name, true));
 		return this;
-	}
-
-	/**
-	 * Removes a score entry of the specified name.
-	 * @param key to remove entry
-	 * @return this objective
-	 */
-	public Objective removeScore(ChatArguments key) {
-		return removeScore(key.asString());
-	}
-
-	/**
-	 * Removes a score entry of the specified name.
-	 * @param key to remove entry
-	 * @return this objective
-	 */
-	public Objective removeScore(Object... key) {
-		return removeScore(new ChatArguments(key));
 	}
 
 	/**

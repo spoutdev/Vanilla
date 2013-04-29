@@ -26,13 +26,11 @@
  */
 package org.spout.vanilla.protocol.handler.player;
 
-import org.spout.api.chat.ChatArguments;
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 
 import org.spout.vanilla.protocol.msg.player.PlayerChatMessage;
-import org.spout.vanilla.util.chat.VanillaStyleHandler;
 
 public final class PlayerChatHandler extends MessageHandler<PlayerChatMessage> {
 	@Override
@@ -40,9 +38,7 @@ public final class PlayerChatHandler extends MessageHandler<PlayerChatMessage> {
 		if (!session.hasPlayer()) {
 			return;
 		}
-
-		ChatArguments text = ChatArguments.fromString(message.getMessage(), VanillaStyleHandler.ID);
-		session.getPlayer().sendRawMessage(text);
+		session.getPlayer().sendMessage(message.getMessage());
 	}
 
 	@Override
@@ -52,29 +48,23 @@ public final class PlayerChatHandler extends MessageHandler<PlayerChatMessage> {
 		}
 
 		Player player = session.getPlayer();
-		String text = message.getMessage();
-		text = text.trim();
-
+		String text = message.getMessage().trim();
 		if (text.length() > 100) {
-			//session.disconnect("Chat message is too long."); TODO Don't disconnect people...
 			text = text.substring(0, 99);
 		}
+
 		String command;
-		ChatArguments args;
+		String[] args;
+
 		if (text.startsWith("/")) {
-			int spaceIndex = text.indexOf(" ");
-			if (spaceIndex != -1) {
-				command = text.substring(1, spaceIndex);
-				text = text.substring(spaceIndex + 1);
-			} else {
-				command = text.substring(1);
-				text = "";
-			}
+			command = text.split(" ")[0].replaceFirst("/", "");
+			int argsIndex = text.indexOf(" ") + 1;
+			args = argsIndex > 0 ? text.substring(argsIndex).split(" ") : new String[0];
 		} else {
 			command = "say";
+			args = text.split(" ");
 		}
 
-		args = ChatArguments.fromString(text, VanillaStyleHandler.ID);
 		player.processCommand(command, args);
 	}
 }

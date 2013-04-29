@@ -36,8 +36,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
-import org.spout.api.chat.ChatArguments;
 import org.spout.api.command.Command;
+import org.spout.api.command.CommandArguments;
 import org.spout.api.exception.UnknownPacketException;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
@@ -64,7 +64,6 @@ import org.spout.vanilla.protocol.plugin.RegisterPluginChannelMessage;
 import org.spout.vanilla.protocol.plugin.RegisterPluginChannelMessageHandler;
 import org.spout.vanilla.protocol.plugin.UnregisterPluginChannelCodec;
 import org.spout.vanilla.protocol.plugin.UnregisterPluginChannelMessageHandler;
-import org.spout.vanilla.util.chat.VanillaStyleHandler;
 
 public class VanillaProtocol extends Protocol {
 	public final static DefaultedKey<String> SESSION_ID = new DefaultedKeyImpl<String>("sessionid", "0000000000000000");
@@ -95,13 +94,13 @@ public class VanillaProtocol extends Protocol {
 	}
 
 	@Override
-	public Message getCommandMessage(Command command, ChatArguments args) {
-		if (command.getPreferredName().equals("kick")) {
-			return getKickMessage(args);
-		} else if (command.getPreferredName().equals("say")) {
-			return new PlayerChatMessage(args.asString(VanillaStyleHandler.ID) + "\u00a7r"); // The reset text is a workaround for a change in 1.3 -- Remove if fixed
+	public Message getCommandMessage(Command command, CommandArguments args) {
+		if (command.getName().equals("kick")) {
+			return getKickMessage(args.getJoinedString(0));
+		} else if (command.getName().equals("say")) {
+			return new PlayerChatMessage(args.getJoinedString(0) + "\u00a7r"); // The reset text is a workaround for a change in 1.3 -- Remove if fixed
 		} else {
-			return new PlayerChatMessage('/' + command.getPreferredName() + ' ' + args.asString(VanillaStyleHandler.ID));
+			return new PlayerChatMessage('/' + command.getName() + ' ' + args.getJoinedString(0));
 		}
 	}
 
@@ -132,8 +131,8 @@ public class VanillaProtocol extends Protocol {
 	}
 
 	@Override
-	public Message getKickMessage(ChatArguments message) {
-		return new PlayerKickMessage(message.asString(VanillaStyleHandler.ID));
+	public Message getKickMessage(String message) {
+		return new PlayerKickMessage(message);
 	}
 
 	@Override

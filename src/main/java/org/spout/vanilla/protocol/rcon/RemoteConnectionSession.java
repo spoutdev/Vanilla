@@ -26,33 +26,11 @@
  */
 package org.spout.vanilla.protocol.rcon;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
-
-import com.google.common.base.Preconditions;
-
-import org.jboss.netty.channel.Channel;
-
-import org.spout.api.chat.ChatArguments;
-import org.spout.api.chat.channel.ChatChannel;
-import org.spout.api.command.Command;
-import org.spout.api.command.CommandSource;
-import org.spout.api.data.ValueHolder;
-import org.spout.api.data.ValueHolderBase;
-import org.spout.api.geo.World;
-import org.spout.api.lang.Locale;
-
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.protocol.rcon.msg.CommandResponseMessage;
-import org.spout.vanilla.protocol.rcon.msg.RconMessage;
-
 /**
  * Session for a remote connection
  */
-public class RemoteConnectionSession implements CommandSource {
+public class RemoteConnectionSession {
+	/*
 	private final RemoteConnectionCore core;
 	private final AtomicInteger requestId = new AtomicInteger(-1);
 	private final AtomicReference<Channel> channel = new AtomicReference<Channel>();
@@ -245,5 +223,5 @@ public class RemoteConnectionSession implements CommandSource {
 		Preconditions.checkNotNull(channel);
 		channel.onAttachTo(this);
 		activeChannel.getAndSet(channel).onDetachedFrom(this);
-	}
+	}*/
 }

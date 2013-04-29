@@ -27,11 +27,13 @@
 package org.spout.vanilla.command;
 
 import org.spout.api.Client;
-import org.spout.api.command.CommandContext;
+import org.spout.api.command.CommandArguments;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Binding;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.component.entity.InteractComponent;
+import org.spout.api.command.annotated.Filter;
+import org.spout.api.command.filter.PlayerFilter;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
 import org.spout.api.geo.cuboid.Block;
@@ -45,7 +47,7 @@ import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class InputCommands {
+public class InputCommands  {
 	private final VanillaPlugin plugin;
 	private final Client client;
 	private BlockMaterial selection;
@@ -56,9 +58,9 @@ public class InputCommands {
 	}
 
 	@Command(aliases = "toggle_inventory", desc = "Opens and closes your inventory.", min = 1, max = 1)
-	@Binding(keys = Keyboard.KEY_E)
-	public void toggleInventory(CommandContext args, CommandSource source) throws CommandException {
-		checkPlayer(source);
+	@Binding(Keyboard.KEY_E)
+	@Filter(PlayerFilter.class)
+	public void toggleInventory(CommandSource source, CommandArguments args) throws CommandException {
 		if (!args.getString(0).equalsIgnoreCase("+")) {
 			return;
 		}
@@ -73,8 +75,8 @@ public class InputCommands {
 
 	@Command(aliases = "break_block", desc = "Breaks a block.", min = 1, max = 1)
 	@Binding(mouse = Mouse.MOUSE_BUTTON0)
-	public void breakBlock(CommandContext args, CommandSource source) throws CommandException {
-		checkPlayer(source);
+	@Filter(PlayerFilter.class)
+	public void breakBlock(CommandSource source, CommandArguments args) throws CommandException {
 		if (!args.getString(0).equalsIgnoreCase("+")) {
 			return;
 		}
@@ -95,8 +97,8 @@ public class InputCommands {
 
 	@Command(aliases = "select_block", desc = "Selects a block to place", min = 1, max = 1)
 	@Binding(mouse = Mouse.MOUSE_BUTTON2)
-	public void selectBlock(CommandContext args, CommandSource source) throws CommandException {
-		checkPlayer(source);
+	@Filter(PlayerFilter.class)
+	public void selectBlock(CommandSource source, CommandArguments args) throws CommandException {
 		if (!args.getString(0).equalsIgnoreCase("+")) {
 			return;
 		}
@@ -112,8 +114,8 @@ public class InputCommands {
 
 	@Command(aliases = "place_block", desc = "Places a block.", min = 1, max = 1)
 	@Binding(mouse = Mouse.MOUSE_BUTTON1)
-	public void placeBlock(CommandContext args, CommandSource source) throws CommandException {
-		checkPlayer(source);
+	@Filter(PlayerFilter.class)
+	public void placeBlock(CommandSource source, CommandArguments args) throws CommandException {
 		if (!args.getString(0).equalsIgnoreCase("+")) {
 			return;
 		}
@@ -134,12 +136,6 @@ public class InputCommands {
 					}
 				});
 			}
-		}
-	}
-
-	private void checkPlayer(CommandSource source) throws CommandException {
-		if (!(source instanceof Player)) {
-			throw new CommandException("Only players may open inventory windows.");
 		}
 	}
 }

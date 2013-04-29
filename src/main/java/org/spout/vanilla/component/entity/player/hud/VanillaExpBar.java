@@ -28,8 +28,6 @@ package org.spout.vanilla.component.entity.player.hud;
 
 import java.awt.Color;
 
-import org.spout.api.chat.ChatArguments;
-import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.component.widget.LabelComponent;
 import org.spout.api.component.widget.RenderPartPacksComponent;
 import org.spout.api.gui.Widget;
@@ -37,6 +35,7 @@ import org.spout.api.gui.render.RenderPart;
 import org.spout.api.gui.render.RenderPartPack;
 import org.spout.api.math.Rectangle;
 
+import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 
@@ -49,7 +48,7 @@ public class VanillaExpBar extends ExpBarWidget {
 		final LabelComponent lvlTxt = widget.add(LabelComponent.class);
 		widget.getTransform().add(-0.02f, -0.79f);
 		lvlTxt.setFont(VanillaRenderMaterials.FONT);
-		lvlTxt.setText(new ChatArguments(ChatStyle.BRIGHT_GREEN, "50"));
+		lvlTxt.setText(ChatStyle.GREEN + "50");
 
 		// Setup survival-specific hud components
 		boolean survival = true;

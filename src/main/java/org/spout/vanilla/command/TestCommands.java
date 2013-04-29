@@ -234,7 +234,7 @@ public class TestCommands {
 			return;
 		}
 		short id = manager.getId();
-		OutwardIterator i = new OutwardIterator(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ(), 8);
+		OutwardIterator i = new OutwardIterator(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ(), 3);
 		while (i.hasNext()) {
 			IntVector3 v = i.next();
 			Chunk c = w.getChunkFromBlock(v.getX(), v.getY(), v.getZ());

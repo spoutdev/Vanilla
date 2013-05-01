@@ -28,6 +28,8 @@ package org.spout.vanilla.world.lighting;
 
 import org.spout.api.Spout;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.math.IntVector3;
+import org.spout.api.util.IntVector3CuboidArray;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 import org.spout.api.util.cuboid.ImmutableHeightMapBuffer;
@@ -38,7 +40,11 @@ public class VanillaSkylightLightingManager extends VanillaBlocklightLightingMan
 	}
 
 	@Override
-	public void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int[] hx, int[] hz, int[] oldHy, int[] newHy, int changedColumns) {
+	public void resolveColumns(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int[] hx, int[] hz, int[] oldHy, int[] newHy, int changedColumns) {
+		Iterable<IntVector3> coords = new IntVector3CuboidArray(hx, oldHy, hz, newHy, changedColumns, true);
+		super.resolve(light, material, height, coords);
+
+		
 		//Spout.getLogger().info(getClass().getSimpleName() + ":" + changedColumns + " columns changed");
 		for (int i = 0; i < changedColumns; i++) {
 			Spout.getLogger().info("Col changed " + hx[i] + ", " + hz[i] + " from " + oldHy[i] + " to " + newHy[i]);

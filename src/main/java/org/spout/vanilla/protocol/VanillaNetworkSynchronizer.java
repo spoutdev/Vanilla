@@ -26,6 +26,10 @@
  */
 package org.spout.vanilla.protocol;
 
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
+import gnu.trove.set.TIntSet;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -33,11 +37,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import gnu.trove.set.TIntSet;
-
 import org.spout.api.Server;
 import org.spout.api.Spout;
-
 import org.spout.api.component.impl.DatatableComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -64,7 +65,6 @@ import org.spout.api.util.hashing.IntPairHashed;
 import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
 import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.material.Sign;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
@@ -166,9 +166,8 @@ import org.spout.vanilla.protocol.reposition.VanillaRepositionManager;
 import org.spout.vanilla.scoreboard.Objective;
 import org.spout.vanilla.scoreboard.Team;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
-
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
+import org.spout.vanilla.world.lighting.VanillaCuboidLightBuffer;
+import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
 	private static final int SOLID_BLOCK_ID = 1; // Initializer block ID
@@ -914,12 +913,14 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 			VanillaContainer container = new VanillaContainer();
 			c.fillBlockContainer(container);
-			container.setLightMode(true);
-			c.fillBlockLightContainer(container);
-			container.setLightMode(false);
-			c.fillSkyLightContainer(container);
 			c.fillBlockComponentContainer(container);
+                       
+			VanillaCuboidLightBuffer blockLight = (VanillaCuboidLightBuffer) c.getLightBuffer(VanillaLighting.BLOCK_LIGHT.getId());
+			VanillaCuboidLightBuffer skyLight = (VanillaCuboidLightBuffer) c.getLightBuffer(VanillaLighting.SKY_LIGHT.getId());
 
+			container.copyLight(true, blockLight);
+			container.copyLight(false, skyLight);
+			
 			int[] componentX = container.getXArray();
 			int[] componentY = container.getYArray();
 			int[] componentZ = container.getZArray();

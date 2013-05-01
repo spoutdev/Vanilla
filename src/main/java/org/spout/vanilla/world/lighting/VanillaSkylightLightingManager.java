@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.world.lighting;
 
-import org.spout.api.Spout;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.math.IntVector3;
 import org.spout.api.util.IntVector3CuboidArray;
@@ -43,12 +42,6 @@ public class VanillaSkylightLightingManager extends VanillaBlocklightLightingMan
 	public void resolveColumns(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int[] hx, int[] hz, int[] oldHy, int[] newHy, int changedColumns) {
 		Iterable<IntVector3> coords = new IntVector3CuboidArray(hx, oldHy, hz, newHy, changedColumns, true);
 		super.resolve(light, material, height, coords);
-
-		
-		//Spout.getLogger().info(getClass().getSimpleName() + ":" + changedColumns + " columns changed");
-		for (int i = 0; i < changedColumns; i++) {
-			Spout.getLogger().info("Col changed " + hx[i] + ", " + hz[i] + " from " + oldHy[i] + " to " + newHy[i]);
-		}
 	}
 
 	@Override
@@ -69,10 +62,10 @@ public class VanillaSkylightLightingManager extends VanillaBlocklightLightingMan
 			for (int zz = z; zz < z + Chunk.BLOCKS.SIZE; zz++) {
 				int h = height.get(xx, zz);
 				if (h < th - 1) {
-					if (h >= y) {
+					if (h > y) {
 						minLight = 0;
 					}
-					for (int yy = Math.max(y, h + 1); yy < th; yy++) {
+					for (int yy = Math.max(y, h); yy < th; yy++) {
 						emittingBlocks++;
 						this.setLightLevel(light, xx, yy, zz, 15);
 						maxLight = 15;

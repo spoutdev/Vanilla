@@ -26,20 +26,19 @@
  */
 package org.spout.vanilla.protocol.container;
 
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
+
 import org.spout.api.component.type.BlockComponent;
 import org.spout.api.geo.cuboid.BlockComponentContainer;
 import org.spout.api.geo.cuboid.BlockContainer;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.ContainerFillOrder;
-import org.spout.api.geo.cuboid.LightContainer;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFullState;
-import org.spout.api.util.hashing.NibblePairHashed;
+import org.spout.api.util.cuboid.CuboidNibbleLightBuffer;
 
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
-
-public class VanillaContainer implements BlockContainer, LightContainer, BlockComponentContainer {
+public class VanillaContainer implements BlockContainer, BlockComponentContainer {
 	private static final int HALF_VOLUME = Chunk.BLOCKS.HALF_VOLUME;
 	private static final int VOLUME = Chunk.BLOCKS.VOLUME;
 	private int index;
@@ -88,17 +87,11 @@ public class VanillaContainer implements BlockContainer, LightContainer, BlockCo
 		evenLight = true;
 	}
 
-	@Override
-	public void setLightLevel(byte light) {
-		if (evenLight) {
-			nibbleStore = light;
-		} else {
-			nibbleStore = NibblePairHashed.key(light, nibbleStore & 0x0F);
-			fullChunkData[index++] = (byte) nibbleStore;
-		}
-		evenLight = !evenLight;
+	public void copyLight(boolean blockLight, CuboidNibbleLightBuffer buffer) {
+		int index = blockLight ? HALF_VOLUME * 3 : HALF_VOLUME * 4;
+		buffer.copyToArray(fullChunkData, index);
 	}
-
+	
 	public byte[] getChunkFullData() {
 		return fullChunkData;
 	}

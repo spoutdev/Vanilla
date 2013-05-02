@@ -184,14 +184,13 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		int yoff = y & mask;
 		int zoff = z & mask;;
 		
-		int neighborLight = 0;
-		
 		if (xoff == 0 || xoff == mask || yoff == 0 || yoff == mask || zoff == 0 || zoff == mask) {
 			for (int i = 0; i < 6; i++) {
 				BlockFace face = allFaces[i];
 				IntVector3 v = face.getIntOffset();
-				int faceLight = getLightLevel(light, x + v.getX(), y + v.getY(), z + v.getZ(), true);
-				neighborLight = Math.max(neighborLight, faceLight);
+				if (getLightLevel(light, x + v.getX(), y + v.getY(), z + v.getZ(), true) > lightLevel) {
+					return true;
+				}
 			}
 		} else {
 			VanillaCuboidLightBuffer buffer = light.getLightBuffer(x, y, z);
@@ -202,12 +201,13 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			for (int i = 0; i < 6; i++) {
 				BlockFace face = allFaces[i];
 				IntVector3 v = face.getIntOffset();
-				int faceLight = getLightLevel(light, x + v.getX(), y + v.getY(), z + v.getZ(), true);
-				neighborLight = Math.max(neighborLight, faceLight);
+				if (buffer.get(x + v.getX(), y + v.getY(), z + v.getZ()) > lightLevel) {
+					return true;
+				}
 			}
 		}
 		
-		return neighborLight > lightLevel;
+		return false;
 	}
 	
 	public int getLightLevel(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, int x, int y, int z) {

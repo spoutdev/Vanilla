@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.world.lighting;
 
-import org.spout.api.Spout;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.IntVector3;
@@ -49,8 +48,8 @@ public class VanillaBlocklightLightingManager extends VanillaLightingManager {
 	}
 
 	@Override
-	public void resolveChunks(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int[] bx, int[] by, int[] bz, int changedCuboids) {
-		Iterable<IntVector3> coords = new IntVector3CuboidArray(bx, by, bz, Chunk.BLOCKS.SIZE, Chunk.BLOCKS.SIZE, Chunk.BLOCKS.SIZE, changedCuboids);
+	public void resolveChunks(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int[] bx, int[] by, int[] bz, int[] tx, int[] ty, int[] tz, int changedCuboids) {
+		Iterable<IntVector3> coords = new IntVector3CuboidArray(bx, by, bz, tx, ty, tz, changedCuboids);
 		super.resolve(light, material, height, coords);
 	}
 	

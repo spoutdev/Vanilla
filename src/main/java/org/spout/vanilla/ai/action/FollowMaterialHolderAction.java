@@ -33,14 +33,13 @@ import org.spout.api.ai.goap.PlannerAgent;
 import org.spout.api.ai.goap.WorldState;
 import org.spout.api.component.impl.NavigationComponent;
 import org.spout.api.entity.Player;
+
 import org.spout.vanilla.ai.sensor.NearbyMaterialHolderSensor;
 
 /**
  * Follow action that can be used for animals following players holding specific food items.
- *
  */
 public class FollowMaterialHolderAction implements Action {
-
 	private static final WorldState EFFECTS = WorldState.createImmutable("hasNearbyMaterialHolders", false);
 	private static final WorldState PRECONDITIONS = WorldState.createImmutable("hasNearbyMaterialHolders", true);
 	private PlannerAgent agent;
@@ -90,5 +89,4 @@ public class FollowMaterialHolderAction implements Action {
 		}
 		navi.setDestination(target.getScene().getPosition());
 	}
-
 }

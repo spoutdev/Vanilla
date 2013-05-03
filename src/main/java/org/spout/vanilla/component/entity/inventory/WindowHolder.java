@@ -28,10 +28,8 @@ package org.spout.vanilla.component.entity.inventory;
 
 import java.util.logging.Level;
 
-
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
-import org.spout.vanilla.VanillaPlugin;
 
 import org.spout.vanilla.inventory.window.DefaultWindow;
 import org.spout.vanilla.inventory.window.Window;

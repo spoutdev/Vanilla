@@ -49,7 +49,6 @@ public class EntityEffect extends BasicTickable {
 
 	/**
 	 * Returns the {@link EntityEffectType} of the effect.
-	 *
 	 * @return type of effect
 	 */
 	public EntityEffectType getType() {
@@ -58,7 +57,6 @@ public class EntityEffect extends BasicTickable {
 
 	/**
 	 * Returns the amplifier for the effect.
-	 *
 	 * @return amplifier
 	 */
 	public int getAmplifier() {
@@ -67,7 +65,6 @@ public class EntityEffect extends BasicTickable {
 
 	/**
 	 * Returns the duration left in this effect.
-	 *
 	 * @return duration left
 	 */
 	public float getDuration() {
@@ -77,7 +74,6 @@ public class EntityEffect extends BasicTickable {
 	/**
 	 * Returns the amount of ticks this effect has been active since
 	 * {@link #resetTicks()} was called.
-	 *
 	 * @return amount of ticks that have passed
 	 */
 	public int getTicks() {

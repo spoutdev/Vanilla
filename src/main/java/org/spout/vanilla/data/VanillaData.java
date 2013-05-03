@@ -26,9 +26,6 @@
  */
 package org.spout.vanilla.data;
 
-import java.util.Collections;
-import java.util.Set;
-
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyArray;
@@ -54,7 +51,6 @@ import org.spout.vanilla.inventory.player.PlayerMainInventory;
 import org.spout.vanilla.inventory.player.PlayerQuickbar;
 import org.spout.vanilla.material.block.component.FurnaceBlock;
 import org.spout.vanilla.protocol.entity.creature.CreatureType;
-import org.spout.vanilla.scoreboard.Objective;
 
 /**
  * * Common Vanilla-like data mappings that are found in Vanilla.

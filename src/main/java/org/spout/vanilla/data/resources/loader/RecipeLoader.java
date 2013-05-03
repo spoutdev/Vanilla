@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
-
 import org.spout.api.Spout;
 import org.spout.api.exception.ConfigurationException;
 import org.spout.api.inventory.recipe.Recipe;
@@ -44,6 +43,7 @@ import org.spout.api.material.MaterialRegistry;
 import org.spout.api.resource.BasicResourceLoader;
 import org.spout.api.util.config.ConfigurationNode;
 import org.spout.api.util.config.yaml.YamlConfiguration;
+
 import org.spout.vanilla.data.resources.RecipeYaml;
 
 public class RecipeLoader extends BasicResourceLoader<RecipeYaml> {

@@ -50,7 +50,6 @@ public class Scoreboard extends EntityComponent {
 
 	/**
 	 * Creates a new objective with the specified name and display name.
-	 *
 	 * @param name of objective
 	 * @return newly created objective
 	 */
@@ -63,7 +62,6 @@ public class Scoreboard extends EntityComponent {
 
 	/**
 	 * Removes the objective with the specified name.
-	 *
 	 * @param name to remove objective
 	 */
 	public void removeObjective(String name) {
@@ -77,7 +75,6 @@ public class Scoreboard extends EntityComponent {
 
 	/**
 	 * Returns the objective with the specified name.
-	 *
 	 * @param name to get objective from
 	 * @return objective with specified name
 	 */
@@ -92,7 +89,6 @@ public class Scoreboard extends EntityComponent {
 
 	/**
 	 * Returns all created objectives on this scoreboard.
-	 *
 	 * @return all objectives
 	 */
 	public Set<Objective> getObjectives() {
@@ -101,7 +97,6 @@ public class Scoreboard extends EntityComponent {
 
 	/**
 	 * Creates a new team on this scoreboard.
-	 *
 	 * @param name of new team
 	 * @return newly created team
 	 */
@@ -114,7 +109,6 @@ public class Scoreboard extends EntityComponent {
 
 	/**
 	 * Removes team with specified name.
-	 *
 	 * @param name of team to remove
 	 */
 	public void removeTeam(String name) {
@@ -128,7 +122,6 @@ public class Scoreboard extends EntityComponent {
 
 	/**
 	 * Returns the team with the specified name.
-	 *
 	 * @param name of team to get
 	 * @return team with specified name
 	 */
@@ -143,7 +136,6 @@ public class Scoreboard extends EntityComponent {
 
 	/**
 	 * Returns a set of all teams on this scoreboard.
-	 *
 	 * @return set of all teams
 	 */
 	public Set<Team> getTeams() {
@@ -153,7 +145,6 @@ public class Scoreboard extends EntityComponent {
 	/**
 	 * Updates the score of the specified key for every objective with the
 	 * specified criteria to the specified value.
-	 *
 	 * @param criteria to check for
 	 * @param key to find
 	 * @param value of points to add
@@ -174,7 +165,6 @@ public class Scoreboard extends EntityComponent {
 
 	/**
 	 * Returns the player associated with this scoreboard.
-	 *
 	 * @return player
 	 */
 	public Player getPlayer() {

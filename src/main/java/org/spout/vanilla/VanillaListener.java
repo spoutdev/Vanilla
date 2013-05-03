@@ -71,6 +71,7 @@ import org.spout.vanilla.protocol.PasteExceptionHandler;
 
 public class VanillaListener implements Listener {
 	private final VanillaPlugin plugin;
+
 	public VanillaListener(VanillaPlugin plugin) {
 		this.plugin = plugin;
 	}

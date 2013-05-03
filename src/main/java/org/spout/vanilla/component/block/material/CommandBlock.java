@@ -78,7 +78,6 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 
 	/**
 	 * Sets the name displayed when a command is executed.
-	 *
 	 * @param name to display
 	 */
 	public void setName(String name) {
@@ -87,7 +86,6 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 
 	/**
 	 * Sets the command executed when {@link #execute()} is called.
-	 *
 	 * @param cmd to execute
 	 * @param cause of command, can be null
 	 */
@@ -117,7 +115,6 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 
 	/**
 	 * Sets the command to be executed on {@link #execute()}.
-	 *
 	 * @param cmd to execute
 	 */
 	public void setCommand(String cmd) {
@@ -126,7 +123,6 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 
 	/**
 	 * Returns the command to execute.
-	 *
 	 * @return command to execute
 	 */
 	public String getCommand() {
@@ -135,7 +131,6 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 
 	/**
 	 * Sets whether the command block is powered.
-	 *
 	 * @param powered if this command block is powered
 	 */
 	public void setPowered(boolean powered) {
@@ -149,7 +144,6 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 
 	/**
 	 * Returns true if this command block is powered.
-	 *
 	 * @return true if powered
 	 */
 	public boolean isPowered() {

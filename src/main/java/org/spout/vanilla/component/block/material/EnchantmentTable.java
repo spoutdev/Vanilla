@@ -28,7 +28,6 @@ package org.spout.vanilla.component.block.material;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.inventory.Container;
 
 import org.spout.vanilla.component.block.ViewedBlockComponent;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;

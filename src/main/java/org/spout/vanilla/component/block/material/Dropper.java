@@ -29,18 +29,15 @@ package org.spout.vanilla.component.block.material;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Container;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.ViewedBlockComponent;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.inventory.DropperCloseEvent;
 import org.spout.vanilla.event.inventory.DropperOpenEvent;
-
 import org.spout.vanilla.inventory.block.DropperInventory;
 import org.spout.vanilla.inventory.window.block.DropperWindow;
 
 public class Dropper extends ViewedBlockComponent implements Container {
-
 	/**
 	 * Returns true if the block this component is attached to is currently powered
 	 * @return true if the block is powered

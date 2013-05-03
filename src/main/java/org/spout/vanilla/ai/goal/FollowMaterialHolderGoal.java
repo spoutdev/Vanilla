@@ -29,12 +29,11 @@ package org.spout.vanilla.ai.goal;
 import org.spout.api.ai.goap.Goal;
 import org.spout.api.ai.goap.PlannerAgent;
 import org.spout.api.ai.goap.WorldState;
+
 import org.spout.vanilla.ai.sensor.NearbyMaterialHolderSensor;
 
 public class FollowMaterialHolderGoal implements Goal {
-
 	private static final WorldState GOAL = WorldState.create("hasNearbyMaterialHolders", false);
-
 	private PlannerAgent agent;
 
 	public FollowMaterialHolderGoal(PlannerAgent agent) {
@@ -55,5 +54,4 @@ public class FollowMaterialHolderGoal implements Goal {
 	public boolean shouldContinue() {
 		return getPriority() > 0;
 	}
-
 }

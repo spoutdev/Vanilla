@@ -26,9 +26,6 @@
  */
 package org.spout.vanilla.protocol.container;
 
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
-
 import org.spout.api.component.type.BlockComponent;
 import org.spout.api.geo.cuboid.BlockComponentContainer;
 import org.spout.api.geo.cuboid.BlockContainer;
@@ -37,6 +34,9 @@ import org.spout.api.geo.cuboid.ContainerFillOrder;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFullState;
 import org.spout.api.util.cuboid.CuboidNibbleLightBuffer;
+
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 
 public class VanillaContainer implements BlockContainer, BlockComponentContainer {
 	private static final int HALF_VOLUME = Chunk.BLOCKS.HALF_VOLUME;
@@ -91,7 +91,7 @@ public class VanillaContainer implements BlockContainer, BlockComponentContainer
 		int index = blockLight ? HALF_VOLUME * 3 : HALF_VOLUME * 4;
 		buffer.copyToArray(fullChunkData, index);
 	}
-	
+
 	public byte[] getChunkFullData() {
 		return fullChunkData;
 	}

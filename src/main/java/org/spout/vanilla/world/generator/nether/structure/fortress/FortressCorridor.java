@@ -26,16 +26,14 @@
  */
 package org.spout.vanilla.world.generator.nether.structure.fortress;
 
-import java.util.List;
-
 import java.util.ArrayList;
+import java.util.List;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
-import org.spout.vanilla.world.generator.structure.StructurePiece.BoundingBox;
 import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
 public class FortressCorridor extends WeightedNextStructurePiece {

@@ -27,9 +27,6 @@
 package org.spout.vanilla.world.lighting;
 
 import org.spout.api.Spout;
-import org.spout.vanilla.VanillaPlugin;
-
-
 
 public class VanillaLighting {
 	public static final VanillaSkylightLightingManager SKY_LIGHT = new VanillaSkylightLightingManager("skylight");

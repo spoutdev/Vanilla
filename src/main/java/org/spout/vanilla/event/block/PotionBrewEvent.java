@@ -31,6 +31,7 @@ import org.spout.api.event.Cause;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.block.BlockEvent;
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.component.block.material.BrewingStand;
 
 public class PotionBrewEvent extends BlockEvent implements Cancellable {
@@ -55,7 +56,7 @@ public class PotionBrewEvent extends BlockEvent implements Cancellable {
 	public BrewingStand getBrewingStand() {
 		return brewingStand;
 	}
-	
+
 	/**
 	 * Get the ingredient used in the brewing process
 	 * @return ingredient
@@ -79,7 +80,7 @@ public class PotionBrewEvent extends BlockEvent implements Cancellable {
 	public ItemStack getResult() {
 		return result;
 	}
-	
+
 	/**
 	 * Set the result ItemStack
 	 * @param result

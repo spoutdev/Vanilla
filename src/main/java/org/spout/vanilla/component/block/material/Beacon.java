@@ -50,7 +50,6 @@ public class Beacon extends ViewedBlockComponent {
 	/**
 	 * Returns the amount of levels on the pyramid below this Beacon, this
 	 * will only account for up to a 4-level pyramid.
-	 *
 	 * @return levels on pyramid
 	 */
 	public int getLevels() {
@@ -70,7 +69,6 @@ public class Beacon extends ViewedBlockComponent {
 	/**
 	 * Returns the range in which players are effected by this Beacon
 	 * determined by an arbitrary algorithm.
-	 *
 	 * @return range of effects
 	 */
 	public float getEffectRange() {
@@ -80,7 +78,6 @@ public class Beacon extends ViewedBlockComponent {
 	/**
 	 * Returns the amount of time (in seconds) until the Beacon will update the
 	 * players in the vicinity specified by {@link #getEffectRange()}.
-	 *
 	 * @return time (in seconds) until beacon sends an update
 	 */
 	public float getUpdateDelay() {
@@ -90,7 +87,6 @@ public class Beacon extends ViewedBlockComponent {
 	/**
 	 * Sets the amount of time (in seconds) until the Beacon will update the
 	 * players in the vicinity specified by {@link #getEffectRange()}.
-	 *
 	 * @param delay (in seconds) until beacon should send an update
 	 */
 	public void setUpdateDelay(float delay) {
@@ -100,7 +96,6 @@ public class Beacon extends ViewedBlockComponent {
 	/**
 	 * Returns the time that the update delay should be set to upon reaching
 	 * zero.
-	 *
 	 * @return delay to update to when delay reaches zero
 	 */
 	public float getMaxUpdateDelay() {
@@ -109,7 +104,6 @@ public class Beacon extends ViewedBlockComponent {
 
 	/**
 	 * Sets the time that the delay will be reset to upon reaching zero.
-	 *
 	 * @param delay to reset to
 	 */
 	public void setMaxUpdateDelay(float delay) {
@@ -118,7 +112,6 @@ public class Beacon extends ViewedBlockComponent {
 
 	/**
 	 * Returns the primary effect of this Beacon.
-	 *
 	 * @return primary effect of beacon
 	 */
 	public EntityEffectType getPrimaryEffect() {
@@ -127,7 +120,6 @@ public class Beacon extends ViewedBlockComponent {
 
 	/**
 	 * Sets the primary effect of this Beacon.
-	 *
 	 * @param type of effect to use
 	 */
 	public void setPrimaryEffect(EntityEffectType type) {
@@ -136,7 +128,6 @@ public class Beacon extends ViewedBlockComponent {
 
 	/**
 	 * Returns the secondary effect of this Beacon.
-	 *
 	 * @return type of effect to use
 	 */
 	public EntityEffectType getSecondaryEffect() {
@@ -145,7 +136,6 @@ public class Beacon extends ViewedBlockComponent {
 
 	/**
 	 * Sets the secondary effect of this Beacon.
-	 *
 	 * @param type of effect to use
 	 */
 	public void setSecondaryEffect(EntityEffectType type) {
@@ -154,7 +144,6 @@ public class Beacon extends ViewedBlockComponent {
 
 	/**
 	 * Returns the duration of the effects applied by this Beacon.
-	 *
 	 * @return duration of effects that are applied
 	 */
 	public float getEffectDuration() {
@@ -163,7 +152,6 @@ public class Beacon extends ViewedBlockComponent {
 
 	/**
 	 * Sets the duration of the effects applied by this Beacon.
-	 *
 	 * @param duration of effects
 	 */
 	public void setEffectDuration(float duration) {
@@ -174,7 +162,6 @@ public class Beacon extends ViewedBlockComponent {
 	 * Returns the amplifier on the primary effect. This returns one if this
 	 * Beacon has four levels, and it's primary effect is the same as it's
 	 * secondary effect.
-	 *
 	 * @return amplifier of primary effect
 	 */
 	public int getPrimaryAmplifier() {
@@ -221,7 +208,6 @@ public class Beacon extends ViewedBlockComponent {
 	/**
 	 * Returns true if the specified {@link BlockMaterial} is a valid material
 	 * to use in the construction of a Beacon's power pyramid.
-	 *
 	 * @param mat to check
 	 * @return true if material is valid
 	 */

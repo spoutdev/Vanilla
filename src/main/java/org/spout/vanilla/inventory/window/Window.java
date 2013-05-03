@@ -33,7 +33,6 @@ import java.util.List;
 import org.spout.api.Client;
 import org.spout.api.Platform;
 import org.spout.api.ServerOnly;
-
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Player;

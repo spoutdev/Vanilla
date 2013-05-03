@@ -47,7 +47,6 @@ public class DropperCloseEvent extends InventoryCloseEvent implements Cancellabl
 
 	/**
 	 * Returns the dropper which caused this event.
-	 *
 	 * @return dropper
 	 */
 	public Dropper getDropper() {

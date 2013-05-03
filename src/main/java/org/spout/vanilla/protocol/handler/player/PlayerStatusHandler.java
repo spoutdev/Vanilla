@@ -28,7 +28,6 @@ package org.spout.vanilla.protocol.handler.player;
 
 import java.util.Set;
 
-
 import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.PlayerConnectEvent;
@@ -36,8 +35,8 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-import org.spout.vanilla.VanillaPlugin;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.event.cause.HealthChangeCause;
 import org.spout.vanilla.event.player.PlayerRespawnEvent;

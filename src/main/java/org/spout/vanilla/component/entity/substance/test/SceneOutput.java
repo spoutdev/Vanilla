@@ -27,8 +27,8 @@
 package org.spout.vanilla.component.entity.substance.test;
 
 import java.util.logging.Level;
-import org.spout.api.Platform;
 
+import org.spout.api.Platform;
 import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 

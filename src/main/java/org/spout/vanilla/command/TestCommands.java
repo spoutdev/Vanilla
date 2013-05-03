@@ -61,6 +61,7 @@ import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.util.BlockIterator;
 import org.spout.api.util.OutwardIterator;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.material.chest.Chest;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
@@ -190,7 +191,7 @@ public class TestCommands {
 				.setPrefix(ChatStyle.BRIGHT_GREEN)
 				.addPlayerName(name);
 	}
-	
+
 	@Command(aliases = "lightcheck", usage = "", desc = "Checks nearby light values", max = 0)
 	@CommandPermissions("vanilla.command.debug")
 	public void light(CommandContext args, CommandSource source) throws CommandException {
@@ -218,7 +219,7 @@ public class TestCommands {
 			}
 		}
 	}
-	
+
 	@Command(aliases = "skylightcheck", usage = "", desc = "Checks nearby sky light values", max = 0)
 	@CommandPermissions("vanilla.command.debug")
 	public void skyLight(CommandContext args, CommandSource source) throws CommandException {
@@ -246,7 +247,6 @@ public class TestCommands {
 			}
 		}
 	}
-
 
 	// TODO - There needs to be a method that guarantees unique data values on a per-server basis
 	private int mapId = 1;

@@ -52,43 +52,43 @@ public class VanillaBlocklightLightingManager extends VanillaLightingManager {
 		Iterable<IntVector3> coords = new IntVector3CuboidArray(bx, by, bz, tx, ty, tz, changedCuboids);
 		super.resolve(light, material, height, coords);
 	}
-	
+
 	@Override
 	protected void initChunks(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int[] bx, int[] by, int[] bz, int initializedChunks) {
 		// Scan for new chunks needs to check
 		// - light emitting blocks
 		// - boundary of entire volume
-		
+
 		@SuppressWarnings("unchecked")
 		Iterable<IntVector3>[] emitters = new Iterable[initializedChunks + 1];
-		
+
 		for (int i = 0; i < initializedChunks; i++) {
 			emitters[i] = this.scanChunk(light, material, height, bx[i], by[i], bz[i]);
 		}
-		
+
 		Iterable<IntVector3> boundary = this.getBoundary(material, bx, by, bz, initializedChunks);
-		
+
 		emitters[initializedChunks] = boundary;
-		
+
 		Iterable<IntVector3> combined = new IntVector3CompositeIterator(emitters);
-		
+
 		super.resolve(light, material, height, combined);
 	}
-	
+
 	@Override
 	protected int getEmittedLight(ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
 		BlockMaterial m = material.get(x, y, z);
 		short data = material.getData(x, y, z);
 		return m.getLightLevel(data);
 	}
-	
+
 	@Override
 	public int updateEmittingBlocks(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
 		int maxLight = 0;
 		int minLight = 15;
-		
+
 		int emittingBlocks = 0;
-		
+
 		for (int xx = x; xx < x + Chunk.BLOCKS.SIZE; xx++) {
 			for (int yy = y; yy < y + Chunk.BLOCKS.SIZE; yy++) {
 				for (int zz = z; zz < z + Chunk.BLOCKS.SIZE; zz++) {
@@ -106,8 +106,7 @@ public class VanillaBlocklightLightingManager extends VanillaLightingManager {
 				}
 			}
 		}
-		
+
 		return maxLight != minLight ? emittingBlocks : -1;
 	}
-	
 }

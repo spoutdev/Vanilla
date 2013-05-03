@@ -30,11 +30,10 @@ import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.set.TInt10Procedure;
 
 public class IncreaseLightProcedure extends TInt10Procedure {
-	
 	private int targetLevel;
 	private final ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light;
 	private final VanillaLightingManager manager;
-	
+
 	public IncreaseLightProcedure(VanillaLightingManager manager, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light) {
 		this.light = light;
 		this.manager = manager;
@@ -48,13 +47,12 @@ public class IncreaseLightProcedure extends TInt10Procedure {
 	@Override
 	public boolean execute(int x, int y, int z) {
 		int lightLevel = manager.getLightLevel(light, x, y, z);
-		
+
 		// Spout.getLogger().info("Increasing: " + x + ", " + y + ", " + z + " light level " + lightLevel + " target " + targetLevel);
-		
+
 		if (lightLevel < targetLevel) {
 			manager.setLightLevel(light, x, y, z, targetLevel);
 		}
 		return true;
 	}
-
 }

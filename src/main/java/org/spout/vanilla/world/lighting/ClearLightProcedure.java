@@ -30,24 +30,22 @@ import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.set.TInt10Procedure;
 
 public class ClearLightProcedure extends TInt10Procedure {
-	
 	private final ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light;
 	private final VanillaLightingManager manager;
-	
+
 	public ClearLightProcedure(VanillaLightingManager manager, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light) {
 		this.light = light;
 		this.manager = manager;
 	}
-	
+
 	@Override
 	public boolean execute(int x, int y, int z) {
 		return execute(x, y, z, false);
 	}
-	
+
 	public boolean execute(int x, int y, int z, boolean root) {
 		// Spout.getLogger().info("Clearing: " + x + ", " + y + ", " + z);
 		manager.setLightLevel(light, x, y, z, 0);
 		return true;
 	}
-
 }

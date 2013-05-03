@@ -48,16 +48,16 @@ public class VanillaSkylightLightingManager extends VanillaBlocklightLightingMan
 	protected int getEmittedLight(ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
 		return y > height.get(x, z) ? 15 : 0;
 	}
-	
+
 	@Override
 	public int updateEmittingBlocks(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
 		int maxLight = 0;
 		int minLight = 15;
-		
+
 		int emittingBlocks = 0;
-		
+
 		int th = y + Chunk.BLOCKS.SIZE;
-		
+
 		for (int xx = x; xx < x + Chunk.BLOCKS.SIZE; xx++) {
 			for (int zz = z; zz < z + Chunk.BLOCKS.SIZE; zz++) {
 				int h = height.get(xx, zz);
@@ -75,7 +75,7 @@ public class VanillaSkylightLightingManager extends VanillaBlocklightLightingMan
 				}
 			}
 		}
-		
+
 		return maxLight != minLight ? emittingBlocks : -1;
 	}
 }

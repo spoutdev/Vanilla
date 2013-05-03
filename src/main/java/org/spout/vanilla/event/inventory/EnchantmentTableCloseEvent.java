@@ -41,7 +41,7 @@ public class EnchantmentTableCloseEvent extends InventoryCloseEvent implements C
 	private static final HandlerList handlers = new HandlerList();
 	private final EnchantmentTable enchantmentTable;
 
-	public EnchantmentTableCloseEvent(EnchantmentTable enchantmentTable,EnchantmentTableInventory inventory, Entity entity) {
+	public EnchantmentTableCloseEvent(EnchantmentTable enchantmentTable, EnchantmentTableInventory inventory, Entity entity) {
 		super(inventory, entity);
 		this.enchantmentTable = enchantmentTable;
 	}

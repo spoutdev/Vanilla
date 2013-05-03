@@ -29,14 +29,13 @@ package org.spout.vanilla.world.generator.normal.populator;
 import java.util.Random;
 import java.util.logging.Level;
 
-
 import org.spout.api.Spout;
 import org.spout.api.generator.Populator;
 import org.spout.api.generator.WorldGeneratorUtils;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
-import org.spout.vanilla.VanillaPlugin;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.world.generator.normal.structure.stronghold.Stronghold;
 
 public class StrongholdPopulator extends Populator {

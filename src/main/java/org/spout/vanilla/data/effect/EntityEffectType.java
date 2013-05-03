@@ -63,7 +63,7 @@ public enum EntityEffectType {
 
 	private EntityEffectType(int id, int potionId) {
 		this.id = id;
-		this.potionId= potionId;
+		this.potionId = potionId;
 	}
 
 	public static EntityEffectType get(int id) {

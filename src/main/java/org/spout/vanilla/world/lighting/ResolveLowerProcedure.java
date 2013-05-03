@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.world.lighting;
 
-
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
@@ -37,17 +36,14 @@ import org.spout.api.util.set.TInt10Procedure;
 import org.spout.api.util.set.TInt10TripleSet;
 
 public class ResolveLowerProcedure extends TInt10Procedure {
-	
 	private final static BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
-
 	private final TInt10TripleSet[] dirtySets;
 	private final TInt10TripleSet[] regenSets;
 	private final ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light;
-
 	private final ImmutableCuboidBlockMaterialBuffer material;
 	private final VanillaLightingManager manager;
 	private final ImmutableHeightMapBuffer height;
-	
+
 	public ResolveLowerProcedure(VanillaLightingManager manager, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, TInt10TripleSet[] dirtySets, TInt10TripleSet[] regenSets) {
 		this.dirtySets = dirtySets;
 		this.regenSets = regenSets;
@@ -61,7 +57,7 @@ public class ResolveLowerProcedure extends TInt10Procedure {
 	public boolean execute(int x, int y, int z) {
 		return execute(x, y, z, true);
 	}
-	
+
 	public boolean execute(int x, int y, int z, boolean neighbours) {
 		// Spout.getLogger().info("Checking lower " + x + ", " + y + ", " + z);
 		manager.checkAndAddDirtyFalling(dirtySets, regenSets, light, material, height, x, y, z);
@@ -77,5 +73,4 @@ public class ResolveLowerProcedure extends TInt10Procedure {
 		}
 		return true;
 	}
-
 }

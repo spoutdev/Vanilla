@@ -438,7 +438,6 @@ public final class VanillaMaterials {
 	public static final RedstoneBlock REDSTONE_BLOCK = new RedstoneBlock("Block of Redstone", 152);
 	public static final HopperBlock HOPPER = new HopperBlock("Hopper", 154);
 	public static final DropperBlock DROPPER = new DropperBlock("Dropper", 158);
-
 	/*
 	 * Items
 	 */

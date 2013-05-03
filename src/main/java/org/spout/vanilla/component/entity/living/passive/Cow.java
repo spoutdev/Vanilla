@@ -32,6 +32,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.ai.action.FollowMaterialHolderAction;
 import org.spout.vanilla.ai.goal.FollowMaterialHolderGoal;

@@ -30,7 +30,6 @@ public enum BeaconProperty implements WindowProperty {
 	LEVELS(0),
 	PRIMARY_EFFECT(1),
 	SECONDARY_EFFECT(2);
-
 	private final int id;
 
 	private BeaconProperty(int id) {

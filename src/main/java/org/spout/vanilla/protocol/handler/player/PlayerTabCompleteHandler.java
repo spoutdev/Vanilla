@@ -26,12 +26,11 @@
  */
 package org.spout.vanilla.protocol.handler.player;
 
-
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
-import org.spout.vanilla.VanillaPlugin;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.protocol.msg.player.PlayerTabCompleteMessage;
 
 public final class PlayerTabCompleteHandler extends MessageHandler<PlayerTabCompleteMessage> {

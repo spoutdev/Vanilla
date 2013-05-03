@@ -46,7 +46,7 @@ import org.spout.api.util.set.TInt10TripleSet;
 
 public abstract class VanillaLightingManager extends LightingManager<VanillaCuboidLightBuffer> {
 	private final static BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
-	
+
 	public VanillaLightingManager(String name) {
 		super(name);
 	}
@@ -59,7 +59,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	@Override
 	public void resolveColumns(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int[] hx, int[] hz, int[] oldHy, int[] newHy, int changedColumns) {
 	}
-	
+
 	protected void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, Iterable<IntVector3> coords) {
 		TInt10TripleSet[] dirtySets = new TInt10TripleSet[16];
 		TInt10TripleSet[] regenSets = new TInt10TripleSet[16];
@@ -70,14 +70,14 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		}
 		// Spout.getLogger().info("Buffer type: " + getClass().getSimpleName());
 		// Spout.getLogger().info("About to process higher emit");
-		
+
 		// Scan all root blocks and increase to emitted level, if emitted light > actual light
 		Iterator<IntVector3> itr = coords.iterator();
 		while (itr.hasNext()) {
 			IntVector3 v = itr.next();
 			raiseToEmittedLight(v, dirtySets, light, material, height);
 		}
-		
+
 		// Spout.getLogger().info("About to scan higher root");
 		// Scan all root blocks and neighbours and see if any need to be made brighter
 		// Adds blocks to dirty set corresponding corresponding to required level
@@ -88,16 +88,16 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			procHigher.execute(v.getX(), v.getY(), v.getZ());
 		}
 		// Spout.getLogger().info("About to process higher from sets");
-		
+
 		// Loop to resolve and propagate brightening of blocks
 		// Updates are limited to blocks that could have been affected by the modified blocks
 		resolveHigher(dirtySets, light, material, height);
-		
+
 		// Reset dirty sets for darkening pass
 		for (int i = 0; i < dirtySets.length; i++) {
 			dirtySets[i].clear();
 		}
-		
+
 		ResolveLowerProcedure procLower = new ResolveLowerProcedure(this, light, material, height, dirtySets, regenSets);
 		// Spout.getLogger().info("About to process lower root");
 		itr = coords.iterator();
@@ -119,8 +119,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		}
 		return count;
 	}
-	
-	
+
 	// TODO - needs surface height data
 	protected abstract int getEmittedLight(ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z);
 
@@ -178,12 +177,13 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	private boolean isLightFlowPossible(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, int x, int y, int z, boolean inward) {
 
 		int lightLevel = getLightLevel(light, x, y, z);
-		
+
 		int mask = Chunk.BLOCKS.MASK;
 		int xoff = x & mask;
 		int yoff = y & mask;
-		int zoff = z & mask;;
-		
+		int zoff = z & mask;
+		;
+
 		if (xoff == 0 || xoff == mask || yoff == 0 || yoff == mask || zoff == 0 || zoff == mask) {
 			for (int i = 0; i < 6; i++) {
 				BlockFace face = allFaces[i];
@@ -197,7 +197,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			if (buffer == null) {
 				return false;
 			}
-			
+
 			for (int i = 0; i < 6; i++) {
 				BlockFace face = allFaces[i];
 				IntVector3 v = face.getIntOffset();
@@ -206,14 +206,14 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 				}
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	public int getLightLevel(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, int x, int y, int z) {
 		return getLightLevel(light, x, y, z, false);
 	}
-	
+
 	public int getLightLevel(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, int x, int y, int z, boolean allowNull) {
 		VanillaCuboidLightBuffer buffer = light.getLightBuffer(x, y, z, allowNull);
 		int level = 0;
@@ -232,7 +232,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			Spout.getLogger().info("No light buffer to write to");
 		}
 	}
-	
+
 	protected void processRootHigher(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
 		int actualLevel = getLightLevel(light, x, y, z);
 		int calculatedLevel = computeLightLevel(light, material, height, x, y, z);
@@ -240,7 +240,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			setLightLevel(light, x, y, z, calculatedLevel);
 		}
 	}
-	
+
 	protected void processRootLower(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
 		int actualLevel = getLightLevel(light, x, y, z);
 		int calculatedLevel = computeLightLevel(light, material, height, x, y, z);
@@ -254,7 +254,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		if (BlockMaterial.UNGENERATED.equals(m)) {
 			return;
 		}
-		
+
 		int actualLevel = getLightLevel(light, x, y, z);
 		if (actualLevel <= 0) {
 			return;
@@ -271,7 +271,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			regenSets[actualLevel].add(x, y, z);
 		}
 	}
-	
+
 	protected void checkAndAddDirtyRising(TInt10TripleSet[] dirtySets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
 		BlockMaterial m = material.get(x, y, z);
 		if (BlockMaterial.UNGENERATED.equals(m)) {
@@ -291,7 +291,6 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	/**
 	 * Resolves block changes that cause blocks to become brighter.  This method never causes the light level
 	 * for blocks to be reduced.
-	 * 
 	 * @param dirtySets
 	 * @param light
 	 * @param material
@@ -306,16 +305,16 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		// darker dirty sets.  The update procedure will never cause a block to be made darker.  This
 		// handles the case where a block is set updated due to 2 different sources.  The source which
 		// gives the brightest result will be the one that is used.
-		for (int i = dirtySets.length - 1; i >= 0 ; i--) {
+		for (int i = dirtySets.length - 1; i >= 0; i--) {
 			// Updates light levels for blocks that need to be set to a light level of i
 			increaseProc.setTargetLevel(i);
 			dirtySets[i].forEach(increaseProc);
-			
+
 			// Scan all updated blocks and neighbours and add to dirty sets
 			dirtySets[i].forEach(resolveProc);
 		}
 	}
-	
+
 	protected void raiseToEmittedLight(IntVector3 v, TInt10TripleSet[] dirtySets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height) {
 		int x = v.getX();
 		int y = v.getY();
@@ -330,7 +329,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	protected void resolveLower(TInt10TripleSet[] dirtySets, TInt10TripleSet[] regenSets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height) {
 		ClearLightProcedure clearProc = new ClearLightProcedure(this, light);
 		ResolveLowerProcedure lowerProc = new ResolveLowerProcedure(this, light, material, height, dirtySets, regenSets);
-		
+
 		// All blocks in dirty sets need to be set to zero.  They are stored in the dirty set
 		// index matching what level they had when determined to require setting to zero
 		// Each block is set to zero and then the block and neighbours are scanned to see if any more
@@ -347,16 +346,16 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		// limit on the distance processing can occur due to a block modification.
 		//
 		// This method does not handle the light regeneration step
-		for (int i = dirtySets.length - 1; i >= 0 ; i--) {
+		for (int i = dirtySets.length - 1; i >= 0; i--) {
 			dirtySets[i].forEach(clearProc);
 			dirtySets[i].forEach(lowerProc);
 		}
 	}
-	
+
 	protected Iterable<IntVector3> getBoundary(ImmutableCuboidBlockMaterialBuffer material, int[] bx, int[] by, int[] bz, int changedCuboids) {
-		
+
 		Vector3 base = material.getBase();
-		
+
 		TInt10TripleSet chunkSet = new TInt10TripleSet(base.getFloorX(), base.getFloorY(), base.getFloorZ(), changedCuboids);
 		for (int i = 0; i < changedCuboids; i++) {
 			chunkSet.add(bx[i], by[i], bz[i]);
@@ -388,12 +387,12 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		int count = 0;
 
 		TInt10TripleSet blockSet = new TInt10TripleSet(base.getFloorX(), base.getFloorY(), base.getFloorZ(), blocks);
-		
+
 		for (int i = 0; i < changedCuboids; i++) {
 			int x = bx[i];
 			int y = by[i];
 			int z = bz[i];
-			
+
 			int shift = Chunk.BLOCKS.BITS;
 			int size = Chunk.BLOCKS.SIZE;
 			for (int j = 0; j < allFaces.length; j++) {
@@ -401,7 +400,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 				int xo = x + (offset.getX() << shift);
 				int yo = y + (offset.getY() << shift);
 				int zo = z + (offset.getZ() << shift);
-				
+
 				if (!chunkSet.contains(xo, yo, zo)) {
 					if (material.get(xo, yo, zo) != BlockMaterial.UNGENERATED) {
 						int startX = offset.getX() <= 0 ? x : (x + size - 1);
@@ -432,11 +431,10 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 
 		return new IntVector3Array(xArray, yArray, zArray, count);
 	}
-	
+
 	/**
-	 * Initializes all emitting blocks and returns the number of emitting blocks in the chunk.  
+	 * Initializes all emitting blocks and returns the number of emitting blocks in the chunk.
 	 * If the entire chunk is made up of emitting blocks with the same light level, then the method returns -1.
-	 * 
 	 * @param light
 	 * @param material
 	 * @param height
@@ -446,15 +444,15 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	 * @return
 	 */
 	public abstract int updateEmittingBlocks(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z);
-	
+
 	public Iterable<IntVector3> scanChunk(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
 
 		int emittingBlocks = this.updateEmittingBlocks(light, material, height, x, y, z);
-		
+
 		if (emittingBlocks < 0) {
 			return null;
 		}
-		
+
 		int xArray[] = new int[emittingBlocks];
 		int yArray[] = new int[emittingBlocks];
 		int zArray[] = new int[emittingBlocks];
@@ -474,6 +472,4 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		}
 		return new IntVector3Array(xArray, yArray, zArray, count);
 	}
-
-	
 }

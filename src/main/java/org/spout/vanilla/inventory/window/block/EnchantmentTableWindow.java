@@ -33,7 +33,6 @@ import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.component.block.material.EnchantmentTable;
-import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.inventory.block.EnchantmentTableInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
 import org.spout.vanilla.inventory.window.Window;

@@ -29,6 +29,7 @@ package org.spout.vanilla.event.entity;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
 import org.spout.api.event.entity.EntityDeathEvent;
+
 import org.spout.vanilla.event.cause.DamageCause;
 
 /**
@@ -111,5 +112,4 @@ public class VanillaEntityDeathEvent extends EntityDeathEvent {
 	public static HandlerList getHandlerList() {
 		return handlers;
 	}
-
 }

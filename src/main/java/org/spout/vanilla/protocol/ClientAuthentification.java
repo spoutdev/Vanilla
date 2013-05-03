@@ -35,6 +35,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 import org.spout.api.Spout;
+
 import org.spout.vanilla.VanillaPlugin;
 
 /**

@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.Client;
-
 import org.spout.api.event.player.input.PlayerClickEvent;
 import org.spout.api.event.player.input.PlayerKeyEvent;
 import org.spout.api.gui.component.ControlComponent;
@@ -43,8 +42,8 @@ import org.spout.api.math.IntVector2;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
 import org.spout.api.render.SpoutRenderMaterials;
-import org.spout.vanilla.VanillaPlugin;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.VanillaRenderMaterials;
 import org.spout.vanilla.inventory.window.AbstractWindow;

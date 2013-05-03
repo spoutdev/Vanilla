@@ -29,10 +29,9 @@ package org.spout.vanilla.inventory.recipe;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-
 import org.spout.api.inventory.recipe.Recipe;
-import org.spout.vanilla.VanillaPlugin;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.resources.RecipeYaml;
 
 public class VanillaRecipes {

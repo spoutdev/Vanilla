@@ -30,8 +30,8 @@ import org.spout.api.entity.Player;
 import org.spout.api.event.cause.MaterialCause;
 import org.spout.api.inventory.Container;
 import org.spout.api.inventory.ItemStack;
-import org.spout.vanilla.VanillaPlugin;
 
+import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.ViewedBlockComponent;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.VanillaData;

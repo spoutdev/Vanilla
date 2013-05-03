@@ -35,7 +35,6 @@ import org.spout.vanilla.world.generator.structure.PieceCuboidBuilder;
 import org.spout.vanilla.world.generator.structure.SimpleBlockMaterialPicker;
 import org.spout.vanilla.world.generator.structure.Structure;
 import org.spout.vanilla.world.generator.structure.StructurePiece;
-import org.spout.vanilla.world.generator.structure.StructurePiece.BoundingBox;
 import org.spout.vanilla.world.generator.structure.WeightedNextStructurePiece;
 
 public class FortressTurn extends WeightedNextStructurePiece {

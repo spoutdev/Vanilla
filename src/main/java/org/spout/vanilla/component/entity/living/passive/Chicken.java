@@ -30,6 +30,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.ai.action.FollowMaterialHolderAction;
 import org.spout.vanilla.ai.goal.FollowMaterialHolderGoal;

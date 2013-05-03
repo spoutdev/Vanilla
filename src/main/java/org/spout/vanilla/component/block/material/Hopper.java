@@ -29,13 +29,11 @@ package org.spout.vanilla.component.block.material;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Container;
 
-import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.ViewedBlockComponent;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.event.inventory.HopperCloseEvent;
 import org.spout.vanilla.event.inventory.HopperOpenEvent;
-
 import org.spout.vanilla.inventory.block.HopperInventory;
 import org.spout.vanilla.inventory.window.block.HopperWindow;
 
@@ -43,7 +41,6 @@ import org.spout.vanilla.inventory.window.block.HopperWindow;
  * Component that represents any kind of Hopper.
  */
 public class Hopper extends ViewedBlockComponent implements Container {
-
 	/**
 	 * Returns true if the block this component is attached to is currently powered
 	 * @return true if the block is powered

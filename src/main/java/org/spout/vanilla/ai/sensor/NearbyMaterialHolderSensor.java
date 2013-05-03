@@ -35,16 +35,15 @@ import org.spout.api.ai.goap.PlannerAgent;
 import org.spout.api.ai.goap.WorldState;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.ItemStack;
+
 import org.spout.vanilla.inventory.entity.QuickbarInventory;
 import org.spout.vanilla.material.VanillaMaterial;
 import org.spout.vanilla.util.PlayerUtil;
 
 /**
  * A sensor that finds {@link Player}s holding a specified {@link VanillaMaterial}.
- *
  */
 public class NearbyMaterialHolderSensor implements Sensor {
-
 	private PlannerAgent agent;
 	private VanillaMaterial material;
 	private WorldState state;
@@ -91,5 +90,4 @@ public class NearbyMaterialHolderSensor implements Sensor {
 	public boolean hasFoundPlayers() {
 		return (Boolean) state.get("hasNearbyMaterialHolders");
 	}
-
 }

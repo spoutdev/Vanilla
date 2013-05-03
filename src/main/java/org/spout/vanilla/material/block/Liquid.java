@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.material.block;
 
-import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 
 import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
@@ -352,7 +353,6 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 
 	/**
 	 * Instantly flows the liquid at the block position.
-	 *
 	 * @param liquid The liquid to flow as a block
 	 */
 	public static void performInstantFlow(Block liquid) {
@@ -361,7 +361,6 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 
 	/**
 	 * Instantly flows the liquids at the block positions.
-	 *
 	 * @param liquids The liquids to flow as a collection of blocks
 	 */
 	public static void performInstantFlow(Collection<Block> liquids) {

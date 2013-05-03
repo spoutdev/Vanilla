@@ -36,14 +36,13 @@ import org.spout.api.util.set.TInt10Procedure;
 import org.spout.api.util.set.TInt10TripleSet;
 
 public class ResolveHigherProcedure extends TInt10Procedure {
-	
 	private final static BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
 	private final TInt10TripleSet[] dirtySets;
 	private final ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light;
 	private final ImmutableCuboidBlockMaterialBuffer material;
 	private final ImmutableHeightMapBuffer height;
 	private final VanillaLightingManager manager;
-	
+
 	public ResolveHigherProcedure(VanillaLightingManager manager, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, TInt10TripleSet[] dirtySets) {
 		this.dirtySets = dirtySets;
 		this.light = light;
@@ -56,7 +55,7 @@ public class ResolveHigherProcedure extends TInt10Procedure {
 	public boolean execute(int x, int y, int z) {
 		// Spout.getLogger().info("Checking higher " + x + ", " + y + ", " + z);
 		manager.checkAndAddDirtyRising(dirtySets, light, material, height, x, y, z);
-		
+
 		for (BlockFace face : allFaces) {
 			Vector3 offset = face.getOffset();
 			int nx = x + offset.getFloorX();
@@ -67,5 +66,4 @@ public class ResolveHigherProcedure extends TInt10Procedure {
 
 		return true;
 	}
-
 }

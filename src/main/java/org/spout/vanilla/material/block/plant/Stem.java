@@ -117,12 +117,13 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 		}
 		return false;
 	}
+
 	@Override
 	public void onInteractBy(Entity entity, Block block, PlayerInteractEvent.Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
 		Slot inv = PlayerUtil.getHeldSlot(entity);
 		if (inv != null && inv.get() != null && type.equals(Action.RIGHT_CLICK)) {
-			if(grow(block, inv.get().getMaterial()) && !PlayerUtil.isCostSuppressed(entity)) {
+			if (grow(block, inv.get().getMaterial()) && !PlayerUtil.isCostSuppressed(entity)) {
 				inv.addAmount(-1);
 			}
 		}

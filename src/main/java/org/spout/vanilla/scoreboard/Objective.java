@@ -81,7 +81,6 @@ public class Objective implements Named {
 
 	/**
 	 * Returns the objective associated with this scoreboard.
-	 *
 	 * @return scoreboard attached to this objective
 	 */
 	public Scoreboard getScoreboard() {
@@ -90,7 +89,6 @@ public class Objective implements Named {
 
 	/**
 	 * Returns the name displayed on the scoreboard for this objective.
-	 *
 	 * @return display name
 	 */
 	public ChatArguments getDisplayName() {
@@ -99,7 +97,6 @@ public class Objective implements Named {
 
 	/**
 	 * Sets the name displayed on the scoreboard for this objective.
-	 *
 	 * @param displayName to set
 	 * @return this objective
 	 */
@@ -111,7 +108,6 @@ public class Objective implements Named {
 
 	/**
 	 * Sets the name displayed on the scoreboard for this objective.
-	 *
 	 * @param displayName to set
 	 * @return this objective
 	 */
@@ -121,7 +117,6 @@ public class Objective implements Named {
 
 	/**
 	 * Returns the score mapping.
-	 *
 	 * @return score mapping
 	 */
 	public Map<String, Integer> getScoreMap() {
@@ -130,7 +125,6 @@ public class Objective implements Named {
 
 	/**
 	 * Returns the score of the specified name.
-	 *
 	 * @param name to get score of
 	 * @return score of specified name
 	 */
@@ -140,7 +134,6 @@ public class Objective implements Named {
 
 	/**
 	 * Returns the score of the specified name.
-	 *
 	 * @param name to get score of
 	 * @return score of specified name
 	 */
@@ -150,7 +143,6 @@ public class Objective implements Named {
 
 	/**
 	 * Returns the score of the specified name.
-	 *
 	 * @param name to get score of
 	 * @return score of specified name
 	 */
@@ -160,7 +152,6 @@ public class Objective implements Named {
 
 	/**
 	 * Sets the score for the specified key at the specified integer value.
-	 *
 	 * @param key to set score for
 	 * @param value of score
 	 * @return this objective
@@ -173,7 +164,6 @@ public class Objective implements Named {
 
 	/**
 	 * Sets the score for the specified key at the specified integer value.
-	 *
 	 * @param key to set score for
 	 * @param value of score
 	 * @return this objective
@@ -184,7 +174,6 @@ public class Objective implements Named {
 
 	/**
 	 * Sets the score for the specified key at the specified integer value.
-	 *
 	 * @param key to set score for
 	 * @param value of score
 	 * @return this objective
@@ -196,7 +185,6 @@ public class Objective implements Named {
 	/**
 	 * Adds to the current score of the specified name with the specified
 	 * value.
-	 *
 	 * @param key to add score to
 	 * @param value how much to add
 	 * @return
@@ -209,7 +197,6 @@ public class Objective implements Named {
 	/**
 	 * Adds to the current score of the specified name with the specified
 	 * value.
-	 *
 	 * @param key to add score to
 	 * @param value how much to add
 	 * @return
@@ -222,7 +209,6 @@ public class Objective implements Named {
 	/**
 	 * Adds to the current score of the specified name with the specified
 	 * value.
-	 *
 	 * @param key to add score to
 	 * @param value how much to add
 	 * @return
@@ -234,7 +220,6 @@ public class Objective implements Named {
 
 	/**
 	 * Removes a score entry of the specified name.
-	 *
 	 * @param key to remove entry
 	 * @return this objective
 	 */
@@ -246,7 +231,6 @@ public class Objective implements Named {
 
 	/**
 	 * Removes a score entry of the specified name.
-	 *
 	 * @param key to remove entry
 	 * @return this objective
 	 */
@@ -256,7 +240,6 @@ public class Objective implements Named {
 
 	/**
 	 * Removes a score entry of the specified name.
-	 *
 	 * @param key to remove entry
 	 * @return this objective
 	 */
@@ -266,7 +249,6 @@ public class Objective implements Named {
 
 	/**
 	 * Returns the slot this objective is being displayed at.
-	 *
 	 * @return slot this objective is being displayed at
 	 */
 	public ObjectiveSlot getSlot() {
@@ -275,7 +257,6 @@ public class Objective implements Named {
 
 	/**
 	 * Sets the slot this objective is being displayed at.
-	 *
 	 * @param slot to display objective at
 	 * @return this objective
 	 */
@@ -287,7 +268,6 @@ public class Objective implements Named {
 
 	/**
 	 * Returns the criteria for this objective.
-	 *
 	 * @return criteria of objective
 	 */
 	public String getCriteria() {
@@ -296,7 +276,6 @@ public class Objective implements Named {
 
 	/**
 	 * Sets the criteria for this objective.
-	 *
 	 * @param criteria to set
 	 * @return this objective
 	 */

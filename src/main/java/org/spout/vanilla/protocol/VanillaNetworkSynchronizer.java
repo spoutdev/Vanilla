@@ -42,6 +42,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.generator.biome.Biome;
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
@@ -314,38 +315,15 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 	}
 
 	@Override
-	protected boolean canSendChunk(Chunk c, Set<Chunk> unsendable) {
-		if (!c.canSend()) {
-			if (unsendable != null) {
-				unsendable.add(c);
-			}
-			c.populate(true, true, true);
-			return false;
-		}
+	protected boolean canSendChunk(Chunk c) {
 		if (activeChunks.contains(c.getX(), c.getZ())) {
 			return true;
 		}
-		boolean canSend = true;
 		Collection<Chunk> chunks = chunkInit.getChunks(c);
-		for (Chunk cc : chunks) {
-			if (!cc.canSend()) {
-				if (unsendable != null) {
-					unsendable.add(c);
-				}
-				canSend = false;
-				cc.populate(true, true, true);
-			}
+		if (chunks == null) {
+			return false;
 		}
-		return canSend;
-	}
-
-	@Override
-	public Collection<Chunk> sendChunk(Chunk c) {
-		if (canSendChunk(c, null)) {
-			return sendChunk(c, true);
-		} else {
-			return null;
-		}
+		return true;
 	}
 
 	@Override
@@ -386,7 +364,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				packetChunkData[cube] = chunkInit.getChunkData(heights, materials, pp, events);
 			}
 
-			Chunk chunk = p.getWorld().getChunkFromBlock(p);
+			Chunk chunk = p.getWorld().getChunkFromBlock(p, LoadOption.LOAD_ONLY);
 			byte[] biomeData = new byte[Chunk.BLOCKS.AREA];
 			for (int dx = x; dx < x + Chunk.BLOCKS.SIZE; ++dx) {
 				for (int dz = z; dz < z + Chunk.BLOCKS.SIZE; ++dz) {
@@ -870,14 +848,24 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 			}
 		}
 
-		public Collection<Chunk> getChunks(Chunk c) {
+		public Collection<Chunk> getChunks(final Chunk c) {
 			if (this.sendColumn()) {
-				int x = c.getX();
-				int z = c.getZ();
-				int height = WORLD_HEIGHT >> Chunk.BLOCKS.BITS;
+				final int x = c.getX();
+				final int z = c.getZ();
+				final int height = WORLD_HEIGHT >> Chunk.BLOCKS.BITS;
 				List<Chunk> chunks = new ArrayList<Chunk>(height);
 				for (int y = 0; y < height; y++) {
-					chunks.add(c.getWorld().getChunk(x, y, z));
+					Chunk cc = c.getWorld().getChunk(x, y, z, LoadOption.LOAD_ONLY);
+					if (cc == null) {
+						c.getRegion().getTaskManager().scheduleSyncDelayedTask(VanillaPlugin.getInstance(), new Runnable() {
+							public void run() {
+								for (int y = 0; y < height; y++) {
+									c.getWorld().getChunk(x, y, z, LoadOption.LOAD_GEN);
+								}
+							}
+						});
+						return null;
+					}
 				}
 				return chunks;
 			} else {
@@ -907,7 +895,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		}
 
 		private static byte[] getChunkFullColumn(int[][] heights, BlockMaterial[][] materials, Point p, List<ProtocolEvent> updateEvents) {
-			Chunk c = p.getWorld().getChunkFromBlock(p);
+			Chunk c = p.getWorld().getChunkFromBlock(p, LoadOption.LOAD_ONLY);
 			return getChunkFullData(c, updateEvents);
 		}
 

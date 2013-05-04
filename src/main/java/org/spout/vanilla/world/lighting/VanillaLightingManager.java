@@ -159,12 +159,14 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		int nx = x + nOffset.getFloorX();
 		int ny = y + nOffset.getFloorY();
 		int nz = z + nOffset.getFloorZ();
-		BlockMaterial m = material.get(nx, ny, nz);
-		if (m == BlockMaterial.UNGENERATED) {
+		short id = material.getId(nx, ny, nz);
+		if (id == BlockMaterial.UNGENERATED.getId()) {
 			return 0;
 		}
 		short data = material.getData(nx, ny, nz);
 
+		BlockMaterial m = BlockMaterial.get(id, data);
+		
 		ByteBitSet neighborOcclusionSet = m.getOcclusion(data);
 		if (neighborOcclusionSet.get(face.getOpposite())) {
 			return 0;
@@ -250,8 +252,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	}
 
 	protected void checkAndAddDirtyFalling(TInt10TripleSet[] dirtySets, TInt10TripleSet[] regenSets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
-		BlockMaterial m = material.get(x, y, z);
-		if (BlockMaterial.UNGENERATED.equals(m)) {
+		if (BlockMaterial.UNGENERATED.getId() == material.getId(x, y, z)) {
 			return;
 		}
 
@@ -273,8 +274,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	}
 
 	protected void checkAndAddDirtyRising(TInt10TripleSet[] dirtySets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
-		BlockMaterial m = material.get(x, y, z);
-		if (BlockMaterial.UNGENERATED.equals(m)) {
+		if (BlockMaterial.UNGENERATED.getId() == material.getId(x, y, z)) {
 			return;
 		}
 		if (!isLightFlowPossible(light, x, y, z, true)) {
@@ -373,7 +373,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 				int yo = y + (offset.getY() << shift);
 				int zo = z + (offset.getZ() << shift);
 				if (!chunkSet.contains(xo, yo, zo)) {
-					if (material.get(xo, yo, zo) != BlockMaterial.UNGENERATED) {
+					if (material.getId(xo, yo, zo) != BlockMaterial.UNGENERATED.getId()) {
 						blocks += face;
 					}
 				}
@@ -402,7 +402,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 				int zo = z + (offset.getZ() << shift);
 
 				if (!chunkSet.contains(xo, yo, zo)) {
-					if (material.get(xo, yo, zo) != BlockMaterial.UNGENERATED) {
+					if (material.getId(xo, yo, zo) != BlockMaterial.UNGENERATED.getId()) {
 						int startX = offset.getX() <= 0 ? x : (x + size - 1);
 						int endX = offset.getX() >= 0 ? (x + size - 1) : x;
 

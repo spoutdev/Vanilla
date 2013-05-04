@@ -219,7 +219,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		int actualLevel = getLightLevel(light, x, y, z);
 		int calculatedLevel = computeLightLevel(light, material, height, x, y, z);
 		//Spout.getLogger().info("-- Checking rising " + x + ", " + y + ", " + z + " actual " + actualLevel + " computed" + calculatedLevel);
-		if (calculatedLevel > actualLevel) {
+		if (calculatedLevel >= actualLevel) {
 			dirtySets[calculatedLevel].add(x, y, z);
 		}
 	}

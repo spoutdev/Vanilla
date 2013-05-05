@@ -146,10 +146,10 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		if (occlusionSet.get(face)) {
 			return 0;
 		}
-		Vector3 nOffset = face.getOffset();
-		int nx = x + nOffset.getFloorX();
-		int ny = y + nOffset.getFloorY();
-		int nz = z + nOffset.getFloorZ();
+		IntVector3 nOffset = face.getIntOffset();
+		int nx = x + nOffset.getX();
+		int ny = y + nOffset.getY();
+		int nz = z + nOffset.getZ();
 		short id = material.getId(nx, ny, nz);
 		if (id == BlockMaterial.UNGENERATED.getId()) {
 			return 0;

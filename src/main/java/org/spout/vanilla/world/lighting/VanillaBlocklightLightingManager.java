@@ -26,6 +26,9 @@
  */
 package org.spout.vanilla.world.lighting;
 
+import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.IntVector3;
@@ -58,17 +61,70 @@ public class VanillaBlocklightLightingManager extends VanillaLightingManager {
 		// Scan for new chunks needs to check
 		// - light emitting blocks
 		// - boundary of entire volume
+		
+		if (initializedChunks > 4) {
+			int base = light.getBase().getFloorY() + 256;
+			Future<?>[] f = new Future<?>[3];
 
-		@SuppressWarnings("unchecked")
-		Iterable<IntVector3>[] emitters = new Iterable[initializedChunks + 1];
+			f[0] = pool.add(asyncInitChunkSubSet(base + 0, base + 16, light, material, height, bx, by, bz, initializedChunks));
+			f[1] = pool.add(asyncInitChunkSubSet(base + 48, base + 80, light, material, height, bx, by, bz, initializedChunks));
+			f[2] = pool.add(asyncInitChunkSubSet(base + 112, base + 256, light, material, height, bx, by, bz, initializedChunks));
 
+			pool.waitUntilDone(f);
+
+			f[0] = pool.add(asyncInitChunkSubSet(base + 16, base + 48, light, material, height, bx, by, bz, initializedChunks));
+			f[1] = pool.add(asyncInitChunkSubSet(base + 80, base + 112, light, material, height, bx, by, bz, initializedChunks));
+			f[2] = null;
+			
+			pool.waitUntilDone(f);
+		} else {
+			initChunkSubSet(Integer.MIN_VALUE, Integer.MAX_VALUE, light, material, height, bx, by, bz, initializedChunks);
+		}
+	}
+	
+	private Runnable asyncInitChunkSubSet(final int minY, final int maxY, final ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, final ImmutableCuboidBlockMaterialBuffer material, final ImmutableHeightMapBuffer height, final int[] bx, final int[] by, final int[] bz, final int initializedChunks) {
+		return new Runnable() {
+			@Override
+			public void run() {
+				initChunkSubSet(minY, maxY, light, material, height, bx, by, bz, initializedChunks);
+			}
+		};
+	}
+	
+	private void initChunkSubSet(int minY, int maxY, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int[] bx, int[] by, int[] bz, int initializedChunks) {
+		
+		int inRangeChunks = 0;
+		
 		for (int i = 0; i < initializedChunks; i++) {
-			emitters[i] = this.scanChunk(light, material, height, bx[i], by[i], bz[i]);
+			if (by[i] >= minY && by[i] < maxY) {
+				inRangeChunks++;
+			}
+		}	
+
+		int j = 0;
+		int[] newBx = new int[inRangeChunks];
+		int[] newBy = new int[inRangeChunks];
+		int[] newBz = new int[inRangeChunks];
+		
+		for (int i = 0; i < initializedChunks; i++) {
+			if (by[i] >= minY && by[i] < maxY) {
+				newBx[j] = bx[i];
+				newBy[j] = by[i];
+				newBz[j] = bz[i];
+				j++;
+			}
+		}
+		
+		@SuppressWarnings("unchecked")
+		Iterable<IntVector3>[] emitters = new Iterable[inRangeChunks + 1];
+
+		for (int i = 0; i < inRangeChunks; i++) {
+			emitters[i] = this.scanChunk(light, material, height, newBx[i], newBy[i], newBz[i]);
 		}
 
-		Iterable<IntVector3> boundary = this.getBoundary(material, bx, by, bz, initializedChunks);
+		Iterable<IntVector3> boundary = this.getBoundary(material, newBx, newBy, newBz, inRangeChunks);
 
-		emitters[initializedChunks] = boundary;
+		emitters[inRangeChunks] = boundary;
 
 		Iterable<IntVector3> combined = new IntVector3CompositeIterator(emitters);
 

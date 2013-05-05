@@ -27,9 +27,9 @@
 package org.spout.vanilla.world.lighting;
 
 import org.spout.api.lighting.Modifiable;
-import org.spout.api.util.cuboid.CuboidNibbleLightBuffer;
+import org.spout.api.util.cuboid.AlignedCuboidNibbleLightBuffer;
 
-public class VanillaCuboidLightBuffer extends CuboidNibbleLightBuffer {
+public class VanillaCuboidLightBuffer extends AlignedCuboidNibbleLightBuffer {
 	protected VanillaCuboidLightBuffer(VanillaCuboidLightBuffer buffer) {
 		super(buffer);
 	}

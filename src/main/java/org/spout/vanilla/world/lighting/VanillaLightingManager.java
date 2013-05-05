@@ -43,12 +43,9 @@ import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 import org.spout.api.util.cuboid.ImmutableHeightMapBuffer;
 import org.spout.api.util.set.TInt10TripleSet;
-import org.spout.api.util.thread.DaemonThreadPool;
 
 public abstract class VanillaLightingManager extends LightingManager<VanillaCuboidLightBuffer> {
 	private final static BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
-	
-	protected static final DaemonThreadPool pool = new DaemonThreadPool("Vanilla lighting thread pool worker", Runtime.getRuntime().availableProcessors() * 2, 32);
 
 	public VanillaLightingManager(String name) {
 		super(name);

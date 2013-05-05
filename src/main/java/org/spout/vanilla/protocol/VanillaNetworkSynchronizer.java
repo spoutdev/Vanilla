@@ -866,7 +866,6 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 						});
 						return null;
 					}
-					chunks.add(cc);
 				}
 				return chunks;
 			} else {

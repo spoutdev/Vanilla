@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.world.lighting;
 
+import org.spout.api.Spout;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -67,9 +68,6 @@ public class ResolveHigherProcedure extends TInt10Procedure {
 			return true;
 		}
 		
-		short data = material.getData(x, y, z);
-		BlockMaterial m = BlockMaterial.get(id, data);
-		
 		int lightLevel = manager.getLightLevel(light, x, y, z);
 
 		if (lightLevel < targetLevel) {
@@ -78,27 +76,30 @@ public class ResolveHigherProcedure extends TInt10Procedure {
 			return true;
 		}
 		
-		ByteBitSet occlusionSet = m.getOcclusion(data);
-			
 		for (int f = 0; f < allFaces.length; f++) {
 			BlockFace face = allFaces[f];
 			IntVector3 offset = face.getIntOffset();
 			int nx = x + offset.getX();
 			int ny = y + offset.getY();
 			int nz = z + offset.getZ();
-			int neighborLight = manager.getLightLevel(light, nx, ny, nz, true);
-			if (neighborLight >= lightLevel - 1) {
-				continue;
-			}
-			if (occlusionSet.get(face)) {
-				continue;
-			}
+			
 			short nId = material.getId(nx, ny, nz);
 			if (nId == BlockMaterial.UNGENERATED.getId()) {
 				continue;
 			}
+			
+			int neighborLight = manager.getLightLevel(light, nx, ny, nz, true);
+			if (neighborLight >= lightLevel - 1) {
+				continue;
+			}
+
 			short nData = material.getData(nx, ny, nz);
 			BlockMaterial nMaterial = BlockMaterial.get(nId, nData);
+			
+			ByteBitSet occlusionSet = nMaterial.getOcclusion(nData);
+			if (occlusionSet.get(face.getOpposite())) {
+				continue;
+			}
 			
 			int newLight = targetLevel - nMaterial.getOpacity() - 1;
 			if (newLight > neighborLight) {

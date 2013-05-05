@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.world.lighting;
 
+import org.spout.api.Spout;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.set.TInt10Procedure;
 
@@ -44,7 +45,6 @@ public class ClearLightProcedure extends TInt10Procedure {
 	}
 
 	public boolean execute(int x, int y, int z, boolean root) {
-		// Spout.getLogger().info("Clearing: " + x + ", " + y + ", " + z);
 		manager.setLightLevel(light, x, y, z, 0);
 		return true;
 	}

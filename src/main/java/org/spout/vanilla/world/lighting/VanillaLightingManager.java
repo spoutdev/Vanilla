@@ -90,12 +90,11 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			dirtySets[i].clear();
 		}
 
-		ResolveLowerProcedure procLower = new ResolveLowerProcedure(this, light, material, height, dirtySets, regenSets);
 		// Spout.getLogger().info("About to process lower root");
 		itr = coords.iterator();
 		while (itr.hasNext()) {
 			IntVector3 v = itr.next();
-			procLower.execute(v.getX(), v.getY(), v.getZ(), false);
+			checkAndAddDirtyFalling(dirtySets, regenSets, light, material, height, v.getX(), v.getY(), v.getZ());
 		}
 		// Spout.getLogger().info("About to process lower from sets");
 		resolveLower(dirtySets, regenSets, light, material, height);
@@ -201,14 +200,9 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		}
 
 		int calculatedLevel = computeLightLevel(light, material, height, x, y, z);
-		//Spout.getLogger().info("-- Checking falling " + x + ", " + y + ", " + z + " actual " + actualLevel + " computed" + calculatedLevel);
 
 		if (calculatedLevel < actualLevel) {
-			// Spout.getLogger().info("Dirty: Adding " + x + ", " + y + ", " + z + " to " + actualLevel);
 			dirtySets[actualLevel].add(x, y, z);
-		} else {
-			// Spout.getLogger().info("Regen: Adding " + x + ", " + y + ", " + z + " to " + actualLevel);
-			regenSets[actualLevel].add(x, y, z);
 		}
 	}
 
@@ -274,6 +268,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		// This method does not handle the light regeneration step
 		for (int i = dirtySets.length - 1; i >= 0; i--) {
 			dirtySets[i].forEach(clearProc);
+			lowerProc.setPreviousLevel(i);
 			dirtySets[i].forEach(lowerProc);
 		}
 	}

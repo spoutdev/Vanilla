@@ -114,7 +114,7 @@ import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
 import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
-import org.spout.vanilla.world.lighting.LightManagerVerification;
+import org.spout.vanilla.world.lighting.LightingVerification;
 import org.spout.vanilla.world.lighting.VanillaCuboidLightBuffer;
 
 public class TestCommands {
@@ -264,7 +264,17 @@ public class TestCommands {
 			p.sendMessage("Chunk is null");
 			return;
 		}
-		LightManagerVerification.checkChunk(c);
+		LightingVerification.checkChunk(c, false);
+	}
+	
+	@Command(aliases = "alllight", usage = "", desc = "Tests lighting in all loaded chunks in the current world", max = 0)
+	@CommandPermissions("vanilla.command.debug")
+	public void allLight(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to test lighting.");
+		}
+		Player p = (Player) source;
+		LightingVerification.checkAll(p.getWorld(), true);
 	}
 	
 	@Command(aliases = "checkheight", usage = "", desc = "Finds surface height of current column", max = 0)

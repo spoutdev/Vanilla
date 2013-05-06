@@ -41,38 +41,45 @@ import org.spout.api.math.Vector3;
 import org.spout.api.util.bytebit.ByteBitSet;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
-public class LightManagerVerification {
+public class LightingVerification {
 	
 	private final static BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
 	
-	public static void checkAll(World w) {
+	public static void checkAll(World w, boolean breakOnError) {
 		Collection<Region> regions = w.getRegions();
 		for (Region r : regions) {
-			checkRegion(r);
+			if (checkRegion(r, breakOnError) && breakOnError) {
+				return;
+			}
 		}
 	}
 	
-	private static void checkRegion(Region r) {
+	public static boolean checkRegion(Region r, boolean breakOnError) {
 		for (int x = 0; x < Region.CHUNKS.SIZE; x++) {
 			for (int y = 0; y < Region.CHUNKS.SIZE; y++) {
 				for (int z = 0; z < Region.CHUNKS.SIZE; z++) {
 					Chunk c = r.getChunk(x, y, z, LoadOption.NO_LOAD);
 					if (c != null) {
-						checkChunk(c);
+						if (checkChunk(c, breakOnError) && breakOnError) {
+							return true;
+						}
 					}
 				}
 			}
 		}
+		return false;
 	}
 	
-	public static void checkChunk(Chunk c) {
+	public static boolean checkChunk(Chunk c, boolean breakOnError) {
+		boolean failure = false;
 		Spout.getLogger().info("Testing skylight for chunk at " + c.getBase().toBlockString());
-		checkChunk(c, VanillaLighting.SKY_LIGHT);
+		failure |= checkChunk(c, VanillaLighting.SKY_LIGHT);
 		Spout.getLogger().info("Testing blocklight for chunk at " + c.getBase().toBlockString());
-		checkChunk(c, VanillaLighting.BLOCK_LIGHT);
+		failure |= checkChunk(c, VanillaLighting.BLOCK_LIGHT);
+		return failure;
 	}
 	
-	private static void checkChunk(Chunk c, VanillaLightingManager manager) {
+	private static boolean checkChunk(Chunk c, VanillaLightingManager manager) {
 		final VanillaCuboidLightBuffer[][][] lightBuffers = getLightBuffers(c, manager);
 		final CuboidBlockMaterialBuffer[][][] materialBuffers = getBlockMaterialBuffers(c);
 		final int[][] height = getHeightMap(c);
@@ -102,13 +109,17 @@ public class LightManagerVerification {
 						return m.getLightLevel(data);
 					}
 				};
+		boolean failure = false;
 		for (int x = 0; x < Chunk.BLOCKS.SIZE; x++) {
 			for (int y = 0; y < Chunk.BLOCKS.SIZE; y++) {
 				for (int z = 0; z < Chunk.BLOCKS.SIZE; z++) {
-					testLight(x, y, z, materialBuffers, lightBuffers, lightSource);
+					if (!testLight(x, y, z, materialBuffers, lightBuffers, lightSource)) {
+						failure = true;
+					}
 				}
 			}
 		}
+		return failure;
 	}
 	
 	private static VanillaCuboidLightBuffer[][][] getLightBuffers(Chunk c, VanillaLightingManager manager) {
@@ -161,19 +172,35 @@ public class LightManagerVerification {
 		return heights;
 	}
 	
-	public static void testLight(int x, int y, int z, CuboidBlockMaterialBuffer[][][] materialBuffers, VanillaCuboidLightBuffer[][][] lightBuffers, LightGenerator lightSource) {
+	public static boolean testLight(int x, int y, int z, CuboidBlockMaterialBuffer[][][] materialBuffers, VanillaCuboidLightBuffer[][][] lightBuffers, LightGenerator lightSource) {
 		int emitted = lightSource.getEmittedLight(x, y, z);
 		BlockMaterial[][][] materials = getNeighborMaterials(x, y, z, materialBuffers);
 		int[][][] lightLevels = getNeighborLight(x, y, z, lightBuffers);
 		if (emitted > lightLevels[1][1][1]) {
 			log("Light below emit level " + emitted + " > " + lightLevels[1][1][1], x, y, z, materialBuffers, lightBuffers, materials, lightLevels);
+			return false;
 		}
 		int inward = checkFlowFrom(materials, lightLevels);
 		if (inward > lightLevels[1][1][1]) {
 			log("Light below support level " + inward + " > " + lightLevels[1][1][1], x, y, z, materialBuffers, lightBuffers, materials, lightLevels);
+			checkSurrounded(materials);
+			return false;
 		}
 		if (inward < lightLevels[1][1][1] && emitted != lightLevels[1][1][1]) {
 			log("Light above support level " + inward + " < " + lightLevels[1][1][1] + " and not equal to emitted level " + emitted, x, y, z, materialBuffers, lightBuffers, materials, lightLevels);
+			checkSurrounded(materials);
+			return false;
+		}
+		return true;
+	}
+	
+	private static void checkSurrounded(BlockMaterial[][][] materials) {
+		for (BlockFace face : allFaces) {
+			IntVector3 o = face.getIntOffset();
+			if (materials[1 + o.getX()][1 + o.getY()][1 + o.getZ()] == null) {
+				Spout.getLogger().info("Block is not surrounded");
+				return;
+			}
 		}
 	}
 	
@@ -292,7 +319,10 @@ public class LightManagerVerification {
 			zi++;
 			z -= Chunk.BLOCKS.SIZE;
 		}
-		VanillaCuboidLightBuffer b = buffers[1][1][1];
+		VanillaCuboidLightBuffer b = buffers[xi][yi][zi];
+		if (b == null) {
+			return 0;
+		}
 		return buffers[xi][yi][zi].get(x + b.getBase().getFloorX(), y + b.getBase().getFloorY(), z + b.getBase().getFloorZ()) & 0xFF;
 	}
 	

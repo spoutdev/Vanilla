@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.world.lighting;
 
-import org.spout.api.Spout;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.set.TInt10Procedure;
 
@@ -48,6 +47,8 @@ public class IncreaseLightProcedure extends TInt10Procedure {
 	@Override
 	public boolean execute(int x, int y, int z) {
 		int lightLevel = manager.getLightLevel(light, x, y, z);
+		
+		// Spout.getLogger().info("Increasing for " + x + ", " + y + ", " + z + " from " + lightLevel + " to " + targetLevel);		
 
 		if (lightLevel < targetLevel) {
 			manager.setLightLevel(light, x, y, z, targetLevel);

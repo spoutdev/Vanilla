@@ -26,6 +26,8 @@
  */
 package org.spout.vanilla.world.lighting;
 
+import gnu.trove.iterator.hash.TObjectHashIterator;
+
 import java.util.Iterator;
 
 import org.spout.api.Spout;
@@ -42,6 +44,7 @@ import org.spout.api.util.bytebit.ByteBitSet;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 import org.spout.api.util.cuboid.ImmutableHeightMapBuffer;
+import org.spout.api.util.hashing.Int10TripleHashed;
 import org.spout.api.util.set.TInt10TripleSet;
 
 public abstract class VanillaLightingManager extends LightingManager<VanillaCuboidLightBuffer> {
@@ -98,6 +101,9 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		}
 		// Spout.getLogger().info("About to process lower from sets");
 		resolveLower(dirtySets, regenSets, light, material, height);
+		
+		purgeSet(light, regenSets);
+		
 		// Spout.getLogger().info("About to process higher (lower regen)");
 		resolveHigher(regenSets, light, material, height);
 		// Spout.getLogger().info("Done processing regen");
@@ -188,6 +194,24 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			Spout.getLogger().info("No light buffer to write to");
 		}
 	}
+	
+	public void purgeSet(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, TInt10TripleSet[] sets) {
+		for (int i = 0; i < sets.length; i++) {
+			TInt10TripleSet set = sets[i];
+			TObjectHashIterator<Integer> itr = set.iterator();
+			while (itr.hasNext()) {
+				Int10TripleHashed hash = set.getHash();
+				Integer key = itr.next();
+				int x = hash.keyX(key);
+				int y = hash.keyY(key);
+				int z = hash.keyZ(key);
+				int lightLevel = this.getLightLevel(light, x, y, z);
+				if (lightLevel < i) {
+					itr.remove();
+				}
+			}
+		}
+	}
 
 	protected void checkAndAddDirtyFalling(TInt10TripleSet[] dirtySets, TInt10TripleSet[] regenSets, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
 		if (BlockMaterial.UNGENERATED.getId() == material.getId(x, y, z)) {
@@ -212,7 +236,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		}
 		int actualLevel = getLightLevel(light, x, y, z);
 		int calculatedLevel = computeLightLevel(light, material, height, x, y, z);
-		//Spout.getLogger().info("-- Checking rising " + x + ", " + y + ", " + z + " actual " + actualLevel + " computed" + calculatedLevel);
+
 		if (calculatedLevel >= actualLevel) {
 			dirtySets[calculatedLevel].add(x, y, z);
 		}

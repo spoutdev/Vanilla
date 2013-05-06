@@ -66,7 +66,8 @@ public class ResolveLowerProcedure extends TInt10Procedure {
 		return execute(x, y, z, true);
 	}
 
-	public boolean execute(int x, int y, int z, boolean neighbours) {		
+	public boolean execute(int x, int y, int z, boolean neighbours) {	
+		// Spout.getLogger().info("Resolving lower for " + x + ", " + y + ", " + z);
 		for (int f = 0; f < allFaces.length; f++) {
 			BlockFace face = allFaces[f];
 			IntVector3 offset = face.getIntOffset();
@@ -90,12 +91,16 @@ public class ResolveLowerProcedure extends TInt10Procedure {
 			
 			int newLight = previousLevel - nMaterial.getOpacity() - 1;
 
+			// Spout.getLogger().info("new light " + newLight + " neighbor light " + neighborLight + " for neighbor " + nx + ", " + ny + ", " + nz);
+
 			if (newLight == neighborLight) {
 				if (newLight >= 0) {
+					// Spout.getLogger().info("Adding to dirty " + newLight + " for neighbor " + nx + ", " + ny + ", " + nz);
 					dirtySets[newLight].add(nx, ny, nz);
 				}
 			} else {
 				if (neighborLight > 0) {
+					// Spout.getLogger().info("Adding to regen " + neighborLight + " for neighbor " + nx + ", " + ny + ", " + nz);
 					regenSets[neighborLight].add(nx, ny, nz);
 				}
 			}

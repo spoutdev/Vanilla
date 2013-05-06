@@ -288,7 +288,7 @@ public class TestCommands {
 		
 		int height = pos.getWorld().getSurfaceHeight(pos.getBlockX(), pos.getBlockZ());
 		
-		p.sendMessage("You are at " + pos.getBlockX() + ", " + pos.getBlockZ() + ", " + pos.getBlockZ());
+		p.sendMessage("You are at " + pos.getBlockX() + ", " + pos.getBlockY() + ", " + pos.getBlockZ());
 		p.sendMessage("Surface Height " + height + " " + (pos.getBlockY() - height) + " blocks below");
 		
 	}

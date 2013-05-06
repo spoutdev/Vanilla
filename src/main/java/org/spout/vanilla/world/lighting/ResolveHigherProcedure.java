@@ -63,6 +63,8 @@ public class ResolveHigherProcedure extends TInt10Procedure {
 	@Override
 	public boolean execute(int x, int y, int z) {
 		
+		// Spout.getLogger().info("Resolving higher for " + x + ", " + y + ", " + z);
+		
 		short id = material.getId(x, y, z);
 		if (id == BlockMaterial.UNGENERATED.getId()) {
 			return true;
@@ -102,7 +104,9 @@ public class ResolveHigherProcedure extends TInt10Procedure {
 			}
 			
 			int newLight = targetLevel - nMaterial.getOpacity() - 1;
+			// Spout.getLogger().info("new light " + newLight + " neighbor light " + neighborLight + " for neighbor " + nx + ", " + ny + ", " + nz);
 			if (newLight > neighborLight) {
+				// Spout.getLogger().info("Adding to dirty " + newLight + " for neighbor " + nx + ", " + ny + ", " + nz);
 				dirtySets[newLight].add(nx, ny, nz);
 			}			
 		}

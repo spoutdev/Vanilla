@@ -45,6 +45,7 @@ public class ClearLightProcedure extends TInt10Procedure {
 	}
 
 	public boolean execute(int x, int y, int z, boolean root) {
+		// Spout.getLogger().info("Clearing for " + x + ", " + y + ", " + z);
 		manager.setLightLevel(light, x, y, z, 0);
 		return true;
 	}

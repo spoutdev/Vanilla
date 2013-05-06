@@ -54,6 +54,7 @@ import org.spout.api.lighting.LightingManager;
 import org.spout.api.lighting.LightingRegistry;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
+import org.spout.api.math.GenericMath;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
@@ -61,7 +62,6 @@ import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.util.BlockIterator;
 import org.spout.api.util.OutwardIterator;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.material.chest.Chest;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
@@ -98,6 +98,7 @@ import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.inventory.window.entity.VillagerWindow;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.plant.Sapling;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.material.map.Map;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
@@ -109,8 +110,11 @@ import org.spout.vanilla.scoreboard.Objective;
 import org.spout.vanilla.scoreboard.ObjectiveSlot;
 import org.spout.vanilla.scoreboard.Scoreboard;
 import org.spout.vanilla.util.explosion.ExplosionModels;
+import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
+import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
+import org.spout.vanilla.world.lighting.LightManagerVerification;
 import org.spout.vanilla.world.lighting.VanillaCuboidLightBuffer;
 
 public class TestCommands {
@@ -248,6 +252,52 @@ public class TestCommands {
 		}
 	}
 
+	@Command(aliases = "chunklight", usage = "", desc = "Tests lighting in current chunk", max = 0)
+	@CommandPermissions("vanilla.command.debug")
+	public void chunkLight(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to test current chunk.");
+		}
+		Player p = (Player) source;
+		Chunk c = p.getChunk();
+		if (c == null) {
+			p.sendMessage("Chunk is null");
+			return;
+		}
+		LightManagerVerification.checkChunk(c);
+	}
+	
+	@Command(aliases = "checkheight", usage = "", desc = "Finds surface height of current column", max = 0)
+	@CommandPermissions("vanilla.command.debug")
+	public void targetHeight(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to test current chunk.");
+		}
+		Player p = (Player) source;
+		Point pos = p.getScene().getPosition();
+		
+		int height = pos.getWorld().getSurfaceHeight(pos.getBlockX(), pos.getBlockZ());
+		
+		p.sendMessage("You are at " + pos.getBlockX() + ", " + pos.getBlockZ() + ", " + pos.getBlockZ());
+		p.sendMessage("Surface Height " + height + " " + (pos.getBlockY() - height) + " blocks below");
+		
+	}
+
+	@Command(aliases = "growtree", usage = "", desc = "grows a tree at the current location", max = 0)
+	@CommandPermissions("vanilla.command.debug")
+	public void growTree(CommandContext args, CommandSource source) throws CommandException {
+		if (!(source instanceof Player)) {
+			throw new CommandException("You must be a player to grow a tree.");
+		}
+		Player p = (Player) source;
+		Point pos = p.getScene().getPosition();
+		
+		BigTreeObject tree = new BigTreeObject();
+		tree.placeObject(pos.getWorld(), pos.getBlockX(), pos.getBlockY(), pos.getBlockZ());
+		p.teleport(pos.add(new Vector3(0, 50, 0)));
+	}
+	
+	
 	// TODO - There needs to be a method that guarantees unique data values on a per-server basis
 	private int mapId = 1;
 

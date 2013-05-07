@@ -48,34 +48,24 @@ public class VanillaSkylightLightingManager extends VanillaBlocklightLightingMan
 	protected int getEmittedLight(ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
 		return y > height.get(x, z) ? 15 : 0;
 	}
-
+	
 	@Override
-	public int updateEmittingBlocks(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
-		int maxLight = 0;
-		int minLight = 15;
-
-		int emittingBlocks = 0;
-
-		int th = y + Chunk.BLOCKS.SIZE;
-
-		for (int xx = x; xx < x + Chunk.BLOCKS.SIZE; xx++) {
-			for (int zz = z; zz < z + Chunk.BLOCKS.SIZE; zz++) {
-				int h = height.get(xx, zz);
-				if (h < th - 1) {
-					if (h > y) {
-						minLight = 0;
-					}
-					for (int yy = Math.max(y, h); yy < th; yy++) {
-						emittingBlocks++;
-						this.setLightLevel(light, xx, yy, zz, 15);
-						maxLight = 15;
-					}
-				} else {
-					minLight = 0;
+	public void updateEmittingBlocks(int[][][] emittedLight, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
+		int size = Chunk.BLOCKS.SIZE;
+		for (int xx = x; xx < x + size; xx++) {
+			for (int zz = z; zz < z + size; zz++) {
+				int xIndex = xx - x + 1;
+				int zIndex = zz - z + 1;
+				int yIndex = 1;
+				int h = Math.max(height.get(xx, zz) + 1, y);
+				h = Math.min(h, y + size);
+				for (int yy = y; yy < h; yy++) {
+					emittedLight[xIndex][yIndex++][zIndex] = 0;
+				}
+				for (int yy = h; yy < y + size; yy++) {
+					emittedLight[xIndex][yIndex++][zIndex] = 15;
 				}
 			}
 		}
-
-		return maxLight != minLight ? emittingBlocks : -1;
 	}
 }

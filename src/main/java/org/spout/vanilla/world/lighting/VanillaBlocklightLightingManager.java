@@ -30,7 +30,6 @@ import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.IntVector3;
 import org.spout.api.util.IntVector3Array;
-import org.spout.api.util.IntVector3CompositeIterator;
 import org.spout.api.util.IntVector3CuboidArray;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
@@ -54,59 +53,26 @@ public class VanillaBlocklightLightingManager extends VanillaLightingManager {
 	}
 
 	@Override
-	protected void initChunks(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int[] bx, int[] by, int[] bz, int initializedChunks) {
-		// Scan for new chunks needs to check
-		// - light emitting blocks
-		// - boundary of entire volume
-
-		@SuppressWarnings("unchecked")
-		Iterable<IntVector3>[] emitters = new Iterable[initializedChunks + 1];
-
-		for (int i = 0; i < initializedChunks; i++) {
-			emitters[i] = this.scanChunk(light, material, height, bx[i], by[i], bz[i]);
-		}
-
-		Iterable<IntVector3> boundary = this.getBoundary(material, bx, by, bz, initializedChunks);
-
-		emitters[initializedChunks] = boundary;
-
-		Iterable<IntVector3> combined = new IntVector3CompositeIterator(emitters);
-
-		super.resolve(light, material, height, combined);
-	}
-
-	@Override
 	protected int getEmittedLight(ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
 		BlockMaterial m = material.get(x, y, z);
 		short data = material.getData(x, y, z);
 		return m.getLightLevel(data);
 	}
-
+	
 	@Override
-	public int updateEmittingBlocks(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
-		int maxLight = 0;
-		int minLight = 15;
-
-		int emittingBlocks = 0;
-
-		for (int xx = x; xx < x + Chunk.BLOCKS.SIZE; xx++) {
-			for (int yy = y; yy < y + Chunk.BLOCKS.SIZE; yy++) {
-				for (int zz = z; zz < z + Chunk.BLOCKS.SIZE; zz++) {
-					int emitted = this.getEmittedLight(material, height, xx, yy, zz);
-					if (emitted > 0) {
-						this.setLightLevel(light, xx, yy, zz, emitted);
-						emittingBlocks++;
-					}
-					if (emitted > maxLight) {
-						maxLight = emitted;
-					}
-					if (emitted < minLight) {
-						minLight = emitted;
-					}
+	public void updateEmittingBlocks(int[][][] emittedLight, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
+		int size = Chunk.BLOCKS.SIZE;
+		for (int xx = x; xx < x + size; xx++) {
+			for (int yy = y; yy < y + size; yy++) {
+				int xIndex = xx - x + 1;
+				int zIndex = 1;
+				int yIndex = yy - y + 1;
+				int[] zArray = emittedLight[xIndex][yIndex];
+				for (int zz = z; zz < z + size; zz++) {
+					BlockMaterial m = material.get(xx, yy, zz);
+					zArray[zIndex++] = m.getLightLevel(m.getData());
 				}
 			}
 		}
-
-		return maxLight != minLight ? emittingBlocks : -1;
 	}
 }

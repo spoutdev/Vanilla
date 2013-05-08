@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.world.lighting;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.spout.api.Spout;
@@ -45,36 +46,57 @@ public class LightingVerification {
 	
 	private final static BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
 	
-	public static void checkAll(World w, boolean breakOnError) {
+	public static boolean checkAll(World w, boolean breakOnError) {
 		Collection<Region> regions = w.getRegions();
+		Collection<Chunk> chunks = new ArrayList<Chunk>();
 		for (Region r : regions) {
-			if (checkRegion(r, breakOnError) && breakOnError) {
-				return;
-			}
+			chunks.addAll(getChunks(r));
 		}
+		return checkChunks(chunks, breakOnError);
 	}
 	
 	public static boolean checkRegion(Region r, boolean breakOnError) {
-		for (int x = 0; x < Region.CHUNKS.SIZE; x++) {
-			for (int y = 0; y < Region.CHUNKS.SIZE; y++) {
-				for (int z = 0; z < Region.CHUNKS.SIZE; z++) {
+		Collection<Chunk> chunks = getChunks(r);
+		return checkChunks(chunks, breakOnError);
+	}
+	
+	public static Collection<Chunk> getChunks(Region r) {
+		int size = Region.CHUNKS.SIZE;
+		ArrayList<Chunk> chunks = new ArrayList<Chunk>(size * size * size);
+		for (int x = 0; x < size; x++) {
+			for (int y = 0; y < size; y++) {
+				for (int z = 0; z < size; z++) {
 					Chunk c = r.getChunk(x, y, z, LoadOption.NO_LOAD);
 					if (c != null) {
-						if (checkChunk(c, breakOnError) && breakOnError) {
-							return true;
-						}
+						chunks.add(c);
 					}
 				}
 			}
+		}
+		return chunks;
+	}
+	
+	public static boolean checkChunks(Collection<Chunk> chunks, boolean breakOnError) {
+		int size = chunks.size();
+		int count = 0;
+		for (Chunk c : chunks) {
+			if (checkChunk((count * 100) / size, c, breakOnError) && breakOnError) {
+				return true;
+			}
+			count++;
 		}
 		return false;
 	}
 	
 	public static boolean checkChunk(Chunk c, boolean breakOnError) {
+		return checkChunk(100, c, breakOnError);
+	}
+	
+	public static boolean checkChunk(int percent, Chunk c, boolean breakOnError) {
 		boolean failure = false;
-		Spout.getLogger().info("Testing skylight for chunk at " + c.getBase().toBlockString());
+		Spout.getLogger().info(percent + "%) Testing skylight for chunk at " + c.getBase().toBlockString());
 		failure |= checkChunk(c, VanillaLighting.SKY_LIGHT);
-		Spout.getLogger().info("Testing blocklight for chunk at " + c.getBase().toBlockString());
+		Spout.getLogger().info(percent + "%) Testing blocklight for chunk at " + c.getBase().toBlockString());
 		failure |= checkChunk(c, VanillaLighting.BLOCK_LIGHT);
 		return failure;
 	}
@@ -135,7 +157,7 @@ public class LightingVerification {
 	}
 	
 	private static VanillaCuboidLightBuffer getLightBuffer(World w, int cx, int cy, int cz, short id) {
-		Chunk c = w.getChunk(cx, cy, cz, LoadOption.NO_LOAD);
+		Chunk c = w.getChunk(cx, cy, cz, LoadOption.LOAD_ONLY);
 		if (c == null) {
 			return null;
 		}
@@ -155,7 +177,7 @@ public class LightingVerification {
 	}
 	
 	private static CuboidBlockMaterialBuffer getBlockMaterialBuffer(World w, int cx, int cy, int cz) {
-		Chunk c = w.getChunk(cx, cy, cz, LoadOption.NO_LOAD);
+		Chunk c = w.getChunk(cx, cy, cz, LoadOption.LOAD_ONLY);
 		if (c == null) {
 			return null;
 		}
@@ -341,5 +363,37 @@ public class LightingVerification {
 		y += base.getFloorY();
 		z += base.getFloorZ();
 		Spout.getLogger().info(message + " at " + x + ", " + y + ", " + z);
+		Spout.getLogger().info(getCuboid(localLight, localMaterials));
+	}
+	
+	private final static String[] layers = new String[] {"Top", "Middle", "Bottom"};
+	
+	private static String getCuboid(int[][][] light, BlockMaterial[][][] material) {
+		StringBuilder sb = new StringBuilder();
+		for (int y = 2; y >= 0; y--) {
+			sb.append("\n");
+			sb.append(layers[y]);
+			sb.append("\n");
+			for (int x = 0; x < 3; x++) {
+				for (int z = 0; z < 3; z++) {
+					sb.append(getLocation(x, y, z, light, material));
+					if (z != 2) {
+						sb.append(", ");
+					}
+				}
+				sb.append("\n");
+			}
+		}
+		return sb.toString();
+	}
+	
+	private static String getLocation(int x, int y, int z, int[][][] light, BlockMaterial[][][] material) {
+		int level = light[x][y][z];
+		BlockMaterial m = material[x][y][z];
+		if (m == null) {
+			return "{" + level + ", null}";
+		} else {
+			return "{" + level + ", " + m.getClass().getSimpleName() + "}";
+		}
 	}
 }

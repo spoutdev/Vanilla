@@ -78,7 +78,7 @@ public class LightingVerification {
 	
 	public static boolean checkChunks(Collection<Chunk> chunks, boolean breakOnError) {
 		int size = chunks.size();
-		int count = 0;
+		int count = 1;
 		for (Chunk c : chunks) {
 			if (checkChunk((count * 100) / size, c, breakOnError) && breakOnError) {
 				return true;

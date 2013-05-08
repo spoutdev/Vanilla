@@ -351,7 +351,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	}
 	
 	public void fillEdges(int[][][] emitLight) {
-		int max = Chunk.BLOCKS.SIZE - 1;
+		int max = Chunk.BLOCKS.SIZE + 2 - 1;
 		for (int x = 0; x < 18; x++) {
 			for (int y = 0; y < 18; y++) {
 				emitLight[0][y][x] = -1;
@@ -385,9 +385,9 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		
 		int index = 0;
 		
-		for (int x = 1; x < Chunk.BLOCKS.SIZE + 1; x++) {
-			for (int y = 1; y < Chunk.BLOCKS.SIZE + 1; y++) {
-				for (int z = 1; z < Chunk.BLOCKS.SIZE + 1; z++) {
+		for (int x = 1; x <= Chunk.BLOCKS.SIZE; x++) {
+			for (int y = 1; y <= Chunk.BLOCKS.SIZE; y++) {
+				for (int z = 1; z <= Chunk.BLOCKS.SIZE; z++) {
 					int center = emitLight[x][y][z];
 					if (
 							emitLight[x-1][y][z] < center || 

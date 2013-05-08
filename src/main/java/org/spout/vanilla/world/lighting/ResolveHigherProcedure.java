@@ -78,8 +78,17 @@ public class ResolveHigherProcedure extends TInt10Procedure {
 			return true;
 		}
 		
+		BlockMaterial m = material.get(x, y, z);
+		
+		ByteBitSet centerOcclusionSet = m.getOcclusion(m.getData());
+
 		for (int f = 0; f < allFaces.length; f++) {
 			BlockFace face = allFaces[f];
+			
+			if (centerOcclusionSet.get(face)) {
+				continue;
+			}
+			
 			IntVector3 offset = face.getIntOffset();
 			int nx = x + offset.getX();
 			int ny = y + offset.getY();

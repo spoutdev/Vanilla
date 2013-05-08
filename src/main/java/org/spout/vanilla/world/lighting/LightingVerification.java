@@ -222,8 +222,13 @@ public class LightingVerification {
 		if (neighbor == null) {
 			return 0;
 		}
+		ByteBitSet occulusion = neighbor.getOcclusion(neighbor.getData());
+		if (occulusion.get(face.getOpposite())) {
+			return 0;
+		}
+		
 		BlockMaterial center = materials[1][1][1];
-		ByteBitSet occulusion = center.getOcclusion(center.getData());
+		occulusion = center.getOcclusion(center.getData());
 		if (occulusion.get(face)) {
 			return 0;
 		}

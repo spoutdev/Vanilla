@@ -46,6 +46,7 @@ import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 import org.spout.api.util.cuboid.ImmutableHeightMapBuffer;
 import org.spout.api.util.hashing.Int10TripleHashed;
+import org.spout.api.util.list.IntVector3FIFO;
 import org.spout.api.util.set.TInt10TripleSet;
 import org.spout.api.util.sort.TripleIntArraySort;
 
@@ -63,6 +64,11 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 
 	@Override
 	public void resolveColumns(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int[] hx, int[] hz, int[] oldHy, int[] newHy, int changedColumns) {
+	}
+	
+	@Override
+	public VanillaCuboidLightBuffer newLightBuffer(Modifiable holder, int baseX, int baseY, int baseZ, int sizeX, int sizeY, int sizeZ) {
+		return deserialize(holder, baseX, baseY, baseZ, sizeX, sizeY, sizeZ, null);
 	}
 
 	protected void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, Iterable<IntVector3> coords) {
@@ -331,18 +337,31 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		// - light emitting blocks
 		// - boundary of entire volume
 		
-		//TripleIntArraySort.tripleIntArraySort(bx, bz, by, initializedChunks);
+		TripleIntArraySort.tripleIntArraySort(bx, bz, by, initializedChunks);
 		
 		int[][][] emitLight = new int[18][18][18];
 
 		@SuppressWarnings("unchecked")
 		Iterable<IntVector3>[] emitters = new Iterable[initializedChunks];
 		
+		int lastX = 0;
+		int lastY = 0;
+		int lastZ = 0;
+		boolean first = true;
+		
 		for (int i = 0; i < initializedChunks;i++) {
-			fillEdges(emitLight);
-			updateEmittingBlocks(emitLight, light, material, height, bx[i], by[i], bz[i]);
+			if (first) {
+				lastX = bx[i] + 1;
+				first = false;
+			}
+			//fillEdges(emitLight, false);
+			//fillEdges(emitLight, lastX == bx[i] && lastZ == bz[i] && lastY == by[i] - Chunk.BLOCKS.SIZE);
+			//updateEmittingBlocks(emitLight, light, material, height, bx[i], by[i], bz[i]);
 			emitters[i] = scanForEmitEdges(bx[i], by[i], bz[i], emitLight);
-			copyToLightBuffer(light, bx[i], by[i], bz[i], emitLight);
+			//copyToLightBuffer(light, bx[i], by[i], bz[i], emitLight);
+			lastX = bx[i];
+			lastY = by[i];
+			lastZ = bz[i];
 		}
 		
 		Iterable<IntVector3> combined = new IntVector3CompositeIterator(emitters);
@@ -350,16 +369,16 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		resolve(light, material, height, combined);
 	}
 	
-	public void fillEdges(int[][][] emitLight) {
+	public void fillEdges(int[][][] emitLight, boolean move) {
 		int max = Chunk.BLOCKS.SIZE + 2 - 1;
 		for (int x = 0; x < 18; x++) {
 			for (int y = 0; y < 18; y++) {
+				emitLight[x][0][y] = -1;
+				emitLight[x][max][y] = move ? (emitLight[x][1][y]) : -1;
 				emitLight[0][y][x] = -1;
 				emitLight[max][y][x] = -1;
 				emitLight[x][y][0] = -1;
 				emitLight[x][y][max] = -1;
-				emitLight[x][0][y] = -1;
-				emitLight[x][max][y] = -1;
 			}
 		}
 	}
@@ -388,7 +407,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		for (int x = 1; x <= Chunk.BLOCKS.SIZE; x++) {
 			for (int y = 1; y <= Chunk.BLOCKS.SIZE; y++) {
 				for (int z = 1; z <= Chunk.BLOCKS.SIZE; z++) {
-					int center = emitLight[x][y][z];
+					/*int center = emitLight[x][y][z];
 					if (
 							emitLight[x-1][y][z] < center || 
 							emitLight[x+1][y][z] < center ||
@@ -396,7 +415,8 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 							emitLight[x][y-1][z] < center ||
 							emitLight[x][y][z+1] < center ||
 							emitLight[x][y][z-1] < center
-						) {
+						) {*/
+					if (x == 1 || x == Chunk.BLOCKS.SIZE || y == 1 || y == Chunk.BLOCKS.SIZE || z == 1 || z == Chunk.BLOCKS.SIZE) {
 						index = append(x + bx - 1, y + by - 1, z + bz - 1, ex, ey, ez, index);
 					}
 				}
@@ -417,4 +437,152 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		return pos + 1;
 	}
 	
+	public abstract void bulkEmittingInitialize(ImmutableCuboidBlockMaterialBuffer buffer, int[][][] light, int[][] height);
+	
+	@Override
+	public VanillaCuboidLightBuffer[][][] bulkInitialize(ImmutableCuboidBlockMaterialBuffer buffer, int[][] height) {
+		Vector3 size = buffer.getSize();
+		
+		final int sizeX = size.getFloorX();
+		final int sizeY = size.getFloorY();
+		final int sizeZ = size.getFloorZ();
+		
+		Vector3 base = buffer.getBase();
+		
+		final int baseX = base.getFloorX();
+		final int baseY = base.getFloorY();
+		final int baseZ = base.getFloorZ();
+		
+		Vector3 top = buffer.getTop();
+		
+		final int topX = top.getFloorX();
+		final int topY = top.getFloorY();
+		final int topZ = top.getFloorZ();
+		
+		// TODO - this should be passed as a input parameter
+		//        It still needs to scan the new buffer, since it hasn't been added to the column
+		
+		final boolean[][][] dirty = new boolean[sizeX + 2][sizeY + 2][sizeZ + 2];
+		final int[][][] newLight = new int[sizeX + 2][sizeY + 2][sizeZ + 2];
+		final IntVector3FIFO fifo = new IntVector3FIFO((sizeX + 2) * (sizeY + 2) * (sizeZ + 2));
+		
+		bulkEmittingInitialize(buffer, newLight, height); 
+		
+		// Mark the edges as dirty so they don't get added to the FIFO
+		
+		for (int x = 0; x <= sizeX + 1; x++) {
+			for (int y = 0; y <= sizeY + 1; y++) {
+				dirty[x][y][0] = true;
+				dirty[x][y][sizeZ + 1] = true;
+			}
+		}
+		
+		for (int x = 0; x <= sizeX + 1; x++) {
+			for (int z = 0; z <= sizeZ + 1; z++) {
+				dirty[x][0][z] = true;
+				dirty[x][sizeY + 1][z] = true;
+			}
+		}
+		
+		for (int y = 0; y <= sizeY + 1; y++) {
+			for (int z = 0; z <= sizeZ + 1; z++) {
+				dirty[0][y][z] = true;
+				dirty[sizeX + 1][y][z] = true;
+			}
+		}
+		
+		for (int x = 1; x <= sizeX; x++) {
+			for (int y = 1; y <= sizeY; y++) {
+				for (int z = 1; z <= sizeZ; z++) {
+					if (newLight[x][y][z] > 0) {
+						fifo.write(x, y, z);
+						dirty[x][y][z] = true;
+					}
+				}
+			}
+		}
+		
+		IntVector3 v;
+		
+		while ((v = fifo.read()) != null) {
+			
+			int x = v.getX();
+			int y = v.getY();
+			int z = v.getZ();
+			
+			BlockMaterial m = buffer.get(x + baseX - 1, y + baseY - 1, z + baseZ - 1);
+			
+			ByteBitSet occulusion = m.getOcclusion(m.getData());
+			
+			int center = newLight[x][y][z];
+
+			for (BlockFace face : allFaces) {
+				if (occulusion.get(face)) {
+					continue;
+				}
+				IntVector3 off = face.getIntOffset();
+				int nx = x + off.getX();
+				int ny = y + off.getY();
+				int nz = z + off.getZ();
+				if (nx <= 0 || nx > sizeX || ny <= 0 || ny > sizeY || nz <= 0 || nz >= sizeZ) {
+					continue;
+				}
+				BlockMaterial other = buffer.get(nx + baseX - 1, ny + baseY - 1, nz + baseZ - 1);
+
+				int opacity = other.getOpacity() + 1;
+
+				int newLevel = center - opacity;
+
+				if (newLevel > newLight[nx][ny][nz] && !other.getOcclusion(other.getData()).get(face.getOpposite())) {
+					newLight[nx][ny][nz] = newLevel;
+					if (!dirty[nx][ny][nz]) {
+						dirty[nx][ny][nz] = true;
+						fifo.write(nx, ny, nz);
+					}
+				}
+			}
+			dirty[x][y][z] = false;
+		}
+		
+		int cx = sizeX >> Chunk.BLOCKS.BITS;
+		int cy = sizeY >> Chunk.BLOCKS.BITS;
+		int cz = sizeZ >> Chunk.BLOCKS.BITS;
+		
+		VanillaCuboidLightBuffer[][][] lightBufferArray = new VanillaCuboidLightBuffer[cx][cy][cz];
+		
+		for (int x = 0; x < cx; x++) {
+			for (int y = 0; y < cy; y++) {
+				for (int z = 0; z < cz; z++) {
+					
+					int shift = Chunk.BLOCKS.BITS;
+					int chunkSize = Chunk.BLOCKS.SIZE;
+					
+					VanillaCuboidLightBuffer light = newLightBuffer(null, baseX + (cx << shift), baseY + (cy << shift), baseZ + (cz << shift), chunkSize, chunkSize, chunkSize);
+					
+					Vector3 lightBase = light.getBase();
+					
+					int lightBaseX = lightBase.getFloorX();
+					int lightBaseY = lightBase.getFloorY();
+					int lightBaseZ = lightBase.getFloorZ();
+					
+					int arrayStart = 1 + (z << shift);
+					int arrayEnd = arrayStart + chunkSize;
+					
+					int xOff = 1 + (x << shift);
+					int yOff = 1 + (y << shift);
+					
+					for (int bx = 0; bx < chunkSize; bx++) {
+						for (int by = 0; by < chunkSize; by++) {
+							light.copyZRow(lightBaseX + bx, lightBaseY + by, lightBaseZ, arrayStart, arrayEnd, newLight[xOff + bx][yOff + by]);
+						}
+					}
+					
+					lightBufferArray[x][y][z] = light;
+				}
+			}
+		}
+
+		return lightBufferArray;
+	}
+
 }

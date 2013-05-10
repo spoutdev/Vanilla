@@ -29,11 +29,13 @@ package org.spout.vanilla.world.lighting;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.IntVector3;
+import org.spout.api.math.Vector3;
 import org.spout.api.util.IntVector3Array;
 import org.spout.api.util.IntVector3CuboidArray;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 import org.spout.api.util.cuboid.ImmutableHeightMapBuffer;
+import org.spout.api.util.cuboid.procedure.CuboidBlockMaterialProcedure;
 
 public class VanillaBlocklightLightingManager extends VanillaLightingManager {
 	public VanillaBlocklightLightingManager(String name) {
@@ -74,5 +76,30 @@ public class VanillaBlocklightLightingManager extends VanillaLightingManager {
 				}
 			}
 		}
+	}
+	
+	@Override
+	public void bulkEmittingInitialize(ImmutableCuboidBlockMaterialBuffer buffer, final int[][][] light, int[][] height) {
+		Vector3 base = buffer.getBase();
+		
+		final int baseX = base.getFloorX();
+		final int baseY = base.getFloorY();
+		final int baseZ = base.getFloorZ();
+		
+		buffer.forEach(new CuboidBlockMaterialProcedure() {
+			@Override
+			public boolean execute(int x, int y, int z, short id, short data) {
+				x -= baseX;
+				z -= baseZ;
+
+				BlockMaterial m = BlockMaterial.get(id, data);
+				
+				int lightLevel = m.getLightLevel(m.getData());
+				if (lightLevel > 0) {
+					light[x + 1][y + 1][z + 1] = lightLevel;
+				}
+				return true;
+			}
+		});
 	}
 }

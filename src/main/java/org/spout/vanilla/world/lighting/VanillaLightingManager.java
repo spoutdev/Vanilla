@@ -421,7 +421,6 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		
 		Chunk[][][] cuboid = new Chunk[sizeX][sizeY][sizeZ];
 		
-		Spout.getLogger().info("Scanning chunks " + chunks[0].getWorld().getName() + " " + baseX + ", " + baseY + ", " + baseZ);
 		int index = startChunk;
 		for (int x = 0; x < sizeX; x++) {
 			for (int z = 0; z < sizeZ; z++) {

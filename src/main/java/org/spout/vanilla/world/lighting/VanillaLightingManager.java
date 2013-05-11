@@ -40,7 +40,6 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.IntVector3Array;
-import org.spout.api.util.IntVector3CompositeIterator;
 import org.spout.api.util.bytebit.ByteBitSet;
 import org.spout.api.util.cuboid.ChunkCuboidLightBufferWrapper;
 import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
@@ -48,7 +47,6 @@ import org.spout.api.util.cuboid.ImmutableHeightMapBuffer;
 import org.spout.api.util.hashing.Int10TripleHashed;
 import org.spout.api.util.list.IntVector3FIFO;
 import org.spout.api.util.set.TInt10TripleSet;
-import org.spout.api.util.sort.TripleIntArraySort;
 
 public abstract class VanillaLightingManager extends LightingManager<VanillaCuboidLightBuffer> {
 	private final static BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
@@ -334,108 +332,76 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	@Override
 	protected void initChunks(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int[] bx, int[] by, int[] bz, int initializedChunks) {
 		// Scan for new chunks needs to check
-		// - light emitting blocks
 		// - boundary of entire volume
 		
-		TripleIntArraySort.tripleIntArraySort(bx, bz, by, initializedChunks);
+		Iterable<IntVector3> boundary = getBoundary(material, bx, by, bz, initializedChunks);
 		
-		int[][][] emitLight = new int[18][18][18];
+		resolve(light, material, height, boundary);
+	}
+	
+	protected Iterable<IntVector3> getBoundary(ImmutableCuboidBlockMaterialBuffer material, int[] bx, int[] by, int[] bz, int changedCuboids) {
 
-		@SuppressWarnings("unchecked")
-		Iterable<IntVector3>[] emitters = new Iterable[initializedChunks];
-		
-		int lastX = 0;
-		int lastY = 0;
-		int lastZ = 0;
-		boolean first = true;
-		
-		for (int i = 0; i < initializedChunks;i++) {
-			if (first) {
-				lastX = bx[i] + 1;
-				first = false;
-			}
-			//fillEdges(emitLight, false);
-			//fillEdges(emitLight, lastX == bx[i] && lastZ == bz[i] && lastY == by[i] - Chunk.BLOCKS.SIZE);
-			//updateEmittingBlocks(emitLight, light, material, height, bx[i], by[i], bz[i]);
-			emitters[i] = scanForEmitEdges(bx[i], by[i], bz[i], emitLight);
-			//copyToLightBuffer(light, bx[i], by[i], bz[i], emitLight);
-			lastX = bx[i];
-			lastY = by[i];
-			lastZ = bz[i];
-		}
-		
-		Iterable<IntVector3> combined = new IntVector3CompositeIterator(emitters);
+		Vector3 base = material.getBase();
 
-		resolve(light, material, height, combined);
-	}
-	
-	public void fillEdges(int[][][] emitLight, boolean move) {
-		int max = Chunk.BLOCKS.SIZE + 2 - 1;
-		for (int x = 0; x < 18; x++) {
-			for (int y = 0; y < 18; y++) {
-				emitLight[x][0][y] = -1;
-				emitLight[x][max][y] = move ? (emitLight[x][1][y]) : -1;
-				emitLight[0][y][x] = -1;
-				emitLight[max][y][x] = -1;
-				emitLight[x][y][0] = -1;
-				emitLight[x][y][max] = -1;
-			}
+		TInt10TripleSet chunkSet = new TInt10TripleSet(base.getFloorX(), base.getFloorY(), base.getFloorZ(), changedCuboids);
+		for (int i = 0; i < changedCuboids; i++) {
+			chunkSet.add(bx[i], by[i], bz[i]);
 		}
-	}
-	
-	public void copyToLightBuffer(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, int bx, int by, int bz, int[][][] emitLight) {
-		VanillaCuboidLightBuffer buffer = light.getLightBuffer(bx, by, bz);
-		for (int x = 1; x < Chunk.BLOCKS.SIZE + 1; x++) {
-			for (int y = 1; y < Chunk.BLOCKS.SIZE + 1; y++) {
-				int xPos = bx + x - 1;
-				int yPos = by + y - 1;
-				int zPos = bz;
-				for (int z = 1; z < Chunk.BLOCKS.SIZE + 1; z++) {
-					buffer.set(xPos, yPos, zPos++, (byte) emitLight[x][y][z]);
-				}
-			}
-		}
-	}
-	
-	public Iterable<IntVector3> scanForEmitEdges(int bx, int by, int bz, int[][][] emitLight) {
-		int[] ex = new int[Chunk.BLOCKS.VOLUME];
-		int[] ey = new int[Chunk.BLOCKS.VOLUME];
-		int[] ez = new int[Chunk.BLOCKS.VOLUME];
+
+		int blocks = changedCuboids << 11;
 		
-		int index = 0;
+		int[] xArray = new int[blocks];
+		int[] yArray = new int[blocks];
+		int[] zArray = new int[blocks];
+
+		int count = 0;
 		
-		for (int x = 1; x <= Chunk.BLOCKS.SIZE; x++) {
-			for (int y = 1; y <= Chunk.BLOCKS.SIZE; y++) {
-				for (int z = 1; z <= Chunk.BLOCKS.SIZE; z++) {
-					/*int center = emitLight[x][y][z];
-					if (
-							emitLight[x-1][y][z] < center || 
-							emitLight[x+1][y][z] < center ||
-							emitLight[x][y+1][z] < center ||
-							emitLight[x][y-1][z] < center ||
-							emitLight[x][y][z+1] < center ||
-							emitLight[x][y][z-1] < center
-						) {*/
-					if (x == 1 || x == Chunk.BLOCKS.SIZE || y == 1 || y == Chunk.BLOCKS.SIZE || z == 1 || z == Chunk.BLOCKS.SIZE) {
-						index = append(x + bx - 1, y + by - 1, z + bz - 1, ex, ey, ez, index);
+		TInt10TripleSet blockSet = new TInt10TripleSet(base.getFloorX(), base.getFloorY(), base.getFloorZ(), blocks);
+
+		for (int i = 0; i < changedCuboids; i++) {
+			int x = bx[i];
+			int y = by[i];
+			int z = bz[i];
+
+			int shift = Chunk.BLOCKS.BITS;
+			int size = Chunk.BLOCKS.SIZE;
+			for (int j = 0; j < allFaces.length; j++) {
+				IntVector3 offset = allFaces[j].getIntOffset();
+				int xo = x + (offset.getX() << shift);
+				int yo = y + (offset.getY() << shift);
+				int zo = z + (offset.getZ() << shift);
+
+				if (!chunkSet.contains(xo, yo, zo)) {
+					if (material.getId(xo, yo, zo) != BlockMaterial.UNGENERATED.getId()) {
+						int startX = offset.getX() <= 0 ? x : (x + size - 1);
+						int endX = offset.getX() >= 0 ? (x + size - 1) : x;
+
+						int startY = offset.getY() <= 0 ? y : (y + size - 1);
+						int endY = offset.getY() >= 0 ? (y + size - 1) : y;
+
+						int startZ = offset.getZ() <= 0 ? z : (z + size - 1);
+						int endZ = offset.getZ() >= 0 ? (z + size - 1) : z;
+
+						for (int xx = startX; xx <= endX; xx++) {
+							for (int yy = startY; yy <= endY; yy++) {
+								for (int zz = startZ; zz <= endZ; zz++) {
+									if (blockSet.add(xx, yy, zz)) {
+										xArray[count] = xx;
+										yArray[count] = yy;
+										zArray[count] = zz;
+										count++;
+									}
+								}
+							}
+						}
 					}
 				}
 			}
 		}
 		
-		if (index == 0) {
-			return null;
-		} else {
-			return new IntVector3Array(ex, ey, ez, index);
-		}
+		return new IntVector3Array(xArray, yArray, zArray, count);
 	}
-	
-	private static int append(int x, int y, int z, int[] ax, int[] ay, int[] az, int pos) {
-		ax[pos] = x;
-		ay[pos] = y;
-		az[pos] = z;
-		return pos + 1;
-	}
+
 	
 	public abstract void bulkEmittingInitialize(ImmutableCuboidBlockMaterialBuffer buffer, int[][][] light, int[][] height);
 	

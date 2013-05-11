@@ -45,6 +45,7 @@ import org.spout.api.entity.EntityPrefab;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
 import org.spout.api.generator.WorldGeneratorObject;
+import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
@@ -52,9 +53,9 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.lighting.LightingManager;
 import org.spout.api.lighting.LightingRegistry;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
-import org.spout.api.math.GenericMath;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
@@ -98,7 +99,6 @@ import org.spout.vanilla.inventory.window.block.chest.ChestWindow;
 import org.spout.vanilla.inventory.window.entity.VillagerWindow;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.plant.Sapling;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.material.map.Map;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
@@ -111,7 +111,6 @@ import org.spout.vanilla.scoreboard.ObjectiveSlot;
 import org.spout.vanilla.scoreboard.Scoreboard;
 import org.spout.vanilla.util.explosion.ExplosionModels;
 import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
-import org.spout.vanilla.world.generator.normal.object.tree.TreeObject;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
 import org.spout.vanilla.world.lighting.LightingVerification;
@@ -291,6 +290,25 @@ public class TestCommands {
 		p.sendMessage("You are at " + pos.getBlockX() + ", " + pos.getBlockY() + ", " + pos.getBlockZ());
 		p.sendMessage("Surface Height " + height + " " + (pos.getBlockY() - height) + " blocks below");
 		
+	}
+	
+	@Command(aliases = "getblock", usage = "<world> <x> <y> <z>", desc = "Finds block at the given coords", min = 4, max = 4)
+	@CommandPermissions("vanilla.command.debug")
+	public void getBlock(CommandContext args, CommandSource source) throws CommandException {
+		World w = Spout.getEngine().getWorld(args.getString(0));
+		if (w == null) {
+			throw new CommandException("Unable to find world " + args.getString(0));
+		}
+		int x = args.getInteger(1);
+		int y = args.getInteger(2);
+		int z = args.getInteger(3);
+		Chunk c = w.getChunkFromBlock(x, y, z, LoadOption.NO_LOAD);
+		if (c == null) {
+			throw new CommandException("Chunk not loaded");
+		}
+		int blockState = c.getBlockFullState(x, y, z);
+		BlockMaterial m = BlockMaterial.get(blockState);
+		source.sendMessage("Material at " + x + ", " + y + ", " + z + " is " + m.getClass().getSimpleName());
 	}
 
 	@Command(aliases = "growtree", usage = "", desc = "grows a tree at the current location", max = 0)
@@ -637,8 +655,15 @@ public class TestCommands {
 				continue;
 			}
 			count++;
+			VanillaEntityComponent comp = entity.get(VanillaEntityComponent.class);
+			if (comp instanceof Item) {
+				Item item = (Item) comp;
+				ItemStack stack = item.getItemStack();
+				getEngine().getLogger().info("Removing item (" + stack + ") at " + entity.getScene().getTransform().getPosition().toBlockString());
+			} else {
+				getEngine().getLogger().info("Killing " + comp.getClass().getSimpleName() + " at " + entity.getScene().getTransform().getPosition().toBlockString());
+			}
 			entity.remove();
-			getEngine().getLogger().info(entity.get(VanillaEntityComponent.class) + " was killed");
 		}
 		if (count > 0) {
 			if (!isConsole) {

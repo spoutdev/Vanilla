@@ -28,6 +28,8 @@ package org.spout.vanilla.world.lighting;
 
 import gnu.trove.iterator.hash.TObjectHashIterator;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Iterator;
 
 import org.spout.api.Spout;
@@ -330,25 +332,42 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	public abstract void updateEmittingBlocks(int[][][] emittedLight, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z);
 
 	@Override
-	protected void initChunks(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int[] bx, int[] by, int[] bz, int initializedChunks) {
+	protected void initChunks(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, Chunk[] chunks) {
 		// Scan for new chunks needs to check
 		// - boundary of entire volume
 		
-		Iterable<IntVector3> boundary = getBoundary(material, bx, by, bz, initializedChunks);
+		Iterable<IntVector3> boundary = getBoundary(material, chunks);
 		
 		resolve(light, material, height, boundary);
 	}
 	
-	protected Iterable<IntVector3> getBoundary(ImmutableCuboidBlockMaterialBuffer material, int[] bx, int[] by, int[] bz, int changedCuboids) {
+	private final static Comparator<Chunk> chunkSorter = new Comparator<Chunk>() {
 
-		Vector3 base = material.getBase();
-
-		TInt10TripleSet chunkSet = new TInt10TripleSet(base.getFloorX(), base.getFloorY(), base.getFloorZ(), changedCuboids);
-		for (int i = 0; i < changedCuboids; i++) {
-			chunkSet.add(bx[i], by[i], bz[i]);
+		@Override
+		public int compare(Chunk c1, Chunk c2) {
+			int genDiff = c1.getGenerationIndex() - c2.getGenerationIndex();
+			if (genDiff != 0) {
+				return genDiff;
+			}
+			// X sort rising
+			if (c1.getX() != c2.getX()) {
+				return c1.getX() - c2.getX();
+			}
+			// Z sort rising
+			if (c1.getZ() != c2.getZ()) {
+				return c1.getZ() - c2.getZ();
+			}
+			// Y sort falling
+			return c2.getY() - c1.getY();
 		}
+		
+	};
+	
+	protected Iterable<IntVector3> getBoundary(ImmutableCuboidBlockMaterialBuffer material, Chunk[] chunks) {
 
-		int blocks = changedCuboids << 11;
+		Arrays.sort(chunks, chunkSorter);
+		
+		int blocks = chunks.length << 11;
 		
 		int[] xArray = new int[blocks];
 		int[] yArray = new int[blocks];
@@ -356,50 +375,120 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 
 		int count = 0;
 		
-		TInt10TripleSet blockSet = new TInt10TripleSet(base.getFloorX(), base.getFloorY(), base.getFloorZ(), blocks);
-
-		for (int i = 0; i < changedCuboids; i++) {
-			int x = bx[i];
-			int y = by[i];
-			int z = bz[i];
-
-			int shift = Chunk.BLOCKS.BITS;
-			int size = Chunk.BLOCKS.SIZE;
-			for (int j = 0; j < allFaces.length; j++) {
-				IntVector3 offset = allFaces[j].getIntOffset();
-				int xo = x + (offset.getX() << shift);
-				int yo = y + (offset.getY() << shift);
-				int zo = z + (offset.getZ() << shift);
-
-				if (!chunkSet.contains(xo, yo, zo)) {
-					if (material.getId(xo, yo, zo) != BlockMaterial.UNGENERATED.getId()) {
-						int startX = offset.getX() <= 0 ? x : (x + size - 1);
-						int endX = offset.getX() >= 0 ? (x + size - 1) : x;
-
-						int startY = offset.getY() <= 0 ? y : (y + size - 1);
-						int endY = offset.getY() >= 0 ? (y + size - 1) : y;
-
-						int startZ = offset.getZ() <= 0 ? z : (z + size - 1);
-						int endZ = offset.getZ() >= 0 ? (z + size - 1) : z;
-
-						for (int xx = startX; xx <= endX; xx++) {
-							for (int yy = startY; yy <= endY; yy++) {
-								for (int zz = startZ; zz <= endZ; zz++) {
-									if (blockSet.add(xx, yy, zz)) {
-										xArray[count] = xx;
-										yArray[count] = yy;
-										zArray[count] = zz;
-										count++;
-									}
-								}
-							}
+		int startChunk = 0;
+		int endChunk = 0;
+		
+		while (startChunk < chunks.length) {
+			int genIndex = chunks[startChunk].getGenerationIndex();
+			endChunk = startChunk + 1;
+			
+			while (endChunk < chunks.length && chunks[endChunk].getGenerationIndex() == genIndex) {
+				endChunk++;
+			}
+			
+			count = getBoundary(chunks, count, xArray, yArray, zArray, startChunk, endChunk);
+			
+			startChunk = endChunk;
+		}
+		
+		return new IntVector3Array(xArray, yArray, zArray, count);
+	}
+	
+	private int getBoundary(Chunk[] chunks, int count, int[] xArray, int[] yArray, int[] zArray, int startChunk, int endChunk) {
+		
+		Chunk first = chunks[startChunk];
+		Chunk last = chunks[endChunk - 1];
+		
+		// Note: X and Z are sorted low to high and Y is sorted high to low
+		
+		int baseX = first.getX();
+		int baseY = last.getY();
+		int baseZ = first.getZ();
+		
+		int topX = last.getX() + 1;
+		int topY = first.getY() + 1;
+		int topZ = last.getZ() + 1;
+		
+		int sizeX = topX - baseX;
+		int sizeY = topY - baseY;
+		int sizeZ = topZ - baseZ;
+		
+		int volume = sizeX * sizeY * sizeZ;
+		
+		if (volume != (endChunk - startChunk)) {
+			throw new IllegalStateException("Chunks must be generated in cuboids");
+		}
+		
+		Chunk[][][] cuboid = new Chunk[sizeX][sizeY][sizeZ];
+		
+		Spout.getLogger().info("Scanning chunks " + chunks[0].getWorld().getName() + " " + baseX + ", " + baseY + ", " + baseZ);
+		int index = startChunk;
+		for (int x = 0; x < sizeX; x++) {
+			for (int z = 0; z < sizeZ; z++) {
+				for (int y = sizeY - 1; y >=0; y--) {
+					if (cuboid[x][y][z] == null) {
+						Chunk c = chunks[index++];
+						if (c.getX() != baseX + x || c.getY() != baseY + y || c.getZ() != baseZ + z) {
+							throw new IllegalStateException("Chunks incorrectly ordered " + c.getBase().toChunkString());
 						}
+						cuboid[x][y][z] = c;
+					} else {
+						throw new IllegalStateException("Chunks appears twice in list, " + x + ", " + y + ", " + z);
 					}
 				}
 			}
 		}
 		
-		return new IntVector3Array(xArray, yArray, zArray, count);
+		int baseBlockX = baseX << Chunk.BLOCKS.BITS;
+		int baseBlockY = baseY << Chunk.BLOCKS.BITS;
+		int baseBlockZ = baseZ << Chunk.BLOCKS.BITS;
+		
+		int topBlockX = topX << Chunk.BLOCKS.BITS;
+		int topBlockY = topY << Chunk.BLOCKS.BITS;
+		int topBlockZ = topZ << Chunk.BLOCKS.BITS;
+		
+		
+		for (int x = baseBlockX; x < topBlockX; x++) {
+			for (int y = baseBlockY; y < topBlockY; y++) {
+				xArray[count] = x;
+				yArray[count] = y;
+				zArray[count] = baseBlockZ;
+				count++;
+				xArray[count] = x;
+				yArray[count] = y;
+				zArray[count] = topBlockZ - 1;
+				count++;
+			}
+		}
+		
+		for (int x = baseBlockX; x < topBlockX; x++) {
+			for (int z = baseBlockZ; z < topBlockZ; z++) {
+				xArray[count] = x;
+				yArray[count] = baseBlockY;
+				zArray[count] = z;
+				count++;
+				xArray[count] = x;
+				yArray[count] = topBlockY - 1;
+				zArray[count] = z;
+				count++;
+			}
+		}
+		
+		for (int z = baseBlockZ; z < topBlockZ; z++) {
+			for (int y = baseBlockY; y < topBlockY; y++) {
+				xArray[count] = baseBlockX;
+				yArray[count] = y;
+				zArray[count] = z;
+				count++;
+				xArray[count] = topBlockX - 1;
+				yArray[count] = y;
+				zArray[count] = z;
+				count++;
+			}
+		}
+		
+		return count;
+		
 	}
 
 	

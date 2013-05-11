@@ -39,8 +39,10 @@ public abstract class VanillaBiomeGenerator extends BiomeGenerator implements Va
 
 	@Override
 	public void generate(CuboidBlockMaterialBuffer blockData, int chunkX, int chunkY, int chunkZ, World world) {
-		if (chunkY < lowestChunkY || chunkY > highestChunkY) {
+		if (chunkY > highestChunkY) {
 			blockData.flood(VanillaMaterials.AIR);
+		} else if (chunkY < lowestChunkY) {
+			blockData.flood(VanillaMaterials.BEDROCK);
 		} else {
 			super.generate(blockData, chunkX, chunkY, chunkZ, world);
 		}

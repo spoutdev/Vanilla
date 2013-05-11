@@ -109,7 +109,7 @@ public class VanillaSkylightLightingManager extends VanillaBlocklightLightingMan
 				z -= baseZ;
 
 				BlockMaterial m = BlockMaterial.get(id, data);
-				if (m.isSurface() && height[x][z] < y) {
+				if (height[x][z] < y && m.isSurface()) {
 					height[x][z] = y;
 				}
 				return true;

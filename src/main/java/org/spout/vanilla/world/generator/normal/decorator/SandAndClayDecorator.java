@@ -86,7 +86,7 @@ public class SandAndClayDecorator extends Decorator {
 	}
 
 	private int getHighestWorkableBlock(World world, int x, int z) {
-		int y = NormalGenerator.HEIGHT;
+		int y = world.getSurfaceHeight(x, z);
 		BlockMaterial material;
 		while ((material = world.getBlockMaterial(x, y, z)) == VanillaMaterials.ICE
 				|| !(material instanceof Solid)) {

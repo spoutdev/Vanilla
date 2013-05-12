@@ -67,7 +67,7 @@ public class PumpkinDecorator extends VariableAmountDecorator {
 	}
 
 	private int getHighestWorkableBlock(World w, int x, int z) {
-		int y = NormalGenerator.HEIGHT;
+		int y = w.getSurfaceHeight(x, z);
 		while (w.getBlockMaterial(x, y, z) != VanillaMaterials.GRASS) {
 			if (--y <= 0) {
 				return -1;

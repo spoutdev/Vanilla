@@ -85,7 +85,7 @@ public class SnowPopulator extends Populator {
 	}
 
 	private int getHighestWorkableBlock(World world, int x, int z) {
-		int y = NormalGenerator.HEIGHT;
+		int y = world.getSurfaceHeight(x, z);
 		while (world.getBlockMaterial(x, y, z).isInvisible()) {
 			if (--y <= 0) {
 				return -1;

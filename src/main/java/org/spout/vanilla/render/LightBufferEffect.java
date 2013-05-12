@@ -28,11 +28,14 @@ package org.spout.vanilla.render;
 
 import gnu.trove.list.array.TFloatArrayList;
 
+import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.cuboid.ChunkSnapshot;
 import org.spout.api.geo.cuboid.ChunkSnapshotModel;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.render.BufferContainer;
 import org.spout.api.render.effect.BufferEffect;
+import org.spout.vanilla.world.lighting.VanillaCuboidLightBuffer;
+import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public class LightBufferEffect implements BufferEffect {
 	@Override
@@ -99,12 +102,23 @@ public class LightBufferEffect implements BufferEffect {
 
 			for (int xx = xs; xx <= xi; xx++) {
 				for (int yy = ys; yy <= yi; yy++) {
+					int zOld = 0;
+					ChunkSnapshot chunk = null;
+					VanillaCuboidLightBuffer blockLight = null;
+					VanillaCuboidLightBuffer skyLight = null;
+					
 					for (int zz = zs; zz <= zi; zz++) {
-						ChunkSnapshot chunk = chunkModel.getChunkFromBlock(xx, yy, zz);
+						int zChunk = zz >> Chunk.BLOCKS.BITS;
+						if (zChunk != zOld || chunk == null) {
+							chunk = chunkModel.getChunkFromBlock(xx, yy, zz);
+							blockLight = (VanillaCuboidLightBuffer) chunk.getLightBuffer(VanillaLighting.BLOCK_LIGHT.getId());
+							skyLight = (VanillaCuboidLightBuffer) chunk.getLightBuffer(VanillaLighting.SKY_LIGHT.getId());
+							zOld = zChunk;
+						}
 						BlockMaterial m = chunk.getBlockMaterial(xx, yy, zz);
 						if (!m.isOpaque()) {
-							light += chunk.getBlockLight(xx, yy, zz);
-							skylight += chunk.getBlockSkyLightRaw(xx, yy, zz); //use the SkyLightRaw, the real sky state would be apply by the shader
+							light += blockLight.get(xx, yy, zz);
+							skylight += skyLight.get(xx, yy, zz); //use the SkyLightRaw, the real sky state would be apply by the shader
 							count++;
 						}
 					}

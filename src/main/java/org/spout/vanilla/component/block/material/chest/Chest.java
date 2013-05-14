@@ -81,9 +81,9 @@ public class Chest extends AbstractChest implements Container {
 		ChestInventory inventory = getInventory();
 		if (otherHalf != null) {
 			if (block.translate(BlockFace.EAST).equals(otherHalf) || block.translate(BlockFace.NORTH).equals(otherHalf)) {
-				inventory = new ChestInventory(((Chest) otherHalf.getComponent()).getInventory(), inventory);
+				inventory = new ChestInventory(otherHalf.get(Chest.class).getInventory(), inventory);
 			} else {
-				inventory = new ChestInventory(inventory, ((Chest) otherHalf.getComponent()).getInventory());
+				inventory = new ChestInventory(inventory, otherHalf.get(Chest.class).getInventory());
 			}
 		}
 		return inventory;

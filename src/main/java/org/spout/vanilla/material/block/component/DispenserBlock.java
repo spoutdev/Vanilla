@@ -90,7 +90,7 @@ public class DispenserBlock extends ComponentMaterial implements Directional, Re
 	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
-		Dispenser dispenser = (Dispenser) block.getComponent();
+		Dispenser dispenser = block.get(Dispenser.class);
 		if (!dispenser.isPowered() && this.isReceivingPower(block)) {
 			shootItem(block, dispenser.getInventory().getFirstUsedSlot());
 		}

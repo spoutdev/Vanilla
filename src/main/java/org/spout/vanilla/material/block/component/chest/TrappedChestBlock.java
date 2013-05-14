@@ -77,13 +77,7 @@ public class TrappedChestBlock extends AbstractChestBlock implements RedstoneSou
 
 	@Override
 	public boolean onDestroy(Block block, Cause<?> cause) {
-		BlockComponent c = block.getComponent();
-		Inventory inventory;
-		if (c instanceof Chest) {
-			inventory = ((Chest) c).getInventory();
-		} else {
-			return false;
-		}
+		Inventory inventory = block.get(Chest.class).getInventory();
 		boolean shouldD = super.onDestroy(block, cause);
 		if (shouldD) {
 			Point position = block.getPosition();
@@ -127,7 +121,7 @@ public class TrappedChestBlock extends AbstractChestBlock implements RedstoneSou
 
 	@Override
 	public short getRedstonePowerStrength(BlockSnapshot state) {
-		AbstractChest chest = (AbstractChest) state.getBlock().getComponent();
+		AbstractChest chest = state.getBlock().get(AbstractChest.class);
 		int viewers = chest.getViewers().size();
 		if (viewers > 15) {
 			viewers = 15;

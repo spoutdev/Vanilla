@@ -64,7 +64,7 @@ public class LootChestObject extends RandomObject {
 	public void placeObject(World w, int x, int y, int z) {
 		final Block block = w.getBlock(x, y, z);
 		VanillaMaterials.CHEST.onPlacement(block, (short) 0, null, null, false, null);
-		final ChestInventory inventory = ((Chest) block.getComponent()).getInventory();
+		final ChestInventory inventory = block.get(Chest.class).getInventory();
 		final int numberOfStack = random.nextInt(maxNumberOfStacks - minNumberOfStacks + 1) + minNumberOfStacks;
 		final int size = inventory.size();
 		for (int i = 0; i < numberOfStack; i++) {

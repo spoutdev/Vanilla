@@ -236,7 +236,7 @@ public class JungleTemple extends StructurePiece {
 	}
 
 	private void fillDispenser(int xx, int yy, int zz) {
-		final DispenserInventory inventory = ((Dispenser) getBlock(xx, yy, zz).getComponent()).getInventory();
+		final DispenserInventory inventory = getBlock(xx, yy, zz).get(Dispenser.class).getInventory();
 		final Random random = getRandom();
 		inventory.add(random.nextInt(inventory.size()), new ItemStack(VanillaMaterials.ARROW, random.nextInt(8) + 2));
 	}

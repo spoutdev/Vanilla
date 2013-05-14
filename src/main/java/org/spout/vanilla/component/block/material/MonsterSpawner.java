@@ -194,7 +194,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	public boolean canSpawn() {
 		int count = 0;
 		int range = getCreatureSearchRange();
-		for (Entity e : getOwner().getChunk().getWorld().getNearbyEntities(getPosition(), range)) {
+		for (Entity e : getOwner().getWorld().getNearbyEntities(getPosition(), range)) {
 			if (e instanceof Player) {
 				continue;
 			}
@@ -244,7 +244,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @return true if there is a player within the radius
 	 */
 	public boolean isActive() {
-		return !getOwner().getChunk().getWorld().getNearbyPlayers(getPosition(), getRadius()).isEmpty();
+		return !getOwner().getWorld().getNearbyPlayers(getPosition(), getRadius()).isEmpty();
 	}
 
 	/**

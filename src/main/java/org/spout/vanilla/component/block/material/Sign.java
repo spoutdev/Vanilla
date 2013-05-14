@@ -107,7 +107,7 @@ public class Sign extends VanillaBlockComponent {
 		VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(event);
 		//Send event to protocol
 		if (!event.isCancelled()) {
-			for (Player p : this.getOwner().getChunk().getObservingPlayers()) {
+			for (Player p : this.getOwner().getBlock().getChunk().getObservingPlayers()) {
 				p.getNetworkSynchronizer().callProtocolEvent(event);
 			}
 			getData().put(VanillaData.SIGN_TEXT, event.getLines());

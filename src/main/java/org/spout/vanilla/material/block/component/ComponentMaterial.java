@@ -28,11 +28,8 @@ package org.spout.vanilla.material.block.component;
 
 import org.spout.api.component.type.BlockComponent;
 import org.spout.api.entity.Entity;
-import org.spout.api.event.Cause;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
-import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.ComplexMaterial;
 import org.spout.api.material.block.BlockFace;
 
@@ -60,38 +57,19 @@ public class ComponentMaterial extends VanillaBlockMaterial implements ComplexMa
 	public ComponentMaterial(String name, int id, int data, ComponentMaterial parent, String model) {
 		super(name, id, data, parent, model);
 		this.componentType = parent.componentType;
-	}
-
-	public BlockComponent spawn(Point pos) {
-		return pos.getWorld().createAndSpawnEntity(pos, LoadOption.NO_LOAD, componentType).get(componentType);
-	}
+    }
 
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteract(entity, block, type, clickedFace);
-		BlockComponent c = block.getComponent();
-		Point pos = block.getPosition();
-		if (c == null || !c.getClass().equals(componentType)) {
-			c = spawn(pos);
-		}
-
-		if (c == null) {
-			throw new IllegalStateException("Failed to spawn " + componentType.getName() + " at (" + pos.getX() + "," + pos.getY() + "," + pos.getZ() + ")");
-		}
-
+		BlockComponent c = block.add(componentType);
 		((VanillaBlockComponent) c).onInteractBy(entity, type, clickedFace);
 	}
 
 	@Override
-	public void onCreate(Block block, short data, Cause<?> cause) {
-		super.onCreate(block, data, cause);
-		spawn(block.getPosition());
-	}
-
-	@Override
-	public BlockComponent createBlockComponent() {
+	public Class<? extends BlockComponent> getBlockComponent() {
 		try {
-			return componentType.newInstance();
+			return componentType;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

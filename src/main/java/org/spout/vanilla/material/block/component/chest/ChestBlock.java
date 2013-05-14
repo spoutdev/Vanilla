@@ -53,7 +53,7 @@ public class ChestBlock extends AbstractChestBlock {
 	 */
 	public Block getOtherHalf(Block block) {
 		for (BlockFace face : BlockFaces.NESW) {
-			if (block.translate(face).getMaterial().equals(this)) {
+			if (block.translate(face).get(Chest.class) != null) {
 				return block.translate(face);
 			}
 		}
@@ -71,10 +71,10 @@ public class ChestBlock extends AbstractChestBlock {
 
 	@Override
 	public boolean onDestroy(Block block, Cause<?> cause) {
-		BlockComponent c = block.getComponent();
+		Chest c = block.get(Chest.class);
 		Inventory inventory;
-		if (c instanceof Chest) {
-			inventory = ((Chest) c).getInventory();
+		if (c != null) {
+			inventory = c.getInventory();
 		} else {
 			return false;
 		}

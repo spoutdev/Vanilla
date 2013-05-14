@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.block;
 
-import org.spout.api.component.ChunkComponentOwner;
 import org.spout.api.component.type.BlockComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.PlayerInteractEvent.Action;
@@ -38,7 +37,12 @@ public abstract class VanillaBlockComponent extends BlockComponent {
 	}
 
 	public Block getBlock() {
-		ChunkComponentOwner owner = getOwner();
-		return owner.getChunk().getBlock(owner.getX(), owner.getY(), owner.getZ());
+		return getOwner().getBlock();
 	}
+
+    @Override
+    public boolean isDetachable() {
+        //By default, don't allow the detaching of Vanilla's components
+        return false;
+    }
 }

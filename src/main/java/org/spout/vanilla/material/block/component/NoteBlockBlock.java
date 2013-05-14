@@ -68,7 +68,7 @@ public class NoteBlockBlock extends ComponentMaterial implements Fuel, RedstoneT
 	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
-		NoteBlock note = (NoteBlock) block.getComponent();
+		NoteBlock note = block.get(NoteBlock.class);
 		note.setPowered(isReceivingPower(block));
 	}
 

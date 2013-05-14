@@ -42,7 +42,7 @@ public class CommandBlockBlock extends ComponentMaterial implements RedstoneTarg
 	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
-		CommandBlock cmdBlock = (CommandBlock) block.getComponent();
+		CommandBlock cmdBlock = block.get(CommandBlock.class);
 		cmdBlock.setPowered(isReceivingPower(block));
 	}
 

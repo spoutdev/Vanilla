@@ -100,6 +100,7 @@ public class RedstoneComparator extends GroundAttachable implements Directional,
 	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
 		this.setFacing(block, PlayerUtil.getFacing(cause));
+        /*//TODO this is broken; nothing implements Container; there's no way to get an interface from a componentholder
 		Block input = block.translate(this.getFacing(block).getOpposite());
 		if (input.getMaterial().isMaterial(inputs)) {
 			Inventory inventory = ((Container) input.getComponent()).getInventory();
@@ -114,11 +115,12 @@ public class RedstoneComparator extends GroundAttachable implements Directional,
 			if (!viewed) {
 				inventory.addViewer(new ComparableViewer(block, inventory));
 			}
-		}
+		}*/
 	}
 
 	@Override
 	public boolean onDestroy(Block block, Cause<?> cause) {
+        /*//TODO this is broken; nothing implements Container; there's no way to get an interface from a componentholder
 		Block input = block.translate(this.getFacing(block).getOpposite());
 		if (input.getMaterial().isMaterial(inputs)) {
 			Inventory inventory = ((Container) input.getComponent()).getInventory();
@@ -131,7 +133,7 @@ public class RedstoneComparator extends GroundAttachable implements Directional,
 			if (cViewer != null) {
 				cViewer.removeViewer(block);
 			}
-		}
+		}*/
 		return super.onDestroy(block, cause);
 	}
 
@@ -225,7 +227,7 @@ public class RedstoneComparator extends GroundAttachable implements Directional,
 	public short getRedstonePowerStrength(BlockSnapshot state) {
 		return this.isPowered() ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;  //TODO:
 	}
-
+    /*//TODO this is broken; nothing implements Container; there's no way to get an interface from a componentholder
 	private short getInputAStrength(Block block) {
 		Block input = block.translate(this.getFacing(block).getOpposite());
 		if (input.getMaterial().isMaterial(inputs)) {
@@ -244,7 +246,7 @@ public class RedstoneComparator extends GroundAttachable implements Directional,
 		}
 		return 0;
 	}
-
+    */
 	private short getInputBStrength(Block block) {
 		BlockFace dir = this.getFacing(block);
 		BlockFace opp = dir.getOpposite();

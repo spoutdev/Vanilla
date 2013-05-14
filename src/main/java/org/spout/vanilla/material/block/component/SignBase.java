@@ -90,16 +90,13 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 	public abstract boolean canSupport(BlockMaterial material, BlockFace face);
 
 	@Override
-	public BlockComponent createBlockComponent() {
-		return new Sign();
+	public Class<? extends BlockComponent> getBlockComponent() {
+		return Sign.class;
 	}
 
 	@Override
 	public ProtocolEvent getUpdate(World world, int x, int y, int z) {
-		Sign sign = (Sign) world.getBlockComponent(x, y, z);
-		if (sign == null) {
-			throw new UnsupportedOperationException("Can't get data for sign at " + x + " " + y + " " + z + "! Component missing...");
-		}
+		Sign sign = world.getBlock(x, y, z).get(Sign.class);
 		return new SignUpdateEvent(sign, sign.getText(), null);
 	}
 }

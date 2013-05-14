@@ -61,7 +61,7 @@ public class DropperBlock extends ComponentMaterial implements Directional, Reds
 	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
-		Dropper dropper = (Dropper) block.getComponent();
+		Dropper dropper = block.get(Dropper.class);
 		if (!dropper.isPowered() && this.isReceivingPower(block)) {
 			shootItem(block, dropper.getInventory().getFirstUsedSlot());
 		}

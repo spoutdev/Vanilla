@@ -106,7 +106,7 @@ public class SkullBlock extends ComponentMaterial implements Attachable {
 		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
 		this.setAttachedFace(block, against, cause);
 		if (against == BlockFace.BOTTOM || against == BlockFace.TOP) {
-			Skull skull = (Skull) block.getComponent();
+			Skull skull = block.get(Skull.class);
 			skull.setRotation(PlayerUtil.getYaw(cause));
 		}
 	}

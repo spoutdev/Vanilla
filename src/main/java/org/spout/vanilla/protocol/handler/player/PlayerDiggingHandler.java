@@ -84,8 +84,8 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		if (!blockMaterial.destroy(block, flags, new PlayerBreakCause((Player) human.getOwner(), block))) {
 			RepositionManager rm = session.getPlayer().getNetworkSynchronizer().getRepositionManager();
 			session.send(false, new BlockChangeMessage(block, rm));
-			if (block.getComponent() instanceof Sign) {
-				Sign sign = (Sign) block.getComponent();
+            Sign sign = block.get(Sign.class);
+			if (sign != null) {
 				session.send(false, new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), rm));
 			}
 			return false;
@@ -152,8 +152,8 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 			if (player.getEngine().getEventManager().callEvent(event).isCancelled()) {
 				if (human.isCreative() || blockMaterial.getHardness() == 0.0f) {
 					session.send(false, new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
-					if (block.getComponent() instanceof Sign) {
-						Sign sign = (Sign) block.getComponent();
+                    Sign sign = block.get(Sign.class);
+                    if (sign != null) {
 						session.send(false, new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), player.getNetworkSynchronizer().getRepositionManager()));
 					}
 				}
@@ -220,8 +220,8 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 			if (!diggingComponent.stopDigging(new Point(w, x, y, z), true) || !isInteractable) {
 				if (!diggingComponent.isDigging()) {
 					session.send(false, new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
-					if (block.getComponent() instanceof Sign) {
-						Sign sign = (Sign) block.getComponent();
+                    Sign sign = block.get(Sign.class);
+                    if (sign != null) {
 						session.send(false, new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), player.getNetworkSynchronizer().getRepositionManager()));
 					}
 				}

@@ -49,9 +49,9 @@ public class SignHandler extends MessageHandler<SignMessage> {
 		int x = rmInverse.convertX(message.getX());
 		int y = rmInverse.convertY(message.getY());
 		int z = rmInverse.convertZ(message.getZ());
-
-		BlockComponent component = player.getWorld().getBlockComponent(x, y, z);
-		if (component == null || !(component instanceof Sign)) {
+		
+        Sign sign = player.getWorld().getBlock(x, y, z).get(Sign.class);
+		if (sign == null) {
 			return;
 		}
 
@@ -60,7 +60,6 @@ public class SignHandler extends MessageHandler<SignMessage> {
 			return;
 		}
 
-		Sign sign = (Sign) component;
 		sign.setText(text, new PlayerCause(player));
 	}
 
@@ -77,8 +76,8 @@ public class SignHandler extends MessageHandler<SignMessage> {
 		int y = rm.convertY(message.getY());
 		int z = rm.convertZ(message.getZ());
 
-		BlockComponent component = player.getWorld().getBlockComponent(x, y, z);
-		if (component == null || !(component instanceof Sign)) {
+        Sign sign = player.getWorld().getBlock(x, y, z).get(Sign.class);
+		if (sign == null) {
 			return;
 		}
 
@@ -87,7 +86,6 @@ public class SignHandler extends MessageHandler<SignMessage> {
 			return;
 		}
 
-		Sign sign = (Sign) component;
 		sign.setText(text, new PlayerCause(player));
 	}
 }

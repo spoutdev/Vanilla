@@ -52,7 +52,7 @@ public class HopperBlock extends ComponentMaterial implements RedstoneTarget {
 	@Override
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
-		Hopper hopper = (Hopper) block.getComponent();
+		Hopper hopper = block.get(Hopper.class);
 		hopper.setPowered(this.isReceivingPower(block));
 	}
 

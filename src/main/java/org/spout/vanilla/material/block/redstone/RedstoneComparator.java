@@ -100,10 +100,9 @@ public class RedstoneComparator extends GroundAttachable implements Directional,
 	public void onPlacement(Block block, short data, BlockFace against, Vector3 clickedPos, boolean isClickedBlock, Cause<?> cause) {
 		super.onPlacement(block, data, against, clickedPos, isClickedBlock, cause);
 		this.setFacing(block, PlayerUtil.getFacing(cause));
-        /*//TODO this is broken; nothing implements Container; there's no way to get an interface from a componentholder
 		Block input = block.translate(this.getFacing(block).getOpposite());
 		if (input.getMaterial().isMaterial(inputs)) {
-			Inventory inventory = ((Container) input.getComponent()).getInventory();
+			Inventory inventory = input.getType(Container.class).getInventory();
 			boolean viewed = false;
 			for (InventoryViewer viewer : inventory.getViewers()) {
 				if (viewer instanceof ComparableViewer) {
@@ -115,7 +114,7 @@ public class RedstoneComparator extends GroundAttachable implements Directional,
 			if (!viewed) {
 				inventory.addViewer(new ComparableViewer(block, inventory));
 			}
-		}*/
+		}
 	}
 
 	@Override

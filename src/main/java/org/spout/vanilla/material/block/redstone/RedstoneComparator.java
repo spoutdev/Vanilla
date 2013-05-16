@@ -119,10 +119,9 @@ public class RedstoneComparator extends GroundAttachable implements Directional,
 
 	@Override
 	public boolean onDestroy(Block block, Cause<?> cause) {
-        /*//TODO this is broken; nothing implements Container; there's no way to get an interface from a componentholder
 		Block input = block.translate(this.getFacing(block).getOpposite());
 		if (input.getMaterial().isMaterial(inputs)) {
-			Inventory inventory = ((Container) input.getComponent()).getInventory();
+			Inventory inventory = input.getType(Container.class).getInventory();
 			ComparableViewer cViewer = null;
 			for (InventoryViewer viewer : inventory.getViewers()) {
 				if (viewer instanceof ComparableViewer) {
@@ -132,7 +131,7 @@ public class RedstoneComparator extends GroundAttachable implements Directional,
 			if (cViewer != null) {
 				cViewer.removeViewer(block);
 			}
-		}*/
+		}
 		return super.onDestroy(block, cause);
 	}
 
@@ -226,11 +225,11 @@ public class RedstoneComparator extends GroundAttachable implements Directional,
 	public short getRedstonePowerStrength(BlockSnapshot state) {
 		return this.isPowered() ? REDSTONE_POWER_MAX : REDSTONE_POWER_MIN;  //TODO:
 	}
-    /*//TODO this is broken; nothing implements Container; there's no way to get an interface from a componentholder
+
 	private short getInputAStrength(Block block) {
 		Block input = block.translate(this.getFacing(block).getOpposite());
 		if (input.getMaterial().isMaterial(inputs)) {
-			Inventory inv = ((Container) block.getComponent()).getInventory();
+			Inventory inv = input.getType(Container.class).getInventory();
 			ComparableViewer view = null;
 			for (InventoryViewer viewer : inv.getViewers()) {
 				if (viewer instanceof ComparableViewer) {
@@ -245,7 +244,7 @@ public class RedstoneComparator extends GroundAttachable implements Directional,
 		}
 		return 0;
 	}
-    */
+
 	private short getInputBStrength(Block block) {
 		BlockFace dir = this.getFacing(block);
 		BlockFace opp = dir.getOpposite();

@@ -119,7 +119,7 @@ import org.spout.vanilla.event.world.TimeUpdateEvent;
 import org.spout.vanilla.event.world.WeatherChangeEvent;
 import org.spout.vanilla.inventory.window.DefaultWindow;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.material.block.component.VanillaComplexMaterial;
+import org.spout.vanilla.material.block.component.TileMaterial;
 import org.spout.vanilla.protocol.container.VanillaContainer;
 import org.spout.vanilla.protocol.entity.player.ExperienceChangeEvent;
 import org.spout.vanilla.protocol.msg.VanillaBlockDataChannelMessage;
@@ -917,8 +917,8 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 			for (int i = 0; i < container.getBlockComponentCount(); i++) {
 				BlockMaterial bm = c.getBlockMaterial(componentX[i], componentY[i], componentZ[i]);
-				if (bm instanceof VanillaComplexMaterial) {
-					ProtocolEvent event = ((VanillaComplexMaterial) bm).getUpdate(c.getWorld(), componentX[i], componentY[i], componentZ[i]);
+				if (bm instanceof TileMaterial) {
+					ProtocolEvent event = ((TileMaterial) bm).getUpdate(c.getWorld(), componentX[i], componentY[i], componentZ[i]);
 					if (event != null) {
 						updateEvents.add(event);
 					}

@@ -28,10 +28,11 @@ package org.spout.vanilla.material.block.component;
 
 import org.spout.vanilla.component.block.material.Beacon;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 
-public class BeaconBlock extends ComponentMaterial {
+public class BeaconBlock extends VanillaBlockMaterial {
 	public BeaconBlock(String name, int id) {
-		super(name, id, Beacon.class, VanillaMaterialModels.BEACON);
+		super(name, id, VanillaMaterialModels.BEACON, Beacon.class);
 		this.setResistance(3.0F).setHardness(15.0F);
 		//TODO: Block needs to do special stuff when it is the top of a pyramid.
 	}

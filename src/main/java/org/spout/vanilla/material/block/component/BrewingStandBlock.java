@@ -37,10 +37,11 @@ import org.spout.vanilla.component.block.material.BrewingStand;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 
-public class BrewingStandBlock extends ComponentMaterial {
+public class BrewingStandBlock extends VanillaBlockMaterial {
 	public BrewingStandBlock(String name, int id) {
-		super(name, id, BrewingStand.class, VanillaMaterialModels.BREWING_STAND);
+		super(name, id, VanillaMaterialModels.BREWING_STAND, BrewingStand.class);
 		this.setResistance(2.5F).setHardness(10.F).setOpacity(0).setOcclusion((short) 0, BlockFace.BOTTOM);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}

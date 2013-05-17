@@ -45,9 +45,9 @@ import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.AbstractAttachable;
 
-public abstract class SignBase extends AbstractAttachable implements InitializableMaterial, VanillaComplexMaterial {
+public abstract class SignBase extends AbstractAttachable implements InitializableMaterial, TileMaterial {
 	public SignBase(String name, int id) {
-		super(name, id, VanillaMaterialModels.SIGN);
+		super(name, id, VanillaMaterialModels.SIGN, Sign.class);
 		this.setAttachable(BlockFaces.NESWB).setHardness(1.0F).setResistance(1.6F).setTransparent();
 	}
 
@@ -88,11 +88,6 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 
 	@Override
 	public abstract boolean canSupport(BlockMaterial material, BlockFace face);
-
-	@Override
-	public Class<? extends BlockComponent> getBlockComponent() {
-		return Sign.class;
-	}
 
 	@Override
 	public ProtocolEvent getUpdate(World world, int x, int y, int z) {

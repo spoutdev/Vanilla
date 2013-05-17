@@ -37,15 +37,15 @@ import org.spout.vanilla.component.block.material.chest.AbstractChest;
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Directional;
-import org.spout.vanilla.material.block.component.ComponentMaterial;
 import org.spout.vanilla.util.PlayerUtil;
 
-public abstract class AbstractChestBlock extends ComponentMaterial implements Directional, Fuel {
+public abstract class AbstractChestBlock extends VanillaBlockMaterial implements Directional, Fuel {
 	public final float BURN_TIME = 15;
 
 	public AbstractChestBlock(String name, int id, Class<? extends AbstractChest> componentType, String model) {
-		super(name, id, componentType, model);
+		super(name, id, model, componentType);
 	}
 
 	@Override

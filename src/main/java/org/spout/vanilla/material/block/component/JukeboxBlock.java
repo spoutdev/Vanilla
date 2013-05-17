@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.block.component;
 
-import org.spout.api.component.type.BlockComponent;
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
@@ -37,13 +36,14 @@ import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.Fuel;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class JukeboxBlock extends ComponentMaterial implements Fuel {
+public class JukeboxBlock extends VanillaBlockMaterial implements Fuel {
 	public final float BURN_TIME = 15;
 
 	public JukeboxBlock(String name, int id) {
-		super(name, id, Jukebox.class, VanillaMaterialModels.JUKEBOX);
+		super(name, id, VanillaMaterialModels.JUKEBOX, Jukebox.class);
 		this.setHardness(2.0F).setResistance(10.0F);
 	}
 

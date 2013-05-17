@@ -39,17 +39,18 @@ import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.util.RedstoneUtil;
 
-public class DropperBlock extends ComponentMaterial implements Directional, RedstoneTarget {
+public class DropperBlock extends VanillaBlockMaterial implements Directional, RedstoneTarget {
 	public static final BlockFaces BTEWNS = new BlockFaces(BlockFace.BOTTOM, BlockFace.TOP, BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH);
 
 	public DropperBlock(String name, int id) {
-		super(name, id, Dropper.class, VanillaMaterialModels.DROPPER);
+		super(name, id, VanillaMaterialModels.DROPPER, Dropper.class);
 		this.setHardness(3.5F).setResistance(5.8F);
 	}
 

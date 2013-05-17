@@ -35,12 +35,13 @@ import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.RedstoneUtil;
 
-public class HopperBlock extends ComponentMaterial implements RedstoneTarget {
+public class HopperBlock extends VanillaBlockMaterial implements RedstoneTarget {
 	public HopperBlock(String name, int id) {
-		super(name, id, Hopper.class, VanillaMaterialModels.HOPPER);
+		super(name, id, VanillaMaterialModels.HOPPER, Hopper.class);
 		this.setHardness(3.5F).setResistance(5.8F).addMiningType(ToolType.PICKAXE).setMiningLevel(ToolLevel.WOOD);
 	}
 

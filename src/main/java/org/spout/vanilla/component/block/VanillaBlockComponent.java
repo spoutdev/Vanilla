@@ -40,9 +40,9 @@ public abstract class VanillaBlockComponent extends BlockComponent {
 		return getOwner().getBlock();
 	}
 
-    @Override
-    public boolean isDetachable() {
-        //By default, don't allow the detaching of Vanilla's components
-        return false;
-    }
+	@Override
+	public boolean isDetachable() {
+		//By default, don't allow the detaching of Vanilla's components
+		return false;
+	}
 }

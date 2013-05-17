@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.attachable;
 
+import org.spout.api.component.type.BlockComponent;
 import org.spout.api.event.Cause;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
@@ -39,16 +40,16 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 public abstract class AbstractAttachable extends VanillaBlockMaterial implements Attachable {
 	private final ByteBitSet attachableFaces = new ByteBitSet(BlockFaces.NONE);
 
-	protected AbstractAttachable(short dataMask, String name, int id, String model) {
-		super(dataMask, name, id, model);
+	protected AbstractAttachable(short dataMask, String name, int id, String model, Class<? extends BlockComponent>... components) {
+		super(dataMask, name, id, model, components);
 	}
 
-	protected AbstractAttachable(String name, int id, String model) {
-		super(name, id, model);
+	protected AbstractAttachable(String name, int id, String model, Class<? extends BlockComponent>... components) {
+		super(name, id, model, components);
 	}
 
-	public AbstractAttachable(String name, int id, int data, VanillaBlockMaterial parent, String model) {
-		super(name, id, data, parent, model);
+	public AbstractAttachable(String name, int id, int data, VanillaBlockMaterial parent, String model, Class<? extends BlockComponent>... components) {
+		super(name, id, data, parent, model, components);
 	}
 
 	/**

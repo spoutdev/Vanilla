@@ -35,10 +35,11 @@ import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.block.material.Skull;
 import org.spout.vanilla.data.MoveReaction;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.attachable.Attachable;
 import org.spout.vanilla.util.PlayerUtil;
 
-public class SkullBlock extends ComponentMaterial implements Attachable {
+public class SkullBlock extends VanillaBlockMaterial implements Attachable {
 	public static final SkullBlock SKELETON_SKULL = new SkullBlock("Skeleton Skull", 144);
 	public static final SkullBlock WITHER_SKELETON_SKULL = new SkullBlock("Wither Skeleton Skull", 1, SKELETON_SKULL);
 	public static final SkullBlock ZOMBIE_HEAD = new SkullBlock("Zombie Head", 2, SKELETON_SKULL);
@@ -46,7 +47,7 @@ public class SkullBlock extends ComponentMaterial implements Attachable {
 	public static final SkullBlock CREEPER_HEAD = new SkullBlock("Creeper Head", 4, SKELETON_SKULL);
 
 	private SkullBlock(String name, int id) {
-		super((short) 0x7, name, id, Skull.class, null);
+		super((short) 0x7, name, id, null, Skull.class);
 		this.setHardness(1.0F).setResistance(3.0F).setTransparent();
 	}
 

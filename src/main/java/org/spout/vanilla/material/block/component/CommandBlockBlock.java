@@ -31,12 +31,13 @@ import org.spout.api.material.BlockMaterial;
 
 import org.spout.vanilla.component.block.material.CommandBlock;
 import org.spout.vanilla.data.MoveReaction;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.redstone.RedstoneTarget;
 import org.spout.vanilla.util.RedstoneUtil;
 
-public class CommandBlockBlock extends ComponentMaterial implements RedstoneTarget {
+public class CommandBlockBlock extends VanillaBlockMaterial implements RedstoneTarget {
 	public CommandBlockBlock(String name, int id) {
-		super(name, id, CommandBlock.class, null);
+		super(name, id, null, CommandBlock.class);
 	}
 
 	@Override

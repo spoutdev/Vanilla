@@ -58,6 +58,7 @@ import org.spout.vanilla.data.effect.Effect;
 import org.spout.vanilla.data.effect.store.GeneralEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.event.inventory.InventoryCanSetEvent;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.material.block.Growing;
@@ -74,11 +75,11 @@ import org.spout.vanilla.material.item.vehicle.minecart.MinecartItem;
 import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.util.RedstoneUtil;
 
-public class DispenserBlock extends ComponentMaterial implements Directional, RedstoneTarget {
+public class DispenserBlock extends VanillaBlockMaterial implements Directional, RedstoneTarget {
 	public static final BlockFaces BTEWNS = new BlockFaces(BlockFace.BOTTOM, BlockFace.TOP, BlockFace.EAST, BlockFace.WEST, BlockFace.NORTH, BlockFace.SOUTH);
 
 	public DispenserBlock(String name, int id) {
-		super(name, id, Dispenser.class, VanillaMaterialModels.DISPENSER);
+		super(name, id, VanillaMaterialModels.DISPENSER, Dispenser.class);
 		this.setHardness(3.5F).setResistance(5.8F);
 	}
 

@@ -36,10 +36,11 @@ import org.spout.vanilla.component.block.material.Furnace;
 import org.spout.vanilla.data.MoveReaction;
 import org.spout.vanilla.data.drops.flag.ToolTypeFlags;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
+import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.Directional;
 import org.spout.vanilla.util.PlayerUtil;
 
-public class FurnaceBlock extends ComponentMaterial implements Directional {
+public class FurnaceBlock extends VanillaBlockMaterial implements Directional {
 	private static final short BURNING_FLAG = (short) 0x0010;
 	public static final FurnaceBlock FURNACE = new FurnaceBlock(BURNING_FLAG, "Furnace", 61, false, VanillaMaterialModels.FURNACE);
 	public static final FurnaceBlock FURNACE_BURNING = new FurnaceBlock("Burning Furnace", 62, FURNACE, true, VanillaMaterialModels.FURNACE);
@@ -47,14 +48,14 @@ public class FurnaceBlock extends ComponentMaterial implements Directional {
 	private final boolean burning;
 
 	public FurnaceBlock(String name, int id, FurnaceBlock parent, boolean burning, String model) {
-		super(name, id, BURNING_FLAG, parent, Furnace.class, model);
+		super(name, id, BURNING_FLAG, parent, model, Furnace.class);
 		this.burning = burning;
 		this.setHardness(3.5F).setResistance(5.8F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);
 	}
 
 	public FurnaceBlock(short dataMask, String name, int id, boolean burning, String model) {
-		super(dataMask, name, id, Furnace.class, model);
+		super(dataMask, name, id, model, Furnace.class);
 		this.burning = burning;
 		this.setHardness(3.5F).setResistance(5.8F);
 		this.getDrops().NOT_CREATIVE.addFlags(ToolTypeFlags.PICKAXE);

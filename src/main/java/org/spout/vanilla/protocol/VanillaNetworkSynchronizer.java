@@ -37,6 +37,7 @@ import gnu.trove.set.TIntSet;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
+import org.spout.api.component.BlockComponentHolder;
 import org.spout.api.component.impl.DatatableComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -917,8 +918,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 			for (int i = 0; i < container.getBlockComponentCount(); i++) {
 				BlockMaterial bm = c.getBlockMaterial(componentX[i], componentY[i], componentZ[i]);
+				BlockComponentHolder holder = container.getBlockComponent()[i];
 				if (bm instanceof TileMaterial) {
-					ProtocolEvent event = ((TileMaterial) bm).getUpdate(c.getWorld(), componentX[i], componentY[i], componentZ[i]);
+					ProtocolEvent event = ((TileMaterial) bm).getUpdate(c.getWorld(), componentX[i], componentY[i], componentZ[i], holder);
 					if (event != null) {
 						updateEvents.add(event);
 					}

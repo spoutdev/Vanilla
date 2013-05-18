@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.block.component;
 
-import org.spout.api.component.type.BlockComponent;
+import org.spout.api.component.BlockComponentHolder;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
 import org.spout.api.event.cause.EntityCause;
@@ -90,8 +90,11 @@ public abstract class SignBase extends AbstractAttachable implements Initializab
 	public abstract boolean canSupport(BlockMaterial material, BlockFace face);
 
 	@Override
-	public ProtocolEvent getUpdate(World world, int x, int y, int z) {
-		Sign sign = world.getBlock(x, y, z).get(Sign.class);
-		return new SignUpdateEvent(sign, sign.getText(), null);
+	public ProtocolEvent getUpdate(World world, int x, int y, int z, BlockComponentHolder owner) {
+		Sign sign = owner.get(Sign.class);
+		if (sign != null) {
+			return new SignUpdateEvent(sign, sign.getText(), null);
+		}
+		return null;
 	}
 }

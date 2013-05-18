@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.material.block.component;
 
+import org.spout.api.component.BlockComponentHolder;
 import org.spout.api.geo.World;
 import org.spout.api.protocol.event.ProtocolEvent;
 
@@ -39,7 +40,8 @@ public interface TileMaterial {
 	 * @param x
 	 * @param y
 	 * @param z
+	 * @param owner
 	 * @return event
 	 */
-	public ProtocolEvent getUpdate(World world, int x, int y, int z);
+	public ProtocolEvent getUpdate(World world, int x, int y, int z, BlockComponentHolder owner);
 }

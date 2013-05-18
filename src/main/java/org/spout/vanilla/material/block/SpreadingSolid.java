@@ -39,6 +39,7 @@ import org.spout.api.math.GenericMath;
 import org.spout.api.math.IntVector3;
 
 import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.world.lighting.VanillaLighting;
 
 /**
  * A solid material that can spread to other materials nearby
@@ -104,7 +105,7 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 	 * @return True if it can spread, False if not
 	 */
 	public boolean canSpreadFrom(Block block) {
-		return block.translate(BlockFace.TOP).getLight() >= this.getMinimumLightToSpread();
+		return VanillaLighting.getLight(block.translate(BlockFace.TOP)) >= this.getMinimumLightToSpread();
 	}
 
 	/**

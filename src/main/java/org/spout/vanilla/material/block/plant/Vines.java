@@ -54,6 +54,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Spreading;
 import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
 import org.spout.vanilla.render.VanillaEffects;
+import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Burnable, DynamicMaterial {
 	private static final EffectRange VINE_RANGE = new CuboidEffectRange(-4, -1, -4, 4, 1, 4);
@@ -257,7 +258,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 			return;
 		}
 		int minLight = getMinimumLightToSpread();
-		if (minLight > 0 && block.getLight() < minLight) {
+		if (minLight > 0 && VanillaLighting.getLight(block) < minLight) {
 			return;
 		}
 

@@ -49,6 +49,7 @@ import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.util.PlayerUtil;
+import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public class WheatCrop extends GroundAttachable implements Growing, Crop, DynamicMaterial, InitializableMaterial {
 	public WheatCrop(String name, int id) {
@@ -145,7 +146,7 @@ public class WheatCrop extends GroundAttachable implements Growing, Crop, Dynami
 	@Override
 	public void onDynamicUpdate(Block block, long updateTime, int data) {
 		if (!this.isFullyGrown(block)) {
-			if (block.translate(BlockFace.TOP).getLight() >= this.getMinimumLightToGrow()) {
+			if (VanillaLighting.getLight(block.translate(BlockFace.TOP)) >= this.getMinimumLightToGrow()) {
 				// Grow using a calculated chance of growing
 				final Random rand = GenericMath.getRandom();
 				int chance = VanillaBlockMaterial.getCropGrowthChance(block);

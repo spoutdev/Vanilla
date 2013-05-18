@@ -42,6 +42,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.world.generator.biome.VanillaBiomes;
+import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public class NetherWartBlock extends GroundAttachable implements Plant, Growing, DynamicMaterial {
 	public NetherWartBlock(String name, int id) {
@@ -122,7 +123,7 @@ public class NetherWartBlock extends GroundAttachable implements Plant, Growing,
 			return;
 		}
 		int minLight = this.getMinimumLightToGrow();
-		if (minLight > 0 && block.translate(BlockFace.TOP).getLight() < minLight) {
+		if (minLight > 0 && VanillaLighting.getLight(block.translate(BlockFace.TOP)) < minLight) {
 			//TODO : Delay before first grow
 			block.dynamicUpdate(updateTime + 10000, true);
 			return;

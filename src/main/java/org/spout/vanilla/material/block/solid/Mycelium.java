@@ -35,6 +35,7 @@ import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.SpreadingSolid;
+import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public class Mycelium extends SpreadingSolid implements InitializableMaterial {
 	public Mycelium(String name, int id) {
@@ -58,7 +59,7 @@ public class Mycelium extends SpreadingSolid implements InitializableMaterial {
 	@Override
 	public boolean canDecayAt(Block block) {
 		block = block.translate(BlockFace.TOP);
-		return block.getMaterial().getOpacity() > 1 && block.getLight() < 4;
+		return block.getMaterial().getOpacity() > 1 && VanillaLighting.getLight(block) < 4;
 	}
 
 	@Override

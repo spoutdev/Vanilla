@@ -51,6 +51,7 @@ import org.spout.vanilla.util.PlayerUtil;
 import org.spout.vanilla.world.generator.normal.object.HugeMushroomObject;
 import org.spout.vanilla.world.generator.normal.object.HugeMushroomObject.HugeMushroomType;
 import org.spout.vanilla.world.generator.object.VariableHeightObject;
+import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public class Mushroom extends GroundAttachable implements Spreading, Plant, DynamicMaterial {
 	private static final EffectRange MUSHROOM_RANGE = new CuboidEffectRange(-4, -1, -4, 4, 1, 4);
@@ -101,7 +102,7 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 	public boolean isValidPosition(Block block, BlockFace attachedFace, boolean seekAlternative) {
 		if (super.isValidPosition(block, attachedFace, seekAlternative)) {
 			final Block under = block.translate(BlockFace.BOTTOM);
-			return under.isMaterial(VanillaMaterials.MYCELIUM) || block.getLight() <= 12 && under.getMaterial().isOpaque();
+			return under.isMaterial(VanillaMaterials.MYCELIUM) || VanillaLighting.getLight(block) <= 12 && under.getMaterial().isOpaque();
 		}
 		return false;
 	}

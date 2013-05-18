@@ -43,6 +43,7 @@ import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.SpreadingSolid;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
+import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public class Ice extends SpreadingSolid implements InitializableMaterial {
 	private static final byte MIN_MELT_LIGHT = 11;
@@ -92,11 +93,11 @@ public class Ice extends SpreadingSolid implements InitializableMaterial {
 
 	@Override
 	public boolean canDecayAt(Block block) {
-		if ((block.getBlockLight() + this.getOpacity() + 1) > MIN_MELT_LIGHT) {
+		if ((VanillaLighting.getBlockLight(block) + this.getOpacity() + 1) > MIN_MELT_LIGHT) {
 			return true;
 		}
 		if (Climate.get(block).isMelting()) {
-			if ((block.getSkyLight() + this.getOpacity() + 1) > MIN_MELT_LIGHT) {
+			if ((VanillaLighting.getSkyLight(block) + this.getOpacity() + 1) > MIN_MELT_LIGHT) {
 				return true;
 			}
 		}

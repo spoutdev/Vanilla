@@ -37,6 +37,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.decorator.VariableAmountDecorator;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
+import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public class FlowerDecorator extends VariableAmountDecorator {
 	private int odd = 10;
@@ -77,7 +78,7 @@ public class FlowerDecorator extends VariableAmountDecorator {
 
 	//TODO: add this to flower material
 	private boolean canFlowerStay(Block block) {
-		return (block.getLight() > 7 || block.isAtSurface())
+		return (VanillaLighting.getLight(block) > 7 || block.isAtSurface())
 				&& block.translate(BlockFace.BOTTOM).getMaterial().isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FARMLAND);
 	}
 

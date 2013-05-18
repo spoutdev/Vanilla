@@ -27,6 +27,7 @@
 package org.spout.vanilla.world.lighting;
 
 import org.spout.api.Spout;
+import org.spout.api.geo.cuboid.Block;
 
 public class VanillaLighting {
 	public static final VanillaSkylightLightingManager SKY_LIGHT = new VanillaSkylightLightingManager("skylight");
@@ -37,5 +38,23 @@ public class VanillaLighting {
 		if (initialized) {
 			Spout.getLogger().info("Vanilla lighting initialized more than once");
 		}
+	}
+	
+	// TODO - add these to World/Region/Chunk/Block
+	public static byte getLight(Block b) {
+		return (byte) Math.max(getBlockLight(b), getSkyLight(b));
+	}
+	
+	public static byte getBlockLight(Block b) {
+		return getLight(b, BLOCK_LIGHT);
+	}
+
+	public static byte getSkyLight(Block b) {
+		return getLight(b, SKY_LIGHT);
+	}
+	
+	public static byte getLight(Block b, VanillaLightingManager manager) {
+		VanillaCuboidLightBuffer light =  (VanillaCuboidLightBuffer) b.getChunk().getLightBuffer(manager.getId());
+		return light.get(b.getX(), b.getY(), b.getZ());
 	}
 }

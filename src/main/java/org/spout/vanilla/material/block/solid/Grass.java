@@ -48,6 +48,7 @@ import org.spout.vanilla.material.block.misc.Snow;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.render.VanillaEffects;
 import org.spout.vanilla.util.PlayerUtil;
+import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public class Grass extends SpreadingSolid implements DynamicMaterial, InitializableMaterial {
 	public Grass(String name, int id) {
@@ -80,7 +81,7 @@ public class Grass extends SpreadingSolid implements DynamicMaterial, Initializa
 		block = block.translate(BlockFace.TOP);
 		BlockMaterial mat = block.getMaterial();
 		if ((!(mat instanceof Snow)) || (!(mat.isMaterial(VanillaMaterials.SLAB)))) {
-			return (block.getMaterial().getOpacity() > 0 && block.getLight() < 4);
+			return (block.getMaterial().getOpacity() > 0 && VanillaLighting.getLight(block) < 4);
 		}
 		return false;
 	}

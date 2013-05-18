@@ -37,6 +37,7 @@ import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.plant.TallGrass;
 import org.spout.vanilla.world.generator.decorator.VariableAmountDecorator;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;
+import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public class TallGrassDecorator extends VariableAmountDecorator {
 	private TallGrassFactory factory;
@@ -70,7 +71,7 @@ public class TallGrassDecorator extends VariableAmountDecorator {
 
 	// TODO: this needs to be added to tall grass itself (valid for flowers too)
 	private boolean canTallGrassStay(Block block) {
-		return (block.getLight() > 7 || block.isAtSurface())
+		return (VanillaLighting.getLight(block) > 7 || block.isAtSurface())
 				&& block.translate(BlockFace.BOTTOM).getMaterial().isMaterial(VanillaMaterials.GRASS, VanillaMaterials.DIRT, VanillaMaterials.FARMLAND);
 	}
 

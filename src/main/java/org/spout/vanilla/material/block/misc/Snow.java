@@ -39,6 +39,7 @@ import org.spout.vanilla.data.tool.ToolType;
 import org.spout.vanilla.material.InitializableMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public class Snow extends GroundAttachable implements DynamicMaterial, InitializableMaterial {
 	private static final long POLL_TIME = 60000;
@@ -90,7 +91,7 @@ public class Snow extends GroundAttachable implements DynamicMaterial, Initializ
 	}
 
 	public final boolean willMeltAt(Block block) {
-		return block.getBlockLight() > MIN_MELT_LIGHT;
+		return VanillaLighting.getBlockLight(block) > MIN_MELT_LIGHT;
 	}
 
 	@Override

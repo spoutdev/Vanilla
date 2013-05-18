@@ -36,6 +36,7 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
+import org.spout.vanilla.world.lighting.VanillaLighting;
 
 /**
  * A base class for plants that grow upwards by placing multiple blocks on one another
@@ -162,7 +163,7 @@ public abstract class StackGrowingBase extends GroundAttachable implements Plant
 			return;
 		}
 		int minLight = this.getMinimumLightToGrow();
-		if (minLight > 0 && top.getLight() < minLight) {
+		if (minLight > 0 && VanillaLighting.getLight(top) < minLight) {
 			return;
 		}
 		// Finally, grow

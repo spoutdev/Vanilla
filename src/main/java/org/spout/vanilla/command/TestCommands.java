@@ -195,62 +195,6 @@ public class TestCommands {
 				.addPlayerName(name);
 	}
 
-	@Command(aliases = "lightcheck", usage = "", desc = "Checks nearby light values", max = 0)
-	@CommandPermissions("vanilla.command.debug")
-	public void light(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player)) {
-			throw new CommandException("You must be a player to get a map.");
-		}
-		Player p = (Player) source;
-		Point pos = p.getScene().getPosition();
-		World w = pos.getWorld();
-		LightingManager<?> manager = LightingRegistry.getContains("blocklight");
-		if (manager == null) {
-			p.sendMessage("Block light manager not registered");
-			return;
-		}
-		short id = manager.getId();
-		OutwardIterator i = new OutwardIterator(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ(), 8);
-		while (i.hasNext()) {
-			IntVector3 v = i.next();
-			Chunk c = w.getChunkFromBlock(v.getX(), v.getY(), v.getZ());
-			byte lightOriginal = c.getBlockLight(v.getX(), v.getY(), v.getZ());
-			VanillaCuboidLightBuffer buffer = (VanillaCuboidLightBuffer) c.getLightBuffer(id);
-			int lightNew = buffer.get(v.getX(), v.getY(), v.getZ());
-			if (lightNew != lightOriginal) {
-				Spout.getLogger().info(v.getX() + ", " + v.getY() + ", " + v.getZ() + " old=" + lightOriginal + " new=" + lightNew);
-			}
-		}
-	}
-
-	@Command(aliases = "skylightcheck", usage = "", desc = "Checks nearby sky light values", max = 0)
-	@CommandPermissions("vanilla.command.debug")
-	public void skyLight(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player)) {
-			throw new CommandException("You must be a player to get a map.");
-		}
-		Player p = (Player) source;
-		Point pos = p.getScene().getPosition();
-		World w = pos.getWorld();
-		LightingManager<?> manager = LightingRegistry.getContains("skylight");
-		if (manager == null) {
-			p.sendMessage("Sky light manager not registered");
-			return;
-		}
-		short id = manager.getId();
-		OutwardIterator i = new OutwardIterator(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ(), 3);
-		while (i.hasNext()) {
-			IntVector3 v = i.next();
-			Chunk c = w.getChunkFromBlock(v.getX(), v.getY(), v.getZ());
-			byte lightOriginal = c.getBlockLight(v.getX(), v.getY(), v.getZ());
-			VanillaCuboidLightBuffer buffer = (VanillaCuboidLightBuffer) c.getLightBuffer(id);
-			int lightNew = buffer.get(v.getX(), v.getY(), v.getZ());
-			if (lightNew != lightOriginal) {
-				Spout.getLogger().info(v.getX() + ", " + v.getY() + ", " + v.getZ() + " old=" + lightOriginal + " new=" + lightNew);
-			}
-		}
-	}
-
 	@Command(aliases = "chunklight", usage = "", desc = "Tests lighting in current chunk", max = 0)
 	@CommandPermissions("vanilla.command.debug")
 	public void chunkLight(CommandContext args, CommandSource source) throws CommandException {
@@ -716,11 +660,6 @@ public class TestCommands {
 		} else if (args.getString(0, "").contains("resend")) {
 			player.getNetworkSynchronizer().sendChunk(player.getChunk());
 			source.sendMessage("Chunk resent");
-		} else if (args.getString(0, "").contains("relight")) {
-			for (Chunk chunk : VanillaBlockMaterial.getChunkColumn(player.getChunk())) {
-				chunk.initLighting();
-			}
-			source.sendMessage("Chunk lighting is being initialized");
 		} else if (args.getString(0, "").contains("packets")) {
 			player.add(ForceMessages.class);
 		}

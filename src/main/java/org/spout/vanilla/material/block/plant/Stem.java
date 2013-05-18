@@ -48,6 +48,7 @@ import org.spout.vanilla.material.block.Growing;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.item.misc.Dye;
 import org.spout.vanilla.util.PlayerUtil;
+import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public abstract class Stem extends GroundAttachable implements Growing, Crop, DynamicMaterial {
 	private BlockMaterial lastMaterial;
@@ -141,7 +142,7 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 
 	@Override
 	public void onDynamicUpdate(Block block, long updateTime, int data) {
-		if (block.translate(BlockFace.TOP).getLight() < this.getMinimumLightToGrow()) {
+		if (VanillaLighting.getLight(block.translate(BlockFace.TOP)) < this.getMinimumLightToGrow()) {
 			block.dynamicUpdate(updateTime + getGrowthTime(block), true);
 			return;
 		}

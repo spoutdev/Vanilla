@@ -578,7 +578,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 				int nx = x + off.getX();
 				int ny = y + off.getY();
 				int nz = z + off.getZ();
-				if (nx <= 0 || nx > sizeX || ny <= 0 || ny > sizeY || nz <= 0 || nz >= sizeZ) {
+				if (nx <= 0 || nx > sizeX || ny <= 0 || ny > sizeY || nz <= 0 || nz > sizeZ) {
 					continue;
 				}
 				BlockMaterial other = buffer.get(nx + baseX - 1, ny + baseY - 1, nz + baseZ - 1);

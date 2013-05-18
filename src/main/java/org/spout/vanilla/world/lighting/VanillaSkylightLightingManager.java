@@ -94,11 +94,7 @@ public class VanillaSkylightLightingManager extends VanillaBlocklightLightingMan
 		
 		for (int x = 0; x < sizeX; x++) {
 			for (int z = 0; z < sizeZ; z++) {
-				if (genHeight[x][z] >= topY) {
-					height[x][z] = topY + 1;
-				} else {
-					height[x][z] = baseY - 1;
-				}
+				height[x][z] = genHeight[x][z];
 			}
 		}
 		

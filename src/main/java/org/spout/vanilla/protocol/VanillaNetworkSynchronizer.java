@@ -281,7 +281,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 		for (int xx = 0; xx < Chunk.BLOCKS.SIZE; xx++) {
 			for (int zz = 0; zz < Chunk.BLOCKS.SIZE; zz++) {
-				materials[xx][zz] = w.getTopmostBlock(p.getBlockX() + xx, p.getBlockZ() + zz, true);
+				materials[xx][zz] = w.getTopmostBlock(p.getBlockX() + xx, p.getBlockZ() + zz, LoadOption.LOAD_GEN);
 			}
 		}
 		return materials;
@@ -294,7 +294,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 		for (int xx = 0; xx < Chunk.BLOCKS.SIZE; xx++) {
 			for (int zz = 0; zz < Chunk.BLOCKS.SIZE; zz++) {
-				heights[xx][zz] = w.getSurfaceHeight(p.getBlockX() + xx, p.getBlockZ() + zz, true);
+				heights[xx][zz] = w.getSurfaceHeight(p.getBlockX() + xx, p.getBlockZ() + zz, LoadOption.LOAD_GEN);
 			}
 		}
 		return heights;

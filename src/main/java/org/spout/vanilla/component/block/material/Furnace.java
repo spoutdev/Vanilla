@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.component.block.material;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 import org.spout.api.event.cause.MaterialCause;
 import org.spout.api.inventory.Container;
@@ -172,9 +173,8 @@ public class Furnace extends ViewedBlockComponent implements Container {
 		if (!inventory.hasIngredient()) {
 			return;
 		}
-
 		ItemStack ingredient = inventory.getIngredient();
-		ItemStack result = ((TimedCraftable) ingredient).getResult(); //TODO: unsafe.
+		ItemStack result = ((TimedCraftable) ingredient.getMaterial()).getResult();
 		FurnaceSmeltEvent event = VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new FurnaceSmeltEvent(this, new MaterialCause(ingredient.getMaterial(), this.getBlock()), ingredient, result));
 		if (!event.isCancelled()) {
 			if (inventory.getOutput() == null) {

@@ -54,7 +54,7 @@ public class VanillaLighting {
 	}
 	
 	public static byte getLight(Block b, VanillaLightingManager manager) {
-		VanillaCuboidLightBuffer light =  (VanillaCuboidLightBuffer) b.getChunk().getLightBuffer(manager.getId());
+		VanillaCuboidLightBuffer light =  b.getChunk().getLightBuffer(manager);
 		return light.get(b.getX(), b.getY(), b.getZ());
 	}
 }

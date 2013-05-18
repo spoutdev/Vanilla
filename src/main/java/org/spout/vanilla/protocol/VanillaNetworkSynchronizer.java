@@ -26,14 +26,15 @@
  */
 package org.spout.vanilla.protocol;
 
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
+import gnu.trove.set.TIntSet;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
-
-import gnu.trove.set.TIntSet;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -52,6 +53,7 @@ import org.spout.api.geo.discrete.Transform;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
+import org.spout.api.math.Vector3;
 import org.spout.api.protocol.EntityProtocol;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.NetworkSynchronizer;
@@ -65,7 +67,6 @@ import org.spout.api.util.hashing.IntPairHashed;
 import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
 import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.material.Sign;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
@@ -169,9 +170,6 @@ import org.spout.vanilla.scoreboard.Team;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.world.lighting.VanillaCuboidLightBuffer;
 import org.spout.vanilla.world.lighting.VanillaLighting;
-
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
 	private static final int SOLID_BLOCK_ID = 1; // Initializer block ID
@@ -855,6 +853,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 				final int z = c.getZ();
 				final int height = WORLD_HEIGHT >> Chunk.BLOCKS.BITS;
 				List<Chunk> chunks = new ArrayList<Chunk>(height);
+				List<Vector3> ungenerated = new ArrayList<Vector3>(height);
 				for (int y = 0; y < height; y++) {
 					Chunk cc = c.getWorld().getChunk(x, y, z, LoadOption.LOAD_ONLY);
 					if (cc == null) {
@@ -865,10 +864,17 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 								}
 							}
 						});
-						return null;
+						ungenerated.add(new Vector3(x, y, z));
+					} else {
+						chunks.add(cc);
 					}
 				}
-				return chunks;
+				if (ungenerated.isEmpty()) {
+					return chunks;
+				} else {
+					c.getWorld().queueChunksForGeneration(ungenerated);
+					return null;
+				}
 			} else {
 				List<Chunk> chunks = new ArrayList<Chunk>(1);
 				chunks.add(c);

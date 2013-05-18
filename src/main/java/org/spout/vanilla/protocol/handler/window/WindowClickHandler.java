@@ -46,13 +46,9 @@ public final class WindowClickHandler extends MessageHandler<WindowClickMessage>
 		Window window = player.get(WindowHolder.class).getActiveWindow();
 		boolean result = false;
 		int slot = message.getSlot();
-		if (slot == 64537) {
-			result = window.onOutsideClick();
-		} else {
-			ClickArguments args = window.getClickArguments(slot, message.isRightClick(), message.isShift());
-			if (args != null) {
-				result = window.onClick(args);
-			}
+		ClickArguments args = window.getClickArguments(slot, ClickArguments.ClickAction.getAction(message.getMode(), message.getButton()));
+		if (args != null) {
+			result = window.onClick(args);
 		}
 		session.send(false, new WindowTransactionMessage(window, message.getTransaction(), result));
 	}

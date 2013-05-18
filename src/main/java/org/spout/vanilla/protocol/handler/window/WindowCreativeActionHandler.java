@@ -57,7 +57,7 @@ public class WindowCreativeActionHandler extends MessageHandler<WindowCreativeAc
 		if (message.get() == null) {
 			//Taking item from existing slot
 			window.setCursorItem(null);
-			ClickArguments args = window.getClickArguments(message.getSlot(), false, false);
+			ClickArguments args = window.getClickArguments(message.getSlot(), ClickArguments.ClickAction.LEFT_CLICK);
 			if (args != null) {
 				window.onClick(args);
 			}

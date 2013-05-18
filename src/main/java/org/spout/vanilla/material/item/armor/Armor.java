@@ -26,8 +26,13 @@
  */
 package org.spout.vanilla.material.item.armor;
 
+import org.spout.api.entity.Entity;
+import org.spout.api.event.player.PlayerInteractEvent;
+import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.ItemStack;
+import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector2;
+import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 
 import org.spout.vanilla.event.cause.DamageCause;
 import org.spout.vanilla.event.cause.DamageCause.DamageType;
@@ -95,4 +100,17 @@ public abstract class Armor extends VanillaItemMaterial {
 	 * @return index
 	 */
 	public abstract int getEquipableSlot();
+
+	@Override
+	public void onInteract(Entity entity, Block block, PlayerInteractEvent.Action type, BlockFace clickedface) {
+		PlayerInventory get = entity.get(PlayerInventory.class);
+		if (type == PlayerInteractEvent.Action.RIGHT_CLICK && get != null) {
+			if (get.getArmor().get(getEquipableSlot()) == null) {
+				get.getArmor().set(getEquipableSlot(), get.getHeldItem());
+				get.getQuickbar().getSelectedSlot().set(null);
+			}
+		}
+	}
+	
+	
 }

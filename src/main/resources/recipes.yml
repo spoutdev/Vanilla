@@ -270,7 +270,7 @@ recipes:
 
   Smooth Sandstone:
     type: Shaped
-    result: SMOOTH_SANDSTONE,1
+    result: SMOOTH_SANDSTONE,4
     ingredients:
       A: SANDSTONE
     rows: ['AA', 'AA']

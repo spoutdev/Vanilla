@@ -33,6 +33,7 @@ import org.spout.api.math.Vector2;
 
 import org.spout.vanilla.inventory.block.CraftingTableInventory;
 import org.spout.vanilla.inventory.util.InventoryConverter;
+import org.spout.vanilla.inventory.window.ClickArguments;
 import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.inventory.window.WindowType;
 
@@ -59,5 +60,20 @@ public class CraftingTableWindow extends Window {
 		}
 		inventory.clear();
 		super.close();
+	}
+
+	@Override
+	public boolean onClick(ClickArguments args) {
+		if (args.getSlot().getInventory() == inventory) {
+			if (args.getAction() == ClickArguments.ClickAction.DOUBLE_CLICK) {
+				for (ItemStack item : inventory) {
+					if (item == null) {
+						continue;
+					}
+					getPlayerInventory().getMain().add(item);
+				}
+			 }
+		}
+		return super.onClick(args);
 	}
 }

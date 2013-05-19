@@ -397,17 +397,42 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	private int getBoundary(Chunk[] chunks, int count, int[] xArray, int[] yArray, int[] zArray, int startChunk, int endChunk) {
 		
 		Chunk first = chunks[startChunk];
-		Chunk last = chunks[endChunk - 1];
 		
 		// Note: X and Z are sorted low to high and Y is sorted high to low
 		
 		int baseX = first.getX();
-		int baseY = last.getY();
+		int baseY = first.getY();
 		int baseZ = first.getZ();
 		
-		int topX = last.getX() + 1;
-		int topY = first.getY() + 1;
-		int topZ = last.getZ() + 1;
+		int topX = first.getX();
+		int topY = first.getY();
+		int topZ = first.getZ();
+		
+		for (int i = startChunk + 1; i < endChunk; i++) {
+			Chunk c = chunks[i];
+			if (c.getX() < baseX) {
+				baseX = c.getX();
+			}
+			if (c.getY() < baseY) {
+				baseY = c.getY();
+			}
+			if (c.getZ() < baseZ) {
+				baseZ = c.getZ();
+			}
+			if (c.getX() > topX) {
+				topX = c.getX();
+			}
+			if (c.getY() > topY) {
+				topY = c.getY();
+			}
+			if (c.getZ() > topZ) {
+				topZ = c.getZ();
+			}
+		}
+		
+		topX++;
+		topY++;
+		topZ++;
 		
 		int sizeX = topX - baseX;
 		int sizeY = topY - baseY;
@@ -415,26 +440,20 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		
 		int volume = sizeX * sizeY * sizeZ;
 		
-		if (volume != (endChunk - startChunk)) {
-			throw new IllegalStateException("Chunks must be generated in cuboids");
-		}
+		boolean fullCuboid = volume == endChunk - startChunk;
 		
 		Chunk[][][] cuboid = new Chunk[sizeX][sizeY][sizeZ];
 		
-		int index = startChunk;
-		for (int x = 0; x < sizeX; x++) {
-			for (int z = 0; z < sizeZ; z++) {
-				for (int y = sizeY - 1; y >=0; y--) {
-					if (cuboid[x][y][z] == null) {
-						Chunk c = chunks[index++];
-						if (c.getX() != baseX + x || c.getY() != baseY + y || c.getZ() != baseZ + z) {
-							throw new IllegalStateException("Chunks incorrectly ordered " + c.getBase().toChunkString());
-						}
-						cuboid[x][y][z] = c;
-					} else {
-						throw new IllegalStateException("Chunks appears twice in list, " + x + ", " + y + ", " + z);
-					}
-				}
+		for (int i = startChunk; i < endChunk; i++) {
+			Chunk c = chunks[i];
+			int cx = c.getX() - baseX;
+			int cy = c.getY() - baseY;
+			int cz = c.getZ() - baseZ;
+
+			if (cuboid[cx][cy][cz] == null) {
+				cuboid[cx][cy][cz] = c;
+			} else {
+				throw new IllegalStateException("Chunks appears twice in list, " + cx + ", " + cy + ", " + cz);
 			}
 		}
 		
@@ -447,45 +466,105 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		int topBlockZ = topZ << Chunk.BLOCKS.BITS;
 		
 		
-		for (int x = baseBlockX; x < topBlockX; x++) {
-			for (int y = baseBlockY; y < topBlockY; y++) {
-				xArray[count] = x;
-				yArray[count] = y;
-				zArray[count] = baseBlockZ;
-				count++;
-				xArray[count] = x;
-				yArray[count] = y;
-				zArray[count] = topBlockZ - 1;
-				count++;
+		if (fullCuboid) {
+			for (int x = baseBlockX; x < topBlockX; x++) {
+				for (int y = baseBlockY; y < topBlockY; y++) {
+					xArray[count] = x;
+					yArray[count] = y;
+					zArray[count] = baseBlockZ;
+					count++;
+					xArray[count] = x;
+					yArray[count] = y;
+					zArray[count] = topBlockZ - 1;
+					count++;
+				}
 			}
-		}
-		
-		for (int x = baseBlockX; x < topBlockX; x++) {
+
+			for (int x = baseBlockX; x < topBlockX; x++) {
+				for (int z = baseBlockZ; z < topBlockZ; z++) {
+					xArray[count] = x;
+					yArray[count] = baseBlockY;
+					zArray[count] = z;
+					count++;
+					xArray[count] = x;
+					yArray[count] = topBlockY - 1;
+					zArray[count] = z;
+					count++;
+				}
+			}
+
 			for (int z = baseBlockZ; z < topBlockZ; z++) {
-				xArray[count] = x;
-				yArray[count] = baseBlockY;
-				zArray[count] = z;
-				count++;
-				xArray[count] = x;
-				yArray[count] = topBlockY - 1;
-				zArray[count] = z;
-				count++;
+				for (int y = baseBlockY; y < topBlockY; y++) {
+					xArray[count] = baseBlockX;
+					yArray[count] = y;
+					zArray[count] = z;
+					count++;
+					xArray[count] = topBlockX - 1;
+					yArray[count] = y;
+					zArray[count] = z;
+					count++;
+				}
+			}
+		} else {
+			int size = Chunk.BLOCKS.SIZE;
+			for (int x = 0; x < sizeX; x++) {
+				int wX = (baseX + x) << Chunk.BLOCKS.BITS;
+				for (int z = 0; z < sizeZ; z++) {
+					int wZ = (baseZ + z) << Chunk.BLOCKS.BITS;
+					for (int y = sizeY - 1; y >=0; y--) {
+						Chunk c = cuboid[x][y][z];
+						
+						if (c == null) {
+							continue;
+						}
+						
+						int wY = (baseY + y) << Chunk.BLOCKS.BITS;
+						for (BlockFace face : allFaces) {
+	
+							IntVector3 off = face.getIntOffset();
+							int nx = x + off.getX();
+							int ny = y + off.getY();
+							int nz = z + off.getZ();
+							
+							if (nx >= 0 && nx < sizeX && ny >= 0 && ny < sizeY && nz >= 0 && nz < sizeZ && cuboid[nx][y][z] != null) {
+								continue;
+							}
+							
+							int startX = off.getX() <= 0 ? 0 : (size - 1);
+							int endX = off.getX() >= 0 ? (size - 1) : 0;
+
+							int startY = off.getY() <= 0 ? 0 : (size - 1);
+							int endY = off.getY() >= 0 ? (size - 1) : 0;
+
+							int startZ = off.getZ() <= 0 ? 0 : (size - 1);
+							int endZ = off.getZ() >= 0 ? (size - 1) : 0;
+							
+							startX += wX;
+							endX += wX;
+							
+							startY += wY;
+							endY += wY;
+							
+							startZ += wZ;
+							endZ += wZ;
+
+							for (int xx = startX; xx <= endX; xx++) {
+								for (int yy = startY; yy <= endY; yy++) {
+									for (int zz = startZ; zz <= endZ; zz++) {
+										xArray[count] = xx;
+										yArray[count] = yy;
+										zArray[count] = zz;
+										count++;
+									}
+								}
+							}
+
+						}
+
+					}
+				}
 			}
 		}
-		
-		for (int z = baseBlockZ; z < topBlockZ; z++) {
-			for (int y = baseBlockY; y < topBlockY; y++) {
-				xArray[count] = baseBlockX;
-				yArray[count] = y;
-				zArray[count] = z;
-				count++;
-				xArray[count] = topBlockX - 1;
-				yArray[count] = y;
-				zArray[count] = z;
-				count++;
-			}
-		}
-		
 		return count;
 		
 	}

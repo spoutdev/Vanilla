@@ -173,23 +173,22 @@ public abstract class AbstractWindow implements InventoryViewer {
 	/**
 	 * Gets the inventory at the specified native slot. Returns -1 if
 	 * non-existent.
-	 * @param nativeSlot clicked
+	 * @param nativeSlot clicked slot
 	 * @return inventory entry at slot
 	 */
 	public abstract Slot getSlot(int nativeSlot);
 
 	/**
 	 * Arguments to handle
-	 * @param nativeSlot
-	 * @param rightClick
-	 * @param shiftClick
+	 * @param nativeSlot clicked slot
+	 * @param action the action
 	 * @return
 	 */
-	public abstract ClickArguments getClickArguments(int nativeSlot, boolean rightClick, boolean shiftClick);
+	public abstract ClickArguments getClickArguments(int nativeSlot, ClickArguments.ClickAction action);
 
 	/**
 	 * Sets a property of the window
-	 * @param id of the property
+	 * @param id id of property
 	 * @param value value of property
 	 */
 	public void setProperty(int id, int value) {
@@ -218,16 +217,16 @@ public abstract class AbstractWindow implements InventoryViewer {
 
 	/**
 	 * Returns the value of the specified property.
-	 * @param prop
+	 * @param property
 	 * @return value of property
 	 */
-	public int getProperty(WindowProperty prop) {
-		return properties.get(prop);
+	public int getProperty(WindowProperty property) {
+		return properties.get(property);
 	}
 
 	/**
 	 * Returns the id of the window.
-	 * @return id window
+	 * @return id of window
 	 */
 	public int getId() {
 		return id;
@@ -282,10 +281,6 @@ public abstract class AbstractWindow implements InventoryViewer {
 
 	public boolean isShiftDown() {
 		return shiftDown;
-	}
-
-	public boolean canTick() {
-		return false;
 	}
 
 	protected void callProtocolEvent(ProtocolEvent event) {

@@ -26,9 +26,11 @@
  */
 package org.spout.vanilla.inventory.window;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.spout.api.Client;
 import org.spout.api.Platform;
@@ -66,6 +68,11 @@ import org.spout.vanilla.inventory.util.InventoryConverter;
 public abstract class Window extends AbstractWindow {
 	private final List<InventoryConverter> converters = new LinkedList<InventoryConverter>();
 	protected boolean opened;
+	// Painting
+	private ItemStack painting;
+	private final Set<Slot> paintedSlotSet = new HashSet<Slot>();
+	private byte paintType = 0;
+	private static final byte NOPAINT = 0, LEFTPAINT = 1, RIGHTPAINT = 2;
 	// Widgets
 	protected final Screen popup = new Screen();
 	protected final Widget background;
@@ -207,6 +214,13 @@ public abstract class Window extends AbstractWindow {
 
 	@Override
 	public boolean onClick(ClickArguments args) {
+		if (args.getSlot().getIndex() == -999
+			&& args.getAction() != ClickArguments.ClickAction.START_LEFT_PAINT
+			&& args.getAction() != ClickArguments.ClickAction.END_LEFT_PAINT
+			&& args.getAction() != ClickArguments.ClickAction.START_RIGHT_PAINT
+			&& args.getAction() != ClickArguments.ClickAction.END_RIGHT_PAINT) {
+			return onOutsideClick();
+		}
 		if (handleClick(args)) {
 			reload();
 			return true;
@@ -218,145 +232,292 @@ public abstract class Window extends AbstractWindow {
 		Slot s = args.getSlot();
 		Inventory inventory = s.getInventory();
 		int slot = s.getIndex();
+		// First check if we have a situtation where s's inventory is null
+		switch (args.getAction()) {
+			case START_LEFT_PAINT:
+				if (paintType != NOPAINT || cursorItem == null) {
+					resetPaint();
+					return false;
+				}
+				debug("[Window] Beginning left paint");
+				paintType = LEFTPAINT;
+				painting = cursorItem.clone();
+				return true;
+			case START_RIGHT_PAINT:
+				if (paintType != NOPAINT || cursorItem == null) {
+					resetPaint();
+					return false;
+				}
+				debug("[Window] Beginning right paint");
+				paintType = RIGHTPAINT;
+				painting = cursorItem.clone();
+				return true;
+			case LEFT_PAINT_PROGRESS:
+				if (paintType != LEFTPAINT || cursorItem == null) {
+					resetPaint();
+					return false;
+				}
+				if (paintedSlotSet.size() == painting.getAmount()) {// Can't split item anymore
+					return false;
+				}
+				debug("[Window] Progessing left paint");
+				if (s.get() != null) {
+					if (!s.get().equalsIgnoreSize(painting)) {// Materials don't match
+						return false;
+					}
+					if (s.get().getAmount() >= s.get().getMaxStackSize()) {// Can't stack anymore
+						return true;
+					}
+				}
+				paintedSlotSet.add(s);
+				return true;
+			case RIGHT_PAINT_PROGRESS:
+				if (paintType != RIGHTPAINT || cursorItem == null) {
+					resetPaint();
+					return false;
+				}
+				if (paintedSlotSet.size() == painting.getAmount()) {// Can't split item anymore
+					return false;
+				}
+				debug("[Window] Progessing right paint");
+				if (s.get() != null) {
+					if (!s.get().equalsIgnoreSize(painting)) {// Materials don't match
+						return false;
+					}
+					if (s.get().getAmount() >= s.get().getMaxStackSize()) {// Can't stack anymore
+						return true;
+					}
+				}
+				paintedSlotSet.add(s);
+				return true;
+			case END_LEFT_PAINT:
+				if (paintType != LEFTPAINT || cursorItem == null) {
+					resetPaint();
+					return false;
+				}
+				debug("[Window] Ending left paint");
+				final int divide = painting.getAmount() / paintedSlotSet.size();
+				int extra = 0;
+				for (Slot pSlot : paintedSlotSet) {
+					int newSize = (pSlot.get() == null ? 0 : pSlot.get().getAmount()) + divide;
+					if (newSize > painting.getMaxStackSize()) {
+						extra += painting.getMaxStackSize() - newSize;
+						newSize = painting.getMaxStackSize();
+					}
+					pSlot.set(painting.clone().setAmount(newSize));
+				}
+				cursorItem.setAmount(extra + (painting.getAmount() % paintedSlotSet.size()));
+				resetPaint();
+				return true;
+			case END_RIGHT_PAINT:
+				if (paintType != RIGHTPAINT || cursorItem == null) {
+					resetPaint();
+					return false;
+				}
+				debug("[Window] Ending right paint");
+				for (Slot pSlot : paintedSlotSet) {
+					int newSize = (pSlot.get() == null ? 0 : pSlot.get().getAmount()) + 1;
+					pSlot.set(painting.clone().setAmount(newSize));
+				}
+				cursorItem.setAmount(cursorItem.getAmount() - paintedSlotSet.size());
+				resetPaint();
+				return true;
+		}
 		ItemStack clicked = s.get();
 		if (args.isShiftClick()) {
 			debug("[Window] Shift-Clicked slot " + slot);
 			if (clicked != null) {
 				return onShiftClick(clicked, slot, inventory);
+			} else {
+				return true;
 			}
-		} else if (args.isRightClick()) {
-			debug("[Window] Right-Clicked slot " + slot + " using Cursor: " + cursorItem);
-			debug("[Window] Item at clicked slot: " + (clicked == null ? "Empty" : clicked.getMaterial().getName()));
-			if (clicked == null) {
-				if (cursorItem != null) {
-					debug("[Window] Add one");
-					// slot is empty with a not empty cursor
-					// add one
-					clicked = cursorItem.clone();
-					clicked.setAmount(1);
-					// Can it be set?
-					if (canSet(inventory, slot, clicked)) {
-						inventory.set(slot, clicked);
-						// remove from cursor
-						cursorItem.setAmount(cursorItem.getAmount() - 1);
-						if (cursorItem.isEmpty()) {
-							cursorItem = null;
-						}
-						return true;
-					}
-				}
-			} else if (cursorItem != null) {
-				// slot is not empty with not empty cursor
-				if (cursorItem.equalsIgnoreSize(clicked)) {
-					// only stack materials that are the same
-					if (clicked.getMaxStackSize() > clicked.getAmount()) {
-						debug("[Window] Stacking");
-						// add one if can fit
-						clicked.setAmount(clicked.getAmount() + 1);
+		} 
+		switch (args.getAction()) {
+			case RIGHT_CLICK:
+				debug("[Window - " + title + "] Right-Clicked slot " + slot + " using Cursor: " + cursorItem);
+				debug("[Window] Item at clicked slot: " + (clicked == null ? "Empty" : clicked.getMaterial().getName()));
+				if (clicked == null) {
+					if (cursorItem != null) {
+						debug("[Window] Add one");
+						// slot is empty with a not empty cursor
+						// add one
+						clicked = cursorItem.clone();
+						clicked.setAmount(1);
+						// Can it be set?
 						if (canSet(inventory, slot, clicked)) {
 							inventory.set(slot, clicked);
+							// remove from cursor
 							cursorItem.setAmount(cursorItem.getAmount() - 1);
 							if (cursorItem.isEmpty()) {
 								cursorItem = null;
 							}
 							return true;
+						}
+					}
+				} else if (cursorItem != null) {
+					// slot is not empty with not empty cursor
+					if (cursorItem.equalsIgnoreSize(clicked)) {
+						// only stack materials that are the same
+						if (clicked.getMaxStackSize() > clicked.getAmount()) {
+							debug("[Window] Stacking");
+							// add one if can fit
+							clicked.setAmount(clicked.getAmount() + 1);
+							if (canSet(inventory, slot, clicked)) {
+								inventory.set(slot, clicked);
+								cursorItem.setAmount(cursorItem.getAmount() - 1);
+								if (cursorItem.isEmpty()) {
+									cursorItem = null;
+								}
+								return true;
+							} else {
+								//Crafting result slot?
+								//Reset state
+								clicked.setAmount(clicked.getAmount() - 1);
+								cursorItem.stack(clicked);
+								if (clicked.isEmpty()) {
+									clicked = null;
+									inventory.set(slot, null, true); //will trigger crafting table to create new result if possible
+								} else {
+									inventory.set(slot, clicked, false);//will not trigger crafting table to create new result (some result still left in slot)
+								}
+							}
+						}
+					} else {
+						// Can it be set?
+						if (canSet(inventory, slot, cursorItem)) {
+							debug("[Window] Materials don't match. Swapping stacks.");
+							// materials don't match
+							// swap stacks
+							ItemStack newCursor = clicked.clone();
+							inventory.set(slot, cursorItem);
+							cursorItem = newCursor;
+							return true;
+						}
+					}
+				} else {
+					// slot is not empty with an empty cursor
+					// split the stack
+					int x = clicked.getAmount();
+					int y = x / 2;
+					int z = x % 2;
+					clicked.setAmount(y);
+					inventory.set(slot, clicked);
+					// cursor gets any remainder
+					cursorItem = clicked.clone();
+					cursorItem.setAmount(y + z);
+				}
+				return true;
+			case LEFT_CLICK:
+				debug("[Window - " + title + "] Left-Clicked slot " + slot + " using Cursor: " + cursorItem);
+				debug("[Window] Item at clicked slot: " + (clicked == null ? "Empty" : clicked.getMaterial().getName()));
+				if (clicked == null) {
+					if (cursorItem != null) {
+						debug("[Window] Put whole stack in slot");
+						// slot is empty; cursor is not empty.
+						// put whole stack down
+						clicked = cursorItem.clone();
+						// Can it be set?
+						if (canSet(inventory, slot, clicked)) {
+							inventory.set(slot, clicked);
+							cursorItem = null;
+							return true;
+						}
+					}
+				} else if (cursorItem != null) {
+					// slot is not empty; cursor is not empty.
+					// stack
+					if (cursorItem.equalsIgnoreSize(clicked)) {
+						debug("[Window] Stacking");
+						//Try to set items
+						if (canSet(inventory, slot, clicked)) {
+							clicked.stack(cursorItem);
+							inventory.set(slot, clicked);
+							if (cursorItem.isEmpty()) {
+								cursorItem = null;
+							}
+							//Else try to pick them up (crafting)
 						} else {
-							//Crafting result slot?
-							//Reset state
-							clicked.setAmount(clicked.getAmount() - 1);
 							cursorItem.stack(clicked);
 							if (clicked.isEmpty()) {
 								clicked = null;
-								inventory.set(slot, null, true /*will trigger crafting table to create new result if possible*/);
+								inventory.set(slot, null, true);//will trigger crafting table to create new result if possible
 							} else {
-								inventory.set(slot, clicked, false /*will not trigger crafting table to create new result (some result still left in slot)*/);
+								inventory.set(slot, clicked, false);//will not trigger crafting table to create new result (some result still left in slot)
+							}
+						}
+						return true;
+					} else {
+						// Can it be set?
+						if (canSet(inventory, slot, clicked)) {
+							debug("[Window] Materials don't match. Swapping stacks.");
+							// materials don't match
+							// swap stacks
+							ItemStack newCursor = clicked.clone();
+							inventory.set(slot, cursorItem);
+							cursorItem = newCursor;
+						}
+					}
+				} else {
+					// slot is not empty; cursor is empty.
+					// pick up stack
+					cursorItem = clicked.clone();
+					inventory.set(slot, null);
+				}
+				return true;
+			case DOUBLE_CLICK:
+				if (cursorItem == null || cursorItem.getAmount() >= cursorItem.getMaxStackSize()) {
+					return true;
+				}
+				debug("[Window] Combining similar materials.");
+				for (int i = 0; i < getSize(); i++) {
+					Slot spoutSlot = getSlot(i);
+					ItemStack get = spoutSlot.get();
+					if (get == null || get.getAmount() >= get.getMaxStackSize()) {
+						continue;
+					}
+					if (cursorItem.stack(get)) {
+						if (get.isEmpty()) {
+							spoutSlot.set(null);
+							if (cursorItem.getAmount() >= cursorItem.getMaxStackSize()) {// Done
+								return true;
 							}
 						}
 					}
-				} else {
-					// Can it be set?
-					if (canSet(inventory, slot, cursorItem)) {
-						debug("[Window] Materials don't match. Swapping stacks.");
-						// materials don't match
-						// swap stacks
-						ItemStack newCursor = clicked.clone();
-						inventory.set(slot, cursorItem);
-						cursorItem = newCursor;
-						return true;
-					}
 				}
-			} else {
-				// slot is not empty with an empty cursor
-				// split the stack
-				int x = clicked.getAmount();
-				int y = x / 2;
-				int z = x % 2;
-				clicked.setAmount(y);
-				inventory.set(slot, clicked);
-				// cursor gets any remainder
-				cursorItem = clicked.clone();
-				cursorItem.setAmount(y + z);
-				return true;
-			}
-		} else {
-			debug("[Window] Left-Clicked slot " + slot + " using Cursor: " + cursorItem);
-			debug("[Window] Item at clicked slot: " + (clicked == null ? "Empty" : clicked.getMaterial().getName()));
-			if (clicked == null) {
-				if (cursorItem != null) {
-					debug("[Window] Put whole stack in slot");
-					// slot is empty; cursor is not empty.
-					// put whole stack down
-					clicked = cursorItem.clone();
-					// Can it be set?
-					if (canSet(inventory, slot, clicked)) {
-						inventory.set(slot, clicked);
-						cursorItem = null;
-						return true;
-					}
-				}
-			} else if (cursorItem != null) {
-				// slot is not empty; cursor is not empty.
-				// stack
-				if (cursorItem.equalsIgnoreSize(clicked)) {
-					debug("[Window] Stacking");
-					//Try to set items
-					if (canSet(inventory, slot, clicked)) {
-						clicked.stack(cursorItem);
-						inventory.set(slot, clicked);
-						if (cursorItem.isEmpty()) {
-							cursorItem = null;
-						}
-						//Else try to pick them up (crafting)
-					} else {
-						cursorItem.stack(clicked);
-						if (clicked.isEmpty()) {
-							clicked = null;
-							inventory.set(slot, null, true /*will trigger crafting table to create new result if possible*/);
-						} else {
-							inventory.set(slot, clicked, false /*will not trigger crafting table to create new result (some result still left in slot)*/);
-						}
-					}
+				break;
+			case DROP:
+				ItemStack get = args.getSlot().get();
+				if (get == null) {
 					return true;
-				} else {
-					// Can it be set?
-					if (canSet(inventory, slot, clicked)) {
-						debug("[Window] Materials don't match. Swapping stacks.");
-						// materials don't match
-						// swap stacks
-						ItemStack newCursor = clicked.clone();
-						inventory.set(slot, cursorItem);
-						cursorItem = newCursor;
-					}
 				}
-			} else {
-				// slot is not empty; cursor is empty.
-				// pick up stack
-				cursorItem = clicked.clone();
-				inventory.set(slot, null);
+				if (get.getAmount() == 1) {
+					getHuman().dropItem(get);
+					args.getSlot().set(null);
+				} else {
+					getHuman().dropItem(get.clone().setAmount(1));
+					args.getSlot().addAmount(-1);
+				}
 				return true;
-			}
+			case CTRL_DROP:
+				if (args.getSlot().get() == null) {
+					return true;
+				}
+				getHuman().dropItem(args.getSlot().get());
+				args.getSlot().set(null);
+				return true;
+				
 		}
 		return false;
+	}
+
+	private void resetPaint() {
+		if (painting == null) {
+			return;
+		}
+		paintedSlotSet.clear();
+		paintType = NOPAINT;
+		// Clear painging
+		painting = null;
 	}
 
 	@Override
@@ -419,6 +580,9 @@ public abstract class Window extends AbstractWindow {
 
 	@Override
 	public Slot getSlot(int nativeSlot) {
+		if (nativeSlot == 64537) {
+			return new Slot(null, -999);
+		}
 		int slot;
 		for (InventoryConverter converter : converters) {
 			slot = converter.convert(nativeSlot);
@@ -431,10 +595,10 @@ public abstract class Window extends AbstractWindow {
 	}
 
 	@Override
-	public ClickArguments getClickArguments(int nativeSlot, boolean rightClick, boolean shiftClick) {
+	public ClickArguments getClickArguments(int nativeSlot, ClickArguments.ClickAction action) {
 		Slot entry = getSlot(nativeSlot);
 		if (entry != null) {
-			return new ClickArguments(entry.getInventory(), entry.getIndex(), rightClick, shiftClick);
+			return new ClickArguments(entry.getInventory(), entry.getIndex(), action);
 		}
 		return null;
 	}
@@ -525,12 +689,11 @@ public abstract class Window extends AbstractWindow {
 		if (slots == null) {
 			return;
 		}
-
 		switch (VanillaPlugin.getInstance().getEngine().getPlatform()) {
 			case PROXY:
 			case SERVER:
 				QuickbarInventory quickbar = getPlayerInventory().getQuickbar();
-				debug("[Window] Slot changed: " + slot + " = " + item);
+				debug("[Window - " + title + "] Slot changed: " + slot + " = " + item);
 				//callProtocolEvent(new WindowSlotEvent(this, inventory, slots.revert(slot), item));
 				reload();
 				// Update the held item

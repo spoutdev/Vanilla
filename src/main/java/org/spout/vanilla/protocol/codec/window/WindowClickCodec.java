@@ -46,11 +46,11 @@ public final class WindowClickCodec extends MessageCodec<WindowClickMessage> {
 	public WindowClickMessage decode(ChannelBuffer buffer) throws IOException {
 		int id = buffer.readUnsignedByte();
 		int slot = buffer.readUnsignedShort();
-		boolean rightClick = buffer.readUnsignedByte() != 0;
+		byte button = buffer.readByte();
 		int transaction = buffer.readUnsignedShort();
-		boolean shift = buffer.readUnsignedByte() != 0;
+		byte mode = buffer.readByte();
 		ItemStack item = ChannelBufferUtils.readItemStack(buffer);
-		return new WindowClickMessage(id, slot, rightClick, transaction, shift, item);
+		return new WindowClickMessage(id, slot, button, transaction, mode, item);
 	}
 
 	@Override
@@ -58,9 +58,9 @@ public final class WindowClickCodec extends MessageCodec<WindowClickMessage> {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeByte(message.getWindowInstanceId());
 		buffer.writeShort(message.getSlot());
-		buffer.writeByte(message.isRightClick() ? 1 : 0);
+		buffer.writeByte(message.getButton());
 		buffer.writeShort(message.getTransaction());
-		buffer.writeByte(message.isShift() ? 1 : 0);
+		buffer.writeByte(message.getMode());
 		ChannelBufferUtils.writeItemStack(buffer, message.get());
 		return buffer;
 	}

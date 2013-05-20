@@ -35,34 +35,28 @@ import org.spout.api.inventory.Slot;
  */
 public class ClickArguments {
 	private final Slot slot;
-	private final boolean rightClick, shiftClick;
+	private final ClickAction action;
 
-	public ClickArguments(Inventory inventory, int slot, boolean rightClick, boolean shiftClick) {
-		this.slot = new Slot(inventory, slot);
-		this.rightClick = rightClick;
-		this.shiftClick = shiftClick;
+	public ClickArguments(Inventory inventory, int slot, ClickAction action) {
+		this(new Slot(inventory, slot), action);
 	}
 
-	public ClickArguments(Slot slot, boolean rightClick, boolean shiftClick) {
-		this.slot = slot;
-		this.rightClick = rightClick;
-		this.shiftClick = shiftClick;
-	}
-
-	/**
-	 * Returns true if the click was a right click
-	 * @return true if window was right clicked
-	 */
-	public boolean isRightClick() {
-		return rightClick;
+	public ClickArguments(Slot invSlot, ClickAction action) {
+		this.slot = invSlot;
+		this.action = action;
 	}
 
 	/**
 	 * Returns true if the client was holding shift when the window was clicked
+	 * NOTE: this is only a shortcut method
 	 * @return true if shift was being held down
 	 */
 	public boolean isShiftClick() {
-		return shiftClick;
+		return action == ClickAction.SHIFT_LEFT_MOUSE || action == ClickAction.SHIFT_RIGHT_MOUSE;
+	}
+
+	public ClickAction getAction() {
+		return action;
 	}
 
 	/**
@@ -75,6 +69,54 @@ public class ClickArguments {
 
 	@Override
 	public String toString() {
-		return "ClickArguments {Slot=" + slot.getIndex() + ", Button=" + (rightClick ? "Right" : "Left") + ", Shift=" + shiftClick + "}";
+		return "ClickArguments {Slot=" + slot.getIndex() + ", Button=" + action + "}";
+	}
+	
+	public enum ClickAction {
+		LEFT_CLICK(0, 0),
+		RIGHT_CLICK(0, 1),
+		SHIFT_LEFT_MOUSE(1, 0),
+		SHIFT_RIGHT_MOUSE(1, 1),
+		NUMBER_1(2, 0),
+		NUMBER_2(2, 1),
+		NUMBER_3(2, 2),
+		NUMBER_4(2, 3),
+		NUMBER_5(2, 4),
+		NUMBER_6(2, 5),
+		NUMBER_7(2, 6),
+		NUMBER_8(2, 7),
+		NUMBER_9(2, 8),
+		MIDDLE_CLICK(3, 2),
+		DROP(4, 0),
+		CTRL_DROP(4, 1),
+		EMPTY_LEFT_OUTSIDE_CLICK(4, 0),
+		EMPTY_RIGHT_OUTSIDE_CLICK(4, 1),
+		START_LEFT_PAINT(5, 0),
+		START_RIGHT_PAINT(5, 4),
+		LEFT_PAINT_PROGRESS(5, 1),
+		RIGHT_PAINT_PROGRESS(5, 5),
+		END_LEFT_PAINT(5, 2),
+		END_RIGHT_PAINT(5, 6),
+		DOUBLE_CLICK(6, 0);
+		
+		private byte mode, button;
+		private ClickAction(int mode, int button) {
+			this.mode = (byte) mode;
+			this.button = (byte) button;
+		}
+
+		public static ClickAction getAction(byte mode, byte button) {
+			for (ClickAction a : values()) {
+				if (mode == a.mode && button == a.button) {
+					return a;
+				}
+			}
+			throw new IllegalArgumentException("Invalid mode{" + mode + "} and button{" + button + "} combination has occured!");
+		}
+
+		@Override
+		public String toString() {
+			return "ClickAction{" + "mode=" + mode + ", button=" + button + '}';
+		}
 	}
 }

@@ -187,7 +187,7 @@ public class VanillaProtocolTest extends BaseProtocolTest {
 			new EntityThunderboltMessage(34, 1, 23, 45, 55, NullRepositionManager.getInstance()),
 			new WindowOpenMessage(1, WindowType.FURNACE, "container.furnace", 42, true),
 			new WindowCloseMessage(23),
-			new WindowClickMessage(1, 2, false, 34, true, new ItemStack(VanillaMaterials.PLANK, 1, 1)),
+			new WindowClickMessage(1, 2, (byte) 0, 34, (byte) 0, new ItemStack(VanillaMaterials.PLANK, 1, 1)),
 			new WindowSlotMessage(1, 2, new ItemStack(VanillaMaterials.PLANK, 1, 2)),
 			new WindowItemsMessage((byte) 3, new ItemStack[]{new ItemStack(VanillaMaterials.PISTON_BASE, 3), new ItemStack(VanillaMaterials.ARROW, 23)}),
 			new WindowPropertyMessage(2, 4, 55),

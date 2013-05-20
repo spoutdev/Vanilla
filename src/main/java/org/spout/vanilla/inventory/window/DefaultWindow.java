@@ -57,7 +57,7 @@ public class DefaultWindow extends Window {
 		}));
 	}
 
-	@Override
+	@Override 
 	public void close() {
 		PlayerInventory pInv = getPlayerInventory();
 		//Disconnecting
@@ -116,6 +116,16 @@ public class DefaultWindow extends Window {
 	@Override
 	public boolean onClick(ClickArguments args) {
 		opened = true;
+		if (args.getSlot().getInventory() == getPlayerInventory().getCraftingGrid()) {
+			if (args.getAction() == ClickArguments.ClickAction.DOUBLE_CLICK) {
+				for (ItemStack item : getPlayerInventory().getCraftingGrid()) {
+					if (item == null) {
+						continue;
+					}
+					getPlayerInventory().getMain().add(item);
+				}
+			 }
+		}
 		return super.onClick(args);
 	}
 

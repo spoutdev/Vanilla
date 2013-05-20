@@ -138,12 +138,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		return count;
 	}
 
-	// TODO - needs surface height data
 	protected abstract int getEmittedLight(ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z);
-
-	protected boolean processDirty(TInt10TripleSet[] dirtySets, int currentLevel, boolean falling) {
-		return false;
-	}
 
 	protected int computeLightLevel(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
 		BlockMaterial m = material.get(x, y, z);

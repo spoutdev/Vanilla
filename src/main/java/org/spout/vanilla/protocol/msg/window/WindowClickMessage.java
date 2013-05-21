@@ -32,28 +32,28 @@ import org.spout.vanilla.inventory.window.Window;
 
 public final class WindowClickMessage extends WindowMessage {
 	private final int slot;
-	private final boolean rightClick, shift;
+	private final byte button, mode;
 	private final int transaction;
 	private final ItemStack item;
 
-	public WindowClickMessage(Window window, int slot, boolean rightClick, int transaction, boolean shift) {
-		this(window.getId(), slot, rightClick, transaction, shift);
+	public WindowClickMessage(Window window, int slot, byte button, int transaction, byte mode) {
+		this(window.getId(), slot, button, transaction, mode);
 	}
 
-	public WindowClickMessage(int windowInstanceId, int slot, boolean rightClick, int transaction, boolean shift) {
-		this(windowInstanceId, slot, rightClick, transaction, shift, null);
+	public WindowClickMessage(int windowInstanceId, int slot, byte button, int transaction, byte mode) {
+		this(windowInstanceId, slot, button, transaction, mode, null);
 	}
 
-	public WindowClickMessage(Window window, int slot, boolean rightClick, int transaction, boolean shift, ItemStack item) {
-		this(window.getId(), slot, rightClick, transaction, shift, item);
+	public WindowClickMessage(Window window, int slot, byte button, int transaction, byte mode, ItemStack item) {
+		this(window.getId(), slot, button, transaction, mode, item);
 	}
 
-	public WindowClickMessage(int windowInstanceId, int slot, boolean rightClick, int transaction, boolean shift, ItemStack item) {
+	public WindowClickMessage(int windowInstanceId, int slot, byte button, int transaction, byte mode, ItemStack item) {
 		super(windowInstanceId);
 		this.slot = slot;
-		this.rightClick = rightClick;
+		this.button = button;
 		this.transaction = transaction;
-		this.shift = shift;
+		this.mode = mode;
 		this.item = item;
 	}
 
@@ -61,12 +61,12 @@ public final class WindowClickMessage extends WindowMessage {
 		return slot;
 	}
 
-	public boolean isRightClick() {
-		return rightClick;
+	public byte getButton() {
+		return button;
 	}
 
-	public boolean isShift() {
-		return shift;
+	public byte getMode() {
+		return mode;
 	}
 
 	public int getTransaction() {
@@ -79,7 +79,7 @@ public final class WindowClickMessage extends WindowMessage {
 
 	@Override
 	public String toString() {
-		return "WindowClickMessage{id=" + this.getWindowInstanceId() + ",slot=" + slot + ",rightClick=" + rightClick + ",shift=" + shift + ",transaction=" + transaction + ",item=" + item + "}";
+		return "WindowClickMessage{id=" + this.getWindowInstanceId() + ",slot=" + slot + ",button=" + button + ",mode=" + mode + ",transaction=" + transaction + ",item=" + item + "}";
 	}
 
 	@Override
@@ -94,8 +94,8 @@ public final class WindowClickMessage extends WindowMessage {
 		return new org.apache.commons.lang3.builder.EqualsBuilder()
 				.append(this.getWindowInstanceId(), other.getWindowInstanceId())
 				.append(this.slot, other.slot)
-				.append(this.rightClick, other.rightClick)
-				.append(this.shift, other.shift)
+				.append(this.button, other.button)
+				.append(this.mode, other.mode)
 				.append(this.transaction, other.transaction)
 				.append(this.item, other.item)
 				.isEquals();

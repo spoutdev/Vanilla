@@ -33,6 +33,7 @@ import org.spout.api.geo.discrete.Transform;
 import org.spout.api.input.InputExecutor;
 import org.spout.api.math.QuaternionMath;
 import org.spout.api.math.Vector3;
+import org.spout.vanilla.component.entity.misc.Head;
 
 public class VanillaInputExecutor implements InputExecutor {
 	private final Player player;
@@ -46,7 +47,7 @@ public class VanillaInputExecutor implements InputExecutor {
 		PlayerInputState inputState = player.input();
 		SceneComponent sc = player.getScene();
 		Transform ts = sc.getTransform(); //TODO: Maybe need getTransformLive?
-
+		Head head = player.get(Head.class);
 		Vector3 offset = Vector3.ZERO;
 		float speed = 50;
 		if (inputState.getForward()) {
@@ -68,7 +69,8 @@ public class VanillaInputExecutor implements InputExecutor {
 			offset = offset.subtract(ts.upVector().multiply(speed).multiply(dt));
 		}
 
-		ts.translateAndSetRotation(offset, QuaternionMath.rotation(inputState.pitch(), inputState.yaw(), ts.getRotation().getRoll()));
-		sc.setTransform(ts);
+		ts.translate(offset);
+		head.setRotation(QuaternionMath.rotation(inputState.pitch(), inputState.yaw(), ts.getRotation().getRoll()));
+                sc.setTransform(ts);
 	}
 }

@@ -45,13 +45,13 @@ public class VanillaBlocklightLightingManager extends VanillaLightingManager {
 	@Override
 	public void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int[] x, int[] y, int[] z, int changedBlocks) {
 		Iterable<IntVector3> coords = new IntVector3Array(x, y, z, changedBlocks);
-		super.resolve(light, material, height, coords);
+		super.resolve(light, material, height, coords, false);
 	}
 
 	@Override
 	public void resolveChunks(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int[] bx, int[] by, int[] bz, int[] tx, int[] ty, int[] tz, int changedCuboids) {
 		Iterable<IntVector3> coords = new IntVector3CuboidArray(bx, by, bz, tx, ty, tz, changedCuboids);
-		super.resolve(light, material, height, coords);
+		super.resolve(light, material, height, coords, false);
 	}
 
 	@Override

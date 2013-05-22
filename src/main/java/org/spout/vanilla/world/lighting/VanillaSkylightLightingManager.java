@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.world.lighting;
 
-import org.spout.api.Spout;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.math.IntVector3;
@@ -45,7 +44,7 @@ public class VanillaSkylightLightingManager extends VanillaBlocklightLightingMan
 	@Override
 	public void resolveColumns(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int[] hx, int[] hz, int[] oldHy, int[] newHy, int changedColumns) {
 		Iterable<IntVector3> coords = new IntVector3CuboidArray(hx, oldHy, hz, newHy, changedColumns, true);
-		super.resolve(light, material, height, coords);
+		super.resolve(light, material, height, coords, false);
 	}
 
 	@Override

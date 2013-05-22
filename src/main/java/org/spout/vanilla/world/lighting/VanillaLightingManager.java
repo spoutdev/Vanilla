@@ -40,6 +40,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.IntVector3;
+import org.spout.api.math.IntVector4;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.IntVector3Array;
 import org.spout.api.util.bytebit.ByteBitSet;
@@ -48,6 +49,7 @@ import org.spout.api.util.cuboid.ImmutableCuboidBlockMaterialBuffer;
 import org.spout.api.util.cuboid.ImmutableHeightMapBuffer;
 import org.spout.api.util.hashing.Int10TripleHashed;
 import org.spout.api.util.list.IntVector3FIFO;
+import org.spout.api.util.list.IntVector4ExpandableFIFO;
 import org.spout.api.util.set.TInt10TripleSet;
 
 public abstract class VanillaLightingManager extends LightingManager<VanillaCuboidLightBuffer> {
@@ -71,63 +73,165 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		return deserialize(holder, baseX, baseY, baseZ, sizeX, sizeY, sizeZ, null);
 	}
 
-	protected void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, Iterable<IntVector3> coords) {
-		TInt10TripleSet[] dirtySets = new TInt10TripleSet[16];
-		TInt10TripleSet[] regenSets = new TInt10TripleSet[16];
-		Vector3 base = light.getBase();
-		for (int i = 0; i < dirtySets.length; i++) {
-			dirtySets[i] = new TInt10TripleSet(base.getFloorX(), base.getFloorY(), base.getFloorZ());
-			regenSets[i] = new TInt10TripleSet(base.getFloorX(), base.getFloorY(), base.getFloorZ());
-		}
-		// Spout.getLogger().info("Buffer type: " + getClass().getSimpleName());
-		// Spout.getLogger().info("About to process higher emit");
+	protected void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, Iterable<IntVector3> coords, boolean init) {
+		
+		// Spout.getLogger().info("Processing for " + getClass().getSimpleName());
+		
+		IntVector4ExpandableFIFO fifo = new IntVector4ExpandableFIFO(256);
 
-		// Spout.getLogger().info("About to scan higher root");
-		// Scan all root blocks and neighbours and see if any need to be made brighter
-		// Adds blocks to dirty set corresponding corresponding to required level
+		IntVector4ExpandableFIFO regen = new IntVector4ExpandableFIFO(256);
+	
+		if (!init) {
+			processLower(coords, fifo, regen, light, material, height);
+
+			fifo = null;
+		}
+		
+		processHigher(coords, regen, light, material, height);
+	}
+	
+	public void processHigher(Iterable<IntVector3> coords, IntVector3FIFO fifo, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height) {
+		
 		Iterator<IntVector3> itr = coords.iterator();
+		
 		while (itr.hasNext()) {
 			IntVector3 v = itr.next();
-			try {
-				checkAndAddDirtyRising(dirtySets, light, material, height, v.getX(), v.getY(), v.getZ());
-			} catch (IllegalArgumentException iae) {
-				Spout.getLogger().info("Extra info");
-				Spout.getLogger().info("Current coords: " + v);
-				Spout.getLogger().info("Light: " + light.getBase());
-				Spout.getLogger().info("Material: " + material.getBase());
-				itr = coords.iterator();
-				Spout.getLogger().info("All points: ");
-				while (itr.hasNext()) {
-					Spout.getLogger().info(itr.next().toString());
+			int newLight = this.computeLightLevel(light, material, height, v.getX(), v.getY(), v.getZ());
+			int lightLevel = getLightLevel(light, v.getX(), v.getY(), v.getZ());
+			if (newLight > lightLevel) {
+				setLightLevel(light, v.getX(), v.getY(), v.getZ(), newLight);
+			}
+			fifo.write(v.getX(), v.getY(), v.getZ());
+		}
+		
+		Vector3 base = material.getBase();
+		int baseX = base.getFloorX();
+		int baseY = base.getFloorY();
+		int baseZ = base.getFloorZ();
+		
+		Vector3 top = material.getTop();
+		int topX = top.getFloorX();
+		int topY = top.getFloorY();
+		int topZ = top.getFloorZ();
+		
+		int ops = 0;
+		IntVector3 v;
+		while ((v = fifo.read()) != null) {
+			ops++;
+			int center = getLightLevel(light, v.getX(), v.getY(), v.getZ());
+
+			BlockMaterial m = material.get(v.getX(), v.getY(), v.getZ());
+			
+			if (m == BlockMaterial.UNGENERATED) {
+				continue;
+			}
+			
+			ByteBitSet occulusion = m.getOcclusion(m.getData());
+			
+			for (BlockFace face : allFaces) {
+				if (occulusion.get(face)) {
+					continue;
 				}
-				throw iae;
+				IntVector3 off = face.getIntOffset();
+				int nx = v.getX() + off.getX();
+				int ny = v.getY() + off.getY();
+				int nz = v.getZ() + off.getZ();
+				if (nx < baseX || nx >= topX || ny <= baseY || ny >= topY || nz < baseZ || nz >= topZ) {
+					continue;
+				}
+				BlockMaterial other = material.get(nx, ny, nz);
+				if (other == BlockMaterial.UNGENERATED) {
+					continue;
+				}
+
+				int opacity = other.getOpacity() + 1;
+
+				int newLevel = center - opacity;
+				
+				int oldLevel = getLightLevel(light, nx, ny, nz);
+				
+				if (newLevel > oldLevel && !other.getOcclusion(other.getData()).get(face.getOpposite())) {
+					setLightLevel(light, nx, ny, nz, newLevel);
+					fifo.write(nx, ny, nz); // block is added each time its light increases
+				}
 			}
 		}
-		// Spout.getLogger().info("About to process higher from sets");
-
-		// Loop to resolve and propagate brightening of blocks
-		// Updates are limited to blocks that could have been affected by the modified blocks
-		resolveHigher(dirtySets, light, material, height);
-
-		// Reset dirty sets for darkening pass
-		for (int i = 0; i < dirtySets.length; i++) {
-			dirtySets[i].clear();
-		}
-
-		// Spout.getLogger().info("About to process lower root");
-		itr = coords.iterator();
+	}
+	
+	public void processLower(Iterable<IntVector3> coords, IntVector4ExpandableFIFO fifo, IntVector4ExpandableFIFO regen, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height) {
+		Iterator<IntVector3> itr = coords.iterator();
+		
 		while (itr.hasNext()) {
 			IntVector3 v = itr.next();
-			checkAndAddDirtyFalling(dirtySets, regenSets, light, material, height, v.getX(), v.getY(), v.getZ());
+			int lightLevel = getLightLevel(light, v.getX(), v.getY(), v.getZ());
+			if (lightLevel == 0) {
+				continue;
+			}
+			int newLight = this.computeLightLevel(light, material, height, v.getX(), v.getY(), v.getZ());
+			if (newLight < lightLevel) {
+				setLightLevel(light, v.getX(), v.getY(), v.getZ(), 0);
+				fifo.write(lightLevel, v.getX(), v.getY(), v.getZ());
+			} else {
+				BlockMaterial m = material.get(v.getX(), v.getY(), v.getZ());
+				if (!m.isTransparent() || m.getOcclusion(m.getData()).getAny(BlockFaces.NESWBT)) {
+					fifo.write(lightLevel, v.getX(), v.getY(), v.getZ());
+				}
+			}
 		}
-		// Spout.getLogger().info("About to process lower from sets");
-		resolveLower(dirtySets, regenSets, light, material, height);
+
+		Vector3 base = material.getBase();
+		int baseX = base.getFloorX();
+		int baseY = base.getFloorY();
+		int baseZ = base.getFloorZ();
 		
-		purgeSet(light, regenSets);
+		Vector3 top = material.getTop();
+		int topX = top.getFloorX();
+		int topY = top.getFloorY();
+		int topZ = top.getFloorZ();
 		
-		// Spout.getLogger().info("About to process higher (lower regen)");
-		resolveHigher(regenSets, light, material, height);
-		// Spout.getLogger().info("Done processing regen");
+		int ops = 0;
+		IntVector4 v;
+		while ((v = fifo.read()) != null) {
+			ops++;
+			int center = v.getW();
+			
+			BlockMaterial m = material.get(v.getX(), v.getY(), v.getZ());
+			
+			if (m == BlockMaterial.UNGENERATED) {
+				continue;
+			}
+			
+			for (BlockFace face : allFaces) {
+
+				IntVector3 off = face.getIntOffset();
+				int nx = v.getX() + off.getX();
+				int ny = v.getY() + off.getY();
+				int nz = v.getZ() + off.getZ();
+				if (nx < baseX || nx >= topX || ny <= baseY || ny >= topY || nz < baseZ || nz >= topZ) {
+					continue;
+				}
+				BlockMaterial other = material.get(nx, ny, nz);
+				
+				if (other == BlockMaterial.UNGENERATED) {
+					continue;
+				}
+
+				int oldLevel = getLightLevel(light, nx, ny, nz);
+
+				if (oldLevel > 0) {
+					int opacity = other.getOpacity() + 1;
+
+					int oldSupportLevel = center - opacity;
+					
+					if (oldSupportLevel == oldLevel) {
+						setLightLevel(light, nx, ny, nz, 0);
+						fifo.write(oldLevel, nx, ny, nz); // block is added if it is set to zero
+					} else if (oldLevel > 0) {
+						regen.write(oldLevel, nx, ny, nz);
+					}
+				}
+			}
+		}
 	}
 
 	public static int sizeSets(TInt10TripleSet[] sets) {
@@ -149,10 +253,9 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		if (occlusionSet.get(BlockFaces.NESWBT)) {
 			return 0;
 		}
-		// TODO - needs to be made generic
+
 		int opacity = m.getOpacity() + 1;
 
-		// TODO - add this method -> probably need sub-classes of VanillaLightBuffer
 		int neighborLight = getEmittedLight(material, height, x, y, z);
 
 		for (int i = 0; i < 6; i++) {
@@ -198,6 +301,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		if (buffer != null) {
 			level = buffer.get(x, y, z);
 		}
+		//Spout.getLogger().info("Getting " + x + ", " + y + ", " + z + " " + level);
 		return level;
 	}
 
@@ -333,7 +437,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		
 		Iterable<IntVector3> boundary = getBoundary(material, chunks);
 		
-		resolve(light, material, height, boundary);
+		resolve(light, material, height, boundary, true);
 	}
 	
 	private final static Comparator<Chunk> chunkSorter = new Comparator<Chunk>() {

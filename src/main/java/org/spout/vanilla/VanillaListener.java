@@ -129,7 +129,7 @@ public class VanillaListener implements Listener {
 		player.add(InteractComponent.class).setRange(5f);
 
 		((Client) player.getEngine()).getInputManager().addInputExecutor(new VanillaInputExecutor(player));
-
+		((Client) player.getEngine()).setActiveCamera(player.get(VanillaCamera.class));
 		String username = VanillaConfiguration.USERNAME.getString();
 		String password = VanillaConfiguration.PASSWORD.getString();
 

@@ -55,6 +55,7 @@ import org.spout.vanilla.component.entity.misc.Sleep;
 import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.component.entity.player.Ping;
 import org.spout.vanilla.component.entity.player.PlayerList;
+import org.spout.vanilla.component.entity.player.VanillaCamera;
 import org.spout.vanilla.component.entity.player.hud.VanillaArmorWidget;
 import org.spout.vanilla.component.entity.player.hud.VanillaCrosshair;
 import org.spout.vanilla.component.entity.player.hud.VanillaDrowning;
@@ -123,13 +124,13 @@ public class VanillaListener implements Listener {
 		player.add(Human.class);
 		player.add(PlayerInventory.class);
 		player.add(WindowHolder.class);
-		player.add(CameraComponent.class);
+		player.add(VanillaCamera.class);
 		player.add(Health.class);
 		player.add(Hunger.class);
 		player.add(InteractComponent.class).setRange(5f);
 
 		((Client) player.getEngine()).getInputManager().addInputExecutor(new VanillaInputExecutor(player));
-
+		((Client) player.getEngine()).setActiveCamera(player.get(VanillaCamera.class));
 		String username = VanillaConfiguration.USERNAME.getString();
 		String password = VanillaConfiguration.PASSWORD.getString();
 

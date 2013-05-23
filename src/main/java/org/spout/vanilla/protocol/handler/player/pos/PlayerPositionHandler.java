@@ -185,16 +185,17 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 				System.out.println("    Ping: " + holder.get(Ping.class).getPing());
 				last = System.nanoTime();
 				*/
-				if (tracker.isFilled()) {
-					//Flying?
-					if (tracker.getAvgMovement() > 0.3D && !human.canFly()) {
-						holder.sendMessage("Flying? (Speed: " + tracker.getAvgMovement());
-					}
-					//Flooding packets?
-					if (tracker.getAvgMessageTime() < 40F * 1E6F) {
-						holder.sendMessage("Speed Hacking?");
-					}
-				}
+				//TODO This is way too aggressive, needs to be revised.
+//				if (tracker.isFilled()) {
+//					//Flying?
+//					if (tracker.getAvgMovement() > 0.3D && !human.canFly()) {
+//						holder.sendMessage("Flying? (Speed: " + tracker.getAvgMovement());
+//					}
+//					//Flooding packets?
+//					if (tracker.getAvgMessageTime() < 40F * 1E6F) {
+//						holder.sendMessage("Speed Hacking?");
+//					}
+//				}
 			}
 		}
 	}

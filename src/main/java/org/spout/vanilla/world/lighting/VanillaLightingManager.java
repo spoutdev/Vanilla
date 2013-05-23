@@ -87,21 +87,30 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			fifo = null;
 		}
 		
-		processHigher(coords, regen, light, material, height);
+		processHigher(coords, regen, light, material, height, init);
 	}
 	
-	public void processHigher(Iterable<IntVector3> coords, IntVector3FIFO fifo, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height) {
+	public void processHigher(Iterable<IntVector3> coords, IntVector4ExpandableFIFO fifo, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, boolean init) {
 		
 		Iterator<IntVector3> itr = coords.iterator();
 		
 		while (itr.hasNext()) {
 			IntVector3 v = itr.next();
-			int newLight = this.computeLightLevel(light, material, height, v.getX(), v.getY(), v.getZ());
-			int lightLevel = getLightLevel(light, v.getX(), v.getY(), v.getZ());
-			if (newLight > lightLevel) {
-				setLightLevel(light, v.getX(), v.getY(), v.getZ(), newLight);
+			BlockMaterial m = material.get(v.getX(), v.getY(), v.getZ());
+			if (m.isOpaque()) {
+				continue;
 			}
-			fifo.write(v.getX(), v.getY(), v.getZ());
+			int lightLevel = getLightLevel(light, v.getX(), v.getY(), v.getZ());
+
+			if (lightLevel < 15) {
+				int newLight = this.computeLightLevel(light, material, height, v.getX(), v.getY(), v.getZ());
+				if (newLight > lightLevel) {
+					setLightLevel(light, v.getX(), v.getY(), v.getZ(), newLight);
+					fifo.write(newLight, v.getX(), v.getY(), v.getZ());
+					continue;
+				}
+			}
+			fifo.write(lightLevel, v.getX(), v.getY(), v.getZ());
 		}
 		
 		Vector3 base = material.getBase();
@@ -114,11 +123,13 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		int topY = top.getFloorY();
 		int topZ = top.getFloorZ();
 		
-		int ops = 0;
-		IntVector3 v;
+		IntVector4 v;
 		while ((v = fifo.read()) != null) {
-			ops++;
 			int center = getLightLevel(light, v.getX(), v.getY(), v.getZ());
+			
+			if (center <= 1 || v.getW() != center) {
+				continue;
+			}
 
 			BlockMaterial m = material.get(v.getX(), v.getY(), v.getZ());
 			
@@ -128,6 +139,8 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			
 			ByteBitSet occulusion = m.getOcclusion(m.getData());
 			
+			final boolean boundary = v.getX() == baseX || v.getX() == (topX - 1) || v.getY() == baseY || v.getY() == topY - 1 || v.getZ() == baseZ || v.getZ() == topZ - 1;
+			
 			for (BlockFace face : allFaces) {
 				if (occulusion.get(face)) {
 					continue;
@@ -136,19 +149,23 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 				int nx = v.getX() + off.getX();
 				int ny = v.getY() + off.getY();
 				int nz = v.getZ() + off.getZ();
-				if (nx < baseX || nx >= topX || ny <= baseY || ny >= topY || nz < baseZ || nz >= topZ) {
+				if (boundary && nx < baseX || nx >= topX || ny <= baseY || ny >= topY || nz < baseZ || nz >= topZ) {
 					continue;
 				}
 				BlockMaterial other = material.get(nx, ny, nz);
-				if (other == BlockMaterial.UNGENERATED) {
+				if (other.isOpaque()) {
+					continue;
+				}
+				
+				int oldLevel = getLightLevel(light, nx, ny, nz);
+
+				if (oldLevel == 15) {
 					continue;
 				}
 
 				int opacity = other.getOpacity() + 1;
 
 				int newLevel = center - opacity;
-				
-				int oldLevel = getLightLevel(light, nx, ny, nz);
 				
 				if (newLevel > oldLevel && !other.getOcclusion(other.getData()).get(face.getOpposite())) {
 					setLightLevel(light, nx, ny, nz, newLevel);

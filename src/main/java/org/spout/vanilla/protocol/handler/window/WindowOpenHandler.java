@@ -51,7 +51,7 @@ import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
 public class WindowOpenHandler extends MessageHandler<WindowOpenMessage> {
 	@Override
 	public void handleClient(Session session, WindowOpenMessage message) {
-		Player player = ((Client) VanillaPlugin.getInstance().getEngine()).getActivePlayer();
+		Player player = ((Client) VanillaPlugin.getInstance().getEngine()).getPlayer();
 		String title = message.getTitle();
 		switch (message.getType()) {
 			case DEFAULT:

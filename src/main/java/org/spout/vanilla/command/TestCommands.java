@@ -400,7 +400,7 @@ public class TestCommands {
 		if (getEngine().getPlatform() != Platform.CLIENT) {
 			player = (Player) source;
 		} else {
-			player = ((Client) getEngine()).getActivePlayer();
+			player = ((Client) getEngine()).getPlayer();
 		}
 
 		BlockIterator blockIt;
@@ -440,7 +440,7 @@ public class TestCommands {
 		if (getEngine().getPlatform() != Platform.CLIENT) {
 			player = (Player) source;
 		} else {
-			player = ((Client) getEngine()).getActivePlayer();
+			player = ((Client) getEngine()).getPlayer();
 		}
 
 		BlockIterator blockIt = player.get(InteractComponent.class).getAlignedBlocks();
@@ -507,7 +507,7 @@ public class TestCommands {
 		if (getEngine().getPlatform() != Platform.CLIENT) {
 			player = (Player) source;
 		} else {
-			player = ((Client) getEngine()).getActivePlayer();
+			player = ((Client) getEngine()).getPlayer();
 		}
 		player.get(Health.class).damage(args.getInteger(0));
 	}
@@ -517,7 +517,7 @@ public class TestCommands {
 	public void hunger(CommandContext args, CommandSource source) throws CommandException {
 		Hunger hunger = null;
 		if (getEngine().getPlatform() == Platform.CLIENT) {
-			hunger = ((Client) getEngine()).getActivePlayer().get(Hunger.class);
+			hunger = ((Client) getEngine()).getPlayer().get(Hunger.class);
 		} else {
 			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to change your hunger!");
@@ -672,7 +672,7 @@ public class TestCommands {
 			if (getEngine().getPlatform() != Platform.CLIENT) {
 				throw new CommandException("Only a player may spawn a Vanilla entity!");
 			} else {
-				player = ((Client) getEngine()).getActivePlayer();
+				player = ((Client) getEngine()).getPlayer();
 			}
 		} else {
 			player = (Player) source;
@@ -746,7 +746,7 @@ public class TestCommands {
 	public void fire(CommandContext args, CommandSource source) throws CommandException {
 		Burn fire = null;
 		if (getEngine().getPlatform() == Platform.CLIENT) {
-			fire = ((Client) getEngine()).getActivePlayer().add(Burn.class);
+			fire = ((Client) getEngine()).getPlayer().add(Burn.class);
 		} else {
 			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to change be burnable!");

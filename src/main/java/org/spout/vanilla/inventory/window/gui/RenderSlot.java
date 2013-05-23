@@ -74,7 +74,7 @@ public class RenderSlot extends ControlComponent {
 		if (!(VanillaPlugin.getInstance().getEngine() instanceof Client)) {
 			throw new IllegalStateException("Cannot handle GUIs on the server.");
 		}
-		return ((Client) VanillaPlugin.getInstance().getEngine()).getActivePlayer().get(WindowHolder.class).getActiveWindow();
+		return ((Client) VanillaPlugin.getInstance().getEngine()).getPlayer().get(WindowHolder.class).getActiveWindow();
 	}
 
 	@Override

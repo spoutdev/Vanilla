@@ -108,7 +108,7 @@ public class VanillaListener implements Listener {
 			return;
 		}
 
-		Player player = ((Client) plugin.getEngine()).getActivePlayer();
+		Player player = ((Client) plugin.getEngine()).getPlayer();
 
 		HUD HUD = player.add(org.spout.vanilla.component.entity.player.HUD.class);
 		HUD.setDefault(VanillaArmorWidget.class);
@@ -129,7 +129,7 @@ public class VanillaListener implements Listener {
 		player.add(InteractComponent.class).setRange(5f);
 
 		((Client) player.getEngine()).getInputManager().addInputExecutor(new VanillaInputExecutor(player));
-		((Client) player.getEngine()).setActiveCamera(player.get(VanillaCamera.class));
+		player.add(VanillaCamera.class);
 
 		String username = VanillaConfiguration.USERNAME.getString();
 		String password = VanillaConfiguration.PASSWORD.getString();

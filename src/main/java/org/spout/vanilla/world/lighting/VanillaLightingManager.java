@@ -90,27 +90,43 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		processHigher(coords, regen, light, material, height, init);
 	}
 	
+	private final void log(String message, IntVector3 v) {
+		log(message, v.getX(), v.getY(), v.getZ());
+	}
+	
+	private final void log(String message, IntVector3 v, int light) {
+		log(message, v.getX(), v.getY(), v.getZ(), light);
+	}
+	
+	private final void log(String message, int x, int y, int z, int light) {
+		//Spout.getLogger().info(getClass().getSimpleName() + ": " + message + " at " + x + ", " + y + ", " + z + " light " + light);
+	}
+	
+	private final void log(String message, int x, int y, int z) {
+		//Spout.getLogger().info(getClass().getSimpleName() + ": " + message + " at " + x + ", " + y + ", " + z);
+	}
+	
 	public void processHigher(Iterable<IntVector3> coords, IntVector4ExpandableFIFO fifo, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, boolean init) {
 		
 		Iterator<IntVector3> itr = coords.iterator();
 		
 		while (itr.hasNext()) {
 			IntVector3 v = itr.next();
-			BlockMaterial m = material.get(v.getX(), v.getY(), v.getZ());
-			if (m.isOpaque()) {
-				continue;
-			}
-			int lightLevel = getLightLevel(light, v.getX(), v.getY(), v.getZ());
 
+			int lightLevel = getLightLevel(light, v.getX(), v.getY(), v.getZ());
+			
+			log("(Higher) Root light level", v, lightLevel);
+			
 			if (lightLevel < 15) {
 				int newLight = this.computeLightLevel(light, material, height, v.getX(), v.getY(), v.getZ());
+				log("(Higher) Computed light level", v, newLight);
 				if (newLight > lightLevel) {
 					setLightLevel(light, v.getX(), v.getY(), v.getZ(), newLight);
 					fifo.write(newLight, v.getX(), v.getY(), v.getZ());
+					log("(Higher) Set and added to FIFO for ", v, newLight);
 					continue;
 				}
 			}
-			fifo.write(lightLevel, v.getX(), v.getY(), v.getZ());
 		}
 		
 		Vector3 base = material.getBase();
@@ -127,6 +143,8 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		while ((v = fifo.read()) != null) {
 			int center = getLightLevel(light, v.getX(), v.getY(), v.getZ());
 			
+			log("(Higher) checking center (W = " + v.getW() + ")", v, center);
+			
 			if (center <= 1 || v.getW() != center) {
 				continue;
 			}
@@ -137,27 +155,28 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 				continue;
 			}
 			
-			ByteBitSet occulusion = m.getOcclusion(m.getData());
-			
 			final boolean boundary = v.getX() == baseX || v.getX() == (topX - 1) || v.getY() == baseY || v.getY() == topY - 1 || v.getZ() == baseZ || v.getZ() == topZ - 1;
 			
 			for (BlockFace face : allFaces) {
-				if (occulusion.get(face)) {
-					continue;
-				}
 				IntVector3 off = face.getIntOffset();
 				int nx = v.getX() + off.getX();
 				int ny = v.getY() + off.getY();
 				int nz = v.getZ() + off.getZ();
-				if (boundary && nx < baseX || nx >= topX || ny <= baseY || ny >= topY || nz < baseZ || nz >= topZ) {
+				if (boundary && (nx < baseX || nx >= topX || ny <= baseY || ny >= topY || nz < baseZ || nz >= topZ)) {
 					continue;
 				}
+				
 				BlockMaterial other = material.get(nx, ny, nz);
-				if (other.isOpaque()) {
+				
+				log("(Higher) checking neighbor: material=" + other, nx, ny, nz);
+				
+				if (other.isOpaque() || other.getOcclusion(other.getData()).get(face.getOpposite())) {
 					continue;
 				}
 				
 				int oldLevel = getLightLevel(light, nx, ny, nz);
+				
+				log("(Higher) old light", nx, ny, nz, oldLevel);
 
 				if (oldLevel == 15) {
 					continue;
@@ -167,9 +186,12 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 
 				int newLevel = center - opacity;
 				
-				if (newLevel > oldLevel && !other.getOcclusion(other.getData()).get(face.getOpposite())) {
+				log("(Higher) new level", nx, ny, nz, newLevel);
+				
+				if (newLevel > oldLevel) {
 					setLightLevel(light, nx, ny, nz, newLevel);
-					fifo.write(nx, ny, nz); // block is added each time its light increases
+					fifo.write(newLevel, nx, ny, nz); // block is added each time its light increases
+					log("(Higher) Adding to fifo", nx, ny, nz, newLevel);
 				}
 			}
 		}
@@ -181,18 +203,20 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		while (itr.hasNext()) {
 			IntVector3 v = itr.next();
 			int lightLevel = getLightLevel(light, v.getX(), v.getY(), v.getZ());
+			
+			log("(Lower) Root light level", v, lightLevel);
+			
 			if (lightLevel == 0) {
 				continue;
 			}
 			int newLight = this.computeLightLevel(light, material, height, v.getX(), v.getY(), v.getZ());
+			
+			log("(Lower) New light level", v, newLight);
+			
 			if (newLight < lightLevel) {
 				setLightLevel(light, v.getX(), v.getY(), v.getZ(), 0);
 				fifo.write(lightLevel, v.getX(), v.getY(), v.getZ());
-			} else {
-				BlockMaterial m = material.get(v.getX(), v.getY(), v.getZ());
-				if (!m.isTransparent() || m.getOcclusion(m.getData()).getAny(BlockFaces.NESWBT)) {
-					fifo.write(lightLevel, v.getX(), v.getY(), v.getZ());
-				}
+				log("(Lower) Set (0) and added to FIFO for ", v, lightLevel);
 			}
 		}
 
@@ -206,11 +230,11 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		int topY = top.getFloorY();
 		int topZ = top.getFloorZ();
 		
-		int ops = 0;
 		IntVector4 v;
 		while ((v = fifo.read()) != null) {
-			ops++;
 			int center = v.getW();
+			
+			log("(Lower) checking center (W = " + v.getW() + ")", v, center);
 			
 			BlockMaterial m = material.get(v.getX(), v.getY(), v.getZ());
 			
@@ -218,13 +242,15 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 				continue;
 			}
 			
+			final boolean boundary = v.getX() == baseX || v.getX() == (topX - 1) || v.getY() == baseY || v.getY() == topY - 1 || v.getZ() == baseZ || v.getZ() == topZ - 1;
+			
 			for (BlockFace face : allFaces) {
 
 				IntVector3 off = face.getIntOffset();
 				int nx = v.getX() + off.getX();
 				int ny = v.getY() + off.getY();
 				int nz = v.getZ() + off.getZ();
-				if (nx < baseX || nx >= topX || ny <= baseY || ny >= topY || nz < baseZ || nz >= topZ) {
+				if (boundary && (nx < baseX || nx >= topX || ny <= baseY || ny >= topY || nz < baseZ || nz >= topZ)) {
 					continue;
 				}
 				BlockMaterial other = material.get(nx, ny, nz);
@@ -232,19 +258,27 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 				if (other == BlockMaterial.UNGENERATED) {
 					continue;
 				}
+				
+				log("(Lower) checking neighbor: material=" + other, nx, ny, nz);
 
 				int oldLevel = getLightLevel(light, nx, ny, nz);
+				
+				log("(Lower) old light", nx, ny, nz, oldLevel);
 
 				if (oldLevel > 0) {
 					int opacity = other.getOpacity() + 1;
 
 					int oldSupportLevel = center - opacity;
 					
+					log("(Lower) supported light", nx, ny, nz, oldSupportLevel);
+					
 					if (oldSupportLevel == oldLevel) {
 						setLightLevel(light, nx, ny, nz, 0);
 						fifo.write(oldLevel, nx, ny, nz); // block is added if it is set to zero
+						log("(Lower) Adding to fifo", nx, ny, nz, oldLevel);
 					} else if (oldLevel > 0) {
 						regen.write(oldLevel, nx, ny, nz);
+						log("(Lower) Adding to regen", nx, ny, nz, oldLevel);
 					}
 				}
 			}
@@ -266,14 +300,14 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		short data = material.getData(x, y, z);
 
 		ByteBitSet occlusionSet = m.getOcclusion(data);
+		
+		int neighborLight = getEmittedLight(material, height, x, y, z);
 
-		if (occlusionSet.get(BlockFaces.NESWBT)) {
-			return 0;
+		if (m.isOpaque() || occlusionSet.get(BlockFaces.NESWBT)) {
+			return neighborLight;
 		}
 
 		int opacity = m.getOpacity() + 1;
-
-		int neighborLight = getEmittedLight(material, height, x, y, z);
 
 		for (int i = 0; i < 6; i++) {
 			BlockFace face = allFaces[i];

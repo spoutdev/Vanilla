@@ -28,10 +28,8 @@ package org.spout.vanilla.material.block.misc;
 
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.DynamicMaterial;
-import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.range.EffectRange;
 import org.spout.api.math.GenericMath;
-
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolLevel;
@@ -59,18 +57,15 @@ public class Snow extends GroundAttachable implements DynamicMaterial, Initializ
 
 	public Snow(String name, int id, String model) {
 		super((short) 0x07, name, id, model);
-		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent();
-		this.setOcclusion((short) 0, BlockFace.BOTTOM);
+		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent().setSurface();
 		this.addMiningType(ToolType.SPADE).setMiningLevel(ToolLevel.WOOD);
 	}
 
 	private Snow(String name, int data, Snow parent, String model) {
 		super(name, SNOW[0].getMinecraftId(), data, parent, model);
-		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent();
+		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent().setSurface();
 		if (data == 7) {
 			this.setOpaque();
-		} else {
-			this.setOcclusion((short) data, BlockFace.BOTTOM);
 		}
 		this.addMiningType(ToolType.SPADE).setMiningLevel(ToolLevel.WOOD);
 	}

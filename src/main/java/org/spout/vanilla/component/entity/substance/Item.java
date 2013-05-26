@@ -126,7 +126,7 @@ public class Item extends Substance {
 		Item item = entity.add(Item.class);
 		item.setUncollectableDelay(DROP_PICKUP_DELAY);
 		item.setItemStack(itemStack);
-		entity.getScene().translate(velocity);
+		entity.getScene().impulse(velocity);
 		if (position.getChunk(LoadOption.NO_LOAD) != null) {
 			position.getWorld().spawnEntity(entity);
 		}

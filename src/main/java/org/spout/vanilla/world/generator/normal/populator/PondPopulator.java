@@ -31,7 +31,9 @@ import java.util.Random;
 import org.spout.api.generator.Populator;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
+import org.spout.api.util.LogicUtil;
 
+import org.spout.vanilla.world.generator.biome.VanillaBiomes;
 import org.spout.vanilla.world.generator.normal.object.PondObject;
 
 public class PondPopulator extends Populator {
@@ -49,9 +51,11 @@ public class PondPopulator extends Populator {
 			final int x = chunk.getBlockX(random);
 			final int z = chunk.getBlockZ(random);
 			final int y = random.nextInt(128);
-			final PondObject pond = new PondObject(random, PondObject.PondType.WATER);
-			if (pond.canPlaceObject(world, x, y, z)) {
-				pond.placeObject(world, x, y, z);
+			if (!LogicUtil.equalsAny(world.getBiome(x, y, z), VanillaBiomes.DESERT, VanillaBiomes.DESERT_HILLS)) {
+				final PondObject pond = new PondObject(random, PondObject.PondType.WATER);
+				if (pond.canPlaceObject(world, x, y, z)) {
+					pond.placeObject(world, x, y, z);
+				}
 			}
 		}
 		if (random.nextInt(lavaOdd) == 0) {

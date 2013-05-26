@@ -45,6 +45,7 @@ import org.spout.api.component.impl.NetworkComponent;
 import org.spout.api.component.impl.ObserverComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventManager;
+import org.spout.api.generator.WorldGenerator;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
@@ -261,45 +262,49 @@ public class VanillaPlugin extends CommonPlugin {
 		getEngine().getServiceManager().register(ProtectionService.class, new VanillaProtectionService(), this, ServiceManager.ServicePriority.Highest);
 
 		for (World world : worlds) {
+
 			// Keep spawn loaded
 			WorldConfigurationNode worldConfig = VanillaConfiguration.WORLDS.get(world);
+			final WorldGenerator generator = world.getGenerator();
 			boolean newWorld = world.getAge() <= 0;
-			if (worldConfig.LOADED_SPAWN.getBoolean() || newWorld) {
-				// Initialize the first chunks
-				Point point = world.getSpawnPoint().getPosition();
-				int cx = point.getBlockX() >> Chunk.BLOCKS.BITS;
-				int cz = point.getBlockZ() >> Chunk.BLOCKS.BITS;
 
-				((VanillaProtectionService) getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider()).addProtection(new SpawnProtection(world.getName() + " Spawn Protection", world, point, protectionRadius));
+			if (worldConfig.LOADED_SPAWN.getBoolean() || newWorld) {
+
+				final Point spawn;
+
+				// Grab safe spawn if newly created world and generator is vanilla generator, else get old one.
+				if (newWorld && generator instanceof VanillaGenerator) {
+					spawn = ((VanillaGenerator) generator).getSafeSpawn(world);
+					world.setSpawnPoint(new Transform(spawn, Quaternion.IDENTITY, Vector3.ONE));
+				} else {
+					spawn = world.getSpawnPoint().getPosition();
+				}
+
+				// Start the protection for the spawn
+				((VanillaProtectionService) getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider()).addProtection(new SpawnProtection(world.getName() + " Spawn Protection", world, spawn, protectionRadius));
+
+				// Chunks coords of the spawn
+				int cx = spawn.getBlockX() >> Chunk.BLOCKS.BITS;
+				int cz = spawn.getBlockZ() >> Chunk.BLOCKS.BITS;
 
 				// Load or generate spawn area
 				int effectiveRadius = newWorld ? (2 * radius) : radius;
 				loader.load(world, cx, cz, effectiveRadius, newWorld);
 
+				// Add observer to spawn to keep loaded if desired
 				if (worldConfig.LOADED_SPAWN.getBoolean()) {
 					@SuppressWarnings("unchecked")
-					Entity e = world.createAndSpawnEntity(point, LoadOption.LOAD_GEN, ObserverComponent.class);
+					Entity e = world.createAndSpawnEntity(spawn, LoadOption.LOAD_GEN, ObserverComponent.class);
 					e.setObserver(new FlatIterator(cx, 0, cz, 16, effectiveRadius));
-				}
-
-				// Grab safe spawn if newly created world.
-				if (newWorld && world.getGenerator() instanceof VanillaGenerator) {
-					Point spawn = ((VanillaGenerator) world.getGenerator()).getSafeSpawn(world);
-					world.setSpawnPoint(new Transform(spawn, Quaternion.IDENTITY, Vector3.ONE));
-				}
-
-				// Grab safe spawn if newly created world.
-				if (newWorld && world.getGenerator() instanceof VanillaGenerator) {
-					Point spawn = ((VanillaGenerator) world.getGenerator()).getSafeSpawn(world);
-					world.setSpawnPoint(new Transform(spawn, Quaternion.IDENTITY, Vector3.ONE));
 				}
 			}
 
-			if (world.getGenerator() instanceof NetherGenerator) {
+			// Set the appropriate sky for the world type
+			if (generator instanceof NetherGenerator) {
 				world.add(NetherSky.class).setHasWeather(false);
-			} else if (world.getGenerator() instanceof TheEndGenerator) {
+			} else if (generator instanceof TheEndGenerator) {
 				world.add(TheEndSky.class).setHasWeather(false);
-			} else if (world.getGenerator() instanceof SkylandsGenerator) {
+			} else if (generator instanceof SkylandsGenerator) {
 				world.add(NormalSky.class).setHasWeather(false);
 			} else {
 				world.add(NormalSky.class);

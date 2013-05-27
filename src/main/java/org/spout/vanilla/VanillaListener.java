@@ -123,7 +123,7 @@ public class VanillaListener implements Listener {
 		player.add(Human.class);
 		player.add(PlayerInventory.class);
 		player.add(WindowHolder.class);
-		player.add(VanillaCamera.class);
+		//player.add(VanillaCamera.class); TODO Fix Vanilla's Camera and Head component to allow 3D axis movement (instead of just left/right).
 		player.add(Health.class);
 		player.add(Hunger.class);
 		player.add(InteractComponent.class).setRange(5f);

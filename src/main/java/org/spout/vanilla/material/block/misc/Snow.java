@@ -57,13 +57,13 @@ public class Snow extends GroundAttachable implements DynamicMaterial, Initializ
 
 	public Snow(String name, int id, String model) {
 		super((short) 0x07, name, id, model);
-		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent().setSurface();
+		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent().setOpacity(1);
 		this.addMiningType(ToolType.SPADE).setMiningLevel(ToolLevel.WOOD);
 	}
 
 	private Snow(String name, int data, Snow parent, String model) {
 		super(name, SNOW[0].getMinecraftId(), data, parent, model);
-		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent().setSurface();
+		this.setLiquidObstacle(false).setStepSound(SoundEffects.STEP_CLOTH).setHardness(0.1F).setResistance(0.2F).setTransparent().setOpacity(1);
 		if (data == 7) {
 			this.setOpaque();
 		}

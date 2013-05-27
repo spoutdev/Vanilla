@@ -36,7 +36,6 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.decorator.VariableAmountDecorator;
-import org.spout.vanilla.world.generator.normal.NormalGenerator;
 import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public class FlowerDecorator extends VariableAmountDecorator {

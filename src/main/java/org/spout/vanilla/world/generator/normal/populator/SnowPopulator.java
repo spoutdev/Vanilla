@@ -43,7 +43,6 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.misc.Snow;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
-import org.spout.vanilla.world.generator.normal.NormalGenerator;
 
 public class SnowPopulator extends Populator {
 	private static final Perlin HEIGHTS = new Perlin();
@@ -85,7 +84,7 @@ public class SnowPopulator extends Populator {
 	}
 
 	private int getHighestWorkableBlock(World world, int x, int z) {
-		int y = world.getSurfaceHeight(x, z);
+		int y = world.getSurfaceHeight(x, z) + 16;
 		while (world.getBlockMaterial(x, y, z).isInvisible()) {
 			if (--y <= 0) {
 				return -1;

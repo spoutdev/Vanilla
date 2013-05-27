@@ -42,7 +42,8 @@ public class PlainBiome extends GrassyBiome {
 		tallGrass.setFactory(new NormalTallGrassFactory());
 		tallGrass.setBaseAmount(5);
 		final FlowerDecorator flowers = new FlowerDecorator();
-		flowers.setBaseAmount(4);
+		flowers.setOdd(5);
+		flowers.setBaseAmount(8);
 		addDecorators(new SandAndClayDecorator(), flowers, tallGrass, new MushroomDecorator(),
 				new SugarCaneDecorator(), new PumpkinDecorator());
 		setElevation(63, 74);

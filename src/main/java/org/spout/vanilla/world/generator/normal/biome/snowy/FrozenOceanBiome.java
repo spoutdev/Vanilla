@@ -34,7 +34,7 @@ public class FrozenOceanBiome extends SnowyBiome {
 	public FrozenOceanBiome(int biomeId) {
 		super(biomeId);
 		addDecorators(new SandAndClayDecorator());
-		setElevation(40, 58);
+		setElevation(46, 58);
 		setGrassColorMultiplier(new Color(128, 180, 151));
 		setFoliageColorMultiplier(new Color(96, 161, 123));
 	}

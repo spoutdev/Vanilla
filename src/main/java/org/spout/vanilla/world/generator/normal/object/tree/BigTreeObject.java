@@ -41,6 +41,7 @@ import org.spout.api.math.VectorMath;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.material.VanillaMaterials;
+import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.material.block.plant.Sapling;
 
 public class BigTreeObject extends TreeObject {
@@ -64,7 +65,7 @@ public class BigTreeObject extends TreeObject {
 
 	@Override
 	public boolean canPlaceObject(World w, int x, int y, int z) {
-		if (!super.canPlaceObject(w, x, y, z)) {
+		if (!super.canPlaceObject(w, x, y, z) || w.getBlockMaterial(x, y, z) instanceof Water) {
 			return false;
 		}
 		final Point base = new Point(w, x, y, z);

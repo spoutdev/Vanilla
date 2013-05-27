@@ -29,6 +29,7 @@ package org.spout.vanilla.world.generator.normal;
 import java.util.Random;
 
 import net.royawesome.jlibnoise.NoiseQuality;
+import net.royawesome.jlibnoise.module.modifier.Exponent;
 import net.royawesome.jlibnoise.module.modifier.ScalePoint;
 import net.royawesome.jlibnoise.module.source.Perlin;
 
@@ -79,26 +80,30 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 	private static final byte BEDROCK_DEPTH = 5;
 	// noise for generation
 	private static final Perlin PERLIN = new Perlin();
+	private static final Exponent CONTRAST = new Exponent();
 	private static final ScalePoint NOISE = new ScalePoint();
 	// smoothing stuff
 	private static final int SMOOTH_SIZE = 2;
 	private static final double[][] GAUSSIAN_KERNEL;
 
 	static {
-		PERLIN.setFrequency(0.015);
+		PERLIN.setFrequency(0.012);
 		PERLIN.setLacunarity(2);
 		PERLIN.setNoiseQuality(NoiseQuality.BEST);
 		PERLIN.setPersistence(0.5);
 		PERLIN.setOctaveCount(16);
 
-		NOISE.SetSourceModule(0, PERLIN);
+		CONTRAST.SetSourceModule(0, PERLIN);
+		CONTRAST.setExponent(2.5);
+
+		NOISE.SetSourceModule(0, CONTRAST);
 		NOISE.setxScale(1);
 		NOISE.setyScale(1);
 		NOISE.setzScale(1);
 
 		final int kernelSize = SMOOTH_SIZE * 2 + 1;
 		GAUSSIAN_KERNEL = new double[kernelSize][kernelSize];
-		final double bellSize = 1d / SMOOTH_SIZE / 2;
+		final double bellSize = 1d / SMOOTH_SIZE;
 		final double bellHeight = 2 * SMOOTH_SIZE;
 		for (int sx = -SMOOTH_SIZE; sx <= SMOOTH_SIZE; sx++) {
 			for (int sz = -SMOOTH_SIZE; sz <= SMOOTH_SIZE; sz++) {
@@ -208,7 +213,7 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 				final double minElevation = minSum / weightSum;
 				final double smoothHeight = (maxSum / weightSum - minElevation) / 2;
 				for (int yy = 0; yy < sizeY; yy++) {
-					final double noiseValue = pow(noise[xx][yy][zz], 2) - 1 / smoothHeight * (y + yy - smoothHeight - minElevation);
+					final double noiseValue = noise[xx][yy][zz] - 1 / smoothHeight * (y + yy - smoothHeight - minElevation);
 					if (noiseValue >= 0) {
 						blockData.set(x + xx, y + yy, z + zz, VanillaMaterials.STONE);
 					} else {
@@ -225,14 +230,6 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 				}
 			}
 		}
-	}
-
-	private static double pow(double val, int pow) {
-		val = val * 0.5 + 0.5;
-		for (int i = 1; i < pow; i++) {
-			val *= val;
-		}
-		return (val - 0.5) / 0.5;
 	}
 
 	@Override
@@ -310,8 +307,8 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		// desert land
 		final BiomeSelectorLayer desert =
 				rivers.clone().
-						addElement(basicDesert, -1, 0.16f).
-						addElement(VanillaBiomes.RIVER, 0.16f, 1);
+						addElement(basicDesert, -1, 0.14f).
+						addElement(VanillaBiomes.RIVER, 0.14f, 1);
 		// forest
 		final BiomeSelectorLayer basicForest =
 				hills.clone().
@@ -320,8 +317,8 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		// forest land
 		final BiomeSelectorLayer forest =
 				rivers.clone().
-						addElement(basicForest, -1, 0.16f).
-						addElement(VanillaBiomes.RIVER, 0.16f, 1);
+						addElement(basicForest, -1, 0.14f).
+						addElement(VanillaBiomes.RIVER, 0.14f, 1);
 		// jungle
 		final BiomeSelectorLayer basicJungle =
 				hills.clone().
@@ -330,18 +327,18 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		// jungle land
 		final BiomeSelectorLayer jungle =
 				rivers.clone().
-						addElement(basicJungle, -1, 0.16f).
-						addElement(VanillaBiomes.RIVER, 0.16f, 1);
+						addElement(basicJungle, -1, 0.14f).
+						addElement(VanillaBiomes.RIVER, 0.14f, 1);
 		// plains
 		final BiomeSelectorLayer plains =
 				rivers.clone().
-						addElement(VanillaBiomes.PLAINS, -1, 0.16f).
-						addElement(VanillaBiomes.RIVER, 0.16f, 1);
+						addElement(VanillaBiomes.PLAINS, -1, 0.14f).
+						addElement(VanillaBiomes.RIVER, 0.14f, 1);
 		// swamp
 		final BiomeSelectorLayer swamp =
 				rivers.clone().
-						addElement(VanillaBiomes.SWAMP, -1, 0.16f).
-						addElement(VanillaBiomes.RIVER, 0.16f, 1);
+						addElement(VanillaBiomes.SWAMP, -1, 0.14f).
+						addElement(VanillaBiomes.RIVER, 0.14f, 1);
 		// taiga
 		final BiomeSelectorLayer basicTaiga =
 				hills.clone().
@@ -350,8 +347,8 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		// taiga sub-land
 		final BiomeSelectorLayer subTaiga =
 				rivers.clone().
-						addElement(basicTaiga, -1, 0.16f).
-						addElement(VanillaBiomes.FROZEN_RIVER, 0.16f, 1);
+						addElement(basicTaiga, -1, 0.14f).
+						addElement(VanillaBiomes.FROZEN_RIVER, 0.14f, 1);
 		// taiga land
 		final BiomeSelectorLayer taiga =
 				frozenOceans.clone().
@@ -365,8 +362,8 @@ public class NormalGenerator extends VanillaBiomeGenerator {
 		// tundra sub-land
 		final BiomeSelectorLayer subTundra =
 				rivers.clone().
-						addElement(basicTundra, -1, 0.16f).
-						addElement(VanillaBiomes.FROZEN_RIVER, 0.16f, 1);
+						addElement(basicTundra, -1, 0.14f).
+						addElement(VanillaBiomes.FROZEN_RIVER, 0.14f, 1);
 		// tundra land
 		final BiomeSelectorLayer tundra =
 				frozenOceans.clone().

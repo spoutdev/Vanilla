@@ -54,7 +54,7 @@ public class SwampBiome extends GrassyBiome {
 		sugarCane.setNumberOfClusters(2);
 		addDecorators(new SandAndClayDecorator(), trees, tallGrass, new DeadBushDecorator(),
 				new LilyPadDecorator(), mushrooms, sugarCane, new PumpkinDecorator());
-		setElevation(59, 66);
+		setElevation(60, 66);
 		setGrassColorMultiplier(new Color(92, 105, 78));
 		setFoliageColorMultiplier(new Color(73, 97, 55));
 		setWaterColorMultiplier(new Color(224, 255, 174));

@@ -143,7 +143,7 @@ public class PlayerUtil {
 	 */
 	public static float getYaw(Entity entity) {
 		Head head = entity.get(Head.class);
-		return head != null ? head.getRotation().getYaw() : entity.getScene().getRotation().getYaw();
+		return head != null ? head.getHeadRotation().getYaw() : entity.getScene().getRotation().getYaw();
 	}
 
 	/**

@@ -114,7 +114,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		// Head movement
 		Head head = entity.get(Head.class);
 		if (head != null && head.isDirty()) {
-			final int headYawProt = ChannelBufferUtils.protocolifyYaw(head.getRotation().getYaw());
+			final int headYawProt = ChannelBufferUtils.protocolifyYaw(head.getHeadRotation().getYaw());
 			messages.add(new EntityHeadYawMessage(entity.getId(), headYawProt));
 		}
 

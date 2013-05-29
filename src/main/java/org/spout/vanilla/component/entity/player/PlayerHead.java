@@ -27,6 +27,7 @@
 package org.spout.vanilla.component.entity.player;
 
 import org.spout.api.component.type.EntityComponent;
+import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.math.Matrix;
 import org.spout.api.math.MatrixMath;
@@ -35,7 +36,7 @@ import org.spout.api.render.Camera;
 import org.spout.api.render.ViewFrustum;
 import org.spout.vanilla.component.entity.misc.Head;
 
-public class VanillaCamera extends EntityComponent implements Camera{
+public class PlayerHead extends Head implements Camera{
 	private Matrix projection;
 	private Matrix view;
 	private ViewFrustum frustum = new ViewFrustum();
@@ -66,7 +67,8 @@ public class VanillaCamera extends EntityComponent implements Camera{
 	@Override
 	public void updateView() {
 		Transform transform = getOwner().getScene().getRenderTransform();
-		Matrix pos = MatrixMath.createTranslated(transform.getPosition().multiply(-1));
+		Point point = transform.getPosition().add(0.0f, this.getHeight(), 0.0f);
+		Matrix pos = MatrixMath.createTranslated(point.multiply(-1));
 		Matrix rot = getRotation();
 		view = pos.multiply(rot);
 		frustum.update(projection, view, transform.getPosition());
@@ -75,7 +77,8 @@ public class VanillaCamera extends EntityComponent implements Camera{
 	@Override
 	public void updateReflectedView() {
 		Transform transform = getOwner().getScene().getRenderTransform();
-		Matrix pos = MatrixMath.createTranslated(transform.getPosition().multiply(-1, 1, -1));
+		Point point = transform.getPosition().add(0.0f, this.getHeight(), 0.0f);
+		Matrix pos = MatrixMath.createTranslated(point.multiply(-1, 1, -1));
 		Matrix rot = getRotation();
 		view = MatrixMath.createScaled(new Vector3(1,-1,1)).multiply(pos).multiply(rot);
 		frustum.update(projection, view, transform.getPosition());
@@ -93,6 +96,6 @@ public class VanillaCamera extends EntityComponent implements Camera{
 
 	@Override
 	public Matrix getRotation(){
-		return MatrixMath.createRotated(getOwner().get(Head.class).getRotation());
+		return MatrixMath.createRotated(this.getHeadTransform().getRotation());
 	}
 }

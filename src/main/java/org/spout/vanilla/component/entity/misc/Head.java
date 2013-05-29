@@ -53,7 +53,7 @@ public class Head extends EntityComponent {
 	 * @return True if the head rotation is dirty, False if not
 	 */
 	public boolean isDirty() {
-		return !lastRotation.equals(getRotation());
+		return !lastRotation.equals(getHeadRotation());
 	}
 
 	/**
@@ -69,7 +69,7 @@ public class Head extends EntityComponent {
 	 * @return Head direction vector
 	 */
 	public Vector3 getLookingAt() {
-		return VectorMath.getDirection(getRotation());
+		return VectorMath.getDirection(getHeadRotation());
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class Head extends EntityComponent {
 	 * @param rotation to set to
 	 */
 	public void setRotation(Quaternion rotation) {
-		lastRotation = getRotation();
+		lastRotation = getHeadRotation();
 		getData().put(VanillaData.HEAD_ROTATION, rotation);
 	}
 
@@ -85,7 +85,7 @@ public class Head extends EntityComponent {
 	 * Gets the rotation of the head
 	 * @return Head rotation
 	 */
-	public Quaternion getRotation() {
+	public Quaternion getHeadRotation() {
 		return getData().get(VanillaData.HEAD_ROTATION);
 	}
 
@@ -120,7 +120,7 @@ public class Head extends EntityComponent {
 	public Transform getHeadTransform() {
 		Transform trans = new Transform();
 		trans.setPosition(this.getPosition());
-		trans.setRotation(getRotation());
+		trans.setRotation(getHeadRotation());
 		return trans;
 	}
 

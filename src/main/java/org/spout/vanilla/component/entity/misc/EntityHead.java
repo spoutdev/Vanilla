@@ -40,7 +40,7 @@ import org.spout.vanilla.data.VanillaData;
 /**
  * Component that controls the rotation of a head on Vanilla resources.entities.
  */
-public class Head extends EntityComponent {
+public class EntityHead extends EntityComponent {
 	private Quaternion lastRotation = Quaternion.IDENTITY;
 
 	@Override
@@ -53,7 +53,7 @@ public class Head extends EntityComponent {
 	 * @return True if the head rotation is dirty, False if not
 	 */
 	public boolean isDirty() {
-		return !lastRotation.equals(getRotation());
+		return !lastRotation.equals(geHeadtRotation());
 	}
 
 	/**
@@ -66,10 +66,10 @@ public class Head extends EntityComponent {
 
 	/**
 	 * Gets the {@link Vector3} the head is currently looking at.
-	 * @return Head direction vector
+	 * @return EntityHead direction vector
 	 */
 	public Vector3 getLookingAt() {
-		return VectorMath.getDirection(getRotation());
+		return VectorMath.getDirection(geHeadtRotation());
 	}
 
 	/**
@@ -77,15 +77,15 @@ public class Head extends EntityComponent {
 	 * @param rotation to set to
 	 */
 	public void setRotation(Quaternion rotation) {
-		lastRotation = getRotation();
+		lastRotation = geHeadtRotation();
 		getData().put(VanillaData.HEAD_ROTATION, rotation);
 	}
 
 	/**
 	 * Gets the rotation of the head
-	 * @return Head rotation
+	 * @return EntityHead rotation
 	 */
-	public Quaternion getRotation() {
+	public Quaternion geHeadtRotation() {
 		return getData().get(VanillaData.HEAD_ROTATION);
 	}
 
@@ -99,7 +99,7 @@ public class Head extends EntityComponent {
 
 	/**
 	 * Gets the current height of the head above the main position
-	 * @return Head height
+	 * @return EntityHead height
 	 */
 	public float getHeight() {
 		return getData().get(VanillaData.HEAD_HEIGHT);
@@ -107,7 +107,7 @@ public class Head extends EntityComponent {
 
 	/**
 	 * Gets the position of the head in the world
-	 * @return Head position
+	 * @return EntityHead position
 	 */
 	public Point getPosition() {
 		return getOwner().getScene().getPosition().add(0.0f, this.getHeight(), 0.0f);
@@ -115,12 +115,12 @@ public class Head extends EntityComponent {
 
 	/**
 	 * Gets the transform of this head in the world
-	 * @return Head transform
+	 * @return EntityHead transform
 	 */
 	public Transform getHeadTransform() {
 		Transform trans = new Transform();
 		trans.setPosition(this.getPosition());
-		trans.setRotation(getRotation());
+		trans.setRotation(geHeadtRotation());
 		return trans;
 	}
 

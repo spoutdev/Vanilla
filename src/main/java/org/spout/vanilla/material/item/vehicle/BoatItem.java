@@ -35,7 +35,7 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector2;
 
-import org.spout.vanilla.component.entity.misc.Head;
+import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.component.entity.substance.vehicle.Boat;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
@@ -51,7 +51,7 @@ public class BoatItem extends VanillaItemMaterial {
 			return;
 		}
 
-		Head head = entity.add(Head.class);
+		EntityHead head = entity.add(EntityHead.class);
 		Block b = head.getBlockView(1).next();
 		if (!b.isMaterial(VanillaMaterials.WATER)) {
 			System.out.println("No water");

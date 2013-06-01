@@ -116,7 +116,7 @@ public class VanillaSkylightLightingManager extends VanillaBlocklightLightingMan
 				int h = height[x - 1][z - 1];
 				h -= baseY;
 				for (int y = Math.max(1, 2 + h); y <= sizeY ; y++) {
-					light[x][(int) y][z] = 15;
+					light[x][y][z] = 15;
 				}
 			}
 		}

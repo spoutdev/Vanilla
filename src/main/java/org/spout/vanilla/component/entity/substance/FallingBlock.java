@@ -71,7 +71,7 @@ public class FallingBlock extends Substance {
 				// Place block on top of this obstacle, if possible
 				Block current = world.getBlock(x, y - dy + 1, z);
 				BlockMaterial currentMat = current.getMaterial();
-				if (!(currentMat instanceof VanillaBlockMaterial) || !((VanillaBlockMaterial) currentMat).isPlacementObstacle()) {
+				if (!(currentMat instanceof VanillaBlockMaterial) || !currentMat.isPlacementObstacle()) {
 					// Place in the world
 					current.setMaterial(getMaterial(), getMaterial().toCause(pos));
 				} else {

@@ -119,7 +119,7 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 					yDiff -= 0.5F; //half blocks
 				}
 				final BlockMaterial ground = newPosition.getBlock().translate(BlockFace.BOTTOM).getMaterial();
-				final boolean onGround = yDiff < 0.01 && (ground instanceof VanillaBlockMaterial && ((VanillaBlockMaterial) ground).isSolid());
+				final boolean onGround = yDiff < 0.01 && (ground instanceof VanillaBlockMaterial && ground.isSolid());
 				final boolean wasOnGround = human.isOnGround();
 				human.setOnGround(onGround);
 

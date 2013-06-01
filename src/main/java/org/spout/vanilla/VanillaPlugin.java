@@ -197,7 +197,7 @@ public class VanillaPlugin extends CommonPlugin {
 		VanillaLighting.initialize();
 		VanillaEnchantments.initialize();
 		//MapPalette.DEFAULT = (MapPalette) Spout.getFileSystem().getResource("mappalette://Vanilla/map/mapColorPalette.dat");
-		RecipeYaml.DEFAULT = (RecipeYaml) getEngine().getFileSystem().getResource("recipe://Vanilla/recipes.yml");
+		RecipeYaml.DEFAULT = getEngine().getFileSystem().getResource("recipe://Vanilla/recipes.yml");
 		VanillaRecipes.initialize();
 
 		getLogger().info("loaded");

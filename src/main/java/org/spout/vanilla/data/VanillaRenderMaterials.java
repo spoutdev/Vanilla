@@ -56,20 +56,20 @@ public final class VanillaRenderMaterials {
 
 	static {
 		if (VanillaPlugin.getInstance().getEngine().getPlatform() == Platform.CLIENT) {
-			FONT = (Font) fileSystem.getResource("font://Spout/fonts/ubuntu/Ubuntu-M.ttf");
-			QUICKBAR_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/QuickbarGUIMaterial.smt");
-			ICONS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/IconsGUIMaterial.smt");
-			INVENTORY_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/InventoryGUIMaterial.smt");
-			CONTAINER_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/ContainerGUIMaterial.smt");
-			CRAFTING_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/CraftingGUIMaterial.smt");
-			FURNACE_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/FurnaceGUIMaterial.smt");
-			TRAP_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/TrapGUIMaterial.smt");
-			ENCHANT_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/InventoryGUIMaterial.smt");
-			ALCHEMY_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/InventoryGUIMaterial.smt");
-			ITEMS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/gui/smt/ItemsGUIMaterial.smt");
-			BLOCKS_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/materials/terrain.smt");
-			HOPPER_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/materials.InventoryGUIMaterial.smt");
-			DROPPER_MATERIAL = (RenderMaterial) fileSystem.getResource("material://Vanilla/materials.InventoryGUIMaterial.smt");
+			FONT = fileSystem.getResource("font://Spout/fonts/ubuntu/Ubuntu-M.ttf");
+			QUICKBAR_MATERIAL = fileSystem.getResource("material://Vanilla/gui/smt/QuickbarGUIMaterial.smt");
+			ICONS_MATERIAL = fileSystem.getResource("material://Vanilla/gui/smt/IconsGUIMaterial.smt");
+			INVENTORY_MATERIAL = fileSystem.getResource("material://Vanilla/gui/smt/InventoryGUIMaterial.smt");
+			CONTAINER_MATERIAL = fileSystem.getResource("material://Vanilla/gui/smt/ContainerGUIMaterial.smt");
+			CRAFTING_MATERIAL = fileSystem.getResource("material://Vanilla/gui/smt/CraftingGUIMaterial.smt");
+			FURNACE_MATERIAL = fileSystem.getResource("material://Vanilla/gui/smt/FurnaceGUIMaterial.smt");
+			TRAP_MATERIAL = fileSystem.getResource("material://Vanilla/gui/smt/TrapGUIMaterial.smt");
+			ENCHANT_MATERIAL = fileSystem.getResource("material://Vanilla/gui/smt/InventoryGUIMaterial.smt");
+			ALCHEMY_MATERIAL = fileSystem.getResource("material://Vanilla/gui/smt/InventoryGUIMaterial.smt");
+			ITEMS_MATERIAL = fileSystem.getResource("material://Vanilla/gui/smt/ItemsGUIMaterial.smt");
+			BLOCKS_MATERIAL = fileSystem.getResource("material://Vanilla/materials/terrain.smt");
+			HOPPER_MATERIAL = fileSystem.getResource("material://Vanilla/materials.InventoryGUIMaterial.smt");
+			DROPPER_MATERIAL = fileSystem.getResource("material://Vanilla/materials.InventoryGUIMaterial.smt");
 		} else {
 			FONT = null;
 			QUICKBAR_MATERIAL = null;

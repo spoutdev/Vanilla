@@ -49,7 +49,7 @@ public class PlayerSpawnHandler extends MessageHandler<PlayerSpawnMessage> {
 		Entity entity = w.createEntity(pos, Human.class);
 		entity.setSavable(true);
 		entity.add(Human.class).setName(message.getName());
-		EntityPrefab humanPrefab = (EntityPrefab) session.getEngine().getFileSystem().getResource("entity://Vanilla/entities/human/human.sep");
+		EntityPrefab humanPrefab = session.getEngine().getFileSystem().getResource("entity://Vanilla/entities/human/human.sep");
 		entity = humanPrefab.createEntity(pos);
 
 		w.spawnEntity(entity);

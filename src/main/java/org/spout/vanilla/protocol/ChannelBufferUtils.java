@@ -59,7 +59,7 @@ public final class ChannelBufferUtils {
 	 * @param parameters The parameters.
 	 */
 	@SuppressWarnings("unchecked")
-	public static void writeParameters(ChannelBuffer buf, List<Parameter<?>> parameters) throws IOException {
+	public static void writeParameters(ChannelBuffer buf, List<Parameter<?>> parameters) {
 		for (Parameter<?> parameter : parameters) {
 			int type = parameter.getType();
 			int index = parameter.getIndex();

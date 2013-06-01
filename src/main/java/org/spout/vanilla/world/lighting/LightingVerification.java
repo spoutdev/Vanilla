@@ -181,7 +181,7 @@ public class LightingVerification {
 		if (c == null) {
 			return null;
 		}
-		return (CuboidBlockMaterialBuffer) c.getCuboid(false);
+		return c.getCuboid(false);
 	}
 	
 	private static int[][] getHeightMap(Chunk c) {

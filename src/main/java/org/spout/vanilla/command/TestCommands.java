@@ -698,7 +698,7 @@ public class TestCommands {
 		//How about some client support?
 		final Entity entity;
 		if (getEngine() instanceof Client) {
-			final EntityPrefab prefab = (EntityPrefab) getEngine().getFileSystem().getResource("entity://Vanilla/entities/" + clazz.getSimpleName().toLowerCase() + "/" + clazz.getSimpleName().toLowerCase() + ".sep");
+			final EntityPrefab prefab = getEngine().getFileSystem().getResource("entity://Vanilla/entities/" + clazz.getSimpleName().toLowerCase() + "/" + clazz.getSimpleName().toLowerCase() + ".sep");
 			entity = prefab.createEntity(player.getScene().getPosition());
 		} else {
 			entity = player.getWorld().createEntity(player.getScene().getPosition(), clazz);

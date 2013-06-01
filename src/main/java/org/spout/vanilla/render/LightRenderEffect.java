@@ -69,9 +69,9 @@ public class LightRenderEffect implements RenderEffect {
 
 		float y1 = (float) Math.cos(rads);
 
-		float y = (float) (y1 * cY);
+		float y = y1 * cY;
 
-		float z = (float) (y1 * cZ);
+		float z = y1 * cZ;
 
 		if (force) {
 			x = xForce;

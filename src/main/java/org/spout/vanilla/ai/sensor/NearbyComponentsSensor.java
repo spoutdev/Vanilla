@@ -92,7 +92,7 @@ public class NearbyComponentsSensor implements Sensor {
 	 * @return True if player detected, false if not.
 	 */
 	public boolean hasFoundEntity() {
-		return state.get("hasNearbyEntities");
+		return (Boolean) state.get("hasNearbyEntities");
 	}
 
 	/**

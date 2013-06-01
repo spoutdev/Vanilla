@@ -88,6 +88,6 @@ public class NearbyMaterialHolderSensor implements Sensor {
 	}
 
 	public boolean hasFoundPlayers() {
-		return state.get("hasNearbyMaterialHolders");
+		return (Boolean) state.get("hasNearbyMaterialHolders");
 	}
 }

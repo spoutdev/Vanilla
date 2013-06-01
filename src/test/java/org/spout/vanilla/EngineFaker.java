@@ -33,7 +33,6 @@ import java.util.logging.Logger;
 
 import org.mockito.Mockito;
 import org.spout.api.Engine;
-import org.spout.api.FileSystem;
 import org.spout.api.Platform;
 import org.spout.api.Spout;
 
@@ -45,6 +44,7 @@ import org.spout.api.event.Order;
 import org.spout.api.generator.WorldGenerator;
 import org.spout.api.lang.PluginDictionary;
 import org.spout.api.plugin.PluginDescriptionFile;
+import org.spout.api.resource.FileSystem;
 
 import org.spout.vanilla.event.entity.EntityDamageEvent;
 
@@ -56,7 +56,7 @@ public class EngineFaker {
 		Engine engine = Mockito.mock(Engine.class);
 		FileSystem filesystem = Mockito.mock(FileSystem.class);
 		Mockito.when(engine.getPlatform()).thenReturn(Platform.SERVER);
-		Mockito.when(engine.getFilesystem()).thenReturn(filesystem);
+		Mockito.when(engine.getFileSystem()).thenReturn(filesystem);
 		Mockito.when(engine.getEventManager()).thenReturn(new TestEventManager());
 		Mockito.when(engine.getLogger()).thenReturn(Mockito.mock(Logger.class));
 

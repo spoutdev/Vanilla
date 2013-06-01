@@ -30,42 +30,31 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
 
-import org.spout.api.resource.BasicResourceLoader;
+import org.spout.api.resource.ResourceLoader;
 
 import org.spout.vanilla.data.resources.MapPalette;
 
-public class MapPaletteLoader extends BasicResourceLoader<MapPalette> {
+public class MapPaletteLoader extends ResourceLoader {
+	public MapPaletteLoader() {
+		super("mappalette", "mappalette://Vanilla/map/mapColorPalette.dat");
+	}
+
 	@Override
-	public MapPalette getResource(InputStream stream) {
+	public MapPalette load(InputStream in) {
 		try {
-			stream = new GZIPInputStream(stream);
+			in = new GZIPInputStream(in);
 			MapPalette res = new MapPalette();
-			res.read(stream);
+			res.read(in);
 			return res;
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				stream.close();
+				in.close();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 		}
 		return null;
-	}
-
-	@Override
-	public String getFallbackResourceName() {
-		return "mappalette://Vanilla/map/mapColorPalette.dat";
-	}
-
-	@Override
-	public String getProtocol() {
-		return "mappalette";
-	}
-
-	@Override
-	public String[] getExtensions() {
-		return new String[]{"dat"};
 	}
 }

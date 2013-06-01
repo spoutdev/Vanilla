@@ -31,9 +31,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.spout.api.inventory.recipe.Recipe;
-import org.spout.api.resource.Resource;
 
-public class RecipeYaml extends Resource {
+public class RecipeYaml {
 	public static RecipeYaml DEFAULT;
 	private Map<String, Recipe> recipes = new HashMap<String, Recipe>();
 

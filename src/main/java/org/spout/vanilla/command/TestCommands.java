@@ -51,18 +51,15 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
-import org.spout.api.lighting.LightingManager;
-import org.spout.api.lighting.LightingRegistry;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
-import org.spout.api.math.IntVector3;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.util.BlockIterator;
-import org.spout.api.util.OutwardIterator;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.material.chest.Chest;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
@@ -114,7 +111,6 @@ import org.spout.vanilla.world.generator.normal.object.tree.BigTreeObject;
 import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
 import org.spout.vanilla.world.lighting.LightingVerification;
-import org.spout.vanilla.world.lighting.VanillaCuboidLightBuffer;
 
 public class TestCommands {
 	private final VanillaPlugin plugin;
@@ -702,7 +698,7 @@ public class TestCommands {
 		//How about some client support?
 		final Entity entity;
 		if (getEngine() instanceof Client) {
-			final EntityPrefab prefab = (EntityPrefab) getEngine().getFilesystem().getResource("entity://Vanilla/entities/" + clazz.getSimpleName().toLowerCase() + "/" + clazz.getSimpleName().toLowerCase() + ".sep");
+			final EntityPrefab prefab = (EntityPrefab) getEngine().getFileSystem().getResource("entity://Vanilla/entities/" + clazz.getSimpleName().toLowerCase() + "/" + clazz.getSimpleName().toLowerCase() + ".sep");
 			entity = prefab.createEntity(player.getScene().getPosition());
 		} else {
 			entity = player.getWorld().createEntity(player.getScene().getPosition(), clazz);

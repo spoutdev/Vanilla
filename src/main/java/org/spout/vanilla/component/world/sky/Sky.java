@@ -59,7 +59,7 @@ public abstract class Sky extends VanillaWorldComponent {
 		if (this.model != null && getOwner().getEngine().getPlatform() == Platform.CLIENT) {
 			// Load the model
 			Spout.getLogger().info("Loading Skydome for " + getClass().getSimpleName());
-			Model m = (Model) getOwner().getEngine().getFilesystem().getResource(this.model);
+			Model m = (Model) getOwner().getEngine().getFileSystem().getResource(this.model);
 			m.getRenderMaterial().addRenderEffect(VanillaEffects.SKY);
 			Spout.getLogger().info("Loaded Skydome");
 			// Apply model

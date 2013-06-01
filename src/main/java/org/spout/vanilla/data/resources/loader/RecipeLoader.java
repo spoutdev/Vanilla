@@ -40,22 +40,21 @@ import org.spout.api.inventory.recipe.Recipe;
 import org.spout.api.inventory.recipe.RecipeBuilder;
 import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
-import org.spout.api.resource.BasicResourceLoader;
+import org.spout.api.resource.ResourceLoader;
 import org.spout.api.util.config.ConfigurationNode;
 import org.spout.api.util.config.yaml.YamlConfiguration;
 
 import org.spout.vanilla.data.resources.RecipeYaml;
 
-public class RecipeLoader extends BasicResourceLoader<RecipeYaml> {
-	@Override
-	public String getFallbackResourceName() {
-		return "recipe://Vanilla/recipes.yml";
+public class RecipeLoader extends ResourceLoader {
+	public RecipeLoader() {
+		super("recipe", "recipe://Vanilla/recipes.yml");
 	}
 
 	@Override
-	public RecipeYaml getResource(InputStream stream) {
+	public RecipeYaml load(InputStream in) {
 		Map<String, Recipe> recipes = new HashMap<String, Recipe>();
-		YamlConfiguration config = new YamlConfiguration(stream);
+		YamlConfiguration config = new YamlConfiguration(in);
 		try {
 			config.load();
 		} catch (ConfigurationException ex) {
@@ -139,15 +138,5 @@ public class RecipeLoader extends BasicResourceLoader<RecipeYaml> {
 		}
 		recipes.remove(null);
 		return new RecipeYaml(recipes);
-	}
-
-	@Override
-	public String getProtocol() {
-		return "recipe";
-	}
-
-	@Override
-	public String[] getExtensions() {
-		return new String[]{"yml"};
 	}
 }

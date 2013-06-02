@@ -46,7 +46,7 @@ import org.spout.api.math.VectorMath;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.misc.Digging;
-import org.spout.vanilla.component.entity.misc.Head;
+import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.misc.PlayerItemCollector;
 import org.spout.vanilla.component.entity.substance.Item;
@@ -185,7 +185,7 @@ public class Human extends Living {
 	 */
 	public void dropItem(ItemStack item) {
 		final Transform dropFrom;
-		Head head = getHead();
+		EntityHead head = getHead();
 		if (head != null) {
 			dropFrom = head.getHeadTransform();
 		} else {

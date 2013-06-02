@@ -37,7 +37,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.component.entity.misc.Head;
+import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.event.cause.PlayerBreakCause;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
 import org.spout.vanilla.material.block.liquid.Water;
@@ -64,7 +64,7 @@ public class LilyPad extends GroundAttachable {
 	@Override
 	public void onInteract(Entity entity, Action type) {
 		super.onInteract(entity, type);
-		Head head = entity.get(Head.class);
+		EntityHead head = entity.get(EntityHead.class);
 		if (type == Action.RIGHT_CLICK && head != null) {
 			BlockIterator iterator = head.getBlockView();
 			if (iterator == null || !iterator.hasNext()) {

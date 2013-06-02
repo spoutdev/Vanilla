@@ -70,7 +70,7 @@ import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.Burn;
 import org.spout.vanilla.component.entity.misc.Effects;
-import org.spout.vanilla.component.entity.misc.Head;
+import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.misc.Hunger;
 import org.spout.vanilla.component.entity.substance.FallingBlock;
@@ -401,7 +401,7 @@ public class TestCommands {
 
 		BlockIterator blockIt;
 		if (getEngine().getPlatform() != Platform.CLIENT) {
-			blockIt = player.get(Head.class).getBlockView();
+			blockIt = player.get(EntityHead.class).getBlockView();
 		} else {
 			blockIt = player.get(InteractComponent.class).getAlignedBlocks();
 		}

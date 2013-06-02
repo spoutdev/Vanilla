@@ -55,7 +55,7 @@ public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 		Human human = holder.get(Human.class);
 		if (human != null) {
 			human.setOnGround(message.isOnGround());
-			human.getHead().setRotation(message.getRotation());
+			human.getHead().setOrientation(message.getRotation());
 		}
 	}
 
@@ -71,7 +71,7 @@ public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 		Human human = holder.get(Human.class);
 		if (human != null) {
 			human.setOnGround(message.isOnGround());
-			human.getHead().setRotation(message.getRotation());
+			human.getHead().setOrientation(message.getRotation());
 		}
 	}
 }

@@ -40,7 +40,7 @@ import org.spout.vanilla.data.VanillaData;
 /**
  * Component that controls the rotation of a head on Vanilla resources.entities.
  */
-public class Head extends EntityComponent {
+public class EntityHead extends EntityComponent {
 	private Quaternion lastRotation = Quaternion.IDENTITY;
 
 	@Override
@@ -53,7 +53,7 @@ public class Head extends EntityComponent {
 	 * @return True if the head rotation is dirty, False if not
 	 */
 	public boolean isDirty() {
-		return !lastRotation.equals(getRotation());
+		return !lastRotation.equals(getOrientation());
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class Head extends EntityComponent {
 	 * @param lookingAt {@link org.spout.api.math.Vector3} to look at
 	 */
 	public void setLooking(Vector3 lookingAt) {
-		setRotation(QuaternionMath.rotationTo(Vector3.FORWARD, lookingAt));
+		setOrientation(QuaternionMath.rotationTo(Vector3.FORWARD, lookingAt));
 	}
 
 	/**
@@ -69,15 +69,15 @@ public class Head extends EntityComponent {
 	 * @return Head direction vector
 	 */
 	public Vector3 getLookingAt() {
-		return VectorMath.getDirection(getRotation());
+		return VectorMath.getDirection(getOrientation());
 	}
 
 	/**
 	 * Sets the rotation of the head
 	 * @param rotation to set to
 	 */
-	public void setRotation(Quaternion rotation) {
-		lastRotation = getRotation();
+	public void setOrientation(Quaternion rotation) {
+		lastRotation = getOrientation();
 		getData().put(VanillaData.HEAD_ROTATION, rotation);
 	}
 
@@ -85,7 +85,7 @@ public class Head extends EntityComponent {
 	 * Gets the rotation of the head
 	 * @return Head rotation
 	 */
-	public Quaternion getRotation() {
+	public Quaternion getOrientation() {
 		return getData().get(VanillaData.HEAD_ROTATION);
 	}
 
@@ -120,7 +120,7 @@ public class Head extends EntityComponent {
 	public Transform getHeadTransform() {
 		Transform trans = new Transform();
 		trans.setPosition(this.getPosition());
-		trans.setRotation(getRotation());
+		trans.setRotation(getOrientation());
 		return trans;
 	}
 

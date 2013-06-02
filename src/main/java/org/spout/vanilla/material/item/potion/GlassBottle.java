@@ -34,7 +34,7 @@ import org.spout.api.inventory.Slot;
 import org.spout.api.util.BlockIterator;
 
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
-import org.spout.vanilla.component.entity.misc.Head;
+import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.liquid.Water;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
@@ -49,7 +49,7 @@ public class GlassBottle extends VanillaItemMaterial {
 	@Override
 	public void onInteract(Entity entity, Action action) {
 		if (action == Action.RIGHT_CLICK) {
-			Head interact = entity.get(Head.class);
+			EntityHead interact = entity.get(EntityHead.class);
 			if (interact == null) {
 				return;
 			}

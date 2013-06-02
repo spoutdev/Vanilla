@@ -39,7 +39,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.Material;
 import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.component.entity.misc.Head;
+import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.block.liquid.Lava;
 import org.spout.vanilla.material.block.liquid.Water;
@@ -55,7 +55,7 @@ public class EmptyBucket extends VanillaItemMaterial {
 	@Override
 	public void onInteract(Entity entity, Action action) {
 		if (action == Action.RIGHT_CLICK) {
-			Head head = entity.get(Head.class);
+			EntityHead head = entity.get(EntityHead.class);
 			if (head == null) {
 				return;
 			}

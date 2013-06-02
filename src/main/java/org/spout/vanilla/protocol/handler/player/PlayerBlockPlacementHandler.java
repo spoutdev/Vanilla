@@ -55,7 +55,7 @@ import org.spout.api.protocol.reposition.RepositionManager;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Living;
-import org.spout.vanilla.component.entity.misc.Head;
+import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.component.entity.misc.Hunger;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
@@ -220,7 +220,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 							refreshClient(player, clickedBlock, clickedFace, rm);
 							return;
 						}
-						Head head = player.get(Head.class);
+						EntityHead head = player.get(EntityHead.class);
 						if (head != null && head.getPosition().distance(tpos) < 0.6) {
 							refreshClient(player, clickedBlock, clickedFace, rm);
 							return;

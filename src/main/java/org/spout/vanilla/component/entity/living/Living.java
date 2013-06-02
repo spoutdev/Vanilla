@@ -36,13 +36,13 @@ import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.misc.Burn;
 import org.spout.vanilla.component.entity.misc.Drowning;
 import org.spout.vanilla.component.entity.misc.Effects;
-import org.spout.vanilla.component.entity.misc.Head;
+import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.effect.EntityEffectType;
 
 public abstract class Living extends VanillaEntityComponent {
-	private Head head;
+	private EntityHead head;
 	private Health health;
 	private Drowning drowning;
 	private NavigationComponent navigation;
@@ -52,7 +52,7 @@ public abstract class Living extends VanillaEntityComponent {
 	public void onAttached() {
 		super.onAttached();
 		Entity holder = getOwner();
-		head = holder.add(Head.class);
+		head = holder.add(EntityHead.class);
 		health = holder.add(Health.class);
 		drowning = holder.add(Drowning.class);
 		navigation = holder.add(NavigationComponent.class);
@@ -70,7 +70,7 @@ public abstract class Living extends VanillaEntityComponent {
 		getOwner().getData().put(VanillaData.IS_ON_GROUND, onGround);
 	}
 
-	public Head getHead() {
+	public EntityHead getHead() {
 		return head;
 	}
 

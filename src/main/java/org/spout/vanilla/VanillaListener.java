@@ -28,6 +28,7 @@ package org.spout.vanilla;
 
 import org.spout.api.Client;
 import org.spout.api.Platform;
+import org.spout.api.component.impl.CameraComponent;
 import org.spout.api.component.impl.InteractComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
@@ -46,6 +47,7 @@ import org.spout.api.material.block.BlockSnapshot;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.entity.living.Human;
+import org.spout.vanilla.component.entity.misc.EntityHead;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.misc.Hunger;
 import org.spout.vanilla.component.entity.misc.Level;
@@ -54,7 +56,7 @@ import org.spout.vanilla.component.entity.misc.Sleep;
 import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.component.entity.player.Ping;
 import org.spout.vanilla.component.entity.player.PlayerList;
-import org.spout.vanilla.component.entity.player.VanillaCamera;
+import org.spout.vanilla.component.entity.player.PlayerHead;
 import org.spout.vanilla.component.entity.player.hud.VanillaArmorWidget;
 import org.spout.vanilla.component.entity.player.hud.VanillaCrosshair;
 import org.spout.vanilla.component.entity.player.hud.VanillaDrowning;
@@ -121,15 +123,19 @@ public class VanillaListener implements Listener {
 		HUD.openHUD();
 
 		player.add(Human.class);
+		
+		//Remove default Entityhead and Camera
+		player.detach(EntityHead.class);
+		player.detach(CameraComponent.class); 
+		
+		player.add(PlayerHead.class);
 		player.add(PlayerInventory.class);
 		player.add(WindowHolder.class);
-		//player.add(VanillaCamera.class); TODO Fix Vanilla's Camera and Head component to allow 3D axis movement (instead of just left/right).
 		player.add(Health.class);
 		player.add(Hunger.class);
 		player.add(InteractComponent.class).setRange(5f);
 
 		((Client) player.getEngine()).getInputManager().addInputExecutor(new VanillaInputExecutor(player));
-		player.add(VanillaCamera.class);
 
 		String username = VanillaConfiguration.USERNAME.getString();
 		String password = VanillaConfiguration.PASSWORD.getString();

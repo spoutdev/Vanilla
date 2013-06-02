@@ -46,7 +46,7 @@ import org.spout.vanilla.material.block.liquid.Water;
 public class Drowning extends EntityComponent {
 	private Entity owner;
 	private Health health;
-	private Head head;
+	private EntityHead head;
 	public static final float MAX_AIR = VanillaData.AIR_SECS.getDefaultValue();
 	private int damageTimer = 20;
 	// Client
@@ -57,7 +57,7 @@ public class Drowning extends EntityComponent {
 	public void onAttached() {
 		owner = getOwner();
 		health = owner.add(Health.class);
-		head = owner.add(Head.class);
+		head = owner.add(EntityHead.class);
 	}
 
 	@Override

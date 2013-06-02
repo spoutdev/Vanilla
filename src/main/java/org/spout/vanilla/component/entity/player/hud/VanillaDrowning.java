@@ -40,6 +40,9 @@ import org.spout.vanilla.data.VanillaRenderMaterials;
 
 public class VanillaDrowning extends DrowningWidget {
 	private final RenderPartPack bubblePack = new RenderPartPack(VanillaRenderMaterials.ICONS_MATERIAL);
+	private final Rectangle bubbleFull = new Rectangle(16f / 256f, 19f / 256f, 9f / 256f, 8f / 256f);
+	private final Rectangle bubbleExplode = new Rectangle(25f / 256f, 19f / 256f, 9f / 256f, 8f / 256f);
+	private final Rectangle bubbleEmpty = new Rectangle(34f / 256f, 19f / 256f, 9f / 256f, 8f / 256f);
 
 	@Override
 	public void init(Widget drowning, HUD hud) {
@@ -54,7 +57,7 @@ public class VanillaDrowning extends DrowningWidget {
 			final RenderPart bubble = new RenderPart();
 			bubble.setColor(Color.WHITE);
 			bubble.setSprite(new Rectangle(x, -0.69f, 0.06f * SCALE, 0.06f));
-			bubble.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f));
+			bubble.setSource(bubbleFull);
 			bubblePack.add(bubble);
 			x += dx;
 		}
@@ -69,19 +72,18 @@ public class VanillaDrowning extends DrowningWidget {
 		int bubId = 0;
 		for (RenderPart bub : bubblePack.getRenderParts()) {
 			if (bubId > nbBub) {
-				bub.setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Empty
+				bub.setSource(bubbleEmpty);
 			} else if (bubId == nbBub) {
 				if (nbBubExact - nbBub >= 0.02f) {
-					bub.setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Empty
+					bub.setSource(bubbleEmpty);
 				} else {
-					bub.setSource(new Rectangle(25f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Explode
+					bub.setSource(bubbleExplode);
 				}
 			} else {
-				bub.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Full
+				bub.setSource(bubbleFull);
 			}
 			bubId++;
 		}
-
 		widget.update();
 	}
 
@@ -93,7 +95,7 @@ public class VanillaDrowning extends DrowningWidget {
 	@Override
 	public void show() {
 		for (RenderPart bubble : bubblePack.getRenderParts()) {
-			bubble.setSource(new Rectangle(16f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Full
+			bubble.setSource(bubbleFull);
 		}
 		widget.update();
 	}
@@ -101,7 +103,7 @@ public class VanillaDrowning extends DrowningWidget {
 	@Override
 	public void hide() {
 		for (RenderPart bubble : bubblePack.getRenderParts()) {
-			bubble.setSource(new Rectangle(34f / 256f, 18f / 256f, 9f / 256f, 9f / 256f)); // Empty
+			bubble.setSource(bubbleEmpty);
 		}
 		widget.update();
 	}

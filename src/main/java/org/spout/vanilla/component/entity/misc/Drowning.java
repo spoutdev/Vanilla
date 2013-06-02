@@ -49,9 +49,6 @@ public class Drowning extends EntityComponent {
 	private EntityHead head;
 	public static final float MAX_AIR = VanillaData.AIR_SECS.getDefaultValue();
 	private int damageTimer = 20;
-	// Client
-	//private final Widget bubbles = new Widget();
-	//private static final float SCALE = 0.75f; // TODO: Apply directly from engine
 
 	@Override
 	public void onAttached() {

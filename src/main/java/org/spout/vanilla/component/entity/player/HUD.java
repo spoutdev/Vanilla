@@ -184,7 +184,7 @@ public class HUD extends EntityComponent {
 
 	// Needs to be moved to ArmorComponent if one ever exists
 	public int getArmor() {
-		return 15;
+		return 0;
 	}
 
 	// Needs to be moved to ExperienceComponent if one ever exists.

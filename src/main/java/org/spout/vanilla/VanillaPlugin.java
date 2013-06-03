@@ -33,16 +33,13 @@ import java.util.logging.Level;
 import org.spout.api.Client;
 import org.spout.api.Platform;
 import org.spout.api.Server;
-import org.spout.api.chat.ChatArguments;
-import org.spout.api.chat.style.ChatStyle;
-import org.spout.api.command.CommandRegistrationsFactory;
-import org.spout.api.command.RootCommand;
-import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
-import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
-import org.spout.api.command.annotated.SimpleInjector;
 import org.spout.api.component.DatatableComponent;
 import org.spout.api.component.entity.NetworkComponent;
 import org.spout.api.component.entity.ObserverComponent;
+import org.spout.api.Spout;
+import org.spout.api.command.CommandManager;
+import org.spout.api.command.annotated.AnnotatedCommandExecutorFactory;
+import org.spout.api.command.filter.PlayerFilter;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventManager;
 import org.spout.api.generator.WorldGenerator;
@@ -119,12 +116,10 @@ public class VanillaPlugin extends CommonPlugin {
 	@Override
 	public void onEnable() {
 		//Commands
-		final CommandRegistrationsFactory<Class<?>> commandRegFactory = new AnnotatedCommandRegistrationFactory(getEngine(), new SimpleInjector(this), new SimpleAnnotatedCommandExecutorFactory());
-		final RootCommand root = getEngine().getRootCommand();
-		root.addSubCommands(this, AdministrationCommands.class, commandRegFactory);
+		AnnotatedCommandExecutorFactory.create(new AdministrationCommands(this));
 
 		if (getEngine().debugMode()) {
-			getEngine().getRootCommand().addSubCommands(this, TestCommands.class, commandRegFactory);
+			AnnotatedCommandExecutorFactory.create(new TestCommands(this));
 		}
 
 		EventManager em = getEngine().getEventManager();
@@ -143,14 +138,16 @@ public class VanillaPlugin extends CommonPlugin {
 					input.bind(new Binding("quickbar_" + i, Keyboard.valueOf("KEY_" + i)));
 				}
 
+				CommandManager cm = Spout.getCommandManager();
 				final QuickbarCommandExecutor exe = new QuickbarCommandExecutor();
-				root.addSubCommand(this, "quickbar_left").setHelp("Changes quickbar slot!").setExecutor(exe).setArgBounds(1, 1);
-				root.addSubCommand(this, "quickbar_right").setHelp("Changes quickbar slot!").setExecutor(exe).setArgBounds(1, 1);
+				final PlayerFilter filter = new PlayerFilter();
+				cm.getCommand("quickbar_left").setHelp("Changes quickbar slot!").setExecutor(exe).setArgumentBounds(1, 1).addFilter(filter);
+				cm.getCommand("quickbar_right").setHelp("Changes quickbar slot!").setExecutor(exe).setArgumentBounds(1, 1).addFilter(filter);
 				for (int i = 1; i < 10; i++) {
-					root.addSubCommand(this, "quickbar_" + i).setHelp("Changes quickbar slot!").setExecutor(exe).setArgBounds(1, 1);
+					cm.getCommand("quickbar_" + i).setHelp("Changes quickbar slot!").setExecutor(exe).setArgumentBounds(1, 1).addFilter(filter);
 				}
 
-				root.addSubCommands(this, InputCommands.class, commandRegFactory);
+				AnnotatedCommandExecutorFactory.create(new InputCommands(this));
 
 				if (getEngine().debugMode()) {
 					setupWorlds();
@@ -188,7 +185,7 @@ public class VanillaPlugin extends CommonPlugin {
 		config = new VanillaConfiguration(getDataFolder());
 		config.load();
 		//Logger
-		((PluginLogger) getLogger()).setTag(new ChatArguments(ChatStyle.RESET, "[", ChatStyle.GOLD, "Vanilla", ChatStyle.RESET, "] "));
+		((PluginLogger) getLogger()).setTag(ChatStyle.RESET + "[" + ChatStyle.GOLD + "Vanilla" + ChatStyle.RESET + "] ");
 		//Spout.getFileSystem().registerLoader(new MapPaletteLoader());
 		getEngine().getFileSystem().registerLoader(new RecipeLoader());
 		Protocol.registerProtocol(new VanillaProtocol());
@@ -341,7 +338,7 @@ public class VanillaPlugin extends CommonPlugin {
 		return config;
 	}
 
-	public ChatArguments getPrefix() {
+	public String getPrefix() {
 		return ((PluginLogger) getLogger()).getTag();
 	}
 

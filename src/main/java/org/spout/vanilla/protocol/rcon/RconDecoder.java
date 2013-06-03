@@ -40,7 +40,8 @@ import org.spout.api.protocol.MessageCodec;
 /**
  * Decoder for the rcon protocol
  */
-public class RconDecoder extends ReplayingDecoder<VoidEnum> {
+public class RconDecoder /*extends ReplayingDecoder<VoidEnum>*/ {
+	/*
 	private final RemoteConnectionSession session;
 
 	public RconDecoder(RemoteConnectionSession session) {
@@ -65,5 +66,5 @@ public class RconDecoder extends ReplayingDecoder<VoidEnum> {
 			session.setRequestId(requestId);
 		}
 		return codec.decode(buffer);
-	}
+	}*/
 }

@@ -69,7 +69,7 @@ public class PasteExceptionHandler implements UncaughtExceptionHandler {
 			Runnable task = new PasteRunnable(session, builder.toString(), "Message handler exception for " + message.getClass().getSimpleName());
 			player.getEngine().getScheduler().scheduleAsyncDelayedTask(VanillaPlugin.getInstance(), task, 0, TaskPriority.CRITICAL);
 		} else {
-			session.disconnect(false, new Object[]{"Message handler exception for ", message.getClass().getSimpleName()});
+			session.disconnect(false, "Message handler exception for " + message.getClass().getSimpleName());
 		}
 	}
 
@@ -112,9 +112,9 @@ public class PasteExceptionHandler implements UncaughtExceptionHandler {
 				e.printStackTrace();
 			}
 			if (response.startsWith(PASTEBIN_URL)) {
-				session.disconnect(true, new Object[]{"Unhandled exception: " + response});
+				session.disconnect(true, "Unhandled exception: " + response);
 			} else {
-				session.disconnect(false, new Object[]{backupMessage});
+				session.disconnect(false, backupMessage);
 			}
 		}
 	}

@@ -35,8 +35,6 @@ import java.util.Set;
 import org.spout.api.Client;
 import org.spout.api.Platform;
 import org.spout.api.ServerOnly;
-import org.spout.api.chat.ChatArguments;
-import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.component.widget.LabelComponent;
 import org.spout.api.component.widget.RenderPartComponent;
 import org.spout.api.entity.Player;
@@ -48,6 +46,7 @@ import org.spout.api.inventory.Slot;
 import org.spout.api.math.Rectangle;
 import org.spout.api.math.Vector2;
 
+import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.living.Human;
@@ -121,7 +120,7 @@ public abstract class Window extends AbstractWindow {
 				// Draw title
 				LabelComponent labelComponent = label.add(LabelComponent.class);
 				labelComponent.setFont(VanillaRenderMaterials.FONT);
-				labelComponent.setText(new ChatArguments(ChatStyle.GRAY, title));
+				labelComponent.setText(ChatStyle.GRAY + title);
 				label.getTransform().add(0, 0.45f);
 				popup.attachWidget(plugin, label);
 

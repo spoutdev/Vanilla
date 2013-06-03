@@ -37,7 +37,6 @@ import org.spout.api.protocol.reposition.NullRepositionManager;
 import org.spout.api.util.Parameter;
 
 import org.spout.nbt.CompoundMap;
-
 import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.GameMode;
 import org.spout.vanilla.inventory.window.WindowType;

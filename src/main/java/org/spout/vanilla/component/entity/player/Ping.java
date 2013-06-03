@@ -26,11 +26,12 @@
  */
 package org.spout.vanilla.component.entity.player;
 
-import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Player;
 import org.spout.api.math.GenericMath;
 
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
+
+import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.event.player.network.PlayerPingEvent;
 
 /**
@@ -67,11 +68,11 @@ public class Ping extends VanillaEntityComponent {
 			request();
 		}
 		if (kickTimer > timeout) {
-			player.kick(ChatStyle.RED, "Connection timed out!");
+			player.kick(ChatStyle.RED + "Connection timed out!");
 		}
 		float longTimeout = 120;
 		if (longKickTimer > longTimeout) {
-			player.kick(ChatStyle.RED, "Connection timed out due to no ping response!");
+			player.kick(ChatStyle.RED + "Connection timed out due to no ping response!");
 		}
 	}
 

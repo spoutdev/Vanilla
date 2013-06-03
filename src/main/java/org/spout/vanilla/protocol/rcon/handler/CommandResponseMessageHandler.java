@@ -29,9 +29,9 @@ package org.spout.vanilla.protocol.rcon.handler;
 import org.spout.vanilla.protocol.rcon.RemoteConnectionSession;
 import org.spout.vanilla.protocol.rcon.msg.CommandResponseMessage;
 
-public class CommandResponseMessageHandler extends RconMessageHandler<CommandResponseMessage> {
-	@Override
+public class CommandResponseMessageHandler /*extends RconMessageHandler<CommandResponseMessage>*/ {
+	/*@Override
 	public void handleClient(RemoteConnectionSession session, CommandResponseMessage message) {
 		throw new UnsupportedOperationException("Not supported yet."); // TODO: Find a good way to prit command responses onto the client!
-	}
+	}*/
 }

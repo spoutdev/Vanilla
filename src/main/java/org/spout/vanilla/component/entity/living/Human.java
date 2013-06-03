@@ -29,7 +29,6 @@ package org.spout.vanilla.component.entity.living;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
-import org.spout.api.chat.ChatArguments;
 import org.spout.api.component.entity.TextModelComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
@@ -171,7 +170,7 @@ public class Human extends Living {
 		getDatatable().put(Data.NAME, name);
 		TextModelComponent textModel = getOwner().get(TextModelComponent.class);
 		if (textModel != null) {
-			textModel.setText(new ChatArguments(name));
+			textModel.setText(name);
 		}
 	}
 

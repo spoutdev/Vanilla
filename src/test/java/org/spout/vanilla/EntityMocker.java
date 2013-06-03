@@ -34,9 +34,9 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import org.spout.api.Engine;
-import org.spout.api.component.BaseComponentHolder;
+import org.spout.api.component.BaseComponentOwner;
 import org.spout.api.component.Component;
-import org.spout.api.component.type.EntityComponent;
+import org.spout.api.component.entity.EntityComponent;
 import org.spout.api.entity.Entity;
 
 public class EntityMocker {
@@ -51,7 +51,7 @@ public class EntityMocker {
 		Mockito.when(entity.get(Matchers.argThat(new ClassOrSubclassMatcher<EntityComponent>(EntityComponent.class)))).thenAnswer(componentHolder);
 		Mockito.when(entity.getExact(Matchers.argThat(new ClassOrSubclassMatcher<EntityComponent>(EntityComponent.class)))).thenAnswer(componentHolder);
 		Mockito.when(entity.detach(Matchers.argThat(new ClassOrSubclassMatcher<EntityComponent>(EntityComponent.class)))).thenAnswer(componentHolder);
-		Mockito.when(entity.getData()).thenAnswer(componentHolder);
+		Mockito.when(entity.getDatatable()).thenAnswer(componentHolder);
 		Mockito.when(entity.getEngine()).thenAnswer(new EntityEngineAnswer(engine));
 
 		//Set up entity tick
@@ -90,7 +90,7 @@ public class EntityMocker {
 		}
 	}
 
-	private static class EntityComponentAnswer extends BaseComponentHolder implements Answer<Component> {
+	private static class EntityComponentAnswer extends BaseComponentOwner implements Answer<Component> {
 		private final Entity entity;
 
 		EntityComponentAnswer(Entity entity) {
@@ -115,8 +115,8 @@ public class EntityMocker {
 		@SuppressWarnings("unchecked")
 		@Override
 		public Component answer(InvocationOnMock invocation) throws Throwable {
-			if (invocation.getMethod().getName().equals("getData")) {
-				return getData();
+			if (invocation.getMethod().getName().equals("getDatatable")) {
+				return getDatatable();
 			}
 			Class<? extends EntityComponent> clazz = (Class<? extends EntityComponent>) invocation.getArguments()[0];
 			if (invocation.getMethod().getName().equals("add")) {

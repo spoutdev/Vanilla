@@ -27,7 +27,7 @@
 package org.spout.vanilla.component.entity.living;
 
 import org.spout.api.ai.goap.GoapAIComponent;
-import org.spout.api.component.impl.NavigationComponent;
+import org.spout.api.component.entity.NavigationComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
@@ -63,11 +63,11 @@ public abstract class Living extends VanillaEntityComponent {
 	}
 
 	public boolean isOnGround() {
-		return getOwner().getData().get(VanillaData.IS_ON_GROUND);
+		return getOwner().getDatatable().get(VanillaData.IS_ON_GROUND);
 	}
 
 	public void setOnGround(boolean onGround) {
-		getOwner().getData().put(VanillaData.IS_ON_GROUND, onGround);
+		getOwner().getDatatable().put(VanillaData.IS_ON_GROUND, onGround);
 	}
 
 	public EntityHead getHead() {
@@ -116,29 +116,29 @@ public abstract class Living extends VanillaEntityComponent {
 	}
 
 	public boolean isRiding() {
-		return getOwner().getData().get(VanillaData.IS_RIDING);
+		return getOwner().getDatatable().get(VanillaData.IS_RIDING);
 	}
 
 	public void setRiding(boolean isRiding) {
-		getOwner().getData().put(VanillaData.IS_RIDING, isRiding);
+		getOwner().getDatatable().put(VanillaData.IS_RIDING, isRiding);
 		sendMetaData();
 	}
 
 	public boolean isEatingBlocking() {
-		return getOwner().getData().get(VanillaData.IS_EATING_BLOCKING);
+		return getOwner().getDatatable().get(VanillaData.IS_EATING_BLOCKING);
 	}
 
 	public void setEatingBlocking(boolean isEatingBlocking) {
-		getOwner().getData().put(VanillaData.IS_EATING_BLOCKING, isEatingBlocking);
+		getOwner().getDatatable().put(VanillaData.IS_EATING_BLOCKING, isEatingBlocking);
 		sendMetaData();
 	}
 
 	public boolean isSneaking() {
-		return getOwner().getData().get(VanillaData.IS_SNEAKING);
+		return getOwner().getDatatable().get(VanillaData.IS_SNEAKING);
 	}
 
 	public void setSneaking(boolean isSneaking) {
-		getOwner().getData().put(VanillaData.IS_SNEAKING, isSneaking);
+		getOwner().getDatatable().put(VanillaData.IS_SNEAKING, isSneaking);
 		sendMetaData();
 	}
 

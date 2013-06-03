@@ -133,14 +133,14 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 
 				//Hover tracking
 				if (wasOnGround && !onGround) {
-					human.getData().put("position_on_ground", livePosition);
-					human.getData().put("time_in_air", holder.getWorld().getAge());
+					human.getDatatable().put("position_on_ground", livePosition);
+					human.getDatatable().put("time_in_air", holder.getWorld().getAge());
 				} else if (!wasOnGround && !onGround) {
 					//Changed directions
 					if (wasFalling && !human.isFalling() || human.isInWater()) {
-						human.getData().remove("time_in_air");
+						human.getDatatable().remove("time_in_air");
 					}
-					float time = human.getData().get("time_in_air", holder.getWorld().getAge());
+					float time = human.getDatatable().get("time_in_air", holder.getWorld().getAge());
 					//hovering or still rising
 					if (time + 2000 < holder.getWorld().getAge() && newPosition.getY() - livePosition.getY() >= 0) {
 						if (!human.canFly()) {
@@ -148,8 +148,8 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 						}
 					}
 				} else if (!wasOnGround && onGround) {
-					human.getData().remove("position_on_ground");
-					human.getData().remove("time_in_air");
+					human.getDatatable().remove("position_on_ground");
+					human.getDatatable().remove("time_in_air");
 				}
 
 				//Movement tracking
@@ -186,16 +186,16 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 				last = System.nanoTime();
 				*/
 				//TODO This is way too aggressive, needs to be revised.
-//				if (tracker.isFilled()) {
-//					//Flying?
-//					if (tracker.getAvgMovement() > 0.3D && !human.canFly()) {
-//						holder.sendMessage("Flying? (Speed: " + tracker.getAvgMovement());
-//					}
-//					//Flooding packets?
-//					if (tracker.getAvgMessageTime() < 40F * 1E6F) {
-//						holder.sendMessage("Speed Hacking?");
-//					}
-//				}
+				//				if (tracker.isFilled()) {
+				//					//Flying?
+				//					if (tracker.getAvgMovement() > 0.3D && !human.canFly()) {
+				//						holder.sendMessage("Flying? (Speed: " + tracker.getAvgMovement());
+				//					}
+				//					//Flooding packets?
+				//					if (tracker.getAvgMessageTime() < 40F * 1E6F) {
+				//						holder.sendMessage("Speed Hacking?");
+				//					}
+				//				}
 			}
 		}
 	}

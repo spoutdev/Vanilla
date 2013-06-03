@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.protocol.handler.entity;
 
-import org.spout.api.component.impl.AnimationComponent;
-import org.spout.api.component.impl.ModelHolderComponent;
+import org.spout.api.component.entity.AnimationComponent;
+import org.spout.api.component.entity.ModelComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.model.Model;
@@ -65,7 +65,7 @@ public final class EntityAnimationHandler extends MessageHandler<EntityAnimation
 
 		Entity entity = player.getWorld().getEntity(message.getEntityId());
 
-		ModelHolderComponent models = entity.get(ModelHolderComponent.class);
+		ModelComponent models = entity.get(ModelComponent.class);
 		if (models == null) {
 			return;
 		}

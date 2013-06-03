@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.component.entity.misc;
 
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.math.Quaternion;
@@ -35,12 +34,13 @@ import org.spout.api.math.Vector3;
 import org.spout.api.math.VectorMath;
 import org.spout.api.util.BlockIterator;
 
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.data.VanillaData;
 
 /**
  * Component that controls the rotation of a head on Vanilla resources.entities.
  */
-public class EntityHead extends EntityComponent {
+public class EntityHead extends VanillaEntityComponent {
 	private Quaternion lastRotation = Quaternion.IDENTITY;
 
 	@Override
@@ -78,7 +78,7 @@ public class EntityHead extends EntityComponent {
 	 */
 	public void setOrientation(Quaternion rotation) {
 		lastRotation = getOrientation();
-		getData().put(VanillaData.HEAD_ROTATION, rotation);
+		getDatatable().put(VanillaData.HEAD_ROTATION, rotation);
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class EntityHead extends EntityComponent {
 	 * @return Head rotation
 	 */
 	public Quaternion getOrientation() {
-		return getData().get(VanillaData.HEAD_ROTATION);
+		return getDatatable().get(VanillaData.HEAD_ROTATION);
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class EntityHead extends EntityComponent {
 	 * @param height
 	 */
 	public void setHeight(float height) {
-		getData().put(VanillaData.HEAD_HEIGHT, height);
+		getDatatable().put(VanillaData.HEAD_HEIGHT, height);
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class EntityHead extends EntityComponent {
 	 * @return Head height
 	 */
 	public float getHeight() {
-		return getData().get(VanillaData.HEAD_HEIGHT);
+		return getDatatable().get(VanillaData.HEAD_HEIGHT);
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class EntityHead extends EntityComponent {
 	 * @return Block iterator
 	 */
 	public BlockIterator getBlockView() {
-		return getBlockView(getData().get(VanillaData.INTERACT_REACH));
+		return getBlockView(getDatatable().get(VanillaData.INTERACT_REACH));
 	}
 
 	/**

@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.protocol.handler.world.block;
 
-import org.spout.api.component.type.BlockComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.protocol.MessageHandler;
@@ -49,8 +48,8 @@ public class SignHandler extends MessageHandler<SignMessage> {
 		int x = rmInverse.convertX(message.getX());
 		int y = rmInverse.convertY(message.getY());
 		int z = rmInverse.convertZ(message.getZ());
-		
-        Sign sign = player.getWorld().getBlock(x, y, z).get(Sign.class);
+
+		Sign sign = player.getWorld().getBlock(x, y, z).get(Sign.class);
 		if (sign == null) {
 			return;
 		}
@@ -76,7 +75,7 @@ public class SignHandler extends MessageHandler<SignMessage> {
 		int y = rm.convertY(message.getY());
 		int z = rm.convertZ(message.getZ());
 
-        Sign sign = player.getWorld().getBlock(x, y, z).get(Sign.class);
+		Sign sign = player.getWorld().getBlock(x, y, z).get(Sign.class);
 		if (sign == null) {
 			return;
 		}

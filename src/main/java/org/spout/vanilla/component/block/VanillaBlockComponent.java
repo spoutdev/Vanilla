@@ -26,20 +26,9 @@
  */
 package org.spout.vanilla.component.block;
 
-import org.spout.api.component.type.BlockComponent;
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.geo.cuboid.Block;
-import org.spout.api.material.block.BlockFace;
+import org.spout.api.component.block.BlockComponent;
 
 public abstract class VanillaBlockComponent extends BlockComponent {
-	public void onInteractBy(Entity entity, Action action, BlockFace face) {
-	}
-
-	public Block getBlock() {
-		return getOwner().getBlock();
-	}
-
 	@Override
 	public boolean isDetachable() {
 		//By default, don't allow the detaching of Vanilla's components

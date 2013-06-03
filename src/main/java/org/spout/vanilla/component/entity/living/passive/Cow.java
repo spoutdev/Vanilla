@@ -28,8 +28,9 @@ package org.spout.vanilla.component.entity.living.passive;
 
 import java.util.Random;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.entity.Player;
+import org.spout.api.event.entity.EntityInteractEvent;
+import org.spout.api.event.player.PlayerInteractEntityEvent;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 
@@ -71,16 +72,21 @@ public class Cow extends Animal implements Passive {
 	}
 
 	@Override
-	public void onInteract(Action action, Entity source) {
-		if (Action.RIGHT_CLICK.equals(action)) {
-			QuickbarInventory playerQuickbar = PlayerUtil.getQuickbar(source);
-			if (playerQuickbar == null) {
-				return;
-			}
-			Slot selected = playerQuickbar.getSelectedSlot();
-			if (selected.get() != null && selected.get().equalsIgnoreSize(new ItemStack(VanillaMaterials.BUCKET, 0))) {
-				selected.addAmount(-1);
-				playerQuickbar.add(new ItemStack(VanillaMaterials.MILK_BUCKET, 1));
+	public void onInteract(final EntityInteractEvent event) {
+		if (event instanceof PlayerInteractEntityEvent) {
+			final PlayerInteractEntityEvent pie = (PlayerInteractEntityEvent) event;
+			final Player player = (Player) pie.getEntity();
+			switch (pie.getAction()) {
+				case RIGHT_CLICK:
+					final QuickbarInventory playerQuickbar = PlayerUtil.getQuickbar(player);
+					if (playerQuickbar == null) {
+						return;
+					}
+					final Slot selected = playerQuickbar.getSelectedSlot();
+					if (selected.get() != null && selected.get().equalsIgnoreSize(new ItemStack(VanillaMaterials.BUCKET, 0))) {
+						selected.addAmount(-1);
+						playerQuickbar.add(new ItemStack(VanillaMaterials.MILK_BUCKET, 1));
+					}
 			}
 		}
 	}

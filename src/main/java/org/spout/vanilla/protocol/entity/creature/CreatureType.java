@@ -29,7 +29,7 @@ package org.spout.vanilla.protocol.entity.creature;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.spout.api.component.type.EntityComponent;
+import org.spout.api.component.entity.EntityComponent;
 
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.living.hostile.Blaze;

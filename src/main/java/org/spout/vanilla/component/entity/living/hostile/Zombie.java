@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.component.entity.living.hostile;
 
-import org.spout.api.component.impl.SceneComponent;
+import org.spout.api.component.entity.SceneComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
@@ -87,7 +87,7 @@ public class Zombie extends Living implements Hostile {
 	 * @return true if this is a villager zombie
 	 */
 	public boolean wasVillager() {
-		return getOwner().getData().get(VanillaData.WAS_VILLAGER);
+		return getOwner().getDatatable().get(VanillaData.WAS_VILLAGER);
 	}
 
 	/**
@@ -95,14 +95,14 @@ public class Zombie extends Living implements Hostile {
 	 * @param value
 	 */
 	public void setWasVillager(boolean value) {
-		getOwner().getData().put(VanillaData.WAS_VILLAGER, value);
+		getOwner().getDatatable().put(VanillaData.WAS_VILLAGER, value);
 	}
 
 	@Override
-	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
+	public void onCollided(Point point, Entity entity) {
 		Health health = entity.get(Health.class);
 		if (health != null) {
-			health.damage(getOwner().get(Damage.class).getDamageLevel(colliderPoint.getWorld().getData().get(VanillaData.DIFFICULTY)).getAmount());
+			health.damage(getOwner().get(Damage.class).getDamageLevel(point.getWorld().getDatatable().get(VanillaData.DIFFICULTY)).getAmount());
 		}
 	}
 }

@@ -37,10 +37,10 @@ public class XPOrb extends Substance {
 	}
 
 	public short getExperience() {
-		return getData().get(VanillaData.EXPERIENCE_AMOUNT);
+		return getDatatable().get(VanillaData.EXPERIENCE_AMOUNT);
 	}
 
 	public void setExperience(short experience) {
-		getData().put(VanillaData.EXPERIENCE_AMOUNT, experience);
+		getDatatable().put(VanillaData.EXPERIENCE_AMOUNT, experience);
 	}
 }

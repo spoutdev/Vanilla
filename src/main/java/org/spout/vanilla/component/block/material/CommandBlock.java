@@ -107,10 +107,10 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 		}
 
 		if (Spout.debugMode()) {
-			Spout.getLogger().info("CommandBlock at " + getPosition().toString() + " command set to " + cmd);
+			Spout.getLogger().info("CommandBlock at " + getPoint().toString() + " command set to " + cmd);
 		}
 
-		getData().put(VanillaData.COMMAND, cmd);
+		getDatatable().put(VanillaData.COMMAND, cmd);
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 	 * @return command to execute
 	 */
 	public String getCommand() {
-		return getData().get(VanillaData.COMMAND);
+		return getDatatable().get(VanillaData.COMMAND);
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 	 */
 	public void setPowered(boolean powered) {
 		if (isPowered() != powered) {
-			getData().put(VanillaData.IS_POWERED, powered);
+			getDatatable().put(VanillaData.IS_POWERED, powered);
 			if (powered) {
 				execute();
 			}
@@ -147,7 +147,7 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 	 * @return true if powered
 	 */
 	public boolean isPowered() {
-		return getData().get(VanillaData.IS_POWERED);
+		return getDatatable().get(VanillaData.IS_POWERED);
 	}
 
 	/**
@@ -159,7 +159,7 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 		}
 
 		if (Spout.debugMode()) {
-			Spout.getLogger().info("Executing CommandBlock at: " + getPosition().toString());
+			Spout.getLogger().info("Executing CommandBlock at: " + getPoint().toString());
 		}
 
 		String cmd = getCommand();
@@ -584,17 +584,17 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 	@Override
 	public ChatChannel getActiveChannel() {
 		for (ChatChannel channel : ChatChannel.Registry.getAllChannels()) {
-			if (channel.getName().equalsIgnoreCase(getData().get(VanillaData.CHAT_CHANNEL))) {
+			if (channel.getName().equalsIgnoreCase(getDatatable().get(VanillaData.CHAT_CHANNEL))) {
 				return channel;
 			}
 		}
-		getData().put(VanillaData.CHAT_CHANNEL, CHAT_CHANNEL.getName());
+		getDatatable().put(VanillaData.CHAT_CHANNEL, CHAT_CHANNEL.getName());
 		return CHAT_CHANNEL;
 	}
 
 	@Override
 	public void setActiveChannel(ChatChannel chan) {
-		getData().put(VanillaData.CHAT_CHANNEL, chan.getName());
+		getDatatable().put(VanillaData.CHAT_CHANNEL, chan.getName());
 	}
 
 	@Override

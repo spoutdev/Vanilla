@@ -30,8 +30,7 @@ import java.util.Random;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.Cause;
-import org.spout.api.event.player.PlayerInteractEvent;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.event.player.Action;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.Slot;
@@ -66,7 +65,7 @@ public class Mushroom extends GroundAttachable implements Spreading, Plant, Dyna
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
-		if (type != PlayerInteractEvent.Action.RIGHT_CLICK) {
+		if (type != Action.RIGHT_CLICK) {
 			return;
 		}
 		Slot inv = PlayerUtil.getHeldSlot(entity);

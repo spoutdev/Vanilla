@@ -26,8 +26,7 @@
  */
 package org.spout.vanilla.protocol.container;
 
-import org.spout.api.component.BlockComponentHolder;
-import org.spout.api.component.type.BlockComponent;
+import org.spout.api.component.BlockComponentOwner;
 import org.spout.api.geo.cuboid.BlockComponentContainer;
 import org.spout.api.geo.cuboid.BlockContainer;
 import org.spout.api.geo.cuboid.Chunk;
@@ -47,7 +46,7 @@ public class VanillaContainer implements BlockContainer, BlockComponentContainer
 	private final byte[] fullChunkData;
 	private BlockMaterial material1;
 	private short nibbleStore;
-	private BlockComponentHolder[] components;
+	private BlockComponentOwner[] components;
 	private int[] componentX;
 	private int[] componentY;
 	private int[] componentZ;
@@ -97,18 +96,18 @@ public class VanillaContainer implements BlockContainer, BlockComponentContainer
 		return fullChunkData;
 	}
 
-    @Override
-    public void setBlockComponent(int x, int y, int z, BlockComponentHolder component) {
+	@Override
+	public void setBlockComponent(int x, int y, int z, BlockComponentOwner component) {
 		components[index] = component;
 		componentX[index] = x;
 		componentY[index] = y;
 		componentZ[index] = z;
 		index++;
-    }
+	}
 
 	@Override
 	public void setBlockComponentCount(int count) {
-		components = new BlockComponentHolder[count];
+		components = new BlockComponentOwner[count];
 		componentX = new int[count];
 		componentY = new int[count];
 		componentZ = new int[count];
@@ -116,7 +115,7 @@ public class VanillaContainer implements BlockContainer, BlockComponentContainer
 		index = 0;
 	}
 
-	public BlockComponentHolder[] getBlockComponent() {
+	public BlockComponentOwner[] getBlockComponent() {
 		return components;
 	}
 

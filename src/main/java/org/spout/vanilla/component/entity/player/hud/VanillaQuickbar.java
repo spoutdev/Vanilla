@@ -28,8 +28,8 @@ package org.spout.vanilla.component.entity.player.hud;
 
 import java.awt.Color;
 
+import org.spout.api.component.widget.RenderPartPacksComponent;
 import org.spout.api.gui.Widget;
-import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.gui.render.RenderPartPack;
 import org.spout.api.math.Rectangle;
@@ -46,7 +46,7 @@ public class VanillaQuickbar extends QuickbarWidget {
 	public void init(Widget quickbar, HUD hud) {
 		super.init(quickbar, hud);
 		// Setup the quickbar
-		final RenderPartsHolderComponent quickbarRect = widget.add(RenderPartsHolderComponent.class);
+		final RenderPartPacksComponent quickbarRect = widget.add(RenderPartPacksComponent.class);
 		quickbarRect.add(quickbarPack);
 
 		final RenderPart quickbarBgRect = new RenderPart();

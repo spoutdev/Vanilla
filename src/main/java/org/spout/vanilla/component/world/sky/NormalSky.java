@@ -26,12 +26,17 @@
  */
 package org.spout.vanilla.component.world.sky;
 
+import org.spout.api.Client;
+import org.spout.api.Spout;
+import org.spout.api.component.world.SkydomeComponent;
 import org.spout.api.entity.Player;
+import org.spout.api.model.Model;
 import org.spout.api.protocol.NetworkSynchronizer;
 
 import org.spout.vanilla.data.Weather;
 import org.spout.vanilla.event.world.TimeUpdateEvent;
 import org.spout.vanilla.event.world.WeatherChangeEvent;
+import org.spout.vanilla.render.VanillaEffects;
 import org.spout.vanilla.util.MathHelper;
 import org.spout.vanilla.world.WeatherSimulator;
 
@@ -39,7 +44,12 @@ public class NormalSky extends Sky {
 	public NormalSky() {
 		super();
 		setHasWeather(true);
-		setModel("model://Vanilla/materials/sky/skydome.spm");
+		if (getOwner().getEngine() instanceof Client) {
+			final SkydomeComponent skydome = getOwner().add(SkydomeComponent.class);
+			final Model model = Spout.getFileSystem().getResource("model://Vanilla/materials/sky/skydome.spm");
+			skydome.setModel(model);
+			model.getRenderMaterial().addRenderEffect(VanillaEffects.SKY);
+		}
 	}
 
 	@Override

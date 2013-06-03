@@ -28,8 +28,8 @@ package org.spout.vanilla;
 
 import org.spout.api.Client;
 import org.spout.api.Platform;
-import org.spout.api.component.impl.CameraComponent;
-import org.spout.api.component.impl.InteractComponent;
+import org.spout.api.component.entity.CameraComponent;
+import org.spout.api.component.entity.InteractComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
@@ -55,8 +55,8 @@ import org.spout.vanilla.component.entity.misc.PlayerItemCollector;
 import org.spout.vanilla.component.entity.misc.Sleep;
 import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.component.entity.player.Ping;
-import org.spout.vanilla.component.entity.player.PlayerList;
 import org.spout.vanilla.component.entity.player.PlayerHead;
+import org.spout.vanilla.component.entity.player.PlayerList;
 import org.spout.vanilla.component.entity.player.hud.VanillaArmorWidget;
 import org.spout.vanilla.component.entity.player.hud.VanillaCrosshair;
 import org.spout.vanilla.component.entity.player.hud.VanillaDrowning;
@@ -123,11 +123,11 @@ public class VanillaListener implements Listener {
 		HUD.openHUD();
 
 		player.add(Human.class);
-		
+
 		// Remove Head and default Camera
 		player.detach(EntityHead.class);
 		player.detach(CameraComponent.class);
-		
+
 		player.add(PlayerHead.class);
 		player.add(PlayerInventory.class);
 		player.add(WindowHolder.class);

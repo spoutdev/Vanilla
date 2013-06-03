@@ -84,11 +84,11 @@ public class Sheep extends Animal implements Passive {
 	}
 
 	public boolean isSheared() {
-		return getOwner().getData().get(VanillaData.SHEARED);
+		return getOwner().getDatatable().get(VanillaData.SHEARED);
 	}
 
 	public void setSheared(boolean sheared) {
-		getOwner().getData().put(VanillaData.SHEARED, sheared);
+		getOwner().getDatatable().put(VanillaData.SHEARED, sheared);
 		Parameter<Byte> param;
 		if (sheared) {
 			param = new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (getColor().getData() | 16));
@@ -103,7 +103,7 @@ public class Sheep extends Animal implements Passive {
 	 * @return color of the sheep.
 	 */
 	public WoolColor getColor() {
-		return WoolColor.getById(getOwner().getData().get(VanillaData.WOOL_COLOR).shortValue());
+		return WoolColor.getById(getOwner().getDatatable().get(VanillaData.WOOL_COLOR).shortValue());
 	}
 
 	/**
@@ -113,7 +113,7 @@ public class Sheep extends Animal implements Passive {
 	public void setColor(Wool.WoolColor color) {
 		short oldData = getColor().getData();
 		short newData = color.getData();
-		getOwner().getData().put(VanillaData.WOOL_COLOR, newData);
+		getOwner().getDatatable().put(VanillaData.WOOL_COLOR, newData);
 		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (oldData & 240 | newData & 15)));
 	}
 
@@ -126,12 +126,12 @@ public class Sheep extends Animal implements Passive {
 	 */
 	private void onGrassEaten() {
 		getOwner().getNetwork().callProtocolEvent(new EntityStatusEvent(getOwner(), EntityStatusMessage.SHEEP_EAT_GRASS));
-		getOwner().getData().put(VanillaData.SHEARED, false);
-		long newGrowthTicks = getOwner().getData().get(VanillaData.GROWTH_TICKS) + GRASS_GROWTH_TICK_BONUS;
+		getOwner().getDatatable().put(VanillaData.SHEARED, false);
+		long newGrowthTicks = getOwner().getDatatable().get(VanillaData.GROWTH_TICKS) + GRASS_GROWTH_TICK_BONUS;
 		if (newGrowthTicks > TICKS_UNTIL_ADULT) {
 			newGrowthTicks = TICKS_UNTIL_ADULT;
 		}
-		getOwner().getData().put(VanillaData.GROWTH_TICKS, newGrowthTicks);
+		getOwner().getDatatable().put(VanillaData.GROWTH_TICKS, newGrowthTicks);
 	}
 
 	private void eatGrass() {
@@ -154,8 +154,8 @@ public class Sheep extends Animal implements Passive {
 		final int x = position.getFloorX();
 		final int y = position.getFloorY() - 1;
 		final int z = position.getFloorZ();
-		int maxInt = 0;
-		if (getOwner().getData().get(VanillaData.GROWTH_TICKS) < 24000) {
+		int maxInt;
+		if (getOwner().getDatatable().get(VanillaData.GROWTH_TICKS) < 24000) {
 			maxInt = GRASS_CHANCE_AS_BABY;
 		} else {
 			maxInt = GRASS_CHANCE_AS_ADULT;

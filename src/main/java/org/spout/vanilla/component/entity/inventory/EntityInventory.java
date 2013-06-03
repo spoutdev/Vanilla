@@ -29,7 +29,7 @@ package org.spout.vanilla.component.entity.inventory;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.spout.api.component.type.EntityComponent;
+import org.spout.api.component.entity.EntityComponent;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
@@ -46,7 +46,7 @@ public class EntityInventory extends EntityComponent {
 	 * @return armor
 	 */
 	public ArmorInventory getArmor() {
-		return getData().get(VanillaData.ARMOR_INVENTORY);
+		return getDatatable().get(VanillaData.ARMOR_INVENTORY);
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class EntityInventory extends EntityComponent {
 	 * @return quickbar
 	 */
 	public QuickbarInventory getQuickbar() {
-		return getData().get(VanillaData.ENTITY_HELD_INVENTORY);
+		return getDatatable().get(VanillaData.ENTITY_HELD_INVENTORY);
 	}
 
 	/**

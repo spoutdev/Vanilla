@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.component.entity.misc;
 
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.Material;
 import org.spout.api.math.GenericMath;
 
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.tool.ToolType;
@@ -42,7 +42,7 @@ import org.spout.vanilla.material.item.tool.MiningTool;
 /**
  * Component that mainly handles the block breaking animation.
  */
-public class Digging extends EntityComponent {
+public class Digging extends VanillaEntityComponent {
 	private boolean isDigging;
 	protected Point diggingPosition;
 	protected long diggingStartTime;

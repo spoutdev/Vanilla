@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.material.item.potion;
 
-import org.spout.api.component.impl.SceneComponent;
+import org.spout.api.component.entity.SceneComponent;
 import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.event.player.Action;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 import org.spout.api.math.VectorMath;
@@ -229,9 +229,10 @@ public class PotionItem extends VanillaItemMaterial {
 		return time;
 	}
 
+	@Override
 	public void onInteract(Entity entity, Action action) {
 		if (this.isSplash()) {
-			Potion item = entity.getWorld().createEntity(entity.getScene().getPosition().add(0, 1.6f, 0), Potion.class).add(Potion.class);
+			Potion item = entity.getWorld().createEntity(entity.getScene().getPosition().add(0, 1.6f, 0)).add(Potion.class);
 			SceneComponent scene = item.getOwner().getScene();
 			//cene.setShape(6f, new SphereShape(0.3f)); // TODO: Correct this
 			scene.impulse(VectorMath.getDirection(entity.getScene().getRotation()).multiply(55)); //TODO: Need real parameters

@@ -28,8 +28,8 @@ package org.spout.vanilla.component.entity.player.hud;
 
 import java.awt.Color;
 
+import org.spout.api.component.widget.RenderPartPacksComponent;
 import org.spout.api.gui.Widget;
-import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.gui.render.RenderPartPack;
 import org.spout.api.math.Rectangle;
@@ -48,7 +48,7 @@ public class VanillaDrowning extends DrowningWidget {
 	public void init(Widget drowning, HUD hud) {
 		super.init(drowning, hud);
 
-		final RenderPartsHolderComponent bubblesRect = widget.add(RenderPartsHolderComponent.class);
+		final RenderPartPacksComponent bubblesRect = widget.add(RenderPartPacksComponent.class);
 		bubblesRect.add(bubblePack);
 
 		float x = 0.09f * SCALE;

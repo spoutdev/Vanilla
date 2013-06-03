@@ -40,23 +40,23 @@ public class Tnt extends Substance {
 	private Entity holder;
 
 	public float getExplosionSize() {
-		return getData().get(VanillaData.EXPLOSION_SIZE);
+		return getDatatable().get(VanillaData.EXPLOSION_SIZE);
 	}
 
 	public void setExplosionSize(float explosionSize) {
-		getData().put(VanillaData.EXPLOSION_SIZE, explosionSize);
+		getDatatable().put(VanillaData.EXPLOSION_SIZE, explosionSize);
 	}
 
 	public boolean makesFire() {
-		return getData().get(VanillaData.MAKES_FIRE);
+		return getDatatable().get(VanillaData.MAKES_FIRE);
 	}
 
 	public float getFuse() {
-		return getData().get(VanillaData.FUSE);
+		return getDatatable().get(VanillaData.FUSE);
 	}
 
 	public void setFuse(float fuse) {
-		getData().put(VanillaData.FUSE, fuse);
+		getDatatable().put(VanillaData.FUSE, fuse);
 	}
 
 	public void pulse(float dt) {
@@ -64,7 +64,7 @@ public class Tnt extends Substance {
 	}
 
 	public void setMakesFire(boolean makesFire) {
-		getData().put(VanillaData.MAKES_FIRE, makesFire);
+		getDatatable().put(VanillaData.MAKES_FIRE, makesFire);
 	}
 
 	@Override

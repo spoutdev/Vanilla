@@ -33,12 +33,12 @@ import java.util.logging.Level;
 import org.spout.api.Client;
 import org.spout.api.Platform;
 import org.spout.api.Spout;
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.gui.Screen;
 import org.spout.api.gui.Widget;
 
 import org.spout.vanilla.VanillaPlugin;
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.player.hud.ArmorWidget;
 import org.spout.vanilla.component.entity.player.hud.CrosshairWidget;
 import org.spout.vanilla.component.entity.player.hud.DrowningWidget;
@@ -50,7 +50,7 @@ import org.spout.vanilla.component.entity.player.hud.QuickbarWidget;
 /**
  * Component attached to clients-only that updates the Heads Up Display.
  */
-public class HUD extends EntityComponent {
+public class HUD extends VanillaEntityComponent {
 	private static final float SCALE = 0.75f; // TODO: Apply directly from engine
 	private static final float START_X = -0.71f * SCALE;
 	// The main hud screen

@@ -29,10 +29,9 @@ package org.spout.vanilla.component.block;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
-import org.spout.api.material.block.BlockFace;
+import org.spout.api.event.entity.EntityInteractEvent;
+import org.spout.api.event.player.PlayerInteractBlockEvent;
 
 public abstract class ViewedBlockComponent extends VanillaBlockComponent {
 	protected final Set<Player> viewers = new HashSet<Player>();
@@ -65,12 +64,16 @@ public abstract class ViewedBlockComponent extends VanillaBlockComponent {
 	}
 
 	@Override
-	public void onInteractBy(Entity entity, Action action, BlockFace face) {
-		super.onInteractBy(entity, action, face);
-		if (action == Action.RIGHT_CLICK && entity instanceof Player) {
-			Player player = (Player) entity;
-			if (open(player)) {
-				viewers.add(player);
+	public void onInteract(final EntityInteractEvent event) {
+		super.onInteract(event);
+		if (event instanceof PlayerInteractBlockEvent) {
+			final PlayerInteractBlockEvent pib = (PlayerInteractBlockEvent) event;
+			final Player player = (Player) pib.getEntity();
+			switch (pib.getAction()) {
+				case RIGHT_CLICK:
+					if (open(player)) {
+						viewers.add(player);
+					}
 			}
 		}
 	}

@@ -28,14 +28,13 @@ package org.spout.vanilla.component.entity.misc;
 
 import java.util.HashMap;
 
-import org.spout.api.component.type.EntityComponent;
-
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.data.Difficulty;
 
 /**
  * Component that contains the amount of damage this entity does.
  */
-public class Damage extends EntityComponent {
+public class Damage extends VanillaEntityComponent {
 	private final HashMap<Difficulty, org.spout.vanilla.data.Damage> damageList = new HashMap<Difficulty, org.spout.vanilla.data.Damage>();
 
 	public Damage() {

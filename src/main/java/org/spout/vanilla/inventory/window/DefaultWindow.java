@@ -57,7 +57,7 @@ public class DefaultWindow extends Window {
 		}));
 	}
 
-	@Override 
+	@Override
 	public void close() {
 		PlayerInventory pInv = getPlayerInventory();
 		//Disconnecting
@@ -124,7 +124,7 @@ public class DefaultWindow extends Window {
 					}
 					getPlayerInventory().getMain().add(item);
 				}
-			 }
+			}
 		}
 		return super.onClick(args);
 	}

@@ -30,11 +30,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.event.ProtocolEvent;
 
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.event.scoreboard.ObjectiveActionEvent;
 import org.spout.vanilla.event.scoreboard.TeamActionEvent;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardObjectiveMessage;
@@ -43,7 +43,7 @@ import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardTeamMessage;
 /**
  * Represents a collection of objective attached to a player.
  */
-public class Scoreboard extends EntityComponent {
+public class Scoreboard extends VanillaEntityComponent {
 	private Player player;
 	private final Set<Objective> objectives = new HashSet<Objective>();
 	private final Set<Team> teams = new HashSet<Team>();

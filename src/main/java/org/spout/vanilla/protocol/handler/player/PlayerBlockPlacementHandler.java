@@ -27,16 +27,13 @@
 package org.spout.vanilla.protocol.handler.player;
 
 import java.util.Collection;
-import java.util.logging.Level;
 
 import org.spout.api.Spout;
 import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
-import org.spout.api.event.EventManager;
-import org.spout.api.event.Result;
-import org.spout.api.event.player.PlayerInteractEvent;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.event.player.Action;
+import org.spout.api.event.player.PlayerInteractBlockEvent;
 import org.spout.api.geo.Protection;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
@@ -71,6 +68,7 @@ import org.spout.vanilla.protocol.msg.player.PlayerBlockPlacementMessage;
 import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 import org.spout.vanilla.util.PlayerUtil;
 
+//TODO Re-write this
 public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBlockPlacementMessage> {
 	private void refreshClient(Player player, Block clickedBlock, BlockFace clickedFace, RepositionManager rm) {
 		// refresh the client just in case it assumed something
@@ -92,11 +90,9 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		RepositionManager rmInverse = rm.getInverse();
 		message = message.convert(rmInverse);
 
-		EventManager eventManager = session.getEngine().getEventManager();
 		World world = player.getWorld();
 		Slot currentSlot = PlayerUtil.getHeldSlot(player);
 		if (currentSlot == null) {
-			Spout.getLogger().log(Level.WARNING, "Block placement failed for " + player.getName() + ": Missing player inventory");
 			return;
 		}
 		ItemStack holding = currentSlot.get();
@@ -116,13 +112,13 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 		}
 		if (clickedFace == BlockFace.THIS) {
 			// Right clicked air with an item.
-			PlayerInteractEvent event = eventManager.callEvent(new PlayerInteractEvent(player, null, holding, Action.RIGHT_CLICK, true, clickedFace));
+			PlayerInteractBlockEvent event = Spout.getEventManager().callEvent(new PlayerInteractBlockEvent(player, null, null, clickedFace, Action.RIGHT_CLICK));
 
 			// May have been changed by the event
 			holding = currentSlot.get();
 			holdingMat = holding == null ? null : holding.getMaterial();
 
-			if (event.useItemInHand() != Result.DENY && holdingMat != null) {
+			if (holdingMat != null) {
 				holdingMat.onInteract(player, Action.RIGHT_CLICK);
 			}
 		} else {
@@ -134,7 +130,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 			final BlockMaterial clickedMaterial = clickedBlock.getMaterial();
 
 			// Perform interaction event
-			PlayerInteractEvent interactEvent = eventManager.callEvent(new PlayerInteractEvent(player, clickedBlock.getPosition(), currentSlot.get(), Action.RIGHT_CLICK, false, clickedFace));
+			PlayerInteractBlockEvent interactEvent = Spout.getEventManager().callEvent(new PlayerInteractBlockEvent(player, clickedBlock, clickedBlock.getPosition(), clickedFace, Action.RIGHT_CLICK));
 
 			// May have been changed by the event
 			holding = currentSlot.get();
@@ -145,31 +141,10 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				refreshClient(player, clickedBlock, clickedFace, rm);
 				return;
 			}
-
-			// perform interaction on the server
-			if (interactEvent.interactWithBlock() != Result.DENY) {
-				if (holdingMat != null && interactEvent.useItemInHand() != Result.DENY) {
-					holdingMat.onInteract(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
-				}
-				clickedMaterial.onInteractBy(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
-
-				// TODO: Put block component interaction handling back in
-				// if (clickedMaterial.hasController()) {
-				// clickedMaterial.getController(clickedBlock).onInteract(player, Action.RIGHT_CLICK);
-				// }
+			if (holdingMat != null) {
+				holdingMat.onInteract(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
 			}
-
-			// Checks before placement
-			if (interactEvent.useItemInHand() == Result.DENY) {
-				refreshClient(player, clickedBlock, clickedFace, rm);
-				return;
-			}
-			if (interactEvent.useItemInHand() != Result.ALLOW) {
-				if (clickedMaterial instanceof VanillaBlockMaterial && (((VanillaBlockMaterial) clickedMaterial).isPlacementSuppressed())) {
-					refreshClient(player, clickedBlock, clickedFace, rm);
-					return;
-				}
-			}
+			clickedMaterial.onInteract(player, clickedBlock, Action.RIGHT_CLICK, clickedFace);
 
 			// If the holding material can be placed, place it
 			if (holdingMat instanceof Placeable) {
@@ -187,7 +162,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 				} else {
 					clickedAgainst = clickedFace.getOpposite();
 				}
-				if (toPlace.canPlace(clickedBlock, placedData, clickedAgainst, message.getFace(), true, cause) || interactEvent.useItemInHand() == Result.ALLOW) {
+				if (toPlace.canPlace(clickedBlock, placedData, clickedAgainst, message.getFace(), true, cause)) {
 					placedBlock = clickedBlock;
 					placedAgainst = clickedAgainst;
 					placedIsClicked = true;

@@ -60,7 +60,7 @@ public class VanillaBlocklightLightingManager extends VanillaLightingManager {
 		short data = material.getData(x, y, z);
 		return m.getLightLevel(data);
 	}
-	
+
 	@Override
 	public void updateEmittingBlocks(int[][][] emittedLight, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
 		int size = Chunk.BLOCKS.SIZE;
@@ -77,15 +77,15 @@ public class VanillaBlocklightLightingManager extends VanillaLightingManager {
 			}
 		}
 	}
-	
+
 	@Override
 	public void bulkEmittingInitialize(ImmutableCuboidBlockMaterialBuffer buffer, final int[][][] light, int[][] height) {
 		Vector3 base = buffer.getBase();
-		
+
 		final int baseX = base.getFloorX();
 		final int baseY = base.getFloorY();
 		final int baseZ = base.getFloorZ();
-		
+
 		buffer.forEach(new CuboidBlockMaterialProcedure() {
 			@Override
 			public boolean execute(int x, int y, int z, short id, short data) {
@@ -93,7 +93,7 @@ public class VanillaBlocklightLightingManager extends VanillaLightingManager {
 				z -= baseZ;
 
 				BlockMaterial m = BlockMaterial.get(id, data);
-				
+
 				int lightLevel = m.getLightLevel(m.getData());
 				if (lightLevel > 0) {
 					light[x + 1][y + 1][z + 1] = lightLevel;

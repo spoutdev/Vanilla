@@ -55,13 +55,13 @@ public class XPBottle extends Substance implements Projectile {
 	}
 
 	@Override
-	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
+	public void onCollided(Point point, Entity entity) {
 		//TODO: Actually drop xp.
 		getOwner().remove();
 	}
 
 	@Override
-	public void onCollided(Point colliderPoint, Point collidedPoint, Block block) {
+	public void onCollided(Point point, Block block) {
 		//TODO: Actually drop xp.
 		getOwner().remove();
 	}

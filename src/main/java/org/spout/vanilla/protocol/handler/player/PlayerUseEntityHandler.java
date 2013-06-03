@@ -26,9 +26,11 @@
  */
 package org.spout.vanilla.protocol.handler.player;
 
+import org.spout.api.Spout;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.event.player.Action;
+import org.spout.api.event.player.PlayerInteractEntityEvent;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 import org.spout.api.material.Material;
@@ -70,9 +72,16 @@ public class PlayerUseEntityHandler extends MessageHandler<PlayerUseEntityMessag
 		if (holdingMat == null) {
 			holdingMat = VanillaMaterials.AIR;
 		}
+		//TODO VanillaPlayerInteractEntityEvent maybe?
+		PlayerInteractEntityEvent event;
+
 		if (message.isPunching()) {
+			event = new PlayerInteractEntityEvent(playerEnt, clickedEntity, clickedEntity.getScene().getPosition(), Action.LEFT_CLICK);
+			if (Spout.getEventManager().callEvent(event).isCancelled()) {
+				return;
+			}
 			holdingMat.onInteract(playerEnt, clickedEntity, Action.LEFT_CLICK);
-			clickedEntity.interact(Action.LEFT_CLICK, playerEnt);
+			clickedEntity.interact(event);
 
 			if (clickedEntity.get(Human.class) != null && !VanillaConfiguration.PLAYER_PVP_ENABLED.getBoolean()) {
 				return;
@@ -110,8 +119,12 @@ public class PlayerUseEntityHandler extends MessageHandler<PlayerUseEntityMessag
 				}
 			}
 		} else {
+			event = new PlayerInteractEntityEvent(playerEnt, clickedEntity, clickedEntity.getScene().getPosition(), Action.LEFT_CLICK);
+			if (Spout.getEventManager().callEvent(event).isCancelled()) {
+				return;
+			}
 			holdingMat.onInteract(playerEnt, clickedEntity, Action.RIGHT_CLICK);
-			clickedEntity.interact(Action.RIGHT_CLICK, playerEnt);
+			clickedEntity.interact(event);
 		}
 	}
 }

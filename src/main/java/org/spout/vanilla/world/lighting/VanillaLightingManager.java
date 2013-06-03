@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.world.lighting;
 
-import gnu.trove.iterator.hash.TObjectHashIterator;
-
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
+
+import gnu.trove.iterator.hash.TObjectHashIterator;
 
 import org.spout.api.Spout;
 import org.spout.api.geo.cuboid.Chunk;
@@ -67,56 +67,56 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	@Override
 	public void resolveColumns(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int[] hx, int[] hz, int[] oldHy, int[] newHy, int changedColumns) {
 	}
-	
+
 	@Override
 	public VanillaCuboidLightBuffer newLightBuffer(Modifiable holder, int baseX, int baseY, int baseZ, int sizeX, int sizeY, int sizeZ) {
 		return deserialize(holder, baseX, baseY, baseZ, sizeX, sizeY, sizeZ, null);
 	}
 
 	protected void resolve(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, Iterable<IntVector3> coords, boolean init) {
-		
+
 		// Spout.getLogger().info("Processing for " + getClass().getSimpleName());
-		
+
 		IntVector4ExpandableFIFO fifo = new IntVector4ExpandableFIFO(256);
 
 		IntVector4ExpandableFIFO regen = new IntVector4ExpandableFIFO(256);
-	
+
 		if (!init) {
 			processLower(coords, fifo, regen, light, material, height);
 
 			fifo = null;
 		}
-		
+
 		processHigher(coords, regen, light, material, height, init);
 	}
-	
+
 	private final void log(String message, IntVector3 v) {
 		log(message, v.getX(), v.getY(), v.getZ());
 	}
-	
+
 	private final void log(String message, IntVector3 v, int light) {
 		log(message, v.getX(), v.getY(), v.getZ(), light);
 	}
-	
+
 	private final void log(String message, int x, int y, int z, int light) {
 		//Spout.getLogger().info(getClass().getSimpleName() + ": " + message + " at " + x + ", " + y + ", " + z + " light " + light);
 	}
-	
+
 	private final void log(String message, int x, int y, int z) {
 		//Spout.getLogger().info(getClass().getSimpleName() + ": " + message + " at " + x + ", " + y + ", " + z);
 	}
-	
+
 	public void processHigher(Iterable<IntVector3> coords, IntVector4ExpandableFIFO fifo, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, boolean init) {
-		
+
 		Iterator<IntVector3> itr = coords.iterator();
-		
+
 		while (itr.hasNext()) {
 			IntVector3 v = itr.next();
 
 			int lightLevel = getLightLevel(light, v.getX(), v.getY(), v.getZ());
-			
+
 			log("(Higher) Root light level", v, lightLevel);
-			
+
 			if (lightLevel < 15) {
 				int newLight = this.computeLightLevel(light, material, height, v.getX(), v.getY(), v.getZ());
 				log("(Higher) Computed light level", v, newLight);
@@ -128,35 +128,35 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 				}
 			}
 		}
-		
+
 		Vector3 base = material.getBase();
 		int baseX = base.getFloorX();
 		int baseY = base.getFloorY();
 		int baseZ = base.getFloorZ();
-		
+
 		Vector3 top = material.getTop();
 		int topX = top.getFloorX();
 		int topY = top.getFloorY();
 		int topZ = top.getFloorZ();
-		
+
 		IntVector4 v;
 		while ((v = fifo.read()) != null) {
 			int center = getLightLevel(light, v.getX(), v.getY(), v.getZ());
-			
+
 			log("(Higher) checking center (W = " + v.getW() + ")", v, center);
-			
+
 			if (center <= 1 || v.getW() != center) {
 				continue;
 			}
 
 			BlockMaterial m = material.get(v.getX(), v.getY(), v.getZ());
-			
+
 			if (m == BlockMaterial.UNGENERATED) {
 				continue;
 			}
-			
+
 			final boolean boundary = v.getX() == baseX || v.getX() == (topX - 1) || v.getY() == baseY || v.getY() == topY - 1 || v.getZ() == baseZ || v.getZ() == topZ - 1;
-			
+
 			for (BlockFace face : allFaces) {
 				IntVector3 off = face.getIntOffset();
 				int nx = v.getX() + off.getX();
@@ -165,17 +165,17 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 				if (boundary && (nx < baseX || nx >= topX || ny <= baseY || ny >= topY || nz < baseZ || nz >= topZ)) {
 					continue;
 				}
-				
+
 				BlockMaterial other = material.get(nx, ny, nz);
-				
+
 				log("(Higher) checking neighbor: material=" + other, nx, ny, nz);
-				
+
 				if (other.isOpaque() || other.getOcclusion(other.getData()).get(face.getOpposite())) {
 					continue;
 				}
-				
+
 				int oldLevel = getLightLevel(light, nx, ny, nz);
-				
+
 				log("(Higher) old light", nx, ny, nz, oldLevel);
 
 				if (oldLevel == 15) {
@@ -185,9 +185,9 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 				int opacity = other.getOpacity() + 1;
 
 				int newLevel = center - opacity;
-				
+
 				log("(Higher) new level", nx, ny, nz, newLevel);
-				
+
 				if (newLevel > oldLevel) {
 					setLightLevel(light, nx, ny, nz, newLevel);
 					fifo.write(newLevel, nx, ny, nz); // block is added each time its light increases
@@ -196,23 +196,23 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			}
 		}
 	}
-	
+
 	public void processLower(Iterable<IntVector3> coords, IntVector4ExpandableFIFO fifo, IntVector4ExpandableFIFO regen, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height) {
 		Iterator<IntVector3> itr = coords.iterator();
-		
+
 		while (itr.hasNext()) {
 			IntVector3 v = itr.next();
 			int lightLevel = getLightLevel(light, v.getX(), v.getY(), v.getZ());
-			
+
 			log("(Lower) Root light level", v, lightLevel);
-			
+
 			if (lightLevel == 0) {
 				continue;
 			}
 			int newLight = this.computeLightLevel(light, material, height, v.getX(), v.getY(), v.getZ());
-			
+
 			log("(Lower) New light level", v, newLight);
-			
+
 			if (newLight < lightLevel) {
 				setLightLevel(light, v.getX(), v.getY(), v.getZ(), 0);
 				fifo.write(lightLevel, v.getX(), v.getY(), v.getZ());
@@ -224,26 +224,26 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		int baseX = base.getFloorX();
 		int baseY = base.getFloorY();
 		int baseZ = base.getFloorZ();
-		
+
 		Vector3 top = material.getTop();
 		int topX = top.getFloorX();
 		int topY = top.getFloorY();
 		int topZ = top.getFloorZ();
-		
+
 		IntVector4 v;
 		while ((v = fifo.read()) != null) {
 			int center = v.getW();
-			
+
 			log("(Lower) checking center (W = " + v.getW() + ")", v, center);
-			
+
 			BlockMaterial m = material.get(v.getX(), v.getY(), v.getZ());
-			
+
 			if (m == BlockMaterial.UNGENERATED) {
 				continue;
 			}
-			
+
 			final boolean boundary = v.getX() == baseX || v.getX() == (topX - 1) || v.getY() == baseY || v.getY() == topY - 1 || v.getZ() == baseZ || v.getZ() == topZ - 1;
-			
+
 			for (BlockFace face : allFaces) {
 
 				IntVector3 off = face.getIntOffset();
@@ -254,24 +254,24 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 					continue;
 				}
 				BlockMaterial other = material.get(nx, ny, nz);
-				
+
 				if (other == BlockMaterial.UNGENERATED) {
 					continue;
 				}
-				
+
 				log("(Lower) checking neighbor: material=" + other, nx, ny, nz);
 
 				int oldLevel = getLightLevel(light, nx, ny, nz);
-				
+
 				log("(Lower) old light", nx, ny, nz, oldLevel);
 
 				if (oldLevel > 0) {
 					int opacity = other.getOpacity() + 1;
 
 					int oldSupportLevel = center - opacity;
-					
+
 					log("(Lower) supported light", nx, ny, nz, oldSupportLevel);
-					
+
 					if (oldSupportLevel == oldLevel) {
 						setLightLevel(light, nx, ny, nz, 0);
 						fifo.write(oldLevel, nx, ny, nz); // block is added if it is set to zero
@@ -300,7 +300,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		short data = material.getData(x, y, z);
 
 		ByteBitSet occlusionSet = m.getOcclusion(data);
-		
+
 		int neighborLight = getEmittedLight(material, height, x, y, z);
 
 		if (m.isOpaque() || occlusionSet.get(BlockFaces.NESWBT)) {
@@ -333,7 +333,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 		short data = material.getData(nx, ny, nz);
 
 		BlockMaterial m = BlockMaterial.get(id, data);
-		
+
 		ByteBitSet neighborOcclusionSet = m.getOcclusion(data);
 		if (neighborOcclusionSet.get(face.getOpposite())) {
 			return 0;
@@ -365,7 +365,7 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			Spout.getLogger().info("No light buffer to write to");
 		}
 	}
-	
+
 	public void purgeSet(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, TInt10TripleSet[] sets) {
 		for (int i = 0; i < sets.length; i++) {
 			TInt10TripleSet set = sets[i];
@@ -470,7 +470,6 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 
 	/**
 	 * Copies the emitted light values of each block in the given chunk into the given array for coords (1, 1, 1) to (16, 16, 16)
-	 * 
 	 * @param light
 	 * @param material
 	 * @param height
@@ -485,14 +484,13 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 	protected void initChunks(ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, Chunk[] chunks) {
 		// Scan for new chunks needs to check
 		// - boundary of entire volume
-		
+
 		Iterable<IntVector3> boundary = getBoundary(material, chunks);
-		
+
 		resolve(light, material, height, boundary, true);
 	}
-	
-	private final static Comparator<Chunk> chunkSorter = new Comparator<Chunk>() {
 
+	private final static Comparator<Chunk> chunkSorter = new Comparator<Chunk>() {
 		@Override
 		public int compare(Chunk c1, Chunk c2) {
 			int genDiff = c1.getGenerationIndex() - c2.getGenerationIndex();
@@ -510,54 +508,53 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			// Y sort falling
 			return c2.getY() - c1.getY();
 		}
-		
 	};
-	
+
 	protected Iterable<IntVector3> getBoundary(ImmutableCuboidBlockMaterialBuffer material, Chunk[] chunks) {
 
 		Arrays.sort(chunks, chunkSorter);
-		
+
 		int blocks = chunks.length << 11;
-		
+
 		int[] xArray = new int[blocks];
 		int[] yArray = new int[blocks];
 		int[] zArray = new int[blocks];
 
 		int count = 0;
-		
+
 		int startChunk = 0;
 		int endChunk = 0;
-		
+
 		while (startChunk < chunks.length) {
 			int genIndex = chunks[startChunk].getGenerationIndex();
 			endChunk = startChunk + 1;
-			
+
 			while (endChunk < chunks.length && chunks[endChunk].getGenerationIndex() == genIndex) {
 				endChunk++;
 			}
-			
+
 			count = getBoundary(chunks, count, xArray, yArray, zArray, startChunk, endChunk);
-			
+
 			startChunk = endChunk;
 		}
-		
+
 		return new IntVector3Array(xArray, yArray, zArray, count);
 	}
-	
+
 	private int getBoundary(Chunk[] chunks, int count, int[] xArray, int[] yArray, int[] zArray, int startChunk, int endChunk) {
-		
+
 		Chunk first = chunks[startChunk];
-		
+
 		// Note: X and Z are sorted low to high and Y is sorted high to low
-		
+
 		int baseX = first.getX();
 		int baseY = first.getY();
 		int baseZ = first.getZ();
-		
+
 		int topX = first.getX();
 		int topY = first.getY();
 		int topZ = first.getZ();
-		
+
 		for (int i = startChunk + 1; i < endChunk; i++) {
 			Chunk c = chunks[i];
 			if (c.getX() < baseX) {
@@ -579,21 +576,21 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 				topZ = c.getZ();
 			}
 		}
-		
+
 		topX++;
 		topY++;
 		topZ++;
-		
+
 		int sizeX = topX - baseX;
 		int sizeY = topY - baseY;
 		int sizeZ = topZ - baseZ;
-		
+
 		int volume = sizeX * sizeY * sizeZ;
-		
+
 		boolean fullCuboid = volume == endChunk - startChunk;
-		
+
 		Chunk[][][] cuboid = new Chunk[sizeX][sizeY][sizeZ];
-		
+
 		for (int i = startChunk; i < endChunk; i++) {
 			Chunk c = chunks[i];
 			int cx = c.getX() - baseX;
@@ -606,16 +603,15 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 				throw new IllegalStateException("Chunks appears twice in list, " + cx + ", " + cy + ", " + cz);
 			}
 		}
-		
+
 		int baseBlockX = baseX << Chunk.BLOCKS.BITS;
 		int baseBlockY = baseY << Chunk.BLOCKS.BITS;
 		int baseBlockZ = baseZ << Chunk.BLOCKS.BITS;
-		
+
 		int topBlockX = topX << Chunk.BLOCKS.BITS;
 		int topBlockY = topY << Chunk.BLOCKS.BITS;
 		int topBlockZ = topZ << Chunk.BLOCKS.BITS;
-		
-		
+
 		if (fullCuboid) {
 			for (int x = baseBlockX; x < topBlockX; x++) {
 				for (int y = baseBlockY; y < topBlockY; y++) {
@@ -661,25 +657,25 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 				int wX = (baseX + x) << Chunk.BLOCKS.BITS;
 				for (int z = 0; z < sizeZ; z++) {
 					int wZ = (baseZ + z) << Chunk.BLOCKS.BITS;
-					for (int y = sizeY - 1; y >=0; y--) {
+					for (int y = sizeY - 1; y >= 0; y--) {
 						Chunk c = cuboid[x][y][z];
-						
+
 						if (c == null) {
 							continue;
 						}
-						
+
 						int wY = (baseY + y) << Chunk.BLOCKS.BITS;
 						for (BlockFace face : allFaces) {
-	
+
 							IntVector3 off = face.getIntOffset();
 							int nx = x + off.getX();
 							int ny = y + off.getY();
 							int nz = z + off.getZ();
-							
+
 							if (nx >= 0 && nx < sizeX && ny >= 0 && ny < sizeY && nz >= 0 && nz < sizeZ && cuboid[nx][y][z] != null) {
 								continue;
 							}
-							
+
 							int startX = off.getX() <= 0 ? 0 : (size - 1);
 							int endX = off.getX() >= 0 ? (size - 1) : 0;
 
@@ -688,13 +684,13 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 
 							int startZ = off.getZ() <= 0 ? 0 : (size - 1);
 							int endZ = off.getZ() >= 0 ? (size - 1) : 0;
-							
+
 							startX += wX;
 							endX += wX;
-							
+
 							startY += wY;
 							endY += wY;
-							
+
 							startZ += wZ;
 							endZ += wZ;
 
@@ -708,72 +704,68 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 									}
 								}
 							}
-
 						}
-
 					}
 				}
 			}
 		}
 		return count;
-		
 	}
 
-	
 	public abstract void bulkEmittingInitialize(ImmutableCuboidBlockMaterialBuffer buffer, int[][][] light, int[][] height);
-	
+
 	@Override
 	public VanillaCuboidLightBuffer[][][] bulkInitialize(ImmutableCuboidBlockMaterialBuffer buffer, int[][] height) {
 		Vector3 size = buffer.getSize();
-		
+
 		final int sizeX = size.getFloorX();
 		final int sizeY = size.getFloorY();
 		final int sizeZ = size.getFloorZ();
-		
+
 		Vector3 base = buffer.getBase();
-		
+
 		final int baseX = base.getFloorX();
 		final int baseY = base.getFloorY();
 		final int baseZ = base.getFloorZ();
-		
+
 		Vector3 top = buffer.getTop();
-		
+
 		final int topX = top.getFloorX();
 		final int topY = top.getFloorY();
 		final int topZ = top.getFloorZ();
-		
+
 		// TODO - this should be passed as a input parameter
 		//        It still needs to scan the new buffer, since it hasn't been added to the column
-		
+
 		final boolean[][][] dirty = new boolean[sizeX + 2][sizeY + 2][sizeZ + 2];
 		final int[][][] newLight = new int[sizeX + 2][sizeY + 2][sizeZ + 2];
 		final IntVector3FIFO fifo = new IntVector3FIFO((sizeX + 2) * (sizeY + 2) * (sizeZ + 2));
-		
-		bulkEmittingInitialize(buffer, newLight, height); 
-		
+
+		bulkEmittingInitialize(buffer, newLight, height);
+
 		// Mark the edges as dirty so they don't get added to the FIFO
-		
+
 		for (int x = 0; x <= sizeX + 1; x++) {
 			for (int y = 0; y <= sizeY + 1; y++) {
 				dirty[x][y][0] = true;
 				dirty[x][y][sizeZ + 1] = true;
 			}
 		}
-		
+
 		for (int x = 0; x <= sizeX + 1; x++) {
 			for (int z = 0; z <= sizeZ + 1; z++) {
 				dirty[x][0][z] = true;
 				dirty[x][sizeY + 1][z] = true;
 			}
 		}
-		
+
 		for (int y = 0; y <= sizeY + 1; y++) {
 			for (int z = 0; z <= sizeZ + 1; z++) {
 				dirty[0][y][z] = true;
 				dirty[sizeX + 1][y][z] = true;
 			}
 		}
-		
+
 		for (int x = 1; x <= sizeX; x++) {
 			for (int y = 1; y <= sizeY; y++) {
 				for (int z = 1; z <= sizeZ; z++) {
@@ -784,19 +776,19 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 				}
 			}
 		}
-		
+
 		IntVector3 v;
-		
+
 		while ((v = fifo.read()) != null) {
-			
+
 			int x = v.getX();
 			int y = v.getY();
 			int z = v.getZ();
-			
+
 			BlockMaterial m = buffer.get(x + baseX - 1, y + baseY - 1, z + baseZ - 1);
-			
+
 			ByteBitSet occulusion = m.getOcclusion(m.getData());
-			
+
 			int center = newLight[x][y][z];
 
 			for (BlockFace face : allFaces) {
@@ -826,40 +818,40 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 			}
 			dirty[x][y][z] = false;
 		}
-		
+
 		int cx = sizeX >> Chunk.BLOCKS.BITS;
 		int cy = sizeY >> Chunk.BLOCKS.BITS;
 		int cz = sizeZ >> Chunk.BLOCKS.BITS;
-		
+
 		VanillaCuboidLightBuffer[][][] lightBufferArray = new VanillaCuboidLightBuffer[cx][cy][cz];
-		
+
 		for (int x = 0; x < cx; x++) {
 			for (int y = 0; y < cy; y++) {
 				for (int z = 0; z < cz; z++) {
-					
+
 					int shift = Chunk.BLOCKS.BITS;
 					int chunkSize = Chunk.BLOCKS.SIZE;
-					
+
 					VanillaCuboidLightBuffer light = newLightBuffer(null, baseX + (cx << shift), baseY + (cy << shift), baseZ + (cz << shift), chunkSize, chunkSize, chunkSize);
-					
+
 					Vector3 lightBase = light.getBase();
-					
+
 					int lightBaseX = lightBase.getFloorX();
 					int lightBaseY = lightBase.getFloorY();
 					int lightBaseZ = lightBase.getFloorZ();
-					
+
 					int arrayStart = 1 + (z << shift);
 					int arrayEnd = arrayStart + chunkSize;
-					
+
 					int xOff = 1 + (x << shift);
 					int yOff = 1 + (y << shift);
-					
+
 					for (int bx = 0; bx < chunkSize; bx++) {
 						for (int by = 0; by < chunkSize; by++) {
 							light.copyZRow(lightBaseX + bx, lightBaseY + by, lightBaseZ, arrayStart, arrayEnd, newLight[xOff + bx][yOff + by]);
 						}
 					}
-					
+
 					lightBufferArray[x][y][z] = light;
 				}
 			}
@@ -867,5 +859,4 @@ public abstract class VanillaLightingManager extends LightingManager<VanillaCubo
 
 		return lightBufferArray;
 	}
-
 }

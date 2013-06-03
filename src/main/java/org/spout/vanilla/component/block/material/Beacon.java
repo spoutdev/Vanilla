@@ -81,7 +81,7 @@ public class Beacon extends ViewedBlockComponent {
 	 * @return time (in seconds) until beacon sends an update
 	 */
 	public float getUpdateDelay() {
-		return getData().get(VanillaData.UPDATE_DELAY);
+		return getDatatable().get(VanillaData.UPDATE_DELAY);
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class Beacon extends ViewedBlockComponent {
 	 * @param delay (in seconds) until beacon should send an update
 	 */
 	public void setUpdateDelay(float delay) {
-		getData().put(VanillaData.UPDATE_DELAY, delay);
+		getDatatable().put(VanillaData.UPDATE_DELAY, delay);
 	}
 
 	/**
@@ -99,7 +99,7 @@ public class Beacon extends ViewedBlockComponent {
 	 * @return delay to update to when delay reaches zero
 	 */
 	public float getMaxUpdateDelay() {
-		return getData().get(VanillaData.MAX_UPDATE_DELAY);
+		return getDatatable().get(VanillaData.MAX_UPDATE_DELAY);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class Beacon extends ViewedBlockComponent {
 	 * @param delay to reset to
 	 */
 	public void setMaxUpdateDelay(float delay) {
-		getData().put(VanillaData.MAX_UPDATE_DELAY, delay);
+		getDatatable().put(VanillaData.MAX_UPDATE_DELAY, delay);
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class Beacon extends ViewedBlockComponent {
 	 * @return primary effect of beacon
 	 */
 	public EntityEffectType getPrimaryEffect() {
-		return getData().get(VanillaData.PRIMARY_EFFECT);
+		return getDatatable().get(VanillaData.PRIMARY_EFFECT);
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class Beacon extends ViewedBlockComponent {
 	 * @param type of effect to use
 	 */
 	public void setPrimaryEffect(EntityEffectType type) {
-		getData().put(VanillaData.PRIMARY_EFFECT, type);
+		getDatatable().put(VanillaData.PRIMARY_EFFECT, type);
 	}
 
 	/**
@@ -131,7 +131,7 @@ public class Beacon extends ViewedBlockComponent {
 	 * @return type of effect to use
 	 */
 	public EntityEffectType getSecondaryEffect() {
-		return getData().get(VanillaData.SECONDARY_EFFECT);
+		return getDatatable().get(VanillaData.SECONDARY_EFFECT);
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class Beacon extends ViewedBlockComponent {
 	 * @param type of effect to use
 	 */
 	public void setSecondaryEffect(EntityEffectType type) {
-		getData().put(VanillaData.SECONDARY_EFFECT, type);
+		getDatatable().put(VanillaData.SECONDARY_EFFECT, type);
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class Beacon extends ViewedBlockComponent {
 	 * @return duration of effects that are applied
 	 */
 	public float getEffectDuration() {
-		return getData().get(VanillaData.EFFECT_DURATION);
+		return getDatatable().get(VanillaData.EFFECT_DURATION);
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class Beacon extends ViewedBlockComponent {
 	 * @param duration of effects
 	 */
 	public void setEffectDuration(float duration) {
-		getData().put(VanillaData.EFFECT_DURATION, duration);
+		getDatatable().put(VanillaData.EFFECT_DURATION, duration);
 	}
 
 	/**
@@ -182,7 +182,7 @@ public class Beacon extends ViewedBlockComponent {
 	 */
 	public void doUpdate() {
 		resetUpdateDelay();
-		Point pos = getPosition();
+		Point pos = getPoint();
 		EntityEffectType primary = getPrimaryEffect();
 		EntityEffectType secondary = getSecondaryEffect();
 		if (getLevels() < 1 || primary == null || primary == EntityEffectType.NONE) {

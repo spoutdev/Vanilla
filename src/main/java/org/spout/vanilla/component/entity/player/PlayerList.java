@@ -31,15 +31,15 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 
 import org.spout.api.Server;
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.event.player.network.PlayerListEvent;
 
 /**
  * Component that handles the Player list (TAB) list.
  */
-public class PlayerList extends EntityComponent {
+public class PlayerList extends VanillaEntityComponent {
 	private Player player;
 	private Server server;
 	private final LinkedHashMap<String, Long> players = new LinkedHashMap<String, Long>();

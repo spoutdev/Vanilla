@@ -58,7 +58,7 @@ public class PlayerUtil {
 	 * @return True if the game mode is creative, False if not
 	 */
 	public static boolean isCreativePlayer(Entity entity) {
-		return entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.CREATIVE);
+		return entity.getDatatable().get(VanillaData.GAMEMODE).equals(GameMode.CREATIVE);
 	}
 
 	/**

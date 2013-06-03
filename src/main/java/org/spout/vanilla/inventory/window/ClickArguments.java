@@ -71,7 +71,7 @@ public class ClickArguments {
 	public String toString() {
 		return "ClickArguments {Slot=" + slot.getIndex() + ", Button=" + action + "}";
 	}
-	
+
 	public enum ClickAction {
 		LEFT_CLICK(0, 0),
 		RIGHT_CLICK(0, 1),
@@ -98,8 +98,8 @@ public class ClickArguments {
 		END_LEFT_PAINT(5, 2),
 		END_RIGHT_PAINT(5, 6),
 		DOUBLE_CLICK(6, 0);
-		
 		private byte mode, button;
+
 		private ClickAction(int mode, int button) {
 			this.mode = (byte) mode;
 			this.button = (byte) button;

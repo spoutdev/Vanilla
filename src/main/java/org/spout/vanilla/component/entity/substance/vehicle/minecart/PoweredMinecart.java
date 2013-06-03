@@ -29,9 +29,9 @@ package org.spout.vanilla.component.entity.substance.vehicle.minecart;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.event.entity.EntityInteractEvent;
+import org.spout.api.event.player.PlayerInteractEntityEvent;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 import org.spout.api.util.Parameter;
@@ -85,22 +85,23 @@ public class PoweredMinecart extends MinecartBase {
 	}
 
 	@Override
-	public void onInteract(Action action, Entity source) {
-		if (!(source instanceof Player)) {
-			return;
-		}
-
-		if (Action.RIGHT_CLICK.equals(action)) {
-			Slot slot = PlayerUtil.getHeldSlot(source);
-			if (slot.get() != null) {
-				ItemStack stack = slot.get();
-				if (stack.getMaterial() instanceof Fuel) {
-					setFueled(true);
-					slot.addAmount(-1);
-				}
+	public void onInteract(final EntityInteractEvent event) {
+		if (event instanceof PlayerInteractEntityEvent) {
+			final PlayerInteractEntityEvent pie = (PlayerInteractEntityEvent) event;
+			final Player player = (Player) pie.getEntity();
+			switch (pie.getAction()) {
+				case LEFT_CLICK:
+					Slot slot = PlayerUtil.getHeldSlot(player);
+					if (slot.get() != null) {
+						ItemStack stack = slot.get();
+						if (stack.getMaterial() instanceof Fuel) {
+							setFueled(true);
+							slot.addAmount(-1);
+						}
+					}
 			}
 		}
-		super.onInteract(action, source);
+		super.onInteract(event);
 	}
 
 	private void updateMetadata() {

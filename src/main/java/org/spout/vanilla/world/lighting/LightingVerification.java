@@ -43,9 +43,8 @@ import org.spout.api.util.bytebit.ByteBitSet;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
 
 public class LightingVerification {
-	
 	private final static BlockFace[] allFaces = BlockFaces.NESWBT.toArray();
-	
+
 	public static boolean checkAll(World w, boolean breakOnError) {
 		Collection<Region> regions = w.getRegions();
 		Collection<Chunk> chunks = new ArrayList<Chunk>();
@@ -54,12 +53,12 @@ public class LightingVerification {
 		}
 		return checkChunks(chunks, breakOnError);
 	}
-	
+
 	public static boolean checkRegion(Region r, boolean breakOnError) {
 		Collection<Chunk> chunks = getChunks(r);
 		return checkChunks(chunks, breakOnError);
 	}
-	
+
 	public static Collection<Chunk> getChunks(Region r) {
 		int size = Region.CHUNKS.SIZE;
 		ArrayList<Chunk> chunks = new ArrayList<Chunk>(size * size * size);
@@ -75,7 +74,7 @@ public class LightingVerification {
 		}
 		return chunks;
 	}
-	
+
 	public static boolean checkChunks(Collection<Chunk> chunks, boolean breakOnError) {
 		int size = chunks.size();
 		int count = 1;
@@ -87,11 +86,11 @@ public class LightingVerification {
 		}
 		return false;
 	}
-	
+
 	public static boolean checkChunk(Chunk c, boolean breakOnError) {
 		return checkChunk(100, c, breakOnError);
 	}
-	
+
 	public static boolean checkChunk(int percent, Chunk c, boolean breakOnError) {
 		boolean failure = false;
 		Spout.getLogger().info(percent + "%) Testing skylight for chunk at " + c.getBase().toBlockString());
@@ -100,7 +99,7 @@ public class LightingVerification {
 		failure |= checkChunk(c, VanillaLighting.BLOCK_LIGHT);
 		return failure;
 	}
-	
+
 	private static boolean checkChunk(Chunk c, VanillaLightingManager manager) {
 		final VanillaCuboidLightBuffer[][][] lightBuffers = getLightBuffers(c, manager);
 		final CuboidBlockMaterialBuffer[][][] materialBuffers = getBlockMaterialBuffers(c);
@@ -118,7 +117,7 @@ public class LightingVerification {
 							return 0;
 						}
 					}
-				}:
+				} :
 				new LightGenerator() {
 					@Override
 					public int getEmittedLight(int x, int y, int z) {
@@ -143,7 +142,7 @@ public class LightingVerification {
 		}
 		return failure;
 	}
-	
+
 	private static VanillaCuboidLightBuffer[][][] getLightBuffers(Chunk c, VanillaLightingManager manager) {
 		VanillaCuboidLightBuffer[][][] buffers = new VanillaCuboidLightBuffer[3][3][3];
 		for (int x = 0; x < 3; x++) {
@@ -155,7 +154,7 @@ public class LightingVerification {
 		}
 		return buffers;
 	}
-	
+
 	private static VanillaCuboidLightBuffer getLightBuffer(World w, int cx, int cy, int cz, short id) {
 		Chunk c = w.getChunk(cx, cy, cz, LoadOption.LOAD_ONLY);
 		if (c == null) {
@@ -163,7 +162,7 @@ public class LightingVerification {
 		}
 		return (VanillaCuboidLightBuffer) c.getLightBuffer(id);
 	}
-	
+
 	private static CuboidBlockMaterialBuffer[][][] getBlockMaterialBuffers(Chunk c) {
 		CuboidBlockMaterialBuffer[][][] buffers = new CuboidBlockMaterialBuffer[3][3][3];
 		for (int x = 0; x < 3; x++) {
@@ -175,7 +174,7 @@ public class LightingVerification {
 		}
 		return buffers;
 	}
-	
+
 	private static CuboidBlockMaterialBuffer getBlockMaterialBuffer(World w, int cx, int cy, int cz) {
 		Chunk c = w.getChunk(cx, cy, cz, LoadOption.LOAD_ONLY);
 		if (c == null) {
@@ -183,7 +182,7 @@ public class LightingVerification {
 		}
 		return c.getCuboid(false);
 	}
-	
+
 	private static int[][] getHeightMap(Chunk c) {
 		int[][] heights = new int[Chunk.BLOCKS.SIZE][Chunk.BLOCKS.SIZE];
 		for (int x = 0; x < heights.length; x++) {
@@ -193,7 +192,7 @@ public class LightingVerification {
 		}
 		return heights;
 	}
-	
+
 	public static boolean testLight(int x, int y, int z, CuboidBlockMaterialBuffer[][][] materialBuffers, VanillaCuboidLightBuffer[][][] lightBuffers, LightGenerator lightSource) {
 		int emitted = lightSource.getEmittedLight(x, y, z);
 		BlockMaterial[][][] materials = getNeighborMaterials(x, y, z, materialBuffers);
@@ -215,7 +214,7 @@ public class LightingVerification {
 		}
 		return true;
 	}
-	
+
 	private static void checkSurrounded(BlockMaterial[][][] materials) {
 		for (BlockFace face : allFaces) {
 			IntVector3 o = face.getIntOffset();
@@ -225,7 +224,7 @@ public class LightingVerification {
 			}
 		}
 	}
-	
+
 	public static int checkFlowFrom(BlockMaterial[][][] materials, int[][][] lightLevels) {
 		int bestInward = 0;
 		for (BlockFace face : allFaces) {
@@ -234,7 +233,7 @@ public class LightingVerification {
 		}
 		return bestInward;
 	}
-	
+
 	public static int checkFlowFrom(BlockFace face, BlockMaterial[][][] materials, int[][][] lightLevels) {
 		IntVector3 o = face.getIntOffset();
 		int ox = o.getX() + 1;
@@ -248,7 +247,7 @@ public class LightingVerification {
 		if (occulusion.get(face.getOpposite())) {
 			return 0;
 		}
-		
+
 		BlockMaterial center = materials[1][1][1];
 		occulusion = center.getOcclusion(center.getData());
 		if (occulusion.get(face)) {
@@ -256,7 +255,7 @@ public class LightingVerification {
 		}
 		return lightLevels[ox][oy][oz] - 1 - center.getOpacity();
 	}
-	
+
 	private static BlockMaterial[][][] getNeighborMaterials(int x, int y, int z, CuboidBlockMaterialBuffer[][][] buffers) {
 		BlockMaterial[][][] materials = new BlockMaterial[3][3][3];
 		for (int xx = x - 1; xx <= x + 1; xx++) {
@@ -268,7 +267,7 @@ public class LightingVerification {
 		}
 		return materials;
 	}
-	
+
 	private static BlockMaterial getMaterial(int x, int y, int z, CuboidBlockMaterialBuffer[][][] buffers) {
 		int xi = 1;
 		int yi = 1;
@@ -305,7 +304,7 @@ public class LightingVerification {
 		Vector3 base = b.getBase();
 		return b.get(x + base.getFloorX(), y + base.getFloorY(), z + base.getFloorZ());
 	}
-	
+
 	private static int[][][] getNeighborLight(int x, int y, int z, VanillaCuboidLightBuffer[][][] buffers) {
 		int[][][] light = new int[3][3][3];
 		for (int xx = x - 1; xx <= x + 1; xx++) {
@@ -317,7 +316,7 @@ public class LightingVerification {
 		}
 		return light;
 	}
-	
+
 	private static int getLight(int x, int y, int z, VanillaCuboidLightBuffer[][][] buffers) {
 		int xi = 1;
 		int yi = 1;
@@ -352,11 +351,11 @@ public class LightingVerification {
 		}
 		return buffers[xi][yi][zi].get(x + b.getBase().getFloorX(), y + b.getBase().getFloorY(), z + b.getBase().getFloorZ()) & 0xFF;
 	}
-	
+
 	private static interface LightGenerator {
 		public int getEmittedLight(int x, int y, int z);
 	}
-	
+
 	private static void log(String message, int x, int y, int z, CuboidBlockMaterialBuffer[][][] material, VanillaCuboidLightBuffer[][][] light, BlockMaterial[][][] localMaterials, int[][][] localLight) {
 		Vector3 base = material[1][1][1].getBase();
 		x += base.getFloorX();
@@ -365,9 +364,9 @@ public class LightingVerification {
 		Spout.getLogger().info(message + " at " + x + ", " + y + ", " + z);
 		Spout.getLogger().info(getCuboid(localLight, localMaterials));
 	}
-	
-	private final static String[] layers = new String[] {"Bottom", "Middle", "Top"};
-	
+
+	private final static String[] layers = new String[]{"Bottom", "Middle", "Top"};
+
 	private static String getCuboid(int[][][] light, BlockMaterial[][][] material) {
 		StringBuilder sb = new StringBuilder();
 		for (int y = 2; y >= 0; y--) {
@@ -386,7 +385,7 @@ public class LightingVerification {
 		}
 		return sb.toString();
 	}
-	
+
 	private static String getLocation(int x, int y, int z, int[][][] light, BlockMaterial[][][] material) {
 		int level = light[x][y][z];
 		BlockMaterial m = material[x][y][z];

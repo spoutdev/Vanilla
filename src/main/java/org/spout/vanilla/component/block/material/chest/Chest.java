@@ -72,7 +72,7 @@ public class Chest extends AbstractChest implements Container {
 
 	@Override
 	public ChestInventory getInventory() {
-		return getData().get(CHEST_INVENTORY);
+		return getDatatable().get(CHEST_INVENTORY);
 	}
 
 	public ChestInventory getLargestInventory() {

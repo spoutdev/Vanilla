@@ -58,12 +58,12 @@ public class Egg extends Substance implements Projectile {
 	}
 
 	@Override
-	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
+	public void onCollided(Point point, Entity entity) {
 		Health health = entity.get(Health.class);
 		if (health != null) {
 			health.damage(0);
 		}
-		spawnChickens(colliderPoint);
+		spawnChickens(point);
 		getOwner().remove();
 	}
 
@@ -86,8 +86,8 @@ public class Egg extends Substance implements Projectile {
 	}
 
 	@Override
-	public void onCollided(Point collidedroint, Point collidedPoint, Block block) {
-		spawnChickens(collidedPoint);
+	public void onCollided(Point point, Block block) {
+		spawnChickens(point);
 		getOwner().remove();
 	}
 }

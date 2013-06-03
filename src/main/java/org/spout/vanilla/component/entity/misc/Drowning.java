@@ -26,11 +26,11 @@
  */
 package org.spout.vanilla.component.entity.misc;
 
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.data.GameMode;
@@ -43,7 +43,7 @@ import org.spout.vanilla.material.block.liquid.Water;
  * Component that handles a entity drowning in water.
  * The drowning component requires a health component and head component
  */
-public class Drowning extends EntityComponent {
+public class Drowning extends VanillaEntityComponent {
 	private Entity owner;
 	private Health health;
 	private EntityHead head;
@@ -93,7 +93,7 @@ public class Drowning extends EntityComponent {
 				}
 				// Animate air meter
 				final float maxSecsBubbles = VanillaData.AIR_SECS.getDefaultValue();
-				final float secsBubbles = getData().get(VanillaData.AIR_SECS);
+				final float secsBubbles = getDatatable().get(VanillaData.AIR_SECS);
 				if (secsBubbles == maxSecsBubbles) {
 					hideBubbles();
 				} else {
@@ -108,7 +108,7 @@ public class Drowning extends EntityComponent {
 
 	public float getNbBubExact() {
 		final float maxSecsBubbles = VanillaData.AIR_SECS.getDefaultValue();
-		final float secsBubbles = getData().get(VanillaData.AIR_SECS);
+		final float secsBubbles = getDatatable().get(VanillaData.AIR_SECS);
 
 		return secsBubbles / maxSecsBubbles * 10f;
 	}
@@ -138,7 +138,7 @@ public class Drowning extends EntityComponent {
 	 * @return The amount of air in seconds.
 	 */
 	public float getAir() {
-		return getData().get(VanillaData.AIR_SECS);
+		return getDatatable().get(VanillaData.AIR_SECS);
 	}
 
 	/**
@@ -146,6 +146,6 @@ public class Drowning extends EntityComponent {
 	 * @param airSecs The amount of air (in seconds) that the entity have.
 	 */
 	public void setAir(float airSecs) {
-		getData().put(VanillaData.AIR_SECS, airSecs);
+		getDatatable().put(VanillaData.AIR_SECS, airSecs);
 	}
 }

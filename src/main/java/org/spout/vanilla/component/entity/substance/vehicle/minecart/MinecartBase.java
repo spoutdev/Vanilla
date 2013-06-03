@@ -29,9 +29,8 @@ package org.spout.vanilla.component.entity.substance.vehicle.minecart;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.entity.Player;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.event.entity.EntityInteractEvent;
+import org.spout.api.event.player.PlayerInteractEntityEvent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockSnapshot;
@@ -58,25 +57,25 @@ public abstract class MinecartBase extends Substance {
 	}
 
 	@Override
-	public void onInteract(Action action, Entity source) {
-		if (!(source instanceof Player)) {
-			return;
-		}
-
+	public void onInteract(final EntityInteractEvent event) {
 		if (wobble > 0) {
 			wobble--;
 		}
-		if (Action.LEFT_CLICK.equals(action)) {
-			wobble += 10;
-			List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
-			parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 17, wobble / 5)); // Unknown flag; initialized to 0. (Probably time since last collision)
-			parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 19, wobble));
-			getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), parameters));
-			getOwner().getNetwork().callProtocolEvent(new EntityStatusEvent(getOwner(), EntityStatusMessage.ENTITY_HURT));
+		if (event instanceof PlayerInteractEntityEvent) {
+			final PlayerInteractEntityEvent pie = (PlayerInteractEntityEvent) event;
+			switch (pie.getAction()) {
+				case LEFT_CLICK:
+					wobble += 10;
+					List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
+					parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 17, wobble / 5)); // Unknown flag; initialized to 0. (Probably time since last collision)
+					parameters.add(new Parameter<Integer>(Parameter.TYPE_INT, 19, wobble));
+					getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), parameters));
+					getOwner().getNetwork().callProtocolEvent(new EntityStatusEvent(getOwner(), EntityStatusMessage.ENTITY_HURT));
 
-			if (wobble > 40) {
-				onDestroy();
-				getOwner().remove();
+					if (wobble > 40) {
+						onDestroy();
+						getOwner().remove();
+					}
 			}
 		}
 	}

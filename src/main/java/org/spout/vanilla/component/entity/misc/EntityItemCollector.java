@@ -29,11 +29,11 @@ package org.spout.vanilla.component.entity.misc;
 import javax.tools.Tool;
 import java.util.List;
 
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
@@ -46,7 +46,7 @@ import org.spout.vanilla.material.item.armor.Armor;
 /**
  * Component that adds a detector to resources.entities to scan for and pickup items.
  */
-public class EntityItemCollector extends EntityComponent {
+public class EntityItemCollector extends VanillaEntityComponent {
 	private final int DISTANCE = VanillaConfiguration.ITEM_PICKUP_RANGE.getInt();
 	private List<Entity> nearbyEntities;
 	private int wait = 0;

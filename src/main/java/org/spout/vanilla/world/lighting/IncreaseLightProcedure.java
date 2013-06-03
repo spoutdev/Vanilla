@@ -47,7 +47,7 @@ public class IncreaseLightProcedure extends TInt10Procedure {
 	@Override
 	public boolean execute(int x, int y, int z) {
 		int lightLevel = manager.getLightLevel(light, x, y, z);
-		
+
 		// Spout.getLogger().info("Increasing for " + x + ", " + y + ", " + z + " from " + lightLevel + " to " + targetLevel);		
 
 		if (lightLevel < targetLevel) {

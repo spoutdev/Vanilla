@@ -46,7 +46,7 @@ public class Hopper extends ViewedBlockComponent implements Container {
 	 * @return true if the block is powered
 	 */
 	public boolean isPowered() {
-		return getData().get(VanillaData.IS_POWERED);
+		return getDatatable().get(VanillaData.IS_POWERED);
 	}
 
 	/**
@@ -54,12 +54,12 @@ public class Hopper extends ViewedBlockComponent implements Container {
 	 * @param powered
 	 */
 	public void setPowered(boolean powered) {
-		getData().put(VanillaData.IS_POWERED, powered);
+		getDatatable().put(VanillaData.IS_POWERED, powered);
 	}
 
 	@Override
 	public HopperInventory getInventory() {
-		return getData().get(VanillaData.HOPPER_INVENTORY);
+		return getDatatable().get(VanillaData.HOPPER_INVENTORY);
 	}
 
 	@Override

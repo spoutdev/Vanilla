@@ -28,23 +28,23 @@ package org.spout.vanilla.component.entity.misc;
 
 import java.util.List;
 
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.data.VanillaData;
 
 /**
  * Handle item/XP drop from a entity.
  */
-public class DeathDrops extends EntityComponent {
+public class DeathDrops extends VanillaEntityComponent {
 	/**
 	 * Add a amount of XP the entity drops.
 	 * @param amount The amount of XP the entity drops.
 	 * @return The current component.
 	 */
 	public DeathDrops addXpDrop(short amount) {
-		getOwner().getData().put(VanillaData.DROP_EXPERIENCE, amount);
+		getOwner().getDatatable().put(VanillaData.DROP_EXPERIENCE, amount);
 		return this;
 	}
 
@@ -53,7 +53,7 @@ public class DeathDrops extends EntityComponent {
 	 * @return the amount of XP.
 	 */
 	public short getXpDrop() {
-		return getOwner().getData().get(VanillaData.DROP_EXPERIENCE);
+		return getOwner().getDatatable().get(VanillaData.DROP_EXPERIENCE);
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class DeathDrops extends EntityComponent {
 	 * @return The current component.
 	 */
 	public DeathDrops addDrop(ItemStack itemstack) {
-		Inventory dropInventory = getOwner().getData().get(VanillaData.DROP_INVENTORY);
+		Inventory dropInventory = getOwner().getDatatable().get(VanillaData.DROP_INVENTORY);
 		dropInventory.add(itemstack);
 		return this;
 	}
@@ -72,6 +72,6 @@ public class DeathDrops extends EntityComponent {
 	 * @return A list of all the items this entity drops.
 	 */
 	public List<ItemStack> getDrops() {
-		return getOwner().getData().get(VanillaData.DROP_INVENTORY);
+		return getOwner().getDatatable().get(VanillaData.DROP_INVENTORY);
 	}
 }

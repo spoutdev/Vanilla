@@ -27,7 +27,7 @@
 package org.spout.vanilla.component.entity.substance;
 
 import org.spout.api.collision.BoundingBox;
-import org.spout.api.component.impl.SceneComponent;
+import org.spout.api.component.entity.SceneComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.LoadOption;
@@ -65,11 +65,11 @@ public class Item extends Substance {
 	}
 
 	public ItemStack getItemStack() {
-		return getData().get(Data.HELD_ITEM);
+		return getDatatable().get(Data.HELD_ITEM);
 	}
 
 	public void setItemStack(ItemStack stack) {
-		getData().put(Data.HELD_ITEM, stack);
+		getDatatable().put(Data.HELD_ITEM, stack);
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class Item extends Substance {
 	 * @return uncollectable time in milliseconds
 	 */
 	public long getUncollectableTime() {
-		return getData().get(VanillaData.UNCOLLECTABLE_TICKS).longValue();
+		return getDatatable().get(VanillaData.UNCOLLECTABLE_TICKS).longValue();
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class Item extends Substance {
 	 * @param uncollectableTime in milliseconds
 	 */
 	public void setUncollectableTime(long uncollectableTime) {
-		getData().put(VanillaData.UNCOLLECTABLE_TICKS, Long.valueOf(uncollectableTime));
+		getDatatable().put(VanillaData.UNCOLLECTABLE_TICKS, Long.valueOf(uncollectableTime));
 	}
 
 	/**

@@ -39,7 +39,7 @@ import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
 import org.spout.api.command.annotated.CommandPermissions;
 import org.spout.api.component.Component;
-import org.spout.api.component.impl.InteractComponent;
+import org.spout.api.component.entity.InteractComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.EntityPrefab;
 import org.spout.api.entity.Player;
@@ -205,7 +205,7 @@ public class TestCommands {
 		}
 		LightingVerification.checkChunk(c, false);
 	}
-	
+
 	@Command(aliases = "alllight", usage = "", desc = "Tests lighting in all loaded chunks in the current world", max = 0)
 	@CommandPermissions("vanilla.command.debug")
 	public void allLight(CommandContext args, CommandSource source) throws CommandException {
@@ -215,7 +215,7 @@ public class TestCommands {
 		Player p = (Player) source;
 		LightingVerification.checkAll(p.getWorld(), true);
 	}
-	
+
 	@Command(aliases = "checkheight", usage = "", desc = "Finds surface height of current column", max = 0)
 	@CommandPermissions("vanilla.command.debug")
 	public void targetHeight(CommandContext args, CommandSource source) throws CommandException {
@@ -224,14 +224,13 @@ public class TestCommands {
 		}
 		Player p = (Player) source;
 		Point pos = p.getScene().getPosition();
-		
+
 		int height = pos.getWorld().getSurfaceHeight(pos.getBlockX(), pos.getBlockZ());
-		
+
 		p.sendMessage("You are at " + pos.getBlockX() + ", " + pos.getBlockY() + ", " + pos.getBlockZ());
 		p.sendMessage("Surface Height " + height + " " + (pos.getBlockY() - height) + " blocks below");
-		
 	}
-	
+
 	@Command(aliases = "getblock", usage = "<world> <x> <y> <z>", desc = "Finds block at the given coords", min = 4, max = 4)
 	@CommandPermissions("vanilla.command.debug")
 	public void getBlock(CommandContext args, CommandSource source) throws CommandException {
@@ -259,13 +258,12 @@ public class TestCommands {
 		}
 		Player p = (Player) source;
 		Point pos = p.getScene().getPosition();
-		
+
 		BigTreeObject tree = new BigTreeObject();
 		tree.placeObject(pos.getWorld(), pos.getBlockX(), pos.getBlockY(), pos.getBlockZ());
 		p.teleport(pos.add(new Vector3(0, 50, 0)));
 	}
-	
-	
+
 	// TODO - There needs to be a method that guarantees unique data values on a per-server basis
 	private int mapId = 1;
 
@@ -636,7 +634,7 @@ public class TestCommands {
 		}
 
 		if (args.getString(0, "").contains("look")) {
-			Quaternion rotation = player.getData().get(VanillaData.HEAD_ROTATION);
+			Quaternion rotation = player.getDatatable().get(VanillaData.HEAD_ROTATION);
 			Point startPosition = player.getScene().getPosition();
 			Vector3 offset = rotation.getDirection().multiply(0.1);
 			for (int i = 0; i < 100; i++) {

@@ -28,7 +28,7 @@ package org.spout.vanilla.material.item.vehicle;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.event.player.Action;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
@@ -54,7 +54,6 @@ public class BoatItem extends VanillaItemMaterial {
 		EntityHead head = entity.add(EntityHead.class);
 		Block b = head.getBlockView(1).next();
 		if (!b.isMaterial(VanillaMaterials.WATER)) {
-			System.out.println("No water");
 			return;
 		}
 

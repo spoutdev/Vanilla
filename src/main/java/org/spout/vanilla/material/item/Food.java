@@ -56,7 +56,7 @@ public class Food extends VanillaItemMaterial {
 
 	public void onEat(Entity entity, Slot slot) {
 		entity.get(Living.class).setEatingBlocking(false);
-		if (entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
+		if (entity.getDatatable().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 			Hunger hunger = entity.get(Hunger.class);
 			for (FoodEffect effect : getEffectType()) {
 				switch (effect.getEffect()) {

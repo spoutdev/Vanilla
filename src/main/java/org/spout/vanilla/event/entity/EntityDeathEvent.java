@@ -28,24 +28,24 @@ package org.spout.vanilla.event.entity;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.event.HandlerList;
-import org.spout.api.event.entity.EntityDeathEvent;
+import org.spout.api.event.entity.EntityEvent;
 
 import org.spout.vanilla.event.cause.DamageCause;
 
 /**
  * Event which is called when a Living dies
  */
-public class VanillaEntityDeathEvent extends EntityDeathEvent {
+public class EntityDeathEvent extends EntityEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private int dropExp;
 	private DamageCause<?> lastDamageCause;
 	private Object lastDamager;
 
-	public VanillaEntityDeathEvent(Entity e) {
+	public EntityDeathEvent(Entity e) {
 		super(e);
 	}
 
-	public VanillaEntityDeathEvent(Entity e, DamageCause<?> lastDamageCause, Object lastDamager) {
+	public EntityDeathEvent(Entity e, DamageCause<?> lastDamageCause, Object lastDamager) {
 		super(e);
 		this.lastDamageCause = lastDamageCause;
 		this.lastDamager = lastDamager;

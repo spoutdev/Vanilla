@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.component.entity.misc;
 
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.protocol.entity.player.ExperienceChangeEvent;
 import org.spout.vanilla.protocol.msg.player.PlayerExperienceMessage;
@@ -36,13 +36,13 @@ import org.spout.vanilla.protocol.msg.player.PlayerExperienceMessage;
 /**
  * Components that handles everything about the Experience system.
  */
-public class Level extends EntityComponent {
+public class Level extends VanillaEntityComponent {
 	/**
 	 * Gets current level
 	 * @return the level
 	 */
 	public short getLevel() {
-		return getData().get(VanillaData.EXPERIENCE_LEVEL);
+		return getDatatable().get(VanillaData.EXPERIENCE_LEVEL);
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class Level extends EntityComponent {
 	 * @return the total exp
 	 */
 	public short getExperience() {
-		return getData().get(VanillaData.EXPERIENCE_AMOUNT);
+		return getDatatable().get(VanillaData.EXPERIENCE_AMOUNT);
 	}
 
 	/**
@@ -64,8 +64,8 @@ public class Level extends EntityComponent {
 		if (event.isCancelled()) {
 			return false;
 		}
-		getData().put(VanillaData.EXPERIENCE_AMOUNT, xp);
-		getData().put(VanillaData.EXPERIENCE_LEVEL, convertXpToLevel(xp));
+		getDatatable().put(VanillaData.EXPERIENCE_AMOUNT, xp);
+		getDatatable().put(VanillaData.EXPERIENCE_LEVEL, convertXpToLevel(xp));
 		updateUi();
 		return true;
 	}
@@ -75,7 +75,7 @@ public class Level extends EntityComponent {
 	 * @return the progress bar
 	 */
 	public float getProgress() {
-		return getData().get(VanillaData.EXPERIENCE_BAR_PROGRESS);
+		return getDatatable().get(VanillaData.EXPERIENCE_BAR_PROGRESS);
 	}
 
 	/**
@@ -93,10 +93,10 @@ public class Level extends EntityComponent {
 		float newProgress = getProgress() + ((float) amount / getXpCap(getLevel()));
 		if (newProgress < 0.f || newProgress >= 1.0f) {
 			short newLevel = convertXpToLevel(newExperience);
-			getData().put(VanillaData.EXPERIENCE_LEVEL, newLevel);
+			getDatatable().put(VanillaData.EXPERIENCE_LEVEL, newLevel);
 			newProgress = (float) (newExperience - convertLevelToXp(newLevel)) / getXpCap(newLevel);
 		}
-		getData().put(VanillaData.EXPERIENCE_BAR_PROGRESS, newProgress);
+		getDatatable().put(VanillaData.EXPERIENCE_BAR_PROGRESS, newProgress);
 		updateUi();
 	}
 

@@ -72,7 +72,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @param delay in seconds
 	 */
 	public void setMinSpawnDelay(int delay) {
-		getData().put(VanillaData.MIN_SPAWN_DELAY, delay);
+		getDatatable().put(VanillaData.MIN_SPAWN_DELAY, delay);
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @return delay in seconds
 	 */
 	public int getMinSpawnDelay() {
-		return getData().get(VanillaData.MIN_SPAWN_DELAY);
+		return getDatatable().get(VanillaData.MIN_SPAWN_DELAY);
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @param delay in seconds
 	 */
 	public void setMaxSpawnDelay(int delay) {
-		getData().put(VanillaData.MAX_SPAWN_DELAY, delay);
+		getDatatable().put(VanillaData.MAX_SPAWN_DELAY, delay);
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @return delay in seconds
 	 */
 	public int getMaxSpawnDelay() {
-		return getData().get(VanillaData.MAX_SPAWN_DELAY);
+		return getDatatable().get(VanillaData.MAX_SPAWN_DELAY);
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @param maxCreatures maximum amount of creatures that can spawn
 	 */
 	public void setMaxCreatures(int maxCreatures) {
-		getData().put(VanillaData.MAX_CREATURES, maxCreatures);
+		getDatatable().put(VanillaData.MAX_CREATURES, maxCreatures);
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @return maximum amount of creatures that can spawn
 	 */
 	public int getMaxCreatures() {
-		return getData().get(VanillaData.MAX_CREATURES);
+		return getDatatable().get(VanillaData.MAX_CREATURES);
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @param range to search for creatures in
 	 */
 	public void setCreatureSearchRange(int range) {
-		getData().put(VanillaData.CREATURE_SEARCH_RANGE, range);
+		getDatatable().put(VanillaData.CREATURE_SEARCH_RANGE, range);
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @return range to search for creatures in
 	 */
 	public int getCreatureSearchRange() {
-		return getData().get(VanillaData.CREATURE_SEARCH_RANGE);
+		return getDatatable().get(VanillaData.CREATURE_SEARCH_RANGE);
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @param spawnRange of spawner
 	 */
 	public void setSpawnRange(float spawnRange) {
-		getData().put(VanillaData.SPAWN_RANGE, spawnRange);
+		getDatatable().put(VanillaData.SPAWN_RANGE, spawnRange);
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @return range from the spawner
 	 */
 	public float getSpawnRange() {
-		return getData().get(VanillaData.SPAWN_RANGE);
+		return getDatatable().get(VanillaData.SPAWN_RANGE);
 	}
 
 	/**
@@ -155,7 +155,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @param spawnCount how many entities to try and spawn
 	 */
 	public void setSpawnCount(int spawnCount) {
-		getData().put(VanillaData.SPAWN_COUNT, spawnCount);
+		getDatatable().put(VanillaData.SPAWN_COUNT, spawnCount);
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @return how many entities to spawn
 	 */
 	public int getSpawnCount() {
-		return getData().get(VanillaData.SPAWN_COUNT);
+		return getDatatable().get(VanillaData.SPAWN_COUNT);
 	}
 
 	/**
@@ -173,7 +173,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * {@link #getSpawnRange()} and resets the spawn delay.
 	 */
 	public void doSpawn() {
-		Point pos = getPosition();
+		Point pos = getPoint();
 		resetSpawnDelay();
 		for (int i = 0; i < getSpawnCount(); i++) {
 			float range = getSpawnRange();
@@ -194,7 +194,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	public boolean canSpawn() {
 		int count = 0;
 		int range = getCreatureSearchRange();
-		for (Entity e : getOwner().getWorld().getNearbyEntities(getPosition(), range)) {
+		for (Entity e : getOwner().getWorld().getNearbyEntities(getPoint(), range)) {
 			if (e instanceof Player) {
 				continue;
 			}
@@ -208,7 +208,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @param type to spawn
 	 */
 	public void setCreatureType(CreatureType type) {
-		getData().put(VanillaData.CREATURE_TYPE, type.getId());
+		getDatatable().put(VanillaData.CREATURE_TYPE, type.getId());
 		sendData();
 	}
 
@@ -217,7 +217,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @return creature to spawn
 	 */
 	public CreatureType getCreatureType() {
-		return CreatureType.get(getData().get(VanillaData.CREATURE_TYPE));
+		return CreatureType.get(getDatatable().get(VanillaData.CREATURE_TYPE));
 	}
 
 	/**
@@ -226,7 +226,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @param radius to search for players in
 	 */
 	public void setRadius(int radius) {
-		getData().put(VanillaData.RADIUS, radius);
+		getDatatable().put(VanillaData.RADIUS, radius);
 	}
 
 	/**
@@ -235,7 +235,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @return radius to search for players in
 	 */
 	public int getRadius() {
-		return getData().get(VanillaData.RADIUS);
+		return getDatatable().get(VanillaData.RADIUS);
 	}
 
 	/**
@@ -244,7 +244,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @return true if there is a player within the radius
 	 */
 	public boolean isActive() {
-		return !getOwner().getWorld().getNearbyPlayers(getPosition(), getRadius()).isEmpty();
+		return !getOwner().getWorld().getNearbyPlayers(getPoint(), getRadius()).isEmpty();
 	}
 
 	/**
@@ -253,7 +253,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @return time, in seconds, until next spawn
 	 */
 	public float getSpawnDelay() {
-		return getData().get(VanillaData.SPAWN_DELAY);
+		return getDatatable().get(VanillaData.SPAWN_DELAY);
 	}
 
 	/**
@@ -262,7 +262,7 @@ public class MonsterSpawner extends VanillaBlockComponent {
 	 * @param spawnDelay in seconds
 	 */
 	public void setSpawnDelay(float spawnDelay) {
-		getData().put(VanillaData.SPAWN_DELAY, spawnDelay);
+		getDatatable().put(VanillaData.SPAWN_DELAY, spawnDelay);
 	}
 
 	/**

@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.component.entity.misc;
 
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.geo.discrete.Point;
 
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.data.VanillaData;
@@ -39,7 +39,7 @@ import org.spout.vanilla.material.block.liquid.Water;
 /**
  * Component handling a entity being on fire.
  */
-public class Burn extends EntityComponent {
+public class Burn extends VanillaEntityComponent {
 	private float internalTimer = 0.0f, rainTimer = 0f;
 	private Health health;
 	private Living living;
@@ -94,7 +94,7 @@ public class Burn extends EntityComponent {
 	 * @return The firetick value.
 	 */
 	public float getFireTick() {
-		return getOwner().getData().get(VanillaData.FIRE_TICK);
+		return getOwner().getDatatable().get(VanillaData.FIRE_TICK);
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class Burn extends EntityComponent {
 	 * @return True if the fire hurts and false if it doesn't
 	 */
 	public boolean isFireHurting() {
-		return getOwner().getData().get(VanillaData.FIRE_HURT);
+		return getOwner().getDatatable().get(VanillaData.FIRE_HURT);
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class Burn extends EntityComponent {
 	 * @param fireTick The fire tick amount.
 	 */
 	private void setFireTick(float fireTick) {
-		getOwner().getData().put(VanillaData.FIRE_TICK, fireTick);
+		getOwner().getDatatable().put(VanillaData.FIRE_TICK, fireTick);
 	}
 
 	/**
@@ -137,6 +137,6 @@ public class Burn extends EntityComponent {
 	 * @param fireHurt True if the fire should hurt else false.
 	 */
 	private void setFireHurting(boolean fireHurt) {
-		getOwner().getData().put(VanillaData.FIRE_HURT, fireHurt);
+		getOwner().getDatatable().put(VanillaData.FIRE_HURT, fireHurt);
 	}
 }

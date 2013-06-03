@@ -30,8 +30,8 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Random;
 
+import org.spout.api.component.widget.RenderPartPacksComponent;
 import org.spout.api.gui.Widget;
-import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.gui.render.RenderPartPack;
 import org.spout.api.math.Rectangle;
@@ -48,7 +48,7 @@ public class VanillaHunger extends HungerWidget {
 	@Override
 	public void init(Widget widget, HUD hud) {
 		super.init(widget, hud);
-		final RenderPartsHolderComponent hungerRect = widget.add(RenderPartsHolderComponent.class);
+		final RenderPartPacksComponent hungerRect = widget.add(RenderPartPacksComponent.class);
 		hungerRect.add(hungerPack);
 
 		float x = 0.09f * SCALE;

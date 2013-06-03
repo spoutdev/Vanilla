@@ -34,6 +34,7 @@ import org.spout.api.geo.cuboid.ChunkSnapshotModel;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.render.BufferContainer;
 import org.spout.api.render.effect.BufferEffect;
+
 import org.spout.vanilla.world.lighting.VanillaCuboidLightBuffer;
 import org.spout.vanilla.world.lighting.VanillaLighting;
 
@@ -106,7 +107,7 @@ public class LightBufferEffect implements BufferEffect {
 					ChunkSnapshot chunk = null;
 					VanillaCuboidLightBuffer blockLight = null;
 					VanillaCuboidLightBuffer skyLight = null;
-					
+
 					for (int zz = zs; zz <= zi; zz++) {
 						int zChunk = zz >> Chunk.BLOCKS.BITS;
 						if (zChunk != zOld || chunk == null) {

@@ -29,8 +29,8 @@ package org.spout.vanilla.component.entity.substance.vehicle;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.event.entity.EntityInteractEvent;
+import org.spout.api.event.player.PlayerInteractEntityEvent;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.util.Parameter;
@@ -54,14 +54,17 @@ public class Boat extends Substance {
 	}
 
 	@Override
-	public void onInteract(Action action, Entity source) {
-		if (action == Action.LEFT_CLICK) {
-			timeSinceLastHit = 0;
-			damage(10);
-			if (damageTaken > 40) {
-				Entity entity = getOwner();
-				Item.dropNaturally(entity.getScene().getPosition(), new ItemStack(VanillaMaterials.BOAT, 1));
-				entity.remove();
+	public void onInteract(final EntityInteractEvent event) {
+		if (event instanceof PlayerInteractEntityEvent) {
+			final PlayerInteractEntityEvent pie = (PlayerInteractEntityEvent) event;
+			switch (pie.getAction()) {
+				case LEFT_CLICK:
+					timeSinceLastHit = 0;
+					damage(10);
+					if (damageTaken > 40) {
+						Item.dropNaturally(getOwner().getScene().getPosition(), new ItemStack(VanillaMaterials.BOAT, 1));
+						getOwner().remove();
+					}
 			}
 		}
 	}

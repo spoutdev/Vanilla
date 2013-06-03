@@ -30,10 +30,10 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.data.effect.EntityEffect;
 import org.spout.vanilla.data.effect.EntityEffectType;
@@ -43,7 +43,7 @@ import org.spout.vanilla.event.entity.network.EntityRemoveEffectEvent;
 /**
  * Component handling status effects. This includes food poisoning, regeneration, etc.
  */
-public class Effects extends EntityComponent {
+public class Effects extends VanillaEntityComponent {
 	private final Set<EntityEffect> effects = new HashSet<EntityEffect>();
 	private Player player;
 

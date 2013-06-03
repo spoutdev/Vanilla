@@ -28,7 +28,7 @@ package org.spout.vanilla.component.entity;
 
 import java.util.Arrays;
 
-import org.spout.api.component.type.EntityComponent;
+import org.spout.api.component.entity.EntityComponent;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.data.VanillaData;
@@ -38,12 +38,8 @@ public class VanillaEntityComponent extends EntityComponent {
 	@Override
 	public void onAttached() {
 		//Tracks the number of times this component has been attached (i.e how many times it's been saved, then loaded. 1 = fresh entity)
-		getOwner().getData().put(VanillaData.ATTACHED_COUNT, getAttachedCount() + 1);
+		getOwner().getDatatable().put(VanillaData.ATTACHED_COUNT, getAttachedCount() + 1);
 		getOwner().setSavable(true);
-	}
-
-	public boolean isStatic() {
-		return false;
 	}
 
 	protected void setMetadata(Parameter<?>... p) {
@@ -60,6 +56,6 @@ public class VanillaEntityComponent extends EntityComponent {
 	 * @return attached count
 	 */
 	public final int getAttachedCount() {
-		return getOwner().getData().get(VanillaData.ATTACHED_COUNT);
+		return getOwner().getDatatable().get(VanillaData.ATTACHED_COUNT);
 	}
 }

@@ -26,11 +26,10 @@
  */
 package org.spout.vanilla.component.block.material;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.event.entity.EntityInteractEvent;
+import org.spout.api.event.player.PlayerInteractEntityEvent;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
-import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.MaterialSource;
 import org.spout.api.math.Vector3;
 
@@ -47,17 +46,21 @@ import org.spout.vanilla.util.PlayerUtil;
  */
 public class Jukebox extends VanillaBlockComponent {
 	@Override
-	public void onInteractBy(Entity entity, Action type, BlockFace face) {
-		super.onInteract(entity, type);
-		if (type == Action.RIGHT_CLICK) {
-			Slot inv = PlayerUtil.getHeldSlot(entity);
-			if (inv != null && this.canPlay(inv.get())) {
-				this.setPlayedItem(inv.get().clone().setAmount(1));
-				if (!PlayerUtil.isCostSuppressed(entity)) {
-					inv.addAmount(-1);
-				}
-			} else {
-				this.eject();
+	public void onInteract(final EntityInteractEvent event) {
+		super.onInteract(event);
+		if (event instanceof PlayerInteractEntityEvent) {
+			final PlayerInteractEntityEvent pie = (PlayerInteractEntityEvent) event;
+			switch (pie.getAction()) {
+				case RIGHT_CLICK:
+					Slot inv = PlayerUtil.getHeldSlot(pie.getEntity());
+					if (inv != null && this.canPlay(inv.get())) {
+						this.setPlayedItem(inv.get().clone().setAmount(1));
+						if (!PlayerUtil.isCostSuppressed(pie.getEntity())) {
+							inv.addAmount(-1);
+						}
+					} else {
+						this.eject();
+					}
 			}
 		}
 	}
@@ -67,7 +70,7 @@ public class Jukebox extends VanillaBlockComponent {
 	 * @return Played item
 	 */
 	public ItemStack getPlayedItem() {
-		return getData().get(VanillaData.JUKEBOX_ITEM);
+		return getDatatable().get(VanillaData.JUKEBOX_ITEM);
 	}
 
 	/**
@@ -75,10 +78,10 @@ public class Jukebox extends VanillaBlockComponent {
 	 * @param item to set to
 	 */
 	public void setPlayedItem(ItemStack item) {
-		ItemStack old = getData().put(VanillaData.JUKEBOX_ITEM, item);
+		ItemStack old = getDatatable().put(VanillaData.JUKEBOX_ITEM, item);
 		if (old != null) {
 			// Drop the old item
-			Item.drop(getPosition(), old, Vector3.UP.multiply(0.5));
+			Item.drop(getPoint(), old, Vector3.UP.multiply(0.5));
 		}
 		setPlaying(item != null);
 	}
@@ -122,6 +125,6 @@ public class Jukebox extends VanillaBlockComponent {
 		getBlock().setData(playing ? 1 : 0);
 		// Play the effect
 		Music music = playing ? this.getMusic() : Music.NONE;
-		GeneralEffects.MUSIC_DISC.playGlobal(getPosition(), music);
+		GeneralEffects.MUSIC_DISC.playGlobal(getPoint(), music);
 	}
 }

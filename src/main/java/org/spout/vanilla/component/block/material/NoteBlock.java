@@ -26,8 +26,8 @@
  */
 package org.spout.vanilla.component.block.material;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.event.entity.EntityInteractEvent;
+import org.spout.api.event.player.PlayerInteractEntityEvent;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 
@@ -52,13 +52,20 @@ public class NoteBlock extends VanillaBlockComponent {
 	}
 
 	@Override
-	public void onInteractBy(Entity entity, Action type, BlockFace face) {
-		super.onInteract(entity, type);
-		if (type == Action.RIGHT_CLICK) {
-			this.setNote(this.getNote() + 1);
-			this.play();
-		} else if (type == Action.LEFT_CLICK && !PlayerUtil.isCreativePlayer(entity)) {
-			this.play();
+	public void onInteract(final EntityInteractEvent event) {
+		super.onInteract(event);
+		if (event instanceof PlayerInteractEntityEvent) {
+			final PlayerInteractEntityEvent pie = (PlayerInteractEntityEvent) event;
+			switch (pie.getAction()) {
+				case LEFT_CLICK:
+					if (!PlayerUtil.isCreativePlayer(event.getEntity())) {
+						play();
+					}
+				case RIGHT_CLICK:
+					this.setNote(this.getNote() + 1);
+					this.play();
+					break;
+			}
 		}
 	}
 
@@ -68,7 +75,7 @@ public class NoteBlock extends VanillaBlockComponent {
 	 */
 	public void setPowered(boolean powered) {
 		if (this.isPowered() != powered) {
-			getData().put(VanillaData.IS_POWERED, powered);
+			getDatatable().put(VanillaData.IS_POWERED, powered);
 			if (powered) {
 				this.play();
 			}
@@ -80,7 +87,7 @@ public class NoteBlock extends VanillaBlockComponent {
 	 * @return True if it is powered, False if not
 	 */
 	public boolean isPowered() {
-		return getData().get(VanillaData.IS_POWERED);
+		return getDatatable().get(VanillaData.IS_POWERED);
 	}
 
 	/**
@@ -88,7 +95,7 @@ public class NoteBlock extends VanillaBlockComponent {
 	 * @return the note value
 	 */
 	public int getNote() {
-		return getData().get(VanillaData.NOTE);
+		return getDatatable().get(VanillaData.NOTE);
 	}
 
 	/**
@@ -96,7 +103,7 @@ public class NoteBlock extends VanillaBlockComponent {
 	 * @param note value to set to
 	 */
 	public void setNote(int note) {
-		getData().put(VanillaData.NOTE, note % 25);
+		getDatatable().put(VanillaData.NOTE, note % 25);
 	}
 
 	/**
@@ -104,7 +111,7 @@ public class NoteBlock extends VanillaBlockComponent {
 	 */
 	public void play() {
 		final int note = getNote();
-		this.getInstrument().getEffect().playGlobal(getPosition(), note);
-		GeneralEffects.NOTE_PARTICLE.playGlobal(getPosition(), note);
+		this.getInstrument().getEffect().playGlobal(getPoint(), note);
+		GeneralEffects.NOTE_PARTICLE.playGlobal(getPoint(), note);
 	}
 }

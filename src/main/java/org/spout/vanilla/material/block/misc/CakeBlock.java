@@ -27,7 +27,7 @@
 package org.spout.vanilla.material.block.misc;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent;
+import org.spout.api.event.player.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.source.DataSource;
@@ -44,8 +44,8 @@ public class CakeBlock extends Solid {
 	}
 
 	@Override
-	public void onInteractBy(Entity entity, Block block, PlayerInteractEvent.Action type, BlockFace clickedface) {
-		if (type == PlayerInteractEvent.Action.RIGHT_CLICK) {
+	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedface) {
+		if (type == Action.RIGHT_CLICK) {
 			if (block.getData() == CakeSize.ONE_PIECE.getData()) {
 				// Cake has been fully eaten
 				block.setMaterial(VanillaMaterials.AIR);

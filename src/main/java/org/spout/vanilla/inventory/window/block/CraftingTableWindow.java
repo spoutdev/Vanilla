@@ -72,7 +72,7 @@ public class CraftingTableWindow extends Window {
 					}
 					getPlayerInventory().getMain().add(item);
 				}
-			 }
+			}
 		}
 		return super.onClick(args);
 	}

@@ -28,7 +28,7 @@ package org.spout.vanilla.component.entity.living.hostile;
 
 import java.util.Random;
 
-import org.spout.api.component.impl.SceneComponent;
+import org.spout.api.component.entity.SceneComponent;
 import org.spout.api.inventory.ItemStack;
 
 import org.spout.vanilla.VanillaPlugin;

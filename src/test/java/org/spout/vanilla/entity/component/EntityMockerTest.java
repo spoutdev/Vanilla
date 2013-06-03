@@ -44,6 +44,6 @@ public class EntityMockerTest {
 		Level sameLevel = entity.get(Level.class);
 		assertTrue("Level does not match!", level == sameLevel);
 
-		assertTrue("Level data is null!", level.getData() != null);
+		assertTrue("Level data is null!", level.getDatatable() != null);
 	}
 }

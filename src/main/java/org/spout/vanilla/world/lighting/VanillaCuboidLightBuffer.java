@@ -41,7 +41,7 @@ public class VanillaCuboidLightBuffer extends AlignedCuboidNibbleLightBuffer {
 	protected VanillaCuboidLightBuffer(Modifiable holder, int id, int baseX, int baseY, int baseZ, int sizeX, int sizeY, int sizeZ, byte[] data) {
 		super(holder, id, baseX, baseY, baseZ, sizeX, sizeY, sizeZ, data);
 	}
-	
+
 	@Override
 	public VanillaCuboidLightBuffer copy() {
 		return new VanillaCuboidLightBuffer(this);

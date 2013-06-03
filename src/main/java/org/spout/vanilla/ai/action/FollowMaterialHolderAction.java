@@ -31,7 +31,7 @@ import java.util.List;
 import org.spout.api.ai.goap.Action;
 import org.spout.api.ai.goap.PlannerAgent;
 import org.spout.api.ai.goap.WorldState;
-import org.spout.api.component.impl.NavigationComponent;
+import org.spout.api.component.entity.NavigationComponent;
 import org.spout.api.entity.Player;
 
 import org.spout.vanilla.ai.sensor.NearbyMaterialHolderSensor;

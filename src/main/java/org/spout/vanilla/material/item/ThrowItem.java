@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.material.item;
 
-import org.spout.api.component.impl.SceneComponent;
+import org.spout.api.component.entity.SceneComponent;
 import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.event.player.Action;
 import org.spout.api.geo.World;
 import org.spout.api.math.VectorMath;
 

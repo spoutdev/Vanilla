@@ -56,7 +56,7 @@ public class Snowball extends Substance implements Projectile {
 	}
 
 	@Override
-	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
+	public void onCollided(Point point, Entity entity) {
 		Health health = entity.get(Health.class);
 		if (health != null) {
 			health.damage(0);
@@ -65,7 +65,7 @@ public class Snowball extends Substance implements Projectile {
 	}
 
 	@Override
-	public void onCollided(Point colliderPoint, Point collidedPoint, Block block) {
+	public void onCollided(Point point, Block block) {
 		getOwner().remove();
 	}
 }

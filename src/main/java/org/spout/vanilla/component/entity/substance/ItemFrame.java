@@ -29,8 +29,8 @@ package org.spout.vanilla.component.entity.substance;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.event.entity.EntityInteractEvent;
+import org.spout.api.event.player.PlayerInteractEntityEvent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
@@ -54,24 +54,26 @@ public class ItemFrame extends Substance {
 	}
 
 	@Override
-	public void onInteract(Action action, Entity source) {
-		Entity entity = getOwner();
-		switch (action) {
-			case LEFT_CLICK:
-				Point pos = entity.getScene().getPosition();
-				Item.dropNaturally(pos, new ItemStack(VanillaMaterials.ITEM_FRAME, 1));
-				if (material != null) {
-					Item.dropNaturally(pos, new ItemStack(material, 1));
-				}
-				entity.remove();
-				break;
-			case RIGHT_CLICK:
-				Slot slot = PlayerUtil.getHeldSlot(source);
-				if (slot != null && slot.get() != null) {
-					setMaterial(slot.get().getMaterial());
-					slot.addAmount(-1);
-				}
-				break;
+	public void onInteract(final EntityInteractEvent event) {
+		if (event instanceof PlayerInteractEntityEvent) {
+			final PlayerInteractEntityEvent pie = (PlayerInteractEntityEvent) event;
+			switch (pie.getAction()) {
+				case LEFT_CLICK:
+					Point pos = getOwner().getScene().getPosition();
+					Item.dropNaturally(pos, new ItemStack(VanillaMaterials.ITEM_FRAME, 1));
+					if (material != null) {
+						Item.dropNaturally(pos, new ItemStack(material, 1));
+					}
+					getOwner().remove();
+					break;
+				case RIGHT_CLICK:
+					Slot slot = PlayerUtil.getHeldSlot(getOwner());
+					if (slot != null && slot.get() != null) {
+						setMaterial(slot.get().getMaterial());
+						slot.addAmount(-1);
+					}
+					break;
+			}
 		}
 	}
 

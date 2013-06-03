@@ -33,8 +33,9 @@ import java.util.List;
 import org.spout.api.ai.Sensor;
 import org.spout.api.ai.goap.PlannerAgent;
 import org.spout.api.ai.goap.WorldState;
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
+
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 
 /**
  * Simple Sensor that detects Entities with a specified Component nearby.
@@ -44,14 +45,14 @@ import org.spout.api.entity.Entity;
 public class NearbyComponentsSensor implements Sensor {
 	private final PlannerAgent agent;
 	private final WorldState state;
-	private final List<Class<? extends EntityComponent>> classes;
+	private final List<Class<? extends VanillaEntityComponent>> classes;
 	private int radius;
 
-	public NearbyComponentsSensor(PlannerAgent agent, Class<? extends EntityComponent>... classes) {
+	public NearbyComponentsSensor(PlannerAgent agent, Class<? extends VanillaEntityComponent>... classes) {
 		this.agent = agent;
 		this.state = WorldState.createEmptyState();
-		this.classes = new ArrayList<Class<? extends EntityComponent>>();
-		for (Class<? extends EntityComponent> clazz : classes) {
+		this.classes = new ArrayList<Class<? extends VanillaEntityComponent>>();
+		for (Class<? extends VanillaEntityComponent> clazz : classes) {
 			this.classes.add(clazz);
 		}
 	}
@@ -115,7 +116,7 @@ public class NearbyComponentsSensor implements Sensor {
 	 * Returns the classes this Entity is sensing.
 	 * @return classes the entity is sensing
 	 */
-	public List<Class<? extends EntityComponent>> sensing() {
+	public List<Class<? extends VanillaEntityComponent>> sensing() {
 		return Collections.unmodifiableList(classes);
 	}
 
@@ -123,7 +124,7 @@ public class NearbyComponentsSensor implements Sensor {
 	 * Adds a new class for the Entity to sense.
 	 * @param clazz
 	 */
-	public void shouldSense(Class<? extends EntityComponent> clazz) {
+	public void shouldSense(Class<? extends VanillaEntityComponent> clazz) {
 		if (clazz == null) {
 			throw new IllegalArgumentException("Must be a non-null class to search for!");
 		}
@@ -137,7 +138,7 @@ public class NearbyComponentsSensor implements Sensor {
 	 * Removes a class from being sensed anymore. Ignores classes that are null or aren't contained in the list.
 	 * @param clazz The class to remove
 	 */
-	public void removeSense(Class<? extends EntityComponent> clazz) {
+	public void removeSense(Class<? extends VanillaEntityComponent> clazz) {
 		if (clazz == null) {
 			return;
 		}

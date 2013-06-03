@@ -28,12 +28,12 @@ package org.spout.vanilla.component.entity.misc;
 
 import org.spout.api.Client;
 import org.spout.api.Server;
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.Slot;
 
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.data.VanillaData;
@@ -50,7 +50,7 @@ import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
  * Component to handle everything related to the hunger system.
  * It controls the Hunger level, the food saturation value, the exhaustion value and the eating process.
  */
-public class Hunger extends EntityComponent {
+public class Hunger extends VanillaEntityComponent {
 	//Timer used for when eating. Prevents insta-eating.
 	private float eatingTimer;
 	private Slot foodEating;
@@ -213,7 +213,7 @@ public class Hunger extends EntityComponent {
 	 * @return The hunger level.
 	 */
 	public int getHunger() {
-		return getData().get(VanillaData.HUNGER);
+		return getDatatable().get(VanillaData.HUNGER);
 	}
 
 	// Need to confirm what fx/bx equals to rename methods propertly
@@ -231,7 +231,7 @@ public class Hunger extends EntityComponent {
 	 * @param hunger The hunger level of the entity
 	 */
 	public void setHunger(int hunger) {
-		getData().put(VanillaData.HUNGER, Math.min(hunger, 20));
+		getDatatable().put(VanillaData.HUNGER, Math.min(hunger, 20));
 		reload();
 		if (getOwner().getEngine() instanceof Client) {
 			//render(52, 16);
@@ -246,7 +246,7 @@ public class Hunger extends EntityComponent {
 	 * @return The food saturation value.
 	 */
 	public float getFoodSaturation() {
-		return getData().get(VanillaData.FOOD_SATURATION);
+		return getDatatable().get(VanillaData.FOOD_SATURATION);
 	}
 
 	/**
@@ -255,7 +255,7 @@ public class Hunger extends EntityComponent {
 	 * @param foodSaturation The food saturation value.
 	 */
 	public void setFoodSaturation(float foodSaturation) {
-		getData().put(VanillaData.FOOD_SATURATION, Math.min(foodSaturation, getHunger()));
+		getDatatable().put(VanillaData.FOOD_SATURATION, Math.min(foodSaturation, getHunger()));
 		reload();
 	}
 
@@ -264,7 +264,7 @@ public class Hunger extends EntityComponent {
 	 * @return The exhaustion value.
 	 */
 	public float getExhaustion() {
-		return getData().get(VanillaData.EXHAUSTION);
+		return getDatatable().get(VanillaData.EXHAUSTION);
 	}
 
 	/**
@@ -272,7 +272,7 @@ public class Hunger extends EntityComponent {
 	 * @param exhaustion The exhaustion value.
 	 */
 	public void setExhaustion(float exhaustion) {
-		getData().put(VanillaData.EXHAUSTION, exhaustion);
+		getDatatable().put(VanillaData.EXHAUSTION, exhaustion);
 	}
 
 	/**
@@ -280,7 +280,7 @@ public class Hunger extends EntityComponent {
 	 * @return True if the entity is poisoned else false
 	 */
 	public boolean isPoisoned() {
-		return getData().get(VanillaData.POISONED);
+		return getDatatable().get(VanillaData.POISONED);
 	}
 
 	/**
@@ -288,7 +288,7 @@ public class Hunger extends EntityComponent {
 	 * @param poisoned True if he is poisoned else false
 	 */
 	public void setPoisoned(boolean poisoned) {
-		getData().put(VanillaData.POISONED, poisoned);
+		getDatatable().put(VanillaData.POISONED, poisoned);
 		if (getOwner().getEngine() instanceof Client) {
 			if (poisoned) {
 				fx = 88;

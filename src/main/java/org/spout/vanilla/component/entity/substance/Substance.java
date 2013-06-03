@@ -29,21 +29,4 @@ package org.spout.vanilla.component.entity.substance;
 import org.spout.vanilla.component.entity.VanillaEntityComponent;
 
 public abstract class Substance extends VanillaEntityComponent {
-	@Override
-	public void onAttached() {
-		super.onAttached();
-	}
-
-	//
-	//	@Override
-	//	public void onCollided(Point colliderPoint, Point collidedPoint, Block block) {
-	//		if (getPhysics() == null) {
-	//			return;
-	//		}
-	//		if (block.getMaterial() instanceof Solid) {
-	//			getPhysics().setDamping(1f, 1f);
-	//		} else if (block.getMaterial() instanceof Liquid) {
-	//			getPhysics().setDamping(0.8f, 0.8f);
-	//		}
-	//	}
 }

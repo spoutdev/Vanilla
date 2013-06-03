@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.world.lighting;
 
-import org.spout.api.Spout;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
@@ -55,21 +54,21 @@ public class ResolveHigherProcedure extends TInt10Procedure {
 		this.height = height;
 		this.targetLevel = 15;
 	}
-	
+
 	public void setTargetLevel(int level) {
 		this.targetLevel = level;
 	}
 
 	@Override
 	public boolean execute(int x, int y, int z) {
-		
+
 		// Spout.getLogger().info("Resolving higher for " + x + ", " + y + ", " + z);
-		
+
 		short id = material.getId(x, y, z);
 		if (id == BlockMaterial.UNGENERATED.getId()) {
 			return true;
 		}
-		
+
 		int lightLevel = manager.getLightLevel(light, x, y, z);
 
 		if (lightLevel < targetLevel) {
@@ -77,28 +76,28 @@ public class ResolveHigherProcedure extends TInt10Procedure {
 		} else if (lightLevel > targetLevel) {
 			return true;
 		}
-		
+
 		BlockMaterial m = material.get(x, y, z);
-		
+
 		ByteBitSet centerOcclusionSet = m.getOcclusion(m.getData());
 
 		for (int f = 0; f < allFaces.length; f++) {
 			BlockFace face = allFaces[f];
-			
+
 			if (centerOcclusionSet.get(face)) {
 				continue;
 			}
-			
+
 			IntVector3 offset = face.getIntOffset();
 			int nx = x + offset.getX();
 			int ny = y + offset.getY();
 			int nz = z + offset.getZ();
-			
+
 			short nId = material.getId(nx, ny, nz);
 			if (nId == BlockMaterial.UNGENERATED.getId()) {
 				continue;
 			}
-			
+
 			int neighborLight = manager.getLightLevel(light, nx, ny, nz, true);
 			if (neighborLight >= lightLevel - 1) {
 				continue;
@@ -106,18 +105,18 @@ public class ResolveHigherProcedure extends TInt10Procedure {
 
 			short nData = material.getData(nx, ny, nz);
 			BlockMaterial nMaterial = BlockMaterial.get(nId, nData);
-			
+
 			ByteBitSet occlusionSet = nMaterial.getOcclusion(nData);
 			if (occlusionSet.get(face.getOpposite())) {
 				continue;
 			}
-			
+
 			int newLight = targetLevel - nMaterial.getOpacity() - 1;
 			// Spout.getLogger().info("new light " + newLight + " neighbor light " + neighborLight + " for neighbor " + nx + ", " + ny + ", " + nz);
 			if (newLight > neighborLight) {
 				// Spout.getLogger().info("Adding to dirty " + newLight + " for neighbor " + nx + ", " + ny + ", " + nz);
 				dirtySets[newLight].add(nx, ny, nz);
-			}			
+			}
 		}
 
 		return true;

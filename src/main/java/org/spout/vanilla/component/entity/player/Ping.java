@@ -27,16 +27,16 @@
 package org.spout.vanilla.component.entity.player;
 
 import org.spout.api.chat.style.ChatStyle;
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.math.GenericMath;
 
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.event.player.network.PlayerPingEvent;
 
 /**
- * Component that pings periodictly the client to see if it's still connected.
+ * Component that pings periodically the client to see if it's still connected.
  */
-public class Ping extends EntityComponent {
+public class Ping extends VanillaEntityComponent {
 	private Player player;
 	private final float timeout = 30;
 	private final int repeatRate = 8;

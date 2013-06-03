@@ -37,7 +37,7 @@ public abstract class Animal extends Ageable {
 	 * @return true if animal is in love mode
 	 */
 	public boolean isInLove() {
-		return getData().get(VanillaData.IN_LOVE);
+		return getDatatable().get(VanillaData.IN_LOVE);
 	}
 
 	/**
@@ -45,7 +45,7 @@ public abstract class Animal extends Ageable {
 	 * @param inLove if the animal is in love mode
 	 */
 	public void setInLove(boolean inLove) {
-		getData().put(VanillaData.IN_LOVE, inLove);
+		getDatatable().put(VanillaData.IN_LOVE, inLove);
 	}
 
 	/**

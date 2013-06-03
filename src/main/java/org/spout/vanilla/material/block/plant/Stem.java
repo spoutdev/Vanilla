@@ -29,8 +29,7 @@ package org.spout.vanilla.material.block.plant;
 import java.util.Random;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.event.player.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.Slot;
 import org.spout.api.material.BlockMaterial;
@@ -120,7 +119,7 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 	}
 
 	@Override
-	public void onInteractBy(Entity entity, Block block, PlayerInteractEvent.Action type, BlockFace clickedFace) {
+	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
 		Slot inv = PlayerUtil.getHeldSlot(entity);
 		if (inv != null && inv.get() != null && type.equals(Action.RIGHT_CLICK)) {

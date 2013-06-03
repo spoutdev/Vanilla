@@ -28,9 +28,9 @@ package org.spout.vanilla.component.entity.living.passive;
 
 import java.util.HashMap;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.event.entity.EntityInteractEvent;
+import org.spout.api.event.player.PlayerInteractEntityEvent;
 import org.spout.api.inventory.Container;
 
 import org.spout.vanilla.VanillaPlugin;
@@ -45,6 +45,8 @@ import org.spout.vanilla.protocol.entity.creature.VillagerEntityProtocol;
  * A component that identifies the entity as a Villager.
  */
 public class Villager extends Ageable implements Container, Passive {
+	private HashMap<Player, Window> viewers = new HashMap<Player, Window>();
+
 	@Override
 	public void onAttached() {
 		super.onAttached();
@@ -55,19 +57,20 @@ public class Villager extends Ageable implements Container, Passive {
 		}
 	}
 
-	private HashMap<Player, Window> viewers = new HashMap<Player, Window>();
-
 	@Override
-	public void onInteract(Action action, Entity entity) {
-		super.onInteract(action, entity);
-		if (action == Action.RIGHT_CLICK) {
-			// TODO: Open window
+	public void onInteract(final EntityInteractEvent event) {
+		if (event instanceof PlayerInteractEntityEvent) {
+			final PlayerInteractEntityEvent pie = (PlayerInteractEntityEvent) event;
+			final Player player = (Player) pie.getEntity();
+			switch (pie.getAction()) {
+				case RIGHT_CLICK:
+					//TODO Open Window
+			}
 		}
 	}
 
 	@Override
 	public CraftingInventory getInventory() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

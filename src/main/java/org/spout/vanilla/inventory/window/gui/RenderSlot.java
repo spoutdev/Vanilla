@@ -31,9 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.spout.api.Client;
+import org.spout.api.component.widget.ControlComponent;
 import org.spout.api.event.player.input.PlayerClickEvent;
 import org.spout.api.event.player.input.PlayerKeyEvent;
-import org.spout.api.gui.component.ControlComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.gui.render.RenderPartPack;
 import org.spout.api.inventory.ItemStack;

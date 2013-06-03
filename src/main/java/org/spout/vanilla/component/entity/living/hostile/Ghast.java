@@ -61,11 +61,11 @@ public class Ghast extends Living implements Hostile {
 	}
 
 	public boolean hasRedEyes() {
-		return getData().get(VanillaData.RED_EYES);
+		return getDatatable().get(VanillaData.RED_EYES);
 	}
 
 	public void setRedEyes(boolean redEyes) {
-		getData().put(VanillaData.RED_EYES, redEyes);
+		getDatatable().put(VanillaData.RED_EYES, redEyes);
 		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, redEyes ? (byte) 1 : 0));
 	}
 }

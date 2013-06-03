@@ -62,15 +62,15 @@ public class WeatherSimulator extends BasicTickable {
 	}
 
 	public Weather getCurrent() {
-		return sky.getData().get(VanillaData.WORLD_WEATHER);
+		return sky.getDatatable().get(VanillaData.WORLD_WEATHER);
 	}
 
 	public Weather getForecast() {
-		return sky.getData().get(VanillaData.WORLD_FORECAST);
+		return sky.getDatatable().get(VanillaData.WORLD_FORECAST);
 	}
 
 	public void setForecast(Weather weather) {
-		sky.getData().put(VanillaData.WORLD_FORECAST, weather);
+		sky.getDatatable().put(VanillaData.WORLD_FORECAST, weather);
 	}
 
 	public void forceUpdate() {
@@ -135,8 +135,8 @@ public class WeatherSimulator extends BasicTickable {
 	 * @return the strength
 	 */
 	public float getRainStrength(float factor) {
-		final float prevRainStr = sky.getData().get(VanillaData.PREVIOUS_RAIN_STRENGTH);
-		return (prevRainStr + factor * (sky.getData().get(VanillaData.CURRENT_RAIN_STRENGTH) - prevRainStr));
+		final float prevRainStr = sky.getDatatable().get(VanillaData.PREVIOUS_RAIN_STRENGTH);
+		return (prevRainStr + factor * (sky.getDatatable().get(VanillaData.CURRENT_RAIN_STRENGTH) - prevRainStr));
 	}
 
 	/**
@@ -151,11 +151,11 @@ public class WeatherSimulator extends BasicTickable {
 	@Override
 	public void onTick(float dt) {
 		final Random random = GenericMath.getRandom();
-		float secondsUntilWeatherChange = sky.getData().get(VanillaData.WEATHER_CHANGE_TIME);
+		float secondsUntilWeatherChange = sky.getDatatable().get(VanillaData.WEATHER_CHANGE_TIME);
 		secondsUntilWeatherChange -= dt;
 		if (forceWeatherUpdate.compareAndSet(true, false) || secondsUntilWeatherChange <= 0) {
 			this.sky.updateWeather(getCurrent(), getForecast());
-			sky.getData().put(VanillaData.WORLD_WEATHER, getForecast());
+			sky.getDatatable().put(VanillaData.WORLD_WEATHER, getForecast());
 			final Weather current = getCurrent();
 			Weather forecast = current;
 			while (forecast == current) {
@@ -173,21 +173,21 @@ public class WeatherSimulator extends BasicTickable {
 				Spout.getLogger().info("Weather changed to: " + current + ", next change in " + secondsUntilWeatherChange / 1000F + "s");
 			}
 		}
-		float currentRainStrength = sky.getData().get(VanillaData.CURRENT_RAIN_STRENGTH);
-		sky.getData().put(VanillaData.PREVIOUS_RAIN_STRENGTH, currentRainStrength);
+		float currentRainStrength = sky.getDatatable().get(VanillaData.CURRENT_RAIN_STRENGTH);
+		sky.getDatatable().put(VanillaData.PREVIOUS_RAIN_STRENGTH, currentRainStrength);
 		if (this.isRaining()) {
 			currentRainStrength = Math.min(1.0f, currentRainStrength + 0.01f);
 		} else {
 			currentRainStrength = Math.max(0.0f, currentRainStrength - 0.01f);
 		}
-		sky.getData().put(VanillaData.CURRENT_RAIN_STRENGTH, currentRainStrength);
+		sky.getDatatable().put(VanillaData.CURRENT_RAIN_STRENGTH, currentRainStrength);
 		if (hasLightning()) {
 			lightning.onTick(dt);
 		}
 		if (getCurrent().isRaining()) {
 			snowfall.onTick(dt);
 		}
-		sky.getData().put(VanillaData.WEATHER_CHANGE_TIME, secondsUntilWeatherChange);
+		sky.getDatatable().put(VanillaData.WEATHER_CHANGE_TIME, secondsUntilWeatherChange);
 	}
 
 	@Override

@@ -28,7 +28,6 @@ package org.spout.vanilla.material.block.component;
 
 import java.util.Random;
 
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
@@ -47,6 +46,7 @@ import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.block.material.Dispenser;
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.component.entity.substance.Tnt;
@@ -137,7 +137,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 			}
 		} else if (item.getMaterial() instanceof SpawnEgg) {
 			if (!facingBlock.getMaterial().isSolid()) {
-				Entity entity = facingBlock.getWorld().createEntity(facingBlock.getPosition(), ((SpawnEgg) item.getMaterial()).getEntityComponent());
+				Entity entity = facingBlock.getWorld().createEntity(facingBlock.getPosition(), ((SpawnEgg) item.getMaterial()).getComponent());
 				entity.getScene().translate(new Vector3(0.5D, 0.5D, 0.5D));
 				facingBlock.getWorld().spawnEntity(entity);
 				slot.addAmount(-1);
@@ -226,7 +226,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 
 			// Calculate position to shoot from
 			Point position = block.getPosition().add(direction.multiply(0.6));
-			EntityComponent toLaunch = null;
+			VanillaEntityComponent toLaunch = null;
 
 			// Calculate shooting velocity using facing direction
 			Vector3 velocity = direction.multiply(rand.nextDouble() * 0.1 + 0.2);

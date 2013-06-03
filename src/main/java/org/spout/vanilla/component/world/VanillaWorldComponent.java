@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.component.world;
 
-import org.spout.api.component.type.WorldComponent;
+import org.spout.api.component.world.WorldComponent;
 
 public abstract class VanillaWorldComponent extends WorldComponent {
 }

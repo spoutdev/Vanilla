@@ -26,10 +26,10 @@
  */
 package org.spout.vanilla.component.entity.misc;
 
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.cuboid.Block;
 
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.data.Animation;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.event.player.network.PlayerBedEvent;
@@ -39,7 +39,7 @@ import org.spout.vanilla.material.block.misc.BedBlock;
 /**
  * Component that handle the player sleeping on a bed or any similar blocks.
  */
-public class Sleep extends EntityComponent {
+public class Sleep extends VanillaEntityComponent {
 	private final float sleepSeconds = 5;
 	private float sleepTimer = sleepSeconds;
 	private boolean sleeping, skipNight;

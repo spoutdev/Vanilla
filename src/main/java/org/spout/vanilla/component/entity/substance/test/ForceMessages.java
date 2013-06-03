@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.component.entity.substance.test;
 
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Player;
 
-public class ForceMessages extends EntityComponent {
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
+
+public class ForceMessages extends VanillaEntityComponent {
 	private boolean first = true;
 	private float time = 60F;
 

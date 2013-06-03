@@ -27,7 +27,7 @@
 package org.spout.vanilla.material.item.tool;
 
 import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.event.player.Action;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.GenericMath;
 

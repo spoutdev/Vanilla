@@ -37,11 +37,11 @@ import org.spout.api.Platform;
 import org.spout.api.ServerOnly;
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;
+import org.spout.api.component.widget.LabelComponent;
+import org.spout.api.component.widget.RenderPartComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.gui.Screen;
 import org.spout.api.gui.Widget;
-import org.spout.api.gui.component.LabelComponent;
-import org.spout.api.gui.component.TextureComponent;
 import org.spout.api.inventory.Inventory;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
@@ -112,7 +112,7 @@ public abstract class Window extends AbstractWindow {
 				popup.setGrabsMouse(false);
 
 				// Setup the window to render
-				TextureComponent backgroundRect = background.add(TextureComponent.class);
+				RenderPartComponent backgroundRect = background.add(RenderPartComponent.class);
 				backgroundRect.setRenderMaterial(type.getRenderMaterial());
 				backgroundRect.setSprite(new Rectangle(-WIDTH * SCALE, -WIDTH, HEIGHT * 2 * SCALE, HEIGHT * 2));
 				backgroundRect.setSource(new Rectangle(0, 0, WIDTH, HEIGHT));
@@ -215,10 +215,10 @@ public abstract class Window extends AbstractWindow {
 	@Override
 	public boolean onClick(ClickArguments args) {
 		if (args.getSlot().getIndex() == -999
-			&& args.getAction() != ClickArguments.ClickAction.START_LEFT_PAINT
-			&& args.getAction() != ClickArguments.ClickAction.END_LEFT_PAINT
-			&& args.getAction() != ClickArguments.ClickAction.START_RIGHT_PAINT
-			&& args.getAction() != ClickArguments.ClickAction.END_RIGHT_PAINT) {
+				&& args.getAction() != ClickArguments.ClickAction.START_LEFT_PAINT
+				&& args.getAction() != ClickArguments.ClickAction.END_LEFT_PAINT
+				&& args.getAction() != ClickArguments.ClickAction.START_RIGHT_PAINT
+				&& args.getAction() != ClickArguments.ClickAction.END_RIGHT_PAINT) {
 			return onOutsideClick();
 		}
 		if (handleClick(args)) {
@@ -331,7 +331,7 @@ public abstract class Window extends AbstractWindow {
 			} else {
 				return true;
 			}
-		} 
+		}
 		switch (args.getAction()) {
 			case RIGHT_CLICK:
 				debug("[Window - " + title + "] Right-Clicked slot " + slot + " using Cursor: " + cursorItem);
@@ -505,7 +505,6 @@ public abstract class Window extends AbstractWindow {
 				getHuman().dropItem(args.getSlot().get());
 				args.getSlot().set(null);
 				return true;
-				
 		}
 		return false;
 	}

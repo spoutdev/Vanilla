@@ -34,12 +34,15 @@ import java.util.Set;
 
 import org.spout.api.Engine;
 import org.spout.api.Platform;
+import org.spout.api.Spout;
 import org.spout.api.collision.CollisionStrategy;
-import org.spout.api.component.type.BlockComponent;
+import org.spout.api.component.block.BlockComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
-import org.spout.api.event.player.PlayerInteractEvent;
+import org.spout.api.event.entity.EntityInteractBlockEvent;
+import org.spout.api.event.player.Action;
+import org.spout.api.event.player.PlayerInteractBlockEvent;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.cuboid.Chunk;
@@ -57,7 +60,6 @@ import org.spout.api.util.flag.Flag;
 import org.spout.api.util.flag.FlagBundle;
 
 import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.block.VanillaBlockComponent;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.data.Instrument;
@@ -453,7 +455,7 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	 * @return True if rain is falling on the Block, false if not
 	 */
 	public static boolean isRaining(Block block) {
-		return block.getWorld().getData().get(VanillaData.WORLD_WEATHER).isRaining() && block.isAtSurface();
+		return block.getWorld().getDatatable().get(VanillaData.WORLD_WEATHER).isRaining() && block.isAtSurface();
 	}
 
 	/**
@@ -518,14 +520,23 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		}
 		return rval;
 	}
-	
+
 	@Override
-	public void onInteractBy(Entity entity, Block block, PlayerInteractEvent.Action type, BlockFace clickedFace) {
+	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
+		EntityInteractBlockEvent event;
+		if (entity instanceof Player) {
+			event = new PlayerInteractBlockEvent((Player) entity, block, block.getPosition(), clickedFace, type);
+		} else {
+			event = new EntityInteractBlockEvent(entity, block, block.getPosition(), clickedFace);
+		}
+		if (Spout.getEventManager().callEvent(event).isCancelled()) {
+			return;
+		}
 		super.onInteract(entity, block, type, clickedFace);
 		for (Class<? extends BlockComponent> c : getComponents()) {
 			BlockComponent get = block.get(c);
-			if (get != null && get instanceof VanillaBlockComponent) {
-				((VanillaBlockComponent) get).onInteractBy(entity, type, clickedFace);
+			if (get != null) {
+				get.onInteract(event);
 			}
 		}
 	}

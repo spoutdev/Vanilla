@@ -30,12 +30,12 @@ import org.spout.api.entity.Player;
 import org.spout.api.event.HandlerList;
 
 import org.spout.vanilla.event.cause.DamageCause;
-import org.spout.vanilla.event.entity.VanillaEntityDeathEvent;
+import org.spout.vanilla.event.entity.EntityDeathEvent;
 
 /**
  * Event which is called when a player dies
  */
-public class PlayerDeathEvent extends VanillaEntityDeathEvent {
+public class PlayerDeathEvent extends EntityDeathEvent {
 	private static final HandlerList handlers = new HandlerList();
 
 	public PlayerDeathEvent(Player player) {

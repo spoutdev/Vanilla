@@ -72,7 +72,7 @@ public class BeaconWindow extends Window {
 	public void close() {
 		for (ItemStack item : inventory) {
 			if (item != null) {
-				Item.dropNaturally(beacon.getPosition(), item);
+				Item.dropNaturally(beacon.getPoint(), item);
 			}
 		}
 		super.close();

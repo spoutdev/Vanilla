@@ -51,7 +51,7 @@ public class JukeboxBlock extends VanillaBlockMaterial implements Fuel {
 	public boolean onDestroy(Block block, Cause<?> cause) {
 		//Note: Eject logic not part of drops, because item is always ejected
 		// Or shouldn't it? If it becomes part of drops, turn this into setPlaying(false).
-        block.get(Jukebox.class).eject();
+		block.get(Jukebox.class).eject();
 		return super.onDestroy(block, cause);
 	}
 

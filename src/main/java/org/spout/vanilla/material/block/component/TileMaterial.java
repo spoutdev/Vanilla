@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.block.component;
 
-import org.spout.api.component.BlockComponentHolder;
+import org.spout.api.component.BlockComponentOwner;
 import org.spout.api.geo.World;
 import org.spout.api.protocol.event.ProtocolEvent;
 
@@ -34,8 +34,7 @@ public interface TileMaterial {
 	/**
 	 * Gets the protocol event to reflect the block state at the location
 	 * or null if none exists
-	 * Used when sending chunks to the client in {@link ChunkDataMessage}
-	 * 
+	 * Used when sending chunks to the client in {@link org.spout.vanilla.protocol.msg.world.chunk.ChunkDataMessage}
 	 * @param world
 	 * @param x
 	 * @param y
@@ -43,5 +42,5 @@ public interface TileMaterial {
 	 * @param owner
 	 * @return event
 	 */
-	public ProtocolEvent getUpdate(World world, int x, int y, int z, BlockComponentHolder owner);
+	public ProtocolEvent getUpdate(World world, int x, int y, int z, BlockComponentOwner owner);
 }

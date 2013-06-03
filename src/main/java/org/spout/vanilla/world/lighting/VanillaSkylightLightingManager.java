@@ -51,7 +51,7 @@ public class VanillaSkylightLightingManager extends VanillaBlocklightLightingMan
 	protected int getEmittedLight(ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
 		return y > height.get(x, z) ? 15 : 0;
 	}
-	
+
 	@Override
 	public void updateEmittingBlocks(int[][][] emittedLight, ChunkCuboidLightBufferWrapper<VanillaCuboidLightBuffer> light, ImmutableCuboidBlockMaterialBuffer material, ImmutableHeightMapBuffer height, int x, int y, int z) {
 		int size = Chunk.BLOCKS.SIZE;
@@ -71,32 +71,32 @@ public class VanillaSkylightLightingManager extends VanillaBlocklightLightingMan
 			}
 		}
 	}
-	
+
 	@Override
 	public void bulkEmittingInitialize(ImmutableCuboidBlockMaterialBuffer buffer, int[][][] light, int[][] genHeight) {
-		
+
 		Vector3 size = buffer.getSize();
-		
+
 		final int sizeX = size.getFloorX();
 		final int sizeY = size.getFloorY();
 		final int sizeZ = size.getFloorZ();
-		
+
 		Vector3 base = buffer.getBase();
-		
+
 		final int baseX = base.getFloorX();
 		final int baseY = base.getFloorY();
 		final int baseZ = base.getFloorZ();
-		
+
 		final int topY = buffer.getTop().getFloorY();
-		
+
 		final int[][] height = new int[sizeX][sizeZ];
-		
+
 		for (int x = 0; x < sizeX; x++) {
 			for (int z = 0; z < sizeZ; z++) {
 				height[x][z] = genHeight[x][z];
 			}
 		}
-		
+
 		buffer.forEach(new CuboidBlockMaterialProcedure() {
 			@Override
 			public boolean execute(int x, int y, int z, short id, short data) {
@@ -110,12 +110,12 @@ public class VanillaSkylightLightingManager extends VanillaBlocklightLightingMan
 				return true;
 			}
 		});
-		
+
 		for (int x = 1; x <= sizeX; x++) {
 			for (int z = 1; z <= sizeZ; z++) {
 				int h = height[x - 1][z - 1];
 				h -= baseY;
-				for (int y = Math.max(1, 2 + h); y <= sizeY ; y++) {
+				for (int y = Math.max(1, 2 + h); y <= sizeY; y++) {
 					light[x][y][z] = 15;
 				}
 			}

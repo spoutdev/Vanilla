@@ -26,20 +26,18 @@
  */
 package org.spout.vanilla.protocol;
 
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
-import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
-import gnu.trove.set.TIntSet;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import gnu.trove.set.TIntSet;
+
 import org.spout.api.Server;
 import org.spout.api.Spout;
-import org.spout.api.component.BlockComponentHolder;
-import org.spout.api.component.impl.DatatableComponent;
+import org.spout.api.component.BlockComponentOwner;
+import org.spout.api.component.DatatableComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
@@ -67,6 +65,7 @@ import org.spout.api.util.hashing.IntPairHashed;
 import org.spout.api.util.map.concurrent.TSyncIntPairObjectHashMap;
 import org.spout.api.util.set.concurrent.TSyncIntHashSet;
 import org.spout.api.util.set.concurrent.TSyncIntPairHashSet;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.material.Sign;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
@@ -170,6 +169,9 @@ import org.spout.vanilla.scoreboard.Team;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.world.lighting.VanillaCuboidLightBuffer;
 import org.spout.vanilla.world.lighting.VanillaLighting;
+
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftData;
+import static org.spout.vanilla.material.VanillaMaterials.getMinecraftId;
 
 public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements ProtocolEventListener {
 	private static final int SOLID_BLOCK_ID = 1; // Initializer block ID
@@ -422,7 +424,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		int highY = minY + stepY;
 		lastY = Integer.MAX_VALUE;
 
-		final DatatableComponent data = world.getData();
+		final DatatableComponent data = world.getDatatable();
 		final Human human = player.add(Human.class);
 		GameMode gamemode = null;
 		Difficulty difficulty = data.get(VanillaData.DIFFICULTY);
@@ -924,9 +926,9 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 
 			for (int i = 0; i < container.getBlockComponentCount(); i++) {
 				BlockMaterial bm = c.getBlockMaterial(componentX[i], componentY[i], componentZ[i]);
-				BlockComponentHolder holder = container.getBlockComponent()[i];
+				BlockComponentOwner owner = container.getBlockComponent()[i];
 				if (bm instanceof TileMaterial) {
-					ProtocolEvent event = ((TileMaterial) bm).getUpdate(c.getWorld(), componentX[i], componentY[i], componentZ[i], holder);
+					ProtocolEvent event = ((TileMaterial) bm).getUpdate(c.getWorld(), componentX[i], componentY[i], componentZ[i], owner);
 					if (event != null) {
 						updateEvents.add(event);
 					}

@@ -26,13 +26,14 @@
  */
 package org.spout.vanilla.input;
 
-import org.spout.api.component.impl.SceneComponent;
+import org.spout.api.component.entity.SceneComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.entity.state.PlayerInputState;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.input.InputExecutor;
 import org.spout.api.math.QuaternionMath;
 import org.spout.api.math.Vector3;
+
 import org.spout.vanilla.component.entity.misc.EntityHead;
 
 public class VanillaInputExecutor implements InputExecutor {

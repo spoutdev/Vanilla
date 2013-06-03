@@ -28,9 +28,8 @@ package org.spout.vanilla.component.entity.substance;
 
 import java.util.List;
 
-import org.spout.api.entity.Entity;
-import org.spout.api.entity.Player;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.event.entity.EntityInteractEvent;
+import org.spout.api.event.player.PlayerInteractEntityEvent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.block.BlockFace;
@@ -55,10 +54,7 @@ public class Painting extends Substance {
 		getOwner().setSavable(true);
 	}
 
-	public boolean isStatic() {
-		return true;
-	}
-
+	@Override
 	public void onTick(float dt) {
 		// We set a timer so we don't spam the server for nothing.
 		if (timer >= 1f) {
@@ -71,19 +67,19 @@ public class Painting extends Substance {
 	}
 
 	public PaintingType getType() {
-		return getOwner().getData().get(VanillaData.PAINTING_TYPE);
+		return getOwner().getDatatable().get(VanillaData.PAINTING_TYPE);
 	}
 
 	public void setType(PaintingType type) {
-		getOwner().getData().put(VanillaData.PAINTING_TYPE, type);
+		getOwner().getDatatable().put(VanillaData.PAINTING_TYPE, type);
 	}
 
 	public BlockFace getFace() {
-		return getOwner().getData().get(VanillaData.PAINTING_FACE);
+		return getOwner().getDatatable().get(VanillaData.PAINTING_FACE);
 	}
 
 	public void setFace(BlockFace face) {
-		getOwner().getData().put(VanillaData.PAINTING_FACE, face);
+		getOwner().getDatatable().put(VanillaData.PAINTING_FACE, face);
 	}
 
 	public int getNativeFace() {
@@ -106,13 +102,13 @@ public class Painting extends Substance {
 	}
 
 	@Override
-	public void onInteract(Action action, Entity source) {
-		if (!(source instanceof Player)) {
-			return;
-		}
-
-		if (Action.LEFT_CLICK.equals(action)) {
-			destroy();
+	public void onInteract(final EntityInteractEvent event) {
+		if (event instanceof PlayerInteractEntityEvent) {
+			final PlayerInteractEntityEvent pie = (PlayerInteractEntityEvent) event;
+			switch (pie.getAction()) {
+				case LEFT_CLICK:
+					destroy();
+			}
 		}
 	}
 

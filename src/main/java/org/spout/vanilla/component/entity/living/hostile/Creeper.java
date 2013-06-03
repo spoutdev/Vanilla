@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.component.entity.living.hostile;
 
-import org.spout.api.component.impl.SceneComponent;
+import org.spout.api.component.entity.SceneComponent;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
@@ -73,36 +73,36 @@ public class Creeper extends Living implements Hostile {
 	}
 
 	public float getFuse() {
-		return getData().get(VanillaData.CREEPER_FUSE);
+		return getDatatable().get(VanillaData.CREEPER_FUSE);
 	}
 
 	public void setFuse(float fuse) {
-		getData().put(VanillaData.CREEPER_FUSE, fuse);
+		getDatatable().put(VanillaData.CREEPER_FUSE, fuse);
 	}
 
 	public float getExplosionRadius() {
-		return getData().get(VanillaData.EXPLOSION_RADIUS);
+		return getDatatable().get(VanillaData.EXPLOSION_RADIUS);
 	}
 
 	public void setExplosionRadius(float radius) {
-		getData().put(VanillaData.EXPLOSION_RADIUS, radius);
+		getDatatable().put(VanillaData.EXPLOSION_RADIUS, radius);
 	}
 
 	public byte getState() {
-		return getData().get(VanillaData.STATE);
+		return getDatatable().get(VanillaData.STATE);
 	}
 
 	public void setState(byte state) {
-		getData().put(VanillaData.STATE, state);
+		getDatatable().put(VanillaData.STATE, state);
 		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, state));
 	}
 
 	public boolean isCharged() {
-		return getData().get(VanillaData.CHARGED);
+		return getDatatable().get(VanillaData.CHARGED);
 	}
 
 	public void setCharged(boolean charged) {
-		getData().put(VanillaData.CHARGED, charged);
+		getDatatable().put(VanillaData.CHARGED, charged);
 		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, charged ? (byte) 1 : 0));
 	}
 }

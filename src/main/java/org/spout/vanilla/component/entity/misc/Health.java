@@ -32,12 +32,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.spout.api.Client;
-import org.spout.api.component.type.EntityComponent;
+import org.spout.api.component.widget.RenderPartPacksComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
 import org.spout.api.gui.Widget;
-import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.gui.render.RenderPartPack;
 import org.spout.api.inventory.Inventory;
@@ -46,6 +45,7 @@ import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.component.entity.living.hostile.EnderDragon;
 import org.spout.vanilla.component.entity.living.hostile.Wither;
@@ -62,11 +62,11 @@ import org.spout.vanilla.event.cause.HealthChangeCause;
 import org.spout.vanilla.event.cause.NullDamageCause;
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.event.entity.EntityDamageEvent;
+import org.spout.vanilla.event.entity.EntityDeathEvent;
 import org.spout.vanilla.event.entity.EntityHealEvent;
 import org.spout.vanilla.event.entity.EntityHealthChangeEvent;
 import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.event.entity.EntityStatusEvent;
-import org.spout.vanilla.event.entity.VanillaEntityDeathEvent;
 import org.spout.vanilla.event.player.PlayerDeathEvent;
 import org.spout.vanilla.event.player.network.PlayerHealthEvent;
 import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
@@ -74,7 +74,7 @@ import org.spout.vanilla.protocol.msg.entity.EntityStatusMessage;
 /**
  * Component that adds a health-like attribute to resources.entities.
  */
-public class Health extends EntityComponent {
+public class Health extends VanillaEntityComponent {
 	protected static final int DEATH_TIME_TICKS = 30;
 	// Damage
 	protected DamageCause<?> lastDamageCause = new NullDamageCause(DamageCause.DamageType.UNKNOWN);
@@ -99,7 +99,7 @@ public class Health extends EntityComponent {
 			float dx = 0.06f * SCALE;
 
 			// Health bar
-			final RenderPartsHolderComponent heartsRect = hearts.add(RenderPartsHolderComponent.class);
+			final RenderPartPacksComponent heartsRect = hearts.add(RenderPartPacksComponent.class);
 			final RenderPartPack hearts_pack = new RenderPartPack(VanillaRenderMaterials.ICONS_MATERIAL);
 			float y = VanillaConfiguration.HARDCORE_MODE.getBoolean() ? 45f / 256f : 0;
 			for (int i = 0; i < 10; i++) {
@@ -151,7 +151,7 @@ public class Health extends EntityComponent {
 				if (!(getOwner() instanceof Player)) {
 					return;
 				}
-				java.util.List<RenderPart> heartParts = hearts.get(RenderPartsHolderComponent.class).getRenderPartPacks().get(0).getRenderParts();
+				java.util.List<RenderPart> heartParts = hearts.get(RenderPartPacksComponent.class).getRenderPartPacks().get(0).getRenderParts();
 				if (animateHearts) {
 					float x = 0;
 					if (heartAnimationTicks == 3) {
@@ -186,7 +186,7 @@ public class Health extends EntityComponent {
 				float dx = 0.06f * SCALE;
 
 				if (getHealth() <= 4) {
-					java.util.List<RenderPart> parts = hearts.get(RenderPartsHolderComponent.class).getRenderPartPacks().get(0).getRenderParts();
+					java.util.List<RenderPart> parts = hearts.get(RenderPartPacksComponent.class).getRenderPartPacks().get(0).getRenderParts();
 					for (int i = 0; i < 10; i++) {
 						RenderPart heart = parts.get(i);
 						RenderPart heartBg = parts.get(i + 10);
@@ -212,12 +212,12 @@ public class Health extends EntityComponent {
 	 * Called when the resources.entities' health hits zero and is considered "dead" by Vanilla game standards
 	 */
 	private void onDeath() {
-		VanillaEntityDeathEvent event;
+		EntityDeathEvent event;
 		Entity owner = getOwner();
 		if (owner instanceof Player) {
 			event = new PlayerDeathEvent((Player) owner, lastDamageCause, lastDamager);
 		} else {
-			event = new VanillaEntityDeathEvent(owner, lastDamageCause, lastDamager);
+			event = new EntityDeathEvent(owner, lastDamageCause, lastDamager);
 		}
 		if (!getEngine().getEventManager().callEvent(event).isCancelled()) {
 			if (!(owner instanceof Player)) {
@@ -299,7 +299,7 @@ public class Health extends EntityComponent {
 	 * @return the maximum health
 	 */
 	public int getMaxHealth() {
-		return getData().get(VanillaData.MAX_HEALTH);
+		return getDatatable().get(VanillaData.MAX_HEALTH);
 	}
 
 	/**
@@ -307,7 +307,7 @@ public class Health extends EntityComponent {
 	 * @param maxHealth to set to
 	 */
 	public void setMaxHealth(int maxHealth) {
-		getData().put(VanillaData.MAX_HEALTH, maxHealth);
+		getDatatable().put(VanillaData.MAX_HEALTH, maxHealth);
 	}
 
 	/**
@@ -317,7 +317,7 @@ public class Health extends EntityComponent {
 	public void setSpawnHealth(int maxHealth) {
 		this.setMaxHealth(maxHealth);
 		//Do not call setHealth yet, network has not been initialized if loading from file
-		getData().put(VanillaData.HEALTH, maxHealth);
+		getDatatable().put(VanillaData.HEALTH, maxHealth);
 	}
 
 	/**
@@ -325,7 +325,7 @@ public class Health extends EntityComponent {
 	 * @return the health value
 	 */
 	public int getHealth() {
-		return getData().get(VanillaData.HEALTH);
+		return getDatatable().get(VanillaData.HEALTH);
 	}
 
 	/**
@@ -338,9 +338,9 @@ public class Health extends EntityComponent {
 		getEngine().getEventManager().callEvent(event);
 		if (!event.isCancelled()) {
 			if (getHealth() + event.getChange() > getMaxHealth()) {
-				getData().put(VanillaData.HEALTH, getMaxHealth());
+				getDatatable().put(VanillaData.HEALTH, getMaxHealth());
 			} else {
-				getData().put(VanillaData.HEALTH, getHealth() + event.getChange());
+				getDatatable().put(VanillaData.HEALTH, getHealth() + event.getChange());
 			}
 		}
 
@@ -405,7 +405,7 @@ public class Health extends EntityComponent {
 	 * @return The death ticks amount
 	 */
 	public int getDeathTicks() {
-		return getData().get(VanillaData.DEATH_TICKS);
+		return getDatatable().get(VanillaData.DEATH_TICKS);
 	}
 
 	/**
@@ -416,7 +416,7 @@ public class Health extends EntityComponent {
 		if (deathTicks > DEATH_TIME_TICKS) {
 			deathTicks = DEATH_TIME_TICKS;
 		}
-		getData().put(VanillaData.DEATH_TICKS, deathTicks);
+		getDatatable().put(VanillaData.DEATH_TICKS, deathTicks);
 	}
 
 	/**
@@ -477,7 +477,7 @@ public class Health extends EntityComponent {
 	 * @return true if animated death
 	 */
 	public boolean hasDeathAnimation() {
-		return getData().get(VanillaData.HAS_DEATH_ANIMATION);
+		return getDatatable().get(VanillaData.HAS_DEATH_ANIMATION);
 	}
 
 	/**
@@ -485,7 +485,7 @@ public class Health extends EntityComponent {
 	 * @param hasDeathAnimation
 	 */
 	public void setDeathAnimation(boolean hasDeathAnimation) {
-		getData().put(VanillaData.HAS_DEATH_ANIMATION, hasDeathAnimation);
+		getDatatable().put(VanillaData.HAS_DEATH_ANIMATION, hasDeathAnimation);
 	}
 
 	/**

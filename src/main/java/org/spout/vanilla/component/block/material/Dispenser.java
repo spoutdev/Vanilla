@@ -46,7 +46,7 @@ public class Dispenser extends ViewedBlockComponent implements Container {
 	 * @return True if the dispenser is powered. Else false.
 	 */
 	public boolean isPowered() {
-		return getData().get(VanillaData.IS_POWERED);
+		return getDatatable().get(VanillaData.IS_POWERED);
 	}
 
 	/**
@@ -54,12 +54,12 @@ public class Dispenser extends ViewedBlockComponent implements Container {
 	 * @param powered True if the dispenser is powered else false.
 	 */
 	public void setPowered(boolean powered) {
-		getData().put(VanillaData.IS_POWERED, powered);
+		getDatatable().put(VanillaData.IS_POWERED, powered);
 	}
 
 	@Override
 	public DispenserInventory getInventory() {
-		return getData().get(VanillaData.DISPENSER_INVENTORY);
+		return getDatatable().get(VanillaData.DISPENSER_INVENTORY);
 	}
 
 	@Override

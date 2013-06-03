@@ -26,15 +26,15 @@
  */
 package org.spout.vanilla.material.item.misc;
 
-import org.spout.api.component.type.EntityComponent;
 import org.spout.api.entity.Entity;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.event.player.Action;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.Slot;
 import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 
+import org.spout.vanilla.component.entity.VanillaEntityComponent;
 import org.spout.vanilla.component.entity.living.hostile.Blaze;
 import org.spout.vanilla.component.entity.living.hostile.CaveSpider;
 import org.spout.vanilla.component.entity.living.hostile.Creeper;
@@ -87,13 +87,13 @@ public class SpawnEgg extends VanillaItemMaterial {
 	public static final SpawnEgg WITCH = new SpawnEgg("Spawn Witch", 66, Witch.class, PARENT);
 	public static final SpawnEgg VILLAGER = new SpawnEgg("Spawn Villager", 120, Villager.class, PARENT);
 	public static final SpawnEgg OCELOT = new SpawnEgg("Spawn Ocelot", 98, Ocelot.class, PARENT);
-	private Class<? extends EntityComponent> entityComponent;
+	private Class<? extends VanillaEntityComponent> entityComponent;
 
 	private SpawnEgg(String name) {
 		super((short) 0x007F, name, 383, null);
 	}
 
-	private SpawnEgg(String name, int data, Class<? extends EntityComponent> entityComponent, Material parent) {
+	private SpawnEgg(String name, int data, Class<? extends VanillaEntityComponent> entityComponent, Material parent) {
 		super(name, 383, data, parent, null);
 		this.entityComponent = entityComponent;
 	}
@@ -110,7 +110,7 @@ public class SpawnEgg extends VanillaItemMaterial {
 		block.getWorld().createAndSpawnEntity(block.translate(clickedface).getPosition(), LoadOption.NO_LOAD, entityComponent);
 	}
 
-	public Class getEntityComponent() {
+	public Class<? extends VanillaEntityComponent> getComponent() {
 		return entityComponent;
 	}
 }

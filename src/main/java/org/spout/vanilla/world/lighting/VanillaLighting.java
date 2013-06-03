@@ -39,12 +39,12 @@ public class VanillaLighting {
 			Spout.getLogger().info("Vanilla lighting initialized more than once");
 		}
 	}
-	
+
 	// TODO - add these to World/Region/Chunk/Block
 	public static byte getLight(Block b) {
 		return (byte) Math.max(getBlockLight(b), getSkyLight(b));
 	}
-	
+
 	public static byte getBlockLight(Block b) {
 		return getLight(b, BLOCK_LIGHT);
 	}
@@ -52,9 +52,9 @@ public class VanillaLighting {
 	public static byte getSkyLight(Block b) {
 		return getLight(b, SKY_LIGHT);
 	}
-	
+
 	public static byte getLight(Block b, VanillaLightingManager manager) {
-		VanillaCuboidLightBuffer light =  b.getChunk().getLightBuffer(manager);
+		VanillaCuboidLightBuffer light = b.getChunk().getLightBuffer(manager);
 		return light.get(b.getX(), b.getY(), b.getZ());
 	}
 }

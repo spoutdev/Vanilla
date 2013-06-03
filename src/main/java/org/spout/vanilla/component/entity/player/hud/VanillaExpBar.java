@@ -30,9 +30,9 @@ import java.awt.Color;
 
 import org.spout.api.chat.ChatArguments;
 import org.spout.api.chat.style.ChatStyle;
+import org.spout.api.component.widget.LabelComponent;
+import org.spout.api.component.widget.RenderPartPacksComponent;
 import org.spout.api.gui.Widget;
-import org.spout.api.gui.component.LabelComponent;
-import org.spout.api.gui.component.RenderPartsHolderComponent;
 import org.spout.api.gui.render.RenderPart;
 import org.spout.api.gui.render.RenderPartPack;
 import org.spout.api.math.Rectangle;
@@ -55,7 +55,7 @@ public class VanillaExpBar extends ExpBarWidget {
 		boolean survival = true;
 		if (survival) {
 			// Experience bar
-			final RenderPartsHolderComponent expRect = widget.add(RenderPartsHolderComponent.class);
+			final RenderPartPacksComponent expRect = widget.add(RenderPartPacksComponent.class);
 			expRect.add(expPack);
 
 			final RenderPart expBgRect = new RenderPart();

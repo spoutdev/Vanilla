@@ -64,14 +64,14 @@ public class Potion extends Substance implements Projectile {
 	}
 
 	@Override
-	public void onCollided(Point colliderPoint, Point collidedPoint, Entity entity) {
-		GeneralEffects.SPLASHPOTION.playGlobal(collidedPoint, getPotion().getData());
+	public void onCollided(Point point, Entity entity) {
+		GeneralEffects.SPLASHPOTION.playGlobal(point, getPotion().getData());
 		getOwner().remove();
 	}
 
 	@Override
-	public void onCollided(Point colliderPoint, Point collidedPoint, Block block) {
-		GeneralEffects.SPLASHPOTION.playGlobal(collidedPoint, getPotion().getData());
+	public void onCollided(Point point, Block block) {
+		GeneralEffects.SPLASHPOTION.playGlobal(point, getPotion().getData());
 		getOwner().remove();
 	}
 }

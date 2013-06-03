@@ -36,12 +36,12 @@ import org.spout.api.event.Listener;
 import org.spout.api.event.Order;
 
 import org.spout.vanilla.component.entity.misc.Health;
+import org.spout.vanilla.event.entity.EntityDeathEvent;
 import org.spout.vanilla.event.entity.EntityHealthChangeEvent;
-import org.spout.vanilla.event.entity.VanillaEntityDeathEvent;
 
 public class ScoreboardListener implements Listener {
 	@EventHandler(order = Order.LATEST)
-	public void entityDeath(VanillaEntityDeathEvent event) {
+	public void entityDeath(EntityDeathEvent event) {
 		Entity entity = event.getEntity();
 		Engine engine = Spout.getEngine();
 

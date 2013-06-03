@@ -85,28 +85,28 @@ public class AdministrationCommands {
 		Player player;
 		Material filter = null;
 		Integer data = null;
-		
+
 		if (args.length() == 0) {
 			if (!(source instanceof Player)) {
 				throw new CommandException("You must be a player to clear your own inventory.");
 			}
 			player = (Player) source;
-		} else if (args.length() == 3) { 
+		} else if (args.length() == 3) {
 			if (getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			
+
 			player = getEngine().getPlayer(args.getString(0), false);
 			if (player == null) {
 				throw new CommandException(args.getString(0) + " is not online.");
 			}
-			
+
 			if (args.isInteger(1)) {
 				filter = VanillaMaterials.getMaterial((short) args.getInteger(1));
 			} else {
 				filter = Material.get(args.getString(1));
 			}
-			
+
 			data = args.getInteger(2);
 		} else {
 			if (args.isInteger(0)) {
@@ -114,13 +114,13 @@ public class AdministrationCommands {
 					throw new CommandException("You must be a player to clear your own inventory.");
 				}
 				player = (Player) source;
-				
+
 				filter = VanillaMaterials.getMaterial((short) args.getInteger(0));
 			} else {
 				if (getEngine() instanceof Client) {
 					throw new CommandException("You cannot search for players unless you are in server mode.");
 				}
-				
+
 				player = getEngine().getPlayer(args.getString(0), false);
 				if (player == null) {
 					filter = Material.get(args.getString(0));
@@ -149,13 +149,13 @@ public class AdministrationCommands {
 				}
 			}
 		}
-		
+
 		PlayerInventory inv = player.get(PlayerInventory.class);
 		if (inv == null) {
 			throw new CommandException(player.getName() + " doesn't have a inventory!");
 		} else {
 			// Count the items and clear the inventory
-			Inventory[] inventories = new Inventory[] { inv.getMain(), inv.getQuickbar(), inv.getArmor() };
+			Inventory[] inventories = new Inventory[]{inv.getMain(), inv.getQuickbar(), inv.getArmor()};
 			int cleared = 0;
 			for (int k = 0; k < inventories.length; k++) {
 				for (int i = 0; i < inventories[k].size(); i++) {
@@ -165,13 +165,13 @@ public class AdministrationCommands {
 					}
 				}
 			}
-			
+
 			if (cleared == 0) {
 				throw new CommandException("Inventory is already empty");
 			}
-			
+
 			source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Cleared the inventory of ", player.getName(), ", removing ", cleared, " items.");
-		}	
+		}
 	}
 
 	@Command(aliases = {"give"}, usage = "[player] <block> [amount] [data]", desc = "Lets a player spawn items", min = 1, max = 4)
@@ -179,14 +179,14 @@ public class AdministrationCommands {
 	public void give(CommandContext args, CommandSource source) throws CommandException {
 		int index = 0;
 		Player player = null;
-		
+
 		if (args.length() != 1) {
 			if (getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
 			player = getEngine().getPlayer(args.getString(index++), true);
 		}
-		
+
 		if (player == null) {
 			switch (args.length()) {
 				case 4:
@@ -203,29 +203,29 @@ public class AdministrationCommands {
 					break;
 			}
 		}
-		
+
 		Material material;
 		if (args.isInteger(index)) {
 			material = VanillaMaterials.getMaterial((short) args.getInteger(index++));
 		} else {
 			material = Material.get(args.getString(index++));
 		}
-		
+
 		if (material == null) {
 			throw new CommandException(args.getString(index) + " is not a block!");
 		}
-		
+
 		int quantity = 1;
 		int data = 0;
-		
+
 		if (args.length() > 2) {
 			quantity = args.getInteger(index++);
 		}
-		
+
 		if (args.length() > 3) {
 			data = args.getInteger(index++);
 		}
-		
+
 		PlayerInventory inventory = player.get(PlayerInventory.class);
 		if (inventory != null) {
 			inventory.add(new ItemStack(material, data, quantity));

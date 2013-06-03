@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.component.entity.substance.vehicle.minecart;
 
-import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
-import org.spout.api.event.player.PlayerInteractEvent.Action;
+import org.spout.api.event.entity.EntityInteractEvent;
+import org.spout.api.event.player.PlayerInteractEntityEvent;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyFactory;
@@ -55,18 +55,20 @@ public class HopperMinecart extends MinecartBase {
 	}
 
 	public HopperInventory getInventory() {
-		return this.getData().get(HOPPER_INVENTORY);
+		return this.getDatatable().get(HOPPER_INVENTORY);
 	}
 
 	@Override
-	public void onInteract(Action action, Entity source) {
-		if (!(source instanceof Player)) {
-			return;
+	public void onInteract(final EntityInteractEvent event) {
+		if (event instanceof PlayerInteractEntityEvent) {
+			final PlayerInteractEntityEvent pie = (PlayerInteractEntityEvent) event;
+			final Player player = (Player) pie.getEntity();
+			switch (pie.getAction()) {
+				case RIGHT_CLICK:
+					player.add(WindowHolder.class).openWindow(new HopperWindow(player, getInventory(), "Minecart"));
+			}
 		}
-		if (Action.RIGHT_CLICK.equals(action)) {
-			source.add(WindowHolder.class).openWindow(new HopperWindow((Player) source, getInventory(), "Minecart"));
-		}
-		super.onInteract(action, source);
+		super.onInteract(event);
 	}
 
 	@Override

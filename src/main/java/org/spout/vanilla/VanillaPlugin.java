@@ -40,9 +40,9 @@ import org.spout.api.command.RootCommand;
 import org.spout.api.command.annotated.AnnotatedCommandRegistrationFactory;
 import org.spout.api.command.annotated.SimpleAnnotatedCommandExecutorFactory;
 import org.spout.api.command.annotated.SimpleInjector;
-import org.spout.api.component.impl.DatatableComponent;
-import org.spout.api.component.impl.NetworkComponent;
-import org.spout.api.component.impl.ObserverComponent;
+import org.spout.api.component.DatatableComponent;
+import org.spout.api.component.entity.NetworkComponent;
+import org.spout.api.component.entity.ObserverComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.EventManager;
 import org.spout.api.generator.WorldGenerator;
@@ -238,7 +238,7 @@ public class VanillaPlugin extends CommonPlugin {
 				World world = getEngine().loadWorld(worldNode.getWorldName(), generator);
 
 				// Apply general settings
-				final DatatableComponent data = world.getData();
+				final DatatableComponent data = world.getDatatable();
 				data.put(VanillaData.GAMEMODE, GameMode.get(worldNode.GAMEMODE.getString()));
 				data.put(VanillaData.DIFFICULTY, Difficulty.get(worldNode.DIFFICULTY.getString()));
 				data.put(VanillaData.DIMENSION, Dimension.get(worldNode.SKY_TYPE.getString()));

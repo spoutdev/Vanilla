@@ -29,17 +29,13 @@ package org.spout.vanilla.component.world.sky;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.spout.api.Platform;
-import org.spout.api.Spout;
 import org.spout.api.entity.Player;
-import org.spout.api.model.Model;
 
 import org.spout.vanilla.component.entity.misc.Sleep;
 import org.spout.vanilla.component.world.VanillaWorldComponent;
 import org.spout.vanilla.data.Time;
 import org.spout.vanilla.data.VanillaData;
 import org.spout.vanilla.data.Weather;
-import org.spout.vanilla.render.VanillaEffects;
 import org.spout.vanilla.world.WeatherSimulator;
 
 /**
@@ -52,41 +48,11 @@ public abstract class Sky extends VanillaWorldComponent {
 	private static final long REFRESH_RATE = 600;
 	private final AtomicLong countdown = new AtomicLong(REFRESH_RATE);
 	private WeatherSimulator weather;
-	private String model;
-
-	@Override
-	public void onAttached() {
-		if (this.model != null && getOwner().getEngine().getPlatform() == Platform.CLIENT) {
-			// Load the model
-			Spout.getLogger().info("Loading Skydome for " + getClass().getSimpleName());
-			Model m = getOwner().getEngine().getFileSystem().getResource(this.model);
-			m.getRenderMaterial().addRenderEffect(VanillaEffects.SKY);
-			Spout.getLogger().info("Loaded Skydome");
-			// Apply model
-			getOwner().getData().put("skydome", m);
-		}
-	}
-
-	/**
-	 * Sets the model of this sky
-	 * @param model to set to
-	 */
-	public void setModel(String model) {
-		this.model = model;
-	}
-
-	/**
-	 * Gets the model of this sky
-	 * @return model
-	 */
-	public String getModel() {
-		return this.model;
-	}
 
 	@Override
 	public void onTick(float dt) {
 		final long maxTime = getMaxTime();
-		float time = getData().get(VanillaData.WORLD_TIME).floatValue();
+		float time = getDatatable().get(VanillaData.WORLD_TIME).floatValue();
 		time += getRate() * (dt / 50F);
 		while (time >= maxTime) {
 			time -= maxTime;
@@ -119,7 +85,7 @@ public abstract class Sky extends VanillaWorldComponent {
 				}
 			}
 		}
-		getData().put(VanillaData.WORLD_TIME, time);
+		getDatatable().put(VanillaData.WORLD_TIME, time);
 
 		synchronized (this) {
 			if (this.weather != null) {
@@ -133,7 +99,7 @@ public abstract class Sky extends VanillaWorldComponent {
 	 * @param time
 	 */
 	public void setTime(long time) {
-		getData().put(VanillaData.WORLD_TIME, time);
+		getDatatable().put(VanillaData.WORLD_TIME, time);
 		countdown.set(0);
 	}
 
@@ -142,7 +108,7 @@ public abstract class Sky extends VanillaWorldComponent {
 	 * @return time
 	 */
 	public long getTime() {
-		return getData().get(VanillaData.WORLD_TIME).longValue();
+		return getDatatable().get(VanillaData.WORLD_TIME).longValue();
 	}
 
 	/**
@@ -151,7 +117,7 @@ public abstract class Sky extends VanillaWorldComponent {
 	 * @return
 	 */
 	public long getMaxTime() {
-		return getData().get(VanillaData.MAX_TIME);
+		return getDatatable().get(VanillaData.MAX_TIME);
 	}
 
 	/**
@@ -160,7 +126,7 @@ public abstract class Sky extends VanillaWorldComponent {
 	 * @param maxTime
 	 */
 	public void setMaxTime(long maxTime) {
-		getData().put(VanillaData.MAX_TIME, maxTime);
+		getDatatable().put(VanillaData.MAX_TIME, maxTime);
 		countdown.set(0);
 	}
 
@@ -169,7 +135,7 @@ public abstract class Sky extends VanillaWorldComponent {
 	 * @return
 	 */
 	public long getRate() {
-		return getData().get(VanillaData.TIME_RATE);
+		return getDatatable().get(VanillaData.TIME_RATE);
 	}
 
 	/**
@@ -178,7 +144,7 @@ public abstract class Sky extends VanillaWorldComponent {
 	 * @param rate
 	 */
 	public void setRate(long rate) {
-		getData().put(VanillaData.TIME_RATE, rate);
+		getDatatable().put(VanillaData.TIME_RATE, rate);
 		countdown.set(0);
 	}
 

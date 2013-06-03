@@ -37,8 +37,8 @@ import org.spout.vanilla.protocol.rcon.msg.RconMessage;
 /**
  * Handler for rcon connections
  */
-public class RconHandler extends SimpleChannelHandler {
-	private final RemoteConnectionSession session;
+public class RconHandler /*extends SimpleChannelHandler*/ {
+	/*private final RemoteConnectionSession session;
 
 	public RconHandler(RemoteConnectionSession session) {
 		this.session = session;
@@ -63,5 +63,5 @@ public class RconHandler extends SimpleChannelHandler {
 			RconMessageHandler<RconMessage> handler = (RconMessageHandler<RconMessage>) session.getCore().getHandlerLookupService().find(msg.getClass());
 			handler.handle(session, msg);
 		}
-	}
+	}*/
 }

@@ -32,12 +32,12 @@ import gnu.trove.list.linked.TLongLinkedList;
 import org.spout.api.Client;
 import org.spout.api.Engine;
 import org.spout.api.Server;
-import org.spout.api.chat.ChatArguments;
-import org.spout.api.chat.style.ChatStyle;
-import org.spout.api.command.CommandContext;
+import org.spout.api.command.CommandArguments;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Command;
-import org.spout.api.command.annotated.CommandPermissions;
+import org.spout.api.command.annotated.Filter;
+import org.spout.api.command.annotated.Permissible;
+import org.spout.api.command.filter.PlayerFilter;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
 import org.spout.api.generator.biome.Biome;
@@ -50,6 +50,7 @@ import org.spout.api.material.Material;
 import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.util.concurrent.AtomicFloat;
 
+import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.living.Human;
@@ -80,8 +81,8 @@ public class AdministrationCommands {
 	}
 
 	@Command(aliases = "clear", usage = "[player] [item] [data]", desc = "Clears the target's inventory", min = 0, max = 3)
-	@CommandPermissions("vanilla.command.clear")
-	public void clear(CommandContext args, CommandSource source) throws CommandException {
+	@Permissible("vanilla.command.clear")
+	public void clear(CommandSource source, CommandArguments args) throws CommandException {
 		Player player;
 		Material filter = null;
 		Integer data = null;
@@ -169,14 +170,14 @@ public class AdministrationCommands {
 			if (cleared == 0) {
 				throw new CommandException("Inventory is already empty");
 			}
-
-			source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Cleared the inventory of ", player.getName(), ", removing ", cleared, " items.");
-		}
+			
+			source.sendMessage(plugin.getPrefix() + ChatStyle.GREEN + "Cleared the inventory of " + player.getName() + ", removing " + cleared + " items.");
+		}	
 	}
 
 	@Command(aliases = {"give"}, usage = "[player] <block> [amount] [data]", desc = "Lets a player spawn items", min = 1, max = 4)
-	@CommandPermissions("vanilla.command.give")
-	public void give(CommandContext args, CommandSource source) throws CommandException {
+	@Permissible("vanilla.command.give")
+	public void give(CommandSource source, CommandArguments args) throws CommandException {
 		int index = 0;
 		Player player = null;
 
@@ -229,52 +230,53 @@ public class AdministrationCommands {
 		PlayerInventory inventory = player.get(PlayerInventory.class);
 		if (inventory != null) {
 			inventory.add(new ItemStack(material, data, quantity));
-			source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Gave ", ChatStyle.WHITE, player.getName() + " ", quantity, ChatStyle.BRIGHT_GREEN, " of ", ChatStyle.WHITE,
-					material.getDisplayName());
+			source.sendMessage(plugin.getPrefix() + ChatStyle.GREEN + "Gave "
+					+ ChatStyle.WHITE + player.getName() + " " + quantity + ChatStyle.GREEN + " of " + ChatStyle.WHITE
+					+ material.getDisplayName());
 		} else {
 			throw new CommandException(player.getName() + " doesn't have a inventory!");
 		}
 	}
 
 	@Command(aliases = {"deop"}, usage = "<player>", desc = "Revoke a players operator status", min = 1, max = 1)
-	@CommandPermissions("vanilla.command.deop")
-	public void deop(CommandContext args, CommandSource source) {
+	@Permissible("vanilla.command.deop")
+	public void deop(CommandSource source, CommandArguments args) throws CommandException {
 		String playerName = args.getString(0);
 		OpConfiguration ops = VanillaConfiguration.OPS;
 		if (!ops.isOp(playerName)) {
-			source.sendMessage(plugin.getPrefix(), playerName, ChatStyle.RED, " is not an operaor!");
+			source.sendMessage(plugin.getPrefix() + playerName + ChatStyle.RED + " is not an operator!");
 			return;
 		}
 
 		ops.setOp(playerName, false);
-		source.sendMessage(plugin.getPrefix(), playerName, ChatStyle.RED, " had their operator status revoked!");
+		source.sendMessage(plugin.getPrefix() + playerName + ChatStyle.RED + " had their operator status revoked!");
 		Player player = getEngine().getPlayer(playerName, true);
 		if (player != null && !source.equals(player)) {
-			player.sendMessage(plugin.getPrefix(), ChatStyle.RED, "You had your operator status revoked!");
+			player.sendMessage(plugin.getPrefix() + ChatStyle.RED + "You had your operator status revoked!");
 		}
 	}
 
 	@Command(aliases = {"op"}, usage = "<player>", desc = "Make a player an operator", min = 1, max = 1)
-	@CommandPermissions("vanilla.command.op")
-	public void op(CommandContext args, CommandSource source) {
+	@Permissible("vanilla.command.op")
+	public void op(CommandSource source, CommandArguments args) throws CommandException {
 		String playerName = args.getString(0);
 		OpConfiguration ops = VanillaConfiguration.OPS;
 		if (ops.isOp(playerName)) {
-			source.sendMessage(plugin.getPrefix(), ChatStyle.RED, playerName, " is already an operator!");
+			source.sendMessage(plugin.getPrefix() + ChatStyle.RED + playerName + " is already an operator!");
 			return;
 		}
 
 		ops.setOp(playerName, true);
-		source.sendMessage(plugin.getPrefix(), ChatStyle.RED, playerName, " is now an operator!");
+		source.sendMessage(plugin.getPrefix() + ChatStyle.RED + playerName + " is now an operator!");
 		Player player = getEngine().getPlayer(playerName, true);
 		if (player != null && !source.equals(player)) {
-			player.sendMessage(plugin.getPrefix(), ChatStyle.YELLOW, "You are now an operator!");
+			player.sendMessage(plugin.getPrefix() + ChatStyle.YELLOW + "You are now an operator!");
 		}
 	}
 
 	@Command(aliases = {"time"}, usage = "<add|set> <0-24000|day|night|dawn|dusk> [world]", desc = "Set the time of the server", min = 2, max = 3)
-	@CommandPermissions("vanilla.command.time")
-	public void time(CommandContext args, CommandSource source) throws CommandException {
+	@Permissible("vanilla.command.time")
+	public void time(CommandSource source, CommandArguments args) throws CommandException {
 		long time;
 		boolean relative = args.getString(0).equalsIgnoreCase("add");
 
@@ -311,16 +313,18 @@ public class AdministrationCommands {
 
 		sky.setTime(relative ? (sky.getTime() + time) : time);
 		if (getEngine() instanceof Client) {
-			source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "You set ", ChatStyle.WHITE, world.getName(), ChatStyle.BRIGHT_GREEN, " to time: ", ChatStyle.WHITE,
-					sky.getTime());
+			source.sendMessage(plugin.getPrefix() + ChatStyle.GREEN + "You set "
+					+ ChatStyle.WHITE + world.getName() + ChatStyle.GREEN
+					+ " to time: " + ChatStyle.WHITE + sky.getTime());
 		} else {
-			((Server) getEngine()).broadcastMessage(plugin.getPrefix(), ChatStyle.WHITE, world.getName(), ChatStyle.BRIGHT_GREEN, " set to: ", ChatStyle.WHITE, sky.getTime());
+			((Server) getEngine()).broadcastMessage(plugin.getPrefix() + ChatStyle.WHITE
+					+ world.getName() + ChatStyle.GREEN + " set to: " + ChatStyle.WHITE + sky.getTime());
 		}
 	}
 
 	@Command(aliases = {"gamemode", "gm"}, usage = "<0|1|2|survival|creative|adventure|s|c|a> [player] (0 = SURVIVAL, 1 = CREATIVE, 2 = ADVENTURE)", desc = "Change a player's game mode", min = 1, max = 2)
-	@CommandPermissions("vanilla.command.gamemode")
-	public void gamemode(CommandContext args, CommandSource source) throws CommandException {
+	@Permissible("vanilla.command.gamemode")
+	public void gamemode(CommandSource source, CommandArguments args) throws CommandException {
 		Player player;
 		if (args.length() == 2) {
 			if (getEngine() instanceof Client) {
@@ -369,13 +373,15 @@ public class AdministrationCommands {
 		human.setGamemode(mode);
 
 		if (!player.equals(source)) {
-			source.sendMessage(plugin.getPrefix(), ChatStyle.WHITE, player.getName(), "'s ", ChatStyle.BRIGHT_GREEN, "gamemode has been changed to ", ChatStyle.WHITE, mode.name(), ChatStyle.BRIGHT_GREEN, ".");
+			source.sendMessage(plugin.getPrefix() + ChatStyle.WHITE + player.getName()
+					+ "'s " + ChatStyle.GREEN + "gamemode has been changed to "
+					+ ChatStyle.WHITE + mode.name() + ChatStyle.GREEN + ".");
 		}
 	}
 
 	@Command(aliases = "xp", usage = "[player] <amount>", desc = "Give/take experience from a player", min = 1, max = 2)
-	@CommandPermissions("vanilla.command.xp")
-	public void xp(CommandContext args, CommandSource source) throws CommandException {
+	@Permissible("vanilla.command.xp")
+	public void xp(CommandSource source, CommandArguments args) throws CommandException {
 		int index = 0;
 		Player player;
 		if (args.length() == 1) {
@@ -404,12 +410,12 @@ public class AdministrationCommands {
 		}
 
 		level.addExperience(amount);
-		player.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Your experience has been set to ", ChatStyle.WHITE, amount, ChatStyle.BRIGHT_GREEN, ".");
+		player.sendMessage(plugin.getPrefix() + ChatStyle.GREEN + "Your experience has been set to " + ChatStyle.WHITE + amount + ChatStyle.GREEN + ".");
 	}
 
 	@Command(aliases = "weather", usage = "<0|1|2|clear|rain|thunder> (0 = CLEAR, 1 = RAIN/SNOW, 2 = THUNDERSTORM) [world]", desc = "Changes the weather", min = 1, max = 2)
-	@CommandPermissions("vanilla.command.weather")
-	public void weather(CommandContext args, CommandSource source) throws CommandException {
+	@Permissible("vanilla.command.weather")
+	public void weather(CommandSource source, CommandArguments args) throws CommandException {
 		World world;
 		if (source instanceof Player && args.length() == 1) {
 			world = ((Player) source).getWorld();
@@ -440,14 +446,13 @@ public class AdministrationCommands {
 		}
 
 		sky.setWeather(weather);
-		ChatArguments message;
-
+		String message;
 		switch (weather) {
 			case RAIN:
-				message = new ChatArguments(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Weather set to ", ChatStyle.WHITE, "RAIN/SNOW", ChatStyle.BRIGHT_GREEN, ".");
+				message = plugin.getPrefix() + ChatStyle.GREEN + "Weather set to " + ChatStyle.WHITE + "RAIN/SNOW" + ChatStyle.GREEN + ".";
 				break;
 			default:
-				message = new ChatArguments(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Weather set to ", ChatStyle.WHITE, weather.name(), ChatStyle.BRIGHT_GREEN, ".");
+				message = plugin.getPrefix() + ChatStyle.GREEN + "Weather set to " + ChatStyle.WHITE + weather.name() + ChatStyle.GREEN + ".";
 				break;
 		}
 		if (getEngine() instanceof Client) {
@@ -462,8 +467,8 @@ public class AdministrationCommands {
 	}
 
 	@Command(aliases = {"kill"}, usage = "[player]", desc = "Kill yourself or another player", min = 0, max = 1)
-	@CommandPermissions("vanilla.command.kill")
-	public void kill(CommandContext args, CommandSource source) throws CommandException {
+	@Permissible("vanilla.command.kill")
+	public void kill(CommandSource source, CommandArguments args) throws CommandException {
 		Player player;
 		if (args.length() == 0) {
 			if (!(source instanceof Player)) {
@@ -487,30 +492,30 @@ public class AdministrationCommands {
 	}
 
 	@Command(aliases = {"version", "vr"}, usage = "", desc = "Print out the version information for Vanilla", min = 0, max = 0)
-	@CommandPermissions("vanilla.command.version")
-	public void getVersion(CommandContext args, CommandSource source) {
-		source.sendMessage("Vanilla ", plugin.getDescription().getVersion(), " (Implementing Minecraft protocol v", plugin.getDescription().getData("protocol"), ")");
-		source.sendMessage("Powered by Spout " + getEngine().getVersion(), " (Implementing SpoutAPI ", getEngine().getAPIVersion(), ")");
+	@Permissible("vanilla.command.version")
+	public void getVersion(CommandSource source, CommandArguments args) {
+		source.sendMessage("Vanilla " + plugin.getDescription().getVersion()
+				+ " (Implementing Minecraft protocol v" + plugin.getDescription().getData("protocol") + ")");
+
+		source.sendMessage("Powered by Spout " + getEngine().getVersion() + " (Implementing SpoutAPI " + getEngine().getAPIVersion() + ")");
 	}
 
 	@Command(aliases = {"biome"}, usage = "", desc = "Print out the name of the biome at the current location", min = 0, max = 0)
-	@CommandPermissions("vanilla.command.biome")
-	public void getBiomeName(CommandContext args, CommandSource source) throws CommandException {
-		if (!(source instanceof Player)) {
-			throw new CommandException("Only a player may call this command.");
-		}
+	@Permissible("vanilla.command.biome")
+	@Filter(PlayerFilter.class)
+	public void getBiomeName(CommandSource source, CommandArguments args) throws CommandException {
 		Player player = (Player) source;
 		if (!(player.getScene().getPosition().getWorld().getGenerator() instanceof BiomeGenerator)) {
 			throw new CommandException("This map does not appear to have any biome data.");
 		}
 		Point pos = player.getScene().getPosition();
 		Biome biome = pos.getWorld().getBiome(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ());
-		source.sendMessage(plugin.getPrefix(), ChatStyle.BRIGHT_GREEN, "Current biome: ", ChatStyle.WHITE, (biome != null ? biome.getName() : "none"));
+		source.sendMessage(plugin.getPrefix() + ChatStyle.GREEN + "Current biome: " + ChatStyle.WHITE + (biome != null ? biome.getName() : "none"));
 	}
 
 	@Command(aliases = {"tps"}, usage = "", desc = "Print out the current engine ticks per second", min = 0, max = 0)
-	@CommandPermissions("vanilla.command.tps")
-	public void getTPS(CommandContext args, CommandSource source) {
+	@Permissible("vanilla.command.tps")
+	public void getTPS(CommandSource source, CommandArguments args) {
 		source.sendMessage("TPS: " + tpsMonitor.getTPS());
 		source.sendMessage("Average TPS: " + tpsMonitor.getAvgTPS());
 	}

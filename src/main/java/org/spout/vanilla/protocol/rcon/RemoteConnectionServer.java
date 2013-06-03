@@ -65,7 +65,7 @@ public class RemoteConnectionServer extends RemoteConnectionCore {
 	public RemoteConnectionServer(Logger logger, File dataFolder) {
 		super(logger);
 		this.config = new RconConfiguration(new YamlConfiguration(new File(dataFolder, "rcon.yml")));
-		bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
+		/*bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
 			public ChannelPipeline getPipeline() throws Exception {
 				RemoteConnectionSession session = new RemoteConnectionSession(RemoteConnectionServer.this);
 				return Channels.pipeline(new RconEncoder(session),
@@ -73,7 +73,7 @@ public class RemoteConnectionServer extends RemoteConnectionCore {
 						new ChannelTracker(),
 						new RconHandler(session));
 			}
-		});
+		});*/
 
 		NioServerSocketChannelFactory factory = new NioServerSocketChannelFactory() {
 			@Override

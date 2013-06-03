@@ -34,6 +34,7 @@ import org.spout.vanilla.protocol.rcon.msg.RconMessage;
  * Parent class for handlers for {@link RconMessage RconMessages}
  */
 public abstract class RconMessageHandler<T extends RconMessage> {
+	/*
 	public void handle(RemoteConnectionSession session, T message) {
 		if (session.getCore() instanceof RemoteConnectionServer) {
 			handleServer(session, message);
@@ -48,5 +49,5 @@ public abstract class RconMessageHandler<T extends RconMessage> {
 
 	public void handleClient(RemoteConnectionSession session, T message) {
 		throw new UnsupportedOperationException(message + " cannot be handled on the client!");
-	}
+	}*/
 }

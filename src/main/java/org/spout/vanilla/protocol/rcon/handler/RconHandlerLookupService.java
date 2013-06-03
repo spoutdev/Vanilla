@@ -41,13 +41,13 @@ public class RconHandlerLookupService {
 	private final Map<Class<? extends RconMessage>, RconMessageHandler<?>> handlers = new HashMap<Class<? extends RconMessage>, RconMessageHandler<?>>();
 
 	public RconHandlerLookupService() {
-		try {
+		/*try {
 			bind(AuthMessage.class, new AuthMessageHandler());
 			bind(CommandMessage.class, new CommandMessageHandler());
 			bind(CommandResponseMessage.class, new CommandResponseMessageHandler());
 		} catch (Throwable t) {
 			throw new ExceptionInInitializerError(t);
-		}
+		}*/
 	}
 
 	protected <T extends RconMessage> void bind(Class<T> messageClass, RconMessageHandler<T> handler) {

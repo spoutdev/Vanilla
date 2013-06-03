@@ -29,7 +29,6 @@ package org.spout.vanilla.protocol.handler.player;
 import java.util.Collection;
 import java.util.HashSet;
 
-import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Player;
 import org.spout.api.event.player.Action;
 import org.spout.api.event.player.PlayerInteractBlockEvent;
@@ -47,6 +46,7 @@ import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.flag.Flag;
 
+import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.component.block.material.Sign;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.misc.Digging;
@@ -99,6 +99,23 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 			return;
 		}
 		ItemStack heldItem = currentSlot.get();
+
+		// Don't block protections if dropping an item, silly Notch...
+		if (state != PlayerDiggingMessage.STATE_DROP_ITEM && state != PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD) {
+			Collection<Protection> protections = player.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(point);
+			for (Protection p : protections) {
+				if (p.contains(point) && !human.isOp()) {
+					player.getSession().send(false, new BlockChangeMessage(x, y, z, minecraftID, block.getData() & 0xF, rm));
+					player.sendMessage(ChatStyle.DARK_RED + "This area is a protected spawn point!");
+					return;
+				}
+			}
+		}
+
+		if (state == PlayerDiggingMessage.STATE_DROP_ITEM && x == 0 && y == 0 && z == 0) {
+			human.dropItem();
+			return;
+		}
 
 		boolean isInteractable = true;
 		if (blockMaterial == VanillaMaterials.AIR) {
@@ -251,7 +268,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		for (Protection p : protections) {
 			if (p.contains(point) && !player.get(Human.class).isOp()) {
 				player.getSession().send(false, new BlockChangeMessage(x, y, z, minecraftID, block.getData() & 0xF, rm));
-				player.sendMessage(ChatStyle.DARK_RED, "This area is a protected spawn point!");
+				player.sendMessage(ChatStyle.DARK_RED + "This area is a protected spawn point!");
 				return false;
 			}
 		}

@@ -26,19 +26,13 @@
  */
 package org.spout.vanilla.protocol.rcon.handler;
 
-import org.spout.api.chat.ChatArguments;
-
 import org.spout.vanilla.protocol.rcon.RemoteConnectionSession;
 import org.spout.vanilla.protocol.rcon.msg.CommandMessage;
 
-/**
- * @author zml2008
- */
-public class CommandMessageHandler extends RconMessageHandler<CommandMessage> {
-	@Override
+public class CommandMessageHandler /*extends RconMessageHandler<CommandMessage>*/ {
+	/*@Override
 	public void handleServer(RemoteConnectionSession session, CommandMessage message) {
 		String command;
-		ChatArguments arguments;
 		String text = message.getPayload();
 		int spaceIndex = text.indexOf(" ");
 		if (spaceIndex != -1) {
@@ -58,5 +52,5 @@ public class CommandMessageHandler extends RconMessageHandler<CommandMessage> {
 		if (session.isAuthenticated()) {
 			session.setState(RemoteConnectionSession.State.COMMANDS);
 		}
-	}
+	}*/
 }

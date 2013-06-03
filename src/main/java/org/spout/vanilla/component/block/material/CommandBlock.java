@@ -37,23 +37,21 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
-import org.spout.api.chat.ChatArguments;
-import org.spout.api.chat.channel.ChatChannel;
-import org.spout.api.chat.channel.PermissionChatChannel;
-import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.command.Command;
+import org.spout.api.command.CommandArguments;
 import org.spout.api.command.CommandSource;
-import org.spout.api.command.RootCommand;
 import org.spout.api.data.ValueHolder;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
 import org.spout.api.event.server.PreCommandEvent;
+import org.spout.api.exception.CommandException;
 import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.lang.Locale;
 import org.spout.api.util.SpoutToStringStyle;
 
+import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.VanillaBlockComponent;
 import org.spout.vanilla.component.entity.living.Human;
@@ -66,7 +64,6 @@ import org.spout.vanilla.scoreboard.Scoreboard;
 import org.spout.vanilla.scoreboard.Team;
 
 public class CommandBlock extends VanillaBlockComponent implements CommandSource {
-	public static final ChatChannel CHAT_CHANNEL = new PermissionChatChannel("CommandBlock", "vanilla.commandblock.recieve");
 	public static final char TARGET_CHAR = '@';
 	public static final char NEAREST_PLAYER_CHAR = 'p';
 	public static final char RANDOM_PLAYER_CHAR = 'r';
@@ -92,12 +89,12 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 	public void setCommand(String cmd, Cause<?> cause) {
 		if (cause != null && cause.getSource() instanceof CommandSource) {
 			CommandSource cmdSource = (CommandSource) cause.getSource();
-			ChatArguments prefix = VanillaPlugin.getInstance().getPrefix();
+			String prefix = VanillaPlugin.getInstance().getPrefix();
 			if (!cmdSource.hasPermission("vanilla.commandblock." + cmd.split(" ")[0])) {
-				cmdSource.sendMessage(prefix, ChatStyle.RED, " You don't have permission to do that.");
+				cmdSource.sendMessage(prefix + ChatStyle.RED + " You don't have permission to do that.");
 				return;
 			}
-			cmdSource.sendMessage(prefix, ChatStyle.WHITE, "Command set: ", ChatStyle.BRIGHT_GREEN, cmd);
+			cmdSource.sendMessage(prefix + ChatStyle.WHITE + "Command set: " + ChatStyle.GREEN + cmd);
 		}
 
 		if (!cmd.startsWith("/")) {
@@ -234,18 +231,10 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 
 		for (String c : cmds) {
 			// send commands
-			String[] args = c.split(" ");
-			String root = args[0];
-			ChatArguments arguments = new ChatArguments();
-			if (args.length > 1) {
-				for (int i = 1; i < args.length; i++) {
-					arguments.append(args[i]);
-					if (i != args.length - 1) {
-						arguments.append(" ");
-					}
-				}
-			}
-			processCommand(root, new ChatArguments(arguments));
+			String root = c.split(" ")[0];
+			int argsIndex = c.indexOf(' ') + 1;
+			String[] args = argsIndex > 0 ? c.substring(argsIndex).split(" ") : new String[0];
+			processCommand(root, args);
 		}
 	}
 
@@ -527,74 +516,45 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 	}
 
 	@Override
-	public boolean sendMessage(Object... message) {
-		return sendMessage(new ChatArguments(message));
+	public void sendMessage(String message) {
+		if (VanillaConfiguration.COMMAND_BLOCK_VERBOSE.getBoolean()) {
+			Spout.getLogger().info("[ " + getName() + "] " + message);
+		}
 	}
 
 	@Override
-	public void sendCommand(String command, ChatArguments arguments) {
+	public void sendCommand(String command, String... args) {
 	}
 
 	@Override
-	public void processCommand(String command, ChatArguments arguments) {
-		PreCommandEvent event = VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new PreCommandEvent(this, command, arguments));
+	public void processCommand(String command, String... args) {
+		PreCommandEvent event = VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new PreCommandEvent(this, command, args));
 		if (event.isCancelled()) {
 			return;
 		}
 		command = event.getCommand();
-		arguments = event.getArguments();
+		CommandArguments arguments = event.getArguments();
 
 		if (Spout.debugMode()) {
 			Spout.getLogger().info("Executing: " + command + " " + arguments);
 		}
 
-		final RootCommand rootCmd = VanillaPlugin.getInstance().getEngine().getRootCommand();
-		Command cmd = rootCmd.getChild(command);
-		if (cmd != null) {
-			cmd.process(this, command, arguments, false);
-		} else {
-			Spout.getLogger().warning("CommandBlock tried to process unknown command: " + command);
+		Command cmd = Spout.getCommandManager().getCommand(command, false);
+		if (cmd == null) {
+			Spout.getLogger().warning("CommandBlock tried to send unknown command: " + command);
+			return;
 		}
-	}
 
-	@Override
-	public boolean sendMessage(ChatArguments message) {
-		if (VanillaConfiguration.COMMAND_BLOCK_VERBOSE.getBoolean()) {
-			Spout.getLogger().info("[ " + getName() + "] " + message.getPlainString());
-			return true;
+		try {
+			cmd.execute(this, args);
+		} catch (CommandException e) {
+			sendMessage(ChatStyle.RED + e.getMessage());
 		}
-		return false;
-	}
-
-	@Override
-	public boolean sendRawMessage(Object... message) {
-		return sendMessage(message);
-	}
-
-	@Override
-	public boolean sendRawMessage(ChatArguments message) {
-		return sendMessage(message);
 	}
 
 	@Override
 	public Locale getPreferredLocale() {
 		return Locale.ENGLISH_US;
-	}
-
-	@Override
-	public ChatChannel getActiveChannel() {
-		for (ChatChannel channel : ChatChannel.Registry.getAllChannels()) {
-			if (channel.getName().equalsIgnoreCase(getDatatable().get(VanillaData.CHAT_CHANNEL))) {
-				return channel;
-			}
-		}
-		getDatatable().put(VanillaData.CHAT_CHANNEL, CHAT_CHANNEL.getName());
-		return CHAT_CHANNEL;
-	}
-
-	@Override
-	public void setActiveChannel(ChatChannel chan) {
-		getDatatable().put(VanillaData.CHAT_CHANNEL, chan.getName());
 	}
 
 	@Override

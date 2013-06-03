@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.block.misc;
 
-import org.spout.api.chat.ChatArguments;
-import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.Cause;
@@ -39,6 +37,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 
+import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.component.entity.living.Hostile;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.misc.Sleep;
@@ -55,9 +54,9 @@ import org.spout.vanilla.world.generator.nether.NetherGenerator;
 
 public class BedBlock extends VanillaBlockMaterial implements InitializableMaterial {
 	public static final int NEARBY_MONSTER_RANGE = 8, NETHER_EXPLOSION_SIZE = 4;
-	public static final ChatArguments NEARBY_MONSTER_MESSAGE = new ChatArguments(ChatStyle.RED, "You must not rest, there are monsters nearby!");
-	public static final ChatArguments NOT_NIGHT_MESSAGE = new ChatArguments(ChatStyle.RED, "You can only sleep at night.");
-	public static final ChatArguments OCCUPIED_MESSAGE = new ChatArguments(ChatStyle.RED, "This bed is occupied.");
+	public static final String NEARBY_MONSTER_MESSAGE = ChatStyle.RED + "You must not rest, there are monsters nearby!";
+	public static final String NOT_NIGHT_MESSAGE = ChatStyle.RED + "You can only sleep at night.";
+	public static final String OCCUPIED_MESSAGE = ChatStyle.RED + "This bed is occupied.";
 
 	public BedBlock(String name, int id) {
 		super(name, id, VanillaMaterialModels.BED_BLOCK);

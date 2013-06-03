@@ -41,8 +41,8 @@ import org.spout.api.protocol.MessageCodec;
 /**
  * Encoder for the rcon protocol
  */
-public class RconEncoder extends OneToOneEncoder {
-	private final RemoteConnectionSession session;
+public class RconEncoder /*extends OneToOneEncoder*/ {
+	/*private final RemoteConnectionSession session;
 
 	public RconEncoder(RemoteConnectionSession session) {
 		this.session = session;
@@ -64,5 +64,5 @@ public class RconEncoder extends OneToOneEncoder {
 			return ChannelBuffers.wrappedBuffer(headerBuf, payloadBuf);
 		}
 		return obj;
-	}
+	}*/
 }

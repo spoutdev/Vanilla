@@ -32,10 +32,10 @@ import java.io.InputStream;
 import java.util.logging.Logger;
 
 import org.mockito.Mockito;
+
 import org.spout.api.Engine;
 import org.spout.api.Platform;
 import org.spout.api.Spout;
-
 import org.spout.api.event.Event;
 import org.spout.api.event.EventExecutor;
 import org.spout.api.event.EventManager;

@@ -29,10 +29,9 @@ package org.spout.vanilla.scoreboard;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.spout.api.chat.ChatArguments;
-import org.spout.api.chat.style.ChatStyle;
 import org.spout.api.util.Named;
 
+import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.event.scoreboard.TeamActionEvent;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardTeamMessage;
 
@@ -42,9 +41,9 @@ import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardTeamMessage;
 public class Team implements Named {
 	private final Scoreboard scoreboard;
 	private final String name;
-	private ChatArguments displayName = new ChatArguments("");
-	private ChatArguments prefix = new ChatArguments("");
-	private ChatArguments suffix = new ChatArguments(ChatStyle.RESET);
+	private String displayName = "";
+	private String prefix = "";
+	private String suffix = ChatStyle.RESET.toString();
 	private boolean friendlyFire = false;
 	private final Set<String> playerNames = new HashSet<String>();
 
@@ -57,7 +56,7 @@ public class Team implements Named {
 	 * Returns the name to display for this team.
 	 * @return display name of this team
 	 */
-	public ChatArguments getDisplayName() {
+	public String getDisplayName() {
 		return displayName;
 	}
 
@@ -66,27 +65,18 @@ public class Team implements Named {
 	 * @param displayName for team
 	 * @return this team
 	 */
-	public Team setDisplayName(ChatArguments displayName) {
+	public Team setDisplayName(String displayName) {
 		this.displayName = displayName;
 		update();
 		return this;
 	}
 
 	/**
-	 * Sets the name to be displayed for this team
-	 * @param displayName for team
-	 * @return this team
-	 */
-	public Team setDisplayName(Object... displayName) {
-		return setDisplayName(new ChatArguments(displayName));
-	}
-
-	/**
-	 * Returns the {@link ChatArguments} that prefaces the name of each player
+	 * Returns the {@link String} that prefaces the name of each player
 	 * on this team.
 	 * @return prefix of players on this team
 	 */
-	public ChatArguments getPrefix() {
+	public String getPrefix() {
 		return prefix;
 	}
 
@@ -95,26 +85,17 @@ public class Team implements Named {
 	 * @param prefix of each player on the team
 	 * @return this team
 	 */
-	public Team setPrefix(ChatArguments prefix) {
+	public Team setPrefix(String prefix) {
 		this.prefix = prefix;
 		update();
 		return this;
 	}
 
 	/**
-	 * Sets the prefix of each player on this team.
-	 * @param prefix of each player on the team
-	 * @return this team
-	 */
-	public Team setPrefix(Object... prefix) {
-		return setPrefix(new ChatArguments(prefix));
-	}
-
-	/**
-	 * Returns the {@link ChatArguments} that come after each player's name.
+	 * Returns the {@link String} that come after each player's name.
 	 * @return suffix for players
 	 */
-	public ChatArguments getSuffix() {
+	public String getSuffix() {
 		return suffix;
 	}
 
@@ -123,19 +104,10 @@ public class Team implements Named {
 	 * @param suffix for players
 	 * @return this team
 	 */
-	public Team setSuffix(ChatArguments suffix) {
+	public Team setSuffix(String suffix) {
 		this.suffix = suffix;
 		update();
 		return this;
-	}
-
-	/**
-	 * Sets the suffix for the players on this team.
-	 * @param suffix for players
-	 * @return this team
-	 */
-	public Team setSuffix(Object... suffix) {
-		return setSuffix(new ChatArguments(suffix));
 	}
 
 	/**

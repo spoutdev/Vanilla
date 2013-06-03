@@ -27,9 +27,9 @@
 package org.spout.vanilla.command;
 
 import org.spout.api.command.Command;
-import org.spout.api.command.CommandContext;
-import org.spout.api.command.CommandExecutor;
+import org.spout.api.command.CommandArguments;
 import org.spout.api.command.CommandSource;
+import org.spout.api.command.Executor;
 import org.spout.api.entity.Player;
 import org.spout.api.exception.CommandException;
 
@@ -37,17 +37,14 @@ import org.spout.vanilla.component.entity.inventory.PlayerInventory;
 import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.inventory.entity.QuickbarInventory;
 
-public class QuickbarCommandExecutor implements CommandExecutor {
+public class QuickbarCommandExecutor implements Executor {
 	@Override
-	public void processCommand(CommandSource source, Command command, CommandContext args) throws CommandException {
-		if (!(source instanceof Player)) {
-			throw new CommandException("Only players may open inventory windows.");
-		}
+	public void execute(CommandSource source, Command command, CommandArguments args) throws CommandException {
 		if (!args.getString(0).equalsIgnoreCase("+")) {
 			return;
 		}
 
-		String name = command.getPreferredName();
+		String name = command.getName();
 		if (name.startsWith("quickbar_")) {
 			Player player = (Player) source;
 			PlayerInventory inventory = player.get(PlayerInventory.class);

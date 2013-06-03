@@ -31,8 +31,8 @@ import org.spout.vanilla.protocol.rcon.RemoteConnectionSession;
 import org.spout.vanilla.protocol.rcon.msg.AuthMessage;
 import org.spout.vanilla.protocol.rcon.msg.CommandMessage;
 
-public class AuthMessageHandler extends RconMessageHandler<AuthMessage> {
-	@Override
+public class AuthMessageHandler /*extends RconMessageHandler<AuthMessage>*/ {
+	/*@Override
 	public void handleServer(RemoteConnectionSession session, AuthMessage message) {
 		if (!message.getPayload().equals(((RemoteConnectionServer) session.getCore()).getPassword())) {
 			session.setRequestId(-1); // Auth failed
@@ -40,5 +40,5 @@ public class AuthMessageHandler extends RconMessageHandler<AuthMessage> {
 			session.setState(RemoteConnectionSession.State.COMMANDS);
 		}
 		session.send(new CommandMessage(""));
-	}
+	}*/
 }

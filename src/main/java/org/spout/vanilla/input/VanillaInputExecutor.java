@@ -71,7 +71,7 @@ public class VanillaInputExecutor implements InputExecutor {
 		}
 
 		player.get(EntityHead.class).setOrientation(QuaternionMath.rotation(inputState.pitch(), inputState.yaw(), ts.getRotation().getRoll()));
-		ts.translateAndSetRotation(offset, QuaternionMath.rotation(ts.getRotation().getPitch(), inputState.yaw(), ts.getRotation().getRoll()));
+		ts.translateAndSetRotation(offset, QuaternionMath.rotation(inputState.pitch(), inputState.yaw(), ts.getRotation().getRoll()));
 		sc.setTransform(ts);
 	}
 }

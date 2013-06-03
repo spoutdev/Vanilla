@@ -44,17 +44,17 @@ public class NormalSky extends Sky {
 	public NormalSky() {
 		super();
 		setHasWeather(true);
+	}
+
+	@Override
+	public void onAttached() {
+		super.onAttached();
 		if (getOwner().getEngine() instanceof Client) {
 			final SkydomeComponent skydome = getOwner().add(SkydomeComponent.class);
 			final Model model = Spout.getFileSystem().getResource("model://Vanilla/materials/sky/skydome.spm");
 			skydome.setModel(model);
 			model.getRenderMaterial().addRenderEffect(VanillaEffects.SKY);
 		}
-	}
-
-	@Override
-	public void onAttached() {
-		super.onAttached();
 		getOwner().setSkyLight(MAX_SKY_LIGHT);
 	}
 

@@ -11,3 +11,6 @@ platform: ALL
 
 data:
     protocol: ${protocolVersion}
+
+protocols:
+    - ${protocolClass}

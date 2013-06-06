@@ -115,6 +115,22 @@ public class VanillaPlugin extends CommonPlugin {
 
 	@Override
 	public void onEnable() {
+		instance = this;
+		//Config
+		config = new VanillaConfiguration(getDataFolder());
+		config.load();
+		//Logger
+		((PluginLogger) getLogger()).setTag(ChatStyle.RESET + "[" + ChatStyle.GOLD + "Vanilla" + ChatStyle.RESET + "] ");
+		//Spout.getFileSystem().registerLoader(new MapPaletteLoader());
+		getEngine().getFileSystem().registerLoader(new RecipeLoader());
+
+		VanillaMaterials.initialize();
+		VanillaLighting.initialize();
+		VanillaEnchantments.initialize();
+		//MapPalette.DEFAULT = (MapPalette) Spout.getFileSystem().getResource("mappalette://Vanilla/map/mapColorPalette.dat");
+		RecipeYaml.DEFAULT = getEngine().getFileSystem().getResource("recipe://Vanilla/recipes.yml");
+		VanillaRecipes.initialize();
+
 		//Commands
 		AnnotatedCommandExecutorFactory.create(new AdministrationCommands(this));
 
@@ -176,28 +192,6 @@ public class VanillaPlugin extends CommonPlugin {
 		}
 
 		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol"));
-	}
-
-	@Override
-	public void onLoad() {
-		instance = this;
-		//Config
-		config = new VanillaConfiguration(getDataFolder());
-		config.load();
-		//Logger
-		((PluginLogger) getLogger()).setTag(ChatStyle.RESET + "[" + ChatStyle.GOLD + "Vanilla" + ChatStyle.RESET + "] ");
-		//Spout.getFileSystem().registerLoader(new MapPaletteLoader());
-		getEngine().getFileSystem().registerLoader(new RecipeLoader());
-		Protocol.registerProtocol(new VanillaProtocol());
-
-		VanillaMaterials.initialize();
-		VanillaLighting.initialize();
-		VanillaEnchantments.initialize();
-		//MapPalette.DEFAULT = (MapPalette) Spout.getFileSystem().getResource("mappalette://Vanilla/map/mapColorPalette.dat");
-		RecipeYaml.DEFAULT = getEngine().getFileSystem().getResource("recipe://Vanilla/recipes.yml");
-		VanillaRecipes.initialize();
-
-		getLogger().info("loaded");
 	}
 
 	@SuppressWarnings("unused")

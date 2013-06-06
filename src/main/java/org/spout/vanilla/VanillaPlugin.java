@@ -132,8 +132,8 @@ public class VanillaPlugin extends CommonPlugin {
 				final Client client = (Client) getEngine();
 				//Setup client input
 				final InputManager input = client.getInputManager();
-				input.bind(new Binding("quickbar_left", Mouse.MOUSE_SCROLLUP));
-				input.bind(new Binding("quickbar_right", Mouse.MOUSE_SCROLLDOWN));
+				input.bind(new Binding("quickbar_left", Mouse.SCROLL_UP));
+				input.bind(new Binding("quickbar_right", Mouse.SCROLL_DOWN));
 				for (int i = 1; i < 10; i++) {
 					input.bind(new Binding("quickbar_" + i, Keyboard.valueOf("KEY_" + i)));
 				}

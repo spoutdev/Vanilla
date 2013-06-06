@@ -74,7 +74,7 @@ public class InputCommands  {
 	}
 
 	@Command(aliases = "break_block", desc = "Breaks a block.", min = 1, max = 1)
-	@Binding(mouse = Mouse.MOUSE_BUTTON0)
+	@Binding(mouse = Mouse.BUTTON_LEFT)
 	@Filter(PlayerFilter.class)
 	public void breakBlock(CommandSource source, CommandArguments args) throws CommandException {
 		if (!args.getString(0).equalsIgnoreCase("+")) {
@@ -96,7 +96,7 @@ public class InputCommands  {
 	}
 
 	@Command(aliases = "select_block", desc = "Selects a block to place", min = 1, max = 1)
-	@Binding(mouse = Mouse.MOUSE_BUTTON2)
+	@Binding(mouse = Mouse.BUTTON_MIDDLE)
 	@Filter(PlayerFilter.class)
 	public void selectBlock(CommandSource source, CommandArguments args) throws CommandException {
 		if (!args.getString(0).equalsIgnoreCase("+")) {
@@ -113,7 +113,7 @@ public class InputCommands  {
 	}
 
 	@Command(aliases = "place_block", desc = "Places a block.", min = 1, max = 1)
-	@Binding(mouse = Mouse.MOUSE_BUTTON1)
+	@Binding(mouse = Mouse.BUTTON_RIGHT)
 	@Filter(PlayerFilter.class)
 	public void placeBlock(CommandSource source, CommandArguments args) throws CommandException {
 		if (!args.getString(0).equalsIgnoreCase("+")) {

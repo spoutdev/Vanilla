@@ -52,26 +52,26 @@ public class VanillaInputExecutor implements InputExecutor {
 		Vector3 offset = Vector3.ZERO;
 		float speed = 50;
 		if (inputState.getForward()) {
-			offset = offset.subtract(ts.forwardVector().multiply(speed).multiply(dt));
+			offset = offset.subtract(ts.forwardVector().multiply(speed * dt));
 		}
 		if (inputState.getBackward()) {
-			offset = offset.add(ts.forwardVector().multiply(speed).multiply(dt));
+			offset = offset.add(ts.forwardVector().multiply(speed * dt));
 		}
 		if (inputState.getLeft()) {
-			offset = offset.subtract(ts.rightVector().multiply(speed).multiply(dt));
+			offset = offset.subtract(ts.rightVector().multiply(speed * dt));
 		}
 		if (inputState.getRight()) {
-			offset = offset.add(ts.rightVector().multiply(speed).multiply(dt));
+			offset = offset.add(ts.rightVector().multiply(speed * dt));
 		}
 		if (inputState.getJump()) {
-			offset = offset.add(ts.upVector().multiply(speed).multiply(dt));
+			offset = offset.add(ts.upVector().multiply(speed * dt));
 		}
 		if (inputState.getCrouch()) {
-			offset = offset.subtract(ts.upVector().multiply(speed).multiply(dt));
+			offset = offset.subtract(ts.upVector().multiply(speed * dt));
 		}
 
 		player.get(EntityHead.class).setOrientation(QuaternionMath.rotation(inputState.pitch(), inputState.yaw(), ts.getRotation().getRoll()));
-		ts.translateAndSetRotation(offset, QuaternionMath.rotation(ts.getRotation().getPitch(), inputState.yaw(), ts.getRotation().getRoll()));
+		ts.translateAndSetRotation(offset, QuaternionMath.rotation(inputState.pitch(), inputState.yaw(), ts.getRotation().getRoll()));
 		sc.setTransform(ts);
 	}
 }

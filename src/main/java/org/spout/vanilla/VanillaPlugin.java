@@ -166,7 +166,7 @@ public class VanillaPlugin extends CommonPlugin {
 				AnnotatedCommandExecutorFactory.create(new InputCommands(this));
 
 				if (getEngine().debugMode()) {
-					setupWorlds();
+					//setupWorlds();
 				}
 				break;
 			case SERVER:
@@ -226,7 +226,7 @@ public class VanillaPlugin extends CommonPlugin {
 				if (generator == null) {
 					throw new IllegalArgumentException("Invalid generator name for world '" + worldNode.getWorldName() + "': " + generatorName);
 				}
-				World world = getEngine().loadWorld(worldNode.getWorldName(), generator);
+				World world = ((Server) getEngine()).loadWorld(worldNode.getWorldName(), generator);
 
 				// Apply general settings
 				final DatatableComponent data = world.getDatatable();
@@ -266,7 +266,7 @@ public class VanillaPlugin extends CommonPlugin {
 				// Grab safe spawn if newly created world and generator is vanilla generator, else get old one.
 				if (newWorld && generator instanceof VanillaGenerator) {
 					spawn = ((VanillaGenerator) generator).getSafeSpawn(world);
-					world.setSpawnPoint(new Transform(spawn, Quaternion.IDENTITY, Vector3.ONE));
+					 world.setSpawnPoint(new Transform(spawn, Quaternion.IDENTITY, Vector3.ONE));
 				} else {
 					spawn = world.getSpawnPoint().getPosition();
 				}

@@ -97,7 +97,7 @@ public class AdministrationCommands {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
 
-			player = getEngine().getPlayer(args.getString(0), false);
+			player = args.getPlayer(0, false);
 			if (player == null) {
 				throw new CommandException(args.getString(0) + " is not online.");
 			}
@@ -122,7 +122,7 @@ public class AdministrationCommands {
 					throw new CommandException("You cannot search for players unless you are in server mode.");
 				}
 
-				player = getEngine().getPlayer(args.getString(0), false);
+				player = args.getPlayer(0, false);
 				if (player == null) {
 					filter = Material.get(args.getString(0));
 					if (filter == null) {
@@ -185,7 +185,7 @@ public class AdministrationCommands {
 			if (getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			player = getEngine().getPlayer(args.getString(index++), true);
+			player = args.getPlayer(index++);
 		}
 
 		if (player == null) {
@@ -250,7 +250,7 @@ public class AdministrationCommands {
 
 		ops.setOp(playerName, false);
 		source.sendMessage(plugin.getPrefix() + playerName + ChatStyle.RED + " had their operator status revoked!");
-		Player player = getEngine().getPlayer(playerName, true);
+		Player player = args.getPlayer(0, true);
 		if (player != null && !source.equals(player)) {
 			player.sendMessage(plugin.getPrefix() + ChatStyle.RED + "You had your operator status revoked!");
 		}
@@ -268,7 +268,7 @@ public class AdministrationCommands {
 
 		ops.setOp(playerName, true);
 		source.sendMessage(plugin.getPrefix() + ChatStyle.RED + playerName + " is now an operator!");
-		Player player = getEngine().getPlayer(playerName, true);
+		Player player = args.getPlayer(0, true);
 		if (player != null && !source.equals(player)) {
 			player.sendMessage(plugin.getPrefix() + ChatStyle.YELLOW + "You are now an operator!");
 		}
@@ -295,7 +295,7 @@ public class AdministrationCommands {
 
 		World world;
 		if (args.length() == 3) {
-			world = plugin.getEngine().getWorld(args.getString(2));
+			world = plugin.getEngine().getWorld(args.getString(2), false);
 			if (world == null) {
 				throw new CommandException("'" + args.getString(2) + "' is not a valid world.");
 			}
@@ -330,7 +330,7 @@ public class AdministrationCommands {
 			if (getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			player = getEngine().getPlayer(args.getString(1), true);
+			player = args.getPlayer(1, true);
 			if (player == null) {
 				throw new CommandException(args.getString(1) + " is not online.");
 			}
@@ -394,7 +394,7 @@ public class AdministrationCommands {
 			if (getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			player = getEngine().getPlayer(args.getString(index++), true);
+			player = args.getPlayer(index++, true);
 		}
 		if (player == null) {
 			throw new CommandException("That player is not online.");
@@ -420,7 +420,7 @@ public class AdministrationCommands {
 		if (source instanceof Player && args.length() == 1) {
 			world = ((Player) source).getWorld();
 		} else if (args.length() == 2) {
-			world = plugin.getEngine().getWorld(args.getString(1));
+			world = plugin.getEngine().getWorld(args.getString(1), false);
 
 			if (world == null) {
 				throw new CommandException("Invalid world '" + args.getString(1) + "'.");
@@ -479,7 +479,7 @@ public class AdministrationCommands {
 			if (getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			player = getEngine().getPlayer(args.getString(0), true);
+			player = args.getPlayer(0, true);
 		}
 		if (player == null) {
 			throw new CommandException(args.getString(0) + " is not online.");

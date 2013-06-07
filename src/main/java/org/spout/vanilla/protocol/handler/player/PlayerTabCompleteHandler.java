@@ -26,6 +26,7 @@
  */
 package org.spout.vanilla.protocol.handler.player;
 
+import org.spout.api.Server;
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
@@ -44,7 +45,7 @@ public final class PlayerTabCompleteHandler extends MessageHandler<PlayerTabComp
 		text = text.trim();
 		String[] text2 = text.split(" ");
 
-		Player p = VanillaPlugin.getInstance().getEngine().getPlayer(text2[text2.length - 1], false);
+		Player p = ((Server) VanillaPlugin.getInstance().getEngine()).getPlayer(text2[text2.length - 1], false);
 		if (p != null) {
 			session.send(false, new PlayerTabCompleteMessage(p.getName()));
 		}

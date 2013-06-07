@@ -221,7 +221,7 @@ public class TestCommands {
 	@Command(aliases = "getblock", usage = "<world> <x> <y> <z>", desc = "Finds block at the given coords", min = 4, max = 4)
 	@Permissible("vanilla.command.debug")
 	public void getBlock(CommandSource source, CommandArguments args) throws CommandException {
-		World w = Spout.getEngine().getWorld(args.getString(0));
+		World w = Spout.getEngine().getWorld(args.getString(0), false);
 		if (w == null) {
 			throw new CommandException("Unable to find world " + args.getString(0));
 		}
@@ -537,7 +537,7 @@ public class TestCommands {
 				throw new CommandException("Need to provide a world when executing from the console");
 			}
 			String name = args.getString(0);
-			world = getEngine().getWorld(name);
+			world = getEngine().getWorld(name, false);
 			isConsole = true;
 		}
 		if (world == null && isConsole) {
@@ -586,7 +586,7 @@ public class TestCommands {
 			if (getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			player = getEngine().getPlayer(args.getString(1), true);
+			player = args.getPlayer(1, true);
 			if (player == null) {
 				source.sendMessage("Must be a player or send player name in arguments");
 				return;

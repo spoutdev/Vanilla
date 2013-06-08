@@ -44,6 +44,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
+import org.spout.vanilla.component.entity.player.PlayerInteract;
 import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -80,7 +81,7 @@ public class InputCommands  {
 		if (!args.getString(0).equalsIgnoreCase("+")) {
 			return;
 		}
-		InteractComponent hit = ((Player) source).get(InteractComponent.class);
+		PlayerInteract hit = ((Player) source).get(PlayerInteract.class);
 		if (hit != null) {
 			final Block hitting = hit.getTargetBlock();
 			if (hitting != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
@@ -102,7 +103,7 @@ public class InputCommands  {
 		if (!args.getString(0).equalsIgnoreCase("+")) {
 			return;
 		}
-		InteractComponent hit = ((Player) source).get(InteractComponent.class);
+		PlayerInteract hit = ((Player) source).get(PlayerInteract.class);
 		if (hit != null) {
 			Block hitting = hit.getTargetBlock(true);
 			if (hitting != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
@@ -119,7 +120,7 @@ public class InputCommands  {
 		if (!args.getString(0).equalsIgnoreCase("+")) {
 			return;
 		}
-		InteractComponent hit = ((Player) source).get(InteractComponent.class);
+		PlayerInteract hit = ((Player) source).get(PlayerInteract.class);
 		if (hit != null) {
 			final Block hitting = hit.getTargetBlock();
 			if (hitting != null && selection != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {

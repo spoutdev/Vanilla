@@ -89,10 +89,6 @@ public class EngineFaker {
 		}
 
 		@Override
-		public void onLoad() {
-		}
-
-		@Override
 		public WorldGenerator getWorldGenerator(String world, String generator) {
 			return null;
 		}

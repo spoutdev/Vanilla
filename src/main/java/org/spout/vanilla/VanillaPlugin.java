@@ -115,6 +115,22 @@ public class VanillaPlugin extends CommonPlugin {
 
 	@Override
 	public void onEnable() {
+		instance = this;
+		//Config
+		config = new VanillaConfiguration(getDataFolder());
+		config.load();
+		//Logger
+		((PluginLogger) getLogger()).setTag(ChatStyle.RESET + "[" + ChatStyle.GOLD + "Vanilla" + ChatStyle.RESET + "] ");
+		//Spout.getFileSystem().registerLoader(new MapPaletteLoader());
+		getEngine().getFileSystem().registerLoader(new RecipeLoader());
+
+		VanillaMaterials.initialize();
+		VanillaLighting.initialize();
+		VanillaEnchantments.initialize();
+		//MapPalette.DEFAULT = (MapPalette) Spout.getFileSystem().getResource("mappalette://Vanilla/map/mapColorPalette.dat");
+		RecipeYaml.DEFAULT = getEngine().getFileSystem().getResource("recipe://Vanilla/recipes.yml");
+		VanillaRecipes.initialize();
+
 		//Commands
 		AnnotatedCommandExecutorFactory.create(new AdministrationCommands(this));
 
@@ -150,7 +166,7 @@ public class VanillaPlugin extends CommonPlugin {
 				AnnotatedCommandExecutorFactory.create(new InputCommands(this));
 
 				if (getEngine().debugMode()) {
-					setupWorlds();
+					//setupWorlds();
 				}
 				break;
 			case SERVER:
@@ -176,28 +192,6 @@ public class VanillaPlugin extends CommonPlugin {
 		}
 
 		getLogger().info("v" + getDescription().getVersion() + " enabled. Protocol: " + getDescription().getData("protocol"));
-	}
-
-	@Override
-	public void onLoad() {
-		instance = this;
-		//Config
-		config = new VanillaConfiguration(getDataFolder());
-		config.load();
-		//Logger
-		((PluginLogger) getLogger()).setTag(ChatStyle.RESET + "[" + ChatStyle.GOLD + "Vanilla" + ChatStyle.RESET + "] ");
-		//Spout.getFileSystem().registerLoader(new MapPaletteLoader());
-		getEngine().getFileSystem().registerLoader(new RecipeLoader());
-		Protocol.registerProtocol(new VanillaProtocol());
-
-		VanillaMaterials.initialize();
-		VanillaLighting.initialize();
-		VanillaEnchantments.initialize();
-		//MapPalette.DEFAULT = (MapPalette) Spout.getFileSystem().getResource("mappalette://Vanilla/map/mapColorPalette.dat");
-		RecipeYaml.DEFAULT = getEngine().getFileSystem().getResource("recipe://Vanilla/recipes.yml");
-		VanillaRecipes.initialize();
-
-		getLogger().info("loaded");
 	}
 
 	@SuppressWarnings("unused")
@@ -232,7 +226,7 @@ public class VanillaPlugin extends CommonPlugin {
 				if (generator == null) {
 					throw new IllegalArgumentException("Invalid generator name for world '" + worldNode.getWorldName() + "': " + generatorName);
 				}
-				World world = getEngine().loadWorld(worldNode.getWorldName(), generator);
+				World world = ((Server) getEngine()).loadWorld(worldNode.getWorldName(), generator);
 
 				// Apply general settings
 				final DatatableComponent data = world.getDatatable();
@@ -272,7 +266,7 @@ public class VanillaPlugin extends CommonPlugin {
 				// Grab safe spawn if newly created world and generator is vanilla generator, else get old one.
 				if (newWorld && generator instanceof VanillaGenerator) {
 					spawn = ((VanillaGenerator) generator).getSafeSpawn(world);
-					world.setSpawnPoint(new Transform(spawn, Quaternion.IDENTITY, Vector3.ONE));
+					 world.setSpawnPoint(new Transform(spawn, Quaternion.IDENTITY, Vector3.ONE));
 				} else {
 					spawn = world.getSpawnPoint().getPosition();
 				}

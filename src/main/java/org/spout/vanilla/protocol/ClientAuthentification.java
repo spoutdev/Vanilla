@@ -101,6 +101,8 @@ public class ClientAuthentification implements Runnable {
 			VanillaPlugin.getInstance().setClientAuthInfos(infos[2], infos[3]);
 		} else {
 			Spout.getLogger().info("Authentification failed: " + response);
+			// TODO is this right?
+			Spout.getEngine().stop("Bad Login");
 		}
 	}
 }

@@ -33,8 +33,7 @@ import org.spout.api.math.QuaternionMath;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.BlockIterator;
 
-public class PlayerInteract extends InteractComponent { 
-	
+public class PlayerInteract extends InteractComponent {
 	@Override
 	public BlockIterator getAlignedBlocks() {
 		Player player = (Player) getOwner();

@@ -138,11 +138,12 @@ public class VanillaListener implements Listener {
 		((Client) player.getEngine()).getInputManager().addInputExecutor(new VanillaInputExecutor(player));
 		player.add(PlayerHead.class);
 
-		String username = VanillaConfiguration.USERNAME.getString();
-		String password = VanillaConfiguration.PASSWORD.getString();
-
-		Thread loginAuth = new Thread(new ClientAuthentification(username, password));
-		loginAuth.start();
+		if (VanillaConfiguration.ONLINE_MODE.getBoolean()) {
+			String username = VanillaConfiguration.USERNAME.getString();
+			String password = VanillaConfiguration.PASSWORD.getString();
+			Thread loginAuth = new Thread(new ClientAuthentification(username, password));
+			loginAuth.start();
+		}
 	}
 
 	@EventHandler

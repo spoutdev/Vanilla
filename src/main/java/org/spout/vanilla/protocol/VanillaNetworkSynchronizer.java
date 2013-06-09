@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import gnu.trove.set.TIntSet;
+import org.spout.api.Platform;
 
 import org.spout.api.Server;
 import org.spout.api.Spout;
@@ -468,10 +469,11 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		if (inv != null) {
 			inv.updateAll();
 		}
-
-		Point pos = world.getSpawnPoint().getPosition();
-		PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());
-		player.getSession().send(false, SPMsg);
+		if (Spout.getPlatform() == Platform.SERVER) {
+			Point pos = world.getSpawnPoint().getPosition();
+			PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());
+			player.getSession().send(false, SPMsg);
+		}
 		session.send(false, new PlayerHeldItemChangeMessage(player.add(PlayerInventory.class).getQuickbar().getSelectedSlot().getIndex()));
 		Sky sky;
 

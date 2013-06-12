@@ -29,7 +29,8 @@ package org.spout.vanilla.protocol.handler.world.block;
 import org.spout.api.entity.Player;
 import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
+import org.spout.api.protocol.ServerSession;
 import org.spout.api.protocol.reposition.RepositionManager;
 
 import org.spout.vanilla.component.block.material.Sign;
@@ -37,7 +38,7 @@ import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 
 public class SignHandler extends MessageHandler<SignMessage> {
 	@Override
-	public void handleServer(Session session, SignMessage message) {
+	public void handleServer(ServerSession session, SignMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
@@ -63,7 +64,7 @@ public class SignHandler extends MessageHandler<SignMessage> {
 	}
 
 	@Override
-	public void handleClient(Session session, SignMessage message) {
+	public void handleClient(ClientSession session, SignMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

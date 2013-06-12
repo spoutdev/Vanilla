@@ -28,7 +28,7 @@ package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.Server;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ServerSession;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
@@ -42,7 +42,7 @@ public class ServerListPingHandler extends MessageHandler<ServerListPingMessage>
 	private static String MOTD = null;
 
 	@Override
-	public void handleServer(Session session, ServerListPingMessage message) {
+	public void handleServer(ServerSession session, ServerListPingMessage message) {
 		Server server = (Server) VanillaPlugin.getInstance().getEngine();
 		//Cache values for speed
 		if (PROTOCOL == null) {

@@ -46,7 +46,7 @@ import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ServerSession;
 import org.spout.api.protocol.reposition.RepositionManager;
 
 import org.spout.vanilla.ChatStyle;
@@ -81,7 +81,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 	}
 
 	@Override
-	public void handleServer(Session session, PlayerBlockPlacementMessage message) {
+	public void handleServer(ServerSession session, PlayerBlockPlacementMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

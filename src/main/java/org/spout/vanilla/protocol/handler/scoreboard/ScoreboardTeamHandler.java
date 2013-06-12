@@ -27,13 +27,13 @@
 package org.spout.vanilla.protocol.handler.scoreboard;
 
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardTeamMessage;
 
 public class ScoreboardTeamHandler extends MessageHandler<ScoreboardTeamMessage> {
 	@Override
-	public void handleClient(final Session session, final ScoreboardTeamMessage message) {
+	public void handleClient(final ClientSession session, final ScoreboardTeamMessage message) {
 		// Handle team creation/updates
 	}
 }

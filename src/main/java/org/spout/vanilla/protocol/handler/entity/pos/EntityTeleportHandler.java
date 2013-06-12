@@ -32,13 +32,13 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.math.QuaternionMath;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.protocol.msg.entity.pos.EntityTeleportMessage;
 
 public class EntityTeleportHandler extends MessageHandler<EntityTeleportMessage> {
 	@Override
-	public void handleClient(Session session, EntityTeleportMessage message) {
+	public void handleClient(ClientSession session, EntityTeleportMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

@@ -27,8 +27,9 @@
 package org.spout.vanilla.protocol.handler.player;
 
 import org.spout.api.entity.Player;
+import org.spout.api.protocol.ClientSession;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ServerSession;
 
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.event.player.PlayerHeldItemChangeEvent;
@@ -39,7 +40,7 @@ import org.spout.vanilla.util.PlayerUtil;
 
 public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeldItemChangeMessage> {
 	@Override
-	public void handleServer(Session session, PlayerHeldItemChangeMessage message) {
+	public void handleServer(ServerSession session, PlayerHeldItemChangeMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
@@ -71,7 +72,7 @@ public final class PlayerHeldItemChangeHandler extends MessageHandler<PlayerHeld
 	}
 
 	@Override
-	public void handleClient(Session session, PlayerHeldItemChangeMessage message) {
+	public void handleClient(ClientSession session, PlayerHeldItemChangeMessage message) {
 		QuickbarInventory quickbar = PlayerUtil.getQuickbar(session.getPlayer());
 		if (quickbar == null) {
 			return;

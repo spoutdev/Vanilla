@@ -41,9 +41,11 @@ import org.spout.api.command.CommandArguments;
 import org.spout.api.exception.UnknownPacketException;
 import org.spout.api.map.DefaultedKey;
 import org.spout.api.map.DefaultedKeyImpl;
+import org.spout.api.protocol.ClientSession;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.Protocol;
+import org.spout.api.protocol.ServerSession;
 import org.spout.api.protocol.Session;
 import org.spout.api.util.Named;
 
@@ -159,8 +161,8 @@ public class VanillaProtocol extends Protocol {
 	}
 
 	@Override
-	public void initializeSession(Session session) {
-		session.setNetworkSynchronizer(new VanillaNetworkSynchronizer(session));
+	public void initializeServerSession(ServerSession session) {
+		session.setNetworkSynchronizer(new VanillaServerNetworkSynchronizer(session));
 
 		List<MessageCodec<?>> dynamicCodecList = new ArrayList<MessageCodec<?>>();
 		for (Pair<Integer, String> item : getDynamicallyRegisteredPackets()) {
@@ -172,6 +174,22 @@ public class VanillaProtocol extends Protocol {
 			}
 		}
 
+		session.send(false, new RegisterPluginChannelMessage(dynamicCodecList));
+	}
+
+	@Override
+	public void initializeClientSession(ClientSession session) {
+		session.setNetworkSynchronizer(new VanillaClientNetworkSynchronizer((Session) session));
+
+		List<MessageCodec<?>> dynamicCodecList = new ArrayList<MessageCodec<?>>();
+		for (Pair<Integer, String> item : getDynamicallyRegisteredPackets()) {
+			MessageCodec<?> codec = getCodecLookupService().find(item.getLeft());
+			if (codec != null) {
+				dynamicCodecList.add(codec);
+			} else {
+				throw new IllegalStateException("Dynamic packet class" + item.getRight() + " claims to be registered but is not in our CodecLookupService!");
+			}
+		}
 		session.send(false, new RegisterPluginChannelMessage(dynamicCodecList));
 	}
 }

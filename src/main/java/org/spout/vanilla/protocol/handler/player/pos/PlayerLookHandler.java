@@ -29,15 +29,16 @@ package org.spout.vanilla.protocol.handler.player.pos;
 import org.spout.api.entity.Player;
 import org.spout.api.math.QuaternionMath;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
+import org.spout.api.protocol.ServerSession;
 
 import org.spout.vanilla.component.entity.living.Human;
-import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
+import org.spout.vanilla.protocol.VanillaServerNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerLookMessage;
 
 public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 	@Override
-	public void handleServer(Session session, PlayerLookMessage message) {
+	public void handleServer(ServerSession session, PlayerLookMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
@@ -45,7 +46,7 @@ public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 		//First look packet is to login/receive terrain, is not a valid rotation
 		if (session.getDataMap().get("first_login", 0) == 0) {
 			session.getDataMap().put("first_login", 1);
-			((VanillaNetworkSynchronizer) session.getPlayer().getNetworkSynchronizer()).sendPosition();
+			((VanillaServerNetworkSynchronizer) session.getPlayer().getNetworkSynchronizer()).sendPosition();
 			return;
 		}
 
@@ -60,7 +61,7 @@ public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 	}
 
 	@Override
-	public void handleClient(Session session, PlayerLookMessage message) {
+	public void handleClient(ClientSession session, PlayerLookMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

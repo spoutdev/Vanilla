@@ -28,13 +28,14 @@ package org.spout.vanilla.protocol.handler.player;
 
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
+import org.spout.api.protocol.ServerSession;
 
 import org.spout.vanilla.protocol.msg.player.PlayerChatMessage;
 
 public final class PlayerChatHandler extends MessageHandler<PlayerChatMessage> {
 	@Override
-	public void handleClient(Session session, PlayerChatMessage message) {
+	public void handleClient(ClientSession session, PlayerChatMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
@@ -42,7 +43,7 @@ public final class PlayerChatHandler extends MessageHandler<PlayerChatMessage> {
 	}
 
 	@Override
-	public void handleServer(Session session, PlayerChatMessage message) {
+	public void handleServer(ServerSession session, PlayerChatMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

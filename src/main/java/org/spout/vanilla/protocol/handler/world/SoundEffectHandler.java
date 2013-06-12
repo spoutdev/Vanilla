@@ -27,13 +27,13 @@
 package org.spout.vanilla.protocol.handler.world;
 
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.protocol.msg.world.SoundEffectMessage;
 
 public class SoundEffectHandler extends MessageHandler<SoundEffectMessage> {
 	@Override
-	public void handleClient(Session session, SoundEffectMessage message) {
+	public void handleClient(ClientSession session, SoundEffectMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

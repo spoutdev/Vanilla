@@ -28,7 +28,7 @@ package org.spout.vanilla.protocol.handler.player;
 
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.component.entity.misc.Hunger;
@@ -37,7 +37,7 @@ import org.spout.vanilla.protocol.msg.player.PlayerHealthMessage;
 
 public class PlayerHealthHandler extends MessageHandler<PlayerHealthMessage> {
 	@Override
-	public void handleClient(Session session, PlayerHealthMessage message) {
+	public void handleClient(ClientSession session, PlayerHealthMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

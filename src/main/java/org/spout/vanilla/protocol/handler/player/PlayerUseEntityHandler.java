@@ -35,7 +35,7 @@ import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
 import org.spout.api.material.Material;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ServerSession;
 
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.living.Living;
@@ -52,7 +52,7 @@ import org.spout.vanilla.util.PlayerUtil;
 
 public class PlayerUseEntityHandler extends MessageHandler<PlayerUseEntityMessage> {
 	@Override
-	public void handleServer(Session session, PlayerUseEntityMessage message) {
+	public void handleServer(ServerSession session, PlayerUseEntityMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

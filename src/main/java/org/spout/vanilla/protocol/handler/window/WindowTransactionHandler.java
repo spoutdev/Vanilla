@@ -27,13 +27,13 @@
 package org.spout.vanilla.protocol.handler.window;
 
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.protocol.msg.window.WindowTransactionMessage;
 
 public class WindowTransactionHandler extends MessageHandler<WindowTransactionMessage> {
 	@Override
-	public void handleClient(Session session, WindowTransactionMessage message) {
+	public void handleClient(ClientSession session, WindowTransactionMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

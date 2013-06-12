@@ -46,6 +46,8 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.ClientSession;
+import org.spout.api.protocol.ServerSession;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 
@@ -69,7 +71,7 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 	};
 
 	@Override
-	public void handleClient(Session session, PlayerPositionMessage message) {
+	public void handleClient(ClientSession session, PlayerPositionMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
@@ -82,7 +84,7 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 	}
 
 	@Override
-	public void handleServer(Session session, PlayerPositionMessage message) {
+	public void handleServer(ServerSession session, PlayerPositionMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
@@ -98,9 +100,9 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 		final Point newPosition = rmInverse.convert(rawPosition);
 		final Point position = holder.getScene().getPosition();
 
-		if (holder.getNetworkSynchronizer().isTeleportPending()) {
+		if (session.getNetworkSynchronizer().isTeleportPending()) {
 			if (position.getX() == newPosition.getX() && position.getZ() == newPosition.getZ() && Math.abs(position.getY() - newPosition.getY()) < 16) {
-				holder.getNetworkSynchronizer().clearTeleportPending();
+				session.getNetworkSynchronizer().clearTeleportPending();
 			}
 		} else {
 			if (!position.equals(newPosition)) {

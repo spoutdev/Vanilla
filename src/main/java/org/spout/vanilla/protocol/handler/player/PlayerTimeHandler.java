@@ -29,14 +29,14 @@ package org.spout.vanilla.protocol.handler.player;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.component.world.sky.Sky;
 import org.spout.vanilla.protocol.msg.player.PlayerTimeMessage;
 
 public final class PlayerTimeHandler extends MessageHandler<PlayerTimeMessage> {
 	@Override
-	public void handleClient(Session session, PlayerTimeMessage message) {
+	public void handleClient(ClientSession session, PlayerTimeMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

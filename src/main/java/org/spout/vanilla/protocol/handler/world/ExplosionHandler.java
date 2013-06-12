@@ -27,13 +27,13 @@
 package org.spout.vanilla.protocol.handler.world;
 
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.protocol.msg.world.ExplosionMessage;
 
 public class ExplosionHandler extends MessageHandler<ExplosionMessage> {
 	@Override
-	public void handleClient(Session session, ExplosionMessage message) {
+	public void handleClient(ClientSession session, ExplosionMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

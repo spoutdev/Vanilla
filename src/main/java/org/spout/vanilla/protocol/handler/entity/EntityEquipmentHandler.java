@@ -31,14 +31,14 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 
 public final class EntityEquipmentHandler extends MessageHandler<EntityEquipmentMessage> {
 	@Override
-	public void handleClient(Session session, EntityEquipmentMessage message) {
+	public void handleClient(ClientSession session, EntityEquipmentMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

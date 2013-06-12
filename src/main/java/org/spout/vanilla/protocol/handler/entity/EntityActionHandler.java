@@ -31,7 +31,7 @@ import java.util.List;
 
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ServerSession;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.entity.living.Human;
@@ -43,7 +43,7 @@ import org.spout.vanilla.protocol.msg.entity.EntityActionMessage;
 
 public final class EntityActionHandler extends MessageHandler<EntityActionMessage> {
 	@Override
-	public void handleServer(Session session, EntityActionMessage message) {
+	public void handleServer(ServerSession session, EntityActionMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

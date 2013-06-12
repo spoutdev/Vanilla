@@ -27,14 +27,14 @@
 package org.spout.vanilla.protocol.netcache.protocol;
 
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ServerSession;
 
 import org.spout.vanilla.component.entity.player.Ping;
 import org.spout.vanilla.protocol.VanillaProtocol;
 
 public class ChunkCacheHandler extends MessageHandler<ChunkCacheMessage> {
 	@Override
-	public void handleServer(Session session, ChunkCacheMessage message) {
+	public void handleServer(ServerSession session, ChunkCacheMessage message) {
 		Ping ping = session.getPlayer().get(Ping.class);
 		if (ping != null) {
 			ping.refresh();

@@ -36,7 +36,9 @@ import org.bouncycastle.crypto.CipherParameters;
 import org.bouncycastle.crypto.params.KeyParameter;
 import org.bouncycastle.crypto.params.ParametersWithIV;
 
+import org.spout.api.protocol.ClientSession;
 import org.spout.api.protocol.MessageHandler;
+import org.spout.api.protocol.ServerSession;
 import org.spout.api.protocol.Session;
 import org.spout.api.scheduler.TaskPriority;
 import org.spout.api.security.EncryptionChannelProcessor;
@@ -51,7 +53,7 @@ import org.spout.vanilla.protocol.msg.player.PlayerStatusMessage;
 
 public class EncryptionKeyResponseHandler extends MessageHandler<EncryptionKeyResponseMessage> {
 	@Override
-	public void handleClient(final Session session, final EncryptionKeyResponseMessage message) {
+	public void handleClient(final ClientSession session, final EncryptionKeyResponseMessage message) {
 		System.out.println("Response: " + message.toString());
 
 		String streamCipher = VanillaConfiguration.ENCRYPT_STREAM_ALGORITHM.getString();
@@ -71,7 +73,7 @@ public class EncryptionKeyResponseHandler extends MessageHandler<EncryptionKeyRe
 	}
 
 	@Override
-	public void handleServer(final Session session, final EncryptionKeyResponseMessage message) {
+	public void handleServer(final ServerSession session, final EncryptionKeyResponseMessage message) {
 		Session.State state = session.getState();
 		if (state == Session.State.EXCHANGE_HANDSHAKE) {
 			session.disconnect(false, "Handshake not sent");

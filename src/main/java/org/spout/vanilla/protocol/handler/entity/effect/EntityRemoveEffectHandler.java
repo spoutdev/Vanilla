@@ -27,13 +27,13 @@
 package org.spout.vanilla.protocol.handler.entity.effect;
 
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.protocol.msg.entity.effect.EntityRemoveEffectMessage;
 
 public class EntityRemoveEffectHandler extends MessageHandler<EntityRemoveEffectMessage> {
 	@Override
-	public void handleClient(Session session, EntityRemoveEffectMessage message) {
+	public void handleClient(ClientSession session, EntityRemoveEffectMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

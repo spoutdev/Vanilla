@@ -38,7 +38,7 @@ import org.bouncycastle.crypto.params.ParametersWithIV;
 import org.bouncycastle.crypto.util.PublicKeyFactory;
 
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 import org.spout.api.security.EncryptionChannelProcessor;
 import org.spout.api.security.SecurityHandler;
 
@@ -49,7 +49,7 @@ import org.spout.vanilla.protocol.msg.auth.EncryptionKeyResponseMessage;
 
 public class EncryptionKeyRequestHandler extends MessageHandler<EncryptionKeyRequestMessage> {
 	@Override
-	public void handleClient(final Session session, final EncryptionKeyRequestMessage message) {
+	public void handleClient(final ClientSession session, final EncryptionKeyRequestMessage message) {
 		final byte[] sharedSecret = SecurityHandler.getInstance().getSymetricKey();
 
 		Runnable runnable = new Runnable() {

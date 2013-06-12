@@ -27,13 +27,13 @@
 package org.spout.vanilla.protocol.handler.scoreboard;
 
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardObjectiveMessage;
 
 public class ScoreboardObjectiveHandler extends MessageHandler<ScoreboardObjectiveMessage> {
 	@Override
-	public void handleClient(final Session session, final ScoreboardObjectiveMessage message) {
+	public void handleClient(final ClientSession session, final ScoreboardObjectiveMessage message) {
 		// Handle scoreboard creation
 	}
 }

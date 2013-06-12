@@ -29,7 +29,7 @@ package org.spout.vanilla.protocol.handler.window;
 import org.spout.api.entity.Player;
 import org.spout.api.inventory.Slot;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ServerSession;
 
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.entity.living.Human;
@@ -39,7 +39,7 @@ import org.spout.vanilla.protocol.msg.window.WindowCreativeActionMessage;
 
 public class WindowCreativeActionHandler extends MessageHandler<WindowCreativeActionMessage> {
 	@Override
-	public void handleServer(Session session, WindowCreativeActionMessage message) {
+	public void handleServer(ServerSession session, WindowCreativeActionMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

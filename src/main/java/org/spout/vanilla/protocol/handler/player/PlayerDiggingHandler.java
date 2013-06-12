@@ -42,7 +42,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ServerSession;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.flag.Flag;
 
@@ -69,7 +69,7 @@ import org.spout.vanilla.util.PlayerUtil;
 
 public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMessage> {
 	@Override
-	public void handleServer(Session session, PlayerDiggingMessage message) {
+	public void handleServer(ServerSession session, PlayerDiggingMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
@@ -239,7 +239,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		}
 	}
 
-	private boolean breakBlock(BlockMaterial blockMaterial, Block block, Human human, Session session) {
+	private boolean breakBlock(BlockMaterial blockMaterial, Block block, Human human, ServerSession session) {
 		HashSet<Flag> flags = new HashSet<Flag>();
 		if (human.isSurvival()) {
 			flags.add(PlayerFlags.SURVIVAL);

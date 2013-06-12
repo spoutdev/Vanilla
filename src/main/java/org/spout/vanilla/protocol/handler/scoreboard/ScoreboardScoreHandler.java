@@ -27,13 +27,13 @@
 package org.spout.vanilla.protocol.handler.scoreboard;
 
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardScoreMessage;
 
 public class ScoreboardScoreHandler extends MessageHandler<ScoreboardScoreMessage> {
 	@Override
-	public void handleClient(final Session session, final ScoreboardScoreMessage message) {
+	public void handleClient(final ClientSession session, final ScoreboardScoreMessage message) {
 		// Handle scoreboard updates
 	}
 }

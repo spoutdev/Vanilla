@@ -27,13 +27,13 @@
 package org.spout.vanilla.protocol.handler.entity.pos;
 
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionYawMessage;
 
 public class EntityRelativePositionYawHandler extends MessageHandler<EntityRelativePositionYawMessage> {
 	@Override
-	public void handleClient(Session session, EntityRelativePositionYawMessage message) {
+	public void handleClient(ClientSession session, EntityRelativePositionYawMessage message) {
 		if (!session.hasPlayer()) {
 		}
 		

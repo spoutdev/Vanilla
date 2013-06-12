@@ -27,18 +27,19 @@
 package org.spout.vanilla.protocol.handler;
 
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
+import org.spout.api.protocol.ServerSession;
 
 import org.spout.vanilla.protocol.msg.ServerPluginMessage;
 
 public class ServerPluginHandler extends MessageHandler<ServerPluginMessage> {
 	@Override
-	public void handleServer(Session session, ServerPluginMessage message) {
+	public void handleServer(ServerSession session, ServerPluginMessage message) {
 		//TODO
 	}
 
 	@Override
-	public void handleClient(Session session, ServerPluginMessage message) {
+	public void handleClient(ClientSession session, ServerPluginMessage message) {
 		//TODO
 	}
 }

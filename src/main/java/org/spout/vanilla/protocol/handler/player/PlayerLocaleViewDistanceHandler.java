@@ -28,7 +28,7 @@ package org.spout.vanilla.protocol.handler.player;
 
 import org.spout.api.entity.Player;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ServerSession;
 
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.data.ViewDistance;
@@ -36,7 +36,7 @@ import org.spout.vanilla.protocol.msg.player.PlayerLocaleViewDistanceMessage;
 
 public class PlayerLocaleViewDistanceHandler extends MessageHandler<PlayerLocaleViewDistanceMessage> {
 	@Override
-	public void handleServer(Session session, PlayerLocaleViewDistanceMessage message) {
+	public void handleServer(ServerSession session, PlayerLocaleViewDistanceMessage message) {
 		Player player = session.getPlayer();
 		Human human = player.get(Human.class);
 		if (human != null) {

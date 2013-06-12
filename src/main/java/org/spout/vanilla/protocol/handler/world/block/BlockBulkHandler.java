@@ -31,7 +31,7 @@ import org.spout.api.geo.World;
 import org.spout.api.geo.cuboid.Chunk;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 import org.spout.api.protocol.reposition.RepositionManager;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -39,7 +39,7 @@ import org.spout.vanilla.protocol.msg.world.block.BlockBulkMessage;
 
 public class BlockBulkHandler extends MessageHandler<BlockBulkMessage> {
 	@Override
-	public void handleClient(Session session, BlockBulkMessage message) {
+	public void handleClient(ClientSession session, BlockBulkMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

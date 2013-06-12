@@ -54,9 +54,9 @@ import org.spout.api.input.Keyboard;
 import org.spout.api.input.Mouse;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
-import org.spout.api.plugin.CommonPlugin;
+import org.spout.api.plugin.Plugin;
 import org.spout.api.plugin.PluginLogger;
-import org.spout.api.plugin.ServiceManager;
+import org.spout.api.plugin.services.ServiceManager;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.Protocol;
 import org.spout.api.util.FlatIterator;
@@ -96,7 +96,7 @@ import org.spout.vanilla.world.generator.skylands.SkylandsGenerator;
 import org.spout.vanilla.world.generator.theend.TheEndGenerator;
 import org.spout.vanilla.world.lighting.VanillaLighting;
 
-public class VanillaPlugin extends CommonPlugin {
+public class VanillaPlugin extends Plugin {
 	public static final int MINECRAFT_PROTOCOL_ID = 61;
 	public static final int VANILLA_PROTOCOL_ID = NetworkComponent.getProtocolId("org.spout.vanilla.plugin.protocol");
 	protected static VanillaPlugin instance;

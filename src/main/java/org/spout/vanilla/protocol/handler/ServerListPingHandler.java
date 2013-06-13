@@ -51,6 +51,6 @@ public class ServerListPingHandler extends MessageHandler<ServerListPingMessage>
 			MOTD = VanillaConfiguration.MOTD.getString();
 		}
 		ServerListPingEvent event = VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new ServerListPingEvent(session.getAddress().getAddress(), MOTD, server.getOnlinePlayers().length, server.getMaxPlayers()));
-		session.send(false, true, new PlayerKickMessage('\u00A7' + "1" + '\u0000' + PROTOCOL + '\u0000' + MC_VERSION + '\u0000' + event.getMessage()));
+		session.send(new PlayerKickMessage('\u00A7' + "1" + '\u0000' + PROTOCOL + '\u0000' + MC_VERSION + '\u0000' + event.getMessage()));
 	}
 }

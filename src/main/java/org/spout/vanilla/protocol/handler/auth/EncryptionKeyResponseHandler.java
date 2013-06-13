@@ -136,7 +136,7 @@ public class EncryptionKeyResponseHandler extends MessageHandler<EncryptionKeyRe
 
 					message.getProcessorHandler().setProcessor(fromClientProcessor);
 
-					session.send(false, true, response);
+					session.send(true, response);
 				}
 			};
 

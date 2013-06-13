@@ -50,6 +50,6 @@ public final class WindowClickHandler extends MessageHandler<WindowClickMessage>
 		if (args != null) {
 			result = window.onClick(args);
 		}
-		session.send(false, new WindowTransactionMessage(window, message.getTransaction(), result));
+		session.send(new WindowTransactionMessage(window, message.getTransaction(), result));
 	}
 }

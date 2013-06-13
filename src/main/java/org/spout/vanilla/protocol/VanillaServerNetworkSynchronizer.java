@@ -379,7 +379,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 			}
 
 			ChunkDataMessage CCMsg = new ChunkDataMessage(x, z, true, new boolean[16], packetChunkData, biomeData, player.getSession(), getRepositionManager());
-			player.getSession().send(false, CCMsg);
+			player.getSession().send(CCMsg);
 
 			chunks = chunkInit.getChunks(c);
 		}
@@ -391,7 +391,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 			byte[][] packetChunkData = new byte[16][];
 			packetChunkData[cY] = fullChunkData;
 			ChunkDataMessage CCMsg = new ChunkDataMessage(x, z, false, new boolean[16], packetChunkData, null, player.getSession(), getRepositionManager());
-			player.getSession().send(false, CCMsg);
+			player.getSession().send(CCMsg);
 
 			if (chunks == null) {
 				chunks = new ArrayList<Chunk>(1);
@@ -413,7 +413,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 	@Override
 	protected void sendPosition(Point p, Quaternion rot) {
 		PlayerPositionLookMessage PPLMsg = new PlayerPositionLookMessage(p.getX(), p.getY() + STANCE, p.getZ(), p.getY(), rot.getYaw(), rot.getPitch(), true, VanillaBlockDataChannelMessage.CHANNEL_ID, getRepositionManager());
-		session.send(false, PPLMsg);
+		session.send(PPLMsg);
 	}
 
 	@Override
@@ -448,15 +448,15 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 
 			Server server = (Server) session.getEngine();
 			PlayerLoginRequestMessage idMsg = new PlayerLoginRequestMessage(entityId, worldType.toString(), gamemode.getId(), (byte) dimension.getId(), difficulty.getId(), (byte) server.getMaxPlayers());
-			player.getSession().send(false, true, idMsg);
 			player.getSession().setState(State.GAME);
+			player.getSession().send(idMsg);
 		} else {
 			if (human != null) {
 				gamemode = human.getGameMode();
 			}
-			player.getSession().send(false, new PlayerRespawnMessage(0, difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
-			player.getSession().send(false, new PlayerRespawnMessage(1, difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
-			player.getSession().send(false, new PlayerRespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
+			player.getSession().send(new PlayerRespawnMessage(0, difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
+			player.getSession().send(new PlayerRespawnMessage(1, difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
+			player.getSession().send(new PlayerRespawnMessage(dimension.getId(), difficulty.getId(), gamemode.getId(), 256, worldType.toString()));
 		}
 
 		if (human != null) {
@@ -473,9 +473,9 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		if (Spout.getPlatform() == Platform.SERVER) {
 			Point pos = world.getSpawnPoint().getPosition();
 			PlayerSpawnPositionMessage SPMsg = new PlayerSpawnPositionMessage((int) pos.getX(), (int) pos.getY(), (int) pos.getZ(), getRepositionManager());
-			player.getSession().send(false, SPMsg);
+			player.getSession().send(SPMsg);
 		}
-		session.send(false, new PlayerHeldItemChangeMessage(player.add(PlayerInventory.class).getQuickbar().getSelectedSlot().getIndex()));
+		session.send(new PlayerHeldItemChangeMessage(player.add(PlayerInventory.class).getQuickbar().getSelectedSlot().getIndex()));
 		Sky sky;
 
 		switch (dimension) {
@@ -545,7 +545,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 			if (column != null && column.isEmpty()) {
 				column = initializedChunks.remove(x, z);
 				activeChunks.remove(x, z);
-				session.send(false, new ChunkDataMessage(x, z, true, null, null, null, true, player.getSession(), getRepositionManager()));
+				session.send(new ChunkDataMessage(x, z, true, null, null, null, true, player.getSession(), getRepositionManager()));
 			}
 		}
 	}
@@ -557,7 +557,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		y += chunk.getBlockY();
 		z += chunk.getBlockZ();
 		BlockChangeMessage BCM = new BlockChangeMessage(x, y, z, id, getMinecraftData(material, data), getRepositionManager());
-		session.send(false, BCM);
+		session.send(BCM);
 	}
 
 	@Override
@@ -578,7 +578,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 				messages.addAll(ep.getUpdateMessages(e, liveTransform, getRepositionManager(), force));
 			}
 			for (Message message : messages) {
-				this.session.send(false, message);
+				this.session.send(message);
 			}
 		}
 	}

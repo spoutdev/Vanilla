@@ -80,7 +80,7 @@ public class EncryptionKeyRequestHandler extends MessageHandler<EncryptionKeyReq
 					EncryptionKeyResponseMessage response = new EncryptionKeyResponseMessage(false, encodedSecret, encodedToken);
 					response.setProcessor(toServerProcessor);
 
-					session.send(true, true, response);
+					session.send(true, response);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

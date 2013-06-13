@@ -33,7 +33,7 @@ import org.spout.vanilla.protocol.VanillaProtocol;
 
 public class UnregisterPluginChannelMessageHandler extends MessageHandler<UnregisterPluginChannelMessage> {
 	@Override
-	public void handle(boolean upstream, Session session, UnregisterPluginChannelMessage message) {
+	public void handle(Session session, UnregisterPluginChannelMessage message) {
 		if (message.getTypes().contains("REGISTER") || message.getTypes().contains("UNREGISTER")) {
 			throw new IllegalArgumentException("Plugin channels REGISTER and UNREGISTER cannot be unregistered!");
 		}

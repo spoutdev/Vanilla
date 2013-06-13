@@ -44,6 +44,7 @@ import org.spout.api.material.block.BlockFace;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
+import org.spout.vanilla.component.entity.player.PlayerInteract;
 import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.material.VanillaMaterials;
 
@@ -74,13 +75,13 @@ public class InputCommands  {
 	}
 
 	@Command(aliases = "break_block", desc = "Breaks a block.", min = 1, max = 1)
-	@Binding(mouse = Mouse.MOUSE_BUTTON0)
+	@Binding(mouse = Mouse.BUTTON_LEFT)
 	@Filter(PlayerFilter.class)
 	public void breakBlock(CommandSource source, CommandArguments args) throws CommandException {
 		if (!args.getString(0).equalsIgnoreCase("+")) {
 			return;
 		}
-		InteractComponent hit = ((Player) source).get(InteractComponent.class);
+		PlayerInteract hit = ((Player) source).get(PlayerInteract.class);
 		if (hit != null) {
 			final Block hitting = hit.getTargetBlock();
 			if (hitting != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
@@ -96,13 +97,13 @@ public class InputCommands  {
 	}
 
 	@Command(aliases = "select_block", desc = "Selects a block to place", min = 1, max = 1)
-	@Binding(mouse = Mouse.MOUSE_BUTTON2)
+	@Binding(mouse = Mouse.BUTTON_MIDDLE)
 	@Filter(PlayerFilter.class)
 	public void selectBlock(CommandSource source, CommandArguments args) throws CommandException {
 		if (!args.getString(0).equalsIgnoreCase("+")) {
 			return;
 		}
-		InteractComponent hit = ((Player) source).get(InteractComponent.class);
+		PlayerInteract hit = ((Player) source).get(PlayerInteract.class);
 		if (hit != null) {
 			Block hitting = hit.getTargetBlock(true);
 			if (hitting != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {
@@ -113,13 +114,13 @@ public class InputCommands  {
 	}
 
 	@Command(aliases = "place_block", desc = "Places a block.", min = 1, max = 1)
-	@Binding(mouse = Mouse.MOUSE_BUTTON1)
+	@Binding(mouse = Mouse.BUTTON_RIGHT)
 	@Filter(PlayerFilter.class)
 	public void placeBlock(CommandSource source, CommandArguments args) throws CommandException {
 		if (!args.getString(0).equalsIgnoreCase("+")) {
 			return;
 		}
-		InteractComponent hit = ((Player) source).get(InteractComponent.class);
+		PlayerInteract hit = ((Player) source).get(PlayerInteract.class);
 		if (hit != null) {
 			final Block hitting = hit.getTargetBlock();
 			if (hitting != null && selection != null && !hitting.getMaterial().equals(VanillaMaterials.AIR)) {

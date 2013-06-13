@@ -87,25 +87,6 @@ public class EngineFaker {
 		@Override
 		public void onReload() {
 		}
-
-		@Override
-		public WorldGenerator getWorldGenerator(String world, String generator) {
-			return null;
-		}
-
-		@Override
-		public InputStream getResource(String path) {
-			return null;
-		}
-
-		@Override
-		public void extractResource(String path, File destination) throws IOException {
-		}
-
-		@Override
-		public PluginDictionary getDictionary() {
-			return null;
-		}
 	}
 
 	private static class TestEventManager implements EventManager {

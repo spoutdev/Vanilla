@@ -24,16 +24,23 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.handler.player.conn;
+package org.spout.vanilla.component.entity.player;
 
-import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.component.entity.InteractComponent;
+import org.spout.api.entity.Player;
+import org.spout.api.geo.discrete.Transform;
+import org.spout.api.math.QuaternionMath;
+import org.spout.api.math.Vector3;
+import org.spout.api.util.BlockIterator;
 
-import org.spout.vanilla.protocol.msg.player.conn.PlayerKickMessage;
-
-public final class PlayerKickHandler extends MessageHandler<PlayerKickMessage> {
+public class PlayerInteract extends InteractComponent {
 	@Override
-	public void handle(Session session, PlayerKickMessage message) {
-		session.disconnect(false, message.getReason());
+	public BlockIterator getAlignedBlocks() {
+		Player player = (Player) getOwner();
+		Transform ptr = player.get(PlayerHead.class).getHeadTransform();
+		Transform tr = new Transform();
+		tr.setRotation(QuaternionMath.rotationTo(Vector3.FORWARD, ptr.getRotation().getDirection().multiply(-1)));
+		tr.setPosition(ptr.getPosition());
+		return new BlockIterator(player.getWorld(), tr, getRange());
 	}
 }

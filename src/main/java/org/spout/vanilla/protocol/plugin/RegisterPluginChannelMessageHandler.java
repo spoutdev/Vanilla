@@ -33,7 +33,7 @@ import org.spout.vanilla.protocol.VanillaProtocol;
 
 public class RegisterPluginChannelMessageHandler extends MessageHandler<RegisterPluginChannelMessage> {
 	@Override
-	public void handle(boolean upstream, Session session, RegisterPluginChannelMessage message) {
+	public void handle(Session session, RegisterPluginChannelMessage message) {
 		session.getDataMap().get(VanillaProtocol.REGISTERED_CUSTOM_PACKETS).addAll(message.getTypes());
 	}
 }

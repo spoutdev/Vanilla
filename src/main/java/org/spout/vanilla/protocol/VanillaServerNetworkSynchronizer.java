@@ -330,11 +330,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 	}
 
 	@Override
-	protected Collection<Chunk> sendChunk(Chunk c, boolean force) {
-
-		if (!force) {
-			return sendChunk(c);
-		}
+	protected Collection<Chunk> doSendChunk(Chunk c) {
 
 		int x = c.getX();
 		int y = c.getY();// + SEALEVEL_CHUNK;

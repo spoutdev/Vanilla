@@ -1,6 +1,6 @@
 Name: "Skeleton"
 Components:
-    - org.spout.engine.entity.component.EntityRendererComponent
+    - org.spout.engine.component.entity.SpoutModelComponent
     - org.spout.vanilla.component.entity.living.hostile.Skeleton
 Data:
     Health: 20

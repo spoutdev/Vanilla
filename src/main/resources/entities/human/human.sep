@@ -1,8 +1,8 @@
 Name: "Human"
 Components:
-    - org.spout.engine.entity.component.SpoutAnimationComponent
-    - org.spout.engine.entity.component.EntityRendererComponent
-    - org.spout.engine.entity.component.ClientTextModelComponent
+    - org.spout.engine.component.entity.SpoutAnimationComponent
+    - org.spout.engine.component.entity.SpoutModelComponent
+    - org.spout.engine.component.entity.ClientTextModelComponent
     - org.spout.vanilla.component.entity.neutral.Human
 Data:
     Health: 20

@@ -174,7 +174,7 @@ public class VanillaProtocol extends Protocol {
 			}
 		}
 
-		session.send(false, new RegisterPluginChannelMessage(dynamicCodecList));
+		session.send(new RegisterPluginChannelMessage(dynamicCodecList));
 	}
 
 	@Override
@@ -190,6 +190,6 @@ public class VanillaProtocol extends Protocol {
 				throw new IllegalStateException("Dynamic packet class" + item.getRight() + " claims to be registered but is not in our CodecLookupService!");
 			}
 		}
-		session.send(false, new RegisterPluginChannelMessage(dynamicCodecList));
+		session.send(new RegisterPluginChannelMessage(dynamicCodecList));
 	}
 }

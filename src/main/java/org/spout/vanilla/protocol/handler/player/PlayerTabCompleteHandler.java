@@ -47,7 +47,7 @@ public final class PlayerTabCompleteHandler extends MessageHandler<PlayerTabComp
 
 		Player p = ((Server) VanillaPlugin.getInstance().getEngine()).getPlayer(text2[text2.length - 1], false);
 		if (p != null) {
-			session.send(false, new PlayerTabCompleteMessage(p.getName()));
+			session.send(new PlayerTabCompleteMessage(p.getName()));
 		}
 	}
 }

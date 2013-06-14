@@ -29,7 +29,6 @@ package org.spout.vanilla;
 import org.spout.api.Client;
 import org.spout.api.Platform;
 import org.spout.api.component.entity.CameraComponent;
-import org.spout.api.component.entity.InteractComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
 import org.spout.api.event.Listener;
@@ -56,6 +55,7 @@ import org.spout.vanilla.component.entity.misc.Sleep;
 import org.spout.vanilla.component.entity.player.HUD;
 import org.spout.vanilla.component.entity.player.Ping;
 import org.spout.vanilla.component.entity.player.PlayerHead;
+import org.spout.vanilla.component.entity.player.PlayerInteract;
 import org.spout.vanilla.component.entity.player.PlayerList;
 import org.spout.vanilla.component.entity.player.hud.VanillaArmorWidget;
 import org.spout.vanilla.component.entity.player.hud.VanillaCrosshair;
@@ -133,7 +133,7 @@ public class VanillaListener implements Listener {
 		player.add(WindowHolder.class);
 		player.add(Health.class);
 		player.add(Hunger.class);
-		player.add(InteractComponent.class).setRange(5f);
+		player.add(PlayerInteract.class).setRange(5f);
 
 		((Client) player.getEngine()).getInputManager().addInputExecutor(new VanillaInputExecutor(player));
 		player.add(PlayerHead.class);

@@ -126,10 +126,13 @@ public class VanillaData {
 	public static final DefaultedKey<Number> FLYING_SPEED = new DefaultedKeyImpl<Number>("flying_speed", (byte) 12);
 	public static final DefaultedKey<Number> WALKING_SPEED = new DefaultedKeyImpl<Number>("walking_speed", (byte) 25);
 	public static final DefaultedKey<ViewDistance> VIEW_DISTANCE = new DefaultedKeyImpl<ViewDistance>("view_distance", ViewDistance.NORMAL);
+	public static final DefaultedKey<Byte> ARROWS_IN_BODY = new DefaultedKeyImpl<Byte>("arrows_in_body", (byte) 0);
 	//Creature-specific
 	public static final DefaultedKey<Integer> LINE_OF_SIGHT = new DefaultedKeyImpl<Integer>("line_of_sight", 1);
 	//Item-specific
 	public static final DefaultedKey<Number> UNCOLLECTABLE_TICKS = new DefaultedKeyImpl<Number>("uncollectable_ticks", (long) 0);
+	// Arrow-specific
+	public static final DefaultedKey<Boolean> CRITICAL = new DefaultedKeyImpl<Boolean>("critical", false);
 	//Head-specific
 	public static final DefaultedKey<Float> HEAD_HEIGHT = new DefaultedKeyImpl<Float>("head_height_v2", 1.62f);
 	public static final DefaultedKey<Quaternion> HEAD_ROTATION = new DefaultedKeyImpl<Quaternion>("head_rotation", Quaternion.IDENTITY);
@@ -170,6 +173,8 @@ public class VanillaData {
 	// Enderman
 	public static final DefaultedKey<Byte> HELD_MATERIAL = new DefaultedKeyImpl<Byte>("held_material", (byte) 0);
 	public static final DefaultedKey<Byte> HELD_MATERIAL_DATA = new DefaultedKeyImpl<Byte>("held_material_data", (byte) 0);
+	// Bat
+	public static final DefaultedKey<Boolean> HANGING = new DefaultedKeyImpl<Boolean>("hanging", false);
 	//Sky specific
 	public static final DefaultedKey<Long> MAX_TIME = new DefaultedKeyImpl<Long>("max_time", 24000L);
 	public static final DefaultedKey<Long> TIME_RATE = new DefaultedKeyImpl<Long>("time_rate", 1L);

@@ -26,12 +26,14 @@
  */
 package org.spout.vanilla.component.entity.living.neutral;
 
+import org.spout.api.util.Parameter;
+
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.living.Neutral;
 import org.spout.vanilla.component.entity.misc.Health;
-import org.spout.vanilla.protocol.entity.creature.CreatureProtocol;
-import org.spout.vanilla.protocol.entity.creature.CreatureType;
+import org.spout.vanilla.data.VanillaData;
+import org.spout.vanilla.protocol.entity.creature.BatEntityProtocol;
 
 /**
  * A component that identifies the entity as a Bat.
@@ -40,9 +42,18 @@ public class Bat extends Living implements Neutral {
 	@Override
 	public void onAttached() {
 		super.onAttached();
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.BAT));
+		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new BatEntityProtocol());
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(6);
 		}
+	}
+
+	public boolean isHanging() {
+		return getData().get(VanillaData.HANGING);
+	}
+
+	public void setHanging(boolean hanging) {
+		getData().put(VanillaData.HANGING, hanging);
+		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (hanging ? 1 : 0)));
 	}
 }

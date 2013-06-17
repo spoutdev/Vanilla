@@ -192,7 +192,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 						return;
 					}
 
-					if (player.getDatatable().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
+					if (player.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
 						long diggingTicks = diggingComponent.getDiggingTicks();
 						int damageDone;
 						int totalDamage;

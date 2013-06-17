@@ -38,7 +38,7 @@ public class VanillaEntityComponent extends EntityComponent {
 	@Override
 	public void onAttached() {
 		//Tracks the number of times this component has been attached (i.e how many times it's been saved, then loaded. 1 = fresh entity)
-		getOwner().getDatatable().put(VanillaData.ATTACHED_COUNT, getAttachedCount() + 1);
+		getOwner().getData().put(VanillaData.ATTACHED_COUNT, getAttachedCount() + 1);
 		getOwner().setSavable(true);
 	}
 
@@ -56,6 +56,6 @@ public class VanillaEntityComponent extends EntityComponent {
 	 * @return attached count
 	 */
 	public final int getAttachedCount() {
-		return getOwner().getDatatable().get(VanillaData.ATTACHED_COUNT);
+		return getOwner().getData().get(VanillaData.ATTACHED_COUNT);
 	}
 }

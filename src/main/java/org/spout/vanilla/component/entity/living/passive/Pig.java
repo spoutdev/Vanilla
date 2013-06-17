@@ -64,11 +64,11 @@ public class Pig extends Animal implements Passive {
 	}
 
 	public boolean isSaddled() {
-		return getOwner().getDatatable().get(VanillaData.SADDLED);
+		return getOwner().getData().get(VanillaData.SADDLED);
 	}
 
 	public void setSaddled(boolean saddled) {
-		getOwner().getDatatable().put(VanillaData.SADDLED, saddled);
+		getOwner().getData().put(VanillaData.SADDLED, saddled);
 		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, saddled ? (byte) 1 : 0));
 	}
 }

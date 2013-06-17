@@ -235,7 +235,7 @@ public class VanillaPlugin extends Plugin {
 				World world = getEngine().loadWorld(worldNode.getWorldName(), generator);
 
 				// Apply general settings
-				final DatatableComponent data = world.getDatatable();
+				final DatatableComponent data = world.getData();
 				data.put(VanillaData.GAMEMODE, GameMode.get(worldNode.GAMEMODE.getString()));
 				data.put(VanillaData.DIFFICULTY, Difficulty.get(worldNode.DIFFICULTY.getString()));
 				data.put(VanillaData.DIMENSION, Dimension.get(worldNode.SKY_TYPE.getString()));

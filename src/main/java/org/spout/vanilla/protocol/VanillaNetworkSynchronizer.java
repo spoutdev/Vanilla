@@ -424,7 +424,7 @@ public class VanillaNetworkSynchronizer extends NetworkSynchronizer implements P
 		int highY = minY + stepY;
 		lastY = Integer.MAX_VALUE;
 
-		final DatatableComponent data = world.getDatatable();
+		final DatatableComponent data = world.getData();
 		final Human human = player.add(Human.class);
 		GameMode gamemode = null;
 		Difficulty difficulty = data.get(VanillaData.DIFFICULTY);

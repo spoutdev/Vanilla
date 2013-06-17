@@ -137,7 +137,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 		if (below.equals(VanillaMaterials.NETHERRACK)) {
 			return false;
 		}
-		return !(below.equals(VanillaMaterials.BEDROCK) && block.getWorld().getDatatable().get(VanillaData.DIMENSION) == Dimension.THE_END);
+		return !(below.equals(VanillaMaterials.BEDROCK) && block.getWorld().getData().get(VanillaData.DIMENSION) == Dimension.THE_END);
 	}
 
 	@Override

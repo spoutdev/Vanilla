@@ -51,7 +51,7 @@ public class EntityMocker {
 		Mockito.when(entity.get(Matchers.argThat(new ClassOrSubclassMatcher<EntityComponent>(EntityComponent.class)))).thenAnswer(componentHolder);
 		Mockito.when(entity.getExact(Matchers.argThat(new ClassOrSubclassMatcher<EntityComponent>(EntityComponent.class)))).thenAnswer(componentHolder);
 		Mockito.when(entity.detach(Matchers.argThat(new ClassOrSubclassMatcher<EntityComponent>(EntityComponent.class)))).thenAnswer(componentHolder);
-		Mockito.when(entity.getDatatable()).thenAnswer(componentHolder);
+		Mockito.when(entity.getData()).thenAnswer(componentHolder);
 		Mockito.when(entity.getEngine()).thenAnswer(new EntityEngineAnswer(engine));
 
 		//Set up entity tick
@@ -116,7 +116,7 @@ public class EntityMocker {
 		@Override
 		public Component answer(InvocationOnMock invocation) throws Throwable {
 			if (invocation.getMethod().getName().equals("getDatatable")) {
-				return getDatatable();
+				return getData();
 			}
 			Class<? extends EntityComponent> clazz = (Class<? extends EntityComponent>) invocation.getArguments()[0];
 			if (invocation.getMethod().getName().equals("add")) {

@@ -175,7 +175,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 
 	@Override
 	public void onDynamicUpdate(Block b, long updateTime, int updateData) {
-		int data = b.getData() & 0xFFFF;
+		int data = b.getBlockData() & 0xFFFF;
 		if ((data & aliveMask) == 0) {
 			return;
 		}
@@ -254,7 +254,7 @@ public class Log extends Solid implements DynamicMaterial, Fuel, TimedCraftable,
 				Block b = blocks.get(index);
 				if (b != null && b.getChunk().isLoaded()) {
 					BlockMaterial mat = b.getMaterial();
-					short data = b.getData();
+					short data = b.getBlockData();
 					if (mat.getId() == VanillaMaterials.LEAVES.getId() && !Leaves.isPlayerPlaced(data)) {
 						if (!isLeafAttached(b, LOG_SCAN_RANGE)) {
 							mat.destroy(b, new MaterialCause<Log>(this.cause, VanillaMaterials.LOG, this.center));

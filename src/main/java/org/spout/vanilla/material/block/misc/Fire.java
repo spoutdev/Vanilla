@@ -69,7 +69,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
 		Cause<?> cause = toCause(block);
-		if (!this.canCreate(block, block.getData(), cause)) {
+		if (!this.canCreate(block, block.getBlockData(), cause)) {
 			this.onDestroy(block, cause);
 		}
 	}
@@ -150,7 +150,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 		final Random rand = GenericMath.getRandom();
 
 		// Make fire strength increase over time
-		short blockData = b.getData();
+		short blockData = b.getBlockData();
 		if (blockData < 15) {
 			blockData += rand.nextInt(4) / 3;
 			b.setData(blockData);

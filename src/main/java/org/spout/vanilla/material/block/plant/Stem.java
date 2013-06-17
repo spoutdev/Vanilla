@@ -80,7 +80,7 @@ public abstract class Stem extends GroundAttachable implements Growing, Crop, Dy
 
 	@Override
 	public boolean isFullyGrown(Block block) {
-		return block.getData() == 0x7;
+		return block.getBlockData() == 0x7;
 	}
 
 	/**

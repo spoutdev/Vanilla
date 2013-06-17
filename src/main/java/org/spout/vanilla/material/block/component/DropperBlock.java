@@ -76,7 +76,7 @@ public class DropperBlock extends VanillaBlockMaterial implements Directional, R
 
 	@Override
 	public BlockFace getFacing(Block block) {
-		return BTEWNS.get(block.getData() & 0x7);
+		return BTEWNS.get(block.getBlockData() & 0x7);
 	}
 
 	@Override

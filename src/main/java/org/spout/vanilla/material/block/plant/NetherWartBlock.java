@@ -84,7 +84,7 @@ public class NetherWartBlock extends GroundAttachable implements Plant, Growing,
 
 	@Override
 	public boolean isFullyGrown(Block block) {
-		return block.getData() == 0x3;
+		return block.getBlockData() == 0x3;
 	}
 
 	@Override

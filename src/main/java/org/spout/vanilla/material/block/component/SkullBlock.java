@@ -114,7 +114,7 @@ public class SkullBlock extends VanillaBlockMaterial implements Attachable {
 
 	@Override
 	public BlockFace getAttachedFace(Block block) {
-		return getAttachedFace(block.getData());
+		return getAttachedFace(block.getBlockData());
 	}
 
 	@Override

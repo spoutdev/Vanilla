@@ -117,7 +117,7 @@ public class Lava extends Liquid implements InitializableMaterial {
 	@Override
 	public int getLevel(Block block) {
 		if (this.isMaterial(block.getMaterial())) {
-			return (6 - (block.getData() & 0x6)) >> 1;
+			return (6 - (block.getBlockData() & 0x6)) >> 1;
 		} else {
 			return -1;
 		}

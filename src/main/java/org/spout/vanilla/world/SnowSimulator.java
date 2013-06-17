@@ -152,7 +152,7 @@ public class SnowSimulator extends Component {
 										return;
 										//Try to grow snow
 									} else if (vbm instanceof Snow) {
-										short data = block.getData();
+										short data = block.getBlockData();
 										if (data == 0x7) {
 											Block above = block.translate(BlockFace.TOP);
 											if (above.getMaterial() == BlockMaterial.AIR) {

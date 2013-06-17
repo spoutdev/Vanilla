@@ -93,7 +93,7 @@ public class RedstoneComparator extends GroundAttachable implements Directional,
 	}
 
 	public void setPowered(Block block, boolean powered) {
-		block.setMaterial(powered ? VanillaMaterials.REDSTONE_COMPARATOR_ON : VanillaMaterials.REDSTONE_COMPARATOR_OFF, block.getData());
+		block.setMaterial(powered ? VanillaMaterials.REDSTONE_COMPARATOR_ON : VanillaMaterials.REDSTONE_COMPARATOR_OFF, block.getBlockData());
 	}
 
 	@Override

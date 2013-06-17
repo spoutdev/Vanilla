@@ -64,7 +64,7 @@ public class NearbyMaterialHolderSensor implements Sensor {
 				continue;
 			}
 			ItemStack selectedItem = quickbar.getSelectedItem();
-			if (selectedItem != null && material.isMaterial(selectedItem.getMaterial())) {
+			if (selectedItem != null && material.equals(selectedItem.getMaterial())) {
 				players.add(player);
 			}
 		}

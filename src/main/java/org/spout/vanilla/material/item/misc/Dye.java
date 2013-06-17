@@ -33,7 +33,6 @@ import org.spout.api.geo.cuboid.Block;
 import org.spout.api.inventory.Slot;
 import org.spout.api.material.Placeable;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.source.DataSource;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.entity.living.passive.Sheep;
@@ -61,7 +60,7 @@ public class Dye extends VanillaItemMaterial implements Placeable {
 	public static final Dye BONE_MEAL = new Dye("Bone Meal", DyeColor.WHITE, INK_SAC);
 	private final DyeColor color;
 
-	public static enum DyeColor implements DataSource {
+	public static enum DyeColor {
 		BLACK(0),
 		RED(1),
 		GREEN(2),
@@ -84,7 +83,6 @@ public class Dye extends VanillaItemMaterial implements Placeable {
 			this.data = (short) data;
 		}
 
-		@Override
 		public short getData() {
 			return this.data;
 		}

@@ -85,7 +85,7 @@ public class FurnaceBlock extends VanillaBlockMaterial implements Directional {
 
 	@Override
 	public BlockFace getFacing(Block block) {
-		return BlockFaces.EWNS.get(block.getData() - 2);
+		return BlockFaces.EWNS.get(block.getBlockData() - 2);
 	}
 
 	@Override

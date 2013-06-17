@@ -68,7 +68,7 @@ public abstract class Stairs extends VanillaBlockMaterial implements Directional
 
 	@Override
 	public BlockFace getFacing(Block block) {
-		return BlockFaces.NSEW.get(block.getData() & 0x3);
+		return BlockFaces.NSEW.get(block.getBlockData() & 0x3);
 	}
 
 	@Override

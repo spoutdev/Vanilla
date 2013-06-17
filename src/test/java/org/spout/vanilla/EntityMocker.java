@@ -115,7 +115,7 @@ public class EntityMocker {
 		@SuppressWarnings("unchecked")
 		@Override
 		public Component answer(InvocationOnMock invocation) throws Throwable {
-			if (invocation.getMethod().getName().equals("getDatatable")) {
+			if (invocation.getMethod().getName().equals("getData")) {
 				return getData();
 			}
 			Class<? extends EntityComponent> clazz = (Class<? extends EntityComponent>) invocation.getArguments()[0];

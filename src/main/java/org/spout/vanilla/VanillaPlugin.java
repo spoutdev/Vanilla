@@ -88,7 +88,6 @@ import org.spout.vanilla.protocol.rcon.RemoteConnectionServer;
 import org.spout.vanilla.scoreboard.ScoreboardListener;
 import org.spout.vanilla.service.VanillaProtectionService;
 import org.spout.vanilla.service.protection.SpawnProtection;
-import org.spout.vanilla.util.thread.SpawnLoader;
 import org.spout.vanilla.world.generator.VanillaGenerator;
 import org.spout.vanilla.world.generator.VanillaGenerators;
 import org.spout.vanilla.world.generator.nether.NetherGenerator;
@@ -250,7 +249,6 @@ public class VanillaPlugin extends Plugin {
 
 		final int radius = VanillaConfiguration.SPAWN_RADIUS.getInt();
 		final int protectionRadius = VanillaConfiguration.SPAWN_PROTECTION_RADIUS.getInt();
-		SpawnLoader loader = new SpawnLoader(1);
 
 		if (worlds.isEmpty()) {
 			return;
@@ -286,7 +284,6 @@ public class VanillaPlugin extends Plugin {
 
 				// Load or generate spawn area
 				int effectiveRadius = newWorld ? (2 * radius) : radius;
-				loader.load(world, cx, cz, effectiveRadius, newWorld);
 
 				// Add observer to spawn to keep loaded if desired
 				if (worldConfig.LOADED_SPAWN.getBoolean()) {

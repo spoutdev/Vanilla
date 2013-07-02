@@ -105,7 +105,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 			Collection<Protection> protections = player.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(point);
 			for (Protection p : protections) {
 				if (p.contains(point) && !human.isOp()) {
-					player.getSession().send(new BlockChangeMessage(x, y, z, minecraftID, block.getData() & 0xF, rm));
+					player.getSession().send(new BlockChangeMessage(x, y, z, minecraftID, block.getBlockData() & 0xF, rm));
 					player.sendMessage(ChatStyle.DARK_RED + "This area is a protected spawn point!");
 					return;
 				}
@@ -267,7 +267,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		Collection<Protection> protections = player.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(point);
 		for (Protection p : protections) {
 			if (p.contains(point) && !player.get(Human.class).isOp()) {
-				player.getSession().send(new BlockChangeMessage(x, y, z, minecraftID, block.getData() & 0xF, rm));
+				player.getSession().send(new BlockChangeMessage(x, y, z, minecraftID, block.getBlockData() & 0xF, rm));
 				player.sendMessage(ChatStyle.DARK_RED + "This area is a protected spawn point!");
 				return false;
 			}

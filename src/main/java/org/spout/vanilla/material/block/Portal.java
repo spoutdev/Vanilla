@@ -55,7 +55,7 @@ public abstract class Portal extends VanillaBlockMaterial {
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		super.onUpdate(oldMaterial, block);
 		Cause<?> cause = toCause(block);
-		if (!this.canCreate(block, block.getData(), cause)) {
+		if (!this.canCreate(block, block.getBlockData(), cause)) {
 			this.destroy(block, cause);
 		}
 	}

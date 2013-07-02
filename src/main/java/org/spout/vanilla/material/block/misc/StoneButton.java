@@ -74,7 +74,7 @@ public class StoneButton extends AttachedRedstoneSource implements PointAttachab
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, type, clickedFace);
-		if (type != Action.LEFT_CLICK || !entity.getDatatable().get(VanillaData.GAMEMODE).equals(GameMode.CREATIVE)) {
+		if (type != Action.LEFT_CLICK || !entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.CREATIVE)) {
 			this.setPressed(block, true);
 		}
 	}

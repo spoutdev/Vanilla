@@ -67,19 +67,19 @@ public class Painting extends Substance {
 	}
 
 	public PaintingType getType() {
-		return getOwner().getDatatable().get(VanillaData.PAINTING_TYPE);
+		return getOwner().getData().get(VanillaData.PAINTING_TYPE);
 	}
 
 	public void setType(PaintingType type) {
-		getOwner().getDatatable().put(VanillaData.PAINTING_TYPE, type);
+		getOwner().getData().put(VanillaData.PAINTING_TYPE, type);
 	}
 
 	public BlockFace getFace() {
-		return getOwner().getDatatable().get(VanillaData.PAINTING_FACE);
+		return getOwner().getData().get(VanillaData.PAINTING_FACE);
 	}
 
 	public void setFace(BlockFace face) {
-		getOwner().getDatatable().put(VanillaData.PAINTING_FACE, face);
+		getOwner().getData().put(VanillaData.PAINTING_FACE, face);
 	}
 
 	public int getNativeFace() {

@@ -93,7 +93,7 @@ public class RedstoneRepeater extends GroundAttachable implements Directional, R
 	}
 
 	public void setPowered(Block block, boolean powered) {
-		block.setMaterial(powered ? VanillaMaterials.REDSTONE_REPEATER_ON : VanillaMaterials.REDSTONE_REPEATER_OFF, block.getData());
+		block.setMaterial(powered ? VanillaMaterials.REDSTONE_REPEATER_ON : VanillaMaterials.REDSTONE_REPEATER_OFF, block.getBlockData());
 	}
 
 	@Override

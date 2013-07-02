@@ -118,7 +118,7 @@ public class TrapDoor extends AbstractAttachable implements Fuel, Openable, Reds
 
 	@Override
 	public void toggleOpen(Block block) {
-		block.setData(block.getData() ^ 0x4);
+		block.setData(block.getBlockData() ^ 0x4);
 	}
 
 	@Override

@@ -125,7 +125,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 	public void onUpdate(BlockMaterial oldMaterial, Block block) {
 		//check all directions if it still supports it
 		Block above = block.translate(BlockFace.TOP);
-		if (block.getData() != 0) {
+		if (block.getBlockData() != 0) {
 			BlockMaterial abovemat = above.getMaterial();
 			for (BlockFace face : BlockFaces.NESW) {
 				if (!this.isAttachedTo(block, face)) {
@@ -140,7 +140,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 				}
 			}
 		}
-		if (block.getData() == 0) {
+		if (block.getBlockData() == 0) {
 			//check if there is a block above it can attach to, else destroy
 			if (!this.canAttachTo(above, BlockFace.BOTTOM)) {
 				this.onDestroy(block, above.getMaterial().toCause(above));
@@ -324,7 +324,7 @@ public class Vines extends VanillaBlockMaterial implements Spreading, Plant, Bur
 			return;
 		}
 
-		int randomData = rand.nextInt(16) & block.getData();
+		int randomData = rand.nextInt(16) & block.getBlockData();
 
 		// Upwards spreading
 		if (spreadDirection == BlockFace.TOP && block.getY() < VanillaServerNetworkSynchronizer.WORLD_HEIGHT) {

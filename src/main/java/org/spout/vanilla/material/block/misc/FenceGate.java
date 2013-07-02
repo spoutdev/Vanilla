@@ -63,7 +63,7 @@ public class FenceGate extends VanillaBlockMaterial implements Openable, Redston
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action action, BlockFace clickedFace) {
 		super.onInteractBy(entity, block, action, clickedFace);
-		if (action == Action.LEFT_CLICK && entity.getDatatable().get(VanillaData.GAMEMODE).equals(GameMode.CREATIVE)) {
+		if (action == Action.LEFT_CLICK && entity.getData().get(VanillaData.GAMEMODE).equals(GameMode.CREATIVE)) {
 			return;
 		}
 		this.toggleOpen(block);
@@ -97,11 +97,11 @@ public class FenceGate extends VanillaBlockMaterial implements Openable, Redston
 	}
 
 	public BlockFace getFacing(Block block) {
-		return BlockFaces.WNES.get(block.getData() & 0x3);
+		return BlockFaces.WNES.get(block.getBlockData() & 0x3);
 	}
 
 	public void setFacing(Block block, BlockFace facing) {
-		short data = (short) (block.getData() & ~0x3);
+		short data = (short) (block.getBlockData() & ~0x3);
 		data += BlockFaces.WNES.indexOf(facing, 0);
 		block.setData(data);
 	}

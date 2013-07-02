@@ -105,7 +105,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 
 	@Override
 	public BlockFace getFacing(Block block) {
-		return BTEWNS.get(block.getData() & 0x7);
+		return BTEWNS.get(block.getBlockData() & 0x7);
 	}
 
 	@Override

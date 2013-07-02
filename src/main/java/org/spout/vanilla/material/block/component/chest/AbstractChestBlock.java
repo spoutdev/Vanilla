@@ -65,7 +65,7 @@ public abstract class AbstractChestBlock extends VanillaBlockMaterial implements
 
 	@Override
 	public BlockFace getFacing(Block block) {
-		return BlockFaces.EWNS.get(block.getData() - 2);
+		return BlockFaces.EWNS.get(block.getBlockData() - 2);
 	}
 
 	@Override

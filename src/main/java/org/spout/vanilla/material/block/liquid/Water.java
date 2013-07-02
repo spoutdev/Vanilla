@@ -78,7 +78,7 @@ public class Water extends Liquid implements DynamicMaterial, InitializableMater
 	@Override
 	public int getLevel(Block block) {
 		if (this.isMaterial(block.getMaterial())) {
-			return 7 - (block.getData() & 0x7);
+			return 7 - (block.getBlockData() & 0x7);
 		} else {
 			return -1;
 		}

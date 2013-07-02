@@ -44,6 +44,7 @@ import org.spout.api.event.Order;
 import org.spout.api.generator.WorldGenerator;
 import org.spout.api.lang.PluginDictionary;
 import org.spout.api.plugin.PluginDescriptionFile;
+import org.spout.api.plugin.PluginLogger;
 import org.spout.api.resource.FileSystem;
 
 import org.spout.vanilla.event.entity.EntityDamageEvent;

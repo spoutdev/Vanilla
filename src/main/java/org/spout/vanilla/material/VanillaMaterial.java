@@ -26,11 +26,10 @@
  */
 package org.spout.vanilla.material;
 
-import org.spout.api.material.source.MaterialSource;
 import org.spout.api.math.Vector2;
 import org.spout.api.render.RenderMaterial;
 
-public interface VanillaMaterial extends MaterialSource {
+public interface VanillaMaterial {
 	/**
 	 * Gets whether or not this material stores additional NBT tag data
 	 */

@@ -51,7 +51,7 @@ public final class PlayerRespawnHandler extends MessageHandler<PlayerRespawnMess
 		//TODO : Take Level tpye ? : message.getWorldType()
 
 		World world = player.getWorld();
-		world.getDatatable().put(VanillaData.DIFFICULTY, Difficulty.get(message.getDifficulty()));
+		world.getData().put(VanillaData.DIFFICULTY, Difficulty.get(message.getDifficulty()));
 
 		Human human = player.add(Human.class);
 		human.setGamemode(GameMode.get(message.getGameMode()));

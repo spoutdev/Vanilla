@@ -120,7 +120,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 		bedBlock = getCorrectHalf(bedBlock, false);
 		bedBlock.setDataBits(0x4, occupied);
 		// set to the same data for the head, but set the head flag
-		getCorrectHalf(bedBlock, true).setData(bedBlock.getData() | 0x8);
+		getCorrectHalf(bedBlock, true).setData(bedBlock.getBlockData() | 0x8);
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class BedBlock extends VanillaBlockMaterial implements InitializableMater
 	 * @return the face
 	 */
 	public BlockFace getFacing(Block bedBlock) {
-		return BlockFaces.WNES.get(bedBlock.getData() & 0x3);
+		return BlockFaces.WNES.get(bedBlock.getBlockData() & 0x3);
 	}
 
 	/**

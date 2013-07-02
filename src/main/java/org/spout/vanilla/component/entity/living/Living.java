@@ -63,11 +63,11 @@ public abstract class Living extends VanillaEntityComponent {
 	}
 
 	public boolean isOnGround() {
-		return getOwner().getDatatable().get(VanillaData.IS_ON_GROUND);
+		return getOwner().getData().get(VanillaData.IS_ON_GROUND);
 	}
 
 	public void setOnGround(boolean onGround) {
-		getOwner().getDatatable().put(VanillaData.IS_ON_GROUND, onGround);
+		getOwner().getData().put(VanillaData.IS_ON_GROUND, onGround);
 	}
 
 	public EntityHead getHead() {
@@ -116,29 +116,29 @@ public abstract class Living extends VanillaEntityComponent {
 	}
 
 	public boolean isRiding() {
-		return getOwner().getDatatable().get(VanillaData.IS_RIDING);
+		return getOwner().getData().get(VanillaData.IS_RIDING);
 	}
 
 	public void setRiding(boolean isRiding) {
-		getOwner().getDatatable().put(VanillaData.IS_RIDING, isRiding);
+		getOwner().getData().put(VanillaData.IS_RIDING, isRiding);
 		sendMetaData();
 	}
 
 	public boolean isEatingBlocking() {
-		return getOwner().getDatatable().get(VanillaData.IS_EATING_BLOCKING);
+		return getOwner().getData().get(VanillaData.IS_EATING_BLOCKING);
 	}
 
 	public void setEatingBlocking(boolean isEatingBlocking) {
-		getOwner().getDatatable().put(VanillaData.IS_EATING_BLOCKING, isEatingBlocking);
+		getOwner().getData().put(VanillaData.IS_EATING_BLOCKING, isEatingBlocking);
 		sendMetaData();
 	}
 
 	public boolean isSneaking() {
-		return getOwner().getDatatable().get(VanillaData.IS_SNEAKING);
+		return getOwner().getData().get(VanillaData.IS_SNEAKING);
 	}
 
 	public void setSneaking(boolean isSneaking) {
-		getOwner().getDatatable().put(VanillaData.IS_SNEAKING, isSneaking);
+		getOwner().getData().put(VanillaData.IS_SNEAKING, isSneaking);
 		sendMetaData();
 	}
 

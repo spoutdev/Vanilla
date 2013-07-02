@@ -44,7 +44,7 @@ public class DeathDrops extends VanillaEntityComponent {
 	 * @return The current component.
 	 */
 	public DeathDrops addXpDrop(short amount) {
-		getOwner().getDatatable().put(VanillaData.DROP_EXPERIENCE, amount);
+		getOwner().getData().put(VanillaData.DROP_EXPERIENCE, amount);
 		return this;
 	}
 
@@ -53,7 +53,7 @@ public class DeathDrops extends VanillaEntityComponent {
 	 * @return the amount of XP.
 	 */
 	public short getXpDrop() {
-		return getOwner().getDatatable().get(VanillaData.DROP_EXPERIENCE);
+		return getOwner().getData().get(VanillaData.DROP_EXPERIENCE);
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class DeathDrops extends VanillaEntityComponent {
 	 * @return The current component.
 	 */
 	public DeathDrops addDrop(ItemStack itemstack) {
-		Inventory dropInventory = getOwner().getDatatable().get(VanillaData.DROP_INVENTORY);
+		Inventory dropInventory = getOwner().getData().get(VanillaData.DROP_INVENTORY);
 		dropInventory.add(itemstack);
 		return this;
 	}
@@ -72,6 +72,6 @@ public class DeathDrops extends VanillaEntityComponent {
 	 * @return A list of all the items this entity drops.
 	 */
 	public List<ItemStack> getDrops() {
-		return getOwner().getDatatable().get(VanillaData.DROP_INVENTORY);
+		return getOwner().getData().get(VanillaData.DROP_INVENTORY);
 	}
 }

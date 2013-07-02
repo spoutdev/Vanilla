@@ -31,7 +31,6 @@ import java.util.Map;
 
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.data.effect.store.SoundEffects;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
@@ -98,7 +97,7 @@ public class Wool extends Solid implements Burnable {
 		}
 	}
 
-	public static enum WoolColor implements DataSource {
+	public static enum WoolColor{
 		WHITE(0),
 		ORANGE(1),
 		MAGENTA(2),
@@ -122,7 +121,6 @@ public class Wool extends Solid implements Burnable {
 			this.data = (short) data;
 		}
 
-		@Override
 		public short getData() {
 			return this.data;
 		}

@@ -76,14 +76,14 @@ public class DetectorRail extends RailBase implements RedstoneSource, DynamicMat
 		if (state.isCurved()) {
 			throw new IllegalArgumentException("A detector rail can not curve!");
 		}
-		short data = (short) (block.getData() & ~0x7);
+		short data = (short) (block.getBlockData() & ~0x7);
 		data += state.getData();
 		block.setData(data);
 	}
 
 	@Override
 	public RailsState getState(Block block) {
-		return RailsState.get(block.getData() & 0x7);
+		return RailsState.get(block.getBlockData() & 0x7);
 	}
 
 	@Override

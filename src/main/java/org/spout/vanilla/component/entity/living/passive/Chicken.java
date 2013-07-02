@@ -56,7 +56,7 @@ public class Chicken extends Animal implements Passive {
 	public void onAttached() {
 		super.onAttached();
 		Float nextEgg = (float) (GenericMath.getRandom().nextInt(MINIMUM_EGG_BREEDING_TIME) + MINIMUM_EGG_BREEDING_TIME);
-		getOwner().getDatatable().put(VanillaData.TIME_TILL_EGG, nextEgg);
+		getOwner().getData().put(VanillaData.TIME_TILL_EGG, nextEgg);
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreatureProtocol(CreatureType.CHICKEN));
 		DeathDrops dropComponent = getOwner().add(DeathDrops.class);
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.FEATHER, getRandom().nextInt(2)));
@@ -75,9 +75,9 @@ public class Chicken extends Animal implements Passive {
 
 	@Override
 	public void onTick(float dt) {
-		Float nextEggTime = getOwner().getDatatable().get(VanillaData.TIME_TILL_EGG);
+		Float nextEggTime = getOwner().getData().get(VanillaData.TIME_TILL_EGG);
 		nextEggTime -= dt;
-		getOwner().getDatatable().put(VanillaData.TIME_TILL_EGG, nextEggTime);
+		getOwner().getData().put(VanillaData.TIME_TILL_EGG, nextEggTime);
 		if (shouldLayEgg()) {
 			layEgg();
 		}
@@ -87,11 +87,11 @@ public class Chicken extends Animal implements Passive {
 		Point position = getOwner().getScene().getPosition();
 		Item.drop(position, new ItemStack(VanillaMaterials.EGG, 1), Vector3.ZERO);
 		Float nextEgg = (float) (GenericMath.getRandom().nextInt(MINIMUM_EGG_BREEDING_TIME) + MINIMUM_EGG_BREEDING_TIME);
-		getOwner().getDatatable().put(VanillaData.TIME_TILL_EGG, nextEgg);
+		getOwner().getData().put(VanillaData.TIME_TILL_EGG, nextEgg);
 	}
 
 	private boolean shouldLayEgg() {
-		Float nextEggTime = getOwner().getDatatable().get(VanillaData.TIME_TILL_EGG);
+		Float nextEggTime = getOwner().getData().get(VanillaData.TIME_TILL_EGG);
 		return nextEggTime <= 0;
 	}
 }

@@ -30,7 +30,7 @@ import org.spout.api.event.entity.EntityInteractEvent;
 import org.spout.api.event.player.PlayerInteractEntityEvent;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.inventory.Slot;
-import org.spout.api.material.source.MaterialSource;
+import org.spout.api.material.Material;
 import org.spout.api.math.Vector3;
 
 import org.spout.vanilla.component.block.VanillaBlockComponent;
@@ -91,8 +91,18 @@ public class Jukebox extends VanillaBlockComponent {
 	 * @param material to play
 	 * @return True if it can play it, False if not
 	 */
-	public boolean canPlay(MaterialSource material) {
-		return material != null && material.getMaterial() instanceof MusicDisc;
+	public boolean canPlay(Material material) {
+		return material != null && material instanceof MusicDisc;
+	}
+
+	/**
+	 * Tests whether this Jukebox can play the itemstack specified
+	 * 
+	 * @param itemstack to play
+	 * @return True if it can play it, False if not
+	 */
+	public boolean canPlay(ItemStack item) {
+		return item != null && canPlay(item.getMaterial());
 	}
 
 	/**
@@ -101,7 +111,7 @@ public class Jukebox extends VanillaBlockComponent {
 	 */
 	public Music getMusic() {
 		ItemStack current = this.getPlayedItem();
-		if (canPlay(current)) {
+		if (canPlay(current.getMaterial())) {
 			return ((MusicDisc) current.getMaterial()).getMusic();
 		} else {
 			return Music.NONE;

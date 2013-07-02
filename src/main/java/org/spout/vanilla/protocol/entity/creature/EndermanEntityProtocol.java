@@ -43,7 +43,7 @@ public class EndermanEntityProtocol extends CreatureProtocol {
 
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
-		ItemStack held = entity.getDatatable().get(Data.HELD_ITEM);
+		ItemStack held = entity.getData().get(Data.HELD_ITEM);
 		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
 		if (held != null) {
 			parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, ITEM_ID_INDEX, (byte) held.getMaterial().getId()));

@@ -153,7 +153,7 @@ public class Sapling extends GroundAttachable implements Growing, Spreading, Pla
 
 	@Override
 	public void onDynamicUpdate(Block b, long updateTime, int data) {
-		short oldData = b.getData();
+		short oldData = b.getBlockData();
 		b.setMaterial(Log.DEFAULT);
 		b.setData(oldData & dataMask);
 		b.setDataBits(Log.aliveMask);

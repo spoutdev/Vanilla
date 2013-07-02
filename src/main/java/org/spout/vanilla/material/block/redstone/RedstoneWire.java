@@ -82,7 +82,7 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 		for (BlockFace face : BlockFaces.NESWBT) {
 			block = middle.translate(face);
 			if (block.getMaterial().equals(this)) {
-				if (block.getData() > 0) {
+				if (block.getBlockData() > 0) {
 					block.setData(0);
 					this.disableRedstone(block);
 				}
@@ -147,7 +147,7 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 
 	@Override
 	public short getRedstonePower(Block block, RedstonePowerMode powerMode) {
-		return powerMode == RedstonePowerMode.ALLEXCEPTWIRE ? REDSTONE_POWER_MIN : block.getData();
+		return powerMode == RedstonePowerMode.ALLEXCEPTWIRE ? REDSTONE_POWER_MIN : block.getBlockData();
 	}
 
 	@Override

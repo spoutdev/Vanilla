@@ -72,7 +72,7 @@ public class EndPortalFrame extends VanillaBlockMaterial implements Directional 
 
 	@Override
 	public BlockFace getFacing(Block block) {
-		return BlockFaces.WNES.get(block.getData() & 0x3);
+		return BlockFaces.WNES.get(block.getBlockData() & 0x3);
 	}
 
 	@Override

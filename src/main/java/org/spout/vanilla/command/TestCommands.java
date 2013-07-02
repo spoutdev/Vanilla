@@ -596,7 +596,7 @@ public class TestCommands {
 		}
 
 		if (args.getString(0).contains("look")) {
-			Quaternion rotation = player.getDatatable().get(VanillaData.HEAD_ROTATION);
+			Quaternion rotation = player.getData().get(VanillaData.HEAD_ROTATION);
 			Point startPosition = player.getScene().getPosition();
 			Vector3 offset = rotation.getDirection().multiply(0.1);
 			for (int i = 0; i < 100; i++) {

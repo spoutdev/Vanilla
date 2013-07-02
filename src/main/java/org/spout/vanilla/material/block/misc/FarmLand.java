@@ -67,7 +67,7 @@ public class FarmLand extends VanillaBlockMaterial implements InitializableMater
 	 * @return True if wet, False if not
 	 */
 	public boolean isWet(Block block) {
-		return block.getData() > 0;
+		return block.getBlockData() > 0;
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class FarmLand extends VanillaBlockMaterial implements InitializableMater
 			block.dynamicUpdate(updateTime + 30000, true);
 		} else if (this.isWet(block)) {
 			// gradually reduce wet state
-			block.setData(block.getData() - 1);
+			block.setData(block.getBlockData() - 1);
 			//TODO : Delay before return to dirt ?
 			block.dynamicUpdate(updateTime + 30000, true);
 		} else if (!hasCropsNearby(block)) {

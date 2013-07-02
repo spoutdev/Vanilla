@@ -145,7 +145,7 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 
 				//the previous material
 				BlockMaterial prevMat = VanillaMaterials.PISTON_EXTENSION;
-				short prevData = (short) (block.getData() & 0x7);
+				short prevData = (short) (block.getBlockData() & 0x7);
 				Block previous = block.translate(facing);
 				if (this.isSticky()) {
 					prevData |= 0x8;
@@ -159,7 +159,7 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 				for (int i = 0; i < length; i++) {
 					//prepare the next material
 					nextMat = previous.getMaterial();
-					nextData = previous.getData();
+					nextData = previous.getBlockData();
 					next = previous.translate(facing);
 
 					reac = this.getReaction(previous);
@@ -177,7 +177,7 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 					}
 				}
 			}
-			playBlockAction(block, (byte) 0, (byte) (block.getData() & 0x7));
+			playBlockAction(block, (byte) 0, (byte) (block.getBlockData() & 0x7));
 			return true;
 		}
 		return false;
@@ -248,7 +248,7 @@ public class PistonBlock extends VanillaBlockMaterial implements Directional, Re
 
 	@Override
 	public BlockFace getFacing(Block block) {
-		return BTEWNS.get(block.getData() & 0x7);
+		return BTEWNS.get(block.getBlockData() & 0x7);
 	}
 
 	@Override

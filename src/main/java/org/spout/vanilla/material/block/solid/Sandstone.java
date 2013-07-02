@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.block.solid;
 
-import org.spout.api.material.source.DataSource;
-
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
@@ -60,7 +58,7 @@ public class Sandstone extends Solid {
 		return (Sandstone) super.getParentMaterial();
 	}
 
-	public static enum SandstoneType implements DataSource {
+	public static enum SandstoneType {
 		SANDSTONE(0),
 		DECORATIVE(1),
 		SMOOTH(2),;
@@ -70,7 +68,6 @@ public class Sandstone extends Solid {
 			this.data = (short) data;
 		}
 
-		@Override
 		public short getData() {
 			return this.data;
 		}

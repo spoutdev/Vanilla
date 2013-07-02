@@ -30,7 +30,6 @@ import org.spout.api.entity.Entity;
 import org.spout.api.event.player.Action;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.material.VanillaMaterials;
@@ -46,7 +45,7 @@ public class CakeBlock extends Solid {
 	@Override
 	public void onInteractBy(Entity entity, Block block, Action type, BlockFace clickedface) {
 		if (type == Action.RIGHT_CLICK) {
-			if (block.getData() == CakeSize.ONE_PIECE.getData()) {
+			if (block.getBlockData() == CakeSize.ONE_PIECE.getData()) {
 				// Cake has been fully eaten
 				block.setMaterial(VanillaMaterials.AIR);
 			} else {
@@ -61,7 +60,7 @@ public class CakeBlock extends Solid {
 	 * @return Size of this material
 	 */
 	public CakeSize getSize(Block block) {
-		return CakeSize.getByData(block.getData());
+		return CakeSize.getByData(block.getBlockData());
 	}
 
 	/**
@@ -76,7 +75,7 @@ public class CakeBlock extends Solid {
 	/**
 	 * Represents the size of a cake material.
 	 */
-	public enum CakeSize implements DataSource {
+	public enum CakeSize {
 		FULL(0x0),
 		FIVE_PIECES(0x1),
 		FOUR_PIECES(0x2),
@@ -89,7 +88,6 @@ public class CakeBlock extends Solid {
 			this.data = (short) data;
 		}
 
-		@Override
 		public short getData() {
 			return data;
 		}

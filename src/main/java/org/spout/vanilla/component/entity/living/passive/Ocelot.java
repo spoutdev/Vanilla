@@ -50,37 +50,37 @@ public class Ocelot extends Animal implements Passive {
 	}
 
 	public boolean isTamed() {
-		return getOwner().getDatatable().get(VanillaData.TAMED);
+		return getOwner().getData().get(VanillaData.TAMED);
 	}
 
 	public void setTamed(boolean tamed) {
-		getOwner().getDatatable().put(VanillaData.TAMED, tamed);
+		getOwner().getData().put(VanillaData.TAMED, tamed);
 	}
 
 	public String getOwnerName() {
-		return getOwner().getDatatable().get(VanillaData.OWNER);
+		return getOwner().getData().get(VanillaData.OWNER);
 	}
 
 	public void setOwnerName(String owner) {
 		if (isTamed()) {
-			getOwner().getDatatable().put(VanillaData.OWNER, owner);
+			getOwner().getData().put(VanillaData.OWNER, owner);
 		}
 	}
 
 	public byte getSkinId() {
-		System.out.println(getOwner().getDatatable().get(VanillaData.OCELOT_SKIN));
-		return getOwner().getDatatable().get(VanillaData.OCELOT_SKIN);
+		System.out.println(getOwner().getData().get(VanillaData.OCELOT_SKIN));
+		return getOwner().getData().get(VanillaData.OCELOT_SKIN);
 	}
 
 	public void setSkinId(byte skinId) {
-		getOwner().getDatatable().put(VanillaData.OCELOT_SKIN, skinId);
+		getOwner().getData().put(VanillaData.OCELOT_SKIN, skinId);
 	}
 
 	public boolean isSitting() {
-		return getOwner().getDatatable().get(VanillaData.SITTING);
+		return getOwner().getData().get(VanillaData.SITTING);
 	}
 
 	public void setSitting(boolean sitting) {
-		getOwner().getDatatable().put(VanillaData.SITTING, sitting);
+		getOwner().getData().put(VanillaData.SITTING, sitting);
 	}
 }

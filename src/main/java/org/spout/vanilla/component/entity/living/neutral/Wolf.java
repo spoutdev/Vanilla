@@ -57,11 +57,11 @@ public class Wolf extends Animal implements Neutral {
 	}
 
 	public boolean isTamed() {
-		return getOwner().getDatatable().get(VanillaData.TAMED);
+		return getOwner().getData().get(VanillaData.TAMED);
 	}
 
 	public void setTamed(boolean tamed) {
-		getOwner().getDatatable().put(VanillaData.TAMED, tamed);
+		getOwner().getData().put(VanillaData.TAMED, tamed);
 		if (tamed) {
 			getOwner().get(Health.class).setMaxHealth(20);
 		} else {
@@ -70,12 +70,12 @@ public class Wolf extends Animal implements Neutral {
 	}
 
 	public String getOwnerName() {
-		return getOwner().getDatatable().get(VanillaData.OWNER);
+		return getOwner().getData().get(VanillaData.OWNER);
 	}
 
 	public void setOwnerName(String owner) {
 		if (isTamed()) {
-			getOwner().getDatatable().put(VanillaData.OWNER, owner);
+			getOwner().getData().put(VanillaData.OWNER, owner);
 		}
 	}
 
@@ -88,10 +88,10 @@ public class Wolf extends Animal implements Neutral {
 	}
 
 	public boolean isSitting() {
-		return getOwner().getDatatable().get(VanillaData.SITTING);
+		return getOwner().getData().get(VanillaData.SITTING);
 	}
 
 	public void setSitting(boolean sitting) {
-		getOwner().getDatatable().put(VanillaData.SITTING, sitting);
+		getOwner().getData().put(VanillaData.SITTING, sitting);
 	}
 }

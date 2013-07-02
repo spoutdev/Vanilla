@@ -130,36 +130,36 @@ public class Human extends Living {
 	}
 
 	public boolean isSprinting() {
-		return getOwner().getDatatable().get(VanillaData.IS_SPRINTING);
+		return getOwner().getData().get(VanillaData.IS_SPRINTING);
 	}
 
 	public void setSprinting(boolean isSprinting) {
-		getOwner().getDatatable().put(VanillaData.IS_SPRINTING, isSprinting);
+		getOwner().getData().put(VanillaData.IS_SPRINTING, isSprinting);
 		sendMetaData();
 	}
 
 	public boolean isFalling() {
-		return getOwner().getDatatable().get(VanillaData.IS_FALLING);
+		return getOwner().getData().get(VanillaData.IS_FALLING);
 	}
 
 	public void setFalling(boolean isFalling) {
-		getOwner().getDatatable().put(VanillaData.IS_FALLING, isFalling);
+		getOwner().getData().put(VanillaData.IS_FALLING, isFalling);
 	}
 
 	public boolean isJumping() {
-		return getOwner().getDatatable().get(VanillaData.IS_JUMPING);
+		return getOwner().getData().get(VanillaData.IS_JUMPING);
 	}
 
 	public void setJumping(boolean isJumping) {
-		getOwner().getDatatable().put(VanillaData.IS_JUMPING, isJumping);
+		getOwner().getData().put(VanillaData.IS_JUMPING, isJumping);
 	}
 
 	public boolean isInWater() {
-		return getOwner().getDatatable().get(VanillaData.IS_IN_WATER);
+		return getOwner().getData().get(VanillaData.IS_IN_WATER);
 	}
 
 	public void setInWater(boolean inWater) {
-		getOwner().getDatatable().put(VanillaData.IS_IN_WATER, inWater);
+		getOwner().getData().put(VanillaData.IS_IN_WATER, inWater);
 	}
 
 	public String getName() {
@@ -236,9 +236,9 @@ public class Human extends Living {
 
 	// Abilities
 	public void setFlying(boolean isFlying, boolean updateClient) {
-		Boolean previous = getOwner().getDatatable().put(VanillaData.IS_FLYING, isFlying);
+		Boolean previous = getOwner().getData().put(VanillaData.IS_FLYING, isFlying);
 		if (callAbilityChangeEvent().isCancelled()) {
-			getOwner().getDatatable().put(VanillaData.IS_FLYING, previous);
+			getOwner().getData().put(VanillaData.IS_FLYING, previous);
 			return;
 		}
 		updateAbilities(updateClient);
@@ -249,16 +249,16 @@ public class Human extends Living {
 	}
 
 	public boolean isFlying() {
-		return getOwner().getDatatable().get(VanillaData.IS_FLYING);
+		return getOwner().getData().get(VanillaData.IS_FLYING);
 	}
 
 	public void setFlyingSpeed(byte speed, boolean updateClient) {
-		Number value = getOwner().getDatatable().put(VanillaData.FLYING_SPEED, speed);
+		Number value = getOwner().getData().put(VanillaData.FLYING_SPEED, speed);
 
 		byte previous = value == null ? VanillaData.FLYING_SPEED.getDefaultValue().byteValue() : value.byteValue();
 
 		if (callAbilityChangeEvent().isCancelled()) {
-			getOwner().getDatatable().put(VanillaData.FLYING_SPEED, previous);
+			getOwner().getData().put(VanillaData.FLYING_SPEED, previous);
 			return;
 		}
 		updateAbilities(updateClient);
@@ -269,13 +269,13 @@ public class Human extends Living {
 	}
 
 	public byte getFlyingSpeed() {
-		return getOwner().getDatatable().get(VanillaData.FLYING_SPEED).byteValue();
+		return getOwner().getData().get(VanillaData.FLYING_SPEED).byteValue();
 	}
 
 	public void setWalkingSpeed(byte speed, boolean updateClient) {
-		byte previous = getOwner().getDatatable().put(VanillaData.WALKING_SPEED, speed).byteValue();
+		byte previous = getOwner().getData().put(VanillaData.WALKING_SPEED, speed).byteValue();
 		if (callAbilityChangeEvent().isCancelled()) {
-			getOwner().getDatatable().put(VanillaData.WALKING_SPEED, previous);
+			getOwner().getData().put(VanillaData.WALKING_SPEED, previous);
 			return;
 		}
 		updateAbilities(updateClient);
@@ -286,13 +286,13 @@ public class Human extends Living {
 	}
 
 	public byte getWalkingSpeed() {
-		return getOwner().getDatatable().get(VanillaData.WALKING_SPEED).byteValue();
+		return getOwner().getData().get(VanillaData.WALKING_SPEED).byteValue();
 	}
 
 	public void setCanFly(boolean canFly, boolean updateClient) {
-		Boolean previous = getOwner().getDatatable().put(VanillaData.CAN_FLY, canFly);
+		Boolean previous = getOwner().getData().put(VanillaData.CAN_FLY, canFly);
 		if (callAbilityChangeEvent().isCancelled()) {
-			getOwner().getDatatable().put(VanillaData.CAN_FLY, previous);
+			getOwner().getData().put(VanillaData.CAN_FLY, previous);
 			return;
 		}
 		updateAbilities(updateClient);
@@ -303,13 +303,13 @@ public class Human extends Living {
 	}
 
 	public boolean canFly() {
-		return getOwner().getDatatable().get(VanillaData.CAN_FLY);
+		return getOwner().getData().get(VanillaData.CAN_FLY);
 	}
 
 	public void setGodMode(boolean godMode, boolean updateClient) {
-		Boolean previous = getOwner().getDatatable().put(VanillaData.GOD_MODE, godMode);
+		Boolean previous = getOwner().getData().put(VanillaData.GOD_MODE, godMode);
 		if (callAbilityChangeEvent().isCancelled()) {
-			getOwner().getDatatable().put(VanillaData.GOD_MODE, previous);
+			getOwner().getData().put(VanillaData.GOD_MODE, previous);
 			return;
 		}
 		updateAbilities(updateClient);
@@ -320,7 +320,7 @@ public class Human extends Living {
 	}
 
 	public boolean getGodMode() {
-		return getOwner().getDatatable().get(VanillaData.GOD_MODE);
+		return getOwner().getData().get(VanillaData.GOD_MODE);
 	}
 
 	public void setCreativeMode(boolean creative, boolean updateClient) {

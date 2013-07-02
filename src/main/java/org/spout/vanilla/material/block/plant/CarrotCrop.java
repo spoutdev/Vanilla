@@ -93,7 +93,7 @@ public class CarrotCrop extends GroundAttachable implements Growing, Crop, Dynam
 
 	@Override
 	public boolean isFullyGrown(Block block) {
-		return block.getData() == 0x7;
+		return block.getBlockData() == 0x7;
 	}
 
 	@Override

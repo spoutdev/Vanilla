@@ -28,7 +28,6 @@ package org.spout.vanilla.material.block.solid;
 
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-import org.spout.api.material.source.DataSource;
 
 import org.spout.vanilla.data.Instrument;
 import org.spout.vanilla.data.effect.store.SoundEffects;
@@ -84,7 +83,7 @@ public class Plank extends Solid implements Fuel, Burnable {
 		return (Plank) super.getParentMaterial();
 	}
 
-	public static enum WoodType implements DataSource {
+	public static enum WoodType {
 		OAK(0),
 		PINE(1),
 		BIRCH(2),
@@ -95,7 +94,6 @@ public class Plank extends Solid implements Fuel, Burnable {
 			this.data = (short) data;
 		}
 
-		@Override
 		public short getData() {
 			return this.data;
 		}

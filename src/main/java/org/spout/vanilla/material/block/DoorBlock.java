@@ -111,13 +111,13 @@ public abstract class DoorBlock extends GroundAttachable implements Directional,
 	}
 
 	public boolean isHingeLeft(Block doorHalf) {
-		short data = getCorrectHalf(doorHalf, true).getData();
+		short data = getCorrectHalf(doorHalf, true).getBlockData();
 		return (data & 0x1) == 0x1;
 	}
 
 	public void setHinge(Block doorHalf, boolean left) {
 		doorHalf = getCorrectHalf(doorHalf, true);
-		short data = doorHalf.getData();
+		short data = doorHalf.getBlockData();
 		if (left) {
 			data |= 0x1;
 		} else {
@@ -140,7 +140,7 @@ public abstract class DoorBlock extends GroundAttachable implements Directional,
 	@Override
 	public void toggleOpen(Block doorHalf) {
 		doorHalf = getCorrectHalf(doorHalf, false);
-		doorHalf.setData(doorHalf.getData() ^ 0x4);
+		doorHalf.setData(doorHalf.getBlockData() ^ 0x4);
 	}
 
 	@Override

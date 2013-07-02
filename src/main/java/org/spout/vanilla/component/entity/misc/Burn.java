@@ -94,7 +94,7 @@ public class Burn extends VanillaEntityComponent {
 	 * @return The firetick value.
 	 */
 	public float getFireTick() {
-		return getOwner().getDatatable().get(VanillaData.FIRE_TICK);
+		return getOwner().getData().get(VanillaData.FIRE_TICK);
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class Burn extends VanillaEntityComponent {
 	 * @return True if the fire hurts and false if it doesn't
 	 */
 	public boolean isFireHurting() {
-		return getOwner().getDatatable().get(VanillaData.FIRE_HURT);
+		return getOwner().getData().get(VanillaData.FIRE_HURT);
 	}
 
 	/**
@@ -129,7 +129,7 @@ public class Burn extends VanillaEntityComponent {
 	 * @param fireTick The fire tick amount.
 	 */
 	private void setFireTick(float fireTick) {
-		getOwner().getDatatable().put(VanillaData.FIRE_TICK, fireTick);
+		getOwner().getData().put(VanillaData.FIRE_TICK, fireTick);
 	}
 
 	/**
@@ -137,6 +137,6 @@ public class Burn extends VanillaEntityComponent {
 	 * @param fireHurt True if the fire should hurt else false.
 	 */
 	private void setFireHurting(boolean fireHurt) {
-		getOwner().getDatatable().put(VanillaData.FIRE_HURT, fireHurt);
+		getOwner().getData().put(VanillaData.FIRE_HURT, fireHurt);
 	}
 }

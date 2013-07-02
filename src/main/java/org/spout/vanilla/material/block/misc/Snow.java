@@ -104,7 +104,7 @@ public class Snow extends GroundAttachable implements DynamicMaterial, Initializ
 	@Override
 	public void onDynamicUpdate(Block block, long updateTime, int data) {
 		if (willMeltAt(block)) {
-			short dataBlock = block.getData();
+			short dataBlock = block.getBlockData();
 			if (dataBlock > 0) {
 				block.setData(dataBlock - 1);
 			} else {

@@ -120,7 +120,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 				if (level > this.getLevel(spread)) {
 					if (spreadMat != this.getFlowingMaterial()) {
 						// Make sure the material is adjusted
-						spread.setMaterial(this.getFlowingMaterial(), spread.getData());
+						spread.setMaterial(this.getFlowingMaterial(), spread.getBlockData());
 					}
 					this.setLevel(spread, level);
 					if (to == BlockFace.BOTTOM) {
@@ -268,7 +268,7 @@ public abstract class Liquid extends VanillaBlockMaterial implements DynamicMate
 	 * @return True if it is a source, False if not
 	 */
 	public boolean isSource(Block block) {
-		return block.getData() == 0x0;
+		return block.getBlockData() == 0x0;
 	}
 
 	/**

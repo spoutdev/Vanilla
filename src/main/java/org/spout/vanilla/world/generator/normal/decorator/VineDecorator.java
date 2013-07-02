@@ -61,7 +61,7 @@ public class VineDecorator extends VariableAmountDecorator {
 					final Block top = block.translate(BlockFace.TOP);
 					if (top.isMaterial(VanillaMaterials.VINES)) {
 						block.setMaterial(VanillaMaterials.VINES);
-						block.setData(top);
+						block.setData(top.getBlockData());
 					} else {
 						for (final BlockFace face : BlockFaces.NESW) {
 							if (VanillaMaterials.VINES.canPlace(block, (short) 0, face, face.getOffset(), false, null)) {

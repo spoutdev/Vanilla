@@ -59,7 +59,7 @@ public class Rail extends RailBase implements RedstoneTarget {
 
 	@Override
 	public RailsState getState(Block block) {
-		return RailsState.get(block.getData());
+		return RailsState.get(block.getBlockData());
 	}
 
 	@Override

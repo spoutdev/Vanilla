@@ -40,7 +40,7 @@ public final class BlockChangeMessage extends VanillaBlockDataChannelMessage {
 	private final short type;
 
 	public BlockChangeMessage(Block block, RepositionManager rm) {
-		this(block.getX(), block.getY(), block.getZ(), VanillaMaterials.getMinecraftId(block.getMaterial()), block.getData(), rm);
+		this(block.getX(), block.getY(), block.getZ(), VanillaMaterials.getMinecraftId(block.getMaterial()), block.getBlockData(), rm);
 	}
 
 	public BlockChangeMessage(int x, int y, int z, short type, int metadata, RepositionManager rm) {

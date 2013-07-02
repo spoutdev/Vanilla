@@ -26,8 +26,6 @@
  */
 package org.spout.vanilla.material.block.ore;
 
-import org.spout.api.material.source.DataSource;
-
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
 import org.spout.vanilla.data.tool.ToolLevel;
 import org.spout.vanilla.data.tool.ToolType;
@@ -60,7 +58,7 @@ public class QuartzBlock extends Solid {
 		return (QuartzBlock) super.getParentMaterial();
 	}
 
-	public static enum QuartzBlockType implements DataSource {
+	public static enum QuartzBlockType {
 		QUARTZ(0),
 		CHISELED(1),
 		PILLAR(2),;
@@ -70,7 +68,6 @@ public class QuartzBlock extends Solid {
 			this.data = (short) data;
 		}
 
-		@Override
 		public short getData() {
 			return this.data;
 		}

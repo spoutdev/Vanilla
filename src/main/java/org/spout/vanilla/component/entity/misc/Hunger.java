@@ -103,7 +103,7 @@ public class Hunger extends VanillaEntityComponent {
 				//Timer when eating. Sends a Enting done if the player eated the food the whole time.
 				if (eatingTimer != 0f) {
 					if (eatingTimer >= 1.5f) {
-						((Player) getOwner()).getSession().send(false, new EntityStatusMessage(getOwner().getId(), EntityStatusMessage.EATING_ACCEPTED));
+						((Player) getOwner()).getSession().send(new EntityStatusMessage(getOwner().getId(), EntityStatusMessage.EATING_ACCEPTED));
 						if (foodEating.get() != null) {
 							if (foodEating.get().getMaterial() instanceof Food) {
 								((Food) foodEating.get().getMaterial()).onEat(getOwner(), foodEating);

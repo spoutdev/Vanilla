@@ -29,14 +29,14 @@ package org.spout.vanilla.protocol.plugin;
 import org.spout.api.entity.Player;
 import org.spout.api.event.cause.PlayerCause;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ServerSession;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.material.CommandBlock;
 
 public class CommandBlockHandler extends MessageHandler<CommandBlockMessage> {
 	@Override
-	public void handleServer(Session session, CommandBlockMessage msg) {
+	public void handleServer(ServerSession session, CommandBlockMessage msg) {
 		int x = msg.getX(), y = msg.getY(), z = msg.getZ();
 		String text = msg.getCommand();
 		CommandBlock c = VanillaPlugin.getInstance().getEngine().getDefaultWorld().getBlock(x, y, z).get(CommandBlock.class);

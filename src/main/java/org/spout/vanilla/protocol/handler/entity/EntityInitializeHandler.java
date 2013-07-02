@@ -27,13 +27,13 @@
 package org.spout.vanilla.protocol.handler.entity;
 
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.protocol.msg.entity.EntityInitializeMessage;
 
 public class EntityInitializeHandler extends MessageHandler<EntityInitializeMessage> {
 	@Override
-	public void handleClient(Session session, EntityInitializeMessage message) {
+	public void handleClient(ClientSession session, EntityInitializeMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

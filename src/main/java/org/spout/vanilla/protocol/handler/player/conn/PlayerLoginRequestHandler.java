@@ -27,7 +27,7 @@
 package org.spout.vanilla.protocol.handler.player.conn;
 
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.data.GameMode;
@@ -35,7 +35,7 @@ import org.spout.vanilla.protocol.msg.player.conn.PlayerLoginRequestMessage;
 
 public class PlayerLoginRequestHandler extends MessageHandler<PlayerLoginRequestMessage> {
 	@Override
-	public void handleClient(Session session, PlayerLoginRequestMessage message) {
+	public void handleClient(ClientSession session, PlayerLoginRequestMessage message) {
 		System.out.println(message.toString());
 
 		Human human = session.getPlayer().add(Human.class);

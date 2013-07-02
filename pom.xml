@@ -16,6 +16,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<currentYear>2012</currentYear>
 		<mainClass>org.spout.vanilla.VanillaPlugin</mainClass>
+		<protocolClass>org.spout.vanilla.protocol.VanillaProtocol</protocolClass>
 		<spoutVersion>dev-SNAPSHOT</spoutVersion>
 		<protocolVersion>61</protocolVersion>
 		<buildNumber>0</buildNumber>

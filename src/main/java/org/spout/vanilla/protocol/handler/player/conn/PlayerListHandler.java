@@ -27,13 +27,13 @@
 package org.spout.vanilla.protocol.handler.player.conn;
 
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.protocol.msg.player.conn.PlayerListMessage;
 
 public class PlayerListHandler extends MessageHandler<PlayerListMessage> {
 	@Override
-	public void handleClient(Session session, PlayerListMessage message) {
+	public void handleClient(ClientSession session, PlayerListMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

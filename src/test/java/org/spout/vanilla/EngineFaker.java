@@ -88,10 +88,6 @@ public class EngineFaker {
 		@Override
 		public void onReload() {
 		}
-
-		@Override
-		public void onLoad() {
-		}
 	}
 
 	private static class TestEventManager implements EventManager {

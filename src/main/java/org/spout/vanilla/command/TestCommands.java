@@ -58,6 +58,7 @@ import org.spout.api.material.MaterialRegistry;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
 import org.spout.api.protocol.NetworkSynchronizer;
+import org.spout.api.protocol.ServerNetworkSynchronizer;
 import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.util.BlockIterator;
 
@@ -100,7 +101,7 @@ import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.material.item.VanillaItemMaterial;
 import org.spout.vanilla.material.map.Map;
-import org.spout.vanilla.protocol.VanillaNetworkSynchronizer;
+import org.spout.vanilla.protocol.VanillaServerNetworkSynchronizer;
 import org.spout.vanilla.protocol.entity.creature.CreatureType;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 import org.spout.vanilla.render.LightRenderEffect;
@@ -221,7 +222,7 @@ public class TestCommands {
 	@Command(aliases = "getblock", usage = "<world> <x> <y> <z>", desc = "Finds block at the given coords", min = 4, max = 4)
 	@Permissible("vanilla.command.debug")
 	public void getBlock(CommandSource source, CommandArguments args) throws CommandException {
-		World w = Spout.getEngine().getWorld(args.getString(0));
+		World w = Spout.getEngine().getWorld(args.getString(0), false);
 		if (w == null) {
 			throw new CommandException("Unable to find world " + args.getString(0));
 		}
@@ -326,9 +327,10 @@ public class TestCommands {
 
 	@Command(aliases = "respawn", usage = "", desc = "Forces the client to respawn", max = 0)
 	@Permissible("vanilla.command.debug")
+	@org.spout.api.command.annotated.Platform(Platform.SERVER)
 	@Filter(PlayerFilter.class)
 	public void respawn(CommandSource source, CommandArguments args) throws CommandException {
-		((Player) source).getNetworkSynchronizer().setRespawned();
+		((ServerNetworkSynchronizer) ((Player) source).getNetworkSynchronizer()).setRespawned();
 	}
 
 	@Command(aliases = "sun", usage = "<x> <y> <z>", desc = "Sets the sun direction.", max = 3)
@@ -391,7 +393,7 @@ public class TestCommands {
 	@Filter(PlayerFilter.class)
 	public void resetPosition(CommandSource source, CommandArguments args) throws CommandException {
 		Player player = (Player) source;
-		((VanillaNetworkSynchronizer) player.getNetworkSynchronizer()).sendPosition();
+		((VanillaServerNetworkSynchronizer) player.getNetworkSynchronizer()).sendPosition();
 	}
 
 	@Command(aliases = "torch", desc = "Place a torch.", max = 0)
@@ -537,7 +539,7 @@ public class TestCommands {
 				throw new CommandException("Need to provide a world when executing from the console");
 			}
 			String name = args.getString(0);
-			world = getEngine().getWorld(name);
+			world = getEngine().getWorld(name, false);
 			isConsole = true;
 		}
 		if (world == null && isConsole) {
@@ -586,7 +588,7 @@ public class TestCommands {
 			if (getEngine() instanceof Client) {
 				throw new CommandException("You cannot search for players unless you are in server mode.");
 			}
-			player = getEngine().getPlayer(args.getString(1), true);
+			player = args.getPlayer(1, true);
 			if (player == null) {
 				source.sendMessage("Must be a player or send player name in arguments");
 				return;
@@ -603,8 +605,14 @@ public class TestCommands {
 			}
 			player.sendMessage("Yaw = " + rotation.getYaw());
 			player.sendMessage("Pitch = " + rotation.getPitch());
-		} else if (args.getString(0).contains("resendall")) {
-			NetworkSynchronizer network = player.getNetworkSynchronizer();
+		}  else if (args.getString(0).contains("packets")) {
+			player.add(ForceMessages.class);
+		}
+		if (getEngine() instanceof Client) {
+			throw new CommandException("You cannot resend chunks in client mode.");
+		}
+		 if (args.getString(0).contains("resendall")) {
+			ServerNetworkSynchronizer network = (ServerNetworkSynchronizer) player.getNetworkSynchronizer();
 			Set<Chunk> chunks = network.getActiveChunks();
 			for (Chunk c : chunks) {
 				network.sendChunk(c);
@@ -612,10 +620,8 @@ public class TestCommands {
 
 			source.sendMessage("All chunks resent");
 		} else if (args.getString(0).contains("resend")) {
-			player.getNetworkSynchronizer().sendChunk(player.getChunk());
+			((ServerNetworkSynchronizer) player.getNetworkSynchronizer()).sendChunk(player.getChunk());
 			source.sendMessage("Chunk resent");
-		} else if (args.getString(0).contains("packets")) {
-			player.add(ForceMessages.class);
 		}
 	}
 

@@ -27,7 +27,8 @@
 package org.spout.vanilla.protocol.handler.player.pos;
 
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
+import org.spout.api.protocol.ServerSession;
 
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionLookMessage;
 
@@ -36,13 +37,13 @@ public final class PlayerPositionLookHandler extends MessageHandler<PlayerPositi
 	private final PlayerLookHandler rotation = new PlayerLookHandler();
 
 	@Override
-	public void handleServer(Session session, PlayerPositionLookMessage message) {
+	public void handleServer(ServerSession session, PlayerPositionLookMessage message) {
 		this.position.handleServer(session, message.getPlayerPositionMessage());
 		this.rotation.handleServer(session, message.getPlayerLookMessage());
 	}
 
 	@Override
-	public void handleClient(Session session, PlayerPositionLookMessage message) {
+	public void handleClient(ClientSession session, PlayerPositionLookMessage message) {
 		this.position.handleClient(session, message.getPlayerPositionMessage());
 		this.rotation.handleClient(session, message.getPlayerLookMessage());
 	}

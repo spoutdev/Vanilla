@@ -29,13 +29,13 @@ package org.spout.vanilla.protocol.handler.entity;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.protocol.msg.entity.EntityTileDataMessage;
 
 public final class EntityTileDataHandler extends MessageHandler<EntityTileDataMessage> {
 	@Override
-	public void handleClient(Session session, EntityTileDataMessage message) {
+	public void handleClient(ClientSession session, EntityTileDataMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

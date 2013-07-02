@@ -29,7 +29,7 @@ package org.spout.vanilla.protocol.handler.player;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.data.Difficulty;
@@ -39,7 +39,7 @@ import org.spout.vanilla.protocol.msg.player.pos.PlayerRespawnMessage;
 
 public final class PlayerRespawnHandler extends MessageHandler<PlayerRespawnMessage> {
 	@Override
-	public void handleClient(Session session, PlayerRespawnMessage message) {
+	public void handleClient(ClientSession session, PlayerRespawnMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

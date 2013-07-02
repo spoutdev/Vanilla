@@ -32,15 +32,16 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.model.Model;
 import org.spout.api.model.animation.Animation;
+import org.spout.api.protocol.ClientSession;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ServerSession;
 
 import org.spout.vanilla.event.entity.EntityAnimationEvent;
 import org.spout.vanilla.protocol.msg.entity.EntityAnimationMessage;
 
 public final class EntityAnimationHandler extends MessageHandler<EntityAnimationMessage> {
 	@Override
-	public void handleServer(Session session, EntityAnimationMessage message) {
+	public void handleServer(ServerSession session, EntityAnimationMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
@@ -56,7 +57,7 @@ public final class EntityAnimationHandler extends MessageHandler<EntityAnimation
 	}
 
 	@Override
-	public void handleClient(Session session, EntityAnimationMessage message) {
+	public void handleClient(ClientSession session, EntityAnimationMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

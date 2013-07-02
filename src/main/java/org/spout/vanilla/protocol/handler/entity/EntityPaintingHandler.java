@@ -27,13 +27,13 @@
 package org.spout.vanilla.protocol.handler.entity;
 
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityPaintingMessage;
 
 public class EntityPaintingHandler extends MessageHandler<EntityPaintingMessage> {
 	@Override
-	public void handleClient(Session session, EntityPaintingMessage message) {
+	public void handleClient(ClientSession session, EntityPaintingMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

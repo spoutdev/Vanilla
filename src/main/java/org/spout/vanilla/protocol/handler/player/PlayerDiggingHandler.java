@@ -45,7 +45,6 @@ import org.spout.api.protocol.MessageHandler;
 import org.spout.api.protocol.Session;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.flag.Flag;
-
 import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.component.block.material.Sign;
 import org.spout.vanilla.component.entity.living.Human;
@@ -121,121 +120,128 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		if (blockMaterial == VanillaMaterials.AIR) {
 			isInteractable = false;
 		}
-		//TODO VanillaPlayerInteractBlockEvent and add in Results to it (to more indepthly take away durability).
+		// TODO VanillaPlayerInteractBlockEvent and add in Results to it (to
+		// more indepthly take away durability).
 		switch (state) {
-			case PlayerDiggingMessage.STATE_START_DIGGING:
-				if (!isProtected(player, rm, x, y, z, block, minecraftID)) {
-					final PlayerInteractBlockEvent event = new PlayerInteractBlockEvent(player, block, point, clickedFace, Action.LEFT_CLICK);
-					if (player.getEngine().getEventManager().callEvent(event).isCancelled()) {
-						if (human.isCreative() || blockMaterial.getHardness() == 0.0f) {
-							session.send(false, new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
-							Sign sign = block.get(Sign.class);
-							if (sign != null) {
-								session.send(false, new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), player.getNetworkSynchronizer().getRepositionManager()));
-							}
-						}
-					} else {
-						// Perform interactions
-						if (!isInteractable && heldItem == null) {
-							// interacting with nothing using fist
-							return;
-						} else if (!isInteractable) {
-							// interacting with nothing using item
-							heldItem.getMaterial().onInteract(player, Action.LEFT_CLICK);
-						} else {
-							// interacting with block using item
-							heldItem.getMaterial().onInteract(player, block, Action.LEFT_CLICK, clickedFace);
-						}
-
-						if (isInteractable) {
-							Block neigh = block.translate(clickedFace);
-							boolean fire = neigh.getMaterial().equals(VanillaMaterials.FIRE);
-							if (fire) {
-								// put out fire
-								if (VanillaMaterials.FIRE.onDestroy(neigh, new PlayerBreakCause(player, neigh))) {
-									GeneralEffects.RANDOM_FIZZ.playGlobal(block.getPosition());
-								}
-							} else if (human.isSurvival() && blockMaterial.getHardness() != 0.0f) {
-								ItemStack currentItem = PlayerUtil.getHeldSlot(player).get();
-								if (currentItem != null) {
-									player.get(Digging.class).startDigging(new Point(w, x, y, z), currentItem.getMaterial());
-								} else {
-									player.get(Digging.class).startDigging(new Point(w, x, y, z), VanillaMaterials.AIR);
-								}
-							} else {
-								// insta-break
-								if (breakBlock(blockMaterial, block, human, session)) {
-									GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);
-								}
-							}
+		case PlayerDiggingMessage.STATE_START_DIGGING:
+			if (!isProtected(player, rm, x, y, z, block, minecraftID)) {
+				final PlayerInteractBlockEvent event = new PlayerInteractBlockEvent(player, block, point, clickedFace, Action.LEFT_CLICK);
+				if (player.getEngine().getEventManager().callEvent(event).isCancelled()) {
+					if (human.isCreative() || blockMaterial.getHardness() == 0.0f) {
+						session.send(false, new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
+						Sign sign = block.get(Sign.class);
+						if (sign != null) {
+							session.send(false, new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), player.getNetworkSynchronizer().getRepositionManager()));
 						}
 					}
-				}
-				break;
-			case PlayerDiggingMessage.STATE_CANCEL_DIGGING:
-				if (!isProtected(player, rm, x, y, z, block, minecraftID)) {
-					player.get(Digging.class).stopDigging(new Point(w, x, y, z), false);
-				}
-				break;
-			case PlayerDiggingMessage.STATE_DONE_DIGGING:
-				if (!isProtected(player, rm, x, y, z, block, minecraftID)) {
-					Digging diggingComponent = player.get(Digging.class);
-
-					if (!diggingComponent.stopDigging(new Point(w, x, y, z), true) || !isInteractable) {
-						if (!diggingComponent.isDigging()) {
-							session.send(false, new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
-							Sign sign = block.get(Sign.class);
-							if (sign != null) {
-								session.send(false, new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), player.getNetworkSynchronizer().getRepositionManager()));
-							}
-						}
+				} else {
+					// Perform interactions
+					if (!isInteractable && heldItem == null) {
+						// interacting with nothing using fist
 						return;
+					} else if (!isInteractable) {
+						// interacting with nothing using item
+						heldItem.getMaterial().onInteract(player, Action.LEFT_CLICK);
+					} else {
+						// interacting with block using item
+						heldItem.getMaterial().onInteract(player, block, Action.LEFT_CLICK, clickedFace);
 					}
 
-					if (player.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
-						long diggingTicks = diggingComponent.getDiggingTicks();
-						int damageDone;
-						int totalDamage;
-
-						if (heldItem == null) {
-							damageDone = ((int) diggingTicks);
+					if (isInteractable) {
+						Block neigh = block.translate(clickedFace);
+						boolean fire = neigh.getMaterial().equals(VanillaMaterials.FIRE);
+						if (fire) {
+							// put out fire
+							if (VanillaMaterials.FIRE.onDestroy(neigh, new PlayerBreakCause(player, neigh))) {
+								GeneralEffects.RANDOM_FIZZ.playGlobal(block.getPosition());
+							}
+						} else if (human.isSurvival() && blockMaterial.getHardness() != 0.0f) {
+							ItemStack currentItem = PlayerUtil.getHeldSlot(player).get();
+							if (currentItem != null) {
+								player.get(Digging.class).startDigging(new Point(w, x, y, z), currentItem.getMaterial());
+							} else {
+								player.get(Digging.class).startDigging(new Point(w, x, y, z), VanillaMaterials.AIR);
+							}
 						} else {
-							damageDone = ((int) diggingTicks * ((VanillaMaterial) heldItem.getMaterial()).getDamage());
-						}
-						// TODO: Take into account EFFICIENCY enchantment
-						// TODO: Digging is slower while under water, on ladders, etc. AQUA_AFFINITY enchantment speeds up underwater digging
-
-						totalDamage = ((int) blockMaterial.getHardness() - damageDone);
-						if (totalDamage <= 40) { // Yes, this is a very high allowance - this is because this is only over a single block, and this will spike due to varying latency.
+							// insta-break
 							if (breakBlock(blockMaterial, block, human, session)) {
 								GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);
+							}
+						}
+					}
+				}
+			}
+			break;
+		case PlayerDiggingMessage.STATE_CANCEL_DIGGING:
+			if (!isProtected(player, rm, x, y, z, block, minecraftID)) {
+				player.get(Digging.class).stopDigging(new Point(w, x, y, z), false);
+			}
+			break;
+		case PlayerDiggingMessage.STATE_DONE_DIGGING:
+			if (!isProtected(player, rm, x, y, z, block, minecraftID)) {
+				Digging diggingComponent = player.get(Digging.class);
 
-								if (heldItem != null && heldItem.getMaterial() instanceof Tool) {
-									Tool tool = (Tool) heldItem.getMaterial();
-									short damage = tool.getDurabilityPenalty(heldItem);
-									if (currentSlot.get().getData() + damage >= tool.getMaxDurability()) {
-										currentSlot.set(null);
-									} else {
-										currentSlot.addData(damage);
-									}
+				if (!diggingComponent.stopDigging(new Point(w, x, y, z), true) || !isInteractable) {
+					if (!diggingComponent.isDigging()) {
+						session.send(false, new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
+						Sign sign = block.get(Sign.class);
+						if (sign != null) {
+							session.send(false, new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), player.getNetworkSynchronizer().getRepositionManager()));
+						}
+					}
+					return;
+				}
+
+				if (player.getData().get(VanillaData.GAMEMODE).equals(GameMode.SURVIVAL)) {
+					long diggingTicks = diggingComponent.getDiggingTicks();
+					int damageDone;
+					int totalDamage;
+
+					if (heldItem == null) {
+						damageDone = ((int) diggingTicks);
+					} else {
+						damageDone = ((int) diggingTicks * ((VanillaMaterial) heldItem.getMaterial()).getDamage());
+					}
+					// TODO: Take into account EFFICIENCY enchantment
+					// TODO: Digging is slower while under water, on ladders,
+					// etc. AQUA_AFFINITY enchantment speeds up underwater
+					// digging
+
+					totalDamage = ((int) blockMaterial.getHardness() - damageDone);
+					if (totalDamage <= 40) { // Yes, this is a very high
+												// allowance - this is because
+												// this is only over a single
+												// block, and this will spike
+												// due to varying latency.
+						if (breakBlock(blockMaterial, block, human, session)) {
+							GeneralEffects.BREAKBLOCK.playGlobal(block.getPosition(), blockMaterial, player);
+
+							if (heldItem != null && heldItem.getMaterial() instanceof Tool) {
+								Tool tool = (Tool) heldItem.getMaterial();
+								short damage = tool.getDurabilityPenalty(heldItem);
+								if (currentSlot.get().getData() + damage >= tool.getMaxDurability()) {
+									currentSlot.set(null);
+								} else {
+									currentSlot.addData(damage);
 								}
 							}
 						}
 					}
 				}
-				break;
-			case PlayerDiggingMessage.STATE_DROP_ITEM:
-				human.dropItem();
-				break;
-			case PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD:
-				if (heldItem.getMaterial() instanceof Food || heldItem.getMaterial() instanceof PotionItem) {
-					player.add(Hunger.class).setEating(false, currentSlot);
-				} else if (heldItem.getMaterial() instanceof Sword) {
-					human.setEatingBlocking(false);
-				}
-				break;
-			case PlayerDiggingMessage.STATE_UPDATE_BLOCK:
-				break;
+			}
+			break;
+		case PlayerDiggingMessage.STATE_DROP_ITEM:
+			human.dropItem();
+			break;
+		case PlayerDiggingMessage.STATE_SHOOT_ARROW_EAT_FOOD:
+			if (heldItem.getMaterial() instanceof Food || heldItem.getMaterial() instanceof PotionItem) {
+				player.add(Hunger.class).setEating(false, currentSlot);
+			} else if (heldItem.getMaterial() instanceof Sword) {
+				human.setEatingBlocking(false);
+			}
+			break;
+		case PlayerDiggingMessage.STATE_UPDATE_BLOCK:
+			break;
 		}
 	}
 
@@ -269,9 +275,9 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 			if (p.contains(point) && !player.get(Human.class).isOp()) {
 				player.getSession().send(false, new BlockChangeMessage(x, y, z, minecraftID, block.getBlockData() & 0xF, rm));
 				player.sendMessage(ChatStyle.DARK_RED + "This area is a protected spawn point!");
-				return false;
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 }

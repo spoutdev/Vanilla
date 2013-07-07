@@ -26,9 +26,9 @@
  */
 package org.spout.vanilla.protocol.rcon;
 
-import org.spout.api.util.config.Configuration;
-import org.spout.api.util.config.ConfigurationHolder;
-import org.spout.api.util.config.ConfigurationHolderConfiguration;
+import org.spout.cereal.config.Configuration;
+import org.spout.cereal.config.ConfigurationHolder;
+import org.spout.cereal.config.ConfigurationHolderConfiguration;
 
 /**
  * Configuration for Vanilla's rcon protocol

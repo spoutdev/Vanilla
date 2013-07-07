@@ -36,9 +36,8 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.MaterialRegistry;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
-import org.spout.api.util.config.ConfigurationNode;
 import org.spout.api.util.cuboid.CuboidBlockMaterialBuffer;
-
+import org.spout.cereal.config.ConfigurationNode;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.util.MathHelper;
 import org.spout.vanilla.world.generator.normal.NormalGenerator;

@@ -47,11 +47,9 @@ import org.jboss.netty.channel.group.ChannelGroupFuture;
 import org.jboss.netty.channel.group.DefaultChannelGroup;
 import org.jboss.netty.channel.socket.ServerSocketChannel;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
-
 import org.spout.api.Server;
 import org.spout.api.protocol.PortBinding;
-import org.spout.api.util.config.yaml.YamlConfiguration;
-
+import org.spout.cereal.config.yaml.YamlConfiguration;
 import org.spout.vanilla.protocol.VanillaProtocol;
 
 /**

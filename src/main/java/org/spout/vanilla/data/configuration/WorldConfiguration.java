@@ -31,9 +31,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.spout.api.exception.ConfigurationException;
 import org.spout.api.geo.World;
-import org.spout.api.util.config.yaml.YamlConfiguration;
+import org.spout.cereal.config.ConfigurationException;
+import org.spout.cereal.config.yaml.YamlConfiguration;
 
 public class WorldConfiguration extends YamlConfiguration {
 	private final Map<String, WorldConfigurationNode> worldNodes = new HashMap<String, WorldConfigurationNode>();

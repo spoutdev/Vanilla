@@ -28,11 +28,11 @@ package org.spout.vanilla.data.configuration;
 
 import java.util.Map;
 
-import org.spout.api.exception.ConfigurationException;
-import org.spout.api.util.config.ConfigurationHolder;
-import org.spout.api.util.config.ConfigurationHolderConfiguration;
-import org.spout.api.util.config.ConfigurationNode;
-import org.spout.api.util.config.MapConfiguration;
+import org.spout.cereal.config.ConfigurationException;
+import org.spout.cereal.config.ConfigurationHolder;
+import org.spout.cereal.config.ConfigurationHolderConfiguration;
+import org.spout.cereal.config.ConfigurationNode;
+import org.spout.cereal.config.MapConfiguration;
 
 public final class WorldConfigurationNode extends ConfigurationHolderConfiguration {
 	public final ConfigurationHolder LOAD = new ConfigurationHolder(true, "load");

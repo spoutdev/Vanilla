@@ -26,10 +26,9 @@
  */
 package org.spout.vanilla.world.generator.skylands.biome;
 
-import org.spout.api.util.config.ConfigurationNode;
-import org.spout.api.util.config.annotated.Load;
-import org.spout.api.util.config.annotated.Save;
-
+import org.spout.cereal.config.ConfigurationNode;
+import org.spout.cereal.config.annotated.Load;
+import org.spout.cereal.config.annotated.Save;
 import org.spout.vanilla.material.VanillaMaterials;
 import org.spout.vanilla.world.generator.biome.VanillaBiome;
 import org.spout.vanilla.world.generator.normal.biome.NormalBiome.NormalTallGrassFactory;

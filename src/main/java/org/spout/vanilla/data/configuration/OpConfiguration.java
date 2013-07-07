@@ -29,8 +29,8 @@ package org.spout.vanilla.data.configuration;
 import java.io.File;
 import java.util.List;
 
-import org.spout.api.exception.ConfigurationException;
-import org.spout.api.util.config.yaml.YamlConfiguration;
+import org.spout.cereal.config.ConfigurationException;
+import org.spout.cereal.config.yaml.YamlConfiguration;
 
 public class OpConfiguration {
 	private final YamlConfiguration config;

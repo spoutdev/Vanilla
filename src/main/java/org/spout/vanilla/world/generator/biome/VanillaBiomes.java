@@ -32,11 +32,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.spout.api.exception.ConfigurationException;
-import org.spout.api.util.config.Configuration;
-import org.spout.api.util.config.annotated.AnnotatedObjectConfiguration;
-import org.spout.api.util.config.serialization.Serialization;
-
+import org.spout.cereal.config.Configuration;
+import org.spout.cereal.config.ConfigurationException;
+import org.spout.cereal.config.annotated.AnnotatedObjectConfiguration;
+import org.spout.cereal.config.serialization.Serialization;
 import org.spout.vanilla.util.ColorSerializer;
 import org.spout.vanilla.world.generator.nether.biome.NetherrackBiome;
 import org.spout.vanilla.world.generator.normal.biome.grassy.ForestBiome;
@@ -110,7 +109,7 @@ public class VanillaBiomes {
 		final AnnotatedObjectConfiguration biomes =
 				new AnnotatedObjectConfiguration(config);
 		for (Entry<String, VanillaBiome> entry : BY_NAME.entrySet()) {
-			biomes.addObject(entry.getValue(), entry.getKey());
+			biomes.add(entry.getValue(), entry.getKey());
 		}
 		try {
 			biomes.load();
@@ -123,7 +122,7 @@ public class VanillaBiomes {
 		final AnnotatedObjectConfiguration biomes =
 				new AnnotatedObjectConfiguration(config);
 		for (Entry<String, VanillaBiome> entry : BY_NAME.entrySet()) {
-			biomes.addObject(entry.getValue(), entry.getKey());
+			biomes.add(entry.getValue(), entry.getKey());
 		}
 		try {
 			biomes.save();

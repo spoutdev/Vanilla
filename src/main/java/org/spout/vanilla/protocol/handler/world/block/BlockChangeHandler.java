@@ -30,7 +30,7 @@ import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 import org.spout.api.protocol.reposition.RepositionManager;
 
 import org.spout.vanilla.material.VanillaMaterials;
@@ -38,7 +38,7 @@ import org.spout.vanilla.protocol.msg.world.block.BlockChangeMessage;
 
 public class BlockChangeHandler extends MessageHandler<BlockChangeMessage> {
 	@Override
-	public void handleClient(Session session, BlockChangeMessage message) {
+	public void handleClient(ClientSession session, BlockChangeMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

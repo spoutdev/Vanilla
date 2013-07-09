@@ -27,13 +27,13 @@
 package org.spout.vanilla.protocol.handler.world;
 
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.protocol.msg.world.ParticleEffectMessage;
 
 public class ParticleEffectHandler extends MessageHandler<ParticleEffectMessage> {
 	@Override
-	public void handleClient(Session session, ParticleEffectMessage message) {
+	public void handleClient(ClientSession session, ParticleEffectMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

@@ -30,13 +30,13 @@ import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.geo.World;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ClientSession;
 
 import org.spout.vanilla.protocol.msg.entity.pos.EntityVelocityMessage;
 
 public class EntityVelocityHandler extends MessageHandler<EntityVelocityMessage> {
 	@Override
-	public void handleClient(Session session, EntityVelocityMessage message) {
+	public void handleClient(ClientSession session, EntityVelocityMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

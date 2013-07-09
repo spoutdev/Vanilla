@@ -34,7 +34,8 @@ import org.spout.api.event.player.PlayerConnectEvent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.geo.discrete.Transform;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ServerNetworkSynchronizer;
+import org.spout.api.protocol.ServerSession;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Human;
@@ -45,7 +46,7 @@ import org.spout.vanilla.protocol.msg.player.PlayerStatusMessage;
 
 public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 	@Override
-	public void handleServer(Session session, PlayerStatusMessage message) {
+	public void handleServer(ServerSession session, PlayerStatusMessage message) {
 		if (message.getStatus() == PlayerStatusMessage.INITIAL_SPAWN) {
 			if (PlayerConnectEvent.getHandlerList().getRegisteredListeners().length > 0) {
 				VanillaPlugin.getInstance().getEngine().getEventManager().callEvent(new PlayerConnectEvent(session, (String) session.getDataMap().get("username")));
@@ -69,7 +70,7 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 			}
 			//Set position for the server
 			player.teleport(point);
-			player.getNetworkSynchronizer().setRespawned();
+			session.getNetworkSynchronizer().setRespawned();
 			Human human = player.get(Human.class);
 			if (human != null) {
 				human.getHealth().setHealth(human.getHealth().getMaxHealth(), HealthChangeCause.SPAWN);
@@ -83,7 +84,7 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 				if (player == otherPlayer) {
 					continue;
 				}
-				otherPlayer.getNetworkSynchronizer().syncEntity(player, spawn, true, false, false);
+				((ServerNetworkSynchronizer) otherPlayer.getNetworkSynchronizer()).syncEntity(player, spawn, true, false, false);
 			}
 		}
 	}

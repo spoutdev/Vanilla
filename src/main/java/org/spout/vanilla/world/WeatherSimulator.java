@@ -28,6 +28,7 @@ package org.spout.vanilla.world;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
+import org.spout.api.Platform;
 
 import org.spout.api.Spout;
 import org.spout.api.generator.biome.Biome;
@@ -48,6 +49,9 @@ public class WeatherSimulator extends BasicTickable {
 	private final SnowSimulator snowfall;
 
 	public WeatherSimulator(Sky sky) {
+		if (Spout.getPlatform() != Platform.SERVER) {
+			throw new UnsupportedOperationException("Weather simulation can only happen on the server");
+		}
 		this.sky = sky;
 		this.lightning = new LightningSimulator(this);
 		this.snowfall = new SnowSimulator(this);

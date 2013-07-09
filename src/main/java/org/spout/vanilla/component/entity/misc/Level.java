@@ -176,6 +176,6 @@ public class Level extends VanillaEntityComponent {
 			return;
 		}
 		Player p = (Player) getOwner();
-		p.getSession().send(false, new PlayerExperienceMessage(getProgress(), getLevel(), getExperience()));
+		p.getSession().send(new PlayerExperienceMessage(getProgress(), getLevel(), getExperience()));
 	}
 }

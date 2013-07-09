@@ -27,7 +27,7 @@
 package org.spout.vanilla.protocol.plugin;
 
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ServerSession;
 
 import org.spout.vanilla.component.block.material.Beacon;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
@@ -39,7 +39,7 @@ import org.spout.vanilla.inventory.window.block.BeaconWindow;
 
 public class BeaconHandler extends MessageHandler<BeaconMessage> {
 	@Override
-	public void handleServer(Session session, BeaconMessage msg) {
+	public void handleServer(ServerSession session, BeaconMessage msg) {
 		Window window = session.getPlayer().get(WindowHolder.class).getActiveWindow();
 		if (!(window instanceof BeaconWindow)) {
 			throw new IllegalStateException("Player tried to change Beacon but does not have an opened Beacon.");

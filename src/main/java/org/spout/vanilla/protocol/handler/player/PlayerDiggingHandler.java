@@ -42,7 +42,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.plugin.services.ProtectionService;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ServerSession;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.flag.Flag;
 import org.spout.vanilla.ChatStyle;
@@ -68,7 +68,7 @@ import org.spout.vanilla.util.PlayerUtil;
 
 public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMessage> {
 	@Override
-	public void handleServer(Session session, PlayerDiggingMessage message) {
+	public void handleServer(ServerSession session, PlayerDiggingMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
@@ -104,7 +104,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 			Collection<Protection> protections = player.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(point);
 			for (Protection p : protections) {
 				if (p.contains(point) && !human.isOp()) {
-					player.getSession().send(false, new BlockChangeMessage(x, y, z, minecraftID, block.getBlockData() & 0xF, rm));
+					player.getSession().send(new BlockChangeMessage(x, y, z, minecraftID, block.getBlockData() & 0xF, rm));
 					player.sendMessage(ChatStyle.DARK_RED + "This area is a protected spawn point!");
 					return;
 				}
@@ -128,10 +128,10 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 				final PlayerInteractBlockEvent event = new PlayerInteractBlockEvent(player, block, point, clickedFace, Action.LEFT_CLICK);
 				if (player.getEngine().getEventManager().callEvent(event).isCancelled()) {
 					if (human.isCreative() || blockMaterial.getHardness() == 0.0f) {
-						session.send(false, new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
+						session.send(new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
 						Sign sign = block.get(Sign.class);
 						if (sign != null) {
-							session.send(false, new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), player.getNetworkSynchronizer().getRepositionManager()));
+							session.send(new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), player.getNetworkSynchronizer().getRepositionManager()));
 						}
 					}
 				} else {
@@ -183,10 +183,10 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 
 				if (!diggingComponent.stopDigging(new Point(w, x, y, z), true) || !isInteractable) {
 					if (!diggingComponent.isDigging()) {
-						session.send(false, new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
+						session.send(new BlockChangeMessage(block, session.getPlayer().getNetworkSynchronizer().getRepositionManager()));
 						Sign sign = block.get(Sign.class);
 						if (sign != null) {
-							session.send(false, new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), player.getNetworkSynchronizer().getRepositionManager()));
+							session.send(new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), player.getNetworkSynchronizer().getRepositionManager()));
 						}
 					}
 					return;
@@ -245,7 +245,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		}
 	}
 
-	private boolean breakBlock(BlockMaterial blockMaterial, Block block, Human human, Session session) {
+	private boolean breakBlock(BlockMaterial blockMaterial, Block block, Human human, ServerSession session) {
 		HashSet<Flag> flags = new HashSet<Flag>();
 		if (human.isSurvival()) {
 			flags.add(PlayerFlags.SURVIVAL);
@@ -258,10 +258,10 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		}
 		if (!blockMaterial.destroy(block, flags, new PlayerBreakCause((Player) human.getOwner(), block))) {
 			RepositionManager rm = session.getPlayer().getNetworkSynchronizer().getRepositionManager();
-			session.send(false, new BlockChangeMessage(block, rm));
+			session.send(new BlockChangeMessage(block, rm));
 			Sign sign = block.get(Sign.class);
 			if (sign != null) {
-				session.send(false, new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), rm));
+				session.send(new SignMessage(block.getX(), block.getY(), block.getZ(), sign.getText(), rm));
 			}
 			return false;
 		}
@@ -273,7 +273,7 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 		Collection<Protection> protections = player.getEngine().getServiceManager().getRegistration(ProtectionService.class).getProvider().getAllProtections(point);
 		for (Protection p : protections) {
 			if (p.contains(point) && !player.get(Human.class).isOp()) {
-				player.getSession().send(false, new BlockChangeMessage(x, y, z, minecraftID, block.getBlockData() & 0xF, rm));
+				player.getSession().send(new BlockChangeMessage(x, y, z, minecraftID, block.getBlockData() & 0xF, rm));
 				player.sendMessage(ChatStyle.DARK_RED + "This area is a protected spawn point!");
 				return true;
 			}

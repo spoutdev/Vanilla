@@ -27,14 +27,14 @@
 package org.spout.vanilla.protocol.handler.player.conn;
 
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ServerSession;
 
 import org.spout.vanilla.component.entity.player.Ping;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerPingMessage;
 
 public class PlayerPingHandler extends MessageHandler<PlayerPingMessage> {
 	@Override
-	public void handleServer(Session session, PlayerPingMessage message) {
+	public void handleServer(ServerSession session, PlayerPingMessage message) {
 		if (!session.hasPlayer()) {
 			session.disconnect("Illegal packet!");
 			return;

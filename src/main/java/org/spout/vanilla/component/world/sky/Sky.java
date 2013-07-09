@@ -29,6 +29,8 @@ package org.spout.vanilla.component.world.sky;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.spout.api.Platform;
+import org.spout.api.Spout;
 import org.spout.api.entity.Player;
 
 import org.spout.vanilla.component.entity.misc.Sleep;
@@ -48,6 +50,12 @@ public abstract class Sky extends VanillaWorldComponent {
 	private static final long REFRESH_RATE = 600;
 	private final AtomicLong countdown = new AtomicLong(REFRESH_RATE);
 	private WeatherSimulator weather;
+
+	@Override
+	public boolean canTick() {
+		// TODO any client sky ticks?
+		return Spout.getPlatform() == Platform.SERVER;
+	}
 
 	@Override
 	public void onTick(float dt) {

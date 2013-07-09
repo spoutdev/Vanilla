@@ -27,15 +27,16 @@
 package org.spout.vanilla.protocol.handler.player;
 
 import org.spout.api.entity.Player;
+import org.spout.api.protocol.ClientSession;
 import org.spout.api.protocol.MessageHandler;
-import org.spout.api.protocol.Session;
+import org.spout.api.protocol.ServerSession;
 
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.protocol.msg.player.PlayerAbilityMessage;
 
 public final class PlayerAbilityHandler extends MessageHandler<PlayerAbilityMessage> {
 	@Override
-	public void handleServer(Session session, PlayerAbilityMessage message) {
+	public void handleServer(ServerSession session, PlayerAbilityMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}
@@ -53,7 +54,7 @@ public final class PlayerAbilityHandler extends MessageHandler<PlayerAbilityMess
 	}
 
 	@Override
-	public void handleClient(Session session, PlayerAbilityMessage message) {
+	public void handleClient(ClientSession session, PlayerAbilityMessage message) {
 		if (!session.hasPlayer()) {
 			return;
 		}

@@ -68,8 +68,8 @@ public final class VanillaRenderMaterials {
 			ALCHEMY_MATERIAL = fileSystem.getResource("material://Vanilla/gui/smt/InventoryGUIMaterial.smt");
 			ITEMS_MATERIAL = fileSystem.getResource("material://Vanilla/gui/smt/ItemsGUIMaterial.smt");
 			BLOCKS_MATERIAL = fileSystem.getResource("material://Vanilla/materials/terrain.smt");
-			HOPPER_MATERIAL = fileSystem.getResource("material://Vanilla/materials.InventoryGUIMaterial.smt");
-			DROPPER_MATERIAL = fileSystem.getResource("material://Vanilla/materials.InventoryGUIMaterial.smt");
+			HOPPER_MATERIAL = fileSystem.getResource("material://Vanilla/gui/smt/InventoryGUIMaterial.smt");
+			DROPPER_MATERIAL = fileSystem.getResource("material://Vanilla/gui/smt/InventoryGUIMaterial.smt");
 		} else {
 			FONT = null;
 			QUICKBAR_MATERIAL = null;

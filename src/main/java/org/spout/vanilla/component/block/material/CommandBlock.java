@@ -546,7 +546,7 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 		}
 
 		try {
-			cmd.execute(this, args);
+			cmd.process(this, args);
 		} catch (CommandException e) {
 			sendMessage(ChatStyle.RED + e.getMessage());
 		}

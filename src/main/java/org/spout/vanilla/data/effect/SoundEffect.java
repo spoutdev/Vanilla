@@ -35,6 +35,8 @@ import org.spout.vanilla.data.effect.type.RandomPitchSoundEffect;
 import org.spout.vanilla.event.world.PlaySoundEffectEvent;
 
 public class SoundEffect extends Effect {
+	private static final long serialVersionUID = 1L;
+
 	private static final int SOUND_RANGE = 16;
 	private final String name;
 	private final float volume, pitch;

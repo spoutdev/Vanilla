@@ -34,6 +34,8 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.vanilla.data.effect.SoundEffect;
 
 public class NoteSoundEffect extends SoundEffect {
+	private static final long serialVersionUID = 1L;
+
 	public NoteSoundEffect(String name) {
 		super(name, 3.0f, 0.5f);
 	}

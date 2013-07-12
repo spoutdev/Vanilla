@@ -45,11 +45,7 @@ public class ChunkNetCache implements Serializable {
 	private volatile boolean cacheEnabled = false;
 
 	public ChunkNetCache() {
-		this(Sets.newSetFromMap(new ConcurrentHashMap<Long, Boolean>()));
-	}
-
-	public ChunkNetCache(Set<Long> hashSet) {
-		this.hashSet = hashSet;
+		this.hashSet = Sets.newSetFromMap(new ConcurrentHashMap<Long, Boolean>());
 	}
 
 	public boolean isCacheEnabled() {

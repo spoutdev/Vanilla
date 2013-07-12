@@ -26,12 +26,15 @@
  */
 package org.spout.vanilla.data.effect;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import org.spout.api.entity.Player;
 import org.spout.api.geo.discrete.Point;
 
-public abstract class Effect {
+public abstract class Effect implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private final int range;
 
 	public Effect(int range) {

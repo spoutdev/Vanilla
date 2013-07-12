@@ -28,7 +28,7 @@ package org.spout.vanilla.protocol.rcon.msg;
 
 /**
  * Message used for initial authentication
- * <p/>
+ * <p>
  * Payload: password
  */
 public class AuthMessage extends RconMessage {

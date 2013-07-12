@@ -35,7 +35,7 @@ import org.spout.vanilla.protocol.rcon.handler.RconHandlerLookupService;
 
 /**
  * Core interface for the rcon system
- * <p/>
+ * <p>
  * This has most of the stuff needed for a client implementation, but that has not been done yet.
  */
 public abstract class RemoteConnectionCore implements Closeable {

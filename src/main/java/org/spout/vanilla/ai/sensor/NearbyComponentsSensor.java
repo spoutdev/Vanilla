@@ -39,7 +39,7 @@ import org.spout.vanilla.component.entity.VanillaEntityComponent;
 
 /**
  * Simple Sensor that detects Entities with a specified Component nearby.
- * <p/>
+ * <p>
  * TODO Probably should have some sort of sight limitation on this sensor. Would be a great optimization.
  */
 public class NearbyComponentsSensor implements Sensor {

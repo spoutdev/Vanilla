@@ -48,10 +48,10 @@ public class VanillaEntityComponent extends EntityComponent {
 
 	/**
 	 * A counter of how many times this component has been attached to an entity
-	 * <p/>
+	 * <p>
 	 * Values > 1 indicate how many times this component has been saved to disk,
 	 * and reloaded
-	 * <p/>
+	 * <p>
 	 * Values == 1 indicate a new component that has never been saved and loaded.
 	 * @return attached count
 	 */

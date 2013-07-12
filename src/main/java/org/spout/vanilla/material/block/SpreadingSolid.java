@@ -91,7 +91,7 @@ public abstract class SpreadingSolid extends Solid implements Spreading, Dynamic
 
 	/**
 	 * Tests if the block can decay at the block specified<br><br>
-	 * <p/>
+	 * <p>
 	 * <b>Note: This should not operate on the block itself,
 	 * as the block is not necessarily this material</b>
 	 * @param block of this Spreading solid

@@ -77,7 +77,7 @@ public class HUD extends VanillaEntityComponent {
 	/**
 	 * Will update the class used for each part of the HUD
 	 * Will not replace a class if one already is placed
-	 * <p/>
+	 * <p>
 	 * To replace use setDefault(Class clazz, boolean force)
 	 * @param clazz
 	 */
@@ -87,7 +87,7 @@ public class HUD extends VanillaEntityComponent {
 
 	/**
 	 * Will update the class used for each part of the HUD
-	 * <p/>
+	 * <p>
 	 * Second param is to force the update, a false will only update the
 	 * class if a class isn't already placed, true will replace any class
 	 * and force an update (forced update not implemented yet)
@@ -175,7 +175,7 @@ public class HUD extends VanillaEntityComponent {
 
 	/**
 	 * Sets the amount of armor to display.
-	 * <p/>
+	 * <p>
 	 * This method will be removed once armor is handled by Vanilla
 	 */
 	public void setArmor() {
@@ -194,7 +194,7 @@ public class HUD extends VanillaEntityComponent {
 
 	/**
 	 * Modify the advancement of the xp bar.
-	 * <p/>
+	 * <p>
 	 * This method needs to be removed when experience is handled by
 	 * Vanilla code.
 	 */

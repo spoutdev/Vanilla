@@ -70,17 +70,17 @@ public abstract class ExplosionModel {
 
 	/**
 	 * Calculated with the following:
-	 * <p/>
+	 * <p>
 	 * o: Origin of explosion
 	 * p: Location of entity for impact to be calculated for
 	 * s: The damage radius
 	 * di: distance from origin
 	 * de: density of non-air blocks from the position to the origin
 	 * i: impact of explosion
-	 * <p/>
+	 * <p>
 	 * 1. Calculate impact with <code>i = (1 - di / size) * de</code>
 	 * 2. Return <code>(int) ((i * i + i) / 2 * 8 * size + 1)</code>
-	 * <p/>
+	 * <p>
 	 * Example:
 	 * M
 	 * @param o

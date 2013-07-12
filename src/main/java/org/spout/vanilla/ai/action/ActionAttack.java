@@ -38,7 +38,7 @@ import org.spout.vanilla.ai.sensor.NearbyComponentsSensor;
 
 /**
  * Very basic Attack action that directs the Entity to go attack the player that is nearby.
- * <p/>
+ * <p>
  * The attack is simply the Entity colliding with the player. Actual attack damage is done within
  * onCollided.
  */

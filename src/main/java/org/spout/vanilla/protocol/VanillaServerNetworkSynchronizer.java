@@ -38,7 +38,7 @@ import org.spout.api.Platform;
 import org.spout.api.Server;
 import org.spout.api.Spout;
 import org.spout.api.component.BlockComponentOwner;
-import org.spout.api.component.DatatableComponent;
+import org.spout.api.datatable.ManagedMap;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
 import org.spout.api.event.EventHandler;
@@ -422,7 +422,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		int highY = minY + stepY;
 		lastY = Integer.MAX_VALUE;
 
-		final DatatableComponent data = world.getData();
+		final ManagedMap data = world.getData();
 		final Human human = player.add(Human.class);
 		GameMode gamemode = null;
 		Difficulty difficulty = data.get(VanillaData.DIFFICULTY);

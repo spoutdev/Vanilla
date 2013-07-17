@@ -52,7 +52,7 @@ public abstract class Ageable extends Living {
 	 * @return age identifier
 	 */
 	public float getAge() {
-		return getDatatable().get(VanillaData.AGE);
+		return getData().get(VanillaData.AGE);
 	}
 
 	/**
@@ -61,7 +61,7 @@ public abstract class Ageable extends Living {
 	 * @param age of animal
 	 */
 	public void setAge(float age) {
-		getDatatable().put(VanillaData.AGE, Math.max(MIN_AGE, Math.min(age, MAX_AGE)));
+		getData().put(VanillaData.AGE, Math.max(MIN_AGE, Math.min(age, MAX_AGE)));
 		setMetadata(new Parameter<Integer>(Parameter.TYPE_INT, 12, (int) (age * 20)));
 	}
 }

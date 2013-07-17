@@ -38,7 +38,7 @@ public class Skull extends VanillaBlockComponent {
 	 * @return The rotation.
 	 */
 	public float getRotation() {
-		return getDatatable().get(VanillaData.SKULL_ROTATION);
+		return getData().get(VanillaData.SKULL_ROTATION);
 	}
 
 	/**
@@ -46,6 +46,6 @@ public class Skull extends VanillaBlockComponent {
 	 * @param rotation The rotation.
 	 */
 	public void setRotation(float rotation) {
-		getDatatable().put(VanillaData.SKULL_ROTATION, rotation);
+		getData().put(VanillaData.SKULL_ROTATION, rotation);
 	}
 }

@@ -66,30 +66,30 @@ public class Enderman extends Living implements Neutral {
 	}
 
 	public Material getHeldMaterial() {
-		return VanillaMaterials.getMaterial(getDatatable().get(VanillaData.HELD_MATERIAL));
+		return VanillaMaterials.getMaterial(getData().get(VanillaData.HELD_MATERIAL));
 	}
 
 	public void setHeldMaterial(VanillaMaterial mat) {
 		byte id = (byte) mat.getMinecraftId();
-		getDatatable().put(VanillaData.HELD_MATERIAL, id);
+		getData().put(VanillaData.HELD_MATERIAL, id);
 		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, id));
 	}
 
 	public byte getHeldMaterialData() {
-		return getDatatable().get(VanillaData.HELD_MATERIAL_DATA);
+		return getData().get(VanillaData.HELD_MATERIAL_DATA);
 	}
 
 	public void setHeldMaterialData(byte data) {
-		getDatatable().put(VanillaData.HELD_MATERIAL_DATA, data);
+		getData().put(VanillaData.HELD_MATERIAL_DATA, data);
 		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, data));
 	}
 
 	public boolean isAggressive() {
-		return getDatatable().get(VanillaData.AGGRESSIVE);
+		return getData().get(VanillaData.AGGRESSIVE);
 	}
 
 	public void setAggressive(boolean aggro) {
-		getDatatable().put(VanillaData.AGGRESSIVE, aggro);
+		getData().put(VanillaData.AGGRESSIVE, aggro);
 		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 18, aggro ? (byte) 1 : 0));
 	}
 }

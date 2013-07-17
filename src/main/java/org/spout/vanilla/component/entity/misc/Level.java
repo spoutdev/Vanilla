@@ -42,7 +42,7 @@ public class Level extends VanillaEntityComponent {
 	 * @return the level
 	 */
 	public short getLevel() {
-		return getDatatable().get(VanillaData.EXPERIENCE_LEVEL);
+		return getData().get(VanillaData.EXPERIENCE_LEVEL);
 	}
 
 	/**
@@ -50,7 +50,7 @@ public class Level extends VanillaEntityComponent {
 	 * @return the total exp
 	 */
 	public short getExperience() {
-		return getDatatable().get(VanillaData.EXPERIENCE_AMOUNT);
+		return getData().get(VanillaData.EXPERIENCE_AMOUNT);
 	}
 
 	/**
@@ -64,8 +64,8 @@ public class Level extends VanillaEntityComponent {
 		if (event.isCancelled()) {
 			return false;
 		}
-		getDatatable().put(VanillaData.EXPERIENCE_AMOUNT, xp);
-		getDatatable().put(VanillaData.EXPERIENCE_LEVEL, convertXpToLevel(xp));
+		getData().put(VanillaData.EXPERIENCE_AMOUNT, xp);
+		getData().put(VanillaData.EXPERIENCE_LEVEL, convertXpToLevel(xp));
 		updateUi();
 		return true;
 	}
@@ -75,7 +75,7 @@ public class Level extends VanillaEntityComponent {
 	 * @return the progress bar
 	 */
 	public float getProgress() {
-		return getDatatable().get(VanillaData.EXPERIENCE_BAR_PROGRESS);
+		return getData().get(VanillaData.EXPERIENCE_BAR_PROGRESS);
 	}
 
 	/**
@@ -93,10 +93,10 @@ public class Level extends VanillaEntityComponent {
 		float newProgress = getProgress() + ((float) amount / getXpCap(getLevel()));
 		if (newProgress < 0.f || newProgress >= 1.0f) {
 			short newLevel = convertXpToLevel(newExperience);
-			getDatatable().put(VanillaData.EXPERIENCE_LEVEL, newLevel);
+			getData().put(VanillaData.EXPERIENCE_LEVEL, newLevel);
 			newProgress = (float) (newExperience - convertLevelToXp(newLevel)) / getXpCap(newLevel);
 		}
-		getDatatable().put(VanillaData.EXPERIENCE_BAR_PROGRESS, newProgress);
+		getData().put(VanillaData.EXPERIENCE_BAR_PROGRESS, newProgress);
 		updateUi();
 	}
 

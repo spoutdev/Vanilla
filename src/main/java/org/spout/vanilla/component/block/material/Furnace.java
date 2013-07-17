@@ -58,7 +58,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 	 * @return The maximum time to smelt.
 	 */
 	public float getMaxSmeltTime() {
-		return getDatatable().get(VanillaData.MAX_SMELT_TIME);
+		return getData().get(VanillaData.MAX_SMELT_TIME);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 	 * @param maxSmeltTime The maximum time to smelt.
 	 */
 	public void setMaxSmeltTime(float maxSmeltTime) {
-		getDatatable().put(VanillaData.MAX_SMELT_TIME, maxSmeltTime);
+		getData().put(VanillaData.MAX_SMELT_TIME, maxSmeltTime);
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 	 * @return The current smelting time.
 	 */
 	public float getSmeltTime() {
-		return getDatatable().get(VanillaData.SMELT_TIME);
+		return getData().get(VanillaData.SMELT_TIME);
 	}
 
 	/**
@@ -82,7 +82,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 	 * @param smeltTime The current smelting time.
 	 */
 	public void setSmeltTime(float smeltTime) {
-		getDatatable().put(VanillaData.SMELT_TIME, smeltTime);
+		getData().put(VanillaData.SMELT_TIME, smeltTime);
 		for (Player player : viewers) {
 			updateProgressArrow(player);
 		}
@@ -106,7 +106,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 	 */
 	//TODO: Better description anyone?
 	public float getMaxFuel() {
-		return getDatatable().get(VanillaData.MAX_FURNACE_FUEL);
+		return getData().get(VanillaData.MAX_FURNACE_FUEL);
 	}
 
 	/**
@@ -114,7 +114,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 	 * @param maxFuel The maximum amount of fuel.
 	 */
 	public void setMaxFuel(float maxFuel) {
-		getDatatable().put(VanillaData.MAX_FURNACE_FUEL, maxFuel);
+		getData().put(VanillaData.MAX_FURNACE_FUEL, maxFuel);
 	}
 
 	/**
@@ -122,7 +122,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 	 * @return The current amount of fuel.
 	 */
 	public float getFuel() {
-		return getDatatable().get(VanillaData.FURNACE_FUEL);
+		return getData().get(VanillaData.FURNACE_FUEL);
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 	 * @param fuel The current amount of fuel.
 	 */
 	public void setFuel(float fuel) {
-		getDatatable().put(VanillaData.FURNACE_FUEL, fuel);
+		getData().put(VanillaData.FURNACE_FUEL, fuel);
 		for (Player player : viewers) {
 			updateFireIcon(player);
 		}
@@ -267,7 +267,7 @@ public class Furnace extends ViewedBlockComponent implements Container {
 
 	@Override
 	public FurnaceInventory getInventory() {
-		return getDatatable().get(VanillaData.FURNACE_INVENTORY);
+		return getData().get(VanillaData.FURNACE_INVENTORY);
 	}
 
 	@Override

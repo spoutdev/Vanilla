@@ -78,7 +78,7 @@ public class EntityHead extends VanillaEntityComponent {
 	 */
 	public void setOrientation(Quaternion rotation) {
 		lastRotation = getOrientation();
-		getDatatable().put(VanillaData.HEAD_ROTATION, rotation);
+		getData().put(VanillaData.HEAD_ROTATION, rotation);
 	}
 
 	/**
@@ -86,7 +86,7 @@ public class EntityHead extends VanillaEntityComponent {
 	 * @return Head rotation
 	 */
 	public Quaternion getOrientation() {
-		return getDatatable().get(VanillaData.HEAD_ROTATION);
+		return getData().get(VanillaData.HEAD_ROTATION);
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class EntityHead extends VanillaEntityComponent {
 	 * @param height
 	 */
 	public void setHeight(float height) {
-		getDatatable().put(VanillaData.HEAD_HEIGHT, height);
+		getData().put(VanillaData.HEAD_HEIGHT, height);
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class EntityHead extends VanillaEntityComponent {
 	 * @return Head height
 	 */
 	public float getHeight() {
-		return getDatatable().get(VanillaData.HEAD_HEIGHT);
+		return getData().get(VanillaData.HEAD_HEIGHT);
 	}
 
 	/**
@@ -130,7 +130,7 @@ public class EntityHead extends VanillaEntityComponent {
 	 * @return Block iterator
 	 */
 	public BlockIterator getBlockView() {
-		return getBlockView(getDatatable().get(VanillaData.INTERACT_REACH));
+		return getBlockView(getData().get(VanillaData.INTERACT_REACH));
 	}
 
 	/**

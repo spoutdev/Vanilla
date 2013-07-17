@@ -54,7 +54,7 @@ public class BrewingStand extends ViewedBlockComponent implements Container {
 
 	@Override
 	public BrewingStandInventory getInventory() {
-		return getDatatable().get(VanillaData.BREWING_STAND_INVENTORY);
+		return getData().get(VanillaData.BREWING_STAND_INVENTORY);
 	}
 
 	@Override
@@ -139,11 +139,11 @@ public class BrewingStand extends ViewedBlockComponent implements Container {
 	}
 
 	public float getBrewTime() {
-		return getDatatable().get(VanillaData.BREW_TIME);
+		return getData().get(VanillaData.BREW_TIME);
 	}
 
 	public void setBrewTime(float brewTime) {
-		getDatatable().put(VanillaData.BREW_TIME, brewTime);
+		getData().put(VanillaData.BREW_TIME, brewTime);
 		for (Player player : viewers) {
 			updateProgressArrow(player);
 		}

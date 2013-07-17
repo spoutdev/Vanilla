@@ -46,7 +46,7 @@ public class EntityInventory extends EntityComponent {
 	 * @return armor
 	 */
 	public ArmorInventory getArmor() {
-		return getDatatable().get(VanillaData.ARMOR_INVENTORY);
+		return getData().get(VanillaData.ARMOR_INVENTORY);
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class EntityInventory extends EntityComponent {
 	 * @return quickbar
 	 */
 	public QuickbarInventory getQuickbar() {
-		return getDatatable().get(VanillaData.ENTITY_HELD_INVENTORY);
+		return getData().get(VanillaData.ENTITY_HELD_INVENTORY);
 	}
 
 	/**

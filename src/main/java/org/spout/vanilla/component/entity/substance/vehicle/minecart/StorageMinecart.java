@@ -55,7 +55,7 @@ public class StorageMinecart extends MinecartBase {
 	}
 
 	public ChestInventory getInventory() {
-		return this.getDatatable().get(CHEST_INVENTORY);
+		return this.getData().get(CHEST_INVENTORY);
 	}
 
 	@Override

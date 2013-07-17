@@ -70,7 +70,7 @@ public class Jukebox extends VanillaBlockComponent {
 	 * @return Played item
 	 */
 	public ItemStack getPlayedItem() {
-		return getDatatable().get(VanillaData.JUKEBOX_ITEM);
+		return getData().get(VanillaData.JUKEBOX_ITEM);
 	}
 
 	/**
@@ -78,7 +78,7 @@ public class Jukebox extends VanillaBlockComponent {
 	 * @param item to set to
 	 */
 	public void setPlayedItem(ItemStack item) {
-		ItemStack old = getDatatable().put(VanillaData.JUKEBOX_ITEM, item);
+		ItemStack old = getData().put(VanillaData.JUKEBOX_ITEM, item);
 		if (old != null) {
 			// Drop the old item
 			Item.drop(getPoint(), old, Vector3.UP.multiply(0.5));

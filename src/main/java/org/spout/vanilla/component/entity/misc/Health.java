@@ -299,7 +299,7 @@ public class Health extends VanillaEntityComponent {
 	 * @return the maximum health
 	 */
 	public int getMaxHealth() {
-		return getDatatable().get(VanillaData.MAX_HEALTH);
+		return getData().get(VanillaData.MAX_HEALTH);
 	}
 
 	/**
@@ -307,7 +307,7 @@ public class Health extends VanillaEntityComponent {
 	 * @param maxHealth to set to
 	 */
 	public void setMaxHealth(int maxHealth) {
-		getDatatable().put(VanillaData.MAX_HEALTH, maxHealth);
+		getData().put(VanillaData.MAX_HEALTH, maxHealth);
 	}
 
 	/**
@@ -317,7 +317,7 @@ public class Health extends VanillaEntityComponent {
 	public void setSpawnHealth(int maxHealth) {
 		this.setMaxHealth(maxHealth);
 		//Do not call setHealth yet, network has not been initialized if loading from file
-		getDatatable().put(VanillaData.HEALTH, maxHealth);
+		getData().put(VanillaData.HEALTH, maxHealth);
 	}
 
 	/**
@@ -325,7 +325,7 @@ public class Health extends VanillaEntityComponent {
 	 * @return the health value
 	 */
 	public int getHealth() {
-		return getDatatable().get(VanillaData.HEALTH);
+		return getData().get(VanillaData.HEALTH);
 	}
 
 	/**
@@ -338,9 +338,9 @@ public class Health extends VanillaEntityComponent {
 		getEngine().getEventManager().callEvent(event);
 		if (!event.isCancelled()) {
 			if (getHealth() + event.getChange() > getMaxHealth()) {
-				getDatatable().put(VanillaData.HEALTH, getMaxHealth());
+				getData().put(VanillaData.HEALTH, getMaxHealth());
 			} else {
-				getDatatable().put(VanillaData.HEALTH, getHealth() + event.getChange());
+				getData().put(VanillaData.HEALTH, getHealth() + event.getChange());
 			}
 		}
 
@@ -405,7 +405,7 @@ public class Health extends VanillaEntityComponent {
 	 * @return The death ticks amount
 	 */
 	public int getDeathTicks() {
-		return getDatatable().get(VanillaData.DEATH_TICKS);
+		return getData().get(VanillaData.DEATH_TICKS);
 	}
 
 	/**
@@ -416,7 +416,7 @@ public class Health extends VanillaEntityComponent {
 		if (deathTicks > DEATH_TIME_TICKS) {
 			deathTicks = DEATH_TIME_TICKS;
 		}
-		getDatatable().put(VanillaData.DEATH_TICKS, deathTicks);
+		getData().put(VanillaData.DEATH_TICKS, deathTicks);
 	}
 
 	/**
@@ -477,7 +477,7 @@ public class Health extends VanillaEntityComponent {
 	 * @return true if animated death
 	 */
 	public boolean hasDeathAnimation() {
-		return getDatatable().get(VanillaData.HAS_DEATH_ANIMATION);
+		return getData().get(VanillaData.HAS_DEATH_ANIMATION);
 	}
 
 	/**
@@ -485,7 +485,7 @@ public class Health extends VanillaEntityComponent {
 	 * @param hasDeathAnimation
 	 */
 	public void setDeathAnimation(boolean hasDeathAnimation) {
-		getDatatable().put(VanillaData.HAS_DEATH_ANIMATION, hasDeathAnimation);
+		getData().put(VanillaData.HAS_DEATH_ANIMATION, hasDeathAnimation);
 	}
 
 	/**

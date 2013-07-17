@@ -46,7 +46,7 @@ public class PlayerInventory extends EntityInventory {
 	 * @return armor
 	 */
 	public ArmorInventory getArmor() {
-		return getDatatable().get(VanillaData.ARMOR_INVENTORY);
+		return getData().get(VanillaData.ARMOR_INVENTORY);
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class PlayerInventory extends EntityInventory {
 	 * @return an Inventory with the items
 	 */
 	public Inventory getMain() {
-		return getDatatable().get(VanillaData.MAIN_INVENTORY);
+		return getData().get(VanillaData.MAIN_INVENTORY);
 	}
 
 	/**
@@ -62,7 +62,7 @@ public class PlayerInventory extends EntityInventory {
 	 * @return an inventory with the crafting grid items
 	 */
 	public PlayerCraftingInventory getCraftingGrid() {
-		return getDatatable().get(VanillaData.CRAFTING_INVENTORY);
+		return getData().get(VanillaData.CRAFTING_INVENTORY);
 	}
 
 	/**
@@ -70,12 +70,12 @@ public class PlayerInventory extends EntityInventory {
 	 * @return an inventory for the persistent chest
 	 */
 	public Inventory getEnderChestInventory() {
-		return getDatatable().get(VanillaData.ENDER_CHEST_INVENTORY);
+		return getData().get(VanillaData.ENDER_CHEST_INVENTORY);
 	}
 
 	@Override
 	public QuickbarInventory getQuickbar() {
-		return getDatatable().get(VanillaData.QUICKBAR_INVENTORY);
+		return getData().get(VanillaData.QUICKBAR_INVENTORY);
 	}
 
 	/**

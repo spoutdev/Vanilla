@@ -63,8 +63,8 @@ public class LightningSimulator extends Component {
 	 * @return the strength
 	 */
 	public float getThunderStrength(float factor) {
-		float currentThunderStrength = weather.getSky().getDatatable().get(VanillaData.CURRENT_LIGHTNING_STRENGTH);
-		float previousThunderStrength = weather.getSky().getDatatable().get(VanillaData.PREVIOUS_LIGHTNING_STRENGTH);
+		float currentThunderStrength = weather.getSky().getData().get(VanillaData.CURRENT_LIGHTNING_STRENGTH);
+		float previousThunderStrength = weather.getSky().getData().get(VanillaData.PREVIOUS_LIGHTNING_STRENGTH);
 		return (previousThunderStrength + factor * (currentThunderStrength - previousThunderStrength));
 	}
 
@@ -75,14 +75,14 @@ public class LightningSimulator extends Component {
 
 	@Override
 	public void onTick(float dt) {
-		float currentThunderStrength = weather.getSky().getDatatable().get(VanillaData.CURRENT_LIGHTNING_STRENGTH);
-		weather.getSky().getDatatable().put(VanillaData.PREVIOUS_LIGHTNING_STRENGTH, currentThunderStrength);
+		float currentThunderStrength = weather.getSky().getData().get(VanillaData.CURRENT_LIGHTNING_STRENGTH);
+		weather.getSky().getData().put(VanillaData.PREVIOUS_LIGHTNING_STRENGTH, currentThunderStrength);
 		if (this.weather.isThundering()) {
 			currentThunderStrength = Math.min(1.0f, currentThunderStrength + 0.01f);
 		} else {
 			currentThunderStrength = Math.max(0.0f, currentThunderStrength - 0.01f);
 		}
-		weather.getSky().getDatatable().put(VanillaData.CURRENT_LIGHTNING_STRENGTH, currentThunderStrength);
+		weather.getSky().getData().put(VanillaData.CURRENT_LIGHTNING_STRENGTH, currentThunderStrength);
 		try {
 			updatePlayerTimers();
 		} catch (Exception e) {
@@ -176,11 +176,11 @@ public class LightningSimulator extends Component {
 	}
 
 	public void setIntensity(Intensity in) {
-		weather.getSky().getDatatable().put(VanillaData.STORM_INTENSITY, in != null ? in.ordinal() : -1);
+		weather.getSky().getData().put(VanillaData.STORM_INTENSITY, in != null ? in.ordinal() : -1);
 	}
 
 	public Intensity getIntensity() {
-		int intensity = weather.getSky().getDatatable().get(VanillaData.STORM_INTENSITY);
+		int intensity = weather.getSky().getData().get(VanillaData.STORM_INTENSITY);
 		if (intensity >= 0 && intensity < Intensity.values().length) {
 			return Intensity.values()[intensity];
 		}

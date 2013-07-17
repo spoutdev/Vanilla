@@ -73,36 +73,36 @@ public class Creeper extends Living implements Hostile {
 	}
 
 	public float getFuse() {
-		return getDatatable().get(VanillaData.CREEPER_FUSE);
+		return getData().get(VanillaData.CREEPER_FUSE);
 	}
 
 	public void setFuse(float fuse) {
-		getDatatable().put(VanillaData.CREEPER_FUSE, fuse);
+		getData().put(VanillaData.CREEPER_FUSE, fuse);
 	}
 
 	public float getExplosionRadius() {
-		return getDatatable().get(VanillaData.EXPLOSION_RADIUS);
+		return getData().get(VanillaData.EXPLOSION_RADIUS);
 	}
 
 	public void setExplosionRadius(float radius) {
-		getDatatable().put(VanillaData.EXPLOSION_RADIUS, radius);
+		getData().put(VanillaData.EXPLOSION_RADIUS, radius);
 	}
 
 	public byte getState() {
-		return getDatatable().get(VanillaData.STATE);
+		return getData().get(VanillaData.STATE);
 	}
 
 	public void setState(byte state) {
-		getDatatable().put(VanillaData.STATE, state);
+		getData().put(VanillaData.STATE, state);
 		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, state));
 	}
 
 	public boolean isCharged() {
-		return getDatatable().get(VanillaData.CHARGED);
+		return getData().get(VanillaData.CHARGED);
 	}
 
 	public void setCharged(boolean charged) {
-		getDatatable().put(VanillaData.CHARGED, charged);
+		getData().put(VanillaData.CHARGED, charged);
 		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 17, charged ? (byte) 1 : 0));
 	}
 }

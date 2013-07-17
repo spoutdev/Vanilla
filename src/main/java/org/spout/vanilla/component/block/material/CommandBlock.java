@@ -107,7 +107,7 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 			Spout.getLogger().info("CommandBlock at " + getPoint().toString() + " command set to " + cmd);
 		}
 
-		getDatatable().put(VanillaData.COMMAND, cmd);
+		getData().put(VanillaData.COMMAND, cmd);
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 	 * @return command to execute
 	 */
 	public String getCommand() {
-		return getDatatable().get(VanillaData.COMMAND);
+		return getData().get(VanillaData.COMMAND);
 	}
 
 	/**
@@ -132,7 +132,7 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 	 */
 	public void setPowered(boolean powered) {
 		if (isPowered() != powered) {
-			getDatatable().put(VanillaData.IS_POWERED, powered);
+			getData().put(VanillaData.IS_POWERED, powered);
 			if (powered) {
 				execute();
 			}
@@ -144,7 +144,7 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 	 * @return true if powered
 	 */
 	public boolean isPowered() {
-		return getDatatable().get(VanillaData.IS_POWERED);
+		return getData().get(VanillaData.IS_POWERED);
 	}
 
 	/**

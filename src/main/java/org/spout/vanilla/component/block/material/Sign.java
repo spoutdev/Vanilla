@@ -62,7 +62,7 @@ public class Sign extends VanillaBlockComponent {
 	 * @return copy of the text
 	 */
 	public String[] getText() {
-		String[] raw = getDatatable().get(VanillaData.SIGN_TEXT);
+		String[] raw = getData().get(VanillaData.SIGN_TEXT);
 		String[] copy = new String[raw.length];
 		System.arraycopy(raw, 0, copy, 0, raw.length);
 		return copy;
@@ -73,7 +73,7 @@ public class Sign extends VanillaBlockComponent {
 		super.onAttached();
 
 		//Defaulted key not enough, the array needs to have empty lines in it, not null
-		if (getDatatable().get(VanillaData.SIGN_TEXT)[0] != null) {
+		if (getData().get(VanillaData.SIGN_TEXT)[0] != null) {
 			return;
 		}
 
@@ -81,7 +81,7 @@ public class Sign extends VanillaBlockComponent {
 		for (int i = 0; i < lines.length; i++) {
 			lines[i] = "";
 		}
-		getDatatable().put(VanillaData.SIGN_TEXT, lines);
+		getData().put(VanillaData.SIGN_TEXT, lines);
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class Sign extends VanillaBlockComponent {
 			for (Player p : this.getOwner().getBlock().getChunk().getObservingPlayers()) {
 				p.getNetworkSynchronizer().callProtocolEvent(event);
 			}
-			getDatatable().put(VanillaData.SIGN_TEXT, event.getLines());
+			getData().put(VanillaData.SIGN_TEXT, event.getLines());
 		}
 	}
 }

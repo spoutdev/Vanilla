@@ -55,7 +55,7 @@ public class HopperMinecart extends MinecartBase {
 	}
 
 	public HopperInventory getInventory() {
-		return this.getDatatable().get(HOPPER_INVENTORY);
+		return this.getData().get(HOPPER_INVENTORY);
 	}
 
 	@Override

@@ -213,7 +213,7 @@ public class Hunger extends VanillaEntityComponent {
 	 * @return The hunger level.
 	 */
 	public int getHunger() {
-		return getDatatable().get(VanillaData.HUNGER);
+		return getData().get(VanillaData.HUNGER);
 	}
 
 	// Need to confirm what fx/bx equals to rename methods propertly
@@ -231,7 +231,7 @@ public class Hunger extends VanillaEntityComponent {
 	 * @param hunger The hunger level of the entity
 	 */
 	public void setHunger(int hunger) {
-		getDatatable().put(VanillaData.HUNGER, Math.min(hunger, 20));
+		getData().put(VanillaData.HUNGER, Math.min(hunger, 20));
 		reload();
 		if (getOwner().getEngine() instanceof Client) {
 			//render(52, 16);
@@ -246,7 +246,7 @@ public class Hunger extends VanillaEntityComponent {
 	 * @return The food saturation value.
 	 */
 	public float getFoodSaturation() {
-		return getDatatable().get(VanillaData.FOOD_SATURATION);
+		return getData().get(VanillaData.FOOD_SATURATION);
 	}
 
 	/**
@@ -255,7 +255,7 @@ public class Hunger extends VanillaEntityComponent {
 	 * @param foodSaturation The food saturation value.
 	 */
 	public void setFoodSaturation(float foodSaturation) {
-		getDatatable().put(VanillaData.FOOD_SATURATION, Math.min(foodSaturation, getHunger()));
+		getData().put(VanillaData.FOOD_SATURATION, Math.min(foodSaturation, getHunger()));
 		reload();
 	}
 
@@ -264,7 +264,7 @@ public class Hunger extends VanillaEntityComponent {
 	 * @return The exhaustion value.
 	 */
 	public float getExhaustion() {
-		return getDatatable().get(VanillaData.EXHAUSTION);
+		return getData().get(VanillaData.EXHAUSTION);
 	}
 
 	/**
@@ -272,7 +272,7 @@ public class Hunger extends VanillaEntityComponent {
 	 * @param exhaustion The exhaustion value.
 	 */
 	public void setExhaustion(float exhaustion) {
-		getDatatable().put(VanillaData.EXHAUSTION, exhaustion);
+		getData().put(VanillaData.EXHAUSTION, exhaustion);
 	}
 
 	/**
@@ -280,7 +280,7 @@ public class Hunger extends VanillaEntityComponent {
 	 * @return True if the entity is poisoned else false
 	 */
 	public boolean isPoisoned() {
-		return getDatatable().get(VanillaData.POISONED);
+		return getData().get(VanillaData.POISONED);
 	}
 
 	/**
@@ -288,7 +288,7 @@ public class Hunger extends VanillaEntityComponent {
 	 * @param poisoned True if he is poisoned else false
 	 */
 	public void setPoisoned(boolean poisoned) {
-		getDatatable().put(VanillaData.POISONED, poisoned);
+		getData().put(VanillaData.POISONED, poisoned);
 		if (getOwner().getEngine() instanceof Client) {
 			if (poisoned) {
 				fx = 88;

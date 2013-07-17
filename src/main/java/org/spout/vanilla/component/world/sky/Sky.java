@@ -60,7 +60,7 @@ public abstract class Sky extends VanillaWorldComponent {
 	@Override
 	public void onTick(float dt) {
 		final long maxTime = getMaxTime();
-		float time = getDatatable().get(VanillaData.WORLD_TIME).floatValue();
+		float time = getData().get(VanillaData.WORLD_TIME).floatValue();
 		time += getRate() * (dt / 50F);
 		while (time >= maxTime) {
 			time -= maxTime;
@@ -93,7 +93,7 @@ public abstract class Sky extends VanillaWorldComponent {
 				}
 			}
 		}
-		getDatatable().put(VanillaData.WORLD_TIME, time);
+		getData().put(VanillaData.WORLD_TIME, time);
 
 		synchronized (this) {
 			if (this.weather != null) {
@@ -107,7 +107,7 @@ public abstract class Sky extends VanillaWorldComponent {
 	 * @param time
 	 */
 	public void setTime(long time) {
-		getDatatable().put(VanillaData.WORLD_TIME, time);
+		getData().put(VanillaData.WORLD_TIME, time);
 		countdown.set(0);
 	}
 
@@ -116,7 +116,7 @@ public abstract class Sky extends VanillaWorldComponent {
 	 * @return time
 	 */
 	public long getTime() {
-		return getDatatable().get(VanillaData.WORLD_TIME).longValue();
+		return getData().get(VanillaData.WORLD_TIME).longValue();
 	}
 
 	/**
@@ -125,7 +125,7 @@ public abstract class Sky extends VanillaWorldComponent {
 	 * @return
 	 */
 	public long getMaxTime() {
-		return getDatatable().get(VanillaData.MAX_TIME);
+		return getData().get(VanillaData.MAX_TIME);
 	}
 
 	/**
@@ -134,7 +134,7 @@ public abstract class Sky extends VanillaWorldComponent {
 	 * @param maxTime
 	 */
 	public void setMaxTime(long maxTime) {
-		getDatatable().put(VanillaData.MAX_TIME, maxTime);
+		getData().put(VanillaData.MAX_TIME, maxTime);
 		countdown.set(0);
 	}
 
@@ -143,7 +143,7 @@ public abstract class Sky extends VanillaWorldComponent {
 	 * @return
 	 */
 	public long getRate() {
-		return getDatatable().get(VanillaData.TIME_RATE);
+		return getData().get(VanillaData.TIME_RATE);
 	}
 
 	/**
@@ -152,7 +152,7 @@ public abstract class Sky extends VanillaWorldComponent {
 	 * @param rate
 	 */
 	public void setRate(long rate) {
-		getDatatable().put(VanillaData.TIME_RATE, rate);
+		getData().put(VanillaData.TIME_RATE, rate);
 		countdown.set(0);
 	}
 

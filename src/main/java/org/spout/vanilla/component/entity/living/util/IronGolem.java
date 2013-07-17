@@ -59,11 +59,11 @@ public class IronGolem extends Living implements Utility {
 	}
 
 	public boolean wasNaturallySpawned() {
-		return getDatatable().get(VanillaData.NATURALLY_SPAWNED);
+		return getData().get(VanillaData.NATURALLY_SPAWNED);
 	}
 
 	public void setNaturallySpawned(boolean naturallySpawned) {
-		getDatatable().put(VanillaData.NATURALLY_SPAWNED, naturallySpawned);
+		getData().put(VanillaData.NATURALLY_SPAWNED, naturallySpawned);
 		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, naturallySpawned ? 0 : (byte) 1));
 	}
 }

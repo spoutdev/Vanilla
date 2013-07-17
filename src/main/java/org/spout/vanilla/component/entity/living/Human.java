@@ -90,11 +90,11 @@ public class Human extends Living {
 	}
 
 	public ViewDistance getViewDistance() {
-		return getDatatable().get(VanillaData.VIEW_DISTANCE);
+		return getData().get(VanillaData.VIEW_DISTANCE);
 	}
 
 	public void setViewDistance(ViewDistance distance) {
-		getDatatable().put(VanillaData.VIEW_DISTANCE, distance);
+		getData().put(VanillaData.VIEW_DISTANCE, distance);
 		WorldConfigurationNode config = VanillaConfiguration.WORLDS.get(getOwner().getWorld().getName());
 		int viewDistance;
 		switch (distance) {
@@ -163,11 +163,11 @@ public class Human extends Living {
 	}
 
 	public String getName() {
-		return getDatatable().get(Data.NAME);
+		return getData().get(Data.NAME);
 	}
 
 	public void setName(String name) {
-		getDatatable().put(Data.NAME, name);
+		getData().put(Data.NAME, name);
 		TextModelComponent textModel = getOwner().get(TextModelComponent.class);
 		if (textModel != null) {
 			textModel.setText(name);
@@ -358,7 +358,7 @@ public class Human extends Living {
 				holder.getNetwork().callProtocolEvent(new PlayerGameStateEvent((Player) holder, PlayerGameStateMessage.CHANGE_GAME_MODE, mode), (Player) getOwner());
 			}
 		}
-		getDatatable().put(VanillaData.GAMEMODE, mode);
+		getData().put(VanillaData.GAMEMODE, mode);
 	}
 
 	public void setGamemode(GameMode mode) {
@@ -366,7 +366,7 @@ public class Human extends Living {
 	}
 
 	public GameMode getGameMode() {
-		return getDatatable().get(VanillaData.GAMEMODE);
+		return getData().get(VanillaData.GAMEMODE);
 	}
 
 	public HumanAbilityChangeEvent callAbilityChangeEvent() {

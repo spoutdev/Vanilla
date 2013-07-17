@@ -43,7 +43,7 @@ public class Dropper extends ViewedBlockComponent implements Container {
 	 * @return true if the block is powered
 	 */
 	public boolean isPowered() {
-		return getDatatable().get(VanillaData.IS_POWERED);
+		return getData().get(VanillaData.IS_POWERED);
 	}
 
 	/**
@@ -51,12 +51,12 @@ public class Dropper extends ViewedBlockComponent implements Container {
 	 * @param powered
 	 */
 	public void setPowered(boolean powered) {
-		getDatatable().put(VanillaData.IS_POWERED, powered);
+		getData().put(VanillaData.IS_POWERED, powered);
 	}
 
 	@Override
 	public DropperInventory getInventory() {
-		return getDatatable().get(VanillaData.DROPPER_INVENTORY);
+		return getData().get(VanillaData.DROPPER_INVENTORY);
 	}
 
 	@Override

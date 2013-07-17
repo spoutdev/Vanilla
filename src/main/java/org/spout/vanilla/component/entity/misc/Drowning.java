@@ -93,7 +93,7 @@ public class Drowning extends VanillaEntityComponent {
 				}
 				// Animate air meter
 				final float maxSecsBubbles = VanillaData.AIR_SECS.getDefaultValue();
-				final float secsBubbles = getDatatable().get(VanillaData.AIR_SECS);
+				final float secsBubbles = getData().get(VanillaData.AIR_SECS);
 				if (secsBubbles == maxSecsBubbles) {
 					hideBubbles();
 				} else {
@@ -108,7 +108,7 @@ public class Drowning extends VanillaEntityComponent {
 
 	public float getNbBubExact() {
 		final float maxSecsBubbles = VanillaData.AIR_SECS.getDefaultValue();
-		final float secsBubbles = getDatatable().get(VanillaData.AIR_SECS);
+		final float secsBubbles = getData().get(VanillaData.AIR_SECS);
 
 		return secsBubbles / maxSecsBubbles * 10f;
 	}
@@ -138,7 +138,7 @@ public class Drowning extends VanillaEntityComponent {
 	 * @return The amount of air in seconds.
 	 */
 	public float getAir() {
-		return getDatatable().get(VanillaData.AIR_SECS);
+		return getData().get(VanillaData.AIR_SECS);
 	}
 
 	/**
@@ -146,6 +146,6 @@ public class Drowning extends VanillaEntityComponent {
 	 * @param airSecs The amount of air (in seconds) that the entity have.
 	 */
 	public void setAir(float airSecs) {
-		getDatatable().put(VanillaData.AIR_SECS, airSecs);
+		getData().put(VanillaData.AIR_SECS, airSecs);
 	}
 }

@@ -75,7 +75,7 @@ public class NoteBlock extends VanillaBlockComponent {
 	 */
 	public void setPowered(boolean powered) {
 		if (this.isPowered() != powered) {
-			getDatatable().put(VanillaData.IS_POWERED, powered);
+			getData().put(VanillaData.IS_POWERED, powered);
 			if (powered) {
 				this.play();
 			}
@@ -87,7 +87,7 @@ public class NoteBlock extends VanillaBlockComponent {
 	 * @return True if it is powered, False if not
 	 */
 	public boolean isPowered() {
-		return getDatatable().get(VanillaData.IS_POWERED);
+		return getData().get(VanillaData.IS_POWERED);
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class NoteBlock extends VanillaBlockComponent {
 	 * @return the note value
 	 */
 	public int getNote() {
-		return getDatatable().get(VanillaData.NOTE);
+		return getData().get(VanillaData.NOTE);
 	}
 
 	/**
@@ -103,7 +103,7 @@ public class NoteBlock extends VanillaBlockComponent {
 	 * @param note value to set to
 	 */
 	public void setNote(int note) {
-		getDatatable().put(VanillaData.NOTE, note % 25);
+		getData().put(VanillaData.NOTE, note % 25);
 	}
 
 	/**

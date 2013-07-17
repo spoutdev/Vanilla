@@ -66,11 +66,11 @@ public class Spider extends Living implements Hostile {
 	}
 
 	public boolean isAggressive() {
-		return getDatatable().get(VanillaData.AGGRESSIVE);
+		return getData().get(VanillaData.AGGRESSIVE);
 	}
 
 	public void setAggressive(boolean aggro) {
-		getDatatable().put(VanillaData.AGGRESSIVE, aggro);
+		getData().put(VanillaData.AGGRESSIVE, aggro);
 		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, aggro ? (byte) 1 : 0));
 	}
 }

@@ -138,14 +138,14 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 
 				//Hover tracking
 				if (wasOnGround && !onGround) {
-					human.getDatatable().put("position_on_ground", livePosition);
-					human.getDatatable().put("time_in_air", holder.getWorld().getAge());
+					human.getData().put("position_on_ground", livePosition);
+					human.getData().put("time_in_air", holder.getWorld().getAge());
 				} else if (!wasOnGround && !onGround) {
 					//Changed directions
 					if (wasFalling && !human.isFalling() || human.isInWater()) {
-						human.getDatatable().remove("time_in_air");
+						human.getData().remove("time_in_air");
 					}
-					float time = human.getDatatable().get("time_in_air", holder.getWorld().getAge());
+					float time = human.getData().get("time_in_air", holder.getWorld().getAge());
 					//hovering or still rising
 					if (time + 2000 < holder.getWorld().getAge() && newPosition.getY() - livePosition.getY() >= 0) {
 						if (!human.canFly()) {
@@ -153,8 +153,8 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 						}
 					}
 				} else if (!wasOnGround && onGround) {
-					human.getDatatable().remove("position_on_ground");
-					human.getDatatable().remove("time_in_air");
+					human.getData().remove("position_on_ground");
+					human.getData().remove("time_in_air");
 				}
 
 				//Movement tracking

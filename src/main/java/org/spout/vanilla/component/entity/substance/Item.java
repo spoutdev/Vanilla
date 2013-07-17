@@ -65,11 +65,11 @@ public class Item extends Substance {
 	}
 
 	public ItemStack getItemStack() {
-		return getDatatable().get(Data.HELD_ITEM);
+		return getData().get(Data.HELD_ITEM);
 	}
 
 	public void setItemStack(ItemStack stack) {
-		getDatatable().put(Data.HELD_ITEM, stack);
+		getData().put(Data.HELD_ITEM, stack);
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class Item extends Substance {
 	 * @return uncollectable time in milliseconds
 	 */
 	public long getUncollectableTime() {
-		return getDatatable().get(VanillaData.UNCOLLECTABLE_TICKS).longValue();
+		return getData().get(VanillaData.UNCOLLECTABLE_TICKS).longValue();
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class Item extends Substance {
 	 * @param uncollectableTime in milliseconds
 	 */
 	public void setUncollectableTime(long uncollectableTime) {
-		getDatatable().put(VanillaData.UNCOLLECTABLE_TICKS, Long.valueOf(uncollectableTime));
+		getData().put(VanillaData.UNCOLLECTABLE_TICKS, Long.valueOf(uncollectableTime));
 	}
 
 	/**

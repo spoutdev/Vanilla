@@ -30,25 +30,24 @@ import org.spout.api.Client;
 import org.spout.api.command.CommandArguments;
 import org.spout.api.command.CommandSource;
 import org.spout.api.command.annotated.Binding;
-import org.spout.api.command.annotated.Command;
-import org.spout.api.component.entity.InteractComponent;
+import org.spout.api.command.annotated.CommandDescription;
 import org.spout.api.command.annotated.Filter;
 import org.spout.api.command.filter.PlayerFilter;
 import org.spout.api.entity.Player;
+import org.spout.api.exception.ArgumentParseException;
 import org.spout.api.exception.CommandException;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.input.Keyboard;
 import org.spout.api.input.Mouse;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
-
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.WindowHolder;
 import org.spout.vanilla.component.entity.player.PlayerInteract;
 import org.spout.vanilla.inventory.window.Window;
 import org.spout.vanilla.material.VanillaMaterials;
 
-public class InputCommands  {
+public class InputCommands {
 	private final VanillaPlugin plugin;
 	private final Client client;
 	private BlockMaterial selection;
@@ -58,13 +57,19 @@ public class InputCommands  {
 		client = (Client) plugin.getEngine();  // TODO: This needs to be changed. This is unsafe. Although for now it works.
 	}
 
-	@Command(aliases = "toggle_inventory", desc = "Opens and closes your inventory.", min = 1, max = 1)
+	public static boolean isPressed(CommandArguments args) throws ArgumentParseException {
+		return args.success("pressed", args.currentArgument("pressed").equalsIgnoreCase("+"));
+	}
+
+	@CommandDescription(aliases = "toggle_inventory", desc = "Opens and closes your inventory.")
 	@Binding(Keyboard.KEY_E)
 	@Filter(PlayerFilter.class)
 	public void toggleInventory(CommandSource source, CommandArguments args) throws CommandException {
-		if (!args.getString(0).equalsIgnoreCase("+")) {
+		if (!isPressed(args)) {
 			return;
 		}
+		args.assertCompletelyParsed();
+
 		WindowHolder holder = ((Player) source).get(WindowHolder.class);
 		Window window = holder.getActiveWindow();
 		if (window.isOpened()) {
@@ -74,13 +79,15 @@ public class InputCommands  {
 		}
 	}
 
-	@Command(aliases = "break_block", desc = "Breaks a block.", min = 1, max = 1)
+	@CommandDescription(aliases = "break_block", desc = "Breaks a block.")
 	@Binding(mouse = Mouse.BUTTON_LEFT)
 	@Filter(PlayerFilter.class)
 	public void breakBlock(CommandSource source, CommandArguments args) throws CommandException {
-		if (!args.getString(0).equalsIgnoreCase("+")) {
+		if (!isPressed(args)) {
 			return;
 		}
+		args.assertCompletelyParsed();
+
 		PlayerInteract hit = ((Player) source).get(PlayerInteract.class);
 		if (hit != null) {
 			final Block hitting = hit.getTargetBlock();
@@ -96,13 +103,15 @@ public class InputCommands  {
 		}
 	}
 
-	@Command(aliases = "select_block", desc = "Selects a block to place", min = 1, max = 1)
+	@CommandDescription(aliases = "select_block", desc = "Selects a block to place")
 	@Binding(mouse = Mouse.BUTTON_MIDDLE)
 	@Filter(PlayerFilter.class)
 	public void selectBlock(CommandSource source, CommandArguments args) throws CommandException {
-		if (!args.getString(0).equalsIgnoreCase("+")) {
+		if (!isPressed(args)) {
 			return;
 		}
+		args.assertCompletelyParsed();
+
 		PlayerInteract hit = ((Player) source).get(PlayerInteract.class);
 		if (hit != null) {
 			Block hitting = hit.getTargetBlock(true);
@@ -113,13 +122,15 @@ public class InputCommands  {
 		}
 	}
 
-	@Command(aliases = "place_block", desc = "Places a block.", min = 1, max = 1)
+	@CommandDescription(aliases = "place_block", desc = "Places a block.")
 	@Binding(mouse = Mouse.BUTTON_RIGHT)
 	@Filter(PlayerFilter.class)
 	public void placeBlock(CommandSource source, CommandArguments args) throws CommandException {
-		if (!args.getString(0).equalsIgnoreCase("+")) {
+		if (!isPressed(args)) {
 			return;
 		}
+		args.assertCompletelyParsed();
+
 		PlayerInteract hit = ((Player) source).get(PlayerInteract.class);
 		if (hit != null) {
 			final Block hitting = hit.getTargetBlock();

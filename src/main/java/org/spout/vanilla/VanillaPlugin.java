@@ -156,10 +156,10 @@ public class VanillaPlugin extends Plugin {
 				CommandManager cm = Spout.getCommandManager();
 				final QuickbarCommandExecutor exe = new QuickbarCommandExecutor();
 				final PlayerFilter filter = new PlayerFilter();
-				cm.getCommand("quickbar_left").setHelp("Changes quickbar slot!").setExecutor(exe).setArgumentBounds(1, 1).addFilter(filter);
-				cm.getCommand("quickbar_right").setHelp("Changes quickbar slot!").setExecutor(exe).setArgumentBounds(1, 1).addFilter(filter);
+				cm.getCommand("quickbar_left").setHelp("Changes quickbar slot!").setExecutor(exe).addFilter(filter);
+				cm.getCommand("quickbar_right").setHelp("Changes quickbar slot!").setExecutor(exe).addFilter(filter);
 				for (int i = 1; i < 10; i++) {
-					cm.getCommand("quickbar_" + i).setHelp("Changes quickbar slot!").setExecutor(exe).setArgumentBounds(1, 1).addFilter(filter);
+					cm.getCommand("quickbar_" + i).setHelp("Changes quickbar slot!").setExecutor(exe).addFilter(filter);
 				}
 
 				AnnotatedCommandExecutorFactory.create(new InputCommands(this));

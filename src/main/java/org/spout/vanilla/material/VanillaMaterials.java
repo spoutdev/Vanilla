@@ -426,7 +426,7 @@ public final class VanillaMaterials {
 	public static final TripWireHook TRIPWIRE_HOOK = new TripWireHook("Tripwire Hook", 131);
 	public static final TripWire TRIPWIRE = new TripWire("Trip Wire", 132);
 	public static final CocoaPlant COCOA_PLANT = new CocoaPlant("Cocoa Plant", 127);
-	public static final CommandBlockBlock COMMAND_BLOCK = new CommandBlockBlock("Command Block", 137);
+	public static final CommandBlockBlock COMMAND_BLOCK = new CommandBlockBlock("CommandDescription Block", 137);
 	public static final BeaconBlock BEACON_BLOCK = new BeaconBlock("Beacon Block", 138);
 	public static final WoodButton WOOD_BUTTON = new WoodButton("Wood Button", 143);
 	public static final FlowerPotBlock FLOWER_POT_BLOCK = FlowerPotBlock.EMPTY;

@@ -32,6 +32,7 @@ import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.discrete.Point;
+import org.spout.api.material.BlockMaterial;
 import org.spout.api.protocol.Message;
 import org.spout.api.protocol.reposition.RepositionManager;
 
@@ -49,8 +50,8 @@ public class FallingBlockProtocol extends ObjectEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
 		FallingBlock block = entity.get(FallingBlock.class);
-		if (block != null) {
-			VanillaBlockMaterial material = block.getMaterial();
+		if (block != null && block.getMaterial() instanceof VanillaBlockMaterial) {
+			VanillaBlockMaterial material = (VanillaBlockMaterial) block.getMaterial();
 			int messageData = material.getMinecraftId() | (material.getMinecraftData(material.getData()) >> 16);
 			List<Message> messages = new ArrayList<Message>();
 

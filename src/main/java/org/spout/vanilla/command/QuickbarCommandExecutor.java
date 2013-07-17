@@ -40,9 +40,10 @@ import org.spout.vanilla.inventory.entity.QuickbarInventory;
 public class QuickbarCommandExecutor implements Executor {
 	@Override
 	public void execute(CommandSource source, Command command, CommandArguments args) throws CommandException {
-		if (!args.getString(0).equalsIgnoreCase("+")) {
+		if (!InputCommands.isPressed(args)) {
 			return;
 		}
+		args.assertCompletelyParsed();
 
 		String name = command.getName();
 		if (name.startsWith("quickbar_")) {

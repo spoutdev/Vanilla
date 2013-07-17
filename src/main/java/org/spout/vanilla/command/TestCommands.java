@@ -26,17 +26,14 @@
  */
 package org.spout.vanilla.command;
 
-import java.util.List;
-import java.util.Set;
-
 import org.spout.api.Client;
 import org.spout.api.Engine;
 import org.spout.api.Platform;
-import org.spout.api.Spout;
 import org.spout.api.command.CommandArguments;
 import org.spout.api.command.CommandSource;
-import org.spout.api.command.annotated.Command;
+import org.spout.api.command.annotated.CommandDescription;
 import org.spout.api.command.annotated.Filter;
+import org.spout.api.command.annotated.Flag;
 import org.spout.api.command.annotated.Permissible;
 import org.spout.api.command.filter.PlayerFilter;
 import org.spout.api.component.Component;
@@ -57,11 +54,9 @@ import org.spout.api.material.Material;
 import org.spout.api.material.MaterialRegistry;
 import org.spout.api.math.Quaternion;
 import org.spout.api.math.Vector3;
-import org.spout.api.protocol.NetworkSynchronizer;
 import org.spout.api.protocol.ServerNetworkSynchronizer;
 import org.spout.api.protocol.event.ProtocolEvent;
 import org.spout.api.util.BlockIterator;
-
 import org.spout.vanilla.ChatStyle;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.block.material.chest.Chest;
@@ -115,6 +110,9 @@ import org.spout.vanilla.world.generator.object.RandomizableObject;
 import org.spout.vanilla.world.generator.object.VanillaObjects;
 import org.spout.vanilla.world.lighting.LightingVerification;
 
+import java.util.List;
+import java.util.Set;
+
 public class TestCommands {
 	private final VanillaPlugin plugin;
 
@@ -126,29 +124,26 @@ public class TestCommands {
 		return plugin.getEngine();
 	}
 
-	@Command(aliases = {"effect", "fx"}, usage = "<type> <duration> [amp]", desc = "Applies an effect.", min = 2, max = 3)
+	@CommandDescription(aliases = {"effect", "fx"}, usage = "<type> <duration> [amp]", desc = "Applies an effect.")
 	@Permissible("vanilla.command.debug")
 	@Filter(PlayerFilter.class)
 	public void effect(CommandSource source, CommandArguments args) throws CommandException {
-		Player player = (Player) source;
-		EntityEffectType type;
-		try {
-			type = EntityEffectType.valueOf(args.getString(0).toUpperCase());
-		} catch (IllegalArgumentException e) {
-			throw new CommandException(e);
-		}
-		float duration = (float) args.getDouble(1);
-		int amp = args.length() == 2 ? 0 : args.getInteger(2);
+		Player player = args.checkPlayer(source);
+		EntityEffectType type = args.popEnumValue("type", EntityEffectType.class);
+		float duration = (float) args.popDouble("duration");
+		int amp = args.popInteger("amp", 2);
+		args.assertCompletelyParsed();
 
 		player.add(Effects.class).add(new EntityEffect(type, amp, duration));
 		player.sendMessage(ChatStyle.GREEN + "Applied effect '" + type + "' with amplitude '" + amp + "' for '" + duration + "' seconds.");
 	}
 
-	@Command(aliases = {"testscoreboard", "tsb"}, desc = "Not to be confused with '/scoreboard'")
+	@CommandDescription(aliases = {"testscoreboard", "tsb"}, desc = "Not to be confused with '/scoreboard'")
 	@Permissible("vanilla.command.debug")
 	@Filter(PlayerFilter.class)
-	public void scoreboard(CommandSource source, CommandArguments args) throws CommandException {
-		Player player = (Player) source;
+	public void scoreboard(Player player, CommandArguments args) throws CommandException {
+		args.assertCompletelyParsed();
+
 		String name = player.getName();
 		player.sendMessage(ChatStyle.GREEN + "Displaying scoreboard...");
 
@@ -166,11 +161,12 @@ public class TestCommands {
 				.setSlot(ObjectiveSlot.LIST);
 	}
 
-	@Command(aliases = {"testteams", "tt"}, desc = "Tests teams functionality.")
+	@CommandDescription(aliases = {"testteams", "tt"}, desc = "Tests teams functionality.")
 	@Permissible("vanilla.command.debug")
 	@Filter(PlayerFilter.class)
-	public void teams(CommandSource source, CommandArguments args) throws CommandException {
-		Player player = (Player) source;
+	public void teams(Player player, CommandArguments args) throws CommandException {
+		args.assertCompletelyParsed();
+
 		String name = player.getName();
 		player.sendMessage("Creating team...");
 
@@ -185,90 +181,88 @@ public class TestCommands {
 				.addPlayerName(name);
 	}
 
-	@Command(aliases = "chunklight", usage = "", desc = "Tests lighting in current chunk", max = 0)
+	@CommandDescription(aliases = "chunklight", usage = "", desc = "Tests lighting in current chunk")
 	@Permissible("vanilla.command.debug")
 	@Filter(PlayerFilter.class)
-	public void chunkLight(CommandSource source, CommandArguments args) throws CommandException {
-		Player p = (Player) source;
-		Chunk c = p.getChunk();
+	public void chunkLight(Player player, CommandArguments args) throws CommandException {
+		args.assertCompletelyParsed();
+
+		Chunk c = player.getChunk();
 		if (c == null) {
-			p.sendMessage("Chunk is null");
-			return;
+			throw new CommandException("You are somenow in a null chunk. This is probably bad.");
 		}
 		LightingVerification.checkChunk(c, false);
 	}
 
-	@Command(aliases = "alllight", usage = "", desc = "Tests lighting in all loaded chunks in the current world", max = 0)
+	@CommandDescription(aliases = "alllight", usage = "", desc = "Tests lighting in all loaded chunks in the current world")
 	@Permissible("vanilla.command.debug")
 	@Filter(PlayerFilter.class)
-	public void allLight(CommandSource source, CommandArguments args) throws CommandException {
-		Player p = (Player) source;
-		LightingVerification.checkAll(p.getWorld(), true);
+	public void allLight(Player player, CommandArguments args) throws CommandException {
+		args.assertCompletelyParsed();
+
+		LightingVerification.checkAll(player.getWorld(), true);
 	}
 
-	@Command(aliases = "checkheight", usage = "", desc = "Finds surface height of current column", max = 0)
+	@CommandDescription(aliases = "checkheight", usage = "", desc = "Finds surface height of current column")
 	@Permissible("vanilla.command.debug")
 	@Filter(PlayerFilter.class)
-	public void targetHeight(CommandSource source, CommandArguments args) throws CommandException {
-		Player p = (Player) source;
-		Point pos = p.getScene().getPosition();
+	public void targetHeight(Player player, CommandArguments args) throws CommandException {
+		args.assertCompletelyParsed();
+
+		Point pos = player.getScene().getPosition();
 
 		int height = pos.getWorld().getSurfaceHeight(pos.getBlockX(), pos.getBlockZ());
 
-		p.sendMessage("You are at " + pos.getBlockX() + ", " + pos.getBlockY() + ", " + pos.getBlockZ());
-		p.sendMessage("Surface Height " + height + " " + (pos.getBlockY() - height) + " blocks below");
+		player.sendMessage("You are at " + pos.getBlockX() + ", " + pos.getBlockY() + ", " + pos.getBlockZ());
+		player.sendMessage("Surface Height " + height + " " + (pos.getBlockY() - height) + " blocks below");
 	}
 
-	@Command(aliases = "getblock", usage = "<world> <x> <y> <z>", desc = "Finds block at the given coords", min = 4, max = 4)
+	@CommandDescription(aliases = "getblock", usage = "<world> <x> <y> <z>", desc = "Finds block at the given coords")
 	@Permissible("vanilla.command.debug")
 	public void getBlock(CommandSource source, CommandArguments args) throws CommandException {
-		World w = Spout.getEngine().getWorld(args.getString(0), false);
-		if (w == null) {
-			throw new CommandException("Unable to find world " + args.getString(0));
-		}
-		int x = args.getInteger(1);
-		int y = args.getInteger(2);
-		int z = args.getInteger(3);
-		Chunk c = w.getChunkFromBlock(x, y, z, LoadOption.NO_LOAD);
+		Point p = args.popPoint("loc", source);
+		args.assertCompletelyParsed();
+
+		Chunk c = p.getChunk(LoadOption.NO_LOAD);
 		if (c == null) {
 			throw new CommandException("Chunk not loaded");
 		}
-		int blockState = c.getBlockFullState(x, y, z);
+		int blockState = c.getBlockFullState(p.getBlockX(), p.getBlockY(), p.getBlockZ());
 		BlockMaterial m = BlockMaterial.get(blockState);
-		source.sendMessage("Material at " + x + ", " + y + ", " + z + " is " + m.getClass().getSimpleName());
+		source.sendMessage("Material at " + p.getBlockX() + ", " + p.getBlockY() + ", " + p.getBlockZ() + " is " + m.getClass().getSimpleName());
 	}
 
-	@Command(aliases = "growtree", usage = "", desc = "grows a tree at the current location", max = 0)
+	@CommandDescription(aliases = "growtree", usage = "", desc = "grows a tree at the current location")
 	@Permissible("vanilla.command.debug")
 	@Filter(PlayerFilter.class)
-	public void growTree(CommandSource source, CommandArguments args) throws CommandException {
-		Player p = (Player) source;
-		Point pos = p.getScene().getPosition();
+	public void growTree(Player player, CommandArguments args) throws CommandException {
+		args.assertCompletelyParsed();
+		Point pos = player.getScene().getPosition();
 
 		BigTreeObject tree = new BigTreeObject();
 		tree.placeObject(pos.getWorld(), pos.getBlockX(), pos.getBlockY(), pos.getBlockZ());
-		p.teleport(pos.add(new Vector3(0, 50, 0)));
+		player.teleport(pos.add(new Vector3(0, 50, 0)));
 	}
 
 	// TODO - There needs to be a method that guarantees unique data values on a per-server basis
 	private int mapId = 1;
 
-	@Command(aliases = "map", usage = "", desc = "Creates a map", max = 0)
+	@CommandDescription(aliases = "map", usage = "", desc = "Creates a map")
 	@Permissible("vanilla.command.debug")
 	@Filter(PlayerFilter.class)
-	public void map(CommandSource source, CommandArguments args) throws CommandException {
-		Player p = (Player) source;
+	public void map(Player player, CommandArguments args) throws CommandException {
+		args.assertCompletelyParsed();
+
 		ItemStack i = new ItemStack(VanillaMaterials.MAP, ++mapId, 1);
-		p.get(PlayerInventory.class).add(i);
+		player.get(PlayerInventory.class).add(i);
 	}
 
-	@Command(aliases = "mapdraw", usage = "<bx> <by> <tx> <ty> <col>", desc = "Draws a rectangle on the current map.  The top nibble for col is the colour and the bottom nibble is the brightness",
-			min = 5, max = 5)
+	@CommandDescription(aliases = "mapdraw", usage = "<bx> <by> <tx> <ty> <col>", desc = "Draws a rectangle on the current map.  The top nibble for col is the colour and the bottom nibble is the brightness")
 	@Permissible("vanilla.command.debug")
 	@Filter(PlayerFilter.class)
-	public void mapDraw(CommandSource source, CommandArguments args) throws CommandException {
-		Player p = (Player) source;
-		PlayerInventory inventory = p.get(PlayerInventory.class);
+	public void mapDraw(Player player, CommandArguments args) throws CommandException {
+		args.assertCompletelyParsed();
+		PlayerInventory inventory = player.get(PlayerInventory.class);
 		if (inventory == null) {
 			throw new CommandException("Player has no inventory.");
 		}
@@ -277,11 +271,13 @@ public class TestCommands {
 			throw new CommandException("Held item is not a map");
 		}
 		Map m = (Map) i.getMaterial();
-		int bx = args.getInteger(0);
-		int by = args.getInteger(1);
-		int tx = args.getInteger(2);
-		int ty = args.getInteger(3);
-		int col = args.getInteger(4);
+		int bx = args.popInteger("bx");
+		int by = args.popInteger("by");
+		int tx = args.popInteger("tx");
+		int ty = args.popInteger("ty");
+		int col = args.popInteger("col");
+		args.assertCompletelyParsed();
+
 		if (bx < 0 || bx >= m.getWidth()) {
 			throw new CommandException("bx component is out of range");
 		}
@@ -301,16 +297,16 @@ public class TestCommands {
 			throw new CommandException("by cannot be greater than ty");
 		}
 		for (ProtocolEvent e : m.drawRectangle(i, bx, by, tx, ty, col)) {
-			p.getNetworkSynchronizer().callProtocolEvent(e);
+			player.getNetworkSynchronizer().callProtocolEvent(e);
 		}
 	}
 
-	@Command(aliases = "mapflood", usage = "<bx> <by> <tx> <ty> <col>", desc = "Floods the current map with the given color", min = 1, max = 1)
+	@CommandDescription(aliases = "mapflood", usage = "<col>", desc = "Floods the current map with the given color")
 	@Permissible("vanilla.command.debug")
 	@Filter(PlayerFilter.class)
-	public void mapFlood(CommandSource source, CommandArguments args) throws CommandException {
-		Player p = (Player) source;
-		PlayerInventory inventory = p.get(PlayerInventory.class);
+	public void mapFlood(Player player, CommandArguments args) throws CommandException {
+		args.assertCompletelyParsed();
+		PlayerInventory inventory = player.get(PlayerInventory.class);
 		if (inventory == null) {
 			throw new CommandException("Player has no inventory.");
 		}
@@ -319,57 +315,50 @@ public class TestCommands {
 			throw new CommandException("Held item is not a map");
 		}
 		Map m = (Map) i.getMaterial();
-		int col = args.getInteger(0);
+		int col = args.popInteger("col");
 		for (ProtocolEvent e : m.flood(i, col)) {
-			p.getNetworkSynchronizer().callProtocolEvent(e);
+			player.getNetworkSynchronizer().callProtocolEvent(e);
 		}
 	}
 
-	@Command(aliases = "respawn", usage = "", desc = "Forces the client to respawn", max = 0)
+	@CommandDescription(aliases = "respawn", usage = "", desc = "Forces the client to respawn")
 	@Permissible("vanilla.command.debug")
 	@org.spout.api.command.annotated.Platform(Platform.SERVER)
 	@Filter(PlayerFilter.class)
-	public void respawn(CommandSource source, CommandArguments args) throws CommandException {
-		((ServerNetworkSynchronizer) ((Player) source).getNetworkSynchronizer()).setRespawned();
+	public void respawn(Player player, CommandArguments args) throws CommandException {
+		args.assertCompletelyParsed();
+		((ServerNetworkSynchronizer) player.getNetworkSynchronizer()).setRespawned();
 	}
 
-	@Command(aliases = "sun", usage = "<x> <y> <z>", desc = "Sets the sun direction.", max = 3)
+	@CommandDescription(aliases = "sun", usage = "<x> <y> <z>", desc = "Sets the sun direction.")
 	@Permissible("vanilla.command.debug")
 	public void setSunDirection(CommandSource source, CommandArguments args) throws CommandException {
-		if (args.length() == 0) {
-			LightRenderEffect.setSun(null);
-			SkyRenderEffect.setSun(null);
-		} else if (args.length() == 3) {
-			Vector3 dir = new Vector3(args.getDouble(0), args.getDouble(1), args.getDouble(2));
-			LightRenderEffect.setSun(dir);
-			SkyRenderEffect.setSun(dir);
-		} else {
-			throw new CommandException("You must provide 3 coords or none to clear");
-		}
+		Vector3 dir = args.popVector3("dir", null);
+		args.assertCompletelyParsed();
+		LightRenderEffect.setSun(dir);
+		SkyRenderEffect.setSun(dir);
 	}
 
-	@Command(aliases = "findframe", usage = "<radius>", desc = "Find a nether portal frame.", min = 1, max = 1)
+	@CommandDescription(aliases = "findframe", usage = "<radius>", desc = "Find a nether portal frame.")
 	@Permissible("vanilla.command.debug")
 	@Filter(PlayerFilter.class)
-	public void findFrame(CommandSource source, CommandArguments args) throws CommandException {
-		Player player = (Player) source;
-		if (VanillaObjects.NETHER_PORTAL.find(player.getScene().getPosition(), args.getInteger(0))) {
+	public void findFrame(Player player, CommandArguments args) throws CommandException {
+		final int radius = args.popInteger("radius");
+		args.assertCompletelyParsed();
+
+		if (VanillaObjects.NETHER_PORTAL.find(player.getScene().getPosition(), radius)) {
 			player.sendMessage(ChatStyle.GREEN + "Found portal frame!");
 		} else {
 			player.sendMessage(ChatStyle.RED + "Portal frame not found.");
 		}
 	}
 
-	@Command(aliases = "traceray", desc = "Set all blocks that cross your view to stone.", max = 0)
+	@CommandDescription(aliases = "traceray", desc = "Set all blocks that cross your view to stone.")
 	@Permissible("vanilla.command.debug")
 	@Filter(PlayerFilter.class)
 	public void traceray(CommandSource source, CommandArguments args) throws CommandException {
-		Player player;
-		if (getEngine().getPlatform() != Platform.CLIENT) {
-			player = (Player) source;
-		} else {
-			player = ((Client) getEngine()).getPlayer();
-		}
+		args.assertCompletelyParsed();
+		Player player = (Player) source;
 
 		BlockIterator blockIt;
 		if (getEngine().getPlatform() != Platform.CLIENT) {
@@ -378,7 +367,7 @@ public class TestCommands {
 			blockIt = player.get(InteractComponent.class).getAlignedBlocks();
 		}
 
-		Block block = null;
+		Block block;
 		while (blockIt.hasNext()) {
 			block = blockIt.next();
 			if (block.getMaterial().isPlacementObstacle()) {
@@ -389,28 +378,21 @@ public class TestCommands {
 	}
 
 	@Permissible("vanilla.command.debug")
-	@Command(aliases = "resetpos", desc = "Resets players position", max = 0)
+	@CommandDescription(aliases = "resetpos", desc = "Resets players position")
 	@Filter(PlayerFilter.class)
-	public void resetPosition(CommandSource source, CommandArguments args) throws CommandException {
-		Player player = (Player) source;
+	public void resetPosition(Player player, CommandArguments args) throws CommandException {
+		args.assertCompletelyParsed();
 		((VanillaServerNetworkSynchronizer) player.getNetworkSynchronizer()).sendPosition();
 	}
 
-	@Command(aliases = "torch", desc = "Place a torch.", max = 0)
+	@CommandDescription(aliases = "torch", desc = "Place a torch.")
+	@Filter(PlayerFilter.class)
 	@Permissible("vanilla.command.debug")
-	public void torch(CommandSource source, CommandArguments args) throws CommandException {
-		if (!(source instanceof Player) && getEngine().getPlatform() != Platform.CLIENT) {
-			throw new CommandException("You must be a player to trace a ray!");
-		}
-		Player player;
-		if (getEngine().getPlatform() != Platform.CLIENT) {
-			player = (Player) source;
-		} else {
-			player = ((Client) getEngine()).getPlayer();
-		}
+	public void torch(Player player, CommandArguments args) throws CommandException {
+		args.assertCompletelyParsed();
 
 		BlockIterator blockIt = player.get(InteractComponent.class).getAlignedBlocks();
-		Block block = null;
+		Block block;
 		while (blockIt.hasNext()) {
 			block = blockIt.next();
 			if (block.getMaterial().isPlacementObstacle()) {
@@ -420,18 +402,13 @@ public class TestCommands {
 		}
 	}
 
-	@Command(aliases = "window", usage = "<type>", desc = "Open a window.", min = 1, max = 1)
+	@CommandDescription(aliases = "window", usage = "<type>", desc = "Open a window.")
 	@Permissible("vanilla.command.debug")
 	@Filter(PlayerFilter.class)
-	public void window(CommandSource source, CommandArguments args) throws CommandException {
-		WindowType type;
-		try {
-			type = WindowType.valueOf(args.getString(0).toUpperCase());
-		} catch (IllegalArgumentException e) {
-			throw new CommandException("Window not found.");
-		}
+	public void window(Player player, CommandArguments args) throws CommandException {
+		WindowType type = args.popEnumValue("type", WindowType.class);
+		args.assertCompletelyParsed();
 
-		Player player = (Player) source;
 		switch (type) {
 			case CHEST:
 				player.get(WindowHolder.class).openWindow(new ChestWindow(player, new Chest()));
@@ -459,62 +436,57 @@ public class TestCommands {
 		}
 	}
 
-	@Command(aliases = "damage", usage = "<amount>", desc = "Damage yourself", min = 1, max = 1)
+	@CommandDescription(aliases = "damage", usage = "<amount>", desc = "Damage yourself")
+	@Filter(PlayerFilter.class)
 	@Permissible("vanilla.command.debug")
-	public void damage(CommandSource source, CommandArguments args) throws CommandException {
-		if (!(source instanceof Player) && getEngine().getPlatform() != Platform.CLIENT) {
-			throw new CommandException("You must be a player to damage yourself!");
-		}
-		Player player;
-		if (getEngine().getPlatform() != Platform.CLIENT) {
-			player = (Player) source;
-		} else {
-			player = ((Client) getEngine()).getPlayer();
-		}
-		player.get(Health.class).damage(args.getInteger(0));
+	public void damage(Player player, CommandArguments args) throws CommandException {
+		final int amount = args.popInteger("amount");
+		args.assertCompletelyParsed();
+		player.get(Health.class).damage(amount);
 	}
 
-	@Command(aliases = "hunger", usage = "<amount> <hungry>", desc = "Modify your hunger", min = 2, max = 2)
+	@CommandDescription(aliases = "hunger", usage = "<amount> <hungry>", desc = "Modify your hunger")
+	@Filter(PlayerFilter.class)
 	@Permissible("vanilla.command.debug")
-	public void hunger(CommandSource source, CommandArguments args) throws CommandException {
-		Hunger hunger = null;
-		if (getEngine().getPlatform() == Platform.CLIENT) {
-			hunger = ((Client) getEngine()).getPlayer().get(Hunger.class);
-		} else {
-			if (!(source instanceof Player)) {
-				throw new CommandException("You must be a player to change your hunger!");
-			}
-			hunger = ((Player) source).get(Hunger.class);
-		}
+	public void hunger(Player player, CommandArguments args) throws CommandException {
+		final int amount = args.popInteger("amount");
+		final boolean hungry = args.popBoolean("hungry");
+		args.assertCompletelyParsed();
 
-		hunger.setHunger(args.getInteger(0));
-		hunger.setPoisoned(Boolean.valueOf(args.getString(1)));
+		Hunger hunger = player.get(Hunger.class);
+		hunger.setHunger(amount);
+		hunger.setPoisoned(hungry);
 	}
 
-	@Command(aliases = {"explode"}, usage = "<explode>", desc = "Create an explosion")
+	@CommandDescription(aliases = {"explode"}, usage = "<explode>", desc = "Create an explosion")
 	@Permissible("vanilla.command.debug")
 	@Filter(PlayerFilter.class)
-	public void explode(CommandSource source, CommandArguments args) throws CommandException {
-		Entity entity = (Player) source;
-		Point position = entity.getScene().getPosition();
+	public void explode(Player player, CommandArguments args) throws CommandException {
+		args.assertCompletelyParsed();
 
+		Point position = player.getScene().getPosition();
 		ExplosionModels.SPHERICAL.execute(position, 4.0f);
 	}
 
-	@Command(aliases = {"object", "obj"}, usage = "<name> [-f]", desc = "Spawn a WorldGeneratorObject at your location. Use -f to ignore canPlace check", min = 1, max = 2)
+	@CommandDescription(aliases = {"object", "obj"}, usage = "[-f] <object>", flags = {@Flag(aliases = {"force", "f"})},
+			desc = "Spawn a WorldGeneratorObject at your location. Use -f to ignore canPlace check")
+	@Filter(PlayerFilter.class)
 	@Permissible("vanilla.command.debug")
-	public void generateObject(CommandSource source, CommandArguments args) throws CommandException {
-		final WorldGeneratorObject object = VanillaObjects.byName(args.getString(0));
+	public void generateObject(Player player, CommandArguments args) throws CommandException {
+		final WorldGeneratorObject object = VanillaObjects.byName(args.currentArgument("object"));
 		if (object == null) {
-			throw new CommandException("Invalid object name.");
+			throw args.failure("object", "Unknown object!", false);
+		} else {
+			args.success("object", object);
 		}
-		final Player player = (Player) source;
+		args.assertCompletelyParsed();
+
 		final Point loc = player.getScene().getPosition();
 		final World world = loc.getWorld();
 		final int x = loc.getBlockX();
 		final int y = loc.getBlockY();
 		final int z = loc.getBlockZ();
-		final boolean force = args.length() > 1 && args.getString(1).equalsIgnoreCase("-f");
+		final boolean force = args.has("force");
 		if (!object.canPlaceObject(world, x, y, z)) {
 			player.sendMessage("Couldn't place the object.");
 			if (!force) {
@@ -528,26 +500,12 @@ public class TestCommands {
 		}
 	}
 
-	@Command(aliases = {"killall", "ka"}, desc = "Kill all non-player or world entities within a world", min = 0, max = 1)
+	@CommandDescription(aliases = {"killall", "ka"}, desc = "Kill all non-player or world entities within a world")
 	@Permissible("vanilla.command.debug")
 	public void killall(CommandSource source, CommandArguments args) throws CommandException {
-		World world = null;
-		boolean isConsole = false;
+		World world = args.popWorld("world", source);
+		args.assertCompletelyParsed();
 
-		if (!(source instanceof Player)) {
-			if (args.length() == 0) {
-				throw new CommandException("Need to provide a world when executing from the console");
-			}
-			String name = args.getString(0);
-			world = getEngine().getWorld(name, false);
-			isConsole = true;
-		}
-		if (world == null && isConsole) {
-			throw new CommandException("World specified is not loaded");
-		}
-		if (world == null) {
-			world = ((Player) source).getWorld();
-		}
 		List<Entity> entities = world.getAll();
 		int count = 0;
 		for (Entity entity : entities) {
@@ -555,47 +513,35 @@ public class TestCommands {
 				continue;
 			}
 			count++;
-			VanillaEntityComponent comp = entity.get(VanillaEntityComponent.class);
+			/*VanillaEntityComponent comp = entity.get(VanillaEntityComponent.class); // This has the potential to be REALLY spammy!
 			if (comp instanceof Item) {
 				Item item = (Item) comp;
 				ItemStack stack = item.getItemStack();
 				getEngine().getLogger().info("Removing item (" + stack + ") at " + entity.getScene().getTransform().getPosition().toBlockString());
 			} else {
 				getEngine().getLogger().info("Killing " + comp.getClass().getSimpleName() + " at " + entity.getScene().getTransform().getPosition().toBlockString());
-			}
+			}*/
 			entity.remove();
 		}
 		if (count > 0) {
-			if (!isConsole) {
 				if (count == 1) {
-					source.sendMessage("1 entity has been killed.");
+					args.logAndNotify(plugin, source, "1 entity has been killed by " + source.getName() +  ".");
 				} else {
-					source.sendMessage(count + " entities have been killed.");
+					args.logAndNotify(plugin, source, count + " entities have been killed by " + source.getName() + ".");
 				}
-			}
 		} else {
 			source.sendMessage("No valid entities found to kill");
 		}
 	}
 
-	@Command(aliases = "debug", usage = "[type] (/resend /resendall /look /packets)", desc = "Debug commands", max = 2)
+	@CommandDescription(aliases = "debug", usage = "<resend|resendall|look|packets)", desc = "Debug commands")
 	@Permissible("vanilla.command.debug")
 	public void debug(CommandSource source, CommandArguments args) throws CommandException {
-		Player player;
-		if (source instanceof Player) {
-			player = (Player) source;
-		} else {
-			if (getEngine() instanceof Client) {
-				throw new CommandException("You cannot search for players unless you are in server mode.");
-			}
-			player = args.getPlayer(1, true);
-			if (player == null) {
-				source.sendMessage("Must be a player or send player name in arguments");
-				return;
-			}
-		}
+		String action = args.popString("action");
+		Player player = args.popPlayerOrMe("player", source);
+		args.assertCompletelyParsed();
 
-		if (args.getString(0).contains("look")) {
+		if (action.contains("look")) {
 			Quaternion rotation = player.getData().get(VanillaData.HEAD_ROTATION);
 			Point startPosition = player.getScene().getPosition();
 			Vector3 offset = rotation.getDirection().multiply(0.1);
@@ -605,46 +551,38 @@ public class TestCommands {
 			}
 			player.sendMessage("Yaw = " + rotation.getYaw());
 			player.sendMessage("Pitch = " + rotation.getPitch());
-		}  else if (args.getString(0).contains("packets")) {
+		} else if (action.contains("packets")) {
 			player.add(ForceMessages.class);
-		}
-		if (getEngine() instanceof Client) {
-			throw new CommandException("You cannot resend chunks in client mode.");
-		}
-		 if (args.getString(0).contains("resendall")) {
-			ServerNetworkSynchronizer network = (ServerNetworkSynchronizer) player.getNetworkSynchronizer();
-			Set<Chunk> chunks = network.getActiveChunks();
-			for (Chunk c : chunks) {
-				network.sendChunk(c);
+		} else {
+			if (getEngine() instanceof Client) {
+				throw new CommandException("You cannot resend chunks in client mode.");
 			}
+			if (action.contains("resendall")) {
+				ServerNetworkSynchronizer network = (ServerNetworkSynchronizer) player.getNetworkSynchronizer();
+				Set<Chunk> chunks = network.getActiveChunks();
+				for (Chunk c : chunks) {
+					network.sendChunk(c);
+				}
 
-			source.sendMessage("All chunks resent");
-		} else if (args.getString(0).contains("resend")) {
-			((ServerNetworkSynchronizer) player.getNetworkSynchronizer()).sendChunk(player.getChunk());
-			source.sendMessage("Chunk resent");
+				source.sendMessage("All chunks resent");
+			} else if (action.contains("resend")) {
+				((ServerNetworkSynchronizer) player.getNetworkSynchronizer()).sendChunk(player.getChunk());
+				source.sendMessage("Chunk resent");
+			}
 		}
 	}
 
-	@Command(aliases = "spawn", desc = "Spawns a living entity at your location", min = 1, max = 2)
-	public void spawn(CommandSource source, CommandArguments args) throws CommandException {
-		final Player player;
-		if (!(source instanceof Player)) {
-			if (getEngine().getPlatform() != Platform.CLIENT) {
-				throw new CommandException("Only a player may spawn a Vanilla entity!");
-			} else {
-				player = ((Client) getEngine()).getPlayer();
-			}
-		} else {
-			player = (Player) source;
-		}
+	@CommandDescription(aliases = "spawn", desc = "Spawns a living entity at your location")
+	@Filter(PlayerFilter.class)
+	public void spawn(Player player, CommandArguments args) throws CommandException {
+		final String name = args.popString("name");
 
-		final String name = args.getString(0);
 		Class<? extends Component> clazz;
 		boolean child = false;
 		//See if it is a living?
 		try {
 			clazz = CreatureType.valueOf(name.toUpperCase()).getComponentType();
-			if (Ageable.class.isAssignableFrom(clazz) && args.length() >= 2 && args.getString(1).equalsIgnoreCase("child")) {
+			if (Ageable.class.isAssignableFrom(clazz) && args.flags().hasFlag("child")) {
 				child = true;
 			}
 		} catch (Exception e1) {
@@ -673,47 +611,41 @@ public class TestCommands {
 			if (Living.class.isAssignableFrom(clazz)) {
 				final Living living = entity.get(Living.class);
 				if (name.equalsIgnoreCase("human")) {
-					((Human) living).setName(args.getString(1));
+					((Human) living).setName(args.popString("disp_name"));
 				}
 			} else if (Substance.class.isAssignableFrom(clazz)) {
 				final Substance substance = entity.get(Substance.class);
 				switch (ObjectType.valueOf(name.toUpperCase())) {
 					case ITEM:
-						Material item = MaterialRegistry.get(args.getString(1));
-						if (item == null || !(item instanceof VanillaItemMaterial)) {
-							throw new CommandException(args.getString(1) + " is not a valid VanillaItemMaterial!");
-						}
+						Material item = VanillaArgumentTypes.popMaterial("item", args);
 						((Item) substance).setItemStack(new ItemStack(item, 1));
 						break;
 					case FALLING_OBJECT:
-						Material block = MaterialRegistry.get(args.getString(1));
-						if (block == null || !(block instanceof VanillaBlockMaterial)) {
-							throw new CommandException(args.getString(1) + " is not a valid VanillaBlockMaterial!");
+						Material block = VanillaArgumentTypes.popMaterial("block", args);
+						if (!(block instanceof BlockMaterial)) {
+							throw new CommandException("Material " + block.getDisplayName() + " is not a block!");
 						}
-						((FallingBlock) substance).setMaterial((VanillaBlockMaterial) block);
+						((FallingBlock) substance).setMaterial((BlockMaterial) block);
 						break;
 				}
 			}
 		}
+		args.assertCompletelyParsed();
 		player.getWorld().spawnEntity(entity);
 		if (child) {
 			entity.get(Ageable.class).setAge(Ageable.MIN_AGE);
 		}
 	}
 
-	@Command(aliases = "fire", usage = "<time> <hurt>", desc = "Set you on fire", min = 2, max = 2)
+	@CommandDescription(aliases = "fire", usage = "<time> [hurt]", desc = "Set you on fire")
 	@Permissible("vanilla.command.debug")
-	public void fire(CommandSource source, CommandArguments args) throws CommandException {
-		Burn fire = null;
-		if (getEngine().getPlatform() == Platform.CLIENT) {
-			fire = ((Client) getEngine()).getPlayer().add(Burn.class);
-		} else {
-			if (!(source instanceof Player)) {
-				throw new CommandException("You must be a player to change be burnable!");
-			}
-			fire = ((Player) source).add(Burn.class);
-		}
+	@Filter(PlayerFilter.class)
+	public void fire(Player player, CommandArguments args) throws CommandException {
+		final float time = args.popFloat("time");
+		final boolean hurt = args.popBoolean("hurt", false);
+		args.assertCompletelyParsed();
 
-		fire.setOnFire((float) args.getDouble(0), Boolean.parseBoolean(args.getString(1)));
+		Burn fire = player.add(Burn.class);
+		fire.setOnFire(time, hurt);
 	}
 }

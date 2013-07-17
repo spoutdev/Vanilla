@@ -41,7 +41,7 @@ import org.spout.vanilla.protocol.entity.object.FallingBlockProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 
 public class FallingBlock extends Substance {
-	private VanillaBlockMaterial material;
+	private BlockMaterial material;
 	private float fallSpeed = 0F;
 
 	@Override
@@ -49,11 +49,11 @@ public class FallingBlock extends Substance {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new FallingBlockProtocol(ObjectType.FALLING_OBJECT));
 	}
 
-	public void setMaterial(VanillaBlockMaterial material) {
+	public void setMaterial(BlockMaterial material) {
 		this.material = material;
 	}
 
-	public VanillaBlockMaterial getMaterial() {
+	public BlockMaterial getMaterial() {
 		return material;
 	}
 
@@ -71,7 +71,7 @@ public class FallingBlock extends Substance {
 				// Place block on top of this obstacle, if possible
 				Block current = world.getBlock(x, y - dy + 1, z);
 				BlockMaterial currentMat = current.getMaterial();
-				if (!(currentMat instanceof VanillaBlockMaterial) || !currentMat.isPlacementObstacle()) {
+				if (!currentMat.isPlacementObstacle()) {
 					// Place in the world
 					current.setMaterial(getMaterial(), getMaterial().toCause(pos));
 				} else {

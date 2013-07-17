@@ -94,7 +94,7 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 				cmdSource.sendMessage(prefix + ChatStyle.RED + " You don't have permission to do that.");
 				return;
 			}
-			cmdSource.sendMessage(prefix + ChatStyle.WHITE + "Command set: " + ChatStyle.GREEN + cmd);
+			cmdSource.sendMessage(prefix + ChatStyle.WHITE + "CommandDescription set: " + ChatStyle.GREEN + cmd);
 		}
 
 		if (!cmd.startsWith("/")) {

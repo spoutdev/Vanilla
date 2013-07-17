@@ -327,7 +327,7 @@ public class TestCommands {
 	@Filter(PlayerFilter.class)
 	public void respawn(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
-		((ServerNetworkSynchronizer) player.getNetworkSynchronizer()).setRespawned();
+		((ServerNetworkSynchronizer) player.getNetworkSynchronizer()).forceRespawn();
 	}
 
 	@CommandDescription(aliases = "sun", usage = "<x> <y> <z>", desc = "Sets the sun direction.")

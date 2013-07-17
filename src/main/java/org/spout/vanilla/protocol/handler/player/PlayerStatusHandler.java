@@ -70,7 +70,7 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 			}
 			//Set position for the server
 			player.teleport(point);
-			session.getNetworkSynchronizer().setRespawned();
+			session.getNetworkSynchronizer().forceRespawn();
 			Human human = player.get(Human.class);
 			if (human != null) {
 				human.getHealth().setHealth(human.getHealth().getMaxHealth(), HealthChangeCause.SPAWN);

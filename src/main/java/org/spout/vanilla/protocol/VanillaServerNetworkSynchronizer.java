@@ -33,6 +33,10 @@ import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import gnu.trove.set.TIntSet;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import org.spout.api.Platform;
 
 import org.spout.api.Server;
@@ -184,9 +188,9 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 	private static final int HASH_SEED = 0xB346D76A;
 	public static final int WORLD_HEIGHT = 256;
 	private boolean first = true;
-	private final TSyncIntPairObjectHashMap<TSyncIntHashSet> initializedChunks = new TSyncIntPairObjectHashMap<TSyncIntHashSet>();
+	private final TSyncIntPairObjectHashMap<TSyncIntHashSet> initChunks = new TSyncIntPairObjectHashMap<TSyncIntHashSet>();
 	private final ConcurrentLinkedQueue<Long> emptyColumns = new ConcurrentLinkedQueue<Long>();
-	private final TSyncIntPairHashSet activeChunks = new TSyncIntPairHashSet();
+	private final TSyncIntPairHashSet activeChunksT = new TSyncIntPairHashSet();
 	private final Object initChunkLock = new Object();
 	private final ChunkInit chunkInit;
 	private int minY = 0;
@@ -194,6 +198,30 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 	private int stepY = 160;
 	private int offsetY = 0;
 	private final VanillaRepositionManager vpm = new VanillaRepositionManager();
+
+
+	private boolean teleported = false;
+	private boolean teleportPending = false;
+	private int tickCounter = 0;
+	private volatile boolean worldChanged = false;
+	/** The point that the player was at for the last tick. Used to check world changes */
+	//TODO: can we not check the player's live transform versus snapshot?
+	private Point lastPosition = null;
+	/** If the player is going to teleport, this is the point the player was at before. Used to prevent teleport -> free -> send */
+	private Point holdingPosition = null;
+	private final LinkedHashSet<Chunk> observed = new LinkedHashSet<Chunk>();
+	/** Includes chunks that need to be observed. When observation is successfully attained or no longer wanted, point is removed */
+	private final Set<Point> chunksToObserve = new LinkedHashSet<Point>();
+	private Point lastChunkCheck =  Point.invalid;
+	// Base points used so as not to load chunks unnecessarily
+	private final Set<Point> chunkInitQueue = new LinkedHashSet<Point>();
+	private final Set<Point> priorityChunkSendQueue = new LinkedHashSet<Point>();
+	private final Set<Point> chunkSendQueue = new LinkedHashSet<Point>();
+	private final Set<Point> chunkFreeQueue = new LinkedHashSet<Point>();
+	/** Chunks that have initialized on the client. May also have chunks that have been sent. */
+	private final Set<Point> initializedChunks = new LinkedHashSet<Point>();
+	/** Chunks that have been sent to the client */
+	private final Set<Point> activeChunks = new LinkedHashSet<Point>();
 
 	static {
 		int i = 0;
@@ -238,7 +266,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 			return;
 		}
 
-		TIntSet column = initializedChunks.get(x, z);
+		TIntSet column = initChunks.get(x, z);
 		if (column != null) {
 			column.remove(y);
 			if (column.isEmpty()) {
@@ -249,6 +277,162 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 
 	@Override
 	protected void initChunk(Point p) {
+	}
+
+	public boolean isTeleportPending() {
+		return teleportPending;
+	}
+
+	public void clearTeleportPending() {
+		if (!teleported) {
+			teleportPending = false;
+		}
+	}
+
+	/**
+	 * Resets all chunk stores for the client.  This method is only called during the pre-snapshot part of the tick.
+	 */
+	protected void resetChunks() {
+		priorityChunkSendQueue.clear();
+		chunkSendQueue.clear();
+		chunkFreeQueue.clear();
+		chunkInitQueue.clear();
+		activeChunksT.clear();
+		initChunks.clear();
+		lastChunkCheck = Point.invalid;
+		synchronizedEntities.clear();
+		
+		this.emptyColumns.clear();
+		this.activeChunksT.clear();
+		this.initChunks.clear();
+	}
+
+	private int chunksSent = 0;
+	private Set<Point> unsendable = new HashSet<Point>();
+
+	private Iterator<Point> attemptSendChunk(Iterator<Point> i, Iterable<Point> queue, Point p) {
+		Chunk c = p.getWorld().getChunkFromBlock(p, LoadOption.LOAD_ONLY);
+		if (c == null) {
+			unsendable.add(p);
+			return i;
+		}
+		if (unsendable.contains(p)) {
+			return i;
+		}
+		if (canSendChunk(c)) {
+			Collection<Chunk> sent = sendChunk(c, true);
+			activeChunks.add(c.getBase());
+			i.remove();
+			if (sent != null) {
+				for (Chunk s : sent) {
+					Point base = s.getBase();
+					boolean removed = priorityChunkSendQueue.remove(base);
+					removed |= chunkSendQueue.remove(base);
+					if (removed) {
+						if (initializedChunks.contains(base)) {
+							activeChunks.add(base);
+						}
+						chunksSent++;
+						i = queue.iterator();
+					}
+				}
+			}
+			chunksSent++;
+
+		} else {
+			unsendable.add(p);
+		}
+		return i;
+	}
+
+	private void checkChunkUpdates(Point currentPosition) {
+
+		// Recalculating these
+		priorityChunkSendQueue.clear();
+		chunkSendQueue.clear();
+		chunkFreeQueue.clear();
+		chunkInitQueue.clear();
+
+		World world = currentPosition.getWorld();
+		int bx = (int) currentPosition.getX();
+		int by = (int) currentPosition.getY();
+		int bz = (int) currentPosition.getZ();
+
+		int cx = bx >> Chunk.BLOCKS.BITS;
+		int cy = by >> Chunk.BLOCKS.BITS;
+		int cz = bz >> Chunk.BLOCKS.BITS;
+
+		Point playerChunkBase = Chunk.pointToBase(currentPosition);
+		Point playerHoldingChunkBase = holdingPosition == null ? null : Chunk.pointToBase(holdingPosition);
+
+		for (Point p : initializedChunks) {
+			if (!isInViewVolume(p, playerChunkBase, viewDistance)) {
+				if (playerHoldingChunkBase == null || p.getMaxDistance(playerHoldingChunkBase) > blockMinimumViewDistance) {
+					chunkFreeQueue.add(p);
+				}
+			}
+		}
+
+		Iterator<IntVector3> itr = getViewableVolume(cx, cy, cz, viewDistance);
+
+		while (itr.hasNext()) {
+			IntVector3 v = itr.next();
+			Point base = new Point(world, v.getX() << Chunk.BLOCKS.BITS, v.getY() << Chunk.BLOCKS.BITS, v.getZ() << Chunk.BLOCKS.BITS);
+			boolean inTargetArea = playerChunkBase.getMaxDistance(base) <= blockMinimumViewDistance;
+			if (!activeChunks.contains(base)) {
+				if (inTargetArea) {
+					priorityChunkSendQueue.add(base);
+				} else {
+					chunkSendQueue.add(base);
+				}
+			}
+			if (!initializedChunks.contains(base)) {
+				chunkInitQueue.add(base);
+			}
+		}
+	}
+
+	private void checkObserverUpdateQueue() {
+		Iterator<Point> i = chunksToObserve.iterator();
+		while (i.hasNext()) {
+			Point p = i.next();
+			if (!chunkInitQueue.contains(p) && !this.initializedChunks.contains(p)) {
+				i.remove();
+			} else {
+				Chunk c = p.getWorld().getChunkFromBlock(p, LoadOption.NO_LOAD);
+				if (c != null) {
+					observe(c);
+					i.remove();
+				}
+			}
+		}
+	}
+
+	private void observe(Point p) {
+		Chunk c = p.getWorld().getChunkFromBlock(p, LoadOption.NO_LOAD);
+		if (c != null) {
+			observe(c);
+		} else {
+			chunksToObserve.add(p);
+		}
+	}
+
+	private void observe(Chunk c) {
+		observed.add(c);
+		c.refreshObserver(player);
+	}
+
+	private void removeObserver(Point p) {
+		Chunk c = p.getWorld().getChunkFromBlock(p, LoadOption.NO_LOAD);
+		if (c != null) {
+			removeObserver(c);
+		}
+		chunksToObserve.remove(p);
+	}
+
+	private void removeObserver(Chunk c) {
+		observed.remove(c);
+		c.removeObserver(player);
 	}
 
 	private void initChunkRaw(Point p) {
@@ -264,11 +448,11 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 			return;
 		}
 
-		TSyncIntHashSet column = initializedChunks.get(x, z);
+		TSyncIntHashSet column = initChunks.get(x, z);
 		if (column == null) {
 			column = new TSyncIntHashSet();
 			synchronized (initChunkLock) {
-				TSyncIntHashSet oldColumn = initializedChunks.putIfAbsent(x, z, column);
+				TSyncIntHashSet oldColumn = initChunks.putIfAbsent(x, z, column);
 				if (oldColumn != null) {
 					column = oldColumn;
 				}
@@ -319,7 +503,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 
 	@Override
 	protected boolean canSendChunk(Chunk c) {
-		if (activeChunks.contains(c.getX(), c.getZ())) {
+		if (activeChunksT.contains(c.getX(), c.getZ())) {
 			return true;
 		}
 		Collection<Chunk> chunks = chunkInit.getChunks(c);
@@ -350,7 +534,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 
 		List<ProtocolEvent> events = new ArrayList<ProtocolEvent>();
 
-		if (activeChunks.add(x, z)) {
+		if (activeChunksT.add(x, z)) {
 			Point p = c.getBase();
 			int[][] heights = getColumnHeights(p);
 			BlockMaterial[][] materials = getColumnTopmostMaterials(p);
@@ -487,23 +671,18 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		sky.updatePlayer(player);
 	}
 
-	@Override
-	protected void resetChunks() {
-		super.resetChunks();
-		this.emptyColumns.clear();
-		this.activeChunks.clear();
-		this.initializedChunks.clear();
-	}
-
 	private int lastY = Integer.MIN_VALUE;
 
 	@Override
 	public void finalizeTick() {
+		super.finalizeTick();
+		tickCounter++;
+		
 		Point currentPosition = player.getScene().getPosition();
 
 		int y = currentPosition.getBlockY();
 
-		if (y != lastY && !isTeleportPending()) {
+		if (y != lastY && !teleportPending) {
 
 			lastY = y;
 			int cY = getRepositionManager().convertY(y);
@@ -522,25 +701,121 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 				}
 
 				vpm.setOffset(offsetY);
-				setRespawned();
+				teleported = true;
+				teleportPending = true;
 			}
 		}
+		//TODO: update chunk lists?
+		final int prevViewDistance = viewDistance;
+		final int currentViewDistance = player.getViewDistance() >> Chunk.BLOCKS.BITS;
+		if (viewDistance != currentViewDistance) {
+			viewDistance = currentViewDistance;
+		}
 
-		super.finalizeTick();
+		if (currentPosition != null) {
+			if (prevViewDistance != currentViewDistance || worldChanged || (!currentPosition.equals(lastChunkCheck) && currentPosition.getManhattanDistance(lastChunkCheck) > Chunk.BLOCKS.SIZE >> 1)) {
+				checkChunkUpdates(currentPosition);
+				lastChunkCheck = currentPosition;
+				worldChanged = false;
+			}
+			if (lastPosition == null || lastPosition.getWorld() != currentPosition.getWorld()) {
+				clearObservers();
+				worldChanged = true;
+				teleported = true;
+				teleportPending = true;
+			}
+
+		}
+
+		lastPosition = currentPosition;
+
+		if (!teleportPending) {
+			holdingPosition = currentPosition;
+		}
+
+		if (!worldChanged) {
+			for (Point p : chunkFreeQueue) {
+				if (initializedChunks.contains(p)) {
+					removeObserver(p);
+				}
+			}
+
+			for (Point p : chunkInitQueue) {
+				if (!initializedChunks.contains(p)) {
+					observe(p);
+				}
+			}
+
+			checkObserverUpdateQueue();
+		}
 	}
 
 	@Override
 	public void preSnapshot() {
 		super.preSnapshot();
+		if (worldChanged) {
+			Point ep = player.getScene().getPosition();
+			resetChunks();
+			worldChanged(ep.getWorld());
+		} else if (!worldChanged) {
+
+			unsendable.clear();
+
+			for (Point p : chunkFreeQueue) {
+				if (initializedChunks.remove(p)) {
+					freeChunk(p);
+					activeChunks.remove(p);
+				}
+			}
+
+			chunkFreeQueue.clear();
+
+			int modifiedChunksPerTick = (!priorityChunkSendQueue.isEmpty() ? 4 : 1) * CHUNKS_PER_TICK;
+			chunksSent = Math.max(0, chunksSent - modifiedChunksPerTick);
+
+			for (Point p : chunkInitQueue) {
+				if (initializedChunks.add(p)) {
+					initChunk(p);
+				}
+			}
+
+			chunkInitQueue.clear();
+
+			Iterator<Point> i;
+
+			i = priorityChunkSendQueue.iterator();
+			while (i.hasNext() && chunksSent < CHUNKS_PER_TICK) {
+				Point p = i.next();
+				i = attemptSendChunk(i, priorityChunkSendQueue, p);
+			}
+
+			if (!priorityChunkSendQueue.isEmpty()) {
+				return;
+			}
+
+			if (teleported && !player.getScene().isTransformDirty()) {
+				sendPosition(player.getScene().getPosition(), player.getScene().getRotation());
+				teleported = false;
+			}
+
+			boolean tickTimeRemaining = Spout.getScheduler().getRemainingTickTime() > 0;
+
+			i = chunkSendQueue.iterator();
+			while (i.hasNext() && chunksSent < CHUNKS_PER_TICK && tickTimeRemaining) {
+				Point p = i.next();
+				i = attemptSendChunk(i, chunkSendQueue, p);
+				tickTimeRemaining = Spout.getScheduler().getRemainingTickTime() > 0;
+			}
+		}
 
 		Long key;
 		while ((key = this.emptyColumns.poll()) != null) {
 			int x = IntPairHashed.key1(key);
 			int z = IntPairHashed.key2(key);
-			TIntSet column = initializedChunks.get(x, z);
+			TIntSet column = initChunks.get(x, z);
 			if (column != null && column.isEmpty()) {
-				column = initializedChunks.remove(x, z);
-				activeChunks.remove(x, z);
+				column = initChunks.remove(x, z);
+				activeChunksT.remove(x, z);
 				session.send(new ChunkDataMessage(x, z, true, null, null, null, true, player.getSession(), getRepositionManager()));
 			}
 		}
@@ -582,7 +857,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 	private boolean shouldForce(int entityId) {
 		int hash = HASH_SEED;
 		hash += (hash << 5) + entityId;
-		hash += (hash << 5) + tickCounter;
+		hash += (hash << 5) + tickCounter++;
 		return (hash & FORCE_MASK) == 0 || (VanillaPlugin.getInstance().getEngine().debugMode() && getPlayer().get(ForceMessages.class) != null);
 	}
 
@@ -820,6 +1095,11 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 				team.getPrefix(), team.getSuffix(),
 				team.isFriendlyFire(), event.getPlayers()
 		);
+	}
+
+	@Override
+	public Set<Chunk> getActiveChunks() {
+		return Collections.EMPTY_SET;
 	}
 
 	public enum ChunkInit {

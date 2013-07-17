@@ -55,6 +55,7 @@ import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.component.entity.player.Ping;
 import org.spout.vanilla.material.VanillaBlockMaterial;
+import org.spout.vanilla.protocol.VanillaServerNetworkSynchronizer;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerPositionMessage;
 
 public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMessage> {
@@ -100,9 +101,11 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 		final Point newPosition = rmInverse.convert(rawPosition);
 		final Point position = holder.getScene().getPosition();
 
-		if (session.getNetworkSynchronizer().isTeleportPending()) {
+		if (!(session.getNetworkSynchronizer() instanceof VanillaServerNetworkSynchronizer)) throw new IllegalStateException("Using Vanilla Protocol without using VanillaNetworkSynchronizer");
+		VanillaServerNetworkSynchronizer sync = (VanillaServerNetworkSynchronizer) session.getNetworkSynchronizer();
+		if (sync.isTeleportPending()) {
 			if (position.getX() == newPosition.getX() && position.getZ() == newPosition.getZ() && Math.abs(position.getY() - newPosition.getY()) < 16) {
-				session.getNetworkSynchronizer().clearTeleportPending();
+				sync.clearTeleportPending();
 			}
 		} else {
 			if (!position.equals(newPosition)) {

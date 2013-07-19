@@ -68,7 +68,7 @@ public abstract class Animal extends Ageable {
 	public void breed(Animal animal) {
 		Entity owner = getOwner();
 		if (canBreedWith(animal)) {
-			Animal child = owner.getWorld().createAndSpawnEntity(owner.getScene().getPosition(), LoadOption.LOAD_ONLY, animal.getClass()).get(Animal.class);
+			Animal child = owner.getWorld().createAndSpawnEntity(owner.getPhysics().getPosition(), LoadOption.LOAD_ONLY, animal.getClass()).get(Animal.class);
 			setAge(MAX_AGE);
 			animal.setAge(MAX_AGE);
 			setInLove(false);

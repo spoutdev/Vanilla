@@ -243,7 +243,7 @@ public class Health extends VanillaEntityComponent {
 			for (Inventory inv : inventory.getDroppable()) {
 				toDrop.addAll(inv);
 			}
-			org.spout.api.geo.discrete.Point position = owner.getScene().getPosition();
+			org.spout.api.geo.discrete.Point position = owner.getPhysics().getPosition();
 			for (ItemStack stack : toDrop) {
 				if (stack != null) {
 					Item.dropNaturally(position, stack);
@@ -262,14 +262,14 @@ public class Health extends VanillaEntityComponent {
 		DeathDrops dropComponent = owner.get(DeathDrops.class);
 		if (dropComponent != null) {
 			java.util.List<ItemStack> drops = dropComponent.getDrops();
-			org.spout.api.geo.discrete.Point entityPosition = owner.getScene().getPosition();
+			org.spout.api.geo.discrete.Point entityPosition = owner.getPhysics().getPosition();
 			for (ItemStack stack : drops) {
 				if (stack != null) {
 					Item.drop(entityPosition, stack, Vector3.ZERO);
 				}
 			}
 			if (dropComponent.getXpDrop() > 0) {
-				org.spout.api.geo.discrete.Point pos = getOwner().getScene().getPosition();
+				org.spout.api.geo.discrete.Point pos = getOwner().getPhysics().getPosition();
 
 				XPOrb xporb = pos.getWorld().createEntity(pos, XPOrb.class).add(XPOrb.class);
 				xporb.setExperience(dropComponent.getXpDrop());

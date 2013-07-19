@@ -135,7 +135,7 @@ public class Sheep extends Animal implements Passive {
 	}
 
 	private void eatGrass() {
-		final Point position = getOwner().getScene().getPosition();
+		final Point position = getOwner().getPhysics().getPosition();
 		final int x = position.getFloorX();
 		final int y = position.getFloorY() - 1;
 		final int z = position.getFloorZ();
@@ -150,7 +150,7 @@ public class Sheep extends Animal implements Passive {
 
 	public boolean shouldEatGrass() {
 		final Random random = getRandom();
-		final Point position = getOwner().getScene().getPosition();
+		final Point position = getOwner().getPhysics().getPosition();
 		final int x = position.getFloorX();
 		final int y = position.getFloorY() - 1;
 		final int z = position.getFloorZ();

@@ -60,7 +60,7 @@ public enum PaintingType {
 	SKELETON("Skeleton", 64, 64),
 	DONKEY_KONG("DonkeyKong", 64, 64),
 	POINTER("Pointer", 64, 64),
-	PIG_SCENE("Pigscene", 64, 64),
+	PIG_physics("Pigphysics", 64, 64),
 	FLAMING_SKULL("Flaming Skull", 64, 64);
 	private final String name;
 	private final int width, height;

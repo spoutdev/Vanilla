@@ -62,7 +62,7 @@ public class Boat extends Substance {
 					timeSinceLastHit = 0;
 					damage(10);
 					if (damageTaken > 40) {
-						Item.dropNaturally(getOwner().getScene().getPosition(), new ItemStack(VanillaMaterials.BOAT, 1));
+						Item.dropNaturally(getOwner().getPhysics().getPosition(), new ItemStack(VanillaMaterials.BOAT, 1));
 						getOwner().remove();
 					}
 			}

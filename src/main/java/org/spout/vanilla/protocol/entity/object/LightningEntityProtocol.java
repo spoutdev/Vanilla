@@ -39,6 +39,6 @@ import org.spout.vanilla.protocol.msg.entity.spawn.EntityThunderboltMessage;
 public class LightningEntityProtocol extends VanillaEntityProtocol {
 	@Override
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
-		return Arrays.<Message>asList(new EntityThunderboltMessage(entity.getId(), entity.getScene().getPosition().getBlockX(), entity.getScene().getPosition().getBlockY(), entity.getScene().getPosition().getBlockZ(), rm));
+		return Arrays.<Message>asList(new EntityThunderboltMessage(entity.getId(), entity.getPhysics().getPosition().getBlockX(), entity.getPhysics().getPosition().getBlockY(), entity.getPhysics().getPosition().getBlockZ(), rm));
 	}
 }

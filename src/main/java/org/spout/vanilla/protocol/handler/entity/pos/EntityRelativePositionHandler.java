@@ -45,6 +45,6 @@ public class EntityRelativePositionHandler extends MessageHandler<EntityRelative
 		Player player = session.getPlayer();
 		World world = player.getWorld();
 		Entity entity = world.getEntity(message.getEntityId());
-		entity.getScene().translate(new Vector3(message.getDeltaX(), message.getDeltaY(), message.getDeltaZ()));
+		entity.getPhysics().translate(new Vector3(message.getDeltaX(), message.getDeltaY(), message.getDeltaZ()));
 	}
 }

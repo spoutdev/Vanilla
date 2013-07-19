@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.component.entity.living.neutral;
 
-import org.spout.api.component.entity.SceneComponent;
+import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.material.Material;
 import org.spout.api.util.Parameter;
 
+import org.spout.physics.collision.shape.BoxShape;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.living.Living;
 import org.spout.vanilla.component.entity.living.Neutral;
@@ -49,10 +50,12 @@ public class Enderman extends Living implements Neutral {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new EndermanEntityProtocol());
-		SceneComponent scene = getOwner().getScene();
-		//scene.setShape(7f, new BoxShape(0.3F, 1.5F, 0.3F));
-		scene.setFriction(1f);
-		scene.setRestitution(0f);
+
+		//Physics
+		PhysicsComponent physics = getOwner().getPhysics();
+		physics.activate(2f, new BoxShape(1f, 2f, 1f), true);
+		physics.getPhysicsMaterial().setFriction(10f);
+		physics.getPhysicsMaterial().setRestitution(0f);
 
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(40);

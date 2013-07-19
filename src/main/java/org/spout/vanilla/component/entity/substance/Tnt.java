@@ -73,7 +73,7 @@ public class Tnt extends Substance {
 		holder = getOwner();
 		super.onAttached();
 		//TODO: Correct mass
-		//getOwner().getScene().setShape(5f, new BoxShape(1, 1, 1));
+		//getOwner().getPhysics().setShape(5f, new BoxShape(1, 1, 1));
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public class Tnt extends Substance {
 		pulse(dt);
 		if (getFuse() <= 0) {
 			ExplosionModel explosion = new ExplosionModelSpherical();
-			explosion.execute(holder.getScene().getPosition(), getExplosionSize(), makesFire(), VanillaMaterials.TNT.toCause(holder.getScene().getPosition()));
+			explosion.execute(holder.getPhysics().getPosition(), getExplosionSize(), makesFire(), VanillaMaterials.TNT.toCause(holder.getPhysics().getPosition()));
 			holder.remove();
 		}
 	}

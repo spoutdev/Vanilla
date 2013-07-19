@@ -60,17 +60,17 @@ public class Follow extends VanillaEntityComponent {
 		}
 
 		//Within 2 blocks of the followed entity? No need to continue
-		if (getOwner().getScene().getPosition().distanceSquared(toFollow.getScene().getPosition()) <= 9) {
+		if (getOwner().getPhysics().getPosition().distanceSquared(toFollow.getPhysics().getPosition()) <= 9) {
 			navigate.stop();
 			return;
 		}
 		//Already navigating and the Entity hasn't moved, no need to continue execution.
-		if (navigate.isNavigating() && !toFollow.getScene().isPositionDirty()) {
+		if (navigate.isNavigating() && !toFollow.getPhysics().isPositionDirty()) {
 			return;
 		}
 		//We have established the follower is outside 2 block scope of the followed and the followed's position has moved and the follower isn't following...
 		// Plot a course, make it so!
-		navigate.setDestination(toFollow.getScene().getPosition());
+		navigate.setDestination(toFollow.getPhysics().getPosition());
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class Follow extends VanillaEntityComponent {
 	 * @return Entity the Entity found or null if none found
 	 */
 	public Entity findAndFollow(boolean player, int range) {
-		final Point point = getOwner().getScene().getPosition();
+		final Point point = getOwner().getPhysics().getPosition();
 		List potentialToFollow;
 		if (player) {
 			potentialToFollow = point.getWorld().getNearbyPlayers(getOwner(), range);

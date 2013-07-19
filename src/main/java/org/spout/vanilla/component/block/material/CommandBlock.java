@@ -406,7 +406,7 @@ public class CommandBlock extends VanillaBlockComponent implements CommandSource
 
 		public boolean accept(Player p) {
 			Point center = new Point(block.getWorld(), x, y, z);
-			int distance = Math.round((float) p.getScene().getPosition().distance(center)); // the distance from the cmd block
+			int distance = Math.round((float) p.getPhysics().getPosition().distance(center)); // the distance from the cmd block
 
 			// get various principles (these all default to true if not specified)
 			boolean closeEnough = (minRadius == -1 || distance >= minRadius) && (maxRadius == -1 || distance <= maxRadius);

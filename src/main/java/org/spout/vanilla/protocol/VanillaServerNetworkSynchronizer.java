@@ -587,7 +587,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 	}
 
 	public void sendPosition() {
-		sendPosition(player.getScene().getPosition(), player.getScene().getRotation());
+		sendPosition(player.getPhysics().getPosition(), player.getPhysics().getRotation());
 	}
 
 	@Override
@@ -678,7 +678,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 		super.finalizeTick();
 		tickCounter++;
 		
-		Point currentPosition = player.getScene().getPosition();
+		Point currentPosition = player.getPhysics().getPosition();
 
 		int y = currentPosition.getBlockY();
 
@@ -754,7 +754,7 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 	public void preSnapshot() {
 		super.preSnapshot();
 		if (worldChanged) {
-			Point ep = player.getScene().getPosition();
+			Point ep = player.getPhysics().getPosition();
 			resetChunks();
 			worldChanged(ep.getWorld());
 		} else if (!worldChanged) {
@@ -793,8 +793,8 @@ public class VanillaServerNetworkSynchronizer extends ServerNetworkSynchronizer 
 				return;
 			}
 
-			if (teleported && !player.getScene().isTransformDirty()) {
-				sendPosition(player.getScene().getPosition(), player.getScene().getRotation());
+			if (teleported && !player.getPhysics().isTransformDirty()) {
+				sendPosition(player.getPhysics().getPosition(), player.getPhysics().getRotation());
 				teleported = false;
 			}
 

@@ -198,7 +198,7 @@ public class Human extends Living {
 		if (head != null) {
 			dropFrom = head.getHeadTransform();
 		} else {
-			dropFrom = getOwner().getScene().getTransform();
+			dropFrom = getOwner().getPhysics().getTransform();
 		}
 		// Some constants
 		final double impulseForce = 0.3;
@@ -405,7 +405,7 @@ public class Human extends Living {
 	@Override
 	public void onTick(float dt) {
 		super.onTick(dt);
-		final Point position = getOwner().getScene().getPosition();
+		final Point position = getOwner().getPhysics().getPosition();
 		livePosition.set(position);
 		setInWater(position.getBlock().getMaterial() instanceof Water);
 	}
@@ -416,6 +416,6 @@ public class Human extends Living {
 
 	public void setLivePosition(Point point) {
 		livePosition.set(point);
-		getOwner().getScene().setPosition(point);
+		getOwner().getPhysics().setPosition(point);
 	}
 }

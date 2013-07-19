@@ -67,7 +67,7 @@ public class Shears extends Tool {
 
 			sheep.setSheared(true);
 
-			Item.dropNaturally(other.getScene().getPosition(), event.getItemStack());
+			Item.dropNaturally(other.getPhysics().getPosition(), event.getItemStack());
 		}
 	}
 }

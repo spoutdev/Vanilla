@@ -27,7 +27,7 @@
 package org.spout.vanilla.component.entity.substance;
 
 import org.spout.api.collision.BoundingBox;
-import org.spout.api.component.entity.SceneComponent;
+import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.data.Data;
 import org.spout.api.entity.Entity;
 import org.spout.api.geo.LoadOption;
@@ -35,6 +35,7 @@ import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.math.Vector3;
 
+import org.spout.physics.collision.shape.BoxShape;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.misc.Health;
 import org.spout.vanilla.data.VanillaData;
@@ -53,9 +54,9 @@ public class Item extends Substance {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ItemEntityProtocol());
-		SceneComponent scene = getOwner().getScene();
-		scene.activate(new BoundingBox(-0.05F, -0.05F, -0.05F, 0.05F, 0.05F, 0.05F), 1);
-		scene.setRestitution(0f);
+		PhysicsComponent physics = getOwner().getPhysics();
+		physics.activate(1f, new BoxShape(0.27f, 0.27f, 0.27f), true);
+		physics.getPhysicsMaterial().
 		getOwner().add(Health.class).setMaxHealth(20);
 	}
 
@@ -126,7 +127,7 @@ public class Item extends Substance {
 		Item item = entity.add(Item.class);
 		item.setUncollectableDelay(DROP_PICKUP_DELAY);
 		item.setItemStack(itemStack);
-		entity.getScene().impulse(velocity);
+		entity.getPhysics().impulse(velocity);
 		if (position.getChunk(LoadOption.NO_LOAD) != null) {
 			position.getWorld().spawnEntity(entity);
 		}

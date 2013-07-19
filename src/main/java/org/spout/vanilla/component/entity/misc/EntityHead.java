@@ -110,7 +110,7 @@ public class EntityHead extends VanillaEntityComponent {
 	 * @return Head position
 	 */
 	public Point getPosition() {
-		return getOwner().getScene().getPosition().add(0.0f, this.getHeight(), 0.0f);
+		return getOwner().getPhysics().getPosition().add(0.0f, this.getHeight(), 0.0f);
 	}
 
 	/**

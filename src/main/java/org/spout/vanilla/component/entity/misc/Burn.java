@@ -58,7 +58,7 @@ public class Burn extends VanillaEntityComponent {
 	@Override
 	public void onTick(float dt) {
 		Sky sky = getOwner().getWorld().get(Sky.class);
-		Point point = getOwner().getScene().getPosition();
+		Point point = getOwner().getPhysics().getPosition();
 		if (sky != null && sky.hasWeather()) {
 			if (sky.getWeatherSimulator().isRainingAt((int) point.getX(), (int) point.getY(), (int) point.getZ(), false)) {
 				rainTimer += dt;

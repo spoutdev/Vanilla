@@ -27,6 +27,8 @@
 package org.spout.vanilla.component.entity.substance.projectile;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.entity.EntityCollideEntityEvent;
+import org.spout.api.event.entity.EntityCollideEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 
@@ -56,16 +58,13 @@ public class Snowball extends Substance implements Projectile {
 	}
 
 	@Override
-	public void onCollided(Point point, Entity entity) {
-		Health health = entity.get(Health.class);
-		if (health != null) {
-			health.damage(0);
+	public void onCollided(EntityCollideEvent event) {
+		if (event instanceof EntityCollideEntityEvent) {
+			Health health = ((EntityCollideEntityEvent) event).getCollided().get(Health.class);
+			if (health != null) {
+				health.damage(0);
+			}
 		}
-		getOwner().remove();
-	}
-
-	@Override
-	public void onCollided(Point point, Block block) {
 		getOwner().remove();
 	}
 }

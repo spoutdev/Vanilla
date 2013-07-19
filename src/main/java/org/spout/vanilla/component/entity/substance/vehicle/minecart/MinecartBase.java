@@ -82,7 +82,7 @@ public abstract class MinecartBase extends Substance {
 
 	protected void onDestroy() {
 		List<ItemStack> drops = getOwner().get(DeathDrops.class).getDrops();
-		Point entityPosition = getOwner().getScene().getPosition();
+		Point entityPosition = getOwner().getPhysics().getPosition();
 		for (ItemStack stack : drops) {
 			if (stack != null) {
 				Item.dropNaturally(entityPosition, stack);

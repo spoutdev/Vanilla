@@ -121,7 +121,7 @@ public class LightningSimulator extends Component {
 
 	public void strikePlayers(List<Player> toStrike) {
 		for (Player player : toStrike) {
-			Point playerPos = player.getScene().getPosition();
+			Point playerPos = player.getPhysics().getPosition();
 			final int posX = GenericMath.floor(playerPos.getX());
 			final int posY = GenericMath.floor(playerPos.getY());
 			final int posZ = GenericMath.floor(playerPos.getZ());
@@ -161,7 +161,7 @@ public class LightningSimulator extends Component {
 						Point point = new Point(world, x + adjustX, y + adjustY, z + adjustZ);
 						world.createAndSpawnEntity(point, LoadOption.NO_LOAD, Lightning.class);
 						for (Player p : GeneralEffects.LIGHTNING_THUNDER.getNearbyPlayers(point, null, 600)) {
-							double dist = p.getScene().getPosition().distanceSquared(point);
+							double dist = p.getPhysics().getPosition().distanceSquared(point);
 							float volume = (float) (10000F - Math.pow(dist, 0.73));
 							if (volume > 0) {
 								GeneralEffects.LIGHTNING_THUNDER.adjust(volume, 0.7F).play(p, point);

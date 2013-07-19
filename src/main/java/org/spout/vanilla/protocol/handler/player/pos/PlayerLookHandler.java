@@ -52,7 +52,7 @@ public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 
 		Player holder = session.getPlayer();
 
-		holder.getScene().setRotation(QuaternionMath.rotation(message.getPitch(), message.getYaw(), 0));
+		holder.getPhysics().setRotation(QuaternionMath.rotation(message.getPitch(), message.getYaw(), 0));
 		Human human = holder.get(Human.class);
 		if (human != null) {
 			human.setOnGround(message.isOnGround());
@@ -68,7 +68,7 @@ public final class PlayerLookHandler extends MessageHandler<PlayerLookMessage> {
 
 		Player holder = session.getPlayer();
 
-		holder.getScene().setRotation(QuaternionMath.rotation(message.getPitch(), message.getYaw(), 0));
+		holder.getPhysics().setRotation(QuaternionMath.rotation(message.getPitch(), message.getYaw(), 0));
 		Human human = holder.get(Human.class);
 		if (human != null) {
 			human.setOnGround(message.isOnGround());

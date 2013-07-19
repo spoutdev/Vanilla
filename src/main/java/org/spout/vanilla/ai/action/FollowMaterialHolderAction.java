@@ -87,6 +87,6 @@ public class FollowMaterialHolderAction implements Action {
 		if (navi == null) {
 			return;
 		}
-		navi.setDestination(target.getScene().getPosition());
+		navi.setDestination(target.getPhysics().getPosition());
 	}
 }

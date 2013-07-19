@@ -26,10 +26,11 @@
  */
 package org.spout.vanilla.component.entity.living.hostile;
 
-import org.spout.api.component.entity.SceneComponent;
+import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
 
+import org.spout.physics.collision.shape.BoxShape;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.ai.action.ActionAttack;
 import org.spout.vanilla.ai.goal.AttackPlayerGoal;
@@ -51,11 +52,11 @@ public class Creeper extends Living implements Hostile {
 	public void onAttached() {
 		super.onAttached();
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new CreeperEntityProtocol());
-		SceneComponent scene = getOwner().getScene();
 		getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.GUNPOWDER, getRandom().nextInt(2))).addXpDrop((short) 5);
-		//scene.setShape(2f, new BoxShape(1F, 2F, 1F));
-		scene.setFriction(10f);
-		scene.setRestitution(0f);
+		PhysicsComponent physics = getOwner().getPhysics();
+		physics.activate(2f, new BoxShape(1f, 2f, 1f), true);
+		physics.getPhysicsMaterial().setFriction(10f);
+		physics.getPhysicsMaterial().setRestitution(0f);
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(20);
 		}

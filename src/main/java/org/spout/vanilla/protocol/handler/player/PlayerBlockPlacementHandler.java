@@ -191,7 +191,7 @@ public final class PlayerBlockPlacementHandler extends MessageHandler<PlayerBloc
 
 						// For now: simple distance checking
 						Point tpos = placedBlock.getPosition();
-						if (player.getScene().getPosition().distance(tpos) < 0.6) {
+						if (player.getPhysics().getPosition().distance(tpos) < 0.6) {
 							refreshClient(player, clickedBlock, clickedFace, rm);
 							return;
 						}

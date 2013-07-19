@@ -27,6 +27,8 @@
 package org.spout.vanilla.component.entity.substance.projectile;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.entity.EntityCollideEntityEvent;
+import org.spout.api.event.entity.EntityCollideEvent;
 import org.spout.api.geo.LoadOption;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
@@ -58,12 +60,14 @@ public class Egg extends Substance implements Projectile {
 	}
 
 	@Override
-	public void onCollided(Point point, Entity entity) {
-		Health health = entity.get(Health.class);
-		if (health != null) {
-			health.damage(0);
+	public void onCollided(EntityCollideEvent event) {
+		if (event instanceof EntityCollideEntityEvent) {
+			Health health = ((EntityCollideEntityEvent) event).getCollided().get(Health.class);
+			if (health != null) {
+				health.damage(0);
+			}
 		}
-		spawnChickens(point);
+		spawnChickens(new Point(event.getContactInfo().getNormal(), getOwner().getWorld()));
 		getOwner().remove();
 	}
 
@@ -83,11 +87,5 @@ public class Egg extends Substance implements Projectile {
 				point.getWorld().createAndSpawnEntity(point, LoadOption.NO_LOAD, Chicken.class);
 			}
 		}
-	}
-
-	@Override
-	public void onCollided(Point point, Block block) {
-		spawnChickens(point);
-		getOwner().remove();
 	}
 }

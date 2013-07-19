@@ -66,7 +66,7 @@ public class PlayerHead extends EntityHead implements Camera {
 
 	@Override
 	public void updateView() {
-		Transform transform = getOwner().getScene().getRenderTransform();
+		Transform transform = getOwner().getPhysics().getTransformRender();
 		Point point = transform.getPosition().add(0.0f, getHeight(), 0.0f);
 		Matrix pos = MatrixMath.createTranslated(point.multiply(-1));
 		Matrix rot = getRotation();
@@ -76,7 +76,7 @@ public class PlayerHead extends EntityHead implements Camera {
 
 	@Override
 	public void updateReflectedView() {
-		Transform transform = getOwner().getScene().getRenderTransform();
+		Transform transform = getOwner().getPhysics().getTransformRender();
 		Point point = transform.getPosition().add(0.0f, getHeight(), 0.0f);
 		Matrix pos = MatrixMath.createTranslated(point.multiply(-1));
 		Matrix rot = getRotation();

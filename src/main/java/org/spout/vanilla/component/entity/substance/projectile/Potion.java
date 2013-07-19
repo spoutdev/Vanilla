@@ -27,6 +27,7 @@
 package org.spout.vanilla.component.entity.substance.projectile;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.entity.EntityCollideEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 
@@ -64,14 +65,9 @@ public class Potion extends Substance implements Projectile {
 	}
 
 	@Override
-	public void onCollided(Point point, Entity entity) {
-		GeneralEffects.SPLASHPOTION.playGlobal(point, getPotion().getData());
-		getOwner().remove();
-	}
-
-	@Override
-	public void onCollided(Point point, Block block) {
-		GeneralEffects.SPLASHPOTION.playGlobal(point, getPotion().getData());
+	public void onCollided(EntityCollideEvent event) {
+		//TODO: Hit entities with splash
+		GeneralEffects.SPLASHPOTION.playGlobal(new Point(event.getContactInfo().getNormal(), getOwner().getWorld()), getPotion().getData());
 		getOwner().remove();
 	}
 }

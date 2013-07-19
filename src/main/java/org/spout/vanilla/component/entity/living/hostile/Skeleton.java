@@ -28,9 +28,10 @@ package org.spout.vanilla.component.entity.living.hostile;
 
 import java.util.Random;
 
-import org.spout.api.component.entity.SceneComponent;
+import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.physics.collision.shape.BoxShape;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.component.entity.living.Hostile;
@@ -48,18 +49,23 @@ public class Skeleton extends Living implements Hostile {
 	@Override
 	public void onAttached() {
 		super.onAttached();
+		Random random = getRandom();
+
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new SkeletonEntityProtocol());
-		SceneComponent scene = getOwner().getScene();
-		DeathDrops dropComponent = getOwner().add(DeathDrops.class);
 		getOwner().add(EntityInventory.class);
 		getOwner().add(EntityItemCollector.class);
-		Random random = getRandom();
+
+		//Physics
+		PhysicsComponent physics = getOwner().getPhysics();
+		physics.activate(2f, new BoxShape(1f, 2f, 1f), true);
+		physics.getPhysicsMaterial().setFriction(10f);
+		physics.getPhysicsMaterial().setRestitution(0f);
+
+		DeathDrops dropComponent = getOwner().add(DeathDrops.class);
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.ARROW, random.nextInt(2)));
 		dropComponent.addDrop(new ItemStack(VanillaMaterials.BONE, random.nextInt(2)));
 		dropComponent.addXpDrop((short) 5);
-		//scene.setShape(5f, new BoxShape(0.3F, 1.15F, 0.3F));
-		scene.setFriction(1f);
-		scene.setRestitution(0f);
+
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(20);
 		}

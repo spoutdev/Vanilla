@@ -91,6 +91,6 @@ public class ActionAttack implements Action {
 			return;
 		}
 		//Gogo, get that fool!
-		navi.setDestination(target.getScene().getPosition());
+		navi.setDestination(target.getPhysics().getPosition());
 	}
 }

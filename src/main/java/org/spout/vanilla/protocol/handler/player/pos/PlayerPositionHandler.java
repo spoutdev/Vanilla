@@ -79,7 +79,7 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 		Player player = session.getPlayer();
 
 		World world = session.getEngine().getDefaultWorld();
-		player.getScene().setPosition(new Point(world, (float) message.getX(), (float) message.getY(), (float) message.getZ()));
+		player.getPhysics().setPosition(new Point(world, (float) message.getX(), (float) message.getY(), (float) message.getZ()));
 		// TODO: player position isnt updated
 		System.out.println(message.toString());
 	}
@@ -99,7 +99,7 @@ public final class PlayerPositionHandler extends MessageHandler<PlayerPositionMe
 
 		final Point rawPosition = new Point(message.getPosition(), holder.getWorld());
 		final Point newPosition = rmInverse.convert(rawPosition);
-		final Point position = holder.getScene().getPosition();
+		final Point position = holder.getPhysics().getPosition();
 
 		if (!(session.getNetworkSynchronizer() instanceof VanillaServerNetworkSynchronizer)) throw new IllegalStateException("Using Vanilla Protocol without using VanillaNetworkSynchronizer");
 		VanillaServerNetworkSynchronizer sync = (VanillaServerNetworkSynchronizer) session.getNetworkSynchronizer();

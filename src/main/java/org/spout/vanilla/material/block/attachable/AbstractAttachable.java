@@ -35,21 +35,22 @@ import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.Vector3;
 import org.spout.api.util.bytebit.ByteBitSet;
 
+import org.spout.physics.collision.shape.CollisionShape;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 
 public abstract class AbstractAttachable extends VanillaBlockMaterial implements Attachable {
 	private final ByteBitSet attachableFaces = new ByteBitSet(BlockFaces.NONE);
 
-	protected AbstractAttachable(short dataMask, String name, int id, String model, Class<? extends BlockComponent>... components) {
-		super(dataMask, name, id, model, components);
+	protected AbstractAttachable(short dataMask, String name, int id, String model, CollisionShape shape, Class<? extends BlockComponent>... components) {
+		super(dataMask, name, id, model, shape, components);
 	}
 
-	protected AbstractAttachable(String name, int id, String model, Class<? extends BlockComponent>... components) {
-		super(name, id, model, components);
+	protected AbstractAttachable(String name, int id, String model, CollisionShape shape, Class<? extends BlockComponent>... components) {
+		super(name, id, model, shape, components);
 	}
 
-	public AbstractAttachable(String name, int id, int data, VanillaBlockMaterial parent, String model, Class<? extends BlockComponent>... components) {
-		super(name, id, data, parent, model, components);
+	public AbstractAttachable(String name, int id, int data, VanillaBlockMaterial parent, String model, CollisionShape shape, Class<? extends BlockComponent>... components) {
+		super(name, id, data, parent, model, shape, components);
 	}
 
 	/**

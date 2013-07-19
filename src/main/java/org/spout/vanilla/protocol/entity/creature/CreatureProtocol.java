@@ -52,9 +52,9 @@ public class CreatureProtocol extends BasicEntityProtocol {
 		List<Message> messages = new ArrayList<Message>(6);
 
 		int entityId = entity.getId();
-		Vector3 position = entity.getScene().getPosition().multiply(32).floor();
-		int yaw = (int) (entity.getScene().getRotation().getYaw() * 32);
-		int pitch = (int) (entity.getScene().getRotation().getPitch() * 32);
+		Vector3 position = entity.getPhysics().getPosition().multiply(32).floor();
+		int yaw = (int) (entity.getPhysics().getRotation().getYaw() * 32);
+		int pitch = (int) (entity.getPhysics().getRotation().getPitch() * 32);
 		List<Parameter<?>> parameters = this.getSpawnParameters(entity);
 		if (parameters.isEmpty()) {
 			parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 1)); //Official expects some metadata to spawn

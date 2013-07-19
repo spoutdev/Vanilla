@@ -46,7 +46,7 @@ public final class WindowCloseHandler extends MessageHandler<WindowCloseMessage>
 		WindowHolder window = session.getPlayer().get(WindowHolder.class);
 		if (window != null) {
 			if (window.getActiveWindow() instanceof ChestWindow) {
-				SoundEffects.RANDOM_CHESTCLOSED.playGlobal(session.getPlayer().getScene().getPosition());
+				SoundEffects.RANDOM_CHESTCLOSED.playGlobal(session.getPlayer().getPhysics().getPosition());
 			}
 			window.closeWindow();
 		}

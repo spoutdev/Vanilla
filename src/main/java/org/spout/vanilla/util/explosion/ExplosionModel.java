@@ -172,7 +172,7 @@ public abstract class ExplosionModel {
 				if (human != null && human.isCreative()) {
 					continue;
 				}
-				health.damage(getDamage(position, entity.getScene().getPosition(), size));
+				health.damage(getDamage(position, entity.getPhysics().getPosition(), size));
 			}
 		}
 

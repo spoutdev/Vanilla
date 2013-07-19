@@ -95,7 +95,21 @@ public class EntityInventory extends EntityComponent {
 	}
 
 	/**
-	 * Clears all inventory slots
+	 * Clears either the armor or quickbar inventories (if specified).
+	 * @param armor True clears the armor inventory
+	 * @param quickbar True clears the quickbar inventory
+	 */
+	public void clear (boolean armor, boolean quickbar) {
+		if (armor) {
+			getArmor().clear();
+		}
+		if (quickbar) {
+			getQuickbar().clear();
+		}
+	}
+
+	/**
+	 * Clears the armor and quickbar slots
 	 */
 	public void clear() {
 		getArmor().clear();

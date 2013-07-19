@@ -40,7 +40,7 @@ public class EntityRelativePositionYawHandler extends MessageHandler<EntityRelat
 		/*Player player = session.getPlayer();
 		World world = player.getWorld();
 		Entity entity = world.getEntity(message.getEntityId());
-		entity.getScene().translate(new Vector3(message.getDeltaX(), message.getDeltaY(), message.getDeltaZ()));
-		entity.getScene().rotate(QuaternionMath.rotation(message.getPitch(), message.getRotation(), 0));*/
+		entity.getPhysics().translate(new Vector3(message.getDeltaX(), message.getDeltaY(), message.getDeltaZ()));
+		entity.getPhysics().rotate(QuaternionMath.rotation(message.getPitch(), message.getRotation(), 0));*/
 	}
 }

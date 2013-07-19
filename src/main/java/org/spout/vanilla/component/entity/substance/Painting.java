@@ -59,7 +59,7 @@ public class Painting extends Substance {
 		// We set a timer so we don't spam the server for nothing.
 		if (timer >= 1f) {
 			timer = 0f;
-			if (!getType().canBePlaced(getOwner().getWorld().getBlock(getType().getOriginalPos(getFace(), getOwner().getScene().getPosition())), getFace())) {
+			if (!getType().canBePlaced(getOwner().getWorld().getBlock(getType().getOriginalPos(getFace(), getOwner().getPhysics().getPosition())), getFace())) {
 				destroy();
 			}
 		}
@@ -114,7 +114,7 @@ public class Painting extends Substance {
 
 	private void destroy() {
 		List<ItemStack> drops = getOwner().get(DeathDrops.class).getDrops();
-		Point entityPosition = getOwner().getScene().getPosition();
+		Point entityPosition = getOwner().getPhysics().getPosition();
 		for (ItemStack stack : drops) {
 			if (stack != null) {
 				Item.dropNaturally(entityPosition, stack);

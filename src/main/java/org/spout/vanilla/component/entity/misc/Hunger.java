@@ -139,7 +139,7 @@ public class Hunger extends VanillaEntityComponent {
 
 				// Exhaustion
 
-				final Point pos = getOwner().getScene().getPosition();
+				final Point pos = getOwner().getPhysics().getPosition();
 				if (lastPos == null) {
 					lastPos = pos;
 					return;

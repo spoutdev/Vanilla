@@ -80,7 +80,7 @@ public class Digging extends VanillaEntityComponent {
 	 * @return true if successful
 	 */
 	public boolean startDigging(Point position, Material tool) {
-		if (getOwner().getScene().getPosition().getDistance(position) > 6) { // TODO: Actually get block reach from somewhere instead of just using 6
+		if (getOwner().getPhysics().getPosition().getDistance(position) > 6) { // TODO: Actually get block reach from somewhere instead of just using 6
 			return false;
 		}
 		VanillaBlockMaterial block = (VanillaBlockMaterial) position.getBlock().getMaterial();

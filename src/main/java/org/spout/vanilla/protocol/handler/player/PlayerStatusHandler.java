@@ -76,7 +76,7 @@ public class PlayerStatusHandler extends MessageHandler<PlayerStatusMessage> {
 				human.getHealth().setHealth(human.getHealth().getMaxHealth(), HealthChangeCause.SPAWN);
 			}
 
-			final Transform spawn = new Transform(player.getScene().getTransform());
+			final Transform spawn = new Transform(player.getPhysics().getTransform());
 			spawn.setPosition(point);
 			//send spawn to everyone else
 			Set<? extends Player> observers = player.getChunk().getObservingPlayers();

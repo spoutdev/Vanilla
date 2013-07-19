@@ -41,6 +41,42 @@ import org.spout.vanilla.inventory.player.PlayerCraftingInventory;
  * Represents the inventory of a Player.
  */
 public class PlayerInventory extends EntityInventory {
+
+	@Override
+	public QuickbarInventory getQuickbar() {
+		return getData().get(VanillaData.QUICKBAR_INVENTORY);
+	}
+
+	@Override
+	public List<Inventory> getDroppable() {
+		List<Inventory> inventories = new ArrayList<Inventory>(5);
+		inventories.add(getQuickbar());
+		inventories.add(getArmor());
+		inventories.add(getCraftingGrid());
+		inventories.add(getMain());
+		return inventories;
+	}
+
+	/**
+	 * Clears the armor, quickbar, main, craftinggrid, and enderchest inventories
+	 */
+	@Override
+	public void clear() {
+		super.clear();
+		getMain().clear();
+		getCraftingGrid().clear();
+		getEnderChestInventory().clear();
+	}
+
+	@Override
+	public void updateAll() {
+		updateAll(getQuickbar());
+		updateAll(getMain());
+		updateAll(getArmor());
+		updateAll(getCraftingGrid());
+		updateAll(getEnderChestInventory());
+	}
+
 	/**
 	 * Returns the entity's armor inventory
 	 * @return armor
@@ -73,11 +109,6 @@ public class PlayerInventory extends EntityInventory {
 		return getData().get(VanillaData.ENDER_CHEST_INVENTORY);
 	}
 
-	@Override
-	public QuickbarInventory getQuickbar() {
-		return getData().get(VanillaData.QUICKBAR_INVENTORY);
-	}
-
 	/**
 	 * Attempts to add the specified item to the quickbar and then the main if
 	 * not all of the item is transferred.
@@ -92,30 +123,29 @@ public class PlayerInventory extends EntityInventory {
 		return true;
 	}
 
-	@Override
-	public List<Inventory> getDroppable() {
-		List<Inventory> inventories = new ArrayList<Inventory>(5);
-		inventories.add(getQuickbar());
-		inventories.add(getArmor());
-		inventories.add(getCraftingGrid());
-		inventories.add(getMain());
-		return inventories;
-	}
-
-	@Override
-	public void clear() {
-		getMain().clear();
-		getCraftingGrid().clear();
-		getArmor().clear();
-		getQuickbar().clear();
-	}
-
-	@Override
-	public void updateAll() {
-		updateAll(getQuickbar());
-		updateAll(getMain());
-		updateAll(getArmor());
-		updateAll(getCraftingGrid());
-		updateAll(getEnderChestInventory());
+	/**
+	 * Clears either the armor, quickbar, main, craftinggrid, or enderchest inventories (if specified).
+	 * @param armor True clears the armor inventory
+	 * @param quickbar True clears the quickbar inventory
+	 * @param main True clears the main inventory
+	 * @param craftinggrid True clears the craftinggrid inventory
+	 * @param enderchest True clears the enderchest inventory
+	 */
+	public void clear(boolean armor, boolean quickbar, boolean main, boolean craftinggrid, boolean enderchest) {
+		if (armor) {
+			getArmor().clear();
+		}
+		if (quickbar) {
+			getQuickbar().clear();
+		}
+		if (main) {
+			getMain().clear();
+		}
+		if (craftinggrid) {
+			getCraftingGrid().clear();
+		}
+		if (enderchest) {
+			getEnderChestInventory().clear();
+		}
 	}
 }

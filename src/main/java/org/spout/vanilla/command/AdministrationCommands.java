@@ -326,10 +326,10 @@ public class AdministrationCommands {
 		args.assertCompletelyParsed();
 
 		Player player = (Player) source;
-		if (!(player.getScene().getPosition().getWorld().getGenerator() instanceof BiomeGenerator)) {
+		if (!(player.getPhysics().getPosition().getWorld().getGenerator() instanceof BiomeGenerator)) {
 			throw new CommandException("This map does not appear to have any biome data.");
 		}
-		Point pos = player.getScene().getPosition();
+		Point pos = player.getPhysics().getPosition();
 		Biome biome = pos.getWorld().getBiome(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ());
 		source.sendMessage(plugin.getPrefix() + ChatStyle.GREEN + "Current biome: " + ChatStyle.WHITE + (biome != null ? biome.getName() : "none"));
 	}

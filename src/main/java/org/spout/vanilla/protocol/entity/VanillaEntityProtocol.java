@@ -68,10 +68,10 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 	@Override
 	public List<Message> getUpdateMessages(Entity entity, Transform liveTransform, RepositionManager rm, boolean force) {
 		// Movement
-		final Transform prevTransform = rm.convert(entity.getScene().getTransform());
+		final Transform prevTransform = rm.convert(entity.getPhysics().getTransform());
 		final Transform newTransform = rm.convert(liveTransform);
 
-		final boolean looked = entity.getScene().isRotationDirty();
+		final boolean looked = entity.getPhysics().isRotationDirty();
 
 		final int lastX = protocolifyPosition(prevTransform.getPosition().getX());
 		final int lastY = protocolifyPosition(prevTransform.getPosition().getY());

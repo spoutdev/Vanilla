@@ -26,7 +26,6 @@
  */
 package org.spout.vanilla.material.block;
 
-import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
@@ -38,16 +37,17 @@ import org.spout.vanilla.material.VanillaMaterials;
 public class Solid extends VanillaBlockMaterial {
 	public Solid(String name, int id, String model) {
 		this((short) 0, name, id, model);
+		setOpaque();
 	}
 
 	public Solid(short dataMask, String name, int id, String model) {
 		super(dataMask, name, id, model);
-		this.setCollision(CollisionStrategy.SOLID).setOpaque();
+		setOpaque();
 	}
 
 	public Solid(String name, int id, int data, VanillaBlockMaterial parent, String model) {
 		super(name, id, data, parent, model);
-		this.setCollision(CollisionStrategy.SOLID).setOpaque();
+		setOpaque();
 	}
 
 	@Override

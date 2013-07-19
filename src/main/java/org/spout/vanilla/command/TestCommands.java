@@ -209,7 +209,7 @@ public class TestCommands {
 	public void targetHeight(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
 
-		Point pos = player.getScene().getPosition();
+		Point pos = player.getPhysics().getPosition();
 
 		int height = pos.getWorld().getSurfaceHeight(pos.getBlockX(), pos.getBlockZ());
 
@@ -237,7 +237,7 @@ public class TestCommands {
 	@Filter(PlayerFilter.class)
 	public void growTree(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
-		Point pos = player.getScene().getPosition();
+		Point pos = player.getPhysics().getPosition();
 
 		BigTreeObject tree = new BigTreeObject();
 		tree.placeObject(pos.getWorld(), pos.getBlockX(), pos.getBlockY(), pos.getBlockZ());
@@ -346,7 +346,7 @@ public class TestCommands {
 		final int radius = args.popInteger("radius");
 		args.assertCompletelyParsed();
 
-		if (VanillaObjects.NETHER_PORTAL.find(player.getScene().getPosition(), radius)) {
+		if (VanillaObjects.NETHER_PORTAL.find(player.getPhysics().getPosition(), radius)) {
 			player.sendMessage(ChatStyle.GREEN + "Found portal frame!");
 		} else {
 			player.sendMessage(ChatStyle.RED + "Portal frame not found.");
@@ -464,7 +464,7 @@ public class TestCommands {
 	public void explode(Player player, CommandArguments args) throws CommandException {
 		args.assertCompletelyParsed();
 
-		Point position = player.getScene().getPosition();
+		Point position = player.getPhysics().getPosition();
 		ExplosionModels.SPHERICAL.execute(position, 4.0f);
 	}
 
@@ -481,7 +481,7 @@ public class TestCommands {
 		}
 		args.assertCompletelyParsed();
 
-		final Point loc = player.getScene().getPosition();
+		final Point loc = player.getPhysics().getPosition();
 		final World world = loc.getWorld();
 		final int x = loc.getBlockX();
 		final int y = loc.getBlockY();
@@ -517,9 +517,9 @@ public class TestCommands {
 			if (comp instanceof Item) {
 				Item item = (Item) comp;
 				ItemStack stack = item.getItemStack();
-				getEngine().getLogger().info("Removing item (" + stack + ") at " + entity.getScene().getTransform().getPosition().toBlockString());
+				getEngine().getLogger().info("Removing item (" + stack + ") at " + entity.getPhysics().getTransform().getPosition().toBlockString());
 			} else {
-				getEngine().getLogger().info("Killing " + comp.getClass().getSimpleName() + " at " + entity.getScene().getTransform().getPosition().toBlockString());
+				getEngine().getLogger().info("Killing " + comp.getClass().getSimpleName() + " at " + entity.getPhysics().getTransform().getPosition().toBlockString());
 			}*/
 			entity.remove();
 		}
@@ -543,7 +543,7 @@ public class TestCommands {
 
 		if (action.contains("look")) {
 			Quaternion rotation = player.getData().get(VanillaData.HEAD_ROTATION);
-			Point startPosition = player.getScene().getPosition();
+			Point startPosition = player.getPhysics().getPosition();
 			Vector3 offset = rotation.getDirection().multiply(0.1);
 			for (int i = 0; i < 100; i++) {
 				startPosition = startPosition.add(offset);
@@ -601,9 +601,9 @@ public class TestCommands {
 		final Entity entity;
 		if (getEngine() instanceof Client) {
 			final EntityPrefab prefab = getEngine().getFileSystem().getResource("entity://Vanilla/entities/" + clazz.getSimpleName().toLowerCase() + "/" + clazz.getSimpleName().toLowerCase() + ".sep");
-			entity = prefab.createEntity(player.getScene().getPosition());
+			entity = prefab.createEntity(player.getPhysics().getPosition());
 		} else {
-			entity = player.getWorld().createEntity(player.getScene().getPosition(), clazz);
+			entity = player.getWorld().createEntity(player.getPhysics().getPosition(), clazz);
 		}
 		//Optional param was provided (ie the block material for a falling block).
 		if (args.length() == 2) {

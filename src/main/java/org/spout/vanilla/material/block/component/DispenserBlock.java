@@ -130,7 +130,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 			if (!facingBlock.getMaterial().isSolid()) {
 				World world = facingBlock.getWorld();
 				Tnt tnt = world.createEntity(facingBlock.getPosition(), Tnt.class).add(Tnt.class);
-				tnt.getOwner().getScene().impulse(new Vector3(0.5D, 0.5D, 0.5D));
+				tnt.getOwner().getPhysics().impulse(new Vector3(0.5D, 0.5D, 0.5D));
 				world.spawnEntity(tnt.getOwner());
 				slot.addAmount(-1);
 				return true;
@@ -138,7 +138,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 		} else if (item.getMaterial() instanceof SpawnEgg) {
 			if (!facingBlock.getMaterial().isSolid()) {
 				Entity entity = facingBlock.getWorld().createEntity(facingBlock.getPosition(), ((SpawnEgg) item.getMaterial()).getComponent());
-				entity.getScene().translate(new Vector3(0.5D, 0.5D, 0.5D));
+				entity.getPhysics().translate(new Vector3(0.5D, 0.5D, 0.5D));
 				facingBlock.getWorld().spawnEntity(entity);
 				slot.addAmount(-1);
 				return true;
@@ -177,7 +177,7 @@ public class DispenserBlock extends VanillaBlockMaterial implements Directional,
 			}
 		} else if (item.getMaterial() instanceof Armor) {
 			for (Player player : block.getWorld().getNearbyPlayers(block.getPosition(), 2)) {
-				if (player.getScene().getPosition().getBlock().equals(facingBlock)) {
+				if (player.getPhysics().getPosition().getBlock().equals(facingBlock)) {
 					PlayerInventory inv = player.get(PlayerInventory.class);
 					int armorSlot = ((Armor) item.getMaterial()).getEquipableSlot();
 					if (inv.getArmor().get(armorSlot) != null) {

@@ -35,7 +35,6 @@ import java.util.Set;
 import org.spout.api.Engine;
 import org.spout.api.Platform;
 import org.spout.api.Spout;
-import org.spout.api.collision.CollisionStrategy;
 import org.spout.api.component.block.BlockComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.entity.Player;
@@ -59,6 +58,7 @@ import org.spout.api.render.RenderMaterial;
 import org.spout.api.util.flag.Flag;
 import org.spout.api.util.flag.FlagBundle;
 
+import org.spout.physics.collision.shape.CollisionShape;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.component.world.sky.Sky;
@@ -92,8 +92,8 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	private ToolLevel miningLevel = ToolLevel.NONE;
 	private final Vector2 pos = null; // TODO: Block item rendering
 
-	public VanillaBlockMaterial(String name, int id, String model, Class<? extends BlockComponent>... components) {
-		this((short) 0, name, id, model, components);
+	public VanillaBlockMaterial(String name, int id, String model, CollisionShape shape, Class<? extends BlockComponent>... components) {
+		this((short) 0, name, id, model, shape, components);
 		if (getEngine().getPlatform() == Platform.CLIENT) {
 			if (!getModel().getRenderMaterial().getRenderEffects().contains(VanillaEffects.SKY_TIME)) {
 				getModel().getRenderMaterial().addRenderEffect(VanillaEffects.SKY_TIME);
@@ -102,10 +102,9 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		}
 	}
 
-	public VanillaBlockMaterial(short dataMask, String name, int id, String model, Class<? extends BlockComponent>... components) {
-		super(dataMask, name, model, components);
+	public VanillaBlockMaterial(short dataMask, String name, int id, String model, CollisionShape shape, Class<? extends BlockComponent>... components) {
+		super(dataMask, name, model, shape, components);
 		this.minecraftId = id;
-		this.setCollision(CollisionStrategy.NOCOLLIDE);
 		this.setTransparent();
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
@@ -118,10 +117,9 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 		}
 	}
 
-	public VanillaBlockMaterial(String name, int id, int data, VanillaBlockMaterial parent, String model, Class<? extends BlockComponent>... components) {
-		super(name, data, parent, model, components);
+	public VanillaBlockMaterial(String name, int id, int data, VanillaBlockMaterial parent, String model, CollisionShape shape, Class<? extends BlockComponent>... components) {
+		super(name, data, parent, model, shape, components);
 		this.minecraftId = id;
-		this.setCollision(CollisionStrategy.NOCOLLIDE);
 		this.setTransparent();
 		this.getDrops().SILK_TOUCH.add(this);
 		this.getDrops().DEFAULT.add(this);
@@ -195,6 +193,16 @@ public abstract class VanillaBlockMaterial extends BlockMaterial implements Vani
 	@Override
 	public VanillaBlockMaterial setFriction(float friction) {
 		return (VanillaBlockMaterial) super.setFriction(friction);
+	}
+
+	@Override
+	public VanillaBlockMaterial setRestitution(float restitution) {
+		return (VanillaBlockMaterial) super.setRestitution(restitution);
+	}
+
+	@Override
+	public VanillaBlockMaterial setShape(CollisionShape shape) {
+		return (VanillaBlockMaterial) super.setShape(shape);
 	}
 
 	@Override

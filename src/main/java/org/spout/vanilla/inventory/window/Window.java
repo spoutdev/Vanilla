@@ -557,7 +557,7 @@ public abstract class Window extends AbstractWindow {
 		}
 
 		if (cursorItem != null) {
-			Item.dropNaturally(getPlayer().getScene().getPosition(), cursorItem);
+			Item.dropNaturally(getPlayer().getPhysics().getPosition(), cursorItem);
 			cursorItem = null;
 		}
 	}

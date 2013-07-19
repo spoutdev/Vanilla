@@ -26,15 +26,14 @@
  */
 package org.spout.vanilla.component.entity.substance;
 
-import org.spout.api.collision.CollisionStrategy;
-import org.spout.api.geo.World;
+import org.spout.api.component.entity.PhysicsComponent;
+import org.spout.api.event.entity.EntityCollideBlockEvent;
+import org.spout.api.event.entity.EntityCollideEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.material.BlockMaterial;
-import org.spout.api.math.GenericMath;
-import org.spout.api.math.Vector3;
-
+import org.spout.api.material.block.BlockFace;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.protocol.entity.object.FallingBlockProtocol;
@@ -42,15 +41,25 @@ import org.spout.vanilla.protocol.entity.object.ObjectType;
 
 public class FallingBlock extends Substance {
 	private BlockMaterial material;
-	private float fallSpeed = 0F;
 
 	@Override
 	public void onAttached() {
 		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new FallingBlockProtocol(ObjectType.FALLING_OBJECT));
 	}
 
-	public void setMaterial(BlockMaterial material) {
+	public void setMaterial(VanillaBlockMaterial material) {
+		if (material == null) {
+			throw new IllegalArgumentException("Cannot set a null material for the FallingBlock");
+		}
+		if (this.material.equals(material)) {
+			return;
+		}
 		this.material = material;
+		//Physics
+		PhysicsComponent physics = getOwner().getPhysics();
+		physics.activate(material.getMass(), material.getShape(), true);
+		physics.getPhysicsMaterial().setFriction(material.getFriction());
+		physics.getPhysicsMaterial().setRestitution(material.getRestitution());
 	}
 
 	public BlockMaterial getMaterial() {
@@ -58,60 +67,21 @@ public class FallingBlock extends Substance {
 	}
 
 	@Override
-	public void onTick(float dt) {
-		Point pos = this.getOwner().getScene().getPosition();
-		World world = pos.getWorld();
-		int x = pos.getBlockX();
-		int y = pos.getBlockY();
-		int z = pos.getBlockZ();
-		int fallAmt = Math.max(1, GenericMath.floor(Math.abs(fallSpeed)));
-		for (int dy = 0; dy < fallAmt; dy++) {
-			BlockMaterial below = world.getBlockMaterial(x, y - dy, z);
-			if (isFallingObstacle(below)) {
-				// Place block on top of this obstacle, if possible
-				Block current = world.getBlock(x, y - dy + 1, z);
-				BlockMaterial currentMat = current.getMaterial();
-				if (!currentMat.isPlacementObstacle()) {
-					// Place in the world
-					current.setMaterial(getMaterial(), getMaterial().toCause(pos));
-				} else {
-					// Spawn drops
-					Item.dropNaturally(pos, new ItemStack(getMaterial(), 1));
-				}
-				this.getOwner().remove();
+	public void onCollided(EntityCollideEvent event) {
+		if (event instanceof EntityCollideBlockEvent) {
+			final EntityCollideBlockEvent collideBlockEvent = (EntityCollideBlockEvent) event;
+			final Point point = new Point(collideBlockEvent.getContactInfo().getNormal(), getOwner().getWorld());
+			final int x = point.getBlockX();
+			final int y = point.getBlockX();
+			final int z = point.getBlockX();
+			final Block translated = getOwner().getWorld().getBlock(x, y, z).translate(BlockFace.TOP);
+			final BlockMaterial material = translated.getMaterial();
+			if (material.isPlacementObstacle()) {
+				Item.dropNaturally(point, new ItemStack(getMaterial(), 1));
+			} else {
+				translated.setMaterial(getMaterial(), getMaterial().toCause(point));
 			}
+			getOwner().remove();
 		}
-		if (!this.getOwner().isRemoved()) {
-			float FALL_INCREMENT = -0.04F;
-			fallSpeed += (FALL_INCREMENT * dt * 20);
-			this.getOwner().getScene().translate(new Vector3(0, fallSpeed, 0F));
-			float FALL_MULTIPLIER = 0.98F;
-			fallSpeed *= FALL_MULTIPLIER;
-		}
-	}
-
-	public float getFallingSpeed() {
-		return fallSpeed;
-	}
-
-	/**
-	 * Whether the material can stop a falling block from falling, acting as the new ground block
-	 * @param material
-	 * @return True if it obstructs further falling, False if not
-	 */
-	public static boolean isFallingObstacle(BlockMaterial material) {
-		if (material == BlockMaterial.AIR) {
-			return false;
-		}
-		if (material.getVolume().getStrategy() != CollisionStrategy.SOLID) {
-			return false;
-		}
-		if (material instanceof VanillaBlockMaterial) {
-			VanillaBlockMaterial vbm = (VanillaBlockMaterial) material;
-			if (!vbm.isPlacementObstacle()) {
-				return false;
-			}
-		}
-		return true;
 	}
 }

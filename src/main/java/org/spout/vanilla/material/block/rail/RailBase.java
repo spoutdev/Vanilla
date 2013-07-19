@@ -34,6 +34,7 @@ import org.spout.api.material.BlockMaterial;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.math.Vector3;
 
+import org.spout.physics.collision.shape.BoxShape;
 import org.spout.vanilla.data.RailsState;
 import org.spout.vanilla.material.VanillaBlockMaterial;
 import org.spout.vanilla.material.block.attachable.GroundAttachable;
@@ -41,9 +42,8 @@ import org.spout.vanilla.util.MinecartTrackLogic;
 
 public abstract class RailBase extends GroundAttachable {
 	public RailBase(String name, int id) {
-		super(name, id, null);
-		this.setLiquidObstacle(false).setHardness(0.7F).setResistance(1.2F).setTransparent().setCollision(CollisionStrategy.NOCOLLIDE);
-		setVolume(new BoundingBox(0.0f, 0.0f, 0.0f, 1.0f, 0.125f, 1.0f));
+		super(name, id, null, new BoxShape(1f, 0.125f, 1.0f));
+		this.setLiquidObstacle(false).setHardness(0.7F).setResistance(1.2F).setTransparent();
 	}
 
 	/**

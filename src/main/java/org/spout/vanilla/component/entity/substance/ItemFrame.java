@@ -59,7 +59,7 @@ public class ItemFrame extends Substance {
 			final PlayerInteractEntityEvent pie = (PlayerInteractEntityEvent) event;
 			switch (pie.getAction()) {
 				case LEFT_CLICK:
-					Point pos = getOwner().getScene().getPosition();
+					Point pos = getOwner().getPhysics().getPosition();
 					Item.dropNaturally(pos, new ItemStack(VanillaMaterials.ITEM_FRAME, 1));
 					if (material != null) {
 						Item.dropNaturally(pos, new ItemStack(material, 1));

@@ -27,6 +27,7 @@
 package org.spout.vanilla.component.entity.substance.projectile;
 
 import org.spout.api.entity.Entity;
+import org.spout.api.event.entity.EntityCollideEvent;
 import org.spout.api.geo.cuboid.Block;
 import org.spout.api.geo.discrete.Point;
 
@@ -55,13 +56,7 @@ public class XPBottle extends Substance implements Projectile {
 	}
 
 	@Override
-	public void onCollided(Point point, Entity entity) {
-		//TODO: Actually drop xp.
-		getOwner().remove();
-	}
-
-	@Override
-	public void onCollided(Point point, Block block) {
+	public void onCollided(EntityCollideEvent event) {
 		//TODO: Actually drop xp.
 		getOwner().remove();
 	}

@@ -26,11 +26,14 @@
  */
 package org.spout.vanilla.component.entity.living.hostile;
 
-import org.spout.api.component.entity.SceneComponent;
+import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.entity.Entity;
+import org.spout.api.event.entity.EntityCollideEntityEvent;
+import org.spout.api.event.entity.EntityCollideEvent;
 import org.spout.api.geo.discrete.Point;
 import org.spout.api.inventory.ItemStack;
 
+import org.spout.physics.collision.shape.BoxShape;
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.ai.action.ActionAttack;
 import org.spout.vanilla.ai.goal.AttackPlayerGoal;
@@ -59,10 +62,11 @@ public class Zombie extends Living implements Hostile {
 		getOwner().add(DeathDrops.class).addDrop(new ItemStack(VanillaMaterials.ROTTEN_FLESH, getRandom().nextInt(2))).addXpDrop((short) 5);
 		getOwner().add(EntityInventory.class);
 		getOwner().add(EntityItemCollector.class);
-		SceneComponent scene = getOwner().getScene();
-		//scene.setShape(5f, new BoxShape(0.3F, 1.15F, 0.3F));
-		scene.setFriction(1f);
-		scene.setRestitution(0f);
+
+		PhysicsComponent physics = getOwner().getPhysics();
+		physics.activate(2f, new BoxShape(1f, 2f, 1f), true);
+		physics.getPhysicsMaterial().setFriction(10f);
+		physics.getPhysicsMaterial().setRestitution(0f);
 
 		if (getAttachedCount() == 1) {
 			getOwner().add(Health.class).setSpawnHealth(20);
@@ -99,10 +103,15 @@ public class Zombie extends Living implements Hostile {
 	}
 
 	@Override
-	public void onCollided(Point point, Entity entity) {
-		Health health = entity.get(Health.class);
-		if (health != null) {
-			health.damage(getOwner().get(Damage.class).getDamageLevel(point.getWorld().getData().get(VanillaData.DIFFICULTY)).getAmount());
+	public void onCollided(EntityCollideEvent event) {
+		if (event instanceof EntityCollideEntityEvent) {
+			Point point = ((EntityCollideEntityEvent) event).getCollided().getPhysics().getPosition();
+			Health health = ((EntityCollideEntityEvent) event).getCollided().get(Health.class);
+			if (health != null) {
+				health.damage(getOwner().get(Damage.class).getDamageLevel(point.getWorld().getData().get(VanillaData.DIFFICULTY)).getAmount());
+			}
+		} else {
+			//TODO: Fall damage
 		}
 	}
 }

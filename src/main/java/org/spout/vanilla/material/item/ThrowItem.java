@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.material.item;
 
-import org.spout.api.component.entity.SceneComponent;
+import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.entity.Entity;
 import org.spout.api.event.player.Action;
 import org.spout.api.geo.World;
@@ -52,10 +52,10 @@ public abstract class ThrowItem extends VanillaItemMaterial {
 		super.onInteract(entity, type);
 		if (type == Action.RIGHT_CLICK) {
 			World world = entity.getWorld();
-			Substance item = world.createEntity(entity.getScene().getPosition().add(0, 1.6f, 0), itemThrown).add(itemThrown);
-			SceneComponent scene = item.getOwner().getScene();
-			//scene.setShape(mass, new SphereShape(0.1f)); // TODO: Correct this
-			scene.impulse(VectorMath.getDirection(entity.getScene().getRotation()).multiply(250)); //TODO: Need real parameters
+			Substance item = world.createEntity(entity.getPhysics().getPosition().add(0, 1.6f, 0), itemThrown).add(itemThrown);
+			PhysicsComponent physics = item.getOwner().getPhysics();
+			//physics.setShape(mass, new SphereShape(0.1f)); // TODO: Correct this
+			physics.impulse(VectorMath.getDirection(entity.getPhysics().getRotation()).multiply(250)); //TODO: Need real parameters
 			if (item instanceof Projectile) {
 				((Projectile) item).setShooter(entity);
 			}

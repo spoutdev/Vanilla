@@ -26,7 +26,7 @@
  */
 package org.spout.vanilla.input;
 
-import org.spout.api.component.entity.SceneComponent;
+import org.spout.api.component.entity.PhysicsComponent;
 import org.spout.api.entity.Player;
 import org.spout.api.entity.state.PlayerInputState;
 import org.spout.api.geo.discrete.Transform;
@@ -46,7 +46,7 @@ public class VanillaInputExecutor implements InputExecutor {
 	@Override
 	public void execute(float dt, Transform playerTransform) {
 		PlayerInputState inputState = player.input();
-		SceneComponent sc = player.getScene();
+		PhysicsComponent sc = player.getPhysics();
 		Transform ts = sc.getTransform(); //TODO: Maybe need getTransformLive?
 
 		Vector3 offset = Vector3.ZERO;

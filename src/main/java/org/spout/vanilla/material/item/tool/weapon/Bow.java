@@ -67,6 +67,6 @@ public class Bow extends RangedWeapon {
 	}
 
 	public void shoot(Entity entity) {
-		entity.getWorld().createAndSpawnEntity(entity.getScene().getPosition(), LoadOption.NO_LOAD, Arrow.class);
+		entity.getWorld().createAndSpawnEntity(entity.getPhysics().getPosition(), LoadOption.NO_LOAD, Arrow.class);
 	}
 }

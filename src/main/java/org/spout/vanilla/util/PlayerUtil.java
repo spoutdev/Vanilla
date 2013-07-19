@@ -109,7 +109,7 @@ public class PlayerUtil {
 	public static BlockFace getBlockFacing(Block block, Entity entity) {
 		Point position;
 		EntityHead head = entity.get(EntityHead.class);
-		position = head != null ? head.getPosition() : entity.getScene().getPosition();
+		position = head != null ? head.getPosition() : entity.getPhysics().getPosition();
 
 		Vector3 diff = position.subtract(block.getX(), block.getY(), block.getZ());
 		if (Math.abs(diff.getX()) < 2.0f && Math.abs(diff.getZ()) < 2.0f) {
@@ -143,7 +143,7 @@ public class PlayerUtil {
 	 */
 	public static float getYaw(Entity entity) {
 		EntityHead head = entity.get(EntityHead.class);
-		return head != null ? head.getOrientation().getYaw() : entity.getScene().getRotation().getYaw();
+		return head != null ? head.getOrientation().getYaw() : entity.getPhysics().getRotation().getYaw();
 	}
 
 	/**

@@ -76,7 +76,7 @@ public class PlayerUseEntityHandler extends MessageHandler<PlayerUseEntityMessag
 		PlayerInteractEntityEvent event;
 
 		if (message.isPunching()) {
-			event = new PlayerInteractEntityEvent(playerEnt, clickedEntity, clickedEntity.getScene().getPosition(), Action.LEFT_CLICK);
+			event = new PlayerInteractEntityEvent(playerEnt, clickedEntity, clickedEntity.getPhysics().getPosition(), Action.LEFT_CLICK);
 			if (Spout.getEventManager().callEvent(event).isCancelled()) {
 				return;
 			}
@@ -119,7 +119,7 @@ public class PlayerUseEntityHandler extends MessageHandler<PlayerUseEntityMessag
 				}
 			}
 		} else {
-			event = new PlayerInteractEntityEvent(playerEnt, clickedEntity, clickedEntity.getScene().getPosition(), Action.LEFT_CLICK);
+			event = new PlayerInteractEntityEvent(playerEnt, clickedEntity, clickedEntity.getPhysics().getPosition(), Action.LEFT_CLICK);
 			if (Spout.getEventManager().callEvent(event).isCancelled()) {
 				return;
 			}

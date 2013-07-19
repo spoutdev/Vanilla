@@ -48,7 +48,7 @@ public final class EntityObjectMessage extends EntityMessage {
 		super(entity);
 		this.type = type;
 		this.throwerId = throwerId;
-		Transform transform = entity.getScene().getTransform();
+		Transform transform = entity.getPhysics().getTransform();
 		Point pos = transform.getPosition();
 
 		double p = 32d;
@@ -60,8 +60,8 @@ public final class EntityObjectMessage extends EntityMessage {
 		Vector3 factor = new Vector3(v, v, v);
 
 		Vector3 velocity;
-		if (entity.getScene().isActivated()) {
-			velocity = entity.getScene().getMovementVelocity(); //TODO: Check if it's alright.
+		if (entity.getPhysics().isActivated()) {
+			velocity = entity.getPhysics().getMovementVelocity(); //TODO: Check if it's alright.
 		} else {
 			velocity = Vector3.ZERO;
 		}

@@ -33,7 +33,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardDisplayMessage;
 
 public class ScoreboardDisplayCodec extends MessageCodec<ScoreboardDisplayMessage> {
@@ -44,7 +44,7 @@ public class ScoreboardDisplayCodec extends MessageCodec<ScoreboardDisplayMessag
 	@Override
 	public ScoreboardDisplayMessage decode(ChannelBuffer buffer) throws IOException {
 		byte position = buffer.readByte();
-		String name = ChannelBufferUtils.readString(buffer);
+		String name = VanillaChannelBufferUtils.readString(buffer);
 		return new ScoreboardDisplayMessage(position, name);
 	}
 
@@ -52,7 +52,7 @@ public class ScoreboardDisplayCodec extends MessageCodec<ScoreboardDisplayMessag
 	public ChannelBuffer encode(ScoreboardDisplayMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeByte(message.getPosition());
-		ChannelBufferUtils.writeString(buffer, message.getName());
+		VanillaChannelBufferUtils.writeString(buffer, message.getName());
 		return buffer;
 	}
 }

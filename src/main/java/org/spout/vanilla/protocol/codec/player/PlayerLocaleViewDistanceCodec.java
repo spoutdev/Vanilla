@@ -33,7 +33,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.player.PlayerLocaleViewDistanceMessage;
 
 public class PlayerLocaleViewDistanceCodec extends MessageCodec<PlayerLocaleViewDistanceMessage> {
@@ -43,7 +43,7 @@ public class PlayerLocaleViewDistanceCodec extends MessageCodec<PlayerLocaleView
 
 	@Override
 	public PlayerLocaleViewDistanceMessage decode(ChannelBuffer buffer) throws IOException {
-		String locale = ChannelBufferUtils.readString(buffer);
+		String locale = VanillaChannelBufferUtils.readString(buffer);
 		byte viewDistance = buffer.readByte();
 		byte chatFlags = buffer.readByte();
 		byte difficulty = buffer.readByte();
@@ -54,7 +54,7 @@ public class PlayerLocaleViewDistanceCodec extends MessageCodec<PlayerLocaleView
 	@Override
 	public ChannelBuffer encode(PlayerLocaleViewDistanceMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		ChannelBufferUtils.writeString(buffer, message.getLocale());
+		VanillaChannelBufferUtils.writeString(buffer, message.getLocale());
 		buffer.writeByte(message.getViewDistance());
 		buffer.writeByte(message.getChatFlags());
 		buffer.writeByte(message.getDifficulty());

@@ -31,7 +31,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.player.PlayerChatMessage;
 
 public final class PlayerChatCodec extends MessageCodec<PlayerChatMessage> {
@@ -41,14 +41,14 @@ public final class PlayerChatCodec extends MessageCodec<PlayerChatMessage> {
 
 	@Override
 	public PlayerChatMessage decode(ChannelBuffer buffer) {
-		String message = ChannelBufferUtils.readString(buffer);
+		String message = VanillaChannelBufferUtils.readString(buffer);
 		return new PlayerChatMessage(message);
 	}
 
 	@Override
 	public ChannelBuffer encode(PlayerChatMessage message) {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		ChannelBufferUtils.writeString(buffer, message.getMessage());
+		VanillaChannelBufferUtils.writeString(buffer, message.getMessage());
 		return buffer;
 	}
 }

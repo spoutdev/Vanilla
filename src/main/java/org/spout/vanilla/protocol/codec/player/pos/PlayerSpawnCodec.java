@@ -34,7 +34,6 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.util.Parameter;
-import org.spout.api.util.ChannelBufferUtils;
 
 import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
@@ -47,7 +46,7 @@ public final class PlayerSpawnCodec extends MessageCodec<PlayerSpawnMessage> {
 	@Override
 	public PlayerSpawnMessage decode(ChannelBuffer buffer) throws IOException {
 		int id = buffer.readInt();
-		String name = ChannelBufferUtils.readString(buffer);
+		String name = VanillaChannelBufferUtils.readString(buffer);
 		int x = buffer.readInt();
 		int y = buffer.readInt();
 		int z = buffer.readInt();
@@ -62,7 +61,7 @@ public final class PlayerSpawnCodec extends MessageCodec<PlayerSpawnMessage> {
 	public ChannelBuffer encode(PlayerSpawnMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeInt(message.getEntityId());
-		ChannelBufferUtils.writeString(buffer, message.getName());
+		VanillaChannelBufferUtils.writeString(buffer, message.getName());
 		buffer.writeInt(message.getX());
 		buffer.writeInt(message.getY());
 		buffer.writeInt(message.getZ());

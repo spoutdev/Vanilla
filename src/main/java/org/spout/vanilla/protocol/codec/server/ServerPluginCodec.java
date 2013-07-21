@@ -59,7 +59,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.ServerPluginMessage;
 
 public class ServerPluginCodec extends MessageCodec<ServerPluginMessage> {
@@ -69,7 +69,7 @@ public class ServerPluginCodec extends MessageCodec<ServerPluginMessage> {
 
 	@Override
 	public ServerPluginMessage decode(ChannelBuffer buffer) throws IOException {
-		String type = ChannelBufferUtils.readString(buffer);
+		String type = VanillaChannelBufferUtils.readString(buffer);
 		int length = buffer.readUnsignedShort();
 		byte[] data = new byte[length];
 		buffer.readBytes(data);
@@ -79,7 +79,7 @@ public class ServerPluginCodec extends MessageCodec<ServerPluginMessage> {
 	@Override
 	public ChannelBuffer encode(ServerPluginMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		ChannelBufferUtils.writeString(buffer, message.getType());
+		VanillaChannelBufferUtils.writeString(buffer, message.getType());
 		buffer.writeShort(message.getData().length);
 		buffer.writeBytes(message.getData());
 		return buffer;

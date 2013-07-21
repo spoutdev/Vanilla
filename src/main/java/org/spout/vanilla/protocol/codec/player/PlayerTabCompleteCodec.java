@@ -31,7 +31,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.player.PlayerTabCompleteMessage;
 
 public class PlayerTabCompleteCodec extends MessageCodec<PlayerTabCompleteMessage> {
@@ -41,14 +41,14 @@ public class PlayerTabCompleteCodec extends MessageCodec<PlayerTabCompleteMessag
 
 	@Override
 	public PlayerTabCompleteMessage decode(ChannelBuffer buffer) {
-		String message = ChannelBufferUtils.readString(buffer);
+		String message = VanillaChannelBufferUtils.readString(buffer);
 		return new PlayerTabCompleteMessage(message);
 	}
 
 	@Override
 	public ChannelBuffer encode(PlayerTabCompleteMessage message) {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		ChannelBufferUtils.writeString(buffer, message.getText());
+		VanillaChannelBufferUtils.writeString(buffer, message.getText());
 		return buffer;
 	}
 }

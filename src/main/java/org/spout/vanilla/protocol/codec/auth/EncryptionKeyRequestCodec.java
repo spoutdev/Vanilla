@@ -31,7 +31,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.auth.EncryptionKeyRequestMessage;
 
 public final class EncryptionKeyRequestCodec extends MessageCodec<EncryptionKeyRequestMessage> {
@@ -41,7 +41,7 @@ public final class EncryptionKeyRequestCodec extends MessageCodec<EncryptionKeyR
 
 	@Override
 	public EncryptionKeyRequestMessage decode(ChannelBuffer buffer) {
-		String sessionId = ChannelBufferUtils.readString(buffer);
+		String sessionId = VanillaChannelBufferUtils.readString(buffer);
 		int length = buffer.readShort() & 0xFFFF;
 		byte[] publicKey = new byte[length];
 		buffer.readBytes(publicKey);
@@ -54,7 +54,7 @@ public final class EncryptionKeyRequestCodec extends MessageCodec<EncryptionKeyR
 	@Override
 	public ChannelBuffer encode(EncryptionKeyRequestMessage message) {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		ChannelBufferUtils.writeString(buffer, message.getSessionId());
+		VanillaChannelBufferUtils.writeString(buffer, message.getSessionId());
 		byte[] publicKey = message.getSecretArray();
 		buffer.writeShort((short) publicKey.length);
 		buffer.writeBytes(publicKey);

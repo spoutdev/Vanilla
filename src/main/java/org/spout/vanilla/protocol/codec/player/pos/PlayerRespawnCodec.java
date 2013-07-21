@@ -33,7 +33,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerRespawnMessage;
 
 public final class PlayerRespawnCodec extends MessageCodec<PlayerRespawnMessage> {
@@ -47,7 +47,7 @@ public final class PlayerRespawnCodec extends MessageCodec<PlayerRespawnMessage>
 		byte difficulty = buffer.readByte();
 		byte creative = buffer.readByte();
 		int height = buffer.readUnsignedShort();
-		String worldType = ChannelBufferUtils.readString(buffer);
+		String worldType = VanillaChannelBufferUtils.readString(buffer);
 		return new PlayerRespawnMessage(dimension, difficulty, creative, height, worldType);
 	}
 
@@ -58,7 +58,7 @@ public final class PlayerRespawnCodec extends MessageCodec<PlayerRespawnMessage>
 		buffer.writeByte(message.getDifficulty());
 		buffer.writeByte(message.getGameMode());
 		buffer.writeShort(message.getWorldHeight());
-		ChannelBufferUtils.writeString(buffer, message.getWorldType());
+		VanillaChannelBufferUtils.writeString(buffer, message.getWorldType());
 		return buffer;
 	}
 }

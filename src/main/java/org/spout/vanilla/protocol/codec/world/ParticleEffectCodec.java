@@ -34,7 +34,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.world.ParticleEffectMessage;
 
 public class ParticleEffectCodec extends MessageCodec<ParticleEffectMessage> {
@@ -44,7 +44,7 @@ public class ParticleEffectCodec extends MessageCodec<ParticleEffectMessage> {
 
 	@Override
 	public ParticleEffectMessage decode(ChannelBuffer buffer) throws IOException {
-		String name = ChannelBufferUtils.readString(buffer);
+		String name = VanillaChannelBufferUtils.readString(buffer);
 		float x = buffer.readFloat();
 		float y = buffer.readFloat();
 		float z = buffer.readFloat();
@@ -59,7 +59,7 @@ public class ParticleEffectCodec extends MessageCodec<ParticleEffectMessage> {
 	@Override
 	public ChannelBuffer encode(ParticleEffectMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		ChannelBufferUtils.writeString(buffer, message.getName());
+		VanillaChannelBufferUtils.writeString(buffer, message.getName());
 		buffer.writeFloat(message.getX());
 		buffer.writeFloat(message.getY());
 		buffer.writeFloat(message.getZ());

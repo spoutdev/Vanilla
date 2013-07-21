@@ -32,9 +32,9 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
-import org.spout.api.util.ChannelBufferUtils;
 import org.spout.api.util.Named;
 
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 
 public class CommandBlockCodec extends MessageCodec<CommandBlockMessage> implements Named {
 	public static final String CHANNEL = "MC|AdvCdm";
@@ -53,7 +53,7 @@ public class CommandBlockCodec extends MessageCodec<CommandBlockMessage> impleme
 		int x = buffer.readInt();
 		int y = buffer.readInt();
 		int z = buffer.readInt();
-		String cmd = ChannelBufferUtils.readString(buffer);
+		String cmd = VanillaChannelBufferUtils.readString(buffer);
 		return new CommandBlockMessage(x, y, z, cmd);
 	}
 
@@ -63,7 +63,7 @@ public class CommandBlockCodec extends MessageCodec<CommandBlockMessage> impleme
 		buffer.writeInt(msg.getX());
 		buffer.writeInt(msg.getY());
 		buffer.writeInt(msg.getZ());
-		ChannelBufferUtils.writeString(buffer, msg.getCommand());
+		VanillaChannelBufferUtils.writeString(buffer, msg.getCommand());
 		return buffer;
 	}
 }

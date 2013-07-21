@@ -33,7 +33,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardScoreMessage;
 
 public class ScoreboardScoreCodec extends MessageCodec<ScoreboardScoreMessage> {
@@ -43,12 +43,12 @@ public class ScoreboardScoreCodec extends MessageCodec<ScoreboardScoreMessage> {
 
 	@Override
 	public ScoreboardScoreMessage decode(ChannelBuffer buffer) throws IOException {
-		String item = ChannelBufferUtils.readString(buffer);
+		String item = VanillaChannelBufferUtils.readString(buffer);
 		boolean remove = buffer.readByte() == 1;
 		String name = null;
 		int value = 0;
 		if (!remove) {
-			name = ChannelBufferUtils.readString(buffer);
+			name = VanillaChannelBufferUtils.readString(buffer);
 			value = buffer.readInt();
 		}
 		return new ScoreboardScoreMessage(item, remove, name, value);
@@ -57,10 +57,10 @@ public class ScoreboardScoreCodec extends MessageCodec<ScoreboardScoreMessage> {
 	@Override
 	public ChannelBuffer encode(ScoreboardScoreMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		ChannelBufferUtils.writeString(buffer, message.getItem());
+		VanillaChannelBufferUtils.writeString(buffer, message.getItem());
 		buffer.writeByte(message.isRemove() ? 1 : 0);
 		if (!message.isRemove()) {
-			ChannelBufferUtils.writeString(buffer, message.getScoreboard());
+			VanillaChannelBufferUtils.writeString(buffer, message.getScoreboard());
 			buffer.writeInt(message.getValue());
 		}
 		return buffer;

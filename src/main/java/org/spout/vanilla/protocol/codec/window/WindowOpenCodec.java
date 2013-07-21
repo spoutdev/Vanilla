@@ -34,7 +34,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.protocol.MessageCodec;
 
 import org.spout.vanilla.inventory.window.WindowType;
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.window.WindowOpenMessage;
 
 public final class WindowOpenCodec extends MessageCodec<WindowOpenMessage> {
@@ -49,7 +49,7 @@ public final class WindowOpenCodec extends MessageCodec<WindowOpenMessage> {
 		if (type == null) {
 			throw new IOException("Read Window Type is invalid");
 		}
-		String title = ChannelBufferUtils.readString(buffer);
+		String title = VanillaChannelBufferUtils.readString(buffer);
 		int slots = buffer.readUnsignedByte();
 		boolean useTitle = buffer.readUnsignedByte() != 0;
 		return new WindowOpenMessage(id, type, title, slots, useTitle);
@@ -60,7 +60,7 @@ public final class WindowOpenCodec extends MessageCodec<WindowOpenMessage> {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeByte(message.getWindowInstanceId());
 		buffer.writeByte(message.getType().getId());
-		ChannelBufferUtils.writeString(buffer, message.getTitle());
+		VanillaChannelBufferUtils.writeString(buffer, message.getTitle());
 		buffer.writeByte(message.getSlots());
 		buffer.writeByte(message.isUsingTitle() ? 1 : 0);
 		return buffer;

@@ -33,9 +33,9 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
+import org.spout.api.util.ChannelBufferUtils;
 
 import org.spout.nbt.CompoundMap;
-import org.spout.api.util.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityTileDataMessage;
 
 public class EntityTileDataCodec extends MessageCodec<EntityTileDataMessage> {

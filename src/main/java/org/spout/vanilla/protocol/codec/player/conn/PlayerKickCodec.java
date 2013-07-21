@@ -31,7 +31,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerKickMessage;
 
 public final class PlayerKickCodec extends MessageCodec<PlayerKickMessage> {
@@ -41,13 +41,13 @@ public final class PlayerKickCodec extends MessageCodec<PlayerKickMessage> {
 
 	@Override
 	public PlayerKickMessage decode(ChannelBuffer buffer) {
-		return new PlayerKickMessage(ChannelBufferUtils.readString(buffer));
+		return new PlayerKickMessage(VanillaChannelBufferUtils.readString(buffer));
 	}
 
 	@Override
 	public ChannelBuffer encode(PlayerKickMessage message) {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		ChannelBufferUtils.writeString(buffer, message.getReason());
+		VanillaChannelBufferUtils.writeString(buffer, message.getReason());
 		return buffer;
 	}
 }

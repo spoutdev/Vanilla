@@ -31,7 +31,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.player.conn.PlayerLoginRequestMessage;
 
 public final class PlayerLoginRequestCodec extends MessageCodec<PlayerLoginRequestMessage> {
@@ -42,7 +42,7 @@ public final class PlayerLoginRequestCodec extends MessageCodec<PlayerLoginReque
 	@Override
 	public PlayerLoginRequestMessage decodeFromServer(ChannelBuffer buffer) {
 		int id = buffer.readInt();
-		String worldType = ChannelBufferUtils.readString(buffer);
+		String worldType = VanillaChannelBufferUtils.readString(buffer);
 		byte mode = buffer.readByte();
 		byte dimension = buffer.readByte();
 		byte difficulty = buffer.readByte();
@@ -56,7 +56,7 @@ public final class PlayerLoginRequestCodec extends MessageCodec<PlayerLoginReque
 	@Override
 	public PlayerLoginRequestMessage decodeFromClient(ChannelBuffer buffer) {
 		int id = buffer.readInt();
-		String worldType = ChannelBufferUtils.readString(buffer);
+		String worldType = VanillaChannelBufferUtils.readString(buffer);
 		byte mode = buffer.readByte();
 		byte dimension = buffer.readByte();
 		byte difficulty = buffer.readByte();
@@ -70,7 +70,7 @@ public final class PlayerLoginRequestCodec extends MessageCodec<PlayerLoginReque
 		PlayerLoginRequestMessage server = message;
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeInt(server.getId());
-		ChannelBufferUtils.writeString(buffer, server.getWorldType());
+		VanillaChannelBufferUtils.writeString(buffer, server.getWorldType());
 		buffer.writeByte(server.getGameMode());
 		buffer.writeByte(server.getDimension());
 		buffer.writeByte(server.getDifficulty());
@@ -84,7 +84,7 @@ public final class PlayerLoginRequestCodec extends MessageCodec<PlayerLoginReque
 		PlayerLoginRequestMessage server = message;
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeInt(server.getId());
-		ChannelBufferUtils.writeString(buffer, server.getWorldType());
+		VanillaChannelBufferUtils.writeString(buffer, server.getWorldType());
 		buffer.writeByte(server.getGameMode());
 		buffer.writeByte(server.getDimension());
 		buffer.writeByte(server.getDifficulty());

@@ -34,7 +34,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.world.SoundEffectMessage;
 
 public final class SoundEffectCodec extends MessageCodec<SoundEffectMessage> {
@@ -51,7 +51,7 @@ public final class SoundEffectCodec extends MessageCodec<SoundEffectMessage> {
 
 	@Override
 	public SoundEffectMessage decode(ChannelBuffer buffer) throws IOException {
-		String soundName = ChannelBufferUtils.readString(buffer);
+		String soundName = VanillaChannelBufferUtils.readString(buffer);
 		float x = (float) buffer.readInt() / 8.0f;
 		float y = (float) buffer.readInt() / 8.0f;
 		float z = (float) buffer.readInt() / 8.0f;
@@ -63,7 +63,7 @@ public final class SoundEffectCodec extends MessageCodec<SoundEffectMessage> {
 	@Override
 	public ChannelBuffer encode(SoundEffectMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		ChannelBufferUtils.writeString(buffer, message.getSoundName());
+		VanillaChannelBufferUtils.writeString(buffer, message.getSoundName());
 		buffer.writeInt((int) (message.getX() * 8.0f));
 		buffer.writeInt((int) (message.getY() * 8.0f));
 		buffer.writeInt((int) (message.getZ() * 8.0f));

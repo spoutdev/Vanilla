@@ -34,7 +34,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityPaintingMessage;
 
 public final class EntityPaintingCodec extends MessageCodec<EntityPaintingMessage> {
@@ -45,7 +45,7 @@ public final class EntityPaintingCodec extends MessageCodec<EntityPaintingMessag
 	@Override
 	public EntityPaintingMessage decode(ChannelBuffer buffer) throws IOException {
 		int id = buffer.readInt();
-		String title = ChannelBufferUtils.readString(buffer);
+		String title = VanillaChannelBufferUtils.readString(buffer);
 		int x = buffer.readInt();
 		int y = buffer.readInt();
 		int z = buffer.readInt();
@@ -57,7 +57,7 @@ public final class EntityPaintingCodec extends MessageCodec<EntityPaintingMessag
 	public ChannelBuffer encode(EntityPaintingMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeInt(message.getEntityId());
-		ChannelBufferUtils.writeString(buffer, message.getTitle());
+		VanillaChannelBufferUtils.writeString(buffer, message.getTitle());
 		buffer.writeInt(message.getX());
 		buffer.writeInt(message.getY());
 		buffer.writeInt(message.getZ());

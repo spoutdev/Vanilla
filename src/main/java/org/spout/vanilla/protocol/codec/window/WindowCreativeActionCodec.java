@@ -33,8 +33,8 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.MessageCodec;
-import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.window.WindowCreativeActionMessage;
 
 public class WindowCreativeActionCodec extends MessageCodec<WindowCreativeActionMessage> {

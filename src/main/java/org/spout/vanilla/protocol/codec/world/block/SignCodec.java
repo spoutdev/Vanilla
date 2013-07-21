@@ -34,7 +34,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.world.block.SignMessage;
 
 public final class SignCodec extends MessageCodec<SignMessage> {
@@ -49,7 +49,7 @@ public final class SignCodec extends MessageCodec<SignMessage> {
 		int z = buffer.readInt();
 		String[] message = new String[4];
 		for (int i = 0; i < message.length; i++) {
-			String line = ChannelBufferUtils.readString(buffer);
+			String line = VanillaChannelBufferUtils.readString(buffer);
 			if (line == null) {
 				line = "";
 			}
@@ -70,7 +70,7 @@ public final class SignCodec extends MessageCodec<SignMessage> {
 			if (line == null) {
 				line = "";
 			}
-			ChannelBufferUtils.writeString(buffer, line);
+			VanillaChannelBufferUtils.writeString(buffer, line);
 		}
 		return buffer;
 	}

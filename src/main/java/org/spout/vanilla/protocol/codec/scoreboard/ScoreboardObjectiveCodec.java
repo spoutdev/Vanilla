@@ -33,7 +33,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.scoreboard.ScoreboardObjectiveMessage;
 
 public class ScoreboardObjectiveCodec extends MessageCodec<ScoreboardObjectiveMessage> {
@@ -43,8 +43,8 @@ public class ScoreboardObjectiveCodec extends MessageCodec<ScoreboardObjectiveMe
 
 	@Override
 	public ScoreboardObjectiveMessage decode(ChannelBuffer buffer) throws IOException {
-		String name = ChannelBufferUtils.readString(buffer);
-		String display = ChannelBufferUtils.readString(buffer);
+		String name = VanillaChannelBufferUtils.readString(buffer);
+		String display = VanillaChannelBufferUtils.readString(buffer);
 		byte action = buffer.readByte();
 		return new ScoreboardObjectiveMessage(name, display, action);
 	}
@@ -52,8 +52,8 @@ public class ScoreboardObjectiveCodec extends MessageCodec<ScoreboardObjectiveMe
 	@Override
 	public ChannelBuffer encode(ScoreboardObjectiveMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		ChannelBufferUtils.writeString(buffer, message.getName());
-		ChannelBufferUtils.writeString(buffer, message.getDisplay());
+		VanillaChannelBufferUtils.writeString(buffer, message.getName());
+		VanillaChannelBufferUtils.writeString(buffer, message.getDisplay());
 		buffer.writeByte(message.getAction());
 		return buffer;
 	}

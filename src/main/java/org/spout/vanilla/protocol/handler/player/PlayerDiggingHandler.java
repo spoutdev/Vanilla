@@ -136,10 +136,9 @@ public final class PlayerDiggingHandler extends MessageHandler<PlayerDiggingMess
 					}
 				} else {
 					// Perform interactions
-					if (!isInteractable && heldItem == null) {
-						// interacting with nothing using fist
-						return;
-					} else if (!isInteractable) {
+					if (heldItem == null) {
+						// interacting using fist
+ 					} else if (!isInteractable) {
 						// interacting with nothing using item
 						heldItem.getMaterial().onInteract(player, Action.LEFT_CLICK);
 					} else {

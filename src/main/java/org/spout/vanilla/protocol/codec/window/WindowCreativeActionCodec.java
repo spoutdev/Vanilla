@@ -33,8 +33,8 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.MessageCodec;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 
-import org.spout.vanilla.protocol.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.window.WindowCreativeActionMessage;
 
 public class WindowCreativeActionCodec extends MessageCodec<WindowCreativeActionMessage> {
@@ -45,7 +45,7 @@ public class WindowCreativeActionCodec extends MessageCodec<WindowCreativeAction
 	@Override
 	public WindowCreativeActionMessage decode(ChannelBuffer buffer) throws IOException {
 		short slot = buffer.readShort();
-		ItemStack item = ChannelBufferUtils.readItemStack(buffer);
+		ItemStack item = VanillaChannelBufferUtils.readItemStack(buffer);
 		return new WindowCreativeActionMessage(slot, item);
 	}
 
@@ -53,7 +53,7 @@ public class WindowCreativeActionCodec extends MessageCodec<WindowCreativeAction
 	public ChannelBuffer encode(WindowCreativeActionMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeShort(message.getSlot());
-		ChannelBufferUtils.writeItemStack(buffer, message.get());
+		VanillaChannelBufferUtils.writeItemStack(buffer, message.get());
 		return buffer;
 	}
 }

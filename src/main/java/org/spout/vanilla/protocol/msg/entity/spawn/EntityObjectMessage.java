@@ -35,7 +35,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.SpoutToStringStyle;
 
-import org.spout.vanilla.protocol.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityMessage;
 
 public final class EntityObjectMessage extends EntityMessage {
@@ -73,8 +73,8 @@ public final class EntityObjectMessage extends EntityMessage {
 		speedY = (short) (velocity.getY() * s);
 		speedZ = (short) (velocity.getZ() * s);
 
-		pitch = (byte) ChannelBufferUtils.protocolifyPitch(transform.getRotation().getPitch());
-		yaw = (byte) ChannelBufferUtils.protocolifyYaw(transform.getRotation().getYaw());
+		pitch = (byte) VanillaChannelBufferUtils.protocolifyPitch(transform.getRotation().getPitch());
+		yaw = (byte) VanillaChannelBufferUtils.protocolifyYaw(transform.getRotation().getYaw());
 	}
 
 	public EntityObjectMessage(Entity entity, byte type, RepositionManager rm) {

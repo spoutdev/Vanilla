@@ -24,37 +24,38 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.protocol.codec.entity;
+package org.spout.vanilla.protocol;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import org.junit.Test;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
 
-import org.spout.api.protocol.MessageCodec;
+import static org.junit.Assert.assertEquals;
+import org.spout.api.inventory.ItemStack;
 import org.spout.api.util.Parameter;
+import org.spout.vanilla.EngineFaker;
+import org.spout.vanilla.material.VanillaMaterials;
 
-import org.spout.api.util.ChannelBufferUtils;
-import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
+import static org.spout.vanilla.protocol.VanillaChannelBufferUtils.getExpandedHeight;
+import static org.spout.vanilla.protocol.VanillaChannelBufferUtils.getShifts;
 
-public final class EntityMetadataCodec extends MessageCodec<EntityMetadataMessage> {
-	public EntityMetadataCodec() {
-		super(EntityMetadataMessage.class, 0x28);
+public class VanillaChannelBufferUtilsTest {
+	public static final List<Parameter<?>> TEST_PARAMS = new ArrayList<Parameter<?>>();
+
+	static {
+		TEST_PARAMS.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 1, (byte) 33));
+		TEST_PARAMS.add(new Parameter<Short>(Parameter.TYPE_SHORT, 2, (short) 333));
+		TEST_PARAMS.add(new Parameter<Integer>(Parameter.TYPE_INT, 3, 22));
+		TEST_PARAMS.add(new Parameter<Float>(Parameter.TYPE_FLOAT, 4, 1.23F));
+		TEST_PARAMS.add(new Parameter<String>(Parameter.TYPE_STRING, 5, "Hello World"));
+		TEST_PARAMS.add(new Parameter<ItemStack>(Parameter.TYPE_ITEM, 6, new ItemStack(VanillaMaterials.BEDROCK, 5)));
 	}
-
-	@Override
-	public EntityMetadataMessage decode(ChannelBuffer buffer) throws IOException {
-		int id = buffer.readInt();
-		List<Parameter<?>> parameters = ChannelBufferUtils.readParameters(buffer);
-		return new EntityMetadataMessage(id, parameters);
-	}
-
-	@Override
-	public ChannelBuffer encode(EntityMetadataMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
-		buffer.writeInt(message.getEntityId());
-		ChannelBufferUtils.writeParameters(buffer, message.getParameters());
-		return buffer;
+	@Test
+	public void testShifts() {
+		for (int i = 2; i < 12; ++i) {
+			final int origHeight = (int) Math.pow(2, i);
+			assertEquals(getExpandedHeight(getShifts(origHeight) - 1), origHeight);
+		}
 	}
 }

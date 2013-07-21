@@ -38,7 +38,7 @@ import org.spout.api.protocol.reposition.RepositionManager;
 
 import org.spout.vanilla.component.entity.substance.FallingBlock;
 import org.spout.vanilla.material.VanillaBlockMaterial;
-import org.spout.vanilla.protocol.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityObjectMessage;
 
@@ -54,17 +54,18 @@ public class FallingBlockProtocol extends ObjectEntityProtocol {
 			VanillaBlockMaterial material = (VanillaBlockMaterial) block.getMaterial();
 			int messageData = material.getMinecraftId() | (material.getMinecraftData(material.getData()) >> 16);
 			List<Message> messages = new ArrayList<Message>();
-
-			final double p = 32d;
-			Point pos = entity.getPhysics().getPosition();
-			int x = (int) Math.floor(pos.getX() * p);
-			int y = (int) Math.floor(pos.getY() * p);
-			int z = (int) Math.floor(pos.getZ() * p);
-			byte yaw = (byte) ChannelBufferUtils.protocolifyYaw(entity.getPhysics().getRotation().getYaw());
-			byte pitch = (byte) ChannelBufferUtils.protocolifyPitch(entity.getPhysics().getRotation().getPitch());
-			short fallSpeed = (short) (block.getFallingSpeed() * 8000d);
-			messages.add(new EntityObjectMessage(entity.getId(), (byte) typeId, x, y, z, messageData, (short) 0, fallSpeed, (short) 0, yaw, pitch, rm));
-			messages.add(new EntityMetadataMessage(entity.getId(), getSpawnParameters(entity)));
+			//TODO: Redo this as FallingBlock will remain an Entity
+//
+//			final double p = 32d;
+//			Point pos = entity.getPhysics().getPosition();
+//			int x = (int) Math.floor(pos.getX() * p);
+//			int y = (int) Math.floor(pos.getY() * p);
+//			int z = (int) Math.floor(pos.getZ() * p);
+//			byte yaw = (byte) VanillaChannelBufferUtils.protocolifyYaw(entity.getPhysics().getRotation().getYaw());
+//			byte pitch = (byte) VanillaChannelBufferUtils.protocolifyPitch(entity.getPhysics().getRotation().getPitch());
+//			short fallSpeed = (short) (block.getFallingSpeed() * 8000d);
+//			messages.add(new EntityObjectMessage(entity.getId(), (byte) typeId, x, y, z, messageData, (short) 0, fallSpeed, (short) 0, yaw, pitch, rm));
+//			messages.add(new EntityMetadataMessage(entity.getId(), getSpawnParameters(entity)));
 			return messages;
 		} else {
 			return Collections.emptyList();

@@ -35,7 +35,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.protocol.ChannelBufferUtils;
+import org.spout.api.util.ChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
 
 public final class PlayerSpawnCodec extends MessageCodec<PlayerSpawnMessage> {

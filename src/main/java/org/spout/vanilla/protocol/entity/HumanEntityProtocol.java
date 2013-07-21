@@ -39,7 +39,7 @@ import org.spout.api.util.Parameter;
 import org.spout.vanilla.component.entity.inventory.EntityInventory;
 import org.spout.vanilla.component.entity.living.Human;
 import org.spout.vanilla.inventory.entity.ArmorInventory;
-import org.spout.vanilla.protocol.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityEquipmentMessage;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
 import org.spout.vanilla.util.PlayerUtil;
@@ -55,11 +55,11 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		Human human = entity.add(Human.class);
 
 		int id = entity.getId();
-		int x = ChannelBufferUtils.protocolifyPosition(rm.convertX(entity.getPhysics().getPosition().getX()));
-		int y = ChannelBufferUtils.protocolifyPosition(rm.convertY(entity.getPhysics().getPosition().getY()));
-		int z = ChannelBufferUtils.protocolifyPosition(rm.convertZ(entity.getPhysics().getPosition().getZ()));
-		int r = ChannelBufferUtils.protocolifyYaw(entity.getPhysics().getRotation().getYaw());
-		int p = ChannelBufferUtils.protocolifyPitch(entity.getPhysics().getRotation().getPitch());
+		int x = VanillaChannelBufferUtils.protocolifyPosition(rm.convertX(entity.getPhysics().getPosition().getX()));
+		int y = VanillaChannelBufferUtils.protocolifyPosition(rm.convertY(entity.getPhysics().getPosition().getY()));
+		int z = VanillaChannelBufferUtils.protocolifyPosition(rm.convertZ(entity.getPhysics().getPosition().getZ()));
+		int r = VanillaChannelBufferUtils.protocolifyYaw(entity.getPhysics().getRotation().getYaw());
+		int p = VanillaChannelBufferUtils.protocolifyPitch(entity.getPhysics().getRotation().getPitch());
 
 		int item = 0;
 		Slot hand = PlayerUtil.getHeldSlot(entity);

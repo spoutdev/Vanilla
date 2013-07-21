@@ -38,7 +38,7 @@ import org.spout.api.math.Vector3;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 
-import org.spout.vanilla.protocol.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.player.PlayerBlockPlacementMessage;
 
 public final class PlayerBlockPlacementCodec extends MessageCodec<PlayerBlockPlacementMessage> {
@@ -53,7 +53,7 @@ public final class PlayerBlockPlacementCodec extends MessageCodec<PlayerBlockPla
 		int z = buffer.readInt();
 		BlockFace direction = BlockFaces.BTEWNS.get(buffer.readUnsignedByte(), BlockFace.THIS);
 
-		ItemStack heldItem = ChannelBufferUtils.readItemStack(buffer);
+		ItemStack heldItem = VanillaChannelBufferUtils.readItemStack(buffer);
 
 		float dx = ((float) (buffer.readByte() & 0xFF)) / 16.0F;
 		float dy = ((float) (buffer.readByte() & 0xFF)) / 16.0F;
@@ -69,7 +69,7 @@ public final class PlayerBlockPlacementCodec extends MessageCodec<PlayerBlockPla
 		buffer.writeByte(message.getY());
 		buffer.writeInt(message.getZ());
 		buffer.writeByte(BlockFaces.BTEWNS.indexOf(message.getDirection(), 255));
-		ChannelBufferUtils.writeItemStack(buffer, message.getHeldItem());
+		VanillaChannelBufferUtils.writeItemStack(buffer, message.getHeldItem());
 		buffer.writeByte((int) (message.getFace().getX() * 16.0F));
 		buffer.writeByte((int) (message.getFace().getY() * 16.0F));
 		buffer.writeByte((int) (message.getFace().getZ() * 16.0F));

@@ -34,7 +34,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.inventory.ItemStack;
 import org.spout.api.protocol.MessageCodec;
 
-import org.spout.vanilla.protocol.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.window.WindowItemsMessage;
 
 public final class WindowItemsCodec extends MessageCodec<WindowItemsMessage> {
@@ -48,7 +48,7 @@ public final class WindowItemsCodec extends MessageCodec<WindowItemsMessage> {
 		short count = buffer.readShort();
 		ItemStack[] items = new ItemStack[count];
 		for (int slot = 0; slot < count; slot++) {
-			items[slot] = ChannelBufferUtils.readItemStack(buffer);
+			items[slot] = VanillaChannelBufferUtils.readItemStack(buffer);
 		}
 		return new WindowItemsMessage(id, items);
 	}
@@ -60,7 +60,7 @@ public final class WindowItemsCodec extends MessageCodec<WindowItemsMessage> {
 		buffer.writeByte(message.getWindowInstanceId());
 		buffer.writeShort(items.length);
 		for (ItemStack item : items) {
-			ChannelBufferUtils.writeItemStack(buffer, item);
+			VanillaChannelBufferUtils.writeItemStack(buffer, item);
 		}
 		return buffer;
 	}

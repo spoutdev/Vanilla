@@ -40,7 +40,7 @@ import org.spout.api.protocol.reposition.RepositionManager;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.entity.misc.EntityHead;
-import org.spout.vanilla.protocol.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityDestroyMessage;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityHeadYawMessage;
@@ -49,9 +49,9 @@ import org.spout.vanilla.protocol.msg.entity.pos.EntityRelativePositionYawMessag
 import org.spout.vanilla.protocol.msg.entity.pos.EntityTeleportMessage;
 import org.spout.vanilla.protocol.msg.entity.pos.EntityYawMessage;
 
-import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPitch;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyPosition;
-import static org.spout.vanilla.protocol.ChannelBufferUtils.protocolifyYaw;
+import static org.spout.vanilla.protocol.VanillaChannelBufferUtils.protocolifyPitch;
+import static org.spout.vanilla.protocol.VanillaChannelBufferUtils.protocolifyPosition;
+import static org.spout.vanilla.protocol.VanillaChannelBufferUtils.protocolifyYaw;
 
 public abstract class VanillaEntityProtocol implements EntityProtocol {
 	private List<Parameter<?>> lastMeta;
@@ -114,7 +114,7 @@ public abstract class VanillaEntityProtocol implements EntityProtocol {
 		// Head movement
 		EntityHead head = entity.get(EntityHead.class);
 		if (head != null && head.isDirty()) {
-			final int headYawProt = ChannelBufferUtils.protocolifyYaw(head.getOrientation().getYaw());
+			final int headYawProt = VanillaChannelBufferUtils.protocolifyYaw(head.getOrientation().getYaw());
 			messages.add(new EntityHeadYawMessage(entity.getId(), headYawProt));
 		}
 

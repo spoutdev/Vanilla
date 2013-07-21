@@ -40,7 +40,7 @@ import org.spout.vanilla.component.entity.substance.Item;
 import org.spout.vanilla.component.entity.substance.Substance;
 import org.spout.vanilla.event.entity.EntityMetaChangeEvent;
 import org.spout.vanilla.material.VanillaMaterials;
-import org.spout.vanilla.protocol.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.entity.object.vehicle.BoatObjectEntityProtocol;
 
 public class Boat extends Substance {
@@ -101,7 +101,7 @@ public class Boat extends Substance {
 	public void setForwardDirection(BlockFace direction) {
 		this.direction = direction;
 		List<Parameter<?>> params = new ArrayList<Parameter<?>>();
-		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 18, (int) ChannelBufferUtils.getNativeDirection(direction)));
+		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 18, (int) VanillaChannelBufferUtils.getNativeDirection(direction)));
 		getOwner().getNetwork().callProtocolEvent(new EntityMetaChangeEvent(getOwner(), params));
 	}
 }

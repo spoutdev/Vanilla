@@ -32,7 +32,7 @@ import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.component.entity.substance.vehicle.Boat;
-import org.spout.vanilla.protocol.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.entity.object.ObjectEntityProtocol;
 import org.spout.vanilla.protocol.entity.object.ObjectType;
 
@@ -46,7 +46,7 @@ public class BoatObjectEntityProtocol extends ObjectEntityProtocol {
 		List<Parameter<?>> params = super.getSpawnParameters(entity);
 		Boat boat = entity.add(Boat.class);
 		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 17, boat.getTimeSinceLastHit()));
-		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 18, (int) ChannelBufferUtils.getNativeDirection(boat.getForwardDirection())));
+		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 18, (int) VanillaChannelBufferUtils.getNativeDirection(boat.getForwardDirection())));
 		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 19, boat.getDamageTaken()));
 		return params;
 	}

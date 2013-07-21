@@ -35,7 +35,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.util.Parameter;
 
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.EntityMetadataMessage;
 
 public final class EntityMetadataCodec extends MessageCodec<EntityMetadataMessage> {
@@ -46,7 +46,7 @@ public final class EntityMetadataCodec extends MessageCodec<EntityMetadataMessag
 	@Override
 	public EntityMetadataMessage decode(ChannelBuffer buffer) throws IOException {
 		int id = buffer.readInt();
-		List<Parameter<?>> parameters = ChannelBufferUtils.readParameters(buffer);
+		List<Parameter<?>> parameters = VanillaChannelBufferUtils.readParameters(buffer);
 		return new EntityMetadataMessage(id, parameters);
 	}
 
@@ -54,7 +54,7 @@ public final class EntityMetadataCodec extends MessageCodec<EntityMetadataMessag
 	public ChannelBuffer encode(EntityMetadataMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
 		buffer.writeInt(message.getEntityId());
-		ChannelBufferUtils.writeParameters(buffer, message.getParameters());
+		VanillaChannelBufferUtils.writeParameters(buffer, message.getParameters());
 		return buffer;
 	}
 }

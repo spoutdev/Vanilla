@@ -36,7 +36,7 @@ import org.spout.api.protocol.MessageCodec;
 import org.spout.api.protocol.reposition.NullRepositionManager;
 import org.spout.api.util.Parameter;
 
-import org.spout.api.util.ChannelBufferUtils;
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.entity.spawn.EntityMobMessage;
 
 public final class EntityMobCodec extends MessageCodec<EntityMobMessage> {
@@ -57,7 +57,7 @@ public final class EntityMobCodec extends MessageCodec<EntityMobMessage> {
 		short velocityZ = buffer.readShort();
 		short velocityX = buffer.readShort();
 		short velocityY = buffer.readShort();
-		List<Parameter<?>> parameters = ChannelBufferUtils.readParameters(buffer);
+		List<Parameter<?>> parameters = VanillaChannelBufferUtils.readParameters(buffer);
 		return new EntityMobMessage(id, type, x, y, z, yaw, pitch, headYaw, velocityZ, velocityX, velocityY, parameters, NullRepositionManager.getInstance());
 	}
 
@@ -75,7 +75,7 @@ public final class EntityMobCodec extends MessageCodec<EntityMobMessage> {
 		buffer.writeShort(message.getVelocityZ());
 		buffer.writeShort(message.getVelocityX());
 		buffer.writeShort(message.getVelocityY());
-		ChannelBufferUtils.writeParameters(buffer, message.getParameters());
+		VanillaChannelBufferUtils.writeParameters(buffer, message.getParameters());
 		return buffer;
 	}
 }

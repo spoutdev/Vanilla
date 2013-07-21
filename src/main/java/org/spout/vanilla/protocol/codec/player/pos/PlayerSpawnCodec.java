@@ -34,8 +34,9 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import org.spout.api.protocol.MessageCodec;
 import org.spout.api.util.Parameter;
-
 import org.spout.api.util.ChannelBufferUtils;
+
+import org.spout.vanilla.protocol.VanillaChannelBufferUtils;
 import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
 
 public final class PlayerSpawnCodec extends MessageCodec<PlayerSpawnMessage> {
@@ -53,7 +54,7 @@ public final class PlayerSpawnCodec extends MessageCodec<PlayerSpawnMessage> {
 		int rotation = buffer.readUnsignedByte();
 		int pitch = buffer.readUnsignedByte();
 		int item = buffer.readUnsignedShort();
-		List<Parameter<?>> parameters = ChannelBufferUtils.readParameters(buffer);
+		List<Parameter<?>> parameters = VanillaChannelBufferUtils.readParameters(buffer);
 		return new PlayerSpawnMessage(id, name, x, y, z, rotation, pitch, item, parameters);
 	}
 
@@ -68,7 +69,7 @@ public final class PlayerSpawnCodec extends MessageCodec<PlayerSpawnMessage> {
 		buffer.writeByte(message.getYaw());
 		buffer.writeByte(message.getPitch());
 		buffer.writeShort(message.getId());
-		ChannelBufferUtils.writeParameters(buffer, message.getParameters());
+		VanillaChannelBufferUtils.writeParameters(buffer, message.getParameters());
 		return buffer;
 	}
 }

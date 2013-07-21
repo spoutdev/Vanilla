@@ -31,6 +31,8 @@ import java.util.List;
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
+import org.spout.vanilla.component.entity.substance.projectile.Arrow;
+
 public class ArrowObjectEntityProtocol extends ObjectEntityProtocol {
 	public ArrowObjectEntityProtocol() {
 		super(ObjectType.ARROW);
@@ -39,7 +41,7 @@ public class ArrowObjectEntityProtocol extends ObjectEntityProtocol {
 	@Override
 	public List<Parameter<?>> getSpawnParameters(Entity entity) {
 		List<Parameter<?>> params = super.getSpawnParameters(entity);
-		params.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) 0)); // Unknown flag...
+		params.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (entity.add(Arrow.class).isCritical() ? 1 : 0)));
 		return params;
 	}
 }

@@ -24,42 +24,26 @@
  * License and see <http://spout.in/licensev1> for the full license, including
  * the MIT license.
  */
-package org.spout.vanilla.component.entity.substance.projectile;
+package org.spout.vanilla.protocol.entity.creature;
+
+import java.util.List;
 
 import org.spout.api.entity.Entity;
 import org.spout.api.util.Parameter;
 
-import org.spout.vanilla.VanillaPlugin;
-import org.spout.vanilla.component.entity.substance.Substance;
-import org.spout.vanilla.data.VanillaData;
-import org.spout.vanilla.protocol.entity.object.ArrowObjectEntityProtocol;
+import org.spout.vanilla.component.entity.living.neutral.Bat;
 
-public class Arrow extends Substance implements Projectile {
-	public static final int ID = 60;
-	private Entity shooter;
+public class BatEntityProtocol extends CreatureProtocol {
+	public final static int HANGING_INDEX = 16; // The MC metadata index to determine if the bat is hanging.
 
-	@Override
-	public void onAttached() {
-		getOwner().getNetwork().setEntityProtocol(VanillaPlugin.VANILLA_PROTOCOL_ID, new ArrowObjectEntityProtocol());
-		super.onAttached();
+	public BatEntityProtocol() {
+		super(CreatureType.BAT);
 	}
 
 	@Override
-	public Entity getShooter() {
-		return shooter;
-	}
-
-	@Override
-	public void setShooter(Entity shooter) {
-		this.shooter = shooter;
-	}
-
-	public boolean isCritical() {
-		return getData().get(VanillaData.CRITICAL);
-	}
-
-	public void setCritical(boolean critical) {
-		getData().put(VanillaData.CRITICAL, critical);
-		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 16, (byte) (critical ? 1 : 0)));
+	public List<Parameter<?>> getSpawnParameters(Entity entity) {
+		List<Parameter<?>> parameters = super.getSpawnParameters(entity);
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, HANGING_INDEX, (byte) (entity.add(Bat.class).isHanging() ? 1 : 0)));
+		return parameters;
 	}
 }

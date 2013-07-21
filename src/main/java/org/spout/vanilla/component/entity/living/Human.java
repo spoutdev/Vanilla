@@ -41,6 +41,7 @@ import org.spout.api.inventory.Slot;
 import org.spout.api.math.GenericMath;
 import org.spout.api.math.Vector3;
 import org.spout.api.math.VectorMath;
+import org.spout.api.util.Parameter;
 
 import org.spout.vanilla.VanillaPlugin;
 import org.spout.vanilla.component.entity.inventory.PlayerInventory;
@@ -87,6 +88,15 @@ public class Human extends Living {
 			textModel.setSize(0.5f);
 			textModel.setTranslation(new Vector3(0, 3f, 0));
 		}
+	}
+
+	public byte getArrowsInBody() {
+		return getData().get(VanillaData.ARROWS_IN_BODY);
+	}
+
+	public void setArrowsInBody(byte amount) {
+		getData().put(VanillaData.ARROWS_IN_BODY, amount);
+		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 10, amount));
 	}
 
 	public ViewDistance getViewDistance() {

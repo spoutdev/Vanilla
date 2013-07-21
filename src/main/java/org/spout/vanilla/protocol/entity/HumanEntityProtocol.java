@@ -45,6 +45,8 @@ import org.spout.vanilla.protocol.msg.player.pos.PlayerSpawnMessage;
 import org.spout.vanilla.util.PlayerUtil;
 
 public class HumanEntityProtocol extends VanillaEntityProtocol {
+	public final static int ARROWS_INDEX = 10; // The MC metadata index to determine the arrows in the players body.
+
 	@Override
 	public List<Message> getSpawnMessages(Entity entity, RepositionManager rm) {
 
@@ -66,6 +68,7 @@ public class HumanEntityProtocol extends VanillaEntityProtocol {
 		}
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 		parameters.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 100));
+		parameters.add(new Parameter<Byte>(Parameter.TYPE_BYTE, ARROWS_INDEX, human.getArrowsInBody()));
 
 		messages.add(new PlayerSpawnMessage(id, human.getName(), x, y, z, r, p, item, parameters));
 

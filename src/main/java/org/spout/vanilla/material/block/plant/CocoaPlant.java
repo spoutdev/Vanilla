@@ -55,7 +55,7 @@ public class CocoaPlant extends AbstractAttachable implements Plant, Growing, Dy
 
 	public CocoaPlant(String name, int id) {
 		super(name, id, null, null);
-		this.setAttachable(BlockFaces.NESW);
+		this.setAttachable(BlockFaces.NESW).setGhost(true);
 	}
 
 	@Override

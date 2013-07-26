@@ -47,8 +47,7 @@ import org.spout.vanilla.world.lighting.VanillaLighting;
 public class NetherWartBlock extends GroundAttachable implements Plant, Growing, DynamicMaterial {
 	public NetherWartBlock(String name, int id) {
 		super(name, id, null, null);
-		this.setLiquidObstacle(false);
-		this.setResistance(0.0F).setHardness(0.0F).setOpacity((byte) 0);
+		this.setLiquidObstacle(false).setResistance(0.0F).setHardness(0.0F).setOpacity((byte) 0).setGhost(true);
 		this.getDrops().DEFAULT.clear();
 		this.getDrops().DEFAULT.forFlags(BlockFlags.FULLY_GROWN.NOT).add(VanillaMaterials.NETHER_WART);
 		this.getDrops().DEFAULT.forFlags(BlockFlags.FULLY_GROWN).addRange(VanillaMaterials.NETHER_WART, 2, 5);

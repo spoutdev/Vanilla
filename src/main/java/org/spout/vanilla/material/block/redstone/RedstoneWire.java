@@ -52,7 +52,7 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 
 	public RedstoneWire(String name, int id) {
 		super(name, id, null, null);
-		this.setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();
+		this.setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent().setGhost(true);
 	}
 
 	@Override

@@ -37,7 +37,7 @@ import org.spout.vanilla.util.resources.ModelUtil;
 
 public class Torch extends AbstractAttachable implements PointAttachable {
 	public Torch(short dataMask, String name, int id, String model) {
-		super(dataMask, name, id, model);
+		super(dataMask, name, id, model, null);
 		this.setAttachable(BlockFaces.NSEWB).setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();
 		// Register the directional submaterials
 		if (model == null) {
@@ -50,7 +50,7 @@ public class Torch extends AbstractAttachable implements PointAttachable {
 	}
 
 	private Torch(String name, int id, int data, Torch parent, String model) {
-		super(name, id, data, parent, model);
+		super(name, id, data, parent, model, null);
 		this.setAttachable(BlockFaces.NSEWB).setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}
 

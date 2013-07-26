@@ -58,13 +58,13 @@ public class Sapling extends GroundAttachable implements Growing, Spreading, Pla
 	private static final int GROWTH_MASK = 0x8;
 
 	private Sapling(String name) {
-		super(dataMask, name, 6, null);
+		super(dataMask, name, 6, null, null);
 		this.setLiquidObstacle(false);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}
 
 	private Sapling(String name, int data, Sapling parent) {
-		super(name, 6, data, parent, null);
+		super(name, 6, data, parent, null, null);
 		this.setLiquidObstacle(false);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}

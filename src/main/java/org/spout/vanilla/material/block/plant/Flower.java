@@ -34,7 +34,7 @@ import org.spout.vanilla.material.block.attachable.GroundAttachable;
 
 public class Flower extends GroundAttachable implements Plant {
 	public Flower(String name, int id, String model) {
-		super(name, id, model);
+		super(name, id, model, null);
 		this.setLiquidObstacle(false);
 		this.setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}

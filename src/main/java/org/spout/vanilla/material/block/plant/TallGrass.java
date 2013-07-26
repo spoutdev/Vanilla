@@ -47,11 +47,11 @@ public final class TallGrass extends GroundAttachable implements Burnable, Plant
 	public static final TallGrass FERN = new TallGrass("Fern", 2, DEAD_GRASS, VanillaMaterialModels.FERN);
 
 	private TallGrass(String name, int id, String model) {
-		super((short) 0x0003, name, id, model);
+		super((short) 0x0003, name, id, model, null);
 	}
 
 	private TallGrass(String name, int data, TallGrass parent, String model) {
-		super(name, parent.getMinecraftId(), data, parent, model);
+		super(name, parent.getMinecraftId(), data, parent, model, null);
 		if (VanillaPlugin.getInstance().getEngine().getPlatform() == Platform.CLIENT && data == 1) {
 			if (!getModel().getRenderMaterial().getBufferEffects().contains(VanillaEffects.BIOME_GRASS_COLOR)) {
 				getModel().getRenderMaterial().addBufferEffect(VanillaEffects.BIOME_GRASS_COLOR);

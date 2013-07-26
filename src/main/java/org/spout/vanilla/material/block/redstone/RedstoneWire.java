@@ -51,7 +51,7 @@ public class RedstoneWire extends GroundAttachable implements RedstoneSource, Re
 	private static final EffectRange maximumPhysicsRange = new PlusEffectRange(15, true);
 
 	public RedstoneWire(String name, int id) {
-		super(name, id, null);
+		super(name, id, null, null);
 		this.setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();
 	}
 

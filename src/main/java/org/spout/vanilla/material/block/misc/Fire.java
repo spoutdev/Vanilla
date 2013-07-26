@@ -50,7 +50,7 @@ public class Fire extends VanillaBlockMaterial implements DynamicMaterial {
 	private static final EffectRange SPREAD_RANGE = new CuboidEffectRange(-1, -1, -1, 1, 4, 1);
 
 	public Fire(String name, int id) {
-		super(name, id, VanillaMaterialModels.FIRE);
+		super(name, id, VanillaMaterialModels.FIRE, null);
 		this.setLiquidObstacle(false).setHardness(0.0F).setResistance(0.0F).setTransparent();
 		this.getDrops().clear();
 	}

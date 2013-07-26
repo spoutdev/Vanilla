@@ -36,6 +36,7 @@ import org.spout.api.material.Material;
 import org.spout.api.material.block.BlockFace;
 import org.spout.api.material.block.BlockFaces;
 import org.spout.api.math.GenericMath;
+import org.spout.physics.collision.shape.BoxShape;
 
 import org.spout.vanilla.data.configuration.VanillaConfiguration;
 import org.spout.vanilla.data.resources.VanillaMaterialModels;
@@ -48,7 +49,7 @@ public class Cactus extends StackGrowingBase implements TimedCraftable {
 	private final Set<BlockMaterial> deniedNeighbours = new HashSet<BlockMaterial>();
 
 	public Cactus(String name, int id) {
-		super(name, id, VanillaMaterialModels.CACTUS);
+		super(name, id, VanillaMaterialModels.CACTUS, new BoxShape(1, 1, 1));
 		this.setHardness(0.4F).setResistance(0.7F).setTransparent();
 		this.addDeniedNeighbour(VanillaMaterials.WEB, VanillaMaterials.STONE_PRESSURE_PLATE, VanillaMaterials.WOODEN_PRESSURE_PLATE);
 	}

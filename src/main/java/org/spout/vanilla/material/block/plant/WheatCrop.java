@@ -53,7 +53,7 @@ import org.spout.vanilla.world.lighting.VanillaLighting;
 
 public class WheatCrop extends GroundAttachable implements Growing, Crop, DynamicMaterial, InitializableMaterial {
 	public WheatCrop(String name, int id) {
-		super(name, id, null);
+		super(name, id, null, null);
 		this.setResistance(0.0F).setHardness(0.0F).setTransparent();
 	}
 

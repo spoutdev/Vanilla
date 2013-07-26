@@ -54,7 +54,7 @@ public class CocoaPlant extends AbstractAttachable implements Plant, Growing, Dy
 	private static final int GROWTH_MASK = 0xC;
 
 	public CocoaPlant(String name, int id) {
-		super(name, id, null);
+		super(name, id, null, null);
 		this.setAttachable(BlockFaces.NESW);
 	}
 

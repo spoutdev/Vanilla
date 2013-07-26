@@ -57,7 +57,7 @@ public class Skeleton extends Living implements Hostile {
 
 		//Physics
 		PhysicsComponent physics = getOwner().getPhysics();
-		physics.activate(2f, new BoxShape(1f, 2f, 1f), true);
+		physics.activate(2f, new BoxShape(1f, 2f, 1f), false, true);
 		physics.setFriction(10f);
 		physics.setRestitution(0f);
 
